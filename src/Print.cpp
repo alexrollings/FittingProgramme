@@ -56,6 +56,7 @@ void LoadDataSet(Polarity myPolarity) {
   }
 
   // Create RooRealVars: any variables we are interested in
+  // Put all arguments generally as inputs to function (to make it general to gamma mode)
   RooRealVar Bu_M("Pi0_Bu_M_DTF_D0Pi0", "Pi0_Bu_M_DTF_D0Pi0", 4979, 5701,
                   "Mev/c^2");
 
@@ -67,7 +68,20 @@ void LoadDataSet(Polarity myPolarity) {
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have (therefore need to include categories in ArgSet)
   TFile dataFile(filePath + fileName);
-  TTree *tree = (TTree *)dataFile.Get(ttree);
+  //Get takes a TObject pointer and casts it as a ttree pointer
+  //This makes sense as the dataFile contains a ttree
+  //All it does it take an address of a TOBject and force it to be that of a ttree
+  //General casts:
+  //static_cast - type conversions / up cast pointers (TTree pointer to Object pointer as TTree inherits from object)
+  //dynamic_cast - takes a higher inheritance level pointer and tries to conveert it to a lower level pointer. Will fail if the object is not actually a ttree. Returns a null pointer if not (after you use dynamic cast, check pointer isn't null and throw an error if it is).
+  //const_cast
+  //reinterpret_cast
+  TTree *tree = dynamic_cast<Tree*>(dataFile.Get(ttree));
+  if(tree == nullptr){
+    //exception throws and handles errors. Use them when something UNINTENDED happens.
+    throw std::runtime_exception("File did not contain a TTree.");
+  }
+
   std::cout << "Loading tree " << ttree << " from file " << filePath + fileName
             << "\n";
   RooDataSet dataSet("dataSet", "dataSet", tree, ArgSet);
@@ -77,10 +91,11 @@ void LoadDataSet(Polarity myPolarity) {
   for (int i = 0; i < dataSet.numEntries(); i++) {
     // RooDataSet::get() returns a const pointer to a RooArgSet for event i (why
     // we must use RooArgSet not RooArgList)
-    const RooArgSet *row = dataSet.get(i);
+    RooArgSet const *row = dataSet.get(i);
     // RooAbsArg::find() finds object with name in list. Null pointer returned
     // if the name isn't found
     RooCategory *_polarity = (RooCategory *)row->find("polarityCat");
+    // TString has an automatic converter to const char* array. String doesn't.
     _polarity->setLabel(polarity.c_str());
     RooRealVar *_Bu_M = (RooRealVar *)row->find(Bu_M.GetName());
 
