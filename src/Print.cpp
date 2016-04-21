@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <stdexcept>
 
 #include "RooArgList.h"
 #include "RooCategory.h"
@@ -35,12 +37,18 @@ void LoadDataSet(Polarity myPolarity) {
   polarityCat.defineType("down");
   polarityCat.defineType("both");
 
+  RooCategory chargeCat("chargeCat", "chargeCat");
+  chargeCat.defineType("minus");
+  chargeCat.defineType("plus");
+
   // ------------- IGNORE FOR NOW --------------------
   // declare vector to store fileName options
   // std::vector<std::string> polarity_fn;
   // -------------------------------------------------
 
+  // Declare strings to hold category options
   std::string polarity;
+  std::string charge;
 
   // Set fileName and RooCategory options
   if (myPolarity == Polarity::up) {
@@ -56,53 +64,129 @@ void LoadDataSet(Polarity myPolarity) {
   }
 
   // Create RooRealVars: any variables we are interested in
-  // Put all arguments generally as inputs to function (to make it general to gamma mode)
+  // Put all arguments generally as inputs to function (to make it general to
+  // gamma mode)
   RooRealVar Bu_M("Pi0_Bu_M_DTF_D0Pi0", "Pi0_Bu_M_DTF_D0Pi0", 4979, 5701,
                   "Mev/c^2");
+  RooRealVar Bu_ID("Pi0_Bu_ID", "Pi0_Bu_ID", -550, 550, "");
 
-  // Create RooArgSet and add RooAbsArg type variables (could be var's or
-  // catagories) that we will need
-  RooArgSet ArgSet;
-  ArgSet.add(Bu_M);
-  ArgSet.add(polarityCat);
+  // Create separate RooArgSets for variables and categories
+  RooArgSet VarArgSet;
+  VarArgSet.add(Bu_M);
+  VarArgSet.add(Bu_ID);
+
+  RooArgSet CatArgSet;
+  CatArgSet.add(polarityCat);
+  CatArgSet.add(chargeCat);
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have (therefore need to include categories in ArgSet)
   TFile dataFile(filePath + fileName);
-  //Get takes a TObject pointer and casts it as a ttree pointer
-  //This makes sense as the dataFile contains a ttree
-  //All it does it take an address of a TOBject and force it to be that of a ttree
-  //General casts:
-  //static_cast - type conversions / up cast pointers (TTree pointer to Object pointer as TTree inherits from object)
-  //dynamic_cast - takes a higher inheritance level pointer and tries to conveert it to a lower level pointer. Will fail if the object is not actually a ttree. Returns a null pointer if not (after you use dynamic cast, check pointer isn't null and throw an error if it is).
-  //const_cast
-  //reinterpret_cast
-  TTree *tree = dynamic_cast<Tree*>(dataFile.Get(ttree));
-  if(tree == nullptr){
-    //exception throws and handles errors. Use them when something UNINTENDED happens.
-    throw std::runtime_exception("File did not contain a TTree.");
+  // ---------------------- CAST STUFF ----------------------
+  // Get takes a TObject pointer and casts it as a ttree pointer
+  // This makes sense as the dataFile contains a ttree
+  // All it does it take an address of a TOBject and force it to be that of a
+  // ttree
+  // General casts:
+  // static_cast - type conversions / up cast pointers (TTree pointer to Object
+  // pointer as TTree inherits from object).
+  // dynamic_cast - takes a higher inheritance level pointer and tries to
+  // conveert it to a lower level pointer. Will fail if the object is not
+  // actually a ttree. Returns a null pointer if not (after you use dynamic
+  // cast, check pointer isn't null and throw an error if it is).
+  // const_cast - strips away a const.
+  // reinterpret_cast - takes a ptr and pretends it points to something
+  // else but doesn't cast the TYPE of the ptr.
+  // --------------------------------------------------------
+  TTree *tree = dynamic_cast<TTree *>(dataFile.Get(ttree));
+  if (tree == nullptr) {
+    // exception throws and handles errors. Use them when something UNINTENDED
+    // happens.
+    throw std::runtime_error("File did not contain a TTree.");
   }
 
   std::cout << "Loading tree " << ttree << " from file " << filePath + fileName
             << "\n";
-  RooDataSet dataSet("dataSet", "dataSet", tree, ArgSet);
+
+  // Create data set for our ttree variables
+  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, VarArgSet);
+
+  // Create data set to store categories
+  RooDataSet extraDataSet("extraDataSet", "Category Data Set", CatArgSet);
 
   // Loop over data set, find RooCategory for each event and set it's label
-
-  for (int i = 0; i < dataSet.numEntries(); i++) {
+  for (int i = 0; i < inputDataSet.numEntries(); i++) {
     // RooDataSet::get() returns a const pointer to a RooArgSet for event i (why
     // we must use RooArgSet not RooArgList)
-    RooArgSet const *row = dataSet.get(i);
-    // RooAbsArg::find() finds object with name in list. Null pointer returned
+    RooArgSet const *row = inputDataSet.get(i);
     // if the name isn't found
-    RooCategory *_polarity = (RooCategory *)row->find("polarityCat");
     // TString has an automatic converter to const char* array. String doesn't.
-    _polarity->setLabel(polarity.c_str());
-    RooRealVar *_Bu_M = (RooRealVar *)row->find(Bu_M.GetName());
+    // RooAbsArg::find() finds object with name in list. Null pointer returned
+    RooRealVar *_Bu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (_Bu_ID == nullptr) {
+      std::stringstream output;
+      output << "No value for Bu_ID for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
 
-    std::cout << "For event " << i << " ...  m[Bu] = " << _Bu_M->getVal()
-              << " ... polarity = " << _polarity->getLabel() << "\n";
+    if (_Bu_ID->getVal() < 0) {
+      charge = "minus";
+    } else if (_Bu_ID->getVal() > 0) {
+      charge = "plus";
+    };
+
+    // SetRooCategory labels for each event
+    polarityCat.setLabel(polarity.c_str());
+    chargeCat.setLabel(charge.c_str());
+
+    // Add category labels to 'extra' data set
+    extraDataSet.add(CatArgSet);
   }
 
+  // Merge data set containing variables with that containing categories
+  inputDataSet.merge(&extraDataSet);
+
+  // Check assignment of categories has worked by looping over the new data set
+  // and printng the values for each event
+  for (int i = 0; i < inputDataSet.numEntries(); i++) {
+
+    RooArgSet const *row = inputDataSet.get(i);
+    
+    RooRealVar *_Bu_M = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (_Bu_M == nullptr) {
+      std::stringstream output;
+      output << "No value for Bu_M for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooRealVar *_Bu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (_Bu_ID == nullptr) {
+      std::stringstream output;
+      output << "No value for Bu_ID for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *_polarity =
+        dynamic_cast<RooCategory *>(row->find(polarityCat.GetName()));
+    if (_polarity == nullptr) {
+      std::stringstream output;
+      output << "No value for the polarity for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *_charge =
+        dynamic_cast<RooCategory *>(row->find(chargeCat.GetName()));
+    if (_charge == nullptr) {
+      std::stringstream output;
+      output << "No value for the charge for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+
+    std::cout << "For event " << i << " ...  m[Bu] = " << _Bu_M->getVal()
+              << " ... polarity = " << _polarity->getLabel()
+              << " ... Bu_ID = " << _Bu_ID->getVal()
+              << " ... charge = " << _charge->getLabel() << "\n";
+  }
   // ------------- IGNORE FOR NOW --------------------
   // give fileName to second argument of GetfileNames function
   // std::vector<std::string> fileName;
