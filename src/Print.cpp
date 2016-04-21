@@ -71,15 +71,16 @@ void LoadDataSet(Polarity myPolarity) {
   RooRealVar Bu_ID("Pi0_Bu_ID", "Pi0_Bu_ID", -550, 550, "");
 
   // Create separate RooArgSets for variables and categories
-  RooArgSet VarArgSet;
-  VarArgSet.add(Bu_M);
-  VarArgSet.add(Bu_ID);
+  RooArgSet varArgSet;
+  varArgSet.add(Bu_M);
+  varArgSet.add(Bu_ID);
 
-  RooArgSet CatArgSet;
-  CatArgSet.add(polarityCat);
-  CatArgSet.add(chargeCat);
+  RooArgSet catArgSet;
+  catArgSet.add(polarityCat);
+  catArgSet.add(chargeCat);
+
   // Create DataSet and feed it the ArgSet, which defines how many columns it
-  // should have (therefore need to include categories in ArgSet)
+  // should have
   TFile dataFile(filePath + fileName);
   // ---------------------- CAST STUFF ----------------------
   // Get takes a TObject pointer and casts it as a ttree pointer
@@ -108,38 +109,42 @@ void LoadDataSet(Polarity myPolarity) {
             << "\n";
 
   // Create data set for our ttree variables
-  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, VarArgSet);
+  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, varArgSet);
 
   // Create data set to store categories
-  RooDataSet extraDataSet("extraDataSet", "Category Data Set", CatArgSet);
+  RooDataSet extraDataSet("extraDataSet", "Category Data Set", catArgSet);
 
   // Loop over data set, find RooCategory for each event and set it's label
   for (int i = 0; i < inputDataSet.numEntries(); i++) {
     // RooDataSet::get() returns a const pointer to a RooArgSet for event i (why
     // we must use RooArgSet not RooArgList)
     RooArgSet const *row = inputDataSet.get(i);
-    // if the name isn't found
     // TString has an automatic converter to const char* array. String doesn't.
     // RooAbsArg::find() finds object with name in list. Null pointer returned
-    RooRealVar *_Bu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (_Bu_ID == nullptr) {
+    // if the name isn't found
+    RooRealVar *pBu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (pBu_ID == nullptr) {
       std::stringstream output;
       output << "No value for Bu_ID for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    if (_Bu_ID->getVal() < 0) {
+    if (pBu_ID->getVal() < 0) {
       charge = "minus";
-    } else if (_Bu_ID->getVal() > 0) {
+    } else if (pBu_ID->getVal() > 0) {
       charge = "plus";
     };
 
     // SetRooCategory labels for each event
     polarityCat.setLabel(polarity.c_str());
     chargeCat.setLabel(charge.c_str());
+    // Adding the categories to RooArgSet added a pointer to the value's memory
+    // address. Therefore changing their values changes changes what is stored
+    // in catArgSet.
 
     // Add category labels to 'extra' data set
-    extraDataSet.add(CatArgSet);
+    extraDataSet.add(catArgSet);
+    // Add here copies the values from rooArgSet
   }
 
   // Merge data set containing variables with that containing categories
@@ -150,24 +155,24 @@ void LoadDataSet(Polarity myPolarity) {
   for (int i = 0; i < inputDataSet.numEntries(); i++) {
 
     RooArgSet const *row = inputDataSet.get(i);
-    
-    RooRealVar *_Bu_M = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (_Bu_M == nullptr) {
+
+    RooRealVar *pBu_M = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (pBu_M == nullptr) {
       std::stringstream output;
       output << "No value for Bu_M for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    RooRealVar *_Bu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (_Bu_ID == nullptr) {
+    RooRealVar *pBu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
+    if (pBu_ID == nullptr) {
       std::stringstream output;
       output << "No value for Bu_ID for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    RooCategory *_polarity =
+    RooCategory *ppolarity =
         dynamic_cast<RooCategory *>(row->find(polarityCat.GetName()));
-    if (_polarity == nullptr) {
+    if (ppolarity == nullptr) {
       std::stringstream output;
       output << "No value for the polarity for event " << i << ".";
       throw std::runtime_error(output.str());
@@ -175,17 +180,16 @@ void LoadDataSet(Polarity myPolarity) {
 
     RooCategory *_charge =
         dynamic_cast<RooCategory *>(row->find(chargeCat.GetName()));
-    if (_charge == nullptr) {
+    if (pcharge == nullptr) {
       std::stringstream output;
       output << "No value for the charge for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-
-    std::cout << "For event " << i << " ...  m[Bu] = " << _Bu_M->getVal()
-              << " ... polarity = " << _polarity->getLabel()
-              << " ... Bu_ID = " << _Bu_ID->getVal()
-              << " ... charge = " << _charge->getLabel() << "\n";
+    std::cout << "For event " << i << " ...  m[Bu] = " << pBu_M->getVal()
+              << " ... polarity = " << ppolarity->getLabel()
+              << " ... Bu_ID = " << pBu_ID->getVal()
+              << " ... charge = " << pcharge->getLabel() << "\n";
   }
   // ------------- IGNORE FOR NOW --------------------
   // give fileName to second argument of GetfileNames function
