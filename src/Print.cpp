@@ -11,6 +11,10 @@
 #include "TTree.h"
 
 enum class Polarity { up, down, both };
+enum class Daughter { kpi, kk, pipi, pik };
+enum class Bachelor { pi, k };
+enum class Year { y2011, y2012, y2015 };
+enum class Neutral { pi0, gamma };
 
 using namespace RooFit;
 
@@ -29,7 +33,8 @@ TString ttree("BtoDstar0h3_h1h2pi0RTuple");
 // }
 // -------------------------------------------------
 
-void LoadDataSet(Polarity myPolarity) {
+//Function takes as input all options parsed via the command line
+void LoadDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelor, Year myYear, Neutral myNeutral) {
 
   // Initialise RooCategories
   RooCategory polarityCat("polarityCat", "polarityCat");
@@ -41,6 +46,25 @@ void LoadDataSet(Polarity myPolarity) {
   chargeCat.defineType("minus");
   chargeCat.defineType("plus");
 
+  RooCategory daughterCat("daughterCat", "daughterCat");
+  daughterCat.defineType("kpi");
+  daughterCat.defineType("kk");
+  daughterCat.defineType("pipi");
+  daughterCat.defineType("pik");
+
+  RooCategory bachelorCat("bachelorCat", "bachelorCat");
+  bachelorCat.defineType("pi");
+  bachelorCat.defineType("k");
+
+  RooCategory yearCat("yearCat", "yearCat");
+  yearCat.defineType("2011");
+  yearCat.defineType("2012");
+  yearCat.defineType("2015");
+
+  RooCategory neutralCat("neutralCat", "neutralCat");
+  neutralCat.defineType("pi0");
+  neutralCat.defineType("gamma");
+
   // ------------- IGNORE FOR NOW --------------------
   // declare vector to store fileName options
   // std::vector<std::string> polarity_fn;
@@ -49,6 +73,10 @@ void LoadDataSet(Polarity myPolarity) {
   // Declare strings to hold category options
   std::string polarity;
   std::string charge;
+  std::string daughter;
+  std::string bachelor;
+  std::string year;
+  std::string neutral;
 
   // Set fileName and RooCategory options
   if (myPolarity == Polarity::up) {
@@ -63,21 +91,76 @@ void LoadDataSet(Polarity myPolarity) {
     polarity = "both";
   }
 
-  // Create RooRealVars: any variables we are interested in
-  // Put all arguments generally as inputs to function (to make it general to
-  // gamma mode)
-  RooRealVar Bu_M("Pi0_Bu_M_DTF_D0Pi0", "Pi0_Bu_M_DTF_D0Pi0", 4979, 5701,
-                  "Mev/c^2");
-  RooRealVar Bu_ID("Pi0_Bu_ID", "Pi0_Bu_ID", -550, 550, "");
+  if(myDaughter == Daughter::kpi) {
+    daughter = "kpi";
+  } else if(myDaughter == Daughter::kk) {
+    daughter = "kk";
+  } else if(myDaughter == Daughter::pipi) {
+    daughter = "pipi";
+  } else if(myDaughter == Daughter::pik) {
+    daughter = "pik";
+  }
+
+  if(myBachelor == Bachelor::pi) {
+    bachelor = "pi";
+  } else if(myBachelor == Bachelor::k) {
+    bachelor = "k";
+  }
+    
+  if(myYear == Year::y2011){
+    year = "2011";
+  } else if(myYear == Year::y2012){
+    year = "2012";
+  } else if(myYear == Year::y2015){
+    year = "2015";
+  }
+    
+  if(myNeutral == Neutral::pi0) {
+    neutral = "pi0";
+  } else if(myNeutral == Neutral::gamma) {
+    neutral = "gamma";
+  }
+ 
+  //Initialise all variable names in nTuples
+  std::string nm_m_Bu;
+  std::string nm_id_Bu;
+  
+  if( neutral == "pi0" ){
+    nm_m_Bu = "Pi0_Bu_M_DTF_D0Pi0"; 
+    nm_id_Bu = "Pi0_Bu_ID";
+  } else if( neutral == "gamma"){
+    nm_m_Bu = "Gamma_Bu_M_DTF_D0";
+    nm_id_Bu = "Gamma_Bu_ID";
+  }
+
+  //Initialise any units needed
+  std::string mUnit("Mev/c^2");
+  std::string pUnit("Mev/c");
+
+  //Initialise all upper and lower limits of variables
+  double klow_m_Bu = 4979.;
+  double khigh_m_Bu = 5701.;
+  double klow_id_Bu = -550.;
+  double khigh_id_Bu = 550.;
+
+
+  //Create RooRealVars: any variables we are interested in (different for pi0 and gamma mode)
+  RooRealVar m_Bu(nm_m_Bu.c_str(), "Bu Mass DTF Constrained", klow_m_Bu, khigh_m_Bu,
+                  mUnit.c_str());
+  RooRealVar id_Bu(nm_id_Bu.c_str(), "Bu PDG ID", klow_id_Bu, khigh_id_Bu, "");
 
   // Create separate RooArgSets for variables and categories
   RooArgSet varArgSet;
-  varArgSet.add(Bu_M);
-  varArgSet.add(Bu_ID);
+  varArgSet.add(m_Bu);
+  varArgSet.add(id_Bu);
 
   RooArgSet catArgSet;
   catArgSet.add(polarityCat);
   catArgSet.add(chargeCat);
+  catArgSet.add(daughterCat);
+  catArgSet.add(bachelorCat);
+  catArgSet.add(yearCat);
+  catArgSet.add(neutralCat);
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
@@ -122,22 +205,26 @@ void LoadDataSet(Polarity myPolarity) {
     // TString has an automatic converter to const char* array. String doesn't.
     // RooAbsArg::find() finds object with name in list. Null pointer returned
     // if the name isn't found
-    RooRealVar *pBu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (pBu_ID == nullptr) {
+    RooRealVar *ptr_id_Bu = dynamic_cast<RooRealVar *>(row->find(id_Bu.GetName()));
+    if (ptr_id_Bu == nullptr) {
       std::stringstream output;
-      output << "No value for Bu_ID for event " << i << ".";
+      output << "No value for ID[Bu] for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    if (pBu_ID->getVal() < 0) {
+    if (ptr_id_Bu->getVal() < 0) {
       charge = "minus";
-    } else if (pBu_ID->getVal() > 0) {
+    } else if (ptr_id_Bu->getVal() > 0) {
       charge = "plus";
     };
 
     // SetRooCategory labels for each event
     polarityCat.setLabel(polarity.c_str());
     chargeCat.setLabel(charge.c_str());
+    daughterCat.setLabel(daughter.c_str());
+    bachelorCat.setLabel(bachelor.c_str());
+    yearCat.setLabel(year.c_str());
+    neutralCat.setLabel(neutral.c_str());
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
@@ -156,40 +243,76 @@ void LoadDataSet(Polarity myPolarity) {
 
     RooArgSet const *row = inputDataSet.get(i);
 
-    RooRealVar *pBu_M = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (pBu_M == nullptr) {
+    RooRealVar *ptr_m_Bu = dynamic_cast<RooRealVar *>(row->find(id_Bu.GetName()));
+    if (ptr_m_Bu == nullptr) {
       std::stringstream output;
-      output << "No value for Bu_M for event " << i << ".";
+      output << "No value for m[Bu] for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    RooRealVar *pBu_ID = dynamic_cast<RooRealVar *>(row->find(Bu_ID.GetName()));
-    if (pBu_ID == nullptr) {
+    RooRealVar *ptr_id_Bu = dynamic_cast<RooRealVar *>(row->find(id_Bu.GetName()));
+    if (ptr_id_Bu == nullptr) {
       std::stringstream output;
-      output << "No value for Bu_ID for event " << i << ".";
+      output << "No value for ID[Bu] for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    RooCategory *ppolarity =
-        dynamic_cast<RooCategory *>(row->find(polarityCat.GetName()));
-    if (ppolarity == nullptr) {
-      std::stringstream output;
-      output << "No value for the polarity for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *_charge =
+    RooCategory *ptr_charge =
         dynamic_cast<RooCategory *>(row->find(chargeCat.GetName()));
-    if (pcharge == nullptr) {
+    if (ptr_charge == nullptr) {
       std::stringstream output;
       output << "No value for the charge for event " << i << ".";
       throw std::runtime_error(output.str());
     }
 
-    std::cout << "For event " << i << " ...  m[Bu] = " << pBu_M->getVal()
-              << " ... polarity = " << ppolarity->getLabel()
-              << " ... Bu_ID = " << pBu_ID->getVal()
-              << " ... charge = " << pcharge->getLabel() << "\n";
+    RooCategory *ptr_polarity =
+        dynamic_cast<RooCategory *>(row->find(polarityCat.GetName()));
+    if (ptr_polarity == nullptr) {
+      std::stringstream output;
+      output << "No value for the polarity for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *ptr_daughter =
+        dynamic_cast<RooCategory *>(row->find(daughterCat.GetName()));
+    if (ptr_daughter == nullptr) {
+      std::stringstream output;
+      output << "No value for the daughter for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *ptr_bachelor =
+        dynamic_cast<RooCategory *>(row->find(bachelorCat.GetName()));
+    if (ptr_bachelor == nullptr) {
+      std::stringstream output;
+      output << "No value for the bachelor for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *ptr_year =
+        dynamic_cast<RooCategory *>(row->find(yearCat.GetName()));
+    if (ptr_year == nullptr) {
+      std::stringstream output;
+      output << "No value for the year for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    RooCategory *ptr_neutral =
+        dynamic_cast<RooCategory *>(row->find(neutralCat.GetName()));
+    if (ptr_neutral == nullptr) {
+      std::stringstream output;
+      output << "No value for the neutral for event " << i << ".";
+      throw std::runtime_error(output.str());
+    }
+
+    std::cout << "For event " << i << " m[Bu] = " << ptr_m_Bu->getVal()
+              << "  year = " << ptr_year->getLabel()
+              << "  polarity = " << ptr_polarity->getLabel()
+              << "  ID[Bu] = " << ptr_id_Bu->getVal()
+              << "  charge = " << ptr_charge->getLabel()
+              << "  D0 daughters = " << ptr_daughter->getLabel()
+              << "  bachelor = " << ptr_bachelor->getLabel()
+              << "  neutral = " << ptr_neutral->getLabel() << "\n";
   }
   // ------------- IGNORE FOR NOW --------------------
   // give fileName to second argument of GetfileNames function
@@ -209,9 +332,17 @@ void LoadDataSet(Polarity myPolarity) {
 }
 
 int main(int argc, char **argv) {
-  TString polarityInput = argv[1];
+  std::string polarityInput = argv[1];
+  std::string daughterInput = argv[2];
+  std::string bachelorInput = argv[3];
+  std::string yearInput = argv[4];
+  std::string neutralInput = argv[5];
 
   Polarity myPolarity;
+  Daughter myDaughter;
+  Bachelor myBachelor;
+  Year myYear;
+  Neutral myNeutral;
 
   if (polarityInput == "up") {
     myPolarity = Polarity::up;
@@ -219,6 +350,52 @@ int main(int argc, char **argv) {
     myPolarity = Polarity::down;
   }
 
-  LoadDataSet(myPolarity);
+  if(daughterInput == "kpi") {
+    myDaughter = Daughter::kpi;
+  } else if(daughterInput == "kk") {
+    myDaughter = Daughter::kk;
+  } else if(daughterInput == "pipi") {
+    myDaughter = Daughter::pipi;
+  } else if(daughterInput == "pik") {
+    myDaughter = Daughter::pik;
+  }
+
+  if(bachelorInput == "pi") {
+    myBachelor = Bachelor::pi;
+  } else if(bachelorInput == "k") {
+    myBachelor = Bachelor::k;
+  }
+    
+  if(yearInput == "2011"){
+    myYear = Year::y2011;
+  } else if(yearInput == "2012"){
+    myYear = Year::y2012;
+  } else if(yearInput == "2015"){
+    myYear = Year::y2015;
+  }
+    
+  if(neutralInput == "pi0") {
+    myNeutral = Neutral::pi0;
+  } else if(neutralInput == "gamma") {
+    myNeutral = Neutral::gamma;
+  }
+  
+  LoadDataSet(myPolarity, myDaughter, myBachelor, myYear, myNeutral);
   return 0;
 }
+
+// std::shared_ptr has a built in counter that counts how many 'places' knows
+// about its existence. It automatically destroys itself when nobody knows it
+// exists
+//
+// What .add() SHOULD look like for the two cases:
+// void RooArgSet::Add(std::shared_ptr<RooAbsArg> ptr);
+// void RooDataSet::Add(RooAbsArg const &row);
+//
+// This IMMEDIATELY makes it clear that RooArgSet will only store a pointer to
+// my data, meaning that if I change it, it will also change what RooArgSet
+// knows about
+// When you pass something as a reference like here for RooDataSet, you expect
+// that they will only use it for the duration of the function, and then it's
+// completely back in your control after, meaning either they only needed to
+// read it once or they've made a copy
