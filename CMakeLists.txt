@@ -11,15 +11,18 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 find_package(ROOT REQUIRED)
 
 #Find header files
-include_directories(${ROOT_INCLUDE_DIR})
+include_directories(${ROOT_INCLUDE_DIR} include)
+set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam MathMore TreePlayer)
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Definitions.cpp)
 
 #${variable} expands variable
 add_executable(Main src/Main.cpp ${FITTING_SRC})
+add_executable(SaveRooDataSet src/SaveRooDataSet.cpp ${FITTING_SRC})
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
-target_link_libraries(Main ${ROOT_LIBRARIES} RooFitCore RooFit)
+target_link_libraries(Main ${FITTING_LIBS})
+target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
 
