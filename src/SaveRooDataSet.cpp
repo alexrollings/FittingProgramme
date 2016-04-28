@@ -32,7 +32,16 @@ TString ttree("BtoDstar0h3_h1h2pi0RTuple");
 //Function takes as input all options parsed via the command line
 void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelor, Year myYear, Neutral myNeutral) {
 
-
+  //StaticVars::polarityCat() is a function returning a const reference to polarityCat_ stored in StaticVars
+  //Then we invoke the RooCategory constructor using this const reference, thereby creating a copy of it using the copy constructor
+  //So you end up copying polarityCat_ in StaticVars to your local variable polarityCat
+  //We can now overwrite the copied value as it exists only in our local scope
+  //We can then pass the values around as we like (e.g. assign to RooDataSet)
+  
+  //Static functions are associated to the class not a object (:: not .)
+  //Passing arguments by reference calls te copy constructor for RooCategory
+  //This ensures a deep copy as it knows how big the class is, therefore it copies the object from its initial memory location to a new one
+  //This ensures the original object still exists when the new one goes out of scope (as the destructor would then be called)
   RooCategory polarityCat(StaticVars::polarityCat());
   RooCategory chargeCat(StaticVars::chargeCat());
   RooCategory daughterCat(StaticVars::daughterCat());

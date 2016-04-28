@@ -9,8 +9,10 @@ enum class Neutral { pi0, gamma };
 
 //Singleton = class that can only be instantiated once.
 //Make the constructor and destructor private.
+//members of struct are public by default and a struct features public inheritance from a base struct (private for class)
 struct StaticVars {
 public:
+  //static ensures the member is shared across all instances of the class: not just the object
   static RooCategory const& polarityCat() {
     return StaticVars::Get().polarityCat_;
   }
@@ -29,7 +31,6 @@ public:
   static RooCategory const& yearCat() {
     return StaticVars::Get().yearCat_;
   }
-  //Call a and b whatever you want to access.
   //Have the function return a const reference to the variable, e.g. category.
   //Need one function for every variable.
   //Get a reference to the variable we have instantiated but we only get the constant reference to the variable therefore we cannot change them.
@@ -38,9 +39,7 @@ private:
   ~StaticVars() {}
   StaticVars &operator=(StaticVars const &) = delete;
   //Deletes the = operator (which is defined in std)
-  //Static functions are associated to the class not a object (:: not .)
   //Get() returns a reference to the instantiation StaticVars (it is a function IN the class therefore it can construct the object)
-  RooCategory polarityCat_;
   
   static StaticVars const &Get() {
     static StaticVars singleton;
@@ -48,6 +47,7 @@ private:
   }
   
   
+  RooCategory polarityCat_;
   RooCategory chargeCat_;
   RooCategory daughterCat_;
   RooCategory bachelorCat_;
