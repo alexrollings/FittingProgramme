@@ -13,24 +13,9 @@
 #include "Definitions.h"
 
 using namespace RooFit;
+std::string dsPath("~/ButoDst0X_FIT/roodatasets/");
 
-TString filePath("/data/lhcb/users/rollings/ButoDst0X_DATA_1/");
-TString fileName("2011_MagDown/"
-                 "2011_MagDown_ButDst0pi_Dst0tD0pi0_D0tkpi_Selections_"
-                 "MERemoved.root");
-TString ttree("BtoDstar0h3_h1h2pi0RTuple");
-
-// ------------- IGNORE FOR NOW --------------------
-// Create function that takes a directory as input then outputs a list of
-// fileNames from the directory
-// void GetfileNames(std::string directory, std::vector<std::string> &fileNames)
-// {
-// Ask JOJ best way to do this!
-// }
-// -------------------------------------------------
-
-//Function takes as input all options parsed via the command line
-void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelor, Year myYear, Neutral myNeutral) {
+void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarity myPolarity, Bachelor myBachelor, Neutral myNeutral, Daughter myDaughter) {
 
   //StaticVars::polarityCat() is a function returning a const reference to polarityCat_ stored in StaticVars
   //Then we invoke the RooCategory constructor using this const reference, thereby creating a copy of it using the copy constructor
@@ -42,39 +27,53 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
   //Passing arguments by reference calls te copy constructor for RooCategory
   //This ensures a deep copy as it knows how big the class is, therefore it copies the object from its initial memory location to a new one
   //This ensures the original object still exists when the new one goes out of scope (as the destructor would then be called)
+
+  RooCategory yearCat(StaticVars::yearCat());
   RooCategory polarityCat(StaticVars::polarityCat());
-  RooCategory chargeCat(StaticVars::chargeCat());
-  RooCategory daughterCat(StaticVars::daughterCat());
   RooCategory bachelorCat(StaticVars::bachelorCat());
   RooCategory neutralCat(StaticVars::neutralCat());
-  RooCategory yearCat(StaticVars::yearCat());
+  RooCategory daughterCat(StaticVars::daughterCat());
+  RooCategory chargeCat(StaticVars::chargeCat());
 
-  // ------------- IGNORE FOR NOW --------------------
-  // declare vector to store fileName options
-  // std::vector<std::string> polarity_fn;
-  // -------------------------------------------------
 
   // Declare strings to hold category options
-  std::string polarity;
-  std::string charge;
-  std::string daughter;
-  std::string bachelor;
   std::string year;
+  std::string polarity;
+  std::string bachelor;
   std::string neutral;
+  std::string daughter;
+  std::string charge;
+  std::string ttree;
 
   // Set fileName and RooCategory options
+  if(myYear == Year::y2011){
+    year = "2011";
+  } else if(myYear == Year::y2012){
+    year = "2012";
+  } else if(myYear == Year::y2015){
+    year = "2015";
+  }
+    
   if (myPolarity == Polarity::up) {
-    // polarity_fn.push_back("MagUp");
     polarity = "up";
   } else if (myPolarity == Polarity::down) {
-    // polarity_fn.push_back("MagDown");
     polarity = "down";
-  } else if (myPolarity == Polarity::both) {
-    // polarity_fn.push_back("MagUp");
-    // polarity_fn.push_back("MagDown");
-    polarity = "both";
   }
 
+  if(myBachelor == Bachelor::pi) {
+    bachelor = "pi";
+  } else if(myBachelor == Bachelor::k) {
+    bachelor = "k";
+  }
+    
+  if(myNeutral == Neutral::pi0) {
+    neutral = "pi0";
+    ttree = "BtoDstar0h3_h1h2pi0RTuple";
+  } else if(myNeutral == Neutral::gamma) {
+    neutral = "gamma";
+    ttree = "BtoDstar0h3_h1h2gammaTuple";
+  }
+ 
   if(myDaughter == Daughter::kpi) {
     daughter = "kpi";
   } else if(myDaughter == Daughter::kk) {
@@ -85,26 +84,6 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
     daughter = "pik";
   }
 
-  if(myBachelor == Bachelor::pi) {
-    bachelor = "pi";
-  } else if(myBachelor == Bachelor::k) {
-    bachelor = "k";
-  }
-    
-  if(myYear == Year::y2011){
-    year = "2011";
-  } else if(myYear == Year::y2012){
-    year = "2012";
-  } else if(myYear == Year::y2015){
-    year = "2015";
-  }
-    
-  if(myNeutral == Neutral::pi0) {
-    neutral = "pi0";
-  } else if(myNeutral == Neutral::gamma) {
-    neutral = "gamma";
-  }
- 
   //Initialise all variable names in nTuples
   std::string nameBuMass;
   std::string nameBuID;
@@ -148,7 +127,7 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
-  TFile dataFile(filePath + fileName);
+  TFile dataFile(path.c_str()+filename.c_str());
   // ---------------------- CAST STUFF ----------------------
   // Get takes a TObject pointer and casts it as a ttree pointer
   // This makes sense as the dataFile contains a ttree
@@ -165,14 +144,14 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
   // reinterpret_cast - takes a ptr and pretends it points to something
   // else but doesn't cast the TYPE of the ptr.
   // --------------------------------------------------------
-  TTree *tree = dynamic_cast<TTree *>(dataFile.Get(ttree));
+  TTree *tree = dynamic_cast<TTree *>(dataFile.Get(ttree.c_str()));
   if (tree == nullptr) {
     // exception throws and handles errors. Use them when something UNINTENDED
     // happens.
     throw std::runtime_error("File did not contain a TTree.");
   }
 
-  std::cout << "Loading tree " << ttree << " from file " << filePath + fileName
+  std::cout << "Loading tree " << ttree << " from file " << path+filename
             << "\n";
 
   // Create data set for our ttree variables
@@ -203,12 +182,12 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
     };
 
     // SetRooCategory labels for each event
-    polarityCat.setLabel(polarity.c_str());
-    chargeCat.setLabel(charge.c_str());
-    daughterCat.setLabel(daughter.c_str());
-    bachelorCat.setLabel(bachelor.c_str());
     yearCat.setLabel(year.c_str());
+    polarityCat.setLabel(polarity.c_str());
+    bachelorCat.setLabel(bachelor.c_str());
     neutralCat.setLabel(neutral.c_str());
+    daughterCat.setLabel(daughter.c_str());
+    chargeCat.setLabel(charge.c_str());
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
@@ -221,106 +200,21 @@ void SaveRooDataSet(Polarity myPolarity, Daughter myDaughter, Bachelor myBachelo
   // Merge data set containing variables with that containing categories
   inputDataSet.merge(&extraDataSet);
 
-  // Check assignment of categories has worked by looping over the new data set
-  // and printng the values for each event
-  for (int i = 0; i < inputDataSet.numEntries(); i++) {
+  std::string dsFileName(year+"_"+polarity+"_"+bachelor+"_"+neutral+"_"+daughter+"_"+charge+".root");
+  std::out << "Saving data set to file: " << dsPath+dsFileName << "\n";
+  TFile dsFile( dsPath.c_str()+dsFileName.c_str(), "RECREATE");
+  inputDataSet.write( dsPath.c_str()+dsFileName.c_str() );
 
-    RooArgSet const *row = inputDataSet.get(i);
 
-    RooRealVar *mBuPtr = dynamic_cast<RooRealVar *>(row->find(mBu.GetName()));
-    if (mBuPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for m[Bu] for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooRealVar *idBuPtr = dynamic_cast<RooRealVar *>(row->find(idBu.GetName()));
-    if (idBuPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for ID[Bu] for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *chargePtr =
-        dynamic_cast<RooCategory *>(row->find(chargeCat.GetName()));
-    if (chargePtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the charge for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *polarityPtr =
-        dynamic_cast<RooCategory *>(row->find(polarityCat.GetName()));
-    if (polarityPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the polarity for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *daughterPtr =
-        dynamic_cast<RooCategory *>(row->find(daughterCat.GetName()));
-    if (daughterPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the daughter for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *bachelorPtr =
-        dynamic_cast<RooCategory *>(row->find(bachelorCat.GetName()));
-    if (bachelorPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the bachelor for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *yearPtr =
-        dynamic_cast<RooCategory *>(row->find(yearCat.GetName()));
-    if (yearPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the year for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    RooCategory *neutralPtr =
-        dynamic_cast<RooCategory *>(row->find(neutralCat.GetName()));
-    if (neutralPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for the neutral for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    std::cout << "For event " << i << " m[Bu] = " << mBuPtr->getVal()
-              << "  year = " << yearPtr->getLabel()
-              << "  polarity = " << polarityPtr->getLabel()
-              << "  ID[Bu] = " << idBuPtr->getVal()
-              << "  charge = " << chargePtr->getLabel()
-              << "  D0 daughters = " << daughterPtr->getLabel()
-              << "  bachelor = " << bachelorPtr->getLabel()
-              << "  neutral = " << neutralPtr->getLabel() << "\n";
-  }
-  // ------------- IGNORE FOR NOW --------------------
-  // give fileName to second argument of GetfileNames function
-  // std::vector<std::string> fileName;
-
-  // for (auto it = fileName.begin(), itEnd = fileName.end(); it != itEnd; ++it)
-  // {
-  // if((*it).find("filestring")
-  // TFile* dataFile = TFile::Open(fullpathandname.c_str());
-  // TString ttree("BtoDstar0h3_h1h2pi0RTuple");
-  // TTree* myTree = (TTree*)dataFile.Get(ttree);
-  // RooDataSet* tempDataSet = new RooDataSet("temp", "temp", inputList, ttree);
-  // DataSet.append(*tempDataSet);
-  // delete tempDataSet;
-  // }
-  // -------------------------------------------------
-}
 
 int main(int argc, char **argv) {
-  std::string polarityInput = argv[1];
-  std::string daughterInput = argv[2];
-  std::string bachelorInput = argv[3];
-  std::string yearInput = argv[4];
-  std::string neutralInput = argv[5];
+  std::string myPath = argv[1];
+  std::string myFile = argv[2];
+  std::string yearInput = argv[3];
+  std::string polarityInput = argv[4];
+  std::string bachelorInput = argv[5];
+  std::string neutralInput = argv[6];
+  std::string daughterInput = argv[7];
 
   Polarity myPolarity;
   Daughter myDaughter;
@@ -364,7 +258,7 @@ int main(int argc, char **argv) {
     myNeutral = Neutral::gamma;
   }
   
-  SaveRooDataSet(myPolarity, myDaughter, myBachelor, myYear, myNeutral);
+  SaveRooDataSet(myPath, myFile, myYear, myPolarity, myBachelor, myNeutral, myDaughter);
   return 0;
 }
 
