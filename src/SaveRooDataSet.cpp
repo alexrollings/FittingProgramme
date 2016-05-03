@@ -15,18 +15,25 @@
 using namespace RooFit;
 std::string dsPath("~/ButoDst0X_FIT/roodatasets/");
 
-void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarity myPolarity, Bachelor myBachelor, Neutral myNeutral, Daughter myDaughter) {
+void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
+                    Bachelor myBachelor, Neutral myNeutral,
+                    Daughter myDaughter) {
 
-  //StaticVars::polarityCat() is a function returning a const reference to polarityCat_ stored in StaticVars
-  //Then we invoke the RooCategory constructor using this const reference, thereby creating a copy of it using the copy constructor
-  //So you end up copying polarityCat_ in StaticVars to your local variable polarityCat
-  //We can now overwrite the copied value as it exists only in our local scope
-  //We can then pass the values around as we like (e.g. assign to RooDataSet)
-  
-  //Static functions are associated to the class not a object (:: not .)
-  //Passing arguments by reference calls te copy constructor for RooCategory
-  //This ensures a deep copy as it knows how big the class is, therefore it copies the object from its initial memory location to a new one
-  //This ensures the original object still exists when the new one goes out of scope (as the destructor would then be called)
+  // StaticVars::polarityCat() is a function returning a const reference to
+  // polarityCat_ stored in StaticVars
+  // Then we invoke the RooCategory constructor using this const reference,
+  // thereby creating a copy of it using the copy constructor
+  // So you end up copying polarityCat_ in StaticVars to your local variable
+  // polarityCat
+  // We can now overwrite the copied value as it exists only in our local scope
+  // We can then pass the values around as we like (e.g. assign to RooDataSet)
+
+  // Static functions are associated to the class not a object (:: not .)
+  // Passing arguments by reference calls te copy constructor for RooCategory
+  // This ensures a deep copy as it knows how big the class is, therefore it
+  // copies the object from its initial memory location to a new one
+  // This ensures the original object still exists when the new one goes out of
+  // scope (as the destructor would then be called)
 
   RooCategory yearCat(StaticVars::yearCat());
   RooCategory polarityCat(StaticVars::polarityCat());
@@ -34,7 +41,6 @@ void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarit
   RooCategory neutralCat(StaticVars::neutralCat());
   RooCategory daughterCat(StaticVars::daughterCat());
   RooCategory chargeCat(StaticVars::chargeCat());
-
 
   // Declare strings to hold category options
   std::string year;
@@ -46,70 +52,70 @@ void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarit
   std::string ttree;
 
   // Set fileName and RooCategory options
-  if(myYear == Year::y2011){
+  if (myYear == Year::y2011) {
     year = "2011";
-  } else if(myYear == Year::y2012){
+  } else if (myYear == Year::y2012) {
     year = "2012";
-  } else if(myYear == Year::y2015){
+  } else if (myYear == Year::y2015) {
     year = "2015";
   }
-    
+
   if (myPolarity == Polarity::up) {
     polarity = "up";
   } else if (myPolarity == Polarity::down) {
     polarity = "down";
   }
 
-  if(myBachelor == Bachelor::pi) {
+  if (myBachelor == Bachelor::pi) {
     bachelor = "pi";
-  } else if(myBachelor == Bachelor::k) {
+  } else if (myBachelor == Bachelor::k) {
     bachelor = "k";
   }
-    
-  if(myNeutral == Neutral::pi0) {
+
+  if (myNeutral == Neutral::pi0) {
     neutral = "pi0";
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
-  } else if(myNeutral == Neutral::gamma) {
+  } else if (myNeutral == Neutral::gamma) {
     neutral = "gamma";
     ttree = "BtoDstar0h3_h1h2gammaTuple";
   }
- 
-  if(myDaughter == Daughter::kpi) {
+
+  if (myDaughter == Daughter::kpi) {
     daughter = "kpi";
-  } else if(myDaughter == Daughter::kk) {
+  } else if (myDaughter == Daughter::kk) {
     daughter = "kk";
-  } else if(myDaughter == Daughter::pipi) {
+  } else if (myDaughter == Daughter::pipi) {
     daughter = "pipi";
-  } else if(myDaughter == Daughter::pik) {
+  } else if (myDaughter == Daughter::pik) {
     daughter = "pik";
   }
 
-  //Initialise all variable names in nTuples
+  // Initialise all variable names in nTuples
   std::string nameBuMass;
   std::string nameBuID;
 
-  if( neutral == "pi0" ){
-    nameBuMass = "Pi0_Bu_M_DTF_D0Pi0"; 
+  if (neutral == "pi0") {
+    nameBuMass = "Pi0_Bu_M_DTF_D0Pi0";
     nameBuID = "Pi0_Bu_ID";
-  } else if( neutral == "gamma"){
+  } else if (neutral == "gamma") {
     nameBuMass = "Gamma_Bu_M_DTF_D0";
     nameBuID = "Gamma_Bu_ID";
   }
 
-  //Initialise any units needed
+  // Initialise any units needed
   std::string massUnit("Mev/c^2");
   std::string momentumUnit("Mev/c");
 
-  //Initialise all upper and lower limits of variables
+  // Initialise all upper and lower limits of variables
   const double kLowBuMass = 4979.;
   const double kHighBuMass = 5701.;
   const double kLowBuID = -550.;
   const double kHighBuID = 550.;
 
-
-  //Create RooRealVars: any variables we are interested in (different for pi0 and gamma mode)
-  RooRealVar mBu(nameBuMass.c_str(), "Bu Mass DTF Constrained", kLowBuMass, kHighBuMass,
-                  massUnit.c_str());
+  // Create RooRealVars: any variables we are interested in (different for pi0
+  // and gamma mode)
+  RooRealVar mBu(nameBuMass.c_str(), "Bu Mass DTF Constrained", kLowBuMass,
+                 kHighBuMass, massUnit.c_str());
   RooRealVar idBu(nameBuID.c_str(), "Bu PDG ID", kLowBuID, kHighBuID, "");
 
   // Create separate RooArgSets for variables and categories
@@ -127,7 +133,7 @@ void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarit
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
-  TFile dataFile(path.c_str()+filename.c_str());
+  TFile dataFile(path.c_str());
   // ---------------------- CAST STUFF ----------------------
   // Get takes a TObject pointer and casts it as a ttree pointer
   // This makes sense as the dataFile contains a ttree
@@ -151,8 +157,7 @@ void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarit
     throw std::runtime_error("File did not contain a TTree.");
   }
 
-  std::cout << "Loading tree " << ttree << " from file " << path+filename
-            << "\n";
+  std::cout << "Loading tree " << ttree << " from file " << path << "\n";
 
   // Create data set for our ttree variables
   RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, varArgSet);
@@ -200,21 +205,35 @@ void SaveRooDataSet(std::string path, std::string filename, Year myYear, Polarit
   // Merge data set containing variables with that containing categories
   inputDataSet.merge(&extraDataSet);
 
-  std::string dsFileName(year+"_"+polarity+"_"+bachelor+"_"+neutral+"_"+daughter+"_"+charge+".root");
-  std::out << "Saving data set to file: " << dsPath+dsFileName << "\n";
-  TFile dsFile( dsPath.c_str()+dsFileName.c_str(), "RECREATE");
-  inputDataSet.write( dsPath.c_str()+dsFileName.c_str() );
+  RooDataSet* plusDataSet = dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::plus"));
+
+ 
+  std::string dsPlusFileName(year + "_" + polarity + "_" + bachelor + "_" +
+                         neutral + "_" + daughter + "_plus.root");
+  std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
+  TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
+  plusDataSet->Write();
+  dsPlusFile.Close();
+
+  RooDataSet* minusDataSet = dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::minus"));
+ 
+  std::string dsMinusFileName(year + "_" + polarity + "_" + bachelor + "_" +
+                         neutral + "_" + daughter + "_minus.root");
+  std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
+  TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
+  minusDataSet->Write();
+  dsMinusFile.Close();
 
 
+}
 
 int main(int argc, char **argv) {
   std::string myPath = argv[1];
-  std::string myFile = argv[2];
-  std::string yearInput = argv[3];
-  std::string polarityInput = argv[4];
-  std::string bachelorInput = argv[5];
-  std::string neutralInput = argv[6];
-  std::string daughterInput = argv[7];
+  std::string yearInput = argv[2];
+  std::string polarityInput = argv[3];
+  std::string bachelorInput = argv[4];
+  std::string neutralInput = argv[5];
+  std::string daughterInput = argv[6];
 
   Polarity myPolarity;
   Daughter myDaughter;
@@ -228,37 +247,37 @@ int main(int argc, char **argv) {
     myPolarity = Polarity::down;
   }
 
-  if(daughterInput == "kpi") {
+  if (daughterInput == "kpi") {
     myDaughter = Daughter::kpi;
-  } else if(daughterInput == "kk") {
+  } else if (daughterInput == "kk") {
     myDaughter = Daughter::kk;
-  } else if(daughterInput == "pipi") {
+  } else if (daughterInput == "pipi") {
     myDaughter = Daughter::pipi;
-  } else if(daughterInput == "pik") {
+  } else if (daughterInput == "pik") {
     myDaughter = Daughter::pik;
   }
 
-  if(bachelorInput == "pi") {
+  if (bachelorInput == "pi") {
     myBachelor = Bachelor::pi;
-  } else if(bachelorInput == "k") {
+  } else if (bachelorInput == "k") {
     myBachelor = Bachelor::k;
   }
-    
-  if(yearInput == "2011"){
+
+  if (yearInput == "2011") {
     myYear = Year::y2011;
-  } else if(yearInput == "2012"){
+  } else if (yearInput == "2012") {
     myYear = Year::y2012;
-  } else if(yearInput == "2015"){
+  } else if (yearInput == "2015") {
     myYear = Year::y2015;
   }
-    
-  if(neutralInput == "pi0") {
+
+  if (neutralInput == "pi0") {
     myNeutral = Neutral::pi0;
-  } else if(neutralInput == "gamma") {
+  } else if (neutralInput == "gamma") {
     myNeutral = Neutral::gamma;
   }
-  
-  SaveRooDataSet(myPath, myFile, myYear, myPolarity, myBachelor, myNeutral, myDaughter);
+
+  SaveRooDataSet(myPath, myYear, myPolarity, myBachelor, myNeutral, myDaughter);
   return 0;
 }
 
