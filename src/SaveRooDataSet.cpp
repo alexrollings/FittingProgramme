@@ -10,14 +10,15 @@
 #include "TFile.h"
 #include "TTree.h"
 
-#include "Definitions.h"
+#include "Configuration.h"
 
-using namespace RooFit;
 std::string dsPath("~/ButoDst0X_FIT/roodatasets/");
 
 void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
                     Bachelor myBachelor, Neutral myNeutral,
                     Daughter myDaughter) {
+
+  // using namespace RooFit;
 
   // StaticVars::polarityCat() is a function returning a const reference to
   // polarityCat_ stored in StaticVars
@@ -34,13 +35,6 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   // copies the object from its initial memory location to a new one
   // This ensures the original object still exists when the new one goes out of
   // scope (as the destructor would then be called)
-
-  RooCategory yearCat(StaticVars::yearCat());
-  RooCategory polarityCat(StaticVars::polarityCat());
-  RooCategory bachelorCat(StaticVars::bachelorCat());
-  RooCategory neutralCat(StaticVars::neutralCat());
-  RooCategory daughterCat(StaticVars::daughterCat());
-  RooCategory chargeCat(StaticVars::chargeCat());
 
   // Declare strings to hold category options
   std::string year;
@@ -80,12 +74,6 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     ttree = "BtoDstar0h3_h1h2gammaTuple";
   }
 
-  // Initialise RooRealVars now neutral has been specified
-  
-  RooRealVar mBu = mBuInitialiser(neutral);
-  RooRealVar idBu = idBuInitialiser(neutral);
-
-
   if (myDaughter == Daughter::kpi) {
     daughter = "kpi";
   } else if (myDaughter == Daughter::kk) {
@@ -96,19 +84,22 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     daughter = "pik";
   }
 
+  // Initialise RooRealVars now neutral has been specified
+  Configuration config(neutral);
 
   // Create separate RooArgSets for variables and categories
   RooArgSet varArgSet;
-  varArgSet.add(mBu);
-  varArgSet.add(idBu);
+  varArgSet.add(config.buMass());
+  varArgSet.add(config.buPdgId());
 
+  Categories categories; // Initialize categories
   RooArgSet catArgSet;
-  catArgSet.add(polarityCat);
-  catArgSet.add(chargeCat);
-  catArgSet.add(daughterCat);
-  catArgSet.add(bachelorCat);
-  catArgSet.add(yearCat);
-  catArgSet.add(neutralCat);
+  catArgSet.add(categories.polarity);
+  catArgSet.add(categories.charge);
+  catArgSet.add(categories.daughter);
+  catArgSet.add(categories.bachelor);
+  catArgSet.add(categories.year);
+  catArgSet.add(categories.neutral);
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
@@ -152,7 +143,8 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     // TString has an automatic converter to const char* array. String doesn't.
     // RooAbsArg::find() finds object with name in list. Null pointer returned
     // if the name isn't found
-    RooRealVar *idBuPtr = dynamic_cast<RooRealVar *>(row->find(idBu.GetName()));
+    RooRealVar *idBuPtr =
+        dynamic_cast<RooRealVar *>(row->find(config.buPdgId().GetName()));
     if (idBuPtr == nullptr) {
       std::stringstream output;
       output << "No value for ID[Bu] for event " << i << ".";
@@ -166,12 +158,12 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     };
 
     // SetRooCategory labels for each event
-    yearCat.setLabel(year.c_str());
-    polarityCat.setLabel(polarity.c_str());
-    bachelorCat.setLabel(bachelor.c_str());
-    neutralCat.setLabel(neutral.c_str());
-    daughterCat.setLabel(daughter.c_str());
-    chargeCat.setLabel(charge.c_str());
+    categories.year.setLabel(year.c_str());
+    categories.polarity.setLabel(polarity.c_str());
+    categories.bachelor.setLabel(bachelor.c_str());
+    categories.neutral.setLabel(neutral.c_str());
+    categories.daughter.setLabel(daughter.c_str());
+    categories.charge.setLabel(charge.c_str());
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
@@ -184,20 +176,21 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   // Merge data set containing variables with that containing categories
   inputDataSet.merge(&extraDataSet);
 
-  RooDataSet* plusDataSet = dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::plus"));
+  RooDataSet *plusDataSet = dynamic_cast<RooDataSet *>(
+      inputDataSet.reduce("chargeCat==chargeCat::plus"));
 
- 
   std::string dsPlusFileName(year + "_" + polarity + "_" + bachelor + "_" +
-                         neutral + "_" + daughter + "_plus.root");
+                             neutral + "_" + daughter + "_plus.root");
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
   TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
   plusDataSet->Write();
   dsPlusFile.Close();
 
-  RooDataSet* minusDataSet = dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::minus"));
- 
+  RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
+      inputDataSet.reduce("chargeCat==chargeCat::minus"));
+
   std::string dsMinusFileName(year + "_" + polarity + "_" + bachelor + "_" +
-                         neutral + "_" + daughter + "_minus.root");
+                              neutral + "_" + daughter + "_minus.root");
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
   TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
   minusDataSet->Write();
