@@ -1,11 +1,39 @@
 #pragma once
+
 #include "RooCategory.h"
+#include "RooRealVar.h"
+
+#include <string>
 
 enum class Polarity { up, down, both };
 enum class Daughter { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
+
+// Initialise any units needed
+// Array of chars. Pass to RooRealVar without '.c_str()'
+// not *kMassUnit[] ??????
+constexpr const char *kMassUnit = "Mev/c^2";
+constexpr const char *kMomentumUnit = "Mev/c";
+constexpr const char *kNoUnit = "";
+
+constexpr const char *kLabelBuMass = "Bu Mass DTF Constrained";
+constexpr const char *kLabelBuID = "Bu PDG ID";
+
+// constexpr guarantees initialisation at compile time
+// Initialise upper and lower values for RooRealVars
+constexpr double kLowBuMass = 4979.;
+constexpr double kHighBuMass = 5701.;
+constexpr double kLowBuID = -550.;
+constexpr double kHighBuID = 550.;
+
+// Error says I have multiple definitions when I try to declare it here?
+// RooRealVar mBu;
+// RooRealVar idBu;
+
+RooRealVar mBuInitialiser(std::string neutral);
+RooRealVar idBuInitialiser(std::string neutral);
 
 //Singleton = class that can only be instantiated once.
 //Make the constructor and destructor private.
@@ -31,6 +59,16 @@ public:
   static RooCategory const& yearCat() {
     return StaticVars::Get().yearCat_;
   }
+  // static RooRealVar const& mBu() {
+  //   return StaticVars::Get().mBu_;
+  // }
+  // static RooRealVar const& idBu() {
+  //   return StaticVars::Get().idBu_;
+  // }
+
+  // RooRealVar mBuInitialiser(std::string neutral);
+  // RooRealVar idBuInitialiser(std::string neutral);
+
   //Have the function return a const reference to the variable, e.g. category.
   //Need one function for every variable.
   //Get a reference to the variable we have instantiated but we only get the constant reference to the variable therefore we cannot change them.
@@ -53,6 +91,9 @@ private:
   RooCategory bachelorCat_;
   RooCategory neutralCat_;
   RooCategory yearCat_;
+
+  // RooRealVar mBu_;
+  // RooRealVar idBu_;
 };
 
 

@@ -80,6 +80,12 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     ttree = "BtoDstar0h3_h1h2gammaTuple";
   }
 
+  // Initialise RooRealVars now neutral has been specified
+  
+  RooRealVar mBu = mBuInitialiser(neutral);
+  RooRealVar idBu = idBuInitialiser(neutral);
+
+
   if (myDaughter == Daughter::kpi) {
     daughter = "kpi";
   } else if (myDaughter == Daughter::kk) {
@@ -90,33 +96,6 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     daughter = "pik";
   }
 
-  // Initialise all variable names in nTuples
-  std::string nameBuMass;
-  std::string nameBuID;
-
-  if (neutral == "pi0") {
-    nameBuMass = "Pi0_Bu_M_DTF_D0Pi0";
-    nameBuID = "Pi0_Bu_ID";
-  } else if (neutral == "gamma") {
-    nameBuMass = "Gamma_Bu_M_DTF_D0";
-    nameBuID = "Gamma_Bu_ID";
-  }
-
-  // Initialise any units needed
-  std::string massUnit("Mev/c^2");
-  std::string momentumUnit("Mev/c");
-
-  // Initialise all upper and lower limits of variables
-  const double kLowBuMass = 4979.;
-  const double kHighBuMass = 5701.;
-  const double kLowBuID = -550.;
-  const double kHighBuID = 550.;
-
-  // Create RooRealVars: any variables we are interested in (different for pi0
-  // and gamma mode)
-  RooRealVar mBu(nameBuMass.c_str(), "Bu Mass DTF Constrained", kLowBuMass,
-                 kHighBuMass, massUnit.c_str());
-  RooRealVar idBu(nameBuID.c_str(), "Bu PDG ID", kLowBuID, kHighBuID, "");
 
   // Create separate RooArgSets for variables and categories
   RooArgSet varArgSet;
