@@ -5,10 +5,10 @@
 #include <vector>
 #include <vector>
 
-#include "Definitions.h"
-#include "ParseArguments.h"
 #include "RooDataSet.h"
-#include "RooRealVar.h"
+
+#include "Configuration.h"
+#include "ParseArguments.h"
 
 // ExtractSubString() allows user to parse multiple options separated by commas.
 // Takes full options string as input and outputs a vector containing each
@@ -143,6 +143,7 @@ int main(int argc, char **argv) {
         return 1;
       }
 
+
       if (args("daughters", daughters)) {
         daughtersVec = ExtractSubString(daughters);
         for (unsigned int i = 0; i < daughtersVec.size(); i++) {
@@ -179,8 +180,7 @@ int main(int argc, char **argv) {
   }
 
   RooDataSet *dataset = NULL;
-  RooRealVar mBu = mBuInitialiser(neutral);
-  RooRealVar idBu = idBuInitialiser(neutral);
+  Configuration config(neutral == "pi0" ? Neutral::pi0 : Neutral::gamma);
 
   for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
     for (unsigned int pCounter = 0; pCounter < polarityVec.size(); pCounter++) {
@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
               return 1;
             } else {
               std::cout << dsFile.str() << " exists.\n";
-              dataset = RooDataSet::read(dsFile.str().c_str(), mBu);
+              // dataset = RooDataSet::read(dsFile.str().c_str(), config.buMass());
               std::cout << "RooDataSet extracted\n";
               // NEED TO DEFINE mBu PROPERLY
             }

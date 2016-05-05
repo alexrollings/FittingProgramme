@@ -85,7 +85,7 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   }
 
   // Initialise RooRealVars now neutral has been specified
-  Configuration config(neutral);
+  Configuration config(myNeutral);
 
   // Create separate RooArgSets for variables and categories
   RooArgSet varArgSet;

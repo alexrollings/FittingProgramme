@@ -1,6 +1,7 @@
 #include "Configuration.h"
 
-Configuration::Configuration(Neutral neutral) {
+Configuration::Configuration(Neutral neutral)
+    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
 
   constexpr const char *kMassUnit = "Mev/c^2";
   constexpr const char *kMomentumUnit = "Mev/c";
@@ -15,9 +16,17 @@ Configuration::Configuration(Neutral neutral) {
     buPdgIdVar = "Gamma_Bu_ID";
   }
 
-  buMass_ =
-      RooRealVar(buMassVar, "Bu Mass DTF Constrained", 4979, 5701, kMassUnit);
-  buPdgId_ = RooRealVar(buPdgIdVar, "Bu PDG ID", -550, 550, kNoUnit);
+  buMass_.SetName(buMassVar.c_str());
+  buMass_.SetTitle("Bu Mass DTF Constrained");
+  buMass_.setMin(4979);
+  buMass_.setMax(5701);
+  buMass_.setUnit(kMassUnit);
+
+  buPdgId_.SetName(buPdgIdVar.c_str());
+  buPdgId_.SetTitle("Bu PDG ID");
+  buPdgId_.setMin(-550);
+  buPdgId_.setMax(550);
+  buPdgId_.setUnit(kNoUnit);
 }
 
 Categories::Categories()

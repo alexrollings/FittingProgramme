@@ -1,4 +1,5 @@
 #pragma once
+#include <RooCategory.h>
 #include <RooRealVar.h>
 #include <string>
 
@@ -9,12 +10,13 @@ enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 
 class Configuration {
-  std::string const &buMass() const { return buMass_; }
-  std::string const &buPdgId() const { return buPdgId_; }
+public:
+  RooRealVar const &buMass() const { return buMass_; }
+  RooRealVar const &buPdgId() const { return buPdgId_; }
   Configuration(Neutral neutral);
 private:
-  std::string buMass_{};
-  std::string buPdgId_{};  
+  RooRealVar buMass_;
+  RooRealVar buPdgId_;  
 };
 
 struct Categories {
