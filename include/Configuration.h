@@ -8,6 +8,7 @@ enum class Daughter { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
+enum class Charge { plus, minus };
 
 class Configuration {
 public:
@@ -28,3 +29,16 @@ struct Categories {
   RooCategory year;
   Categories();
 };
+
+template <typename Enum>
+Enum StringToEnum(std::string const &);
+
+std::string EnumToString(Polarity);
+std::string EnumToString(Daughter);
+std::string EnumToString(Bachelor);
+std::string EnumToString(Year);
+std::string EnumToString(Neutral);
+std::string EnumToString(Charge);
+
+std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
+                            Neutral neutral, Daughter daughter, Charge charge);

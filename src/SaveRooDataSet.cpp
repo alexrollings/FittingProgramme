@@ -6,6 +6,8 @@
 #include "RooCategory.h"
 #include "RooDataSet.h"
 #include "RooRealVar.h"
+#include "RooFormulaVar.h"
+#include "RooFormula.h"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -46,43 +48,20 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   std::string ttree;
 
   // Set fileName and RooCategory options
-  if (myYear == Year::y2011) {
-    year = "2011";
-  } else if (myYear == Year::y2012) {
-    year = "2012";
-  } else if (myYear == Year::y2015) {
-    year = "2015";
-  }
+  year = EnumToString(myYear);
 
-  if (myPolarity == Polarity::up) {
-    polarity = "up";
-  } else if (myPolarity == Polarity::down) {
-    polarity = "down";
-  }
+  polarity = EnumToString(myPolarity);
 
-  if (myBachelor == Bachelor::pi) {
-    bachelor = "pi";
-  } else if (myBachelor == Bachelor::k) {
-    bachelor = "k";
-  }
+  bachelor = EnumToString(myBachelor);
 
+  neutral = EnumToString(myNeutral);
   if (myNeutral == Neutral::pi0) {
-    neutral = "pi0";
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
   } else if (myNeutral == Neutral::gamma) {
-    neutral = "gamma";
     ttree = "BtoDstar0h3_h1h2gammaTuple";
   }
 
-  if (myDaughter == Daughter::kpi) {
-    daughter = "kpi";
-  } else if (myDaughter == Daughter::kk) {
-    daughter = "kk";
-  } else if (myDaughter == Daughter::pipi) {
-    daughter = "pipi";
-  } else if (myDaughter == Daughter::pik) {
-    daughter = "pik";
-  }
+  daughter = EnumToString(myDaughter);
 
   // Initialise RooRealVars now neutral has been specified
   Configuration config(myNeutral);
@@ -177,20 +156,24 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   inputDataSet.merge(&extraDataSet);
 
   RooDataSet *plusDataSet = dynamic_cast<RooDataSet *>(
-      inputDataSet.reduce("chargeCat==chargeCat::plus"));
+      inputDataSet.reduce("charge==charge::plus"));
 
-  std::string dsPlusFileName(year + "_" + polarity + "_" + bachelor + "_" +
-                             neutral + "_" + daughter + "_plus.root");
+  std::string dsPlusFileName =
+      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
+                      Charge::plus) +
+      ".txt";
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
   TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
   plusDataSet->Write();
   dsPlusFile.Close();
 
   RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
-      inputDataSet.reduce("chargeCat==chargeCat::minus"));
-
-  std::string dsMinusFileName(year + "_" + polarity + "_" + bachelor + "_" +
-                              neutral + "_" + daughter + "_minus.root");
+      inputDataSet.reduce("charge==charge::minus"));
+  //  Charge in the formula it corresponds to the string we have in the constructor of Categories as RooFit only knows the strings you've given it
+  std::string dsMinusFileName =
+      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
+                      Charge::minus) +
+      ".txt";
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
   TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
   minusDataSet->Write();
@@ -200,56 +183,15 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
 }
 
 int main(int argc, char **argv) {
-  std::string myPath = argv[1];
-  std::string yearInput = argv[2];
-  std::string polarityInput = argv[3];
-  std::string bachelorInput = argv[4];
-  std::string neutralInput = argv[5];
-  std::string daughterInput = argv[6];
 
-  Polarity myPolarity;
-  Daughter myDaughter;
-  Bachelor myBachelor;
-  Year myYear;
-  Neutral myNeutral;
+  std::string path = argv[1];
+  Year year = StringToEnum<Year>(argv[2]);
+  Polarity polarity = StringToEnum<Polarity>(argv[3]);
+  Bachelor bachelor = StringToEnum<Bachelor>(argv[4]);
+  Neutral neutral = StringToEnum<Neutral>(argv[5]);
+  Daughter daughter = StringToEnum<Daughter>(argv[6]);
 
-  if (polarityInput == "up") {
-    myPolarity = Polarity::up;
-  } else if (polarityInput == "down") {
-    myPolarity = Polarity::down;
-  }
-
-  if (daughterInput == "kpi") {
-    myDaughter = Daughter::kpi;
-  } else if (daughterInput == "kk") {
-    myDaughter = Daughter::kk;
-  } else if (daughterInput == "pipi") {
-    myDaughter = Daughter::pipi;
-  } else if (daughterInput == "pik") {
-    myDaughter = Daughter::pik;
-  }
-
-  if (bachelorInput == "pi") {
-    myBachelor = Bachelor::pi;
-  } else if (bachelorInput == "k") {
-    myBachelor = Bachelor::k;
-  }
-
-  if (yearInput == "2011") {
-    myYear = Year::y2011;
-  } else if (yearInput == "2012") {
-    myYear = Year::y2012;
-  } else if (yearInput == "2015") {
-    myYear = Year::y2015;
-  }
-
-  if (neutralInput == "pi0") {
-    myNeutral = Neutral::pi0;
-  } else if (neutralInput == "gamma") {
-    myNeutral = Neutral::gamma;
-  }
-
-  SaveRooDataSet(myPath, myYear, myPolarity, myBachelor, myNeutral, myDaughter);
+  SaveRooDataSet(path, year, polarity, bachelor, neutral, daughter);
   return 0;
 }
 
