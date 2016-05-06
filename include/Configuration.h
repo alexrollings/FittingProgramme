@@ -14,6 +14,10 @@ public:
   RooRealVar const &buMass() const { return buMass_; }
   RooRealVar const &buPdgId() const { return buPdgId_; }
   Configuration(Neutral neutral);
+  Configuration(Configuration const&) = delete;
+  Configuration(Configuration &&) = delete;
+  Configuration& operator=(Configuration const&) = delete;
+  Configuration& operator=(Configuration &&) = delete;
 private:
   RooRealVar buMass_;
   RooRealVar buPdgId_;  
@@ -27,4 +31,8 @@ struct Categories {
   RooCategory neutral;
   RooCategory year;
   Categories();
+  Categories(Categories const &) = delete;
+  Categories(Categories &&) = delete;
+  Categories& operator=(Categories const&) = delete;
+  Categories& operator=(Categories &&) = delete;
 };
