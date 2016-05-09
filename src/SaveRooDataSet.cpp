@@ -14,7 +14,7 @@
 
 #include "Configuration.h"
 
-std::string dsPath("~/ButoDst0X_FIT/roodatasets/");
+std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
 
 void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
                     Bachelor myBachelor, Neutral myNeutral,
@@ -161,10 +161,10 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   std::string dsPlusFileName =
       ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
                       Charge::plus) +
-      ".txt";
+      ".root";
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
   TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
-  plusDataSet->Write();
+  plusDataSet->Write("inputDataSet");
   dsPlusFile.Close();
 
   RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
@@ -173,10 +173,10 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   std::string dsMinusFileName =
       ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
                       Charge::minus) +
-      ".txt";
+      ".root";
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
   TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
-  minusDataSet->Write();
+  minusDataSet->Write("inputDataSet");
   dsMinusFile.Close();
 
 

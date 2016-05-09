@@ -3,7 +3,7 @@
 #include <RooRealVar.h>
 #include <string>
 
-enum class Polarity { up, down, both };
+enum class Polarity { up, down };
 enum class Daughter { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015 };

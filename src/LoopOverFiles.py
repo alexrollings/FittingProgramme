@@ -54,7 +54,7 @@ def pass_filename(filename):
       sys.exit("D0 Daughters must be: kpi, kk, pipi or pik")
 
     # print(filename, year, polarity, bachelor, neutral, daughters)
-    subprocess.call(["./SaveRooDataSet", filename, year, polarity, bachelor, neutral, daughters])
+    subprocess.call(["../build/./SaveRooDataSet", filename, year, polarity, bachelor, neutral, daughters])
 
 if os.path.isdir(sys.argv[1]):
   for filename in os.listdir(sys.argv[1]):

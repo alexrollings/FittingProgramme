@@ -36,37 +36,37 @@ Categories::Categories()
 
   polarity.defineType(EnumToString(Polarity::up).c_str());
   polarity.defineType(EnumToString(Polarity::down).c_str());
-  polarity.defineType(EnumToString(Polarity::both).c_str());
 
-  charge.defineType("minus");
-  charge.defineType("plus");
+  charge.defineType(EnumToString(Charge::plus).c_str());
+  charge.defineType(EnumToString(Charge::minus).c_str());
 
-  daughter.defineType("kpi");
-  daughter.defineType("kk");
-  daughter.defineType("pipi");
-  daughter.defineType("pik");
+  daughter.defineType(EnumToString(Daughter::kpi).c_str());
+  daughter.defineType(EnumToString(Daughter::kk).c_str());
+  daughter.defineType(EnumToString(Daughter::pipi).c_str());
+  daughter.defineType(EnumToString(Daughter::pik).c_str());
 
-  bachelor.defineType("pi");
-  bachelor.defineType("k");
+  bachelor.defineType(EnumToString(Bachelor::pi).c_str());
+  bachelor.defineType(EnumToString(Bachelor::k).c_str());
 
-  year.defineType("2011");
-  year.defineType("2012");
-  year.defineType("2015");
+  year.defineType(EnumToString(Year::y2011).c_str());
+  year.defineType(EnumToString(Year::y2012).c_str());
+  year.defineType(EnumToString(Year::y2015).c_str());
 
-  neutral.defineType("pi0");
-  neutral.defineType("gamma");
+  neutral.defineType(EnumToString(Neutral::pi0).c_str());
+  neutral.defineType(EnumToString(Neutral::gamma).c_str());
 }
 
+//Need a template for this as each enum option is a different 'type'
 template <>
 Polarity StringToEnum<Polarity>(std::string const &polarity) {
   if (polarity == "up") {
     return Polarity::up;
   } else if (polarity == "down") {
     return Polarity::down;
-  } else if (polarity == "both") {
-    return Polarity::both;
-  }
-  throw std::invalid_argument("Polarity must take a value in [up/down/both]");
+  // } else if (polarity == "both") {
+  //   return Polarity::both;
+   }
+  throw std::invalid_argument("Polarity must take a value in [up/down]");
 }
 
 std::string EnumToString(Polarity polarity) {
@@ -75,9 +75,9 @@ std::string EnumToString(Polarity polarity) {
       return "up";
     case Polarity::down:
       return "down";
-    case Polarity::both:
-    default:
-      return "both";
+    // case Polarity::both:
+    // default:
+    //   return "both";
   }
 }
 
@@ -105,7 +105,7 @@ std::string EnumToString(Daughter daughter) {
     case Daughter::pipi:
       return "pipi";
     case Daughter::pik:
-    default:
+    // default:
       return "pik";
   }
 }
@@ -125,7 +125,7 @@ std::string EnumToString(Bachelor bachelor) {
     case Bachelor::pi:
       return "pi";
     case Bachelor::k:
-    default:
+    // default:
       return "k";
   }
 }
@@ -149,7 +149,7 @@ std::string EnumToString(Year year) {
     case Year::y2012:
       return "2012";
     case Year::y2015:
-    default:
+    // default:
       return "2015";
   }
 }
@@ -169,7 +169,7 @@ std::string EnumToString(Neutral neutral) {
     case Neutral::pi0:
       return "pi0";
     case Neutral::gamma:
-    default:
+    // default:
       return "gamma";
   }
 }
@@ -189,7 +189,7 @@ std::string EnumToString(Charge charge) {
     case Charge::plus:
       return "plus";
     case Charge::minus:
-    default:
+    // default:
       return "minus";
   }
 }
