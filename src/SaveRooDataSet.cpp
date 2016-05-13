@@ -64,21 +64,8 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   daughter = EnumToString(myDaughter);
 
   // Initialise RooRealVars now neutral has been specified
+  Categories categories;
   Configuration config(myNeutral);
-
-  // Create separate RooArgSets for variables and categories
-  RooArgSet varArgSet;
-  varArgSet.add(config.buMass());
-  varArgSet.add(config.buPdgId());
-
-  Categories categories; // Initialize categories
-  RooArgSet catArgSet;
-  catArgSet.add(categories.polarity);
-  catArgSet.add(categories.charge);
-  catArgSet.add(categories.daughter);
-  catArgSet.add(categories.bachelor);
-  catArgSet.add(categories.year);
-  catArgSet.add(categories.neutral);
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
@@ -107,12 +94,28 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
   }
 
   std::cout << "Loading tree " << ttree << " from file " << path << "\n";
+  
+  RooArgSet variableArgSet;
+  variableArgSet.add(config.buMass());
+  variableArgSet.add(config.buPdgId());
+    
+  RooArgSet categoryArgSet;
+  categoryArgSet.add(categories.polarity);
+  categoryArgSet.add(categories.charge);
+  categoryArgSet.add(categories.daughter);
+  categoryArgSet.add(categories.bachelor);
+  categoryArgSet.add(categories.year);
+  categoryArgSet.add(categories.neutral);
 
+  std::cout << "made it" << std::endl;
   // Create data set for our ttree variables
-  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, varArgSet);
+  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, variableArgSet);
 
+  std::cout << "made it again" << std::endl;
   // Create data set to store categories
-  RooDataSet extraDataSet("extraDataSet", "Category Data Set", catArgSet);
+  RooDataSet extraDataSet("extraDataSet", "Category Data Set", categoryArgSet);
+
+  std::cout << "Finished loading tree.\n";
 
   // Loop over data set, find RooCategory for each event and set it's label
   for (int i = 0; i < inputDataSet.numEntries(); i++) {
@@ -136,22 +139,22 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
       charge = "plus";
     };
 
-    // SetRooCategory labels for each event
+    // Adding the categories to RooArgSet added a pointer to the value's memory
+    // address. Therefore changing their values changes changes what is stored
+    // in catArgSet.
     categories.year.setLabel(year.c_str());
     categories.polarity.setLabel(polarity.c_str());
     categories.bachelor.setLabel(bachelor.c_str());
     categories.neutral.setLabel(neutral.c_str());
     categories.daughter.setLabel(daughter.c_str());
     categories.charge.setLabel(charge.c_str());
-    // Adding the categories to RooArgSet added a pointer to the value's memory
-    // address. Therefore changing their values changes changes what is stored
-    // in catArgSet.
 
     // Add category labels to 'extra' data set
-    extraDataSet.add(catArgSet);
+    extraDataSet.add(categoryArgSet);
     // Add here copies the values from rooArgSet
   }
 
+  std::cout << "exited loop" << std::endl;
   // Merge data set containing variables with that containing categories
   inputDataSet.merge(&extraDataSet);
 

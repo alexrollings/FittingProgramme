@@ -10,16 +10,6 @@ enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
 
-class Configuration {
-public:
-  RooRealVar const &buMass() const { return buMass_; }
-  RooRealVar const &buPdgId() const { return buPdgId_; }
-  Configuration(Neutral neutral);
-private:
-  RooRealVar buMass_;
-  RooRealVar buPdgId_;  
-};
-
 struct Categories {
   RooCategory polarity;
   RooCategory charge;
@@ -28,6 +18,22 @@ struct Categories {
   RooCategory neutral;
   RooCategory year;
   Categories();
+};
+
+class Configuration {
+public:
+  RooRealVar &buMass() { return buMass_; }
+  RooRealVar &buPdgId() { return buPdgId_; }
+  RooArgSet &variableArgSet() { return variableArgSet_; }
+  RooArgSet &categoryArgSet() { return categoryArgSet_; }
+  RooArgSet &fullArgSet() { return fullArgSet_; }
+  Configuration(Neutral neutral);
+private:
+  RooRealVar buMass_;
+  RooRealVar buPdgId_;  
+  RooArgSet variableArgSet_;
+  RooArgSet categoryArgSet_;
+  RooArgSet fullArgSet_;
 };
 
 template <typename Enum>

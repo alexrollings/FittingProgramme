@@ -27,6 +27,20 @@ Configuration::Configuration(Neutral neutral)
   buPdgId_.setMax(550);
   buPdgId_.setMin(-550);
   buPdgId_.setUnit(kNoUnit);
+
+  variableArgSet_.add(buMass_);
+  variableArgSet_.add(buPdgId_);
+    
+  Categories categories;
+  categoryArgSet_.add(categories.polarity);
+  categoryArgSet_.add(categories.charge);
+  categoryArgSet_.add(categories.daughter);
+  categoryArgSet_.add(categories.bachelor);
+  categoryArgSet_.add(categories.year);
+  categoryArgSet_.add(categories.neutral);
+
+  fullArgSet_.add(variableArgSet_);
+  fullArgSet_.add(categoryArgSet_);
 }
 
 Categories::Categories()

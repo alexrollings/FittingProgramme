@@ -53,10 +53,9 @@ int main(int argc, char **argv) {
   std::vector<Daughter> daughtersVec;
   std::vector<Charge> chargeVec;
 
+  Categories categories;                     // Initialize categories
   Configuration config(neutral); // Initialise RooRealVars
-  Categories categories;         // Initialize categories
 
-  // ADD ARGSET TO CONFIGURATIONS.h/.cpp
   RooArgSet fullArgSet;
   fullArgSet.add(config.buMass());
   fullArgSet.add(config.buPdgId());
@@ -66,8 +65,6 @@ int main(int argc, char **argv) {
   fullArgSet.add(categories.bachelor);
   fullArgSet.add(categories.year);
   fullArgSet.add(categories.neutral);
-
-  // fullDataSet to add all data sets we want into
   RooDataSet fullDataSet("dataset", "dataset", fullArgSet);
 
   // By letting the ParseArguments object go out of scope it will print a
@@ -78,11 +75,14 @@ int main(int argc, char **argv) {
 
     std::string yearArg("2011,2012,2015");
     std::string polarityArg("up,down");
-    std::string bachelorArg;
+    std::string bachelorArg("pi,k");
     std::string neutralArg;
-    std::string daughtersArg("kpi");
+    std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("plus,minus");
 
+    //We always want to simultaneously fir the pi AND k bachelor modes together
+    bachelorVec = ExtractEnumList<Bachelor>(bachelorArg);
+    
     if (args("help")) {
 
       std::cout << " ----------------------------------------------------------"
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
                 << "\n";
       std::cout << "    -polarity choice {up,down} default: " << polarityArg
                 << "\n";
-      std::cout << "    -bachelor choice {k,pi} must be specified.\n";
+      // std::cout << "    -bachelor choice {k,pi} default: " << bachelorArg << "\n";
       std::cout << "    -neutral choice {pi0,gamma} must be specified.\n";
       std::cout << "    -daughters choice {kpi,kk,pipi,pik} default: "
                 << daughtersArg << "\n";
@@ -132,18 +132,18 @@ int main(int argc, char **argv) {
         return 1;
       }
 
-      // Bachelor
-      if (!args("bachelor", bachelorArg)) {
-        std::cerr << "Missing mandatory argument: -bachelor\n";
-        return 1;
-      }
-      try {
-        bachelorVec = ExtractEnumList<Bachelor>(bachelorArg);
-      } catch (std::invalid_argument) {
-        std::cerr << "bachelor assignment failed, please specify: "
-                     "-bachelor=[pi,k].\n";
-        return 1;
-      }
+      // // Bachelor
+      // if (!args("bachelor", bachelorArg)) {
+      //   std::cerr << "Missing mandatory argument: -bachelor\n";
+      //   return 1;
+      // }
+      // try {
+      //   bachelorVec = ExtractEnumList<Bachelor>(bachelorArg);
+      // } catch (std::invalid_argument) {
+      //   std::cerr << "bachelor assignment failed, please specify: "
+      //                "-bachelor=[pi,k].\n";
+      //   return 1;
+      // }
 
       // Neutral
       if (!args("neutral", neutralArg)) {
@@ -223,93 +223,93 @@ int main(int argc, char **argv) {
     }
   }
 
-  // // Check categories are assigned correctly
-  // for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
-  //
-  //   RooArgSet const *row = fullDataSet.get(i);
-  //
-  //   std::cout << "For event " << i << ":";
-  //
-  //   RooRealVar *idBuPtr =
-  //       dynamic_cast<RooRealVar *>(row->find(config.buPdgId().GetName()));
-  //   if (idBuPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No value for ID[Bu] for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    Bu PDG ID = " << idBuPtr->getVal() << "\n";
-  //   }
-  //
-  //   RooRealVar *mBuPtr =
-  //       dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
-  //   if (mBuPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No value for m[Bu] for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    Bu mass = " << mBuPtr->getVal() << "\n";
-  //   }
-  //
-  //   RooCategory *yearPtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.year.GetName()));
-  //   if (yearPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to year for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    year = " << yearPtr->getLabel() << "\n";
-  //   }
-  //
-  //   RooCategory *polarityPtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.polarity.GetName()));
-  //   if (polarityPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to polarity for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    Polarity = " << polarityPtr->getLabel() << "\n";
-  //   }
-  //
-  //   RooCategory *bachelorPtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.bachelor.GetName()));
-  //   if (bachelorPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to bachelor for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    bachelor = " << bachelorPtr->getLabel() << "\n";
-  //   }
-  //
-  //   RooCategory *neutralPtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.neutral.GetName()));
-  //   if (neutralPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to neutral for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
-  //   }
-  //
-  //   RooCategory *daughterPtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.daughter.GetName()));
-  //   if (daughterPtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to daughter for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    daughter = " << daughterPtr->getLabel() << "\n";
-  //   }
-  //
-  //   RooCategory *chargePtr =
-  //       dynamic_cast<RooCategory *>(row->find(categories.charge.GetName()));
-  //   if (chargePtr == nullptr) {
-  //     std::stringstream output;
-  //     output << "No category assigned to charge for event " << i << ".";
-  //     throw std::runtime_error(output.str());
-  //   } else {
-  //     std::cout << "    charge = " << chargePtr->getLabel() << "\n";
-  //   }
-  // }
+  // Check categories are assigned correctly
+  for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
+
+    RooArgSet const *row = fullDataSet.get(i);
+
+    std::cout << "For event " << i << ":";
+
+    RooRealVar *idBuPtr =
+        dynamic_cast<RooRealVar *>(row->find(config.buPdgId().GetName()));
+    if (idBuPtr == nullptr) {
+      std::stringstream output;
+      output << "No value for ID[Bu] for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    Bu PDG ID = " << idBuPtr->getVal() << "\n";
+    }
+
+    RooRealVar *mBuPtr =
+        dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
+    if (mBuPtr == nullptr) {
+      std::stringstream output;
+      output << "No value for m[Bu] for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    Bu mass = " << mBuPtr->getVal() << "\n";
+    }
+
+    RooCategory *yearPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.year.GetName()));
+    if (yearPtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to year for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    year = " << yearPtr->getLabel() << "\n";
+    }
+
+    RooCategory *polarityPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.polarity.GetName()));
+    if (polarityPtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to polarity for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    Polarity = " << polarityPtr->getLabel() << "\n";
+    }
+
+    RooCategory *bachelorPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.bachelor.GetName()));
+    if (bachelorPtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to bachelor for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    bachelor = " << bachelorPtr->getLabel() << "\n";
+    }
+
+    RooCategory *neutralPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.neutral.GetName()));
+    if (neutralPtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to neutral for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
+    }
+
+    RooCategory *daughterPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.daughter.GetName()));
+    if (daughterPtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to daughter for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    daughter = " << daughterPtr->getLabel() << "\n";
+    }
+
+    RooCategory *chargePtr =
+        dynamic_cast<RooCategory *>(row->find(categories.charge.GetName()));
+    if (chargePtr == nullptr) {
+      std::stringstream output;
+      output << "No category assigned to charge for event " << i << ".";
+      throw std::runtime_error(output.str());
+    } else {
+      std::cout << "    charge = " << chargePtr->getLabel() << "\n";
+    }
+  }
 
   return 0;
 }
