@@ -22,7 +22,6 @@
 
 
 void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
-
   
   // Shape parameters that are constant across each decay mode
   // Bu2Dst0Hst
@@ -50,6 +49,22 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
   RooRealVar meanBd2DstH("meanBd2DstH", "Bd2DstH mean", 5277);  //, 5279, 5267);
   RooRealVar sigmaBd2DstH("sigmaBd2DstH", "Bd2DstH sigma", 66); //, 62, 70);
 
+  // Background pdfs common to both modes
+  RooGaussian bu2Dst0HstGaussian("bu2Dst0HstGaussian", "Bu2Dst0Hst gaussian",
+                                 varToFit, meanBu2Dst0Hst, sigmaBu2Dst0Hst);
+  RooGaussian crossFeedGaussian("crossFeedGaussian",
+                                "Neutral cross feed gaussian", varToFit,
+                                meanCrossFeed, sigmaCrossFeed);
+  RooGaussian bu2D0HGaussian("bu2D0HGaussian", "Bu2D0H gaussian", varToFit,
+                             meanBu2D0H, sigmaBu2D0H);
+  RooGaussian bu2D0HstGaussian("bu2D0HstGaussian", "Bu2D0Hst gaussian",
+                               varToFit, meanBu2D0Hst, sigmaBu2D0Hst);
+  RooGaussian bd2DstHGaussian("bd2DstHGaussian", "Bd2DstH gaussian", varToFit,
+                              meanBd2DstH, sigmaBd2DstH);
+  
+  
+  // --------------- pi mode ---------------------
+  
   RooRealVar buMassMean_pi("m[Bu]_Mean_bachelor=pi", "m[Bu] signal mean", 5279, 5275, 5285);
   RooRealVar buMassSigma_pi("m[Bu]_Sigma_bachelor=pi", "m[Bu] signal sigma", 18, 15, 23);
   RooRealVar lambdaCombinatorial_pi("lambda_Compinatorial_bachelor=pi", "Combinatorial lambda", 0, -0.1, 0.1);
@@ -58,27 +73,15 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
   RooGaussian signalGaussian_pi("Signal_Gaussian_bachelor=pi", "Signal gaussian pdf", varToFit, buMassMean_pi, buMassSigma_pi);
   RooExponential combinatorialExponential_pi("Combinatorial_Exponential_bachelor=pi", "Combinatorial exponential pdf", varToFit, lambdaCombinatorial_pi);
 
-  // Background pdfs common to both modes
-  RooGaussian bu2Dst0HstGaussian_pi("bu2Dst0HstGaussian_pi", "Bu2Dst0Hst gaussian",
-                                 varToFit, meanBu2Dst0Hst, sigmaBu2Dst0Hst);
-  RooGaussian crossFeedGaussian_pi("crossFeedGaussian_pi",
-                                "Neutral cross feed gaussian", varToFit,
-                                meanCrossFeed, sigmaCrossFeed);
-  RooGaussian bu2D0HGaussian_pi("bu2D0HGaussian_pi", "Bu2D0H gaussian", varToFit,
-                             meanBu2D0H, sigmaBu2D0H);
-  RooGaussian bu2D0HstGaussian_pi("bu2D0HstGaussian_pi", "Bu2D0Hst gaussian",
-                               varToFit, meanBu2D0Hst, sigmaBu2D0Hst);
-  RooGaussian bd2DstHGaussian_pi("bd2DstHGaussian_pi", "Bd2DstH gaussian", varToFit,
-                              meanBd2DstH, sigmaBd2DstH);
 
   RooArgList functions_pi;
   functions_pi.add(signalGaussian_pi);
   functions_pi.add(combinatorialExponential_pi);
-  functions_pi.add(bu2Dst0HstGaussian_pi);
-  functions_pi.add(crossFeedGaussian_pi);
-  functions_pi.add(bu2D0HGaussian_pi);
-  functions_pi.add(bu2D0HstGaussian_pi);
-  functions_pi.add(bd2DstHGaussian_pi);
+  functions_pi.add(bu2Dst0HstGaussian);
+  functions_pi.add(crossFeedGaussian);
+  functions_pi.add(bu2D0HGaussian);
+  functions_pi.add(bu2D0HstGaussian);
+  functions_pi.add(bd2DstHGaussian);
 
   RooRealVar signalYield_pi("signal_yield_bachelor=pi", "m[Bu] signal yield", 10000, 0, 20000);
   RooRealVar combinatorialYield_pi("combinatorial_yield_bachelor=pi", "m[Bu] combinatorial yield",1000, 0, 20000); 
@@ -98,7 +101,12 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
   yields_pi.add(bd2DstHYield_pi);
 
   RooAddPdf pdf_pi("pdf_pi", "pdf_pi", functions_pi, yields_pi);
-  
+ 
+
+  // --------------- k mode ---------------------
+
+
+
   RooRealVar buMassMean_k("m[Bu]_Mean_bachelor=k", "m[Bu] signal mean", 5279, 5275, 5285);
   RooRealVar buMassSigma_k("m[Bu]_Sigma_bachelor=k", "m[Bu] signal sigma", 18, 15, 23);
   RooRealVar lambdaCombinatorial_k("lambda_Compinatorial_bachelor=k", "Combinatorial lambda", 0, -0.1, 0.1);
@@ -106,27 +114,15 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
   RooGaussian signalGaussian_k("Signal_Gaussian_bachelor=k", "Signal gaussian pdf", varToFit, buMassMean_k, buMassSigma_k);
   RooExponential combinatorialExponential_k("Combinatorial_Exponential_bachelor=k", "Combinatorial exponential pdf", varToFit, lambdaCombinatorial_k); 
 
-  // Background pdfs common to both modes
-  RooGaussian bu2Dst0HstGaussian_k("bu2Dst0HstGaussian_k", "Bu2Dst0Hst gaussian",
-                                 varToFit, meanBu2Dst0Hst, sigmaBu2Dst0Hst);
-  RooGaussian crossFeedGaussian_k("crossFeedGaussian_k",
-                                "Neutral cross feed gaussian", varToFit,
-                                meanCrossFeed, sigmaCrossFeed);
-  RooGaussian bu2D0HGaussian_k("bu2D0HGaussian_k", "Bu2D0H gaussian", varToFit,
-                             meanBu2D0H, sigmaBu2D0H);
-  RooGaussian bu2D0HstGaussian_k("bu2D0HstGaussian_k", "Bu2D0Hst gaussian",
-                               varToFit, meanBu2D0Hst, sigmaBu2D0Hst);
-  RooGaussian bd2DstHGaussian_k("bd2DstHGaussian_k", "Bd2DstH gaussian", varToFit,
-                              meanBd2DstH, sigmaBd2DstH);
   
   RooArgList functions_k;
   functions_k.add(signalGaussian_k);
   functions_k.add(combinatorialExponential_k);
-  functions_k.add(bu2Dst0HstGaussian_k);
-  functions_k.add(crossFeedGaussian_k);
-  functions_k.add(bu2D0HGaussian_k);
-  functions_k.add(bu2D0HstGaussian_k);
-  functions_k.add(bd2DstHGaussian_k);
+  functions_k.add(bu2Dst0HstGaussian);
+  functions_k.add(crossFeedGaussian);
+  functions_k.add(bu2D0HGaussian);
+  functions_k.add(bu2D0HstGaussian);
+  functions_k.add(bd2DstHGaussian);
 
 
   RooRealVar signalYield_k("signal_yield_bachelor=k", "m[Bu] signal yield", 1000, 0, 2000); 
@@ -148,52 +144,74 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   RooAddPdf pdf_k("pdf_k", "pdf_k", functions_k, yields_k);
 
-  //DEFINE CATEGORIES
+
+  // --------------- define categories ---------------------
+
 
   RooCategory bachelor("bachelor", "bachelor");
   bachelor.defineType("pi");
   bachelor.defineType("k");
 
-  //CONSTRUCT COMBINED DATA SET
+  
+  // --------------- combine data sets ---------------------
+
 
   RooDataSet combinedDataSet(
       "combinedDataSet", "combinedDataSet", varToFit, RooFit::Index(bachelor),
       RooFit::Import("pi", piDataSet), RooFit::Import("k", kDataSet));
 
-  //CONSTRUCT SIM PDF
+
+  // --------------- simultaneous pdf ---------------------
+
 
   RooSimultaneous simPdf("simPdf", "simPdf", bachelor);
   simPdf.addPdf(pdf_pi, "pi");
   simPdf.addPdf(pdf_k, "k");
 
+
+  // --------------- fit  ---------------------
+  
+  
   simPdf.fitTo(combinedDataSet);
  
-  //FIT SIM PDF TO COMB DATA
-
-  // RooFitResult* myFR = simPdf.fitTo(combinedDataSet, Save());
-
-  //PLOT DECAY MODES ON SAME CANVAS
+  
+  // --------------- pi ---------------------
+  
+  
+  // --------------- create frame ---------------------
  
   RooPlot* frame_pi = varToFit.frame(RooFit::Title("Dst0pi_D0pi0_kpi"));
   
   combinedDataSet.plotOn(frame_pi,RooFit::Cut("bachelor==bachelor::pi"));
 
-  //Plot on components
+  // --------------- plot data and pdfs onto frame ---------------------
+  
   simPdf.plotOn(frame_pi,
                 RooFit::Slice(bachelor, "pi"),
                 RooFit::ProjWData(bachelor, combinedDataSet),
                 RooFit::LineColor(kBlue));
  
+
+
+  // --------------- k ---------------------
+  
+  
+  // --------------- create frame ---------------------
+
   RooPlot* frame_k = varToFit.frame(RooFit::Title("Dst0k_D0pi0_kpi"));
   
   combinedDataSet.plotOn(frame_k,RooFit::Cut("bachelor==bachelor::k"));
 
-  //Plot on components
+  
+  // --------------- plot data and pdfs onto frame ---------------------
   simPdf.plotOn(frame_k,
                 RooFit::Slice(bachelor, "k"),
                 RooFit::ProjWData(bachelor, combinedDataSet),
                 RooFit::LineColor(kBlue));
 
+ 
+  // --------------- plot onto canvas ---------------------
+  
   TCanvas canvas("simPdf", "simPdf", 1000, 1000);
 
   canvas.Divide(1,2);
@@ -210,8 +228,8 @@ int main(int argc, char **argv) {
 
   // We will actually just have 1 data set as input, then cut it down by
   // selecting certain categories in the fit. This is just as a toy example.
-  TString inputfile1("~/Desktop/FittingProgramme/src/2012_MagDown_ButDst0pi_Dst0tD0pi0_D0tkpi.root");
-  TString inputfile2("~/Desktop/FittingProgramme/src/2012_MagDown_ButDst0K_Dst0tD0pi0_D0tkpi.root");
+  TString inputfile1("/data/lhcb/users/rollings/ButoDst0X_DATA_NEW/2012_MagDown/RenamedTriggers/temp/2012_MagDown_ButDst0pi_Dst0tD0pi0_D0tkpi.root");
+  TString inputfile2("/data/lhcb/users/rollings/ButoDst0X_DATA_NEW/2012_MagDown/RenamedTriggers/temp/2012_MagDown_ButDst0K_Dst0tD0pi0_D0tkpi.root");
 
   TString ttree("BtoDstar0h3_h1h2pi0RTuple");
   TChain myChain1(ttree);
