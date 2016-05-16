@@ -23,9 +23,11 @@ set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.p
 #${variable} expands variable
 add_executable(Main src/Main.cpp ${FITTING_SRC})
 add_executable(SaveRooDataSet src/SaveRooDataSet.cpp ${FITTING_SRC})
+add_executable(Fitting src/Fitting.cpp ${FITTING_SRC})
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
 target_link_libraries(Main ${FITTING_LIBS})
 target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
+target_link_libraries(Fitting ${FITTING_LIBS})
 

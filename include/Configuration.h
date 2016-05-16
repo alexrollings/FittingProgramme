@@ -10,20 +10,6 @@ enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
 
-class Configuration {
-public:
-  RooRealVar const &buMass() const { return buMass_; }
-  RooRealVar const &buPdgId() const { return buPdgId_; }
-  Configuration(Neutral neutral);
-  Configuration(Configuration const&) = delete;
-  Configuration(Configuration &&) = delete;
-  Configuration& operator=(Configuration const&) = delete;
-  Configuration& operator=(Configuration &&) = delete;
-private:
-  RooRealVar buMass_;
-  RooRealVar buPdgId_;  
-};
-
 struct Categories {
   RooCategory polarity;
   RooCategory charge;
