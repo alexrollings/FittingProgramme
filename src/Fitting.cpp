@@ -44,44 +44,60 @@ public:
             "Combinatorial exponential pdf", fitVariable, lambdaCombinatorial_),
         functions_(commonFunctions),
         signalYield_(("signal_yield_bachelor=" + bachelorString_).c_str(),
-                     "m[Bu] signal yield", 10000, 0, 20000),
+                     "m[Bu] signal yield", 0, 0, 0, ""),
         combinatorialYield_(
             ("combinatorial_yield_bachelor=" + bachelorString_).c_str(),
-            "m[Bu] combinatorial yield", 1000, 0, 20000),
+            "m[Bu] combinatorial yield", 0, 0, 0, ""),
         bu2Dst0HstYield_(
             ("bu2Dst0Hst_yield_bachelor=" + bachelorString_).c_str(),
-            "m[Bu] bu2Dst0Hst yield", 5000, 0, 20000),
+            "m[Bu] bu2Dst0Hst yield", 0, 0, 0, ""),
         crossFeedYield_(("crossFeed_yield_bachelor=" + bachelorString_).c_str(),
-                        "m[Bu] crossFeed yield", 1000, 0, 20000),
+                        "m[Bu] crossFeed yield", 0, 0, 0, ""), 
         bu2D0HYield_(("bu2D0H_yield_bachelor=" + bachelorString_).c_str(),
-                     "m[Bu] bu2D0H yield", 3000, 0, 20000),
+                     "m[Bu] bu2D0H yield", 0, 0, 0, ""),
         bu2D0HstYield_(("bu2D0Hst_yield_bachelor=" + bachelorString_).c_str(),
-                       "m[Bu] bu2D0Hst yield", 2500, 0, 20000),
+                       "m[Bu] bu2D0Hst yield", 0, 0, 0, ""), 
         bd2DstHYield_(("bd2DstH_yield_bachelor=" + bachelorString_).c_str(),
-                      "m[Bu] bd2DstH yield", 1000, 0, 20000),
+                      "m[Bu] bd2DstH yield", 0, 0, 0, ""),
         yields_(), addPdf_(nullptr) {
 
-    functions_.add(signalGaussian_);
-    functions_.add(combinatorialExponential_);
-    yields_.add(signalYield_);
-    yields_.add(combinatorialYield_);
-    yields_.add(bu2Dst0HstYield_);
-    yields_.add(crossFeedYield_);
-    yields_.add(bu2D0HYield_);
-    yields_.add(bu2D0HstYield_);
-    yields_.add(bd2DstHYield_);
-    addPdf_ = std::unique_ptr<RooAddPdf>(
-        new RooAddPdf(("pdf_" + bachelorString_).c_str(),
-                      ("pdf_" + bachelorString_).c_str(), functions_, yields_));
-  }
+        signalYield_.setMax(20000);
+        signalYield_.setVal(10000);
+        combinatorialYield_.setMax(20000);
+        combinatorialYield_.setVal(1000);
+        bu2Dst0HstYield_.setMax(20000);
+        bu2Dst0HstYield_.setVal(5000);
+        crossFeedYield_.setMax(20000);
+        crossFeedYield_.setVal(1000);
+        bu2D0HYield_.setMax(20000);
+        bu2D0HYield_.setVal(3000);
+        bu2D0HstYield_.setMax(20000);
+        bu2D0HstYield_.setVal(2500);
+        bd2DstHYield_.setMax(20000);
+        bd2DstHYield_.setVal(1000);
+    
+        functions_.add(signalGaussian_);
+        functions_.add(combinatorialExponential_);
+        yields_.add(signalYield_);
+        yields_.add(combinatorialYield_);
+        yields_.add(bu2Dst0HstYield_);
+        yields_.add(crossFeedYield_);
+        yields_.add(bu2D0HYield_);
+        yields_.add(bu2D0HstYield_);
+        yields_.add(bd2DstHYield_);
+        addPdf_ = std::unique_ptr<RooAddPdf>(
+          new RooAddPdf(("pdf_" + bachelorString_).c_str(),
+                        ("pdf_" + bachelorString_).c_str(),
+                        functions_,  yields_));
+          }
 
-  RooAddPdf &addPdf() {
-    return *addPdf_;
-  }
+        RooAddPdf &addPdf() {
+          return *addPdf_;
+        }
 
-  RooAddPdf const &addPdf() const {
-    return *addPdf_;
-  }
+        RooAddPdf const &addPdf() const {
+          return *addPdf_;
+        }
 
 private:
   std::string bachelorString_;
