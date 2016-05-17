@@ -52,52 +52,54 @@ public:
             ("bu2Dst0Hst_yield_bachelor=" + bachelorString_).c_str(),
             "m[Bu] bu2Dst0Hst yield", 0, 0, 0, ""),
         crossFeedYield_(("crossFeed_yield_bachelor=" + bachelorString_).c_str(),
-                        "m[Bu] crossFeed yield", 0, 0, 0, ""), 
+                        "m[Bu] crossFeed yield", 0, 0, 0, ""),
         bu2D0HYield_(("bu2D0H_yield_bachelor=" + bachelorString_).c_str(),
                      "m[Bu] bu2D0H yield", 0, 0, 0, ""),
         bu2D0HstYield_(("bu2D0Hst_yield_bachelor=" + bachelorString_).c_str(),
-                       "m[Bu] bu2D0Hst yield", 0, 0, 0, ""), 
+                       "m[Bu] bu2D0Hst yield", 0, 0, 0, ""),
         bd2DstHYield_(("bd2DstH_yield_bachelor=" + bachelorString_).c_str(),
                       "m[Bu] bd2DstH yield", 0, 0, 0, ""),
         yields_(), addPdf_(nullptr) {
 
-        signalYield_.setMax(20000);
-        signalYield_.setVal(10000);
-        combinatorialYield_.setMax(20000);
-        combinatorialYield_.setVal(1000);
-        bu2Dst0HstYield_.setMax(20000);
-        bu2Dst0HstYield_.setVal(5000);
-        crossFeedYield_.setMax(20000);
-        crossFeedYield_.setVal(1000);
-        bu2D0HYield_.setMax(20000);
-        bu2D0HYield_.setVal(3000);
-        bu2D0HstYield_.setMax(20000);
-        bu2D0HstYield_.setVal(2500);
-        bd2DstHYield_.setMax(20000);
-        bd2DstHYield_.setVal(1000);
-    
-        functions_.add(signalGaussian_);
-        functions_.add(combinatorialExponential_);
-        yields_.add(signalYield_);
-        yields_.add(combinatorialYield_);
-        yields_.add(bu2Dst0HstYield_);
-        yields_.add(crossFeedYield_);
-        yields_.add(bu2D0HYield_);
-        yields_.add(bu2D0HstYield_);
-        yields_.add(bd2DstHYield_);
-        addPdf_ = std::unique_ptr<RooAddPdf>(
-          new RooAddPdf(("pdf_" + bachelorString_).c_str(),
-                        ("pdf_" + bachelorString_).c_str(),
-                        functions_,  yields_));
-          }
+    if (bachelor == Bachelor::pi) {
+      scaleFactor = 1;
+    } else if (bachelor == Bachelor::k) {
+      // Scale factor given by ratio of BR's
+      scaleFactor = 0.000420 / 0.00518;
+    }
 
-        RooAddPdf &addPdf() {
-          return *addPdf_;
-        }
+    signalYield_.setMax(20000 * scaleFactor);
+    signalYield_.setVal(10000 * scaleFactor);
+    combinatorialYield_.setMax(20000 * scaleFactor);
+    combinatorialYield_.setVal(1000 * scaleFactor);
+    bu2Dst0HstYield_.setMax(20000 * scaleFactor);
+    bu2Dst0HstYield_.setVal(5000 * scaleFactor);
+    crossFeedYield_.setMax(20000 * scaleFactor);
+    crossFeedYield_.setVal(1000 * scaleFactor);
+    bu2D0HYield_.setMax(20000 * scaleFactor);
+    bu2D0HYield_.setVal(3000 * scaleFactor);
+    bu2D0HstYield_.setMax(20000 * scaleFactor);
+    bu2D0HstYield_.setVal(2500 * scaleFactor);
+    bd2DstHYield_.setMax(20000 * scaleFactor);
+    bd2DstHYield_.setVal(1000 * scaleFactor);
 
-        RooAddPdf const &addPdf() const {
-          return *addPdf_;
-        }
+    functions_.add(signalGaussian_);
+    functions_.add(combinatorialExponential_);
+    yields_.add(signalYield_);
+    yields_.add(combinatorialYield_);
+    yields_.add(bu2Dst0HstYield_);
+    yields_.add(crossFeedYield_);
+    yields_.add(bu2D0HYield_);
+    yields_.add(bu2D0HstYield_);
+    yields_.add(bd2DstHYield_);
+    addPdf_ = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("pdf_" + bachelorString_).c_str(),
+                      ("pdf_" + bachelorString_).c_str(), functions_, yields_));
+  }
+
+  RooAddPdf &addPdf() { return *addPdf_; }
+
+  RooAddPdf const &addPdf() const { return *addPdf_; }
 
 private:
   std::string bachelorString_;
@@ -114,9 +116,37 @@ private:
   RooRealVar bu2D0HYield_;
   RooRealVar bu2D0HstYield_;
   RooRealVar bd2DstHYield_;
-  RooArgList yields_; 
+  RooArgList yields_;
+  double scaleFactor;
   std::unique_ptr<RooAddPdf> addPdf_;
 };
+
+void Plotting(RooRealVar varToFit, Bachelor bachelor,
+              RooDataSet fullDataSet, RooSimultaneous simultaneousPdf) {
+
+  Categories categories;
+
+  std::string bachelorString(EnumToString(bachelor));
+  std::string title = "Bu2Dst0" + bachelorString + "_Dst02D0pi0_D02kpi";
+
+  // --------------- create frame ---------------------
+  
+  RooPlot* frame = varToFit.frame(RooFit::Title(title.c_str()));
+
+  // --------------- plot data and pdfs onto frame ---------------------
+  
+  fullDataSet.plotOn(frame, RooFit::Cut(("bachelor==bachelor::"+bachelorString).c_str()));
+  simultaneousPdf.plotOn(frame, RooFit::Slice(categories.bachelor/* , bachelorString.c_str() */),
+                        RooFit::ProjWData(categories.bachelor, fullDataSet),
+                        RooFit::LineColor(kBlue));
+
+  // --------------- plot onto canvas ---------------------
+  
+  TCanvas canvas(("canvas_"+bachelorString).c_str(), (title+"_canvas").c_str(), 1000, 1000);
+  frame->Draw();
+  canvas.SaveAs((title+".pdf").c_str());
+  delete frame;
+}
 
 void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
@@ -168,76 +198,26 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   // --------------- pi mode ---------------------
 
-  Pdf piPdf(Bachelor::pi, varToFit, commonFunctions); 
+  Pdf piPdf(Bachelor::pi, varToFit, commonFunctions);
 
   // --------------- k mode ---------------------
 
-  RooRealVar buMassMean_k("m[Bu]_Mean_bachelor=k", "m[Bu] signal mean", 5279,
-                          5275, 5285);
-  RooRealVar buMassSigma_k("m[Bu]_Sigma_bachelor=k", "m[Bu] signal sigma", 18,
-                           15, 23);
-  RooRealVar lambdaCombinatorial_k("lambda_Compinatorial_bachelor=k",
-                                   "Combinatorial lambda", 0, -0.1, 0.1);
+  Pdf kPdf(Bachelor::k, varToFit, commonFunctions);
 
-  RooGaussian signalGaussian_k("Signal_Gaussian_bachelor=k",
-                               "Signal gaussian pdf", varToFit, buMassMean_k,
-                               buMassSigma_k);
-  RooExponential combinatorialExponential_k(
-      "Combinatorial_Exponential_bachelor=k", "Combinatorial exponential pdf",
-      varToFit, lambdaCombinatorial_k);
 
-  RooArgList functions_k;
-  functions_k.add(signalGaussian_k);
-  functions_k.add(combinatorialExponential_k);
-  functions_k.add(bu2Dst0HstGaussian);
-  functions_k.add(crossFeedGaussian);
-  functions_k.add(bu2D0HGaussian);
-  functions_k.add(bu2D0HstGaussian);
-  functions_k.add(bd2DstHGaussian);
-
-  RooRealVar signalYield_k("signal_yield_bachelor=k", "m[Bu] signal yield",
-                           1000, 0, 2000);
-  RooRealVar combinatorialYield_k("combinatorial_yield_bachelor=k",
-                                  "m[Bu] combinatorial yield", 100, 0, 2000);
-  RooRealVar bu2Dst0HstYield_k("bu2Dst0Hst_yield_bachelor=k",
-                               "m[Bu] bu2Dst0Hst yield", 500, 0, 2000);
-  RooRealVar crossFeedYield_k("crossFeed_yield_bachelor=k",
-                              "m[Bu] crossFeed yield", 100, 0, 2000);
-  RooRealVar bu2D0HYield_k("bu2D0H_yield_bachelor=k", "m[Bu] bu2D0H yield", 300,
-                           0, 2000);
-  RooRealVar bu2D0HstYield_k("bu2D0Hst_yield_bachelor=k",
-                             "m[Bu] bu2D0Hst yield", 250, 0, 2000);
-  RooRealVar bd2DstHYield_k("bd2DstH_yield_bachelor=k", "m[Bu] bd2DstH yield",
-                            100, 0, 2000);
-
-  RooArgList yields_k;
-  yields_k.add(signalYield_k);
-  yields_k.add(combinatorialYield_k);
-  yields_k.add(bu2Dst0HstYield_k);
-  yields_k.add(crossFeedYield_k);
-  yields_k.add(bu2D0HYield_k);
-  yields_k.add(bu2D0HstYield_k);
-  yields_k.add(bd2DstHYield_k);
-
-  RooAddPdf pdf_k("pdf_k", "pdf_k", functions_k, yields_k);
-
-  // --------------- define categories ---------------------
-
-  RooCategory bachelor("bachelor", "bachelor");
-  bachelor.defineType("pi");
-  bachelor.defineType("k");
+  Categories categories;
 
   // --------------- combine data sets ---------------------
 
   RooDataSet combinedDataSet(
-      "combinedDataSet", "combinedDataSet", varToFit, RooFit::Index(bachelor),
+      "combinedDataSet", "combinedDataSet", varToFit, RooFit::Index(categories.bachelor),
       RooFit::Import("pi", piDataSet), RooFit::Import("k", kDataSet));
 
   // --------------- simultaneous pdf ---------------------
 
-  RooSimultaneous simPdf("simPdf", "simPdf", bachelor);
+  RooSimultaneous simPdf("simPdf", "simPdf", categories.bachelor);
   simPdf.addPdf(piPdf.addPdf(), "pi");
-  simPdf.addPdf(pdf_k, "k");
+  simPdf.addPdf(kPdf.addPdf(), "k");
 
   // --------------- fit  ---------------------
 
@@ -245,42 +225,47 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   // --------------- pi ---------------------
 
+  Plotting(varToFit, Bachelor::pi, combinedDataSet, simPdf);
+
+  // --------------- k ---------------------
+
+  Plotting(varToFit, Bachelor::k, combinedDataSet, simPdf);
+
   // --------------- create frame ---------------------
 
-  RooPlot *frame_pi = varToFit.frame(RooFit::Title("Dst0pi_D0pi0_kpi"));
+  // RooPlot *frame_pi = varToFit.frame(RooFit::Title("Dst0pi_D0pi0_kpi"));
+  // RooPlot *frame_k = varToFit.frame(RooFit::Title("Dst0k_D0pi0_kpi"));
 
-  combinedDataSet.plotOn(frame_pi, RooFit::Cut("bachelor==bachelor::pi"));
+  // combinedDataSet.plotOn(frame_pi, RooFit::Cut("bachelor==bachelor::pi"));
 
   // --------------- plot data and pdfs onto frame ---------------------
 
-  simPdf.plotOn(frame_pi, RooFit::Slice(bachelor, "pi"),
-                RooFit::ProjWData(bachelor, combinedDataSet),
-                RooFit::LineColor(kBlue));
+  // simPdf.plotOn(frame_pi, RooFit::Slice(bachelor, "pi"),
+  //               RooFit::ProjWData(bachelor, combinedDataSet),
+  //               RooFit::LineColor(kBlue));
 
   // --------------- k ---------------------
 
   // --------------- create frame ---------------------
 
-  RooPlot *frame_k = varToFit.frame(RooFit::Title("Dst0k_D0pi0_kpi"));
-
-  combinedDataSet.plotOn(frame_k, RooFit::Cut("bachelor==bachelor::k"));
+  // combinedDataSet.plotOn(frame_k, RooFit::Cut("bachelor==bachelor::k"));
 
   // --------------- plot data and pdfs onto frame ---------------------
-  simPdf.plotOn(frame_k, RooFit::Slice(bachelor, "k"),
-                RooFit::ProjWData(bachelor, combinedDataSet),
-                RooFit::LineColor(kBlue));
+  // simPdf.plotOn(frame_k, RooFit::Slice(bachelor, "k"),
+  //               RooFit::ProjWData(bachelor, combinedDataSet),
+  //               RooFit::LineColor(kBlue));
 
   // --------------- plot onto canvas ---------------------
 
-  TCanvas canvas("simPdf", "simPdf", 1000, 1000);
-
-  canvas.Divide(1, 2);
-  canvas.cd(1);
-  frame_pi->Draw();
-  canvas.cd(2);
-  frame_k->Draw();
-
-  canvas.SaveAs("Result.pdf");
+  // TCanvas canvas("simPdf", "simPdf", 1000, 1000);
+  //
+  // canvas.Divide(1, 2);
+  // canvas.cd(1);
+  // frame_pi->Draw();
+  // canvas.cd(2);
+  // frame_k->Draw();
+  //
+  // canvas.SaveAs("Result.pdf");
 }
 int main(int argc, char **argv) {
 
