@@ -121,31 +121,29 @@ private:
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-void Plotting(RooRealVar varToFit, Bachelor bachelor,
-              RooDataSet fullDataSet, RooSimultaneous simultaneousPdf) {
-
-  Categories categories;
-
-  std::string bachelorString(EnumToString(bachelor));
-  std::string title = "Bu2Dst0" + bachelorString + "_Dst02D0pi0_D02kpi";
+// ALWAYS pass values by const reference (if possible)
+// It is important to pass the same category object !!!!
+void Plotting(Bachelor bachelor, RooRealVar const &varToFit, Categories &categories, RooDataSet const &combinedDataSet, RooSimultaneous const &simPdf) {
+  const std::string bachelorString = EnumToString(bachelor);
 
   // --------------- create frame ---------------------
   
-  RooPlot* frame = varToFit.frame(RooFit::Title(title.c_str()));
-
+  std::unique_ptr<RooPlot> frame(varToFit.frame(RooFit::Title(("Dst0" + bachelorString + "_D0pi0_kpi").c_str())));
+  
   // --------------- plot data and pdfs onto frame ---------------------
   
-  fullDataSet.plotOn(frame, RooFit::Cut(("bachelor==bachelor::"+bachelorString).c_str()));
-  simultaneousPdf.plotOn(frame, RooFit::Slice(categories.bachelor/* , bachelorString.c_str() */),
-                        RooFit::ProjWData(categories.bachelor, fullDataSet),
-                        RooFit::LineColor(kBlue));
+  combinedDataSet.plotOn(frame.get(), RooFit::Cut(("bachelor==bachelor::" + bachelorString).c_str()));
+
+  // .get() gets the raw pointer from underneath the smart pointer
+  simPdf.plotOn(frame.get(), RooFit::Slice(categories.bachelor, bachelorString.c_str()),
+                RooFit::ProjWData(categories.bachelor, combinedDataSet),
+                RooFit::LineColor(kBlue));
 
   // --------------- plot onto canvas ---------------------
   
-  TCanvas canvas(("canvas_"+bachelorString).c_str(), (title+"_canvas").c_str(), 1000, 1000);
+  TCanvas canvas(("simPdf_" + bachelorString).c_str(), "simPdf", 1000, 1000);
   frame->Draw();
-  canvas.SaveAs((title+".pdf").c_str());
-  delete frame;
+  canvas.SaveAs(("Result" + bachelorString + ".pdf").c_str());
 }
 
 void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
@@ -196,14 +194,15 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
   commonFunctions.add(bu2D0HstGaussian);
   commonFunctions.add(bd2DstHGaussian);
 
-  // --------------- pi mode ---------------------
+  // --------------- pi ---------------------
 
   Pdf piPdf(Bachelor::pi, varToFit, commonFunctions);
 
-  // --------------- k mode ---------------------
+  // --------------- k ---------------------
 
   Pdf kPdf(Bachelor::k, varToFit, commonFunctions);
 
+  // --------------- instantiate category object ---------------------
 
   Categories categories;
 
@@ -223,49 +222,17 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   simPdf.fitTo(combinedDataSet);
 
+  // --------------- create frame ---------------------
+
   // --------------- pi ---------------------
 
-  Plotting(varToFit, Bachelor::pi, combinedDataSet, simPdf);
+  Plotting(Bachelor::pi, varToFit, categories, combinedDataSet, simPdf);
 
   // --------------- k ---------------------
 
-  Plotting(varToFit, Bachelor::k, combinedDataSet, simPdf);
+  Plotting(Bachelor::k, varToFit, categories, combinedDataSet, simPdf);
 
-  // --------------- create frame ---------------------
 
-  // RooPlot *frame_pi = varToFit.frame(RooFit::Title("Dst0pi_D0pi0_kpi"));
-  // RooPlot *frame_k = varToFit.frame(RooFit::Title("Dst0k_D0pi0_kpi"));
-
-  // combinedDataSet.plotOn(frame_pi, RooFit::Cut("bachelor==bachelor::pi"));
-
-  // --------------- plot data and pdfs onto frame ---------------------
-
-  // simPdf.plotOn(frame_pi, RooFit::Slice(bachelor, "pi"),
-  //               RooFit::ProjWData(bachelor, combinedDataSet),
-  //               RooFit::LineColor(kBlue));
-
-  // --------------- k ---------------------
-
-  // --------------- create frame ---------------------
-
-  // combinedDataSet.plotOn(frame_k, RooFit::Cut("bachelor==bachelor::k"));
-
-  // --------------- plot data and pdfs onto frame ---------------------
-  // simPdf.plotOn(frame_k, RooFit::Slice(bachelor, "k"),
-  //               RooFit::ProjWData(bachelor, combinedDataSet),
-  //               RooFit::LineColor(kBlue));
-
-  // --------------- plot onto canvas ---------------------
-
-  // TCanvas canvas("simPdf", "simPdf", 1000, 1000);
-  //
-  // canvas.Divide(1, 2);
-  // canvas.cd(1);
-  // frame_pi->Draw();
-  // canvas.cd(2);
-  // frame_k->Draw();
-  //
-  // canvas.SaveAs("Result.pdf");
 }
 int main(int argc, char **argv) {
 
