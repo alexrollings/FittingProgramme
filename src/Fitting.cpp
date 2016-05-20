@@ -1,6 +1,7 @@
 #include "RooAbsBinning.h"
 #include "RooAddPdf.h"
 #include "RooArgList.h"
+#include "RooArgSet.h"
 #include "RooBifurGauss.h"
 #include "RooCategory.h"
 #include "RooDataHist.h"
@@ -17,38 +18,50 @@
 #include "TFile.h"
 #include "TTree.h"
 
+#include <fstream>
+#include <iostream>
 #include <iostream>
 #include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #include "Configuration.h"
+#include "ParseArguments.h"
 #include "Pdf.h"
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
-void Plotting(Bachelor bachelor, RooRealVar const &varToFit, Categories &categories, RooDataSet const &combinedDataSet, RooSimultaneous const &simPdf) {
+void Plotting(Bachelor bachelor, Configuration &config, Categories &categories,
+              RooDataSet const &fullDataSet, RooSimultaneous const &simPdf) {
   const std::string bachelorString = EnumToString(bachelor);
 
   // --------------- create frame ---------------------
-  
-  std::unique_ptr<RooPlot> frame(varToFit.frame(RooFit::Title(("Dst0" + bachelorString + "_D0pi0_kpi").c_str())));
-  
+
+  std::unique_ptr<RooPlot> frame(config.buMass().frame(
+      RooFit::Title(("Dst0" + bachelorString + "_D0pi0_kpi").c_str())));
+
   // --------------- plot data and pdfs onto frame ---------------------
-  
-  combinedDataSet.plotOn(frame.get(), RooFit::Cut(("bachelor==bachelor::" + bachelorString).c_str()));
+
+  fullDataSet.plotOn(
+      frame.get(),
+      RooFit::Cut(("bachelor==bachelor::" + bachelorString).c_str()));
 
   // .get() gets the raw pointer from underneath the smart pointer
-  simPdf.plotOn(frame.get(), RooFit::Slice(categories.bachelor, bachelorString.c_str()),
-                RooFit::ProjWData(categories.bachelor, combinedDataSet),
+  simPdf.plotOn(frame.get(),
+                RooFit::Slice(categories.bachelor, bachelorString.c_str()),
+                RooFit::ProjWData(categories.bachelor, fullDataSet),
                 RooFit::LineColor(kBlue));
 
   // --------------- plot onto canvas ---------------------
-  
+
   TCanvas canvas(("simPdf_" + bachelorString).c_str(), "simPdf", 1000, 1000);
   frame->Draw();
   canvas.SaveAs(("Result" + bachelorString + ".pdf").c_str());
 }
 
-void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
+void Fitting(RooDataSet &fullDataSet, Configuration &config,
+             Categories &categories) {
 
   // Shape parameters that are constant across each decay mode
   // Bu2Dst0Hst
@@ -78,16 +91,17 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   // Background pdfs common to both modes
   RooGaussian bu2Dst0HstGaussian("bu2Dst0HstGaussian", "Bu2Dst0Hst gaussian",
-                                 varToFit, meanBu2Dst0Hst, sigmaBu2Dst0Hst);
+                                 config.buMass(), meanBu2Dst0Hst,
+                                 sigmaBu2Dst0Hst);
   RooGaussian crossFeedGaussian("crossFeedGaussian",
-                                "Neutral cross feed gaussian", varToFit,
+                                "Neutral cross feed gaussian", config.buMass(),
                                 meanCrossFeed, sigmaCrossFeed);
-  RooGaussian bu2D0HGaussian("bu2D0HGaussian", "Bu2D0H gaussian", varToFit,
-                             meanBu2D0H, sigmaBu2D0H);
+  RooGaussian bu2D0HGaussian("bu2D0HGaussian", "Bu2D0H gaussian",
+                             config.buMass(), meanBu2D0H, sigmaBu2D0H);
   RooGaussian bu2D0HstGaussian("bu2D0HstGaussian", "Bu2D0Hst gaussian",
-                               varToFit, meanBu2D0Hst, sigmaBu2D0Hst);
-  RooGaussian bd2DstHGaussian("bd2DstHGaussian", "Bd2DstH gaussian", varToFit,
-                              meanBd2DstH, sigmaBd2DstH);
+                               config.buMass(), meanBu2D0Hst, sigmaBu2D0Hst);
+  RooGaussian bd2DstHGaussian("bd2DstHGaussian", "Bd2DstH gaussian",
+                              config.buMass(), meanBd2DstH, sigmaBd2DstH);
 
   RooArgList commonFunctions;
   commonFunctions.add(bu2Dst0HstGaussian);
@@ -98,21 +112,11 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   // --------------- pi ---------------------
 
-  Pdf piPdf(Bachelor::pi, varToFit, commonFunctions);
+  Pdf piPdf(Bachelor::pi, config.buMass(), commonFunctions);
 
   // --------------- k ---------------------
 
-  Pdf kPdf(Bachelor::k, varToFit, commonFunctions);
-
-  // --------------- instantiate category object ---------------------
-
-  Categories categories;
-
-  // --------------- combine data sets ---------------------
-
-  RooDataSet combinedDataSet(
-      "combinedDataSet", "combinedDataSet", varToFit, RooFit::Index(categories.bachelor),
-      RooFit::Import("pi", piDataSet), RooFit::Import("k", kDataSet));
+  Pdf kPdf(Bachelor::k, config.buMass(), commonFunctions);
 
   // --------------- simultaneous pdf ---------------------
 
@@ -122,45 +126,304 @@ void Fitting(RooDataSet piDataSet, RooDataSet kDataSet, RooRealVar varToFit) {
 
   // --------------- fit  ---------------------
 
-  simPdf.fitTo(combinedDataSet);
+  simPdf.fitTo(fullDataSet);
 
   // --------------- create frame ---------------------
 
   // --------------- pi ---------------------
 
-  Plotting(Bachelor::pi, varToFit, categories, combinedDataSet, simPdf);
+  Plotting(Bachelor::pi, config, categories, fullDataSet, simPdf);
 
   // --------------- k ---------------------
 
-  Plotting(Bachelor::k, varToFit, categories, combinedDataSet, simPdf);
-
-
+  Plotting(Bachelor::k, config, categories, fullDataSet, simPdf);
 }
+
+// ExtractEnumList() allows user to parse multiple options separated by commas.
+// Takes full options string as input and outputs a vector containing each
+// specified option as an element
+
+template <typename Enum>
+std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
+
+  std::stringstream ss(s);
+  std::vector<Enum> values;
+  std::string substring;
+
+  while (std::getline(ss, substring, delim)) {
+    values.push_back(StringToEnum<Enum>(substring));
+  }
+
+  return values;
+}
+
+// Check file exists
+bool fexists(std::string const &filename) {
+  std::ifstream infile(filename.c_str());
+  return infile.is_open();
+}
+
+// Path to roodatasets
+std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+
 int main(int argc, char **argv) {
 
-  // We will actually just have 1 data set as input, then cut it down by
-  // selecting certain categories in the fit. This is just as a toy example.
-  TString inputfile1("/data/lhcb/users/rollings/ButoDst0X_DATA_NEW/"
-                     "2012_MagDown/RenamedTriggers/temp/"
-                     "2012_MagDown_ButDst0pi_Dst0tD0pi0_D0tkpi.root");
-  TString inputfile2("/data/lhcb/users/rollings/ButoDst0X_DATA_NEW/"
-                     "2012_MagDown/RenamedTriggers/temp/"
-                     "2012_MagDown_ButDst0K_Dst0tD0pi0_D0tkpi.root");
+  std::vector<Year> yearVec;
+  std::vector<Polarity> polarityVec;
+  std::vector<Bachelor> bachelorVec;
+  Neutral neutral;
+  std::vector<Daughter> daughtersVec;
+  std::vector<Charge> chargeVec;
 
-  TString ttree("BtoDstar0h3_h1h2pi0RTuple");
-  TChain myChain1(ttree);
-  TChain myChain2(ttree);
+  Categories categories;
+  Configuration config(neutral, categories); // Initialise RooRealVars
 
-  myChain1.Add(inputfile1);
-  myChain2.Add(inputfile2);
+  RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
-  RooRealVar buMass("Pi0_Bu_M_DTF_D0Pi0", "m[Bu]", 4929, 5631, "Mev/c^2");
-  buMass.setBins(140);
-  RooArgSet myAS(buMass);
-  RooDataSet piDS("piDataSet", "piDataSet", &myChain1, myAS);
-  RooDataSet kDS("kDataSet", "kDataSet", &myChain2, myAS);
+  // By letting the ParseArguments object go out of scope it will print a
+  // warning if the user specified any unknown options.
+  { // calls destructor when object goes out of scope: Will tell you if anything
+    // was not used that was given as a command line argument before continuing
+    ParseArguments args(argc, argv); // object instantiated
 
-  Fitting(piDS, kDS, buMass);
+    std::string yearArg("2011,2012,2015");
+    std::string polarityArg("up,down");
+    std::string bachelorArg("pi,k");
+    std::string neutralArg;
+    std::string daughtersArg("kpi,kk,pipi,pik");
+    std::string chargeArg("plus,minus");
 
+    // We always want to simultaneously fir the pi AND k bachelor modes together
+    bachelorVec = ExtractEnumList<Bachelor>(bachelorArg);
+
+    if (args("help")) {
+
+      std::cout << " ----------------------------------------------------------"
+                   "------------------------------------------------\n";
+      std::cout << "The following options are possible:\n";
+      std::cout << "\n";
+      std::cout << "    -year choice {2011,2012,2015} default: " << yearArg
+                << "\n";
+      std::cout << "    -polarity choice {up,down} default: " << polarityArg
+                << "\n";
+      // std::cout << "    -bachelor choice {k,pi} default: " << bachelorArg <<
+      // "\n";
+      std::cout << "    -neutral choice {pi0,gamma} must be specified.\n";
+      std::cout << "    -daughters choice {kpi,kk,pipi,pik} default: "
+                << daughtersArg << "\n";
+      std::cout << "    -charge choice {plus,minus} default: " << chargeArg
+                << "\n";
+      std::cout << "\n";
+      std::cout << "To specify multiple options, separate them by commas.\n";
+      std::cout << " ----------------------------------------------------------"
+                   "------------------------------------------------\n";
+      std::cout << "\n";
+    } else {
+
+      // Year
+      // args matches "year" to string given in command like and assigns option
+      // parsed to year
+      if (!args("year", yearArg)) {
+        std::cout << "Using default value -year=[" << yearArg << "].\n";
+      }
+      try {
+        yearVec = ExtractEnumList<Year>(yearArg);
+      } catch (std::invalid_argument) {
+        std::cerr << "year assignment failed, please specify: "
+                     "-year=[2011,2012,2015].\n";
+        return 1;
+      }
+
+      // Polarity
+      if (!args("polarity", polarityArg)) {
+        std::cout << "Using default value -polarity=[" << polarityArg << "].\n";
+      }
+      try {
+        polarityVec = ExtractEnumList<Polarity>(polarityArg);
+      } catch (std::invalid_argument) {
+        std::cerr << "Polarity assignment failed, please specify: "
+                     "-polarity=[up,down].\n";
+        return 1;
+      }
+
+      // Neutral
+      if (!args("neutral", neutralArg)) {
+        std::cerr << "Missing mandatory argument: -neutral\n";
+        return 1;
+      }
+      try {
+        neutral = StringToEnum<Neutral>(neutralArg);
+      } catch (std::invalid_argument) {
+        std::cerr << "neutral assignment failed, please specify: "
+                     "-neutral=[pi0,gamma].\n";
+        return 1;
+      }
+
+      if (!args("daughters", daughtersArg)) {
+        std::cout << "Using default value -daughters=[" << daughtersArg
+                  << "].\n";
+      }
+      try {
+        daughtersVec = ExtractEnumList<Daughter>(daughtersArg);
+      } catch (std::invalid_argument) {
+        std::cerr << "daughters assignment failed, please specify: "
+                     "-daughters=[kpi,kk,pipi,pik].\n";
+        return 1;
+      }
+
+      if (!args("charge", chargeArg)) {
+        std::cout << "Using default value -charge=[" << chargeArg << "].\n";
+      }
+      try {
+        chargeVec = ExtractEnumList<Charge>(chargeArg);
+      } catch (std::invalid_argument) {
+        std::cerr << "charge assignment failed, please specify: "
+                     "-charge=[plus,minus].\n";
+        return 1;
+      }
+
+      // Loop over all options in order to extract correct roodatasets
+      for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
+        for (unsigned int pCounter = 0; pCounter < polarityVec.size();
+             pCounter++) {
+          for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
+               bCounter++) {
+            for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
+                 dCounter++) {
+              for (unsigned int cCounter = 0; cCounter < chargeVec.size();
+                   cCounter++) {
+                std::string dsFile =
+                    dsPath +
+                    ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
+                                    bachelorVec[bCounter], neutral,
+                                    daughtersVec[dCounter],
+                                    chargeVec[cCounter]) +
+                    ".root";
+                std::cout << "Extracting RooDataSet from file ... " << dsFile
+                          << "\n";
+
+                if (!fexists(dsFile)) {
+                  std::cerr << dsFile << " does not exists.\n";
+                  return 1;
+                } else {
+                  std::cout << dsFile << " exists.\n";
+                  TFile in(dsFile.c_str(), "READ");
+                  RooDataSet *inputDataSet;
+                  gDirectory->GetObject("inputDataSet", inputDataSet);
+                  if (inputDataSet == nullptr) {
+                    throw std::runtime_error("Data set does not exist.");
+                  } else {
+                    std::cout << "inputDataSet extracted... \n";
+                    fullDataSet.append(*inputDataSet);
+                    std::cout << "Appended to full data set...\n";
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Check categories are assigned correctly
+      // for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
+      //
+      //   RooArgSet const *row = fullDataSet.get(i);
+      //
+      //   std::cout << "For event " << i << ":";
+      //
+      //   RooRealVar *idBuPtr =
+      //       dynamic_cast<RooRealVar
+      //       *>(row->find(config.buPdgId().GetName()));
+      //   if (idBuPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No value for ID[Bu] for event " << i << ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    Bu PDG ID = " << idBuPtr->getVal() << "\n";
+      //   }
+      //
+      //   RooRealVar *mBuPtr =
+      //       dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
+      //   if (mBuPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No value for m[Bu] for event " << i << ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    Bu mass = " << mBuPtr->getVal() << "\n";
+      //   }
+      //
+      //   RooCategory *yearPtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.year.GetName()));
+      //   if (yearPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to year for event " << i << ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    year = " << yearPtr->getLabel() << "\n";
+      //   }
+      //
+      //   RooCategory *polarityPtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.polarity.GetName()));
+      //   if (polarityPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to polarity for event " << i <<
+      //     ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    Polarity = " << polarityPtr->getLabel() << "\n";
+      //   }
+      //
+      //   RooCategory *bachelorPtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.bachelor.GetName()));
+      //   if (bachelorPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to bachelor for event " << i <<
+      //     ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    bachelor = " << bachelorPtr->getLabel() << "\n";
+      //   }
+      //
+      //   RooCategory *neutralPtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.neutral.GetName()));
+      //   if (neutralPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to neutral for event " << i << ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
+      //   }
+      //
+      //   RooCategory *daughterPtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.daughter.GetName()));
+      //   if (daughterPtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to daughter for event " << i <<
+      //     ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    daughter = " << daughterPtr->getLabel() << "\n";
+      //   }
+      //
+      //   RooCategory *chargePtr =
+      //       dynamic_cast<RooCategory
+      //       *>(row->find(categories.charge.GetName()));
+      //   if (chargePtr == nullptr) {
+      //     std::stringstream output;
+      //     output << "No category assigned to charge for event " << i << ".";
+      //     throw std::runtime_error(output.str());
+      //   } else {
+      //     std::cout << "    charge = " << chargePtr->getLabel() << "\n";
+      //   }
+      // }
+
+      Fitting(fullDataSet, config, categories);
+    }
+  }
   return 0;
 }
