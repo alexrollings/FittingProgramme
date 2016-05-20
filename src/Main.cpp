@@ -42,7 +42,6 @@ bool fexists(std::string const &filename) {
 // Path to roodatasets
 std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
-using namespace RooFit;
 
 int main(int argc, char **argv) {
 
@@ -53,19 +52,19 @@ int main(int argc, char **argv) {
   std::vector<Daughter> daughtersVec;
   std::vector<Charge> chargeVec;
 
-  Categories categories;                     // Initialize categories
-  Configuration config(neutral); // Initialise RooRealVars
+  Categories categories;
+  Configuration config(neutral, categories); // Initialise RooRealVars
 
-  RooArgSet fullArgSet;
-  fullArgSet.add(config.buMass());
-  fullArgSet.add(config.buPdgId());
-  fullArgSet.add(categories.polarity);
-  fullArgSet.add(categories.charge);
-  fullArgSet.add(categories.daughter);
-  fullArgSet.add(categories.bachelor);
-  fullArgSet.add(categories.year);
-  fullArgSet.add(categories.neutral);
-  RooDataSet fullDataSet("dataset", "dataset", fullArgSet);
+  // RooArgSet fullArgSet;
+  // fullArgSet.add(config.buMass());
+  // fullArgSet.add(config.buPdgId());
+  // fullArgSet.add(categories.polarity);
+  // fullArgSet.add(categories.charge);
+  // fullArgSet.add(categories.daughter);
+  // fullArgSet.add(categories.bachelor);
+  // fullArgSet.add(categories.year);
+  // fullArgSet.add(categories.neutral);
+  RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.

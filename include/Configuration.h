@@ -20,28 +20,34 @@ struct Categories {
   Categories();
   Categories(Categories const &) = delete;
   Categories(Categories &&) = delete;
-  Categories& operator=(Categories const&) = delete;
-  Categories& operator=(Categories &&) = delete;
+  Categories &operator=(Categories const &) = delete;
+  Categories &operator=(Categories &&) = delete;
 };
 
 class Configuration {
+
 public:
+  Configuration(Neutral neutral, Categories const &categories);
+  Configuration(Configuration const &) = delete;
+  Configuration(Configuration &&) = delete;
+  Configuration &operator=(Configuration const &) = delete;
+  Configuration &operator=(Configuration &&) = delete;
+
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
-  Configuration(Neutral neutral);
+
 private:
   RooRealVar buMass_;
-  RooRealVar buPdgId_;  
+  RooRealVar buPdgId_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
 };
 
-template <typename Enum>
-Enum StringToEnum(std::string const &);
+template <typename Enum> Enum StringToEnum(std::string const &);
 
 std::string EnumToString(Polarity);
 std::string EnumToString(Daughter);

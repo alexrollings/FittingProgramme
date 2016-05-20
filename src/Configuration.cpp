@@ -1,6 +1,6 @@
 #include "Configuration.h"
 
-Configuration::Configuration(Neutral neutral)
+Configuration::Configuration(Neutral neutral, Categories const &categories)
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
 
   constexpr const char *kMassUnit = "Mev/c^2";
@@ -31,7 +31,6 @@ Configuration::Configuration(Neutral neutral)
   variableArgSet_.add(buMass_);
   variableArgSet_.add(buPdgId_);
     
-  Categories categories;
   categoryArgSet_.add(categories.polarity);
   categoryArgSet_.add(categories.charge);
   categoryArgSet_.add(categories.daughter);
@@ -42,7 +41,7 @@ Configuration::Configuration(Neutral neutral)
   fullArgSet_.add(variableArgSet_);
   fullArgSet_.add(categoryArgSet_);
 }
-
+// Categories is a class within a class !!!
 Categories::Categories()
     : polarity("polarity", "polarity"), charge("charge", "charge"),
       daughter("daughter", "daughter"), bachelor("bachelor", "bachelor"),

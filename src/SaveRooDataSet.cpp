@@ -16,7 +16,7 @@
 
 std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
 
-void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
+void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
                     Bachelor myBachelor, Neutral myNeutral,
                     Daughter myDaughter) {
 
@@ -65,7 +65,7 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
 
   // Initialise RooRealVars now neutral has been specified
   Categories categories;
-  Configuration config(myNeutral);
+  Configuration config(myNeutral, categories);
 
   // Create DataSet and feed it the ArgSet, which defines how many columns it
   // should have
@@ -95,25 +95,12 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
 
   std::cout << "Loading tree " << ttree << " from file " << path << "\n";
   
-  RooArgSet variableArgSet;
-  variableArgSet.add(config.buMass());
-  variableArgSet.add(config.buPdgId());
-    
-  RooArgSet categoryArgSet;
-  categoryArgSet.add(categories.polarity);
-  categoryArgSet.add(categories.charge);
-  categoryArgSet.add(categories.daughter);
-  categoryArgSet.add(categories.bachelor);
-  categoryArgSet.add(categories.year);
-  categoryArgSet.add(categories.neutral);
 
-  std::cout << "made it" << std::endl;
   // Create data set for our ttree variables
-  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, variableArgSet);
+  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, config.variableArgSet());
 
-  std::cout << "made it again" << std::endl;
   // Create data set to store categories
-  RooDataSet extraDataSet("extraDataSet", "Category Data Set", categoryArgSet);
+  RooDataSet extraDataSet("extraDataSet", "Category Data Set", config.categoryArgSet());
 
   std::cout << "Finished loading tree.\n";
 
@@ -150,7 +137,7 @@ void SaveRooDataSet(std::string path, Year myYear, Polarity myPolarity,
     categories.charge.setLabel(charge.c_str());
 
     // Add category labels to 'extra' data set
-    extraDataSet.add(categoryArgSet);
+    extraDataSet.add(config.categoryArgSet());
     // Add here copies the values from rooArgSet
   }
 
