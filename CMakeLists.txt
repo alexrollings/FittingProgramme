@@ -18,7 +18,7 @@ include_directories(${ROOT_INCLUDE_DIR} include)
 set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam MathMore TreePlayer)
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/Pdf.cpp)
 
 #${variable} expands variable
 add_executable(Main src/Main.cpp ${FITTING_SRC})
