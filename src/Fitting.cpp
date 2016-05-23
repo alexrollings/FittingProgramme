@@ -56,11 +56,11 @@ void Plotting(Bachelor bachelor, Daughters daughters, Neutral neutral,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-      RooFit::Slice(categories.fitting,
-                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
-      RooFit:: 
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue);
+      // RooFit::Slice(categories.fitting,
+      //               ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      // RooFit:: 
+      // RooFit::ProjWData(categories.fitting, fullDataSet),
+      // RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue);
 
   // --------------- plot onto canvas ---------------------
 
@@ -78,52 +78,6 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
              std::vector<Daughters> daughtersVec,
              std::vector<Charge> chargeVec) {
 
-  // Shape parameters that are constant across each decay mode
-  // Bu2Dst0Hst
-  RooRealVar meanBu2Dst0Hst("meanBu2Dst0Hst", "Bu2Dst0Hst mean",
-                            5057); //, 5050, 5056);
-  RooRealVar sigmaBu2Dst0Hst("sigmaBu2Dst0Hst", "Bu2Dst0Hst sigma",
-                             65); //, 63, 67);
-
-  // ButoD0pi
-  RooRealVar meanBu2D0H("meanBu2D0H", "Bu2D0H mean", 5508);  //, 5502, 5506);
-  RooRealVar sigmaBu2D0H("sigmaBu2D0H", "Bu2D0H sigma", 43); //, 41, 45);
-
-  // Bu2D0Hst
-  RooRealVar meanBu2D0Hst("meanBu2D0Hst", "Bu2D0Hst mean",
-                          5277); //, 5268, 5278);
-  RooRealVar sigmaBu2D0Hst("sigmaBu2D0Hst", "Bu2D0Hst sigma", 66); //, 62, 70);
-
-  // Bu2Dst0pi0_D0gamma
-  RooRealVar meanCrossFeed("meanCrossFeed", "Neutral cross feed mean",
-                           5294); //, 5286, 5294);
-  RooRealVar sigmaCrossFeed("sigmaCrossFeed", "Neutral cross feed sigma",
-                            90); //, 87, 93);
-
-  // BdtoDstpi
-  RooRealVar meanBd2DstH("meanBd2DstH", "Bd2DstH mean", 5277);  //, 5279, 5267);
-  RooRealVar sigmaBd2DstH("sigmaBd2DstH", "Bd2DstH sigma", 66); //, 62, 70);
-
-  // Background pdfs common to both modes
-  RooGaussian bu2Dst0HstGaussian("bu2Dst0HstGaussian", "Bu2Dst0Hst gaussian",
-                                 config.buMass(), meanBu2Dst0Hst,
-                                 sigmaBu2Dst0Hst);
-  RooGaussian crossFeedGaussian("crossFeedGaussian",
-                                "Neutral cross feed gaussian", config.buMass(),
-                                meanCrossFeed, sigmaCrossFeed);
-  RooGaussian bu2D0HGaussian("bu2D0HGaussian", "Bu2D0H gaussian",
-                             config.buMass(), meanBu2D0H, sigmaBu2D0H);
-  RooGaussian bu2D0HstGaussian("bu2D0HstGaussian", "Bu2D0Hst gaussian",
-                               config.buMass(), meanBu2D0Hst, sigmaBu2D0Hst);
-  RooGaussian bd2DstHGaussian("bd2DstHGaussian", "Bd2DstH gaussian",
-                              config.buMass(), meanBd2DstH, sigmaBd2DstH);
-
-  RooArgList commonFunctions;
-  commonFunctions.add(bu2Dst0HstGaussian);
-  commonFunctions.add(crossFeedGaussian);
-  commonFunctions.add(bu2D0HGaussian);
-  commonFunctions.add(bu2D0HstGaussian);
-  commonFunctions.add(bd2DstHGaussian);
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
@@ -141,31 +95,23 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
       // vector type
       // The operators required to do this are not supported by RooFit so we
       // have to use a vector of pointers
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kpi, config.buMass(),
-                                commonFunctions));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kpi, config.buMass(),
-                                commonFunctions));
+      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kpi, config.buMass()));
+      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kpi, config.buMass()));
 
     } else if (d == Daughters::kk) {
 
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kk, config.buMass(),
-                                commonFunctions));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kk, config.buMass(),
-                                commonFunctions));
+      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kk, config.buMass()));
+      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kk, config.buMass()));
 
     } else if (d == Daughters::pipi) {
 
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::pipi, config.buMass(),
-                                commonFunctions));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pipi, config.buMass(),
-                                commonFunctions));
+      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::pipi, config.buMass()));
+      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pipi, config.buMass()));
 
     } else {
 
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::pik, config.buMass(),
-                                commonFunctions));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pik, config.buMass(),
-                                commonFunctions));
+      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::pik, config.buMass()));
+      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pik, config.buMass()));
     }
   }
 

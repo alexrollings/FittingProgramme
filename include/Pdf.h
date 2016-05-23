@@ -14,8 +14,8 @@
 
 class Pdf {
 public:
-  Pdf(Bachelor bachelor, Daughters daughters, RooRealVar &fitVariable,
-      RooArgList const &commonFunctions);
+  Pdf(Bachelor bachelor, Daughters daughters, RooRealVar &fitVariable);
+      // RooArgList const &commonFunctions);
 
   Pdf(Pdf const &) = delete;
   Pdf(Pdf &&) = delete;
@@ -33,6 +33,12 @@ public:
   inline Bachelor bachelor() const { return bachelor_; }
 
   inline Daughters daughters() const { return daughters_; }
+  
+  inline RooGaussian bu2Dst0HstGaussian() const { return bu2Dst0HstGaussian_; }
+  inline RooGaussian crossFeedGaussian() const { return crossFeedGaussian_; }
+  inline RooGaussian bu2D0HGaussian() const { return bu2D0HGaussian_; }
+  inline RooGaussian bu2D0HstGaussian() const { return bu2D0HstGaussian_; }
+  inline RooGaussian bd2DstHGaussian() const { return bd2DstHGaussian_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
 
@@ -42,8 +48,23 @@ private:
   RooRealVar buMassMean_;
   RooRealVar buMassSigma_;
   RooRealVar lambdaCombinatorial_;
+  RooRealVar meanBu2Dst0Hst_;
+  RooRealVar sigmaBu2Dst0Hst_;
+  RooRealVar meanBu2D0H_;
+  RooRealVar sigmaBu2D0H_;
+  RooRealVar meanBu2D0Hst_;
+  RooRealVar sigmaBu2D0Hst_;
+  RooRealVar meanCrossFeed_;
+  RooRealVar sigmaCrossFeed_;
+  RooRealVar meanBd2DstH_;
+  RooRealVar sigmaBd2DstH_;
   RooGaussian signalGaussian_;
   RooExponential combinatorialExponential_;
+  RooGaussian bu2Dst0HstGaussian_;
+  RooGaussian crossFeedGaussian_;
+  RooGaussian bu2D0HGaussian_;
+  RooGaussian bu2D0HstGaussian_;
+  RooGaussian bd2DstHGaussian_;
   RooArgList functions_;
   RooRealVar signalYield_;
   RooRealVar combinatorialYield_;
