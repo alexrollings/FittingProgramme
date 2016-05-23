@@ -18,8 +18,9 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
 
   buMass_.SetName(buMassVar.c_str());
   buMass_.SetTitle("Bu Mass DTF Constrained");
-  buMass_.setMax(5701);
-  buMass_.setMin(4979);
+  buMass_.setMax(5705);
+  buMass_.setMin(4980);
+  buMass_.setBins(145);
   buMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName(buPdgIdVar.c_str());
@@ -30,13 +31,14 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
 
   variableArgSet_.add(buMass_);
   variableArgSet_.add(buPdgId_);
-    
+
   categoryArgSet_.add(categories.polarity);
   categoryArgSet_.add(categories.charge);
-  categoryArgSet_.add(categories.daughter);
+  categoryArgSet_.add(categories.daughters);
   categoryArgSet_.add(categories.bachelor);
   categoryArgSet_.add(categories.year);
   categoryArgSet_.add(categories.neutral);
+  categoryArgSet_.add(categories.fitting);
 
   fullArgSet_.add(variableArgSet_);
   fullArgSet_.add(categoryArgSet_);
@@ -44,8 +46,9 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
 // Categories is a class within a class !!!
 Categories::Categories()
     : polarity("polarity", "polarity"), charge("charge", "charge"),
-      daughter("daughter", "daughter"), bachelor("bachelor", "bachelor"),
-      neutral("neutral", "neutral"), year("year", "year") {
+      daughters("daughters", "daughters"), bachelor("bachelor", "bachelor"),
+      neutral("neutral", "neutral"), year("year", "year"),
+      fitting("fitting", "fitting") {
 
   polarity.defineType(EnumToString(Polarity::up).c_str());
   polarity.defineType(EnumToString(Polarity::down).c_str());
@@ -53,10 +56,10 @@ Categories::Categories()
   charge.defineType(EnumToString(Charge::plus).c_str());
   charge.defineType(EnumToString(Charge::minus).c_str());
 
-  daughter.defineType(EnumToString(Daughter::kpi).c_str());
-  daughter.defineType(EnumToString(Daughter::kk).c_str());
-  daughter.defineType(EnumToString(Daughter::pipi).c_str());
-  daughter.defineType(EnumToString(Daughter::pik).c_str());
+  daughters.defineType(EnumToString(Daughters::kpi).c_str());
+  daughters.defineType(EnumToString(Daughters::kk).c_str());
+  daughters.defineType(EnumToString(Daughters::pipi).c_str());
+  daughters.defineType(EnumToString(Daughters::pik).c_str());
 
   bachelor.defineType(EnumToString(Bachelor::pi).c_str());
   bachelor.defineType(EnumToString(Bachelor::k).c_str());
@@ -67,64 +70,84 @@ Categories::Categories()
 
   neutral.defineType(EnumToString(Neutral::pi0).c_str());
   neutral.defineType(EnumToString(Neutral::gamma).c_str());
+
+  // PlotOn only takes one category as an option therefore we need to encompass
+  // both bachelor and daughters in the same category
+  fitting.defineType(
+      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
 }
 
-//Need a template for this as each enum option is a different 'type'
-template <>
-Polarity StringToEnum<Polarity>(std::string const &polarity) {
+// Need a template for this as each enum option is a different 'type'
+template <> Polarity StringToEnum<Polarity>(std::string const &polarity) {
   if (polarity == "up") {
     return Polarity::up;
   } else if (polarity == "down") {
     return Polarity::down;
-  // } else if (polarity == "both") {
-  //   return Polarity::both;
-   }
+    // } else if (polarity == "both") {
+    //   return Polarity::both;
+  }
   throw std::invalid_argument("Polarity must take a value in [up/down]");
 }
 
 std::string EnumToString(Polarity polarity) {
   switch (polarity) {
-    case Polarity::up:
-      return "up";
-    case Polarity::down:
-      return "down";
+  case Polarity::up:
+    return "up";
+  case Polarity::down:
+    return "down";
     // case Polarity::both:
     // default:
     //   return "both";
   }
 }
 
-template <>
-Daughter StringToEnum<Daughter>(std::string const &daughter) {
-  if (daughter == "kpi") {
-    return Daughter::kpi;
-  } else if (daughter == "kk") {
-    return Daughter::kk;
-  } else if (daughter == "pipi") {
-    return Daughter::pipi;
-  } else if (daughter == "pik") {
-    return Daughter::pik;
+template <> Daughters StringToEnum<Daughters>(std::string const &daughters) {
+  if (daughters == "kpi") {
+    return Daughters::kpi;
+  } else if (daughters == "kk") {
+    return Daughters::kk;
+  } else if (daughters == "pipi") {
+    return Daughters::pipi;
+  } else if (daughters == "pik") {
+    return Daughters::pik;
   }
   throw std::invalid_argument(
-      "Daughter must take a value in [kpi/kk/pipi/pik]");
+      "Daughters must take a value in [kpi/kk/pipi/pik]");
 }
 
-std::string EnumToString(Daughter daughter) {
-  switch (daughter) {
-    case Daughter::kpi:
-      return "kpi";
-    case Daughter::kk:
-      return "kk";
-    case Daughter::pipi:
-      return "pipi";
-    case Daughter::pik:
+std::string EnumToString(Daughters daughters) {
+  switch (daughters) {
+  case Daughters::kpi:
+    return "kpi";
+  case Daughters::kk:
+    return "kk";
+  case Daughters::pipi:
+    return "pipi";
+  case Daughters::pik:
     // default:
-      return "pik";
+    return "pik";
   }
 }
 
-template <>
-Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
+template <> Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
   if (bachelor == "pi") {
     return Bachelor::pi;
   } else if (bachelor == "k") {
@@ -135,16 +158,15 @@ Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
 
 std::string EnumToString(Bachelor bachelor) {
   switch (bachelor) {
-    case Bachelor::pi:
-      return "pi";
-    case Bachelor::k:
+  case Bachelor::pi:
+    return "pi";
+  case Bachelor::k:
     // default:
-      return "k";
+    return "k";
   }
 }
 
-template <>
-Year StringToEnum<Year>(std::string const &year) {
+template <> Year StringToEnum<Year>(std::string const &year) {
   if (year == "2011") {
     return Year::y2011;
   } else if (year == "2012") {
@@ -157,18 +179,17 @@ Year StringToEnum<Year>(std::string const &year) {
 
 std::string EnumToString(Year year) {
   switch (year) {
-    case Year::y2011:
-      return "2011";
-    case Year::y2012:
-      return "2012";
-    case Year::y2015:
+  case Year::y2011:
+    return "2011";
+  case Year::y2012:
+    return "2012";
+  case Year::y2015:
     // default:
-      return "2015";
+    return "2015";
   }
 }
 
-template <>
-Neutral StringToEnum<Neutral>(std::string const &neutral) {
+template <> Neutral StringToEnum<Neutral>(std::string const &neutral) {
   if (neutral == "pi0") {
     return Neutral::pi0;
   } else if (neutral == "gamma") {
@@ -179,16 +200,15 @@ Neutral StringToEnum<Neutral>(std::string const &neutral) {
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
-    case Neutral::pi0:
-      return "pi0";
-    case Neutral::gamma:
+  case Neutral::pi0:
+    return "pi0";
+  case Neutral::gamma:
     // default:
-      return "gamma";
+    return "gamma";
   }
 }
 
-template <>
-Charge StringToEnum<Charge>(std::string const &charge) {
+template <> Charge StringToEnum<Charge>(std::string const &charge) {
   if (charge == "plus") {
     return Charge::plus;
   } else if (charge == "minus") {
@@ -199,17 +219,71 @@ Charge StringToEnum<Charge>(std::string const &charge) {
 
 std::string EnumToString(Charge charge) {
   switch (charge) {
-    case Charge::plus:
-      return "plus";
-    case Charge::minus:
+  case Charge::plus:
+    return "plus";
+  case Charge::minus:
     // default:
-      return "minus";
+    return "minus";
   }
 }
 
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
-                            Neutral neutral, Daughter daughter, Charge charge) {
+                            Neutral neutral, Daughters daughters,
+                            Charge charge) {
   return EnumToString(year) + "_" + EnumToString(polarity) + "_" +
          EnumToString(bachelor) + "_" + EnumToString(neutral) + "_" +
-         EnumToString(daughter) + "_" + EnumToString(charge);
+         EnumToString(daughters) + "_" + EnumToString(charge);
+}
+
+std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters) {
+  return EnumToString(bachelor) + "_" + EnumToString(daughters);
+}
+
+std::string MakePdfTitle(Bachelor bachelor, Daughters daughters,
+                         Neutral neutral, std::vector<Charge> chargeVec) {
+
+  std::string firstDaughter;
+  std::string secondDaughter;
+  std::string bachelorString;
+  std::string neutralString;
+
+  if (bachelor == Bachelor::pi) {
+    bachelorString = "#pi";
+  } else {
+    bachelorString = "K";
+  }
+
+  if (daughters == Daughters::kpi) {
+    firstDaughter = "K";
+    secondDaughter = "#pi";
+  } else if (daughters == Daughters::kk) {
+    firstDaughter = "K";
+    secondDaughter = "K";
+  } else if (daughters == Daughters::pipi) {
+    firstDaughter = "#pi";
+    secondDaughter = "#pi";
+  } else {
+    firstDaughter = "#pi";
+    secondDaughter = "K";
+  }
+
+  if(neutral == Neutral::pi0){
+    neutralString = "#pi^{0}";
+  } else {
+    neutralString = "#gamma";
+  }
+
+  if (chargeVec.size() == 2) {
+    return "B^{-}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
+           "^{-}" + secondDaughter + "^{+}#font[132]{]}_{D}" +
+           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{-}";
+  } else if (chargeVec[0] == Charge::plus) {
+    return "B^{+}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
+           "^{+}" + secondDaughter + "^{-}#font[132]{]}_{D}" +
+           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{+}";
+  } else {
+    return "B^{-}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
+           "^{-}" + secondDaughter + "^{+}#font[132]{]}_{D}" +
+           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{-}";
+  }
 }

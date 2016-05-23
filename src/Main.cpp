@@ -5,7 +5,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <vector>
 
 #include "RooArgList.h"
 #include "RooArgSet.h"
@@ -42,6 +41,7 @@ bool fexists(std::string const &filename) {
 // Path to roodatasets
 std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
+using namespace RooFit;
 
 int main(int argc, char **argv) {
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
   std::vector<Polarity> polarityVec;
   std::vector<Bachelor> bachelorVec;
   Neutral neutral;
-  std::vector<Daughter> daughtersVec;
+  std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
 
   Categories categories;
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
   // fullArgSet.add(config.buPdgId());
   // fullArgSet.add(categories.polarity);
   // fullArgSet.add(categories.charge);
-  // fullArgSet.add(categories.daughter);
+  // fullArgSet.add(categories.daughters);
   // fullArgSet.add(categories.bachelor);
   // fullArgSet.add(categories.year);
   // fullArgSet.add(categories.neutral);
@@ -162,7 +162,7 @@ int main(int argc, char **argv) {
                   << "].\n";
       }
       try {
-        daughtersVec = ExtractEnumList<Daughter>(daughtersArg);
+        daughtersVec = ExtractEnumList<Daughters>(daughtersArg);
       } catch (std::invalid_argument) {
         std::cerr << "daughters assignment failed, please specify: "
                      "-daughters=[kpi,kk,pipi,pik].\n";
@@ -289,14 +289,14 @@ int main(int argc, char **argv) {
       std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
     }
 
-    RooCategory *daughterPtr =
-        dynamic_cast<RooCategory *>(row->find(categories.daughter.GetName()));
-    if (daughterPtr == nullptr) {
+    RooCategory *daughtersPtr =
+        dynamic_cast<RooCategory *>(row->find(categories.daughters.GetName()));
+    if (daughtersPtr == nullptr) {
       std::stringstream output;
-      output << "No category assigned to daughter for event " << i << ".";
+      output << "No category assigned to daughters for event " << i << ".";
       throw std::runtime_error(output.str());
     } else {
-      std::cout << "    daughter = " << daughterPtr->getLabel() << "\n";
+      std::cout << "    daughters = " << daughtersPtr->getLabel() << "\n";
     }
 
     RooCategory *chargePtr =

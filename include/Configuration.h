@@ -4,7 +4,7 @@
 #include <string>
 
 enum class Polarity { up, down };
-enum class Daughter { kpi, kk, pipi, pik };
+enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
@@ -13,10 +13,11 @@ enum class Charge { plus, minus };
 struct Categories {
   RooCategory polarity;
   RooCategory charge;
-  RooCategory daughter;
+  RooCategory daughters;
   RooCategory bachelor;
   RooCategory neutral;
   RooCategory year;
+  RooCategory fitting;
   Categories();
   Categories(Categories const &) = delete;
   Categories(Categories &&) = delete;
@@ -50,11 +51,17 @@ private:
 template <typename Enum> Enum StringToEnum(std::string const &);
 
 std::string EnumToString(Polarity);
-std::string EnumToString(Daughter);
+std::string EnumToString(Daughters);
 std::string EnumToString(Bachelor);
 std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
 
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
-                            Neutral neutral, Daughter daughter, Charge charge);
+                            Neutral neutral, Daughters daughters,
+                            Charge charge);
+
+std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters);
+
+std::string MakePdfTitle(Bachelor bachelor, Daughters daughters,
+                         Neutral neutral, std::vector<Charge> chargeVec);

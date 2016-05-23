@@ -18,7 +18,7 @@ std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
 
 void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
                     Bachelor myBachelor, Neutral myNeutral,
-                    Daughter myDaughter) {
+                    Daughters myDaughters) {
 
   // using namespace RooFit;
 
@@ -43,8 +43,9 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
   std::string polarity;
   std::string bachelor;
   std::string neutral;
-  std::string daughter;
+  std::string daughters;
   std::string charge;
+  std::string fitting;
   std::string ttree;
 
   // Set fileName and RooCategory options
@@ -61,8 +62,9 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
     ttree = "BtoDstar0h3_h1h2gammaTuple";
   }
 
-  daughter = EnumToString(myDaughter);
+  daughters = EnumToString(myDaughters);
 
+  fitting = ComposeFittingCategoryName(myBachelor, myDaughters);
   // Initialise RooRealVars now neutral has been specified
   Categories categories;
   Configuration config(myNeutral, categories);
@@ -133,8 +135,9 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
     categories.polarity.setLabel(polarity.c_str());
     categories.bachelor.setLabel(bachelor.c_str());
     categories.neutral.setLabel(neutral.c_str());
-    categories.daughter.setLabel(daughter.c_str());
+    categories.daughters.setLabel(daughters.c_str());
     categories.charge.setLabel(charge.c_str());
+    categories.fitting.setLabel(fitting.c_str());
 
     // Add category labels to 'extra' data set
     extraDataSet.add(config.categoryArgSet());
@@ -149,7 +152,7 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
       inputDataSet.reduce("charge==charge::plus"));
 
   std::string dsPlusFileName =
-      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
+      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughters,
                       Charge::plus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
@@ -161,7 +164,7 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
       inputDataSet.reduce("charge==charge::minus"));
   //  Charge in the formula it corresponds to the string we have in the constructor of Categories as RooFit only knows the strings you've given it
   std::string dsMinusFileName =
-      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughter,
+      ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughters,
                       Charge::minus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
@@ -179,9 +182,9 @@ int main(int argc, char **argv) {
   Polarity polarity = StringToEnum<Polarity>(argv[3]);
   Bachelor bachelor = StringToEnum<Bachelor>(argv[4]);
   Neutral neutral = StringToEnum<Neutral>(argv[5]);
-  Daughter daughter = StringToEnum<Daughter>(argv[6]);
+  Daughters daughters = StringToEnum<Daughters>(argv[6]);
 
-  SaveRooDataSet(path, year, polarity, bachelor, neutral, daughter);
+  SaveRooDataSet(path, year, polarity, bachelor, neutral, daughters);
   return 0;
 }
 
