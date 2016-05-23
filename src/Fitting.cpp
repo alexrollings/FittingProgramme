@@ -32,12 +32,15 @@
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
-void Plotting(Bachelor bachelor, Daughters daughters, Neutral neutral,
+void Plotting(Pdf &pdf, Neutral neutral,
               std::vector<Charge> chargeVec, Configuration &config,
               Categories &categories, RooDataSet const &fullDataSet,
               RooSimultaneous const &simPdf) {
 
   // --------------- create frame ---------------------
+
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
 
   std::unique_ptr<RooPlot> frame(config.buMass().frame(RooFit::Title(
       (MakePdfTitle(bachelor, daughters, neutral, chargeVec)).c_str())));
@@ -56,11 +59,55 @@ void Plotting(Bachelor bachelor, Daughters daughters, Neutral neutral,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-      // RooFit::Slice(categories.fitting,
-      //               ComposeFittingCategoryName(bachelor, daughters).c_str()),
-      // RooFit:: 
-      // RooFit::ProjWData(categories.fitting, fullDataSet),
-      // RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue);
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.signalGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.combinatorialExponential()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kViolet));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2Dst0HstGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.crossFeedGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2D0HGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2D0HstGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kTeal));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bd2DstHGaussian()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
 
   // --------------- plot onto canvas ---------------------
 
@@ -121,40 +168,16 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
   // --------------- fit  ---------------------
 
-  simPdf.fitTo(fullDataSet);
+  // simPdf.fitTo(fullDataSet);
+  RooFitResult* result = simPdf.fitTo(fullDataSet, RooFit::Save());
 
   // Loop over daughters again to plot correct PDFs
-  for (auto &d : daughtersVec) {
-
-    if (d == Daughters::kpi) {
-
-      Plotting(Bachelor::pi, Daughters::kpi, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-      Plotting(Bachelor::k, Daughters::kpi, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-
-    } else if (d == Daughters::kk) {
-
-      Plotting(Bachelor::pi, Daughters::kk, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-      Plotting(Bachelor::k, Daughters::kk, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-
-    } else if (d == Daughters::pipi) {
-
-      Plotting(Bachelor::pi, Daughters::pipi, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-      Plotting(Bachelor::k, Daughters::pipi, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-
-    } else {
-
-      Plotting(Bachelor::pi, Daughters::pik, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-      Plotting(Bachelor::k, Daughters::pik, neutral, chargeVec, config,
-               categories, fullDataSet, simPdf);
-    }
+  for (auto &p : pdfs) {
+    Plotting(*p, neutral, chargeVec, config, categories,
+             fullDataSet, simPdf);
   }
+
+  result->Print();
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -348,109 +371,6 @@ int main(int argc, char **argv) {
       }
     }
 
-    // Check categories are assigned correctly
-    // for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
-    //
-    //   RooArgSet const *row = fullDataSet.get(i);
-    //
-    //   std::cout << "For event " << i << ":";
-    //
-    //   RooRealVar *idBuPtr =
-    //       dynamic_cast<RooRealVar
-    //       *>(row->find(config.buPdgId().GetName()));
-    //   if (idBuPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No value for ID[Bu] for event " << i << ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    Bu PDG ID = " << idBuPtr->getVal() << "\n";
-    //   }
-    //
-    //   RooRealVar *mBuPtr =
-    //       dynamic_cast<RooRealVar
-    //       *>(row->find(config.buMass().GetName()));
-    //   if (mBuPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No value for m[Bu] for event " << i << ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    Bu mass = " << mBuPtr->getVal() << "\n";
-    //   }
-    //
-    //   RooCategory *yearPtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.year.GetName()));
-    //   if (yearPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to year for event " << i << ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    year = " << yearPtr->getLabel() << "\n";
-    //   }
-    //
-    //   RooCategory *polarityPtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.polarity.GetName()));
-    //   if (polarityPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to polarity for event " << i <<
-    //     ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    Polarity = " << polarityPtr->getLabel() <<
-    //     "\n";
-    //   }
-    //
-    //   RooCategory *bachelorPtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.bachelor.GetName()));
-    //   if (bachelorPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to bachelor for event " << i <<
-    //     ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    bachelor = " << bachelorPtr->getLabel() <<
-    //     "\n";
-    //   }
-    //
-    //   RooCategory *neutralPtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.neutral.GetName()));
-    //   if (neutralPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to neutral for event " << i <<
-    //     ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
-    //   }
-    //
-    //   RooCategory *daughtersPtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.daughters.GetName()));
-    //   if (daughtersPtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to daughters for event " << i <<
-    //     ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    daughters = " << daughtersPtr->getLabel() <<
-    //     "\n";
-    //   }
-    //
-    //   RooCategory *chargePtr =
-    //       dynamic_cast<RooCategory
-    //       *>(row->find(categories.charge.GetName()));
-    //   if (chargePtr == nullptr) {
-    //     std::stringstream output;
-    //     output << "No category assigned to charge for event " << i <<
-    //     ".";
-    //     throw std::runtime_error(output.str());
-    //   } else {
-    //     std::cout << "    charge = " << chargePtr->getLabel() << "\n";
-    //   }
-    // }
 
     Fitting(fullDataSet, config, categories, neutral, daughtersVec, chargeVec);
   }

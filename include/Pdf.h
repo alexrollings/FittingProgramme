@@ -33,12 +33,15 @@ public:
   inline Bachelor bachelor() const { return bachelor_; }
 
   inline Daughters daughters() const { return daughters_; }
-  
-  inline RooGaussian bu2Dst0HstGaussian() const { return bu2Dst0HstGaussian_; }
-  inline RooGaussian crossFeedGaussian() const { return crossFeedGaussian_; }
-  inline RooGaussian bu2D0HGaussian() const { return bu2D0HGaussian_; }
-  inline RooGaussian bu2D0HstGaussian() const { return bu2D0HstGaussian_; }
-  inline RooGaussian bd2DstHGaussian() const { return bd2DstHGaussian_; }
+ 
+  // So that we can access the pdf components in order to plot them separately
+  inline RooGaussian const &signalGaussian() const { return signalGaussian_; }
+  inline RooExponential const &combinatorialExponential() const { return combinatorialExponential_; }
+  inline RooGaussian const &bu2Dst0HstGaussian() const { return bu2Dst0HstGaussian_; }
+  inline RooGaussian const &crossFeedGaussian() const { return crossFeedGaussian_; }
+  inline RooGaussian const &bu2D0HGaussian() const { return bu2D0HGaussian_; }
+  inline RooGaussian const &bu2D0HstGaussian() const { return bu2D0HstGaussian_; }
+  inline RooGaussian const &bd2DstHGaussian() const { return bd2DstHGaussian_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
 
