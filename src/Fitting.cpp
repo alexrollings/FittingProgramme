@@ -2,13 +2,11 @@
 #include "RooAddPdf.h"
 #include "RooArgList.h"
 #include "RooArgSet.h"
-#include "RooBifurGauss.h"
 #include "RooCategory.h"
-#include "RooDataHist.h"
 #include "RooDataSet.h"
 #include "RooExponential.h"
 #include "RooFitResult.h"
-#include "RooGaussian.h"
+#include "RooCBShape.h"
 #include "RooPlot.h"
 #include "RooRealVar.h"
 #include "RooSimultaneous.h"
@@ -64,7 +62,7 @@ void Plotting(Pdf &pdf, Neutral neutral,
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.signalGaussian()),
+      RooFit::Components(pdf.signal()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
   simPdf.plotOn(
       frame.get(),
@@ -78,36 +76,50 @@ void Plotting(Pdf &pdf, Neutral neutral,
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2Dst0HstGaussian()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.crossFeedGaussian()),
+      RooFit::Components(pdf.crossFeed()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2D0HGaussian()),
+      RooFit::Components(pdf.bu2Dst0Hst_D0pi0()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2Dst0Hst_D0gamma()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2D0H()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2D0HstGaussian()),
+      RooFit::Components(pdf.bu2D0Hst()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kTeal));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bd2DstHGaussian()),
+      RooFit::Components(pdf.bd2DstH()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bd2D0Hst0()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
 
   // --------------- plot onto canvas ---------------------
 
