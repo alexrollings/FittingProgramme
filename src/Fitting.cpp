@@ -18,7 +18,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -218,7 +217,7 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+std::string dsPath = "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
 
 int main(int argc, char **argv) {
 
@@ -362,7 +361,7 @@ int main(int argc, char **argv) {
                         << "\n";
 
               if (!fexists(dsFile)) {
-                std::cerr << dsFile << " does not exists.\n";
+                std::cerr << dsFile << " does not exist.\n";
                 return 1;
               } else {
                 std::cout << dsFile << " exists.\n";

@@ -5,6 +5,7 @@
 #include "RooDataSet.h"
 #include "RooExponential.h"
 #include "RooCBShape.h"
+#include "RooBifurGauss.h"
 #include "RooRealVar.h"
 #include "RooSimultaneous.h"
 
@@ -36,11 +37,12 @@ public:
  
   // So that we can access the pdf components in order to plot them separately
   inline RooCBShape const &signal() const { return signal_; }
+  inline RooBifurGauss const &nonTMSignal() const { return nonTMSignal_; }
   inline RooExponential const &combinatorialExponential() const { return combinatorialExponential_; }
   inline RooCBShape const &bu2Dst0Hst_D0pi0() const { return bu2Dst0Hst_D0pi0_; }
   inline RooCBShape const &bu2Dst0Hst_D0gamma() const { return bu2Dst0Hst_D0gamma_; }
   inline RooCBShape const &crossFeed() const { return crossFeed_; }
-  inline RooCBShape const &bu2D0H() const { return bu2D0H_; }
+  inline RooBifurGauss const &bu2D0H() const { return bu2D0H_; }
   inline RooCBShape const &bu2D0Hst() const { return bu2D0Hst_; }
   inline RooCBShape const &bd2DstH() const { return bd2DstH_; }
   inline RooCBShape const &bd2D0Hst0() const { return bd2D0Hst0_; }
@@ -54,6 +56,9 @@ private:
   RooRealVar signalSigma_;
   RooRealVar aSignal_;
   RooRealVar nSignal_;
+  RooRealVar meanNonTMSignal_;
+  RooRealVar sigmaLeftNonTMSignal_;
+  RooRealVar sigmaRightNonTMSignal_;
   RooRealVar lambdaCombinatorial_;
   RooRealVar meanCrossFeed_;
   RooRealVar sigmaCrossFeed_;
@@ -68,9 +73,8 @@ private:
   RooRealVar aBu2Dst0Hst_D0gamma_;
   RooRealVar nBu2Dst0Hst_D0gamma_;
   RooRealVar meanBu2D0H_;
-  RooRealVar sigmaBu2D0H_;
-  RooRealVar aBu2D0H_;
-  RooRealVar nBu2D0H_;
+  RooRealVar sigmaLeftBu2D0H_;
+  RooRealVar sigmaRightBu2D0H_;
   RooRealVar meanBu2D0Hst_;
   RooRealVar sigmaBu2D0Hst_;
   RooRealVar aBu2D0Hst_;
@@ -84,16 +88,18 @@ private:
   RooRealVar aBd2D0Hst0_;
   RooRealVar nBd2D0Hst0_;
   RooCBShape signal_;
+  RooBifurGauss nonTMSignal_;
   RooExponential combinatorialExponential_;
   RooCBShape crossFeed_;
   RooCBShape bu2Dst0Hst_D0pi0_;
   RooCBShape bu2Dst0Hst_D0gamma_;
-  RooCBShape bu2D0H_;
+  RooBifurGauss bu2D0H_;
   RooCBShape bu2D0Hst_;
   RooCBShape bd2DstH_;
   RooCBShape bd2D0Hst0_;
   RooArgList functions_;
   RooRealVar signalYield_;
+  RooRealVar nonTMSignalYield_;
   RooRealVar combinatorialYield_;
   RooRealVar bu2Dst0Hst_D0pi0Yield_;
   RooRealVar bu2Dst0Hst_D0gammaYield_;
