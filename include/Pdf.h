@@ -46,6 +46,7 @@ public:
   inline RooCBShape const &bu2D0Hst() const { return bu2D0Hst_; }
   inline RooCBShape const &bd2DstH() const { return bd2DstH_; }
   inline RooCBShape const &bd2D0Hst0() const { return bd2D0Hst0_; }
+  inline RooCBShape const &missId() const { return missId1_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
 
@@ -87,6 +88,16 @@ private:
   RooRealVar sigmaBd2D0Hst0_;
   RooRealVar aBd2D0Hst0_;
   RooRealVar nBd2D0Hst0_;
+  RooRealVar meanMissId1_;
+  RooRealVar sigmaMissId1_;
+  RooRealVar aMissId1_;
+  RooRealVar nMissId1_;
+  RooRealVar meanMissId2_;
+  RooRealVar sigmaMissId2_;
+  RooRealVar aMissId2_;
+  RooRealVar nMissId2_;
+  // Miss-ID background is made up of 2 components: define fraction of first component w.r.t. entire PDF to enter into a RooAddPdf
+  RooRealVar fracMissId1_;
   RooCBShape signal_;
   RooBifurGauss nonTMSignal_;
   RooExponential combinatorialExponential_;
@@ -97,6 +108,9 @@ private:
   RooCBShape bu2D0Hst_;
   RooCBShape bd2DstH_;
   RooCBShape bd2D0Hst0_;
+  RooCBShape missId1_;
+  RooCBShape missId2_;
+  RooAddPdf missId_;
   RooArgList functions_;
   RooRealVar signalYield_;
   RooRealVar nonTMSignalYield_;
@@ -108,6 +122,7 @@ private:
   RooRealVar bu2D0HstYield_;
   RooRealVar bd2D0Hst0Yield_;
   RooRealVar bd2DstHYield_;
+  RooRealVar missIdYield_;
   RooArgList yields_;
   double scaleFactor;
   double bachelorScaleFactor;
