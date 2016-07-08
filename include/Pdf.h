@@ -7,6 +7,7 @@
 #include "RooCBShape.h"
 #include "RooBifurGauss.h"
 #include "RooRealVar.h"
+#include "RooFormulaVar.h"
 #include "RooSimultaneous.h"
 
 #include "Configuration.h"
@@ -53,6 +54,8 @@ public:
 private:
   Daughters daughters_;
   Bachelor bachelor_;
+  double kRelativeWidth_;
+  RooRealVar relativeWidth_;
   RooRealVar signalMean_;
   RooRealVar signalSigma_;
   RooRealVar aSignal_;
@@ -98,6 +101,7 @@ private:
   RooRealVar nMissId2_;
   // Miss-ID background is made up of 2 components: define fraction of first component w.r.t. entire PDF to enter into a RooAddPdf
   RooRealVar fracMissId1_;
+  RooFormulaVar signalSigmaFormula_;
   RooCBShape signal_;
   RooBifurGauss nonTMSignal_;
   RooExponential combinatorialExponential_;
