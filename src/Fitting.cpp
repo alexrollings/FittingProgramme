@@ -68,29 +68,36 @@ void Plotting(Pdf &pdf, Neutral neutral,
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.nonTMSignal()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kBlack));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.combinatorialExponential()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kViolet));
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed+2));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.crossFeed()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0pi0()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0gamma()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta+3));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
@@ -118,7 +125,14 @@ void Plotting(Pdf &pdf, Neutral neutral,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bd2D0Hst0()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed));
+      RooFit::LineStyle(kDashed), RooFit::LineColor(kYellow));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.missId()),
+      RooFit::LineStyle(kDashed), RooFit::LineColor(9));
 
   // --------------- plot onto canvas ---------------------
 
