@@ -18,9 +18,9 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
 
   buMass_.SetName(buMassVar.c_str());
   buMass_.SetTitle("Bu Mass DTF Constrained");
-  buMass_.setMax(5705);
-  buMass_.setMin(4980);
-  buMass_.setBins(145);
+  buMass_.setMax(5805);
+  buMass_.setMin(5040);
+  buMass_.setBins(152);
   buMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName(buPdgIdVar.c_str());

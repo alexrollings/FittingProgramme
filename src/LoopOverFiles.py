@@ -11,7 +11,7 @@ import os, re, subprocess, sys
 
 def pass_filename(filename):
 
-  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+).root", filename)
+  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+.root", filename)
   #regex says if not an "_" or a "/", it is a group
 
   if m:
