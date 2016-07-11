@@ -57,11 +57,16 @@ std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
 
+std::string EnumToLabel(std::vector<Charge> chargeVec);
+std::string EnumToLabel(Daughters, std::vector<Charge> chargeVec);
+std::string EnumToLabel(Bachelor);
+std::string EnumToLabel(Neutral);
+std::string MissIdLabel(Bachelor);
+std::string CrossFeedLabel(Neutral);
+std::string HstLabel(Bachelor);
+
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge);
 
 std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters);
-
-std::string MakePdfTitle(Bachelor bachelor, Daughters daughters,
-                         Neutral neutral, std::vector<Charge> chargeVec);

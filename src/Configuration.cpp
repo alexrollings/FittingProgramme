@@ -3,8 +3,8 @@
 Configuration::Configuration(Neutral neutral, Categories const &categories)
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
 
-  constexpr const char *kMassUnit = "Mev/c^2";
-  constexpr const char *kMomentumUnit = "Mev/c";
+  constexpr const char *kMassUnit = "MeV/c^{2}";
+  constexpr const char *kMomentumUnit = "MeV/c";
   constexpr const char *kNoUnit = "";
 
   std::string buMassVar, buPdgIdVar;
@@ -17,7 +17,7 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
   }
 
   buMass_.SetName(buMassVar.c_str());
-  buMass_.SetTitle("Bu Mass DTF Constrained");
+  buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
   buMass_.setMin(5045);
   buMass_.setBins(152);
@@ -227,6 +227,7 @@ std::string EnumToString(Charge charge) {
   }
 }
 
+
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge) {
@@ -239,51 +240,77 @@ std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters) {
   return EnumToString(bachelor) + "_" + EnumToString(daughters);
 }
 
-std::string MakePdfTitle(Bachelor bachelor, Daughters daughters,
-                         Neutral neutral, std::vector<Charge> chargeVec) {
-
-  std::string firstDaughter;
-  std::string secondDaughter;
-  std::string bachelorString;
-  std::string neutralString;
-
-  if (bachelor == Bachelor::pi) {
-    bachelorString = "#pi";
-  } else {
-    bachelorString = "K";
-  }
-
-  if (daughters == Daughters::kpi) {
-    firstDaughter = "K";
-    secondDaughter = "#pi";
-  } else if (daughters == Daughters::kk) {
-    firstDaughter = "K";
-    secondDaughter = "K";
-  } else if (daughters == Daughters::pipi) {
-    firstDaughter = "#pi";
-    secondDaughter = "#pi";
-  } else {
-    firstDaughter = "#pi";
-    secondDaughter = "K";
-  }
-
-  if(neutral == Neutral::pi0){
-    neutralString = "#pi^{0}";
-  } else {
-    neutralString = "#gamma";
-  }
-
-  if (chargeVec.size() == 2) {
-    return "B^{-}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
-           "^{-}" + secondDaughter + "^{+}#font[132]{]}_{D}" +
-           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{-}";
-  } else if (chargeVec[0] == Charge::plus) {
-    return "B^{+}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
-           "^{+}" + secondDaughter + "^{-}#font[132]{]}_{D}" +
-           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{+}";
-  } else {
-    return "B^{-}#rightarrow#font[132]{[}#font[132]{[}" + firstDaughter +
-           "^{-}" + secondDaughter + "^{+}#font[132]{]}_{D}" +
-           neutralString + "#font[132]{]}_{D^{*}}" + bachelorString + "^{-}";
+std::string EnumToLabel(std::vector<Charge> chargeVec) {
+  if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {
+    return "-";
+  } else { 
+      return "+";
   }
 }
+
+std::string EnumToLabel(Daughters daughters, std::vector<Charge> chargeVec) {
+  switch (daughters) {
+    case Daughters::kpi:
+      if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {    
+        return "K^{-}#pi^{+}";
+      } else {  
+        return "K^{+}#pi^{-}";
+      }
+    case Daughters::kk:
+      return "K^{+}K^{-}";
+    case Daughters::pipi:
+        return "#pi^{+}#pi^{-}";
+    case Daughters::pik:
+      if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {    
+        return "#pi^{-}K^{+}";
+      } else {  
+        return "#pi^{+}K^{-}";
+      }
+  }
+}
+
+std::string EnumToLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "#pi";
+    case Bachelor::k:
+      return "K";
+  }
+}
+
+std::string EnumToLabel(Neutral neutral) {
+  switch (neutral) {
+    case Neutral::pi0:
+      return "#pi^{0}";
+    case Neutral::gamma:
+      return "#gamma";
+  }
+}
+
+std::string MissIdLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "K";
+    case Bachelor::k:
+      return "#pi";
+  }
+}
+
+std::string HstLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "#rho";
+    case Bachelor::k:
+      return "K^{*}";
+  }
+}
+
+std::string CrossFeedLabel(Neutral neutral) {
+  switch (neutral) {
+    case Neutral::pi0:
+      return "#gamma";
+    case Neutral::gamma:
+      return "#pi^{0}";
+  }
+}
+
