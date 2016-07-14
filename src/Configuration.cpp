@@ -234,8 +234,8 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
-std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters) {
-  return EnumToString(bachelor) + "_" + EnumToString(daughters);
+std::string ComposeFittingCategoryName(Neutral neutral, Bachelor bachelor, Daughters daughters) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" + EnumToString(daughters);
 }
 
 std::string EnumToLabel(std::vector<Charge> chargeVec) {
