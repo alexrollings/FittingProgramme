@@ -16,7 +16,7 @@
 
 class Pdf {
 public:
-  Pdf(Bachelor bachelor, Daughters daughters, RooRealVar &fitVariable);
+  Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters, RooRealVar &fitVariable);
       // RooArgList const &commonFunctions);
 
   Pdf(Pdf const &) = delete;
@@ -33,12 +33,14 @@ public:
   // By declaring the function const you say you are not going to change
   // anything in the class by calling the function
   inline Bachelor bachelor() const { return bachelor_; }
-
   inline Daughters daughters() const { return daughters_; }
+  inline Neutral neutral() const { return neutral_; }
  
   // So that we can access the pdf components in order to plot them separately
-  inline RooCBShape const &signal() const { return signal_; }
-  inline RooBifurGauss const &nonTMSignal() const { return nonTMSignal_; }
+  inline RooCBShape const &signalPi0() const { return signalPi0_; }
+  inline RooBifurGauss const &nonTMSignalPi0() const { return nonTMSignalPi0_; }
+  inline RooBifurGauss const &signalGamma() const { return signalGamma_; }
+  inline RooAddPdf const &nonTMSignalGamma() const { return nonTMSignalGamma_; }
   inline RooExponential const &combinatorialExponential() const { return combinatorialExponential_; }
   inline RooCBShape const &bu2Dst0Hst_D0pi0() const { return bu2Dst0Hst_D0pi0_; }
   inline RooCBShape const &bu2Dst0Hst_D0gamma() const { return bu2Dst0Hst_D0gamma_; }
@@ -47,22 +49,36 @@ public:
   inline RooCBShape const &bu2D0Hst() const { return bu2D0Hst_; }
   inline RooCBShape const &bd2DstH() const { return bd2DstH_; }
   inline RooCBShape const &bd2D0Hst0() const { return bd2D0Hst0_; }
-  inline RooCBShape const &missId() const { return missId1_; }
+  inline RooAddPdf const &missId() const { return missId_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
 
 private:
   Daughters daughters_;
   Bachelor bachelor_;
-  double kRelativeWidth_;
-  RooRealVar relativeWidth_;
-  RooRealVar signalMean_;
-  RooRealVar signalSigma_;
-  RooRealVar aSignal_;
-  RooRealVar nSignal_;
-  RooRealVar meanNonTMSignal_;
-  RooRealVar sigmaLeftNonTMSignal_;
-  RooRealVar sigmaRightNonTMSignal_;
+  Neutral neutral_;
+  double relativeWidth_;
+  RooRealVar signalPi0Mean_;
+  RooRealVar signalPi0Sigma_;
+  RooRealVar aSignalPi0_;
+  RooRealVar nSignalPi0_;
+  RooRealVar signalGammaMean_;  
+  RooRealVar signalGammaSigmaLeft_;
+  RooRealVar signalGammaSigmaRight_;
+  RooRealVar relativeWidthVar_;
+  RooFormulaVar signalGammaSigmaLeftFormula_;
+  RooFormulaVar signalGammaSigmaRightFormula_;
+  RooRealVar meanNonTMSignalGamma_;
+  RooRealVar sigmaNonTMSignalGamma1_;
+  RooRealVar aNonTMSignalGamma1_;
+  RooRealVar nNonTMSignalGamma1_;
+  RooRealVar fracNonTMSignalGamma1_;
+  RooRealVar sigmaNonTMSignalGamma2_;
+  RooRealVar aNonTMSignalGamma2_;
+  RooRealVar nNonTMSignalGamma2_;
+  RooRealVar meanNonTMSignalPi0_;
+  RooRealVar sigmaLeftNonTMSignalPi0_;
+  RooRealVar sigmaRightNonTMSignalPi0_;
   RooRealVar lambdaCombinatorial_;
   RooRealVar meanCrossFeed_;
   RooRealVar sigmaCrossFeed_;
@@ -102,8 +118,12 @@ private:
   // Miss-ID background is made up of 2 components: define fraction of first component w.r.t. entire PDF to enter into a RooAddPdf
   RooRealVar fracMissId1_;
   RooFormulaVar signalSigmaFormula_;
-  RooCBShape signal_;
-  RooBifurGauss nonTMSignal_;
+  RooCBShape signalPi0_;
+  RooBifurGauss nonTMSignalPi0_;
+  RooBifurGauss signalGamma_;
+  RooCBShape nonTMSignalGamma1_;
+  RooCBShape nonTMSignalGamma2_;
+  RooAddPdf nonTMSignalGamma_;
   RooExponential combinatorialExponential_;
   RooCBShape crossFeed_;
   RooCBShape bu2Dst0Hst_D0pi0_;
@@ -116,7 +136,8 @@ private:
   RooCBShape missId2_;
   RooAddPdf missId_;
   RooArgList functions_;
-  double kSignalBR_;
+  double kSignalPi0BR_;
+  double kSignalGammaBR_;
   double kCrossFeedBR_;
   double kBu2Dst0Hst_D0pi0BR_;
   double kBu2Dst0Hst_D0gammaBR_;
