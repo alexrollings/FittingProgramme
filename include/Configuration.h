@@ -69,4 +69,4 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge);
 
-std::string ComposeFittingCategoryName(Bachelor bachelor, Daughters daughters);
+std::string ComposeFittingCategoryName(Neutral neutral, Bachelor bachelor, Daughters daughters);

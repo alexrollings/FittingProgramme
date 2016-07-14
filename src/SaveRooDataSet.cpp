@@ -14,7 +14,8 @@
 
 #include "Configuration.h"
 
-std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
+// std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
+std::string dsPath("~/Desktop/FittingProgramme/roodatasets/");
 
 void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
                     Bachelor myBachelor, Neutral myNeutral,
@@ -64,7 +65,7 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
 
   daughters = EnumToString(myDaughters);
 
-  fitting = ComposeFittingCategoryName(myBachelor, myDaughters);
+  fitting = ComposeFittingCategoryName(myNeutral, myBachelor, myDaughters);
   // Initialise RooRealVars now neutral has been specified
   Categories categories;
   Configuration config(myNeutral, categories);

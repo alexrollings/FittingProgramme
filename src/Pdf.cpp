@@ -31,7 +31,7 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
                                     RooArgList(signalGammaSigmaRight_,
                                                relativeWidthVar_)),
       lambdaCombinatorial_(("lambda_Combinatorial_" +
-                            ComposeFittingCategoryName(bachelor_, daughters_))
+                            ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                                .c_str(),
                            "Combinatorial lambda", 0, -0.1, 0.1),
       meanNonTMSignalPi0_("meanNonTMSignalPi0", "Non TM signal mean", 0),
@@ -128,7 +128,7 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
                         RooArgList(nonTMSignalGamma1_, nonTMSignalGamma2_),
                         fracNonTMSignalGamma1_),
       combinatorialExponential_(("Combinatorial_Exponential_" +
-                                 ComposeFittingCategoryName(bachelor_,
+                                 ComposeFittingCategoryName(neutral_, bachelor_,
                                                             daughters_))
                                     .c_str(),
                                 "Combinatorial exponential pdf", fitVariable,
@@ -199,21 +199,21 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       // Also have to multiple by relative production cross section of Bd w.r.t.
       // Bu.
       signalYield_(("signal_yield_" +
-                    ComposeFittingCategoryName(bachelor_, daughters_))
+                    ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                        .c_str(),
                    "m[Bu] signal yield", 1000, 0, 20000),
       // Improve this estimate for each decay mode?
       nonTMSignalYield_(("nonTMSignalYield_" +
-                         ComposeFittingCategoryName(bachelor_, daughters_))
+                         ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                             .c_str(),
                         "Formula for non TM signal yield", "(@0*@1*@2)",
                         RooArgList(signalYield_, probLoosePi0_, probAddPi0_)),
       combinatorialYield_(("combinatorialYield_" +
-                           ComposeFittingCategoryName(bachelor_, daughters_))
+                           ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                               .c_str(),
                           "m[Bu] combinatorial yield", 0, 0, 0, ""),
       bu2Dst0Hst_D0pi0Yield_(("bu2Dst0Hst_D0pi0Yield_" +
-                              ComposeFittingCategoryName(bachelor_, daughters_))
+                              ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                                  .c_str(),
                              "Formula for bu2Dst0Hst_D0pi0 yield",
                              "(@0*@1/@2*@3)",
@@ -221,42 +221,42 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
                                         signalBR_, probLoosePi0_)),
       bu2Dst0Hst_D0gammaYield_(
           ("bu2Dst0Hst_D0gammaYield_" +
-           ComposeFittingCategoryName(bachelor_, daughters_))
+           ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
               .c_str(),
           "Formula for bu2Dst0Hst_D0gamma yield", "(@0*@1/@2*@3*@4*@5)",
           RooArgList(signalYield_, bu2Dst0Hst_D0gammaBR_, signalBR_,
                      probLoosePi0_, probLooseGamma_, probAddPi0_)),
       crossFeedYield_(("crossFeedYield_" +
-                       ComposeFittingCategoryName(bachelor_, daughters_))
+                       ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                           .c_str(),
                       "Formula for crossFeed yield", "(@0*@1/@2*@3*@4)",
                       RooArgList(signalYield_, crossFeedBR_, signalBR_,
                                  probLooseGamma_, probAddPi0_)),
       bu2D0HYield_(("bu2D0HYield_" +
-                    ComposeFittingCategoryName(bachelor_, daughters_))
+                    ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                        .c_str(),
                    "Formula for bu2D0H yield", "(@0*@1/@2*@3)",
                    RooArgList(signalYield_, bu2D0HBR_, signalBR_, probAddPi0_)),
       bu2D0HstYield_(("bu2D0HstYield_" +
-                      ComposeFittingCategoryName(bachelor_, daughters_))
+                      ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                          .c_str(),
                      "Formula for bu2D0Hst yield", "(@0*@1/@2*@3*@4)",
                      RooArgList(signalYield_, bu2D0HstBR_, signalBR_,
                                 probLoosePi0_, probAddPi0_)),
       bd2DstHYield_(("bd2DstHYield_" +
-                     ComposeFittingCategoryName(bachelor_, daughters_))
+                     ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                         .c_str(),
                     "Formula for bd2DstH yield", "(@0*@1/@2*@3*@4)",
                     RooArgList(signalYield_, bd2DstHBR_, signalBR_,
                                probLoosePi_, probAddPi0_)),
       bd2D0Hst0Yield_(("bd2D0Hst0Yield_" +
-                       ComposeFittingCategoryName(bachelor_, daughters_))
+                       ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                           .c_str(),
                       "Formula for bd2D0Hst0 yield", "(@0*@1/@2*@3*@4)",
                       RooArgList(signalYield_, bd2D0Hst0BR_, signalBR_,
                                  probLoosePi_, probAddPi0_)),
       missIdYield_(("missId_yield_" +
-                    ComposeFittingCategoryName(bachelor_, daughters_))
+                    ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                        .c_str(),
                    "m[Bu] missId yield", 100, 0, 20000),
       yields_(),
@@ -426,13 +426,13 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
   yields_.add(missIdYield_);
 
   addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeFittingCategoryName(bachelor_, daughters_)).c_str(),
-      ("pdf_" + ComposeFittingCategoryName(bachelor_, daughters_)).c_str(),
+      ("pdf_" + ComposeFittingCategoryName(neutral_, bachelor_, daughters_)).c_str(),
+      ("pdf_" + ComposeFittingCategoryName(neutral_, bachelor_, daughters_)).c_str(),
       functions_, yields_));
 }
 
 void Pdf::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(*addPdf_,
-                ComposeFittingCategoryName(bachelor_, daughters_).c_str());
+                ComposeFittingCategoryName(neutral_, bachelor_, daughters_).c_str());
 }
 
