@@ -9,14 +9,12 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
 
   std::string buMassVar, buPdgIdVar;
   if (neutral == Neutral::pi0) {
-    buMassVar = "Pi0_Bu_M_DTF_D0Pi0";
     buPdgIdVar = "Pi0_Bu_ID";
   } else {
-    buMassVar = "Gamma_Bu_M_DTF_D0";
     buPdgIdVar = "Gamma_Bu_ID";
   }
 
-  buMass_.SetName(buMassVar.c_str());
+  buMass_.SetName("Pi0_Bu_M_DTF_D0Pi0");
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
   buMass_.setMin(5045);

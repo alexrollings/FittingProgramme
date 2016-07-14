@@ -111,7 +111,20 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
         RooFit::LineColor(kBlack));
     break;
   case Neutral::gamma:
-    std::cerr << " GAMMA MODE ???\n";
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(categories.fitting,
+                      ComposeFittingCategoryName(bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.signalGamma()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlue));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(categories.fitting,
+                      ComposeFittingCategoryName(bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.nonTMSignalGamma()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlack));
     break;
   }
   simPdf.plotOn(
@@ -478,7 +491,7 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+std::string dsPath = "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
 
 int main(int argc, char **argv) {
 
