@@ -28,7 +28,7 @@ struct Categories {
 class Configuration {
 
 public:
-  Configuration(Neutral neutral, Categories const &categories);
+  Configuration(Categories const &categories);
   Configuration(Configuration const &) = delete;
   Configuration(Configuration &&) = delete;
   Configuration &operator=(Configuration const &) = delete;
