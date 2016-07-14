@@ -1,18 +1,11 @@
 #include "Configuration.h"
 
-Configuration::Configuration(Neutral neutral, Categories const &categories)
+Configuration::Configuration(Categories const &categories)
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
   constexpr const char *kNoUnit = "";
-
-  std::string buMassVar, buPdgIdVar;
-  if (neutral == Neutral::pi0) {
-    buPdgIdVar = "Pi0_Bu_ID";
-  } else {
-    buPdgIdVar = "Gamma_Bu_ID";
-  }
 
   buMass_.SetName("Pi0_Bu_M_DTF_D0Pi0");
   buMass_.SetTitle("m[Bu]");
@@ -21,7 +14,7 @@ Configuration::Configuration(Neutral neutral, Categories const &categories)
   buMass_.setBins(152);
   buMass_.setUnit(kMassUnit);
 
-  buPdgId_.SetName(buPdgIdVar.c_str());
+  buPdgId_.SetName("Pi0_Bu_ID");
   buPdgId_.SetTitle("Bu PDG ID");
   buPdgId_.setMax(550);
   buPdgId_.setMin(-550);
@@ -72,25 +65,45 @@ Categories::Categories()
   // PlotOn only takes one category as an option therefore we need to encompass
   // both bachelor and daughters in the same category
   fitting.defineType(
-      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
           .c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
           .c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
           .c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
           .c_str());
   fitting.defineType(
-      (EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
 }
 
 // Need a template for this as each enum option is a different 'type'

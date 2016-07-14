@@ -491,7 +491,8 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath = "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+// std::string dsPath = "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
 
@@ -611,7 +612,7 @@ int main(int argc, char **argv) {
     }
 
     Categories categories;
-    Configuration config(neutral, categories); // Initialise RooRealVars
+    Configuration config(categories); // Initialise RooRealVars
 
     RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
