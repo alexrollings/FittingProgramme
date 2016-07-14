@@ -26,10 +26,10 @@
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
-void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
-              Configuration &config, Categories &categories,
-              RooDataSet const &fullDataSet, RooSimultaneous const &simPdf) {
-  
+void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
+              Categories &categories, RooDataSet const &fullDataSet,
+              RooSimultaneous const &simPdf) {
+
   // -------------- Set Style Attributes ------------------
 
   gStyle->SetTitleFont(132, "XYZ");
@@ -53,6 +53,7 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
 
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
 
   std::string chargeLabel = EnumToLabel(chargeVec);
   std::string daughtersLabel = EnumToLabel(daughters, chargeVec);
@@ -62,19 +63,20 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
   std::string hstLabel = HstLabel(bachelor);
   std::string missIdLabel = MissIdLabel(bachelor);
 
-  std::unique_ptr<RooPlot> frame(config.buMass().frame(RooFit::Title((
-      "B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-      daughtersLabel + "#font[132]{]}_{D}" + neutralLabel +
-      "#font[132]{]}_{D^{*}}" + bachelorLabel + "^{" + chargeLabel + "}").c_str())));
+  std::unique_ptr<RooPlot> frame(config.buMass().frame(RooFit::Title(
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D}" + neutralLabel +
+       "#font[132]{]}_{D^{*}}" + bachelorLabel + "^{" + chargeLabel + "}")
+          .c_str())));
 
   // --------- Create histogram of data to plot on top of fit ----------
-  // FIX: NOT WORKING???
+  // Need to plot a reduced data set
 
-  TH1F *dataHist = (TH1F *)fullDataSet.createHistogram(
-      "dataHist", config.buMass(), RooFit::Binning(152));
-  dataHist->SetMarkerColor(1);
-  dataHist->SetMarkerStyle(20);
-  dataHist->SetMarkerSize(1);
+  // TH1F *dataHist = (TH1F *)fullDataSet.createHistogram(
+  //     "dataHist", config.buMass(), RooFit::Binning(152));
+  // dataHist->SetMarkerColor(1);
+  // dataHist->SetMarkerStyle(20);
+  // dataHist->SetMarkerSize(1);
 
   // --------------- plot data and pdfs onto frame ---------------------
 
@@ -84,26 +86,34 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
                                    .c_str()));
 
   // .get() gets the raw pointer from underneath the smart pointer
+
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeFittingCategoryName(bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kBlue));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeFittingCategoryName(bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.nonTMSignal()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kBlack));
+  switch (neutral) {
+  case Neutral::pi0:
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(categories.fitting,
+                      ComposeFittingCategoryName(bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.signalPi0()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlue));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(categories.fitting,
+                      ComposeFittingCategoryName(bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.nonTMSignalPi0()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlack));
+    break;
+  case Neutral::gamma:
+    std::cerr << " GAMMA MODE ???\n";
+    break;
+  }
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
@@ -169,62 +179,88 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
       RooFit::LineColor(9));
 
   // ------------- Draw Legend --------------
-  
-  TH1D *signalHist = new TH1D("signalHist", "signalHist", 0, 0, 0);
+
+  TH1D *signalHist = new TH1D(
+      ("signalHist" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
+      "signalHist", 0, 0, 0);
   signalHist->SetLineColor(kBlue);
   signalHist->SetLineStyle(kDashed);
   signalHist->SetLineWidth(2);
 
-  TH1D *nonTMSignalHist =
-      new TH1D("nonTMSignalHist", "nonTMSignalHist", 0, 0, 0);
+  TH1D *nonTMSignalHist = new TH1D(
+      ("nonTMSignalHist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "nonTMSignalHist", 0, 0, 0);
   nonTMSignalHist->SetLineColor(kBlack);
   nonTMSignalHist->SetLineStyle(kDashed);
   nonTMSignalHist->SetLineWidth(2);
 
-  TH1D *crossFeedHist = new TH1D("crossFeedHist", "crossFeedHist", 0, 0, 0);
+  TH1D *crossFeedHist = new TH1D(
+      ("crossFeedHist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "crossFeedHist", 0, 0, 0);
   crossFeedHist->SetLineColor(kRed);
   crossFeedHist->SetLineStyle(kDashed);
   crossFeedHist->SetLineWidth(2);
 
-  TH1D *bu2Dst0Hst_D0pi0Hist =
-      new TH1D("bu2Dst0Hst_D0pi0Hist", "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
+  TH1D *bu2Dst0Hst_D0pi0Hist = new TH1D(
+      ("bu2Dst0Hst_D0pi0Hist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
   bu2Dst0Hst_D0pi0Hist->SetLineColor(kGreen);
   bu2Dst0Hst_D0pi0Hist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0pi0Hist->SetLineWidth(2);
 
   TH1D *bu2Dst0Hst_D0gammaHist =
-      new TH1D("bu2Dst0Hst_D0gammaHist", "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
+      new TH1D(("bu2Dst0Hst_D0gammaHist" +
+                ComposeFittingCategoryName(bachelor, daughters))
+                   .c_str(),
+               "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
   bu2Dst0Hst_D0gammaHist->SetLineColor(kMagenta + 3);
   bu2Dst0Hst_D0gammaHist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0gammaHist->SetLineWidth(2);
 
-  TH1D *bu2D0HHist = new TH1D("bu2D0HHist", "bu2D0HHist", 0, 0, 0);
+  TH1D *bu2D0HHist = new TH1D(
+      ("bu2D0HHist" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
+      "bu2D0HHist", 0, 0, 0);
   bu2D0HHist->SetLineColor(kOrange);
   bu2D0HHist->SetLineStyle(kDashed);
   bu2D0HHist->SetLineWidth(2);
 
-  TH1D *bu2D0HstHist = new TH1D("bu2D0HstHist", "bu2D0HstHist", 0, 0, 0);
+  TH1D *bu2D0HstHist = new TH1D(
+      ("bu2D0HstHist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "bu2D0HstHist", 0, 0, 0);
   bu2D0HstHist->SetLineColor(kTeal);
   bu2D0HstHist->SetLineStyle(kDashed);
   bu2D0HstHist->SetLineWidth(2);
 
-  TH1D *bd2DstHHist = new TH1D("bd2DstHHist", "bd2DstHHist", 0, 0, 0);
+  TH1D *bd2DstHHist = new TH1D(
+      ("bd2DstHHist" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
+      "bd2DstHHist", 0, 0, 0);
   bd2DstHHist->SetLineColor(kMagenta);
   bd2DstHHist->SetLineStyle(kDashed);
   bd2DstHHist->SetLineWidth(2);
 
-  TH1D *bd2D0Hst0Hist = new TH1D("bd2D0Hst0Hist", "bd2D0Hst0Hist", 0, 0, 0);
+  TH1D *bd2D0Hst0Hist = new TH1D(
+      ("bd2D0Hst0Hist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "bd2D0Hst0Hist", 0, 0, 0);
   bd2D0Hst0Hist->SetLineColor(kYellow);
   bd2D0Hst0Hist->SetLineStyle(kDashed);
   bd2D0Hst0Hist->SetLineWidth(2);
 
-  TH1D *combinatorialHist =
-      new TH1D("combinatorialHist", "combinatorialHist", 0, 0, 0);
+  TH1D *combinatorialHist = new TH1D(
+      ("combinatorialHist" + ComposeFittingCategoryName(bachelor, daughters))
+          .c_str(),
+      "combinatorialHist", 0, 0, 0);
   combinatorialHist->SetLineColor(kRed + 2);
   combinatorialHist->SetLineStyle(kDashed);
   combinatorialHist->SetLineWidth(2);
 
-  TH1D *missIdHist = new TH1D("missIdHist", "missIdHist", 0, 0, 0);
+  TH1D *missIdHist = new TH1D(
+      ("missIdHist" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
+      "missIdHist", 0, 0, 0);
   missIdHist->SetLineColor(9);
   missIdHist->SetLineStyle(kDashed);
   missIdHist->SetLineWidth(2);
@@ -247,7 +283,8 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
        "#font[132]{]}_{D^{0}*}" + hstLabel + "^{" + chargeLabel + "}")
           .c_str(),
       "l");
-  legend->AddEntry(bu2Dst0Hst_D0gammaHist,
+  legend->AddEntry(
+      bu2Dst0Hst_D0gammaHist,
       ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
        daughtersLabel + "#font[132]{]}_{D^{0}}" + crossFeedLabel +
        "#font[132]{]}_{D^{0}*}" + hstLabel + "^{" + chargeLabel + "}")
@@ -267,34 +304,36 @@ void Plotting(Pdf &pdf, Neutral neutral, std::vector<Charge> chargeVec,
                    "l");
   legend->AddEntry(bd2DstHHist,
                    ("B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                       daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{-}#font["
-                                        "132]{]}_{D^{-}*}" +
-                       bachelorLabel + "^{+}").c_str(),
+                    daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{-}#font["
+                                     "132]{]}_{D^{-}*}" +
+                    bachelorLabel + "^{+}")
+                       .c_str(),
                    "l");
   legend->AddEntry(bd2D0Hst0Hist,
                    ("B^{0}#rightarrow#font[132]{[}" + daughtersLabel +
-                       "#font[132]{]}_{D^{0}}" + hstLabel + "^{0}").c_str(),
+                    "#font[132]{]}_{D^{0}}" + hstLabel + "^{0}")
+                       .c_str(),
                    "l");
-  legend->AddEntry(missIdHist, ("Miss-ID B^{" + chargeLabel +
-                                "}#rightarrow#font[132]{[}#font[132]{[}" +
-                                daughtersLabel + "#font[132]{]}_{D^{0}}" +
-                                crossFeedLabel + "#font[132]{]}_{D^{0}*}" +
-                                missIdLabel + "^{" + chargeLabel + "}")
-                                   .c_str(),
-                   "l");
+  legend->AddEntry(
+      missIdHist,
+      ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}" + crossFeedLabel +
+       "#font[132]{]}_{D^{0}*}" + missIdLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
   legend->AddEntry(combinatorialHist, "Combinatorial", "l");
 
   // --------------- plot onto canvas ---------------------
 
   TCanvas canvas(
-      ("simPdf_" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
+      ("simPdf_" + EnumToString(neutral) + "_" + ComposeFittingCategoryName(bachelor, daughters)).c_str(),
       "simPdf", 1500, 900);
   frame->Draw();
   legend->Draw("same");
   // dataHist->Draw("same");
 
   canvas.SaveAs(
-      ("Result_" + ComposeFittingCategoryName(bachelor, daughters) + ".pdf")
+      ("Result_" + EnumToString(neutral) + "_" + ComposeFittingCategoryName(bachelor, daughters) + ".pdf")
           .c_str());
 }
 
@@ -319,24 +358,80 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
       // vector type
       // The operators required to do this are not supported by RooFit so we
       // have to use a vector of pointers
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kpi, config.buMass()));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kpi, config.buMass()));
 
+      // switch (neutral) {
+      // case Neutral::pi0:
+
+      switch (neutral) {
+      case Neutral::pi0:
+
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::kpi,
+                                  config.buMass()));
+        break;
+      case Neutral::gamma:
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kpi,
+                                  config.buMass()));
+      }
     } else if (d == Daughters::kk) {
 
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::kk, config.buMass()));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::kk, config.buMass()));
+      switch (neutral) {
+      case Neutral::pi0:
 
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kk,
+                                  config.buMass()));
+        pdfs.emplace_back(
+            new Pdf(Neutral::pi0, Bachelor::k, Daughters::kk, config.buMass()));
+
+        break;
+
+      case Neutral::gamma:
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::kk,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kk,
+                                  config.buMass()));
+        break;
+      }
     } else if (d == Daughters::pipi) {
 
-      pdfs.emplace_back(
-          new Pdf(Bachelor::pi, Daughters::pipi, config.buMass()));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pipi, config.buMass()));
+      switch (neutral) {
+      case Neutral::pi0:
 
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pipi,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::pipi,
+                                  config.buMass()));
+        break;
+
+      case Neutral::gamma:
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::pipi,
+                                  config.buMass()));
+        break;
+      }
     } else {
 
-      pdfs.emplace_back(new Pdf(Bachelor::pi, Daughters::pik, config.buMass()));
-      pdfs.emplace_back(new Pdf(Bachelor::k, Daughters::pik, config.buMass()));
+      switch (neutral) {
+      case Neutral::pi0:
+
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pik,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::pik,
+                                  config.buMass()));
+
+        break;
+
+      case Neutral::gamma:
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::pik,
+                                  config.buMass()));
+        pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::pik,
+                                  config.buMass()));
+        break;
+      }
     }
   }
 
@@ -351,7 +446,7 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting(*p, neutral, chargeVec, config, categories, fullDataSet, simPdf);
+    Plotting(*p, chargeVec, config, categories, fullDataSet, simPdf);
   }
 
   result->Print();
@@ -383,8 +478,7 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath =
-    "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
 
@@ -550,6 +644,29 @@ int main(int argc, char **argv) {
     }
 
     Fitting(fullDataSet, config, categories, neutral, daughtersVec, chargeVec);
+
+  //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
+  //
+  //     RooArgSet const *row = fullDataSet.get(i);
+  //
+  //     std::cout << "For event " << i << ":";
+  //
+  //     RooCategory *neutralPtr =
+  //         dynamic_cast<RooCategory *>(row->find(categories.neutral.GetName()));
+  //     if (neutralPtr == nullptr) {
+  //       std::stringstream output;
+  //       output << "No category assigned to neutral for event " << i << ".";
+  //       throw std::runtime_error(output.str());
+  //     } else {
+  //       std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
+  //       if (neutralPtr->getLabel() == "gamma") {
+  //
+  //         std::cerr << "Wrong neutral assigned (gamma)\n";
+  //         return 1;
+  //       }
+  //     }
+  //   }
+  //
   }
-  return 0;
+    return 0;
 }
