@@ -4,8 +4,10 @@
 #include "RooArgList.h"
 #include "RooDataSet.h"
 #include "RooExponential.h"
+#include "RooPolynomial.h"
 #include "RooCBShape.h"
 #include "RooBifurGauss.h"
+#include "RooGaussian.h"
 #include "RooRealVar.h"
 #include "RooFormulaVar.h"
 #include "RooSimultaneous.h"
@@ -41,7 +43,7 @@ public:
   inline RooBifurGauss const &nonTMSignalPi0() const { return nonTMSignalPi0_; }
   inline RooBifurGauss const &signalGamma() const { return signalGamma_; }
   inline RooAddPdf const &nonTMSignalGamma() const { return nonTMSignalGamma_; }
-  inline RooExponential const &combinatorialExponential() const { return combinatorialExponential_; }
+  inline RooPolynomial const &combinatorialExponential() const { return combinatorialExponential_; }
   inline RooCBShape const &bu2Dst0Hst_D0pi0() const { return bu2Dst0Hst_D0pi0_; }
   inline RooCBShape const &bu2Dst0Hst_D0gamma() const { return bu2Dst0Hst_D0gamma_; }
   inline RooCBShape const &crossFeed() const { return crossFeed_; }
@@ -65,9 +67,6 @@ private:
   RooRealVar signalGammaMean_;  
   RooRealVar signalGammaSigmaLeft_;
   RooRealVar signalGammaSigmaRight_;
-  RooRealVar relativeWidthVar_;
-  RooFormulaVar signalGammaSigmaLeftFormula_;
-  RooFormulaVar signalGammaSigmaRightFormula_;
   RooRealVar meanNonTMSignalGamma_;
   RooRealVar sigmaNonTMSignalGamma1_;
   RooRealVar aNonTMSignalGamma1_;
@@ -84,6 +83,8 @@ private:
   RooRealVar sigmaCrossFeed_;
   RooRealVar aCrossFeed_;
   RooRealVar nCrossFeed_;
+  RooRealVar meanBu2Dst0Kst_D0pi0_Gamma_;
+  RooRealVar sigmaBu2Dst0Kst_D0pi0_Gamma_;
   RooRealVar meanBu2Dst0Hst_D0pi0_;
   RooRealVar sigmaBu2Dst0Hst_D0pi0_;
   RooRealVar aBu2Dst0Hst_D0pi0_;
@@ -124,9 +125,10 @@ private:
   RooCBShape nonTMSignalGamma1_;
   RooCBShape nonTMSignalGamma2_;
   RooAddPdf nonTMSignalGamma_;
-  RooExponential combinatorialExponential_;
+  RooPolynomial combinatorialExponential_;
   RooCBShape crossFeed_;
   RooCBShape bu2Dst0Hst_D0pi0_;
+  RooGaussian bu2Dst0Kst_D0pi0_Gamma_;
   RooCBShape bu2Dst0Hst_D0gamma_;
   RooBifurGauss bu2D0H_;
   RooCBShape bu2D0Hst_;
@@ -136,37 +138,22 @@ private:
   RooCBShape missId2_;
   RooAddPdf missId_;
   RooArgList functions_;
-  double kSignalPi0BR_;
-  double kSignalGammaBR_;
-  double kCrossFeedBR_;
-  double kBu2Dst0Hst_D0pi0BR_;
-  double kBu2Dst0Hst_D0gammaBR_;
-  double kBu2D0HBR_;
-  double kBu2D0HstBR_;
-  double kBd2DstHBR_;
-  double kBd2D0Hst0BR_;
-  RooRealVar signalBR_;
-  RooRealVar crossFeedBR_;
-  RooRealVar bu2Dst0Hst_D0pi0BR_;
-  RooRealVar bu2Dst0Hst_D0gammaBR_;
-  RooRealVar bu2D0HBR_;
-  RooRealVar bu2D0HstBR_;
-  RooRealVar bd2DstHBR_;
-  RooRealVar bd2D0Hst0BR_;
-  RooRealVar probLoosePi0_;
-  RooRealVar probLooseGamma_;
-  RooRealVar probLoosePi_;
-  RooRealVar probAddPi0_;
+  RooRealVar rateRelativeNeutralAddition_;
+  RooRealVar rateCrossFeed_;
+  RooRealVar rateFalseSignalReconstruction_;
   RooRealVar signalYield_;
   RooFormulaVar nonTMSignalYield_;
   RooRealVar combinatorialYield_;
-  RooFormulaVar bu2Dst0Hst_D0pi0Yield_;
-  RooFormulaVar bu2Dst0Hst_D0gammaYield_;
   RooFormulaVar crossFeedYield_;
-  RooFormulaVar bu2D0HYield_;
-  RooFormulaVar bu2D0HstYield_;
-  RooFormulaVar bd2D0Hst0Yield_;
-  RooFormulaVar bd2DstHYield_;
+  RooRealVar bu2Dst0Hst_D0pi0Yield_;
+  RooRealVar bu2Dst0Hst_D0gammaYield_;
+  RooRealVar bu2D0HYield_;
+  RooRealVar bu2D0Hst_Pi0Yield_;
+  RooRealVar bd2D0Hst0_Pi0Yield_;
+  RooRealVar bd2DstH_Pi0Yield_;
+  RooRealVar bu2D0Hst_GammaYield_;
+  RooRealVar bd2DstH_GammaYield_;
+  // RooRealVar bd2D0Hst0_GammaYield_;
   RooRealVar missIdYield_;
   RooArgList yields_;
   std::unique_ptr<RooAddPdf> addPdf_;
