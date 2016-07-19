@@ -26,6 +26,172 @@
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
+
+void CalculateYieldRatios(Pdf &pdf) {
+
+  Bachelor bachelor = pdf.bachelor();
+
+  std::cout << "Bachelor = " << EnumToString(bachelor) << " Neutral = " << EnumToString(pdf.neutral())
+            << " D0 Daughers = " << EnumToString(pdf.daughters()) << " yields:\n";
+
+  switch (bachelor) {
+  case Bachelor::pi:
+    std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+              << "\tNon truth matched signal = "
+              << pdf.nonTMSignal_PiYield().getVal() << "\n"
+              << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() << "\n"
+              << "\tBu2D0H = " << pdf.bu2D0H_PiYield().getVal() << "\n"
+              << "\tBd2DstH = " << pdf.bd2DstH_PiYield().getVal() << "\n";
+    break;
+  case Bachelor::k:
+    std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+              << "\tNon truth matched signal = "
+              << pdf.nonTMSignal_KYield().getVal() << "\n"
+              << "\tCross feed = " << pdf.crossFeed_KYield().getVal() << "\n"
+              << "\tBu2D0H = " << pdf.bu2D0H_KYield().getVal() << "\n"
+              << "\tBd2DstH = " << pdf.bd2DstH_KYield().getVal() << "\n";
+    break;
+  }
+  //   std::cout
+  //       << "Ratios of background yields w.r.t. B->D0h for "
+  //       << "\tneutral: " << EnumToString(pdf.neutral())
+  //       << ", bachelor: " << EnumToString(pdf.bachelor())
+  //       << ", D daughters: " << EnumToString(pdf.daughters()) << ":\n"
+  //       << pdf.nonTMSignalYield().getTitle()
+  //       << "\t = " << pdf.nonTMSignalYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.nonTMSignalYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.nonTMSignalYield().getError() /
+  //                       pdf.nonTMSignalYield().getVal() *
+  //                       pdf.nonTMSignalYield().getError() /
+  //                       pdf.nonTMSignalYield().getVal() +
+  //                   pdf.nonTMSignalYield().getError() /
+  //                       pdf.nonTMSignalYield().getVal() *
+  //                       pdf.nonTMSignalYield().getError() /
+  //                       pdf.nonTMSignalYield().getVal())
+  //       << "\n"
+  //       // << pdf.combinatorialYield().getTitle() << "\t = "
+  //       // << pdf.combinatorialYield().getVal() /
+  //       pdf.bu2D0HYield().getVal() <<
+  //       " ± "
+  //       // << pdf.combinatorialYield().getVal() /
+  //       pdf.bu2D0HYield().getVal() *
+  //       //        sqrt(pdf.combinatorialYield().getError() /
+  //       //                 pdf.combinatorialYield().getVal() *
+  //       //                 pdf.combinatorialYield().getError() /
+  //       //                 pdf.combinatorialYield().getVal() +
+  //       //             pdf.combinatorialYield().getError() /
+  //       //                 pdf.combinatorialYield().getVal() *
+  //       //                 pdf.combinatorialYield().getError() /
+  //       //                 pdf.combinatorialYield().getVal())
+  //       // << "\n"
+  //       << pdf.crossFeedYield().getTitle()
+  //       << "\t = " << pdf.crossFeedYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.crossFeedYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.crossFeedYield().getError() /
+  //                       pdf.crossFeedYield().getVal() *
+  //                       pdf.crossFeedYield().getError() /
+  //                       pdf.crossFeedYield().getVal() +
+  //                   pdf.crossFeedYield().getError() /
+  //                       pdf.crossFeedYield().getVal() *
+  //                       pdf.crossFeedYield().getError() /
+  //                       pdf.crossFeedYield().getVal())
+  //       << "\n"
+  //       << pdf.bu2Dst0Hst_D0pi0Yield().getTitle() << "\t = "
+  //       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
+  //       pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() +
+  //                   pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal())
+  //       << "\n"
+  //       << pdf.bu2Dst0Hst_D0gammaYield().getTitle() << "\t = "
+  //       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       *
+  //              sqrt(pdf.bu2Dst0Hst_D0gammaYield().getError() /
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() +
+  //                   pdf.bu2Dst0Hst_D0gammaYield().getError() /
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
+  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal())
+  //       << "\n"
+  //       << pdf.bu2D0HYield().getTitle()
+  //       << "\t = " << pdf.bu2D0HYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.bu2D0HYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.bu2D0HYield().getError() /
+  //              pdf.bu2D0HYield().getVal() *
+  //                       pdf.bu2D0HYield().getError() /
+  //                       pdf.bu2D0HYield().getVal() +
+  //                   pdf.bu2D0HYield().getError() /
+  //                   pdf.bu2D0HYield().getVal() *
+  //                       pdf.bu2D0HYield().getError() /
+  //                       pdf.bu2D0HYield().getVal())
+  //       << "\n"
+  //       << pdf.bu2D0HstYield().getTitle()
+  //       << "\t = " << pdf.bu2D0HstYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.bu2D0HstYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(
+  //                  pdf.bu2D0HstYield().getError() /
+  //                  pdf.bu2D0HstYield().getVal() *
+  //                      pdf.bu2D0HstYield().getError() /
+  //                      pdf.bu2D0HstYield().getVal() +
+  //                  pdf.bu2D0HstYield().getError() /
+  //                  pdf.bu2D0HstYield().getVal() *
+  //                      pdf.bu2D0HstYield().getError() /
+  //                      pdf.bu2D0HstYield().getVal())
+  //       << "\n"
+  //       << pdf.bd2DstHYield().getTitle()
+  //       << "\t = " << pdf.bd2DstHYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.bd2DstHYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.bd2DstHYield().getError() /
+  //              pdf.bd2DstHYield().getVal()
+  //              *
+  //                       pdf.bd2DstHYield().getError() /
+  //                       pdf.bd2DstHYield().getVal() +
+  //                   pdf.bd2DstHYield().getError() /
+  //                   pdf.bd2DstHYield().getVal()
+  //                   *
+  //                       pdf.bd2DstHYield().getError() /
+  //                       pdf.bd2DstHYield().getVal())
+  //       << "\n"
+  //       << pdf.missIdYield().getTitle()
+  //       << "\t = " << pdf.missIdYield().getVal() /
+  //       pdf.bu2D0HYield().getVal()
+  //       << " ± "
+  //       << pdf.missIdYield().getVal() / pdf.bu2D0HYield().getVal() *
+  //              sqrt(pdf.missIdYield().getError() /
+  //              pdf.missIdYield().getVal() *
+  //                       pdf.missIdYield().getError() /
+  //                       pdf.missIdYield().getVal() +
+  //                   pdf.missIdYield().getError() /
+  //                   pdf.missIdYield().getVal() *
+  //                       pdf.missIdYield().getError() /
+  //                       pdf.missIdYield().getVal())
+  //       << "\n";
+}
+
 void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
               Categories &categories, RooDataSet const &fullDataSet,
               RooSimultaneous const &simPdf) {
@@ -113,6 +279,14 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.nonTMSignalPi0()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlack));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kRed));
     break;
   case Neutral::gamma:
     simPdf.plotOn(
@@ -122,7 +296,7 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
             ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.signalGamma()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlue));
+        RooFit::LineColor(kRed));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -131,6 +305,14 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.nonTMSignalGamma()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlack));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlue));
     break;
   }
   simPdf.plotOn(
@@ -141,14 +323,6 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.combinatorialExponential()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kRed + 2));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kRed));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
@@ -208,13 +382,14 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
 
   // ------------- Draw Legend --------------
 
-  TH1D *signalHist = new TH1D(
-      ("signalHist" + ComposeFittingCategoryName(neutral, bachelor, daughters))
-          .c_str(),
-      "signalHist", 0, 0, 0);
-  signalHist->SetLineColor(kBlue);
-  signalHist->SetLineStyle(kDashed);
-  signalHist->SetLineWidth(2);
+  TH1D *bu2Dst0H_D0pi0Hist =
+      new TH1D(("bu2Dst0H_D0pi0Hist" +
+                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                   .c_str(),
+               "bu2Dst0H_D0pi0Hist", 0, 0, 0);
+  bu2Dst0H_D0pi0Hist->SetLineColor(kBlue);
+  bu2Dst0H_D0pi0Hist->SetLineStyle(kDashed);
+  bu2Dst0H_D0pi0Hist->SetLineWidth(2);
 
   TH1D *nonTMSignalHist =
       new TH1D(("nonTMSignalHist" +
@@ -225,14 +400,14 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
   nonTMSignalHist->SetLineStyle(kDashed);
   nonTMSignalHist->SetLineWidth(2);
 
-  TH1D *crossFeedHist =
-      new TH1D(("crossFeedHist" +
+  TH1D *bu2Dst0H_D0gammaHist =
+      new TH1D(("bu2Dst0H_D0gammaHist" +
                 ComposeFittingCategoryName(neutral, bachelor, daughters))
                    .c_str(),
-               "crossFeedHist", 0, 0, 0);
-  crossFeedHist->SetLineColor(kRed);
-  crossFeedHist->SetLineStyle(kDashed);
-  crossFeedHist->SetLineWidth(2);
+               "bu2Dst0H_D0gammaHist", 0, 0, 0);
+  bu2Dst0H_D0gammaHist->SetLineColor(kRed);
+  bu2Dst0H_D0gammaHist->SetLineStyle(kDashed);
+  bu2Dst0H_D0gammaHist->SetLineWidth(2);
 
   TH1D *bu2Dst0Hst_D0pi0Hist =
       new TH1D(("bu2Dst0Hst_D0pi0Hist" +
@@ -305,29 +480,41 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
 
   TLegend *legend = new TLegend(0.65, 0.35, 0.97, 0.90);
   // legend->SetHeader("Physics Bachgrounds");
-  legend->AddEntry(signalHist, "Signal", "l");
-  legend->AddEntry(nonTMSignalHist, "Non-TM Signal", "l");
+  legend->AddEntry(bu2Dst0H_D0pi0Hist,
+                   ("B^{" + chargeLabel +
+                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+                    "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+                    bachelorLabel + "^{" + chargeLabel + "}")
+                       .c_str(),
+                   "l");
   legend->AddEntry(
-      crossFeedHist,
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + crossFeedLabel +
+      nonTMSignalHist,
+      ("False B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
        "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" + chargeLabel + "}")
           .c_str(),
       "l");
-  legend->AddEntry(
-      bu2Dst0Hst_D0pi0Hist,
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{0}*}" + hstLabel + "^{" + chargeLabel + "}")
-          .c_str(),
-      "l");
-  legend->AddEntry(
-      bu2Dst0Hst_D0gammaHist,
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + crossFeedLabel +
-       "#font[132]{]}_{D^{0}*}" + hstLabel + "^{" + chargeLabel + "}")
-          .c_str(),
-      "l");
+  legend->AddEntry(bu2Dst0H_D0gammaHist,
+                   ("B^{" + chargeLabel +
+                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+                    "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+                    bachelorLabel + "^{" + chargeLabel + "}")
+                       .c_str(),
+                   "l");
+  legend->AddEntry(bu2Dst0Hst_D0pi0Hist,
+                   ("B^{" + chargeLabel +
+                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+                    "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+                    hstLabel + "^{" + chargeLabel + "}")
+                       .c_str(),
+                   "l");
+  legend->AddEntry(bu2Dst0Hst_D0gammaHist,
+                   ("B^{" + chargeLabel +
+                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+                    "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+                    hstLabel + "^{" + chargeLabel + "}")
+                       .c_str(),
+                   "l");
   legend->AddEntry(bu2D0HHist,
                    ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}" + bachelorLabel +
@@ -392,7 +579,8 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
     if (d == Daughters::kpi) {
 
-      // emplace_back creates the object in the vector, emplace_back creates the
+      // emplace_back creates the object in the vector, emplace_back creates
+      // the
       // object then moves it into the vector
       // You only have to pass the arguments as if you were constructing the
       // vector type
@@ -404,22 +592,21 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
       for (auto &n : neutralVec) {
 
         switch (n) {
-        
-          case Neutral::pi0:
+
+        case Neutral::pi0:
 
           pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kpi,
                                     config.buMass()));
           pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::kpi,
                                     config.buMass()));
           break;
-        
+
         case Neutral::gamma:
-         
+
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
                                     Daughters::kpi, config.buMass()));
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kpi,
                                     config.buMass()));
-        
         }
       }
     } else if (d == Daughters::kk) {
@@ -427,8 +614,8 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
       for (auto &n : neutralVec) {
 
         switch (n) {
-        
-          case Neutral::pi0:
+
+        case Neutral::pi0:
 
           pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kk,
                                     config.buMass()));
@@ -438,13 +625,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
           break;
 
         case Neutral::gamma:
-        
+
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::kk,
                                     config.buMass()));
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kk,
                                     config.buMass()));
           break;
-        
         }
       }
     } else if (d == Daughters::pipi) {
@@ -452,8 +638,8 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
       for (auto &n : neutralVec) {
 
         switch (n) {
-        
-          case Neutral::pi0:
+
+        case Neutral::pi0:
 
           pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pipi,
                                     config.buMass()));
@@ -462,22 +648,21 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
           break;
 
         case Neutral::gamma:
-        
+
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
                                     Daughters::pipi, config.buMass()));
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k,
                                     Daughters::pipi, config.buMass()));
           break;
-        
         }
       }
     } else {
-      
+
       for (auto &n : neutralVec) {
-        
+
         switch (n) {
-        
-          case Neutral::pi0:
+
+        case Neutral::pi0:
 
           pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pik,
                                     config.buMass()));
@@ -487,13 +672,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
           break;
 
         case Neutral::gamma:
-          
+
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
                                     Daughters::pik, config.buMass()));
           pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::pik,
                                     config.buMass()));
           break;
-        
         }
       }
     }
@@ -511,6 +695,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
     Plotting(*p, chargeVec, config, categories, fullDataSet, simPdf);
+  }
+
+  for (auto &p : pdfs) {
+    CalculateYieldRatios(*p);
   }
 
   result->Print();
