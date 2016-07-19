@@ -52,6 +52,21 @@ public:
   inline RooCBShape const &bd2DstH() const { return bd2DstH_; }
   inline RooCBShape const &bd2D0Hst0() const { return bd2D0Hst0_; }
   inline RooAddPdf const &missId() const { return missId_; }
+  inline RooRealVar const &signalYield() const { return signalYield_; }
+  inline RooFormulaVar const &nonTMSignal_PiYield() const { return nonTMSignal_PiYield_; }
+  inline RooFormulaVar const &nonTMSignal_KYield() const { return nonTMSignal_KYield_; }
+  inline RooRealVar const &combinatorialYield() const { return combinatorialYield_; }
+  inline RooRealVar const &crossFeed_PiYield() const { return crossFeed_PiYield_; }
+  inline RooFormulaVar const &crossFeed_KYield() const { return crossFeed_KYield_; }
+  inline RooRealVar const &bu2Dst0Hst_D0pi0Yield() const { return bu2Dst0Hst_D0pi0Yield_; }
+  inline RooRealVar const &bu2Dst0Hst_D0gammaYield() const { return bu2Dst0Hst_D0gammaYield_; }
+  inline RooRealVar const &bu2D0H_PiYield() const { return bu2D0H_PiYield_; }
+  inline RooFormulaVar const &bu2D0H_KYield() const { return bu2D0H_KYield_; }
+  inline RooRealVar const &bu2D0HstYield() const { return bu2D0HstYield_; }
+  inline RooRealVar const &bd2DstH_PiYield() const { return bd2DstH_PiYield_; }
+  inline RooFormulaVar const &bd2DstH_KYield() const { return bd2DstH_KYield_; }
+  inline RooFormulaVar const &missIdYield() const { return missIdYield_; }
+  inline RooRealVar const &bachelorRatio() const { return bachelorRatio_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
 
@@ -59,7 +74,6 @@ private:
   Daughters daughters_;
   Bachelor bachelor_;
   Neutral neutral_;
-  double relativeWidth_;
   RooRealVar signalPi0Mean_;
   RooRealVar signalPi0Sigma_;
   RooRealVar aSignalPi0_;
@@ -140,21 +154,28 @@ private:
   RooArgList functions_;
   RooRealVar rateRelativeNeutralAddition_;
   RooRealVar rateCrossFeed_;
+  RooRealVar bachelorRatio_;
   RooRealVar rateFalseSignalReconstruction_;
   RooRealVar signalYield_;
-  RooFormulaVar nonTMSignalYield_;
+  // RooFormulaVar nonTMSignalYield_;
+  RooFormulaVar nonTMSignal_PiYield_;
+  RooFormulaVar nonTMSignal_KYield_;
   RooRealVar combinatorialYield_;
-  RooFormulaVar crossFeedYield_;
+  RooRealVar crossFeed_PiYield_;
+  RooFormulaVar crossFeed_KYield_;
   RooRealVar bu2Dst0Hst_D0pi0Yield_;
   RooRealVar bu2Dst0Hst_D0gammaYield_;
-  RooRealVar bu2D0HYield_;
-  RooRealVar bu2D0Hst_Pi0Yield_;
-  RooRealVar bd2D0Hst0_Pi0Yield_;
-  RooRealVar bd2DstH_Pi0Yield_;
-  RooRealVar bu2D0Hst_GammaYield_;
-  RooRealVar bd2DstH_GammaYield_;
-  // RooRealVar bd2D0Hst0_GammaYield_;
-  RooRealVar missIdYield_;
+  RooRealVar bu2D0H_PiYield_;
+  RooFormulaVar bu2D0H_KYield_;
+  RooRealVar bu2D0HstYield_;
+  RooRealVar bd2D0Hst0Yield_;
+  RooRealVar bd2DstH_PiYield_;
+  RooFormulaVar bd2DstH_KYield_;
+  RooRealVar bu2Dst0H_BR_;
+  RooRealVar bu2Dst0MissId_BR_;
+  RooRealVar bachEff_;
+  RooRealVar bachMissId_;
+  RooFormulaVar missIdYield_;
   RooArgList yields_;
   std::unique_ptr<RooAddPdf> addPdf_;
 };

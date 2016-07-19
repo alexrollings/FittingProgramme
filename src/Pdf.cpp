@@ -7,7 +7,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
     : bachelor_(bachelor),
       daughters_(daughters),
       neutral_(neutral),
-      relativeWidth_(1.0),
       signalPi0Mean_("signalPi0Mean", "m[Bu] signal mean", 5279, 5275, 5285),
       signalPi0Sigma_("signalPi0Sigma", "m[Bu] signal sigma", 0), //, 15, 23),
       aSignalPi0_("aSignalPi0", "a Signal", 0),
@@ -184,32 +183,53 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
           1, 0, 3),
       rateCrossFeed_(("rateCrossFeed_" + EnumToString(neutral_)).c_str(),
                      "Rate of cross feed w.r.t. signal", 1, 0, 5),
+      bachelorRatio_(
+          "bachelorRatio_",
+          "Ratio of yields in k w.r.t. pi mode for B->Dh like decays", 0.1, 0, 5),
       signalYield_(("signal_yield_" +
                     ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                        .c_str(),
-                   "m[Bu] signal yield", 10000, 0, 30000),
+                   "Signal yield", 10000, 0, 30000),
       // Improve this estimate for each decay mode?
-      nonTMSignalYield_(
-          ("nonTMSignalYield_" +
-           ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
-              .c_str(),
-          "Formula for non TM signal yield", "@0*@1",
-          RooArgList(signalYield_, rateFalseSignalReconstruction_)),
+      nonTMSignal_PiYield_(("nonTMSignalYield_" + EnumToString(neutral_) +
+                            "_" + EnumToString(daughters_))
+                               .c_str(),
+                           "Formula for non TM signal yield", "@0*@1",
+                           RooArgList(signalYield_,
+                                      rateFalseSignalReconstruction_)),
+      nonTMSignal_KYield_(("nonTMSignalYield_" + EnumToString(neutral_) + "_" +
+                           EnumToString(daughters_))
+                              .c_str(),
+                          "Formula for non TM signal yield", "@0*@1",
+                          RooArgList(nonTMSignal_PiYield_, bachelorRatio_)),
       combinatorialYield_(("combinatorialYield_" +
                            ComposeFittingCategoryName(neutral_, bachelor_,
                                                       daughters_))
                               .c_str(),
-                          "m[Bu] combinatorial yield", 1000, 0, 30000),
+                          "Combinatorial yield", 1000, 0, 30000),
+      bu2Dst0H_BR_("bu2Dst0H_BR_", "bu2Dst0H branching ratio", 0),
+      bu2Dst0MissId_BR_("bu2Dst0MissId_BR_",
+                        "Miss-ID bachelor B branching ratio", 0),
+      bachEff_("bachEff_", "Efficiency of cut PIDL cut for bachelor", 0),
+      bachMissId_("bachMissId_",
+                  "Rate of pion miss-ID in bachelor mode for PIDK cut", 0),
       missIdYield_(("missId_yield_" +
                     ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
                        .c_str(),
-                   "m[Bu] missId yield", 1000, 0, 30000),
-      crossFeedYield_(("crossFeedYield_" +
-                       ComposeFittingCategoryName(neutral_, bachelor_,
-                                                  daughters_))
-                          .c_str(),
-                      "CrossFeed yield", "@0*@1",
-                      RooArgList(signalYield_, rateCrossFeed_)),
+                   "Miss-ID yield", "@0*@1*@2/@3/@4",
+                   RooArgList(signalYield_, bu2Dst0MissId_BR_, bachMissId_,
+                              bu2Dst0H_BR_, bachEff_)),
+      crossFeed_PiYield_(("crossFeed_PiYield_" + EnumToString(neutral_) + "_" +
+                          EnumToString(daughters_))
+                             .c_str(),
+                         "CrossFeed yield", 3000, 0, 30000),
+      crossFeed_KYield_(("crossFeed_KYield_" + EnumToString(neutral_) + "_" +
+                         EnumToString(daughters_))
+                            .c_str(),
+                        "CrossFeed yield", "@0*@1",
+                        RooArgList(crossFeed_PiYield_, bachelorRatio_)),
+      // "CrossFeed yield", "@0*@1",
+      // RooArgList(signalYield_, rateCrossFeed_)),
       bu2Dst0Hst_D0pi0Yield_(("bu2Dst0Hst_D0pi0Yield_" +
                               ComposeFittingCategoryName(neutral_, bachelor_,
                                                          daughters_))
@@ -220,22 +240,34 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
                                                            daughters_))
                                    .c_str(),
                                "Bu2Dst0Hst_D0gamma yield", 5000, 0, 30000),
-      bu2D0HYield_(("bu2D0HYield_" +
-                    ComposeFittingCategoryName(neutral_, bachelor_, daughters_))
-                       .c_str(),
-                   "Bu2D0H yield", 3000, 0, 30000),
-      bu2D0Hst_Pi0Yield_(("bu2D0Hst_Pi0Yield_" + EnumToString(bachelor_) + "_" +
-                          EnumToString(daughters_))
-                             .c_str(),
-                         "Bu2D0Hst yield", 1000, 0, 30000),
-      bd2DstH_Pi0Yield_(("bd2DstH_Pi0Yield_" + EnumToString(bachelor_) + "_" +
-                         EnumToString(daughters_))
-                            .c_str(),
-                        "Bd2DstH yield", 1000, 0, 30000),
-      bd2D0Hst0_Pi0Yield_(("bd2D0Hst0_Pi0Yield_" + EnumToString(bachelor_) +
-                           "_" + EnumToString(daughters_))
-                              .c_str(),
-                          "Bd2D0Hst0 yield", 100, 0, 30000),
+      bu2D0H_PiYield_(("bu2D0H_PiYield_" + EnumToString(neutral_) + "_" +
+                       EnumToString(daughters_))
+                          .c_str(),
+                      "Bu2D0H yield", 3000, 0, 30000),
+      bu2D0H_KYield_(("bu2D0H_KYield_" + EnumToString(neutral_) + "_" +
+                      EnumToString(daughters_))
+                         .c_str(),
+                     "Bu2D0H yield", "@0*@1",
+                     RooArgList(bu2D0H_PiYield_, bachelorRatio_)),
+      bu2D0HstYield_(("bu2D0HstYield_" + ComposeFittingCategoryName(neutral_,
+                                                                    bachelor_,
+                                                                    daughters_))
+                         .c_str(),
+                     "Bu2D0Hst yield", 1000, 0, 30000),
+      bd2DstH_PiYield_(("bd2DstH_PiYield_" + EnumToString(neutral_) + "_" +
+                        EnumToString(daughters_))
+                           .c_str(),
+                       "Bd2DstH yield", 1000, 0, 30000),
+      bd2DstH_KYield_(("bd2DstH_KYield_" + EnumToString(neutral_) + "_" +
+                       EnumToString(daughters_))
+                          .c_str(),
+                      "Bd2DstH yield", "@0*@1",
+                      RooArgList(bd2DstH_PiYield_, bachelorRatio_)),
+      bd2D0Hst0Yield_(("bd2D0Hst0Yield_" +
+                       ComposeFittingCategoryName(neutral_, bachelor_,
+                                                  daughters_))
+                          .c_str(),
+                      "Bd2D0Hst0 yield", 100, 0, 30000),
       // bu2D0H_GammaYield_(("bu2D0H_GammaYield_" + EnumToString(bachelor_) +
       // "_" +
       //                     EnumToString(daughters_))
@@ -243,28 +275,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       //                    "Bu2D0H yield", "@0*@1",
       //                    RooArgList(bu2D0H_Pi0Yield_,
       //                               rateRelativeNeutralAddition_)),
-      bu2D0Hst_GammaYield_(("bu2D0Hst_GammaYield_" + EnumToString(bachelor_) +
-                            "_" + EnumToString(daughters_))
-                               .c_str(),
-                           "Bu2D0Hst yield", 1000, 0, 30000),
-      // "@0*@1",
-      // RooArgList(bu2D0Hst_Pi0Yield_,
-      //            rateRelativeNeutralAddition_)),
-      bd2DstH_GammaYield_(("bd2DstH_GammaYield_" + EnumToString(bachelor_) +
-                           "_" + EnumToString(daughters_))
-                              .c_str(),
-                          "Bd2DstH yield", 2000, 0, 3000),
-      // "@0*@1",
-      // RooArgList(bd2DstH_Pi0Yield_,
-      //            rateRelativeNeutralAddition_)),
-      // bd2D0Hst0_GammaYield_(("bd2D0Hst0_GammaYield_" +
-      // EnumToString(bachelor_) +
-      //                        "_" + EnumToString(daughters_))
-      //                           .c_str(),
-      //                       "Bd2D0Hst0 yield",
-      // "@0*@1",
-      // RooArgList(bd2D0Hst0_Pi0Yield_,
-      //            rateRelativeNeutralAddition_)),
       yields_(),
       functions_(),
       addPdf_(nullptr) {
@@ -272,35 +282,35 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
   switch (neutral) {
   case Neutral::pi0:
 
-    signalPi0Sigma_.setVal(17 * relativeWidth_);
     aSignalPi0_.setVal(2.13);
     nSignalPi0_.setVal(2.37);
     meanNonTMSignalPi0_.setVal(5284.8);
-    sigmaLeftNonTMSignalPi0_.setVal(52.6 * relativeWidth_);
-    sigmaRightNonTMSignalPi0_.setVal(49.4 * relativeWidth_);
     meanCrossFeed_.setVal(5283);
-    sigmaCrossFeed_.setVal(80 * relativeWidth_);
     aCrossFeed_.setVal(3.5);
     nCrossFeed_.setVal(2.8);
     meanBu2D0H_.setVal(5492);
-    sigmaLeftBu2D0H_.setVal(35.7 * relativeWidth_);
-    sigmaRightBu2D0H_.setVal(46.7 * relativeWidth_);
     meanBu2D0Hst_.setVal(5304);
-    sigmaBu2D0Hst_.setVal(51.9 * relativeWidth_);
     aBu2D0Hst_.setVal(0.33);
     nBu2D0Hst_.setVal(5.0);
     meanBd2DstH_.setVal(5277.6);
-    sigmaBd2DstH_.setVal(54.3 * relativeWidth_);
     aBd2DstH_.setVal(4.0);
     nBd2DstH_.setVal(6.1);
     meanBd2D0Hst0_.setVal(5225);
-    sigmaBd2D0Hst0_.setVal(107 * relativeWidth_);
     aBd2D0Hst0_.setVal(1.21);
     nBd2D0Hst0_.setVal(2.8);
 
     switch (bachelor) {
     case Bachelor::pi:
       // Miss-ID backgrounds have different shapes for pi and k modes
+      signalPi0Sigma_.setVal(17);
+      sigmaLeftNonTMSignalPi0_.setVal(52.6);
+      sigmaRightNonTMSignalPi0_.setVal(49.4);
+      sigmaCrossFeed_.setVal(80);
+      sigmaLeftBu2D0H_.setVal(35.7);
+      sigmaRightBu2D0H_.setVal(46.7);
+      sigmaBu2D0Hst_.setVal(51.9);
+      sigmaBd2DstH_.setVal(54.3);
+      sigmaBd2D0Hst0_.setVal(107);
       meanBu2Dst0Hst_D0pi0_.setVal(5080);
       sigmaBu2Dst0Hst_D0pi0_.setVal(57.8);
       aBu2Dst0Hst_D0pi0_.setVal(1.23);
@@ -309,7 +319,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       sigmaBu2Dst0Hst_D0gamma_.setVal(91.5);
       aBu2Dst0Hst_D0gamma_.setVal(1.0);
       nBu2Dst0Hst_D0gamma_.setVal(0.1);
-      relativeWidth_ = 1.0;
       meanMissId1_.setVal(5218.6);
       sigmaMissId1_.setVal(57.0);
       aMissId1_.setVal(-3.25);
@@ -319,10 +328,45 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       aMissId2_.setVal(0.50);
       nMissId2_.setVal(1.68);
       fracMissId1_.setVal(0.390);
+      bachEff_.setVal(0.96);
+      bachMissId_.setVal(0.32);
+      bu2Dst0H_BR_.setVal(0.00518);
+      bu2Dst0MissId_BR_.setVal(0.000420);
+      functions_.add(signalPi0_);
+      functions_.add(nonTMSignalPi0_);
+      // functions_.add(combinatorialExponential_);
+      functions_.add(bu2Dst0Hst_D0pi0_);
+      functions_.add(bu2Dst0Hst_D0gamma_);
+      functions_.add(crossFeed_);
+      functions_.add(bu2D0H_);
+      functions_.add(bu2D0Hst_);
+      functions_.add(bd2DstH_);
+      // functions_.add(bd2D0Hst0_);
+      functions_.add(missId_);
+      yields_.add(signalYield_);
+      yields_.add(nonTMSignal_PiYield_);
+      // yields_.add(combinatorialYield_);
+      yields_.add(bu2Dst0Hst_D0pi0Yield_);
+      yields_.add(bu2Dst0Hst_D0gammaYield_);
+      yields_.add(crossFeed_PiYield_);
+      yields_.add(bu2D0H_PiYield_);
+      yields_.add(bu2D0HstYield_);
+      yields_.add(bd2DstH_PiYield_);
+      // yields_.add(bd2D0Hst0Yield_);
+      yields_.add(missIdYield_);
       break;
 
     case Bachelor::k:
       // Scale factor given by ratio of BR's
+      signalPi0Sigma_.setVal(17 * 0.95);
+      sigmaLeftNonTMSignalPi0_.setVal(52.6 * 0.95);
+      sigmaRightNonTMSignalPi0_.setVal(49.4 * 0.95);
+      sigmaCrossFeed_.setVal(80 * 0.95);
+      sigmaLeftBu2D0H_.setVal(35.7 * 0.95);
+      sigmaRightBu2D0H_.setVal(46.7 * 0.95);
+      sigmaBu2D0Hst_.setVal(51.9 * 0.95);
+      sigmaBd2DstH_.setVal(54.3 * 0.95);
+      sigmaBd2D0Hst0_.setVal(107 * 0.95);
       meanBu2Dst0Hst_D0pi0_.setVal(5102);
       sigmaBu2Dst0Hst_D0pi0_.setVal(49.5);
       aBu2Dst0Hst_D0pi0_.setVal(0.23);
@@ -331,7 +375,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       sigmaBu2Dst0Hst_D0gamma_.setVal(94.5);
       aBu2Dst0Hst_D0gamma_.setVal(-2.26);
       nBu2Dst0Hst_D0gamma_.setVal(6.8);
-      relativeWidth_ = 0.95;
       meanMissId1_.setVal(5348.1);
       sigmaMissId1_.setVal(22.9);
       aMissId1_.setVal(-0.03);
@@ -341,64 +384,68 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       aMissId2_.setVal(3.80);
       nMissId2_.setVal(13.7);
       fracMissId1_.setVal(0.712);
+      bachEff_.setVal(0.68);
+      bachMissId_.setVal(0.04);
+      bu2Dst0H_BR_.setVal(0.000420);
+      bu2Dst0MissId_BR_.setVal(0.00518);
+      functions_.add(signalPi0_);
+      functions_.add(nonTMSignalPi0_);
+      // functions_.add(combinatorialExponential_);
+      functions_.add(bu2Dst0Hst_D0pi0_);
+      functions_.add(bu2Dst0Hst_D0gamma_);
+      functions_.add(crossFeed_);
+      functions_.add(bu2D0H_);
+      functions_.add(bu2D0Hst_);
+      functions_.add(bd2DstH_);
+      // functions_.add(bd2D0Hst0_);
+      functions_.add(missId_);
+      yields_.add(signalYield_);
+      yields_.add(nonTMSignal_KYield_);
+      // yields_.add(combinatorialYield_);
+      yields_.add(bu2Dst0Hst_D0pi0Yield_);
+      yields_.add(bu2Dst0Hst_D0gammaYield_);
+      yields_.add(crossFeed_KYield_);
+      yields_.add(bu2D0H_KYield_);
+      yields_.add(bu2D0HstYield_);
+      yields_.add(bd2DstH_KYield_);
+      // yields_.add(bd2D0Hst0Yield_);
+      yields_.add(missIdYield_);
       break;
     }
 
-    functions_.add(signalPi0_);
-    functions_.add(nonTMSignalPi0_);
-    // functions_.add(combinatorialExponential_);
-    functions_.add(bu2Dst0Hst_D0pi0_);
-    functions_.add(bu2Dst0Hst_D0gamma_);
-    functions_.add(crossFeed_);
-    functions_.add(bu2D0H_);
-    functions_.add(bu2D0Hst_);
-    functions_.add(bd2DstH_);
-    // functions_.add(bd2D0Hst0_);
-    functions_.add(missId_);
-    yields_.add(signalYield_);
-    yields_.add(nonTMSignalYield_);
-    // yields_.add(combinatorialYield_);
-    yields_.add(bu2Dst0Hst_D0pi0Yield_);
-    yields_.add(bu2Dst0Hst_D0gammaYield_);
-    yields_.add(crossFeedYield_);
-    yields_.add(bu2D0HYield_);
-    yields_.add(bu2D0Hst_Pi0Yield_);
-    yields_.add(bd2DstH_Pi0Yield_);
-    // yields_.add(bd2D0Hst0_Pi0Yield_);
-    yields_.add(missIdYield_);
     break;
 
   case Neutral::gamma:
 
-    signalGammaSigmaLeft_.setVal(23 * relativeWidth_);
-    signalGammaSigmaRight_.setVal(25 * relativeWidth_);
     meanNonTMSignalGamma_.setVal(5284.8);
-    sigmaNonTMSignalGamma1_.setVal(86.8 * relativeWidth_);
     aNonTMSignalGamma1_.setVal(-1.27);
     nNonTMSignalGamma1_.setVal(10.0);
     fracNonTMSignalGamma1_.setVal(0.81);
-    sigmaNonTMSignalGamma2_.setVal(29.1 * relativeWidth_);
     aNonTMSignalGamma2_.setVal(1.92);
-    nNonTMSignalGamma2_.setVal(1.92);
+    nNonTMSignalGamma2_.setVal(0);
     meanCrossFeed_.setVal(5266.5);
-    sigmaCrossFeed_.setVal(80.2 * relativeWidth_);
     aCrossFeed_.setVal(3.17);
     nCrossFeed_.setVal(0.5);
     meanBu2D0H_.setVal(5430);
-    sigmaLeftBu2D0H_.setVal(51.0 * relativeWidth_);
-    sigmaRightBu2D0H_.setVal(93.6 * relativeWidth_);
     meanBu2D0Hst_.setVal(5221.7);
-    sigmaBu2D0Hst_.setVal(87.0 * relativeWidth_);
     aBu2D0Hst_.setVal(1.58);
     nBu2D0Hst_.setVal(2.8);
     meanBd2DstH_.setVal(5257.0);
-    sigmaBd2DstH_.setVal(81.7 * relativeWidth_);
     aBd2DstH_.setVal(3.9);
     nBd2DstH_.setVal(2.7);
 
     switch (bachelor) {
     case Bachelor::pi:
       // Miss-ID backgrounds have different shapes for pi and k modes
+      signalGammaSigmaLeft_.setVal(23);
+      signalGammaSigmaRight_.setVal(25);
+      sigmaNonTMSignalGamma1_.setVal(86.8);
+      sigmaNonTMSignalGamma2_.setVal(29.1);
+      sigmaCrossFeed_.setVal(80.2);
+      sigmaLeftBu2D0H_.setVal(51.0);
+      sigmaRightBu2D0H_.setVal(93.6);
+      sigmaBu2D0Hst_.setVal(87.0);
+      sigmaBd2DstH_.setVal(81.7);
       meanBu2Dst0Hst_D0pi0_.setVal(5025);
       sigmaBu2Dst0Hst_D0pi0_.setVal(96.2);
       aBu2Dst0Hst_D0pi0_.setVal(1.36);
@@ -407,7 +454,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       sigmaBu2Dst0Hst_D0gamma_.setVal(49.2);
       aBu2Dst0Hst_D0gamma_.setVal(-1.86);
       nBu2Dst0Hst_D0gamma_.setVal(2.1);
-      relativeWidth_ = 1.0;
       meanMissId1_.setVal(5218.6);
       sigmaMissId1_.setVal(57.0);
       aMissId1_.setVal(-3.25);
@@ -417,6 +463,10 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       aMissId2_.setVal(0.50);
       nMissId2_.setVal(1.68);
       fracMissId1_.setVal(0.390);
+      bachEff_.setVal(0.96);
+      bachMissId_.setVal(0.32);
+      bu2Dst0H_BR_.setVal(0.00518);
+      bu2Dst0MissId_BR_.setVal(0.000420);
 
       functions_.add(signalGamma_);
       functions_.add(nonTMSignalGamma_);
@@ -430,21 +480,30 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       // functions_.add(bd2D0Hst0_);
       functions_.add(missId_);
       yields_.add(signalYield_);
-      yields_.add(nonTMSignalYield_);
+      yields_.add(nonTMSignal_PiYield_);
       // yields_.add(combinatorialYield_);
       yields_.add(bu2Dst0Hst_D0pi0Yield_);
       yields_.add(bu2Dst0Hst_D0gammaYield_);
-      yields_.add(crossFeedYield_);
-      yields_.add(bu2D0HYield_);
-      yields_.add(bu2D0Hst_GammaYield_);
-      yields_.add(bd2DstH_GammaYield_);
-      // yields_.add(bd2D0Hst0_GammaYield_);
+      yields_.add(crossFeed_PiYield_);
+      yields_.add(bu2D0H_PiYield_);
+      yields_.add(bu2D0HstYield_);
+      yields_.add(bd2DstH_PiYield_);
+      // yields_.add(bd2D0Hst0Yield_);
       yields_.add(missIdYield_);
 
       break;
 
     case Bachelor::k:
-      
+
+      signalGammaSigmaLeft_.setVal(23 * 0.95);
+      signalGammaSigmaRight_.setVal(25 * 0.95);
+      sigmaNonTMSignalGamma1_.setVal(86.8 * 0.95);
+      sigmaNonTMSignalGamma2_.setVal(29.1 * 0.95);
+      sigmaCrossFeed_.setVal(80.2 * 0.95);
+      sigmaLeftBu2D0H_.setVal(51.0 * 0.95);
+      sigmaRightBu2D0H_.setVal(93.6 * 0.95);
+      sigmaBu2D0Hst_.setVal(87.0 * 0.95);
+      sigmaBd2DstH_.setVal(81.7 * 0.95);
       meanBu2Dst0Kst_D0pi0_Gamma_.setVal(5091);
       sigmaBu2Dst0Kst_D0pi0_Gamma_.setVal(97.6);
       // meanBu2Dst0Hst_D0pi0_.setVal(5104);
@@ -455,7 +514,6 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       sigmaBu2Dst0Hst_D0gamma_.setVal(61);
       aBu2Dst0Hst_D0gamma_.setVal(-0.98);
       nBu2Dst0Hst_D0gamma_.setVal(10);
-      relativeWidth_ = 0.95;
       meanMissId1_.setVal(5344.8);
       sigmaMissId1_.setVal(30.0);
       aMissId1_.setVal(-0.68);
@@ -465,6 +523,10 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       aMissId2_.setVal(1.62);
       nMissId2_.setVal(0.0);
       fracMissId1_.setVal(0.747);
+      bachEff_.setVal(0.68);
+      bachMissId_.setVal(0.04);
+      bu2Dst0H_BR_.setVal(0.000420);
+      bu2Dst0MissId_BR_.setVal(0.00518);
 
       functions_.add(signalGamma_);
       functions_.add(nonTMSignalGamma_);
@@ -478,15 +540,15 @@ Pdf::Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters,
       // functions_.add(bd2D0Hst0_);
       functions_.add(missId_);
       yields_.add(signalYield_);
-      yields_.add(nonTMSignalYield_);
+      yields_.add(nonTMSignal_KYield_);
       // yields_.add(combinatorialYield_);
       yields_.add(bu2Dst0Hst_D0pi0Yield_);
       yields_.add(bu2Dst0Hst_D0gammaYield_);
-      yields_.add(crossFeedYield_);
-      yields_.add(bu2D0HYield_);
-      yields_.add(bu2D0Hst_GammaYield_);
-      yields_.add(bd2DstH_GammaYield_);
-      // yields_.add(bd2D0Hst0_GammaYield_);
+      yields_.add(crossFeed_KYield_);
+      yields_.add(bu2D0H_KYield_);
+      yields_.add(bu2D0HstYield_);
+      yields_.add(bd2DstH_KYield_);
+      // yields_.add(bd2D0Hst0Yield_);
       yields_.add(missIdYield_);
 
       break;
