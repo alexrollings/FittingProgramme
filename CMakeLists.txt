@@ -15,22 +15,20 @@ endif()
 
 #Find header files
 include_directories(${ROOT_INCLUDE_DIR} include)
-set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
+set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer MathMore)
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/Pdf.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/Pdf.cpp src/Skeleton.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
 #${variable} expands variable
-add_executable(Main src/Main.cpp)
 add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
 add_executable(Fitting src/Fitting.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
-target_link_libraries(Main ${FITTING_LIBS})
 target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
 target_link_libraries(Fitting ${FITTING_LIBS})
 
