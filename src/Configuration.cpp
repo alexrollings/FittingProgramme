@@ -1,6 +1,6 @@
 #include "Configuration.h"
 
-Configuration::Configuration(Categories const &categories)
+Configuration::Configuration()
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
@@ -23,19 +23,19 @@ Configuration::Configuration(Categories const &categories)
   variableArgSet_.add(buMass_);
   variableArgSet_.add(buPdgId_);
 
-  categoryArgSet_.add(categories.polarity);
-  categoryArgSet_.add(categories.charge);
-  categoryArgSet_.add(categories.daughters);
-  categoryArgSet_.add(categories.bachelor);
-  categoryArgSet_.add(categories.year);
-  categoryArgSet_.add(categories.neutral);
-  categoryArgSet_.add(categories.fitting);
+  categoryArgSet_.add(categories().polarity);
+  categoryArgSet_.add(categories().charge);
+  categoryArgSet_.add(categories().daughters);
+  categoryArgSet_.add(categories().bachelor);
+  categoryArgSet_.add(categories().year);
+  categoryArgSet_.add(categories().neutral);
+  categoryArgSet_.add(categories().fitting);
 
   fullArgSet_.add(variableArgSet_);
   fullArgSet_.add(categoryArgSet_);
 }
 // Categories is a class within a class !!!
-Categories::Categories()
+Configuration::Categories::Categories()
     : polarity("polarity", "polarity"), charge("charge", "charge"),
       daughters("daughters", "daughters"), bachelor("bachelor", "bachelor"),
       neutral("neutral", "neutral"), year("year", "year"),

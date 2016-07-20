@@ -10,43 +10,53 @@ enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
 
-struct Categories {
-  RooCategory polarity;
-  RooCategory charge;
-  RooCategory daughters;
-  RooCategory bachelor;
-  RooCategory neutral;
-  RooCategory year;
-  RooCategory fitting;
-  Categories();
-  Categories(Categories const &) = delete;
-  Categories(Categories &&) = delete;
-  Categories &operator=(Categories const &) = delete;
-  Categories &operator=(Categories &&) = delete;
-};
 
+// There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
 
 public:
-  Configuration(Categories const &categories);
-  Configuration(Configuration const &) = delete;
-  Configuration(Configuration &&) = delete;
-  Configuration &operator=(Configuration const &) = delete;
-  Configuration &operator=(Configuration &&) = delete;
+  static Configuration &Get() {
+    static Configuration singleton;
+    return singleton;
+  }
+
+  struct Categories {
+    RooCategory polarity;
+    RooCategory charge;
+    RooCategory daughters;
+    RooCategory bachelor;
+    RooCategory neutral;
+    RooCategory year;
+    RooCategory fitting;
+    Categories();
+    Categories(Categories const &) = delete;
+    Categories(Categories &&) = delete;
+    Categories &operator=(Categories const &) = delete;
+    Categories &operator=(Categories &&) = delete;
+  };
 
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
+  Categories &categories() { return categories_; }
 
 private:
+  Configuration();
+  Configuration(Configuration const &) = delete;
+  Configuration(Configuration &&) = delete;
+  Configuration &operator=(Configuration const &) = delete;
+  Configuration &operator=(Configuration &&) = delete;
+
+  Categories categories_;
   RooRealVar buMass_;
   RooRealVar buPdgId_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
 };
+
 
 template <typename Enum> Enum StringToEnum(std::string const &);
 

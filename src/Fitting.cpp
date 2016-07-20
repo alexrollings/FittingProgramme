@@ -21,8 +21,10 @@
 #include <vector>
 
 #include "Configuration.h"
-#include "ParseArguments.h"
+#include "NeutralVars.h"
+#include "BachelorVars.h"
 #include "Pdf.h"
+#include "ParseArguments.h"
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
@@ -31,8 +33,10 @@ void CalculateYieldRatios(Pdf &pdf) {
 
   Bachelor bachelor = pdf.bachelor();
 
-  std::cout << "Bachelor = " << EnumToString(bachelor) << " Neutral = " << EnumToString(pdf.neutral())
-            << " D0 Daughers = " << EnumToString(pdf.daughters()) << " yields:\n";
+  std::cout << "Bachelor = " << EnumToString(bachelor)
+            << " Neutral = " << EnumToString(pdf.neutral())
+            << " D0 Daughers = " << EnumToString(pdf.daughters())
+            << " yields:\n";
 
   switch (bachelor) {
   case Bachelor::pi:
@@ -193,7 +197,7 @@ void CalculateYieldRatios(Pdf &pdf) {
 }
 
 void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
-              Categories &categories, RooDataSet const &fullDataSet,
+              Configuration::Categories &categories, RooDataSet const &fullDataSet,
               RooSimultaneous const &simPdf) {
 
   // -------------- Set Style Attributes ------------------
@@ -261,15 +265,13 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
           ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-  switch (neutral) {
-  case Neutral::pi0:
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.signalPi0()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.bu2Dst0H_D0pi0()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
     simPdf.plotOn(
         frame.get(),
@@ -277,7 +279,7 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
             categories.fitting,
             ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.nonTMSignalPi0()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlack));
     simPdf.plotOn(
         frame.get(),
@@ -285,43 +287,15 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
             categories.fitting,
             ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.bu2Dst0H_D0gamma()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
-    break;
-  case Neutral::gamma:
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.signalGamma()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.nonTMSignalGamma()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlack));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlue));
-    break;
-  }
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
           categories.fitting,
           ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.combinatorialExponential()),
+      RooFit::Components(pdf.combinatorial()),
       RooFit::LineStyle(kDashed), RooFit::LineColor(kRed + 2));
   simPdf.plotOn(
       frame.get(),
@@ -363,14 +337,14 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bd2DstH()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kMagenta));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bd2D0Hst0()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kYellow));
+  // simPdf.plotOn(
+  //     frame.get(),
+  //     RooFit::Slice(
+  //         categories.fitting,
+  //         ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+  //     RooFit::ProjWData(categories.fitting, fullDataSet),
+  //     RooFit::Components(pdf.bd2D0Hst0()), RooFit::LineStyle(kDashed),
+  //     RooFit::LineColor(kYellow));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
@@ -565,7 +539,7 @@ void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
 }
 
 void Fitting(RooDataSet &fullDataSet, Configuration &config,
-             Categories &categories, std::vector<Neutral> neutralVec,
+             Configuration::Categories &categories, std::vector<Neutral> neutralVec,
              std::vector<Daughters> daughtersVec,
              std::vector<Charge> chargeVec) {
 
@@ -595,18 +569,18 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                    config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
           break;
 
         case Neutral::gamma:
 
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
-                                    Daughters::kpi, config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
         }
       }
     } else if (d == Daughters::kk) {
@@ -617,19 +591,19 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                    config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::kk,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
 
           break;
 
         case Neutral::gamma:
 
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                    config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::kk,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
           break;
         }
       }
@@ -641,18 +615,18 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                    config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
           break;
 
         case Neutral::gamma:
 
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
-                                    Daughters::pipi, config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k,
-                                    Daughters::pipi, config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
           break;
         }
       }
@@ -664,19 +638,19 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                    config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::pi0, Bachelor::k, Daughters::pik,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
 
           break;
 
         case Neutral::gamma:
 
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::pi,
-                                    Daughters::pik, config.buMass()));
-          pdfs.emplace_back(new Pdf(Neutral::gamma, Bachelor::k, Daughters::pik,
-                                    config.buMass()));
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
           break;
         }
       }
@@ -851,10 +825,11 @@ int main(int argc, char **argv) {
       }
     }
 
-    Categories categories;
-    Configuration config(categories); // Initialise RooRealVars
+    Configuration &config = Configuration::Get();
+    Categories &categories =
+        Configuration::Get().categories()
 
-    RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
+            RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
     // Loop over all options in order to extract correct roodatasets
     for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {

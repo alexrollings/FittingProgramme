@@ -1,182 +1,184 @@
 #pragma once
-
-#include "RooAddPdf.h"
+#include "RooAbsPdf.h"
 #include "RooArgList.h"
-#include "RooDataSet.h"
+#include "RooAddPdf.h"
 #include "RooExponential.h"
-#include "RooPolynomial.h"
-#include "RooCBShape.h"
-#include "RooBifurGauss.h"
-#include "RooGaussian.h"
-#include "RooRealVar.h"
-#include "RooFormulaVar.h"
 #include "RooSimultaneous.h"
+#include "NeutralVars.h" 
+#include "BachelorVars.h" 
+#include "Configuration.h" 
 
-#include "Configuration.h"
 
-#include <memory>
+// Pdf
 
-class Pdf {
+// Remove namespace when not duplicate anymore
+
+template <Neutral neutral, Bachelor bachelor, Daughters daughters> class Pdf {
+
 public:
-  Pdf(Neutral neutral, Bachelor bachelor, Daughters daughters, RooRealVar &fitVariable);
-      // RooArgList const &commonFunctions);
-
-  Pdf(Pdf const &) = delete;
-  Pdf(Pdf &&) = delete;
-  Pdf &operator=(Pdf const &) = delete;
-  Pdf &operator=(Pdf &&) = delete;
-
-  // Implementing something in the header file that is not a template needs the
-  // inline key word
-  // inline RooAddPdf &addPdf() { return *addPdf_; }
-  //
-  // inline RooAddPdf const &addPdf() const { return *addPdf_; }
-
-  // By declaring the function const you say you are not going to change
-  // anything in the class by calling the function
-  inline Bachelor bachelor() const { return bachelor_; }
-  inline Daughters daughters() const { return daughters_; }
-  inline Neutral neutral() const { return neutral_; }
- 
-  // So that we can access the pdf components in order to plot them separately
-  inline RooCBShape const &signalPi0() const { return signalPi0_; }
-  inline RooBifurGauss const &nonTMSignalPi0() const { return nonTMSignalPi0_; }
-  inline RooBifurGauss const &signalGamma() const { return signalGamma_; }
-  inline RooAddPdf const &nonTMSignalGamma() const { return nonTMSignalGamma_; }
-  inline RooPolynomial const &combinatorialExponential() const { return combinatorialExponential_; }
-  inline RooCBShape const &bu2Dst0Hst_D0pi0() const { return bu2Dst0Hst_D0pi0_; }
-  inline RooCBShape const &bu2Dst0Hst_D0gamma() const { return bu2Dst0Hst_D0gamma_; }
-  inline RooCBShape const &crossFeed() const { return crossFeed_; }
-  inline RooBifurGauss const &bu2D0H() const { return bu2D0H_; }
-  inline RooCBShape const &bu2D0Hst() const { return bu2D0Hst_; }
-  inline RooCBShape const &bd2DstH() const { return bd2DstH_; }
-  inline RooCBShape const &bd2D0Hst0() const { return bd2D0Hst0_; }
-  inline RooAddPdf const &missId() const { return missId_; }
-  inline RooRealVar const &signalYield() const { return signalYield_; }
-  inline RooFormulaVar const &nonTMSignal_PiYield() const { return nonTMSignal_PiYield_; }
-  inline RooFormulaVar const &nonTMSignal_KYield() const { return nonTMSignal_KYield_; }
-  inline RooRealVar const &combinatorialYield() const { return combinatorialYield_; }
-  inline RooRealVar const &crossFeed_PiYield() const { return crossFeed_PiYield_; }
-  inline RooFormulaVar const &crossFeed_KYield() const { return crossFeed_KYield_; }
-  inline RooRealVar const &bu2Dst0Hst_D0pi0Yield() const { return bu2Dst0Hst_D0pi0Yield_; }
-  inline RooRealVar const &bu2Dst0Hst_D0gammaYield() const { return bu2Dst0Hst_D0gammaYield_; }
-  inline RooRealVar const &bu2D0H_PiYield() const { return bu2D0H_PiYield_; }
-  inline RooFormulaVar const &bu2D0H_KYield() const { return bu2D0H_KYield_; }
-  inline RooRealVar const &bu2D0HstYield() const { return bu2D0HstYield_; }
-  inline RooRealVar const &bd2DstH_PiYield() const { return bd2DstH_PiYield_; }
-  inline RooFormulaVar const &bd2DstH_KYield() const { return bd2DstH_KYield_; }
-  inline RooFormulaVar const &missIdYield() const { return missIdYield_; }
-  inline RooRealVar const &bachelorRatio() const { return bachelorRatio_; }
+  static Pdf<neutral, bachelor, daughters> &Get() {
+    static Pdf<neutral, bachelor, daughters> singleton;
+    return singleton;
+  }
 
   void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
+  void AddToPdf(RooArgList &yields, RooArgList &functions);
+
+  RooRealVar &combinatorialConstant() { return combinatorialConstant_; }
+  std::unique_ptr<RooAbsPdf> &combinatorial() { return combinatorial_; }
+  RooRealVar &bu2Dst0H_D0pi0Yield() { return bu2Dst0H_D0pi0Yield_; }
+  RooRealVar &bu2Dst0H_D0gammaYield() { return bu2Dst0H_D0gammaYield_; }
+  RooRealVar &nonTmSignalYield() { return nonTmSignalYield_; }
+  RooRealVar &bu2Dst0Hst_D0pi0Yield() { return bu2Dst0Hst_D0pi0Yield_; }
+  RooRealVar &bu2Dst0Hst_D0gammaYield() { return bu2Dst0Hst_D0gammaYield_; }
+  RooRealVar &bu2D0HYield() { return bu2D0HYield_; }
+  RooRealVar &bu2D0HstYield() { return bu2D0HstYield_; }
+  RooRealVar &bd2DstHYield() { return bd2DstHYield_; }
+  RooRealVar &missIdYield() { return missIdYield_; }
+  RooRealVar &combinatorialYield() { return combinatorialYield_; }
+  RooArgList &yields() { return yields_; }
+  RooArgList &functions() { return functions_; }
 
 private:
-  Daughters daughters_;
-  Bachelor bachelor_;
-  Neutral neutral_;
-  RooRealVar signalPi0Mean_;
-  RooRealVar signalPi0Sigma_;
-  RooRealVar aSignalPi0_;
-  RooRealVar nSignalPi0_;
-  RooRealVar signalGammaMean_;  
-  RooRealVar signalGammaSigmaLeft_;
-  RooRealVar signalGammaSigmaRight_;
-  RooRealVar meanNonTMSignalGamma_;
-  RooRealVar sigmaNonTMSignalGamma1_;
-  RooRealVar aNonTMSignalGamma1_;
-  RooRealVar nNonTMSignalGamma1_;
-  RooRealVar fracNonTMSignalGamma1_;
-  RooRealVar sigmaNonTMSignalGamma2_;
-  RooRealVar aNonTMSignalGamma2_;
-  RooRealVar nNonTMSignalGamma2_;
-  RooRealVar meanNonTMSignalPi0_;
-  RooRealVar sigmaLeftNonTMSignalPi0_;
-  RooRealVar sigmaRightNonTMSignalPi0_;
-  RooRealVar lambdaCombinatorial_;
-  RooRealVar meanCrossFeed_;
-  RooRealVar sigmaCrossFeed_;
-  RooRealVar aCrossFeed_;
-  RooRealVar nCrossFeed_;
-  RooRealVar meanBu2Dst0Kst_D0pi0_Gamma_;
-  RooRealVar sigmaBu2Dst0Kst_D0pi0_Gamma_;
-  RooRealVar meanBu2Dst0Hst_D0pi0_;
-  RooRealVar sigmaBu2Dst0Hst_D0pi0_;
-  RooRealVar aBu2Dst0Hst_D0pi0_;
-  RooRealVar nBu2Dst0Hst_D0pi0_;
-  RooRealVar meanBu2Dst0Hst_D0gamma_;
-  RooRealVar sigmaBu2Dst0Hst_D0gamma_;
-  RooRealVar aBu2Dst0Hst_D0gamma_;
-  RooRealVar nBu2Dst0Hst_D0gamma_;
-  RooRealVar meanBu2D0H_;
-  RooRealVar sigmaLeftBu2D0H_;
-  RooRealVar sigmaRightBu2D0H_;
-  RooRealVar meanBu2D0Hst_;
-  RooRealVar sigmaBu2D0Hst_;
-  RooRealVar aBu2D0Hst_;
-  RooRealVar nBu2D0Hst_;
-  RooRealVar meanBd2DstH_;
-  RooRealVar sigmaBd2DstH_;
-  RooRealVar aBd2DstH_;
-  RooRealVar nBd2DstH_;
-  RooRealVar meanBd2D0Hst0_;
-  RooRealVar sigmaBd2D0Hst0_;
-  RooRealVar aBd2D0Hst0_;
-  RooRealVar nBd2D0Hst0_;
-  RooRealVar meanMissId1_;
-  RooRealVar sigmaMissId1_;
-  RooRealVar aMissId1_;
-  RooRealVar nMissId1_;
-  RooRealVar meanMissId2_;
-  RooRealVar sigmaMissId2_;
-  RooRealVar aMissId2_;
-  RooRealVar nMissId2_;
-  // Miss-ID background is made up of 2 components: define fraction of first component w.r.t. entire PDF to enter into a RooAddPdf
-  RooRealVar fracMissId1_;
-  RooFormulaVar signalSigmaFormula_;
-  RooCBShape signalPi0_;
-  RooBifurGauss nonTMSignalPi0_;
-  RooBifurGauss signalGamma_;
-  RooCBShape nonTMSignalGamma1_;
-  RooCBShape nonTMSignalGamma2_;
-  RooAddPdf nonTMSignalGamma_;
-  RooPolynomial combinatorialExponential_;
-  RooCBShape crossFeed_;
-  RooCBShape bu2Dst0Hst_D0pi0_;
-  RooGaussian bu2Dst0Kst_D0pi0_Gamma_;
-  RooCBShape bu2Dst0Hst_D0gamma_;
-  RooBifurGauss bu2D0H_;
-  RooCBShape bu2D0Hst_;
-  RooCBShape bd2DstH_;
-  RooCBShape bd2D0Hst0_;
-  RooCBShape missId1_;
-  RooCBShape missId2_;
-  RooAddPdf missId_;
-  RooArgList functions_;
-  RooRealVar rateRelativeNeutralAddition_;
-  RooRealVar rateCrossFeed_;
-  RooRealVar bachelorRatio_;
-  RooRealVar rateFalseSignalReconstruction_;
-  RooRealVar signalYield_;
-  // RooFormulaVar nonTMSignalYield_;
-  RooFormulaVar nonTMSignal_PiYield_;
-  RooFormulaVar nonTMSignal_KYield_;
-  RooRealVar combinatorialYield_;
-  RooRealVar crossFeed_PiYield_;
-  RooFormulaVar crossFeed_KYield_;
+  Pdf();
+  ~Pdf();
+
+  RooRealVar combinatorialConstant_;
+  std::unique_ptr<RooAbsPdf> combinatorial_;
+
+  RooRealVar bu2Dst0H_D0pi0Yield_;
+  RooRealVar bu2Dst0H_D0gammaYield_;
+  RooRealVar nonTmSignalYield_;
   RooRealVar bu2Dst0Hst_D0pi0Yield_;
   RooRealVar bu2Dst0Hst_D0gammaYield_;
-  RooRealVar bu2D0H_PiYield_;
-  RooFormulaVar bu2D0H_KYield_;
+  RooRealVar bu2D0HYield_;
   RooRealVar bu2D0HstYield_;
-  RooRealVar bd2D0Hst0Yield_;
-  RooRealVar bd2DstH_PiYield_;
-  RooFormulaVar bd2DstH_KYield_;
-  RooRealVar bu2Dst0H_BR_;
-  RooRealVar bu2Dst0MissId_BR_;
-  RooRealVar bachEff_;
-  RooRealVar bachMissId_;
-  RooFormulaVar missIdYield_;
+  RooRealVar bd2DstHYield_;
+  RooRealVar missIdYield_;
+  RooRealVar combinatorialYield_;
   RooArgList yields_;
+  RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
 };
+
+// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Pdf();
+// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Pdf();
+// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Pdf();
+
+template <Neutral neutral, Bachelor bachelor, Daughters daughters>
+Pdf<neutral, bachelor, daughters>::Pdf()
+    : combinatorialConstant_(
+          ("combinatorialConstant_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "Combinatorial parameter", 0.1, -1, 1),
+      combinatorial_(new RooExponential(
+          ("combinatorial_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "combinatorial exponential", Configuration::Get().buMass(),
+          combinatorialConstant_)),
+      bu2Dst0H_D0pi0Yield_(
+          ("bu2Dst0H_D0pi0Yield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "bu2Dst0H_D0pi0 yield", 10000, 0, 30000),
+      bu2Dst0H_D0gammaYield_(
+          ("bu2Dst0H_D0gammaYield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "bu2Dst0H_D0gamma yield", 10000, 0, 30000),
+      nonTmSignalYield_(
+          ("nonTmSignalYield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "nonTmSignal yield", 10000, 0, 30000),
+      bu2Dst0Hst_D0pi0Yield_(
+          ("bu2Dst0Hst_D0pi0Yield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "bu2Dst0Hst_D0pi0 yield", 10000, 0, 30000),
+      bu2Dst0Hst_D0gammaYield_(
+          ("bu2Dst0Hst_D0gammaYield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "bu2Dst0Hst_D0gamma yield", 10000, 0, 30000),
+      bu2D0HYield_(("bu2D0HYield_" +
+                    ComposeFittingCategoryName(neutral, bachelor, daughters))
+                       .c_str(),
+                   "bu2D0H yield", 10000, 0, 30000),
+      bu2D0HstYield_(("bu2D0HstYield_" +
+                      ComposeFittingCategoryName(neutral, bachelor, daughters))
+                         .c_str(),
+                     "bu2D0Hst yield", 10000, 0, 30000),
+      bd2DstHYield_(("bd2DstHYield_" +
+                     ComposeFittingCategoryName(neutral, bachelor, daughters))
+                        .c_str(),
+                    "bd2DstH yield", 10000, 0, 30000),
+      missIdYield_(("missIdYield_" +
+                    ComposeFittingCategoryName(neutral, bachelor, daughters))
+                       .c_str(),
+                   "missId yield", 10000, 0, 30000),
+      combinatorialYield_(
+          ("combinatorialYield_" +
+           ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str(),
+          "combinatorial yield", 10000, 0, 30000),
+      yields_(
+          ("yields_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+              .c_str()),
+      functions_(("functions_" +
+                  ComposeFittingCategoryName(neutral, bachelor, daughters))
+                     .c_str()),
+      addPdf_(nullptr) {
+
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0H_D0pi0()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0H_D0gamma()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().nonTmSignal()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0Hst_D0pi0()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0Hst_D0gamma()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2D0H()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2D0Hst()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bd2DstH()));
+  functions_.add(*(BachelorVars<neutral, bachelor>::Get().missId()));
+  functions_.add(*combinatorial_);
+  yields_.add(bu2Dst0H_D0pi0Yield_);
+  yields_.add(bu2Dst0H_D0gammaYield_);
+  yields_.add(nonTmSignalYield_);
+  yields_.add(bu2Dst0Hst_D0pi0Yield_);
+  yields_.add(bu2Dst0Hst_D0gammaYield_);
+  yields_.add(bu2D0HYield_);
+  yields_.add(bu2D0HstYield_);
+  yields_.add(bd2DstHYield_);
+  yields_.add(missIdYield_);
+  yields_.add(combinatorialYield_);
+
+  addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("pdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+          .c_str(),
+      ("pdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+          .c_str(),
+      functions_, yields_));
+}
+
+template <Neutral neutral, Bachelor bachelor, Daughters daughters>
+void Pdf<neutral, bachelor, daughters>::AddToSimultaneousPdf(
+    RooSimultaneous &simPdf) const {
+  simPdf.addPdf(
+      *addPdf_,
+      ComposeFittingCategoryName(neutral, bachelor, daughters).c_str());
+}
 
