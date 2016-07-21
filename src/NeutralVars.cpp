@@ -10,7 +10,7 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       aBu2Dst0H_D0pi0_("aBu2Dst0H_D0pi0_Gamma", "Gamma Bu2Dst0H_D0pi0 a", 3.17),
       nBu2Dst0H_D0pi0_("nBu2Dst0H_D0pi0_Gamma", "Gamma Bu2Dst0H_D0pi0 n", 0.5),
       meanBu2Dst0H_D0gamma_("meanBu2Dst0H_D0gamma_Gamma",
-                            "Gamma Bu2Dst0H_D0gamma mean", 5281, 5277, 5385),
+                            "Gamma Bu2Dst0H_D0gamma mean", 5281, 5277, 5285),
       aBu2Dst0H_D0gamma_(), // Construct empty unused variables??
       nBu2Dst0H_D0gamma_(),
       meanNonTmSignal_("meanNonTmSignal_Gamma", "Gamma NonTmSignal mean",
@@ -27,7 +27,8 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       nBu2D0Hst_("nBu2D0Hst_Gamma", "Gamma Bu2D0Hst n", 2.8),
       meanBd2DstH_("meanBd2DstH_Gamma", "Gamma Bd2DstH mean", 5257.0),
       aBd2DstH_("aBd2DstH_Gamma", "Gamma Bd2DstH a", 3.9),
-      nBd2DstH_("nBd2DstH_Gamma", "Gamma Bd2DstH n", 2.7) {}
+      nBd2DstH_("nBd2DstH_Gamma", "Gamma Bd2DstH n", 2.7),
+      nonTmRatio_("nonTmRatio_Gamma", "Ratio of non TM .w.r.t TM signal, Gamma", 1, 0, 5) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
@@ -36,7 +37,7 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       aBu2Dst0H_D0pi0_("aBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 a", 2.13),
       nBu2Dst0H_D0pi0_("nBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 n", 2.37),
       meanBu2Dst0H_D0gamma_("meanBu2Dst0H_D0gamma_Pi0",
-                            "Pi0 Bu2Dst0H_D0gamma mean", 5383),
+                            "Pi0 Bu2Dst0H_D0gamma mean", 5283),
       aBu2Dst0H_D0gamma_("aBu2Dst0H_D0gamma_Pi0", "Pi0 Bu2Dst0H_D0gamma a",
                          3.5),
       nBu2Dst0H_D0gamma_("nBu2Dst0H_D0gamma_Pi0", "Pi0 Bu2Dst0H_D0gamma n",
@@ -51,7 +52,8 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       nBu2D0Hst_("nBu2D0Hst_Pi0", "Pi0 Bu2D0Hst n", 5.0),
       meanBd2DstH_("meanBd2DstH_Pi0", "Pi0 Bd2DstH mean", 5277.6),
       aBd2DstH_("aBd2DstH_Pi0", "Pi0 Bd2DstH a", 4.0),
-      nBd2DstH_("nBd2DstH_Pi0", "Pi0 Bd2DstH n", 6.1) {}
+      nBd2DstH_("nBd2DstH_Pi0", "Pi0 Bd2DstH n", 6.1),
+      nonTmRatio_("nonTmRatio_Pi0", "Ratio of non TM .w.r.t TM signal, Pi0", 1, 0, 5) {}
 
 
 

@@ -40,6 +40,9 @@ public:
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
   Categories &categories() { return categories_; }
+  RooRealVar &relativeWidth() { return relativeWidth_; }
+  RooRealVar &relativeBachelorYields() { return relativeBachelorYields_; }
+  RooRealVar &relativeVectorYields() { return relativeVectorYields_; }
 
 private:
   Configuration();
@@ -54,6 +57,9 @@ private:
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
+  RooRealVar relativeWidth_;
+  RooRealVar relativeBachelorYields_;
+  RooRealVar relativeVectorYields_;
 };
 
 

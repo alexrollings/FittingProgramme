@@ -1,7 +1,15 @@
 #include "Configuration.h"
 
 Configuration::Configuration()
-    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, "") {
+    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""),
+      relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
+                     0.95),
+      relativeBachelorYields_(
+          "relativeBachelorYields",
+          "Relative yield of K compared to pi bachelor modes", 0.08, 0, 1),
+      relativeVectorYields_(
+          "relativeVectorYields",
+          "Relative yield of Kst compared to rho vector modes", 0.08, 0, 1) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";

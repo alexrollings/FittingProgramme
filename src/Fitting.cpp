@@ -737,9 +737,9 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-// std::string dsPath =
-//     "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
-std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+std::string dsPath =
+    "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+// std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
 

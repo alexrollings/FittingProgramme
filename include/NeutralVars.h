@@ -47,6 +47,7 @@ public:
   RooRealVar &meanBd2DstH() { return meanBd2DstH_; }
   RooRealVar &aBd2DstH() { return aBd2DstH_; }
   RooRealVar &nBd2DstH() { return nBd2DstH_; }
+  RooRealVar &nonTmRatio() { return nonTmRatio_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -75,6 +76,7 @@ private:
   RooRealVar meanBd2DstH_;
   RooRealVar aBd2DstH_;
   RooRealVar nBd2DstH_;
+  RooRealVar nonTmRatio_;
 };
 
 // Now we just need to define the constructors separately so the values are
