@@ -1,6 +1,7 @@
 #include "RooAbsBinning.h"
 #include "RooAddPdf.h"
 #include "RooArgSet.h"
+#include "RooDataSet.h"
 #include "RooFitResult.h"
 #include "RooPlot.h"
 #include "TH1D.h"
@@ -29,33 +30,33 @@
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
 
-void CalculateYieldRatios(Pdf &pdf) {
-
-  Bachelor bachelor = pdf.bachelor();
-
-  std::cout << "Bachelor = " << EnumToString(bachelor)
-            << " Neutral = " << EnumToString(pdf.neutral())
-            << " D0 Daughers = " << EnumToString(pdf.daughters())
-            << " yields:\n";
-
-  switch (bachelor) {
-  case Bachelor::pi:
-    std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
-              << "\tNon truth matched signal = "
-              << pdf.nonTMSignal_PiYield().getVal() << "\n"
-              << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() << "\n"
-              << "\tBu2D0H = " << pdf.bu2D0H_PiYield().getVal() << "\n"
-              << "\tBd2DstH = " << pdf.bd2DstH_PiYield().getVal() << "\n";
-    break;
-  case Bachelor::k:
-    std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
-              << "\tNon truth matched signal = "
-              << pdf.nonTMSignal_KYield().getVal() << "\n"
-              << "\tCross feed = " << pdf.crossFeed_KYield().getVal() << "\n"
-              << "\tBu2D0H = " << pdf.bu2D0H_KYield().getVal() << "\n"
-              << "\tBd2DstH = " << pdf.bd2DstH_KYield().getVal() << "\n";
-    break;
-  }
+// void CalculateYieldRatios(Pdf &pdf) {
+//
+//   Bachelor bachelor = pdf.bachelor();
+//
+//   std::cout << "Bachelor = " << EnumToString(bachelor)
+//             << " Neutral = " << EnumToString(pdf.neutral())
+//             << " D0 Daughers = " << EnumToString(pdf.daughters())
+//             << " yields:\n";
+//
+//   switch (bachelor) {
+//   case Bachelor::pi:
+//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+//               << "\tNon truth matched signal = "
+//               << pdf.nonTMSignal_PiYield().getVal() << "\n"
+//               << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() << "\n"
+//               << "\tBu2D0H = " << pdf.bu2D0H_PiYield().getVal() << "\n"
+//               << "\tBd2DstH = " << pdf.bd2DstH_PiYield().getVal() << "\n";
+//     break;
+//   case Bachelor::k:
+//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+//               << "\tNon truth matched signal = "
+//               << pdf.nonTMSignal_KYield().getVal() << "\n"
+//               << "\tCross feed = " << pdf.crossFeed_KYield().getVal() << "\n"
+//               << "\tBu2D0H = " << pdf.bu2D0H_KYield().getVal() << "\n"
+//               << "\tBd2DstH = " << pdf.bd2DstH_KYield().getVal() << "\n";
+//     break;
+//   }
   //   std::cout
   //       << "Ratios of background yields w.r.t. B->D0h for "
   //       << "\tneutral: " << EnumToString(pdf.neutral())
@@ -194,11 +195,11 @@ void CalculateYieldRatios(Pdf &pdf) {
   //                       pdf.missIdYield().getError() /
   //                       pdf.missIdYield().getVal())
   //       << "\n";
-}
+// }
 
-void Plotting(Pdf &pdf, std::vector<Charge> chargeVec, Configuration &config,
-              Configuration::Categories &categories, RooDataSet const &fullDataSet,
-              RooSimultaneous const &simPdf) {
+void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
+              Configuration &config, Configuration::Categories &categories,
+              RooDataSet const &fullDataSet, RooSimultaneous const &simPdf) {
 
   // -------------- Set Style Attributes ------------------
 
@@ -545,7 +546,7 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
-  std::vector<std::unique_ptr<Pdf>> pdfs;
+  std::vector<PdfBase*> pdfs;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -569,6 +570,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
@@ -577,6 +582,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::gamma:
 
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
@@ -591,6 +600,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
@@ -600,6 +613,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::gamma:
 
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
@@ -615,6 +632,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
@@ -623,6 +644,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::gamma:
 
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
@@ -638,6 +663,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::pi0:
 
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
@@ -647,6 +676,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
 
         case Neutral::gamma:
 
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+          //     .AddToSimultaneousPdf(simPdf);
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
@@ -671,9 +704,9 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
     Plotting(*p, chargeVec, config, categories, fullDataSet, simPdf);
   }
 
-  for (auto &p : pdfs) {
-    CalculateYieldRatios(*p);
-  }
+  // for (auto &p : pdfs) {
+  //   CalculateYieldRatios(*p);
+  // }
 
   result->Print();
 }
@@ -704,9 +737,9 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath =
-    "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
-// std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+// std::string dsPath =
+//     "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
 
@@ -826,10 +859,9 @@ int main(int argc, char **argv) {
     }
 
     Configuration &config = Configuration::Get();
-    Categories &categories =
-        Configuration::Get().categories()
+    Configuration::Categories &categories = Configuration::Get().categories();
 
-            RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
+    RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
     // Loop over all options in order to extract correct roodatasets
     for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {

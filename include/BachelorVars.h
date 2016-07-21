@@ -45,21 +45,21 @@ public:
   RooRealVar &sigmaMissId2() { return sigmaMissId2_; }
   RooRealVar &aMissId2() { return aMissId2_; }
   RooRealVar &nMissId2() { return nMissId2_; }
-  std::unique_ptr<RooAbsPdf> &bu2Dst0H_D0pi0() { return bu2Dst0H_D0pi0_; }
-  std::unique_ptr<RooAbsPdf> &bu2Dst0H_D0gamma() { return bu2Dst0H_D0gamma_; }
-  std::unique_ptr<RooAbsPdf> &nonTmSignal_1() { return nonTmSignal_1_; }
-  std::unique_ptr<RooAbsPdf> &nonTmSignal_2() { return nonTmSignal_2_; }
-  std::unique_ptr<RooAbsPdf> &nonTmSignal() { return nonTmSignal_; }
-  std::unique_ptr<RooAbsPdf> &bu2Dst0Hst_D0pi0() { return bu2Dst0Hst_D0pi0_; }
-  std::unique_ptr<RooAbsPdf> &bu2Dst0Hst_D0gamma() {
-    return bu2Dst0Hst_D0gamma_;
+  RooAbsPdf &bu2Dst0H_D0pi0() { return *bu2Dst0H_D0pi0_; }
+  RooAbsPdf &bu2Dst0H_D0gamma() { return *bu2Dst0H_D0gamma_; }
+  RooAbsPdf &nonTmSignal_1() { return *nonTmSignal_1_; }
+  RooAbsPdf &nonTmSignal_2() { return *nonTmSignal_2_; }
+  RooAbsPdf &nonTmSignal() { return *nonTmSignal_; }
+  RooAbsPdf &bu2Dst0Hst_D0pi0() { return *bu2Dst0Hst_D0pi0_; }
+  RooAbsPdf &bu2Dst0Hst_D0gamma() {
+    return *bu2Dst0Hst_D0gamma_;
   }
-  std::unique_ptr<RooAbsPdf> &bu2D0H() { return bu2D0H_; }
-  std::unique_ptr<RooAbsPdf> &bu2D0Hst() { return bu2D0Hst_; }
-  std::unique_ptr<RooAbsPdf> &bd2DstH() { return bd2DstH_; }
-  std::unique_ptr<RooAbsPdf> &missId1() { return missId1_; }
-  std::unique_ptr<RooAbsPdf> &missId2() { return missId2_; }
-  std::unique_ptr<RooAbsPdf> &missId() { return missId_; }
+  RooAbsPdf &bu2D0H() { return *bu2D0H_; }
+  RooAbsPdf &bu2D0Hst() { return *bu2D0Hst_; }
+  RooAbsPdf &bd2DstH() { return *bd2DstH_; }
+  RooAbsPdf &missId1() { return *missId1_; }
+  RooAbsPdf &missId2() { return *missId2_; }
+  RooAbsPdf &missId() { return *missId_; }
 
 private:
   BachelorVars();

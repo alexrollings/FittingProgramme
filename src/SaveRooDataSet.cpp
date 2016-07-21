@@ -68,12 +68,12 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
   fitting = ComposeFittingCategoryName(myNeutral, myBachelor, myDaughters);
   // Initialise RooRealVars now neutral has been specified
   Configuration &config = Configuration::Get();
-  Categories &categories = Configuration::Get().categories()
+  Configuration::Categories &categories = Configuration::Get().categories();
 
-                           // Create DataSet and feed it the ArgSet, which
-                           // defines how many columns it
-                           // should have
-                           TFile dataFile(path.c_str());
+  // Create DataSet and feed it the ArgSet, which
+  // defines how many columns it
+  // should have
+  TFile dataFile(path.c_str());
   // ---------------------- CAST STUFF ----------------------
   // Get takes a TObject pointer and casts it as a ttree pointer
   // This makes sense as the dataFile contains a ttree

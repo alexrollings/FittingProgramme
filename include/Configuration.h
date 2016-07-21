@@ -10,7 +10,6 @@ enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
 
-
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
 

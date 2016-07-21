@@ -1,31 +1,24 @@
 #pragma once
+#include "BachelorVars.h"
+#include "Configuration.h"
+#include "NeutralVars.h"
 #include "RooAbsPdf.h"
-#include "RooArgList.h"
 #include "RooAddPdf.h"
+#include "RooArgList.h"
 #include "RooExponential.h"
 #include "RooSimultaneous.h"
-#include "NeutralVars.h" 
-#include "BachelorVars.h" 
-#include "Configuration.h" 
 
-
-// Pdf
-
-// Remove namespace when not duplicate anymore
-
-template <Neutral neutral, Bachelor bachelor, Daughters daughters> class Pdf {
+class PdfBase {
 
 public:
-  static Pdf<neutral, bachelor, daughters> &Get() {
-    static Pdf<neutral, bachelor, daughters> singleton;
-    return singleton;
-  }
+  void AddToSimultaneousPdf(RooSimultaneous &) const;
 
-  void AddToSimultaneousPdf(RooSimultaneous &simPdf) const;
-  void AddToPdf(RooArgList &yields, RooArgList &functions);
+  Bachelor bachelor() const { return bachelor_; }
+  Neutral neutral() const { return neutral_; }
+  Daughters daughters() const { return daughters_; }
 
   RooRealVar &combinatorialConstant() { return combinatorialConstant_; }
-  std::unique_ptr<RooAbsPdf> &combinatorial() { return combinatorial_; }
+  RooAbsPdf &combinatorial() { return *combinatorial_; }
   RooRealVar &bu2Dst0H_D0pi0Yield() { return bu2Dst0H_D0pi0Yield_; }
   RooRealVar &bu2Dst0H_D0gammaYield() { return bu2Dst0H_D0gammaYield_; }
   RooRealVar &nonTmSignalYield() { return nonTmSignalYield_; }
@@ -39,9 +32,23 @@ public:
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
 
-private:
-  Pdf();
-  ~Pdf();
+  virtual RooAbsPdf &nonTmSignal() const = 0;
+  virtual RooAbsPdf &bu2Dst0H_D0pi0() const = 0;
+  virtual RooAbsPdf &bu2Dst0H_D0gamma() const = 0;
+  virtual RooAbsPdf &bu2Dst0Hst_D0pi0() const = 0;
+  virtual RooAbsPdf &bu2Dst0Hst_D0gamma() const = 0;
+  virtual RooAbsPdf &bu2D0H() const = 0;
+  virtual RooAbsPdf &bu2D0Hst() const = 0;
+  virtual RooAbsPdf &bd2DstH() const = 0;
+  virtual RooAbsPdf &missId() const = 0;
+
+protected:
+  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters);
+  virtual ~PdfBase() {}
+
+  Neutral neutral_;
+  Bachelor bachelor_;
+  Daughters daughters_;
 
   RooRealVar combinatorialConstant_;
   std::unique_ptr<RooAbsPdf> combinatorial_;
@@ -61,124 +68,93 @@ private:
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Pdf();
-// template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Pdf();
-// template <> Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Pdf();
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+class Pdf : public PdfBase {
 
-template <Neutral neutral, Bachelor bachelor, Daughters daughters>
-Pdf<neutral, bachelor, daughters>::Pdf()
-    : combinatorialConstant_(
-          ("combinatorialConstant_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "Combinatorial parameter", 0.1, -1, 1),
-      combinatorial_(new RooExponential(
-          ("combinatorial_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "combinatorial exponential", Configuration::Get().buMass(),
-          combinatorialConstant_)),
-      bu2Dst0H_D0pi0Yield_(
-          ("bu2Dst0H_D0pi0Yield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "bu2Dst0H_D0pi0 yield", 10000, 0, 30000),
-      bu2Dst0H_D0gammaYield_(
-          ("bu2Dst0H_D0gammaYield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "bu2Dst0H_D0gamma yield", 10000, 0, 30000),
-      nonTmSignalYield_(
-          ("nonTmSignalYield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "nonTmSignal yield", 10000, 0, 30000),
-      bu2Dst0Hst_D0pi0Yield_(
-          ("bu2Dst0Hst_D0pi0Yield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "bu2Dst0Hst_D0pi0 yield", 10000, 0, 30000),
-      bu2Dst0Hst_D0gammaYield_(
-          ("bu2Dst0Hst_D0gammaYield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "bu2Dst0Hst_D0gamma yield", 10000, 0, 30000),
-      bu2D0HYield_(("bu2D0HYield_" +
-                    ComposeFittingCategoryName(neutral, bachelor, daughters))
-                       .c_str(),
-                   "bu2D0H yield", 10000, 0, 30000),
-      bu2D0HstYield_(("bu2D0HstYield_" +
-                      ComposeFittingCategoryName(neutral, bachelor, daughters))
-                         .c_str(),
-                     "bu2D0Hst yield", 10000, 0, 30000),
-      bd2DstHYield_(("bd2DstHYield_" +
-                     ComposeFittingCategoryName(neutral, bachelor, daughters))
-                        .c_str(),
-                    "bd2DstH yield", 10000, 0, 30000),
-      missIdYield_(("missIdYield_" +
-                    ComposeFittingCategoryName(neutral, bachelor, daughters))
-                       .c_str(),
-                   "missId yield", 10000, 0, 30000),
-      combinatorialYield_(
-          ("combinatorialYield_" +
-           ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str(),
-          "combinatorial yield", 10000, 0, 30000),
-      yields_(
-          ("yields_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
-              .c_str()),
-      functions_(("functions_" +
-                  ComposeFittingCategoryName(neutral, bachelor, daughters))
-                     .c_str()),
-      addPdf_(nullptr) {
+public:
+  static Pdf<_neutral, _bachelor, _daughters> &Get() {
+    static Pdf<_neutral, _bachelor, _daughters> singleton;
+    return singleton;
+  }
 
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0H_D0pi0()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0H_D0gamma()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().nonTmSignal()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0Hst_D0pi0()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2Dst0Hst_D0gamma()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2D0H()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bu2D0Hst()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().bd2DstH()));
-  functions_.add(*(BachelorVars<neutral, bachelor>::Get().missId()));
-  functions_.add(*combinatorial_);
-  yields_.add(bu2Dst0H_D0pi0Yield_);
-  yields_.add(bu2Dst0H_D0gammaYield_);
-  yields_.add(nonTmSignalYield_);
-  yields_.add(bu2Dst0Hst_D0pi0Yield_);
-  yields_.add(bu2Dst0Hst_D0gammaYield_);
-  yields_.add(bu2D0HYield_);
-  yields_.add(bu2D0HstYield_);
-  yields_.add(bd2DstHYield_);
-  yields_.add(missIdYield_);
-  yields_.add(combinatorialYield_);
+  virtual RooAbsPdf &nonTmSignal() const {
+    return BachelorVars<_neutral, _bachelor>::Get().nonTmSignal(); 
+  }
 
-  addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+  virtual RooAbsPdf &bu2Dst0H_D0pi0() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0H_D0pi0(); 
+  }
+
+  virtual RooAbsPdf &bu2Dst0H_D0gamma() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0H_D0gamma(); 
+  }
+
+  virtual RooAbsPdf &bu2Dst0Hst_D0pi0() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0(); 
+  }
+
+  virtual RooAbsPdf &bu2Dst0Hst_D0gamma() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma(); 
+  }
+
+  virtual RooAbsPdf &bu2D0H() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2D0H(); 
+  }
+
+  virtual RooAbsPdf &bu2D0Hst() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst(); 
+  }
+
+  virtual RooAbsPdf &bd2DstH() const {
+    return BachelorVars<_neutral, _bachelor>::Get().bd2DstH(); 
+  }
+
+  virtual RooAbsPdf &missId() const {
+    return BachelorVars<_neutral, _bachelor>::Get().missId(); 
+  }
+
+private:
+  Pdf();
+  virtual ~Pdf() {}
+};
+
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+Pdf<_neutral, _bachelor, _daughters>::Pdf()
+    : PdfBase(_neutral, _bachelor, _daughters) {
+
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0H_D0pi0());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0H_D0gamma());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().nonTmSignal());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0H());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bd2DstH());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().missId());
+  PdfBase::functions_.add(*PdfBase::combinatorial_);
+  PdfBase::yields_.add(PdfBase::bu2Dst0H_D0pi0Yield_);
+  PdfBase::yields_.add(PdfBase::bu2Dst0H_D0gammaYield_);
+  PdfBase::yields_.add(PdfBase::nonTmSignalYield_);
+  PdfBase::yields_.add(PdfBase::bu2Dst0Hst_D0pi0Yield_);
+  PdfBase::yields_.add(PdfBase::bu2Dst0Hst_D0gammaYield_);
+  PdfBase::yields_.add(PdfBase::bu2D0HYield_);
+  PdfBase::yields_.add(PdfBase::bu2D0HstYield_);
+  PdfBase::yields_.add(PdfBase::bd2DstHYield_);
+  PdfBase::yields_.add(PdfBase::missIdYield_);
+  PdfBase::yields_.add(PdfBase::combinatorialYield_);
+
+  PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("pdf_" + ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
           .c_str(),
-      ("pdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("pdf_" + ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
           .c_str(),
-      functions_, yields_));
-}
-
-template <Neutral neutral, Bachelor bachelor, Daughters daughters>
-void Pdf<neutral, bachelor, daughters>::AddToSimultaneousPdf(
-    RooSimultaneous &simPdf) const {
-  simPdf.addPdf(
-      *addPdf_,
-      ComposeFittingCategoryName(neutral, bachelor, daughters).c_str());
+      PdfBase::functions_, PdfBase::yields_));
 }
 
