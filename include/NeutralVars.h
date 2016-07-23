@@ -48,6 +48,14 @@ public:
   RooRealVar &aBd2DstH() { return aBd2DstH_; }
   RooRealVar &nBd2DstH() { return nBd2DstH_; }
   RooRealVar &nonTmRatio() { return nonTmRatio_; }
+  double &maxYield() { return maxYield_; }
+  double &bu2D0HExpected() { return bu2D0HExpected_; }
+  double &bd2DstHExpected() { return bd2DstHExpected_; }
+  double &bu2Dst0Hst_D0pi0Expected() { return bu2Dst0Hst_D0pi0Expected_; }
+  double &bu2Dst0Hst_D0gammaExpected() { return bu2Dst0Hst_D0gammaExpected_; }
+  double &bu2D0HstExpected() { return bu2D0HstExpected_; }
+  double &bu2Dst0H_D0pi0Expected() { return bu2Dst0H_D0pi0Expected_; }
+  double &bu2Dst0H_D0gammaExpected() { return bu2Dst0H_D0gammaExpected_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -77,6 +85,14 @@ private:
   RooRealVar aBd2DstH_;
   RooRealVar nBd2DstH_;
   RooRealVar nonTmRatio_;
+  double maxYield_;
+  double bu2D0HExpected_;
+  double bd2DstHExpected_;
+  double bu2Dst0Hst_D0pi0Expected_;
+  double bu2Dst0Hst_D0gammaExpected_;
+  double bu2D0HstExpected_;
+  double bu2Dst0H_D0pi0Expected_;
+  double bu2Dst0H_D0gammaExpected_;
 };
 
 // Now we just need to define the constructors separately so the values are

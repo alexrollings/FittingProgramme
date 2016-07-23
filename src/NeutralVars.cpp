@@ -28,7 +28,15 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       meanBd2DstH_("meanBd2DstH_Gamma", "Gamma Bd2DstH mean", 5257.0),
       aBd2DstH_("aBd2DstH_Gamma", "Gamma Bd2DstH a", 3.9),
       nBd2DstH_("nBd2DstH_Gamma", "Gamma Bd2DstH n", 2.7),
-      nonTmRatio_("nonTmRatio_Gamma", "Ratio of non TM .w.r.t TM signal, Gamma", 1, 0, 5) {}
+      nonTmRatio_("nonTmRatio_Gamma", "Ratio of non TM .w.r.t TM signal, Gamma", 1, 0, 5),
+      maxYield_(29000),
+      bu2D0HExpected_(6080),
+      bd2DstHExpected_(2570),
+      bu2Dst0Hst_D0pi0Expected_(2650),
+      bu2Dst0Hst_D0gammaExpected_(3530),
+      bu2D0HstExpected_(1840),
+      bu2Dst0H_D0pi0Expected_(6230),
+      bu2Dst0H_D0gammaExpected_(9830) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
@@ -43,9 +51,8 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       nBu2Dst0H_D0gamma_("nBu2Dst0H_D0gamma_Pi0", "Pi0 Bu2Dst0H_D0gamma n",
                          2.8),
       meanNonTmSignal_("meanNonTmSignal_Pi0", "Pi0 NonTmSignal mean", 5284.8),
-      aNonTmSignal_1_(), nNonTmSignal_1_(),
-      fracNonTmSignal_1_(), aNonTmSignal_2_(),
-      nNonTmSignal_2_(),
+      aNonTmSignal_1_(), nNonTmSignal_1_(), fracNonTmSignal_1_(),
+      aNonTmSignal_2_(), nNonTmSignal_2_(),
       meanBu2D0H_("meanBu2D0H_Pi0", "Pi0 Bu20H mean", 5492),
       meanBu2D0Hst_("meanBu2D0Hst_Pi0", "Pi0 Bu2D0Hst mean", 5304),
       aBu2D0Hst_("aBu2D0Hst_Pi0", "Pi0 Bu2D0Hst a", 0.33),
@@ -53,7 +60,14 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       meanBd2DstH_("meanBd2DstH_Pi0", "Pi0 Bd2DstH mean", 5277.6),
       aBd2DstH_("aBd2DstH_Pi0", "Pi0 Bd2DstH a", 4.0),
       nBd2DstH_("nBd2DstH_Pi0", "Pi0 Bd2DstH n", 6.1),
-      nonTmRatio_("nonTmRatio_Pi0", "Ratio of non TM .w.r.t TM signal, Pi0", 1, 0, 5) {}
-
-
+      nonTmRatio_("nonTmRatio_Pi0", "Ratio of non TM .w.r.t TM signal, Pi0", 1,
+                  0, 5),
+      maxYield_(27000),
+      bu2D0HExpected_(2830),
+      bd2DstHExpected_(1340),
+      bu2Dst0Hst_D0pi0Expected_(5470),
+      bu2Dst0Hst_D0gammaExpected_(540),
+      bu2D0HstExpected_(2450),
+      bu2Dst0H_D0pi0Expected_(9540),
+      bu2Dst0H_D0gammaExpected_(1860) {}
 

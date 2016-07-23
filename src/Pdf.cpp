@@ -3,15 +3,10 @@
 
 PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
     : neutral_(neutral), bachelor_(bachelor), daughters_(daughters),
-      addPdf_(nullptr),
-      bu2Dst0H_D0pi0Yield_(nullptr),
-      bu2Dst0H_D0gammaYield_(nullptr),
-      nonTmSignalYield_(nullptr),
-      bu2Dst0Hst_D0pi0Yield_(nullptr),
-      bu2Dst0Hst_D0gammaYield_(nullptr),
-      bu2D0HYield_(nullptr),
-      bu2D0HstYield_(nullptr),
-      bd2DstHYield_(nullptr),
+      addPdf_(nullptr), bu2Dst0H_D0pi0Yield_(nullptr),
+      bu2Dst0H_D0gammaYield_(nullptr), nonTmSignalYield_(nullptr),
+      bu2Dst0Hst_D0pi0Yield_(nullptr), bu2Dst0Hst_D0gammaYield_(nullptr),
+      bu2D0HYield_(nullptr), bu2D0HstYield_(nullptr), bd2DstHYield_(nullptr),
       missIdYield_(nullptr),
       combinatorialConstant_(
           ("combinatorialConstant_" +
@@ -34,7 +29,9 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
               .c_str()),
       functions_(("functions_" +
                   ComposeFittingCategoryName(neutral, bachelor, daughters))
-                     .c_str()) {}
+                     .c_str()),
+      bachelorSF_(("bachelorSF_" + EnumToString(bachelor)).c_str(), "Bachelor scale factor", 0),
+      daughtersSF_(("daughtersSF_" + EnumToString(daughters)).c_str(), "Daughters scale factor", 0) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(
