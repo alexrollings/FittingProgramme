@@ -28,6 +28,7 @@ public:
     return singleton;
   }
 
+  // If RooShit wasn't so shit we would pass a const reference
   RooRealVar &meanBu2Dst0H_D0pi0() { return meanBu2Dst0H_D0pi0_; }
   RooRealVar &aBu2Dst0H_D0pi0() { return aBu2Dst0H_D0pi0_; }
   RooRealVar &nBu2Dst0H_D0pi0() { return nBu2Dst0H_D0pi0_; }
@@ -48,14 +49,15 @@ public:
   RooRealVar &aBd2DstH() { return aBd2DstH_; }
   RooRealVar &nBd2DstH() { return nBd2DstH_; }
   RooRealVar &nonTmRatio() { return nonTmRatio_; }
-  double &maxYield() { return maxYield_; }
-  double &bu2D0HExpected() { return bu2D0HExpected_; }
-  double &bd2DstHExpected() { return bd2DstHExpected_; }
-  double &bu2Dst0Hst_D0pi0Expected() { return bu2Dst0Hst_D0pi0Expected_; }
-  double &bu2Dst0Hst_D0gammaExpected() { return bu2Dst0Hst_D0gammaExpected_; }
-  double &bu2D0HstExpected() { return bu2D0HstExpected_; }
-  double &bu2Dst0H_D0pi0Expected() { return bu2Dst0H_D0pi0Expected_; }
-  double &bu2Dst0H_D0gammaExpected() { return bu2Dst0H_D0gammaExpected_; }
+  // Don't pass double as a reference: don't allow user to change numbers.
+  double maxYield() { return maxYield_; }
+  double bu2D0HExpected() { return bu2D0HExpected_; }
+  double bd2DstHExpected() { return bd2DstHExpected_; }
+  double bu2Dst0Hst_D0pi0Expected() { return bu2Dst0Hst_D0pi0Expected_; }
+  double bu2Dst0Hst_D0gammaExpected() { return bu2Dst0Hst_D0gammaExpected_; }
+  double bu2D0HstExpected() { return bu2D0HstExpected_; }
+  double bu2Dst0H_D0pi0Expected() { return bu2Dst0H_D0pi0Expected_; }
+  double bu2Dst0H_D0gammaExpected() { return bu2Dst0H_D0gammaExpected_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see

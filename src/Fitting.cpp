@@ -737,12 +737,13 @@ bool fexists(std::string const &filename) {
 }
 
 // Path to roodatasets
-std::string dsPath =
-    "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
-// std::string dsPath = "/home/rollings/ButoDst0X_FIT/roodatasets/";
+// std::string dataDir =
+    // "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+// std::string dataDir = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
 
+  std::string dataDir;
   std::vector<Year> yearVec;
   std::vector<Polarity> polarityVec;
   std::vector<Bachelor> bachelorVec;
@@ -794,6 +795,13 @@ int main(int argc, char **argv) {
                    "------------------------------------------------\n";
       std::cout << "\n";
     } else {
+
+      // Data folder
+      if (!args("dataDir", dataDir)) {
+        std::cerr
+            << "Data directory must be specified (-dataDir=<path>)\n";
+        return 1;
+      }
 
       // Year
       // args matches "year" to string given in command like and assigns
@@ -876,7 +884,7 @@ int main(int argc, char **argv) {
               for (unsigned int nCounter = 0; nCounter < neutralVec.size();
                    nCounter++) {
                 std::string dsFile =
-                    dsPath +
+                    dataDir + "/" +
                     ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
                                     bachelorVec[bCounter], neutralVec[nCounter],
                                     daughtersVec[dCounter],

@@ -30,8 +30,8 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
       functions_(("functions_" +
                   ComposeFittingCategoryName(neutral, bachelor, daughters))
                      .c_str()),
-      bachelorSF_(("bachelorSF_" + EnumToString(bachelor)).c_str(), "Bachelor scale factor", 0),
-      daughtersSF_(("daughtersSF_" + EnumToString(daughters)).c_str(), "Daughters scale factor", 0) {}
+      bachelorSF_(),
+      daughtersSF_() {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(
