@@ -10,14 +10,11 @@
 
 template <>
 BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi", 0.000420),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.32),
-      bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12", 0.96),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
       sigmaBu2Dst0H_D0pi0_(new RooRealVar("sigmaBu2Dst0H_D0pi0_GammaPi",
                            "Gamma, Pi Bu2Dst0H_D0pi0 sigma", 80.2)),
       sigmaBu2Dst0H_D0gamma_1_(new RooRealVar("sigmaLeftBu2Dst0H_D0gamma_GammaPi",
-                               "Gamma, Pi Bu2Dst0H_D0gamma sigma left", 23, 20, 26)),
+                               "Gamma, Pi Bu2Dst0H_D0gamma sigma left", 23, 18, 26)),
       sigmaBu2Dst0H_D0gamma_2_(new RooRealVar("sigmaRightBu2Dst0H_D0gamma_GammaPi",
                                "Gamma, Pi Bu2Dst0H_D0gamma sigma right", 25, 22, 28)),
       sigmaNonTmSignal_1_(new RooRealVar("sigmaNonTmSignal_1_GammaPi",
@@ -125,10 +122,7 @@ BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
 
 template <>
 BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi", 0.00518),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.04),
-      bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12", 0.68),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
       sigmaBu2Dst0H_D0pi0_(new RooFormulaVar(
           "sigmaBu2Dst0H_D0pi0_GammaK", "Gamma, K Bu2Dst0H_D0pi0 sigma",
           "@0*@1", RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
@@ -267,10 +261,7 @@ BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
 
 template <>
 BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi", 0.000420),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.32),
-      bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12", 0.96),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
       sigmaBu2Dst0H_D0pi0_(new RooRealVar("sigmaBu2Dst0H_D0pi0_Pi0Pi",
                            "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 17, 14, 20)),
       sigmaBu2Dst0H_D0gamma_1_(new RooRealVar("sigmaBu2Dst0H_D0gamma_Pi0Pi",
@@ -371,10 +362,7 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
 
 template <>
 BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi", 0.00518),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.04),
-      bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12", 0.68),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
       sigmaBu2Dst0H_D0pi0_(new RooFormulaVar(
           "sigmaBu2Dst0H_D0pi0_Pi0K", "Pi0, K Bu2Dst0H_D0pi0 sigma", "@0*@1",
           RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()

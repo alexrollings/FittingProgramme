@@ -43,6 +43,11 @@ public:
   RooRealVar &relativeWidth() { return relativeWidth_; }
   RooRealVar &relativeBachelorYields() { return relativeBachelorYields_; }
   RooRealVar &relativeVectorYields() { return relativeVectorYields_; }
+  RooRealVar &relativeNeutralAddition() { return relativeNeutralAddition_; }
+  RooRealVar &relativeBu2D0HYield() { return relativeBu2D0HYield_; }
+  RooRealVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
+  RooRealVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
+  RooRealVar &relativeNonTmYield() { return relativeNonTmYield_; }
 
 private:
   Configuration();
@@ -60,6 +65,11 @@ private:
   RooRealVar relativeWidth_;
   RooRealVar relativeBachelorYields_;
   RooRealVar relativeVectorYields_;
+  RooRealVar relativeNeutralAddition_;
+  RooRealVar relativeBu2D0HYield_;
+  RooRealVar relativeBu2D0HstYield_;
+  RooRealVar relativeBd2DstHYield_;
+  RooRealVar relativeNonTmYield_;
 };
 
 

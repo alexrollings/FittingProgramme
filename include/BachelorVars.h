@@ -61,11 +61,7 @@ public:
   RooAbsPdf &missId1() { return *missId1_; }
   RooAbsPdf &missId2() { return *missId2_; }
   RooAbsPdf &missId() { return *missId_; }
-
-  RooRealVar &bu2Dst0MissIdBR() { return bu2Dst0MissIdBR_; }
   RooRealVar &missIdRate() { return missIdRate_; }
-  RooRealVar &bu2Dst0HBR() { return bu2Dst0HBR_; }
-  RooRealVar &bachEff() { return bachEff_; }
 
 
 private:
@@ -98,12 +94,7 @@ private:
   RooRealVar sigmaMissId2_;
   RooRealVar aMissId2_;
   RooRealVar nMissId2_;
-  
-  // Variables for floating in PDF fit
-  RooRealVar bu2Dst0MissIdBR_;
   RooRealVar missIdRate_;
-  RooRealVar bu2Dst0HBR_;
-  RooRealVar bachEff_;
 
   // By declaring the pointer to be a RooAbsPdf, we can then specialise the type
   // later (base class)
