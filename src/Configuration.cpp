@@ -9,7 +9,12 @@ Configuration::Configuration()
           "Relative yield of K compared to pi bachelor modes", 0.08, 0, 1),
       relativeVectorYields_(
           "relativeVectorYields",
-          "Relative yield of Kst compared to rho vector modes", 0.08, 0, 1) {
+          "Relative yield of Kst compared to rho vector modes", 0.08, 0, 1),
+      relativeNeutralAddition_( "relativeNeutralAddition", "Relative rate of random gamma w.r.t. random pi0 addition", 2, 0, 5),
+      relativeBu2D0HYield_("relativeBu2D0HYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0H", 1.5745),
+      relativeBu2D0HstYield_("relativeBu2D0HstYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0Hst", 0.5607),
+      relativeBd2DstHYield_("relativeBd2DstHYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bd2DstH", 1.4058) ,
+      relativeNonTmYield_("relativeNonTmYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay NonTm", 0.9055) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
