@@ -493,7 +493,7 @@ BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
                               Configuration::Get().buMass(), meanMissId1_,
                               sigmaMissId1_, aMissId1_, nMissId1_)),
       missId2_(new RooCBShape("missId2_Pi0K", "Pi0, K missId2 CBShape",
-                              Configuration::Get().buMass(), meanMissId1_,
+                              Configuration::Get().buMass(), meanMissId2_,
                               sigmaMissId2_, aMissId2_, nMissId2_)),
       missId_(new RooAddPdf("missId_Pi0K", "Pi0, K missId AddPdf",
                             RooArgList(*missId1_, *missId2_), fracMissId1_)) {}

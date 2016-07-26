@@ -333,8 +333,9 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
         ("missIdYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
-        "missId yield", "@0*@1*@2/@3/@4",
+        "missId yield", "(@0+@1)*@2*@3/(@4*@5)",
         RooArgList(PdfBase::bu2Dst0H_D0pi0Yield(),
+                   PdfBase::nonTmSignalYield(),
                    BachelorVars<_neutral, _bachelor>::Get().bu2Dst0MissIdBR(),
                    BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
                    BachelorVars<_neutral, _bachelor>::Get().bu2Dst0HBR(),
@@ -403,8 +404,9 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
         ("missIdYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
-        "missId yield", "@0*@1*@2/@3/@4",
+        "missId yield", "(@0+@1)*@2*@3/(@4*@5)",
         RooArgList(PdfBase::bu2Dst0H_D0gammaYield(),
+                   PdfBase::nonTmSignalYield(),
                    BachelorVars<_neutral, _bachelor>::Get().bu2Dst0MissIdBR(),
                    BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
                    BachelorVars<_neutral, _bachelor>::Get().bu2Dst0HBR(),
