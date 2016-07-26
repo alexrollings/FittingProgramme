@@ -414,8 +414,6 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
               Configuration::Get().relativeBachelorYields())));
       break;
     }
-    break;
-  }
   missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("missIdYield_" +
        ComposeFittingCategoryName(_neutral, _bachelor, _daughters))

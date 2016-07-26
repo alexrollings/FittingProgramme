@@ -62,6 +62,9 @@ public:
   RooAbsPdf &missId2() { return *missId2_; }
   RooAbsPdf &missId() { return *missId_; }
   RooRealVar &missIdRate() { return missIdRate_; }
+  RooRealVar &bu2Dst0MissIdBR() { return bu2Dst0MissIdBR_; }
+  RooRealVar &bu2Dst0HBR() { return bu2Dst0HBR_; }
+  RooRealVar &bachEff() { return bachEff_; }
 
 private:
   BachelorVars();
