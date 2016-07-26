@@ -49,6 +49,7 @@ public:
   RooRealVar &aBd2DstH() { return aBd2DstH_; }
   RooRealVar &nBd2DstH() { return nBd2DstH_; }
   RooRealVar &nonTmRatio() { return nonTmRatio_; }
+  RooRealVar &crossFeedRate() { return crossFeedRate_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
   double bu2D0HExpected() { return bu2D0HExpected_; }
@@ -87,6 +88,7 @@ private:
   RooRealVar aBd2DstH_;
   RooRealVar nBd2DstH_;
   RooRealVar nonTmRatio_;
+  RooRealVar crossFeedRate_;
   double maxYield_;
   double bu2D0HExpected_;
   double bd2DstHExpected_;

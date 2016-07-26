@@ -63,7 +63,6 @@ public:
   RooAbsPdf &missId() { return *missId_; }
   RooRealVar &missIdRate() { return missIdRate_; }
 
-
 private:
   BachelorVars();
   ~BachelorVars() {}
@@ -94,8 +93,11 @@ private:
   RooRealVar sigmaMissId2_;
   RooRealVar aMissId2_;
   RooRealVar nMissId2_;
-  RooRealVar missIdRate_;
 
+  RooRealVar bu2Dst0MissIdBR_;
+  RooRealVar missIdRate_;
+  RooRealVar bu2Dst0HBR_;
+  RooRealVar bachEff_;
   // By declaring the pointer to be a RooAbsPdf, we can then specialise the type
   // later (base class)
   std::unique_ptr<RooAbsPdf> bu2Dst0H_D0pi0_;
