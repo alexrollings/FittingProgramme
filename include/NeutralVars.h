@@ -41,7 +41,13 @@ public:
   RooRealVar &fracNonTmSignal_1() { return fracNonTmSignal_1_; }
   RooRealVar &aNonTmSignal_2() { return aNonTmSignal_2_; }
   RooRealVar &nNonTmSignal_2() { return nNonTmSignal_2_; }
-  RooRealVar &meanBu2D0H() { return meanBu2D0H_; }
+  RooRealVar &meanBu2D0H_1() { return meanBu2D0H_1_; }
+  RooRealVar &meanBu2D0H_2() { return meanBu2D0H_2_; }
+  RooRealVar &aBu2D0H_1() { return aBu2D0H_1_; }
+  RooRealVar &aBu2D0H_2() { return aBu2D0H_2_; }
+  RooRealVar &nBu2D0H_1() { return nBu2D0H_1_; }
+  RooRealVar &nBu2D0H_2() { return nBu2D0H_2_; }
+  RooRealVar &fracBu2D0H_1() { return fracBu2D0H_1_; }
   RooRealVar &meanBu2D0Hst() { return meanBu2D0Hst_; }
   RooRealVar &aBu2D0Hst() { return aBu2D0Hst_; }
   RooRealVar &nBu2D0Hst() { return nBu2D0Hst_; }
@@ -80,7 +86,13 @@ private:
   RooRealVar fracNonTmSignal_1_; // gamma
   RooRealVar aNonTmSignal_2_;    // gamma
   RooRealVar nNonTmSignal_2_;    // gamma
-  RooRealVar meanBu2D0H_;
+  RooRealVar meanBu2D0H_1_;
+  RooRealVar meanBu2D0H_2_;
+  RooRealVar aBu2D0H_1_;
+  RooRealVar aBu2D0H_2_;
+  RooRealVar nBu2D0H_1_;
+  RooRealVar nBu2D0H_2_;
+  RooRealVar fracBu2D0H_1_;
   RooRealVar meanBu2D0Hst_;
   RooRealVar aBu2D0Hst_;
   RooRealVar nBu2D0Hst_;

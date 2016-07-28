@@ -5,9 +5,9 @@
 #include "RooArgList.h"
 #include "RooCategory.h"
 #include "RooDataSet.h"
-#include "RooRealVar.h"
-#include "RooFormulaVar.h"
 #include "RooFormula.h"
+#include "RooFormulaVar.h"
+#include "RooRealVar.h"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -98,13 +98,14 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
   }
 
   std::cout << "Loading tree " << ttree << " from file " << path << "\n";
-  
 
   // Create data set for our ttree variables
-  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree, config.variableArgSet());
+  RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree,
+                          config.variableArgSet());
 
   // Create data set to store categories
-  RooDataSet extraDataSet("extraDataSet", "Category Data Set", config.categoryArgSet());
+  RooDataSet extraDataSet("extraDataSet", "Category Data Set",
+                          config.categoryArgSet());
 
   std::cout << "Finished loading tree.\n";
 
@@ -150,31 +151,40 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
   // Merge data set containing variables with that containing categories
   inputDataSet.merge(&extraDataSet);
 
-  RooDataSet *plusDataSet = dynamic_cast<RooDataSet *>(
-      inputDataSet.reduce("charge==charge::plus"));
+  RooDataSet *plusDataSet =
+      dynamic_cast<RooDataSet *>(inputDataSet.reduce("charge==charge::plus"));
 
+  RooDataSet *reducedPlusDataSet = dynamic_cast<RooDataSet *>(plusDataSet->reduce(config.fullArgSet()));
+  std::cout << "PlusDataSet contains variables: ";
+  reducedPlusDataSet -> printArgs(std::cout);
+  std::cout << "\n";
+ 
   std::string dsPlusFileName =
       ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughters,
                       Charge::plus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
   TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
-  plusDataSet->Write("inputDataSet");
+  reducedPlusDataSet->Write("inputDataSet");
   dsPlusFile.Close();
 
   RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
       inputDataSet.reduce("charge==charge::minus"));
-  //  Charge in the formula it corresponds to the string we have in the constructor of Categories as RooFit only knows the strings you've given it
+  //  Charge in the formula it corresponds to the string we have in the
+  //  constructor of Categories as RooFit only knows the strings you've given it
+  RooDataSet *reducedMinusDataSet =
+      dynamic_cast<RooDataSet *>(minusDataSet->reduce(config.fullArgSet()));
+  std::cout << "MinusDataSet contains variables: ";
+  reducedMinusDataSet -> printArgs(std::cout);
+  std::cout << "\n";
   std::string dsMinusFileName =
       ComposeFilename(myYear, myPolarity, myBachelor, myNeutral, myDaughters,
                       Charge::minus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
   TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
-  minusDataSet->Write("inputDataSet");
+  reducedMinusDataSet->Write("inputDataSet");
   dsMinusFile.Close();
-
-
 }
 
 int main(int argc, char **argv) {

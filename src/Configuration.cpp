@@ -4,17 +4,12 @@ Configuration::Configuration()
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""),
       relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
                      0.95),
-      relativeBachelorYields_(
-          "relativeBachelorYields",
-          "Relative yield of K compared to pi bachelor modes", 0.08, 0, 1),
-      relativeVectorYields_(
-          "relativeVectorYields",
-          "Relative yield of Kst compared to rho vector modes", 0.08, 0, 1),
       relativeNeutralAddition_( "relativeNeutralAddition", "Relative rate of random gamma w.r.t. random pi0 addition", 2, 0, 5),
       relativeBu2D0HYield_("relativeBu2D0HYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0H", 1.5745),
       relativeBu2D0HstYield_("relativeBu2D0HstYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0Hst", 0.5607),
       relativeBd2DstHYield_("relativeBd2DstHYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bd2DstH", 1.4058) ,
-      relativeNonTmYield_("relativeNonTmYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay NonTm", 0.9055) {
+      relativeNonTmYield_("relativeNonTmYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay NonTm", 0.9055),
+      bachelorRatio_Bd2DstH_("bachelorRatio_Bd2DstH", "Relative yield of K compared to pi bachelor mode for Bd2DstH decay", 0.08, 0, 0.1) { 
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
@@ -24,7 +19,7 @@ Configuration::Configuration()
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
   buMass_.setMin(5045);
-  buMass_.setBins(152);
+  buMass_.setBins(76);
   buMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Pi0_Bu_ID");
@@ -44,7 +39,7 @@ Configuration::Configuration()
   categoryArgSet_.add(categories().neutral);
   categoryArgSet_.add(categories().fitting);
 
-  fullArgSet_.add(variableArgSet_);
+  fullArgSet_.add(buMass_);
   fullArgSet_.add(categoryArgSet_);
 }
 // Categories is a class within a class !!!

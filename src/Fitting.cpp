@@ -4,6 +4,7 @@
 #include "RooDataSet.h"
 #include "RooFitResult.h"
 #include "RooPlot.h"
+#include "RooHist.h"
 #include "TH1D.h"
 #include "TH1F.h"
 #include "TLegend.h"
@@ -21,11 +22,12 @@
 #include <string>
 #include <vector>
 
+#include "BachelorVars.h"
 #include "Configuration.h"
 #include "NeutralVars.h"
-#include "BachelorVars.h"
-#include "Pdf.h"
+#include "DaughtersVars.h"
 #include "ParseArguments.h"
+#include "Pdf.h"
 
 // ALWAYS pass values by const reference (if possible)
 // It is important to pass the same category object !!!!
@@ -41,15 +43,18 @@
 //
 //   switch (bachelor) {
 //   case Bachelor::pi:
-//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() <<
+//     "\n"
 //               << "\tNon truth matched signal = "
 //               << pdf.nonTMSignal_PiYield().getVal() << "\n"
-//               << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() << "\n"
+//               << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() <<
+//               "\n"
 //               << "\tBu2D0H = " << pdf.bu2D0H_PiYield().getVal() << "\n"
 //               << "\tBd2DstH = " << pdf.bd2DstH_PiYield().getVal() << "\n";
 //     break;
 //   case Bachelor::k:
-//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() << "\n"
+//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() <<
+//     "\n"
 //               << "\tNon truth matched signal = "
 //               << pdf.nonTMSignal_KYield().getVal() << "\n"
 //               << "\tCross feed = " << pdf.crossFeed_KYield().getVal() << "\n"
@@ -57,144 +62,144 @@
 //               << "\tBd2DstH = " << pdf.bd2DstH_KYield().getVal() << "\n";
 //     break;
 //   }
-  //   std::cout
-  //       << "Ratios of background yields w.r.t. B->D0h for "
-  //       << "\tneutral: " << EnumToString(pdf.neutral())
-  //       << ", bachelor: " << EnumToString(pdf.bachelor())
-  //       << ", D daughters: " << EnumToString(pdf.daughters()) << ":\n"
-  //       << pdf.nonTMSignalYield().getTitle()
-  //       << "\t = " << pdf.nonTMSignalYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.nonTMSignalYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.nonTMSignalYield().getError() /
-  //                       pdf.nonTMSignalYield().getVal() *
-  //                       pdf.nonTMSignalYield().getError() /
-  //                       pdf.nonTMSignalYield().getVal() +
-  //                   pdf.nonTMSignalYield().getError() /
-  //                       pdf.nonTMSignalYield().getVal() *
-  //                       pdf.nonTMSignalYield().getError() /
-  //                       pdf.nonTMSignalYield().getVal())
-  //       << "\n"
-  //       // << pdf.combinatorialYield().getTitle() << "\t = "
-  //       // << pdf.combinatorialYield().getVal() /
-  //       pdf.bu2D0HYield().getVal() <<
-  //       " ± "
-  //       // << pdf.combinatorialYield().getVal() /
-  //       pdf.bu2D0HYield().getVal() *
-  //       //        sqrt(pdf.combinatorialYield().getError() /
-  //       //                 pdf.combinatorialYield().getVal() *
-  //       //                 pdf.combinatorialYield().getError() /
-  //       //                 pdf.combinatorialYield().getVal() +
-  //       //             pdf.combinatorialYield().getError() /
-  //       //                 pdf.combinatorialYield().getVal() *
-  //       //                 pdf.combinatorialYield().getError() /
-  //       //                 pdf.combinatorialYield().getVal())
-  //       // << "\n"
-  //       << pdf.crossFeedYield().getTitle()
-  //       << "\t = " << pdf.crossFeedYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.crossFeedYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.crossFeedYield().getError() /
-  //                       pdf.crossFeedYield().getVal() *
-  //                       pdf.crossFeedYield().getError() /
-  //                       pdf.crossFeedYield().getVal() +
-  //                   pdf.crossFeedYield().getError() /
-  //                       pdf.crossFeedYield().getVal() *
-  //                       pdf.crossFeedYield().getError() /
-  //                       pdf.crossFeedYield().getVal())
-  //       << "\n"
-  //       << pdf.bu2Dst0Hst_D0pi0Yield().getTitle() << "\t = "
-  //       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
-  //       pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() +
-  //                   pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-  //                       pdf.bu2Dst0Hst_D0pi0Yield().getVal())
-  //       << "\n"
-  //       << pdf.bu2Dst0Hst_D0gammaYield().getTitle() << "\t = "
-  //       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       *
-  //              sqrt(pdf.bu2Dst0Hst_D0gammaYield().getError() /
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() +
-  //                   pdf.bu2Dst0Hst_D0gammaYield().getError() /
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
-  //                       pdf.bu2Dst0Hst_D0gammaYield().getVal())
-  //       << "\n"
-  //       << pdf.bu2D0HYield().getTitle()
-  //       << "\t = " << pdf.bu2D0HYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.bu2D0HYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.bu2D0HYield().getError() /
-  //              pdf.bu2D0HYield().getVal() *
-  //                       pdf.bu2D0HYield().getError() /
-  //                       pdf.bu2D0HYield().getVal() +
-  //                   pdf.bu2D0HYield().getError() /
-  //                   pdf.bu2D0HYield().getVal() *
-  //                       pdf.bu2D0HYield().getError() /
-  //                       pdf.bu2D0HYield().getVal())
-  //       << "\n"
-  //       << pdf.bu2D0HstYield().getTitle()
-  //       << "\t = " << pdf.bu2D0HstYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.bu2D0HstYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(
-  //                  pdf.bu2D0HstYield().getError() /
-  //                  pdf.bu2D0HstYield().getVal() *
-  //                      pdf.bu2D0HstYield().getError() /
-  //                      pdf.bu2D0HstYield().getVal() +
-  //                  pdf.bu2D0HstYield().getError() /
-  //                  pdf.bu2D0HstYield().getVal() *
-  //                      pdf.bu2D0HstYield().getError() /
-  //                      pdf.bu2D0HstYield().getVal())
-  //       << "\n"
-  //       << pdf.bd2DstHYield().getTitle()
-  //       << "\t = " << pdf.bd2DstHYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.bd2DstHYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.bd2DstHYield().getError() /
-  //              pdf.bd2DstHYield().getVal()
-  //              *
-  //                       pdf.bd2DstHYield().getError() /
-  //                       pdf.bd2DstHYield().getVal() +
-  //                   pdf.bd2DstHYield().getError() /
-  //                   pdf.bd2DstHYield().getVal()
-  //                   *
-  //                       pdf.bd2DstHYield().getError() /
-  //                       pdf.bd2DstHYield().getVal())
-  //       << "\n"
-  //       << pdf.missIdYield().getTitle()
-  //       << "\t = " << pdf.missIdYield().getVal() /
-  //       pdf.bu2D0HYield().getVal()
-  //       << " ± "
-  //       << pdf.missIdYield().getVal() / pdf.bu2D0HYield().getVal() *
-  //              sqrt(pdf.missIdYield().getError() /
-  //              pdf.missIdYield().getVal() *
-  //                       pdf.missIdYield().getError() /
-  //                       pdf.missIdYield().getVal() +
-  //                   pdf.missIdYield().getError() /
-  //                   pdf.missIdYield().getVal() *
-  //                       pdf.missIdYield().getError() /
-  //                       pdf.missIdYield().getVal())
-  //       << "\n";
+//   std::cout
+//       << "Ratios of background yields w.r.t. B->D0h for "
+//       << "\tneutral: " << EnumToString(pdf.neutral())
+//       << ", bachelor: " << EnumToString(pdf.bachelor())
+//       << ", D daughters: " << EnumToString(pdf.daughters()) << ":\n"
+//       << pdf.nonTMSignalYield().getTitle()
+//       << "\t = " << pdf.nonTMSignalYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.nonTMSignalYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.nonTMSignalYield().getError() /
+//                       pdf.nonTMSignalYield().getVal() *
+//                       pdf.nonTMSignalYield().getError() /
+//                       pdf.nonTMSignalYield().getVal() +
+//                   pdf.nonTMSignalYield().getError() /
+//                       pdf.nonTMSignalYield().getVal() *
+//                       pdf.nonTMSignalYield().getError() /
+//                       pdf.nonTMSignalYield().getVal())
+//       << "\n"
+//       // << pdf.combinatorialYield().getTitle() << "\t = "
+//       // << pdf.combinatorialYield().getVal() /
+//       pdf.bu2D0HYield().getVal() <<
+//       " ± "
+//       // << pdf.combinatorialYield().getVal() /
+//       pdf.bu2D0HYield().getVal() *
+//       //        sqrt(pdf.combinatorialYield().getError() /
+//       //                 pdf.combinatorialYield().getVal() *
+//       //                 pdf.combinatorialYield().getError() /
+//       //                 pdf.combinatorialYield().getVal() +
+//       //             pdf.combinatorialYield().getError() /
+//       //                 pdf.combinatorialYield().getVal() *
+//       //                 pdf.combinatorialYield().getError() /
+//       //                 pdf.combinatorialYield().getVal())
+//       // << "\n"
+//       << pdf.crossFeedYield().getTitle()
+//       << "\t = " << pdf.crossFeedYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.crossFeedYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.crossFeedYield().getError() /
+//                       pdf.crossFeedYield().getVal() *
+//                       pdf.crossFeedYield().getError() /
+//                       pdf.crossFeedYield().getVal() +
+//                   pdf.crossFeedYield().getError() /
+//                       pdf.crossFeedYield().getVal() *
+//                       pdf.crossFeedYield().getError() /
+//                       pdf.crossFeedYield().getVal())
+//       << "\n"
+//       << pdf.bu2Dst0Hst_D0pi0Yield().getTitle() << "\t = "
+//       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
+//       pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() +
+//                   pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
+//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal())
+//       << "\n"
+//       << pdf.bu2Dst0Hst_D0gammaYield().getTitle() << "\t = "
+//       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       *
+//              sqrt(pdf.bu2Dst0Hst_D0gammaYield().getError() /
+//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
+//                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
+//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() +
+//                   pdf.bu2Dst0Hst_D0gammaYield().getError() /
+//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
+//                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
+//                       pdf.bu2Dst0Hst_D0gammaYield().getVal())
+//       << "\n"
+//       << pdf.bu2D0HYield().getTitle()
+//       << "\t = " << pdf.bu2D0HYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.bu2D0HYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.bu2D0HYield().getError() /
+//              pdf.bu2D0HYield().getVal() *
+//                       pdf.bu2D0HYield().getError() /
+//                       pdf.bu2D0HYield().getVal() +
+//                   pdf.bu2D0HYield().getError() /
+//                   pdf.bu2D0HYield().getVal() *
+//                       pdf.bu2D0HYield().getError() /
+//                       pdf.bu2D0HYield().getVal())
+//       << "\n"
+//       << pdf.bu2D0HstYield().getTitle()
+//       << "\t = " << pdf.bu2D0HstYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.bu2D0HstYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(
+//                  pdf.bu2D0HstYield().getError() /
+//                  pdf.bu2D0HstYield().getVal() *
+//                      pdf.bu2D0HstYield().getError() /
+//                      pdf.bu2D0HstYield().getVal() +
+//                  pdf.bu2D0HstYield().getError() /
+//                  pdf.bu2D0HstYield().getVal() *
+//                      pdf.bu2D0HstYield().getError() /
+//                      pdf.bu2D0HstYield().getVal())
+//       << "\n"
+//       << pdf.bd2DstHYield().getTitle()
+//       << "\t = " << pdf.bd2DstHYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.bd2DstHYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.bd2DstHYield().getError() /
+//              pdf.bd2DstHYield().getVal()
+//              *
+//                       pdf.bd2DstHYield().getError() /
+//                       pdf.bd2DstHYield().getVal() +
+//                   pdf.bd2DstHYield().getError() /
+//                   pdf.bd2DstHYield().getVal()
+//                   *
+//                       pdf.bd2DstHYield().getError() /
+//                       pdf.bd2DstHYield().getVal())
+//       << "\n"
+//       << pdf.missIdYield().getTitle()
+//       << "\t = " << pdf.missIdYield().getVal() /
+//       pdf.bu2D0HYield().getVal()
+//       << " ± "
+//       << pdf.missIdYield().getVal() / pdf.bu2D0HYield().getVal() *
+//              sqrt(pdf.missIdYield().getError() /
+//              pdf.missIdYield().getVal() *
+//                       pdf.missIdYield().getError() /
+//                       pdf.missIdYield().getVal() +
+//                   pdf.missIdYield().getError() /
+//                   pdf.missIdYield().getVal() *
+//                       pdf.missIdYield().getError() /
+//                       pdf.missIdYield().getVal())
+//       << "\n";
 // }
 
 void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
@@ -266,38 +271,42 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
           ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.bu2Dst0H_D0pi0()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlue));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlack));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.bu2Dst0H_D0gamma()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
+  
+  // ASK JOJ: no viable conversion from 'std::unique_ptr<RooHist>' to 'RooPlotable *' pullFrame->addPlotable(hpull, "P");
+  RooHist* hpull = frame->RooPlot::pullHist();
+  
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
           categories.fitting,
           ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.combinatorial()),
-      RooFit::LineStyle(kDashed), RooFit::LineColor(kRed + 2));
+      RooFit::Components(pdf.bu2Dst0H_D0pi0()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kBlue));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(
+          categories.fitting,
+          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kBlack));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(
+          categories.fitting,
+          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2Dst0H_D0gamma()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(
+          categories.fitting,
+          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.combinatorial()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kRed + 2));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
@@ -525,14 +534,34 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   // --------------- plot onto canvas ---------------------
 
+  
+
+  std::unique_ptr<RooPlot> pullFrame(config.buMass().frame(RooFit::Title(" ")));
+  
+  pullFrame->addPlotable(hpull, "P");
+  pullFrame->SetName(("pullFrame_"+ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str());
+  pullFrame->SetTitle("");
+  
   TCanvas canvas(
       ("simPdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
           .c_str(),
       "simPdf", 1500, 900);
+ 
+  TPad pad1(("pad1_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad1", 0.0, 0.25, 1.0, 1.0, kWhite);
+  pad1.Draw();
+  
+  TPad pad2(("pad2_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad2", 0.0, 0.05, 1.0, 0.25, kWhite);
+  pad2.Draw();
+ 
+  pad1.cd();
   frame->Draw();
   legend->Draw("same");
   // dataHist->Draw("same");
 
+  pad2.cd();
+  pullFrame->Draw();
+
+  canvas.Update();
   canvas.SaveAs(("Result_" +
                  ComposeFittingCategoryName(neutral, bachelor, daughters) +
                  ".pdf")
@@ -540,13 +569,14 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 }
 
 void Fitting(RooDataSet &fullDataSet, Configuration &config,
-             Configuration::Categories &categories, std::vector<Neutral> neutralVec,
+             Configuration::Categories &categories,
+             std::vector<Neutral> neutralVec,
              std::vector<Daughters> daughtersVec,
              std::vector<Charge> chargeVec) {
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
-  std::vector<PdfBase*> pdfs;
+  std::vector<PdfBase *> pdfs;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -738,7 +768,7 @@ bool fexists(std::string const &filename) {
 
 // Path to roodatasets
 // std::string dataDir =
-    // "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
+// "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
 // std::string dataDir = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
@@ -798,8 +828,7 @@ int main(int argc, char **argv) {
 
       // Data folder
       if (!args("dataDir", dataDir)) {
-        std::cerr
-            << "Data directory must be specified (-dataDir=<path>)\n";
+        std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
         return 1;
       }
 
@@ -865,49 +894,47 @@ int main(int argc, char **argv) {
         return 1;
       }
     }
+  }
 
-    Configuration &config = Configuration::Get();
-    Configuration::Categories &categories = Configuration::Get().categories();
+  Configuration &config = Configuration::Get();
+  Configuration::Categories &categories = Configuration::Get().categories();
 
-    RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
+  RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
-    // Loop over all options in order to extract correct roodatasets
-    for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
-      for (unsigned int pCounter = 0; pCounter < polarityVec.size();
-           pCounter++) {
-        for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
-             bCounter++) {
-          for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
-               dCounter++) {
-            for (unsigned int cCounter = 0; cCounter < chargeVec.size();
-                 cCounter++) {
-              for (unsigned int nCounter = 0; nCounter < neutralVec.size();
-                   nCounter++) {
-                std::string dsFile =
-                    dataDir + "/" +
-                    ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
-                                    bachelorVec[bCounter], neutralVec[nCounter],
-                                    daughtersVec[dCounter],
-                                    chargeVec[cCounter]) +
-                    ".root";
-                std::cout << "Extracting RooDataSet from file ... " << dsFile
-                          << "\n";
+  // Loop over all options in order to extract correct roodatasets
+  for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
+    for (unsigned int pCounter = 0; pCounter < polarityVec.size(); pCounter++) {
+      for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
+           bCounter++) {
+        for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
+             dCounter++) {
+          for (unsigned int cCounter = 0; cCounter < chargeVec.size();
+               cCounter++) {
+            for (unsigned int nCounter = 0; nCounter < neutralVec.size();
+                 nCounter++) {
+              std::string dsFile =
+                  dataDir + "/" +
+                  ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
+                                  bachelorVec[bCounter], neutralVec[nCounter],
+                                  daughtersVec[dCounter], chargeVec[cCounter]) +
+                  ".root";
+              std::cout << "Extracting RooDataSet from file ... " << dsFile
+                        << "\n";
 
-                if (!fexists(dsFile)) {
-                  std::cerr << dsFile << " does not exist.\n";
-                  return 1;
+              if (!fexists(dsFile)) {
+                std::cerr << dsFile << " does not exist.\n";
+                return 1;
+              } else {
+                std::cout << dsFile << " exists.\n";
+                TFile in(dsFile.c_str(), "READ");
+                RooDataSet *inputDataSet;
+                gDirectory->GetObject("inputDataSet", inputDataSet);
+                if (inputDataSet == nullptr) {
+                  throw std::runtime_error("Data set does not exist.");
                 } else {
-                  std::cout << dsFile << " exists.\n";
-                  TFile in(dsFile.c_str(), "READ");
-                  RooDataSet *inputDataSet;
-                  gDirectory->GetObject("inputDataSet", inputDataSet);
-                  if (inputDataSet == nullptr) {
-                    throw std::runtime_error("Data set does not exist.");
-                  } else {
-                    std::cout << "inputDataSet extracted... \n";
-                    fullDataSet.append(*inputDataSet);
-                    std::cout << "Appended to full data set...\n";
-                  }
+                  std::cout << "inputDataSet extracted... \n";
+                  fullDataSet.append(*inputDataSet);
+                  std::cout << "Appended to full data set...\n";
                 }
               }
             }
@@ -915,33 +942,32 @@ int main(int argc, char **argv) {
         }
       }
     }
-
-    Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
-            chargeVec);
-
-    //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
-    //
-    //     RooArgSet const *row = fullDataSet.get(i);
-    //
-    //     std::cout << "For event " << i << ":";
-    //
-    //     RooCategory *neutralPtr =
-    //         dynamic_cast<RooCategory
-    //         *>(row->find(categories.neutral.GetName()));
-    //     if (neutralPtr == nullptr) {
-    //       std::stringstream output;
-    //       output << "No category assigned to neutral for event " << i << ".";
-    //       throw std::runtime_error(output.str());
-    //     } else {
-    //       std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
-    //       if (neutralPtr->getLabel() == "gamma") {
-    //
-    //         std::cerr << "Wrong neutral assigned (gamma)\n";
-    //         return 1;
-    //       }
-    //     }
-    //   }
-    //
   }
+
+  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec);
+
+  //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
+  //
+  //     RooArgSet const *row = fullDataSet.get(i);
+  //
+  //     std::cout << "For event " << i << ":";
+  //
+  //     RooCategory *neutralPtr =
+  //         dynamic_cast<RooCategory
+  //         *>(row->find(categories.neutral.GetName()));
+  //     if (neutralPtr == nullptr) {
+  //       std::stringstream output;
+  //       output << "No category assigned to neutral for event " << i << ".";
+  //       throw std::runtime_error(output.str());
+  //     } else {
+  //       std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
+  //       if (neutralPtr->getLabel() == "gamma") {
+  //
+  //         std::cerr << "Wrong neutral assigned (gamma)\n";
+  //         return 1;
+  //       }
+  //     }
+  //   }
+  //
   return 0;
 }

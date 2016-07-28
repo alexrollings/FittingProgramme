@@ -55,6 +55,8 @@ public:
   RooAbsPdf &bu2Dst0Hst_D0gamma() {
     return *bu2Dst0Hst_D0gamma_;
   }
+  RooAbsPdf &bu2D0H_2() { return *bu2D0H_1_; }
+  RooAbsPdf &bu2D0H_1() { return *bu2D0H_2_; }
   RooAbsPdf &bu2D0H() { return *bu2D0H_; }
   RooAbsPdf &bu2D0Hst() { return *bu2D0Hst_; }
   RooAbsPdf &bd2DstH() { return *bd2DstH_; }
@@ -110,6 +112,8 @@ private:
   std::unique_ptr<RooAbsPdf> nonTmSignal_;
   std::unique_ptr<RooAbsPdf> bu2Dst0Hst_D0pi0_;
   std::unique_ptr<RooAbsPdf> bu2Dst0Hst_D0gamma_;
+  std::unique_ptr<RooAbsPdf> bu2D0H_1_;
+  std::unique_ptr<RooAbsPdf> bu2D0H_2_;
   std::unique_ptr<RooAbsPdf> bu2D0H_;
   std::unique_ptr<RooAbsPdf> bu2D0Hst_;
   std::unique_ptr<RooAbsPdf> bd2DstH_;

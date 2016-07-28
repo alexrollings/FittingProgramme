@@ -41,13 +41,12 @@ public:
   RooArgSet &fullArgSet() { return fullArgSet_; }
   Categories &categories() { return categories_; }
   RooRealVar &relativeWidth() { return relativeWidth_; }
-  RooRealVar &relativeBachelorYields() { return relativeBachelorYields_; }
-  RooRealVar &relativeVectorYields() { return relativeVectorYields_; }
   RooRealVar &relativeNeutralAddition() { return relativeNeutralAddition_; }
   RooRealVar &relativeBu2D0HYield() { return relativeBu2D0HYield_; }
   RooRealVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
   RooRealVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
   RooRealVar &relativeNonTmYield() { return relativeNonTmYield_; }
+  RooRealVar &bachelorRatio_Bd2DstH() { return bachelorRatio_Bd2DstH_; }
 
 private:
   Configuration();
@@ -63,13 +62,12 @@ private:
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
   RooRealVar relativeWidth_;
-  RooRealVar relativeBachelorYields_;
-  RooRealVar relativeVectorYields_;
   RooRealVar relativeNeutralAddition_;
   RooRealVar relativeBu2D0HYield_;
   RooRealVar relativeBu2D0HstYield_;
   RooRealVar relativeBd2DstHYield_;
   RooRealVar relativeNonTmYield_;
+  RooRealVar bachelorRatio_Bd2DstH_;
 };
 
 
