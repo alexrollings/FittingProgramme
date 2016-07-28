@@ -7,6 +7,7 @@
 #include "RooHist.h"
 #include "TH1D.h"
 #include "TH1F.h"
+#include "TLine.h"
 #include "TLegend.h"
 #include "TStyle.h"
 
@@ -216,13 +217,13 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   gStyle->SetTitleSize(0.045, "XY");
   gStyle->SetLabelSize(0.04, "XY");
   gStyle->SetLegendFont(132);
-  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(0.85, "X");
   gStyle->SetTitleOffset(0.95, "Y");
   gStyle->SetTitleOffset(0.9, "Z");
   // gStyle->SetLegendTextSize(0.08);
   gStyle->SetPadTopMargin(0.1);
   gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.11);
+  gStyle->SetPadBottomMargin(0.09);
   gStyle->SetPadLeftMargin(0.1);
 
   // --------------- create frame ---------------------
@@ -272,9 +273,10 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
   
-  // ASK JOJ: no viable conversion from 'std::unique_ptr<RooHist>' to 'RooPlotable *' pullFrame->addPlotable(hpull, "P");
-  RooHist* hpull = frame->RooPlot::pullHist();
-  
+  // auto hpull = std::unique_ptr<RooHist>(
+  //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
+    RooHist* hpull = frame->RooPlot::pullHist();
+
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
@@ -538,7 +540,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   std::unique_ptr<RooPlot> pullFrame(config.buMass().frame(RooFit::Title(" ")));
   
-  pullFrame->addPlotable(hpull, "P");
+  pullFrame->addPlotable(hpull/* .get() */, "P");
   pullFrame->SetName(("pullFrame_"+ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str());
   pullFrame->SetTitle("");
   
@@ -547,20 +549,35 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
           .c_str(),
       "simPdf", 1500, 900);
  
-  TPad pad1(("pad1_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad1", 0.0, 0.25, 1.0, 1.0, kWhite);
-  pad1.Draw();
   
-  TPad pad2(("pad2_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad2", 0.0, 0.05, 1.0, 0.25, kWhite);
+  TPad pad2(("pad2_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad2", 0.0, 0.1, 1.0, 0.20, kWhite);
   pad2.Draw();
  
+  TPad pad1(("pad1_" + ComposeFittingCategoryName(neutral, bachelor, daughters)).c_str(), "pad1", 0.0, 0.19, 1.0, 1.0, kWhite);
+  pad1.Draw();
+ 
+  // Zero line on error plot.
+  TLine zeroLine(5045, 0, 5805, 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
+  pad2.cd();
+  pullFrame->SetYTitle(" ");
+  pullFrame->SetXTitle(" ");
+  pullFrame->SetLabelSize(0.10, "Y");
+  pullFrame->SetLabelFont(132, "XY");
+  pullFrame->SetLabelOffset(100, "X");
+  pullFrame->SetLabelOffset(1.5, "Y");
+  pullFrame->SetTitleOffset(100, "X");
+  pullFrame->Draw();
+  zeroLine.Draw("same");
+
   pad1.cd();
+  pullFrame->SetXTitle("m[Bu] (MeV/c^{2})");
   frame->Draw();
   legend->Draw("same");
   // dataHist->Draw("same");
-
-  pad2.cd();
-  pullFrame->Draw();
-
+  
   canvas.Update();
   canvas.SaveAs(("Result_" +
                  ComposeFittingCategoryName(neutral, bachelor, daughters) +
