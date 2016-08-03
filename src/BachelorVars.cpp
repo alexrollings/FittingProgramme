@@ -121,7 +121,8 @@ BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
                               Configuration::Get().buMass(), meanMissId1_,
                               sigmaMissId2_, aMissId2_, nMissId2_)),
       missId_(new RooAddPdf("missId_GammaPi", "Gamma, Pi missId AddPdf",
-                            RooArgList(*missId1_, *missId2_), fracMissId1_)) {}
+                            RooArgList(*missId1_, *missId2_), fracMissId1_)),
+      bachelorSF_(1.0) {}
 
 template <>
 BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
@@ -263,7 +264,8 @@ BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
                               Configuration::Get().buMass(), meanMissId1_,
                               sigmaMissId2_, aMissId2_, nMissId2_)),
       missId_(new RooAddPdf("missId_GammaK", "Gamma, K missId AddPdf",
-                            RooArgList(*missId1_, *missId2_), fracMissId1_)) {}
+                            RooArgList(*missId1_, *missId2_), fracMissId1_)),
+      bachelorSF_(0.08) {}
 
 template <>
 BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
@@ -394,7 +396,8 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
                               Configuration::Get().buMass(), meanMissId1_,
                               sigmaMissId2_, aMissId2_, nMissId2_)),
       missId_(new RooAddPdf("missId_Pi0Pi", "Pi0, Pi missId AddPdf",
-                            RooArgList(*missId1_, *missId2_), fracMissId1_)) {}
+                            RooArgList(*missId1_, *missId2_), fracMissId1_)),
+      bachelorSF_(1.0) {}
 
 template <>
 BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
@@ -545,5 +548,6 @@ BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
                               Configuration::Get().buMass(), meanMissId2_,
                               sigmaMissId2_, aMissId2_, nMissId2_)),
       missId_(new RooAddPdf("missId_Pi0K", "Pi0, K missId AddPdf",
-                            RooArgList(*missId1_, *missId2_), fracMissId1_)) {}
+                            RooArgList(*missId1_, *missId2_), fracMissId1_)),
+      bachelorSF_(0.08) {}
 

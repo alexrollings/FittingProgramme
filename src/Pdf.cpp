@@ -29,9 +29,7 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
               .c_str()),
       functions_(("functions_" +
                   ComposeFittingCategoryName(neutral, bachelor, daughters))
-                     .c_str()),
-      bachelorSF_(),
-      daughtersSF_() {}
+                     .c_str()) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(

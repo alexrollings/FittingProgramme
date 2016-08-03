@@ -67,6 +67,7 @@ public:
   RooRealVar &bu2Dst0MissIdBR() { return bu2Dst0MissIdBR_; }
   RooRealVar &bu2Dst0HBR() { return bu2Dst0HBR_; }
   RooRealVar &bachEff() { return bachEff_; }
+  double &bachelorSF() { return bachelorSF_; }
 
 private:
   BachelorVars();
@@ -120,6 +121,8 @@ private:
   std::unique_ptr<RooAbsPdf> missId1_;
   std::unique_ptr<RooAbsPdf> missId2_;
   std::unique_ptr<RooAbsPdf> missId_;
+  
+  double bachelorSF_;
 };
 
 template <> BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars();

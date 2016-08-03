@@ -34,8 +34,6 @@ public:
   RooAbsPdf &combinatorial() { return *combinatorial_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
-  double &bachelorSF() { return bachelorSF_; }
-  double &daughtersSF() { return daughtersSF_; }
 
   virtual RooAbsPdf &nonTmSignal() const = 0;
   virtual RooAbsPdf &bu2Dst0H_D0pi0() const = 0;
@@ -71,8 +69,6 @@ protected:
   RooArgList yields_;
   RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
-  double bachelorSF_;
-  double daughtersSF_;
 };
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
@@ -132,42 +128,27 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
   // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
   // TIME
 
-  switch (_daughters) {
-  case Daughters::kpi:
-    daughtersSF_ = 1.0;
-    break;
-  case Daughters::kk:
-    daughtersSF_ = 0.102;
-    break;
-  case Daughters::pipi:
-    daughtersSF_ = 0.0361;
-    break;
-  case Daughters::pik:
-    daughtersSF_ = 0.00356;
-    break;
-  }
 
   switch (_bachelor) {
   case Bachelor::pi:
-    bachelorSF_ = 1.0;
     bu2Dst0Hst_D0pi0Yield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("bu2Dst0Hst_D0pi0Yield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
         "bu2Dst0Hst_D0pi0 Yield",
-        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() * bachelorSF_ *
-            daughtersSF_,
+        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+            DaughtersVars<_daughters>::Get().daughtersSF(),
         0,
-        NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ * daughtersSF_));
+        NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF()));
     bu2Dst0Hst_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("bu2Dst0Hst_D0gammaYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
         "bu2Dst0Hst_D0gamma Yield",
         NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
-            bachelorSF_ * daughtersSF_,
+            BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
         0,
-        NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ * daughtersSF_));
+        NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF()));
     switch (_neutral) {
     case Neutral::pi0:
       bu2D0HYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
@@ -175,25 +156,25 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2D0H Yield", NeutralVars<_neutral>::Get().bu2D0HExpected() *
-                              bachelorSF_ * daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+                              BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       bd2DstHYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
           ("bd2DstHYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bd2DstH Yield", NeutralVars<_neutral>::Get().bd2DstHExpected() *
-                               bachelorSF_ * daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+                               BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       bu2D0HstYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
           ("bu2D0HstYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2D0Hst Yield", NeutralVars<_neutral>::Get().bu2D0HstExpected() *
-                                bachelorSF_ * daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+                                BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       break;
     case Neutral::gamma:
       bu2D0HYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -227,7 +208,6 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
     }
     break;
   case Bachelor::k:
-    bachelorSF_ = 0.08;
     bu2D0HYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("bu2D0HYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
@@ -248,10 +228,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
         "bu2Dst0Hst_D0pi0 Yield",
-        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() * bachelorSF_ *
-            daughtersSF_,
+        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+            DaughtersVars<_daughters>::Get().daughtersSF(),
         0,
-        NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ * daughtersSF_));
+        NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF()));
     // "bu2Dst0Hst_D0pi0 Yield", "@0*@1",
     // RooArgList(
     //     Pdf<_neutral, Bachelor::pi, _daughters>::Get()
@@ -264,9 +244,9 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
             .c_str(),
         "bu2Dst0Hst_D0gamma Yield",
         NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
-            bachelorSF_ * daughtersSF_,
+            BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
         0,
-        NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ * daughtersSF_));
+        NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF()));
     // "bu2Dst0Hst_D0gamma Yield", "@0*@1",
     // RooArgList(
     //     Pdf<_neutral, Bachelor::pi, _daughters>::Get()
@@ -293,19 +273,19 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2Dst0H_D0pi0 Yield",
-          NeutralVars<_neutral>::Get().bu2Dst0H_D0pi0Expected() * bachelorSF_ *
-              daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+          NeutralVars<_neutral>::Get().bu2Dst0H_D0pi0Expected() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+              DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       bu2Dst0H_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
           ("bu2Dst0H_D0gammaYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2Dst0H_D0gamma Yield",
           NeutralVars<_neutral>::Get().bu2Dst0H_D0gammaExpected() *
-              bachelorSF_ * daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+              BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("nonTmSignalYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
@@ -365,19 +345,19 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2Dst0H_D0pi0 Yield",
-          NeutralVars<_neutral>::Get().bu2Dst0H_D0pi0Expected() * bachelorSF_ *
-              daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+          NeutralVars<_neutral>::Get().bu2Dst0H_D0pi0Expected() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+              DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       bu2Dst0H_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
           ("bu2Dst0H_D0gammaYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
               .c_str(),
           "bu2Dst0H_D0gamma Yield",
           NeutralVars<_neutral>::Get().bu2Dst0H_D0gammaExpected() *
-              bachelorSF_ * daughtersSF_,
-          0, NeutralVars<_neutral>::Get().maxYield() * bachelorSF_ *
-                 daughtersSF_));
+              BachelorVars<_neutral,_bachelor>::Get().bachelorSF() * DaughtersVars<_daughters>::Get().daughtersSF(),
+          0, NeutralVars<_neutral>::Get().maxYield() * BachelorVars<_neutral,_bachelor>::Get().bachelorSF() *
+                 DaughtersVars<_daughters>::Get().daughtersSF()));
       nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("nonTmSignalYield_" +
            ComposeFittingCategoryName(_neutral, _bachelor, _daughters))

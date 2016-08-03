@@ -31,6 +31,7 @@ public:
   // If RooShit wasn't so shit we would pass a const reference
   RooRealVar &bachelorRatio_Bu2D0H() { return bachelorRatio_Bu2D0H_; }
   RooRealVar &bachelorRatio_Bu2D0Hst() { return bachelorRatio_Bu2D0Hst_; }
+  double &daughtersSF() { return daughtersSF_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -42,6 +43,7 @@ private:
 
   RooRealVar bachelorRatio_Bu2D0H_;
   RooRealVar bachelorRatio_Bu2D0Hst_;
+  double daughtersSF_;
 };
 
 // Now we just need to define the constructors separately so the values are
