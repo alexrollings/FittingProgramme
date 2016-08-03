@@ -37,10 +37,7 @@ public:
   RooRealVar &nBu2Dst0H_D0gamma() { return nBu2Dst0H_D0gamma_; }
   RooRealVar &meanNonTmSignal() { return meanNonTmSignal_; }
   RooRealVar &aNonTmSignal_1() { return aNonTmSignal_1_; }
-  RooRealVar &nNonTmSignal_1() { return nNonTmSignal_1_; }
-  RooRealVar &fracNonTmSignal_1() { return fracNonTmSignal_1_; }
   RooRealVar &aNonTmSignal_2() { return aNonTmSignal_2_; }
-  RooRealVar &nNonTmSignal_2() { return nNonTmSignal_2_; }
   RooRealVar &meanBu2D0H_1() { return meanBu2D0H_1_; }
   RooRealVar &meanBu2D0H_2() { return meanBu2D0H_2_; }
   RooRealVar &aBu2D0H_1() { return aBu2D0H_1_; }
@@ -51,9 +48,9 @@ public:
   RooRealVar &meanBu2D0Hst() { return meanBu2D0Hst_; }
   RooRealVar &aBu2D0Hst() { return aBu2D0Hst_; }
   RooRealVar &nBu2D0Hst() { return nBu2D0Hst_; }
-  RooRealVar &meanBd2DstH() { return meanBd2DstH_; }
-  RooRealVar &aBd2DstH() { return aBd2DstH_; }
-  RooRealVar &nBd2DstH() { return nBd2DstH_; }
+  RooRealVar &meaaBd2DstH_2() { return meanBd2DstH_; }
+  RooRealVar &aBd2DstH_1() { return aBd2DstH_1_; }
+  RooRealVar &aBd2DstH_2() { return aBd2DstH_2_; }
   RooRealVar &nonTmRatio() { return nonTmRatio_; }
   RooRealVar &crossFeedRate() { return crossFeedRate_; }
   // Don't pass double as a reference: don't allow user to change numbers.
@@ -82,10 +79,7 @@ private:
   RooRealVar nBu2Dst0H_D0gamma_; // pi0
   RooRealVar meanNonTmSignal_;
   RooRealVar aNonTmSignal_1_;    // gamma
-  RooRealVar nNonTmSignal_1_;    // gamma
-  RooRealVar fracNonTmSignal_1_; // gamma
   RooRealVar aNonTmSignal_2_;    // gamma
-  RooRealVar nNonTmSignal_2_;    // gamma
   RooRealVar meanBu2D0H_1_;
   RooRealVar meanBu2D0H_2_;
   RooRealVar aBu2D0H_1_;
@@ -97,8 +91,8 @@ private:
   RooRealVar aBu2D0Hst_;
   RooRealVar nBu2D0Hst_;
   RooRealVar meanBd2DstH_;
-  RooRealVar aBd2DstH_;
-  RooRealVar nBd2DstH_;
+  RooRealVar aBd2DstH_1_;
+  RooRealVar aBd2DstH_2_;
   RooRealVar nonTmRatio_;
   RooRealVar crossFeedRate_;
   double maxYield_;

@@ -16,7 +16,8 @@ public:
     return singleton;
   }
 
-  RooAbsReal &sigmaBu2Dst0H_D0pi0() { return *sigmaBu2Dst0H_D0pi0_; }
+  RooAbsReal &sigmaBu2Dst0H_D0pi0_1() { return *sigmaBu2Dst0H_D0pi0_1_; }
+  RooAbsReal &sigmaBu2Dst0H_D0pi0_2() { return *sigmaBu2Dst0H_D0pi0_2_; }
   RooAbsReal &sigmaBu2Dst0H_D0gamma_1() { return *sigmaBu2Dst0H_D0gamma_1_; }
   RooAbsReal &sigmaBu2Dst0H_D0gamma_2() { return *sigmaBu2Dst0H_D0gamma_2_; }
   RooAbsReal &sigmaNonTmSignal_1() { return *sigmaNonTmSignal_1_; }
@@ -24,7 +25,8 @@ public:
   RooAbsReal &sigmaBu2D0H_1() { return *sigmaBu2D0H_1_; }
   RooAbsReal &sigmaBu2D0H_2() { return *sigmaBu2D0H_2_; }
   RooAbsReal &sigmaBu2D0Hst() { return *sigmaBu2D0Hst_; }
-  RooAbsReal &sigmaBd2DstH() { return *sigmaBd2DstH_; }
+  RooAbsReal &sigmaBd2DstH_1() { return *sigmaBd2DstH_1_; }
+  RooAbsReal &sigmaBd2DstH_2() { return *sigmaBd2DstH_2_; }
   RooRealVar &meanBu2Dst0Hst_D0pi0() { return meanBu2Dst0Hst_D0pi0_; }
   RooRealVar &sigmaBu2Dst0Hst_D0pi0() { return sigmaBu2Dst0Hst_D0pi0_; }
   RooRealVar &aBu2Dst0Hst_D0pi0() { return aBu2Dst0Hst_D0pi0_; }
@@ -48,8 +50,6 @@ public:
   RooRealVar &nMissId2() { return nMissId2_; }
   RooAbsPdf &bu2Dst0H_D0pi0() { return *bu2Dst0H_D0pi0_; }
   RooAbsPdf &bu2Dst0H_D0gamma() { return *bu2Dst0H_D0gamma_; }
-  RooAbsPdf &nonTmSignal_1() { return *nonTmSignal_1_; }
-  RooAbsPdf &nonTmSignal_2() { return *nonTmSignal_2_; }
   RooAbsPdf &nonTmSignal() { return *nonTmSignal_; }
   RooAbsPdf &bu2Dst0Hst_D0pi0() { return *bu2Dst0Hst_D0pi0_; }
   RooAbsPdf &bu2Dst0Hst_D0gamma() {
@@ -73,7 +73,8 @@ private:
   BachelorVars();
   ~BachelorVars() {}
 
-  std::unique_ptr<RooAbsReal> sigmaBu2Dst0H_D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaBu2Dst0H_D0pi0_1_;
+  std::unique_ptr<RooAbsReal> sigmaBu2Dst0H_D0pi0_2_;
   std::unique_ptr<RooAbsReal> sigmaBu2Dst0H_D0gamma_1_;
   std::unique_ptr<RooAbsReal> sigmaBu2Dst0H_D0gamma_2_; // gamma
   std::unique_ptr<RooAbsReal> sigmaNonTmSignal_1_;
@@ -81,7 +82,8 @@ private:
   std::unique_ptr<RooAbsReal> sigmaBu2D0H_1_;
   std::unique_ptr<RooAbsReal> sigmaBu2D0H_2_;
   std::unique_ptr<RooAbsReal> sigmaBu2D0Hst_;
-  std::unique_ptr<RooAbsReal> sigmaBd2DstH_;
+  std::unique_ptr<RooAbsReal> sigmaBd2DstH_1_;
+  std::unique_ptr<RooAbsReal> sigmaBd2DstH_2_;
   RooRealVar meanBu2Dst0Hst_D0pi0_;
   RooRealVar sigmaBu2Dst0Hst_D0pi0_;
   RooRealVar aBu2Dst0Hst_D0pi0_; // Not gamma, K
@@ -108,8 +110,6 @@ private:
   // later (base class)
   std::unique_ptr<RooAbsPdf> bu2Dst0H_D0pi0_;
   std::unique_ptr<RooAbsPdf> bu2Dst0H_D0gamma_;
-  std::unique_ptr<RooAbsPdf> nonTmSignal_1_; // gamma
-  std::unique_ptr<RooAbsPdf> nonTmSignal_2_; // gamma
   std::unique_ptr<RooAbsPdf> nonTmSignal_;
   std::unique_ptr<RooAbsPdf> bu2Dst0Hst_D0pi0_;
   std::unique_ptr<RooAbsPdf> bu2Dst0Hst_D0gamma_;
