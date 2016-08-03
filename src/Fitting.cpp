@@ -567,7 +567,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   pullFrame->SetLabelSize(0.10, "Y");
   pullFrame->SetLabelFont(132, "XY");
   pullFrame->SetLabelOffset(100, "X");
-  pullFrame->SetLabelOffset(1.5, "Y");
+  pullFrame->SetLabelOffset(0.9, "Y");
   pullFrame->SetTitleOffset(100, "X");
   pullFrame->Draw();
   zeroLine.Draw("same");
