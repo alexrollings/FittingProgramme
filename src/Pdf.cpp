@@ -3,8 +3,8 @@
 
 PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
     : neutral_(neutral), bachelor_(bachelor), daughters_(daughters),
-      addPdf_(nullptr), bu2Dst0H_D0pi0Yield_(nullptr),
-      bu2Dst0H_D0gammaYield_(nullptr), nonTmSignalYield_(nullptr),
+      addPdf_(nullptr), signalYield_(nullptr),
+      crossFeedYield_(nullptr), nonTmSignalYield_(nullptr),
       bu2Dst0Hst_D0pi0Yield_(nullptr), bu2Dst0Hst_D0gammaYield_(nullptr),
       bu2D0HYield_(nullptr), bu2D0HstYield_(nullptr), bd2DstHYield_(nullptr),
       missIdYield_(nullptr),

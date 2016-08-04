@@ -5,14 +5,14 @@
 
 template <>
 NeutralVars<Neutral::gamma>::NeutralVars()
-    : meanBu2Dst0H_D0pi0_("meanBu2Dst0H_D0pi0_Gamma",
+    : meanCrossFeed_("meanBu2Dst0H_D0pi0_Gamma",
                           "Gamma Bu2Dst0H_D0pi0 mean", 5257),
-      aBu2Dst0H_D0pi0_("aBu2Dst0H_D0pi0_Gamma", "Gamma Bu2Dst0H_D0pi0 a", -0.079),
-      nBu2Dst0H_D0pi0_("nBu2Dst0H_D0pi0_Gamma", "Gamma Bu2Dst0H_D0pi0 n", 0.045),
-      meanBu2Dst0H_D0gamma_("meanBu2Dst0H_D0gamma_Gamma",
+      aCrossFeed_1_("aBu2Dst0H_D0pi0_1_Gamma", "Gamma Bu2Dst0H_D0pi0 a 1", -0.079),
+      aCrossFeed_2_("aBu2Dst0H_D0pi0_2_Gamma", "Gamma Bu2Dst0H_D0pi0 a 2", 0.045),
+      meanSignal_("meanBu2Dst0H_D0gamma_Gamma",
                             "Gamma Bu2Dst0H_D0gamma mean", 5281, 5277, 5285),
-      aBu2Dst0H_D0gamma_("aBu2Dst0H_D0gamma_1_Gamma", "Gamma Bu2Dst0H_D0gamma a 1", 0.064),
-      nBu2Dst0H_D0gamma_("aBu2Dst0H_D0gamma_2_Gamma", "Gamma Bu2Dst0H_D0gamma a 2", 0.066),
+      aSignal_1_("aBu2Dst0H_D0gamma_1_Gamma", "Gamma Bu2Dst0H_D0gamma a 1", 0.064),
+      aSignal_2_("aBu2Dst0H_D0gamma_2_Gamma", "Gamma Bu2Dst0H_D0gamma a 2", 0.066),
       meanNonTmSignal_("meanNonTmSignal_Gamma", "Gamma NonTmSignal mean",
                        5275),
       aNonTmSignal_1_("aNonTmSignal_1_Gamma", "Gamma NonTmSignal a 1", 0.207),
@@ -38,20 +38,20 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       bu2Dst0Hst_D0pi0Expected_(2650),
       bu2Dst0Hst_D0gammaExpected_(3530),
       bu2D0HstExpected_(1840),
-      bu2Dst0H_D0pi0Expected_(6230),
-      bu2Dst0H_D0gammaExpected_(9830) {}
+      crossFeedExpected_(6230),
+      signalExpected_(9830) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
-    : meanBu2Dst0H_D0pi0_("meanBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 mean",
+    : meanSignal_("meanBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 mean",
                           5281, 5279, 5283),
-      aBu2Dst0H_D0pi0_("aBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 a", 0.125),
-      nBu2Dst0H_D0pi0_("nBu2Dst0H_D0pi0_Pi0", "Pi0 Bu2Dst0H_D0pi0 n", 0.087),
-      meanBu2Dst0H_D0gamma_("meanBu2Dst0H_D0gamma_Pi0",
+      aSignal_1_("aBu2Dst0H_D0pi0_Pi0_1", "Pi0 Bu2Dst0H_D0pi0 a 1", 0.125),
+      aSignal_2_("aBu2Dst0H_D0pi0_Pi0_2", "Pi0 Bu2Dst0H_D0pi0 a 2", 0.087),
+      meanCrossFeed_("meanBu2Dst0H_D0gamma_Pi0",
                             "Pi0 Bu2Dst0H_D0gamma mean", 5296),
-      aBu2Dst0H_D0gamma_("aBu2Dst0H_D0gamma_Pi0", "Pi0 Bu2Dst0H_D0gamma a",
+      aCrossFeed_1_("aBu2Dst0H_D0gamma_1_Pi0", "Pi0 Bu2Dst0H_D0gamma a 1",
                          -0.103),
-      nBu2Dst0H_D0gamma_("nBu2Dst0H_D0gamma_Pi0", "Pi0 Bu2Dst0H_D0gamma n",
+      aCrossFeed_2_("aBu2Dst0H_D0gamma_2_Pi0", "Pi0 Bu2Dst0H_D0gamma a 2",
                          -0.141),
       meanNonTmSignal_("meanNonTmSignal_Pi0", "Pi0 NonTmSignal mean",
                        5278),
@@ -79,6 +79,6 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       bu2Dst0Hst_D0pi0Expected_(5470),
       bu2Dst0Hst_D0gammaExpected_(540),
       bu2D0HstExpected_(2450),
-      bu2Dst0H_D0pi0Expected_(9540),
-      bu2Dst0H_D0gammaExpected_(1860) {}
+      signalExpected_(9540),
+      crossFeedExpected_(1860) {}
 

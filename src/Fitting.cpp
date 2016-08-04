@@ -3,12 +3,12 @@
 #include "RooArgSet.h"
 #include "RooDataSet.h"
 #include "RooFitResult.h"
-#include "RooPlot.h"
 #include "RooHist.h"
+#include "RooPlot.h"
 #include "TH1D.h"
 #include "TH1F.h"
-#include "TLine.h"
 #include "TLegend.h"
+#include "TLine.h"
 #include "TStyle.h"
 
 #include "TCanvas.h"
@@ -25,8 +25,8 @@
 
 #include "BachelorVars.h"
 #include "Configuration.h"
-#include "NeutralVars.h"
 #include "DaughtersVars.h"
+#include "NeutralVars.h"
 #include "ParseArguments.h"
 #include "Pdf.h"
 
@@ -272,19 +272,46 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
           ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
-  
+
   // auto hpull = std::unique_ptr<RooHist>(
   //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
-    RooHist* hpull = frame->RooPlot::pullHist();
+  RooHist *hpull = frame->RooPlot::pullHist();
 
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2Dst0H_D0pi0()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kBlue));
+    if(neutral == Neutral::pi0) {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlue));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kRed));
+    } else {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kRed));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kBlue));
+    }
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
@@ -293,14 +320,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlack));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2Dst0H_D0gamma()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kRed));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(
