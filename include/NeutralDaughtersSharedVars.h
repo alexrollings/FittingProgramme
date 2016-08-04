@@ -29,8 +29,8 @@ public:
   }
 
   // If RooShit wasn't so shit we would pass a const reference
-  RooRealVar &bachelorRatio_Bu2Dst0H() { return bachelorRatio_Bu2Dst0H_; }
-  RooRealVar &bachelorRatio_Bu2Dst0Hst() { return bachelorRatio_Bu2Dst0Hst_; }
+  RooRealVar &N_Dpi() { return N_Dpi_; }
+  RooRealVar &R_Dk_vs_Dpi() { return R_Dk_vs_Dpi_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -40,8 +40,9 @@ private:
 
   // Indicate if only used by one daughters
 
-  RooRealVar bachelorRatio_Bu2Dst0H_;
-  RooRealVar bachelorRatio_Bu2Dst0Hst_;
+  // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
+  RooRealVar N_Dpi_;
+  RooRealVar R_Dk_vs_Dpi_;
 };
 
 // Now we just need to define the constructors separately so the values are

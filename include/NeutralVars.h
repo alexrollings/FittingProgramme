@@ -51,7 +51,8 @@ public:
   RooRealVar &meanBd2DstH() { return meanBd2DstH_; }
   RooRealVar &aBd2DstH_1() { return aBd2DstH_1_; }
   RooRealVar &aBd2DstH_2() { return aBd2DstH_2_; }
-  RooRealVar &nonTmRatio() { return nonTmRatio_; }
+  RooRealVar &fullyReconstructedRate() { return fullyReconstructedRate_; }
+  RooRealVar &selfCrossFeedRate() { return selfCrossFeedRate_; }
   RooRealVar &crossFeedRate() { return crossFeedRate_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
@@ -60,6 +61,7 @@ public:
   double bu2Dst0Hst_D0pi0Expected() { return bu2Dst0Hst_D0pi0Expected_; }
   double bu2Dst0Hst_D0gammaExpected() { return bu2Dst0Hst_D0gammaExpected_; }
   double bu2D0HstExpected() { return bu2D0HstExpected_; }
+  double nonTmSignalExpected() { return nonTmSignalExpected_; }
   double signalExpected() { return signalExpected_; }
   double crossFeedExpected() { return crossFeedExpected_; }
 
@@ -93,7 +95,8 @@ private:
   RooRealVar meanBd2DstH_;
   RooRealVar aBd2DstH_1_;
   RooRealVar aBd2DstH_2_;
-  RooRealVar nonTmRatio_;
+  RooRealVar fullyReconstructedRate_;
+  RooRealVar selfCrossFeedRate_;
   RooRealVar crossFeedRate_;
   double maxYield_;
   double bu2D0HExpected_;
@@ -101,6 +104,7 @@ private:
   double bu2Dst0Hst_D0pi0Expected_;
   double bu2Dst0Hst_D0gammaExpected_;
   double bu2D0HstExpected_;
+  double nonTmSignalExpected_;
   double signalExpected_;
   double crossFeedExpected_;
 };
