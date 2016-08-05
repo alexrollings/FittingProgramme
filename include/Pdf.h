@@ -25,7 +25,7 @@ public:
   RooAbsReal &bu2D0HYield() { return *bu2D0HYield_; }
   RooAbsReal &bd2DstHYield() { return *bd2DstHYield_; }
   RooFormulaVar &nonTmSignalYield() { return *nonTmSignalYield_; }
-  RooFormulaVar &missIdYield() { return *missIdYield_; }
+  RooAbsReal &missIdYield() { return *missIdYield_; }
   RooAbsReal &bu2D0HstYield() { return *bu2D0HstYield_; }
   RooAbsReal &bu2Dst0Hst_D0pi0Yield() { return *bu2Dst0Hst_D0pi0Yield_; }
   RooAbsReal &bu2Dst0Hst_D0gammaYield() { return *bu2Dst0Hst_D0gammaYield_; }
@@ -61,7 +61,7 @@ protected:
   std::unique_ptr<RooAbsReal> bu2D0HYield_;
   std::unique_ptr<RooAbsReal> bd2DstHYield_;
   std::unique_ptr<RooFormulaVar> nonTmSignalYield_;
-  std::unique_ptr<RooFormulaVar> missIdYield_;
+  std::unique_ptr<RooAbsReal> missIdYield_;
   std::unique_ptr<RooAbsReal> bu2Dst0Hst_D0pi0Yield_;
   std::unique_ptr<RooAbsReal> bu2Dst0Hst_D0gammaYield_;
   std::unique_ptr<RooAbsReal> bu2D0HstYield_;
@@ -127,28 +127,159 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
 
   // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
   // TIME
-    bu2Dst0Hst_D0pi0Yield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("bu2Dst0Hst_D0pi0Yield_" +
+  bu2Dst0Hst_D0pi0Yield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+      ("bu2Dst0Hst_D0pi0Yield_" +
+       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+          .c_str(),
+      "bu2Dst0Hst_D0pi0 Yield",
+      NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
+          BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
+          DaughtersVars<_daughters>::Get().daughtersSF(),
+      0, NeutralVars<_neutral>::Get().maxYield() *
+             BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
+             DaughtersVars<_daughters>::Get().daughtersSF()));
+  bu2Dst0Hst_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+      ("bu2Dst0Hst_D0gammaYield_" +
+       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+          .c_str(),
+      "bu2Dst0Hst_D0gamma Yield",
+      NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
+          BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
+          DaughtersVars<_daughters>::Get().daughtersSF(),
+      0, NeutralVars<_neutral>::Get().maxYield() *
+             BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
+             DaughtersVars<_daughters>::Get().daughtersSF()));
+
+  switch (_bachelor) {
+  case Bachelor::pi:
+
+    signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("signalYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
-        "bu2Dst0Hst_D0pi0 Yield",
-        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
-            BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
-            DaughtersVars<_daughters>::Get().daughtersSF(),
-        0, NeutralVars<_neutral>::Get().maxYield() *
-               BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
-               DaughtersVars<_daughters>::Get().daughtersSF()));
-    bu2Dst0Hst_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("bu2Dst0Hst_D0gammaYield_" +
+        "Signal Yield", "@0*(1-@1-@2)*@3",
+        RooArgList(
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
+            NeutralVars<_neutral>::Get().selfCrossFeedRate(),
+            NeutralVars<_neutral>::Get().crossFeedRate(),
+            BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+    nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("nonTmSignalYield_" +
          ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
             .c_str(),
-        "bu2Dst0Hst_D0gamma Yield",
-        NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
-            BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
-            DaughtersVars<_daughters>::Get().daughtersSF(),
-        0, NeutralVars<_neutral>::Get().maxYield() *
-               BachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
-               DaughtersVars<_daughters>::Get().daughtersSF()));
+        "non TM Signal Yield", "@0*@1*@2",
+        RooArgList(
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
+            NeutralVars<_neutral>::Get().selfCrossFeedRate(),
+            BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+    switch (_neutral) {
+    case Neutral::pi0:
+      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+          ("crossFeedYield_" +
+           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+              .c_str(),
+          "Cross Feed Yield", "@0*@1*@2",
+          RooArgList(
+              NeutralDaughtersSharedVars<Neutral::gamma, _daughters>::Get()
+                  .N_Dpi(),
+              NeutralVars<Neutral::gamma>::Get().crossFeedRate(),
+              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+      break;
+    case Neutral::gamma:
+      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+          ("crossFeedYield_" +
+           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+              .c_str(),
+          "Cross Feed Yield", "@0*@1*@2",
+          RooArgList(NeutralDaughtersSharedVars<Neutral::pi0, _daughters>::Get()
+                         .N_Dpi(),
+                     NeutralVars<Neutral::pi0>::Get().crossFeedRate(),
+                     BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+      break;
+    }
+    missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("missIdYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "missId yield",    // 200));
+        "@0*@1*(1-@2)*@3", // "@0*(@1+@2)*@3*@4/(@5*@6)",
+        RooArgList(
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
+                .R_Dk_vs_Dpi(),
+            NeutralVars<_neutral>::Get().crossFeedRate(),
+            // BachelorVars<_neutral, _bachelor>::Get().bu2Dst0MissIdBR(),
+            BachelorVars<_neutral, _bachelor>::Get().missIdRate())));
+    // BachelorVars<_neutral, _bachelor>::Get().bu2Dst0HBR(),
+    // BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+    break;
+  case Bachelor::k:
+
+    signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("signalYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "Signal Yield", "@0*@1*(1-@2-@3)*@4",
+        RooArgList(
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
+                .R_Dk_vs_Dpi(),
+            NeutralVars<_neutral>::Get().selfCrossFeedRate(),
+            NeutralVars<_neutral>::Get().crossFeedRate(),
+            BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+    nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("nonTmSignalYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "non TM Signal Yield", "@0*@1*@2*@3",
+        RooArgList(
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
+            NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
+                .R_Dk_vs_Dpi(),
+            NeutralVars<_neutral>::Get().selfCrossFeedRate(),
+            BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+    switch (_neutral) {
+    case Neutral::pi0:
+      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+          ("crossFeedYield_" +
+           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+              .c_str(),
+          "Cross Feed Yield", "@0*@1*@2*@3",
+          RooArgList(
+              NeutralDaughtersSharedVars<Neutral::gamma, _daughters>::Get()
+                  .N_Dpi(),
+              NeutralDaughtersSharedVars<Neutral::gamma, _daughters>::Get()
+                  .R_Dk_vs_Dpi(),
+              NeutralVars<Neutral::gamma>::Get().crossFeedRate(),
+              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+      break;
+    case Neutral::gamma:
+      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+          ("crossFeedYield_" +
+           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+              .c_str(),
+          "Cross Feed Yield", "@0*@1*@2*@3",
+          RooArgList(NeutralDaughtersSharedVars<Neutral::pi0, _daughters>::Get()
+                         .N_Dpi(),
+                     NeutralDaughtersSharedVars<Neutral::pi0, _daughters>::Get()
+                         .R_Dk_vs_Dpi(),
+                     NeutralVars<Neutral::pi0>::Get().crossFeedRate(),
+                     BachelorVars<_neutral, _bachelor>::Get().bachEff())));
+      break;
+    }
+    // missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+    missIdYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("missIdYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "missId yield", 20*DaughtersVars<_daughters>::Get().daughtersSF()));
+    // "missId yield", "@0*(@1+@2)",
+    // RooArgList(BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+    //     Pdf<_neutral, Bachelor::pi, _daughters>::Get().signalYield(), 
+    //     Pdf<_neutral, Bachelor::pi, _daughters>::Get().nonTmSignalYield())));
+
+    break;
+  }
 
   switch (_bachelor) {
   case Bachelor::pi:
@@ -246,172 +377,19 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
     break;
   }
 
-  switch (_neutral) {
-  case Neutral::pi0:
-    switch (_bachelor) {
-    case Bachelor::pi:
-      signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("signalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Signal Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
-              NeutralVars<_neutral>::Get().fullyReconstructedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("crossFeedYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Cross Feed Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<Neutral::gamma, _daughters>::Get()
-                  .N_Dpi(),
-              NeutralVars<Neutral::gamma>::Get().crossFeedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("nonTmSignalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "non TM Signal Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
-              NeutralVars<_neutral>::Get().selfCrossFeedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      break;
-    case Bachelor::k:
-      signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("signalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Signal Yield", "@0*@1",
-          RooArgList(Pdf<_neutral, Bachelor::pi, _daughters>::Get()
-                         .signalYield(),
-                     NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
-                         .R_Dk_vs_Dpi()))),
-      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("crossFeedYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "CrossFeed Yield", "@0*@1",
-          RooArgList(
-              Pdf<_neutral, Bachelor::pi, _daughters>::Get()
-                  .crossFeedYield(),
-              NeutralDaughtersSharedVars<Neutral::gamma, _daughters>::Get()
-                  .R_Dk_vs_Dpi())));
-      nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("nonTmSignalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "non TM Signal Yield", "@0*@1",
-          RooArgList(Pdf<_neutral, Bachelor::pi, _daughters>::Get()
-                         .signalYield(),
-                     NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
-                         .R_Dk_vs_Dpi())));
-      break;
-    }
-    missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("missIdYield_" +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-            .c_str(),
-        "missId yield", "(@0+@1)*@2*@3/(@4*@5)",
-        RooArgList(PdfBase::signalYield(), PdfBase::nonTmSignalYield(),
-                   BachelorVars<_neutral, _bachelor>::Get().bu2Dst0MissIdBR(),
-                   BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
-                   BachelorVars<_neutral, _bachelor>::Get().bu2Dst0HBR(),
-                   BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-    break;
-  case Neutral::gamma:
-    switch (_bachelor) {
-    case Bachelor::pi:
-      signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("signalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Signal Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
-              NeutralVars<_neutral>::Get().fullyReconstructedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("crossFeedYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Cross Feed Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<Neutral::pi0, _daughters>::Get()
-                  .N_Dpi(),
-              NeutralVars<Neutral::pi0>::Get().crossFeedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("nonTmSignalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "non TM Signal Yield", "@0*@1*@2",
-          RooArgList(
-              NeutralDaughtersSharedVars<_neutral, _daughters>::Get().N_Dpi(),
-              NeutralVars<_neutral>::Get().selfCrossFeedRate(),
-              BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-      break;
-    case Bachelor::k:
-      crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("crossFeedYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "CrossFeed Yield", "@0*@1",
-          RooArgList(Pdf<_neutral, Bachelor::pi, _daughters>::Get()
-                         .crossFeedYield(),
-                     NeutralDaughtersSharedVars<Neutral::pi0, _daughters>::Get()
-                         .R_Dk_vs_Dpi())));
-      signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("signalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "Signal Yield", "@0*@1",
-          RooArgList(Pdf<_neutral, Bachelor::pi, _daughters>::Get()
-                         .signalYield(),
-                     NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
-                         .R_Dk_vs_Dpi())));
-      nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("nonTmSignalYield_" +
-           ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-              .c_str(),
-          "non TM Signal Yield", "@0*@1",
-          RooArgList(
-              Pdf<_neutral, Bachelor::pi, _daughters>::Get().nonTmSignalYield(),
-              NeutralDaughtersSharedVars<_neutral, _daughters>::Get()
-                  .R_Dk_vs_Dpi())));
-      break;
-    }
-    missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("missIdYield_" +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
-            .c_str(),
-        "missId yield", "(@0+@1)*@2*@3/(@4*@5)",
-        RooArgList(PdfBase::signalYield(),
-                   PdfBase::nonTmSignalYield(),
-                   BachelorVars<_neutral, _bachelor>::Get().bu2Dst0MissIdBR(),
-                   BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
-                   BachelorVars<_neutral, _bachelor>::Get().bu2Dst0HBR(),
-                   BachelorVars<_neutral, _bachelor>::Get().bachEff())));
-    break;
-  }
-
-    PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().signal());
-    PdfBase::functions_.add(
-        BachelorVars<_neutral, _bachelor>::Get().crossFeed());
-    PdfBase::functions_.add(
-        BachelorVars<_neutral, _bachelor>::Get().nonTmSignal());
-    PdfBase::functions_.add(
-        BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0());
-    PdfBase::functions_.add(
-        BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma());
-    PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0H());
-    PdfBase::functions_.add(
-        BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst());
-    PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bd2DstH());
-    PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().missId());
-    PdfBase::functions_.add(*PdfBase::combinatorial_);
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().signal());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().crossFeed());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().nonTmSignal());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0());
+  PdfBase::functions_.add(
+      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0H());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bd2DstH());
+  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().missId());
+  PdfBase::functions_.add(*PdfBase::combinatorial_);
   PdfBase::yields_.add(*PdfBase::signalYield_);
   PdfBase::yields_.add(*PdfBase::crossFeedYield_);
   PdfBase::yields_.add(*PdfBase::nonTmSignalYield_);

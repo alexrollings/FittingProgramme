@@ -51,9 +51,9 @@ public:
   RooRealVar &meanBd2DstH() { return meanBd2DstH_; }
   RooRealVar &aBd2DstH_1() { return aBd2DstH_1_; }
   RooRealVar &aBd2DstH_2() { return aBd2DstH_2_; }
-  RooRealVar &fullyReconstructedRate() { return fullyReconstructedRate_; }
   RooRealVar &selfCrossFeedRate() { return selfCrossFeedRate_; }
   RooRealVar &crossFeedRate() { return crossFeedRate_; }
+  RooRealVar &R_cp() { return R_cp_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
   double bu2D0HExpected() { return bu2D0HExpected_; }
@@ -95,9 +95,9 @@ private:
   RooRealVar meanBd2DstH_;
   RooRealVar aBd2DstH_1_;
   RooRealVar aBd2DstH_2_;
-  RooRealVar fullyReconstructedRate_;
   RooRealVar selfCrossFeedRate_;
   RooRealVar crossFeedRate_;
+  RooRealVar R_cp_;
   double maxYield_;
   double bu2D0HExpected_;
   double bd2DstHExpected_;

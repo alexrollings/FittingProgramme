@@ -25,10 +25,10 @@ BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
                          "Gamma, Pi Bu2Dst0H_D0pi0 sigma right", 81.0)),
       sigmaSignal_1_(new RooRealVar(
           "sigmaLeftBu2Dst0H_D0gamma_GammaPi",
-          "Gamma, Pi Bu2Dst0H_D0gamma sigma left", 20.9, 18, 23)),
+          "Gamma, Pi Bu2Dst0H_D0gamma sigma left", 20.9, 15, 23)), //18
       sigmaSignal_2_(new RooRealVar(
           "sigmaRightBu2Dst0H_D0gamma_GammaPi",
-          "Gamma, Pi Bu2Dst0H_D0gamma sigma right", 21.7, 20, 25)),
+          "Gamma, Pi Bu2Dst0H_D0gamma sigma right", 21.7, 15, 25)), //20
       sigmaNonTmSignal_1_(new RooRealVar(
           "sigmaNonTmSignal_1_GammaPi", "Gamma, Pi NonTmSignal sigma 1", 71.6)),
       sigmaNonTmSignal_2_(new RooRealVar(
@@ -285,10 +285,10 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
                0.9965),
       sigmaSignal_1_(new RooRealVar("sigmaLeftBu2Dst0H_D0pi0_Pi0Pi",
                                             "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 14,
-                                            11, 15)),
+                                            9, 15)), //11
       sigmaSignal_2_(new RooRealVar("sigmaRightBu2Dst0H_D0pi0_Pi0Pi",
                                             "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 16,
-                                            15, 25)),
+                                            10, 25)), //15
       sigmaCrossFeed_1_(
           new RooRealVar("sigmaBu2Dst0H_D0gamma_1_Pi0Pi",
                          "Pi0, Pi Bu2Dst0H_D0gamma sigma 1", 97.3)),
