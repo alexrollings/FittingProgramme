@@ -763,7 +763,7 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
   // --------------- fit  ---------------------
 
   // simPdf.fitTo(fullDataSet);
-  RooFitResult *result = simPdf.fitTo(fullDataSet, RooFit::Save());
+  RooFitResult *result = simPdf.fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save());
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
