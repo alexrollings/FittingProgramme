@@ -29,7 +29,7 @@ public:
   }
 
   // If RooShit wasn't so shit we would pass a const reference
-  RooRealVar &N_Dpi() { return N_Dpi_; }
+  // RooRealVar &N_Dpi() { return N_Dpi_; }
   // RooFormulaVar &N_Dk() { return N_Dk_; }
   RooAbsReal &R_Dk_vs_Dpi() { return *R_Dk_vs_Dpi_; }
 
@@ -42,7 +42,7 @@ private:
   // Indicate if only used by one daughters
 
   // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
-  RooRealVar N_Dpi_;
+  // RooRealVar N_Dpi_;
   // RooFormulaVar N_Dk_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_;
 };

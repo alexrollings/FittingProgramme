@@ -291,10 +291,11 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
                                             10, 25)), //15
       sigmaCrossFeed_1_(
           new RooRealVar("sigmaBu2Dst0H_D0gamma_1_Pi0Pi",
-                         "Pi0, Pi Bu2Dst0H_D0gamma sigma 1", 97.3)),
-      sigmaCrossFeed_2_(
-          new RooRealVar("sigmaBu2Dst0H_D0gamma_2_Pi0Pi",
-                         "Pi0, Pi Bu2Dst0H_D0gamma sigma 2", 93.8)),
+                         "Pi0, Pi Bu2Dst0H_D0gamma sigma 1", 80)),
+      // sigmaCrossFeed_2_(
+      //     new RooRealVar("sigmaBu2Dst0H_D0gamma_2_Pi0Pi",
+      //                    "Pi0, Pi Bu2Dst0H_D0gamma sigma 2", 102)),
+      sigmaCrossFeed_2_(nullptr),
       sigmaNonTmSignal_1_(new RooRealVar("sigma1NonTmSignal_Pi0Pi",
                                          "Pi0, Pi NonTmSignal sigma 1", 40.1)),
       sigmaNonTmSignal_2_(new RooRealVar("sigma2NonTmSignal_Pi0Pi",
@@ -343,11 +344,11 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
           *sigmaSignal_1_, *sigmaSignal_2_,
           NeutralVars<Neutral::pi0>::Get().aSignal_1(),
           NeutralVars<Neutral::pi0>::Get().aSignal_2())),
-      crossFeed_(new RooCruijff(
+      crossFeed_(new RooCBShape(
           "bu2Dst0H_D0gamma_Pi0Pi", "Pi0, Pi bu2Dst0H_D0gamma CBShape",
           Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get().meanCrossFeed(),
-          *sigmaCrossFeed_1_, *sigmaCrossFeed_2_,
+          *sigmaCrossFeed_1_,
           NeutralVars<Neutral::pi0>::Get().aCrossFeed_1(),
           NeutralVars<Neutral::pi0>::Get().aCrossFeed_2())),
       nonTmSignal_(
@@ -427,12 +428,13 @@ BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
           RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                          .sigmaCrossFeed_1(),
                      Configuration::Get().relativeWidth()))),
-      sigmaCrossFeed_2_(new RooFormulaVar(
-          "sigmaRightBu2Dst0H_D0gamma_Pi0K",
-          "Pi0, K Bu2Dst0H_D0gamma sigma right", "@0*@1",
-          RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
-                         .sigmaCrossFeed_2(),
-                     Configuration::Get().relativeWidth()))),
+      // sigmaCrossFeed_2_(new RooFormulaVar(
+      //     "sigmaRightBu2Dst0H_D0gamma_Pi0K",
+      //     "Pi0, K Bu2Dst0H_D0gamma sigma right", "@0*@1",
+      //     RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+      //                    .sigmaCrossFeed_2(),
+      //                Configuration::Get().relativeWidth()))),
+      sigmaCrossFeed_2_(nullptr),
       sigmaNonTmSignal_1_(new RooFormulaVar(
           "sigmaNonTmSignal_1_Pi0K", "Pi0, K NonTmSignal sigma 1", "@0*@1",
           RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
@@ -501,11 +503,11 @@ BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
           *sigmaSignal_1_, *sigmaSignal_2_,
           NeutralVars<Neutral::pi0>::Get().aSignal_1(),
           NeutralVars<Neutral::pi0>::Get().aSignal_2())),
-      crossFeed_(new RooCruijff(
-          "bu2Dst0H_D0gamma_Pi0K", "Pi0, K bu2Dst0H_D0gamma Cruijff",
+      crossFeed_(new RooCBShape(
+          "bu2Dst0H_D0gamma_Pi0K", "Pi0, K bu2Dst0H_D0gamma CBShape",
           Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get().meanCrossFeed(),
-          *sigmaCrossFeed_1_, *sigmaCrossFeed_2_,
+          *sigmaCrossFeed_1_,
           NeutralVars<Neutral::pi0>::Get().aCrossFeed_1(),
           NeutralVars<Neutral::pi0>::Get().aCrossFeed_2())),
       nonTmSignal_(

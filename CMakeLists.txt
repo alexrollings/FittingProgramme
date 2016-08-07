@@ -19,7 +19,7 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp  src/RooCruijff src/BachelorVars.cpp src/DaughtersVars.cpp src/NeutralDaughtersSharedVars.cpp src/Pdf.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp  src/RooCruijff src/BachelorVars.cpp src/DaughtersVars.cpp src/NeutralDaughtersSharedVars.cpp src/SpecialisedVars.cpp src/Pdf.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
