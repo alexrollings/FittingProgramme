@@ -284,11 +284,9 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
       bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12",
                0.9965),
       sigmaSignal_1_(new RooRealVar("sigmaLeftBu2Dst0H_D0pi0_Pi0Pi",
-                                            "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 14,
-                                            9, 15)), //11
+                                            "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 14, 9, 15)), //11
       sigmaSignal_2_(new RooRealVar("sigmaRightBu2Dst0H_D0pi0_Pi0Pi",
-                                            "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 16,
-                                            10, 25)), //15
+                                            "Pi0, Pi Bu2Dst0H_D0pi0 sigma", 16, 10, 25)), //15
       sigmaCrossFeed_1_(
           new RooRealVar("sigmaBu2Dst0H_D0gamma_1_Pi0Pi",
                          "Pi0, Pi Bu2Dst0H_D0gamma sigma 1", 80)),

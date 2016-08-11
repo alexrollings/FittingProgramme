@@ -32,6 +32,9 @@ public:
 
   // If RooShit wasn't so shit we would pass a const reference
   RooAbsReal &N_Dh() { return *N_Dh_; }
+  RooAbsReal &N_Dh_Bu2D0H() { return *N_Dh_Bu2D0H_; }
+  RooAbsReal &N_Dh_Bu2D0Hst() { return *N_Dh_Bu2D0Hst_; }
+  RooAbsReal &N_Dh_Bd2DstH() { return *N_Dh_Bd2DstH_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -43,6 +46,9 @@ private:
 
   // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
   std::unique_ptr<RooAbsReal> N_Dh_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2D0H_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2D0Hst_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bd2DstH_;
 };
 
 // Now we just need to define the constructors separately so the values are

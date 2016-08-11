@@ -81,6 +81,9 @@ public:
     return singleton;
   }
 
+  void AssignMissIdYields();
+  void CreateRooAddPdf();
+  
   virtual RooAbsPdf &nonTmSignal() const {
     return BachelorVars<_neutral, _bachelor>::Get().nonTmSignal();
   }
@@ -123,7 +126,6 @@ private:
 
   // Declaring a function inside a class of const will not change any of the
   // variables inside of the object
-  void CreateRooAddPdf();
 };
 
 template <> Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Pdf();
@@ -181,3 +183,38 @@ void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
       PdfBase::functions_, PdfBase::yields_));
 }
 
+// Assign miss-ID yields in a separate function after the PDF objects have been constructed to avoid cyclic dependancy (deadlock)
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
+
+  switch (_bachelor) {
+  case Bachelor::pi:
+    PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("missIdYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "missId yield", "@0*(@1+@2)",
+        RooArgList(
+            BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+            Pdf<_neutral, Bachelor::k, _daughters>::Get().signalYield(),
+            Pdf<_neutral, Bachelor::k, _daughters>::Get().nonTmSignalYield())));
+    break;
+  case Bachelor::k:
+    PdfBase::missIdYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("missIdYield_" +
+         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+            .c_str(),
+        "missId yield", 20 * DaughtersVars<_daughters>::Get().daughtersSF()));
+    // PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+    //     ("missIdYield_" +
+    //      ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+    //         .c_str(),
+    //     "missId yield", "@0*(@1+@2)",
+    //     RooArgList(BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+    //                Pdf<_neutral, Bachelor::pi,
+    //                _daughters>::Get().signalYield(),
+    //                Pdf<_neutral, Bachelor::pi, _daughters>::Get()
+    //                    .nonTmSignalYield())));
+    break;
+  }
+}

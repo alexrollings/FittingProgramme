@@ -29,8 +29,8 @@ public:
   }
 
   // If RooShit wasn't so shit we would pass a const reference
-  RooRealVar &bachelorRatio_Bu2D0H() { return bachelorRatio_Bu2D0H_; }
-  RooRealVar &bachelorRatio_Bu2D0Hst() { return bachelorRatio_Bu2D0Hst_; }
+  RooRealVar &R_Dk_vs_Dpi_Bu2D0H() { return R_Dk_vs_Dpi_Bu2D0H_; }
+  RooRealVar &R_Dk_vs_Dpi_Bu2D0Hst() { return R_Dk_vs_Dpi_Bu2D0Hst_; }
   double &daughtersSF() { return daughtersSF_; }
 
 private:
@@ -41,8 +41,8 @@ private:
 
   // Indicate if only used by one daughters
 
-  RooRealVar bachelorRatio_Bu2D0H_;
-  RooRealVar bachelorRatio_Bu2D0Hst_;
+  RooRealVar R_Dk_vs_Dpi_Bu2D0H_;
+  RooRealVar R_Dk_vs_Dpi_Bu2D0Hst_;
   double daughtersSF_;
 };
 

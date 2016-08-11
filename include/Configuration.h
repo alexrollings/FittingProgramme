@@ -46,7 +46,7 @@ public:
   RooRealVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
   RooRealVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
   RooRealVar &relativeNonTmYield() { return relativeNonTmYield_; }
-  RooRealVar &bachelorRatio_Bd2DstH() { return bachelorRatio_Bd2DstH_; }
+  RooRealVar &R_Dk_vs_Dpi_Bd2DstH() { return R_Dk_vs_Dpi_Bd2DstH_; }
 
 private:
   Configuration();
@@ -67,7 +67,7 @@ private:
   RooRealVar relativeBu2D0HstYield_;
   RooRealVar relativeBd2DstHYield_;
   RooRealVar relativeNonTmYield_;
-  RooRealVar bachelorRatio_Bd2DstH_;
+  RooRealVar R_Dk_vs_Dpi_Bd2DstH_;
 };
 
 

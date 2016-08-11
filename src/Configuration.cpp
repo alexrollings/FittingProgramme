@@ -9,7 +9,10 @@ Configuration::Configuration()
       relativeBu2D0HstYield_("relativeBu2D0HstYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0Hst", 0.5607),
       relativeBd2DstHYield_("relativeBd2DstHYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bd2DstH", 1.4058) ,
       relativeNonTmYield_("relativeNonTmYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay NonTm", 1.0589),
-      bachelorRatio_Bd2DstH_("bachelorRatio_Bd2DstH", "Relative yield of K compared to pi bachelor mode for Bd2DstH decay", 0.08, 0, 0.1) { 
+      R_Dk_vs_Dpi_Bd2DstH_("R_Dk_vs_Dpi_Bd2DstH_kpi",
+                            "Ratio of yields of Bd2DstH decay channel for K "
+                            "w.r.t. pi bachelor, for daughters=kpi",
+                            0.075, 0.01, 0.1) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
