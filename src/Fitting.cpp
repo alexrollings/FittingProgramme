@@ -858,21 +858,23 @@ int main(int argc, char **argv) {
 
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
-      std::cout << "The following options are possible:\n";
+      std::cout << "Type ./Fitting -dataDir=<RooDataSets directory name> \n"
+                << "\n";
+      std::cout << "Followed by the possible options:\n";
       std::cout << "\n";
-      std::cout << "    -year choice {2011,2012,2015} default: " << yearArg
-                << "\n";
-      std::cout << "    -polarity choice {up,down} default: " << polarityArg
-                << "\n";
+      std::cout << "    -year=<choice {2011,2012,2015} default: " << yearArg
+                << ">\n";
+      std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
+                << ">\n";
       // std::cout << "    -bachelor choice {k,pi} default: " << bachelorArg
       // <<
       // "\n";
-      std::cout << "    -neutral choice {pi0,gamma} default:" << neutralArg
-                << "\n";
-      std::cout << "    -daughters choice {kpi,kk,pipi,pik} default: "
-                << daughtersArg << "\n";
-      std::cout << "    -charge choice {plus,minus} default: " << chargeArg
-                << "\n";
+      std::cout << "    -neutral=<choice {pi0,gamma} default: " << neutralArg
+                << ">\n";
+      std::cout << "    -daughters=<choice {kpi,kk,pipi,pik} default: "
+                << daughtersArg << ">\n";
+      std::cout << "    -charge=<choice {plus,minus} default: " << chargeArg
+                << ">\n";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
