@@ -2,7 +2,7 @@
 #include "Configuration.h"
 #include "RooAbsReal.h"
 #include "RooFormulaVar.h"
-#include "NeutralDaughtersSharedVars.h"
+#include "NeutralDaughtersVars.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
 // of the entire class for you for every permutation of template arguments it is

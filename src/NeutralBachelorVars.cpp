@@ -1,4 +1,4 @@
-#include "BachelorVars.h"
+#include "NeutralBachelorVars.h"
 #include "Configuration.h"
 #include "NeutralVars.h"
 #include "RooBifurGauss.h"
@@ -10,11 +10,11 @@
 // Bachelor specializations
 
 template <>
-BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
-                       0.000420),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
+NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars()
+    // : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
+    //                    0.000420),
+    //   bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
       bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12",
                0.9965),
       sigmaCrossFeed_1_(
@@ -128,71 +128,71 @@ BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars()
       bachelorSF_(1.0) {}
 
 template <>
-BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
-                       0.00518),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
+NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars()
+    // : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
+    //                    0.00518),
+    //   bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
       bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12",
                0.6734),
       sigmaCrossFeed_1_(new RooFormulaVar(
           "sigmaLeftBu2Dst0H_D0pi0_GammaK",
           "Gamma, K Bu2Dst0H_D0pi0 sigma left", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaCrossFeed_1(),
                      Configuration::Get().relativeWidth()))),
       sigmaCrossFeed_2_(new RooFormulaVar(
           "sigmaRightBu2Dst0H_D0pi0_GammaK",
           "Gamma, K Bu2Dst0H_D0pi0 sigma right", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaCrossFeed_2(),
                      Configuration::Get().relativeWidth()))),
       sigmaSignal_1_(new RooFormulaVar(
           "sigmaLeftBu2Dst0H_D0gamma_GammaK",
           "Gamma, K Bu2Dst0H_D0gamma sigma left", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaSignal_1(),
                      Configuration::Get().relativeWidth()))),
       sigmaSignal_2_(new RooFormulaVar(
           "sigmaRightBu2Dst0H_D0gamma_GammaK",
           "Gamma, K Bu2Dst0H_D0gamma sigma right", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaSignal_2(),
                      Configuration::Get().relativeWidth()))),
       sigmaNonTmSignal_1_(new RooFormulaVar(
           "sigmaNonTmSignal_1_GammaK", "Gamma, K NonTmSignal sigma 1", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaNonTmSignal_1(),
                      Configuration::Get().relativeWidth()))),
       sigmaNonTmSignal_2_(new RooFormulaVar(
           "sigmaNonTmSignal_2_GammaK", "Gamma, K NonTmSignal sigma 2", "@0*@1",
-          RooArgList(BachelorVars<Neutral::gamma, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get()
                          .sigmaNonTmSignal_2(),
                      Configuration::Get().relativeWidth()))),
       sigmaBu2D0H_1_(new RooFormulaVar(
           "sigmaLeftBu2D0H_GammaK", "Gamma, K Bu2D0H sigma left", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0H_1(),
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0H_1(),
               Configuration::Get().relativeWidth()))),
       sigmaBu2D0H_2_(new RooFormulaVar(
           "sigmaRightBu2D0H_GammaK", "Gamma, K Bu2D0H sigma right ", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0H_2(),
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0H_2(),
               Configuration::Get().relativeWidth()))),
       sigmaBu2D0Hst_(new RooFormulaVar(
           "sigmaRightBu2D0Hst_GammaK", "Gamma, K Bu2D0Hst sigma right", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0Hst(),
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBu2D0Hst(),
               Configuration::Get().relativeWidth()))),
       sigmaBd2DstH_1_(new RooFormulaVar(
           "sigmaLeftBd2DstH_GammaK", "Gamma, K Bd2DstH sigma left", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBd2DstH_1(),
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBd2DstH_1(),
               Configuration::Get().relativeWidth()))),
       sigmaBd2DstH_2_(new RooFormulaVar(
           "sigmaRightBd2DstH_GammaK", "Gamma, K Bd2DstH sigma right", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBd2DstH_2(),
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get().sigmaBd2DstH_2(),
               Configuration::Get().relativeWidth()))),
       meanBu2Dst0Hst_D0pi0_("meanBu2Dst0Hst_D0pi0_GammaK",
                             "Gamma, K Bu2Dst0Hst_D0pi0 mean", 5091),
@@ -276,11 +276,11 @@ BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars()
       bachelorSF_(0.08) {}
 
 template <>
-BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
-                       0.000420),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
+NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars()
+    // : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
+    //                    0.000420),
+    //   bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.00518),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.3266),
       bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12",
                0.9965),
       sigmaSignal_1_(new RooRealVar("sigmaLeftBu2Dst0H_D0pi0_Pi0Pi",
@@ -403,70 +403,70 @@ BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars()
       bachelorSF_(1.0) {}
 
 template <>
-BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars()
-    : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
-                       0.00518),
-      bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
-      missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
+NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars()
+    // : bu2Dst0MissIdBR_("bu2Dst0MissIdBR", "Branching Ratio of Bu2Dst0pi",
+    //                    0.00518),
+    //   bu2Dst0HBR_("bu2Dst0HBR", "Branching Ratio of Bu2Dst0K", 0.000420),
+    : missIdRate_("missIdRate", "Rate of miss-ID with PIDK>12", 0.0035),
       bachEff_("bachEff", "Efficiency of detection of bachelor K with PIDK>12",
                0.6734),
       sigmaSignal_1_(new RooFormulaVar(
           "sigmaLeftBu2Dst0H_D0pi0_Pi0K", "Pi0, K Bu2Dst0H_D0pi0 sigma left",
-          "@0*@1", RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+          "@0*@1", RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                                   .sigmaSignal_1(),
                               Configuration::Get().relativeWidth()))),
       sigmaSignal_2_(new RooFormulaVar(
           "sigmaRightBu2Dst0H_D0pi0_Pi0K", "Pi0, K Bu2Dst0H_D0pi0 sigma right",
-          "@0*@1", RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+          "@0*@1", RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                                   .sigmaSignal_2(),
                               Configuration::Get().relativeWidth()))),
       sigmaCrossFeed_1_(new RooFormulaVar(
           "sigmaLeftBu2Dst0H_D0gamma_Pi0K",
           "Pi0, K Bu2Dst0H_D0gamma sigma left", "@0*@1",
-          RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                          .sigmaCrossFeed_1(),
                      Configuration::Get().relativeWidth()))),
       // sigmaCrossFeed_2_(new RooFormulaVar(
       //     "sigmaRightBu2Dst0H_D0gamma_Pi0K",
       //     "Pi0, K Bu2Dst0H_D0gamma sigma right", "@0*@1",
-      //     RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+      //     RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
       //                    .sigmaCrossFeed_2(),
       //                Configuration::Get().relativeWidth()))),
       sigmaCrossFeed_2_(nullptr),
       sigmaNonTmSignal_1_(new RooFormulaVar(
           "sigmaNonTmSignal_1_Pi0K", "Pi0, K NonTmSignal sigma 1", "@0*@1",
-          RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                          .sigmaNonTmSignal_1(),
                      Configuration::Get().relativeWidth()))),
       sigmaNonTmSignal_2_(new RooFormulaVar(
           "sigmaNonTmSignal_2_Pi0K", "Pi0, K NonTmSignal sigma 2", "@0*@1",
-          RooArgList(BachelorVars<Neutral::pi0, Bachelor::pi>::Get()
+          RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get()
                          .sigmaNonTmSignal_2(),
                      Configuration::Get().relativeWidth()))),
       sigmaBu2D0H_1_(new RooFormulaVar(
           "sigmaLeftBu2D0H_Pi0K", "Pi0, K Bu2D0H sigma left", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0H_1(),
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0H_1(),
               Configuration::Get().relativeWidth()))),
       sigmaBu2D0H_2_(new RooFormulaVar(
           "sigmaRightBu2D0H_Pi0K", "Pi0, K Bu2D0H sigma right ", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0H_2(),
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0H_2(),
               Configuration::Get().relativeWidth()))),
       sigmaBu2D0Hst_(new RooFormulaVar(
           "sigmaRightBu2D0Hst_Pi0K", "Pi0, K Bu2D0Hst sigma right", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0Hst(),
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBu2D0Hst(),
               Configuration::Get().relativeWidth()))),
       sigmaBd2DstH_1_(new RooFormulaVar(
           "sigmaLeftBd2DstH_Pi0K", "Pi0, K Bd2DstH sigma left", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBd2DstH_1(),
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBd2DstH_1(),
               Configuration::Get().relativeWidth()))),
       sigmaBd2DstH_2_(new RooFormulaVar(
           "sigmaRightBd2DstH_Pi0K", "Pi0, K Bd2DstH sigma right", "@0*@1",
           RooArgList(
-              BachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBd2DstH_2(),
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get().sigmaBd2DstH_2(),
               Configuration::Get().relativeWidth()))),
       meanBu2Dst0Hst_D0pi0_("meanBu2Dst0Hst_D0pi0_Pi0K",
                             "Pi0, K Bu2Dst0Hst_D0pi0 mean", 5102),

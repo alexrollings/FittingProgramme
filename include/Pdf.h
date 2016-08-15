@@ -1,9 +1,9 @@
 #pragma once
-#include "BachelorVars.h"
+#include "NeutralBachelorVars.h"
 #include "SpecialisedVars.h"
 #include "Configuration.h"
 #include "DaughtersVars.h"
-#include "NeutralDaughtersSharedVars.h"
+#include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
 #include "RooAbsReal.h"
@@ -85,39 +85,39 @@ public:
   void CreateRooAddPdf();
   
   virtual RooAbsPdf &nonTmSignal() const {
-    return BachelorVars<_neutral, _bachelor>::Get().nonTmSignal();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().nonTmSignal();
   }
 
   virtual RooAbsPdf &signal() const {
-    return BachelorVars<_neutral, _bachelor>::Get().signal();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().signal();
   }
 
   virtual RooAbsPdf &crossFeed() const {
-    return BachelorVars<_neutral, _bachelor>::Get().crossFeed();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().crossFeed();
   }
 
   virtual RooAbsPdf &bu2Dst0Hst_D0pi0() const {
-    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0();
   }
 
   virtual RooAbsPdf &bu2Dst0Hst_D0gamma() const {
-    return BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma();
   }
 
   virtual RooAbsPdf &bu2D0H() const {
-    return BachelorVars<_neutral, _bachelor>::Get().bu2D0H();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().bu2D0H();
   }
 
   virtual RooAbsPdf &bu2D0Hst() const {
-    return BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().bu2D0Hst();
   }
 
   virtual RooAbsPdf &bd2DstH() const {
-    return BachelorVars<_neutral, _bachelor>::Get().bd2DstH();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().bd2DstH();
   }
 
   virtual RooAbsPdf &missId() const {
-    return BachelorVars<_neutral, _bachelor>::Get().missId();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().missId();
   }
 
 private:
@@ -151,18 +151,18 @@ template <> Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Pdf();
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
 
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().signal());
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().crossFeed());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().signal());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().crossFeed());
   PdfBase::functions_.add(
-      BachelorVars<_neutral, _bachelor>::Get().nonTmSignal());
+      NeutralBachelorVars<_neutral, _bachelor>::Get().nonTmSignal());
   PdfBase::functions_.add(
-      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0());
+      NeutralBachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0pi0());
   PdfBase::functions_.add(
-      BachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma());
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0H());
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bu2D0Hst());
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().bd2DstH());
-  PdfBase::functions_.add(BachelorVars<_neutral, _bachelor>::Get().missId());
+      NeutralBachelorVars<_neutral, _bachelor>::Get().bu2Dst0Hst_D0gamma());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().bu2D0H());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().bu2D0Hst());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().bd2DstH());
+  PdfBase::functions_.add(NeutralBachelorVars<_neutral, _bachelor>::Get().missId());
   PdfBase::functions_.add(*PdfBase::combinatorial_);
   PdfBase::yields_.add(*PdfBase::signalYield_);
   PdfBase::yields_.add(*PdfBase::crossFeedYield_);
@@ -195,7 +195,7 @@ void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
             .c_str(),
         "missId yield", "@0*(@1+@2)",
         RooArgList(
-            BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+            NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate(),
             Pdf<_neutral, Bachelor::k, _daughters>::Get().signalYield(),
             Pdf<_neutral, Bachelor::k, _daughters>::Get().nonTmSignalYield())));
     break;
@@ -210,7 +210,7 @@ void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
     //      ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
     //         .c_str(),
     //     "missId yield", "@0*(@1+@2)",
-    //     RooArgList(BachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+    //     RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate(),
     //                Pdf<_neutral, Bachelor::pi,
     //                _daughters>::Get().signalYield(),
     //                Pdf<_neutral, Bachelor::pi, _daughters>::Get()

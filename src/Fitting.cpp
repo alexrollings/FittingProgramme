@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 
-#include "BachelorVars.h"
+#include "NeutralBachelorVars.h"
 #include "Configuration.h"
 #include "DaughtersVars.h"
 #include "NeutralVars.h"
@@ -483,7 +483,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   missIdHist->SetLineStyle(kDashed);
   missIdHist->SetLineWidth(2);
 
-  TLegend *legend = new TLegend(0.65, 0.35, 0.97, 0.90);
+  TLegend *legend = new TLegend(0.6, 0.35, 0.97, 0.90);
   // legend->SetHeader("Physics Bachgrounds");
   legend->AddEntry(bu2Dst0H_D0pi0Hist,
                    ("B^{" + chargeLabel +
@@ -494,7 +494,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
                    "l");
   legend->AddEntry(
       nonTMSignalHist,
-      ("False B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+      ("Miss-Reconstructed B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
        daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
        "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" + chargeLabel + "}")
           .c_str(),
@@ -547,7 +547,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   legend->AddEntry(
       missIdHist,
       ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + crossFeedLabel +
+       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
        "#font[132]{]}_{D^{0}*}" + missIdLabel + "^{" + chargeLabel + "}")
           .c_str(),
       "l");

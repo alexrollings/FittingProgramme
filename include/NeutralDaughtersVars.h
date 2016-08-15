@@ -14,7 +14,7 @@
 // your
 // class/function (unless you explicitly specialize, see below).
 
-template <Neutral neutral, Daughters daughters> class NeutralDaughtersSharedVars {
+template <Neutral neutral, Daughters daughters> class NeutralDaughtersVars {
 
   // One template specialization == One entirely separate class in practice
   // These will give two different instances:
@@ -23,8 +23,8 @@ template <Neutral neutral, Daughters daughters> class NeutralDaughtersSharedVars
   // All happens automatically :-)
   
 public:  
-  static NeutralDaughtersSharedVars<neutral, daughters> &Get() {
-    static NeutralDaughtersSharedVars<neutral, daughters> singleton;
+  static NeutralDaughtersVars<neutral, daughters> &Get() {
+    static NeutralDaughtersVars<neutral, daughters> singleton;
     return singleton;
   }
 
@@ -36,8 +36,8 @@ public:
 private:
   // When we DO need to specialize certain cases, we can still do that (see
   // below)...
-  NeutralDaughtersSharedVars();
-  ~NeutralDaughtersSharedVars() {}
+  NeutralDaughtersVars();
+  ~NeutralDaughtersVars() {}
 
   // Indicate if only used by one daughters
 
@@ -51,12 +51,12 @@ private:
 // different
 
 // ...by telling it exactly which specializations we are providing:
-template <> NeutralDaughtersSharedVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersSharedVars();
-template <> NeutralDaughtersSharedVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersSharedVars();
+template <> NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars();
+template <> NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersVars();
 // Then we can safely put these in the .cpp-file somewhere to be linked later.

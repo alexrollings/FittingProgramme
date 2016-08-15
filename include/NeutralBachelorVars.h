@@ -8,11 +8,11 @@
 
 // Bachelor
 
-template <Neutral neutral, Bachelor bachelor> class BachelorVars {
+template <Neutral neutral, Bachelor bachelor> class NeutralBachelorVars {
 
 public:
-  static BachelorVars<neutral, bachelor> &Get() {
-    static BachelorVars<neutral, bachelor> singleton;
+  static NeutralBachelorVars<neutral, bachelor> &Get() {
+    static NeutralBachelorVars<neutral, bachelor> singleton;
     return singleton;
   }
 
@@ -70,8 +70,8 @@ public:
   double &bachelorSF() { return bachelorSF_; }
 
 private:
-  BachelorVars();
-  ~BachelorVars() {}
+  NeutralBachelorVars();
+  ~NeutralBachelorVars() {}
 
   std::unique_ptr<RooAbsReal> sigmaSignal_1_;
   std::unique_ptr<RooAbsReal> sigmaSignal_2_;
@@ -125,9 +125,9 @@ private:
   double bachelorSF_;
 };
 
-template <> BachelorVars<Neutral::gamma, Bachelor::pi>::BachelorVars();
-template <> BachelorVars<Neutral::gamma, Bachelor::k>::BachelorVars();
-template <> BachelorVars<Neutral::pi0, Bachelor::pi>::BachelorVars();
-template <> BachelorVars<Neutral::pi0, Bachelor::k>::BachelorVars();
+template <> NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars();
+template <> NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars();
+template <> NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars();
+template <> NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars();
 
 

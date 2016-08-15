@@ -1,7 +1,7 @@
 #include "SpecialisedVars.h"
 #include "Configuration.h"
 #include "DaughtersVars.h"
-#include "NeutralDaughtersSharedVars.h"
+#include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
 
 template <>
@@ -79,7 +79,7 @@ SpecialisedVars<Neutral::pi0, Bachelor::k, Daughters::kpi>::SpecialisedVars()
           RooArgList(
               SpecialisedVars<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::pi0, Daughters::kpi>::Get()
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_pi0_kpi", "Total number of Bu2D0Kst-like events, for "
@@ -119,7 +119,7 @@ SpecialisedVars<Neutral::gamma, Bachelor::k, Daughters::kpi>::SpecialisedVars()
               SpecialisedVars<Neutral::gamma, Bachelor::pi,
                               Daughters::kpi>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::gamma, Daughters::kpi>::Get()
+              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_gamma_kpi", "Total number of Bu2D0Kst-like events, for "
@@ -225,7 +225,7 @@ SpecialisedVars<Neutral::pi0, Bachelor::k, Daughters::kk>::SpecialisedVars()
           RooArgList(
               SpecialisedVars<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::pi0, Daughters::kk>::Get()
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_pi0_kk", "Total number of Bu2D0Kst-like events, for "
@@ -265,7 +265,7 @@ SpecialisedVars<Neutral::gamma, Bachelor::k, Daughters::kk>::SpecialisedVars()
               SpecialisedVars<Neutral::gamma, Bachelor::pi,
                               Daughters::kk>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::gamma, Daughters::kk>::Get()
+              NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_gamma_kk", "Total number of Bu2D0Kst-like events, for "
@@ -371,7 +371,7 @@ SpecialisedVars<Neutral::pi0, Bachelor::k, Daughters::pipi>::SpecialisedVars()
           RooArgList(
               SpecialisedVars<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::pi0, Daughters::pipi>::Get()
+              NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_pi0_pipi", "Total number of Bu2D0Kst-like events, for "
@@ -411,7 +411,7 @@ SpecialisedVars<Neutral::gamma, Bachelor::k, Daughters::pipi>::SpecialisedVars()
               SpecialisedVars<Neutral::gamma, Bachelor::pi,
                               Daughters::pipi>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::gamma, Daughters::pipi>::Get()
+              NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_gamma_pipi", "Total number of Bu2D0Kst-like events, for "
@@ -517,7 +517,7 @@ SpecialisedVars<Neutral::pi0, Bachelor::k, Daughters::pik>::SpecialisedVars()
           RooArgList(
               SpecialisedVars<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::pi0, Daughters::pik>::Get()
+              NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_pi0_pik", "Total number of Bu2D0Kst-like events, for "
@@ -557,7 +557,7 @@ SpecialisedVars<Neutral::gamma, Bachelor::k, Daughters::pik>::SpecialisedVars()
               SpecialisedVars<Neutral::gamma, Bachelor::pi,
                               Daughters::pik>::Get()
                   .N_Dh(),
-              NeutralDaughtersSharedVars<Neutral::gamma, Daughters::pik>::Get()
+              NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::Get()
                   .R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           "N_Dk_Bu2D0Hst_gamma_pik", "Total number of Bu2D0Kst-like events, for "
