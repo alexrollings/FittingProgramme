@@ -32,6 +32,8 @@ public:
   // RooRealVar &N_Dpi() { return N_Dpi_; }
   // RooFormulaVar &N_Dk() { return N_Dk_; }
   RooAbsReal &R_Dk_vs_Dpi() { return *R_Dk_vs_Dpi_; }
+  RooRealVar &selfCrossFeedRate() { return selfCrossFeedRate_; }
+  RooRealVar &crossFeedRate() { return crossFeedRate_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -45,6 +47,8 @@ private:
   // RooRealVar N_Dpi_;
   // RooFormulaVar N_Dk_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_;
+  RooRealVar selfCrossFeedRate_;
+  RooRealVar crossFeedRate_;
 };
 
 // Now we just need to define the constructors separately so the values are

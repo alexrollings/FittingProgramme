@@ -30,9 +30,6 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       meanBd2DstH_("meanBd2DstH_Gamma", "Gamma Bd2DstH mean", 5253.7),
       aBd2DstH_1_("aBd2DstH_1_Gamma", "Gamma Bd2DstH a 1", -0.052),
       aBd2DstH_2_("aBd2DstH_2_Gamma", "Gamma Bd2DstH a 2", 0.033),
-      selfCrossFeedRate_("selfCrossFeedRate_Gamma", "Proportion of SCF in N_Dpi, Gamma", 0.4046),
-      crossFeedRate_("crossFeedRate_Gamma", "Proportion of CF in N_Dpi, Gamma", 0.0625),
-      R_cp_("R_cp_Gamma", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Gamma", 1, 0.5, 1.5),
       maxYield_(29000),
       bu2D0HExpected_(6080),
       bd2DstHExpected_(2570),
@@ -41,7 +38,8 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       bu2D0HstExpected_(1840),
       nonTmSignalExpected_(7000),
       crossFeedExpected_(6230),
-      signalExpected_(9830) {}
+      signalExpected_(9830),
+      R_cp_("R_cp_Gamma", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Gamma", 1, 0.5, 1.5) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
@@ -72,9 +70,6 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       meanBd2DstH_("meanBd2DstH_Pi0", "Pi0 Bd2DstH mean", 5274.5),
       aBd2DstH_1_("aBd2DstH_1_Pi0", "Pi0 Bd2DstH a 1", -0.0498),
       aBd2DstH_2_("aBd2DstH_2_Pi0", "Pi0 Bd2DstH a 2", 0.041),
-      selfCrossFeedRate_("selfCrossFeedRate_Pi0", "Proportion of SCF in N_Dpi, Pi0", 0.3082),
-      crossFeedRate_("crossFeedRate_Pi0", "Proportion of CF in N_Dpi, Pi0", 0.3521),
-      R_cp_("R_cp_Pi0", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Pi0", 1, 0.5, 1.5),
       maxYield_(27000),
       bu2D0HExpected_(2830),
       bd2DstHExpected_(1340),
@@ -83,5 +78,6 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       bu2D0HstExpected_(2450),
       nonTmSignalExpected_(7000),
       signalExpected_(9540),
-      crossFeedExpected_(1860) {}
+      crossFeedExpected_(1860),
+      R_cp_("R_cp_Pi0", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Pi0", 1, 0.5, 1.5) {}
 
