@@ -5,7 +5,7 @@ project(Fitting CXX)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
 
 #Set compiler flags - ROOT 6 requires C++11
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 
 #Sets ROOT_INCLUDE_DIR and ROOT_LIBRARIES to the local path on system
 find_package(ROOT REQUIRED)

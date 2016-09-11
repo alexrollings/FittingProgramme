@@ -39,15 +39,11 @@ public:
   RooRealVar &nBu2Dst0Hst_D0gamma() {
     return nBu2Dst0Hst_D0gamma_;
   } // Not gamma, K
-  RooRealVar &meanMissId1() { return meanMissId1_; }
+  RooRealVar &meanMissId() { return meanMissId_; }
   RooRealVar &sigmaMissId1() { return sigmaMissId1_; }
-  RooRealVar &aMissId1() { return aMissId1_; }
-  RooRealVar &nMissId1() { return nMissId1_; }
-  RooRealVar &fracMissId1() { return fracMissId1_; }
-  RooRealVar &meanMissId2() { return meanMissId2_; } // K
   RooRealVar &sigmaMissId2() { return sigmaMissId2_; }
+  RooRealVar &aMissId1() { return aMissId1_; }
   RooRealVar &aMissId2() { return aMissId2_; }
-  RooRealVar &nMissId2() { return nMissId2_; }
   RooAbsPdf &signal() { return *signal_; }
   RooAbsPdf &crossFeed() { return *crossFeed_; }
   RooAbsPdf &nonTmSignal() { return *nonTmSignal_; }
@@ -60,8 +56,6 @@ public:
   RooAbsPdf &bu2D0H() { return *bu2D0H_; }
   RooAbsPdf &bu2D0Hst() { return *bu2D0Hst_; }
   RooAbsPdf &bd2DstH() { return *bd2DstH_; }
-  RooAbsPdf &missId1() { return *missId1_; }
-  RooAbsPdf &missId2() { return *missId2_; }
   RooAbsPdf &missId() { return *missId_; }
   RooRealVar &missIdRate() { return missIdRate_; }
   RooRealVar &bu2Dst0MissIdBR() { return bu2Dst0MissIdBR_; }
@@ -92,15 +86,11 @@ private:
   RooRealVar sigmaBu2Dst0Hst_D0gamma_;
   RooRealVar aBu2Dst0Hst_D0gamma_;
   RooRealVar nBu2Dst0Hst_D0gamma_;
-  RooRealVar meanMissId1_;
+  RooRealVar meanMissId_;
   RooRealVar sigmaMissId1_;
-  RooRealVar aMissId1_;
-  RooRealVar nMissId1_;
-  RooRealVar fracMissId1_;
-  RooRealVar meanMissId2_;
   RooRealVar sigmaMissId2_;
+  RooRealVar aMissId1_;
   RooRealVar aMissId2_;
-  RooRealVar nMissId2_;
 
   RooRealVar bu2Dst0MissIdBR_;
   RooRealVar missIdRate_;
@@ -118,8 +108,6 @@ private:
   std::unique_ptr<RooAbsPdf> bu2D0H_;
   std::unique_ptr<RooAbsPdf> bu2D0Hst_;
   std::unique_ptr<RooAbsPdf> bd2DstH_;
-  std::unique_ptr<RooAbsPdf> missId1_;
-  std::unique_ptr<RooAbsPdf> missId2_;
   std::unique_ptr<RooAbsPdf> missId_;
   
   double bachelorSF_;
