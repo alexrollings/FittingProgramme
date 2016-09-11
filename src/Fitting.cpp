@@ -643,11 +643,11 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
-          // Pdf<Neutral::pi0, Bachelor::pi,
-          //      Daughters::kpi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi,
+               Daughters::kpi>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -656,12 +656,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
-          // Pdf<Neutral::gamma, Bachelor::pi,
-          //      Daughters::kpi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k,
-          //      Daughters::kpi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi,
+               Daughters::kpi>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k,
+               Daughters::kpi>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
           break;
         }
       }
@@ -677,10 +677,10 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -689,12 +689,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
-          // Pdf<Neutral::gamma, Bachelor::pi,
-          //      Daughters::kk>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k,
-          //      Daughters::kk>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi,
+               Daughters::kk>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k,
+               Daughters::kk>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
           break;
         }
       }
@@ -710,12 +710,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
-          // Pdf<Neutral::pi0, Bachelor::pi,
-          //      Daughters::pipi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k,
-          //      Daughters::pipi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi,
+               Daughters::pipi>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k,
+               Daughters::pipi>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -724,13 +724,13 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
-          // Pdf<Neutral::gamma, Bachelor::pi,
-          //      Daughters::pipi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi,
-          //      Daughters::pipi>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k,
-          //      Daughters::pipi>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi,
+               Daughters::pipi>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi,
+               Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k,
+               Daughters::pipi>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
           break;
         }
       }
@@ -746,11 +746,11 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
-          // Pdf<Neutral::pi0, Bachelor::pi,
-          //      Daughters::pik>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi,
+               Daughters::pik>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
 
           break;
 
@@ -760,12 +760,12 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
-          // Pdf<Neutral::gamma, Bachelor::pi,
-          //      Daughters::pik>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k,
-          //      Daughters::pik>::Get().AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi,
+               Daughters::pik>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k,
+               Daughters::pik>::Get().AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
 
           break;
         }
