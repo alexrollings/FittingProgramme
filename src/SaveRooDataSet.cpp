@@ -65,7 +65,7 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
 
   daughters = EnumToString(myDaughters);
 
-  fitting = ComposeFittingCategoryName(myNeutral, myBachelor, myDaughters);
+  fitting = ComposeName(myNeutral, myBachelor, myDaughters);
   // Initialise RooRealVars now neutral has been specified
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();

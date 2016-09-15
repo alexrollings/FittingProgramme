@@ -92,21 +92,32 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge);
 
-std::string ComposeFittingCategoryName(Neutral neutral, Bachelor bachelor, Daughters daughters);
+std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters);
+
+std::string ComposeName(Neutral neutral, Daughters daughters);
 
 template <Neutral neutral>
-constexpr Neutral SwapNeutral() {
-  if (neutral == Neutral::pi0) {
-    return Neutral::gamma;
-  } else if (neutral == Neutral::gamma) {
-    return Neutral::pi0; 
-  }
+constexpr Neutral SwapNeutral();
+
+template <>
+constexpr Neutral SwapNeutral<Neutral::gamma>() {
+  return Neutral::pi0; 
 }
+
+template <>
+constexpr Neutral SwapNeutral<Neutral::pi0>() {
+  return Neutral::gamma;
+}
+
 template <Bachelor bachelor>
-constexpr Bachelor SwapBachelor() {
-  if (bachelor == Bachelor::pi) {
-    return Bachelor::k;
-  } else if (bachelor == Bachelor::k) {
-    return Bachelor::pi; 
-  }
+constexpr Bachelor SwapBachelor();
+
+template <>
+constexpr Bachelor SwapBachelor<Bachelor::k>() {
+  return Bachelor::pi; 
+}
+
+template <>
+constexpr Bachelor SwapBachelor<Bachelor::pi>() {
+  return Bachelor::k;
 }

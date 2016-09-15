@@ -133,10 +133,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
   signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("signalYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("Signal Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*(1-@1-@2)*@3",
       RooArgList(
@@ -146,10 +146,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   nonTmSignalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("nonTmSignalYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("non TM Signal Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1*@2",
       RooArgList(
@@ -158,10 +158,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("crossFeedYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("Cross Feed Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1*@2",
       RooArgList(
@@ -172,10 +172,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bu2Dst0Hst_D0pi0Yield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
       ("bu2Dst0Hst_D0pi0Yield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("bu2Dst0Hst_D0pi0 Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
@@ -185,10 +185,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
              DaughtersVars<_daughters>::Get().daughtersSF()));
   bu2Dst0Hst_D0gammaYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
       ("bu2Dst0Hst_D0gammaYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("bu2Dst0Hst_D0gamma Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachelorSF() *
@@ -198,10 +198,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
              DaughtersVars<_daughters>::Get().daughtersSF()));
   bu2D0HYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("bu2D0HYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("bu2D0H Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
       RooArgList(
@@ -209,10 +209,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bu2D0HstYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("bu2D0HstYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("bu2D0Hst Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
       RooArgList(
@@ -220,10 +220,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bd2DstHYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("bd2DstHYield_" +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       ("bd2DstH Yield " +
-       ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+       ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
       RooArgList(
@@ -231,10 +231,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   // missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
   //       ("missIdYield_" +
-  //        ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+  //        ComposeName(_neutral, _bachelor, _daughters))
   //           .c_str(),
   //       ("missId yield " +
-  //        ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+  //        ComposeName(_neutral, _bachelor, _daughters))
   //           .c_str(),
   //       "@0*(1-@1)*@2",
   //       RooArgList(
@@ -300,9 +300,9 @@ void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
   PdfBase::yields_.add(PdfBase::combinatorialYield_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
-      ("pdf_" + ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       PdfBase::functions_, PdfBase::yields_));
 }
@@ -316,10 +316,10 @@ void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
   case Bachelor::pi:
     PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("missIdYield_" +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+         ComposeName(_neutral, _bachelor, _daughters))
             .c_str(),
         ("missId yield " +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+         ComposeName(_neutral, _bachelor, _daughters))
             .c_str(),
         "@0*(1-@1)*@2",
         RooArgList(
@@ -332,15 +332,15 @@ void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
   case Bachelor::k:
     PdfBase::missIdYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("missIdYield_" +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+         ComposeName(_neutral, _bachelor, _daughters))
             .c_str(),
         ("missId yield " +
-         ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+         ComposeName(_neutral, _bachelor, _daughters))
             .c_str(),
         20 * DaughtersVars<_daughters>::Get().daughtersSF()));
     // PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
     //     ("missIdYield_" +
-    //      ComposeFittingCategoryName(_neutral, _bachelor, _daughters))
+    //      ComposeName(_neutral, _bachelor, _daughters))
     //         .c_str(),
     //     "missId yield", "@0*(@1+@2)",
     //     RooArgList(NeutralBachelorVars<_neutral,

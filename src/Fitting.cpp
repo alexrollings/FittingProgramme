@@ -260,7 +260,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   fullDataSet.plotOn(
       frame.get(),
       RooFit::Cut(("fitting==fitting::" +
-                   ComposeFittingCategoryName(neutral, bachelor, daughters))
+                   ComposeName(neutral, bachelor, daughters))
                       .c_str()));
 
   // .get() gets the raw pointer from underneath the smart pointer
@@ -269,7 +269,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
 
@@ -282,7 +282,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+            ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
@@ -290,7 +290,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+            ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
@@ -299,7 +299,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+            ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
@@ -307,7 +307,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+            ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
@@ -316,7 +316,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlack));
@@ -324,7 +324,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.combinatorial()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kRed + 2));
@@ -332,7 +332,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0pi0()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kGreen));
@@ -340,7 +340,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0gamma()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kMagenta + 3));
@@ -348,7 +348,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2D0H()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kOrange));
@@ -356,7 +356,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2D0Hst()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kTeal));
@@ -364,7 +364,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bd2DstH()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kMagenta));
@@ -372,7 +372,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   //     frame.get(),
   //     RooFit::Slice(
   //         categories.fitting,
-  //         ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+  //         ComposeName(neutral, bachelor, daughters).c_str()),
   //     RooFit::ProjWData(categories.fitting, fullDataSet),
   //     RooFit::Components(pdf.bd2D0Hst0()), RooFit::LineStyle(kDashed),
   //     RooFit::LineColor(kYellow));
@@ -380,7 +380,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       frame.get(),
       RooFit::Slice(
           categories.fitting,
-          ComposeFittingCategoryName(neutral, bachelor, daughters).c_str()),
+          ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.missId()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(9));
@@ -389,7 +389,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bu2Dst0H_D0pi0Hist =
       new TH1D(("bu2Dst0H_D0pi0Hist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bu2Dst0H_D0pi0Hist", 0, 0, 0);
   bu2Dst0H_D0pi0Hist->SetLineColor(kBlue);
@@ -398,7 +398,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *nonTMSignalHist =
       new TH1D(("nonTMSignalHist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "nonTMSignalHist", 0, 0, 0);
   nonTMSignalHist->SetLineColor(kBlack);
@@ -407,7 +407,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bu2Dst0H_D0gammaHist =
       new TH1D(("bu2Dst0H_D0gammaHist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bu2Dst0H_D0gammaHist", 0, 0, 0);
   bu2Dst0H_D0gammaHist->SetLineColor(kRed);
@@ -416,7 +416,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bu2Dst0Hst_D0pi0Hist =
       new TH1D(("bu2Dst0Hst_D0pi0Hist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
   bu2Dst0Hst_D0pi0Hist->SetLineColor(kGreen);
@@ -425,7 +425,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bu2Dst0Hst_D0gammaHist =
       new TH1D(("bu2Dst0Hst_D0gammaHist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
   bu2Dst0Hst_D0gammaHist->SetLineColor(kMagenta + 3);
@@ -433,7 +433,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2Dst0Hst_D0gammaHist->SetLineWidth(2);
 
   TH1D *bu2D0HHist = new TH1D(
-      ("bu2D0HHist" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bu2D0HHist", 0, 0, 0);
   bu2D0HHist->SetLineColor(kOrange);
@@ -442,7 +442,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bu2D0HstHist =
       new TH1D(("bu2D0HstHist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bu2D0HstHist", 0, 0, 0);
   bu2D0HstHist->SetLineColor(kTeal);
@@ -450,7 +450,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2D0HstHist->SetLineWidth(2);
 
   TH1D *bd2DstHHist = new TH1D(
-      ("bd2DstHHist" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bd2DstHHist", 0, 0, 0);
   bd2DstHHist->SetLineColor(kMagenta);
@@ -459,7 +459,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *bd2D0Hst0Hist =
       new TH1D(("bd2D0Hst0Hist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "bd2D0Hst0Hist", 0, 0, 0);
   bd2D0Hst0Hist->SetLineColor(kYellow);
@@ -468,7 +468,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   TH1D *combinatorialHist =
       new TH1D(("combinatorialHist" +
-                ComposeFittingCategoryName(neutral, bachelor, daughters))
+                ComposeName(neutral, bachelor, daughters))
                    .c_str(),
                "combinatorialHist", 0, 0, 0);
   combinatorialHist->SetLineColor(kRed + 2);
@@ -476,7 +476,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   combinatorialHist->SetLineWidth(2);
 
   TH1D *missIdHist = new TH1D(
-      ("missIdHist" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("missIdHist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "missIdHist", 0, 0, 0);
   missIdHist->SetLineColor(9);
@@ -559,21 +559,21 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   pullFrame->addPlotable(hpull /* .get() */, "P");
   pullFrame->SetName(
-      ("pullFrame_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("pullFrame_" + ComposeName(neutral, bachelor, daughters))
           .c_str());
   pullFrame->SetTitle("");
 
   TCanvas canvas(
-      ("simPdf_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+      ("simPdf_" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "simPdf", 1500, 900);
 
-  TPad pad2(("pad2_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+  TPad pad2(("pad2_" + ComposeName(neutral, bachelor, daughters))
                 .c_str(),
             "pad2", 0.0, 0.1, 1.0, 0.20, kWhite);
   pad2.Draw();
 
-  TPad pad1(("pad1_" + ComposeFittingCategoryName(neutral, bachelor, daughters))
+  TPad pad1(("pad1_" + ComposeName(neutral, bachelor, daughters))
                 .c_str(),
             "pad1", 0.0, 0.19, 1.0, 1.0, kWhite);
   pad1.Draw();
@@ -602,7 +602,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   canvas.Update();
   canvas.SaveAs(("Result_" +
-                 ComposeFittingCategoryName(neutral, bachelor, daughters) +
+                 ComposeName(neutral, bachelor, daughters) +
                  ".pdf")
                     .c_str());
 }

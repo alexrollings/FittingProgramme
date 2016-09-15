@@ -5,7 +5,7 @@ project(Fitting CXX)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
 
 #Set compiler flags - ROOT 6 requires C++11
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 #Sets ROOT_INCLUDE_DIR and ROOT_LIBRARIES to the local path on system
 find_package(ROOT REQUIRED)
@@ -19,7 +19,7 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp  src/RooCruijff src/NeutralBachelorVars.cpp src/DaughtersVars.cpp src/NeutralDaughtersVars.cpp src/SpecialisedVars.cpp src/Pdf.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp  src/RooCruijff src/NeutralBachelorVars.cpp src/DaughtersVars.cpp src/NeutralDaughtersVars.cpp src/Pdf.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 

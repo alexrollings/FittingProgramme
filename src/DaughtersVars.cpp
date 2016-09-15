@@ -2,7 +2,7 @@
 #include "Configuration.h"
 
 // Daughters specializations
-
+// Make general and have a switch statement for daughtersSF()
 template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars()
     : R_Dk_vs_Dpi_Bu2D0H_("R_Dk_vs_Dpi_Bu2D0H_kpi",
