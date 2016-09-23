@@ -3,16 +3,16 @@
 #include "RooArgSet.h"
 #include "RooDataSet.h"
 #include "RooFitResult.h"
-#include "RooHist.h"
-#include "RooPlot.h"
 #include "RooFitResult.h"
+#include "RooHist.h"
+#include "RooMCStudy.h"
+#include "RooPlot.h"
 #include "TH1D.h"
-#include "TH2D.h"
 #include "TH1F.h"
+#include "TH2D.h"
 #include "TLegend.h"
 #include "TLine.h"
 #include "TStyle.h"
-#include "RooMCStudy.h"
 
 #include "TCanvas.h"
 #include "TChain.h"
@@ -33,10 +33,9 @@
 #include "ParseArguments.h"
 #include "Pdf.h"
 
-
-void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
+void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
-              RooDataSet const &fullDataSet, RooSimultaneous const &simPdf) {
+              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf) {
 
   // -------------- Set Style Attributes ------------------
 
@@ -211,7 +210,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   // ------------- Draw Legend --------------
 
-  TH1D *bu2Dst0H_D0pi0Hist = new TH1D(
+  auto bu2Dst0H_D0pi0Hist = std::make_unique<TH1D>(
       ("bu2Dst0H_D0pi0Hist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bu2Dst0H_D0pi0Hist", 0, 0, 0);
@@ -219,14 +218,15 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2Dst0H_D0pi0Hist->SetLineStyle(kDashed);
   bu2Dst0H_D0pi0Hist->SetLineWidth(2);
 
-  TH1D *nonTMSignalHist = new TH1D(
-      ("nonTMSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto nonTMSignalHist = std::make_unique<TH1D>(
+      ("nonTMSignalHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "nonTMSignalHist", 0, 0, 0);
   nonTMSignalHist->SetLineColor(kBlack);
   nonTMSignalHist->SetLineStyle(kDashed);
   nonTMSignalHist->SetLineWidth(2);
 
-  TH1D *bu2Dst0H_D0gammaHist = new TH1D(
+  auto bu2Dst0H_D0gammaHist = std::make_unique<TH1D>(
       ("bu2Dst0H_D0gammaHist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bu2Dst0H_D0gammaHist", 0, 0, 0);
@@ -234,7 +234,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2Dst0H_D0gammaHist->SetLineStyle(kDashed);
   bu2Dst0H_D0gammaHist->SetLineWidth(2);
 
-  TH1D *bu2Dst0Hst_D0pi0Hist = new TH1D(
+  auto bu2Dst0Hst_D0pi0Hist = std::make_unique<TH1D>(
       ("bu2Dst0Hst_D0pi0Hist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
@@ -242,7 +242,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2Dst0Hst_D0pi0Hist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0pi0Hist->SetLineWidth(2);
 
-  TH1D *bu2Dst0Hst_D0gammaHist = new TH1D(
+  auto bu2Dst0Hst_D0gammaHist = std::make_unique<TH1D>(
       ("bu2Dst0Hst_D0gammaHist" + ComposeName(neutral, bachelor, daughters))
           .c_str(),
       "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
@@ -250,98 +250,104 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   bu2Dst0Hst_D0gammaHist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0gammaHist->SetLineWidth(2);
 
-  TH1D *bu2D0HHist = new TH1D(
-      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto bu2D0HHist = std::make_unique<TH1D>(
+      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "bu2D0HHist", 0, 0, 0);
   bu2D0HHist->SetLineColor(kOrange);
   bu2D0HHist->SetLineStyle(kDashed);
   bu2D0HHist->SetLineWidth(2);
 
-  TH1D *bu2D0HstHist = new TH1D(
-      ("bu2D0HstHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto bu2D0HstHist = std::make_unique<TH1D>(
+      ("bu2D0HstHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "bu2D0HstHist", 0, 0, 0);
   bu2D0HstHist->SetLineColor(kTeal);
   bu2D0HstHist->SetLineStyle(kDashed);
   bu2D0HstHist->SetLineWidth(2);
 
-  TH1D *bd2DstHHist = new TH1D(
-      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto bd2DstHHist = std::make_unique<TH1D>(
+      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "bd2DstHHist", 0, 0, 0);
   bd2DstHHist->SetLineColor(kMagenta);
   bd2DstHHist->SetLineStyle(kDashed);
   bd2DstHHist->SetLineWidth(2);
 
-  TH1D *combinatorialHist = new TH1D(
-      ("combinatorialHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto combinatorialHist = std::make_unique<TH1D>(
+      ("combinatorialHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "combinatorialHist", 0, 0, 0);
   combinatorialHist->SetLineColor(kRed + 2);
   combinatorialHist->SetLineStyle(kDashed);
   combinatorialHist->SetLineWidth(2);
 
-  TH1D *missIdHist = new TH1D(
-      ("missIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto missIdHist = std::make_unique<TH1D>(
+      ("missIdHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "missIdHist", 0, 0, 0);
   missIdHist->SetLineColor(9);
   missIdHist->SetLineStyle(kDashed);
   missIdHist->SetLineWidth(2);
 
-  TH1D *bu2D0HMissIdHist = new TH1D(
-      ("bu2D0HMissIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+  auto bu2D0HMissIdHist = std::make_unique<TH1D>(
+      ("bu2D0HMissIdHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
       "bu2D0HMissIdHist", 0, 0, 0);
   bu2D0HMissIdHist->SetLineColor(kYellow);
   bu2D0HMissIdHist->SetLineStyle(kDashed);
   bu2D0HMissIdHist->SetLineWidth(2);
 
-  TLegend *legend = new TLegend(0.6, 0.35, 0.97, 0.90);
+  auto legend = std::make_unique<TLegend>(0.6, 0.35, 0.97, 0.90);
   // legend->SetHeader("Physics Bachgrounds");
-  legend->AddEntry(bu2Dst0H_D0pi0Hist,
+  legend->AddEntry(bu2Dst0H_D0pi0Hist.get(),
                    ("B^{" + chargeLabel +
                     "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
                     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
                     bachelorLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(nonTMSignalHist, ("Miss-Reconstructed B^{" + chargeLabel +
+  legend->AddEntry(nonTMSignalHist.get(), ("Miss-Reconstructed B^{" + chargeLabel +
                                      "}#rightarrow#font[132]{[}#font[132]{[}" +
                                      daughtersLabel + "#font[132]{]}_{D^{0}}" +
                                      neutralLabel + "#font[132]{]}_{D^{0}*}" +
                                      bachelorLabel + "^{" + chargeLabel + "}")
                                         .c_str(),
                    "l");
-  legend->AddEntry(bu2Dst0H_D0gammaHist,
+  legend->AddEntry(bu2Dst0H_D0gammaHist.get(),
                    ("B^{" + chargeLabel +
                     "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
                     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
                     bachelorLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bu2Dst0Hst_D0pi0Hist,
+  legend->AddEntry(bu2Dst0Hst_D0pi0Hist.get(),
                    ("B^{" + chargeLabel +
                     "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
                     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
                     hstLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bu2Dst0Hst_D0gammaHist,
+  legend->AddEntry(bu2Dst0Hst_D0gammaHist.get(),
                    ("B^{" + chargeLabel +
                     "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
                     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
                     hstLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bu2D0HHist,
+  legend->AddEntry(bu2D0HHist.get(),
                    ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}" + bachelorLabel +
                     "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bu2D0HstHist,
+  legend->AddEntry(bu2D0HstHist.get(),
                    ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}" + hstLabel + "^{" +
                     chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bd2DstHHist,
+  legend->AddEntry(bd2DstHHist.get(),
                    ("B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{-}#font["
                                      "132]{]}_{D^{-}*}" +
@@ -349,19 +355,19 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
                        .c_str(),
                    "l");
   legend->AddEntry(
-      missIdHist,
+      missIdHist.get(),
       ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
        daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
        "#font[132]{]}_{D^{0}*}" + missIdLabel + "^{" + chargeLabel + "}")
           .c_str(),
       "l");
-  legend->AddEntry(bu2D0HMissIdHist,
+  legend->AddEntry(bu2D0HMissIdHist.get(),
                    ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}" + missIdLabel +
                     "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(combinatorialHist, "Combinatorial", "l");
+  legend->AddEntry(combinatorialHist.get(), "Combinatorial", "l");
 
   // --------------- plot onto canvas ---------------------
 
@@ -411,30 +417,78 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
       ("Result_" + ComposeName(neutral, bachelor, daughters) + ".pdf").c_str());
 }
 
-// void GenerateToyDataSet(const &simPdf, Configuration &config, Configuration::Categories &categories) {
+// void GenerateToyDataSet(const &simPdf, Configuration &config,
+// Configuration::Categories &categories) {
 //
-//   RooMCStudy mcStudy(simPdf, RooArgList(config.buMass(), categories.fitting), RooFit::FitOptions(RooFit::Save(kTrue)));
+//   RooMCStudy mcStudy(simPdf, RooArgList(config.buMass(), categories.fitting),
+//   RooFit::FitOptions(RooFit::Save(kTrue)));
 //
 //   mcStudy.generate(1, 400000, true);
-//   RooDataSet *toyDataSet = dynamic_cast<RooDataSet*>(mcStudy.genData(0)); 
+//   RooDataSet *toyDataSet = dynamic_cast<RooDataSet*>(mcStudy.genData(0));
 
-  // mcStudy.generateAndFit(10000);
-  //
-  // std::unique_ptr<RooPlot> frame(mcStudy.plotPull(config.buMass(), RooFit::Bins(20), RooFit::FitGauss(true)));
-  //
-  // TCanvas canvas(
-  //     ("ToysCanvas", "Toys Canvas", 1500, 900);
-  //
-  // frame->Draw();
-  // canvas.Update();
-  // canvas.SaveAs(("Toys_PullDistribution_" + ComposeFittingCategory(neutral, bachelor, daughters) + ".pdf").c_str());
+// mcStudy.generateAndFit(10000);
+//
+// std::unique_ptr<RooPlot> frame(mcStudy.plotPull(config.buMass(),
+// RooFit::Bins(20), RooFit::FitGauss(true)));
+//
+// TCanvas canvas(
+//     ("ToysCanvas", "Toys Canvas", 1500, 900);
+//
+// frame->Draw();
+// canvas.Update();
+// canvas.SaveAs(("Toys_PullHist.ibution_" + ComposeFittingCategory(neutral,
+// bachelor, daughters) + ".pdf").c_str());
 // }
+void FitSimPdfToData(RooAbsData &fittingDataSet,
+                     RooSimultaneous &simPdf, Configuration &config,
+                     Configuration::Categories &categories,
+                     std::vector<Charge> const &chargeVec,
+                     std::vector<PdfBase *> &pdfs) {
 
-void Fitting(RooDataSet &fullDataSet, Configuration &config,
+  RooFitResult *result =
+      simPdf.fitTo(fittingDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+
+  // Loop over daughters again to plot correct PDFs
+  for (auto &p : pdfs) {
+    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf);
+  }
+
+  result->Print("v");
+  std::cout << "Printed result." << std::endl;
+
+  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 2000,
+                            1000);
+  std::cout << "Created canvas." << std::endl;
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.04);
+  gStyle->SetTitleSize(0.08, "Z");
+  gStyle->SetTitleSize(0.02, "XY");
+  gStyle->SetLabelSize(0.02, "XY");
+  gStyle->SetTitleOffset(0.85, "X");
+  gStyle->SetTitleOffset(0.95, "Y");
+  gStyle->SetTitleOffset(0.9, "Z");
+  // gStyle->SetLegendTextSize(0.08);
+  gStyle->SetPadTopMargin(0.1);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.09);
+  gStyle->SetPadLeftMargin(0.1);
+  correlationCanvas.cd();
+  std::cout << "Extracting correlation histogram from result..." << std::endl;
+  result->correlationHist()->Draw("colz");
+  std::cout << "Extracted correlation histogram from result." << std::endl;
+  correlationCanvas.Update();
+  std::cout << "Updated canvas." << std::endl;
+  correlationCanvas.SaveAs("CorrelationMatrix.pdf");
+  std::cout << "Save to pdf file." << std::endl;
+}
+
+void Fitting(RooAbsData &fullDataSet, Configuration &config,
              Configuration::Categories &categories,
-             std::vector<Neutral> neutralVec,
-             std::vector<Daughters> daughtersVec,
-             std::vector<Charge> chargeVec, bool runToys) {
+             std::vector<Neutral> const &neutralVec,
+             std::vector<Daughters> const &daughtersVec,
+             std::vector<Charge> const &chargeVec, bool runToys) {
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
@@ -619,88 +673,40 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
     p->AddToSimultaneousPdf(simPdf);
   }
 
-  RooDataSet fittingDataSet("fittingDataSet", "Data to fit", config.fullArgSet());
 
   // ------------ generate toys ---------------
 
   // Toy data sets check for bias in our model. The pull distribution should be
   // around 0, i.e. the generated data matches the defined model.
 
-  if( runToys == true) {
+  if (runToys == true) {
 
-  RooMCStudy mcStudy(
-      simPdf, RooArgList(config.buMass(), categories.fitting),
-      RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
-      RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
+    // categories.fitting
+    RooMCStudy mcStudy(
+        simPdf, config.fullArgSet(),
+        RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
+        RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
 
-  std::cout << "Created MCStudy object." << std::endl;
+    std::cout << "Created MCStudy object." << std::endl;
 
-  int nSamples = 1;
-  int nEvtsPerSample = 40;
+    int nSamples = 1;
+    int nEvtsPerSample = 40000;
 
-  mcStudy.generate(nSamples, nEvtsPerSample, true);
+    mcStudy.generate(nSamples, nEvtsPerSample, true);
 
-  std::cout << "Generated toy events." << std::endl;
+    std::cout << "Generated toy events." << std::endl;
 
-  const RooDataSet *constData =
-      dynamic_cast<const RooDataSet *>(mcStudy.genData(0));
-  if (constData == nullptr) {
-    std::stringstream output;
-    output << "Could not retrieve data set from MCStudy object.";
-    throw std::runtime_error(output.str());
-  }
-  RooDataSet *toyDataSet = const_cast<RooDataSet *>(constData);
-  if (toyDataSet == nullptr) {
-    std::stringstream output;
-    output << "Could not retrieve roodataset from const pointer.";
-    throw std::runtime_error(output.str());
-  }
+    RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
 
-  std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
-
-  fittingDataSet = *toyDataSet;
-  } else {
-    fittingDataSet = fullDataSet;
-  }
-  // --------------- fit  ---------------------
-
-  RooFitResult *result =
-      simPdf.fitTo(fittingDataSet, RooFit::Extended(kTRUE), RooFit::Save());
-
-  // Loop over daughters again to plot correct PDFs
-  for (auto &p : pdfs) {
-    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf);
-  }
-
-
-  result->Print("v");
-  std::cout << "Printed result." << std::endl;
+    std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
+    
+    FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
   
-  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 2000, 1000);
-  std::cout << "Created canvas." << std::endl;
-  gStyle->SetTitleFont(132, "XYZ");
-  gStyle->SetLabelFont(132, "XYZ");
-  gStyle->SetStatFont(132);
-  gStyle->SetStatFontSize(0.04);
-  gStyle->SetTitleSize(0.08, "Z");
-  gStyle->SetTitleSize(0.02, "XY");
-  gStyle->SetLabelSize(0.02, "XY");
-  gStyle->SetTitleOffset(0.85, "X");
-  gStyle->SetTitleOffset(0.95, "Y");
-  gStyle->SetTitleOffset(0.9, "Z");
-  // gStyle->SetLegendTextSize(0.08);
-  gStyle->SetPadTopMargin(0.1);
-  gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.09);
-  gStyle->SetPadLeftMargin(0.1);
-  correlationCanvas.cd();
-  std::cout << "Extracting correlation histogram from result..." << std::endl;
-  result->correlationHist()->Draw("colz");
-  std::cout << "Extracted correlation histogram from result." << std::endl;
-  correlationCanvas.Update();
-  std::cout << "Updated canvas." << std::endl;
-  correlationCanvas.SaveAs("CorrelationMatrix.pdf");
-  std::cout << "Save to pdf file." << std::endl;
+  } else {
+    
+    FitSimPdfToData(fullDataSet, simPdf, config, categories, chargeVec, pdfs);
+  
+  }
 
 }
 
@@ -743,9 +749,7 @@ int main(int argc, char **argv) {
   std::vector<Neutral> neutralVec;
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
-  bool runToys;
-
-  runToys = false;
+  bool runToys = false;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -801,11 +805,8 @@ int main(int argc, char **argv) {
         std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
         return 1;
       }
-      
-      // if (args("toys", dataDir)) {
-      //   std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
-      //   return 1;
-      // }
+
+      runToys = args("toys");
 
       // Year
       // args matches "year" to string given in command line and assigns
@@ -919,7 +920,8 @@ int main(int argc, char **argv) {
     }
   }
 
-  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec, runToys);
+  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec,
+          runToys);
 
   //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
   //

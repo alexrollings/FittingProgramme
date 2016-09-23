@@ -5,8 +5,8 @@
 #include <string>
 // regex = regular expressions: way of finding a pattern in text
 ParseArguments::ParseArguments(int argc, char const *const *argv) {
-  static const std::regex pattern("-([a-zA-Z_0-9]+)=?([^ ]*)",
-            std::regex_constants::extended);
+  static const std::regex pattern("-([a-zA-Z_0-9]+)(=([^ \t\n]+))?",
+                                  std::regex_constants::extended);
   //static: not associated to a single object
   //constexpr: evaluated at compile time
   //Regular expression:
@@ -22,8 +22,8 @@ ParseArguments::ParseArguments(int argc, char const *const *argv) {
   std::cmatch match;//now we need to 'read' the regex
   for (int i = 1; i < argc; ++i) { //iterate through arguments
     if (std::regex_match(argv[i], match, pattern)) {//for each regex try to match to a string
-      if (match.size() == 3) {//without the group () size=0/1
-        args_.insert(std::make_pair(match[1], match[2]));//first group is entire string match[0]. second = argn third = argv
+      if (match.size() > 2) {//without the group () size=0/1
+        args_.insert(std::make_pair(match[1], match[3]));//first group is entire string match[0]. second = argn third = argv
       } else {//we want to map our argn into our argv
         args_.insert(std::make_pair(match[1], ""));//"" doesn't have to have argv
       }

@@ -3,6 +3,8 @@
 #include "RooArgSet.h"
 #include "RooConstVar.h"
 #include "RooDataSet.h"
+#include "RooDataHist.h"
+#include "RooTreeData.h"
 #include "RooFitResult.h"
 #include "RooGaussian.h"
 #include "RooGlobalFunc.h"
@@ -59,6 +61,10 @@ void GenerateToys() {
   Letter.defineType("A");
   Letter.defineType("B");
 
+  RooArgList fullList;
+  fullList.add(Letter);
+  fullList.add(x);
+
   RooDataSet combData ("combData", "combData", x, RooFit::Index(Letter), RooFit::Import("A", *data), RooFit::Import("B", *dataB));
  
   RooSimultaneous simPdf("simPdf", "", Letter);
@@ -67,17 +73,44 @@ void GenerateToys() {
   
   // MUST specify yields in RooAbsPdf object in order to use RooMCStudy
 
-  RooMCStudy *mcstudy = new RooMCStudy(
-      simPdf, RooArgList(x, Letter), RooFit::Binned(kTRUE), RooFit::Silence(), RooFit::Extended(),
-        RooFit::FitOptions(RooFit::Save(kTRUE), RooFit::PrintEvalErrors(0)));
+  RooMCStudy *mcStudy = new RooMCStudy(
+      simPdf, RooArgList(fullList), RooFit::Binned(kTRUE), RooFit::Silence(),
+      RooFit::Extended(),
+      RooFit::FitOptions(RooFit::Save(kTRUE), RooFit::PrintEvalErrors(0)));
 
-  mcstudy->generate(1,1000,true);
-  mcstudy->generateAndFit(1000);
+  mcStudy->generate(1, 1000, true);
+  RooAbsData const *test = mcStudy->genData(0);
+  RooDataSet* toyData = (RooDataSet *)test;
 
-  RooPlot *frameA1 = mcstudy->plotParam(mean, RooFit::Bins(40));
-  RooPlot *frameA2 = mcstudy->plotError(mean, RooFit::Bins(40));
-  RooPlot *frameA3 =
-      mcstudy->plotPull(mean, RooFit::Bins(40), RooFit::FitGauss(kTRUE));
+  assert(dynamic_cast<RooDataHist const *>(test) == nullptr);
+  assert(dynamic_cast<RooDataSet const *>(test) == nullptr);
+  assert(dynamic_cast<RooTreeData const *>(test) == nullptr);
+
+  RooFitResult *result =
+      simPdf.fitTo(*toyData, RooFit::Extended(kTRUE), RooFit::Save());
+
+  result->Print();
+  // const RooDataSet *constData =
+  //     dynamic_cast<const RooDataSet *>(mcStudy->genData(0));
+  // if (constData == nullptr) {
+  //   std::stringstream output;
+  //   output << "Could not retrieve data set from MCStudy object.";
+  //   throw std::runtime_error(output.str());
+  // }
+  // RooDataSet *toyDataSet = const_cast<RooDataSet *>(constData);
+  // if (toyDataSet == nullptr) {
+  //   std::stringstream output;
+  //   output << "Could not retrieve roodataset from const pointer.";
+  //   throw std::runtime_error(output.str());
+  // }
+
+  std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
+  // mcstudy->generateAndFit(1000);
+
+  // RooPlot *frameA1 = mcstudy->plotParam(mean, RooFit::Bins(40));
+  // RooPlot *frameA2 = mcstudy->plotError(mean, RooFit::Bins(40));
+  // RooPlot *frameA3 =
+  //     mcstudy->plotPull(mean, RooFit::Bins(40), RooFit::FitGauss(kTRUE));
 
   // RooPlot* frame4 = mcstudy->plotNLL(Bins(40));
   //
@@ -92,23 +125,23 @@ void GenerateToys() {
 
   // gStyle->SetPalette(1);
   // gStyle->SetOptStat(0);
-  TCanvas *c = new TCanvas("rf801_mcstudy", "rf801_mcstudy", 900, 900);
-  c->Divide(1, 3);
-
-  c->cd(1);
-  gPad->SetLeftMargin(0.15);
-  frameA1->GetYaxis()->SetTitleOffset(1.4);
-  frameA1->Draw();
-
-  c->cd(2);
-  gPad->SetLeftMargin(0.15);
-  frameA2->GetYaxis()->SetTitleOffset(1.4);
-  frameA2->Draw();
-
-  c->cd(3);
-  gPad->SetLeftMargin(0.15);
-  frameA3->GetYaxis()->SetTitleOffset(1.4);
-  frameA3->Draw();
+  // TCanvas *c = new TCanvas("rf801_mcstudy", "rf801_mcstudy", 900, 900);
+  // c->Divide(1, 3);
+  //
+  // c->cd(1);
+  // gPad->SetLeftMargin(0.15);
+  // frameA1->GetYaxis()->SetTitleOffset(1.4);
+  // frameA1->Draw();
+  //
+  // c->cd(2);
+  // gPad->SetLeftMargin(0.15);
+  // frameA2->GetYaxis()->SetTitleOffset(1.4);
+  // frameA2->Draw();
+  //
+  // c->cd(3);
+  // gPad->SetLeftMargin(0.15);
+  // frameA3->GetYaxis()->SetTitleOffset(1.4);
+  // frameA3->Draw();
 
   // c->cd(4);
   // gPad->SetLeftMargin(0.15);
@@ -140,8 +173,8 @@ void GenerateToys() {
   // corrHist953->GetYaxis()->SetTitleOffset(1.4);
   // corrHist953->Draw("colz");
 
-  c->Update();
-  c->SaveAs("Toys.pdf");
+  // c->Update();
+  // c->SaveAs("Toys.pdf");
 }
 
 int main(int argc, char **argv) { GenerateToys(); }
