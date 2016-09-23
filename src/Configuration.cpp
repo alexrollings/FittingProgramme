@@ -4,15 +4,10 @@ Configuration::Configuration()
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""),
       relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
                      0.95),
-      relativeNeutralAddition_( "relativeNeutralAddition", "Relative rate of random gamma w.r.t. random pi0 addition", 2, 0, 5),
-      relativeBu2D0HYield_("relativeBu2D0HYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0H", 1.5745),
-      relativeBu2D0HstYield_("relativeBu2D0HstYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bu2D0Hst", 0.5607),
-      relativeBd2DstHYield_("relativeBd2DstHYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay Bd2DstH", 1.4058) ,
-      relativeNonTmYield_("relativeNonTmYield", "Relative acceptance of gamma w.r.t. pi0 mode of decay NonTm", 1.0589),
       R_Dk_vs_Dpi_Bd2DstH_("R_Dk_vs_Dpi_Bd2DstH_kpi",
                             "Ratio of yields of Bd2DstH decay channel for K "
                             "w.r.t. pi bachelor, for daughters=kpi",
-                            0.075, 0.01, 0.1) {
+                            0.075, 0, 0.1) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";

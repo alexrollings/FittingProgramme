@@ -1,10 +1,10 @@
 #pragma once
 #include "Configuration.h"
-#include "RooAbsReal.h"
-#include "RooFormulaVar.h"
+#include "DaughtersVars.h"
 #include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
-#include "DaughtersVars.h"
+#include "RooAbsReal.h"
+#include "RooFormulaVar.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
 // of the entire class for you for every permutation of template arguments it is
@@ -27,9 +27,9 @@ template <Neutral neutral, Daughters daughters>
 struct SpecializedVarsImpl<neutral, Bachelor::pi, daughters> {
   SpecializedVarsImpl();
   std::unique_ptr<RooRealVar> N_Dh_;
-  std::unique_ptr<RooRealVar> N_Dh_Bu2D0H_;
-  std::unique_ptr<RooRealVar> N_Dh_Bu2D0Hst_;
-  std::unique_ptr<RooRealVar> N_Dh_Bd2DstH_;
+  std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0H_;
+  std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0Hst_;
+  std::unique_ptr<RooFormulaVar> N_Dh_Bd2DstH_;
 };
 
 template <Neutral neutral, Daughters daughters>
@@ -40,18 +40,18 @@ struct SpecializedVarsImpl<neutral, Bachelor::k, daughters> {
   std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0Hst_;
   std::unique_ptr<RooFormulaVar> N_Dh_Bd2DstH_;
 };
-
 }
 
-template <Neutral neutral, Bachelor bachelor, Daughters daughters> class SpecialisedVars {
+template <Neutral neutral, Bachelor bachelor, Daughters daughters>
+class SpecialisedVars {
 
   // One template specialization == One entirely separate class in practice
   // These will give two different instances:
   //   DaughtersVars<Daughters::gamma>::Get()
   //   DaughtersVars<Daughters::pi0>::Get()
   // All happens automatically :-)
-  
-public:  
+
+public:
   static SpecialisedVars<neutral, bachelor, daughters> &Get() {
     static SpecialisedVars<neutral, bachelor, daughters> singleton;
     return singleton;
@@ -91,71 +91,68 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
                            0,
                            NeutralVars<neutral>::Get().maxYield() *
                                DaughtersVars<daughters>::Get().daughtersSF())),
-      N_Dh_Bu2D0Hst_(new RooRealVar(
-          ("N_Dpi_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
-          ("Total number of Bu2D0rho-like events " +
-           ComposeName(neutral, daughters))
-              .c_str(),
-          NeutralVars<neutral>::Get().bu2D0HstExpected() *
-              DaughtersVars<daughters>::Get().daughtersSF(),
-          0, NeutralVars<neutral>::Get().maxYield() *
-                 DaughtersVars<daughters>::Get().daughtersSF())),
-      N_Dh_Bd2DstH_(new RooRealVar(
-          ("N_Dpi_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
-          ("Total number of Bd2Dstpi-like events " +
-           ComposeName(neutral, daughters))
-              .c_str(),
-          NeutralVars<neutral>::Get().bd2DstHExpected() *
-              DaughtersVars<daughters>::Get().daughtersSF(),
-          0, NeutralVars<neutral>::Get().maxYield() *
-                 DaughtersVars<daughters>::Get().daughtersSF())),
-      N_Dh_Bu2D0H_(new RooRealVar(
+      N_Dh_Bu2D0H_(new RooFormulaVar(
           ("N_Dpi_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
           ("Total number of Bu2D0pi-like events " +
            ComposeName(neutral, daughters))
               .c_str(),
-          NeutralVars<neutral>::Get().bu2D0HExpected() *
-              DaughtersVars<daughters>::Get().daughtersSF(),
-          0, NeutralVars<neutral>::Get().maxYield() *
-                 DaughtersVars<daughters>::Get().daughtersSF())) {}
+          "@0*@1",
+          RooArgList(*N_Dh_,
+                     NeutralVars<neutral>::Get().relativeBu2D0HYield()))),
+      N_Dh_Bu2D0Hst_(new RooFormulaVar(
+          ("N_Dpi_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2D0rho-like events " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(*N_Dh_,
+                     NeutralVars<neutral>::Get().relativeBu2D0HstYield()))),
+      N_Dh_Bd2DstH_(new RooFormulaVar(
+          ("N_Dpi_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bd2Dstpi-like events " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(*N_Dh_,
+                     NeutralVars<neutral>::Get().relativeBd2DstHYield()))) {}
 
 template <Neutral neutral, Daughters daughters>
 SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
-    : N_Dh_(new RooFormulaVar((
-          "N_Dk_" + ComposeName(neutral, daughters)).c_str(), ("Total number of Bu2Dst0K-like events, for "
-                          + ComposeName(neutral, daughters)).c_str(),
+    : N_Dh_(new RooFormulaVar(
+          ("N_Dk_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2Dst0K-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
           "@0*@1",
           RooArgList(
-              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
-                  .N_Dh(),
-              NeutralDaughtersVars<neutral, daughters>::Get()
-                  .R_Dk_vs_Dpi()))),
-      N_Dh_Bu2D0Hst_(new RooFormulaVar((
-          "N_Dk_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(), ("Total number of Bu2D0Kst-like events, for "
-                          + ComposeName(neutral, daughters)).c_str(),
-          "@0*@1",
-          RooArgList(
-              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
-                  .N_Dh_Bu2D0Hst(),
-              DaughtersVars<daughters>::Get()
-                  .R_Dk_vs_Dpi_Bu2D0Hst()))),
-      N_Dh_Bd2DstH_(new RooFormulaVar((
-          "N_Dk_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(), ("Total number of Bd2DstK-like events, for "
-                          + ComposeName(neutral, daughters)).c_str(),
-          "@0*@1",
-          RooArgList(
-              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
-                  .N_Dh_Bd2DstH(),
-              Configuration::Get()
-                  .R_Dk_vs_Dpi_Bd2DstH()))),
-      N_Dh_Bu2D0H_(new RooFormulaVar((
-          "N_Dk_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(), ("Total number of Bu2D0K-like events, for "
-                          + ComposeName(neutral, daughters)).c_str(),
+              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get().N_Dh(),
+              NeutralDaughtersVars<neutral, daughters>::Get().R_Dk_vs_Dpi()))),
+      N_Dh_Bu2D0H_(new RooFormulaVar(
+          ("N_Dk_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2D0K-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
           "@0*@1",
           RooArgList(
               SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
                   .N_Dh_Bu2D0H(),
-              DaughtersVars<Daughters::kpi>::Get()
-                  .R_Dk_vs_Dpi_Bu2D0H()))) {}
-
+              DaughtersVars<Daughters::kpi>::Get().R_Dk_vs_Dpi_Bu2D0H()))),
+      N_Dh_Bu2D0Hst_(new RooFormulaVar(
+          ("N_Dk_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2D0Kst-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+                         .N_Dh_Bu2D0Hst(),
+                     DaughtersVars<daughters>::Get().R_Dk_vs_Dpi_Bu2D0Hst()))),
+      N_Dh_Bd2DstH_(new RooFormulaVar(
+          ("N_Dk_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bd2DstK-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+                         .N_Dh_Bd2DstH(),
+                     Configuration::Get().R_Dk_vs_Dpi_Bd2DstH()))) {}
 

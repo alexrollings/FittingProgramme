@@ -5,11 +5,14 @@
 #include "RooFitResult.h"
 #include "RooHist.h"
 #include "RooPlot.h"
+#include "RooFitResult.h"
 #include "TH1D.h"
+#include "TH2D.h"
 #include "TH1F.h"
 #include "TLegend.h"
 #include "TLine.h"
 #include "TStyle.h"
+#include "RooMCStudy.h"
 
 #include "TCanvas.h"
 #include "TChain.h"
@@ -23,185 +26,13 @@
 #include <string>
 #include <vector>
 
-#include "NeutralBachelorVars.h"
 #include "Configuration.h"
 #include "DaughtersVars.h"
+#include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "ParseArguments.h"
 #include "Pdf.h"
 
-// ALWAYS pass values by const reference (if possible)
-// It is important to pass the same category object !!!!
-
-// void CalculateYieldRatios(Pdf &pdf) {
-//
-//   Bachelor bachelor = pdf.bachelor();
-//
-//   std::cout << "Bachelor = " << EnumToString(bachelor)
-//             << " Neutral = " << EnumToString(pdf.neutral())
-//             << " D0 Daughers = " << EnumToString(pdf.daughters())
-//             << " yields:\n";
-//
-//   switch (bachelor) {
-//   case Bachelor::pi:
-//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() <<
-//     "\n"
-//               << "\tNon truth matched signal = "
-//               << pdf.nonTMSignal_PiYield().getVal() << "\n"
-//               << "\tCross feed = " << pdf.crossFeed_PiYield().getVal() <<
-//               "\n"
-//               << "\tBu2D0H = " << pdf.bu2D0H_PiYield().getVal() << "\n"
-//               << "\tBd2DstH = " << pdf.bd2DstH_PiYield().getVal() << "\n";
-//     break;
-//   case Bachelor::k:
-//     std::cout << "\tBachelor ratio = " << pdf.bachelorRatio().getVal() <<
-//     "\n"
-//               << "\tNon truth matched signal = "
-//               << pdf.nonTMSignal_KYield().getVal() << "\n"
-//               << "\tCross feed = " << pdf.crossFeed_KYield().getVal() << "\n"
-//               << "\tBu2D0H = " << pdf.bu2D0H_KYield().getVal() << "\n"
-//               << "\tBd2DstH = " << pdf.bd2DstH_KYield().getVal() << "\n";
-//     break;
-//   }
-//   std::cout
-//       << "Ratios of background yields w.r.t. B->D0h for "
-//       << "\tneutral: " << EnumToString(pdf.neutral())
-//       << ", bachelor: " << EnumToString(pdf.bachelor())
-//       << ", D daughters: " << EnumToString(pdf.daughters()) << ":\n"
-//       << pdf.nonTMSignalYield().getTitle()
-//       << "\t = " << pdf.nonTMSignalYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.nonTMSignalYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.nonTMSignalYield().getError() /
-//                       pdf.nonTMSignalYield().getVal() *
-//                       pdf.nonTMSignalYield().getError() /
-//                       pdf.nonTMSignalYield().getVal() +
-//                   pdf.nonTMSignalYield().getError() /
-//                       pdf.nonTMSignalYield().getVal() *
-//                       pdf.nonTMSignalYield().getError() /
-//                       pdf.nonTMSignalYield().getVal())
-//       << "\n"
-//       // << pdf.combinatorialYield().getTitle() << "\t = "
-//       // << pdf.combinatorialYield().getVal() /
-//       pdf.bu2D0HYield().getVal() <<
-//       " ± "
-//       // << pdf.combinatorialYield().getVal() /
-//       pdf.bu2D0HYield().getVal() *
-//       //        sqrt(pdf.combinatorialYield().getError() /
-//       //                 pdf.combinatorialYield().getVal() *
-//       //                 pdf.combinatorialYield().getError() /
-//       //                 pdf.combinatorialYield().getVal() +
-//       //             pdf.combinatorialYield().getError() /
-//       //                 pdf.combinatorialYield().getVal() *
-//       //                 pdf.combinatorialYield().getError() /
-//       //                 pdf.combinatorialYield().getVal())
-//       // << "\n"
-//       << pdf.crossFeedYield().getTitle()
-//       << "\t = " << pdf.crossFeedYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.crossFeedYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.crossFeedYield().getError() /
-//                       pdf.crossFeedYield().getVal() *
-//                       pdf.crossFeedYield().getError() /
-//                       pdf.crossFeedYield().getVal() +
-//                   pdf.crossFeedYield().getError() /
-//                       pdf.crossFeedYield().getVal() *
-//                       pdf.crossFeedYield().getError() /
-//                       pdf.crossFeedYield().getVal())
-//       << "\n"
-//       << pdf.bu2Dst0Hst_D0pi0Yield().getTitle() << "\t = "
-//       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.bu2Dst0Hst_D0pi0Yield().getVal() /
-//       pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() +
-//                   pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal() *
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getError() /
-//                       pdf.bu2Dst0Hst_D0pi0Yield().getVal())
-//       << "\n"
-//       << pdf.bu2Dst0Hst_D0gammaYield().getTitle() << "\t = "
-//       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.bu2Dst0Hst_D0gammaYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       *
-//              sqrt(pdf.bu2Dst0Hst_D0gammaYield().getError() /
-//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
-//                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
-//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() +
-//                   pdf.bu2Dst0Hst_D0gammaYield().getError() /
-//                       pdf.bu2Dst0Hst_D0gammaYield().getVal() *
-//                       pdf.bu2Dst0Hst_D0gammaYield().getError() /
-//                       pdf.bu2Dst0Hst_D0gammaYield().getVal())
-//       << "\n"
-//       << pdf.bu2D0HYield().getTitle()
-//       << "\t = " << pdf.bu2D0HYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.bu2D0HYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.bu2D0HYield().getError() /
-//              pdf.bu2D0HYield().getVal() *
-//                       pdf.bu2D0HYield().getError() /
-//                       pdf.bu2D0HYield().getVal() +
-//                   pdf.bu2D0HYield().getError() /
-//                   pdf.bu2D0HYield().getVal() *
-//                       pdf.bu2D0HYield().getError() /
-//                       pdf.bu2D0HYield().getVal())
-//       << "\n"
-//       << pdf.bu2D0HstYield().getTitle()
-//       << "\t = " << pdf.bu2D0HstYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.bu2D0HstYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(
-//                  pdf.bu2D0HstYield().getError() /
-//                  pdf.bu2D0HstYield().getVal() *
-//                      pdf.bu2D0HstYield().getError() /
-//                      pdf.bu2D0HstYield().getVal() +
-//                  pdf.bu2D0HstYield().getError() /
-//                  pdf.bu2D0HstYield().getVal() *
-//                      pdf.bu2D0HstYield().getError() /
-//                      pdf.bu2D0HstYield().getVal())
-//       << "\n"
-//       << pdf.bd2DstHYield().getTitle()
-//       << "\t = " << pdf.bd2DstHYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.bd2DstHYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.bd2DstHYield().getError() /
-//              pdf.bd2DstHYield().getVal()
-//              *
-//                       pdf.bd2DstHYield().getError() /
-//                       pdf.bd2DstHYield().getVal() +
-//                   pdf.bd2DstHYield().getError() /
-//                   pdf.bd2DstHYield().getVal()
-//                   *
-//                       pdf.bd2DstHYield().getError() /
-//                       pdf.bd2DstHYield().getVal())
-//       << "\n"
-//       << pdf.missIdYield().getTitle()
-//       << "\t = " << pdf.missIdYield().getVal() /
-//       pdf.bu2D0HYield().getVal()
-//       << " ± "
-//       << pdf.missIdYield().getVal() / pdf.bu2D0HYield().getVal() *
-//              sqrt(pdf.missIdYield().getError() /
-//              pdf.missIdYield().getVal() *
-//                       pdf.missIdYield().getError() /
-//                       pdf.missIdYield().getVal() +
-//                   pdf.missIdYield().getError() /
-//                   pdf.missIdYield().getVal() *
-//                       pdf.missIdYield().getError() /
-//                       pdf.missIdYield().getVal())
-//       << "\n";
-// }
 
 void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
               Configuration &config, Configuration::Categories &categories,
@@ -257,19 +88,17 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   // --------------- plot data and pdfs onto frame ---------------------
 
-  fullDataSet.plotOn(
-      frame.get(),
-      RooFit::Cut(("fitting==fitting::" +
-                   ComposeName(neutral, bachelor, daughters))
-                      .c_str()));
+  fullDataSet.plotOn(frame.get(),
+                     RooFit::Cut(("fitting==fitting::" +
+                                  ComposeName(neutral, bachelor, daughters))
+                                     .c_str()));
 
   // .get() gets the raw pointer from underneath the smart pointer
 
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
 
@@ -280,91 +109,80 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   if (neutral == Neutral::pi0) {
     simPdf.plotOn(
         frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeName(neutral, bachelor, daughters).c_str()),
+        RooFit::Slice(categories.fitting,
+                      ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
     simPdf.plotOn(
         frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeName(neutral, bachelor, daughters).c_str()),
+        RooFit::Slice(categories.fitting,
+                      ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
   } else {
     simPdf.plotOn(
         frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeName(neutral, bachelor, daughters).c_str()),
+        RooFit::Slice(categories.fitting,
+                      ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.signal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
     simPdf.plotOn(
         frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeName(neutral, bachelor, daughters).c_str()),
+        RooFit::Slice(categories.fitting,
+                      ComposeName(neutral, bachelor, daughters).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.crossFeed()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
   }
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.nonTmSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlack));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.combinatorial()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kRed + 2));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0pi0()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kGreen));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0gamma()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kMagenta + 3));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2D0H()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kOrange));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2D0Hst()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kTeal));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bd2DstH()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kMagenta));
@@ -378,110 +196,101 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   //     RooFit::LineColor(kYellow));
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.missId()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(9));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.bu2D0HMissId()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kOrange));
 
   // ------------- Draw Legend --------------
 
-  TH1D *bu2Dst0H_D0pi0Hist =
-      new TH1D(("bu2Dst0H_D0pi0Hist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bu2Dst0H_D0pi0Hist", 0, 0, 0);
+  TH1D *bu2Dst0H_D0pi0Hist = new TH1D(
+      ("bu2Dst0H_D0pi0Hist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
+      "bu2Dst0H_D0pi0Hist", 0, 0, 0);
   bu2Dst0H_D0pi0Hist->SetLineColor(kBlue);
   bu2Dst0H_D0pi0Hist->SetLineStyle(kDashed);
   bu2Dst0H_D0pi0Hist->SetLineWidth(2);
 
-  TH1D *nonTMSignalHist =
-      new TH1D(("nonTMSignalHist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "nonTMSignalHist", 0, 0, 0);
+  TH1D *nonTMSignalHist = new TH1D(
+      ("nonTMSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "nonTMSignalHist", 0, 0, 0);
   nonTMSignalHist->SetLineColor(kBlack);
   nonTMSignalHist->SetLineStyle(kDashed);
   nonTMSignalHist->SetLineWidth(2);
 
-  TH1D *bu2Dst0H_D0gammaHist =
-      new TH1D(("bu2Dst0H_D0gammaHist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bu2Dst0H_D0gammaHist", 0, 0, 0);
+  TH1D *bu2Dst0H_D0gammaHist = new TH1D(
+      ("bu2Dst0H_D0gammaHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
+      "bu2Dst0H_D0gammaHist", 0, 0, 0);
   bu2Dst0H_D0gammaHist->SetLineColor(kRed);
   bu2Dst0H_D0gammaHist->SetLineStyle(kDashed);
   bu2Dst0H_D0gammaHist->SetLineWidth(2);
 
-  TH1D *bu2Dst0Hst_D0pi0Hist =
-      new TH1D(("bu2Dst0Hst_D0pi0Hist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
+  TH1D *bu2Dst0Hst_D0pi0Hist = new TH1D(
+      ("bu2Dst0Hst_D0pi0Hist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
+      "bu2Dst0Hst_D0pi0Hist", 0, 0, 0);
   bu2Dst0Hst_D0pi0Hist->SetLineColor(kGreen);
   bu2Dst0Hst_D0pi0Hist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0pi0Hist->SetLineWidth(2);
 
-  TH1D *bu2Dst0Hst_D0gammaHist =
-      new TH1D(("bu2Dst0Hst_D0gammaHist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
+  TH1D *bu2Dst0Hst_D0gammaHist = new TH1D(
+      ("bu2Dst0Hst_D0gammaHist" + ComposeName(neutral, bachelor, daughters))
+          .c_str(),
+      "bu2Dst0Hst_D0gammaHist", 0, 0, 0);
   bu2Dst0Hst_D0gammaHist->SetLineColor(kMagenta + 3);
   bu2Dst0Hst_D0gammaHist->SetLineStyle(kDashed);
   bu2Dst0Hst_D0gammaHist->SetLineWidth(2);
 
   TH1D *bu2D0HHist = new TH1D(
-      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bu2D0HHist", 0, 0, 0);
   bu2D0HHist->SetLineColor(kOrange);
   bu2D0HHist->SetLineStyle(kDashed);
   bu2D0HHist->SetLineWidth(2);
 
-  TH1D *bu2D0HstHist =
-      new TH1D(("bu2D0HstHist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bu2D0HstHist", 0, 0, 0);
+  TH1D *bu2D0HstHist = new TH1D(
+      ("bu2D0HstHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "bu2D0HstHist", 0, 0, 0);
   bu2D0HstHist->SetLineColor(kTeal);
   bu2D0HstHist->SetLineStyle(kDashed);
   bu2D0HstHist->SetLineWidth(2);
 
   TH1D *bd2DstHHist = new TH1D(
-      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bd2DstHHist", 0, 0, 0);
   bd2DstHHist->SetLineColor(kMagenta);
   bd2DstHHist->SetLineStyle(kDashed);
   bd2DstHHist->SetLineWidth(2);
 
-  TH1D *bd2D0Hst0Hist =
-      new TH1D(("bd2D0Hst0Hist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "bd2D0Hst0Hist", 0, 0, 0);
-  bd2D0Hst0Hist->SetLineColor(kYellow);
-  bd2D0Hst0Hist->SetLineStyle(kDashed);
-  bd2D0Hst0Hist->SetLineWidth(2);
-
-  TH1D *combinatorialHist =
-      new TH1D(("combinatorialHist" +
-                ComposeName(neutral, bachelor, daughters))
-                   .c_str(),
-               "combinatorialHist", 0, 0, 0);
+  TH1D *combinatorialHist = new TH1D(
+      ("combinatorialHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "combinatorialHist", 0, 0, 0);
   combinatorialHist->SetLineColor(kRed + 2);
   combinatorialHist->SetLineStyle(kDashed);
   combinatorialHist->SetLineWidth(2);
 
   TH1D *missIdHist = new TH1D(
-      ("missIdHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("missIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "missIdHist", 0, 0, 0);
   missIdHist->SetLineColor(9);
   missIdHist->SetLineStyle(kDashed);
   missIdHist->SetLineWidth(2);
+
+  TH1D *bu2D0HMissIdHist = new TH1D(
+      ("bu2D0HMissIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "bu2D0HMissIdHist", 0, 0, 0);
+  bu2D0HMissIdHist->SetLineColor(kYellow);
+  bu2D0HMissIdHist->SetLineStyle(kDashed);
+  bu2D0HMissIdHist->SetLineWidth(2);
 
   TLegend *legend = new TLegend(0.6, 0.35, 0.97, 0.90);
   // legend->SetHeader("Physics Bachgrounds");
@@ -492,13 +301,13 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
                     bachelorLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(
-      nonTMSignalHist,
-      ("Miss-Reconstructed B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" + chargeLabel + "}")
-          .c_str(),
-      "l");
+  legend->AddEntry(nonTMSignalHist, ("Miss-Reconstructed B^{" + chargeLabel +
+                                     "}#rightarrow#font[132]{[}#font[132]{[}" +
+                                     daughtersLabel + "#font[132]{]}_{D^{0}}" +
+                                     neutralLabel + "#font[132]{]}_{D^{0}*}" +
+                                     bachelorLabel + "^{" + chargeLabel + "}")
+                                        .c_str(),
+                   "l");
   legend->AddEntry(bu2Dst0H_D0gammaHist,
                    ("B^{" + chargeLabel +
                     "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
@@ -539,11 +348,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
                     bachelorLabel + "^{+}")
                        .c_str(),
                    "l");
-  legend->AddEntry(bd2D0Hst0Hist,
-                   ("B^{0}#rightarrow#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}" + hstLabel + "^{0}")
-                       .c_str(),
-                   "l");
   legend->AddEntry(
       missIdHist,
       ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -551,6 +355,12 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
        "#font[132]{]}_{D^{0}*}" + missIdLabel + "^{" + chargeLabel + "}")
           .c_str(),
       "l");
+  legend->AddEntry(bu2D0HMissIdHist,
+                   ("Miss-ID B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
+                    daughtersLabel + "#font[132]{]}_{D^{0}}" + missIdLabel +
+                    "^{" + chargeLabel + "}")
+                       .c_str(),
+                   "l");
   legend->AddEntry(combinatorialHist, "Combinatorial", "l");
 
   // --------------- plot onto canvas ---------------------
@@ -559,22 +369,18 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
 
   pullFrame->addPlotable(hpull /* .get() */, "P");
   pullFrame->SetName(
-      ("pullFrame_" + ComposeName(neutral, bachelor, daughters))
-          .c_str());
+      ("pullFrame_" + ComposeName(neutral, bachelor, daughters)).c_str());
   pullFrame->SetTitle("");
 
   TCanvas canvas(
-      ("simPdf_" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
-      "simPdf", 1500, 900);
+      ("simPdf_" + ComposeName(neutral, bachelor, daughters)).c_str(), "simPdf",
+      1500, 900);
 
-  TPad pad2(("pad2_" + ComposeName(neutral, bachelor, daughters))
-                .c_str(),
+  TPad pad2(("pad2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
             "pad2", 0.0, 0.1, 1.0, 0.20, kWhite);
   pad2.Draw();
 
-  TPad pad1(("pad1_" + ComposeName(neutral, bachelor, daughters))
-                .c_str(),
+  TPad pad1(("pad1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
             "pad1", 0.0, 0.19, 1.0, 1.0, kWhite);
   pad1.Draw();
 
@@ -601,17 +407,34 @@ void Plotting(PdfBase &pdf, std::vector<Charge> chargeVec,
   // dataHist->Draw("same");
 
   canvas.Update();
-  canvas.SaveAs(("Result_" +
-                 ComposeName(neutral, bachelor, daughters) +
-                 ".pdf")
-                    .c_str());
+  canvas.SaveAs(
+      ("Result_" + ComposeName(neutral, bachelor, daughters) + ".pdf").c_str());
 }
+
+// void GenerateToyDataSet(const &simPdf, Configuration &config, Configuration::Categories &categories) {
+//
+//   RooMCStudy mcStudy(simPdf, RooArgList(config.buMass(), categories.fitting), RooFit::FitOptions(RooFit::Save(kTrue)));
+//
+//   mcStudy.generate(1, 400000, true);
+//   RooDataSet *toyDataSet = dynamic_cast<RooDataSet*>(mcStudy.genData(0)); 
+
+  // mcStudy.generateAndFit(10000);
+  //
+  // std::unique_ptr<RooPlot> frame(mcStudy.plotPull(config.buMass(), RooFit::Bins(20), RooFit::FitGauss(true)));
+  //
+  // TCanvas canvas(
+  //     ("ToysCanvas", "Toys Canvas", 1500, 900);
+  //
+  // frame->Draw();
+  // canvas.Update();
+  // canvas.SaveAs(("Toys_PullDistribution_" + ComposeFittingCategory(neutral, bachelor, daughters) + ".pdf").c_str());
+// }
 
 void Fitting(RooDataSet &fullDataSet, Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> neutralVec,
              std::vector<Daughters> daughtersVec,
-             std::vector<Charge> chargeVec) {
+             std::vector<Charge> chargeVec, bool runToys) {
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
@@ -643,11 +466,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi,
-               Daughters::kpi>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+              .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -656,12 +482,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi,
-               Daughters::kpi>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get().CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k,
-               Daughters::kpi>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+              .CreateRooAddPdf();
           break;
         }
       }
@@ -677,10 +505,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+              .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -689,12 +521,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi,
-               Daughters::kk>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get().CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k,
-               Daughters::kk>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+              .CreateRooAddPdf();
           break;
         }
       }
@@ -710,12 +544,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi,
-               Daughters::pipi>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get().CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k,
-               Daughters::pipi>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+              .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -724,13 +560,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi,
-               Daughters::pipi>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi,
-               Daughters::pipi>::Get().CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k,
-               Daughters::pipi>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+              .CreateRooAddPdf();
           break;
         }
       }
@@ -746,11 +583,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi,
-               Daughters::pik>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+              .CreateRooAddPdf();
 
           break;
 
@@ -760,12 +600,14 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi,
-               Daughters::pik>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get().CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k,
-               Daughters::pik>::Get().AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get().CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+              .CreateRooAddPdf();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+              .AssignMissIdYields();
+          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+              .CreateRooAddPdf();
 
           break;
         }
@@ -777,22 +619,89 @@ void Fitting(RooDataSet &fullDataSet, Configuration &config,
     p->AddToSimultaneousPdf(simPdf);
   }
 
+  RooDataSet fittingDataSet("fittingDataSet", "Data to fit", config.fullArgSet());
+
+  // ------------ generate toys ---------------
+
+  // Toy data sets check for bias in our model. The pull distribution should be
+  // around 0, i.e. the generated data matches the defined model.
+
+  if( runToys == true) {
+
+  RooMCStudy mcStudy(
+      simPdf, RooArgList(config.buMass(), categories.fitting),
+      RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
+      RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
+
+  std::cout << "Created MCStudy object." << std::endl;
+
+  int nSamples = 1;
+  int nEvtsPerSample = 40;
+
+  mcStudy.generate(nSamples, nEvtsPerSample, true);
+
+  std::cout << "Generated toy events." << std::endl;
+
+  const RooDataSet *constData =
+      dynamic_cast<const RooDataSet *>(mcStudy.genData(0));
+  if (constData == nullptr) {
+    std::stringstream output;
+    output << "Could not retrieve data set from MCStudy object.";
+    throw std::runtime_error(output.str());
+  }
+  RooDataSet *toyDataSet = const_cast<RooDataSet *>(constData);
+  if (toyDataSet == nullptr) {
+    std::stringstream output;
+    output << "Could not retrieve roodataset from const pointer.";
+    throw std::runtime_error(output.str());
+  }
+
+  std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
+
+  fittingDataSet = *toyDataSet;
+  } else {
+    fittingDataSet = fullDataSet;
+  }
   // --------------- fit  ---------------------
 
-  // simPdf.fitTo(fullDataSet);
   RooFitResult *result =
-      simPdf.fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+      simPdf.fitTo(fittingDataSet, RooFit::Extended(kTRUE), RooFit::Save());
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting(*p, chargeVec, config, categories, fullDataSet, simPdf);
+    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf);
   }
 
-  // for (auto &p : pdfs) {
-  //   CalculateYieldRatios(*p);
-  // }
 
   result->Print("v");
+  std::cout << "Printed result." << std::endl;
+  
+  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 2000, 1000);
+  std::cout << "Created canvas." << std::endl;
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.04);
+  gStyle->SetTitleSize(0.08, "Z");
+  gStyle->SetTitleSize(0.02, "XY");
+  gStyle->SetLabelSize(0.02, "XY");
+  gStyle->SetTitleOffset(0.85, "X");
+  gStyle->SetTitleOffset(0.95, "Y");
+  gStyle->SetTitleOffset(0.9, "Z");
+  // gStyle->SetLegendTextSize(0.08);
+  gStyle->SetPadTopMargin(0.1);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.09);
+  gStyle->SetPadLeftMargin(0.1);
+  correlationCanvas.cd();
+  std::cout << "Extracting correlation histogram from result..." << std::endl;
+  result->correlationHist()->Draw("colz");
+  std::cout << "Extracted correlation histogram from result." << std::endl;
+  correlationCanvas.Update();
+  std::cout << "Updated canvas." << std::endl;
+  correlationCanvas.SaveAs("CorrelationMatrix.pdf");
+  std::cout << "Save to pdf file." << std::endl;
+
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -834,6 +743,9 @@ int main(int argc, char **argv) {
   std::vector<Neutral> neutralVec;
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
+  bool runToys;
+
+  runToys = false;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -875,6 +787,8 @@ int main(int argc, char **argv) {
                 << daughtersArg << ">\n";
       std::cout << "    -charge=<choice {plus,minus} default: " << chargeArg
                 << ">\n";
+      std::cout << "    -toys"
+                << ">\n";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
@@ -887,9 +801,14 @@ int main(int argc, char **argv) {
         std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
         return 1;
       }
+      
+      // if (args("toys", dataDir)) {
+      //   std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
+      //   return 1;
+      // }
 
       // Year
-      // args matches "year" to string given in command like and assigns
+      // args matches "year" to string given in command line and assigns
       // option
       // parsed to year
       if (!args("year", yearArg)) {
@@ -1000,7 +919,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec);
+  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec, runToys);
 
   //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
   //

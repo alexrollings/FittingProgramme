@@ -1,6 +1,7 @@
 #pragma once
-#include <RooCategory.h>
-#include <RooRealVar.h>
+#include "RooCategory.h"
+#include "RooRealVar.h"
+#include "RooConstVar.h"
 #include <string>
 
 enum class Polarity { up, down };
@@ -40,12 +41,7 @@ public:
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
   Categories &categories() { return categories_; }
-  RooRealVar &relativeWidth() { return relativeWidth_; }
-  RooRealVar &relativeNeutralAddition() { return relativeNeutralAddition_; }
-  RooRealVar &relativeBu2D0HYield() { return relativeBu2D0HYield_; }
-  RooRealVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
-  RooRealVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
-  RooRealVar &relativeNonTmYield() { return relativeNonTmYield_; }
+  RooConstVar &relativeWidth() { return relativeWidth_; }
   RooRealVar &R_Dk_vs_Dpi_Bd2DstH() { return R_Dk_vs_Dpi_Bd2DstH_; }
 
 private:
@@ -61,12 +57,7 @@ private:
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
-  RooRealVar relativeWidth_;
-  RooRealVar relativeNeutralAddition_;
-  RooRealVar relativeBu2D0HYield_;
-  RooRealVar relativeBu2D0HstYield_;
-  RooRealVar relativeBd2DstHYield_;
-  RooRealVar relativeNonTmYield_;
+  RooConstVar relativeWidth_;
   RooRealVar R_Dk_vs_Dpi_Bd2DstH_;
 };
 

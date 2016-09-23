@@ -11,7 +11,7 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
           ("combinatorialConstant_" +
            ComposeName(neutral, bachelor, daughters))
               .c_str(),
-          "Combinatorial parameter", 0, -0.00001, 0.00001),
+          "Combinatorial parameter", 0, -0.1, 0.1),
       combinatorial_(new RooExponential(
           ("combinatorial_" +
            ComposeName(neutral, bachelor, daughters))

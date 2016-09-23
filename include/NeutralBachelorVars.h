@@ -4,7 +4,7 @@
 #include "RooAddPdf.h"
 #include "NeutralVars.h" 
 #include "Configuration.h" 
-
+#include "RooConstVar.h"
 
 // Bachelor
 
@@ -27,23 +27,28 @@ public:
   RooAbsReal &sigmaBu2D0Hst() { return *sigmaBu2D0Hst_; }
   RooAbsReal &sigmaBd2DstH_1() { return *sigmaBd2DstH_1_; }
   RooAbsReal &sigmaBd2DstH_2() { return *sigmaBd2DstH_2_; }
-  RooRealVar &meanBu2Dst0Hst_D0pi0() { return meanBu2Dst0Hst_D0pi0_; }
-  RooRealVar &sigmaBu2Dst0Hst_D0pi0() { return sigmaBu2Dst0Hst_D0pi0_; }
-  RooRealVar &aBu2Dst0Hst_D0pi0() { return aBu2Dst0Hst_D0pi0_; }
-  RooRealVar &nBu2Dst0Hst_D0pi0() { return nBu2Dst0Hst_D0pi0_; }
-  RooRealVar &meanBu2Dst0Hst_D0gamma() { return meanBu2Dst0Hst_D0gamma_; }
-  RooRealVar &sigmaBu2Dst0Hst_D0gamma() { return sigmaBu2Dst0Hst_D0gamma_; }
-  RooRealVar &aBu2Dst0Hst_D0gamma() {
+  RooConstVar &meanBu2Dst0Hst_D0pi0() { return meanBu2Dst0Hst_D0pi0_; }
+  RooConstVar &sigmaBu2Dst0Hst_D0pi0() { return sigmaBu2Dst0Hst_D0pi0_; }
+  RooConstVar &aBu2Dst0Hst_D0pi0() { return aBu2Dst0Hst_D0pi0_; }
+  RooConstVar &nBu2Dst0Hst_D0pi0() { return nBu2Dst0Hst_D0pi0_; }
+  RooConstVar &meanBu2Dst0Hst_D0gamma() { return meanBu2Dst0Hst_D0gamma_; }
+  RooConstVar &sigmaBu2Dst0Hst_D0gamma() { return sigmaBu2Dst0Hst_D0gamma_; }
+  RooConstVar &aBu2Dst0Hst_D0gamma() {
     return aBu2Dst0Hst_D0gamma_;
   } // Not gamma, K
-  RooRealVar &nBu2Dst0Hst_D0gamma() {
+  RooConstVar &nBu2Dst0Hst_D0gamma() {
     return nBu2Dst0Hst_D0gamma_;
   } // Not gamma, K
-  RooRealVar &meanMissId() { return meanMissId_; }
-  RooRealVar &sigmaMissId1() { return sigmaMissId1_; }
-  RooRealVar &sigmaMissId2() { return sigmaMissId2_; }
-  RooRealVar &aMissId1() { return aMissId1_; }
-  RooRealVar &aMissId2() { return aMissId2_; }
+  RooConstVar &meanMissId() { return meanMissId_; }
+  RooConstVar &sigmaMissId1() { return sigmaMissId1_; }
+  RooConstVar &sigmaMissId2() { return sigmaMissId2_; }
+  RooConstVar &aMissId1() { return aMissId1_; }
+  RooConstVar &aMissId2() { return aMissId2_; }
+  RooConstVar &meanBu2D0HMissId() { return meanBu2D0HMissId_; }
+  RooConstVar &sigmaBu2D0HMissId1() { return sigmaBu2D0HMissId1_; }
+  RooConstVar &sigmaBu2D0HMissId2() { return sigmaBu2D0HMissId2_; }
+  RooConstVar &aBu2D0HMissId1() { return aBu2D0HMissId1_; }
+  RooConstVar &aBu2D0HMissId2() { return aBu2D0HMissId2_; }
   RooAbsPdf &signal() { return *signal_; }
   RooAbsPdf &crossFeed() { return *crossFeed_; }
   RooAbsPdf &nonTmSignal() { return *nonTmSignal_; }
@@ -57,10 +62,9 @@ public:
   RooAbsPdf &bu2D0Hst() { return *bu2D0Hst_; }
   RooAbsPdf &bd2DstH() { return *bd2DstH_; }
   RooAbsPdf &missId() { return *missId_; }
-  RooRealVar &missIdRate() { return missIdRate_; }
-  RooRealVar &bu2Dst0MissIdBR() { return bu2Dst0MissIdBR_; }
-  RooRealVar &bu2Dst0HBR() { return bu2Dst0HBR_; }
-  RooRealVar &bachEff() { return bachEff_; }
+  RooAbsPdf &bu2D0HMissId() { return *bu2D0HMissId_; }
+  RooConstVar &missIdRate() { return missIdRate_; }
+  RooConstVar &bachEff() { return bachEff_; }
   double &bachelorSF() { return bachelorSF_; }
 
 private:
@@ -78,24 +82,27 @@ private:
   std::unique_ptr<RooAbsReal> sigmaBu2D0Hst_;
   std::unique_ptr<RooAbsReal> sigmaBd2DstH_1_;
   std::unique_ptr<RooAbsReal> sigmaBd2DstH_2_;
-  RooRealVar meanBu2Dst0Hst_D0pi0_;
-  RooRealVar sigmaBu2Dst0Hst_D0pi0_;
-  RooRealVar aBu2Dst0Hst_D0pi0_;
-  RooRealVar nBu2Dst0Hst_D0pi0_;
-  RooRealVar meanBu2Dst0Hst_D0gamma_;
-  RooRealVar sigmaBu2Dst0Hst_D0gamma_;
-  RooRealVar aBu2Dst0Hst_D0gamma_;
-  RooRealVar nBu2Dst0Hst_D0gamma_;
-  RooRealVar meanMissId_;
-  RooRealVar sigmaMissId1_;
-  RooRealVar sigmaMissId2_;
-  RooRealVar aMissId1_;
-  RooRealVar aMissId2_;
+  RooConstVar meanBu2Dst0Hst_D0pi0_;
+  RooConstVar sigmaBu2Dst0Hst_D0pi0_;
+  RooConstVar aBu2Dst0Hst_D0pi0_;
+  RooConstVar nBu2Dst0Hst_D0pi0_;
+  RooConstVar meanBu2Dst0Hst_D0gamma_;
+  RooConstVar sigmaBu2Dst0Hst_D0gamma_;
+  RooConstVar aBu2Dst0Hst_D0gamma_;
+  RooConstVar nBu2Dst0Hst_D0gamma_;
+  RooConstVar meanMissId_;
+  RooConstVar sigmaMissId1_;
+  RooConstVar sigmaMissId2_;
+  RooConstVar aMissId1_;
+  RooConstVar aMissId2_;
+  RooConstVar meanBu2D0HMissId_;
+  RooConstVar sigmaBu2D0HMissId1_;
+  RooConstVar sigmaBu2D0HMissId2_;
+  RooConstVar aBu2D0HMissId1_;
+  RooConstVar aBu2D0HMissId2_;
 
-  RooRealVar bu2Dst0MissIdBR_;
-  RooRealVar missIdRate_;
-  RooRealVar bu2Dst0HBR_;
-  RooRealVar bachEff_;
+  RooConstVar missIdRate_;
+  RooConstVar bachEff_;
   // By declaring the pointer to be a RooAbsPdf, we can then specialise the type
   // later (base class)
   std::unique_ptr<RooAbsPdf> signal_;
@@ -109,6 +116,7 @@ private:
   std::unique_ptr<RooAbsPdf> bu2D0Hst_;
   std::unique_ptr<RooAbsPdf> bd2DstH_;
   std::unique_ptr<RooAbsPdf> missId_;
+  std::unique_ptr<RooAbsPdf> bu2D0HMissId_;
   
   double bachelorSF_;
 };

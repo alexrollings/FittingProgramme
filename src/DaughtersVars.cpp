@@ -8,11 +8,11 @@ DaughtersVars<Daughters::kpi>::DaughtersVars()
     : R_Dk_vs_Dpi_Bu2D0H_("R_Dk_vs_Dpi_Bu2D0H_kpi",
                           "Ratio of yields of Bu2D0H decay channel for K "
                           "w.r.t. pi bachelor, for daughters=kpi",
-                          0.075, 0.02, 0.1),
+                          0.075, 0.02, 0.5),
       R_Dk_vs_Dpi_Bu2D0Hst_("R_Dk_vs_Dpi_Bu2D0Hst_kpi",
                             "Ratio of yields of Bu2D0Hst decay channel for K "
                             "w.r.t. pi bachelor, for daughters=kpi",
-                            0.075, 0.02, 0.1),
+                            0.075, 0.02, 0.5),
       daughtersSF_(1.0) {}
 
 template <>

@@ -30,27 +30,30 @@ public:
 
   // If RooShit wasn't so shit we would pass a const reference
   RooRealVar &meanSignal() { return meanSignal_; }
-  RooRealVar &aSignal_1() { return aSignal_1_; }
-  RooRealVar &aSignal_2() { return aSignal_2_; }
-  RooRealVar &meanCrossFeed() { return meanCrossFeed_; }
-  RooRealVar &aCrossFeed_1() { return aCrossFeed_1_; }
-  RooRealVar &aCrossFeed_2() { return aCrossFeed_2_; }
-  RooRealVar &meanNonTmSignal() { return meanNonTmSignal_; }
-  RooRealVar &aNonTmSignal_1() { return aNonTmSignal_1_; }
-  RooRealVar &aNonTmSignal_2() { return aNonTmSignal_2_; }
-  RooRealVar &meanBu2D0H_1() { return meanBu2D0H_1_; }
+  RooConstVar &aSignal_1() { return aSignal_1_; }
+  RooConstVar &aSignal_2() { return aSignal_2_; }
+  RooConstVar &meanCrossFeed() { return meanCrossFeed_; }
+  RooConstVar &aCrossFeed_1() { return aCrossFeed_1_; }
+  RooConstVar &aCrossFeed_2() { return aCrossFeed_2_; }
+  RooConstVar &meanNonTmSignal() { return meanNonTmSignal_; }
+  RooConstVar &aNonTmSignal_1() { return aNonTmSignal_1_; }
+  RooConstVar &aNonTmSignal_2() { return aNonTmSignal_2_; }
+  RooAbsReal &meanBu2D0H_1() { return *meanBu2D0H_1_; }
   RooRealVar &meanBu2D0H_2() { return meanBu2D0H_2_; }
-  RooRealVar &aBu2D0H_1() { return aBu2D0H_1_; }
-  RooRealVar &aBu2D0H_2() { return aBu2D0H_2_; }
-  RooRealVar &nBu2D0H_1() { return nBu2D0H_1_; }
-  RooRealVar &nBu2D0H_2() { return nBu2D0H_2_; }
+  RooConstVar &aBu2D0H_1() { return aBu2D0H_1_; }
+  RooConstVar &aBu2D0H_2() { return aBu2D0H_2_; }
+  RooConstVar &nBu2D0H_1() { return nBu2D0H_1_; }
+  RooConstVar &nBu2D0H_2() { return nBu2D0H_2_; }
   RooRealVar &fracBu2D0H_1() { return fracBu2D0H_1_; }
-  RooRealVar &meanBu2D0Hst() { return meanBu2D0Hst_; }
-  RooRealVar &aBu2D0Hst() { return aBu2D0Hst_; }
-  RooRealVar &nBu2D0Hst() { return nBu2D0Hst_; }
-  RooRealVar &meanBd2DstH() { return meanBd2DstH_; }
-  RooRealVar &aBd2DstH_1() { return aBd2DstH_1_; }
-  RooRealVar &aBd2DstH_2() { return aBd2DstH_2_; }
+  RooConstVar &meanBu2D0Hst() { return meanBu2D0Hst_; }
+  RooConstVar &aBu2D0Hst() { return aBu2D0Hst_; }
+  RooConstVar &nBu2D0Hst() { return nBu2D0Hst_; }
+  RooConstVar &meanBd2DstH() { return meanBd2DstH_; }
+  RooConstVar &aBd2DstH_1() { return aBd2DstH_1_; }
+  RooConstVar &aBd2DstH_2() { return aBd2DstH_2_; }
+  RooConstVar &relativeBu2D0HYield() { return relativeBu2D0HYield_; }
+  RooConstVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
+  RooConstVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
   RooRealVar &R_cp() { return R_cp_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
@@ -72,27 +75,30 @@ private:
   // Indicate if only used by one neutral
 
   RooRealVar meanSignal_;
-  RooRealVar aSignal_1_;
-  RooRealVar aSignal_2_;
-  RooRealVar meanCrossFeed_;
-  RooRealVar aCrossFeed_1_; // pi0
-  RooRealVar aCrossFeed_2_; // pi0
-  RooRealVar meanNonTmSignal_;
-  RooRealVar aNonTmSignal_1_;    // gamma
-  RooRealVar aNonTmSignal_2_;    // gamma
-  RooRealVar meanBu2D0H_1_;
+  RooConstVar aSignal_1_;
+  RooConstVar aSignal_2_;
+  RooConstVar meanCrossFeed_;
+  RooConstVar aCrossFeed_1_; // pi0
+  RooConstVar aCrossFeed_2_; // pi0
+  RooConstVar meanNonTmSignal_;
+  RooConstVar aNonTmSignal_1_;    // gamma
+  RooConstVar aNonTmSignal_2_;    // gamma
+  std::unique_ptr<RooAbsReal> meanBu2D0H_1_;
   RooRealVar meanBu2D0H_2_;
-  RooRealVar aBu2D0H_1_;
-  RooRealVar aBu2D0H_2_;
-  RooRealVar nBu2D0H_1_;
-  RooRealVar nBu2D0H_2_;
+  RooConstVar aBu2D0H_1_;
+  RooConstVar aBu2D0H_2_;
+  RooConstVar nBu2D0H_1_;
+  RooConstVar nBu2D0H_2_;
   RooRealVar fracBu2D0H_1_;
-  RooRealVar meanBu2D0Hst_;
-  RooRealVar aBu2D0Hst_;
-  RooRealVar nBu2D0Hst_;
-  RooRealVar meanBd2DstH_;
-  RooRealVar aBd2DstH_1_;
-  RooRealVar aBd2DstH_2_;
+  RooConstVar meanBu2D0Hst_;
+  RooConstVar aBu2D0Hst_;
+  RooConstVar nBu2D0Hst_;
+  RooConstVar meanBd2DstH_;
+  RooConstVar aBd2DstH_1_;
+  RooConstVar aBd2DstH_2_;
+  RooConstVar relativeBu2D0HYield_;
+  RooConstVar relativeBu2D0HstYield_;
+  RooConstVar relativeBd2DstHYield_;
   RooRealVar R_cp_;
   double maxYield_;
   double bu2D0HExpected_;
