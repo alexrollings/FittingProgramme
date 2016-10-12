@@ -15,7 +15,7 @@ endif()
 
 #Find header files
 include_directories(${ROOT_INCLUDE_DIR} include)
-set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit MathMore Foam TreePlayer)
+set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files

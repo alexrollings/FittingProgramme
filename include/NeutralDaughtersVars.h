@@ -32,6 +32,12 @@ public:
   // RooRealVar &N_Dpi() { return N_Dpi_; }
   // RooFormulaVar &N_Dk() { return N_Dk_; }
   RooAbsReal &R_Dk_vs_Dpi() { return *R_Dk_vs_Dpi_; }
+  RooAbsReal &R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0() {
+    return *R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0_;
+  }
+  RooAbsReal &R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma() {
+    return *R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma_;
+  }
   RooAbsReal &selfCrossFeedRate() { return *selfCrossFeedRate_; }
   RooAbsReal &crossFeedRate() { return *crossFeedRate_; }
 
@@ -47,6 +53,8 @@ private:
   // RooRealVar N_Dpi_;
   // RooFormulaVar N_Dk_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_;
+  std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0_;
+  std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma_;
   std::unique_ptr<RooAbsReal> selfCrossFeedRate_;
   std::unique_ptr<RooAbsReal> crossFeedRate_;
 };

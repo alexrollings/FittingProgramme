@@ -4,10 +4,10 @@ Configuration::Configuration()
     : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""),
       relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
                      0.95),
-      R_Dk_vs_Dpi_Bd2DstH_("R_Dk_vs_Dpi_Bd2DstH_kpi",
+      R_Dk_vs_Dpi_Bd2DstH_("R_Dk_vs_Dpi_Bd2DstH",
                             "Ratio of yields of Bd2DstH decay channel for K "
-                            "w.r.t. pi bachelor, for daughters=kpi",
-                            0.075, 0, 0.1) {
+                            "w.r.t. pi bachelor",
+                            0.078, 0, 0.1) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";

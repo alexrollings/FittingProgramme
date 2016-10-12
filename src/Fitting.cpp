@@ -148,13 +148,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::Slice(categories.fitting,
                     ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.combinatorial()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kRed + 2));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.bu2Dst0Hst_D0pi0()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kGreen));
   simPdf.plotOn(
@@ -191,22 +184,29 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   //         categories.fitting,
   //         ComposeName(neutral, bachelor, daughters).c_str()),
   //     RooFit::ProjWData(categories.fitting, fullDataSet),
-  //     RooFit::Components(pdf.bd2D0Hst0()), RooFit::LineStyle(kDashed),
+  //     RooFit::Components(pdf.bu2D0Hst0()), RooFit::LineStyle(kDashed),
   //     RooFit::LineColor(kYellow));
+  // simPdf.plotOn(
+  //     frame.get(),
+  //     RooFit::Slice(categories.fitting,
+  //                   ComposeName(neutral, bachelor, daughters).c_str()),
+  //     RooFit::ProjWData(categories.fitting, fullDataSet),
+  //     RooFit::Components(pdf.missId()), RooFit::LineStyle(kDashed),
+  //     RooFit::LineColor(9));
+  // simPdf.plotOn(
+  //     frame.get(),
+  //     RooFit::Slice(categories.fitting,
+  //                   ComposeName(neutral, bachelor, daughters).c_str()),
+  //     RooFit::ProjWData(categories.fitting, fullDataSet),
+  //     RooFit::Components(pdf.bu2D0HMissId()), RooFit::LineStyle(kDashed),
+  //     RooFit::LineColor(kOrange));
   simPdf.plotOn(
       frame.get(),
       RooFit::Slice(categories.fitting,
                     ComposeName(neutral, bachelor, daughters).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.missId()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(9));
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.bu2D0HMissId()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kOrange));
+      RooFit::Components(pdf.combinatorial()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kRed + 2));
 
   // ------------- Draw Legend --------------
 
@@ -520,14 +520,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+              // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -536,14 +536,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
           break;
         }
       }
@@ -559,14 +559,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -575,14 +575,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
           break;
         }
       }
@@ -598,14 +598,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
@@ -614,14 +614,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
           break;
         }
       }
@@ -637,14 +637,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
 
           break;
 
@@ -654,14 +654,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
               &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
           pdfs.emplace_back(
               &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
-              .CreateRooAddPdf();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
-              .AssignMissIdYields();
-          Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
-              .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
 
           break;
         }
@@ -683,14 +683,14 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
 
     // categories.fitting
     RooMCStudy mcStudy(
-        simPdf, config.fullArgSet(),
+        simPdf, RooArgList(config.buMass(), categories.fitting),
         RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
         RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
 
     std::cout << "Created MCStudy object." << std::endl;
 
     int nSamples = 1;
-    int nEvtsPerSample = 40000;
+    int nEvtsPerSample = 60000;
 
     mcStudy.generate(nSamples, nEvtsPerSample, true);
 

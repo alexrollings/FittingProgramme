@@ -54,7 +54,14 @@ public:
   RooConstVar &relativeBu2D0HYield() { return relativeBu2D0HYield_; }
   RooConstVar &relativeBu2D0HstYield() { return relativeBu2D0HstYield_; }
   RooConstVar &relativeBd2DstHYield() { return relativeBd2DstHYield_; }
-  RooRealVar &R_cp() { return R_cp_; }
+  RooConstVar &relativeBu2Dst0Hst_D0pi0Yield() {
+    return relativeBu2Dst0Hst_D0pi0Yield_;
+  }
+  RooConstVar &relativeBu2Dst0Hst_D0gammaYield() {
+    return relativeBu2Dst0Hst_D0gammaYield_;
+  }
+  RooRealVar &R_cp_kk() { return R_cp_kk_; }
+  RooRealVar &R_cp_pipi() { return R_cp_pipi_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
   double bu2D0HExpected() { return bu2D0HExpected_; }
@@ -65,6 +72,7 @@ public:
   double nonTmSignalExpected() { return nonTmSignalExpected_; }
   double signalExpected() { return signalExpected_; }
   double crossFeedExpected() { return crossFeedExpected_; }
+  double combinatorialExpected() { return combinatorialExpected_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -99,7 +107,10 @@ private:
   RooConstVar relativeBu2D0HYield_;
   RooConstVar relativeBu2D0HstYield_;
   RooConstVar relativeBd2DstHYield_;
-  RooRealVar R_cp_;
+  RooConstVar relativeBu2Dst0Hst_D0pi0Yield_;
+  RooConstVar relativeBu2Dst0Hst_D0gammaYield_;
+  RooRealVar R_cp_kk_;
+  RooRealVar R_cp_pipi_;
   double maxYield_;
   double bu2D0HExpected_;
   double bd2DstHExpected_;
@@ -109,6 +120,7 @@ private:
   double nonTmSignalExpected_;
   double signalExpected_;
   double crossFeedExpected_;
+  double combinatorialExpected_;
 };
 
 // Now we just need to define the constructors separately so the values are

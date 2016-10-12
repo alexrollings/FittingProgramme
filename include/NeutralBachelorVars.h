@@ -65,7 +65,7 @@ public:
   RooAbsPdf &bu2D0HMissId() { return *bu2D0HMissId_; }
   RooConstVar &missIdRate() { return missIdRate_; }
   RooConstVar &bachEff() { return bachEff_; }
-  double &bachelorSF() { return bachelorSF_; }
+  const double &bachelorSF() { return bachelorSF_; }
 
 private:
   NeutralBachelorVars();
@@ -118,7 +118,7 @@ private:
   std::unique_ptr<RooAbsPdf> missId_;
   std::unique_ptr<RooAbsPdf> bu2D0HMissId_;
   
-  double bachelorSF_;
+  const double bachelorSF_;
 };
 
 template <> NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars();

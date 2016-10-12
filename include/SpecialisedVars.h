@@ -27,9 +27,11 @@ template <Neutral neutral, Daughters daughters>
 struct SpecializedVarsImpl<neutral, Bachelor::pi, daughters> {
   SpecializedVarsImpl();
   std::unique_ptr<RooRealVar> N_Dh_;
-  std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0H_;
-  std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0Hst_;
-  std::unique_ptr<RooFormulaVar> N_Dh_Bd2DstH_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2D0H_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2D0Hst_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bd2DstH_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2Dst0Hst_D0pi0_;
+  std::unique_ptr<RooAbsReal> N_Dh_Bu2Dst0Hst_D0gamma_;
 };
 
 template <Neutral neutral, Daughters daughters>
@@ -39,6 +41,8 @@ struct SpecializedVarsImpl<neutral, Bachelor::k, daughters> {
   std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0H_;
   std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0Hst_;
   std::unique_ptr<RooFormulaVar> N_Dh_Bd2DstH_;
+  std::unique_ptr<RooFormulaVar> N_Dh_Bu2Dst0Hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_Dh_Bu2Dst0Hst_D0gamma_;
 };
 }
 
@@ -62,6 +66,10 @@ public:
   RooAbsReal &N_Dh_Bu2D0H() { return *impl_.N_Dh_Bu2D0H_; }
   RooAbsReal &N_Dh_Bu2D0Hst() { return *impl_.N_Dh_Bu2D0Hst_; }
   RooAbsReal &N_Dh_Bd2DstH() { return *impl_.N_Dh_Bd2DstH_; }
+  RooAbsReal &N_Dh_Bu2Dst0Hst_D0pi0() { return *impl_.N_Dh_Bu2Dst0Hst_D0pi0_; }
+  RooAbsReal &N_Dh_Bu2Dst0Hst_D0gamma() {
+    return *impl_.N_Dh_Bu2Dst0Hst_D0gamma_;
+  }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -91,30 +99,125 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
                            0,
                            NeutralVars<neutral>::Get().maxYield() *
                                DaughtersVars<daughters>::Get().daughtersSF())),
-      N_Dh_Bu2D0H_(new RooFormulaVar(
-          ("N_Dpi_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
-          ("Total number of Bu2D0pi-like events " +
-           ComposeName(neutral, daughters))
-              .c_str(),
-          "@0*@1",
-          RooArgList(*N_Dh_,
-                     NeutralVars<neutral>::Get().relativeBu2D0HYield()))),
-      N_Dh_Bu2D0Hst_(new RooFormulaVar(
-          ("N_Dpi_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
-          ("Total number of Bu2D0rho-like events " +
-           ComposeName(neutral, daughters))
-              .c_str(),
-          "@0*@1",
-          RooArgList(*N_Dh_,
-                     NeutralVars<neutral>::Get().relativeBu2D0HstYield()))),
-      N_Dh_Bd2DstH_(new RooFormulaVar(
-          ("N_Dpi_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
-          ("Total number of Bd2Dstpi-like events " +
-           ComposeName(neutral, daughters))
-              .c_str(),
-          "@0*@1",
-          RooArgList(*N_Dh_,
-                     NeutralVars<neutral>::Get().relativeBd2DstHYield()))) {}
+      N_Dh_Bu2D0H_(nullptr), N_Dh_Bu2D0Hst_(nullptr), N_Dh_Bd2DstH_(nullptr),
+      N_Dh_Bu2Dst0Hst_D0pi0_(nullptr), N_Dh_Bu2Dst0Hst_D0gamma_(nullptr) {
+
+  if (neutral == Neutral::pi0) {
+    N_Dh_Bu2Dst0Hst_D0pi0_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Dpi_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2Dst0pi D0pi0 -like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        NeutralVars<neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
+            DaughtersVars<daughters>::Get().daughtersSF(),
+        0, NeutralVars<neutral>::Get().maxYield() *
+               DaughtersVars<daughters>::Get().daughtersSF()));
+    N_Dh_Bu2Dst0Hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Dpi_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2Dst0pi D0gamma -like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        "@0*@1/(1-@1)",
+        RooArgList(
+            *N_Dh_Bu2Dst0Hst_D0pi0_,
+            NeutralDaughtersVars<SwapNeutral<neutral>(), daughters>::Get()
+                .crossFeedRate())));
+  } else {
+    N_Dh_Bu2Dst0Hst_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Dpi_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2Dst0pi D0gamma -like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        NeutralVars<neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
+            DaughtersVars<daughters>::Get().daughtersSF(),
+        0, NeutralVars<neutral>::Get().maxYield() *
+               DaughtersVars<daughters>::Get().daughtersSF()));
+    N_Dh_Bu2Dst0Hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Dpi_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2Dst0pi D0pi0 -like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        "@0*@1/(1-@1)",
+        RooArgList(
+            *N_Dh_Bu2Dst0Hst_D0gamma_,
+            NeutralDaughtersVars<SwapNeutral<neutral>(), daughters>::Get()
+                .crossFeedRate())));
+  }
+
+  if (daughters == Daughters::kpi) {
+    N_Dh_Bu2D0H_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Dpi_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2D0pi-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        "@0*@1",
+        RooArgList(*N_Dh_, NeutralVars<neutral>::Get().relativeBu2D0HYield())));
+    N_Dh_Bu2D0Hst_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Dpi_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2D0rho-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        "@0*@1",
+        RooArgList(*N_Dh_,
+                   NeutralVars<neutral>::Get().relativeBu2D0HstYield())));
+    N_Dh_Bd2DstH_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Dpi_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bd2Dstpi-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        "@0*@1",
+        RooArgList(*N_Dh_,
+                   NeutralVars<neutral>::Get().relativeBd2DstHYield())));
+    // N_Dh_Bu2Dst0Hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(new
+    // RooFormulaVar(
+    //     ("N_Dpi_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral,
+    //     daughters)).c_str(),
+    //     ("Total number of Bu2Dst0rho D0pi0-like events " +
+    //      ComposeName(neutral, daughters))
+    //         .c_str(),
+    //     "@0*@1",
+    //     RooArgList(*N_Dh_,
+    //                NeutralVars<neutral>::Get().relativeBu2Dst0Hst_D0pi0Yield())));
+    // N_Dh_Bu2Dst0Hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(new
+    // RooFormulaVar(
+    //     ("N_Dpi_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral,
+    //     daughters)).c_str(),
+    //     ("Total number of Bu2Dst0rho D0gamma-like events " +
+    //      ComposeName(neutral, daughters))
+    //         .c_str(),
+    //     "@0*@1",
+    //     RooArgList(*N_Dh_,
+    //                NeutralVars<neutral>::Get().relativeBu2Dst0Hst_D0gammaYield())));
+  } else {
+    N_Dh_Bu2D0H_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Dpi_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2D0pi-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        NeutralVars<neutral>::Get().bu2D0HExpected() *
+            DaughtersVars<daughters>::Get().daughtersSF(),
+        0, NeutralVars<neutral>::Get().maxYield() *
+               DaughtersVars<daughters>::Get().daughtersSF()));
+    N_Dh_Bu2D0Hst_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Dpi_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2D0pi-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        NeutralVars<neutral>::Get().bu2D0HstExpected() *
+            DaughtersVars<daughters>::Get().daughtersSF(),
+        0, NeutralVars<neutral>::Get().maxYield() *
+               DaughtersVars<daughters>::Get().daughtersSF()));
+    N_Dh_Bd2DstH_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Dpi_Bd2DstH_" + ComposeName(neutral, daughters)).c_str(),
+        ("Total number of Bu2D0pi-like events " +
+         ComposeName(neutral, daughters))
+            .c_str(),
+        NeutralVars<neutral>::Get().bd2DstHExpected() *
+            DaughtersVars<daughters>::Get().daughtersSF(),
+        0, NeutralVars<neutral>::Get().maxYield() *
+               DaughtersVars<daughters>::Get().daughtersSF()));
+  }
+}
 
 template <Neutral neutral, Daughters daughters>
 SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
@@ -133,10 +236,9 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(
-              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
-                  .N_Dh_Bu2D0H(),
-              DaughtersVars<Daughters::kpi>::Get().R_Dk_vs_Dpi_Bu2D0H()))),
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+                         .N_Dh_Bu2D0H(),
+                     DaughtersVars<daughters>::Get().R_Dk_vs_Dpi_Bu2D0H()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
           ("N_Dk_Bu2D0Hst_" + ComposeName(neutral, daughters)).c_str(),
           ("Total number of Bu2D0Kst-like events, for " +
@@ -154,5 +256,26 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
           "@0*@1",
           RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
                          .N_Dh_Bd2DstH(),
-                     Configuration::Get().R_Dk_vs_Dpi_Bd2DstH()))) {}
+                     Configuration::Get().R_Dk_vs_Dpi_Bd2DstH()))),
+      N_Dh_Bu2Dst0Hst_D0pi0_(new RooFormulaVar(
+          ("N_Dk_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2Dst0Kst-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+                         .N_Dh_Bu2Dst0Hst_D0pi0(),
+                     NeutralDaughtersVars<neutral, daughters>::Get()
+                         .R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0()))),
+      N_Dh_Bu2Dst0Hst_D0gamma_(new RooFormulaVar(
+          ("N_Dk_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0Kst-like events, for " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+                         .N_Dh_Bu2Dst0Hst_D0gamma(),
+                     NeutralDaughtersVars<neutral, daughters>::Get()
+                         .R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma()))) {}
 

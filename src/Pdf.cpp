@@ -8,27 +8,17 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
       bu2Dst0Hst_D0gammaYield_(nullptr), bu2D0HYield_(nullptr),
       bu2D0HstYield_(nullptr), bd2DstHYield_(nullptr), missIdYield_(nullptr),
       combinatorialConstant_(
-          ("combinatorialConstant_" +
-           ComposeName(neutral, bachelor, daughters))
+          ("combinatorialConstant_" + ComposeName(neutral, bachelor, daughters))
               .c_str(),
-          "Combinatorial parameter", 0, -0.1, 0.1),
+          "Combinatorial parameter", 0, -0.0001, 0.0001),
       combinatorial_(new RooExponential(
-          ("combinatorial_" +
-           ComposeName(neutral, bachelor, daughters))
+          ("combinatorial_" + ComposeName(neutral, bachelor, daughters))
               .c_str(),
           "combinatorial exponential", Configuration::Get().buMass(),
           combinatorialConstant_)),
-      combinatorialYield_(
-          ("combinatorialYield_" +
-           ComposeName(neutral, bachelor, daughters))
-              .c_str(),
-          "combinatorial yield", 10000, 0, 30000),
-      yields_(
-          ("yields_" + ComposeName(neutral, bachelor, daughters))
-              .c_str()),
-      functions_(("functions_" +
-                  ComposeName(neutral, bachelor, daughters))
-                     .c_str()) {}
+      yields_(("yields_" + ComposeName(neutral, bachelor, daughters)).c_str()),
+      functions_(
+          ("functions_" + ComposeName(neutral, bachelor, daughters)).c_str()) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(
