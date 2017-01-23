@@ -20,12 +20,12 @@
 
 namespace { // Anonymous namespace
 
-template <Neutral neutral, Bachelor bachelor, Daughters daughters>
-struct SpecializedVarsImpl;
+template <Neutral neutral, Bachelor bachelor, Daughters daughters, RunType runType>
+struct SpecialisedVarsImpl;
 
-template <Neutral neutral, Daughters daughters>
-struct SpecializedVarsImpl<neutral, Bachelor::pi, daughters> {
-  SpecializedVarsImpl();
+template <Neutral neutral, Daughters daughters, RunType runType>
+struct SpecialisedVarsImpl<neutral, Bachelor::pi, daughters, runType> {
+  SpecialisedVarsImpl();
   std::unique_ptr<RooRealVar> N_Dh_;
   std::unique_ptr<RooAbsReal> N_Dh_Bu2D0H_;
   std::unique_ptr<RooAbsReal> N_Dh_Bu2D0Hst_;
@@ -34,9 +34,9 @@ struct SpecializedVarsImpl<neutral, Bachelor::pi, daughters> {
   std::unique_ptr<RooAbsReal> N_Dh_Bu2Dst0Hst_D0gamma_;
 };
 
-template <Neutral neutral, Daughters daughters>
-struct SpecializedVarsImpl<neutral, Bachelor::k, daughters> {
-  SpecializedVarsImpl();
+template <Neutral neutral, Daughters daughters, RunType runType>
+struct SpecialisedVarsImpl<neutral, Bachelor::k, daughters, runType> {
+  SpecialisedVarsImpl();
   std::unique_ptr<RooFormulaVar> N_Dh_;
   std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0H_;
   std::unique_ptr<RooFormulaVar> N_Dh_Bu2D0Hst_;
@@ -46,7 +46,7 @@ struct SpecializedVarsImpl<neutral, Bachelor::k, daughters> {
 };
 }
 
-template <Neutral neutral, Bachelor bachelor, Daughters daughters>
+template <Neutral neutral, Bachelor bachelor, Daughters daughters, RunType runType>
 class SpecialisedVars {
 
   // One template specialization == One entirely separate class in practice
@@ -56,8 +56,8 @@ class SpecialisedVars {
   // All happens automatically :-)
 
 public:
-  static SpecialisedVars<neutral, bachelor, daughters> &Get() {
-    static SpecialisedVars<neutral, bachelor, daughters> singleton;
+  static SpecialisedVars<neutral, bachelor, daughters, runType> &Get() {
+    static SpecialisedVars<neutral, bachelor, daughters, runType> singleton;
     return singleton;
   }
 
@@ -80,14 +80,14 @@ private:
   // Indicate if only used by one daughters
 
   // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
-  SpecializedVarsImpl<neutral, bachelor, daughters> impl_;
+  SpecialisedVarsImpl<neutral, bachelor, daughters, runType> impl_;
 };
 
 // Now we just need to define the constructors separately so the values are
 // different
 
-template <Neutral neutral, Daughters daughters>
-SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
+template <Neutral neutral, Daughters daughters, RunType runType>
+SpecialisedVarsImpl<neutral, Bachelor::pi, daughters, runType>::SpecialisedVarsImpl()
     : N_Dh_(new RooRealVar(("N_Dpi_" + ComposeName(neutral, daughters)).c_str(),
                            ("Total number of Bu2Dst0pi-like events " +
                             ComposeName(neutral, daughters))
@@ -142,7 +142,7 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
             NeutralVars<SwapNeutral<neutral>()>::Get().crossFeedRate())));
   }
 
-  if (daughters == Daughters::kpi) {
+  if (daughters == Daughters::kpi && runType == RunType::normal) {
     N_Dh_Bu2D0H_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Dpi_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
         ("Total number of Bu2D0pi-like events " +
@@ -217,8 +217,8 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
   }
 }
 
-template <Neutral neutral, Daughters daughters>
-SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
+template <Neutral neutral, Daughters daughters, RunType runType>
+SpecialisedVarsImpl<neutral, Bachelor::k, daughters, runType>::SpecialisedVarsImpl()
     : N_Dh_(new RooFormulaVar(
           ("N_Dk_" + ComposeName(neutral, daughters)).c_str(),
           ("Total number of Bu2Dst0K-like events, for " +
@@ -226,7 +226,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
               .c_str(),
           "@0*@1",
           RooArgList(
-              SpecialisedVars<neutral, Bachelor::pi, daughters>::Get().N_Dh(),
+              SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get().N_Dh(),
               NeutralDaughtersVars<neutral, daughters>::Get().R_Dk_vs_Dpi()))),
       N_Dh_Bu2D0H_(new RooFormulaVar(
           ("N_Dk_Bu2D0H_" + ComposeName(neutral, daughters)).c_str(),
@@ -234,7 +234,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get()
                          .N_Dh_Bu2D0H(),
                      DaughtersVars<daughters>::Get().R_Dk_vs_Dpi_Bu2D0H()))),
       N_Dh_Bu2D0Hst_(new RooFormulaVar(
@@ -243,7 +243,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get()
                          .N_Dh_Bu2D0Hst(),
                      DaughtersVars<daughters>::Get().R_Dk_vs_Dpi_Bu2D0Hst()))),
       N_Dh_Bd2DstH_(new RooFormulaVar(
@@ -252,7 +252,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get()
                          .N_Dh_Bd2DstH(),
                      Configuration::Get().R_Dk_vs_Dpi_Bd2DstH()))),
       N_Dh_Bu2Dst0Hst_D0pi0_(new RooFormulaVar(
@@ -261,7 +261,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get()
                          .N_Dh_Bu2Dst0Hst_D0pi0(),
                      NeutralDaughtersVars<neutral, daughters>::Get()
                          .R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0()))),
@@ -272,7 +272,7 @@ SpecializedVarsImpl<neutral, Bachelor::k, daughters>::SpecializedVarsImpl()
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters>::Get()
+          RooArgList(SpecialisedVars<neutral, Bachelor::pi, daughters, runType>::Get()
                          .N_Dh_Bu2Dst0Hst_D0gamma(),
                      NeutralDaughtersVars<neutral, daughters>::Get()
                          .R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma()))) {}
