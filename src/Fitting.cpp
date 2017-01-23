@@ -1,4 +1,3 @@
-#include "RooAbsBinning.h"
 #include "RooAddPdf.h"
 #include "RooArgSet.h"
 #include "RooDataSet.h"
@@ -35,7 +34,7 @@
 
 void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
-              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf) {
+              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf, RooFitResult *result) {
 
   // -------------- Set Style Attributes ------------------
 
@@ -219,8 +218,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   bu2Dst0H_D0pi0Hist->SetLineWidth(2);
 
   auto nonTMSignalHist = std::make_unique<TH1D>(
-      ("nonTMSignalHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("nonTMSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "nonTMSignalHist", 0, 0, 0);
   nonTMSignalHist->SetLineColor(kBlack);
   nonTMSignalHist->SetLineStyle(kDashed);
@@ -251,48 +249,42 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   bu2Dst0Hst_D0gammaHist->SetLineWidth(2);
 
   auto bu2D0HHist = std::make_unique<TH1D>(
-      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bu2D0HHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bu2D0HHist", 0, 0, 0);
   bu2D0HHist->SetLineColor(kOrange);
   bu2D0HHist->SetLineStyle(kDashed);
   bu2D0HHist->SetLineWidth(2);
 
   auto bu2D0HstHist = std::make_unique<TH1D>(
-      ("bu2D0HstHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bu2D0HstHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bu2D0HstHist", 0, 0, 0);
   bu2D0HstHist->SetLineColor(kTeal);
   bu2D0HstHist->SetLineStyle(kDashed);
   bu2D0HstHist->SetLineWidth(2);
 
   auto bd2DstHHist = std::make_unique<TH1D>(
-      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bd2DstHHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bd2DstHHist", 0, 0, 0);
   bd2DstHHist->SetLineColor(kMagenta);
   bd2DstHHist->SetLineStyle(kDashed);
   bd2DstHHist->SetLineWidth(2);
 
   auto combinatorialHist = std::make_unique<TH1D>(
-      ("combinatorialHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("combinatorialHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "combinatorialHist", 0, 0, 0);
   combinatorialHist->SetLineColor(kRed + 2);
   combinatorialHist->SetLineStyle(kDashed);
   combinatorialHist->SetLineWidth(2);
 
   auto missIdHist = std::make_unique<TH1D>(
-      ("missIdHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("missIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "missIdHist", 0, 0, 0);
   missIdHist->SetLineColor(9);
   missIdHist->SetLineStyle(kDashed);
   missIdHist->SetLineWidth(2);
 
   auto bu2D0HMissIdHist = std::make_unique<TH1D>(
-      ("bu2D0HMissIdHist" + ComposeName(neutral, bachelor, daughters))
-          .c_str(),
+      ("bu2D0HMissIdHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "bu2D0HMissIdHist", 0, 0, 0);
   bu2D0HMissIdHist->SetLineColor(kYellow);
   bu2D0HMissIdHist->SetLineStyle(kDashed);
@@ -307,12 +299,13 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
                     bachelorLabel + "^{" + chargeLabel + "}")
                        .c_str(),
                    "l");
-  legend->AddEntry(nonTMSignalHist.get(), ("Miss-Reconstructed B^{" + chargeLabel +
-                                     "}#rightarrow#font[132]{[}#font[132]{[}" +
-                                     daughtersLabel + "#font[132]{]}_{D^{0}}" +
-                                     neutralLabel + "#font[132]{]}_{D^{0}*}" +
-                                     bachelorLabel + "^{" + chargeLabel + "}")
-                                        .c_str(),
+  legend->AddEntry(nonTMSignalHist.get(),
+                   ("Miss-Reconstructed B^{" + chargeLabel +
+                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+                    "#font[132]{]}_{D^{0}}" + neutralLabel +
+                    "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" +
+                    chargeLabel + "}")
+                       .c_str(),
                    "l");
   legend->AddEntry(bu2Dst0H_D0gammaHist.get(),
                    ("B^{" + chargeLabel +
@@ -406,10 +399,32 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pullFrame->Draw();
   zeroLine.Draw("same");
 
+  auto blankHist = std::make_unique<TH1D>(("blankHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "blankHist", 0, 0, 0);
+  blankHist->SetLineColor(kWhite);
+  blankHist->SetLineWidth(2);
+
+  auto yieldLegend = std::make_unique<TLegend>(0.12, 0.6, 0.3, 0.8);
+
+  std::stringstream sigLegend;
+  sigLegend << "Signal: " << pdf.signalYield().getVal() + pdf.nonTmSignalYield().getVal()  << " #pm "
+            << pdf.signalYield().getPropagatedError(*result) << " events";
+
+  std::stringstream bkgLegend;
+  bkgLegend << "Background: " << fullDataSet.numEntries() - pdf.signalYield().getVal() - pdf.nonTmSignalYield().getVal() << " #pm ";
+  //           << backgroundYield.getError() << " events";
+
+  gStyle->SetLegendTextSize(0.03);
+  yieldLegend->SetLineColor(kWhite);
+  yieldLegend->AddEntry(blankHist.get(), "#int L dt = 3.3 fb^{-1}", "l");
+  yieldLegend->AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
+  yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
+
   pad1.cd();
   pullFrame->SetXTitle("m[Bu] (MeV/c^{2})");
   frame->Draw();
   legend->Draw("same");
+  yieldLegend->Draw("same");
   // dataHist->Draw("same");
 
   canvas.Update();
@@ -439,8 +454,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 // canvas.SaveAs(("Toys_PullHist.ibution_" + ComposeFittingCategory(neutral,
 // bachelor, daughters) + ".pdf").c_str());
 // }
-void FitSimPdfToData(RooAbsData &fittingDataSet,
-                     RooSimultaneous &simPdf, Configuration &config,
+void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
+                     Configuration &config,
                      Configuration::Categories &categories,
                      std::vector<Charge> const &chargeVec,
                      std::vector<PdfBase *> &pdfs) {
@@ -450,7 +465,7 @@ void FitSimPdfToData(RooAbsData &fittingDataSet,
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf);
+    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf, result);
   }
 
   result->Print("v");
@@ -483,12 +498,11 @@ void FitSimPdfToData(RooAbsData &fittingDataSet,
   correlationCanvas.SaveAs("CorrelationMatrix.pdf");
   std::cout << "Save to pdf file." << std::endl;
 }
-
 void Fitting(RooAbsData &fullDataSet, Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
-             std::vector<Charge> const &chargeVec, bool runToys) {
+             std::vector<Charge> const &chargeVec, RunType runType) {
 
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
@@ -521,7 +535,7 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
           pdfs.emplace_back(
               &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
           // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
-              // .AssignMissIdYields();
+          // .AssignMissIdYields();
           // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
           //     .CreateRooAddPdf();
           // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
@@ -673,41 +687,221 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
     p->AddToSimultaneousPdf(simPdf);
   }
 
+  FitSimPdfToData(fullDataSet, simPdf, config, categories, chargeVec, pdfs);
+}
+
+
+void Fitting(Configuration &config, Configuration::Categories &categories,
+             std::vector<Neutral> const &neutralVec,
+             std::vector<Daughters> const &daughtersVec,
+             std::vector<Charge> const &chargeVec) {
+
+  RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
+
+  std::vector<PdfBase *> pdfs;
+
+  for (auto &d : daughtersVec) {
+
+    if (d == Daughters::kpi) {
+
+      // emplace_back creates
+      // the
+      // object then moves it into the vector
+      // You only have to pass the arguments as if you were constructing the
+      // vector type
+      // The operators required to do this are not supported by RooFit so we
+      // have to use a vector of pointers
+
+      // switch (neutral) {
+      // case Neutral::pi0:
+      for (auto &n : neutralVec) {
+
+        switch (n) {
+
+        case Neutral::pi0:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          //     .CreateRooAddPdf();
+          break;
+        }
+      }
+    } else if (d == Daughters::kk) {
+
+      for (auto &n : neutralVec) {
+
+        switch (n) {
+
+        case Neutral::pi0:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          break;
+        }
+      }
+    } else if (d == Daughters::pipi) {
+
+      for (auto &n : neutralVec) {
+
+        switch (n) {
+
+        case Neutral::pi0:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          break;
+        }
+      }
+    } else {
+
+      for (auto &n : neutralVec) {
+
+        switch (n) {
+
+        case Neutral::pi0:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+
+          break;
+        }
+      }
+    }
+  }
+
+  for (auto &p : pdfs) {
+    p->AddToSimultaneousPdf(simPdf);
+  }
 
   // ------------ generate toys ---------------
 
   // Toy data sets check for bias in our model. The pull distribution should be
   // around 0, i.e. the generated data matches the defined model.
 
-  if (runToys == true) {
+  // categories.fitting
+  RooMCStudy mcStudy(
+      simPdf, RooArgList(config.buMass(), categories.fitting),
+      RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
+      RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
 
-    // categories.fitting
-    RooMCStudy mcStudy(
-        simPdf, RooArgList(config.buMass(), categories.fitting),
-        RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
-        RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
+  std::cout << "Created MCStudy object." << std::endl;
 
-    std::cout << "Created MCStudy object." << std::endl;
+  int nSamples = 1;
+  int nEvtsPerSample = 60000;
 
-    int nSamples = 1;
-    int nEvtsPerSample = 60000;
+  mcStudy.generate(nSamples, nEvtsPerSample, true);
 
-    mcStudy.generate(nSamples, nEvtsPerSample, true);
+  std::cout << "Generated toy events." << std::endl;
 
-    std::cout << "Generated toy events." << std::endl;
+  RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
 
-    RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
+  std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
 
-    std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
-    
-    FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
-  
-  } else {
-    
-    FitSimPdfToData(fullDataSet, simPdf, config, categories, chargeVec, pdfs);
-  
-  }
-
+  FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -750,6 +944,7 @@ int main(int argc, char **argv) {
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
   bool runToys = false;
+  RunType runType;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -807,6 +1002,12 @@ int main(int argc, char **argv) {
       }
 
       runToys = args("toys");
+
+      if (args("test")) {
+        runType = RunType::noRelations;
+      } else {
+        runType = RunType::normal;
+      }
 
       // Year
       // args matches "year" to string given in command line and assigns
@@ -875,42 +1076,47 @@ int main(int argc, char **argv) {
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
 
-  RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
+  if (runToys == false) {
 
-  // Loop over all options in order to extract correct roodatasets
-  for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
-    for (unsigned int pCounter = 0; pCounter < polarityVec.size(); pCounter++) {
-      for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
-           bCounter++) {
-        for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
-             dCounter++) {
-          for (unsigned int cCounter = 0; cCounter < chargeVec.size();
-               cCounter++) {
-            for (unsigned int nCounter = 0; nCounter < neutralVec.size();
-                 nCounter++) {
-              std::string dsFile =
-                  dataDir + "/" +
-                  ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
-                                  bachelorVec[bCounter], neutralVec[nCounter],
-                                  daughtersVec[dCounter], chargeVec[cCounter]) +
-                  ".root";
-              std::cout << "Extracting RooDataSet from file ... " << dsFile
-                        << "\n";
+    RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
-              if (!fexists(dsFile)) {
-                std::cerr << dsFile << " does not exist.\n";
-                return 1;
-              } else {
-                std::cout << dsFile << " exists.\n";
-                TFile in(dsFile.c_str(), "READ");
-                RooDataSet *inputDataSet;
-                gDirectory->GetObject("inputDataSet", inputDataSet);
-                if (inputDataSet == nullptr) {
-                  throw std::runtime_error("Data set does not exist.");
+    // Loop over all options in order to extract correct roodatasets
+    for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
+      for (unsigned int pCounter = 0; pCounter < polarityVec.size();
+           pCounter++) {
+        for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
+             bCounter++) {
+          for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
+               dCounter++) {
+            for (unsigned int cCounter = 0; cCounter < chargeVec.size();
+                 cCounter++) {
+              for (unsigned int nCounter = 0; nCounter < neutralVec.size();
+                   nCounter++) {
+                std::string dsFile =
+                    dataDir + "/" +
+                    ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
+                                    bachelorVec[bCounter], neutralVec[nCounter],
+                                    daughtersVec[dCounter],
+                                    chargeVec[cCounter]) +
+                    ".root";
+                std::cout << "Extracting RooDataSet from file ... " << dsFile
+                          << "\n";
+
+                if (!fexists(dsFile)) {
+                  std::cerr << dsFile << " does not exist.\n";
+                  return 1;
                 } else {
-                  std::cout << "inputDataSet extracted... \n";
-                  fullDataSet.append(*inputDataSet);
-                  std::cout << "Appended to full data set...\n";
+                  std::cout << dsFile << " exists.\n";
+                  TFile in(dsFile.c_str(), "READ");
+                  RooDataSet *inputDataSet;
+                  gDirectory->GetObject("inputDataSet", inputDataSet);
+                  if (inputDataSet == nullptr) {
+                    throw std::runtime_error("Data set does not exist.");
+                  } else {
+                    std::cout << "inputDataSet extracted... \n";
+                    fullDataSet.append(*inputDataSet);
+                    std::cout << "Appended to full data set...\n";
+                  }
                 }
               }
             }
@@ -918,11 +1124,14 @@ int main(int argc, char **argv) {
         }
       }
     }
+
+    Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
+            chargeVec, runType);
+
+  } else {
+
+    Fitting(config, categories, neutralVec, daughtersVec, chargeVec);
   }
-
-  Fitting(fullDataSet, config, categories, neutralVec, daughtersVec, chargeVec,
-          runToys);
-
   //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
   //
   //     RooArgSet const *row = fullDataSet.get(i);

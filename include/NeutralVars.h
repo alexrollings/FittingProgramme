@@ -60,8 +60,8 @@ public:
   RooConstVar &relativeBu2Dst0Hst_D0gammaYield() {
     return relativeBu2Dst0Hst_D0gammaYield_;
   }
-  RooRealVar &R_cp_kk() { return R_cp_kk_; }
-  RooRealVar &R_cp_pipi() { return R_cp_pipi_; }
+  RooAbsReal &selfCrossFeedRate() { return *selfCrossFeedRate_; }
+  RooAbsReal &crossFeedRate() { return *crossFeedRate_; }
   // Don't pass double as a reference: don't allow user to change numbers.
   double maxYield() { return maxYield_; }
   double bu2D0HExpected() { return bu2D0HExpected_; }
@@ -109,8 +109,8 @@ private:
   RooConstVar relativeBd2DstHYield_;
   RooConstVar relativeBu2Dst0Hst_D0pi0Yield_;
   RooConstVar relativeBu2Dst0Hst_D0gammaYield_;
-  RooRealVar R_cp_kk_;
-  RooRealVar R_cp_pipi_;
+  std::unique_ptr<RooAbsReal> selfCrossFeedRate_;
+  std::unique_ptr<RooAbsReal> crossFeedRate_;
   double maxYield_;
   double bu2D0HExpected_;
   double bd2DstHExpected_;

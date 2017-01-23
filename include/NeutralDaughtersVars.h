@@ -31,6 +31,7 @@ public:
   // If RooShit wasn't so shit we would pass a const reference
   // RooRealVar &N_Dpi() { return N_Dpi_; }
   // RooFormulaVar &N_Dk() { return N_Dk_; }
+  RooRealVar &R_cp() { return R_cp_; }
   RooAbsReal &R_Dk_vs_Dpi() { return *R_Dk_vs_Dpi_; }
   RooAbsReal &R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0() {
     return *R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0_;
@@ -38,8 +39,6 @@ public:
   RooAbsReal &R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma() {
     return *R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma_;
   }
-  RooAbsReal &selfCrossFeedRate() { return *selfCrossFeedRate_; }
-  RooAbsReal &crossFeedRate() { return *crossFeedRate_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -52,11 +51,10 @@ private:
   // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
   // RooRealVar N_Dpi_;
   // RooFormulaVar N_Dk_;
+  RooRealVar R_cp_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2Dst0Hst_D0pi0_;
   std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2Dst0Hst_D0gamma_;
-  std::unique_ptr<RooAbsReal> selfCrossFeedRate_;
-  std::unique_ptr<RooAbsReal> crossFeedRate_;
 };
 
 // Now we just need to define the constructors separately so the values are

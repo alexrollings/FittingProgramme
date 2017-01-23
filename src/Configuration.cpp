@@ -7,7 +7,7 @@ Configuration::Configuration()
       R_Dk_vs_Dpi_Bd2DstH_("R_Dk_vs_Dpi_Bd2DstH",
                             "Ratio of yields of Bd2DstH decay channel for K "
                             "w.r.t. pi bachelor",
-                            0.078, 0, 0.1) {
+                            0.0773) {
 
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";

@@ -50,10 +50,12 @@ NeutralVars<Neutral::gamma>::NeutralVars()
       relativeBu2Dst0Hst_D0gammaYield_(
           "relativeBu2Dst0Hst_D0gammaYield_Gamma",
           "Relative yield of Bu2Dst0Hst_D0gamma w.r.t. N_Dh, Gamma mode", 0.27199),
-      R_cp_kk_("R_cp_kk_Gamma", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Gamma", 1, 0.5,
-            1.5),
-      R_cp_pipi_("R_cp_pipi_Gamma", "R_dk_vs_dpi[pipi]/R_dk_vs_dpi[kpi], Gamma", 1, 0.5,
-            1.5) {}
+      selfCrossFeedRate_(new RooRealVar("selfCrossFeedRate_gamma",
+                                        "Proportion of SCF in N_Dpi, gamma, kk",
+                                        0.26424)),
+      crossFeedRate_(new RooRealVar("crossFeedRate_gamma",
+                                    "Proportion of CF in N_Dpi, gamma",
+                                    0.10187)) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
@@ -104,8 +106,10 @@ NeutralVars<Neutral::pi0>::NeutralVars()
       relativeBu2Dst0Hst_D0gammaYield_(
           "relativeBu2Dst0Hst_D0gammaYield_Pi0",
           "Relative yield of Bu2Dst0Hst_D0gamma w.r.t. N_Dh, Pi0 mode", 0.019708),
-      R_cp_kk_("R_cp_kk_Pi0", "R_dk_vs_dpi[kk]/R_dk_vs_dpi[kpi], Pi0", 1, 0.5,
-               1.5),
-      R_cp_pipi_("R_cp_pipi_Pi0", "R_dk_vs_dpi[pipi]/R_dk_vs_dpi[kpi], Pi0", 1,
-                 0.5, 1.5) {}
+      selfCrossFeedRate_(new RooConstVar("selfCrossFeedRate_pi0",
+                                         "Proportion of SCF in N_Dpi, pi0, kpi",
+                                         0.31394)),
+      crossFeedRate_(new RooConstVar("crossFeedRate_pi0",
+                                     "Proportion of CF in N_Dpi, pi0",
+                                     0.34005)) {}
 

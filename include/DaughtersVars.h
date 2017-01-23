@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration.h"
-
+#include "RooAbsReal.h"
+#include "RooFormulaVar.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
 // of the entire class for you for every permutation of template arguments it is
@@ -29,8 +30,10 @@ public:
   }
 
   // If RooShit wasn't so shit we would pass a const reference
-  RooRealVar &R_Dk_vs_Dpi_Bu2D0H() { return R_Dk_vs_Dpi_Bu2D0H_; }
-  RooRealVar &R_Dk_vs_Dpi_Bu2D0Hst() { return R_Dk_vs_Dpi_Bu2D0Hst_; }
+  RooRealVar &R_cp_Bu2D0H() { return R_cp_Bu2D0H_; }
+  RooConstVar &R_cp_Bu2D0Hst() { return R_cp_Bu2D0Hst_; }
+  RooAbsReal &R_Dk_vs_Dpi_Bu2D0H() { return *R_Dk_vs_Dpi_Bu2D0H_; }
+  RooAbsReal &R_Dk_vs_Dpi_Bu2D0Hst() { return *R_Dk_vs_Dpi_Bu2D0Hst_; }
   const double &daughtersSF() { return daughtersSF_; }
 
 private:
@@ -41,8 +44,10 @@ private:
 
   // Indicate if only used by one daughters
 
-  RooRealVar R_Dk_vs_Dpi_Bu2D0H_;
-  RooRealVar R_Dk_vs_Dpi_Bu2D0Hst_;
+  RooRealVar R_cp_Bu2D0H_;
+  RooConstVar R_cp_Bu2D0Hst_;
+  std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2D0H_;
+  std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2D0Hst_;
   const double daughtersSF_;
 };
 

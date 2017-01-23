@@ -105,7 +105,7 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
   if (neutral == Neutral::pi0) {
     N_Dh_Bu2Dst0Hst_D0pi0_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Dpi_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral, daughters)).c_str(),
-        ("Total number of Bu2Dst0pi D0pi0 -like events " +
+        ("Total number of Bu2Dst0rho D0pi0 -like events " +
          ComposeName(neutral, daughters))
             .c_str(),
         NeutralVars<neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
@@ -114,18 +114,17 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
                DaughtersVars<daughters>::Get().daughtersSF()));
     N_Dh_Bu2Dst0Hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Dpi_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral, daughters)).c_str(),
-        ("Total number of Bu2Dst0pi D0gamma -like events " +
+        ("Total number of Bu2Dst0rho D0gamma -like events " +
          ComposeName(neutral, daughters))
             .c_str(),
         "@0*@1/(1-@1)",
         RooArgList(
             *N_Dh_Bu2Dst0Hst_D0pi0_,
-            NeutralDaughtersVars<SwapNeutral<neutral>(), daughters>::Get()
-                .crossFeedRate())));
+            NeutralVars<SwapNeutral<neutral>()>::Get().crossFeedRate())));
   } else {
     N_Dh_Bu2Dst0Hst_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Dpi_Bu2Dst0Hst_D0gamma_" + ComposeName(neutral, daughters)).c_str(),
-        ("Total number of Bu2Dst0pi D0gamma -like events " +
+        ("Total number of Bu2Dst0Kst D0gamma -like events " +
          ComposeName(neutral, daughters))
             .c_str(),
         NeutralVars<neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
@@ -134,14 +133,13 @@ SpecializedVarsImpl<neutral, Bachelor::pi, daughters>::SpecializedVarsImpl()
                DaughtersVars<daughters>::Get().daughtersSF()));
     N_Dh_Bu2Dst0Hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Dpi_Bu2Dst0Hst_D0pi0_" + ComposeName(neutral, daughters)).c_str(),
-        ("Total number of Bu2Dst0pi D0pi0 -like events " +
+        ("Total number of Bu2Dst0Kst D0pi0 -like events " +
          ComposeName(neutral, daughters))
             .c_str(),
         "@0*@1/(1-@1)",
         RooArgList(
             *N_Dh_Bu2Dst0Hst_D0gamma_,
-            NeutralDaughtersVars<SwapNeutral<neutral>(), daughters>::Get()
-                .crossFeedRate())));
+            NeutralVars<SwapNeutral<neutral>()>::Get().crossFeedRate())));
   }
 
   if (daughters == Daughters::kpi) {

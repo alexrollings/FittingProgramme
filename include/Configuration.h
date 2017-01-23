@@ -10,6 +10,7 @@ enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
+enum class RunType { normal, noRelations };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
@@ -42,7 +43,7 @@ public:
   RooArgSet &fullArgSet() { return fullArgSet_; }
   Categories &categories() { return categories_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
-  RooRealVar &R_Dk_vs_Dpi_Bd2DstH() { return R_Dk_vs_Dpi_Bd2DstH_; }
+  RooConstVar &R_Dk_vs_Dpi_Bd2DstH() { return R_Dk_vs_Dpi_Bd2DstH_; }
 
 private:
   Configuration();
@@ -58,7 +59,7 @@ private:
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
   RooConstVar relativeWidth_;
-  RooRealVar R_Dk_vs_Dpi_Bd2DstH_;
+  RooConstVar R_Dk_vs_Dpi_Bd2DstH_;
 };
 
 
