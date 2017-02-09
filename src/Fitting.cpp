@@ -1119,7 +1119,7 @@ int main(int argc, char **argv) {
     // continuing
     ParseArguments args(argc, argv); // object instantiated
 
-    std::string yearArg("2011,2012,2015");
+    std::string yearArg("2011,2012,2015,2016");
     std::string polarityArg("up,down");
     std::string bachelorArg("pi,k");
     std::string neutralArg("pi0,gamma");
@@ -1138,7 +1138,7 @@ int main(int argc, char **argv) {
                 << "\n";
       std::cout << "Followed by the possible options:\n";
       std::cout << "\n";
-      std::cout << "    -year=<choice {2011,2012,2015} default: " << yearArg
+      std::cout << "    -year=<choice {2011,2012,2015,2016} default: " << yearArg
                 << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
                 << ">\n";
@@ -1187,7 +1187,7 @@ int main(int argc, char **argv) {
         yearVec = ExtractEnumList<Year>(yearArg);
       } catch (std::invalid_argument) {
         std::cerr << "year assignment failed, please specify: "
-                     "-year=[2011,2012,2015].\n";
+                     "-year=[2011,2012,2015,2016].\n";
         return 1;
       }
 

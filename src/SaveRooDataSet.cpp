@@ -14,7 +14,7 @@
 
 #include "Configuration.h"
 
-std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets/");
+std::string dsPath("/home/rollings/ButoDst0X_FIT/roodatasets_neutralcuts/");
 // std::string dsPath("~/Desktop/FittingProgramme/roodatasets/");
 
 void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,

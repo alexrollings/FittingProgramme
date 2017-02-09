@@ -64,6 +64,7 @@ Configuration::Categories::Categories()
   year.defineType(EnumToString(Year::y2011).c_str());
   year.defineType(EnumToString(Year::y2012).c_str());
   year.defineType(EnumToString(Year::y2015).c_str());
+  year.defineType(EnumToString(Year::y2016).c_str());
 
   neutral.defineType(EnumToString(Neutral::pi0).c_str());
   neutral.defineType(EnumToString(Neutral::gamma).c_str());
@@ -190,6 +191,8 @@ template <> Year StringToEnum<Year>(std::string const &year) {
     return Year::y2012;
   } else if (year == "2015") {
     return Year::y2015;
+  } else if (year == "2016") {
+    return Year::y2016;
   }
   throw std::invalid_argument("Year must take a value in [2011/2012/2015]");
 }
@@ -201,8 +204,9 @@ std::string EnumToString(Year year) {
   case Year::y2012:
     return "2012";
   case Year::y2015:
-    // default:
     return "2015";
+  case Year::y2016:
+    return "2016";
   }
 }
 

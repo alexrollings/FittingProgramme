@@ -7,7 +7,7 @@
 enum class Polarity { up, down };
 enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
-enum class Year { y2011, y2012, y2015 };
+enum class Year { y2011, y2012, y2015, y2016 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
 enum class RunType { normal, noRelations };
