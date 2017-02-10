@@ -2,7 +2,6 @@
 #include "RooArgSet.h"
 #include "RooDataSet.h"
 #include "RooFitResult.h"
-#include "RooFitResult.h"
 #include "RooHist.h"
 #include "RooMCStudy.h"
 #include "RooPlot.h"
@@ -1119,7 +1118,8 @@ int main(int argc, char **argv) {
     // continuing
     ParseArguments args(argc, argv); // object instantiated
 
-    std::string yearArg("2011,2012,2015,2016");
+    // std::string yearArg("2011,2012,2015,2016");
+    std::string yearArg("2011,2012,2015");
     std::string polarityArg("up,down");
     std::string bachelorArg("pi,k");
     std::string neutralArg("pi0,gamma");
@@ -1138,8 +1138,8 @@ int main(int argc, char **argv) {
                 << "\n";
       std::cout << "Followed by the possible options:\n";
       std::cout << "\n";
-      std::cout << "    -year=<choice {2011,2012,2015,2016} default: " << yearArg
-                << ">\n";
+      std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
+                << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
                 << ">\n";
       // std::cout << "    -bachelor choice {k,pi} default: " << bachelorArg
@@ -1291,37 +1291,32 @@ int main(int argc, char **argv) {
         }
       }
     }
+    
+    for (unsigned int i = 0; i < 10000; i++) {
 
-    Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
-            chargeVec, runType);
+      RooArgSet const *row = fullDataSet.get(i);
+
+      std::cout << "For event " << i << ":";
+
+      RooRealVar *buMassPtr =
+          dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
+      if (buMassPtr == nullptr) {
+        std::stringstream output;
+        output << "No buMass value for event " << i << ".";
+        throw std::runtime_error(output.str());
+      } else {
+        std::cout << "buMass = " << buMassPtr->getVal() << "\n";
+      }
+    }
+
+    // Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
+    //         chargeVec, runType);
+
 
   } else {
 
     Fitting(config, categories, neutralVec, daughtersVec, chargeVec, runType);
   }
-  //   for (unsigned int i = 0; i < fullDataSet.numEntries(); i++) {
-  //
-  //     RooArgSet const *row = fullDataSet.get(i);
-  //
-  //     std::cout << "For event " << i << ":";
-  //
-  //     RooCategory *neutralPtr =
-  //         dynamic_cast<RooCategory
-  //         *>(row->find(categories.neutral.GetName()));
-  //     if (neutralPtr == nullptr) {
-  //       std::stringstream output;
-  //       output << "No category assigned to neutral for event " << i <<
-  //       ".";
-  //       throw std::runtime_error(output.str());
-  //     } else {
-  //       std::cout << "    neutral = " << neutralPtr->getLabel() << "\n";
-  //       if (neutralPtr->getLabel() == "gamma") {
-  //
-  //         std::cerr << "Wrong neutral assigned (gamma)\n";
-  //         return 1;
-  //       }
-  //     }
-  //   }
-  //
+
   return 0;
 }
