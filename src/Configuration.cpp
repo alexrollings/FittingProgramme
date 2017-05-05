@@ -13,14 +13,14 @@ Configuration::Configuration()
   constexpr const char *kMomentumUnit = "MeV/c";
   constexpr const char *kNoUnit = "";
 
-  buMass_.SetName("Pi0_Bu_M_DTF_D0Pi0");
+  buMass_.SetName("Bu_M_DTF_D0Pi0");
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
   buMass_.setMin(5045);
   buMass_.setBins(76);
   buMass_.setUnit(kMassUnit);
 
-  buPdgId_.SetName("Pi0_Bu_ID");
+  buPdgId_.SetName("Bu_ID");
   buPdgId_.SetTitle("Bu PDG ID");
   buPdgId_.setMax(550);
   buPdgId_.setMin(-550);

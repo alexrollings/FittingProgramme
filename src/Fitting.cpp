@@ -410,19 +410,20 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   std::stringstream sigLegend;
   sigLegend << "Signal: "
             << pdf.signalYield().getVal() + pdf.nonTmSignalYield().getVal()
-            << " #pm " << pdf.signalYield().getPropagatedError(*result)
+            // << " #pm " << pdf.signalYield().getPropagatedError(*result)
             << " events";
 
   std::stringstream bkgLegend;
   bkgLegend << "Background: "
             << fullDataSet.numEntries() - pdf.signalYield().getVal() -
                    pdf.nonTmSignalYield().getVal()
-            << " #pm ";
-  //           << backgroundYield.getError() << " events";
+            // << " #pm ";
+            // << backgroundYield.getError()
+            << " events";
 
   gStyle->SetLegendTextSize(0.03);
   yieldLegend->SetLineColor(kWhite);
-  yieldLegend->AddEntry(blankHist.get(), "#int L dt = 3.3 fb^{-1}", "l");
+  yieldLegend->AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}", "l");
   yieldLegend->AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
   yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
 
@@ -1292,25 +1293,25 @@ int main(int argc, char **argv) {
       }
     }
     
-    for (unsigned int i = 0; i < 10000; i++) {
+    // for (unsigned int i = 0; i < 10000; i++) {
+    //
+    //   RooArgSet const *row = fullDataSet.get(i);
+    //
+    //   std::cout << "For event " << i << ":";
+    //
+    //   RooRealVar *buMassPtr =
+    //       dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
+    //   if (buMassPtr == nullptr) {
+    //     std::stringstream output;
+    //     output << "No buMass value for event " << i << ".";
+    //     throw std::runtime_error(output.str());
+    //   } else {
+    //     std::cout << "buMass = " << buMassPtr->getVal() << "\n";
+    //   }
+    // }
 
-      RooArgSet const *row = fullDataSet.get(i);
-
-      std::cout << "For event " << i << ":";
-
-      RooRealVar *buMassPtr =
-          dynamic_cast<RooRealVar *>(row->find(config.buMass().GetName()));
-      if (buMassPtr == nullptr) {
-        std::stringstream output;
-        output << "No buMass value for event " << i << ".";
-        throw std::runtime_error(output.str());
-      } else {
-        std::cout << "buMass = " << buMassPtr->getVal() << "\n";
-      }
-    }
-
-    // Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
-    //         chargeVec, runType);
+    Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
+            chargeVec, runType);
 
 
   } else {
