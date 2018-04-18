@@ -35,7 +35,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
               RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
               RooFitResult *result) {
-
   // -------------- Set Style Attributes ------------------
 
   gStyle->SetTitleFont(132, "XYZ");
@@ -292,54 +291,54 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   auto legend = std::make_unique<TLegend>(0.6, 0.35, 0.97, 0.90);
   // legend->SetHeader("Physics Bachgrounds");
-  legend->AddEntry(bu2Dst0H_D0pi0Hist.get(),
-                   ("B^{" + chargeLabel +
-                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-                    bachelorLabel + "^{" + chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(nonTMSignalHist.get(),
-                   ("Miss-Reconstructed B^{" + chargeLabel +
-                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}" + neutralLabel +
-                    "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" +
-                    chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(bu2Dst0H_D0gammaHist.get(),
-                   ("B^{" + chargeLabel +
-                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                    bachelorLabel + "^{" + chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(bu2Dst0Hst_D0pi0Hist.get(),
-                   ("B^{" + chargeLabel +
-                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-                    hstLabel + "^{" + chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(bu2Dst0Hst_D0gammaHist.get(),
-                   ("B^{" + chargeLabel +
-                    "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-                    "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                    hstLabel + "^{" + chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(bu2D0HHist.get(),
-                   ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
-                    daughtersLabel + "#font[132]{]}_{D^{0}}" + bachelorLabel +
-                    "^{" + chargeLabel + "}")
-                       .c_str(),
-                   "l");
-  legend->AddEntry(bu2D0HstHist.get(),
-                   ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
-                    daughtersLabel + "#font[132]{]}_{D^{0}}" + hstLabel + "^{" +
-                    chargeLabel + "}")
-                       .c_str(),
-                   "l");
+  legend->AddEntry(
+      bu2Dst0H_D0pi0Hist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+       bachelorLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      nonTMSignalHist.get(),
+      ("Miss-Reconstructed B^{" + chargeLabel +
+       "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+       "#font[132]{]}_{D^{0}}" + neutralLabel + "#font[132]{]}_{D^{0}*}" +
+       bachelorLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      bu2Dst0H_D0gammaHist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+       bachelorLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      bu2Dst0Hst_D0pi0Hist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+       hstLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      bu2Dst0Hst_D0gammaHist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       daughtersLabel + "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+       hstLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      bu2D0HHist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" + daughtersLabel +
+       "#font[132]{]}_{D^{0}}" + bachelorLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
+  legend->AddEntry(
+      bu2D0HstHist.get(),
+      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}" + daughtersLabel +
+       "#font[132]{]}_{D^{0}}" + hstLabel + "^{" + chargeLabel + "}")
+          .c_str(),
+      "l");
   legend->AddEntry(bd2DstHHist.get(),
                    ("B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
                     daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{-}#font["
@@ -423,7 +422,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   gStyle->SetLegendTextSize(0.03);
   yieldLegend->SetLineColor(kWhite);
-  yieldLegend->AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}", "l");
+  yieldLegend->AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}",
+                        "l");
   yieldLegend->AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
   yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
 
@@ -466,7 +466,6 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
                      Configuration::Categories &categories,
                      std::vector<Charge> const &chargeVec,
                      std::vector<PdfBase *> &pdfs) {
-
   RooFitResult *result =
       simPdf.fitTo(fittingDataSet, RooFit::Extended(kTRUE), RooFit::Save());
 
@@ -509,8 +508,7 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
-             std::vector<Charge> const &chargeVec, RunType runType) {
-
+             std::vector<Charge> const &chargeVec) {
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
@@ -518,277 +516,194 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
   for (auto &d : daughtersVec) {
-
     if (d == Daughters::kpi) {
-
       // emplace_back creates
       // the
-      // object then moves it into the vector
-      // You only have to pass the arguments as if you were constructing the
+      // object then moves it into the vector      // You only have to pass the
+      // arguments as if you were constructing the
       // vector type
       // The operators required to do this are not supported by RooFit so we
       // have to use a vector of pointers
 
       // switch (neutral) {
-      // case Neutral::pi0:
-      for (auto &n : neutralVec) {
+      // case Neutral::pi0:      for (auto &n : neutralVec) {
 
-        switch (n) {
-
+      switch (n) {
         case Neutral::pi0:
 
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
           // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
           //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+          //     .AssignMissIdYields();          // Pdf<Neutral::pi0,
+          //     Bachelor::k, Daughters::kpi>::Get()
           //     .CreateRooAddPdf();
           break;
 
         case Neutral::gamma:
 
-          if (runType == RunType::normal) {
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
 
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, runType>::Get()
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
           // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, runType>::Get()
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
           //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, runType>::Get()
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
           //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+          // //     .CreateRooAddPdf();
 
           break;
-        }
-      }
-    } else if (d == Daughters::kk) {
-
-      for (auto &n : neutralVec) {
-
-        switch (n) {
-
-        case Neutral::pi0:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
-
-        case Neutral::gamma:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
-        }
-      }
-    } else if (d == Daughters::pipi) {
-
-      for (auto &n : neutralVec) {
-
-        switch (n) {
-
-        case Neutral::pi0:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
-
-        case Neutral::gamma:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(
-                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
-                     RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
-        }
-      }
-    } else {
-
-      for (auto &n : neutralVec) {
-
-        switch (n) {
-
-        case Neutral::pi0:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
-
-        case Neutral::gamma:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-          // runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-          // runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-          // runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-          // runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
-        }
       }
     }
   }
+  else if (d == Daughters::kk) {
+    for (auto &n : neutralVec) {
+      switch (n) {
+        case Neutral::pi0:
 
-  for (auto &p : pdfs) {
-    p->AddToSimultaneousPdf(simPdf);
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
+
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
+
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+          //     .CreateRooAddPdf();
+
+          break;
+      }
+    }
   }
+  else if (d == Daughters::pipi) {
+    for (auto &n : neutralVec) {
+      switch (n) {
+        case Neutral::pi0:
 
-  FitSimPdfToData(fullDataSet, simPdf, config, categories, chargeVec, pdfs);
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
+
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
+
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+          //     .CreateRooAddPdf();
+
+          break;
+      }
+    }
+  }
+  else {
+    for (auto &n : neutralVec) {
+      switch (n) {
+        case Neutral::pi0:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
+
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+          //     .CreateRooAddPdf();
+          break;
+
+        case Neutral::gamma:
+
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
+          pdfs.emplace_back(
+              &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
+
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pi>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pi>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pi>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pi>::Get()
+          //     .CreateRooAddPdf();
+
+          break;
+      }
+    }
+  }
+}
+
+for (auto &p : pdfs) {
+  p->AddToSimultaneousPdf(simPdf);
+}
+
+FitSimPdfToData(fullDataSet, simPdf, config, categories, chargeVec, pdfs);
 }
 
 void Fitting(Configuration &config, Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
-             std::vector<Charge> const &chargeVec, RunType runType) {
-
+             std::vector<Charge> const &chargeVec) {
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
 
   for (auto &d : daughtersVec) {
-
     if (d == Daughters::kpi) {
-
       // emplace_back creates
       // the
       // object then moves it into the vector
@@ -800,238 +715,158 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
       // switch (neutral) {
       // case Neutral::pi0:
       for (auto &n : neutralVec) {
-
         switch (n) {
+          case Neutral::pi0:
 
-        case Neutral::pi0:
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get());
 
-          if (runType == RunType::normal) {
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi>::Get()
+            //     .CreateRooAddPdf();
+            break;
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
+          case Neutral::gamma:
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get());
 
-        case Neutral::gamma:
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi>::Get()
+            //     .CreateRooAddPdf();
 
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
+            break;
         }
       }
     } else if (d == Daughters::kk) {
-
       for (auto &n : neutralVec) {
-
         switch (n) {
+          case Neutral::pi0:
 
-        case Neutral::pi0:
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get());
 
-          if (runType == RunType::normal) {
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk>::Get()
+            //     .CreateRooAddPdf();
+            break;
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
+          case Neutral::gamma:
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get());
 
-        case Neutral::gamma:
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk>::Get()
+            //     .CreateRooAddPdf();
 
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
+            break;
         }
       }
     } else if (d == Daughters::pipi) {
-
       for (auto &n : neutralVec) {
-
         switch (n) {
-
-        case Neutral::pi0:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
-
-        case Neutral::gamma:
-
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
+          case Neutral::pi0:
 
             pdfs.emplace_back(
-                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
-                     RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, runType>::Get()
-          //     .CreateRooAddPdf();
+                &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get());
 
-          break;
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi>::Get()
+            //     .CreateRooAddPdf();
+            break;
+
+          case Neutral::gamma:
+
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get());
+
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi>::Get()
+            //     .CreateRooAddPdf();
+
+            break;
         }
       }
     } else {
-
       for (auto &n : neutralVec) {
-
         switch (n) {
+          case Neutral::pi0:
 
-        case Neutral::pi0:
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get());
 
-          if (runType == RunType::normal) {
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik>::Get()
+            //     .CreateRooAddPdf();
+            break;
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
+          case Neutral::gamma:
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, runType>::Get()
-          //     .CreateRooAddPdf();
-          break;
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get());
+            pdfs.emplace_back(
+                &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get());
 
-        case Neutral::gamma:
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+            // .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik>::Get()
+            //     .CreateRooAddPdf();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+            //     .AssignMissIdYields();
+            // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik>::Get()
+            //     .CreateRooAddPdf();
 
-          if (runType == RunType::normal) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   RunType::normal>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   RunType::normal>::Get());
-          } else if (runType == RunType::noRelations) {
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   RunType::noRelations>::Get());
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   RunType::noRelations>::Get());
-          }
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-          // runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-          // runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-          // runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-          // runType>::Get()
-          //     .CreateRooAddPdf();
-
-          break;
+            break;
         }
       }
     }
@@ -1076,7 +911,6 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
 
 template <typename Enum>
 std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
-
   std::stringstream ss(s);
   std::vector<Enum> values;
   std::string substring;
@@ -1100,7 +934,6 @@ bool fexists(std::string const &filename) {
 // std::string dataDir = "/home/rollings/ButoDst0X_FIT/roodatasets/";
 
 int main(int argc, char **argv) {
-
   std::string dataDir;
   std::vector<Year> yearVec;
   std::vector<Polarity> polarityVec;
@@ -1109,15 +942,14 @@ int main(int argc, char **argv) {
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
   bool runToys = false;
-  RunType runType;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
-  { // calls destructor when object goes out of scope: Will tell you if
+  {  // calls destructor when object goes out of scope: Will tell you if
     // anything
     // was not used that was given as a command line argument before
     // continuing
-    ParseArguments args(argc, argv); // object instantiated
+    ParseArguments args(argc, argv);  // object instantiated
 
     // std::string yearArg("2011,2012,2015,2016");
     std::string yearArg("2011,2012,2015");
@@ -1132,7 +964,6 @@ int main(int argc, char **argv) {
     bachelorVec = ExtractEnumList<Bachelor>(bachelorArg);
 
     if (args("help")) {
-
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "Type ./Fitting -dataDir=<RooDataSets directory name> \n"
@@ -1154,15 +985,12 @@ int main(int argc, char **argv) {
                 << ">\n";
       std::cout << "    -toys"
                 << ">\n";
-      std::cout << "    -test"
-                << ">\n";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "\n";
     } else {
-
       // Data folder
       if (!args("dataDir", dataDir)) {
         std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
@@ -1170,12 +998,6 @@ int main(int argc, char **argv) {
       }
 
       runToys = args("toys");
-
-      if (args("test")) {
-        runType = RunType::noRelations;
-      } else {
-        runType = RunType::normal;
-      }
 
       // Year
       // args matches "year" to string given in command line and assigns
@@ -1245,7 +1067,6 @@ int main(int argc, char **argv) {
   Configuration::Categories &categories = Configuration::Get().categories();
 
   if (runToys == false) {
-
     RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
     // Loop over all options in order to extract correct roodatasets
@@ -1292,7 +1113,7 @@ int main(int argc, char **argv) {
         }
       }
     }
-    
+
     // for (unsigned int i = 0; i < 10000; i++) {
     //
     //   RooArgSet const *row = fullDataSet.get(i);
@@ -1311,12 +1132,10 @@ int main(int argc, char **argv) {
     // }
 
     Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
-            chargeVec, runType);
-
+            chargeVec);
 
   } else {
-
-    Fitting(config, categories, neutralVec, daughtersVec, chargeVec, runType);
+    Fitting(config, categories, neutralVec, daughtersVec, chargeVec);
   }
 
   return 0;

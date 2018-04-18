@@ -20,7 +20,6 @@ public:
   Bachelor bachelor() const { return bachelor_; }
   Neutral neutral() const { return neutral_; }
   Daughters daughters() const { return daughters_; }
-  RunType runType() const { return runType_; }
 
   RooAbsReal &signalYield() { return *signalYield_; }
   RooAbsReal &crossFeedYield() { return *crossFeedYield_; }
@@ -50,14 +49,12 @@ public:
   virtual RooAbsPdf &bu2D0HMissId() const = 0;
 
 protected:
-  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters,
-          RunType runType);
+  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters);
   virtual ~PdfBase() {}
 
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
-  RunType runType_;
 
   RooRealVar combinatorialConstant_;
   std::unique_ptr<RooAbsPdf> combinatorial_;
@@ -78,13 +75,12 @@ protected:
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          RunType _runType>
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 class Pdf : public PdfBase {
 
 public:
-  static Pdf<_neutral, _bachelor, _daughters, _runType> &Get() {
-    static Pdf<_neutral, _bachelor, _daughters, _runType> singleton;
+  static Pdf<_neutral, _bachelor, _daughters> &Get() {
+    static Pdf<_neutral, _bachelor, _daughters> singleton;
     return singleton;
   }
 
@@ -139,15 +135,14 @@ private:
   // variables inside of the object
 };
 
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          RunType _runType>
-Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
-    : PdfBase(_neutral, _bachelor, _daughters, _runType) {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+Pdf<_neutral, _bachelor, _daughters>::Pdf()
+    : PdfBase(_neutral, _bachelor, _daughters) {
   signalYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("signalYield_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       "@0*(1-@1-@2)*@3",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get().N_Dh(),
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get().N_Dh(),
                  NeutralVars<_neutral>::Get().selfCrossFeedRate(),
                  NeutralVars<_neutral>::Get().crossFeedRate(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
@@ -157,7 +152,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
       ("non TM Signal Yield " + ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1*@2",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get().N_Dh(),
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get().N_Dh(),
                  NeutralVars<_neutral>::Get().selfCrossFeedRate(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   crossFeedYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -167,7 +162,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
           .c_str(),
       "@0*@1*@2",
       RooArgList(
-          SpecialisedVars<SwapNeutral<_neutral>(), _bachelor, _daughters, _runType>::Get()
+          SpecialisedVars<SwapNeutral<_neutral>(), _bachelor, _daughters>::Get()
               .N_Dh(),
           NeutralVars<SwapNeutral<_neutral>()>::Get().crossFeedRate(),
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
@@ -177,7 +172,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
       ("bu2Dst0Hst_D0pi0 Yield " + ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get()
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get()
                      .N_Dh_Bu2Dst0Hst_D0pi0(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   // NeutralVars<_neutral>::Get().bu2Dst0Hst_D0pi0Expected() *
@@ -194,7 +189,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
        ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get()
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get()
                      .N_Dh_Bu2Dst0Hst_D0gamma(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   // NeutralVars<_neutral>::Get().bu2Dst0Hst_D0gammaExpected() *
@@ -208,21 +203,21 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
       ("bu2D0H Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       "@0*@1",
       RooArgList(
-          SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get().N_Dh_Bu2D0H(),
+          SpecialisedVars<_neutral, _bachelor, _daughters>::Get().N_Dh_Bu2D0H(),
           NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bu2D0HstYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("bu2D0HstYield_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       ("bu2D0Hst Yield " + ComposeName(_neutral, _bachelor, _daughters))
           .c_str(),
       "@0*@1",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get()
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get()
                      .N_Dh_Bu2D0Hst(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bd2DstHYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("bd2DstHYield_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       ("bd2DstH Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       "@0*@1",
-      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters, _runType>::Get()
+      RooArgList(SpecialisedVars<_neutral, _bachelor, _daughters>::Get()
                      .N_Dh_Bd2DstH(),
                  NeutralBachelorVars<_neutral, _bachelor>::Get().bachEff())));
   bu2D0HMissIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -233,7 +228,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
       "@0*@1",
       RooArgList(
           SpecialisedVars<_neutral, SwapBachelor<_bachelor>(),
-                          _daughters, _runType>::Get()
+                          _daughters>::Get()
               .N_Dh_Bu2D0H(),
           NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate())));
   combinatorialYield_ = std::unique_ptr<RooRealVar>(new RooRealVar(
@@ -263,7 +258,7 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
 
   std::cout
       << "N_D" << EnumToString(SwapBachelor<_bachelor>()) << " * MissIDRate = "
-      << SpecialisedVars<_neutral, SwapBachelor<_bachelor>(), _daughters, _runType>::Get()
+      << SpecialisedVars<_neutral, SwapBachelor<_bachelor>(), _daughters>::Get()
                  .N_Dh()
                  .getVal() *
              NeutralBachelorVars<_neutral, _bachelor>::Get()
@@ -293,9 +288,8 @@ Pdf<_neutral, _bachelor, _daughters, _runType>::Pdf()
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          RunType _runType>
-void Pdf<_neutral, _bachelor, _daughters, _runType>::CreateRooAddPdf() {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
 
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().signal());
@@ -338,9 +332,8 @@ void Pdf<_neutral, _bachelor, _daughters, _runType>::CreateRooAddPdf() {
 
 // Assign miss-ID yields in a separate function after the PDF objects have been
 // constructed to avoid cyclic dependancy (deadlock)
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          RunType _runType>
-void Pdf<_neutral, _bachelor, _daughters, _runType>::AssignMissIdYields() {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+void Pdf<_neutral, _bachelor, _daughters>::AssignMissIdYields() {
 
   switch (_bachelor) {
   case Bachelor::pi:
@@ -351,7 +344,7 @@ void Pdf<_neutral, _bachelor, _daughters, _runType>::AssignMissIdYields() {
         "@0*(1-@1)*@2",
         RooArgList(
             SpecialisedVars<_neutral, SwapBachelor<_bachelor>(),
-                            _daughters, _runType>::Get()
+                            _daughters>::Get()
                 .N_Dh(),
             NeutralVars<_neutral>::Get().crossFeedRate(),
             NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate())));
@@ -361,9 +354,9 @@ void Pdf<_neutral, _bachelor, _daughters, _runType>::AssignMissIdYields() {
         ("missIdYield_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
         "missId yield", "@0*(@1+@2)",
         RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate(),
-                   Pdf<_neutral, Bachelor::pi, _daughters, _runType>::Get()
+                   Pdf<_neutral, Bachelor::pi, _daughters>::Get()
                        .signalYield(),
-                   Pdf<_neutral, Bachelor::pi, _daughters, _runType>::Get()
+                   Pdf<_neutral, Bachelor::pi, _daughters>::Get()
                        .nonTmSignalYield())));
     break;
   }

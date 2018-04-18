@@ -1,10 +1,9 @@
 #include "Pdf.h"
 #include "Configuration.h"
 
-PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters,
-                 RunType runType)
+PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
     : neutral_(neutral), bachelor_(bachelor), daughters_(daughters),
-      runType_(runType), addPdf_(nullptr), signalYield_(nullptr),
+      addPdf_(nullptr), signalYield_(nullptr),
       crossFeedYield_(nullptr), nonTmSignalYield_(nullptr),
       bu2Dst0Hst_D0pi0Yield_(nullptr), bu2Dst0Hst_D0gammaYield_(nullptr),
       bu2D0HYield_(nullptr), bu2D0HstYield_(nullptr), bd2DstHYield_(nullptr),
