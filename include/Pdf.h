@@ -21,11 +21,14 @@ public:
   Neutral neutral() const { return neutral_; }
   Daughters daughters() const { return daughters_; }
 
+  RooRealVar &lambdaComb() { return lambdaComb_; }
   RooAbsReal &yieldSignal() { return *yieldSignal_; }
+  RooAbsReal &yieldComb() { return *yieldComb_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
 
   virtual RooAbsPdf &pdfSignal() const = 0;
+  virtual RooAbsPdf &pdfComb() const = 0;
 
 protected:
   PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters);
@@ -35,7 +38,9 @@ protected:
   Bachelor bachelor_;
   Daughters daughters_;
 
+  RooRealVar lambdaComb_;
   std::unique_ptr<RooAbsReal> yieldSignal_;
+  std::unique_ptr<RooAbsReal> yieldComb_;
   RooArgList yields_;
   RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
@@ -56,6 +61,9 @@ public:
   virtual RooAbsPdf &pdfSignal() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal();
   }
+  virtual RooAbsPdf &pdfComb() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfComb();
+  }
 
 private:
   Pdf();
@@ -70,7 +78,10 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
   yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
-      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(), 1000, 0 5000);
+      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(), 1000, 0, 5000);
+  yieldComb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+      ("yieldComb_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
+      ("Combinatorial Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(), 1000, 0, 5000);
 
   CreateRooAddPdf();
 }
@@ -83,8 +94,11 @@ void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
 
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
+  PdfBase::functions_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get().pdfComb());
 
   PdfBase::yields_.add(*PdfBase::yieldSignal_);
+  PdfBase::yields_.add(*PdfBase::yieldComb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
       ("pdf_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
