@@ -84,8 +84,7 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
-  PdfBase::functions_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get().pdfComb());
+  PdfBase::functions_.add(PdfBase::pdfComb());
 
   PdfBase::yields_.add(PdfBase::yieldSignal_);
   PdfBase::yields_.add(PdfBase::yieldComb_);

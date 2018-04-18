@@ -19,18 +19,15 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp  src/RooCruijff src/NeutralBachelorVars.cpp src/DaughtersVars.cpp src/NeutralDaughtersVars.cpp src/Pdf.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/LoopOverFiles.py src/NeutralVars.cpp src/NeutralBachelorVars.cpp src/Pdf.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
 #${variable} expands variable
 add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
 add_executable(Fitting src/Fitting.cpp)
-add_executable(ToysTest src/ToysTest.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
 target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
 target_link_libraries(Fitting ${FITTING_LIBS})
-target_link_libraries(ToysTest ${FITTING_LIBS})
-
