@@ -14,13 +14,13 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
           ("yieldComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial Yield " + ComposeName(neutral, bachelor, daughters))
               .c_str(),
-          1000, 0, 5000),
+          100, 0, 500),
       lambdaComb_(
           ("lambdaComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial constant " +
            ComposeName(neutral, bachelor, daughters))
               .c_str(),
-          -1),
+          -0.1, -1, 1),
       pdfComb_(
           ("pdfComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial PDF " + ComposeName(neutral, bachelor, daughters))

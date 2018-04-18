@@ -43,7 +43,6 @@ public:
   RooArgSet &fullArgSet() { return fullArgSet_; }
   Categories &categories() { return categories_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
-  RooConstVar &R_Dk_vs_Dpi_Bd2DstH() { return R_Dk_vs_Dpi_Bd2DstH_; }
 
 private:
   Configuration();
@@ -59,7 +58,6 @@ private:
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
   RooConstVar relativeWidth_;
-  RooConstVar R_Dk_vs_Dpi_Bd2DstH_;
 };
 
 

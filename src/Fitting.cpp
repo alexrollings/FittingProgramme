@@ -31,29 +31,31 @@
 #include "ParseArguments.h"
 #include "Pdf.h"
 
-void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
-              Configuration &config, Configuration::Categories &categories,
-              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-              RooFitResult *result) {
-  // -------------- Set Style Attributes ------------------
-
+void SetStyle() {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
   gStyle->SetStatFontSize(0.04);
-  gStyle->SetTitleSize(0.08, "Z");
-  gStyle->SetTitleSize(0.045, "XY");
-  gStyle->SetLabelSize(0.04, "XY");
+  gStyle->SetTitleSize(0.06, "Z");
+  gStyle->SetTitleSize(0.03, "XY");
+  gStyle->SetLabelSize(0.024, "XY");
   gStyle->SetLegendFont(132);
-  gStyle->SetTitleOffset(0.85, "X");
-  gStyle->SetTitleOffset(0.95, "Y");
+  gStyle->SetTitleOffset(0.9, "X");
+  gStyle->SetTitleOffset(1.1, "Y");
   gStyle->SetTitleOffset(0.9, "Z");
-  // gStyle->SetLegendTextSize(0.08);
+  gStyle->SetLegendTextSize(0.03);
   gStyle->SetPadTopMargin(0.1);
   gStyle->SetPadRightMargin(0.03);
   gStyle->SetPadBottomMargin(0.09);
   gStyle->SetPadLeftMargin(0.1);
+}
 
+void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
+              Configuration &config, Configuration::Categories &categories,
+              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+              RooFitResult *result) {
+
+  SetStyle();
   // --------------- create frame ---------------------
 
   Bachelor bachelor = pdf.bachelor();
@@ -70,8 +72,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   std::unique_ptr<RooPlot> frame(config.buMass().frame(RooFit::Title(
       ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D}" + neutralLabel +
-       "#font[132]{]}_{D^{*}}" + bachelorLabel + "^{" + chargeLabel + "}")
+       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
+       "#font[132]{]}_{D^{*0}}" + bachelorLabel + "^{" + chargeLabel + "}")
           .c_str())));
 
   // --------- Create histogram of data to plot on top of fit ----------
@@ -117,6 +119,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfComb()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kRed));
+  frame->SetXTitle(("m[D*^{0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
 
   // ------------- Draw Legend --------------
 
@@ -134,7 +137,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pdfCombHist->SetLineStyle(kDashed);
   pdfCombHist->SetLineWidth(2);
 
-  auto legend = std::make_unique<TLegend>(0.6, 0.35, 0.97, 0.90);
+  auto legend = std::make_unique<TLegend>(0.7, 0.7, 0.97, 0.90);
   // legend->SetHeader("Physics Backgrounds");
   legend->AddEntry(
       pdfSignalHist.get(),
@@ -156,14 +159,14 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   TCanvas canvas(
       ("simPdf_" + ComposeName(neutral, bachelor, daughters)).c_str(), "simPdf",
-      1500, 900);
+      1200, 1000);
 
   TPad pad2(("pad2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "pad2", 0.0, 0.1, 1.0, 0.20, kWhite);
+            "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
 
   TPad pad1(("pad1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "pad1", 0.0, 0.19, 1.0, 1.0, kWhite);
+            "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
   pad1.Draw();
 
   // Zero line on error plot.
@@ -202,7 +205,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
             // << backgroundYield.getError()
             << " events";
 
-  gStyle->SetLegendTextSize(0.03);
   yieldLegend->SetLineColor(kWhite);
   // yieldLegend->AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}",
   //                       "l");
@@ -210,10 +212,10 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
 
   pad1.cd();
-  pullFrame->SetXTitle(("m[D*^{0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
+  pullFrame->SetXTitle(("m[D^{*0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
   frame->Draw();
   legend->Draw("same");
-  yieldLegend->Draw("same");
+  // yieldLegend->Draw("same");
   // dataHist->Draw("same");
 
   canvas.Update();
@@ -259,24 +261,9 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
   result->Print("v");
   std::cout << "Printed result." << std::endl;
 
-  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 2000,
+  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
                             1000);
   std::cout << "Created canvas." << std::endl;
-  gStyle->SetTitleFont(132, "XYZ");
-  gStyle->SetLabelFont(132, "XYZ");
-  gStyle->SetStatFont(132);
-  gStyle->SetStatFontSize(0.04);
-  gStyle->SetTitleSize(0.08, "Z");
-  gStyle->SetTitleSize(0.02, "XY");
-  gStyle->SetLabelSize(0.02, "XY");
-  gStyle->SetTitleOffset(0.85, "X");
-  gStyle->SetTitleOffset(0.95, "Y");
-  gStyle->SetTitleOffset(0.9, "Z");
-  // gStyle->SetLegendTextSize(0.08);
-  gStyle->SetPadTopMargin(0.1);
-  gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.09);
-  gStyle->SetPadLeftMargin(0.1);
   correlationCanvas.cd();
   std::cout << "Extracting correlation histogram from result..." << std::endl;
   result->correlationHist()->Draw("colz");
@@ -764,21 +751,24 @@ int main(int argc, char **argv) {
       std::cout << "    -charge=<choice {plus,minus} default: " << chargeArg
                 << ">\n";
       std::cout << "    -toys"
-                << ">\n";
+                <<  " (optional)\n";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "\n";
+
+      return 1;
     } else {
       // Data folder
-      if (!args("dataDir", dataDir)) {
+      runToys = args("toys");
+
+      if (!args("dataDir", dataDir) && runToys==false) {
         std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
         return 1;
       }
 
-      runToys = args("toys");
-
+      //
       // Year
       // args matches "year" to string given in command line and assigns
       // option

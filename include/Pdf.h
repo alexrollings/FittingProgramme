@@ -74,7 +74,6 @@ class Pdf : public PdfBase {
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
-
   CreateRooAddPdf();
 }
 
