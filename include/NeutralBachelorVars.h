@@ -5,6 +5,7 @@
 #include "NeutralVars.h" 
 #include "Configuration.h" 
 #include "RooConstVar.h"
+#include "RooGaussian.h"
 
 // Bachelor
 
@@ -16,7 +17,7 @@ public:
     return singleton;
   }
 
-  RooAbsReal &sigmaSignal() { return *sigmaSignal1_; }
+  RooAbsReal &sigmaSignal() { return *sigmaSignal_; }
   RooGaussian &pdfSignal() { return pdfSignal_; }
 
 private:

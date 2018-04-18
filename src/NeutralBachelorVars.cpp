@@ -1,11 +1,6 @@
 #include "NeutralBachelorVars.h"
 #include "Configuration.h"
 #include "NeutralVars.h"
-#include "RooBifurGauss.h"
-#include "RooCBShape.h"
-// #include "RooCruijff.h"
-#include "RooGaussian.h"
-#include "RooPolynomial.h"
 
 // Bachelor specializations
 
@@ -19,7 +14,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars()
                                   150)),
       pdfSignal_(
           "pdfSignal_gamma_pi", "Signal PDF", Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get().meanSignal(), sigmaSignal_) {}
+          NeutralVars<Neutral::gamma>::Get().meanSignal(), *sigmaSignal_) {}
 
 template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars()
@@ -30,7 +25,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars()
                      Configuration::Get().relativeWidth()))),
       pdfSignal_(
           "pdfSignal_gamma_k", "Signal PDF", Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get().meanSignal(), sigmaSignal_) {}
+          NeutralVars<Neutral::gamma>::Get().meanSignal(), *sigmaSignal_) {}
 
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars()
@@ -39,7 +34,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars()
                                   100)),
       pdfSignal_("pdfSignal_pi0_pi", "Signal PDF",
                  Configuration::Get().buMass(),
-                 NeutralVars<Neutral::pi0>::Get().meanSignal(), sigmaSignal_) {}
+                 NeutralVars<Neutral::pi0>::Get().meanSignal(), *sigmaSignal_) {}
 
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars()
@@ -49,4 +44,4 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars()
                          .sigmaSignal(),
                      Configuration::Get().relativeWidth()))),
       pdfSignal_("pdfSignal_pi0_k", "Signal PDF", Configuration::Get().buMass(),
-                 NeutralVars<Neutral::pi0>::Get().meanSignal(), sigmaSignal_) {}
+                 NeutralVars<Neutral::pi0>::Get().meanSignal(), *sigmaSignal_) {}
