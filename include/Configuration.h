@@ -38,6 +38,7 @@ public:
 
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
+  RooRealVar &deltaMass() { return deltaMass_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
@@ -54,6 +55,7 @@ private:
   Categories categories_;
   RooRealVar buMass_;
   RooRealVar buPdgId_;
+  RooRealVar deltaMass_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;

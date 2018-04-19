@@ -20,14 +20,20 @@ class PdfBase {
   Neutral neutral() const { return neutral_; }
   Daughters daughters() const { return daughters_; }
 
-  RooRealVar &lambdaComb() { return lambdaComb_; }
-  RooExponential &pdfComb() { return pdfComb_; }
+  RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
+  RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
+  RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
+  RooExponential &pdfBuComb() { return pdfBuComb_; }
+  RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
+  RooProdPdf &pdfComb() { return pdfComb_; }
   RooRealVar &yieldSignal() { return yieldSignal_; }
   RooRealVar &yieldComb() { return yieldComb_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
 
-  virtual RooAbsPdf &pdfSignal() const = 0;
+  virtual RooProdPdf &pdfSignal() const = 0;
+  virtual RooGaussian &pdfDeltaSignal() const = 0;
+  virtual RooGaussian &pdfBuSignal() const = 0;
 
  protected:
   PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters);
@@ -37,8 +43,12 @@ class PdfBase {
   Bachelor bachelor_;
   Daughters daughters_;
 
-  RooRealVar lambdaComb_;
-  RooExponential pdfComb_;
+  RooRealVar lambdaDeltaComb_;
+  RooRealVar a0LambdaBuComb_;
+  RooPolyVar lambdaBuComb_;
+  RooExponential pdfBuComb_;
+  RooExponential pdfDeltaComb_;
+  RooProdPdf pdfComb_;
   RooRealVar yieldSignal_;
   RooRealVar yieldComb_;
   RooArgList yields_;
@@ -59,8 +69,14 @@ class Pdf : public PdfBase {
 
   // pdfSignal made in another class, but we only deal with PDF in the
   // executable. Give PDF functions to retrieve them
-  virtual RooAbsPdf &pdfSignal() const {
+  virtual RooProdPdf &pdfSignal() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal();
+  }
+  virtual RooGaussian &pdfDeltaSignal() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfDeltaSignal();
+  }
+  virtual RooGaussian &pdfBuSignal() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfBuSignal();
   }
 
  private:

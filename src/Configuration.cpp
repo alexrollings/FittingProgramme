@@ -1,7 +1,7 @@
 #include "Configuration.h"
 
 Configuration::Configuration()
-    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""),
+    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""), deltaMass_("", "", 0, 0, ""),
       relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
                      0.95) {
 
@@ -22,8 +22,16 @@ Configuration::Configuration()
   buPdgId_.setMin(-550);
   buPdgId_.setUnit(kNoUnit);
 
+  deltaMass_.SetName("Delta_M");
+  deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
+  deltaMass_.setMax(80);
+  deltaMass_.setMin(240);
+  deltaMass_.setBins(80);
+  deltaMass_.setUnit(kMassUnit);
+
   variableArgSet_.add(buMass_);
   variableArgSet_.add(buPdgId_);
+  variableArgSet_.add(deltaMass_);
 
   categoryArgSet_.add(categories().polarity);
   categoryArgSet_.add(categories().charge);
@@ -34,6 +42,7 @@ Configuration::Configuration()
   categoryArgSet_.add(categories().fitting);
 
   fullArgSet_.add(buMass_);
+  fullArgSet_.add(deltaMass_);
   fullArgSet_.add(categoryArgSet_);
 }
 // Categories is a class within a class !!!

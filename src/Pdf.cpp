@@ -15,17 +15,40 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
           ("Combinatorial Yield " + ComposeName(neutral, bachelor, daughters))
               .c_str(),
           100, 0, 500),
-      lambdaComb_(
-          ("lambdaComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-          ("Combinatorial constant " +
+      lambdaDeltaComb_(
+          ("lambdaDeltaComb_" + ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          ("Delta Combinatorial constant " +
            ComposeName(neutral, bachelor, daughters))
               .c_str(),
           -0.1, -1, 1),
+      a0LambdaBuComb_(
+          ("a0LambdaBuComb_" + ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          ("a0 component for Bu Combinatorial constant " +
+           ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          -0.1, -1, 1),
+      lambdaBuComb_(
+          ("lambdaBuComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+          ("Bu Combinatorial constant " +
+           ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
+      pdfDeltaComb_(
+          ("pdfDeltaComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+          ("DeltaCombinatorial PDF " + ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          Configuration::Get().deltaMass(), lambdaDeltaComb_),
+      pdfBuComb_(
+          ("pdfBuComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+          ("BuCombinatorial PDF " + ComposeName(neutral, bachelor, daughters))
+              .c_str(),
+          Configuration::Get().buMass(), lambdaBuComb_),
       pdfComb_(
           ("pdfComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial PDF " + ComposeName(neutral, bachelor, daughters))
-              .c_str(),
-          Configuration::Get().buMass(), lambdaComb_),
+              .c_str(), pdfDeltaComb_, RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
       yields_(("yields_" + ComposeName(neutral, bachelor, daughters)).c_str()),
       functions_(
           ("functions_" + ComposeName(neutral, bachelor, daughters)).c_str()) {}

@@ -1,5 +1,6 @@
 #pragma once
 #include "Configuration.h"
+#include "RooPolyVar.h"
 
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -29,7 +30,9 @@ public:
   }
 
   // If RooShit wasn't so shit we would pass a const reference
-  RooRealVar &meanSignal() { return meanSignal_; }
+  RooRealVar &meanDeltaSignal() { return meanDeltaSignal_; }
+  RooRealVar &a0MeanBuSignal() { return a0MeanBuSignal_; }
+  RooPolyVar &meanBuSignal() { return meanBuSignal_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -39,7 +42,9 @@ private:
 
   // Indicate if only used by one neutral
 
-  RooRealVar meanSignal_;
+  RooRealVar meanDeltaSignal_;
+  RooRealVar a0MeanBuSignal_;
+  RooPolyVar meanBuSignal_;
 };
 
 // Now we just need to define the constructors separately so the values are

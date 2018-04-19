@@ -5,12 +5,32 @@
 
 template <>
 NeutralVars<Neutral::gamma>::NeutralVars()
-    : meanSignal_(("meanSignal_" + ComposeName(Neutral::gamma)).c_str(),
-                  ("Mean of Signal PDF " + ComposeName(Neutral::gamma)).c_str(), 5281,
-                  5276, 5286) {}
+    : meanDeltaSignal_(
+          ("meanDeltaSignal" + ComposeName(Neutral::gamma)).c_str(),
+          ("Mean of Signal m[Delta]" + ComposeName(Neutral::gamma)).c_str(),
+          130, 125, 135),
+      a0MeanBuSignal_(
+          ("a0MeanBuSignal" + ComposeName(Neutral::gamma)).c_str(),
+          ("a0 of mean of Signal m[Bu] PDF " + ComposeName(Neutral::gamma))
+              .c_str(),
+          5281, 5276, 5286),
+      meanBuSignal_(
+          ("meanDeltaSignal" + ComposeName(Neutral::gamma)).c_str(),
+          ("Mean of Signal m[Delta]" + ComposeName(Neutral::gamma)).c_str(),
+          Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars()
-    : meanSignal_(("meanSignal_" + ComposeName(Neutral::pi0)).c_str(),
-                  ("Mean of Signal PDF " + ComposeName(Neutral::pi0)).c_str(), 5279,
-                  5274, 5284) {}
+    : meanDeltaSignal_(
+          ("meanDeltaSignal" + ComposeName(Neutral::pi0)).c_str(),
+          ("Mean of Signal m[Delta]" + ComposeName(Neutral::pi0)).c_str(), 135,
+          130, 140),
+      a0MeanBuSignal_(
+          ("a0MeanBuSignal_" + ComposeName(Neutral::pi0)).c_str(),
+          ("a0 of mean of Signal m[Bu] PDF " + ComposeName(Neutral::pi0))
+              .c_str(),
+          5279, 5274, 5284),
+      meanBuSignal_(
+          ("meanDeltaSignal" + ComposeName(Neutral::pi0)).c_str(),
+          ("Mean of Signal m[Delta]" + ComposeName(Neutral::pi0)).c_str(),
+          Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}
