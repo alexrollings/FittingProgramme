@@ -257,8 +257,16 @@ std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters)
   return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" + EnumToString(daughters);
 }
 
+std::string ComposeName(Neutral neutral, Bachelor bachelor) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor);
+}
+
 std::string ComposeName(Neutral neutral, Daughters daughters) {
   return EnumToString(neutral) + "_" + EnumToString(daughters);
+}
+
+std::string ComposeName(Neutral neutral) {
+  return EnumToString(neutral);
 }
 
 std::string EnumToLabel(std::vector<Charge> chargeVec) {

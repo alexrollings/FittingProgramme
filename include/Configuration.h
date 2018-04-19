@@ -83,8 +83,9 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Charge charge);
 
 std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters);
-
+std::string ComposeName(Neutral neutral, Bachelor bachelor);
 std::string ComposeName(Neutral neutral, Daughters daughters);
+std::string ComposeName(Neutral neutral);
 
 template <Neutral neutral>
 constexpr Neutral SwapNeutral();
