@@ -50,6 +50,8 @@ void SetStyle() {
   gStyle->SetPadLeftMargin(0.1);
 }
 
+std::string path;
+
 void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
               RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
@@ -220,7 +222,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   canvas.Update();
   canvas.SaveAs(
-      ("Result_" + ComposeName(neutral, bachelor, daughters) + ".pdf").c_str());
+      (path + ComposeName(neutral, bachelor, daughters) + ".pdf").c_str());
 }
 
 // void GenerateToyDataSet(const &simPdf, Configuration &config,
@@ -901,10 +903,12 @@ int main(int argc, char **argv) {
     //   }
     // }
 
+    path = "result/";
     Fitting(fullDataSet, config, categories, neutralVec, daughtersVec,
             chargeVec);
 
   } else {
+    path = "toys/";
     Fitting(config, categories, neutralVec, daughtersVec, chargeVec);
   }
 
