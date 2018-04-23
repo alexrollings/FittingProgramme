@@ -15,8 +15,8 @@ NeutralVars<Neutral::gamma>::NeutralVars()
               .c_str(),
           5281, 5276, 5286),
       meanBuSignal_(
-          ("meanDeltaSignal" + ComposeName(Neutral::gamma)).c_str(),
-          ("Mean of Signal m[Delta]" + ComposeName(Neutral::gamma)).c_str(),
+          ("meanBuSignal" + ComposeName(Neutral::gamma)).c_str(),
+          ("Mean of Signal m[Bu]" + ComposeName(Neutral::gamma)).c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}
 
 template <>
@@ -31,6 +31,6 @@ NeutralVars<Neutral::pi0>::NeutralVars()
               .c_str(),
           5279, 5274, 5284),
       meanBuSignal_(
-          ("meanDeltaSignal" + ComposeName(Neutral::pi0)).c_str(),
-          ("Mean of Signal m[Delta]" + ComposeName(Neutral::pi0)).c_str(),
+          ("meanBuSignal" + ComposeName(Neutral::pi0)).c_str(),
+          ("Mean of Signal m[Bu]" + ComposeName(Neutral::pi0)).c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}

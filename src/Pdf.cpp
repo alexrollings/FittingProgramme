@@ -34,7 +34,7 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
           ("Bu Combinatorial constant " +
            ComposeName(neutral, bachelor, daughters))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
+          Configuration::Get().deltaMass(), RooArgList(a0LambdaBuComb_)),
       pdfDeltaComb_(
           ("pdfDeltaComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("DeltaCombinatorial PDF " + ComposeName(neutral, bachelor, daughters))
