@@ -54,7 +54,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
               RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
               RooFitResult *result) {
-
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -69,9 +68,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   std::string hstLabel = HstLabel(bachelor);
   std::string missIdLabel = MissIdLabel(bachelor);
 
-
   // .get() gets the raw pointer from underneath the smart pointer
-  
+
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
       ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
@@ -125,7 +123,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
-  
+
   std::unique_ptr<RooPlot> frameBu(config.buMass().frame(RooFit::Title(
       ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
        daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
@@ -155,16 +153,17 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfBuSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlue));
-  // simPdf.plotOn(
-  //     frameBu.get(),
-  //     RooFit::Slice(categories.fitting,
-  //                   ComposeName(neutral, bachelor, daughters).c_str()),
-  //     RooFit::ProjWData(categories.fitting, fullDataSet),
-  //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
-  //     RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frameBu.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kRed));
   frameBu->SetXTitle(("m[D*^{0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
 
-  std::unique_ptr<RooPlot> pullFrameBu(config.buMass().frame(RooFit::Title(" ")));
+  std::unique_ptr<RooPlot> pullFrameBu(
+      config.buMass().frame(RooFit::Title(" ")));
 
   pullFrameBu->addPlotable(hPullBu /* .get() */, "P");
   pullFrameBu->SetName(
@@ -172,17 +171,17 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pullFrameBu->SetTitle("");
 
   // --------------- plot onto canvas ---------------------
-  
+
   TCanvas canvasBu(
-      ("canvasBu_" + ComposeName(neutral, bachelor, daughters)).c_str(), "canvasBu",
-      1200, 1000);
+      ("canvasBu_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "canvasBu", 1200, 1000);
 
   TPad padBu2(("padBu2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "padBu2", 0.0, 0.05, 1.0, 0.15, kWhite);
+              "padBu2", 0.0, 0.05, 1.0, 0.15, kWhite);
   padBu2.Draw();
 
   TPad padBu1(("padBu1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "padBu1", 0.0, 0.14, 1.0, 1.0, kWhite);
+              "padBu1", 0.0, 0.14, 1.0, 1.0, kWhite);
   padBu1.Draw();
 
   // Zero line on error plot.
@@ -204,7 +203,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   canvasBu.cd();
   padBu1.cd();
-  pullFrameBu->SetXTitle(("m[D^{*0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
+  pullFrameBu->SetXTitle(
+      ("m[D^{*0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
   frameBu->Draw();
   legend->Draw("same");
   // yieldLegend->Draw("same");
@@ -212,10 +212,11 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   canvasBu.Update();
   canvasBu.SaveAs(
-      (path + ComposeName(neutral, bachelor, daughters) + "_buMass.pdf").c_str());
+      (path + ComposeName(neutral, bachelor, daughters) + "_buMass.pdf")
+          .c_str());
 
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
-  
+
   std::unique_ptr<RooPlot> frameDelta(config.deltaMass().frame(RooFit::Title(
       ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
        daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
@@ -257,16 +258,17 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfDeltaSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlue));
-  // simPdf.plotOn(
-  //     frameDelta.get(),
-  //     RooFit::Slice(categories.fitting,
-  //                   ComposeName(neutral, bachelor, daughters).c_str()),
-  //     RooFit::ProjWData(categories.fitting, fullDataSet),
-  //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
-  //     RooFit::LineColor(kRed));
+  simPdf.plotOn(
+      frameDelta.get(),
+      RooFit::Slice(categories.fitting,
+                    ComposeName(neutral, bachelor, daughters).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+      RooFit::LineColor(kRed));
   frameDelta->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
 
-  std::unique_ptr<RooPlot> pullFrameDelta(config.deltaMass().frame(RooFit::Title(" ")));
+  std::unique_ptr<RooPlot> pullFrameDelta(
+      config.deltaMass().frame(RooFit::Title(" ")));
 
   pullFrameDelta->addPlotable(hPullDelta /* .get() */, "P");
   pullFrameDelta->SetName(
@@ -276,15 +278,17 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // --------------- plot onto canvas ---------------------
 
   TCanvas canvasDelta(
-      ("canvasDelta_" + ComposeName(neutral, bachelor, daughters)).c_str(), "canvasDelta",
-      1200, 1000);
+      ("canvasDelta_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "canvasDelta", 1200, 1000);
 
-  TPad padDelta2(("padDelta2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "padDelta2", 0.0, 0.05, 1.0, 0.15, kWhite);
+  TPad padDelta2(
+      ("padDelta2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "padDelta2", 0.0, 0.05, 1.0, 0.15, kWhite);
   padDelta2.Draw();
 
-  TPad padDelta1(("padDelta1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-            "padDelta1", 0.0, 0.14, 1.0, 1.0, kWhite);
+  TPad padDelta1(
+      ("padDelta1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "padDelta1", 0.0, 0.14, 1.0, 1.0, kWhite);
   padDelta1.Draw();
 
   TLine zeroLineDelta(80, 0, 240, 0);
@@ -303,7 +307,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pullFrameDelta->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
   pullFrameDelta->Draw();
   zeroLineDelta.Draw("same");
-  
+
   canvasDelta.cd();
   padDelta1.cd();
   frameDelta->Draw();
@@ -313,9 +317,11 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   canvasDelta.Update();
   canvasDelta.SaveAs(
-      (path + ComposeName(neutral, bachelor, daughters) + "_deltaMass.pdf").c_str());
-  
-  // --------------- 2D PLOTTING - separate this out into a separate function ---------------- //
+      (path + ComposeName(neutral, bachelor, daughters) + "_deltaMass.pdf")
+          .c_str());
+
+  // --------------- 2D PLOTTING - separate this out into a separate function
+  // ---------------- //
 
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
@@ -324,10 +330,13 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   gStyle->SetTitleOffset(1.2, "Z");
   gStyle->SetPadRightMargin(0.15);
 
- //Make two-dimensional plot of sampled PDF in x vs y
+  // Make two-dimensional plot of sampled PDF in x vs y
   TH2F *hh_model = (TH2F *)simPdf.createHistogram(
-      ("hh_model_" + ComposeName(neutral, bachelor, daughters)).c_str(), config.buMass(), RooFit::Binning(76),
-      RooFit::YVar(config.deltaMass(), RooFit::Binning(80))); // ***** Make binning accessible ***** //
+      ("hh_model_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      config.buMass(), RooFit::Binning(76),
+      RooFit::YVar(
+          config.deltaMass(),
+          RooFit::Binning(80)));  // ***** Make binning accessible ***** //
   hh_model->SetTitle("");
 
   // Make 2D plot of data
@@ -340,7 +349,9 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // Scale model plot to total number of data events
   hh_model->Scale(hh_data->Integral());
 
-  TCanvas *canvasModel = new TCanvas(("canvasModel_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 1000, 800);
+  TCanvas *canvasModel = new TCanvas(
+      ("canvasModel_" + ComposeName(neutral, bachelor, daughters)).c_str(), "",
+      1000, 800);
   hh_model->SetStats(0);
   hh_model->Draw("colz");
   hh_model->SetTitle(
@@ -350,10 +361,14 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
           .c_str());
   hh_model->Draw("colz");
   canvasModel->Update();
-  canvasModel->SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_2dPDF.pdf").c_str());
+  canvasModel->SaveAs(
+      (path + ComposeName(neutral, bachelor, daughters) + "_2dPDF.pdf")
+          .c_str());
 
   // 2D data plot
-  TCanvas *canvasData = new TCanvas(("canvasData_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 1000, 800);
+  TCanvas *canvasData = new TCanvas(
+      ("canvasData_" + ComposeName(neutral, bachelor, daughters)).c_str(), "",
+      1000, 800);
   hh_data->SetStats(0);
   hh_data->Draw("colz");
   hh_data->SetTitle(
@@ -363,11 +378,14 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
           .c_str());
   hh_data->Draw("colz");
   canvasData->Update();
-  canvasData->SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_2dData.pdf").c_str());
+  canvasData->SaveAs(
+      (path + ComposeName(neutral, bachelor, daughters) + "_2dData.pdf")
+          .c_str());
 
   // Make a histogram with the Poisson stats in each data bin
   TH2F *hh_err =
-      new TH2F(("hh_err_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 76, 5045, 5805, 80, 80, 240);
+      new TH2F(("hh_err_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+               "", 76, 5045, 5805, 80, 80, 240);
   for (int i = 0; i < 76 * 80; i++) {
     float n_bin = hh_data->GetBinContent(i);
     float err = sqrt(n_bin);
@@ -375,7 +393,9 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   }
 
   // 2D residuals plot (data - PDF)/err
-  TCanvas *canvasRes = new TCanvas(("canvasRes_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 1000, 800);
+  TCanvas *canvasRes = new TCanvas(
+      ("canvasRes_" + ComposeName(neutral, bachelor, daughters)).c_str(), "",
+      1000, 800);
   canvasRes->cd();
   TH2F *hh_data_new = (TH2F *)hh_data->Clone();
   hh_data_new->Add(hh_model, -1);
@@ -386,7 +406,9 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   hh_data_new->SetStats(0);
   hh_data_new->Draw("colz");
   canvasRes->Update();
-  canvasRes->SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_2dResiduals.pdf").c_str());
+  canvasRes->SaveAs(
+      (path + ComposeName(neutral, bachelor, daughters) + "_2dResiduals.pdf")
+          .c_str());
 }
 
 // void GenerateToyDataSet(const &simPdf, Configuration &config,
@@ -836,6 +858,21 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
   std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
 
   FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
+
+  // RooDataSet *toyDataSet = simPdf.generate(
+  //     RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+  //     10000);
+  //
+  // RooSimultaneous *simPdfFit =
+  //     new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+  //
+  // simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+
+  //   // SET VALUE AWAY FROM REAL VALUE
+  //   // delta_mean_1.setVal(130);
+
+  // FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, chargeVec,
+  // pdfs);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -918,7 +955,7 @@ int main(int argc, char **argv) {
       std::cout << "    -charge=<choice {plus,minus} default: " << chargeArg
                 << ">\n";
       std::cout << "    -toys"
-                <<  " (optional)\n";
+                << " (optional)\n";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
@@ -930,7 +967,7 @@ int main(int argc, char **argv) {
       // Data folder
       runToys = args("toys");
 
-      if (!args("dataDir", dataDir) && runToys==false) {
+      if (!args("dataDir", dataDir) && runToys == false) {
         std::cerr << "Data directory must be specified (-dataDir=<path>)\n";
         return 1;
       }
