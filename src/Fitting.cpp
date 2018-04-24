@@ -347,7 +347,8 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   hh_data->SetTitle("");
 
   // Scale model plot to total number of data events
-  hh_model->Scale(hh_data->Integral());
+  // Scale of data and model should be the same: 1/Integral??
+  // hh_model->Scale(hh_data->Integral());
 
   TCanvas *canvasModel = new TCanvas(
       ("canvasModel_" + ComposeName(neutral, bachelor, daughters)).c_str(), "",
@@ -838,41 +839,44 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
   // around 0, i.e. the generated data matches the defined model.
 
   // categories.fitting
-  RooMCStudy mcStudy(
-      simPdf,
-      RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
-      RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
-      RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
-
-  std::cout << "Created MCStudy object." << std::endl;
-
-  int nSamples = 1;
-  int nEvtsPerSample = 60000;
-
-  mcStudy.generate(nSamples, nEvtsPerSample, true);
-
-  std::cout << "Generated toy events." << std::endl;
-
-  RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
-
-  std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
-
-  FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
-
-  // RooDataSet *toyDataSet = simPdf.generate(
-  //     RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-  //     10000);
+  // RooMCStudy mcStudy(
+  //     simPdf,
+  //     RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
+  //     RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
+  //     RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
   //
-  // RooSimultaneous *simPdfFit =
-  //     new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+  // std::cout << "Created MCStudy object." << std::endl;
   //
-  // simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+  // int nSamples = 1;
+  // int nEvtsPerSample = 60000;
+  //
+  // mcStudy.generate(nSamples, nEvtsPerSample, true);
+  //
+  // std::cout << "Generated toy events." << std::endl;
+  //
+  // RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
+  //
+  // std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
+  //
+  // FitSimPdfToData(*toyDataSet, simPdf, config, categories, chargeVec, pdfs);
 
-  //   // SET VALUE AWAY FROM REAL VALUE
-  //   // delta_mean_1.setVal(130);
+  // Need the number of generated events to be the sum of all predicted yields
+  double expectedEvents = simPdf.expectedEvents(categories.fitting);
 
-  // FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, chargeVec,
-  // pdfs);
+  RooDataSet *toyDataSet = simPdf.generate(
+      RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+      expectedEvents);
+
+  RooSimultaneous *simPdfFit =
+      new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+
+  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+
+    // SET VALUE AWAY FROM REAL VALUE
+    // delta_mean_1.setVal(130);
+
+  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, chargeVec,
+  pdfs);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
