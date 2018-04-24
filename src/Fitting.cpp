@@ -73,7 +73,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // .get() gets the raw pointer from underneath the smart pointer
   
   // ------------- Draw Legends -------------- //
-
   auto pdfSignalHist = std::make_unique<TH1D>(
       ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "pdfSignalHist", 0, 0, 0);
@@ -156,13 +155,13 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfBuSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlue));
-  simPdf.plotOn(
-      frameBu.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kRed));
+  // simPdf.plotOn(
+  //     frameBu.get(),
+  //     RooFit::Slice(categories.fitting,
+  //                   ComposeName(neutral, bachelor, daughters).c_str()),
+  //     RooFit::ProjWData(categories.fitting, fullDataSet),
+  //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+  //     RooFit::LineColor(kRed));
   frameBu->SetXTitle(("m[D*^{0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
 
   std::unique_ptr<RooPlot> pullFrameBu(config.buMass().frame(RooFit::Title(" ")));
@@ -239,8 +238,6 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
                                   ComposeName(neutral, bachelor, daughters))
                                      .c_str()));
 
-  std::unique_ptr<RooPlot> pullFrameDelta(config.buMass().frame(RooFit::Title(" ")));
-
   simPdf.plotOn(
       frameDelta.get(),
       RooFit::Slice(categories.fitting,
@@ -250,7 +247,10 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   // auto hpull = std::unique_ptr<RooHist>(
   //     dynamic_cast<RooHist *>(frameDelta->RooPlot::pullHist()));
-  RooHist *hPullDelta = frameDelta->RooPlot::pullHist();
+  // RooHist *hPullDelta = frameDelta->RooPlot::pullHist();
+  std::cout << "\n\n 1 \n\n" << std::endl;
+  // hPullDelta->SetName("test");
+  std::cout << "\n\n 2 \n\n" << std::endl;
 
   simPdf.plotOn(
       frameDelta.get(),
@@ -259,19 +259,26 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfDeltaSignal()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kBlue));
-  simPdf.plotOn(
-      frameDelta.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeName(neutral, bachelor, daughters).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kRed));
-  frameDelta->SetXTitle("m[D*^{0} - m[D^{0}] (MeV/c^{2})");
+  // simPdf.plotOn(
+  //     frameDelta.get(),
+  //     RooFit::Slice(categories.fitting,
+  //                   ComposeName(neutral, bachelor, daughters).c_str()),
+  //     RooFit::ProjWData(categories.fitting, fullDataSet),
+  //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+  //     RooFit::LineColor(kRed));
+  std::cout << "\n\n 8 \n\n" << std::endl;
+  frameDelta->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
 
-  pullFrameDelta->addPlotable(hPullDelta /* .get() */, "P");
-  pullFrameDelta->SetName(
-      ("pullFrameDelta_" + ComposeName(neutral, bachelor, daughters)).c_str());
-  pullFrameDelta->SetTitle("");
+  std::unique_ptr<RooPlot> pullFrameDelta(config.buMass().frame(RooFit::Title(" ")));
+  std::cout << "\n\n 9 \n\n" << std::endl;
+
+  // pullFrameDelta->addPlotable(hPullDelta #<{(| .get() |)}>#, "P");
+  std::cout << "\n\n 10 \n\n" << std::endl;
+  // pullFrameDelta->SetName(
+  //     ("pullFrameDelta_" + ComposeName(neutral, bachelor, daughters)).c_str());
+  std::cout << "\n\n 11 \n\n" << std::endl;
+  // pullFrameDelta->SetTitle("");
+  std::cout << "\n\n 12 \n\n" << std::endl;
 
   // --------------- plot onto canvas ---------------------
 
@@ -293,19 +300,19 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   canvasDelta.cd();
   padDelta2.cd();
-  pullFrameDelta->SetYTitle(" ");
-  pullFrameDelta->SetXTitle(" ");
-  pullFrameDelta->SetLabelSize(0.2, "Y");
-  pullFrameDelta->SetLabelFont(132, "XY");
-  pullFrameDelta->SetLabelOffset(100, "X");
-  // pullFrameDelta->SetLabelOffset(0.1, "Y");
-  pullFrameDelta->SetTitleOffset(100, "X");
-  pullFrameDelta->Draw();
-  zeroLineDelta.Draw("same");
+  // pullFrameDelta->SetYTitle(" ");
+  // pullFrameDelta->SetXTitle(" ");
+  // pullFrameDelta->SetLabelSize(0.2, "Y");
+  // pullFrameDelta->SetLabelFont(132, "XY");
+  // pullFrameDelta->SetLabelOffset(100, "X");
+  // // pullFrameDelta->SetLabelOffset(0.1, "Y");
+  // pullFrameDelta->SetTitleOffset(100, "X");
+  // pullFrameDelta->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
+  // pullFrameDelta->Draw();
+  // zeroLineDelta.Draw("same");
   
   canvasDelta.cd();
   padDelta1.cd();
-  pullFrameDelta->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
   frameDelta->Draw();
   legend->Draw("same");
   // yieldLegend->Draw("same");

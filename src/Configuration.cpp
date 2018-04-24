@@ -24,8 +24,8 @@ Configuration::Configuration()
 
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
-  deltaMass_.setMax(80);
-  deltaMass_.setMin(240);
+  deltaMass_.setMax(240);
+  deltaMass_.setMin(80);
   deltaMass_.setBins(80);
   deltaMass_.setUnit(kMassUnit);
 

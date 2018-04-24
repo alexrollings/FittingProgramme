@@ -20,14 +20,14 @@ class PdfBase {
   Neutral neutral() const { return neutral_; }
   Daughters daughters() const { return daughters_; }
 
-  RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
-  RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
-  RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
-  RooExponential &pdfBuComb() { return pdfBuComb_; }
-  RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
-  RooProdPdf &pdfComb() { return pdfComb_; }
+  // RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
+  // RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
+  // RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
+  // RooExponential &pdfBuComb() { return pdfBuComb_; }
+  // RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
+  // RooProdPdf &pdfComb() { return pdfComb_; }
   RooRealVar &yieldSignal() { return yieldSignal_; }
-  RooRealVar &yieldComb() { return yieldComb_; }
+  // RooRealVar &yieldComb() { return yieldComb_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
 
@@ -43,14 +43,14 @@ class PdfBase {
   Bachelor bachelor_;
   Daughters daughters_;
 
-  RooRealVar lambdaDeltaComb_;
-  RooRealVar a0LambdaBuComb_;
-  RooPolyVar lambdaBuComb_;
-  RooExponential pdfBuComb_;
-  RooExponential pdfDeltaComb_;
-  RooProdPdf pdfComb_;
+  // RooRealVar lambdaDeltaComb_;
+  // RooRealVar a0LambdaBuComb_;
+  // RooPolyVar lambdaBuComb_;
+  // RooExponential pdfBuComb_;
+  // RooExponential pdfDeltaComb_;
+  // RooProdPdf pdfComb_;
   RooRealVar yieldSignal_;
-  RooRealVar yieldComb_;
+  // RooRealVar yieldComb_;
   RooArgList yields_;
   RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
@@ -99,10 +99,10 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
-  PdfBase::functions_.add(PdfBase::pdfComb());
+  // PdfBase::functions_.add(PdfBase::pdfComb());
 
   PdfBase::yields_.add(PdfBase::yieldSignal_);
-  PdfBase::yields_.add(PdfBase::yieldComb_);
+  // PdfBase::yields_.add(PdfBase::yieldComb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
       ("pdf_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),

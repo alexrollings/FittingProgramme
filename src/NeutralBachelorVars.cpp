@@ -15,7 +15,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars()
                                      ("Sigma of signal Gaussian " +
                                       ComposeName(Neutral::gamma, Bachelor::pi))
                                          .c_str(),
-                                     50, 0, 80)),
+                                     20, 0, 40)),
     pdfDeltaSignal_(
         ("pdfDeltaSignal_" + ComposeName(Neutral::gamma, Bachelor::pi)).c_str(),
         ("Signal Delta PDF " + ComposeName(Neutral::gamma, Bachelor::pi))
@@ -88,7 +88,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars()
           ("Sigma of signal Gaussian " +
            ComposeName(Neutral::pi0, Bachelor::pi))
               .c_str(),
-          30, 0, 50)),
+          10, 0, 80)),
       pdfDeltaSignal_(
           ("pdfDeltaSignal_" + ComposeName(Neutral::pi0, Bachelor::pi)).c_str(),
           ("Signal Delta PDF " + ComposeName(Neutral::pi0, Bachelor::pi))
