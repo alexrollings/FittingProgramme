@@ -365,6 +365,28 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   canvasData->Update();
   canvasData->SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_2dData.pdf").c_str());
 
+  // Make a histogram with the Poisson stats in each data bin
+  TH2F *hh_err =
+      new TH2F(("hh_err_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 76, 5045, 5805, 80, 80, 240);
+  for (int i = 0; i < 76 * 80; i++) {
+    float n_bin = hh_data->GetBinContent(i);
+    float err = sqrt(n_bin);
+    hh_err->SetBinContent(i, err);
+  }
+
+  // 2D residuals plot (data - PDF)/err
+  TCanvas *canvasRes = new TCanvas(("canvasRes_" + ComposeName(neutral, bachelor, daughters)).c_str(), "", 1000, 800);
+  canvasRes->cd();
+  TH2F *hh_data_new = (TH2F *)hh_data->Clone();
+  hh_data_new->Add(hh_model, -1);
+  hh_data_new->Divide(hh_err);
+  canvasRes->cd();
+  hh_data_new->GetZaxis()->SetTitle("Residual");
+  hh_data_new->GetZaxis()->SetRangeUser(-6.0, 6.0);
+  hh_data_new->SetStats(0);
+  hh_data_new->Draw("colz");
+  canvasRes->Update();
+  canvasRes->SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_2dResiduals.pdf").c_str());
 }
 
 // void GenerateToyDataSet(const &simPdf, Configuration &config,
