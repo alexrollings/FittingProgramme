@@ -50,7 +50,7 @@ void SetStyle() {
 
 std::string path;
 
-void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
+void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
               Configuration &config, Configuration::Categories &categories,
               RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
               RooFitResult *result) {
@@ -319,15 +319,28 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   canvasDelta.SaveAs(
       (path + ComposeName(neutral, bachelor, daughters) + "_deltaMass.pdf")
           .c_str());
+}
 
-  // --------------- 2D PLOTTING - separate this out into a separate function
-  // ---------------- //
+void Plotting2D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
+                Configuration &config, RooAbsData const &fullDataSet,
+                RooSimultaneous const &simPdf) {
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+
+  std::string chargeLabel = EnumToLabel(chargeVec);
+  std::string daughtersLabel = EnumToLabel(daughters, chargeVec);
+  std::string bachelorLabel = EnumToLabel(bachelor);
+  std::string neutralLabel = EnumToLabel(neutral);
+  std::string crossFeedLabel = CrossFeedLabel(neutral);
+  std::string hstLabel = HstLabel(bachelor);
+  std::string missIdLabel = MissIdLabel(bachelor);
 
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
   gStyle->SetTitleOffset(1, "X");
   gStyle->SetTitleOffset(1.2, "Y");
-  gStyle->SetTitleOffset(1.2, "Z");
+  gStyle->SetTitleOffset(1.5, "Z");
   gStyle->SetPadRightMargin(0.15);
 
   // Make two-dimensional plot of sampled PDF in x vs y
@@ -350,10 +363,10 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
 
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
-  hh_model->Scale(1/hh_model->Integral());
+  hh_model->Scale(1 / hh_model->Integral());
   // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
   // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
-  hh_data->Scale(1/hh_data->Integral());
+  hh_data->Scale(1 / hh_data->Integral());
   // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
 
@@ -390,6 +403,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       (path + ComposeName(neutral, bachelor, daughters) + "_2dData.pdf")
           .c_str());
 
+  gStyle->SetTitleOffset(1.2, "Z");
   // Make a histogram with the Poisson stats in each data bin
   TH2F *hh_err =
       new TH2F(("hh_err_" + ComposeName(neutral, bachelor, daughters)).c_str(),
@@ -454,7 +468,8 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting(*p, chargeVec, config, categories, fittingDataSet, simPdf, result);
+    Plotting1D(*p, chargeVec, config, categories, fittingDataSet, simPdf, result);
+    Plotting2D(*p, chargeVec, config, fittingDataSet, simPdf);
   }
 
   result->Print("v");
