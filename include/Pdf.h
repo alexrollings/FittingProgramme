@@ -26,7 +26,7 @@ class PdfBase {
   RooExponential &pdfBuComb() { return pdfBuComb_; }
   RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
   RooProdPdf &pdfComb() { return pdfComb_; }
-  RooRealVar &yieldSignal() { return yieldSignal_; }
+  RooAbsReal &yieldSignal() { return *yieldSignal_; }
   RooRealVar &yieldComb() { return yieldComb_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
@@ -49,7 +49,7 @@ class PdfBase {
   RooExponential pdfBuComb_;
   RooExponential pdfDeltaComb_;
   RooProdPdf pdfComb_;
-  RooRealVar yieldSignal_;
+  std::unique_ptr<RooAbsReal> yieldSignal_;
   RooRealVar yieldComb_;
   RooArgList yields_;
   RooArgList functions_;
@@ -87,17 +87,20 @@ class Pdf : public PdfBase {
   // variables inside of the object
 };
 
+// PdfBase is supposed to be general, so the template variables are not known at
+// compile time. Any variables requiring a template in the constructor must
+// therefore be initialised in Pdf.
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
-  yieldSignal_ = RooFormulaVar(
+  yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
       "@0*@1",
       RooArgList(
           NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
               .N_Dst0h(),
-          Configuration::Get().tempVar()));
+          Configuration::Get().tempVar())));
   CreateRooAddPdf();
 }
 
@@ -109,7 +112,7 @@ void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
   PdfBase::functions_.add(PdfBase::pdfComb());
 
-  PdfBase::yields_.add(PdfBase::yieldSignal_);
+  PdfBase::yields_.add(*PdfBase::yieldSignal_);
   PdfBase::yields_.add(PdfBase::yieldComb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
