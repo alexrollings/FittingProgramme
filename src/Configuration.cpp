@@ -5,6 +5,7 @@ Configuration::Configuration()
       relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
                      0.95) {
 
+  // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
   constexpr const char *kNoUnit = "";

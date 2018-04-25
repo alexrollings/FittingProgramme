@@ -185,7 +185,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   padBu1.Draw();
 
   // Zero line on error plot.
-  TLine zeroLineBu(5045, 0, 5805, 0);
+  TLine zeroLineBu(config.buMass().getMin(), 0, config.buMass().getMax(), 0);
   zeroLineBu.SetLineColor(kRed);
   zeroLineBu.SetLineStyle(kDashed);
 
@@ -291,7 +291,7 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       "padDelta1", 0.0, 0.14, 1.0, 1.0, kWhite);
   padDelta1.Draw();
 
-  TLine zeroLineDelta(80, 0, 240, 0);
+  TLine zeroLineDelta(config.deltaMass().getMin(), 0, config.deltaMass().getMax(), 0);
   zeroLineDelta.SetLineColor(kRed);
   zeroLineDelta.SetLineStyle(kDashed);
 
@@ -333,22 +333,29 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // Make two-dimensional plot of sampled PDF in x vs y
   TH2F *hh_model = (TH2F *)simPdf.createHistogram(
       ("hh_model_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-      config.buMass(), RooFit::Binning(76),
-      RooFit::YVar(
-          config.deltaMass(),
-          RooFit::Binning(80)));  // ***** Make binning accessible ***** //
+      config.buMass(), RooFit::Binning(config.buMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
   hh_model->SetTitle("");
 
   // Make 2D plot of data
-  TH2F *hh_data =
-      (TH2F *)fullDataSet.createHistogram("Bu_M_DTF_D0Pi0,Delta_M", 76, 80);
+  TH2F *hh_data = (TH2F *)fullDataSet.createHistogram(
+      "Bu_M_DTF_D0Pi0,Delta_M", config.buMass(),
+      RooFit::Binning(config.buMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
   hh_data->SetName(
       ("hh_data_" + ComposeName(neutral, bachelor, daughters)).c_str());
   hh_data->SetTitle("");
 
   // Scale model plot to total number of data events
-  // Scale of data and model should be the same: 1/Integral??
-  // hh_model->Scale(hh_data->Integral());
+  // PDF not normalized: normalize before scaling to data
+  hh_model->Scale(1/hh_model->Integral());
+  // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
+  // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
+  hh_data->Scale(1/hh_data->Integral());
+  // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
+  // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
 
   TCanvas *canvasModel = new TCanvas(
       ("canvasModel_" + ComposeName(neutral, bachelor, daughters)).c_str(), "",
@@ -386,8 +393,11 @@ void Plotting(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // Make a histogram with the Poisson stats in each data bin
   TH2F *hh_err =
       new TH2F(("hh_err_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-               "", 76, 5045, 5805, 80, 80, 240);
-  for (int i = 0; i < 76 * 80; i++) {
+               "", config.buMass().getBins(), config.buMass().getMin(),
+               config.buMass().getMax(), config.deltaMass().getBins(),
+               config.deltaMass().getMin(), config.deltaMass().getMax());
+  for (int i = 0; i < config.buMass().getBins() * config.deltaMass().getBins();
+       i++) {
     float n_bin = hh_data->GetBinContent(i);
     float err = sqrt(n_bin);
     hh_err->SetBinContent(i, err);
