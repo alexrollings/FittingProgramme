@@ -10,7 +10,7 @@
 #include "RooArgList.h"
 #include "RooExponential.h"
 #include "RooSimultaneous.h"
-#include "SpecialisedVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 
 class PdfBase {
  public:
@@ -90,6 +90,14 @@ class Pdf : public PdfBase {
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
+  yieldSignal_ = RooFormulaVar(
+      ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
+      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
+      "@0*@1",
+      RooArgList(
+          NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+              .N_Dst0h(),
+          Configuration::Get().tempVar()));
   CreateRooAddPdf();
 }
 

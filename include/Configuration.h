@@ -36,9 +36,13 @@ public:
     Categories &operator=(Categories &&) = delete;
   };
 
+  // TEST DELETE LATER
+  RooConstVar &tempVar() { return tempVar_; }
+
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &deltaMass() { return deltaMass_; }
+  RooRealVar &R_Dst0K_vs_Dst0pi() { return R_Dst0K_vs_Dst0pi_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
@@ -52,10 +56,14 @@ private:
   Configuration &operator=(Configuration const &) = delete;
   Configuration &operator=(Configuration &&) = delete;
 
+  // TEST DELETE LATER
+  RooConstVar tempVar_;
+
   Categories categories_;
   RooRealVar buMass_;
   RooRealVar buPdgId_;
   RooRealVar deltaMass_;
+  RooRealVar R_Dst0K_vs_Dst0pi_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;

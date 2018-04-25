@@ -6,10 +6,6 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
       bachelor_(bachelor),
       daughters_(daughters),
       addPdf_(nullptr),
-      yieldSignal_(
-          ("yieldSignal_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-          ("Signal Yield " + ComposeName(neutral, bachelor, daughters)).c_str(),
-          1000, 0, 5000),
       yieldComb_(
           ("yieldComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial Yield " + ComposeName(neutral, bachelor, daughters))
@@ -37,7 +33,8 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
           Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
       pdfDeltaComb_(
           ("pdfDeltaComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-          ("DeltaCombinatorial PDF " + ComposeName(neutral, bachelor, daughters))
+          ("DeltaCombinatorial PDF " +
+           ComposeName(neutral, bachelor, daughters))
               .c_str(),
           Configuration::Get().deltaMass(), lambdaDeltaComb_),
       pdfBuComb_(
@@ -48,7 +45,9 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters)
       pdfComb_(
           ("pdfComb_" + ComposeName(neutral, bachelor, daughters)).c_str(),
           ("Combinatorial PDF " + ComposeName(neutral, bachelor, daughters))
-              .c_str(), pdfDeltaComb_, RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
+              .c_str(),
+          pdfDeltaComb_,
+          RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
       yields_(("yields_" + ComposeName(neutral, bachelor, daughters)).c_str()),
       functions_(
           ("functions_" + ComposeName(neutral, bachelor, daughters)).c_str()) {}

@@ -1,10 +1,14 @@
 #include "Configuration.h"
 
 Configuration::Configuration()
-    : buMass_("", "", 0, 0, ""), buPdgId_("", "", 0, 0, ""), deltaMass_("", "", 0, 0, ""),
-      relativeWidth_("relatvieWidth", "Relative Width of k w.r.t. pi modes",
-                     0.95) {
-
+    : buMass_("", "", 0, 0, ""),
+      buPdgId_("", "", 0, 0, ""),
+      deltaMass_("", "", 0, 0, ""),
+      relativeWidth_("relativeWidth", "Relative Width of k w.r.t. pi modes",
+                     0.95),
+      R_Dst0K_vs_Dst0pi_("Dst0KDst0pi", "Ratio of Dst0K yield w.r.t. Dst0pi",
+                         0.081, 0, 1),
+      tempVar_("tempVar", "", 1) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
@@ -352,4 +356,3 @@ std::string CrossFeedLabel(Neutral neutral) {
       return "#pi^{0}";
   }
 }
-
