@@ -50,26 +50,16 @@ void SetStyle() {
 
 std::string path;
 
-void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
-              Configuration &config, Configuration::Categories &categories,
-              RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-              RooFitResult *result) {
-  SetStyle();
-
+TLegend MakeLegend(TCanvas &canvas, TPad &pad1, TPad &pad2, PdfBase &pdf,
+                   std::vector<Charge> const &chargeVec) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
 
-  std::string chargeLabel = EnumToLabel(chargeVec);
-  std::string daughtersLabel = EnumToLabel(daughters, chargeVec);
-  std::string bachelorLabel = EnumToLabel(bachelor);
-  std::string neutralLabel = EnumToLabel(neutral);
-  std::string crossFeedLabel = CrossFeedLabel(neutral);
-  std::string hstLabel = HstLabel(bachelor);
-  std::string missIdLabel = MissIdLabel(bachelor);
+  canvas.cd();
+  pad1.cd();
 
-  // .get() gets the raw pointer from underneath the smart pointer
-
+  TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
       ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
@@ -85,16 +75,56 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pdfCombHist->SetLineStyle(kDashed);
   pdfCombHist->SetLineWidth(2);
 
-  auto legend = std::make_unique<TLegend>(0.7, 0.7, 0.97, 0.90);
-  // legend->SetHeader("Physics Backgrounds");
-  legend->AddEntry(
-      pdfSignalHist.get(),
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{0}*}" + bachelorLabel + "^{" + chargeLabel + "}")
-          .c_str(),
-      "l");
-  legend->AddEntry(pdfCombHist.get(), "Combinatorial", "l");
+  // legend.SetHeader("Physics Backgrounds");
+  legend.AddEntry(pdfSignalHist.get(),
+                  ("B^{" + EnumToLabel(chargeVec) +
+                   "}#rightarrow#font[132]{[}#font[132]{[}" +
+                   EnumToLabel(daughters, chargeVec) + "#font[132]{]}_{D^{0}}" +
+                   EnumToLabel(neutral) + "#font[132]{]}_{D^{0}*}" +
+                   EnumToLabel(bachelor) + "^{" + EnumToLabel(chargeVec) + "}")
+                      .c_str(),
+                  "l");
+  legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
+
+  return legend;
+}
+
+void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
+                Configuration &config, Configuration::Categories &categories,
+                RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+                RooFitResult *result) {
+  SetStyle();
+
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+
+  TLegend legend(0.7, 0.7, 0.97, 0.90);
+  // ------------- Draw Legends -------------- //
+  auto pdfSignalHist = std::make_unique<TH1D>(
+      ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "pdfSignalHist", 0, 0, 0);
+  pdfSignalHist->SetLineColor(kBlue);
+  pdfSignalHist->SetLineStyle(kDashed);
+  pdfSignalHist->SetLineWidth(2);
+
+  auto pdfCombHist = std::make_unique<TH1D>(
+      ("pdfCombHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      "pdfCombHist", 0, 0, 0);
+  pdfCombHist->SetLineColor(kRed);
+  pdfCombHist->SetLineStyle(kDashed);
+  pdfCombHist->SetLineWidth(2);
+
+  // legend.SetHeader("Physics Backgrounds");
+  legend.AddEntry(pdfSignalHist.get(),
+                  ("B^{" + EnumToLabel(chargeVec) +
+                   "}#rightarrow#font[132]{[}#font[132]{[}" +
+                   EnumToLabel(daughters, chargeVec) + "#font[132]{]}_{D^{0}}" +
+                   EnumToLabel(neutral) + "#font[132]{]}_{D^{0}*}" +
+                   EnumToLabel(bachelor) + "^{" + EnumToLabel(chargeVec) + "}")
+                      .c_str(),
+                  "l");
+  legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
@@ -102,10 +132,11 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  auto yieldLegend = std::make_unique<TLegend>(0.12, 0.6, 0.3, 0.8);
+  TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
+  sigLegend << "Signal: "
+            << pdf.yieldSignal().getVal()
             // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
             << " events";
 
@@ -116,18 +147,20 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
             // << backgroundYield.getError()
             << " events";
 
-  yieldLegend->SetLineColor(kWhite);
-  // yieldLegend->AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}",
+  yieldLegend.SetLineColor(kWhite);
+  // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}",
   //                       "l");
-  yieldLegend->AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
-  yieldLegend->AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
 
   std::unique_ptr<RooPlot> frameBu(config.buMass().frame(RooFit::Title(
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{*0}}" + bachelorLabel + "^{" + chargeLabel + "}")
+      ("B^{" + EnumToLabel(chargeVec) +
+       "}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, chargeVec) + "#font[132]{]}_{D^{0}}" +
+       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+       "^{" + EnumToLabel(chargeVec) + "}")
           .c_str())));
 
   fullDataSet.plotOn(frameBu.get(),
@@ -160,7 +193,8 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
       RooFit::LineColor(kRed));
-  frameBu->SetXTitle(("m[D*^{0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
+  frameBu->SetXTitle(
+      ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
 
   std::unique_ptr<RooPlot> pullFrameBu(
       config.buMass().frame(RooFit::Title(" ")));
@@ -171,18 +205,21 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   pullFrameBu->SetTitle("");
 
   // --------------- plot onto canvas ---------------------
-
   TCanvas canvasBu(
       ("canvasBu_" + ComposeName(neutral, bachelor, daughters)).c_str(),
       "canvasBu", 1200, 1000);
+
+  TPad padBu1(("padBu1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
+              "padBu1", 0.0, 0.14, 1.0, 1.0, kWhite);
+  padBu1.Draw();
 
   TPad padBu2(("padBu2_" + ComposeName(neutral, bachelor, daughters)).c_str(),
               "padBu2", 0.0, 0.05, 1.0, 0.15, kWhite);
   padBu2.Draw();
 
-  TPad padBu1(("padBu1_" + ComposeName(neutral, bachelor, daughters)).c_str(),
-              "padBu1", 0.0, 0.14, 1.0, 1.0, kWhite);
-  padBu1.Draw();
+  // .get() gets the raw pointer from underneath the smart pointer
+  // FIX THIS
+  // TLegend legend = MakeLegend(canvasBu, padBu1, padBu2, pdf, chargeVec);
 
   // Zero line on error plot.
   TLine zeroLineBu(config.buMass().getMin(), 0, config.buMass().getMax(), 0);
@@ -204,13 +241,16 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   canvasBu.cd();
   padBu1.cd();
   pullFrameBu->SetXTitle(
-      ("m[D^{*0}" + bachelorLabel + "] (MeV/c^{2})").c_str());
+      ("m[D^{*0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
   frameBu->Draw();
-  legend->Draw("same");
-  // yieldLegend->Draw("same");
+  // std::cout << "\n\n" << 1 << "\n\n" << std::endl;
+  legend.Draw("same");
+  // std::cout << "\n\n" << 2 << "\n\n" << std::endl;
+  // yieldLegend.Draw("same");
   // dataHist->Draw("same");
 
   canvasBu.Update();
+  // std::cout << "\n\n" << 3 << "\n\n" << std::endl;
   canvasBu.SaveAs(
       (path + ComposeName(neutral, bachelor, daughters) + "_buMass.pdf")
           .c_str());
@@ -218,9 +258,11 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
 
   std::unique_ptr<RooPlot> frameDelta(config.deltaMass().frame(RooFit::Title(
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{*0}}" + bachelorLabel + "^{" + chargeLabel + "}")
+      ("B^{" + EnumToLabel(chargeVec) +
+       "}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, chargeVec) + "#font[132]{]}_{D^{0}}" +
+       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+       "^{" + EnumToLabel(chargeVec) + "}")
           .c_str())));
 
   // --------- Create histogram of data to plot on top of fit ----------
@@ -291,7 +333,8 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       "padDelta1", 0.0, 0.14, 1.0, 1.0, kWhite);
   padDelta1.Draw();
 
-  TLine zeroLineDelta(config.deltaMass().getMin(), 0, config.deltaMass().getMax(), 0);
+  TLine zeroLineDelta(config.deltaMass().getMin(), 0,
+                      config.deltaMass().getMax(), 0);
   zeroLineDelta.SetLineColor(kRed);
   zeroLineDelta.SetLineStyle(kDashed);
 
@@ -311,8 +354,8 @@ void Plotting1D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   canvasDelta.cd();
   padDelta1.cd();
   frameDelta->Draw();
-  legend->Draw("same");
-  // yieldLegend->Draw("same");
+  legend.Draw("same");
+  // yieldLegend.Draw("same");
   // dataHist->Draw("same");
 
   canvasDelta.Update();
@@ -327,14 +370,6 @@ void Plotting2D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
-
-  std::string chargeLabel = EnumToLabel(chargeVec);
-  std::string daughtersLabel = EnumToLabel(daughters, chargeVec);
-  std::string bachelorLabel = EnumToLabel(bachelor);
-  std::string neutralLabel = EnumToLabel(neutral);
-  std::string crossFeedLabel = CrossFeedLabel(neutral);
-  std::string hstLabel = HstLabel(bachelor);
-  std::string missIdLabel = MissIdLabel(bachelor);
 
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
@@ -375,11 +410,13 @@ void Plotting2D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       1000, 800);
   hh_model->SetStats(0);
   hh_model->Draw("colz");
-  hh_model->SetTitle(
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{*0}}" + bachelorLabel + "^{" + chargeLabel + "}")
-          .c_str());
+  hh_model->SetTitle(("B^{" + EnumToLabel(chargeVec) +
+                      "}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, chargeVec) +
+                      "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                      "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) + "^{" +
+                      EnumToLabel(chargeVec) + "}")
+                         .c_str());
   hh_model->Draw("colz");
   canvasModel->Update();
   canvasModel->SaveAs(
@@ -392,11 +429,13 @@ void Plotting2D(PdfBase &pdf, std::vector<Charge> const &chargeVec,
       1000, 800);
   hh_data->SetStats(0);
   hh_data->Draw("colz");
-  hh_data->SetTitle(
-      ("B^{" + chargeLabel + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       daughtersLabel + "#font[132]{]}_{D^{0}}" + neutralLabel +
-       "#font[132]{]}_{D^{*0}}" + bachelorLabel + "^{" + chargeLabel + "}")
-          .c_str());
+  hh_data->SetTitle(("B^{" + EnumToLabel(chargeVec) +
+                     "}#rightarrow#font[132]{[}#font[132]{[}" +
+                     EnumToLabel(daughters, chargeVec) +
+                     "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                     "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) + "^{" +
+                     EnumToLabel(chargeVec) + "}")
+                        .c_str());
   hh_data->Draw("colz");
   canvasData->Update();
   canvasData->SaveAs(
@@ -468,7 +507,8 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(*p, chargeVec, config, categories, fittingDataSet, simPdf, result);
+    Plotting1D(*p, chargeVec, config, categories, fittingDataSet, simPdf,
+               result);
     Plotting2D(*p, chargeVec, config, fittingDataSet, simPdf);
   }
 
@@ -897,11 +937,10 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
 
   simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
 
-    // SET VALUE AWAY FROM REAL VALUE
-    // delta_mean_1.setVal(130);
+  // SET VALUE AWAY FROM REAL VALUE
+  // delta_mean_1.setVal(130);
 
-  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, chargeVec,
-  pdfs);
+  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, chargeVec, pdfs);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
