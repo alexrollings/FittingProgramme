@@ -90,6 +90,9 @@ class Pdf : public PdfBase {
 // PdfBase is supposed to be general, so the template variables are not known at
 // compile time. Any variables requiring a template in the constructor must
 // therefore be initialised in Pdf.
+// We initialise the variables in the text of the constructor as a pointer
+// because otherwise we get the error of RooFit crashing we re-assigning a
+// variable
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
