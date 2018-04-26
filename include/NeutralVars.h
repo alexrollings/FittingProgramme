@@ -35,10 +35,20 @@ public:
   RooPolyVar &meanBuSignal() { return meanBuSignal_; }
 
 private:
-  // When we DO need to specialize certain cases, we can still do that (see
-  // below)...
+  // Inline Constructor
   NeutralVars();
+  // Inline Destructor - can both be implemented externally too:
   ~NeutralVars() {}
+  // Class Human
+  // {
+  // public:
+  //  ~Human(); //Destructor declaration
+  // };
+  //:: is the scoping operator. Destructor definition/implementation
+  // Human::~Human();
+  // { // code }
+  // Invoked when a class is deleted or goes out of scope: good place to reset
+  // variables/release dynamically allocated memory
 
   // Indicate if only used by one neutral
 
@@ -47,6 +57,8 @@ private:
   RooPolyVar meanBuSignal_;
 };
 
+// When we DO need to specialize certain cases, we can still do that (see
+// below)...
 // Now we just need to define the constructors separately so the values are
 // different
 
