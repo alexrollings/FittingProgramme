@@ -10,7 +10,7 @@ enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015, y2016 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus };
-enum class RunType { normal, noRelations };
+enum class SplitByCharge { ktrue, kfalse };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
@@ -80,8 +80,8 @@ std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
 
-std::string EnumToLabel(std::vector<Charge> chargeVec);
-std::string EnumToLabel(Daughters, std::vector<Charge> chargeVec);
+std::string EnumToLabel(Charge charge);
+std::string EnumToLabel(Daughters, Charge charge);
 std::string EnumToLabel(Bachelor);
 std::string EnumToLabel(Neutral);
 std::string MissIdLabel(Bachelor);
@@ -92,6 +92,7 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge);
 
+std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters);
 std::string ComposeName(Neutral neutral, Bachelor bachelor);
 std::string ComposeName(Neutral neutral, Daughters daughters);

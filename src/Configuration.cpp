@@ -6,8 +6,8 @@ Configuration::Configuration()
       deltaMass_("", "", 0, 0, ""),
       relativeWidth_("relativeWidth", "Relative Width of k w.r.t. pi modes",
                      0.95),
-      R_Dst0K_vs_Dst0pi_("R_Dst0K_vs_Dst0pi", "Ratio of Dst0K yield w.r.t. Dst0pi",
-                         0.081, 0, 1),
+      R_Dst0K_vs_Dst0pi_("R_Dst0K_vs_Dst0pi",
+                         "Ratio of Dst0K yield w.r.t. Dst0pi", 0.081, 0, 1),
       tempVar_("tempVar", "", 1) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
@@ -52,11 +52,13 @@ Configuration::Configuration()
 }
 // Categories is a class within a class !!!
 Configuration::Categories::Categories()
-    : polarity("polarity", "polarity"), charge("charge", "charge"),
-      daughters("daughters", "daughters"), bachelor("bachelor", "bachelor"),
-      neutral("neutral", "neutral"), year("year", "year"),
+    : polarity("polarity", "polarity"),
+      charge("charge", "charge"),
+      daughters("daughters", "daughters"),
+      bachelor("bachelor", "bachelor"),
+      neutral("neutral", "neutral"),
+      year("year", "year"),
       fitting("fitting", "fitting") {
-
   polarity.defineType(EnumToString(Polarity::up).c_str());
   polarity.defineType(EnumToString(Polarity::down).c_str());
 
@@ -82,49 +84,138 @@ Configuration::Categories::Categories()
   // PlotOn only takes one category as an option therefore we need to encompass
   // both bachelor and daughters in the same category
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kpi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::kk)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" + EnumToString(Daughters::pik))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kpi)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::kk)).c_str());
-  fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pipi))
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" + EnumToString(Daughters::pik)).c_str());
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+          .c_str());
+  fitting.defineType(
+      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
+       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+          .c_str());
 }
 
 // Need a template for this as each enum option is a different 'type'
-template <> Polarity StringToEnum<Polarity>(std::string const &polarity) {
+template <>
+Polarity StringToEnum<Polarity>(std::string const &polarity) {
   if (polarity == "up") {
     return Polarity::up;
   } else if (polarity == "down") {
@@ -137,17 +228,18 @@ template <> Polarity StringToEnum<Polarity>(std::string const &polarity) {
 
 std::string EnumToString(Polarity polarity) {
   switch (polarity) {
-  case Polarity::up:
-    return "up";
-  case Polarity::down:
-    return "down";
-    // case Polarity::both:
-    // default:
-    //   return "both";
+    case Polarity::up:
+      return "up";
+    case Polarity::down:
+      return "down";
+      // case Polarity::both:
+      // default:
+      //   return "both";
   }
 }
 
-template <> Daughters StringToEnum<Daughters>(std::string const &daughters) {
+template <>
+Daughters StringToEnum<Daughters>(std::string const &daughters) {
   if (daughters == "kpi") {
     return Daughters::kpi;
   } else if (daughters == "kk") {
@@ -163,19 +255,20 @@ template <> Daughters StringToEnum<Daughters>(std::string const &daughters) {
 
 std::string EnumToString(Daughters daughters) {
   switch (daughters) {
-  case Daughters::kpi:
-    return "kpi";
-  case Daughters::kk:
-    return "kk";
-  case Daughters::pipi:
-    return "pipi";
-  case Daughters::pik:
-    // default:
-    return "pik";
+    case Daughters::kpi:
+      return "kpi";
+    case Daughters::kk:
+      return "kk";
+    case Daughters::pipi:
+      return "pipi";
+    case Daughters::pik:
+      // default:
+      return "pik";
   }
 }
 
-template <> Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
+template <>
+Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
   if (bachelor == "pi") {
     return Bachelor::pi;
   } else if (bachelor == "k") {
@@ -186,15 +279,16 @@ template <> Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
 
 std::string EnumToString(Bachelor bachelor) {
   switch (bachelor) {
-  case Bachelor::pi:
-    return "pi";
-  case Bachelor::k:
-    // default:
-    return "k";
+    case Bachelor::pi:
+      return "pi";
+    case Bachelor::k:
+      // default:
+      return "k";
   }
 }
 
-template <> Year StringToEnum<Year>(std::string const &year) {
+template <>
+Year StringToEnum<Year>(std::string const &year) {
   if (year == "2011") {
     return Year::y2011;
   } else if (year == "2012") {
@@ -209,18 +303,19 @@ template <> Year StringToEnum<Year>(std::string const &year) {
 
 std::string EnumToString(Year year) {
   switch (year) {
-  case Year::y2011:
-    return "2011";
-  case Year::y2012:
-    return "2012";
-  case Year::y2015:
-    return "2015";
-  case Year::y2016:
-    return "2016";
+    case Year::y2011:
+      return "2011";
+    case Year::y2012:
+      return "2012";
+    case Year::y2015:
+      return "2015";
+    case Year::y2016:
+      return "2016";
   }
 }
 
-template <> Neutral StringToEnum<Neutral>(std::string const &neutral) {
+template <>
+Neutral StringToEnum<Neutral>(std::string const &neutral) {
   if (neutral == "pi0") {
     return Neutral::pi0;
   } else if (neutral == "gamma") {
@@ -231,15 +326,16 @@ template <> Neutral StringToEnum<Neutral>(std::string const &neutral) {
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
-  case Neutral::pi0:
-    return "pi0";
-  case Neutral::gamma:
-    // default:
-    return "gamma";
+    case Neutral::pi0:
+      return "pi0";
+    case Neutral::gamma:
+      // default:
+      return "gamma";
   }
 }
 
-template <> Charge StringToEnum<Charge>(std::string const &charge) {
+template <>
+Charge StringToEnum<Charge>(std::string const &charge) {
   if (charge == "plus") {
     return Charge::plus;
   } else if (charge == "minus") {
@@ -250,14 +346,13 @@ template <> Charge StringToEnum<Charge>(std::string const &charge) {
 
 std::string EnumToString(Charge charge) {
   switch (charge) {
-  case Charge::plus:
-    return "plus";
-  case Charge::minus:
-    // default:
-    return "minus";
+    case Charge::plus:
+      return "plus";
+    case Charge::minus:
+      // default:
+      return "minus";
   }
 }
-
 
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
@@ -267,8 +362,16 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
-std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters) {
-  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" + EnumToString(daughters);
+std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters,
+                        Charge charge) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters) + "_" + EnumToString(charge);
+}
+
+std::string ComposeName(Neutral neutral, Bachelor bachelor,
+                        Daughters daughters) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters);
 }
 
 std::string ComposeName(Neutral neutral, Bachelor bachelor) {
@@ -279,34 +382,33 @@ std::string ComposeName(Neutral neutral, Daughters daughters) {
   return EnumToString(neutral) + "_" + EnumToString(daughters);
 }
 
-std::string ComposeName(Neutral neutral) {
-  return EnumToString(neutral);
-}
+std::string ComposeName(Neutral neutral) { return EnumToString(neutral); }
 
-std::string EnumToLabel(std::vector<Charge> chargeVec) {
-  if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {
-    return "-";
-  } else { 
+std::string EnumToLabel(Charge charge) {
+  switch (charge) {
+    case Charge::minus:
+      return "-";
+    case Charge::plus:
       return "+";
   }
 }
 
-std::string EnumToLabel(Daughters daughters, std::vector<Charge> chargeVec) {
+std::string EnumToLabel(Daughters daughters, Charge charge) {
   switch (daughters) {
     case Daughters::kpi:
-      if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {    
+      if (charge == Charge::minus) {
         return "K^{-}#pi^{+}";
-      } else {  
+      } else {
         return "K^{+}#pi^{-}";
       }
     case Daughters::kk:
       return "K^{+}K^{-}";
     case Daughters::pipi:
-        return "#pi^{+}#pi^{-}";
+      return "#pi^{+}#pi^{-}";
     case Daughters::pik:
-      if (chargeVec.size() == 2 || chargeVec[0] == Charge::minus) {    
+      if (charge == Charge::minus) {
         return "#pi^{-}K^{+}";
-      } else {  
+      } else {
         return "#pi^{+}K^{-}";
       }
   }

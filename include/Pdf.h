@@ -19,6 +19,7 @@ class PdfBase {
   Bachelor bachelor() const { return bachelor_; }
   Neutral neutral() const { return neutral_; }
   Daughters daughters() const { return daughters_; }
+  Charge charge() const { return charge_; }
 
   RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
   RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
@@ -36,12 +37,13 @@ class PdfBase {
   virtual RooGaussian &pdfBuSignal() const = 0;
 
  protected:
-  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters);
+  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
   virtual ~PdfBase() {}
 
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
+  Charge charge_;
 
   RooRealVar lambdaDeltaComb_;
   RooRealVar a0LambdaBuComb_;
@@ -56,11 +58,11 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
 class Pdf : public PdfBase {
  public:
-  static Pdf<_neutral, _bachelor, _daughters> &Get() {
-    static Pdf<_neutral, _bachelor, _daughters> singleton;
+  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get() {
+    static Pdf<_neutral, _bachelor, _daughters, _charge> singleton;
     return singleton;
   }
 
@@ -95,12 +97,12 @@ class Pdf : public PdfBase {
 // variable
 // We have to do it in the text of the constructor because it's a field of
 // PDFBase, not PDF
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
-Pdf<_neutral, _bachelor, _daughters>::Pdf()
-    : PdfBase(_neutral, _bachelor, _daughters) {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
+Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf()
+    : PdfBase(_neutral, _bachelor, _daughters, _charge) {
   yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
-      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
+      ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
+      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
       "@0*@1",
       RooArgList(
           NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
@@ -111,8 +113,8 @@ Pdf<_neutral, _bachelor, _daughters>::Pdf()
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
-void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
+void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
   PdfBase::functions_.add(PdfBase::pdfComb());
@@ -121,7 +123,7 @@ void Pdf<_neutral, _bachelor, _daughters>::CreateRooAddPdf() {
   PdfBase::yields_.add(PdfBase::yieldComb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
-      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters)).c_str(),
+      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
+      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
       PdfBase::functions_, PdfBase::yields_));
 }
