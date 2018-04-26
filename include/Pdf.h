@@ -93,6 +93,8 @@ class Pdf : public PdfBase {
 // We initialise the variables in the text of the constructor as a pointer
 // because otherwise we get the error of RooFit crashing we re-assigning a
 // variable
+// We have to do it in the text of the constructor because it's a field of
+// PDFBase, not PDF
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters>
 Pdf<_neutral, _bachelor, _daughters>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters) {
