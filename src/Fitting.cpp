@@ -324,7 +324,8 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   gStyle->SetPadRightMargin(0.15);
 
   // Make two-dimensional plot of sampled PDF in x vs y
-  TH2F *hh_model = (TH2F *)simPdf.createHistogram(
+  // Plot ONLY the PDF not the SimPDF
+  TH2D *hh_model = (TH2D *)pdf.addPdf().createHistogram(
       ("hh_model_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
@@ -332,21 +333,24 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   hh_model->SetTitle("");
 
   // Make 2D plot of data
-  TH2F *hh_data = (TH2F *)fullDataSet.createHistogram(
-      "Bu_M_DTF_D0Pi0,Delta_M", config.buMass(),
-      RooFit::Binning(config.buMass().getBins()),
+  // Plot ONLY one component of the data 
+  TH2D *hh_data = (TH2D *)fullDataSet.createHistogram(
+      ("hh_data_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
+      config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
-                   RooFit::Binning(config.deltaMass().getBins())));
-  hh_data->SetName(
-      ("hh_data_" + ComposeName(neutral, bachelor, daughters, charge)).c_str());
+                   RooFit::Binning(config.deltaMass().getBins())),
+      RooFit::Cut(("fitting==fitting::" +
+                   ComposeName(neutral, bachelor, daughters, charge))
+                      .c_str()));
   hh_data->SetTitle("");
 
+  // hh_model->Scale(hh_data->Integral());
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
-  hh_model->Scale(1 / hh_model->Integral());
+  // hh_model->Scale(1 / hh_model->Integral());
   // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
   // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
-  hh_data->Scale(1 / hh_data->Integral());
+  // hh_data->Scale(1 / hh_data->Integral());
   // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
 

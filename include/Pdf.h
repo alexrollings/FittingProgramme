@@ -31,6 +31,7 @@ class PdfBase {
   RooRealVar &yieldComb() { return yieldComb_; }
   RooArgList &yields() { return yields_; }
   RooArgList &functions() { return functions_; }
+  RooAddPdf &addPdf() { return *addPdf_; }
 
   virtual RooProdPdf &pdfSignal() const = 0;
   virtual RooGaussian &pdfDeltaSignal() const = 0;
