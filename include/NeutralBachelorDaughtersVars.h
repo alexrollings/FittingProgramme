@@ -18,7 +18,7 @@
 // your
 // class/function (unless you explicitly specialize, see below).
 
-namespace { // Anonymous namespace
+namespace {  // Anonymous namespace
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl;
@@ -27,25 +27,26 @@ template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl();
   std::unique_ptr<RooRealVar> N_Dst0h_;
+  std::unique_ptr<RooRealVar> Asym_;
 };
 
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl();
   std::unique_ptr<RooFormulaVar> N_Dst0h_;
+  std::unique_ptr<RooRealVar> Asym_;
 };
-}
+}  // namespace
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters>
 class NeutralBachelorDaughtersVars {
-
   // One template specialization == One entirely separate class in practice
   // These will give two different instances:
   //   DaughtersVars<Daughters::gamma>::Get()
   //   DaughtersVars<Daughters::pi0>::Get()
   // All happens automatically :-)
 
-public:
+ public:
   static NeutralBachelorDaughtersVars<neutral, bachelor, daughters> &Get() {
     static NeutralBachelorDaughtersVars<neutral, bachelor, daughters> singleton;
     return singleton;
@@ -53,8 +54,9 @@ public:
 
   // If RooShit wasn't so shit we would pass a const reference
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
+  RooAbsReal &Asym() { return *impl_.Asym_; }
 
-private:
+ private:
   // When we DO need to specialize certain cases, we can still do that (see
   // below)...
   NeutralBachelorDaughtersVars() {}
@@ -70,20 +72,37 @@ private:
 // different
 
 template <Neutral neutral, Daughters daughters>
-NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::NeutralBachelorDaughtersVarsImpl()
-    : N_Dst0h_(new RooRealVar(("N_Dst0pi_" + ComposeName(neutral, daughters)).c_str(),
-                           ("Total number of Bu2Dst0pi-like events " +
-                            ComposeName(neutral, daughters))
-                               .c_str(), 1000, 0, 5000)) {}
+NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
+                                 daughters>::NeutralBachelorDaughtersVarsImpl()
+    : N_Dst0h_(new RooRealVar(
+          ("N_Dst0pi_" + ComposeName(neutral, daughters)).c_str(),
+          ("Total number of Bu2Dst0pi-like events " +
+           ComposeName(neutral, daughters))
+              .c_str(),
+          10000, 0, 50000)),
+      Asym_(new RooRealVar(
+          ("Asym_" + ComposeName(neutral, Bachelor::pi, daughters)).c_str(),
+          ("Asymmetry variable " +
+           ComposeName(neutral, Bachelor::pi, daughters))
+              .c_str(),
+          0.1, -1, 1)) {}
 
 template <Neutral neutral, Daughters daughters>
-NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::NeutralBachelorDaughtersVarsImpl()
+NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k,
+                                 daughters>::NeutralBachelorDaughtersVarsImpl()
     : N_Dst0h_(new RooFormulaVar(
           ("N_Dst0k_" + ComposeName(neutral, daughters)).c_str(),
           ("Total number of Bu2Dst0K-like events, for " +
            ComposeName(neutral, daughters))
               .c_str(),
           "@0*@1",
-          RooArgList(
-              NeutralBachelorDaughtersVars<neutral, Bachelor::pi, daughters>::Get().N_Dst0h(),
-              Configuration::Get().R_Dst0K_vs_Dst0pi()))) {}
+          RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
+                                                  daughters>::Get()
+                         .N_Dst0h(),
+                     Configuration::Get().R_Dst0K_vs_Dst0pi()))),
+      Asym_(new RooRealVar(
+          ("Asym_" + ComposeName(neutral, Bachelor::k, daughters)).c_str(),
+          ("Asymmetry variable " +
+           ComposeName(neutral, Bachelor::k, daughters))
+              .c_str(),
+          0.1, -1, 1)) {}

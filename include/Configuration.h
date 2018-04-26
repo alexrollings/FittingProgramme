@@ -36,9 +36,6 @@ public:
     Categories &operator=(Categories &&) = delete;
   };
 
-  // TEST DELETE LATER
-  RooConstVar &tempVar() { return tempVar_; }
-
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &deltaMass() { return deltaMass_; }
@@ -55,9 +52,6 @@ private:
   Configuration(Configuration &&) = delete;
   Configuration &operator=(Configuration const &) = delete;
   Configuration &operator=(Configuration &&) = delete;
-
-  // TEST DELETE LATER
-  RooConstVar tempVar_;
 
   Categories categories_;
   RooRealVar buMass_;

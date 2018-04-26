@@ -100,14 +100,33 @@ class Pdf : public PdfBase {
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
 Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf()
     : PdfBase(_neutral, _bachelor, _daughters, _charge) {
-  yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
-      ("Signal Yield " + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
-      "@0*@1",
-      RooArgList(
-          NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
-              .N_Dst0h(),
-          Configuration::Get().tempVar())));
+  if (_charge == Charge::minus) {
+    yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        ("Signal Yield " +
+         ComposeName(_neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        "(@0/2)*(@1+1)",
+        RooArgList(
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+                .N_Dst0h(),
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+                .Asym())));
+  } else {
+    yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        ("Signal Yield " +
+         ComposeName(_neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        "(@0/2)*(1-@1)",
+        RooArgList(
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+                .N_Dst0h(),
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+                .Asym())));
+  }
   CreateRooAddPdf();
 }
 

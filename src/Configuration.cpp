@@ -7,8 +7,7 @@ Configuration::Configuration()
       relativeWidth_("relativeWidth", "Relative Width of k w.r.t. pi modes",
                      0.95),
       R_Dst0K_vs_Dst0pi_("R_Dst0K_vs_Dst0pi",
-                         "Ratio of Dst0K yield w.r.t. Dst0pi", 0.081, 0, 1),
-      tempVar_("tempVar", "", 1) {
+                         "Ratio of Dst0K yield w.r.t. Dst0pi", 0.081, 0, 1) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
