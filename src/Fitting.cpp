@@ -462,7 +462,7 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
   correlationCanvas.SaveAs("CorrelationMatrix.pdf");
   std::cout << "Save to pdf file." << std::endl;
 }
-void Fitting(RooAbsData &fullDataSet, Configuration &config,
+void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec) {
@@ -614,7 +614,7 @@ void Fitting(RooAbsData &fullDataSet, Configuration &config,
   FitSimPdfToData(fullDataSet, simPdf, config, categories, pdfs);
 }
 
-void Fitting(Configuration &config, Configuration::Categories &categories,
+void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec) {
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
@@ -872,11 +872,6 @@ bool fexists(std::string const &filename) {
   return infile.is_open();
 }
 
-// Path to roodatasets
-// std::string dataDir =
-// "/Users/alexandrarollings/Desktop/FittingProgramme/roodatasets/";
-// std::string dataDir = "/home/rollings/ButoDst0X_FIT/roodatasets/";
-
 int main(int argc, char **argv) {
   std::string dataDir;
   std::vector<Year> yearVec;
@@ -1070,11 +1065,11 @@ int main(int argc, char **argv) {
     }
 
     path = "result/";
-    Fitting(fullDataSet, config, categories, neutralVec, daughtersVec);
+    MakeSimultaneousPdf(fullDataSet, config, categories, neutralVec, daughtersVec);
 
   } else {
     path = "toys/";
-    Fitting(config, categories, neutralVec, daughtersVec);
+    MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
   }
 
   return 0;
