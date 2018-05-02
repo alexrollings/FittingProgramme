@@ -64,6 +64,5 @@ PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters,
               .c_str()) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
-  simPdf.addPdf(*addPdf_,
-                ComposeName(neutral_, bachelor_, daughters_, charge_).c_str());
+  simPdf.addPdf(*addPdf_, CategoryName().c_str());
 }

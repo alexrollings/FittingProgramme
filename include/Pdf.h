@@ -16,26 +16,37 @@ class PdfBase {
  public:
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
-  Bachelor bachelor() const { return bachelor_; }
-  Neutral neutral() const { return neutral_; }
-  Daughters daughters() const { return daughters_; }
-  Charge charge() const { return charge_; }
+  inline Bachelor bachelor() const { return bachelor_; }
+  inline Neutral neutral() const { return neutral_; }
+  inline Daughters daughters() const { return daughters_; }
+  inline Charge charge() const { return charge_; }
 
-  RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
-  RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
-  RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
-  RooExponential &pdfBuComb() { return pdfBuComb_; }
-  RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
-  RooProdPdf &pdfComb() { return pdfComb_; }
-  RooAbsReal &yieldSignal() { return *yieldSignal_; }
-  RooRealVar &yieldComb() { return yieldComb_; }
-  RooArgList &yields() { return yields_; }
-  RooArgList &functions() { return functions_; }
-  RooAddPdf &addPdf() { return *addPdf_; }
+  inline RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
+  inline RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
+  inline RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
+  inline RooExponential &pdfBuComb() { return pdfBuComb_; }
+  inline RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
+  inline RooProdPdf &pdfComb() { return pdfComb_; }
+  inline RooAbsReal &yieldSignal() { return *yieldSignal_; }
+  inline RooRealVar &yieldComb() { return yieldComb_; }
+  inline RooArgList &yields() { return yields_; }
+  inline RooArgList &functions() { return functions_; }
+  inline RooAddPdf &addPdf() { return *addPdf_; }
+
+  // std::unique_ptr<RooAddPdf> addPdf_;
 
   virtual RooProdPdf &pdfSignal() const = 0;
   virtual RooGaussian &pdfDeltaSignal() const = 0;
   virtual RooGaussian &pdfBuSignal() const = 0;
+
+  // If a function or a method is defined in the header file, and the class is
+  // not a template, it should be inline because otherwise the linker might fail
+  // as the function will be present in multiple compiltation unit
+  // function needs to be const when you don't change the object when the
+  // function is called
+  inline std::string CategoryName() const {
+    return ComposeName(neutral_, bachelor_, daughters_, charge_);
+  }
 
  protected:
   PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);

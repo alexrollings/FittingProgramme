@@ -83,132 +83,100 @@ Configuration::Categories::Categories()
   // PlotOn only takes one category as an option therefore we need to encompass
   // both bachelor and daughters in the same category
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kk, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kk, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pik, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::plus))
+      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pik, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::pi0) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::pi) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kk, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kpi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::kk) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::minus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pipi) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus)
           .c_str());
   fitting.defineType(
-      (EnumToString(Neutral::gamma) + "_" + EnumToString(Bachelor::k) + "_" +
-       EnumToString(Daughters::pik) + "_" + EnumToString(Charge::minus))
+      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pik, Charge::minus)
           .c_str());
 }
 

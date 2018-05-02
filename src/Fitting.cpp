@@ -176,24 +176,24 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 
   pullFrame->addPlotable(hPull /* .get() */, "P");
   pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
-                      ComposeName(neutral, bachelor, daughters))
+                      ComposeName(neutral, bachelor, daughters, charge))
                          .c_str());
   pullFrame->SetTitle("");
 
   // --------------- plot onto canvas ---------------------
   TCanvas canvas(("canvas_" + EnumToString(variable) + "_" +
-                  ComposeName(neutral, bachelor, daughters))
+                  ComposeName(neutral, bachelor, daughters, charge))
                      .c_str(),
                  "canvas", 1200, 1000);
 
   TPad pad1(("pad1_" + EnumToString(variable) + "_" +
-             ComposeName(neutral, bachelor, daughters))
+             ComposeName(neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
   pad1.Draw();
 
   TPad pad2(("pad2_" + EnumToString(variable) + "_" +
-             ComposeName(neutral, bachelor, daughters))
+             ComposeName(neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
@@ -221,16 +221,13 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   canvas.cd();
   pad1.cd();
   frame->Draw();
-  // std::cout << "\n\n" << 1 << "\n\n" << std::endl;
   legend.Draw("same");
-  // std::cout << "\n\n" << 2 << "\n\n" << std::endl;
   // yieldLegend.Draw("same");
   // dataHist->Draw("same");
 
   canvas.Update();
-  // std::cout << "\n\n" << 3 << "\n\n" << std::endl;
-  canvas.SaveAs((path + ComposeName(neutral, bachelor, daughters) + "_" +
-                 EnumToString(variable) + "Mass.pdf")
+  canvas.SaveAs((path + ComposeName(neutral, bachelor, daughters, charge) +
+                 "_" + EnumToString(variable) + "Mass.pdf")
                     .c_str());
 }
 
@@ -325,16 +322,28 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
 
   // Make two-dimensional plot of sampled PDF in x vs y
   // Plot ONLY the PDF not the SimPDF
-  TH2D *hh_model = (TH2D *)pdf.addPdf().createHistogram(
+  RooAbsPdf *singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
+  if (singlePdf == nullptr) {
+    throw std::runtime_error("\nSingle pdf empty\n");
+  }
+
+  TH1 *hh_model = singlePdf->createHistogram(
       ("hh_model_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
                    RooFit::Binning(config.deltaMass().getBins())));
+  // if (hh_model_1D == nullptr) {
+  //   throw std::runtime_error("\n1D hist returns nullptr\n");
+  // }
+  // TH2F *hh_model = dynamic_cast<TH2F*>(hh_model_1D);
+  // if (hh_model == nullptr) {
+  //   throw std::runtime_error("\n2D hist returns nullptr\n");
+  // }
   hh_model->SetTitle("");
 
   // Make 2D plot of data
-  // Plot ONLY one component of the data 
-  TH2D *hh_data = (TH2D *)fullDataSet.createHistogram(
+  // Plot ONLY one component of the data
+  TH1 *hh_data = fullDataSet.createHistogram(
       ("hh_data_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
@@ -344,15 +353,15 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
                       .c_str()));
   hh_data->SetTitle("");
 
-  // hh_model->Scale(hh_data->Integral());
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
-  // hh_model->Scale(1 / hh_model->Integral());
+  hh_model->Scale(1 / hh_model->Integral());
   // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
   // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
-  // hh_data->Scale(1 / hh_data->Integral());
+  hh_data->Scale(1 / hh_data->Integral());
   // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
+  // hh_model->Scale(hh_data->Integral());
 
   TCanvas *canvasModel = new TCanvas(
       ("canvasModel_" + ComposeName(neutral, bachelor, daughters, charge))
@@ -749,8 +758,14 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
     }
   }
 
+  // std::string name;
+  // RooAbsPdf *singlePdf = nullptr;
   for (auto &p : pdfs) {
     p->AddToSimultaneousPdf(simPdf);
+    // singlePdf = simPdf.getPdf(p->CategoryName().c_str());
+    // if (singlePdf == nullptr) {
+    //   throw std::runtime_error("\nSingle pdf empty\n");
+    // }
   }
 
   // ------------ generate toys ---------------
@@ -758,6 +773,9 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
   // Toy data sets check for bias in our model. The pull distribution should
   // be
   // around 0, i.e. the generated data matches the defined model.
+
+  // Need the number of generated events to be the sum of all predicted yields
+  double expectedEvents = simPdf.expectedEvents(categories.fitting);
 
   // categories.fitting
   // RooMCStudy mcStudy(
@@ -769,7 +787,7 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
   // std::cout << "Created MCStudy object." << std::endl;
   //
   // int nSamples = 1;
-  // int nEvtsPerSample = 60000;
+  // int nEvtsPerSample = expectedEvents;
   //
   // mcStudy.generate(nSamples, nEvtsPerSample, true);
   //
@@ -780,9 +798,44 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
   // std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
   //
   // FitSimPdfToData(*toyDataSet, simPdf, config, categories, pdfs);
+  //
 
-  // Need the number of generated events to be the sum of all predicted yields
-  double expectedEvents = simPdf.expectedEvents(categories.fitting);
+  // SET VALUE AWAY FROM REAL VALUE
+  // delta_mean_1.setVal(130);
+  //
+  // Generate toys: remember to set random seed
+  // Initialise histograms for pull distributions
+  // Loop over nToys
+  // Define PDF inside loop, then generate toy dataset from this: how? Do the
+  // PDF loop inside the toy loop??
+  // It doesn't make sense to extract variables from simPdf when they are
+  // different for each pdf?
+  // Fit PDF to toy dataset Fill histograms Draw/Save
+  // histograms outside loop
+
+  // unsigned int nToys = 100;
+  //
+  // TH1D asym_hist("asym_hist", "asym_hist", 40, -1, 1);
+  // TH1D asym_hist_err("asym_hist_err", "asym_hist_err", 40, 0, 0.5);
+  // TH1D asym_hist_pull("asym_hist_pull", "asym_hist_pull", 40, -5, 5);
+  //
+  // for (unsigned int i = 0; i < nToys; ++i) {
+  //   RooDataSet *toyDataSet = simPdf.generate(
+  //       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+  //       expectedEvents);
+  //
+  //   RooSimultaneous *simPdfFit =
+  //       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+  //
+  //   simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+  //
+  //   RooFitResult *result =
+  //       simPdfFit.fitTo(toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+  //
+  // NEED ACCESS TO TEMPLATE PARAMETERS
+  //   asym_hist.Fill(NeutralBachelorDaughtersVar<neutral, bachelor,
+  //   daughters>::Get().Asym());
+  // }
 
   RooDataSet *toyDataSet = simPdf.generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
@@ -792,10 +845,6 @@ void Fitting(Configuration &config, Configuration::Categories &categories,
       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
 
   simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
-
-  // SET VALUE AWAY FROM REAL VALUE
-  // delta_mean_1.setVal(130);
-
   FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, pdfs);
 }
 
