@@ -327,23 +327,23 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
     throw std::runtime_error("\nSingle pdf empty\n");
   }
 
-  TH1 *hh_model = singlePdf->createHistogram(
+  TH1 *hh_model_1D = singlePdf->createHistogram(
       ("hh_model_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
                    RooFit::Binning(config.deltaMass().getBins())));
-  // if (hh_model_1D == nullptr) {
-  //   throw std::runtime_error("\n1D hist returns nullptr\n");
-  // }
-  // TH2F *hh_model = dynamic_cast<TH2F*>(hh_model_1D);
-  // if (hh_model == nullptr) {
-  //   throw std::runtime_error("\n2D hist returns nullptr\n");
-  // }
+  if (hh_model_1D == nullptr) {
+    throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
+  }
+  TH2F *hh_model = dynamic_cast<TH2F*>(hh_model_1D);
+  if (hh_model == nullptr) {
+    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+  }
   hh_model->SetTitle("");
 
   // Make 2D plot of data
   // Plot ONLY one component of the data
-  TH1 *hh_data = fullDataSet.createHistogram(
+  TH1 *hh_data_1D = fullDataSet.createHistogram(
       ("hh_data_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
@@ -351,7 +351,23 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
       RooFit::Cut(("fitting==fitting::" +
                    ComposeName(neutral, bachelor, daughters, charge))
                       .c_str()));
+  if (hh_data_1D == nullptr) {
+    throw std::runtime_error("\n1D hist of data returns nullptr\n");
+  }
+  TH2F *hh_data = dynamic_cast<TH2F*>(hh_data_1D);
+  if (hh_data == nullptr) {
+    throw std::runtime_error("\n2D hist of data returns nullptr\n");
+  }
   hh_data->SetTitle("");
+
+  double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) - hh_model->GetXaxis()->GetBinLowEdge(0);
+  double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) - hh_data->GetXaxis()->GetBinLowEdge(0);
+  std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model << "\n\n";
+  std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data << "\n\n";
+  double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) - hh_model->GetYaxis()->GetBinLowEdge(0);
+  double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) - hh_data->GetYaxis()->GetBinLowEdge(0);
+  std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model << "\n\n";
+  std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data << "\n\n";
 
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
@@ -614,6 +630,53 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
   FitSimPdfToData(fullDataSet, simPdf, config, categories, pdfs);
 }
 
+void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
+                  Configuration::Categories &categories,
+                  std::vector<PdfBase *> &pdfs) {
+  double expectedEvents = simPdf.expectedEvents(categories.fitting);
+
+  RooDataSet *toyDataSet = simPdf.generate(
+      RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+      expectedEvents);
+
+  RooSimultaneous *simPdfFit =
+      new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+
+  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, pdfs);
+}
+
+void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
+                  Configuration::Categories &categories) {
+  double expectedEvents = simPdf.expectedEvents(categories.fitting);
+  unsigned int nToys = 2;
+  RooDataSet *toyDataSet = nullptr;
+  std::vector<RooFitResult *> resultVec;
+
+  for (unsigned int i = 0; i < nToys; ++i) {
+    toyDataSet = simPdf.generate(
+        RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+        expectedEvents);
+
+    RooSimultaneous *simPdfFit =
+        new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+
+    simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+
+    resultVec.emplace_back(
+        simPdfFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
+  }
+  for (auto r : resultVec) {
+    if (r != nullptr) {
+      std::cout << "Success!\n";
+    }
+  }
+
+  // TH1D asym_hist("asym_hist", "asym_hist", 40, -1, 1);
+  // TH1D asym_hist_err("asym_hist_err", "asym_hist_err", 40, 0, 0.5);
+  // TH1D asym_hist_pull("asym_hist_pull", "asym_hist_pull", 40, -5, 5);
+}
+
 void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec) {
@@ -775,7 +838,6 @@ void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categ
   // around 0, i.e. the generated data matches the defined model.
 
   // Need the number of generated events to be the sum of all predicted yields
-  double expectedEvents = simPdf.expectedEvents(categories.fitting);
 
   // categories.fitting
   // RooMCStudy mcStudy(
@@ -787,6 +849,7 @@ void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categ
   // std::cout << "Created MCStudy object." << std::endl;
   //
   // int nSamples = 1;
+  // double expectedEvents = simPdf.expectedEvents(categories.fitting);
   // int nEvtsPerSample = expectedEvents;
   //
   // mcStudy.generate(nSamples, nEvtsPerSample, true);
@@ -806,46 +869,13 @@ void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categ
   // Generate toys: remember to set random seed
   // Initialise histograms for pull distributions
   // Loop over nToys
-  // Define PDF inside loop, then generate toy dataset from this: how? Do the
-  // PDF loop inside the toy loop??
-  // It doesn't make sense to extract variables from simPdf when they are
-  // different for each pdf?
-  // Fit PDF to toy dataset Fill histograms Draw/Save
-  // histograms outside loop
+  // Define PDF inside loop, then generate toy dataset from this
+  // Save RooFitResults to vector
+  // Loop over vector after and fill histograms with values and errors of
+  // parameters
 
-  // unsigned int nToys = 100;
-  //
-  // TH1D asym_hist("asym_hist", "asym_hist", 40, -1, 1);
-  // TH1D asym_hist_err("asym_hist_err", "asym_hist_err", 40, 0, 0.5);
-  // TH1D asym_hist_pull("asym_hist_pull", "asym_hist_pull", 40, -5, 5);
-  //
-  // for (unsigned int i = 0; i < nToys; ++i) {
-  //   RooDataSet *toyDataSet = simPdf.generate(
-  //       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-  //       expectedEvents);
-  //
-  //   RooSimultaneous *simPdfFit =
-  //       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
-  //
-  //   simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
-  //
-  //   RooFitResult *result =
-  //       simPdfFit.fitTo(toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
-  //
-  // NEED ACCESS TO TEMPLATE PARAMETERS
-  //   asym_hist.Fill(NeutralBachelorDaughtersVar<neutral, bachelor,
-  //   daughters>::Get().Asym());
-  // }
-
-  RooDataSet *toyDataSet = simPdf.generate(
-      RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-      expectedEvents);
-
-  RooSimultaneous *simPdfFit =
-      new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
-
-  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
-  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, pdfs);
+  // RunSingleToy(simPdf, config, categories, pdfs);
+  RunManyToys(simPdf, config, categories);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
