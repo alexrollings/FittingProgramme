@@ -649,37 +649,86 @@ void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
 void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
                   Configuration::Categories &categories) {
   double expectedEvents = simPdf.expectedEvents(categories.fitting);
-  unsigned int nToys = 2;
+  unsigned int nToys = 3;
   RooDataSet *toyDataSet = nullptr;
   std::vector<RooFitResult *> resultVec;
+
+  RooSimultaneous *simPdfClone =
+      new RooSimultaneous("simPdfClone", "simPdfClone", categories.fitting);
+
+  simPdfClone = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+
+  RooSimultaneous *simPdfToFit =
+      new RooSimultaneous("simPdfToFit", "simPdfToFit", categories.fitting);
 
   for (unsigned int i = 0; i < nToys; ++i) {
     toyDataSet = simPdf.generate(
         RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
         expectedEvents);
 
-    RooSimultaneous *simPdfFit =
-        new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+    simPdfToFit = dynamic_cast<RooSimultaneous *>(simPdfClone->Clone());
 
-    simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
-
+    // RooMsgService::instance().setSilentMode(true);
+    // check RooFit result
     resultVec.emplace_back(
-        simPdfFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
-  }
-  for (auto r : resultVec) {
-    if (r != nullptr) {
-      std::cout << "Success!\n";
-    }
+        simPdfToFit->fitTo(*toyDataSet,/* RooFit::PrintEvalErrors(-1) */ RooFit::Save()));
+    // run 3 toys and look at RooFit result ("v")
+
   }
 
-  // TH1D asym_hist("asym_hist", "asym_hist", 40, -1, 1);
-  // TH1D asym_hist_err("asym_hist_err", "asym_hist_err", 40, 0, 0.5);
-  // TH1D asym_hist_pull("asym_hist_pull", "asym_hist_pull", 40, -5, 5);
+  TH1D R_Dst0K_vs_Dst0pi_hist("R_Dst0K_vs_Dst0pi_hist",
+                              "R_Dst0K_vs_Dst0pi_hist", 40, 0, 0.15);
+  TH1D R_Dst0K_vs_Dst0pi_err_hist("R_Dst0K_vs_Dst0pi_err_hist",
+                                  "R_Dst0K_vs_Dst0pi_err_hist", 40, 0, 0.01);
+  TH1D R_Dst0K_vs_Dst0pi_pull_hist("R_Dst0K_vs_Dst0pi_pull_hist",
+                                   "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
+
+  for (auto &r : resultVec) {
+
+    r->Print("v");
+
+    RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
+        r->floatParsFinal().find(config.R_Dst0K_vs_Dst0pi().GetName()));
+
+    RooRealVar *R_Dst0K_vs_Dst0pi =
+        dynamic_cast<RooRealVar *>(R_Dst0K_vs_Dst0pi_AbsArg);
+    if (R_Dst0K_vs_Dst0pi == nullptr) {
+      std::stringstream output;
+      output << "No value found in result.";
+      throw std::runtime_error(output.str());
+    }
+
+    R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
+    R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
+    R_Dst0K_vs_Dst0pi_pull_hist.Fill(
+        (R_Dst0K_vs_Dst0pi->getVal() - config.R_Dst0K_vs_Dst0pi_predicted()) /
+        R_Dst0K_vs_Dst0pi->getError());
+  }
+
+  TCanvas R_Dst0K_vs_Dst0pi_canvas("R_Dst0K_vs_Dst0pi_canvas",
+                                   "R_Dst0K_vs_Dst0pi_canvas", 1500, 500);
+  R_Dst0K_vs_Dst0pi_canvas.Divide(3, 1);
+
+  R_Dst0K_vs_Dst0pi_canvas.cd(1);
+  R_Dst0K_vs_Dst0pi_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi");
+  R_Dst0K_vs_Dst0pi_hist.SetTitle("");
+  R_Dst0K_vs_Dst0pi_hist.Draw();
+  R_Dst0K_vs_Dst0pi_canvas.cd(2);
+  R_Dst0K_vs_Dst0pi_err_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Error");
+  R_Dst0K_vs_Dst0pi_err_hist.SetTitle("");
+  R_Dst0K_vs_Dst0pi_err_hist.Draw();
+  R_Dst0K_vs_Dst0pi_canvas.cd(3);
+  R_Dst0K_vs_Dst0pi_pull_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Pull");
+  R_Dst0K_vs_Dst0pi_pull_hist.SetTitle("");
+  R_Dst0K_vs_Dst0pi_pull_hist.Draw();
+
+  R_Dst0K_vs_Dst0pi_canvas.SaveAs((path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
 }
 
-void MakeSimultaneousPdf(Configuration &config, Configuration::Categories &categories,
-             std::vector<Neutral> const &neutralVec,
-             std::vector<Daughters> const &daughtersVec) {
+void MakeSimultaneousPdf(Configuration &config,
+                         Configuration::Categories &categories,
+                         std::vector<Neutral> const &neutralVec,
+                         std::vector<Daughters> const &daughtersVec) {
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;

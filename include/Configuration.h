@@ -39,6 +39,7 @@ public:
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &deltaMass() { return deltaMass_; }
+  double &R_Dst0K_vs_Dst0pi_predicted() { return R_Dst0K_vs_Dst0pi_predicted_; }
   RooRealVar &R_Dst0K_vs_Dst0pi() { return R_Dst0K_vs_Dst0pi_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
@@ -46,7 +47,7 @@ public:
   Categories &categories() { return categories_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
 
-private:
+ private:
   Configuration();
   Configuration(Configuration const &) = delete;
   Configuration(Configuration &&) = delete;
@@ -57,6 +58,7 @@ private:
   RooRealVar buMass_;
   RooRealVar buPdgId_;
   RooRealVar deltaMass_;
+  double R_Dst0K_vs_Dst0pi_predicted_;
   RooRealVar R_Dst0K_vs_Dst0pi_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
