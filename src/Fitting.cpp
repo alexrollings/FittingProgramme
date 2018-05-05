@@ -633,11 +633,11 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
 void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
                   Configuration::Categories &categories,
                   std::vector<PdfBase *> &pdfs) {
-  double expectedEvents = simPdf.expectedEvents(categories.fitting);
+  double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
 
   RooDataSet *toyDataSet = simPdf.generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-      expectedEvents);
+      nEvtsPerToy);
 
   RooSimultaneous *simPdfFit =
       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
@@ -648,11 +648,6 @@ void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
 
 void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
                   Configuration::Categories &categories) {
-  double expectedEvents = simPdf.expectedEvents(categories.fitting);
-  unsigned int nToys = 3;
-  RooDataSet *toyDataSet = nullptr;
-  std::vector<RooFitResult *> resultVec;
-
   RooSimultaneous *simPdfClone =
       new RooSimultaneous("simPdfClone", "simPdfClone", categories.fitting);
 
@@ -661,17 +656,50 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   RooSimultaneous *simPdfToFit =
       new RooSimultaneous("simPdfToFit", "simPdfToFit", categories.fitting);
 
+  // Binned(false) causes seg fault: dataset not datahist?
+  RooMCStudy mcStudy(
+      simPdf,
+      RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
+      RooFit::Binned(true), RooFit::Silence(false), RooFit::Extended(true),
+      RooFit::FitOptions(RooFit::NumCPU(8, 2), RooFit::Extended(true),
+                         RooFit::Optimize(false), RooFit::Offset(true),
+                         RooFit::Minimizer("Minuit2", "migrad"),
+                         RooFit::Strategy(2)));
+
+  std::cout << "Created MCStudy object." << std::endl;
+
+  int nToys = 3;
+  double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
+
+  mcStudy.generate(nToys, nEvtsPerToy, true);
+
+  // RooDataSet* toyDataSet = nullptr;
+  RooAbsData* toyAbsData = nullptr;
+  std::vector<RooFitResult *> resultVec;
+
   for (unsigned int i = 0; i < nToys; ++i) {
-    toyDataSet = simPdf.generate(
-        RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-        expectedEvents);
+
+    toyAbsData = const_cast<RooAbsData *>(mcStudy.genData(i));
+    if (toyAbsData == nullptr) {
+      std::stringstream output;
+      output << "AbsData number " << i << " in McStudy object empty.\n";
+      throw std::runtime_error(output.str());
+    }
+    // toyDataSet = dynamic_cast<RooDataSet *>(toyAbsData);
+    // if (toyDataSet == nullptr) {
+    //   std::stringstream output;
+    //   output << "Dataset number " << i << " in McStudy object empty.\n";
+    //   throw std::runtime_error(output.str());
+    // }
 
     simPdfToFit = dynamic_cast<RooSimultaneous *>(simPdfClone->Clone());
 
     // RooMsgService::instance().setSilentMode(true);
     // check RooFit result
-    resultVec.emplace_back(
-        simPdfToFit->fitTo(*toyDataSet,/* RooFit::PrintEvalErrors(-1) */ RooFit::Save()));
+    resultVec.emplace_back(simPdfToFit->fitTo(
+        *toyAbsData, RooFit::Save(), RooFit::NumCPU(8, 2),
+        RooFit::Extended(true), RooFit::Optimize(false), RooFit::Offset(true),
+        RooFit::Minimizer("Minuit2", "migrad"), RooFit::Strategy(2)));
     // run 3 toys and look at RooFit result ("v")
 
   }
@@ -898,10 +926,9 @@ void MakeSimultaneousPdf(Configuration &config,
   // std::cout << "Created MCStudy object." << std::endl;
   //
   // int nSamples = 1;
-  // double expectedEvents = simPdf.expectedEvents(categories.fitting);
-  // int nEvtsPerSample = expectedEvents;
+  // double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
   //
-  // mcStudy.generate(nSamples, nEvtsPerSample, true);
+  // mcStudy.generate(nSamples, nEvtsPerToy, true);
   //
   // std::cout << "Generated toy events." << std::endl;
   //
