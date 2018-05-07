@@ -24,10 +24,10 @@ add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
 #${variable} expands variable
-add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
+# add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
 add_executable(Fitting src/Fitting.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
-target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
+# target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
 target_link_libraries(Fitting ${FITTING_LIBS})

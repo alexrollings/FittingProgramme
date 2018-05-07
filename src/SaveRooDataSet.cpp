@@ -67,8 +67,9 @@ void SaveRooDataSet(std::string const &path, Year myYear, Polarity myPolarity,
 
   fitting = ComposeName(myNeutral, myBachelor, myDaughters);
   // Initialise RooRealVars now neutral has been specified
-  Configuration &config = Configuration::Get();
-  Configuration::Categories &categories = Configuration::Get().categories();
+  int id = 0;
+  Configuration &config = Configuration::Get(id);
+  Configuration::Categories &categories = Configuration::Get(id).categories();
 
   // Create DataSet and feed it the ArgSet, which
   // defines how many columns it

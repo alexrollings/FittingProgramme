@@ -25,14 +25,14 @@ struct NeutralBachelorDaughtersVarsImpl;
 
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
-  NeutralBachelorDaughtersVarsImpl();
+  NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Dst0h_;
   std::unique_ptr<RooRealVar> Asym_;
 };
 
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
-  NeutralBachelorDaughtersVarsImpl();
+  NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Dst0h_;
   std::unique_ptr<RooRealVar> Asym_;
 };
@@ -47,22 +47,40 @@ class NeutralBachelorDaughtersVars {
   // All happens automatically :-)
 
  public:
-  static NeutralBachelorDaughtersVars<neutral, bachelor, daughters> &Get() {
-    static NeutralBachelorDaughtersVars<neutral, bachelor, daughters> singleton;
-    return singleton;
+  // Need to construct the Impl field here (don't HAVE to do this if imple_
+  // doesn't take an argument, as it happens implicitly.
+  NeutralBachelorDaughtersVars(int uniqueId_) : impl_(uniqueId_) {}
+  ~NeutralBachelorDaughtersVars() {}
+
+  using This_t = NeutralBachelorDaughtersVars<neutral, bachelor, daughters>;
+
+  // Get() method of PDF now doesn't always return the same PDF, but the same
+  // PDF for the given ID
+  static This_t &Get(int uniqueId_) {
+    static std::map<int, std::shared_ptr<This_t>> singletons;
+    // An iterator to a map is a std::pair<key, value>, so we need to call
+    // i->second to get the value
+    auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
+    if (it == singletons.end()) {
+      // If it doesn't, create it as a new unique_ptr by calling emplace, which
+      // will forward the pointer to the constructor of std::unique_ptr
+      it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
+               .first;
+    }
+    return *it->second;
   }
 
   // If RooShit wasn't so shit we would pass a const reference
+  int uniqueId() { return uniqueId_; }
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
   RooAbsReal &Asym() { return *impl_.Asym_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
   // below)...
-  NeutralBachelorDaughtersVars() {}
-  ~NeutralBachelorDaughtersVars() {}
 
   // Indicate if only used by one daughters
+  int uniqueId_;
 
   // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
   NeutralBachelorDaughtersVarsImpl<neutral, bachelor, daughters> impl_;
@@ -73,36 +91,36 @@ class NeutralBachelorDaughtersVars {
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
-                                 daughters>::NeutralBachelorDaughtersVarsImpl()
+                                 daughters>::NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : N_Dst0h_(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(neutral, daughters)).c_str(),
+          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
           ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(neutral, daughters))
+           ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           10000, 0, 50000)),
       Asym_(new RooRealVar(
-          ("Asym_" + ComposeName(neutral, Bachelor::pi, daughters)).c_str(),
+          ("Asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters)).c_str(),
           ("Asymmetry variable " +
-           ComposeName(neutral, Bachelor::pi, daughters))
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           0.1, -1, 1)) {}
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k,
-                                 daughters>::NeutralBachelorDaughtersVarsImpl()
+                                 daughters>::NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : N_Dst0h_(new RooFormulaVar(
-          ("N_Dst0k_" + ComposeName(neutral, daughters)).c_str(),
+          ("N_Dst0k_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
           ("Total number of Bu2Dst0K-like events, for " +
-           ComposeName(neutral, daughters))
+           ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
-                                                  daughters>::Get()
+                                                  daughters>::Get(uniqueId)
                          .N_Dst0h(),
-                     Configuration::Get().R_Dst0K_vs_Dst0pi()))),
+                     Configuration::Get(uniqueId).R_Dst0K_vs_Dst0pi()))),
       Asym_(new RooRealVar(
-          ("Asym_" + ComposeName(neutral, Bachelor::k, daughters)).c_str(),
+          ("Asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters)).c_str(),
           ("Asymmetry variable " +
-           ComposeName(neutral, Bachelor::k, daughters))
+           ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
           0.1, -1, 1)) {}

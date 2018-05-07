@@ -67,20 +67,23 @@ TLegend MakeLegend(TCanvas &canvas, TPad &pad1, TPad &pad2, PdfBase &pdf) {
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
+  int id = 0;
   canvas.cd();
   pad1.cd();
 
   TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters))
+          .c_str(),
       "pdfSignalHist", 0, 0, 0);
   pdfSignalHist->SetLineColor(kBlue);
   pdfSignalHist->SetLineStyle(kDashed);
   pdfSignalHist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" + ComposeName(neutral, bachelor, daughters)).c_str(),
+      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters))
+          .c_str(),
       "pdfCombHist", 0, 0, 0);
   pdfCombHist->SetLineColor(kRed);
   pdfCombHist->SetLineStyle(kDashed);
@@ -108,6 +111,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
+  int id = 0;
 
   std::unique_ptr<RooPlot> frame(var.frame(RooFit::Title(
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -119,13 +123,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   fullDataSet.plotOn(
       frame.get(),
       RooFit::Cut(("fitting==fitting::" +
-                   ComposeName(neutral, bachelor, daughters, charge))
+                   ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
 
   simPdf.plotOn(
       frame.get(),
-      RooFit::Slice(categories.fitting,
-                    ComposeName(neutral, bachelor, daughters, charge).c_str()),
+      RooFit::Slice(
+          categories.fitting,
+          ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
       RooFit::ProjWData(categories.fitting, fullDataSet),
       RooFit::LineColor(kBlue));
 
@@ -138,7 +143,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeName(neutral, bachelor, daughters, charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfBuSignal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
@@ -146,7 +151,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeName(neutral, bachelor, daughters, charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
@@ -157,7 +162,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeName(neutral, bachelor, daughters, charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfDeltaSignal()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kBlue));
@@ -165,7 +170,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeName(neutral, bachelor, daughters, charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
@@ -175,25 +180,26 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
   pullFrame->addPlotable(hPull /* .get() */, "P");
-  pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
-                      ComposeName(neutral, bachelor, daughters, charge))
-                         .c_str());
+  pullFrame->SetName(
+      ("pullFrame_" + EnumToString(variable) + "_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str());
   pullFrame->SetTitle("");
 
   // --------------- plot onto canvas ---------------------
   TCanvas canvas(("canvas_" + EnumToString(variable) + "_" +
-                  ComposeName(neutral, bachelor, daughters, charge))
+                  ComposeName(id, neutral, bachelor, daughters, charge))
                      .c_str(),
                  "canvas", 1200, 1000);
 
   TPad pad1(("pad1_" + EnumToString(variable) + "_" +
-             ComposeName(neutral, bachelor, daughters, charge))
+             ComposeName(id, neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
   pad1.Draw();
 
   TPad pad2(("pad2_" + EnumToString(variable) + "_" +
-             ComposeName(neutral, bachelor, daughters, charge))
+             ComposeName(id, neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
@@ -226,7 +232,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // dataHist->Draw("same");
 
   canvas.Update();
-  canvas.SaveAs((path + ComposeName(neutral, bachelor, daughters, charge) +
+  canvas.SaveAs((path +
+                 ComposeName(id, neutral, bachelor, daughters, charge) +
                  "_" + EnumToString(variable) + "Mass.pdf")
                     .c_str());
 }
@@ -241,11 +248,13 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
+  int id = 0;
 
   TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" + ComposeName(neutral, bachelor, daughters, charge))
+      ("pdfSignalHist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "pdfSignalHist", 0, 0, 0);
   pdfSignalHist->SetLineColor(kBlue);
@@ -253,7 +262,8 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   pdfSignalHist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" + ComposeName(neutral, bachelor, daughters, charge))
+      ("pdfCombHist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "pdfCombHist", 0, 0, 0);
   pdfCombHist->SetLineColor(kRed);
@@ -272,7 +282,9 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
+      ("blankHist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
       "blankHist", 0, 0, 0);
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
@@ -280,8 +292,7 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: "
-            << pdf.yieldSignal().getVal()
+  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
             // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
             << " events";
 
@@ -312,6 +323,7 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
+  int id = 0;
 
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
@@ -328,14 +340,16 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   }
 
   TH1 *hh_model_1D = singlePdf->createHistogram(
-      ("hh_model_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
+      ("hh_model_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
                    RooFit::Binning(config.deltaMass().getBins())));
   if (hh_model_1D == nullptr) {
     throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
   }
-  TH2F *hh_model = dynamic_cast<TH2F*>(hh_model_1D);
+  TH2F *hh_model = dynamic_cast<TH2F *>(hh_model_1D);
   if (hh_model == nullptr) {
     throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
   }
@@ -344,30 +358,39 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   // Make 2D plot of data
   // Plot ONLY one component of the data
   TH1 *hh_data_1D = fullDataSet.createHistogram(
-      ("hh_data_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
+      ("hh_data_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
                    RooFit::Binning(config.deltaMass().getBins())),
       RooFit::Cut(("fitting==fitting::" +
-                   ComposeName(neutral, bachelor, daughters, charge))
+                   ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
   if (hh_data_1D == nullptr) {
     throw std::runtime_error("\n1D hist of data returns nullptr\n");
   }
-  TH2F *hh_data = dynamic_cast<TH2F*>(hh_data_1D);
+  TH2F *hh_data = dynamic_cast<TH2F *>(hh_data_1D);
   if (hh_data == nullptr) {
     throw std::runtime_error("\n2D hist of data returns nullptr\n");
   }
   hh_data->SetTitle("");
 
-  // double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) - hh_model->GetXaxis()->GetBinLowEdge(0);
-  // double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) - hh_data->GetXaxis()->GetBinLowEdge(0);
-  // std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model << "\n\n";
-  // std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data << "\n\n";
-  // double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) - hh_model->GetYaxis()->GetBinLowEdge(0);
-  // double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) - hh_data->GetYaxis()->GetBinLowEdge(0);
-  // std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model << "\n\n";
-  // std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data << "\n\n";
+  // double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) -
+  // hh_model->GetXaxis()->GetBinLowEdge(0);
+  // double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) -
+  // hh_data->GetXaxis()->GetBinLowEdge(0);
+  // std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model
+  // << "\n\n";
+  // std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data
+  // << "\n\n";
+  // double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) -
+  // hh_model->GetYaxis()->GetBinLowEdge(0);
+  // double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) -
+  // hh_data->GetYaxis()->GetBinLowEdge(0);
+  // std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model
+  // << "\n\n";
+  // std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data
+  // << "\n\n";
 
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
@@ -379,10 +402,11 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
   hh_model->Scale(hh_data->Integral());
 
-  TCanvas *canvasModel = new TCanvas(
-      ("canvasModel_" + ComposeName(neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
+  TCanvas *canvasModel =
+      new TCanvas(("canvasModel_" +
+                   ComposeName(id, neutral, bachelor, daughters, charge))
+                      .c_str(),
+                  "", 1000, 800);
   hh_model->SetStats(0);
   hh_model->Draw("colz");
   hh_model->SetTitle(("B^{" + EnumToLabel(charge) +
@@ -394,14 +418,16 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   hh_model->Draw("colz");
   canvasModel->Update();
   canvasModel->SaveAs(
-      (path + ComposeName(neutral, bachelor, daughters, charge) + "_2dPDF.pdf")
+      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
+       "_2dPDF.pdf")
           .c_str());
 
   // 2D data plot
-  TCanvas *canvasData = new TCanvas(
-      ("canvasData_" + ComposeName(neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
+  TCanvas *canvasData =
+      new TCanvas(("canvasData_" +
+                   ComposeName(id, neutral, bachelor, daughters, charge))
+                      .c_str(),
+                  "", 1000, 800);
   hh_data->SetStats(0);
   hh_data->Draw("colz");
   hh_data->SetTitle(("B^{" + EnumToLabel(charge) +
@@ -413,13 +439,15 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   hh_data->Draw("colz");
   canvasData->Update();
   canvasData->SaveAs(
-      (path + ComposeName(neutral, bachelor, daughters, charge) + "_2dData.pdf")
+      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
+       "_2dData.pdf")
           .c_str());
 
   gStyle->SetTitleOffset(1.2, "Z");
   // Make a histogram with the Poisson stats in each data bin
   TH2F *hh_err = new TH2F(
-      ("hh_err_" + ComposeName(neutral, bachelor, daughters, charge)).c_str(),
+      ("hh_err_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
       "", config.buMass().getBins(), config.buMass().getMin(),
       config.buMass().getMax(), config.deltaMass().getBins(),
       config.deltaMass().getMin(), config.deltaMass().getMax());
@@ -431,10 +459,11 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   }
 
   // 2D residuals plot (data - PDF)/err
-  TCanvas *canvasRes = new TCanvas(
-      ("canvasRes_" + ComposeName(neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
+  TCanvas *canvasRes =
+      new TCanvas(("canvasRes_" +
+                   ComposeName(id, neutral, bachelor, daughters, charge))
+                      .c_str(),
+                  "", 1000, 800);
   canvasRes->cd();
   TH2F *hh_data_new = (TH2F *)hh_data->Clone();
   hh_data_new->Add(hh_model, -1);
@@ -445,9 +474,10 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   hh_data_new->SetStats(0);
   hh_data_new->Draw("colz");
   canvasRes->Update();
-  canvasRes->SaveAs((path + ComposeName(neutral, bachelor, daughters, charge) +
-                     "_2dResiduals.pdf")
-                        .c_str());
+  canvasRes->SaveAs(
+      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
+       "_2dResiduals.pdf")
+          .c_str());
 }
 
 void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
@@ -479,9 +509,9 @@ void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
   std::cout << "Save to pdf file." << std::endl;
 }
 void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
-             Configuration::Categories &categories,
-             std::vector<Neutral> const &neutralVec,
-             std::vector<Daughters> const &daughtersVec) {
+                         Configuration::Categories &categories,
+                         std::vector<Neutral> const &neutralVec,
+                         std::vector<Daughters> const &daughtersVec) {
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
@@ -648,7 +678,7 @@ void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
 }
 
 void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
-                  Configuration::Categories &categories) {
+                 Configuration::Categories &categories) {
   RooSimultaneous *simPdfClone =
       new RooSimultaneous("simPdfClone", "simPdfClone", categories.fitting);
 
@@ -675,11 +705,10 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   mcStudy.generate(nToys, nEvtsPerToy, true);
 
   // RooDataSet* toyDataSet = nullptr;
-  RooAbsData* toyAbsData = nullptr;
+  RooAbsData *toyAbsData = nullptr;
   std::vector<RooFitResult *> resultVec;
 
   for (unsigned int i = 0; i < nToys; ++i) {
-
     toyAbsData = const_cast<RooAbsData *>(mcStudy.genData(i));
     if (toyAbsData == nullptr) {
       std::stringstream output;
@@ -702,7 +731,6 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
         RooFit::Extended(true), RooFit::Optimize(false), RooFit::Offset(true),
         RooFit::Minimizer("Minuit2", "migrad"), RooFit::Strategy(2)));
     // run 3 toys and look at RooFit result ("v")
-
   }
 
   TH1D R_Dst0K_vs_Dst0pi_hist("R_Dst0K_vs_Dst0pi_hist",
@@ -713,7 +741,6 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
                                    "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
 
   for (auto &r : resultVec) {
-
     r->Print("v");
 
     RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
@@ -751,7 +778,8 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   R_Dst0K_vs_Dst0pi_pull_hist.SetTitle("");
   R_Dst0K_vs_Dst0pi_pull_hist.Draw();
 
-  R_Dst0K_vs_Dst0pi_canvas.SaveAs((path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
+  R_Dst0K_vs_Dst0pi_canvas.SaveAs(
+      (path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
 }
 
 void MakeSimultaneousPdf(Configuration &config,
@@ -1121,8 +1149,9 @@ int main(int argc, char **argv) {
     }
   }
 
-  Configuration &config = Configuration::Get();
-  Configuration::Categories &categories = Configuration::Get().categories();
+  int id = 0;
+  Configuration &config = Configuration::Get(id);
+  Configuration::Categories &categories = Configuration::Get(id).categories();
 
   if (runToys == false) {
     RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
@@ -1173,7 +1202,8 @@ int main(int argc, char **argv) {
     }
 
     path = "result/";
-    MakeSimultaneousPdf(fullDataSet, config, categories, neutralVec, daughtersVec);
+    MakeSimultaneousPdf(fullDataSet, config, categories, neutralVec,
+                        daughtersVec);
 
   } else {
     path = "toys/";

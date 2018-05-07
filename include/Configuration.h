@@ -16,11 +16,27 @@ enum class SplitByCharge { ktrue, kfalse };
 class Configuration {
 
 public:
-  static Configuration &Get() {
-    static Configuration singleton;
-    return singleton;
+  Configuration(int uniqueId_);
+
+  using This_t = Configuration;
+
+  // Get() method of PDF now doesn't always return the same PDF, but the same
+  // PDF for the given ID
+  static This_t &Get(int uniqueId_) {
+    static std::map<int, std::shared_ptr<This_t>> singletons;
+    // An iterator to a map is a std::pair<key, value>, so we need to call
+    // i->second to get the value
+    auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
+    if (it == singletons.end()) {
+      // If it doesn't, create it as a new unique_ptr by calling emplace, which
+      // will forward the pointer to the constructor of std::unique_ptr
+      it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
+               .first;
+    }
+    return *it->second;
   }
 
+  // What about categories???
   struct Categories {
     RooCategory polarity;
     RooCategory charge;
@@ -35,7 +51,8 @@ public:
     Categories &operator=(Categories const &) = delete;
     Categories &operator=(Categories &&) = delete;
   };
-
+  
+  int uniqueId() { return uniqueId_; }
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &deltaMass() { return deltaMass_; }
@@ -48,12 +65,12 @@ public:
   RooConstVar &relativeWidth() { return relativeWidth_; }
 
  private:
-  Configuration();
   Configuration(Configuration const &) = delete;
   Configuration(Configuration &&) = delete;
   Configuration &operator=(Configuration const &) = delete;
   Configuration &operator=(Configuration &&) = delete;
 
+  int uniqueId_;
   Categories categories_;
   RooRealVar buMass_;
   RooRealVar buPdgId_;
@@ -88,11 +105,12 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge);
 
-std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
-std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters);
-std::string ComposeName(Neutral neutral, Bachelor bachelor);
-std::string ComposeName(Neutral neutral, Daughters daughters);
-std::string ComposeName(Neutral neutral);
+std::string ComposeFittingName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters);
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor);
+std::string ComposeName(int uniqueId, Neutral neutral, Daughters daughters);
+std::string ComposeName(int uniqueId, Neutral neutral);
 
 template <Neutral neutral>
 constexpr Neutral SwapNeutral();

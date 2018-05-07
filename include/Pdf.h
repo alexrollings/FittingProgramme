@@ -11,6 +11,7 @@
 #include "RooArgList.h"
 #include "RooExponential.h"
 #include "RooSimultaneous.h"
+#include <map>
 
 class PdfBase {
  public:
@@ -46,10 +47,10 @@ class PdfBase {
   // function needs to be const when you don't change the object when the
   // function is called
   inline std::string CategoryName() const {
-    return ComposeName(neutral_, bachelor_, daughters_, charge_);
+    return ComposeFittingName(neutral_, bachelor_, daughters_, charge_);
   }
 
- protected:
+ protected: // Can be accessed by deriving classes
   PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge);
   virtual ~PdfBase() {}
@@ -81,19 +82,16 @@ class Pdf : public PdfBase {
  public:
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
-  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get(int _uniqueId) {
-    static std::map<
-        int, std::shared_ptr<Pdf<_neutral, _bachelor, _daughters, _charge>>>
-        singletons{};
+  static This_t &Get(int uniqueId) {
+    static std::map<int, std::shared_ptr<This_t>> singletons;
     // An iterator to a map is a std::pair<key, value>, so we need to call
     // i->second to get the value
-    auto it = singletons.find(_uniqueId);  // Check if _uniqueId already exists
+    auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
     if (it == singletons.end()) {
       // If it doesn't, create it as a new unique_ptr by calling emplace, which
       // will forward the pointer to the constructor of std::unique_ptr
-      it = singletons.emplace(_uniqueId, new This_t(_uniqueId)).first;
+      it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId)).first;
     }
-    // Return a reference to the either 1) existing or 2) newly created PDF
     return *it->second;
   }
 
@@ -102,21 +100,24 @@ class Pdf : public PdfBase {
 
   // pdfSignal made in another class, but we only deal with PDF in the
   // executable. Give PDF functions to retrieve them
-  virtual RooProdPdf &pdfSignal() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal();
+  virtual RooProdPdf &pdfSignal() const { 
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_).pdfSignal();
+    // It shouldn't be private, it sould be protected then it can be accessed by inheriting classes
   }
   virtual RooGaussian &pdfDeltaSignal() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfDeltaSignal();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_).pdfDeltaSignal();
   }
   virtual RooGaussian &pdfBuSignal() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get().pdfBuSignal();
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_).pdfBuSignal();
   }
 
- private:
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
   // singleton)
-  Pdf(int _uniqueId);
+  // This is just a parameter/argument, you can call it anything you want
+  Pdf(int whateverId);
   virtual ~Pdf() {}
+
+ private:
 
   // Declaring a function inside a class of const will not change any of the
   // variables inside of the object
@@ -133,34 +134,34 @@ class Pdf : public PdfBase {
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 // How does it know it's the same unique ID when one is uniqueId_ and the other
-// _uniqueId?
-Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int _uniqueId)
-    : PdfBase(_uniqueId, _neutral, _bachelor, _daughters, _charge) {
+// uniqueId?
+Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
+    : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
   if (_charge == Charge::minus) {
     yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge))
+        ("yieldSignal_" + ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
             .c_str(),
         ("Signal Yield " +
-         ComposeName(_neutral, _bachelor, _daughters, _charge))
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
             .c_str(),
         "(@0/2)*(@1+1)",
         RooArgList(
-            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .N_Dst0h(),
-            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .Asym())));
   } else {
     yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge))
+        ("yieldSignal_" + ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
             .c_str(),
         ("Signal Yield " +
-         ComposeName(_neutral, _bachelor, _daughters, _charge))
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
             .c_str(),
         "(@0/2)*(1-@1)",
         RooArgList(
-            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .N_Dst0h(),
-            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get()
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .Asym())));
   }
   CreateRooAddPdf();
@@ -172,14 +173,14 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   PdfBase::functions_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_).pdfSignal());
   PdfBase::functions_.add(PdfBase::pdfComb_);
 
   PdfBase::yields_.add(*PdfBase::yieldSignal_);
   PdfBase::yields_.add(PdfBase::yieldComb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
-      ("pdf_" + ComposeName(_neutral, _bachelor, _daughters, _charge)).c_str(),
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor, _daughters, _charge)).c_str(),
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor, _daughters, _charge)).c_str(),
       PdfBase::functions_, PdfBase::yields_));
 }

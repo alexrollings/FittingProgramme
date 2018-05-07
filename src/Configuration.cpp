@@ -1,6 +1,6 @@
 #include "Configuration.h"
 
-Configuration::Configuration()
+Configuration::Configuration(int uniqueId)
     : buMass_("", "", 0, 0, ""),
       buPdgId_("", "", 0, 0, ""),
       deltaMass_("", "", 0, 0, ""),
@@ -84,102 +84,102 @@ Configuration::Categories::Categories()
 
   // PlotOn only takes one category as an option therefore we need to encompass
   // both bachelor and daughters in the same category
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::kpi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::kpi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::kk, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::kk, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::pipi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::pipi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::pik, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
+                                        Daughters::pik, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::kpi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::kpi, Charge::minus)
+                         .c_str());
   fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::plus)
+      ComposeFittingName(Neutral::pi0, Bachelor::k, Daughters::kk, Charge::plus)
           .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kk, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::kk, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pik, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::pi0, Bachelor::k, Daughters::pik, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::kk, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::minus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus)
-          .c_str());
-  fitting.defineType(
-      ComposeName(Neutral::gamma, Bachelor::k, Daughters::pik, Charge::minus)
-          .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::kk, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::pipi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::pipi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::pik, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::k,
+                                        Daughters::pik, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::kpi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::kpi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::kk, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::kk, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::pipi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::pipi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::pik, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::pi,
+                                        Daughters::pik, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::kpi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::kpi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::kk, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::kk, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::pipi, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::pipi, Charge::minus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::pik, Charge::plus)
+                         .c_str());
+  fitting.defineType(ComposeFittingName(Neutral::gamma, Bachelor::k,
+                                        Daughters::pik, Charge::minus)
+                         .c_str());
 }
 
 // Need a template for this as each enum option is a different 'type'
@@ -331,27 +331,38 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
-std::string ComposeName(Neutral neutral, Bachelor bachelor, Daughters daughters,
-                        Charge charge) {
+std::string ComposeFittingName(Neutral neutral, Bachelor bachelor,
+                        Daughters daughters, Charge charge) {
   return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
-std::string ComposeName(Neutral neutral, Bachelor bachelor,
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
+                        Daughters daughters, Charge charge) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters) + "_" + EnumToString(charge) + "_" +
+         std::to_string(uniqueId);
+}
+
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
                         Daughters daughters) {
   return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
-         EnumToString(daughters);
+         EnumToString(daughters) + "_" + std::to_string(uniqueId);
 }
 
-std::string ComposeName(Neutral neutral, Bachelor bachelor) {
-  return EnumToString(neutral) + "_" + EnumToString(bachelor);
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         std::to_string(uniqueId);
 }
 
-std::string ComposeName(Neutral neutral, Daughters daughters) {
-  return EnumToString(neutral) + "_" + EnumToString(daughters);
+std::string ComposeName(int uniqueId, Neutral neutral, Daughters daughters) {
+  return EnumToString(neutral) + "_" + EnumToString(daughters) + "_" +
+         std::to_string(uniqueId);
 }
 
-std::string ComposeName(Neutral neutral) { return EnumToString(neutral); }
+std::string ComposeName(int uniqueId, Neutral neutral) {
+  return EnumToString(neutral) + "_" + std::to_string(uniqueId);
+}
 
 std::string EnumToLabel(Charge charge) {
   switch (charge) {
