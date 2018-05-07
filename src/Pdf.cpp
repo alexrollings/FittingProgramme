@@ -1,12 +1,13 @@
 #include "Pdf.h"
 #include "Configuration.h"
 
-PdfBase::PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters,
+PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters,
                  Charge charge)
     : neutral_(neutral),
       bachelor_(bachelor),
       daughters_(daughters),
       charge_(charge),
+      uniqueId_(uniqueId),
       addPdf_(nullptr),
       yieldComb_(
           ("yieldComb_" + ComposeName(neutral, bachelor, daughters, charge))

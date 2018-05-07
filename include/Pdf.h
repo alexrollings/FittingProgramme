@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration.h"
 #include "DaughtersVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
@@ -10,12 +11,12 @@
 #include "RooArgList.h"
 #include "RooExponential.h"
 #include "RooSimultaneous.h"
-#include "NeutralBachelorDaughtersVars.h"
 
 class PdfBase {
  public:
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
+  inline int uniqueId() const { return uniqueId_; }
   inline Bachelor bachelor() const { return bachelor_; }
   inline Neutral neutral() const { return neutral_; }
   inline Daughters daughters() const { return daughters_; }
@@ -49,9 +50,11 @@ class PdfBase {
   }
 
  protected:
-  PdfBase(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+  PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters,
+          Charge charge);
   virtual ~PdfBase() {}
 
+  int uniqueId_;
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
@@ -70,20 +73,25 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
+          Charge _charge>
 class Pdf : public PdfBase {
-  
   using This_t = Pdf<_neutral, _bachelor, _daughters, _charge>;
 
  public:
-  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get(int id) {
+  // Get() method of PDF now doesn't always return the same PDF, but the same
+  // PDF for the given ID
+  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get(int _uniqueId) {
+    static std::map<
+        int, std::shared_ptr<Pdf<_neutral, _bachelor, _daughters, _charge>>>
+        singletons{};
     // An iterator to a map is a std::pair<key, value>, so we need to call
     // i->second to get the value
-    auto it = singletons.find(id); // Check if id already exists
+    auto it = singletons.find(_uniqueId);  // Check if _uniqueId already exists
     if (it == singletons.end()) {
       // If it doesn't, create it as a new unique_ptr by calling emplace, which
       // will forward the pointer to the constructor of std::unique_ptr
-      it = singletons.emplace(id, new This_t(id));
+      it = singletons.emplace(_uniqueId, new This_t(_uniqueId)).first;
     }
     // Return a reference to the either 1) existing or 2) newly created PDF
     return *it->second;
@@ -105,10 +113,9 @@ class Pdf : public PdfBase {
   }
 
  private:
-  static std::map<
-      int, std::unique_ptr<Pdf<_neutral, _bachelor, _daughters, _charge>>>
-      singletons;
-  Pdf();
+  // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
+  // singleton)
+  Pdf(int _uniqueId);
   virtual ~Pdf() {}
 
   // Declaring a function inside a class of const will not change any of the
@@ -123,9 +130,12 @@ class Pdf : public PdfBase {
 // variable
 // We have to do it in the text of the constructor because it's a field of
 // PDFBase, not PDF
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
-Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf()
-    : PdfBase(_neutral, _bachelor, _daughters, _charge) {
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
+          Charge _charge>
+// How does it know it's the same unique ID when one is uniqueId_ and the other
+// _uniqueId?
+Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int _uniqueId)
+    : PdfBase(_uniqueId, _neutral, _bachelor, _daughters, _charge) {
   if (_charge == Charge::minus) {
     yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("yieldSignal_" + ComposeName(_neutral, _bachelor, _daughters, _charge))
@@ -158,11 +168,12 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf()
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
+          Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get().pdfSignal());
-  PdfBase::functions_.add(PdfBase::pdfComb());
+  PdfBase::functions_.add(PdfBase::pdfComb_);
 
   PdfBase::yields_.add(*PdfBase::yieldSignal_);
   PdfBase::yields_.add(PdfBase::yieldComb_);

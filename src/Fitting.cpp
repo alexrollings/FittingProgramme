@@ -360,24 +360,24 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   }
   hh_data->SetTitle("");
 
-  double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) - hh_model->GetXaxis()->GetBinLowEdge(0);
-  double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) - hh_data->GetXaxis()->GetBinLowEdge(0);
-  std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model << "\n\n";
-  std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data << "\n\n";
-  double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) - hh_model->GetYaxis()->GetBinLowEdge(0);
-  double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) - hh_data->GetYaxis()->GetBinLowEdge(0);
-  std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model << "\n\n";
-  std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data << "\n\n";
+  // double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) - hh_model->GetXaxis()->GetBinLowEdge(0);
+  // double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) - hh_data->GetXaxis()->GetBinLowEdge(0);
+  // std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model << "\n\n";
+  // std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data << "\n\n";
+  // double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) - hh_model->GetYaxis()->GetBinLowEdge(0);
+  // double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) - hh_data->GetYaxis()->GetBinLowEdge(0);
+  // std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model << "\n\n";
+  // std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data << "\n\n";
 
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
-  hh_model->Scale(1 / hh_model->Integral());
+  // hh_model->Scale(1 / hh_model->Integral());
   // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
   // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
-  hh_data->Scale(1 / hh_data->Integral());
+  // hh_data->Scale(1 / hh_data->Integral());
   // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
-  // hh_model->Scale(hh_data->Integral());
+  hh_model->Scale(hh_data->Integral());
 
   TCanvas *canvasModel = new TCanvas(
       ("canvasModel_" + ComposeName(neutral, bachelor, daughters, charge))
@@ -485,6 +485,7 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
+  int id = 0;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -506,26 +507,26 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -536,26 +537,26 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -566,26 +567,26 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::plus>::Get());
+                                   Daughters::pipi, Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::minus>::Get());
+                                   Daughters::pipi, Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -596,26 +597,26 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -760,6 +761,7 @@ void MakeSimultaneousPdf(Configuration &config,
   RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
+  int id = 0;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -781,26 +783,26 @@ void MakeSimultaneousPdf(Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -811,26 +813,26 @@ void MakeSimultaneousPdf(Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -841,26 +843,26 @@ void MakeSimultaneousPdf(Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::plus>::Get());
+                                   Daughters::pipi, Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::minus>::Get());
+                                   Daughters::pipi, Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -871,26 +873,26 @@ void MakeSimultaneousPdf(Configuration &config,
           case Neutral::pi0:
 
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
 
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get());
+                                   Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get());
+                                   Charge::minus>::Get(id));
 
             break;
         }
@@ -950,8 +952,8 @@ void MakeSimultaneousPdf(Configuration &config,
   // Loop over vector after and fill histograms with values and errors of
   // parameters
 
-  // RunSingleToy(simPdf, config, categories, pdfs);
-  RunManyToys(simPdf, config, categories);
+  RunSingleToy(simPdf, config, categories, pdfs);
+  // RunManyToys(simPdf, config, categories);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
