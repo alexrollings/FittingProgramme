@@ -72,10 +72,21 @@ class PdfBase {
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters, Charge _charge>
 class Pdf : public PdfBase {
+  
+  using This_t = Pdf<_neutral, _bachelor, _daughters, _charge>;
+
  public:
-  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get() {
-    static Pdf<_neutral, _bachelor, _daughters, _charge> singleton;
-    return singleton;
+  static Pdf<_neutral, _bachelor, _daughters, _charge> &Get(int id) {
+    // An iterator to a map is a std::pair<key, value>, so we need to call
+    // i->second to get the value
+    auto it = singletons.find(id); // Check if id already exists
+    if (it == singletons.end()) {
+      // If it doesn't, create it as a new unique_ptr by calling emplace, which
+      // will forward the pointer to the constructor of std::unique_ptr
+      it = singletons.emplace(id, new This_t(id));
+    }
+    // Return a reference to the either 1) existing or 2) newly created PDF
+    return *it->second;
   }
 
   void AssignMissIdYields();
@@ -94,6 +105,9 @@ class Pdf : public PdfBase {
   }
 
  private:
+  static std::map<
+      int, std::unique_ptr<Pdf<_neutral, _bachelor, _daughters, _charge>>>
+      singletons;
   Pdf();
   virtual ~Pdf() {}
 
