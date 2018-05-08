@@ -626,27 +626,31 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   return p;
 }
 
-void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
-                  Configuration::Categories &categories,
-                  std::vector<PdfBase *> &pdfs) {
-  double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
+void RunSingleToy(Configuration &config, Configuration::Categories &categories,
+                  std::vector<Neutral> const &neutralVec,
+                  std::vector<Daughters> const &daughtersVec) {
+  auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
+  RooSimultaneous *simPdf = p.first;
+  std::vector<PdfBase *> pdfs = p.second;
 
-  RooDataSet *toyDataSet = simPdf.generate(
+  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+
+  RooDataSet *toyDataSet = simPdf->generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy);
 
   RooSimultaneous *simPdfFit =
       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
 
-  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf->Clone());
 
   RooFitResult *result =
-      simPdf.fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+      simPdf->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(*p, config, categories, *toyDataSet, simPdf, result);
-    Plotting2D(*p, config, *toyDataSet, simPdf);
+    Plotting1D(*p, config, categories, *toyDataSet, *simPdf, result);
+    Plotting2D(*p, config, *toyDataSet, *simPdf);
   }
 
   result->Print("v");
@@ -665,19 +669,24 @@ void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
   std::cout << "Save to pdf file." << std::endl;
 }
 
-void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
-                 Configuration::Categories &categories) {
+void RunManyToys(Configuration &config, Configuration::Categories &categories,
+                 std::vector<Neutral> const &neutralVec,
+                 std::vector<Daughters> const &daughtersVec) {
+  auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
+  RooSimultaneous *simPdf = p.first;
+  std::vector<PdfBase *> pdfs = p.second;
+
   RooSimultaneous *simPdfClone =
       new RooSimultaneous("simPdfClone", "simPdfClone", categories.fitting);
 
-  simPdfClone = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
+  simPdfClone = dynamic_cast<RooSimultaneous *>(simPdf->Clone());
 
   RooSimultaneous *simPdfToFit =
       new RooSimultaneous("simPdfToFit", "simPdfToFit", categories.fitting);
 
   // Binned(false) causes seg fault: dataset not datahist?
   RooMCStudy mcStudy(
-      simPdf,
+      *simPdf,
       RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
       RooFit::Binned(true), RooFit::Silence(false), RooFit::Extended(true),
       RooFit::FitOptions(RooFit::NumCPU(8, 2), RooFit::Extended(true),
@@ -688,7 +697,7 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   std::cout << "Created MCStudy object." << std::endl;
 
   int nToys = 3;
-  double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
+  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
 
   mcStudy.generate(nToys, nEvtsPerToy, true);
 
@@ -1017,16 +1026,13 @@ int main(int argc, char **argv) {
     std::cout << "Extracted correlation histogram from result." << std::endl;
     correlationCanvas.Update();
     std::cout << "Updated canvas." << std::endl;
-    correlationCanvas.SaveAs((path+"CorrelationMatrix.pdf").c_str());
+    correlationCanvas.SaveAs((path + "CorrelationMatrix.pdf").c_str());
     std::cout << "Save to pdf file." << std::endl;
 
   } else {
     path = "toys/";
-    auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
-    RooSimultaneous *simPdf = p.first;
-    std::vector<PdfBase *> pdfs = p.second;
-    RunSingleToy(*simPdf, config, categories, pdfs);
-    // RunManyToys(simPdf, config, categories);
+    RunSingleToy(config, categories, neutralVec, daughtersVec);
+    // RunManyToys(config, categories, neutralVec, daughtersVec);
   }
 
   return 0;
