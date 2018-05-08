@@ -24,11 +24,11 @@
 
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "NeutralVars.h"
-#include "NeutralBachelorVars.h"
 #include "NeutralBachelorDaughtersVars.h"
-#include "Pdf.h"
+#include "NeutralBachelorVars.h"
+#include "NeutralVars.h"
 #include "ParseArguments.h"
+#include "Pdf.h"
 
 std::string path;
 
@@ -75,16 +75,14 @@ TLegend MakeLegend(TCanvas &canvas, TPad &pad1, TPad &pad2, PdfBase &pdf) {
   TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters))
-          .c_str(),
+      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
       "pdfSignalHist", 0, 0, 0);
   pdfSignalHist->SetLineColor(kBlue);
   pdfSignalHist->SetLineStyle(kDashed);
   pdfSignalHist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters))
-          .c_str(),
+      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
       "pdfCombHist", 0, 0, 0);
   pdfCombHist->SetLineColor(kRed);
   pdfCombHist->SetLineStyle(kDashed);
@@ -181,10 +179,9 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
   pullFrame->addPlotable(hPull /* .get() */, "P");
-  pullFrame->SetName(
-      ("pullFrame_" + EnumToString(variable) + "_" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str());
+  pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
+                      ComposeName(id, neutral, bachelor, daughters, charge))
+                         .c_str());
   pullFrame->SetTitle("");
 
   // --------------- plot onto canvas ---------------------
@@ -233,8 +230,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // dataHist->Draw("same");
 
   canvas.Update();
-  canvas.SaveAs((path +
-                 ComposeName(id, neutral, bachelor, daughters, charge) +
+  canvas.SaveAs((path + ComposeName(id, neutral, bachelor, daughters, charge) +
                  "_" + EnumToString(variable) + "Mass.pdf")
                     .c_str());
 }
@@ -254,8 +250,7 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "pdfSignalHist", 0, 0, 0);
   pdfSignalHist->SetLineColor(kBlue);
@@ -263,8 +258,7 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   pdfSignalHist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "pdfCombHist", 0, 0, 0);
   pdfCombHist->SetLineColor(kRed);
@@ -283,8 +277,7 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "blankHist", 0, 0, 0);
   blankHist->SetLineColor(kWhite);
@@ -293,7 +286,8 @@ void Plotting1D(PdfBase &pdf, Configuration &config,
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
+  sigLegend << "Signal: "
+            << pdf.yieldSignal().getVal()
             // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
             << " events";
 
@@ -341,8 +335,7 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   }
 
   TH1 *hh_model_1D = singlePdf->createHistogram(
-      ("hh_model_" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hh_model_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
@@ -403,11 +396,10 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
   hh_model->Scale(hh_data->Integral());
 
-  TCanvas *canvasModel =
-      new TCanvas(("canvasModel_" +
-                   ComposeName(id, neutral, bachelor, daughters, charge))
-                      .c_str(),
-                  "", 1000, 800);
+  TCanvas *canvasModel = new TCanvas(
+      ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
   hh_model->SetStats(0);
   hh_model->Draw("colz");
   hh_model->SetTitle(("B^{" + EnumToLabel(charge) +
@@ -418,17 +410,16 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
                          .c_str());
   hh_model->Draw("colz");
   canvasModel->Update();
-  canvasModel->SaveAs(
-      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
-       "_2dPDF.pdf")
-          .c_str());
+  canvasModel->SaveAs((path +
+                       ComposeName(id, neutral, bachelor, daughters, charge) +
+                       "_2dPDF.pdf")
+                          .c_str());
 
   // 2D data plot
-  TCanvas *canvasData =
-      new TCanvas(("canvasData_" +
-                   ComposeName(id, neutral, bachelor, daughters, charge))
-                      .c_str(),
-                  "", 1000, 800);
+  TCanvas *canvasData = new TCanvas(
+      ("canvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
   hh_data->SetStats(0);
   hh_data->Draw("colz");
   hh_data->SetTitle(("B^{" + EnumToLabel(charge) +
@@ -439,10 +430,10 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
                         .c_str());
   hh_data->Draw("colz");
   canvasData->Update();
-  canvasData->SaveAs(
-      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
-       "_2dData.pdf")
-          .c_str());
+  canvasData->SaveAs((path +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      "_2dData.pdf")
+                         .c_str());
 
   gStyle->SetTitleOffset(1.2, "Z");
   // Make a histogram with the Poisson stats in each data bin
@@ -460,11 +451,10 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   }
 
   // 2D residuals plot (data - PDF)/err
-  TCanvas *canvasRes =
-      new TCanvas(("canvasRes_" +
-                   ComposeName(id, neutral, bachelor, daughters, charge))
-                      .c_str(),
-                  "", 1000, 800);
+  TCanvas *canvasRes = new TCanvas(
+      ("canvasRes_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
   canvasRes->cd();
   TH2F *hh_data_new = (TH2F *)hh_data->Clone();
   hh_data_new->Add(hh_model, -1);
@@ -475,45 +465,18 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
   hh_data_new->SetStats(0);
   hh_data_new->Draw("colz");
   canvasRes->Update();
-  canvasRes->SaveAs(
-      (path + ComposeName(id, neutral, bachelor, daughters, charge) +
-       "_2dResiduals.pdf")
-          .c_str());
+  canvasRes->SaveAs((path +
+                     ComposeName(id, neutral, bachelor, daughters, charge) +
+                     "_2dResiduals.pdf")
+                        .c_str());
 }
 
-void FitSimPdfToData(RooAbsData &fittingDataSet, RooSimultaneous &simPdf,
-                     Configuration &config,
-                     Configuration::Categories &categories,
-                     std::vector<PdfBase *> &pdfs) {
-  RooFitResult *result =
-      simPdf.fitTo(fittingDataSet, RooFit::Extended(kTRUE), RooFit::Save());
-
-  // Loop over daughters again to plot correct PDFs
-  for (auto &p : pdfs) {
-    Plotting1D(*p, config, categories, fittingDataSet, simPdf, result);
-    Plotting2D(*p, config, fittingDataSet, simPdf);
-  }
-
-  result->Print("v");
-  std::cout << "Printed result." << std::endl;
-
-  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
-                            1000);
-  std::cout << "Created canvas." << std::endl;
-  correlationCanvas.cd();
-  std::cout << "Extracting correlation histogram from result..." << std::endl;
-  result->correlationHist()->Draw("colz");
-  std::cout << "Extracted correlation histogram from result." << std::endl;
-  correlationCanvas.Update();
-  std::cout << "Updated canvas." << std::endl;
-  correlationCanvas.SaveAs("CorrelationMatrix.pdf");
-  std::cout << "Save to pdf file." << std::endl;
-}
-void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
-                         Configuration::Categories &categories,
-                         std::vector<Neutral> const &neutralVec,
-                         std::vector<Daughters> const &daughtersVec) {
-  RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
+std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
+    Configuration &config, Configuration::Categories &categories,
+    std::vector<Neutral> const &neutralVec,
+    std::vector<Daughters> const &daughtersVec) {
+  RooSimultaneous *simPdf =
+      new RooSimultaneous("simPdf", "simPdf", categories.fitting);
 
   std::vector<PdfBase *> pdfs;
   int id = 0;
@@ -656,10 +619,11 @@ void MakeSimultaneousPdf(RooAbsData &fullDataSet, Configuration &config,
   }
 
   for (auto &p : pdfs) {
-    p->AddToSimultaneousPdf(simPdf);
+    p->AddToSimultaneousPdf(*simPdf);
   }
 
-  FitSimPdfToData(fullDataSet, simPdf, config, categories, pdfs);
+  auto p = std::make_pair(simPdf, pdfs);
+  return p;
 }
 
 void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
@@ -675,7 +639,30 @@ void RunSingleToy(RooSimultaneous &simPdf, Configuration &config,
       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
 
   simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf.Clone());
-  FitSimPdfToData(*toyDataSet, *simPdfFit, config, categories, pdfs);
+
+  RooFitResult *result =
+      simPdf.fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+
+  // Loop over daughters again to plot correct PDFs
+  for (auto &p : pdfs) {
+    Plotting1D(*p, config, categories, *toyDataSet, simPdf, result);
+    Plotting2D(*p, config, *toyDataSet, simPdf);
+  }
+
+  result->Print("v");
+  std::cout << "Printed result." << std::endl;
+
+  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
+                            1000);
+  std::cout << "Created canvas." << std::endl;
+  correlationCanvas.cd();
+  std::cout << "Extracting correlation histogram from result..." << std::endl;
+  result->correlationHist()->Draw("colz");
+  std::cout << "Extracted correlation histogram from result." << std::endl;
+  correlationCanvas.Update();
+  std::cout << "Updated canvas." << std::endl;
+  correlationCanvas.SaveAs((path + "CorrelationMatrix.pdf").c_str());
+  std::cout << "Save to pdf file." << std::endl;
 }
 
 void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
@@ -744,7 +731,7 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   int id = 0;
   for (auto &r : resultVec) {
     r->Print("v");
-    
+
     GlobalVars &globalVars = GlobalVars::Get(id);
 
     RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
@@ -761,7 +748,8 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
     R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
     R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
     R_Dst0K_vs_Dst0pi_pull_hist.Fill(
-        (R_Dst0K_vs_Dst0pi->getVal() - globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
+        (R_Dst0K_vs_Dst0pi->getVal() -
+         globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
         R_Dst0K_vs_Dst0pi->getError());
   }
 
@@ -784,208 +772,6 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
 
   R_Dst0K_vs_Dst0pi_canvas.SaveAs(
       (path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
-}
-
-void MakeSimultaneousPdf(Configuration &config,
-                         Configuration::Categories &categories,
-                         std::vector<Neutral> const &neutralVec,
-                         std::vector<Daughters> const &daughtersVec) {
-  RooSimultaneous simPdf("simPdf", "simPdf", categories.fitting);
-
-  std::vector<PdfBase *> pdfs;
-  int id = 0;
-
-  // d is a reference to an element od the vector
-  // Downside: don't have direct access to the index
-  for (auto &d : daughtersVec) {
-    if (d == Daughters::kpi) {
-      // emplace_back creates
-      // the
-      // object then moves it into the vector      // You only have to pass the
-      // arguments as if you were constructing the
-      // vector type
-      // The operators required to do this are not supported by RooFit so we
-      // have to use a vector of pointers
-
-      // switch (neutral) {
-      // case Neutral::pi0:      for (auto &n : neutralVec) {
-
-      for (auto &n : neutralVec) {
-        switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-
-            break;
-
-          case Neutral::gamma:
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-
-            break;
-        }
-      }
-    } else if (d == Daughters::kk) {
-      for (auto &n : neutralVec) {
-        switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get(id));
-
-            break;
-
-          case Neutral::gamma:
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get(id));
-
-            break;
-        }
-      }
-    } else if (d == Daughters::pipi) {
-      for (auto &n : neutralVec) {
-        switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get(id));
-
-            break;
-
-          case Neutral::gamma:
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
-                                   Daughters::pipi, Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                                   Charge::minus>::Get(id));
-
-            break;
-        }
-      }
-    } else {
-      for (auto &n : neutralVec) {
-        switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get(id));
-
-            break;
-
-          case Neutral::gamma:
-
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get(id));
-
-            break;
-        }
-      }
-    }
-  }
-
-  // std::string name;
-  // RooAbsPdf *singlePdf = nullptr;
-  for (auto &p : pdfs) {
-    p->AddToSimultaneousPdf(simPdf);
-    // singlePdf = simPdf.getPdf(p->CategoryName().c_str());
-    // if (singlePdf == nullptr) {
-    //   throw std::runtime_error("\nSingle pdf empty\n");
-    // }
-  }
-
-  // ------------ generate toys ---------------
-
-  // Toy data sets check for bias in our model. The pull distribution should
-  // be
-  // around 0, i.e. the generated data matches the defined model.
-
-  // Need the number of generated events to be the sum of all predicted yields
-
-  // categories.fitting
-  // RooMCStudy mcStudy(
-  //     simPdf,
-  //     RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
-  //     RooFit::Binned(true), RooFit::Silence(), RooFit::Extended(),
-  //     RooFit::FitOptions(RooFit::Save(true), RooFit::PrintEvalErrors(0)));
-  //
-  // std::cout << "Created MCStudy object." << std::endl;
-  //
-  // int nSamples = 1;
-  // double nEvtsPerToy = simPdf.expectedEvents(categories.fitting);
-  //
-  // mcStudy.generate(nSamples, nEvtsPerToy, true);
-  //
-  // std::cout << "Generated toy events." << std::endl;
-  //
-  // RooAbsData *toyDataSet = const_cast<RooAbsData *>(mcStudy.genData(0));
-  //
-  // std::cout << "Retrieved RooDataSet from MCStudy object." << std::endl;
-  //
-  // FitSimPdfToData(*toyDataSet, simPdf, config, categories, pdfs);
-  //
-
-  // SET VALUE AWAY FROM REAL VALUE
-  // delta_mean_1.setVal(130);
-  //
-  // Generate toys: remember to set random seed
-  // Initialise histograms for pull distributions
-  // Loop over nToys
-  // Define PDF inside loop, then generate toy dataset from this
-  // Save RooFitResults to vector
-  // Loop over vector after and fill histograms with values and errors of
-  // parameters
-
-  RunSingleToy(simPdf, config, categories, pdfs);
-  // RunManyToys(simPdf, config, categories);
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -1206,12 +992,41 @@ int main(int argc, char **argv) {
     }
 
     path = "result/";
-    MakeSimultaneousPdf(fullDataSet, config, categories, neutralVec,
-                        daughtersVec);
+    auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
+    RooSimultaneous *simPdf = p.first;
+    std::vector<PdfBase *> pdfs = p.second;
+
+    RooFitResult *result =
+        simPdf->fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+
+    // Loop over daughters again to plot correct PDFs
+    for (auto &p : pdfs) {
+      Plotting1D(*p, config, categories, fullDataSet, *simPdf, result);
+      Plotting2D(*p, config, fullDataSet, *simPdf);
+    }
+
+    result->Print("v");
+    std::cout << "Printed result." << std::endl;
+
+    TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
+                              1000);
+    std::cout << "Created canvas." << std::endl;
+    correlationCanvas.cd();
+    std::cout << "Extracting correlation histogram from result..." << std::endl;
+    result->correlationHist()->Draw("colz");
+    std::cout << "Extracted correlation histogram from result." << std::endl;
+    correlationCanvas.Update();
+    std::cout << "Updated canvas." << std::endl;
+    correlationCanvas.SaveAs((path+"CorrelationMatrix.pdf").c_str());
+    std::cout << "Save to pdf file." << std::endl;
 
   } else {
     path = "toys/";
-    MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
+    auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
+    RooSimultaneous *simPdf = p.first;
+    std::vector<PdfBase *> pdfs = p.second;
+    RunSingleToy(*simPdf, config, categories, pdfs);
+    // RunManyToys(simPdf, config, categories);
   }
 
   return 0;
