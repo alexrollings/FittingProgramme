@@ -23,11 +23,12 @@
 #include <vector>
 
 #include "Configuration.h"
-#include "DaughtersVars.h"
-#include "NeutralBachelorVars.h"
+#include "GlobalVars.h"
 #include "NeutralVars.h"
-#include "ParseArguments.h"
+#include "NeutralBachelorVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 #include "Pdf.h"
+#include "ParseArguments.h"
 
 std::string path;
 
@@ -740,11 +741,14 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
   TH1D R_Dst0K_vs_Dst0pi_pull_hist("R_Dst0K_vs_Dst0pi_pull_hist",
                                    "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
 
+  int id = 0;
   for (auto &r : resultVec) {
     r->Print("v");
+    
+    GlobalVars &globalVars = GlobalVars::Get(id);
 
     RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
-        r->floatParsFinal().find(config.R_Dst0K_vs_Dst0pi().GetName()));
+        r->floatParsFinal().find(globalVars.R_Dst0K_vs_Dst0pi().GetName()));
 
     RooRealVar *R_Dst0K_vs_Dst0pi =
         dynamic_cast<RooRealVar *>(R_Dst0K_vs_Dst0pi_AbsArg);
@@ -757,7 +761,7 @@ void RunManyToys(RooSimultaneous &simPdf, Configuration &config,
     R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
     R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
     R_Dst0K_vs_Dst0pi_pull_hist.Fill(
-        (R_Dst0K_vs_Dst0pi->getVal() - config.R_Dst0K_vs_Dst0pi_predicted()) /
+        (R_Dst0K_vs_Dst0pi->getVal() - globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
         R_Dst0K_vs_Dst0pi->getError());
   }
 
@@ -1150,8 +1154,8 @@ int main(int argc, char **argv) {
   }
 
   int id = 0;
-  Configuration &config = Configuration::Get(id);
-  Configuration::Categories &categories = Configuration::Get(id).categories();
+  Configuration &config = Configuration::Get();
+  Configuration::Categories &categories = Configuration::Get().categories();
 
   if (runToys == false) {
     RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());

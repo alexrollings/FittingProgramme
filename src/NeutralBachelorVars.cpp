@@ -1,6 +1,4 @@
 #include "NeutralBachelorVars.h"
-#include "Configuration.h"
-#include "NeutralVars.h"
 
 // Bachelor specializations
 
@@ -20,7 +18,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(int uniqu
         ("pdfDeltaSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi)).c_str(),
         ("Signal Delta PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
             .c_str(),
-        Configuration::Get(uniqueId).deltaMass(),
+        Configuration::Get().deltaMass(),
         NeutralVars<Neutral::gamma>::Get(uniqueId).meanDeltaSignal(),
         *sigmaDeltaSignal_),
     sigmaBuSignal_(new RooRealVar(
@@ -32,13 +30,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(int uniqu
     pdfBuSignal_(
         ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi)).c_str(),
         ("Signal Bu PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi)).c_str(),
-        Configuration::Get(uniqueId).buMass(),
+        Configuration::Get().buMass(),
         NeutralVars<Neutral::gamma>::Get(uniqueId).meanBuSignal(), *sigmaBuSignal_),
     pdfSignal_(
         ("pdfSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi)).c_str(),
         ("Signal 2D PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi)).c_str(),
         pdfDeltaSignal_,
-        RooFit::Conditional(pdfBuSignal_, Configuration::Get(uniqueId).buMass())) {}
+        RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}
 
 template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int uniqueId)
@@ -51,13 +49,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int unique
           "@0*@1",
           RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                          .sigmaDeltaSignal(),
-                     Configuration::Get(uniqueId).relativeWidth()))),
+                     GlobalVars::Get(uniqueId).relativeWidth()))),
       pdfDeltaSignal_(
           ("pdfDeltaSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           ("Signal Delta PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          Configuration::Get(uniqueId).deltaMass(),
+          Configuration::Get().deltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).meanDeltaSignal(),
           *sigmaDeltaSignal_),
       sigmaBuSignal_(new RooFormulaVar(
@@ -68,17 +66,17 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int unique
           "@0*@1",
           RooArgList(NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                          .sigmaBuSignal(),
-                     Configuration::Get(uniqueId).relativeWidth()))),
+                     GlobalVars::Get(uniqueId).relativeWidth()))),
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k)).c_str(),
           ("Signal Bu PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::k)).c_str(),
-          Configuration::Get(uniqueId).buMass(),
+          Configuration::Get().buMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).meanBuSignal(), *sigmaBuSignal_),
       pdfSignal_(
           ("pdfSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k)).c_str(),
           ("Signal 2D PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::k)).c_str(),
           pdfDeltaSignal_,
-          RooFit::Conditional(pdfBuSignal_, Configuration::Get(uniqueId).buMass())) {}
+          RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}
 
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(int uniqueId)
@@ -93,7 +91,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(int uniqueI
           ("pdfDeltaSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi)).c_str(),
           ("Signal Delta PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          Configuration::Get(uniqueId).deltaMass(),
+          Configuration::Get().deltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).meanDeltaSignal(),
           *sigmaDeltaSignal_),
       sigmaBuSignal_(new RooRealVar(
@@ -105,13 +103,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(int uniqueI
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi)).c_str(),
           ("Signal Bu PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi)).c_str(),
-          Configuration::Get(uniqueId).buMass(),
+          Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).meanBuSignal(), *sigmaBuSignal_),
       pdfSignal_(
           ("pdfSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi)).c_str(),
           ("Signal 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi)).c_str(),
           pdfDeltaSignal_,
-          RooFit::Conditional(pdfBuSignal_, Configuration::Get(uniqueId).buMass())) {}
+          RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}
 
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(int uniqueId)
@@ -123,12 +121,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(int uniqueId
           "@0*@1",
           RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                          .sigmaDeltaSignal(),
-                     Configuration::Get(uniqueId).relativeWidth()))),
+                     GlobalVars::Get(uniqueId).relativeWidth()))),
       pdfDeltaSignal_(
           ("pdfDeltaSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k)).c_str(),
           ("Signal Delta PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          Configuration::Get(uniqueId).deltaMass(),
+          Configuration::Get().deltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).meanDeltaSignal(),
           *sigmaDeltaSignal_),
       sigmaBuSignal_(new RooFormulaVar(
@@ -138,14 +136,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(int uniqueId
           "@0*@1",
           RooArgList(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                          .sigmaBuSignal(),
-                     Configuration::Get(uniqueId).relativeWidth()))),
+                     GlobalVars::Get(uniqueId).relativeWidth()))),
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k)).c_str(),
           ("Signal Bu PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k)).c_str(),
-          Configuration::Get(uniqueId).buMass(),
+          Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).meanBuSignal(), *sigmaBuSignal_),
       pdfSignal_(
           ("pdfSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k)).c_str(),
           ("Signal 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k)).c_str(),
           pdfDeltaSignal_,
-          RooFit::Conditional(pdfBuSignal_, Configuration::Get(uniqueId).buMass())) {}
+          RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}

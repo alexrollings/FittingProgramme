@@ -1,5 +1,6 @@
 #pragma once
 #include "Configuration.h"
+#include "GlobalVars.h"
 #include "RooPolyVar.h"
 
 // Templated classes/functions mean that the compiler will automatically create

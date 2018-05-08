@@ -1,10 +1,9 @@
 #pragma once
 #include "Configuration.h"
-#include "DaughtersVars.h"
-#include "NeutralBachelorDaughtersVars.h"
-#include "NeutralBachelorVars.h"
-#include "NeutralDaughtersVars.h"
+#include "GlobalVars.h"
 #include "NeutralVars.h"
+#include "NeutralBachelorVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 #include "RooAbsPdf.h"
 #include "RooAbsReal.h"
 #include "RooAddPdf.h"

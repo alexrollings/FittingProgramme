@@ -1,5 +1,6 @@
 #pragma once
 #include "Configuration.h"
+#include "GlobalVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"

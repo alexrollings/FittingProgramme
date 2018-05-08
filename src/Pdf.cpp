@@ -1,5 +1,4 @@
 #include "Pdf.h"
-#include "Configuration.h"
 
 PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters,
                  Charge charge)
@@ -36,28 +35,28 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters dau
           ("Bu Combinatorial constant " +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          Configuration::Get(uniqueId).deltaMass(), RooArgSet(a0LambdaBuComb_)),
+          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
       pdfDeltaComb_(
           ("pdfDeltaComb_" + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
           ("DeltaCombinatorial PDF " +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          Configuration::Get(uniqueId).deltaMass(), lambdaDeltaComb_),
+          Configuration::Get().deltaMass(), lambdaDeltaComb_),
       pdfBuComb_(
           ("pdfBuComb_" + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
           ("BuCombinatorial PDF " +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          Configuration::Get(uniqueId).buMass(), lambdaBuComb_),
+          Configuration::Get().buMass(), lambdaBuComb_),
       pdfComb_(("pdfComb_" + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                    .c_str(),
                ("Combinatorial PDF " +
                 ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                    .c_str(),
                pdfDeltaComb_,
-               RooFit::Conditional(pdfBuComb_, Configuration::Get(uniqueId).buMass())),
+               RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
       yields_(("yields_" + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                   .c_str()),
       functions_(

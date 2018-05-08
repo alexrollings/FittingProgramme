@@ -1,7 +1,7 @@
 #pragma once
 #include "Configuration.h"
-#include "DaughtersVars.h"
-#include "NeutralDaughtersVars.h"
+#include "GlobalVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 #include "NeutralVars.h"
 #include "RooAbsReal.h"
 #include "RooFormulaVar.h"
@@ -117,7 +117,7 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k,
           RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_Dst0h(),
-                     Configuration::Get(uniqueId).R_Dst0K_vs_Dst0pi()))),
+                     GlobalVars::Get(uniqueId).R_Dst0K_vs_Dst0pi()))),
       Asym_(new RooRealVar(
           ("Asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters)).c_str(),
           ("Asymmetry variable " +

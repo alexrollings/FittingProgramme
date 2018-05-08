@@ -1,5 +1,5 @@
 #include "NeutralVars.h"
-#include "Configuration.h"
+#include "GlobalVars.h"
 
 // Neutral specializations
 // Constructor followed by : ... { is an initialisation list, can also but in
@@ -19,7 +19,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       meanBuSignal_(
           ("meanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          Configuration::Get(uniqueId).deltaMass(), RooArgList(a0MeanBuSignal_)) {}
+          Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
@@ -35,4 +35,4 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       meanBuSignal_(
           ("meanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get(uniqueId).deltaMass(), RooArgList(a0MeanBuSignal_)) {}
+          Configuration::Get().deltaMass(), RooArgList(a0MeanBuSignal_)) {}
