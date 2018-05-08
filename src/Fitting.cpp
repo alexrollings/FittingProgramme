@@ -135,7 +135,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 
   // auto hpull = std::unique_ptr<RooHist>(
   //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
-  RooHist *hPull = frame->RooPlot::pullHist();
+  // if (hpull == nullptr) {
+  //   throw std::runtime_error("\nhpull empty.\n");
+  // }
+  RooHist *hpull = frame->RooPlot::pullHist();
 
   if (variable == Variable::bu) {
     simPdf.plotOn(
@@ -178,7 +181,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  pullFrame->addPlotable(hPull /* .get() */, "P");
+  pullFrame->addPlotable(hpull/* .get() */, "P");
   pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
                       ComposeName(id, neutral, bachelor, daughters, charge))
                          .c_str());
@@ -238,7 +241,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 void Plotting1D(PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                RooFitResult *result) {
+                RooFitResult const &result) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -329,30 +332,47 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
 
   // Make two-dimensional plot of sampled PDF in x vs y
   // Plot ONLY the PDF not the SimPDF
-  RooAbsPdf *singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
+  // auto singlePdf =
+  //     std::unique_ptr<RooAbsPdf>(simPdf.getPdf(pdf.CategoryName().c_str()));
+  auto singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
   if (singlePdf == nullptr) {
     throw std::runtime_error("\nSingle pdf empty\n");
   }
 
-  TH1 *hh_model_1D = singlePdf->createHistogram(
-      ("hh_model_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  // auto modelHist1d = std::unique_ptr<TH1>(singlePdf->createHistogram(
+  //     ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
+  //     RooFit::YVar(config.deltaMass(),
+  //                  RooFit::Binning(config.deltaMass().getBins()))));
+  auto modelHist1d = singlePdf->createHistogram(
+      ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
                    RooFit::Binning(config.deltaMass().getBins())));
-  if (hh_model_1D == nullptr) {
+  if (modelHist1d == nullptr) {
     throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
   }
-  TH2F *hh_model = dynamic_cast<TH2F *>(hh_model_1D);
-  if (hh_model == nullptr) {
+  auto modelHist2d = std::unique_ptr<TH2>(dynamic_cast<TH2F *>(modelHist1d/* .get() */));
+  if (modelHist2d == nullptr) {
     throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
   }
-  hh_model->SetTitle("");
+  modelHist2d->SetTitle("");
 
   // Make 2D plot of data
   // Plot ONLY one component of the data
-  TH1 *hh_data_1D = fullDataSet.createHistogram(
-      ("hh_data_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  // auto dataHist1d = std::unique_ptr<TH1>(fullDataSet.createHistogram(
+  //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
+  //     RooFit::YVar(config.deltaMass(),
+  //                  RooFit::Binning(config.deltaMass().getBins())),
+  //     RooFit::Cut(("fitting==fitting::" +
+  //                  ComposeFittingName(neutral, bachelor, daughters, charge))
+  //                     .c_str())));
+  auto dataHist1d = fullDataSet.createHistogram(
+      ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       config.buMass(), RooFit::Binning(config.buMass().getBins()),
       RooFit::YVar(config.deltaMass(),
@@ -360,27 +380,27 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
       RooFit::Cut(("fitting==fitting::" +
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
-  if (hh_data_1D == nullptr) {
+  if (dataHist1d == nullptr) {
     throw std::runtime_error("\n1D hist of data returns nullptr\n");
   }
-  TH2F *hh_data = dynamic_cast<TH2F *>(hh_data_1D);
-  if (hh_data == nullptr) {
+  auto dataHist2d = std::unique_ptr<TH2>(dynamic_cast<TH2F *>(dataHist1d/* .get() */));
+  if (dataHist2d == nullptr) {
     throw std::runtime_error("\n2D hist of data returns nullptr\n");
   }
-  hh_data->SetTitle("");
+  dataHist2d->SetTitle("");
 
-  // double binWidthXaxis_model = hh_model->GetXaxis()->GetBinUpEdge(0) -
-  // hh_model->GetXaxis()->GetBinLowEdge(0);
-  // double binWidthXaxis_data = hh_data->GetXaxis()->GetBinUpEdge(0) -
-  // hh_data->GetXaxis()->GetBinLowEdge(0);
+  // double binWidthXaxis_model = modelHist2d->GetXaxis()->GetBinUpEdge(0) -
+  // modelHist2d->GetXaxis()->GetBinLowEdge(0);
+  // double binWidthXaxis_data = dataHist2d->GetXaxis()->GetBinUpEdge(0) -
+  // dataHist2d->GetXaxis()->GetBinLowEdge(0);
   // std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model
   // << "\n\n";
   // std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data
   // << "\n\n";
-  // double binWidthYaxis_model = hh_model->GetYaxis()->GetBinUpEdge(0) -
-  // hh_model->GetYaxis()->GetBinLowEdge(0);
-  // double binWidthYaxis_data = hh_data->GetYaxis()->GetBinUpEdge(0) -
-  // hh_data->GetYaxis()->GetBinLowEdge(0);
+  // double binWidthYaxis_model = modelHist2d->GetYaxis()->GetBinUpEdge(0) -
+  // modelHist2d->GetYaxis()->GetBinLowEdge(0);
+  // double binWidthYaxis_data = dataHist2d->GetYaxis()->GetBinUpEdge(0) -
+  // dataHist2d->GetYaxis()->GetBinLowEdge(0);
   // std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model
   // << "\n\n";
   // std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data
@@ -388,98 +408,108 @@ void Plotting2D(PdfBase &pdf, Configuration &config,
 
   // Scale model plot to total number of data events
   // PDF not normalized: normalize before scaling to data
-  // hh_model->Scale(1 / hh_model->Integral());
-  // std::cout << "\n\n" << hh_model->Integral() << "\n\n";
-  // hh_model->GetZaxis()->SetRangeUser(0.0, 0.005);
-  // hh_data->Scale(1 / hh_data->Integral());
-  // std::cout << "\n\n" << hh_data->Integral() << "\n\n";
-  // hh_data->GetZaxis()->SetRangeUser(0.0, 0.005);
-  hh_model->Scale(hh_data->Integral());
+  // modelHist2d->Scale(1 / modelHist2d->Integral());
+  // std::cout << "\n\n" << modelHist2d->Integral() << "\n\n";
+  // modelHist2d->GetZaxis()->SetRangeUser(0.0, 0.005);
+  // dataHist2d->Scale(1 / dataHist2d->Integral());
+  // std::cout << "\n\n" << dataHist2d->Integral() << "\n\n";
+  // dataHist2d->GetZaxis()->SetRangeUser(0.0, 0.005);
+  modelHist2d->Scale(dataHist2d->Integral());
 
-  TCanvas *canvasModel = new TCanvas(
+  TCanvas canvasModel(
       ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", 1000, 800);
-  hh_model->SetStats(0);
-  hh_model->Draw("colz");
-  hh_model->SetTitle(("B^{" + EnumToLabel(charge) +
+  modelHist2d->SetStats(0);
+  modelHist2d->Draw("colz");
+  modelHist2d->SetTitle(("B^{" + EnumToLabel(charge) +
                       "}#rightarrow#font[132]{[}#font[132]{[}" +
                       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
                       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
                       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
                          .c_str());
-  hh_model->Draw("colz");
-  canvasModel->Update();
-  canvasModel->SaveAs((path +
+  modelHist2d->Draw("colz");
+  canvasModel.Update();
+  canvasModel.SaveAs((path +
                        ComposeName(id, neutral, bachelor, daughters, charge) +
                        "_2dPDF.pdf")
                           .c_str());
 
   // 2D data plot
-  TCanvas *canvasData = new TCanvas(
+  TCanvas canvasData(
       ("canvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", 1000, 800);
-  hh_data->SetStats(0);
-  hh_data->Draw("colz");
-  hh_data->SetTitle(("B^{" + EnumToLabel(charge) +
+  dataHist2d->SetStats(0);
+  dataHist2d->Draw("colz");
+  dataHist2d->SetTitle(("B^{" + EnumToLabel(charge) +
                      "}#rightarrow#font[132]{[}#font[132]{[}" +
                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
                      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
                         .c_str());
-  hh_data->Draw("colz");
-  canvasData->Update();
-  canvasData->SaveAs((path +
+  dataHist2d->Draw("colz");
+  canvasData.Update();
+  canvasData.SaveAs((path +
                       ComposeName(id, neutral, bachelor, daughters, charge) +
                       "_2dData.pdf")
                          .c_str());
 
   gStyle->SetTitleOffset(1.2, "Z");
   // Make a histogram with the Poisson stats in each data bin
-  TH2F *hh_err = new TH2F(
-      ("hh_err_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto errHist2d = std::unique_ptr<TH2F>(new TH2F(
+      ("errHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", config.buMass().getBins(), config.buMass().getMin(),
       config.buMass().getMax(), config.deltaMass().getBins(),
-      config.deltaMass().getMin(), config.deltaMass().getMax());
+      config.deltaMass().getMin(), config.deltaMass().getMax()));
   for (int i = 0; i < config.buMass().getBins() * config.deltaMass().getBins();
        i++) {
-    float n_bin = hh_data->GetBinContent(i);
+    float n_bin = dataHist2d->GetBinContent(i);
     float err = sqrt(n_bin);
-    hh_err->SetBinContent(i, err);
+    errHist2d->SetBinContent(i, err);
   }
 
   // 2D residuals plot (data - PDF)/err
-  TCanvas *canvasRes = new TCanvas(
+  TCanvas canvasRes(
       ("canvasRes_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", 1000, 800);
-  canvasRes->cd();
-  TH2F *hh_data_new = (TH2F *)hh_data->Clone();
-  hh_data_new->Add(hh_model, -1);
-  hh_data_new->Divide(hh_err);
-  canvasRes->cd();
-  hh_data_new->GetZaxis()->SetTitle("Residual");
-  hh_data_new->GetZaxis()->SetRangeUser(-6.0, 6.0);
-  hh_data_new->SetStats(0);
-  hh_data_new->Draw("colz");
-  canvasRes->Update();
-  canvasRes->SaveAs((path +
+  canvasRes.cd();
+  // auto resHist2d_temp = std::unique_ptr<TObject>(dataHist2d->Clone());
+  auto resHist2d_temp = dataHist2d->Clone();
+  if (resHist2d_temp == nullptr) {
+    throw std::runtime_error("\nCould not clone dataHist2d.\n");
+  }
+  auto resHist2d =
+      std::unique_ptr<TH2F>(dynamic_cast<TH2F *>(resHist2d_temp/* .get() */));
+  if (resHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+  }
+  resHist2d->Add(modelHist2d.get(), -1);
+  resHist2d->Divide(errHist2d.get());
+  canvasRes.cd();
+  resHist2d->GetZaxis()->SetTitle("Residual");
+  resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
+  resHist2d->SetStats(0);
+  resHist2d->Draw("colz");
+  canvasRes.Update();
+  canvasRes.SaveAs((path +
                      ComposeName(id, neutral, bachelor, daughters, charge) +
                      "_2dResiduals.pdf")
                         .c_str());
+  std::cout << "end" << std::endl;
 }
 
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
-    Configuration &config, Configuration::Categories &categories,
+    int &id, Configuration &config, Configuration::Categories &categories,
     std::vector<Neutral> const &neutralVec,
     std::vector<Daughters> const &daughtersVec) {
-  RooSimultaneous *simPdf =
-      new RooSimultaneous("simPdf", "simPdf", categories.fitting);
+  RooSimultaneous *simPdf = new RooSimultaneous(
+      ("simPdf_" + std::to_string(id)).c_str(),
+      ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
 
   std::vector<PdfBase *> pdfs;
-  int id = 0;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -629,158 +659,136 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Neutral> const &neutralVec,
                   std::vector<Daughters> const &daughtersVec) {
-  auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
-  RooSimultaneous *simPdf = p.first;
+  int id = 0;
+  auto p =
+      MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
+  auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
   std::vector<PdfBase *> pdfs = p.second;
 
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
 
-  RooDataSet *toyDataSet = simPdf->generate(
+  auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
-      nEvtsPerToy);
+      nEvtsPerToy));
 
-  RooSimultaneous *simPdfFit =
-      new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting);
+  auto simPdfFit = std::unique_ptr<RooSimultaneous>(
+      new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting));
 
-  simPdfFit = dynamic_cast<RooSimultaneous *>(simPdf->Clone());
+  simPdfFit = std::unique_ptr<RooSimultaneous>(
+      dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-  RooFitResult *result =
-      simPdf->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+  auto result = std::unique_ptr<RooFitResult>(
+      simPdfFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(*p, config, categories, *toyDataSet, *simPdf, result);
+    Plotting1D(*p, config, categories, *toyDataSet, *simPdf, *result.get());
     Plotting2D(*p, config, *toyDataSet, *simPdf);
+    std::cout << "damn roofit" << std::endl;
   }
 
   result->Print("v");
-  std::cout << "Printed result." << std::endl;
+  std::cout << "Printed result.\n";
 
   TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
                             1000);
-  std::cout << "Created canvas." << std::endl;
+  std::cout << "Created canvas.\n";
   correlationCanvas.cd();
-  std::cout << "Extracting correlation histogram from result..." << std::endl;
+  std::cout << "Extracting correlation histogram from result...\n";
   result->correlationHist()->Draw("colz");
-  std::cout << "Extracted correlation histogram from result." << std::endl;
+  std::cout << "Extracted correlation histogram from result.\n";
   correlationCanvas.Update();
-  std::cout << "Updated canvas." << std::endl;
+  std::cout << "Updated canvas.\n";
   correlationCanvas.SaveAs((path + "CorrelationMatrix.pdf").c_str());
-  std::cout << "Save to pdf file." << std::endl;
+  std::cout << "Save to pdf file.\n";
 }
 
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec) {
-  auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
-  RooSimultaneous *simPdf = p.first;
-  std::vector<PdfBase *> pdfs = p.second;
-
-  RooSimultaneous *simPdfClone =
-      new RooSimultaneous("simPdfClone", "simPdfClone", categories.fitting);
-
-  simPdfClone = dynamic_cast<RooSimultaneous *>(simPdf->Clone());
-
-  RooSimultaneous *simPdfToFit =
-      new RooSimultaneous("simPdfToFit", "simPdfToFit", categories.fitting);
-
-  // Binned(false) causes seg fault: dataset not datahist?
-  RooMCStudy mcStudy(
-      *simPdf,
-      RooArgList(config.buMass(), config.deltaMass(), categories.fitting),
-      RooFit::Binned(true), RooFit::Silence(false), RooFit::Extended(true),
-      RooFit::FitOptions(RooFit::NumCPU(8, 2), RooFit::Extended(true),
-                         RooFit::Optimize(false), RooFit::Offset(true),
-                         RooFit::Minimizer("Minuit2", "migrad"),
-                         RooFit::Strategy(2)));
-
-  std::cout << "Created MCStudy object." << std::endl;
-
+  std::vector<std::unique_ptr<RooFitResult> > resultVec;
   int nToys = 3;
-  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
 
-  mcStudy.generate(nToys, nEvtsPerToy, true);
+  for (int id = 0; id < nToys; ++id) {
+    auto p =
+        MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
+    auto simPdf =
+        std::unique_ptr<RooSimultaneous>(p.first);
 
-  // RooDataSet* toyDataSet = nullptr;
-  RooAbsData *toyAbsData = nullptr;
-  std::vector<RooFitResult *> resultVec;
+    double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+    auto toyDataSet =
+        std::unique_ptr<RooDataSet>(simPdf->generate(
+            RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+            nEvtsPerToy));
+    toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
 
-  for (unsigned int i = 0; i < nToys; ++i) {
-    toyAbsData = const_cast<RooAbsData *>(mcStudy.genData(i));
-    if (toyAbsData == nullptr) {
-      std::stringstream output;
-      output << "AbsData number " << i << " in McStudy object empty.\n";
-      throw std::runtime_error(output.str());
-    }
-    // toyDataSet = dynamic_cast<RooDataSet *>(toyAbsData);
-    // if (toyDataSet == nullptr) {
-    //   std::stringstream output;
-    //   output << "Dataset number " << i << " in McStudy object empty.\n";
-    //   throw std::runtime_error(output.str());
-    // }
+    auto simPdfToFit =
+        std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+            ("simPdfFit_" + std::to_string(id)).c_str(),
+            ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
 
-    simPdfToFit = dynamic_cast<RooSimultaneous *>(simPdfClone->Clone());
+    simPdfToFit = std::unique_ptr<RooSimultaneous>(
+        dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-    // RooMsgService::instance().setSilentMode(true);
-    // check RooFit result
-    resultVec.emplace_back(simPdfToFit->fitTo(
-        *toyAbsData, RooFit::Save(), RooFit::NumCPU(8, 2),
-        RooFit::Extended(true), RooFit::Optimize(false), RooFit::Offset(true),
-        RooFit::Minimizer("Minuit2", "migrad"), RooFit::Strategy(2)));
+    // RooFitResult *result =
+    //     simPdfToFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+    resultVec.emplace_back(std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
+        *toyDataSet, RooFit::Save(), RooFit::Extended(true))));
     // run 3 toys and look at RooFit result ("v")
   }
-
-  TH1D R_Dst0K_vs_Dst0pi_hist("R_Dst0K_vs_Dst0pi_hist",
-                              "R_Dst0K_vs_Dst0pi_hist", 40, 0, 0.15);
-  TH1D R_Dst0K_vs_Dst0pi_err_hist("R_Dst0K_vs_Dst0pi_err_hist",
-                                  "R_Dst0K_vs_Dst0pi_err_hist", 40, 0, 0.01);
-  TH1D R_Dst0K_vs_Dst0pi_pull_hist("R_Dst0K_vs_Dst0pi_pull_hist",
-                                   "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
-
-  int id = 0;
   for (auto &r : resultVec) {
     r->Print("v");
-
-    GlobalVars &globalVars = GlobalVars::Get(id);
-
-    RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
-        r->floatParsFinal().find(globalVars.R_Dst0K_vs_Dst0pi().GetName()));
-
-    RooRealVar *R_Dst0K_vs_Dst0pi =
-        dynamic_cast<RooRealVar *>(R_Dst0K_vs_Dst0pi_AbsArg);
-    if (R_Dst0K_vs_Dst0pi == nullptr) {
-      std::stringstream output;
-      output << "No value found in result.";
-      throw std::runtime_error(output.str());
-    }
-
-    R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
-    R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
-    R_Dst0K_vs_Dst0pi_pull_hist.Fill(
-        (R_Dst0K_vs_Dst0pi->getVal() -
-         globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
-        R_Dst0K_vs_Dst0pi->getError());
   }
-
-  TCanvas R_Dst0K_vs_Dst0pi_canvas("R_Dst0K_vs_Dst0pi_canvas",
-                                   "R_Dst0K_vs_Dst0pi_canvas", 1500, 500);
-  R_Dst0K_vs_Dst0pi_canvas.Divide(3, 1);
-
-  R_Dst0K_vs_Dst0pi_canvas.cd(1);
-  R_Dst0K_vs_Dst0pi_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi");
-  R_Dst0K_vs_Dst0pi_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_hist.Draw();
-  R_Dst0K_vs_Dst0pi_canvas.cd(2);
-  R_Dst0K_vs_Dst0pi_err_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Error");
-  R_Dst0K_vs_Dst0pi_err_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_err_hist.Draw();
-  R_Dst0K_vs_Dst0pi_canvas.cd(3);
-  R_Dst0K_vs_Dst0pi_pull_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Pull");
-  R_Dst0K_vs_Dst0pi_pull_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_pull_hist.Draw();
-
-  R_Dst0K_vs_Dst0pi_canvas.SaveAs(
-      (path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
+  // TH1D R_Dst0K_vs_Dst0pi_hist("R_Dst0K_vs_Dst0pi_hist",
+  //                             "R_Dst0K_vs_Dst0pi_hist", 40, 0, 0.15);
+  // TH1D R_Dst0K_vs_Dst0pi_err_hist("R_Dst0K_vs_Dst0pi_err_hist",
+  //                                 "R_Dst0K_vs_Dst0pi_err_hist", 40, 0, 0.01);
+  // TH1D R_Dst0K_vs_Dst0pi_pull_hist("R_Dst0K_vs_Dst0pi_pull_hist",
+  //                                  "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
+  //
+  // for (auto &r : resultVec) {
+  //   r->Print("v");
+  //
+  //   GlobalVars &globalVars = GlobalVars::Get(id);
+  //
+  //   RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg = const_cast<RooAbsArg *>(
+  //       r->floatParsFinal().find(globalVars.R_Dst0K_vs_Dst0pi().GetName()));
+  //
+  //   RooRealVar *R_Dst0K_vs_Dst0pi =
+  //       dynamic_cast<RooRealVar *>(R_Dst0K_vs_Dst0pi_AbsArg);
+  //   if (R_Dst0K_vs_Dst0pi == nullptr) {
+  //     std::stringstream output;
+  //     output << "No value found in result.";
+  //     throw std::runtime_error(output.str());
+  //   }
+  //
+  //   R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
+  //   R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
+  //   R_Dst0K_vs_Dst0pi_pull_hist.Fill(
+  //       (R_Dst0K_vs_Dst0pi->getVal() -
+  //        globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
+  //       R_Dst0K_vs_Dst0pi->getError());
+  // }
+  //
+  // TCanvas R_Dst0K_vs_Dst0pi_canvas("R_Dst0K_vs_Dst0pi_canvas",
+  //                                  "R_Dst0K_vs_Dst0pi_canvas", 1500, 500);
+  // R_Dst0K_vs_Dst0pi_canvas.Divide(3, 1);
+  //
+  // R_Dst0K_vs_Dst0pi_canvas.cd(1);
+  // R_Dst0K_vs_Dst0pi_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi");
+  // R_Dst0K_vs_Dst0pi_hist.SetTitle("");
+  // R_Dst0K_vs_Dst0pi_hist.Draw();
+  // R_Dst0K_vs_Dst0pi_canvas.cd(2);
+  // R_Dst0K_vs_Dst0pi_err_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Error");
+  // R_Dst0K_vs_Dst0pi_err_hist.SetTitle("");
+  // R_Dst0K_vs_Dst0pi_err_hist.Draw();
+  // R_Dst0K_vs_Dst0pi_canvas.cd(3);
+  // R_Dst0K_vs_Dst0pi_pull_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Pull");
+  // R_Dst0K_vs_Dst0pi_pull_hist.SetTitle("");
+  // R_Dst0K_vs_Dst0pi_pull_hist.Draw();
+  //
+  // R_Dst0K_vs_Dst0pi_canvas.SaveAs(
+  //     (path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -948,7 +956,6 @@ int main(int argc, char **argv) {
     }
   }
 
-  int id = 0;
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
 
@@ -1001,33 +1008,35 @@ int main(int argc, char **argv) {
     }
 
     path = "result/";
-    auto p = MakeSimultaneousPdf(config, categories, neutralVec, daughtersVec);
-    RooSimultaneous *simPdf = p.first;
-    std::vector<PdfBase *> pdfs = p.second;
+    int id = 0;
+    auto p =
+        MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
+    auto simPdf =
+        std::unique_ptr<RooSimultaneous>(p.first);
+    auto pdfs = p.second;
 
-    RooFitResult *result =
-        simPdf->fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save());
+    auto result = std::unique_ptr<RooFitResult>(
+        simPdf->fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
 
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
-      Plotting1D(*p, config, categories, fullDataSet, *simPdf, result);
+      Plotting1D(*p, config, categories, fullDataSet, *simPdf, *result.get());
       Plotting2D(*p, config, fullDataSet, *simPdf);
     }
 
     result->Print("v");
-    std::cout << "Printed result." << std::endl;
-
+    std::cout << "Printed result.\n";
     TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
                               1000);
-    std::cout << "Created canvas." << std::endl;
+    std::cout << "Created canvas.\n";
     correlationCanvas.cd();
-    std::cout << "Extracting correlation histogram from result..." << std::endl;
+    std::cout << "Extracting correlation histogram from result...\n";
     result->correlationHist()->Draw("colz");
-    std::cout << "Extracted correlation histogram from result." << std::endl;
+    std::cout << "Extracted correlation histogram from result.\n";
     correlationCanvas.Update();
-    std::cout << "Updated canvas." << std::endl;
+    std::cout << "Updated canvas.\n";
     correlationCanvas.SaveAs((path + "CorrelationMatrix.pdf").c_str());
-    std::cout << "Save to pdf file." << std::endl;
+    std::cout << "Save to pdf file.\n";
 
   } else {
     path = "toys/";
