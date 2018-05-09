@@ -1,3 +1,5 @@
+#include "RooDataHist.h"
+#include "RooRandom.h"
 #include "RooDataSet.h"
 #include "RooFitResult.h"
 #include "RooHist.h"
@@ -415,7 +417,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
   // dataHist2d->Scale(1 / dataHist2d->Integral());
   // std::cout << "\n\n" << dataHist2d->Integral() << "\n\n";
   // dataHist2d->GetZaxis()->SetRangeUser(0.0, 0.005);
-  modelHist2d->Scale(dataHist2d->Integral()/modelHist2d->Integral());
+  modelHist2d->Scale(dataHist2d->Integral() / modelHist2d->Integral());
 
   TCanvas canvasModel(
       ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -672,6 +674,11 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy));
 
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+
   auto simPdfFit = std::unique_ptr<RooSimultaneous>(
       new RooSimultaneous("simPdfFit", "simPdfFit", categories.fitting));
 
@@ -679,12 +686,12 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
   auto result = std::unique_ptr<RooFitResult>(
-      simPdfFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
+      simPdfFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyDataSet, *simPdf, *result.get());
-    Plotting2D(id, *p, config, *toyDataSet, *simPdf);
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get());
+    Plotting2D(id, *p, config, *toyAbsData, *simPdf);
     std::cout << "damn roofit" << std::endl;
   }
 
@@ -704,13 +711,80 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   std::cout << "Save to pdf file.\n";
 }
 
+void PlotVarErrPull(
+    int const nToys,
+    std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
+    std::string const &varNamePlusID, double const varPredicted, double const varMin,
+    double const varMax) {
+  // variable name we pass has "_0" at the end. Need to replace this with the
+  // correct ID in each loop
+  std::string varName = varNamePlusID.substr(0, varNamePlusID.size()-2);
+  TH1D varHist((varName + "_hist").c_str(), (varName + "_hist").c_str(), 40,
+               varMin, varMax);
+  TH1D varErrHist((varName + "_err_hist").c_str(),
+                  (varName + "_err_hist").c_str(), 40, 0,
+                  (varMax - varMin) / 10);
+  TH1D varPullHist((varName + "_pull_hist").c_str(),
+                   (varName + "_pull_hist").c_str(), 40, -10, 10);
+
+  for (int id = 0; id < nToys; ++id) {
+    // resultVec[id]->Print("v");
+    RooAbsArg *varAbsArg =
+        const_cast<RooAbsArg *>(resultVec[id]->floatParsFinal().find(
+            (varName + "_" + std::to_string(id)).c_str()));
+
+    RooRealVar *var = dynamic_cast<RooRealVar *>(varAbsArg);
+    if (var == nullptr) {
+      std::stringstream output;
+      output << "No value found in result.";
+      throw std::runtime_error(output.str());
+    }
+
+    varHist.Fill(var->getVal());
+    varErrHist.Fill(var->getError());
+    varPullHist.Fill((var->getVal() - varPredicted) / var->getError());
+  }
+
+  TCanvas varCanvas((varName + "_Canvas").c_str(),
+                    (varName + "_Canvas").c_str(), 1500, 500);
+  varCanvas.Divide(3, 1);
+  varCanvas.cd(1);
+  varHist.GetXaxis()->SetTitle(varName.c_str());
+  varHist.SetTitle("");
+  varHist.Draw();
+  varCanvas.cd(2);
+  varErrHist.GetXaxis()->SetTitle((varName + " Error").c_str());
+  varErrHist.SetTitle("");
+  varErrHist.Draw();
+  varCanvas.cd(3);
+  varPullHist.GetXaxis()->SetTitle((varName + " Pull").c_str());
+  varPullHist.SetTitle("");
+  varPullHist.Draw();
+  varCanvas.SaveAs((path + "ValErrPull_" + varName + ".pdf").c_str());
+}
+
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec) {
-  std::vector<std::unique_ptr<RooFitResult> > resultVec;
-  int nToys = 100;
+  // Setting the random seed to 0 is a special case which generates a different
+  // seed every time you run. Setting the seed to an integer generates toys in a
+  // replicable way, in case you need to debug something.
+  RooRandom::randomGenerator()->SetSeed(0);
+  std::vector<std::shared_ptr<RooFitResult> > resultVec;
+  int nToys = 1000;
+  // number of unconverged, forced positive definite, or MINOS problemed fits
+  int nUnConv = 0;
+  int nFPD = 0;
+  int nMINOS = 0;
+
+  std::vector<std::string> varNames;
+  std::vector<double> varPredictions;
+  std::vector<double> varMin;
+  std::vector<double> varMax;
 
   for (int id = 0; id < nToys; ++id) {
+    std::cout << "\n\n -------------------------- Running toy #" << id
+              << " -------------------------- \n\n";
     auto p =
         MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
     auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
@@ -720,6 +794,10 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
         nEvtsPerToy));
     toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
+    auto toyDataHist = std::unique_ptr<RooDataHist>(
+        toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
+                                ("toyDataHist" + std::to_string(id)).c_str()));
+    auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -728,65 +806,226 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     simPdfToFit = std::unique_ptr<RooSimultaneous>(
         dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-    // RooFitResult *result =
-    //     simPdfToFit->fitTo(*toyDataSet, RooFit::Extended(kTRUE),
-    //     RooFit::Save());
-    resultVec.emplace_back(std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
-        *toyDataSet, RooFit::Save(), RooFit::Extended(true))));
-    // run 3 toys and look at RooFit result ("v")
-  }
-
-  TH1D R_Dst0K_vs_Dst0pi_hist("R_Dst0K_vs_Dst0pi_hist",
-                              "R_Dst0K_vs_Dst0pi_hist", 40, 0, 0.15);
-  TH1D R_Dst0K_vs_Dst0pi_err_hist("R_Dst0K_vs_Dst0pi_err_hist",
-                                  "R_Dst0K_vs_Dst0pi_err_hist", 40, 0, 0.01);
-  TH1D R_Dst0K_vs_Dst0pi_pull_hist("R_Dst0K_vs_Dst0pi_pull_hist",
-                                   "R_Dst0K_vs_Dst0pi_pull_hist", 40, -10, 10);
-
-  for (int id = 0; id < nToys; ++id) {
-    resultVec[id]->Print("v");
-
-    GlobalVars &globalVars = GlobalVars::Get(id);
-
-    RooAbsArg *R_Dst0K_vs_Dst0pi_AbsArg =
-        const_cast<RooAbsArg *>(resultVec[id]->floatParsFinal().find(
-            globalVars.R_Dst0K_vs_Dst0pi().GetName()));
-
-    RooRealVar *R_Dst0K_vs_Dst0pi =
-        dynamic_cast<RooRealVar *>(R_Dst0K_vs_Dst0pi_AbsArg);
-    if (R_Dst0K_vs_Dst0pi == nullptr) {
-      std::stringstream output;
-      output << "No value found in result.";
-      throw std::runtime_error(output.str());
+    auto result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+    // auto result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
+    //     *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+    // Check result before saving it in vector to calculate pulls
+    if (result->covQual() < 2) {
+      nUnConv++;
+    } else if (result->covQual() < 3) {
+      nFPD++;
+    } else if (result->status() != 0) {
+      nMINOS++;
+    } else {
+      resultVec.emplace_back(result);
     }
-
-    R_Dst0K_vs_Dst0pi_hist.Fill(R_Dst0K_vs_Dst0pi->getVal());
-    R_Dst0K_vs_Dst0pi_err_hist.Fill(R_Dst0K_vs_Dst0pi->getError());
-    R_Dst0K_vs_Dst0pi_pull_hist.Fill(
-        (R_Dst0K_vs_Dst0pi->getVal() -
-         globalVars.R_Dst0K_vs_Dst0pi_predicted()) /
-        R_Dst0K_vs_Dst0pi->getError());
+    // save names and predictions of all variables we want to calculate pulls
+    // for
   }
 
-  TCanvas R_Dst0K_vs_Dst0pi_canvas("R_Dst0K_vs_Dst0pi_canvas",
-                                   "R_Dst0K_vs_Dst0pi_canvas", 1500, 500);
-  R_Dst0K_vs_Dst0pi_canvas.Divide(3, 1);
+  std::cout << "\nQuality of fits:\n"
+            << "Unconverged: " << nUnConv / nToys * 100 << " %\n"
+            << "Forced positive definite: " << nFPD / nToys * 100 << " %\n"
+            << "MINOS problems: " << nMINOS / nToys * 100 << " %\n";
 
-  R_Dst0K_vs_Dst0pi_canvas.cd(1);
-  R_Dst0K_vs_Dst0pi_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi");
-  R_Dst0K_vs_Dst0pi_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_hist.Draw();
-  R_Dst0K_vs_Dst0pi_canvas.cd(2);
-  R_Dst0K_vs_Dst0pi_err_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Error");
-  R_Dst0K_vs_Dst0pi_err_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_err_hist.Draw();
-  R_Dst0K_vs_Dst0pi_canvas.cd(3);
-  R_Dst0K_vs_Dst0pi_pull_hist.GetXaxis()->SetTitle("R_Dst0K_vs_Dst0pi Pull");
-  R_Dst0K_vs_Dst0pi_pull_hist.SetTitle("");
-  R_Dst0K_vs_Dst0pi_pull_hist.Draw();
+  // Extract names and predictions of all the variables we want to obtain pulls
+  // for
+  int id = 0;
+  GlobalVars &globalVars = GlobalVars::Get(id);
+  varNames.emplace_back(globalVars.R_Dst0K_vs_Dst0pi().GetName());
+  varPredictions.emplace_back(globalVars.R_Dst0K_vs_Dst0pi_predicted());
+  varMin.emplace_back(globalVars.R_Dst0K_vs_Dst0pi_min());
+  varMax.emplace_back(globalVars.R_Dst0K_vs_Dst0pi_max());
 
-  R_Dst0K_vs_Dst0pi_canvas.SaveAs(
-      (path + "hists_R_Dst0K_vs_Dst0pi.pdf").c_str());
+  for (auto &n : neutralVec) {
+    for (auto &d : daughtersVec) {
+      switch (n) {
+        case Neutral::pi0: {
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_kpi.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_kpi.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_pi_kpi.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_pi_kpi.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kpi> &nbdVars_pi0_k_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_kpi.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_kpi.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_k_kpi.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_k_kpi.Asym_max());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_pi0_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_kk.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_kk.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_pi_kk.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_pi_kk.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kk> &nbdVars_pi0_k_kk =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_kk.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_kk.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_k_kk.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_k_kk.Asym_max());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_pi0_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_pipi.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_pipi.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_pi_pipi.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_pi_pipi.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::pipi>
+                  &nbdVars_pi0_k_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_pipi.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_pipi.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_k_pipi.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_k_pipi.Asym_max());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pik> &nbdVars_pi0_pi_pik =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_pik.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_pik.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_pi_pik.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_pi_pik.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::pik> &nbdVars_pi0_k_pik =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_pik.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_pik.Asym_predicted());
+              varMin.emplace_back(nbdVars_pi0_k_pik.Asym_min());
+              varMax.emplace_back(nbdVars_pi0_k_pik.Asym_max());
+              break;
+            }
+          }
+          break;
+        }
+        case Neutral::gamma: {
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>
+                  &nbdVars_gamma_pi_kpi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_kpi.Asym().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_kpi.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_pi_kpi.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_pi_kpi.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kpi> &nbdVars_gamma_k_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_kpi.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_kpi.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_k_kpi.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_k_kpi.Asym_max());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_gamma_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_kk.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_pi_kk.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_pi_kk.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_pi_kk.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kk> &nbdVars_gamma_k_kk =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_kk.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_kk.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_k_kk.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_k_kk.Asym_max());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_gamma_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_pipi.Asym().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pipi.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_pi_pipi.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_pi_pipi.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::pipi>
+                  &nbdVars_gamma_k_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_pipi.Asym().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_k_pipi.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_k_pipi.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_k_pipi.Asym_max());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pik>
+                  &nbdVars_gamma_pi_pik =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_pik.Asym().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pik.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_pi_pik.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_pi_pik.Asym_max());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::pik>
+                  &nbdVars_gamma_k_pik =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_pik.Asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_pik.Asym_predicted());
+              varMin.emplace_back(nbdVars_gamma_k_pik.Asym_min());
+              varMax.emplace_back(nbdVars_gamma_k_pik.Asym_max());
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  for (int n = 0; n < varNames.size(); ++n) {
+    // std::cout << "VarName[" << n << "] = " << varNames[n] << "\n"
+    //           << "VarPrediction[" << n << "] = " << varPredictions[n] << "\n"
+    //           << "VarMin[" << n << "] = " << varMin[n] << "\n"
+    //           << "VarMax[" << n << "] = " << varMax[n] << "\n";
+    PlotVarErrPull(nToys, resultVec, varNames[n], varPredictions[n], varMin[n],
+                   varMax[n]);
+  }
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -1007,13 +1246,18 @@ int main(int argc, char **argv) {
 
     path = "result/";
     int id = 0;
+
+    auto fullDataHist = std::unique_ptr<RooDataHist>(
+        fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
+    auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
+
     auto p =
         MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
     auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
     auto result = std::unique_ptr<RooFitResult>(
-        simPdf->fitTo(fullDataSet, RooFit::Extended(kTRUE), RooFit::Save()));
+        simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
 
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
@@ -1038,8 +1282,8 @@ int main(int argc, char **argv) {
 
   } else {
     path = "toys/";
-    RunSingleToy(config, categories, neutralVec, daughtersVec);
-    // RunManyToys(config, categories, neutralVec, daughtersVec);
+    // RunSingleToy(config, categories, neutralVec, daughtersVec);
+    RunManyToys(config, categories, neutralVec, daughtersVec);
   }
 
   return 0;

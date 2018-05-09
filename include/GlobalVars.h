@@ -32,6 +32,8 @@ public:
   
   int uniqueId() { return uniqueId_; }
   double &R_Dst0K_vs_Dst0pi_predicted() { return R_Dst0K_vs_Dst0pi_predicted_; }
+  double &R_Dst0K_vs_Dst0pi_min() { return R_Dst0K_vs_Dst0pi_min_; }
+  double &R_Dst0K_vs_Dst0pi_max() { return R_Dst0K_vs_Dst0pi_max_; }
   RooRealVar &R_Dst0K_vs_Dst0pi() { return R_Dst0K_vs_Dst0pi_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
 
@@ -43,6 +45,8 @@ public:
 
   int uniqueId_;
   double R_Dst0K_vs_Dst0pi_predicted_;
+  double R_Dst0K_vs_Dst0pi_min_;
+  double R_Dst0K_vs_Dst0pi_max_;
   RooRealVar R_Dst0K_vs_Dst0pi_;
   RooConstVar relativeWidth_;
 };
