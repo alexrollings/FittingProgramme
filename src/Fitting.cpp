@@ -1,19 +1,20 @@
 #include "RooDataHist.h"
-#include "RooRandom.h"
 #include "RooDataSet.h"
 #include "RooFitResult.h"
 #include "RooHist.h"
 #include "RooMCStudy.h"
 #include "RooPlot.h"
+#include "RooRandom.h"
+#include "TRandom3.h"
+#include "TCanvas.h"
+#include "TChain.h"
+#include "TFile.h"
 #include "TH1D.h"
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TLegend.h"
 #include "TLine.h"
 #include "TStyle.h"
-#include "TCanvas.h"
-#include "TChain.h"
-#include "TFile.h"
 #include "TTree.h"
 #include "TTreeReader.h"
 
@@ -233,8 +234,9 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // dataHist->Draw("same");
 
   canvas.Update();
-  canvas.SaveAs((outputDir + ComposeName(id, neutral, bachelor, daughters, charge) +
-                 "_" + EnumToString(variable) + "Mass.pdf")
+  canvas.SaveAs((outputDir +
+                 ComposeName(id, neutral, bachelor, daughters, charge) + "_" +
+                 EnumToString(variable) + "Mass.pdf")
                     .c_str());
 }
 
@@ -288,8 +290,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: "
-            << pdf.yieldSignal().getVal()
+  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
             // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
             << " events";
 
@@ -315,7 +316,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 }
 
 void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
-                RooAbsData const &fullDataSet, RooSimultaneous const &simPdf, std::string const &outputDir) {
+                RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+                std::string const &outputDir) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -634,7 +636,8 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 
 void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Neutral> const &neutralVec,
-                  std::vector<Daughters> const &daughtersVec, std::string const &outputDir) {
+                  std::vector<Daughters> const &daughtersVec,
+                  std::string const &outputDir) {
   int id = 0;
   auto p =
       MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec);
@@ -663,7 +666,8 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get(), outputDir);
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get(),
+               outputDir);
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir);
     std::cout << "damn roofit" << std::endl;
   }
@@ -687,10 +691,14 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 void SaveResultInTree(
     int const nToys,
     std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
-    std::string const &varNamePlusID, double varPredicted, std::string const &outputDir, std::string const &toyRun) {
+    std::string const &varNamePlusID, double varPredicted,
+    std::string const &outputDir, double randomTag) {
   std::string varName = varNamePlusID.substr(0, varNamePlusID.size() - 2);
 
-  TFile treeFile((outputDir + "/Tree_" + varName + "_" + toyRun + ".root").c_str(), "recreate");
+  TFile treeFile((outputDir + "/Tree_" + varName + "_" +
+                  std::to_string(randomTag) + ".root")
+                     .c_str(),
+                 "recreate");
   TTree tree((varName + "_tree").c_str(), (varName + "_tree").c_str());
 
   // save variable value, error, and fit quality variables
@@ -731,21 +739,27 @@ void SaveResultInTree(
   treeFile.Write();
   treeFile.Close();
 
-  std::cout << "Result saved in file " << outputDir << "/Tree_" << varName << "_" << toyRun << ".root\n";
+  std::cout << "Result saved in file " << outputDir << "/Tree_" << varName
+            << "_" << std::to_string(randomTag) << ".root\n";
 }
 
 void PlotVarErrPull(
     int const nToys,
     std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
     std::string const &varNamePlusID, double const varPredicted,
-    double const varMin, double const varMax, std::string const &outputDir, std::string const &toyRun) {
+    double const varMin, double const varMax, std::string const &outputDir,
+    double randomTag) {
   // variable name we pass has "_0" at the end. Need to replace this with the
   // correct ID in each loop
-  std::string varName = varNamePlusID.substr(0, varNamePlusID.size()-2);
-  TFile histFile((outputDir + "/Hist_" + varName + "_" + toyRun + ".root").c_str(), "recreate");
+  std::string varName = varNamePlusID.substr(0, varNamePlusID.size() - 2);
+  TFile histFile((outputDir + "/Hist_" + varName + "_" +
+                  std::to_string(randomTag) + ".root")
+                     .c_str(),
+                 "recreate");
 
   TH1D varHist((varName + "_hist").c_str(), (varName + "_hist").c_str(), 40,
-               varPredicted-varPredicted*5, varPredicted+varPredicted*5);
+               varPredicted - varPredicted * 5,
+               varPredicted + varPredicted * 5);
   TH1D varErrHist((varName + "_err_hist").c_str(),
                   (varName + "_err_hist").c_str(), 40, 0,
                   (varMax - varMin) / 20);
@@ -787,7 +801,6 @@ void PlotVarErrPull(
             << "Forced positive definite: " << nFPD / nToys * 100 << " %\n"
             << "MINOS problems: " << nMINOS / nToys * 100 << " %\n";
 
-
   // TCanvas varCanvas((varName + "_Canvas").c_str(),
   //                   (varName + "_Canvas").c_str(), 1500, 500);
   // varCanvas.Divide(3, 1);
@@ -813,11 +826,13 @@ void PlotVarErrPull(
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
-                 std::string const &outputDir, std::string const &toyRun) {
+                 std::string const &outputDir) {
   // Setting the random seed to 0 is a special case which generates a different
   // seed every time you run. Setting the seed to an integer generates toys in a
   // replicable way, in case you need to debug something.
   RooRandom::randomGenerator()->SetSeed(0);
+  TRandom3 random(0);
+  double randomTag = random.Rndm();
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
   int nToys = 3;
 
@@ -968,9 +983,10 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
               varMin.emplace_back(nbdVars_gamma_pi_kpi.Asym_min());
               varMax.emplace_back(nbdVars_gamma_pi_kpi.Asym_max());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi> &nbdVars_gamma_k_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                               Daughters::kpi>::Get(id);
+                                           Daughters::kpi>
+                  &nbdVars_gamma_k_kpi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::kpi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_k_kpi.Asym().GetName());
               varPredictions.emplace_back(nbdVars_gamma_k_kpi.Asym_predicted());
               varMin.emplace_back(nbdVars_gamma_k_kpi.Asym_min());
@@ -1049,9 +1065,11 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   }
 
   for (int n = 0; n < varNames.size(); ++n) {
-    // PlotVarErrPull(nToys, resultVec, varNames[n], varPredictions[n], varMin[n],
-    //                varMax[n], outputDir, toyRun);
-    SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n], outputDir, toyRun);
+    // PlotVarErrPull(nToys, resultVec, varNames[n], varPredictions[n],
+    // varMin[n],
+    //                varMax[n], outputDir, randomTag);
+    SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n],
+                     outputDir, randomTag);
   }
 }
 
@@ -1080,10 +1098,7 @@ bool fexists(std::string const &filename) {
 }
 
 int main(int argc, char **argv) {
-  // toyRun is for toy submission on the batch: input a random #, which is
-  // appended to the file name of the tree with the result saved in it, which
-  // ensures files aren't overwritten
-  std::string inputDir, outputDir, toyRun;
+  std::string inputDir, outputDir;
   std::vector<Year> yearVec;
   std::vector<Polarity> polarityVec;
   std::vector<Bachelor> bachelorVec;
@@ -1141,10 +1156,7 @@ int main(int argc, char **argv) {
       std::cout << "    -split=<choice {true/false} default: " << chargeArg
                 << ">\n";
       std::cout << "    -toys"
-                << "\n";
-      std::cout << "    -toyRun=<random # for batch submission>"
-                << "\n"
-                << " (last 2 optional)";
+                << " (optional)";
       std::cout << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
@@ -1162,11 +1174,6 @@ int main(int argc, char **argv) {
       }
       if (!args("outputDir", outputDir)) {
         std::cout << "Specify output directory (-outputDir=<path>).\n";
-        return 1;
-      }
-      if (runToys == true && !args("toyRun", toyRun)) {
-        std::cerr << "Run number for toy must be specified (-toyRun=<random "
-                     "number>).\n";
         return 1;
       }
       // Year
@@ -1323,7 +1330,7 @@ int main(int argc, char **argv) {
 
   } else {
     // RunSingleToy(config, categories, neutralVec, daughtersVec, outputDir);
-    RunManyToys(config, categories, neutralVec, daughtersVec, outputDir, toyRun);
+    RunManyToys(config, categories, neutralVec, daughtersVec, outputDir);
   }
 
   return 0;
