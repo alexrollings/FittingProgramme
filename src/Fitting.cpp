@@ -392,31 +392,6 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
   }
   dataHist2d->SetTitle("");
 
-  // double binWidthXaxis_model = modelHist2d->GetXaxis()->GetBinUpEdge(0) -
-  // modelHist2d->GetXaxis()->GetBinLowEdge(0);
-  // double binWidthXaxis_data = dataHist2d->GetXaxis()->GetBinUpEdge(0) -
-  // dataHist2d->GetXaxis()->GetBinLowEdge(0);
-  // std::cout << "\n\n Xaxis Bin width of model hist = " << binWidthXaxis_model
-  // << "\n\n";
-  // std::cout << "\n\n Xaxis Bin width of data hist = " << binWidthXaxis_data
-  // << "\n\n";
-  // double binWidthYaxis_model = modelHist2d->GetYaxis()->GetBinUpEdge(0) -
-  // modelHist2d->GetYaxis()->GetBinLowEdge(0);
-  // double binWidthYaxis_data = dataHist2d->GetYaxis()->GetBinUpEdge(0) -
-  // dataHist2d->GetYaxis()->GetBinLowEdge(0);
-  // std::cout << "\n\n Yaxis Bin width of model hist = " << binWidthYaxis_model
-  // << "\n\n";
-  // std::cout << "\n\n Yaxis Bin width of data hist = " << binWidthYaxis_data
-  // << "\n\n";
-
-  // Scale model plot to total number of data events
-  // PDF not normalized: normalize before scaling to data
-  // modelHist2d->Scale(1 / modelHist2d->Integral());
-  // std::cout << "\n\n" << modelHist2d->Integral() << "\n\n";
-  // modelHist2d->GetZaxis()->SetRangeUser(0.0, 0.005);
-  // dataHist2d->Scale(1 / dataHist2d->Integral());
-  // std::cout << "\n\n" << dataHist2d->Integral() << "\n\n";
-  // dataHist2d->GetZaxis()->SetRangeUser(0.0, 0.005);
   modelHist2d->Scale(dataHist2d->Integral() / modelHist2d->Integral());
 
   TCanvas canvasModel(
@@ -719,48 +694,72 @@ void PlotVarErrPull(
   // variable name we pass has "_0" at the end. Need to replace this with the
   // correct ID in each loop
   std::string varName = varNamePlusID.substr(0, varNamePlusID.size()-2);
+  TFile histFile((varName + ".root").c_str(), "recreate");
+
   TH1D varHist((varName + "_hist").c_str(), (varName + "_hist").c_str(), 40,
-               varMin, varMax);
+               varPredicted-varPredicted*5, varPredicted+varPredicted*5);
   TH1D varErrHist((varName + "_err_hist").c_str(),
                   (varName + "_err_hist").c_str(), 40, 0,
-                  (varMax - varMin) / 10);
+                  (varMax - varMin) / 20);
   TH1D varPullHist((varName + "_pull_hist").c_str(),
                    (varName + "_pull_hist").c_str(), 40, -10, 10);
+  // number of unconverged, forced positive definite, or MINOS problemed fits
+  int nUnConv = 0;
+  int nFPD = 0;
+  int nMINOS = 0;
 
   for (int id = 0; id < nToys; ++id) {
     // resultVec[id]->Print("v");
-    RooAbsArg *varAbsArg =
-        const_cast<RooAbsArg *>(resultVec[id]->floatParsFinal().find(
-            (varName + "_" + std::to_string(id)).c_str()));
+    // Check result before calculating pulls
+    if (resultVec[id]->covQual() < 2) {
+      nUnConv++;
+    } else if (resultVec[id]->covQual() < 3) {
+      nFPD++;
+    } else if (resultVec[id]->status() != 0) {
+      nMINOS++;
+    } else {
+      RooAbsArg *varAbsArg =
+          const_cast<RooAbsArg *>(resultVec[id]->floatParsFinal().find(
+              (varName + "_" + std::to_string(id)).c_str()));
 
-    RooRealVar *var = dynamic_cast<RooRealVar *>(varAbsArg);
-    if (var == nullptr) {
-      std::stringstream output;
-      output << "No value found in result.";
-      throw std::runtime_error(output.str());
+      RooRealVar *var = dynamic_cast<RooRealVar *>(varAbsArg);
+      if (var == nullptr) {
+        std::stringstream output;
+        output << "No value found in result.";
+        throw std::runtime_error(output.str());
+      }
+
+      varHist.Fill(var->getVal());
+      varErrHist.Fill(var->getError());
+      varPullHist.Fill((var->getVal() - varPredicted) / var->getError());
     }
-
-    varHist.Fill(var->getVal());
-    varErrHist.Fill(var->getError());
-    varPullHist.Fill((var->getVal() - varPredicted) / var->getError());
   }
+  std::cout << "\nQuality of fits:\n"
+            << "Unconverged: " << nUnConv / nToys * 100 << " %\n"
+            << "Forced positive definite: " << nFPD / nToys * 100 << " %\n"
+            << "MINOS problems: " << nMINOS / nToys * 100 << " %\n";
 
-  TCanvas varCanvas((varName + "_Canvas").c_str(),
-                    (varName + "_Canvas").c_str(), 1500, 500);
-  varCanvas.Divide(3, 1);
-  varCanvas.cd(1);
+
+  // TCanvas varCanvas((varName + "_Canvas").c_str(),
+  //                   (varName + "_Canvas").c_str(), 1500, 500);
+  // varCanvas.Divide(3, 1);
+  // varCanvas.cd(1);
+  histFile.cd();
   varHist.GetXaxis()->SetTitle(varName.c_str());
   varHist.SetTitle("");
   varHist.Draw();
-  varCanvas.cd(2);
+  varHist.Write();
+  // varCanvas.cd(2);
   varErrHist.GetXaxis()->SetTitle((varName + " Error").c_str());
   varErrHist.SetTitle("");
   varErrHist.Draw();
-  varCanvas.cd(3);
+  varErrHist.Write();
+  // varCanvas.cd(3);
   varPullHist.GetXaxis()->SetTitle((varName + " Pull").c_str());
   varPullHist.SetTitle("");
   varPullHist.Draw();
-  varCanvas.SaveAs((path + "ValErrPull_" + varName + ".pdf").c_str());
+  varPullHist.Write();
+  // varCanvas.SaveAs((path + "ValErrPull_" + varName + ".pdf").c_str());
 }
 
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
@@ -771,11 +770,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   // replicable way, in case you need to debug something.
   RooRandom::randomGenerator()->SetSeed(0);
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 1000;
-  // number of unconverged, forced positive definite, or MINOS problemed fits
-  int nUnConv = 0;
-  int nFPD = 0;
-  int nMINOS = 0;
+  int nToys = 3;
 
   std::vector<std::string> varNames;
   std::vector<double> varPredictions;
@@ -810,24 +805,10 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
     // auto result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
     //     *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
-    // Check result before saving it in vector to calculate pulls
-    if (result->covQual() < 2) {
-      nUnConv++;
-    } else if (result->covQual() < 3) {
-      nFPD++;
-    } else if (result->status() != 0) {
-      nMINOS++;
-    } else {
-      resultVec.emplace_back(result);
-    }
+    resultVec.emplace_back(result);
     // save names and predictions of all variables we want to calculate pulls
     // for
   }
-
-  std::cout << "\nQuality of fits:\n"
-            << "Unconverged: " << nUnConv / nToys * 100 << " %\n"
-            << "Forced positive definite: " << nFPD / nToys * 100 << " %\n"
-            << "MINOS problems: " << nMINOS / nToys * 100 << " %\n";
 
   // Extract names and predictions of all the variables we want to obtain pulls
   // for
