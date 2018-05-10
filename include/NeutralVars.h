@@ -62,6 +62,7 @@ class NeutralVars {
   int uniqueId() { return uniqueId_; }
   RooRealVar &meanDeltaSignal() { return meanDeltaSignal_; }
   RooRealVar &a0MeanBuSignal() { return a0MeanBuSignal_; }
+  RooRealVar &a1MeanBuSignal() { return a1MeanBuSignal_; }
   RooPolyVar &meanBuSignal() { return meanBuSignal_; }
 
  private:
@@ -71,6 +72,7 @@ class NeutralVars {
   int uniqueId_;
   RooRealVar meanDeltaSignal_;
   RooRealVar a0MeanBuSignal_;
+  RooRealVar a1MeanBuSignal_;
   RooPolyVar meanBuSignal_;
 };
 
