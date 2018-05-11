@@ -691,7 +691,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 void SaveResultInTree(
     int const nToys,
     std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
-    std::string const &varNamePlusID,
+    std::string const &varNamePlusID, double varPrediction,
     std::string const &outputDir, double randomTag) {
   std::string varName = varNamePlusID.substr(0, varNamePlusID.size() - 2);
 
@@ -708,6 +708,7 @@ void SaveResultInTree(
   tree.Branch(varName.c_str(), &varVal, (varName + "/D").c_str());
   tree.Branch((varName + "_Err").c_str(), &varErr,
               (varName + "_Err/D").c_str());
+  tree.Branch((varName + "_Prediction").c_str(), &varPrediction, (varName + "_Prediction/D").c_str());
   tree.Branch("EDM", &EDM, "EDM/D");
   tree.Branch("covQual", &covQual, "covQual/I");
   tree.Branch("fitStatus", &fitStatus, "fitStatus/I");
@@ -745,6 +746,175 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
                  std::string const &outputDir) {
+  // Extract names and predictions of all the variables we want to obtain pulls
+  // for
+  int id = 0;
+  GlobalVars &globalVars = GlobalVars::Get(id);
+  std::vector<std::string> varNames;
+  std::vector<double> varPredictions;
+  varNames.emplace_back(globalVars.ratioDst0KDst0pi().GetName());
+  varPredictions.emplace_back(globalVars.ratioDst0KDst0pi().getVal());
+
+  for (auto &n : neutralVec) {
+    for (auto &d : daughtersVec) {
+      switch (n) {
+        case Neutral::pi0: {
+         NeutralVars<Neutral::pi0> &nVars_pi0 =
+              NeutralVars<Neutral::pi0>::Get(id);
+          varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_pi0.a0MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
+          // varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          // varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_kpi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_kpi.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kpi> &nbdVars_pi0_k_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_kpi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_kpi.asym().getVal());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_pi0_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_kk.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_kk.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kk> &nbdVars_pi0_k_kk =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_kk.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_kk.asym().getVal());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_pi0_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_pipi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_pipi.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::pipi>
+                  &nbdVars_pi0_k_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_pipi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_pipi.asym().getVal());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pik> &nbdVars_pi0_pi_pik =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_pi_pik.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_pi_pik.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::pik> &nbdVars_pi0_k_pik =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                               Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_pi0_k_pik.asym().GetName());
+              varPredictions.emplace_back(nbdVars_pi0_k_pik.asym().getVal());
+              break;
+            }
+          }
+          break;
+        }
+        case Neutral::gamma: {
+         NeutralVars<Neutral::gamma> &nVars_gamma =
+              NeutralVars<Neutral::gamma>::Get(id);
+          varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_gamma.a0MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
+          // varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          // varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>
+                  &nbdVars_gamma_pi_kpi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_kpi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_pi_kpi.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kpi>
+                  &nbdVars_gamma_k_kpi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::kpi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_kpi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_kpi.asym().getVal());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_gamma_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_kk.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_pi_kk.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kk> &nbdVars_gamma_k_kk =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_kk.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_kk.asym().getVal());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_gamma_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_pipi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_pi_pipi.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::pipi>
+                  &nbdVars_gamma_k_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_pipi.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_pipi.asym().getVal());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pik>
+                  &nbdVars_gamma_pi_pik =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_pi_pik.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_pi_pik.asym().getVal());
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::pik>
+                  &nbdVars_gamma_k_pik =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                                   Daughters::pik>::Get(id);
+              varNames.emplace_back(nbdVars_gamma_k_pik.asym().GetName());
+              varPredictions.emplace_back(nbdVars_gamma_k_pik.asym().getVal());
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
   // Setting the random seed to 0 is a special case which generates a different
   // seed every time you run. Setting the seed to an integer generates toys in a
   // replicable way, in case you need to debug something.
@@ -787,144 +957,9 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     // for
   }
 
-  // Extract names and predictions of all the variables we want to obtain pulls
-  // for
-  int id = 0;
-  GlobalVars &globalVars = GlobalVars::Get(id);
-  std::vector<std::string> varNames;
-  varNames.emplace_back(globalVars.ratioDst0KDst0pi().GetName());
-
-  for (auto &n : neutralVec) {
-    for (auto &d : daughtersVec) {
-      switch (n) {
-        case Neutral::pi0: {
-          switch (d) {
-            case Daughters::kpi: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_kpi.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kpi> &nbdVars_pi0_k_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_kpi.asym().GetName());
-              break;
-            }
-            case Daughters::kk: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_pi0_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_kk.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kk> &nbdVars_pi0_k_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_kk.asym().GetName());
-              break;
-            }
-            case Daughters::pipi: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_pipi.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_k_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_pipi.asym().GetName());
-              break;
-            }
-            case Daughters::pik: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pik> &nbdVars_pi0_pi_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_pik.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::pik> &nbdVars_pi0_k_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_pik.asym().GetName());
-              break;
-            }
-          }
-          break;
-        }
-        case Neutral::gamma: {
-          switch (d) {
-            case Daughters::kpi: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_pi_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_kpi.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_k_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_kpi.asym().GetName());
-              break;
-            }
-            case Daughters::kk: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_gamma_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_kk.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kk> &nbdVars_gamma_k_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_kk.asym().GetName());
-              break;
-            }
-            case Daughters::pipi: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_pipi.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_k_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_pipi.asym().GetName());
-              break;
-            }
-            case Daughters::pik: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pik>
-                  &nbdVars_gamma_pi_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_pik.asym().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::pik>
-                  &nbdVars_gamma_k_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_pik.asym().GetName());
-              break;
-            }
-          }
-          break;
-        }
-      }
-    }
-  }
 
   for (int n = 0; n < varNames.size(); ++n) {
-    SaveResultInTree(nToys, resultVec, varNames[n],
+    SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n],
                      outputDir, randomTag);
   }
 }

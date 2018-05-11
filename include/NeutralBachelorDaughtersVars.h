@@ -27,9 +27,6 @@ template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Dst0h_;
-  double asym_predicted_;
-  double asym_min_;
-  double asym_max_;
   std::unique_ptr<RooRealVar> asym_;
 };
 
@@ -37,9 +34,6 @@ template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Dst0h_;
-  double asym_predicted_;
-  double asym_min_;
-  double asym_max_;
   std::unique_ptr<RooRealVar> asym_;
 };
 }  // namespace
@@ -79,9 +73,6 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
-  double &asym_predicted() { return impl_.asym_predicted_; }
-  double &asym_min() { return impl_.asym_min_; }
-  double &asym_max() { return impl_.asym_max_; }
   RooAbsReal &asym() { return *impl_.asym_; }
 
  private:
@@ -107,16 +98,13 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
            ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           10000, 0, 50000)),
-      asym_predicted_(0.1),
-      asym_min_(-1.0),
-      asym_max_(1.0),
       asym_(new RooRealVar(
           ("asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
-          asym_predicted_, asym_min_, asym_max_)) {}
+          0.1, -1.0, 1.0)) {}
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
@@ -131,13 +119,10 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
                                                   daughters>::Get(uniqueId)
                          .N_Dst0h(),
                      GlobalVars::Get(uniqueId).ratioDst0KDst0pi()))),
-      asym_predicted_(0.1),
-      asym_min_(-1.0),
-      asym_max_(1.0),
       asym_(new RooRealVar(
           ("asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
           ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
-          asym_predicted_, asym_min_, asym_max_)) {}
+          0.1, -1.0, 1.0)) {}
