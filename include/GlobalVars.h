@@ -31,9 +31,6 @@ public:
 
   
   int uniqueId() { return uniqueId_; }
-  double &ratioDst0KDst0pi_predicted() { return ratioDst0KDst0pi_predicted_; }
-  double &ratioDst0KDst0pi_min() { return ratioDst0KDst0pi_min_; }
-  double &ratioDst0KDst0pi_max() { return ratioDst0KDst0pi_max_; }
   RooRealVar &ratioDst0KDst0pi() { return ratioDst0KDst0pi_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
 
@@ -44,9 +41,6 @@ public:
   GlobalVars &operator=(GlobalVars &&) = delete;
 
   int uniqueId_;
-  double ratioDst0KDst0pi_predicted_;
-  double ratioDst0KDst0pi_min_;
-  double ratioDst0KDst0pi_max_;
   RooRealVar ratioDst0KDst0pi_;
   RooConstVar relativeWidth_;
 };

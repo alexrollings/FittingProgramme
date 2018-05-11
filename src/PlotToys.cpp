@@ -9,10 +9,10 @@
 #include "TTree.h"
 #include "TTreeReader.h"
 
-#include "ParseArguments.h"
 #include "Configuration.h"
 #include "GlobalVars.h"
 #include "NeutralBachelorDaughtersVars.h"
+#include "ParseArguments.h"
 
 template <typename Enum>
 std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
@@ -27,23 +27,22 @@ std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
   return values;
 }
 
-void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
+void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                           std::vector<Daughters> const &daughtersVec,
-                          std::vector<std::string> &varNames,
-                          std::vector<double> &varPredictions,
-                          std::vector<double> &varMin,
-                          std::vector<double> &varMax) {
+                          std::vector<std::string> &varNames) {
   int id = 0;
   GlobalVars &globalVars = GlobalVars::Get(id);
   varNames.emplace_back(globalVars.ratioDst0KDst0pi().GetName());
-  varPredictions.emplace_back(globalVars.ratioDst0KDst0pi_predicted());
-  varMin.emplace_back(globalVars.ratioDst0KDst0pi_min());
-  varMax.emplace_back(globalVars.ratioDst0KDst0pi_max());
 
   for (auto &n : neutralVec) {
     for (auto &d : daughtersVec) {
       switch (n) {
         case Neutral::pi0: {
+         NeutralVars<Neutral::pi0> &nVars_pi0 =
+              NeutralVars<Neutral::pi0>::Get(id);
+          varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -51,17 +50,11 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kpi>::Get(id);
               varNames.emplace_back(nbdVars_pi0_pi_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_kpi.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_pi_kpi.asym_min());
-              varMax.emplace_back(nbdVars_pi0_pi_kpi.asym_max());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::kpi> &nbdVars_pi0_k_kpi =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::kpi>::Get(id);
               varNames.emplace_back(nbdVars_pi0_k_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_kpi.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_k_kpi.asym_min());
-              varMax.emplace_back(nbdVars_pi0_k_kpi.asym_max());
               break;
             }
             case Daughters::kk: {
@@ -70,17 +63,11 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(nbdVars_pi0_pi_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_kk.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_pi_kk.asym_min());
-              varMax.emplace_back(nbdVars_pi0_pi_kk.asym_max());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::kk> &nbdVars_pi0_k_kk =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(nbdVars_pi0_k_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_kk.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_k_kk.asym_min());
-              varMax.emplace_back(nbdVars_pi0_k_kk.asym_max());
               break;
             }
             case Daughters::pipi: {
@@ -90,18 +77,12 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(nbdVars_pi0_pi_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_pipi.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_pi_pipi.asym_min());
-              varMax.emplace_back(nbdVars_pi0_pi_pipi.asym_max());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::pipi>
                   &nbdVars_pi0_k_pipi =
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(nbdVars_pi0_k_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_pipi.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_k_pipi.asym_min());
-              varMax.emplace_back(nbdVars_pi0_k_pipi.asym_max());
               break;
             }
             case Daughters::pik: {
@@ -110,23 +91,22 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::pik>::Get(id);
               varNames.emplace_back(nbdVars_pi0_pi_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_pik.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_pi_pik.asym_min());
-              varMax.emplace_back(nbdVars_pi0_pi_pik.asym_max());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::pik> &nbdVars_pi0_k_pik =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::pik>::Get(id);
               varNames.emplace_back(nbdVars_pi0_k_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_pik.asym_predicted());
-              varMin.emplace_back(nbdVars_pi0_k_pik.asym_min());
-              varMax.emplace_back(nbdVars_pi0_k_pik.asym_max());
               break;
             }
           }
           break;
         }
         case Neutral::gamma: {
+         NeutralVars<Neutral::gamma> &nVars_gamma =
+              NeutralVars<Neutral::gamma>::Get(id);
+          varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -135,19 +115,12 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::kpi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_pi_kpi.asym().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_kpi.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_pi_kpi.asym_min());
-              varMax.emplace_back(nbdVars_gamma_pi_kpi.asym_max());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::kpi>
                   &nbdVars_gamma_k_kpi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::kpi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_k_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_kpi.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_k_kpi.asym_min());
-              varMax.emplace_back(nbdVars_gamma_k_kpi.asym_max());
               break;
             }
             case Daughters::kk: {
@@ -156,17 +129,11 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(nbdVars_gamma_pi_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_pi_kk.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_pi_kk.asym_min());
-              varMax.emplace_back(nbdVars_gamma_pi_kk.asym_max());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::kk> &nbdVars_gamma_k_kk =
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(nbdVars_gamma_k_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_kk.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_k_kk.asym_min());
-              varMax.emplace_back(nbdVars_gamma_k_kk.asym_max());
               break;
             }
             case Daughters::pipi: {
@@ -176,20 +143,12 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_pi_pipi.asym().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_pipi.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_pi_pipi.asym_min());
-              varMax.emplace_back(nbdVars_gamma_pi_pipi.asym_max());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::pipi>
                   &nbdVars_gamma_k_pipi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_k_pipi.asym().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_k_pipi.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_k_pipi.asym_min());
-              varMax.emplace_back(nbdVars_gamma_k_pipi.asym_max());
               break;
             }
             case Daughters::pik: {
@@ -199,19 +158,12 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pik>::Get(id);
               varNames.emplace_back(nbdVars_gamma_pi_pik.asym().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_pik.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_pi_pik.asym_min());
-              varMax.emplace_back(nbdVars_gamma_pi_pik.asym_max());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::pik>
                   &nbdVars_gamma_k_pik =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::pik>::Get(id);
               varNames.emplace_back(nbdVars_gamma_k_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_pik.asym_predicted());
-              varMin.emplace_back(nbdVars_gamma_k_pik.asym_min());
-              varMax.emplace_back(nbdVars_gamma_k_pik.asym_max());
               break;
             }
           }
@@ -223,22 +175,45 @@ void ExtractVarProperties(std::vector<Neutral> const &neutralVec,
 }
 
 void PlotVariables(std::string &inputDir, TChain &chain, TTreeReader &reader,
-                   std::string &varName, double varPredicted, double varMin,
-                   double varMax) {
+                   std::string &varName) {
   TTreeReaderValue<double> var(reader, varName.c_str());
   TTreeReaderValue<double> varErr(reader, (varName + "_Err").c_str());
+  TTreeReaderValue<double> varPrediction(reader,
+                                         (varName + "_Prediction").c_str());
   TTreeReaderValue<double> edm(reader, "EDM");
   TTreeReaderValue<int> covQual(reader, "covQual");
   TTreeReaderValue<int> fitStatus(reader, "fitStatus");
 
+  double varMin, varMax, varErrMax;
+
+  unsigned int j = 0;
+
+  while (reader.Next()) {
+    chain.GetEntry(j);
+    if (j == 0) {
+      varMin = *var;
+      varMax = *var;
+      varErrMax = *varErr;
+    } else {
+      if (*var < varMin) {
+        varMin = *var;
+      } else if (*var > varMax) {
+        varMax = *var;
+      }
+      if (*varErr > varErrMax) {
+        varErrMax = *varErr;
+      }
+    }
+    j++;
+  }
+
   TFile histFile((inputDir + "/Hist_" + varName + ".root").c_str(), "recreate");
 
   TH1D varHist((varName + "_hist").c_str(), (varName + "_hist").c_str(), 40,
-               varPredicted - varPredicted * 5,
-               varPredicted + varPredicted * 5);
+               varMin - (varMax - varMin) / 5, varMax + (varMax - varMin) / 5);
   TH1D varErrHist((varName + "_err_hist").c_str(),
                   (varName + "_err_hist").c_str(), 40, 0,
-                  (varMax - varMin) / 20);
+                  varErrMax + varErrMax / 5);
   TH1D varPullHist((varName + "_pull_hist").c_str(),
                    (varName + "_pull_hist").c_str(), 40, -10, 10);
   // number of unconverged, forced positive definite, or MINOS problemed fits
@@ -246,6 +221,7 @@ void PlotVariables(std::string &inputDir, TChain &chain, TTreeReader &reader,
   int nFPD = 0;
   int nMINOS = 0;
 
+  reader.Restart();
   unsigned int i = 0;
 
   while (reader.Next()) {
@@ -260,7 +236,7 @@ void PlotVariables(std::string &inputDir, TChain &chain, TTreeReader &reader,
     } else {
       varHist.Fill(*var);
       varErrHist.Fill(*varErr);
-      varPullHist.Fill((*var - varPredicted) / *varErr);
+      varPullHist.Fill((*var - *varPrediction) / *varErr);
     }
   }
   std::cout << "\nQuality of fits:\n"
@@ -319,7 +295,6 @@ int main(int argc, char **argv) {
       return 1;
 
     } else {
-
       if (!args("inputDir", inputDir)) {
         std::cerr << "Directory must be specified (-inputDir=<inputDir>).\n";
         return 1;
@@ -349,18 +324,17 @@ int main(int argc, char **argv) {
   }
 
   std::vector<std::string> varNames;
-  std::vector<double> varPredictions, varMin, varMax;
+  std::vector<double> varPredictions;
 
-  ExtractVarProperties(neutralVec, daughtersVec, varNames, varPredictions,
-                       varMin, varMax);
+  ExtractVarNames(neutralVec, daughtersVec, varNames);
 
   for (unsigned int i = 0; i < varNames.size(); ++i) {
     std::string varName = varNames[i].substr(0, varNames[i].size() - 2);
     std::string tree = varName + "_tree";
     TChain chain(tree.c_str());
     chain.Add((inputDir + "/Tree_" + varName + "_*.root").c_str());
+    std::cout << "Plotting for " << chain.GetEntries() << " toys.\n";
     TTreeReader reader(&chain);
-    PlotVariables(inputDir, chain, reader, varName, varPredictions[i], varMin[i],
-                  varMax[i]);
+    PlotVariables(inputDir, chain, reader, varName);
   }
 }
