@@ -31,10 +31,10 @@ public:
 
   
   int uniqueId() { return uniqueId_; }
-  double &R_Dst0K_vs_Dst0pi_predicted() { return R_Dst0K_vs_Dst0pi_predicted_; }
-  double &R_Dst0K_vs_Dst0pi_min() { return R_Dst0K_vs_Dst0pi_min_; }
-  double &R_Dst0K_vs_Dst0pi_max() { return R_Dst0K_vs_Dst0pi_max_; }
-  RooRealVar &R_Dst0K_vs_Dst0pi() { return R_Dst0K_vs_Dst0pi_; }
+  double &ratioDst0KDst0pi_predicted() { return ratioDst0KDst0pi_predicted_; }
+  double &ratioDst0KDst0pi_min() { return ratioDst0KDst0pi_min_; }
+  double &ratioDst0KDst0pi_max() { return ratioDst0KDst0pi_max_; }
+  RooRealVar &ratioDst0KDst0pi() { return ratioDst0KDst0pi_; }
   RooConstVar &relativeWidth() { return relativeWidth_; }
 
  private:
@@ -44,10 +44,10 @@ public:
   GlobalVars &operator=(GlobalVars &&) = delete;
 
   int uniqueId_;
-  double R_Dst0K_vs_Dst0pi_predicted_;
-  double R_Dst0K_vs_Dst0pi_min_;
-  double R_Dst0K_vs_Dst0pi_max_;
-  RooRealVar R_Dst0K_vs_Dst0pi_;
+  double ratioDst0KDst0pi_predicted_;
+  double ratioDst0KDst0pi_min_;
+  double ratioDst0KDst0pi_max_;
+  RooRealVar ratioDst0KDst0pi_;
   RooConstVar relativeWidth_;
 };
 

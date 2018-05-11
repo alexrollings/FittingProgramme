@@ -15,7 +15,7 @@ endif()
 
 #Find header files
 include_directories(${ROOT_INCLUDE_DIR} include)
-set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
+set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit MathMore Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files
@@ -26,8 +26,10 @@ set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 #${variable} expands variable
 # add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
 add_executable(Fitting src/Fitting.cpp)
+add_executable(PlotToys src/PlotToys.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
 # target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
 target_link_libraries(Fitting ${FITTING_LIBS})
+target_link_libraries(PlotToys ${FITTING_LIBS})
