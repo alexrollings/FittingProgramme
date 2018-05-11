@@ -753,14 +753,6 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   double randomTag = random.Rndm();
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
   int nToys = 10;
-<<<<<<< HEAD
-
-  std::vector<std::string> varNames;
-  std::vector<double> varPredictions;
-  std::vector<double> varMin;
-  std::vector<double> varMax;
-=======
->>>>>>> 373523dfb8075e0a3c1ae3459a208fca4d0a3851
 
   for (int id = 0; id < nToys; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
