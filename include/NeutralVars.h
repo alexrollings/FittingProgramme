@@ -63,6 +63,7 @@ class NeutralVars {
   RooRealVar &meanDeltaSignal() { return meanDeltaSignal_; }
   RooRealVar &a0MeanBuSignal() { return a0MeanBuSignal_; }
   RooRealVar &a1MeanBuSignal() { return a1MeanBuSignal_; }
+  RooRealVar &a2MeanBuSignal() { return a2MeanBuSignal_; }
   RooPolyVar &meanBuSignal() { return meanBuSignal_; }
 
  private:
@@ -73,6 +74,7 @@ class NeutralVars {
   RooRealVar meanDeltaSignal_;
   RooRealVar a0MeanBuSignal_;
   RooRealVar a1MeanBuSignal_;
+  RooRealVar a2MeanBuSignal_;
   RooPolyVar meanBuSignal_;
 };
 
