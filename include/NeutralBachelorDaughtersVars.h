@@ -27,20 +27,20 @@ template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Dst0h_;
-  double Asym_predicted_;
-  double Asym_min_;
-  double Asym_max_;
-  std::unique_ptr<RooRealVar> Asym_;
+  double asym_predicted_;
+  double asym_min_;
+  double asym_max_;
+  std::unique_ptr<RooRealVar> asym_;
 };
 
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Dst0h_;
-  double Asym_predicted_;
-  double Asym_min_;
-  double Asym_max_;
-  std::unique_ptr<RooRealVar> Asym_;
+  double asym_predicted_;
+  double asym_min_;
+  double asym_max_;
+  std::unique_ptr<RooRealVar> asym_;
 };
 }  // namespace
 
@@ -79,10 +79,10 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
-  double &Asym_predicted() { return impl_.Asym_predicted_; }
-  double &Asym_min() { return impl_.Asym_min_; }
-  double &Asym_max() { return impl_.Asym_max_; }
-  RooAbsReal &Asym() { return *impl_.Asym_; }
+  double &asym_predicted() { return impl_.asym_predicted_; }
+  double &asym_min() { return impl_.asym_min_; }
+  double &asym_max() { return impl_.asym_max_; }
+  RooAbsReal &asym() { return *impl_.asym_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -107,16 +107,16 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
            ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           10000, 0, 50000)),
-      Asym_predicted_(0.1),
-      Asym_min_(-1.0),
-      Asym_max_(1.0),
-      Asym_(new RooRealVar(
-          ("Asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+      asym_predicted_(0.1),
+      asym_min_(-1.0),
+      asym_max_(1.0),
+      asym_(new RooRealVar(
+          ("asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
-          ("Asymmetry variable " +
+          ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
-          Asym_predicted_, Asym_min_, Asym_max_)) {}
+          asym_predicted_, asym_min_, asym_max_)) {}
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
@@ -130,14 +130,14 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
           RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_Dst0h(),
-                     GlobalVars::Get(uniqueId).R_Dst0K_vs_Dst0pi()))),
-      Asym_predicted_(0.1),
-      Asym_min_(-1.0),
-      Asym_max_(1.0),
-      Asym_(new RooRealVar(
-          ("Asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))
+                     GlobalVars::Get(uniqueId).ratioDst0KDst0pi()))),
+      asym_predicted_(0.1),
+      asym_min_(-1.0),
+      asym_max_(1.0),
+      asym_(new RooRealVar(
+          ("asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
-          ("Asymmetry variable " +
+          ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
-          Asym_predicted_, Asym_min_, Asym_max_)) {}
+          asym_predicted_, asym_min_, asym_max_)) {}

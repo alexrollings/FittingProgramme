@@ -148,7 +148,7 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .N_Dst0h(),
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
-                .Asym())));
+                .asym())));
   } else {
     yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("yieldSignal_" + ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
@@ -161,7 +161,7 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .N_Dst0h(),
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
-                .Asym())));
+                .asym())));
   }
   CreateRooAddPdf();
 }
