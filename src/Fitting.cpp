@@ -819,7 +819,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   // replicable way, in case you need to debug something.
   RooRandom::randomGenerator()->SetSeed(0);
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 3;
+  int nToys = 10;
 
   std::vector<std::string> varNames;
   std::vector<double> varPredictions;
