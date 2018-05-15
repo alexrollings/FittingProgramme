@@ -52,10 +52,10 @@ class NeutralBachelorVars {
 };
 
 template <>
-NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(int uniqueId);
-template <>
-NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int uniqueId);
-template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(int uniqueId);
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(int uniqueId);
+template <>
+NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(int uniqueId);
+template <>
+NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int uniqueId);
