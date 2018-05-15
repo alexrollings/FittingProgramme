@@ -5,7 +5,6 @@
 #include "RooMCStudy.h"
 #include "RooPlot.h"
 #include "RooRandom.h"
-#include "TRandom3.h"
 #include "TCanvas.h"
 #include "TChain.h"
 #include "TFile.h"
@@ -14,6 +13,7 @@
 #include "TH2F.h"
 #include "TLegend.h"
 #include "TLine.h"
+#include "TRandom3.h"
 #include "TStyle.h"
 #include "TTree.h"
 #include "TTreeReader.h"
@@ -476,7 +476,6 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                     ComposeName(id, neutral, bachelor, daughters, charge) +
                     "_2dResiduals.pdf")
                        .c_str());
-  std::cout << "end" << std::endl;
 }
 
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
@@ -506,19 +505,6 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 
       for (auto &n : neutralVec) {
         switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::minus>::Get(id));
-
-            break;
-
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
@@ -528,6 +514,19 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                                    Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                                   Charge::minus>::Get(id));
+
+            break;
+
+          case Neutral::pi0:
+
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                   Charge::minus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                                    Charge::minus>::Get(id));
 
             break;
@@ -536,19 +535,6 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     } else if (d == Daughters::kk) {
       for (auto &n : neutralVec) {
         switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                                   Charge::minus>::Get(id));
-
-            break;
-
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
@@ -558,6 +544,19 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
                                    Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                                   Charge::minus>::Get(id));
+
+            break;
+
+          case Neutral::pi0:
+
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                                   Charge::minus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
                                    Charge::minus>::Get(id));
 
             break;
@@ -566,28 +565,28 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     } else if (d == Daughters::pipi) {
       for (auto &n : neutralVec) {
         switch (n) {
-          case Neutral::pi0:
+          case Neutral::gamma:
 
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
                                    Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
                                    Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
                                    Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
                                    Charge::minus>::Get(id));
 
             break;
 
-          case Neutral::gamma:
+          case Neutral::pi0:
 
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi,
                                    Daughters::pipi, Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
                                    Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi,
                                    Daughters::pipi, Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
                                    Charge::minus>::Get(id));
 
             break;
@@ -596,19 +595,6 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     } else {
       for (auto &n : neutralVec) {
         switch (n) {
-          case Neutral::pi0:
-
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::plus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                                   Charge::minus>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                                   Charge::minus>::Get(id));
-
-            break;
-
           case Neutral::gamma:
 
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
@@ -618,6 +604,19 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
                                    Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                                   Charge::minus>::Get(id));
+
+            break;
+
+          case Neutral::pi0:
+
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
+                                   Charge::plus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                                   Charge::minus>::Get(id));
+            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
                                    Charge::minus>::Get(id));
 
             break;
@@ -669,7 +668,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
     Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get(),
                outputDir);
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir);
-    std::cout << "damn roofit" << std::endl;
   }
 
   result->Print("v");
@@ -708,7 +706,8 @@ void SaveResultInTree(
   tree.Branch(varName.c_str(), &varVal, (varName + "/D").c_str());
   tree.Branch((varName + "_Err").c_str(), &varErr,
               (varName + "_Err/D").c_str());
-  tree.Branch((varName + "_Prediction").c_str(), &varPrediction, (varName + "_Prediction/D").c_str());
+  tree.Branch((varName + "_Prediction").c_str(), &varPrediction,
+              (varName + "_Prediction/D").c_str());
   tree.Branch("EDM", &EDM, "EDM/D");
   tree.Branch("covQual", &covQual, "covQual/I");
   tree.Branch("fitStatus", &fitStatus, "fitStatus/I");
@@ -721,7 +720,7 @@ void SaveResultInTree(
     RooRealVar *var = dynamic_cast<RooRealVar *>(varAbsArg);
     if (var == nullptr) {
       std::stringstream output;
-      output << "No value found in result.";
+      output << "No value found in variable " << varName;
       throw std::runtime_error(output.str());
     }
 
@@ -745,7 +744,7 @@ void SaveResultInTree(
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
-                 std::string const &outputDir) {
+                 std::string const &outputDir /* , int nToys */) {
   // Extract names and predictions of all the variables we want to obtain pulls
   // for
   int id = 0;
@@ -759,14 +758,14 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     for (auto &d : daughtersVec) {
       switch (n) {
         case Neutral::pi0: {
-         NeutralVars<Neutral::pi0> &nVars_pi0 =
+          NeutralVars<Neutral::pi0> &nVars_pi0 =
               NeutralVars<Neutral::pi0>::Get(id);
           varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_pi0.a0MeanBuSignal().getVal());
-          // varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
-          // varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
-          // varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
-          // varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
+          varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
+          varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -834,14 +833,14 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           break;
         }
         case Neutral::gamma: {
-         NeutralVars<Neutral::gamma> &nVars_gamma =
+          NeutralVars<Neutral::gamma> &nVars_gamma =
               NeutralVars<Neutral::gamma>::Get(id);
           varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_gamma.a0MeanBuSignal().getVal());
-          // varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
-          // varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
-          // varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
-          // varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
+          varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
+          varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -882,7 +881,8 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(nbdVars_gamma_pi_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_pi_pipi.asym().getVal());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pipi.asym().getVal());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::pipi>
                   &nbdVars_gamma_k_pipi =
@@ -922,7 +922,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   TRandom3 random(0);
   double randomTag = random.Rndm();
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 10;
+  int nToys = 5;
 
   for (int id = 0; id < nToys; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
@@ -940,6 +940,8 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
                                 ("toyDataHist" + std::to_string(id)).c_str()));
     auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+    GlobalVars &globalVars = GlobalVars::Get(id);
+    globalVars.ratioDst0KDst0pi().setVal(0.5);
 
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -956,7 +958,6 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     // save names and predictions of all variables we want to calculate pulls
     // for
   }
-
 
   for (int n = 0; n < varNames.size(); ++n) {
     SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n],
@@ -1002,7 +1003,8 @@ int main(int argc, char **argv) {
   chargeVec.emplace_back(Charge::minus);
 
   SplitByCharge splitbycharge;
-  bool runToys = false;
+  bool runManyToys = false;
+  bool runSingleToy = false;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -1016,7 +1018,7 @@ int main(int argc, char **argv) {
     std::string yearArg("2011,2012,2015");
     std::string polarityArg("up,down");
     std::string bachelorArg("pi,k");
-    std::string neutralArg("pi0,gamma");
+    std::string neutralArg("gamma,pi0");
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("true");
 
@@ -1046,9 +1048,12 @@ int main(int argc, char **argv) {
                 << daughtersArg << ">\n";
       std::cout << "    -split=<choice {true/false} default: " << chargeArg
                 << ">\n";
-      std::cout << "    -toys"
-                << " (optional)";
-      std::cout << "\n";
+      std::cout << "    -singleToy"
+                << " (optional)"
+                << "\n";
+      std::cout << "    -manyToys"
+                << " (optional)"
+                << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
@@ -1057,9 +1062,10 @@ int main(int argc, char **argv) {
       return 1;
     } else {
       // Data folder
-      runToys = args("toys");
+      runSingleToy = args("singleToy");
+      runManyToys = args("manyToys");
 
-      if (!args("inputDir", inputDir) && runToys == false) {
+      if (!args("inputDir", inputDir) && runSingleToy == false && runManyToys == false) {
         std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
         return 1;
       }
@@ -1136,7 +1142,7 @@ int main(int argc, char **argv) {
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
 
-  if (runToys == false) {
+  if (runSingleToy == false && runManyToys == false) {
     RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
 
     // Loop over all options in order to extract correct roodatasets
@@ -1220,8 +1226,12 @@ int main(int argc, char **argv) {
     std::cout << "Save to pdf file.\n";
 
   } else {
-    // RunSingleToy(config, categories, neutralVec, daughtersVec, outputDir);
-    RunManyToys(config, categories, neutralVec, daughtersVec, outputDir);
+    if (runSingleToy == true) {
+      RunSingleToy(config, categories, neutralVec, daughtersVec, outputDir);
+    } else if (runManyToys == true) {
+      RunManyToys(config, categories, neutralVec, daughtersVec,
+                  outputDir /* , nToys */);
+    }
   }
 
   return 0;

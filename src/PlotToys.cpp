@@ -41,8 +41,8 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
          NeutralVars<Neutral::pi0> &nVars_pi0 =
               NeutralVars<Neutral::pi0>::Get(id);
           varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
-          // varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
-          // varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
+          varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -105,8 +105,8 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
          NeutralVars<Neutral::gamma> &nVars_gamma =
               NeutralVars<Neutral::gamma>::Get(id);
           varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
-          // varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
-          // varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
+          varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,

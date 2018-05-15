@@ -85,7 +85,7 @@ class NeutralVars {
 
 // ...by telling it exactly which specializations we are providing:
 template <>
-NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId);
-template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId);
+template <>
+NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId);
 // Then we can safely put these in the .cpp-file somewhere to be linked later.
