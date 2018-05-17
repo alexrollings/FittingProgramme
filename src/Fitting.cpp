@@ -731,6 +731,10 @@ void SaveResultInTree(
     covQual = resultVec[id]->covQual();
 
     tree.Fill();
+    if (EDM > 0.2) {
+      std::cout << "\n\nEDM VALUE > 0.2\n\n";
+      resultVec[id]->Print("v");
+    }
   }
   treeFile.cd();
   tree.Write("", TObject::kOverwrite);
@@ -766,6 +770,14 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
           varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
+          NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
+          varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().getVal());
+          varNames.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().getVal());
+          varNames.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -841,6 +853,14 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
           varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
+          NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
+          varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().getVal());
+          varNames.emplace_back(nbVars_pi_gamma.a1SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_gamma.a1SigmaBuSignal().getVal());
+          varNames.emplace_back(nbVars_pi_gamma.a2SigmaBuSignal().GetName());
+          varPredictions.emplace_back(nbVars_pi_gamma.a2SigmaBuSignal().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -940,8 +960,27 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
                                 ("toyDataHist" + std::to_string(id)).c_str()));
     auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-    GlobalVars &globalVars = GlobalVars::Get(id);
-    globalVars.ratioDst0KDst0pi().setVal(0.5);
+
+    for (auto &n : neutralVec) {
+      switch (n) {
+        case Neutral::gamma: {
+          NeutralVars<Neutral::gamma> &nVars_gamma =
+              NeutralVars<Neutral::gamma>::Get(id);
+          nVars_gamma.a0MeanBuSignal().setVal(4900);
+          // nVars_gamma.a1MeanBuSignal().setVal(4);
+          // nVars_gamma.a2MeanBuSignal().setVal(-0.05);
+          break;
+        }
+        case Neutral::pi0: {
+          NeutralVars<Neutral::pi0> &nVars_pi0 =
+              NeutralVars<Neutral::pi0>::Get(id);
+          nVars_pi0.a0MeanBuSignal().setVal(4900);
+          // nVars_pi0.a1MeanBuSignal().setVal(4);
+          // nVars_pi0.a2MeanBuSignal().setVal(-0.05);
+          break;
+        }
+      }
+    }
 
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -950,8 +989,9 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     simPdfToFit = std::unique_ptr<RooSimultaneous>(
         dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-    auto result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
-        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+    auto result = std::shared_ptr<RooFitResult>(
+        simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                           RooFit::Offset(true)));
     // auto result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
     //     *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
     resultVec.emplace_back(result);

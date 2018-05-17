@@ -14,7 +14,7 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters dau
           ("Combinatorial Yield " +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          100, 0, 500),
+          10000, 0, 50000),
       lambdaDeltaComb_(("lambdaDeltaComb_" +
                         ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                            .c_str(),
