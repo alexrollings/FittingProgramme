@@ -37,6 +37,9 @@ class NeutralBachelorVars {
 
   int uniqueId() { return uniqueId_; }
   RooAbsReal &sigmaDeltaSignal() { return *sigmaDeltaSignal_; }
+  RooRealVar &a0SigmaBuSignal() { return a0SigmaBuSignal_; }
+  RooRealVar &a1SigmaBuSignal() { return a1SigmaBuSignal_; }
+  RooRealVar &a2SigmaBuSignal() { return a2SigmaBuSignal_; }
   RooGaussian &pdfDeltaSignal() { return pdfDeltaSignal_; }
   RooAbsReal &sigmaBuSignal() { return *sigmaBuSignal_; }
   RooGaussian &pdfBuSignal() { return pdfBuSignal_; }
@@ -46,6 +49,9 @@ class NeutralBachelorVars {
   int uniqueId_;
   std::unique_ptr<RooAbsReal> sigmaDeltaSignal_;
   RooGaussian pdfDeltaSignal_;
+  RooRealVar a0SigmaBuSignal_;
+  RooRealVar a1SigmaBuSignal_;
+  RooRealVar a2SigmaBuSignal_;
   std::unique_ptr<RooAbsReal> sigmaBuSignal_;
   RooGaussian pdfBuSignal_;
   RooProdPdf pdfSignal_;

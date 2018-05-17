@@ -97,7 +97,7 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0pi-like events " +
            ComposeName(uniqueId, neutral, daughters))
               .c_str(),
-          10000, 0, 50000)),
+          100000, 0, 500000)),
       asym_(new RooRealVar(
           ("asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),

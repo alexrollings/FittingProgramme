@@ -11,6 +11,8 @@
 
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "NeutralVars.h"
+#include "NeutralBachelorVars.h"
 #include "NeutralBachelorDaughtersVars.h"
 #include "ParseArguments.h"
 
@@ -43,6 +45,11 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
           varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
           varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
           varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
+          varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
+          varNames.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().GetName());
+          varNames.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -107,6 +114,11 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
           varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
           varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
           varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
+          varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());
+          varNames.emplace_back(nbVars_pi_gamma.a1SigmaBuSignal().GetName());
+          varNames.emplace_back(nbVars_pi_gamma.a2SigmaBuSignal().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -217,9 +229,9 @@ void PlotVariables(std::string &inputDir, TChain &chain, TTreeReader &reader,
   TH1D varPullHist((varName + "_pull_hist").c_str(),
                    (varName + "_pull_hist").c_str(), 40, -10, 10);
   // number of unconverged, forced positive definite, or MINOS problemed fits
-  int nUnConv = 0;
-  int nFPD = 0;
-  int nMINOS = 0;
+  double nUnConv = 0;
+  double nFPD = 0;
+  double nMINOS = 0;
 
   reader.Restart();
   unsigned int i = 0;
