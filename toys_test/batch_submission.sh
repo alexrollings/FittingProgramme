@@ -12,5 +12,5 @@ source /data/lhcb/sw/scripts/lbsetup-cvmfs.sh
 
 source /cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/ROOT/6.08.06/x86_64-slc6-gcc49-opt/bin/thisroot.sh
 
-cd /home/rollings/Bu2Dst0h_2d/toys_test/
+cd /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/
 ./ManySimToys

@@ -19,7 +19,7 @@ def make_shell_script(templatePath, scriptPath, substitutions):
             scriptFile.write(scriptString)
 
 if __name__ == "__main__":
-    scriptPath = "/home/rollings/Bu2Dst0h_2d/toys_test/batch_submission.sh"
+    scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/batch_submission.sh"
     for i in range (0, 200):
       run_process(["qsub", scriptPath])
 
