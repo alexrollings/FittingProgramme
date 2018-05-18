@@ -45,22 +45,31 @@ void GenerateToys() {
   bu_mass.setBins(bu_nbins);
   delta_mass.setBins(delta_nbins);
 
-  // Values and their errors get saved into histograms after each fit
-  TH1F *hist_a0_mean = new TH1F("hist_a0_mean", "", 40, 4800, 5600);
-  TH1F *hist_a0_mean_err = new TH1F("hist_a0_mean_err", "", 40, 30, 50);
-  TH1F *hist_a0_mean_pull = new TH1F("hist_a0_mean_pull", "", 40, -5, 5);
-
-  TH1F *hist_a1_mean = new TH1F("hist_a1_mean", "", 40, 0, 10);
-  TH1F *hist_a1_mean_err = new TH1F("hist_a1_mean_err", "", 40, 0, 2);
-  TH1F *hist_a1_mean_pull = new TH1F("hist_a1_mean_pull", "", 40, -5, 5);
-
-  TH1F *hist_a2_mean = new TH1F("hist_a2_mean", "", 40, -0.02, 0.02);
-  TH1F *hist_a2_mean_err = new TH1F("hist_a2_mean_err", "", 40, 0, 0.005);
-  TH1F *hist_a2_mean_pull = new TH1F("hist_a2_mean_pull", "", 40, -5, 5);
-
   double a0_mean_init = 5101.86875;
   double a1_mean_init = 2.1375;
   double a2_mean_init = -0.0062;
+
+  TFile treeFile(("/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/"
+                  "results/TreeFile_" +
+                  std::to_string(randomTag) + ".root")
+                     .c_str(),
+                 "recreate");
+  TTree tree("tree", "tree");
+
+  // save variable value, error, and fit quality variables
+  double a0Mean, a0MeanErr, a1Mean, a1MeanErr, a2Mean, a2MeanErr, EDM;
+  int covQual, fitStatus;
+
+  tree.Branch("a0Mean", &a0Mean, "a0Mean/D");
+  tree.Branch("a0MeanErr", &a0MeanErr, "a0MeanErr/D");
+  tree.Branch("a1Mean", &a1Mean, "a1Mean/D");
+  tree.Branch("a1MeanErr", &a1MeanErr, "a1MeanErr/D");
+  tree.Branch("a2Mean", &a2Mean, "a2Mean/D");
+  tree.Branch("a2MeanErr", &a2MeanErr, "a2MeanErr/D");
+  tree.Branch("EDM", &EDM, "EDM/D");
+  tree.Branch("covQual", &covQual, "covQual/I");
+  tree.Branch("fitStatus", &fitStatus, "fitStatus/I");
+
   // run n_toys fits and store the values in the histograms
   for (int i = 0; i < n_toys; i++) {
     // DEFINE PDFs
@@ -80,90 +89,62 @@ void GenerateToys() {
     RooProdPdf pdf_tot("pdf_tot", "", delta_gaus,
                        RooFit::Conditional(bu_gaus, bu_mass));
 
-    RooDataSet *toyData =
-        pdf_tot.generate(RooArgSet(bu_mass, delta_mass), n_events);
-
-    RooProdPdf *pdf_tot_fit = new RooProdPdf("pdf_tot_fit", "pdf_tot_fit");
-
-    pdf_tot_fit = dynamic_cast<RooProdPdf *>(pdf_tot.Clone());
+    RooDataSet *toyDataSet =
+        pdf_tot.generate(RooArgSet(buMass, deltaMass, bachelor), n_events);
+    toyDataSet->SetName(("toyDataSet_" + std::to_string(i)).c_str());
+    auto toyDataHist = std::unique_ptr<RooDataHist>(
+        toyDataSet->binnedClone(("toyDataHist_" + std::to_string(i)).c_str(),
+                                ("toyDataHist" + std::to_string(i)).c_str()));
+    auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     delta_mean.setVal(142);
 
     RooFitResult *result = 0;
-    result = pdf_tot_fit->fitTo(*toyData, RooFit::Save(true));
+    result = pdf_tot.fitTo(*toyAbsData, RooFit::Save(true));
 
-    // Fill histograms
-    if (result->covQual() > 2 && result->status() == 0) {
-      hist_a0_mean->Fill(a0_mean.getVal());
-      hist_a0_mean_err->Fill(a0_mean.getError());
-      hist_a0_mean_pull->Fill((a0_mean.getVal() - a0_mean_init) /
-                              a0_mean.getError());
+    RooAbsArg *a0MeanAbsArg = const_cast<RooAbsArg *>(
+        result->floatParsFinal().find("a0_mean"));
 
-      hist_a1_mean->Fill(a1_mean.getVal());
-      hist_a1_mean_err->Fill(a1_mean.getError());
-      hist_a1_mean_pull->Fill((a1_mean.getVal() - a1_mean_init) /
-                              a1_mean.getError());
-
-      hist_a2_mean->Fill(a2_mean.getVal());
-      hist_a2_mean_err->Fill(a2_mean.getError());
-      hist_a2_mean_pull->Fill((a2_mean.getVal() - a2_mean_init) /
-                              a2_mean.getError());
-      result->Print("v");
-    } else {
-      result->Print("v");
+    RooRealVar *a0MeanVar = dynamic_cast<RooRealVar *>(a0MeanAbsArg);
+    if (a0MeanVar == nullptr) {
+      std::stringstream output;
+      output << "No value found in variable a0_mean";
+      throw std::runtime_error(output.str());
     }
-    if (result->edm() > 0.2) {
-      result->Print("v");
+
+    RooAbsArg *a1MeanAbsArg = const_cast<RooAbsArg *>(
+        result->floatParsFinal().find("a1_mean"));
+
+    RooRealVar *a1MeanVar = dynamic_cast<RooRealVar *>(a1MeanAbsArg);
+    if (a1MeanVar == nullptr) {
+      std::stringstream output;
+      output << "No value found in variable a1_mean";
+      throw std::runtime_error(output.str());
     }
+
+    RooAbsArg *a2MeanAbsArg = const_cast<RooAbsArg *>(
+        result->floatParsFinal().find("a2_mean"));
+
+    RooRealVar *a2MeanVar = dynamic_cast<RooRealVar *>(a2MeanAbsArg);
+    if (a2MeanVar == nullptr) {
+      std::stringstream output;
+      output << "No value found in variable a2_mean";
+      throw std::runtime_error(output.str());
+    }
+
+    a0Mean = a0MeanVar->getVal();
+    a0MeanErr = a0MeanVar->getError();
+    a1Mean = a1MeanVar->getVal();
+    a1MeanErr = a1MeanVar->getError();
+    a2Mean = a2MeanVar->getVal();
+    a2MeanErr = a2MeanVar->getError();
+    EDM = result->edm();
+    fitStatus = result->status();
+    covQual = result->covQual();
+    result->Print("v");
+
+    tree.Fill();
   }
-
-  TCanvas canvas_a0("canvas_a0", "", 1500, 500);
-  canvas_a0.Divide(3, 1);
-  canvas_a0.cd(1);
-  hist_a0_mean->GetXaxis()->SetTitle("a0 Mean");
-  hist_a0_mean->SetTitle(" ");
-  hist_a0_mean->Draw();
-  canvas_a0.cd(2);
-  hist_a0_mean_err->GetXaxis()->SetTitle("a0 Mean Error");
-  hist_a0_mean_err->SetTitle(" ");
-  hist_a0_mean_err->Draw();
-  canvas_a0.cd(3);
-  hist_a0_mean_pull->GetXaxis()->SetTitle("a0 Mean Pull");
-  hist_a0_mean_pull->SetTitle(" ");
-  hist_a0_mean_pull->Draw();
-  canvas_a0.SaveAs("a0_mean.pdf");
-
-  TCanvas canvas_a1("canvas_a1", "", 1500, 500);
-  canvas_a1.Divide(3, 1);
-  canvas_a1.cd(1);
-  hist_a1_mean->GetXaxis()->SetTitle("a1 Mean");
-  hist_a1_mean->SetTitle(" ");
-  hist_a1_mean->Draw();
-  canvas_a1.cd(2);
-  hist_a1_mean_err->GetXaxis()->SetTitle("a1 Mean Error");
-  hist_a1_mean_err->SetTitle(" ");
-  hist_a1_mean_err->Draw();
-  canvas_a1.cd(3);
-  hist_a1_mean_pull->GetXaxis()->SetTitle("a1 Mean Pull");
-  hist_a1_mean_pull->SetTitle(" ");
-  hist_a1_mean_pull->Draw();
-  canvas_a1.SaveAs("a1_mean.pdf");
-
-  TCanvas canvas_a2("canvas_a2", "", 1500, 500);
-  canvas_a2.Divide(3, 1);
-  canvas_a2.cd(1);
-  hist_a2_mean->GetXaxis()->SetTitle("a2 Mean");
-  hist_a2_mean->SetTitle(" ");
-  hist_a2_mean->Draw();
-  canvas_a2.cd(2);
-  hist_a2_mean_err->GetXaxis()->SetTitle("a2 Mean Error");
-  hist_a2_mean_err->SetTitle(" ");
-  hist_a2_mean_err->Draw();
-  canvas_a2.cd(3);
-  hist_a2_mean_pull->GetXaxis()->SetTitle("a2 Mean Pull");
-  hist_a2_mean_pull->SetTitle(" ");
-  hist_a2_mean_pull->Draw();
-  canvas_a2.SaveAs("a2_mean.pdf");
 }
 
 int main() {
