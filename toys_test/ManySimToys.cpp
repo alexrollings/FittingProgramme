@@ -31,7 +31,7 @@
 #include <string>
 #include <vector>
 
-void GenerateToys() {
+void GenerateToys(std::string const &outputDir) {
   RooRandom::randomGenerator()->SetSeed(0);
   TRandom3 random(0);
   double randomTag = random.Rndm();
@@ -67,11 +67,9 @@ void GenerateToys() {
   double a1MeanBuSignal_init = 2.1375;
   double a2MeanBuSignal_init = -0.0062;
 
-  TFile treeFile(("/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/"
-                  "results/TreeFile_" +
-                  std::to_string(randomTag) + ".root")
-                     .c_str(),
-                 "recreate");
+  TFile treeFile(
+      (outputDir + "/TreeFile_" + std::to_string(randomTag) + ".root").c_str(),
+      "recreate");
   TTree tree("tree", "tree");
 
   // save variable value, error, and fit quality variables
@@ -256,13 +254,16 @@ void GenerateToys() {
   treeFile.Write();
   treeFile.Close();
 
-  std::cout << "Result saved in file "
-               "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results/"
-               "Tree_"
+  std::cout << "Result saved in file " << outputDir << "/Tree_"
             << std::to_string(randomTag) << ".root\n";
 }
 
-int main() {
-  GenerateToys();
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    std::cerr << "Enter output directory.\n";
+    return 1;
+  }
+  std::string outputDir = argv[1];
+  GenerateToys(outputDir);
   return 0;
 }

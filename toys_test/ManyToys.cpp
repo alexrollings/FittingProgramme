@@ -1,30 +1,43 @@
-#include "RooRandom.h"
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
 #include "RooAddPdf.h"
 #include "RooArgSet.h"
 #include "RooCBShape.h"
+#include "RooCategory.h"
 #include "RooDataHist.h"
 #include "RooDataSet.h"
+#include "RooExponential.h"
 #include "RooFitResult.h"
 #include "RooGaussian.h"
 #include "RooPlot.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
+#include "RooRandom.h"
 #include "RooRealVar.h"
+#include "RooSimultaneous.h"
 #include "RooTreeData.h"
 #include "TApplication.h"
 #include "TAxis.h"
 #include "TCanvas.h"
+#include "TChain.h"
+#include "TFile.h"
 #include "TH2.h"
 #include "TPad.h"
 #include "TRandom3.h"
 #include "TStyle.h"
+#include "TTreeReader.h"
 
-void GenerateToys() {
+void GenerateToys(std::string const &outputDir) {
   RooRandom::randomGenerator()->SetSeed(0);
-  TRandom3 r3(0);
+  TRandom3 random(0);
+  double randomTag = random.Rndm();
 
   // Number of toys to run
-  Int_t n_toys = 1000;
+  Int_t n_toys = 5;
 
   // Number of events to generate
   Int_t n_events = 100000;
@@ -49,11 +62,9 @@ void GenerateToys() {
   double a1_mean_init = 2.1375;
   double a2_mean_init = -0.0062;
 
-  TFile treeFile(("/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/"
-                  "results/TreeFile_" +
-                  std::to_string(randomTag) + ".root")
-                     .c_str(),
-                 "recreate");
+  TFile treeFile(
+      (outputDir + "/TreeFile_" + std::to_string(randomTag) + ".root").c_str(),
+      "recreate");
   TTree tree("tree", "tree");
 
   // save variable value, error, and fit quality variables
@@ -90,7 +101,7 @@ void GenerateToys() {
                        RooFit::Conditional(bu_gaus, bu_mass));
 
     RooDataSet *toyDataSet =
-        pdf_tot.generate(RooArgSet(buMass, deltaMass, bachelor), n_events);
+        pdf_tot.generate(RooArgSet(bu_mass, delta_mass), n_events);
     toyDataSet->SetName(("toyDataSet_" + std::to_string(i)).c_str());
     auto toyDataHist = std::unique_ptr<RooDataHist>(
         toyDataSet->binnedClone(("toyDataHist_" + std::to_string(i)).c_str(),
@@ -102,8 +113,8 @@ void GenerateToys() {
     RooFitResult *result = 0;
     result = pdf_tot.fitTo(*toyAbsData, RooFit::Save(true));
 
-    RooAbsArg *a0MeanAbsArg = const_cast<RooAbsArg *>(
-        result->floatParsFinal().find("a0_mean"));
+    RooAbsArg *a0MeanAbsArg =
+        const_cast<RooAbsArg *>(result->floatParsFinal().find("a0_mean"));
 
     RooRealVar *a0MeanVar = dynamic_cast<RooRealVar *>(a0MeanAbsArg);
     if (a0MeanVar == nullptr) {
@@ -112,8 +123,8 @@ void GenerateToys() {
       throw std::runtime_error(output.str());
     }
 
-    RooAbsArg *a1MeanAbsArg = const_cast<RooAbsArg *>(
-        result->floatParsFinal().find("a1_mean"));
+    RooAbsArg *a1MeanAbsArg =
+        const_cast<RooAbsArg *>(result->floatParsFinal().find("a1_mean"));
 
     RooRealVar *a1MeanVar = dynamic_cast<RooRealVar *>(a1MeanAbsArg);
     if (a1MeanVar == nullptr) {
@@ -122,8 +133,8 @@ void GenerateToys() {
       throw std::runtime_error(output.str());
     }
 
-    RooAbsArg *a2MeanAbsArg = const_cast<RooAbsArg *>(
-        result->floatParsFinal().find("a2_mean"));
+    RooAbsArg *a2MeanAbsArg =
+        const_cast<RooAbsArg *>(result->floatParsFinal().find("a2_mean"));
 
     RooRealVar *a2MeanVar = dynamic_cast<RooRealVar *>(a2MeanAbsArg);
     if (a2MeanVar == nullptr) {
@@ -145,9 +156,21 @@ void GenerateToys() {
 
     tree.Fill();
   }
+  treeFile.cd();
+  tree.Write("", TObject::kOverwrite);
+  treeFile.Write();
+  treeFile.Close();
+
+  std::cout << "Result saved in file " << outputDir << "/Tree_"
+            << std::to_string(randomTag) << ".root\n";
 }
 
-int main() {
-  GenerateToys();
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    std::cerr << "Enter input directory.\n";
+    return 1;
+  }
+  std::string outputDir = argv[1];
+  GenerateToys(outputDir);
   return 0;
 }

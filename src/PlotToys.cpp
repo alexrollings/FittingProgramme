@@ -336,7 +336,6 @@ int main(int argc, char **argv) {
   }
 
   std::vector<std::string> varNames;
-  std::vector<double> varPredictions;
 
   ExtractVarNames(neutralVec, daughtersVec, varNames);
 

@@ -1,20 +1,21 @@
-#include "RooRealVar.h"
-#include "TAxis.h"
-#include "TCanvas.h"
-#include "TFile.h"
-#include "TPad.h"
-#include "TStyle.h"
-#include "TChain.h"
-#include "TH1.h"
-#include "TTreeReader.h"
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
+#include "RooRealVar.h"
+#include "TAxis.h"
+#include "TCanvas.h"
+#include "TChain.h"
+#include "TFile.h"
+#include "TH1.h"
+#include "TPad.h"
+#include "TStyle.h"
+#include "TTreeReader.h"
 
-void PlotVariables(TChain &chain, TTreeReader &reader, std::string &varName,
+void PlotVariables(std::string const &inputDir, TChain &chain,
+                   TTreeReader &reader, std::string &varName,
                    double &varPrediction) {
   TTreeReaderValue<double> var(reader, varName.c_str());
   TTreeReaderValue<double> varErr(reader, (varName + "Err").c_str());
@@ -45,11 +46,7 @@ void PlotVariables(TChain &chain, TTreeReader &reader, std::string &varName,
     j++;
   }
 
-  TFile histFile(
-      ("/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results/Hist_" +
-       varName + ".root")
-          .c_str(),
-      "recreate");
+  TFile histFile((inputDir + "/" + varName + ".root").c_str(), "recreate");
 
   TH1D varHist((varName + "_hist").c_str(), (varName + "_hist").c_str(), 40,
                varMin - (varMax - varMin) / 5, varMax + (varMax - varMin) / 5);
@@ -107,13 +104,15 @@ void PlotVariables(TChain &chain, TTreeReader &reader, std::string &varName,
   varPullHist.SetTitle("");
   varPullHist.Draw();
   varPullHist.Write();
-  varCanvas.SaveAs(("/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/"
-                    "results/ValErrPull_" +
-                    varName + ".pdf")
-                       .c_str());
+  varCanvas.SaveAs((inputDir + "/ValErrPull_" + varName + ".pdf").c_str());
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    std::cerr << "Enter input directory.\n";
+    return 1;
+  }
+  std::string inputDir = argv[1];
   std::vector<std::string> varNames;
   std::vector<double> varPredictions;
 
@@ -130,12 +129,10 @@ int main(int argc, char **argv) {
 
   for (unsigned int i = 0; i < varNames.size(); ++i) {
     TChain chain("tree");
-    chain.Add(
-        "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results/"
-        "TreeFile_*.root");
+    chain.Add((inputDir + "/TreeFile_*.root").c_str());
     std::cout << "Plotting for " << chain.GetEntries() << " toys.\n";
     TTreeReader reader(&chain);
-    PlotVariables(chain, reader, varNames[i], varPredictions[i]);
+    PlotVariables(inputDir, chain, reader, varNames[i], varPredictions[i]);
   }
 
   return 1;
