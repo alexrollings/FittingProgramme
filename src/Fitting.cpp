@@ -660,9 +660,9 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   simPdfFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-  auto result = std::unique_ptr<RooFitResult>(
-      simPdfFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                       RooFit::Strategy(2), RooFit::Minimizer("Minuit2")));
+  auto result = std::unique_ptr<RooFitResult>(simPdfFit->fitTo(
+      *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(), RooFit::Strategy(2),
+      RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {

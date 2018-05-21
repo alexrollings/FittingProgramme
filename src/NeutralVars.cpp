@@ -32,14 +32,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a2 of mean of Signal m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -0.0062, -0.01, -0.00001),
+          -0.0062, -0.01, 0.01),
       // -0.083, -0.1, 0.1),
       meanBuSignal_(
           ("meanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_ /* , a2MeanBuSignal_ */)),
+          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_, a2MeanBuSignal_)),
       lambdaDeltaComb_(
           ("lambdaDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta Combinatorial constant " +
@@ -100,14 +100,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a2 of mean of Signal m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -0.0062, -0.01, -0.00001),
+          -0.0062, -0.01, 0.01),
           // -0.083, -0.1, 0.1), 
       meanBuSignal_(
           ("meanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_/* , a2MeanBuSignal_ */)),
+          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_, a2MeanBuSignal_)),
       lambdaDeltaComb_(
           ("lambdaDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta Combinatorial constant " + ComposeName(uniqueId, Neutral::pi0))
