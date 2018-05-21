@@ -50,32 +50,37 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
                        0.005, -0.02, 0.02),
-      sigmaBuSignal_(new RooPolyVar(
-          ("sigmaBuSignal_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Sigma of signal Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
-      pdfBuSignal_(
-          ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Signal Bu PDF " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).meanBuSignal(),
-          *sigmaBuSignal_),
-      pdfSignal_(
-          ("pdfSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Signal 2D PDF " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          pdfDeltaSignal_,
-          RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}
+      sigmaBuSignal_(
+          new RooRealVar(("sigmaBuSignal_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                             .c_str(),
+                         ("Sigma of signal Gaussian " +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                             .c_str(),
+                         100, 0, 150)),
+// sigmaBuSignal_(new RooPolyVar(
+//     ("sigmaBuSignal_" +
+//      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+//         .c_str(),
+//     ("Sigma of signal Gaussian " +
+//      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+//         .c_str(),
+//     Configuration::Get().deltaMass(),
+//     RooArgList(a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
+pdfBuSignal_(
+    ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+        .c_str(),
+    ("Signal Bu PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+        .c_str(),
+    Configuration::Get().buMass(),
+    NeutralVars<Neutral::gamma>::Get(uniqueId).meanBuSignal(), *sigmaBuSignal_),
+    pdfSignal_(
+        ("pdfSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+            .c_str(),
+        ("Signal 2D PDF " + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+            .c_str(),
+        pdfDeltaSignal_,
+        RooFit::Conditional(pdfBuSignal_, Configuration::Get().buMass())) {}
 
 template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
@@ -180,14 +185,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
                        0.005, -0.02, 0.02),
-      sigmaBuSignal_(new RooPolyVar(
-          ("sigmaBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          ("Sigma of signal Gaussian " +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
+      sigmaBuSignal_(
+          new RooRealVar(("sigmaBuSignal_" +
+                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                             .c_str(),
+                         ("Sigma of signal Gaussian " +
+                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                             .c_str(),
+                         100, 0, 150)),
+      // sigmaBuSignal_(new RooPolyVar(
+      //     ("sigmaBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+      //         .c_str(),
+      //     ("Sigma of signal Gaussian " +
+      //      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+      //         .c_str(),
+      //     Configuration::Get().deltaMass(),
+      //     RooArgList(a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),

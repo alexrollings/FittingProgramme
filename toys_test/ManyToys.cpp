@@ -37,7 +37,7 @@ void GenerateToys(std::string const &outputDir) {
   double randomTag = random.Rndm();
 
   // Number of toys to run
-  Int_t n_toys = 5;
+  Int_t n_toys = 1000;
 
   // Number of events to generate
   Int_t n_events = 100000;
@@ -167,7 +167,7 @@ void GenerateToys(std::string const &outputDir) {
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    std::cerr << "Enter input directory.\n";
+    std::cerr << "Enter output directory.\n";
     return 1;
   }
   std::string outputDir = argv[1];

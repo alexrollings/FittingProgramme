@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l cput=01:59:59 
+#PBS -l cput=47:59:59 
 #PBS -N FITTING 
 
 export GCCROOT=/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6
@@ -13,5 +13,5 @@ source /data/lhcb/sw/scripts/lbsetup-cvmfs.sh
 source /cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/ROOT/6.08.06/x86_64-slc6-gcc49-opt/bin/thisroot.sh
 
 cd /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/
-./ManyToys /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results
-# ./ManySimToys /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results_sim
+# ./ManyToys /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results_1000
+./ManySimToys /home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/results_sim_1000

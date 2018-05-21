@@ -37,7 +37,7 @@ void GenerateToys(std::string const &outputDir) {
   double randomTag = random.Rndm();
 
   // Number of toys to run
-  Int_t n_toys = 5;
+  Int_t n_toys = 1000;
 
   // Number of events to generate
   Int_t n_events = 100000;

@@ -125,4 +125,4 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
           ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
-          0.1, -1.0, 1.0)) {}
+          0.01, -1.0, 1.0)) {}

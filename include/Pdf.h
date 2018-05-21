@@ -22,12 +22,6 @@ class PdfBase {
   inline Daughters daughters() const { return daughters_; }
   inline Charge charge() const { return charge_; }
 
-  inline RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
-  inline RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
-  inline RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
-  inline RooExponential &pdfBuComb() { return pdfBuComb_; }
-  inline RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
-  inline RooProdPdf &pdfComb() { return pdfComb_; }
   inline RooAbsReal &yieldSignal() { return *yieldSignal_; }
   inline RooRealVar &yieldComb() { return yieldComb_; }
   inline RooArgList &yields() { return yields_; }
@@ -60,12 +54,6 @@ class PdfBase {
   Daughters daughters_;
   Charge charge_;
 
-  RooRealVar lambdaDeltaComb_;
-  RooRealVar a0LambdaBuComb_;
-  RooPolyVar lambdaBuComb_;
-  RooExponential pdfBuComb_;
-  RooExponential pdfDeltaComb_;
-  RooProdPdf pdfComb_;
   std::unique_ptr<RooAbsReal> yieldSignal_;
   RooRealVar yieldComb_;
   RooArgList yields_;
@@ -173,7 +161,8 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_).pdfSignal());
-  PdfBase::functions_.add(PdfBase::pdfComb_);
+  PdfBase::functions_.add(
+      NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfComb());
 
   PdfBase::yields_.add(*PdfBase::yieldSignal_);
   PdfBase::yields_.add(PdfBase::yieldComb_);
