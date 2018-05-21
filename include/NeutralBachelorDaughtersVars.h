@@ -73,7 +73,7 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
-  RooAbsReal &asym() { return *impl_.asym_; }
+  RooRealVar &asym() { return *impl_.asym_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -104,7 +104,7 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
           ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
-          0.1, -1.0, 1.0)) {}
+          0.001, -1.0, 1.0)) {}
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
