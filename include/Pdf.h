@@ -33,6 +33,8 @@ class PdfBase {
   virtual RooProdPdf &pdfSignal() const = 0;
   virtual RooGaussian &pdfDeltaSignal() const = 0;
   virtual RooGaussian &pdfBuSignal() const = 0;
+  virtual RooExponential &pdfBuComb() const = 0;
+  virtual RooExponential &pdfDeltaComb() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -96,6 +98,12 @@ class Pdf : public PdfBase {
   }
   virtual RooGaussian &pdfBuSignal() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_).pdfBuSignal();
+  }
+  virtual RooExponential &pdfBuComb() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfBuComb();
+  }
+  virtual RooExponential &pdfDeltaComb() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfDeltaComb();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =

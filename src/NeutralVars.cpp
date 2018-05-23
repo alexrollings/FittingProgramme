@@ -11,7 +11,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("meanDeltaSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean of Signal m[Delta]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          145, 140, 150),
+          141, 136, 146),
       a0MeanBuSignal_(
           ("a0MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a0 of mean of Signal m[Bu] PDF " +
@@ -79,13 +79,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("meanDeltaSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of Signal m[Delta]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          135, 130, 140),
+          144, 139, 149),
       a0MeanBuSignal_(
           ("a0MeanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean of Signal m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 5279, 5275, 5284),
+          // 4683, 4083, 5283),
           5101.86875, 4879, 5579),
           //  2600.0, 1600.0, 3600.0), 
       a1MeanBuSignal_(
@@ -94,6 +95,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           2.1375, 0, 10),
+          // 5.6, 0, 10),
           // 31.7, 0, 40), 
       a2MeanBuSignal_(
           ("a2MeanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -101,6 +103,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           -0.0062, -0.01, 0.01),
+          // -0.0099, -0.01, 0.01),
           // -0.083, -0.1, 0.1), 
       meanBuSignal_(
           ("meanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
