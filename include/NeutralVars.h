@@ -4,6 +4,7 @@
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
 #include "RooExponential.h"
+#include "RooDstD0BG.h"
 
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -67,11 +68,13 @@ class NeutralVars {
   RooRealVar &a1MeanBuSignal() { return a1MeanBuSignal_; }
   RooRealVar &a2MeanBuSignal() { return a2MeanBuSignal_; }
   RooPolyVar &meanBuSignal() { return meanBuSignal_; }
-  RooRealVar &lambdaDeltaComb() { return lambdaDeltaComb_; }
+  RooRealVar &aDeltaComb() { return aDeltaComb_; }
+  RooRealVar &bDeltaComb() { return bDeltaComb_; }
+  RooRealVar &cDeltaComb() { return cDeltaComb_; }
   RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
   RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
   RooExponential &pdfBuComb() { return pdfBuComb_; }
-  RooExponential &pdfDeltaComb() { return pdfDeltaComb_; }
+  RooDstD0BG &pdfDeltaComb() { return pdfDeltaComb_; }
   RooProdPdf &pdfComb() { return pdfComb_; }
 
  private:
@@ -84,11 +87,14 @@ class NeutralVars {
   RooRealVar a1MeanBuSignal_;
   RooRealVar a2MeanBuSignal_;
   RooPolyVar meanBuSignal_;
-  RooRealVar lambdaDeltaComb_;
+  RooRealVar thresholdDeltaComb_;
+  RooRealVar aDeltaComb_;
+  RooRealVar bDeltaComb_;
+  RooRealVar cDeltaComb_;
   RooRealVar a0LambdaBuComb_;
   RooPolyVar lambdaBuComb_;
   RooExponential pdfBuComb_;
-  RooExponential pdfDeltaComb_;
+  RooDstD0BG pdfDeltaComb_;
   RooProdPdf pdfComb_;
 };
 

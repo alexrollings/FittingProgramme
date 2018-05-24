@@ -1082,7 +1082,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   TRandom3 random(0);
   double randomTag = random.Rndm();
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 5;
+  int nToys = 25;
 
   for (int id = 0; id < nToys; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id

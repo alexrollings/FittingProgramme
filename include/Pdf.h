@@ -8,7 +8,6 @@
 #include "RooAbsReal.h"
 #include "RooAddPdf.h"
 #include "RooArgList.h"
-#include "RooExponential.h"
 #include "RooSimultaneous.h"
 #include <map>
 
@@ -34,7 +33,7 @@ class PdfBase {
   virtual RooGaussian &pdfDeltaSignal() const = 0;
   virtual RooGaussian &pdfBuSignal() const = 0;
   virtual RooExponential &pdfBuComb() const = 0;
-  virtual RooExponential &pdfDeltaComb() const = 0;
+  virtual RooDstD0BG &pdfDeltaComb() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -102,7 +101,7 @@ class Pdf : public PdfBase {
   virtual RooExponential &pdfBuComb() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfBuComb();
   }
-  virtual RooExponential &pdfDeltaComb() const {
+  virtual RooDstD0BG &pdfDeltaComb() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDeltaComb();
   }
 
