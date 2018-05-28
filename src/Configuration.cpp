@@ -404,7 +404,7 @@ std::string EnumToLabel(Daughters daughters, Charge charge) {
         case Charge::plus:
           return "K^{+}#pi^{-}";
         case Charge::total:
-          return "K^{pm}#pi^{mp}";
+          return "K^{#pm}#pi^{#mp}";
       }
     case Daughters::kk:
       return "K^{+}K^{-}";
