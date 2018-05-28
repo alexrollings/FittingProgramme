@@ -9,8 +9,7 @@ enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015, y2016 };
 enum class Neutral { pi0, gamma };
-enum class Charge { plus, minus };
-enum class SplitByCharge { ktrue, kfalse };
+enum class Charge { plus, minus, total };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {

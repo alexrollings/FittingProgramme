@@ -144,7 +144,7 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                 .N_Dst0h(),
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .asym())));
-  } else {
+  } else if (_charge == Charge::plus) {
     yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("yieldSignal_" + ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
             .c_str(),
@@ -157,6 +157,21 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                 .N_Dst0h(),
             NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(uniqueId)
                 .asym())));
+  } else {
+    // Add in 'dummy' RooRealVar of value 1 if this doesn't work: will be
+    // RooFormulaVar eventually
+    yieldSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("yieldSignal_" +
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        ("Signal Yield " +
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        "@0",
+        RooArgList(
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+                uniqueId)
+                .N_Dst0h())));
   }
   CreateRooAddPdf();
 }
