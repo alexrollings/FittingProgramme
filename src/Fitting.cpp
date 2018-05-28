@@ -908,6 +908,12 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
           varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
+          // varPredictions.emplace_back(nVars_pi0.thresholdDeltaComb().getVal());
+          varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
+          varPredictions.emplace_back(nVars_pi0.cDeltaComb().getVal());
+          varNames.emplace_back(nVars_pi0.aDeltaComb().GetName());
+          varPredictions.emplace_back(nVars_pi0.aDeltaComb().getVal());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
           varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
@@ -991,6 +997,12 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
           varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
           varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
+          // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
+          // varPredictions.emplace_back(nVars_gamma.thresholdDeltaComb().getVal());
+          varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
+          varPredictions.emplace_back(nVars_gamma.cDeltaComb().getVal());
+          varNames.emplace_back(nVars_gamma.aDeltaComb().GetName());
+          varPredictions.emplace_back(nVars_gamma.aDeltaComb().getVal());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
           varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());
@@ -1082,7 +1094,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   TRandom3 random(0);
   double randomTag = random.Rndm();
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 25;
+  int nToys = 5;
 
   for (int id = 0; id < nToys; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id

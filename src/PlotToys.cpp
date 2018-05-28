@@ -45,6 +45,9 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
           varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
           varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
           varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
+          varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
+          varNames.emplace_back(nVars_pi0.aDeltaComb().GetName());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
           varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
@@ -114,6 +117,9 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
           varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
           varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
           varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
+          varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
+          varNames.emplace_back(nVars_gamma.aDeltaComb().GetName());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
           varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());

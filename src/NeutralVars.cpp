@@ -45,12 +45,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Delta Combinatorial thershold " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          70, 60, 80),
+          80.1),
       cDeltaComb_(("cDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
                   ("Delta Combinatorial c parameter " +
                    ComposeName(uniqueId, Neutral::gamma))
                       .c_str(),
-                  15, 0.001, 30),
+                  10, 0.001, 20),
       aDeltaComb_(("aDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
                   ("Delta Combinatorial a parameter " +
                    ComposeName(uniqueId, Neutral::gamma))
@@ -133,12 +133,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Delta Combinatorial thershold " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          70, 60, 80),
+          80.1),
       cDeltaComb_(("cDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
                   ("Delta Combinatorial c parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
                       .c_str(),
-                  15, 0.001, 30),
+                  10, 0.001, 20),
       aDeltaComb_(("aDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
                   ("Delta Combinatorial a parameter " +
                    ComposeName(uniqueId, Neutral::pi0))

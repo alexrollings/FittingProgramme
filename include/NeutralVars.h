@@ -68,6 +68,7 @@ class NeutralVars {
   RooRealVar &a1MeanBuSignal() { return a1MeanBuSignal_; }
   RooRealVar &a2MeanBuSignal() { return a2MeanBuSignal_; }
   RooPolyVar &meanBuSignal() { return meanBuSignal_; }
+  RooRealVar &thresholdDeltaComb() { return thresholdDeltaComb_; }
   RooRealVar &aDeltaComb() { return aDeltaComb_; }
   RooRealVar &bDeltaComb() { return bDeltaComb_; }
   RooRealVar &cDeltaComb() { return cDeltaComb_; }
