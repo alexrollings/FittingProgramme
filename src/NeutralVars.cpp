@@ -18,14 +18,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // 5279, 5275, 5284),
-          5101.86875, 4879, 5579),
+          4565, 4270, 4870),
       //  2600.0, 1600.0, 3600.0),
       a1MeanBuSignal_(
           ("a1MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of mean of Signal m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          2.1375, 0, 10),
+          6, 0, 10),
       // 31.7, 0, 40),
       a2MeanBuSignal_(
           ("a2MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),

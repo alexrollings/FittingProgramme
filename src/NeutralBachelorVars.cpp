@@ -15,7 +15,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          ("Sigma of signal Gaussian " +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         20, 0, 40)),
+                         // 20, 0, 40)),
+                         5, 0, 10)),
       pdfDeltaSignal_(
           ("pdfDeltaSignal_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -34,15 +35,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                            .c_str(),
                        // 100, 0, 150),
                        // -6.1, -100, 100),
-                       25, -100, 100),
+                       5, -100, 100),
       a1SigmaBuSignal_(("a1SigmaBuSignal_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
                        ("a1 of mean of Signal m[Bu] PDF " +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
-                       // 0.36, -10, 10),
-                       -0.36, -10, 10),
+                       0.09, -10, 10),
+                       // -0.36, -10, 10),
       a2SigmaBuSignal_(("a2SigmaBuSignal_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
@@ -69,7 +70,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(
-              a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
+              a0SigmaBuSignal_, a1SigmaBuSignal_/* , a2SigmaBuSignal_ */))),
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -156,8 +157,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                          ("Sigma of signal Gaussian " +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         20, 0, 40)),
-                         // 5, 0, 10)),
+                         // 20, 0, 40)),
+                         2, 0, 5)),
       pdfDeltaSignal_(
           ("pdfDeltaSignal_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -176,7 +177,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                            .c_str(),
                        // 100, 0, 150),
                        // -6.1, -100, 100),
-                       25, -100, 100),
+                       5, -100, 100),
+                       // 25, -100, 100),
                        // 150, -200, 200),
       a1SigmaBuSignal_(("a1SigmaBuSignal_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -184,8 +186,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                        ("a1 of mean of Signal m[Bu] PDF " +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
-                       // 0.36, -10, 10),
-                       -0.36, -10, 10),
+                       0.07, -10, 10),
+                       // -0.36, -10, 10),
                        // -2.4, -10, 10),
       a2SigmaBuSignal_(("a2SigmaBuSignal_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -211,7 +213,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(
-              a0SigmaBuSignal_, a1SigmaBuSignal_, a2SigmaBuSignal_))),
+              a0SigmaBuSignal_, a1SigmaBuSignal_/* , a2SigmaBuSignal_ */))),
       pdfBuSignal_(
           ("pdfBuSignal_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
