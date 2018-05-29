@@ -4,10 +4,10 @@
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"
-#include "RooProdPdf.h"
 #include "RooConstVar.h"
 #include "RooFormulaVar.h"
 #include "RooGaussian.h"
+#include "RooProdPdf.h"
 
 // Bachelor
 
@@ -36,32 +36,80 @@ class NeutralBachelorVars {
   }
 
   int uniqueId() { return uniqueId_; }
-  RooAbsReal &sigmaDeltaSignal() { return *sigmaDeltaSignal_; }
-  RooRealVar &a0SigmaBuSignal() { return a0SigmaBuSignal_; }
-  RooRealVar &a1SigmaBuSignal() { return a1SigmaBuSignal_; }
-  RooRealVar &a2SigmaBuSignal() { return a2SigmaBuSignal_; }
-  RooGaussian &pdfDeltaSignal() { return pdfDeltaSignal_; }
-  RooAbsReal &sigmaBuSignal() { return *sigmaBuSignal_; }
-  RooGaussian &pdfBuSignal() { return pdfBuSignal_; }
-  RooProdPdf &pdfSignal() { return pdfSignal_; }
+  RooAbsReal &sigmaDelta_Bu2Dst0h_Dst02D0gamma() {
+    return *sigmaDelta_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0gamma() {
+    return a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a1SigmaBu_Bu2Dst0h_Dst02D0gamma() {
+    return a1SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a2SigmaBu_Bu2Dst0h_Dst02D0gamma() {
+    return a2SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooGaussian &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
+    return pdfDelta_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAbsReal &sigmaBu_Bu2Dst0h_Dst02D0gamma() {
+    return *sigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooGaussian &pdfBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() { return pdf_Bu2Dst0h_Dst02D0gamma_; }
+  RooAbsReal &sigmaDelta_Bu2Dst0h_Dst02D0pi0() {
+    return *sigmaDelta_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0pi0() {
+    return a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a1SigmaBu_Bu2Dst0h_Dst02D0pi0() {
+    return a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a2SigmaBu_Bu2Dst0h_Dst02D0pi0() {
+    return a2SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooGaussian &pdfDelta_Bu2Dst0h_Dst02D0pi0() {
+    return pdfDelta_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooAbsReal &sigmaBu_Bu2Dst0h_Dst02D0pi0() {
+    return *sigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooGaussian &pdfBu_Bu2Dst0h_Dst02D0pi0() {
+    return pdfBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() { return pdf_Bu2Dst0h_Dst02D0pi0_; }
 
  private:
   int uniqueId_;
-  std::unique_ptr<RooAbsReal> sigmaDeltaSignal_;
-  RooGaussian pdfDeltaSignal_;
-  RooRealVar a0SigmaBuSignal_;
-  RooRealVar a1SigmaBuSignal_;
-  RooRealVar a2SigmaBuSignal_;
-  std::unique_ptr<RooAbsReal> sigmaBuSignal_;
-  RooGaussian pdfBuSignal_;
-  RooProdPdf pdfSignal_;
+  std::unique_ptr<RooAbsReal> sigmaDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooGaussian pdfDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooGaussian pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooProdPdf pdf_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> sigmaDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooGaussian pdfDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0pi0_;
+  RooGaussian pdfBu_Bu2Dst0h_Dst02D0pi0_;
+  RooProdPdf pdf_Bu2Dst0h_Dst02D0pi0_;
 };
 
 template <>
-NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(int uniqueId);
+NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
+    int uniqueId);
 template <>
-NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(int uniqueId);
+NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
+    int uniqueId);
 template <>
-NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(int uniqueId);
+NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
+    int uniqueId);
 template <>
-NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(int uniqueId);
+NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
+    int uniqueId);

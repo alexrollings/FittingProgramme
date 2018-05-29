@@ -11,9 +11,9 @@
 
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "NeutralVars.h"
-#include "NeutralBachelorVars.h"
 #include "NeutralBachelorDaughtersVars.h"
+#include "NeutralBachelorVars.h"
+#include "NeutralVars.h"
 #include "ParseArguments.h"
 
 template <typename Enum>
@@ -30,8 +30,8 @@ std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
 }
 
 void ExtractVarNames(std::vector<Neutral> const &neutralVec,
-                          std::vector<Daughters> const &daughtersVec,
-                          std::vector<std::string> &varNames) {
+                     std::vector<Daughters> const &daughtersVec,
+                     std::vector<std::string> &varNames) {
   int id = 0;
   GlobalVars &globalVars = GlobalVars::Get(id);
   varNames.emplace_back(globalVars.ratioDst0KDst0pi().GetName());
@@ -40,19 +40,25 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
     for (auto &d : daughtersVec) {
       switch (n) {
         case Neutral::pi0: {
-         NeutralVars<Neutral::pi0> &nVars_pi0 =
+          NeutralVars<Neutral::pi0> &nVars_pi0 =
               NeutralVars<Neutral::pi0>::Get(id);
-          varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
-          varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
-          varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
+          varNames.emplace_back(
+              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
           varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
           varNames.emplace_back(nVars_pi0.aDeltaComb().GetName());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
-          varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
-          varNames.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().GetName());
-          varNames.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().GetName());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -112,19 +118,25 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
           break;
         }
         case Neutral::gamma: {
-         NeutralVars<Neutral::gamma> &nVars_gamma =
+          NeutralVars<Neutral::gamma> &nVars_gamma =
               NeutralVars<Neutral::gamma>::Get(id);
-          varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
-          varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
-          varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
+          varNames.emplace_back(
+              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varNames.emplace_back(
+              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
           varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
           varNames.emplace_back(nVars_gamma.aDeltaComb().GetName());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
-          varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());
-          varNames.emplace_back(nbVars_pi_gamma.a1SigmaBuSignal().GetName());
-          varNames.emplace_back(nbVars_pi_gamma.a2SigmaBuSignal().GetName());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,

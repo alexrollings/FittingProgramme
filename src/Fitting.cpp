@@ -144,14 +144,25 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = frame->RooPlot::pullHist();
 
   if (variable == Variable::bu) {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBuSignal()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlue));
+    if (neutral == Neutral::pi0) {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    } else {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    }
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -163,14 +174,25 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
     frame->SetXTitle(
         ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
   } else {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDeltaSignal()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kBlue));
+    if (neutral == Neutral::pi0) {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    } else {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    }
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -292,8 +314,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: "
-            << pdf.yieldSignal().getVal()
+  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
             // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
             << " events";
 
@@ -967,12 +988,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         case Neutral::pi0: {
           NeutralVars<Neutral::pi0> &nVars_pi0 =
               NeutralVars<Neutral::pi0>::Get(id);
-          varNames.emplace_back(nVars_pi0.a0MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_pi0.a0MeanBuSignal().getVal());
-          varNames.emplace_back(nVars_pi0.a1MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_pi0.a1MeanBuSignal().getVal());
-          varNames.emplace_back(nVars_pi0.a2MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_pi0.a2MeanBuSignal().getVal());
+          varNames.emplace_back(
+              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
           // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
           // varPredictions.emplace_back(nVars_pi0.thresholdDeltaComb().getVal());
           varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
@@ -981,12 +1008,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_pi0.aDeltaComb().getVal());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
-          varNames.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().GetName());
-          varPredictions.emplace_back(nbVars_pi_pi0.a0SigmaBuSignal().getVal());
-          varNames.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().GetName());
-          varPredictions.emplace_back(nbVars_pi_pi0.a1SigmaBuSignal().getVal());
-          varNames.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().GetName());
-          varPredictions.emplace_back(nbVars_pi_pi0.a2SigmaBuSignal().getVal());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -1056,12 +1089,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         case Neutral::gamma: {
           NeutralVars<Neutral::gamma> &nVars_gamma =
               NeutralVars<Neutral::gamma>::Get(id);
-          varNames.emplace_back(nVars_gamma.a0MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_gamma.a0MeanBuSignal().getVal());
-          varNames.emplace_back(nVars_gamma.a1MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_gamma.a1MeanBuSignal().getVal());
-          varNames.emplace_back(nVars_gamma.a2MeanBuSignal().GetName());
-          varPredictions.emplace_back(nVars_gamma.a2MeanBuSignal().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
           // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
           // varPredictions.emplace_back(nVars_gamma.thresholdDeltaComb().getVal());
           varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
@@ -1070,15 +1109,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_gamma.aDeltaComb().getVal());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
-          varNames.emplace_back(nbVars_pi_gamma.a0SigmaBuSignal().GetName());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nbVars_pi_gamma.a0SigmaBuSignal().getVal());
-          varNames.emplace_back(nbVars_pi_gamma.a1SigmaBuSignal().GetName());
+              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nbVars_pi_gamma.a1SigmaBuSignal().getVal());
-          varNames.emplace_back(nbVars_pi_gamma.a2SigmaBuSignal().GetName());
+              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nbVars_pi_gamma.a2SigmaBuSignal().getVal());
+              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,

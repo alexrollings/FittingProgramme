@@ -1,10 +1,10 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "RooDstD0BG.h"
+#include "RooExponential.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
-#include "RooExponential.h"
-#include "RooDstD0BG.h"
 
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -63,16 +63,36 @@ class NeutralVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0pi0() { return meanDelta_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0pi0() { return a0MeanBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0pi0() { return a1MeanBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0pi0() { return a2MeanBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0pi0() { return meanBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0gamma() { return meanDelta_Bu2Dst0h_Dst02D0gamma_; }
-  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0gamma() { return a0MeanBu_Bu2Dst0h_Dst02D0gamma_; }
-  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0gamma() { return a1MeanBu_Bu2Dst0h_Dst02D0gamma_; }
-  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0gamma() { return a2MeanBu_Bu2Dst0h_Dst02D0gamma_; }
-  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0gamma() { return meanBu_Bu2Dst0h_Dst02D0gamma_; }
+  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0pi0() {
+    return meanDelta_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0pi0() {
+    return a0MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0pi0() {
+    return a1MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0pi0() {
+    return a2MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0pi0() {
+    return meanBu_Bu2Dst0h_Dst02D0pi0_;
+  }
+  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0gamma() {
+    return meanDelta_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0gamma() {
+    return a0MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0gamma() {
+    return a1MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0gamma() {
+    return a2MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0gamma() {
+    return meanBu_Bu2Dst0h_Dst02D0gamma_;
+  }
   RooRealVar &thresholdDeltaComb() { return thresholdDeltaComb_; }
   RooRealVar &aDeltaComb() { return aDeltaComb_; }
   RooRealVar &bDeltaComb() { return bDeltaComb_; }
@@ -84,7 +104,6 @@ class NeutralVars {
   RooProdPdf &pdfComb() { return pdfComb_; }
 
  private:
-
   // Indicate if only used by one neutral
 
   int uniqueId_;
