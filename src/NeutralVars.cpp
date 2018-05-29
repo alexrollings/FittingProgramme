@@ -7,39 +7,39 @@
 // unless we use pointers
 template <>
 NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
-    : meanDeltaSignal_(
-          ("meanDeltaSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean of Signal m[Delta]" + ComposeName(uniqueId, Neutral::gamma))
+    : meanDelta_Bu2Dst0h_Dst02D0gamma_(
+          ("meanDelta_Bu2Dst0h_Dst02D0gamma" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Mean of Bu2Dst0h_Dst02D0gamma m[Delta]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           141, 136, 146),
-      a0MeanBuSignal_(
-          ("a0MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean of Signal m[Bu] PDF " +
+      a0MeanBu_Bu2Dst0h_Dst02D0gamma_(
+          ("a0MeanBu_Bu2Dst0h_Dst02D0gamma" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a0 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // 5279, 5275, 5284),
           4565, 4270, 4870),
       //  2600.0, 1600.0, 3600.0),
-      a1MeanBuSignal_(
-          ("a1MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a1 of mean of Signal m[Bu] PDF " +
+      a1MeanBu_Bu2Dst0h_Dst02D0gamma_(
+          ("a1MeanBu_Bu2Dst0h_Dst02D0gamma" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a1 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           6, 0, 10),
       // 31.7, 0, 40),
-      a2MeanBuSignal_(
-          ("a2MeanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of mean of Signal m[Bu] PDF " +
+      a2MeanBu_Bu2Dst0h_Dst02D0gamma_(
+          ("a2MeanBu_Bu2Dst0h_Dst02D0gamma" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a2 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -0.0062, -0.01, 0.01),
       // -0.083, -0.1, 0.1),
-      meanBuSignal_(
-          ("meanBuSignal" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
+      meanBu_Bu2Dst0h_Dst02D0gamma_(
+          ("meanBu_Bu2Dst0h_Dst02D0gamma" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Mean of Bu2Dst0h_Dst02D0gamma m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_, a2MeanBuSignal_)),
+          RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0gamma_, a1MeanBu_Bu2Dst0h_Dst02D0gamma_, a2MeanBu_Bu2Dst0h_Dst02D0gamma_)),
       thresholdDeltaComb_(
           ("thresholdDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta Combinatorial thershold " +
@@ -92,42 +92,42 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
-    : meanDeltaSignal_(
-          ("meanDeltaSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Mean of Signal m[Delta]" + ComposeName(uniqueId, Neutral::pi0))
+    : meanDelta_Bu2Dst0h_Dst02D0pi0_(
+          ("meanDelta_Bu2Dst0h_Dst02D0pi0" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Mean of Bu2Dst0h_Dst02D0pi0 m[Delta]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           144, 139, 149),
-      a0MeanBuSignal_(
-          ("a0MeanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a0 of mean of Signal m[Bu] PDF " +
+      a0MeanBu_Bu2Dst0h_Dst02D0pi0_(
+          ("a0MeanBu_Bu2Dst0h_Dst02D0pi0" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a0 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 5279, 5275, 5284),
           // 4683, 4083, 5283),
           5101.86875, 4879, 5579),
       //  2600.0, 1600.0, 3600.0),
-      a1MeanBuSignal_(
-          ("a1MeanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a1 of mean of Signal m[Bu] PDF " +
+      a1MeanBu_Bu2Dst0h_Dst02D0pi0_(
+          ("a1MeanBu_Bu2Dst0h_Dst02D0pi0" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a1 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           2.1375, 0, 10),
       // 5.6, 0, 10),
       // 31.7, 0, 40),
-      a2MeanBuSignal_(
-          ("a2MeanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of mean of Signal m[Bu] PDF " +
+      a2MeanBu_Bu2Dst0h_Dst02D0pi0_(
+          ("a2MeanBu_Bu2Dst0h_Dst02D0pi0" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a2 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           -0.0062, -0.01, 0.01),
       // -0.0099, -0.01, 0.01),
       // -0.083, -0.1, 0.1),
-      meanBuSignal_(
-          ("meanBuSignal" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Mean of Signal m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
+      meanBu_Bu2Dst0h_Dst02D0pi0_(
+          ("meanBu_Bu2Dst0h_Dst02D0pi0" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Mean of Bu2Dst0h_Dst02D0pi0 m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(a0MeanBuSignal_, a1MeanBuSignal_, a2MeanBuSignal_)),
+          RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_, a1MeanBu_Bu2Dst0h_Dst02D0pi0_, a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
       thresholdDeltaComb_(
           ("thresholdDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta Combinatorial thershold " +

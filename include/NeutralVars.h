@@ -63,11 +63,16 @@ class NeutralVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  RooRealVar &meanDeltaSignal() { return meanDeltaSignal_; }
-  RooRealVar &a0MeanBuSignal() { return a0MeanBuSignal_; }
-  RooRealVar &a1MeanBuSignal() { return a1MeanBuSignal_; }
-  RooRealVar &a2MeanBuSignal() { return a2MeanBuSignal_; }
-  RooPolyVar &meanBuSignal() { return meanBuSignal_; }
+  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0pi0() { return meanDelta_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0pi0() { return a0MeanBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0pi0() { return a1MeanBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0pi0() { return a2MeanBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0pi0() { return meanBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0gamma() { return meanDelta_Bu2Dst0h_Dst02D0gamma_; }
+  RooRealVar &a0MeanBu_Bu2Dst0h_Dst02D0gamma() { return a0MeanBu_Bu2Dst0h_Dst02D0gamma_; }
+  RooRealVar &a1MeanBu_Bu2Dst0h_Dst02D0gamma() { return a1MeanBu_Bu2Dst0h_Dst02D0gamma_; }
+  RooRealVar &a2MeanBu_Bu2Dst0h_Dst02D0gamma() { return a2MeanBu_Bu2Dst0h_Dst02D0gamma_; }
+  RooPolyVar &meanBu_Bu2Dst0h_Dst02D0gamma() { return meanBu_Bu2Dst0h_Dst02D0gamma_; }
   RooRealVar &thresholdDeltaComb() { return thresholdDeltaComb_; }
   RooRealVar &aDeltaComb() { return aDeltaComb_; }
   RooRealVar &bDeltaComb() { return bDeltaComb_; }
@@ -83,11 +88,16 @@ class NeutralVars {
   // Indicate if only used by one neutral
 
   int uniqueId_;
-  RooRealVar meanDeltaSignal_;
-  RooRealVar a0MeanBuSignal_;
-  RooRealVar a1MeanBuSignal_;
-  RooRealVar a2MeanBuSignal_;
-  RooPolyVar meanBuSignal_;
+  RooRealVar meanDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a0MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a1MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar a2MeanBu_Bu2Dst0h_Dst02D0pi0_;
+  RooPolyVar meanBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar meanDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a0MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a1MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar a2MeanBu_Bu2Dst0h_Dst02D0gamma_;
+  RooPolyVar meanBu_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar thresholdDeltaComb_;
   RooRealVar aDeltaComb_;
   RooRealVar bDeltaComb_;
