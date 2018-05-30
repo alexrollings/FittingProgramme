@@ -92,19 +92,34 @@ class NeutralBachelorDaughtersVars {
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
-    : N_Dst0h_(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(uniqueId, neutral, daughters))
-              .c_str(),
-          100000, 0, 500000)),
-      asym_(new RooRealVar(
+    : asym_(new RooRealVar(
           ("asym_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           ("asymmetry variable " +
            ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)) {}
+          0.001, -1.0, 1.0)) {
+  switch (neutral) {
+    case (Neutral::gamma): {
+      N_Dst0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
+          ("Total number of Bu2Dst0pi-like events " +
+           ComposeName(uniqueId, neutral, daughters))
+              .c_str(),
+          100000, 0, 500000));
+      break;
+    }
+    case (Neutral::pi0): {
+      N_Dst0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
+          ("Total number of Bu2Dst0pi-like events " +
+           ComposeName(uniqueId, neutral, daughters))
+              .c_str(),
+          150000, 0, 500000));
+      break;
+    }
+  }
+}
 
 template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::

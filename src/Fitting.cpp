@@ -144,16 +144,15 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = frame->RooPlot::pullHist();
 
   if (variable == Variable::bu) {
-    if (neutral == Neutral::pi0) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-    } else {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    if (neutral == Neutral::gamma) {
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -163,27 +162,26 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
     }
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kRed));
+    frame->SetXTitle(
+        ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
+  } else {
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
-    frame->SetXTitle(
-        ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
-  } else {
-    if (neutral == Neutral::pi0) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-    } else {
+        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+    if (neutral == Neutral::gamma) {
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -193,14 +191,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
     }
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kRed));
     frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
   }
 
@@ -277,13 +275,23 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   TLegend legend(0.7, 0.7, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
-  auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto pdf_Bu2Dst0h_Dst02D0pi0_Hist = std::make_unique<TH1D>(
+      ("pdf_Bu2Dst0h_Dst02D0pi0_Hist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdfSignalHist", 0, 0, 0);
-  pdfSignalHist->SetLineColor(kBlue);
-  pdfSignalHist->SetLineStyle(kDashed);
-  pdfSignalHist->SetLineWidth(2);
+      "pdf_Bu2Dst0h_Dst02D0pi0_Hist", 0, 0, 0);
+  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineColor(kBlue);
+  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineStyle(kDashed);
+  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineWidth(2);
+
+  auto pdf_Bu2Dst0h_Dst02D0gamma_Hist = std::make_unique<TH1D>(
+      ("pdf_Bu2Dst0h_Dst02D0gamma_Hist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pdf_Bu2Dst0h_Dst02D0gamma_Hist", 0, 0, 0);
+  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineColor(kOrange);
+  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineStyle(kDashed);
+  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
       ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -295,11 +303,19 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   // legend.SetHeader("Physics Backgrounds");
   legend.AddEntry(
-      pdfSignalHist.get(),
+      pdf_Bu2Dst0h_Dst02D0pi0_Hist.get(),
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{0}*}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
+       EnumToLabel(daughters, charge) +
+       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+          .c_str(),
+      "l");
+  legend.AddEntry(
+      pdf_Bu2Dst0h_Dst02D0gamma_Hist.get(),
+      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, charge) +
+       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
   legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
@@ -313,41 +329,43 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
-  std::stringstream sigLegend;
-  std::stringstream bkgLegend;
-  switch (neutral) {
-    case (Neutral::pi0): {
-      sigLegend << "Signal: " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
-                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-                << " events";
-      bkgLegend << "Background: "
-                << fullDataSet.numEntries() -
-                       pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
-                // << " #pm ";
-                // << backgroundYield.getError()
-                << " events";
-      break;
+  std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
+  std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
+  std::stringstream combLegend;
+  Bu2Dst0h_Dst02D0pi0Legend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+      << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
+      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+      << " events";
+  combLegend << "Background: " << pdf.yieldComb().getVal()
+             // << " #pm ";
+             // << backgroundYield.getError()
+             << " events";
+  if (neutral == Neutral::gamma) {
+      Bu2Dst0h_Dst02D0gammaLegend
+          << "B^{" + EnumToLabel(charge) +
+                 "}#rightarrow#font[132]{[}#font[132]{[}" +
+                 EnumToLabel(daughters, charge) +
+                 "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+                 EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+          << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
+          // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+          << " events";
     }
-    case (Neutral::gamma): {
-      sigLegend << "Signal: " << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
-                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-                << " events";
-      bkgLegend << "Background: "
-                << fullDataSet.numEntries() -
-                       pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
-                // << " #pm ";
-                // << backgroundYield.getError()
-                << " events";
-      break;
-    }
-  }
 
   yieldLegend.SetLineColor(kWhite);
   // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
   // fb^{-1}",
   //                       "l");
-  yieldLegend.AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), Bu2Dst0h_Dst02D0pi0Legend.str().c_str(),
+                       "l");
+  yieldLegend.AddEntry(blankHist.get(),
+                       Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), combLegend.str().c_str(), "l");
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
   PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,

@@ -102,6 +102,7 @@ class NeutralVars {
   RooExponential &pdfBuComb() { return pdfBuComb_; }
   RooDstD0BG &pdfDeltaComb() { return pdfDeltaComb_; }
   RooProdPdf &pdfComb() { return pdfComb_; }
+  RooRealVar &neutralCrossFeedRate_Bu2Dst0h() { return neutralCrossFeedRate_Bu2Dst0h_; }
 
  private:
   // Indicate if only used by one neutral
@@ -126,6 +127,7 @@ class NeutralVars {
   RooExponential pdfBuComb_;
   RooDstD0BG pdfDeltaComb_;
   RooProdPdf pdfComb_;
+  RooRealVar neutralCrossFeedRate_Bu2Dst0h_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
