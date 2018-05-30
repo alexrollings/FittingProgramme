@@ -314,19 +314,37 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
 
   std::stringstream sigLegend;
-  sigLegend << "Signal: " << pdf.yieldSignal().getVal()
-            // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-            << " events";
-
   std::stringstream bkgLegend;
-  bkgLegend << "Background: "
-            << fullDataSet.numEntries() - pdf.yieldSignal().getVal()
-            // << " #pm ";
-            // << backgroundYield.getError()
-            << " events";
+  switch (neutral) {
+    case (Neutral::pi0): {
+      sigLegend << "Signal: " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
+                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+                << " events";
+      bkgLegend << "Background: "
+                << fullDataSet.numEntries() -
+                       pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
+                // << " #pm ";
+                // << backgroundYield.getError()
+                << " events";
+      break;
+    }
+    case (Neutral::gamma): {
+      sigLegend << "Signal: " << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
+                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+                << " events";
+      bkgLegend << "Background: "
+                << fullDataSet.numEntries() -
+                       pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
+                // << " #pm ";
+                // << backgroundYield.getError()
+                << " events";
+      break;
+    }
+  }
 
   yieldLegend.SetLineColor(kWhite);
-  // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13 fb^{-1}",
+  // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
+  // fb^{-1}",
   //                       "l");
   yieldLegend.AddEntry(blankHist.get(), sigLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), bkgLegend.str().c_str(), "l");
@@ -389,13 +407,15 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
   // Make 2D plot of data
   // Plot ONLY one component of the data
   // auto dataHist1d = std::unique_ptr<TH1>(fullDataSet.createHistogram(
-  //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters,
+  //     charge))
   //         .c_str(),
   //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
   //     RooFit::YVar(config.deltaMass(),
   //                  RooFit::Binning(config.deltaMass().getBins())),
   //     RooFit::Cut(("fitting==fitting::" +
-  //                  ComposeFittingName(neutral, bachelor, daughters, charge))
+  //                  ComposeFittingName(neutral, bachelor, daughters,
+  //                  charge))
   //                     .c_str())));
   auto dataHist1d = fullDataSet.createHistogram(
       ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -519,9 +539,11 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
       case Daughters::kpi: {
         // emplace_back creates
         // the
-        // object then moves it into the vector      // You only have to pass
+        // object then moves it into the vector      // You only have to
+        // pass
         // the arguments as if you were constructing the vector type The
-        // operators required to do this are not supported by RooFit so we have
+        // operators required to do this are not supported by RooFit so we
+        // have
         // to use a vector of pointers
 
         // switch (neutral) {
