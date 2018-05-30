@@ -12,8 +12,8 @@ Configuration::Configuration()
   buMass_.SetName("Bu_M_DTF_D0Pi0");
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
-  buMass_.setMin(5045);
-  buMass_.setBins(76);
+  buMass_.setMin(4995);
+  buMass_.setBins(162);
   buMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Bu_ID");
@@ -25,8 +25,8 @@ Configuration::Configuration()
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(240);
-  deltaMass_.setMin(80);
-  deltaMass_.setBins(80);
+  deltaMass_.setMin(0);
+  deltaMass_.setBins(120);
   deltaMass_.setUnit(kMassUnit);
 
   variableArgSet_.add(buMass_);

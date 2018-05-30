@@ -106,7 +106,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         10, 0, 20)),
+                         8, 0, 10)),
       pdfDelta_Bu2Dst0h_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -125,7 +125,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ("a0 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          20, 0, 30),
+          5, -100, 100),
       a1SigmaBu_Bu2Dst0h_Dst02D0pi0_(
           ("a1SigmaBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -151,7 +151,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(
-              a0SigmaBu_Bu2Dst0h_Dst02D0pi0_ /*, a1SigmaBu_Bu2Dst0h_Dst02D0pi0_ , a2SigmaBu_Bu2Dst0h_Dst02D0pi0_ */))),
+              a0SigmaBu_Bu2Dst0h_Dst02D0pi0_, a1SigmaBu_Bu2Dst0h_Dst02D0pi0_ /*, a2SigmaBu_Bu2Dst0h_Dst02D0pi0_ */))),
       pdfBu_Bu2Dst0h_Dst02D0pi0_(
           ("pdfBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

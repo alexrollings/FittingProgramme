@@ -160,7 +160,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
               ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
           RooFit::ProjWData(categories.fitting, fullDataSet),
           RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
     }
     // simPdf.plotOn(
     //     frame.get(),
@@ -469,6 +469,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
        "^{" + EnumToLabel(charge) + "}")
           .c_str());
   modelHist2d->Draw("colz");
+  modelHist2d->GetZaxis()->SetRangeUser(-0.00001, modelHist2d->GetMaximum());
   canvasModel.Update();
   canvasModel.SaveAs((outputDir + "/" +
                       ComposeName(id, neutral, bachelor, daughters, charge) +
@@ -805,7 +806,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                    Daughters::kpi>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
             case Neutral::pi0: {
@@ -815,7 +816,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                Daughters::kpi>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
           }
@@ -832,7 +833,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                Daughters::kk>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
             case Neutral::pi0: {
@@ -842,7 +843,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                Daughters::kk>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
           }
@@ -860,7 +861,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                    Daughters::pipi>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
             case Neutral::pi0: {
@@ -871,7 +872,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                    Daughters::pipi>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
           }
@@ -889,7 +890,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                    Daughters::pik>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
             case Neutral::pi0: {
@@ -899,7 +900,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                                                Daughters::pik>::Get(id);
               auto N_Dst0h_RooRealVar =
                   dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
               break;
             }
           }
@@ -1274,7 +1275,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                         Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
               case Neutral::pi0: {
@@ -1285,7 +1286,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                                      Daughters::kpi>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
             }
@@ -1302,7 +1303,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                         Neutral::gamma, Bachelor::pi, Daughters::kk>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
               case Neutral::pi0: {
@@ -1312,7 +1313,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                                  Daughters::kk>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
             }
@@ -1329,7 +1330,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                         Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get(id);
                 auto N_Dst0h_RooRealVar = dynamic_cast<RooRealVar *>(
                     &nbdVars_gamma_pi_pipi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
               case Neutral::pi0: {
@@ -1340,7 +1341,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                                      Daughters::pipi>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
             }
@@ -1357,7 +1358,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                         Neutral::gamma, Bachelor::pi, Daughters::pik>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
               case Neutral::pi0: {
@@ -1368,7 +1369,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                                      Daughters::pik>::Get(id);
                 auto N_Dst0h_RooRealVar =
                     dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
                 break;
               }
             }
