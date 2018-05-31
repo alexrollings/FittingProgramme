@@ -115,6 +115,9 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   Charge charge = pdf.charge();
   int id = 0;
 
+  // Stops ROOT print INFO messages
+  gErrorIgnoreLevel = kWarning;
+
   std::unique_ptr<RooPlot> frame(var.frame(RooFit::Title(
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
        EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
@@ -162,14 +165,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
     }
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kRed));
     frame->SetXTitle(
         ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
   } else {
@@ -191,14 +194,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
     }
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kRed));
     frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
   }
 
@@ -341,10 +344,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
       // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
       << " events";
-  combLegend << "Background: " << pdf.yieldComb().getVal()
-             // << " #pm ";
-             // << backgroundYield.getError()
-             << " events";
+  // combLegend << "Background: " << pdf.yieldComb().getVal()
+  //            // << " #pm ";
+  //            // << backgroundYield.getError()
+  //            << " events";
   if (neutral == Neutral::gamma) {
       Bu2Dst0h_Dst02D0gammaLegend
           << "B^{" + EnumToLabel(charge) +
