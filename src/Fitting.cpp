@@ -1399,7 +1399,7 @@ int main(int argc, char **argv) {
                 << ">\n";
       std::cout << "    -daughters=<choice {kpi,kk,pipi,pik} default: "
                 << daughtersArg << ">\n";
-      std::cout << "    -split=<choice {true/false} default: " << chargeArg
+      std::cout << "    -split=<choice {kTrue/kFalse} default: " << chargeArg
                 << ">\n";
       std::cout << "    -toys=<choice {single, many, none} default: none>"
                 << "\n";
@@ -1487,13 +1487,13 @@ int main(int argc, char **argv) {
         std::cout << "Using default value -split=[" << chargeArg << "].\n";
         splitbycharge = SplitByCharge::ktrue;
       }
-      if (chargeArg == "true") {
+      if (chargeArg == "kTrue") {
         splitbycharge = SplitByCharge::ktrue;
-      } else if (chargeArg == "false") {
+      } else if (chargeArg == "kFalse") {
         splitbycharge = SplitByCharge::kfalse;
       } else {
         std::cerr << "charge assignment failed, please specify split by "
-                     "charge: -split=[true/false]";
+                     "charge: -split=[kTrue/kFalse]";
         return 1;
       }
     }
