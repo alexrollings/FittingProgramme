@@ -79,14 +79,14 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
       ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
-      "pdfSignalHist", 0, 0, 0);
+      "pdfSignalHist", 1, 0, 1);
   pdfSignalHist->SetLineColor(kBlue);
   pdfSignalHist->SetLineStyle(kDashed);
   pdfSignalHist->SetLineWidth(2);
 
   auto pdfCombHist = std::make_unique<TH1D>(
       ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
-      "pdfCombHist", 0, 0, 0);
+      "pdfCombHist", 1, 0, 1);
   pdfCombHist->SetLineColor(kRed);
   pdfCombHist->SetLineStyle(kDashed);
   pdfCombHist->SetLineWidth(2);
@@ -162,14 +162,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
     }
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kRed));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kRed));
     frame->SetXTitle(
         ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
   } else {
@@ -191,14 +191,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
     }
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kRed));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kRed));
     frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
   }
 
@@ -279,7 +279,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("pdf_Bu2Dst0h_Dst02D0pi0_Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0h_Dst02D0pi0_Hist", 0, 0, 0);
+      "pdf_Bu2Dst0h_Dst02D0pi0_Hist", 1, 0, 1);
   pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineColor(kBlue);
   pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineStyle(kDashed);
   pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineWidth(2);
@@ -288,7 +288,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("pdf_Bu2Dst0h_Dst02D0gamma_Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0h_Dst02D0gamma_Hist", 0, 0, 0);
+      "pdf_Bu2Dst0h_Dst02D0gamma_Hist", 1, 0, 1);
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineColor(kOrange);
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineStyle(kDashed);
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineWidth(2);
@@ -296,7 +296,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   auto pdfCombHist = std::make_unique<TH1D>(
       ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdfCombHist", 0, 0, 0);
+      "pdfCombHist", 1, 0, 1);
   pdfCombHist->SetLineColor(kRed);
   pdfCombHist->SetLineStyle(kDashed);
   pdfCombHist->SetLineWidth(2);
@@ -323,7 +323,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "blankHist", 0, 0, 0);
+      "blankHist", 1, 0, 1);
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
@@ -770,6 +770,125 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   return p;
 }
 
+void ShiftN_Dst0h(std::vector<Daughters> daughtersVec, std::vector<Neutral> neutralVec, int id) {
+
+    for (auto &d : daughtersVec) {
+      switch (d) {
+        case Daughters::kpi: {
+          for (auto &n : neutralVec) {
+            switch (n) {
+              case Neutral::gamma: {
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kpi>
+                    &nbdVars_gamma_pi_kpi = NeutralBachelorDaughtersVars<
+                        Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+              case Neutral::pi0: {
+                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                             Daughters::kpi>
+                    &nbdVars_pi0_pi_kpi =
+                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                     Daughters::kpi>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+            }
+          }
+          break;
+        }
+        case Daughters::kk: {
+          for (auto &n : neutralVec) {
+            switch (n) {
+              case Neutral::gamma: {
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kk>
+                    &nbdVars_gamma_pi_kk = NeutralBachelorDaughtersVars<
+                        Neutral::gamma, Bachelor::pi, Daughters::kk>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+              case Neutral::pi0: {
+                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                             Daughters::kk> &nbdVars_pi0_pi_kk =
+                    NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                 Daughters::kk>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+            }
+          }
+          break;
+        }
+        case Daughters::pipi: {
+          for (auto &n : neutralVec) {
+            switch (n) {
+              case Neutral::gamma: {
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::pipi>
+                    &nbdVars_gamma_pi_pipi = NeutralBachelorDaughtersVars<
+                        Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get(id);
+                auto N_Dst0h_RooRealVar = dynamic_cast<RooRealVar *>(
+                    &nbdVars_gamma_pi_pipi.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+              case Neutral::pi0: {
+                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                             Daughters::pipi>
+                    &nbdVars_pi0_pi_pipi =
+                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                     Daughters::pipi>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+            }
+          }
+          break;
+        }
+        case Daughters::pik: {
+          for (auto &n : neutralVec) {
+            switch (n) {
+              case Neutral::gamma: {
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::pik>
+                    &nbdVars_gamma_pi_pik = NeutralBachelorDaughtersVars<
+                        Neutral::gamma, Bachelor::pi, Daughters::pik>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+              case Neutral::pi0: {
+                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                             Daughters::pik>
+                    &nbdVars_pi0_pi_pik =
+                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                     Daughters::pik>::Get(id);
+                auto N_Dst0h_RooRealVar =
+                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
+                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+                break;
+              }
+            }
+          }
+          break;
+        }
+      }
+    }
+}
+
 void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Neutral> const &neutralVec,
                   std::vector<Daughters> const &daughtersVec,
@@ -793,122 +912,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
-  for (auto &d : daughtersVec) {
-    switch (d) {
-      case Daughters::kpi: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_pi_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::kpi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kpi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::kk: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_gamma_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_pi0_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::pipi: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::pik: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pik>
-                  &nbdVars_gamma_pi_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pik>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pik> &nbdVars_pi0_pi_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::pik>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-              break;
-            }
-          }
-        }
-        break;
-      }
-    }
-  }
+  // ShiftN_Dst0h(daughtersVec, neutralVec, id);
 
   auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -1142,6 +1146,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
               nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
           varPredictions.emplace_back(
               nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+          varNames.emplace_back(
+              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+          varPredictions.emplace_back(
+              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
           // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
           // varPredictions.emplace_back(nVars_gamma.thresholdDeltaComb().getVal());
           varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
@@ -1150,6 +1166,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           varPredictions.emplace_back(nVars_gamma.aDeltaComb().getVal());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
+          varNames.emplace_back(
+              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
+          varNames.emplace_back(
+              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
+          varPredictions.emplace_back(
+              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
           varNames.emplace_back(
               nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
@@ -1263,121 +1291,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                 ("toyDataHist" + std::to_string(id)).c_str()));
     auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
-    for (auto &d : daughtersVec) {
-      switch (d) {
-        case Daughters::kpi: {
-          for (auto &n : neutralVec) {
-            switch (n) {
-              case Neutral::gamma: {
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::kpi>
-                    &nbdVars_gamma_pi_kpi = NeutralBachelorDaughtersVars<
-                        Neutral::gamma, Bachelor::pi, Daughters::kpi>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-              case Neutral::pi0: {
-                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                             Daughters::kpi>
-                    &nbdVars_pi0_pi_kpi =
-                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                     Daughters::kpi>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-            }
-          }
-          break;
-        }
-        case Daughters::kk: {
-          for (auto &n : neutralVec) {
-            switch (n) {
-              case Neutral::gamma: {
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::kk>
-                    &nbdVars_gamma_pi_kk = NeutralBachelorDaughtersVars<
-                        Neutral::gamma, Bachelor::pi, Daughters::kk>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-              case Neutral::pi0: {
-                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                             Daughters::kk> &nbdVars_pi0_pi_kk =
-                    NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                 Daughters::kk>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-            }
-          }
-          break;
-        }
-        case Daughters::pipi: {
-          for (auto &n : neutralVec) {
-            switch (n) {
-              case Neutral::gamma: {
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::pipi>
-                    &nbdVars_gamma_pi_pipi = NeutralBachelorDaughtersVars<
-                        Neutral::gamma, Bachelor::pi, Daughters::pipi>::Get(id);
-                auto N_Dst0h_RooRealVar = dynamic_cast<RooRealVar *>(
-                    &nbdVars_gamma_pi_pipi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-              case Neutral::pi0: {
-                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                             Daughters::pipi>
-                    &nbdVars_pi0_pi_pipi =
-                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                     Daughters::pipi>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-            }
-          }
-          break;
-        }
-        case Daughters::pik: {
-          for (auto &n : neutralVec) {
-            switch (n) {
-              case Neutral::gamma: {
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::pik>
-                    &nbdVars_gamma_pi_pik = NeutralBachelorDaughtersVars<
-                        Neutral::gamma, Bachelor::pi, Daughters::pik>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-              case Neutral::pi0: {
-                NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                             Daughters::pik>
-                    &nbdVars_pi0_pi_pik =
-                        NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                     Daughters::pik>::Get(id);
-                auto N_Dst0h_RooRealVar =
-                    dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
-                N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 1);
-                break;
-              }
-            }
-          }
-          break;
-        }
-      }
-    }
+    // ShiftN_Dst0h(daughtersVec, neutralVec, id);
 
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),

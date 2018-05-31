@@ -97,7 +97,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ("Delta Combinatorial thershold " +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
-                          80.1),
+                          0.1),
       cDeltaComb_(
           ("cDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta Combinatorial c parameter " +
@@ -115,7 +115,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Delta Combinatorial b parameter " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -0.02),  // -0.5, 0.5),
+          0.000001),  // -0.5, 0.5),
       pdfDeltaComb_(
           ("pdfDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("DeltaCombinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
@@ -199,7 +199,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Delta Combinatorial thershold " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          80.1),
+          135),
       cDeltaComb_(("cDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
                   ("Delta Combinatorial c parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
@@ -214,7 +214,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                   ("Delta Combinatorial b parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
                       .c_str(),
-                  -0.02),  // -0.5, 0.5),
+                  0.01),  // -0.5, 0.5),
       pdfDeltaComb_(
           ("pdfDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("DeltaCombinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
