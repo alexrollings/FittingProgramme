@@ -90,60 +90,109 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(),
           RooArgList(
               a0MeanBu_Bu2Dst0h_Dst02D0pi0_, a1MeanBu_Bu2Dst0h_Dst02D0pi0_, a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
-      // -------------------- DST0D0 BACKGROUND -------------------- //
-      thresholdDeltaComb_(("thresholdDeltaComb_" +
+      // -------------------- BU2D0H BACKGROUND -------------------- //
+      thresholdDelta_Bu2D0h_(("thresholdDelta_Bu2D0h_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
-                          ("Delta Combinatorial thershold " +
+                          (" Delta_Bu2D0hinatorial thershold " +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
                           0.1),
-      cDeltaComb_(
-          ("cDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta Combinatorial c parameter " +
+      cDelta_Bu2D0h_(
+          ("cDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_Bu2D0hinatorial c parameter " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           10, 0.001, 20),
-      aDeltaComb_(
-          ("aDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta Combinatorial a parameter " +
+      aDelta_Bu2D0h_(
+          ("aDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_Bu2D0hinatorial a parameter " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -0.5, -1, 1),
-      bDeltaComb_(
-          ("bDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta Combinatorial b parameter " +
+      bDelta_Bu2D0h_(
+          ("bDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_Bu2D0hinatorial b parameter " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           0.000001),  // -0.5, 0.5),
-      pdfDeltaComb_(
-          ("pdfDeltaComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("DeltaCombinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
+      pdfDelta_Bu2D0h_(
+          ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Delta_Bu2D0hinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), thresholdDeltaComb_, cDeltaComb_,
-          aDeltaComb_, bDeltaComb_),
+          Configuration::Get().deltaMass(), thresholdDelta_Bu2D0h_, cDelta_Bu2D0h_,
+          aDelta_Bu2D0h_, bDelta_Bu2D0h_),
+      a0MeanBu_Bu2D0h_(
+          ("a0MeanBu_Bu2D0h_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a0 of mean of Bu2D0h m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          5400, 5350, 5450),
+      meanBu_Bu2D0h_(
+          ("meanBu_Bu2D0h_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Mean of Bu2D0h m[Bu]" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0MeanBu_Bu2D0h_)),
+      // -------------------- DST0D0 BACKGROUND -------------------- //
+      thresholdDelta_Comb_(("thresholdDelta_Comb_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          ("Delta _Combinatorial thershold " +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          0.1),
+      cDelta_Comb_(
+          ("cDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Delta _Combinatorial c parameter " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          10, 0.001, 20),
+      aDelta_Comb_(
+          ("aDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Delta _Combinatorial a parameter " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          -0.5, -1, 1),
+      bDelta_Comb_(
+          ("bDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Delta _Combinatorial b parameter " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.000001),  // -0.5, 0.5),
+      pdfDelta_Comb_(
+          ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_Comb_, cDelta_Comb_,
+          aDelta_Comb_, bDelta_Comb_),
       // -------------------- EXPONENTIAL BACKGROUND -------------------- //
-      a0LambdaBuComb_(
-          ("a0LambdaBuComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 component for Bu Combinatorial constant " +
+      a0LambdaBu_Comb_(
+          ("a0LambdaBu_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a0 component for Bu _Combinatorial constant " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -0.001, -1, -0.00001),
-      lambdaBuComb_(
-          ("lambdaBuComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Bu Combinatorial constant " + ComposeName(uniqueId, Neutral::gamma))
+      lambdaBu_Comb_(
+          ("lambdaBu_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Bu _Combinatorial constant " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
-      pdfBuComb_(("pdfBuComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-                 ("BuCombinatorial PDF " +
+          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBu_Comb_)),
+      pdfBu_Comb_(("pdfBu_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+                 ("Bu_Combinatorial PDF " +
                   ComposeName(uniqueId, Neutral::gamma))
                      .c_str(),
-                 Configuration::Get().buMass(), lambdaBuComb_),
-      pdfComb_(("pdfComb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-               ("Combinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
+                 Configuration::Get().buMass(), lambdaBu_Comb_),
+      pdf_Comb_(("pdf_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+               ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
                    .c_str(),
-               pdfDeltaComb_,
-               RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
+               pdfDelta_Comb_,
+               RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())),
       neutralCrossFeedRate_Bu2Dst0h_() {}
 
 template <>
@@ -193,57 +242,106 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       a1MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a2MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       meanBu_Bu2Dst0h_Dst02D0gamma_(),
+      // -------------------- BU2D0H BKG -------------------- //
+      thresholdDelta_Bu2D0h_(("thresholdDelta_Bu2D0h_" +
+                           ComposeName(uniqueId, Neutral::pi0))
+                              .c_str(),
+                          (" Delta_Bu2D0hinatorial thershold " +
+                           ComposeName(uniqueId, Neutral::pi0))
+                              .c_str(),
+                          0.1),
+      cDelta_Bu2D0h_(
+          ("cDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_Bu2D0hinatorial c parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          10, 0.001, 20),
+      aDelta_Bu2D0h_(
+          ("aDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_Bu2D0hinatorial a parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          -0.5, -1, 1),
+      bDelta_Bu2D0h_(
+          ("bDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_Bu2D0hinatorial b parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.000001),  // -0.5, 0.5),
+      pdfDelta_Bu2D0h_(
+          ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Delta_Bu2D0hinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_Bu2D0h_, cDelta_Bu2D0h_,
+          aDelta_Bu2D0h_, bDelta_Bu2D0h_),
+      a0MeanBu_Bu2D0h_(
+          ("a0MeanBu_Bu2D0h_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a0 of mean of Bu2D0h m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5400, 5350, 5450),
+      meanBu_Bu2D0h_(
+          ("meanBu_Bu2D0h_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Mean of Bu2D0h m[Bu]" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0MeanBu_Bu2D0h_)),
       // -------------------- DST0D0 BACKGROUND -------------------- //
-      thresholdDeltaComb_(
-          ("thresholdDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta Combinatorial thershold " +
+      thresholdDelta_Comb_(
+          ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Delta _Combinatorial thershold " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           135),
           // 0.1),
-      cDeltaComb_(("cDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-                  ("Delta Combinatorial c parameter " +
+      cDelta_Comb_(("cDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+                  ("Delta _Combinatorial c parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
                       .c_str(),
                   10, 0.001, 20),
-      aDeltaComb_(("aDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-                  ("Delta Combinatorial a parameter " +
+      aDelta_Comb_(("aDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+                  ("Delta _Combinatorial a parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
                       .c_str(),
                   -0.5, -1, 1),
-      bDeltaComb_(("bDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-                  ("Delta Combinatorial b parameter " +
+      bDelta_Comb_(("bDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+                  ("Delta _Combinatorial b parameter " +
                    ComposeName(uniqueId, Neutral::pi0))
                       .c_str(),
                   0.01),  // -0.5, 0.5),
                   // 0.000001),
-      pdfDeltaComb_(
-          ("pdfDeltaComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("DeltaCombinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
+      pdfDelta_Comb_(
+          ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), thresholdDeltaComb_, cDeltaComb_,
-          aDeltaComb_, bDeltaComb_),
+          Configuration::Get().deltaMass(), thresholdDelta_Comb_, cDelta_Comb_,
+          aDelta_Comb_, bDelta_Comb_),
       // -------------------- EXPONENTIAL BACKGROUND -------------------- //
-      a0LambdaBuComb_(
-          ("a0LambdaBuComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a0 component for Bu Combinatorial constant " +
+      a0LambdaBu_Comb_(
+          ("a0LambdaBu_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a0 component for Bu _Combinatorial constant " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           -0.001, -1, -0.00001),
-      lambdaBuComb_(
-          ("lambdaBuComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Bu Combinatorial constant " + ComposeName(uniqueId, Neutral::pi0))
+      lambdaBu_Comb_(
+          ("lambdaBu_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Bu _Combinatorial constant " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBuComb_)),
-      pdfBuComb_(("pdfBuComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-                 ("BuCombinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
+          Configuration::Get().deltaMass(), RooArgSet(a0LambdaBu_Comb_)),
+      pdfBu_Comb_(("pdfBu_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+                 ("Bu_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
                      .c_str(),
-                 Configuration::Get().buMass(), lambdaBuComb_),
-      pdfComb_(
-          ("pdfComb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          pdfDeltaComb_,
-          RooFit::Conditional(pdfBuComb_, Configuration::Get().buMass())),
+                 Configuration::Get().buMass(), lambdaBu_Comb_),
+      pdf_Comb_(
+          ("pdf_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          pdfDelta_Comb_,
+          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())),
       neutralCrossFeedRate_Bu2Dst0h_(("neutralCrossFeedRate_Bu2Dst0h_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),

@@ -93,15 +93,26 @@ class NeutralVars {
   RooPolyVar &meanBu_Bu2Dst0h_Dst02D0gamma() {
     return meanBu_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooRealVar &thresholdDeltaComb() { return thresholdDeltaComb_; }
-  RooRealVar &aDeltaComb() { return aDeltaComb_; }
-  RooRealVar &bDeltaComb() { return bDeltaComb_; }
-  RooRealVar &cDeltaComb() { return cDeltaComb_; }
-  RooRealVar &a0LambdaBuComb() { return a0LambdaBuComb_; }
-  RooPolyVar &lambdaBuComb() { return lambdaBuComb_; }
-  RooExponential &pdfBuComb() { return pdfBuComb_; }
-  RooDstD0BG &pdfDeltaComb() { return pdfDeltaComb_; }
-  RooProdPdf &pdfComb() { return pdfComb_; }
+  RooRealVar &thresholdDelta_Bu2D0h() { return thresholdDelta_Bu2D0h_; }
+  RooRealVar &aDelta_Bu2D0h() { return aDelta_Bu2D0h_; }
+  RooRealVar &bDelta_Bu2D0h() { return bDelta_Bu2D0h_; }
+  RooRealVar &cDelta_Bu2D0h() { return cDelta_Bu2D0h_; }
+  RooDstD0BG &pdfDelta_Bu2D0h() { return pdfDelta_Bu2D0h_; }
+  RooRealVar &a0MeanBu_Bu2D0h() {
+    return a0MeanBu_Bu2D0h_;
+  }
+  RooPolyVar &meanBu_Bu2D0h() {
+    return meanBu_Bu2D0h_;
+  }
+  RooRealVar &thresholdDelta_Comb() { return thresholdDelta_Comb_; }
+  RooRealVar &aDelta_Comb() { return aDelta_Comb_; }
+  RooRealVar &bDelta_Comb() { return bDelta_Comb_; }
+  RooRealVar &cDelta_Comb() { return cDelta_Comb_; }
+  RooDstD0BG &pdfDelta_Comb() { return pdfDelta_Comb_; }
+  RooRealVar &a0LambdaBu_Comb() { return a0LambdaBu_Comb_; }
+  RooPolyVar &lambdaBu_Comb() { return lambdaBu_Comb_; }
+  RooExponential &pdfBu_Comb() { return pdfBu_Comb_; }
+  RooProdPdf &pdf_Comb() { return pdf_Comb_; }
   RooRealVar &neutralCrossFeedRate_Bu2Dst0h() { return neutralCrossFeedRate_Bu2Dst0h_; }
 
  private:
@@ -118,15 +129,22 @@ class NeutralVars {
   RooRealVar a1MeanBu_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar a2MeanBu_Bu2Dst0h_Dst02D0gamma_;
   RooPolyVar meanBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar thresholdDeltaComb_;
-  RooRealVar aDeltaComb_;
-  RooRealVar bDeltaComb_;
-  RooRealVar cDeltaComb_;
-  RooRealVar a0LambdaBuComb_;
-  RooPolyVar lambdaBuComb_;
-  RooExponential pdfBuComb_;
-  RooDstD0BG pdfDeltaComb_;
-  RooProdPdf pdfComb_;
+  RooRealVar thresholdDelta_Bu2D0h_;
+  RooRealVar aDelta_Bu2D0h_;
+  RooRealVar bDelta_Bu2D0h_;
+  RooRealVar cDelta_Bu2D0h_;
+  RooDstD0BG pdfDelta_Bu2D0h_;
+  RooRealVar a0MeanBu_Bu2D0h_;
+  RooPolyVar meanBu_Bu2D0h_;
+  RooRealVar thresholdDelta_Comb_;
+  RooRealVar aDelta_Comb_;
+  RooRealVar bDelta_Comb_;
+  RooRealVar cDelta_Comb_;
+  RooDstD0BG pdfDelta_Comb_;
+  RooRealVar a0LambdaBu_Comb_;
+  RooPolyVar lambdaBu_Comb_;
+  RooExponential pdfBu_Comb_;
+  RooProdPdf pdf_Comb_;
   RooRealVar neutralCrossFeedRate_Bu2Dst0h_;
 };
 

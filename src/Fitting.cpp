@@ -84,12 +84,12 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
   pdfSignalHist->SetLineStyle(kDashed);
   pdfSignalHist->SetLineWidth(2);
 
-  auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
-      "pdfCombHist", 1, 0, 1);
-  pdfCombHist->SetLineColor(kRed);
-  pdfCombHist->SetLineStyle(kDashed);
-  pdfCombHist->SetLineWidth(2);
+  auto pdf_CombHist = std::make_unique<TH1D>(
+      ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
+      "pdf_CombHist", 1, 0, 1);
+  pdf_CombHist->SetLineColor(kRed);
+  pdf_CombHist->SetLineStyle(kDashed);
+  pdf_CombHist->SetLineWidth(2);
 
   // legend.SetHeader("Physics Backgrounds");
   legend.AddEntry(
@@ -100,7 +100,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
        "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
-  legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
+  legend.AddEntry(pdf_CombHist.get(), "_Combinatorial", "l");
 
   return legend;
 }
@@ -171,7 +171,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
     //         categories.fitting,
     //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
     //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdfBuComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::Components(pdf.pdfBu_Comb()), RooFit::LineStyle(kDashed),
     //     RooFit::LineColor(kRed));
     frame->SetXTitle(
         ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
@@ -200,7 +200,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
     //         categories.fitting,
     //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
     //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdfDeltaComb()), RooFit::LineStyle(kDashed),
+    //     RooFit::Components(pdf.pdfDelta_Comb()), RooFit::LineStyle(kDashed),
     //     RooFit::LineColor(kRed));
     frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
   }
@@ -296,13 +296,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineStyle(kDashed);
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineWidth(2);
 
-  auto pdfCombHist = std::make_unique<TH1D>(
-      ("pdfCombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto pdf_CombHist = std::make_unique<TH1D>(
+      ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdfCombHist", 1, 0, 1);
-  pdfCombHist->SetLineColor(kRed);
-  pdfCombHist->SetLineStyle(kDashed);
-  pdfCombHist->SetLineWidth(2);
+      "pdf_CombHist", 1, 0, 1);
+  pdf_CombHist->SetLineColor(kRed);
+  pdf_CombHist->SetLineStyle(kDashed);
+  pdf_CombHist->SetLineWidth(2);
 
   // legend.SetHeader("Physics Backgrounds");
   legend.AddEntry(
@@ -321,7 +321,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
-  legend.AddEntry(pdfCombHist.get(), "Combinatorial", "l");
+  legend.AddEntry(pdf_CombHist.get(), "_Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -344,7 +344,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
       // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
       << " events";
-  // combLegend << "Background: " << pdf.yieldComb().getVal()
+  // combLegend << "Background: " << pdf.yield_Comb().getVal()
   //            // << " #pm ";
   //            // << backgroundYield.getError()
   //            << " events";
@@ -1048,12 +1048,12 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
               nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
               nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
-          // varPredictions.emplace_back(nVars_pi0.thresholdDeltaComb().getVal());
-          varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
-          varPredictions.emplace_back(nVars_pi0.cDeltaComb().getVal());
-          varNames.emplace_back(nVars_pi0.aDeltaComb().GetName());
-          varPredictions.emplace_back(nVars_pi0.aDeltaComb().getVal());
+          // varNames.emplace_back(nVars_pi0.thresholdDelta_Comb().GetName());
+          // varPredictions.emplace_back(nVars_pi0.thresholdDelta_Comb().getVal());
+          varNames.emplace_back(nVars_pi0.cDelta_Comb().GetName());
+          varPredictions.emplace_back(nVars_pi0.cDelta_Comb().getVal());
+          varNames.emplace_back(nVars_pi0.aDelta_Comb().GetName());
+          varPredictions.emplace_back(nVars_pi0.aDelta_Comb().getVal());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
           varNames.emplace_back(
@@ -1161,12 +1161,12 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
               nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
               nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
-          // varPredictions.emplace_back(nVars_gamma.thresholdDeltaComb().getVal());
-          varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
-          varPredictions.emplace_back(nVars_gamma.cDeltaComb().getVal());
-          varNames.emplace_back(nVars_gamma.aDeltaComb().GetName());
-          varPredictions.emplace_back(nVars_gamma.aDeltaComb().getVal());
+          // varNames.emplace_back(nVars_gamma.thresholdDelta_Comb().GetName());
+          // varPredictions.emplace_back(nVars_gamma.thresholdDelta_Comb().getVal());
+          varNames.emplace_back(nVars_gamma.cDelta_Comb().GetName());
+          varPredictions.emplace_back(nVars_gamma.cDelta_Comb().getVal());
+          varNames.emplace_back(nVars_gamma.aDelta_Comb().GetName());
+          varPredictions.emplace_back(nVars_gamma.aDelta_Comb().getVal());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
           varNames.emplace_back(

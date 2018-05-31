@@ -27,7 +27,7 @@ class PdfBase {
   inline RooAbsReal &yield_Bu2Dst0h_Dst02D0gamma() {
     return *yield_Bu2Dst0h_Dst02D0gamma_;
   }
-  inline RooRealVar &yieldComb() { return yieldComb_; }
+  inline RooRealVar &yield_Comb() { return yield_Comb_; }
   inline RooArgList &yields() { return yields_; }
   inline RooArgList &functions() { return functions_; }
   inline RooAddPdf &addPdf() { return *addPdf_; }
@@ -40,8 +40,8 @@ class PdfBase {
   virtual RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() const = 0;
   virtual RooGaussian &pdfDelta_Bu2Dst0h_Dst02D0gamma() const = 0;
   virtual RooGaussian &pdfBu_Bu2Dst0h_Dst02D0gamma() const = 0;
-  virtual RooExponential &pdfBuComb() const = 0;
-  virtual RooDstD0BG &pdfDeltaComb() const = 0;
+  virtual RooExponential &pdfBu_Comb() const = 0;
+  virtual RooDstD0BG &pdfDelta_Comb() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -65,7 +65,7 @@ class PdfBase {
 
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar yieldComb_;
+  RooRealVar yield_Comb_;
   RooArgList yields_;
   RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
@@ -125,11 +125,11 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_Dst02D0gamma();
   }
-  virtual RooExponential &pdfBuComb() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfBuComb();
+  virtual RooExponential &pdfBu_Comb() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Comb();
   }
-  virtual RooDstD0BG &pdfDeltaComb() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDeltaComb();
+  virtual RooDstD0BG &pdfDelta_Comb() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Comb();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
@@ -378,8 +378,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
           .pdf_Bu2Dst0h_Dst02D0pi0());
   PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
   // PdfBase::functions_.add(
-  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfComb());
-  // PdfBase::yields_.add(PdfBase::yieldComb_);
+  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdf_Comb());
+  // PdfBase::yields_.add(PdfBase::yield_Comb_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,

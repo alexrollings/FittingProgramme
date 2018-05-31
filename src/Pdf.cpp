@@ -8,10 +8,10 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
       charge_(charge),
       uniqueId_(uniqueId),
       addPdf_(nullptr),
-      yieldComb_(("yieldComb_" +
+      yield_Comb_(("yield_Comb_" +
                   ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                      .c_str(),
-                 ("Combinatorial Yield " +
+                 ("_Combinatorial Yield " +
                   ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                      .c_str(),
                  10000, 0, 15000),

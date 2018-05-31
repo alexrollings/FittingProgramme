@@ -48,9 +48,9 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
               nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varNames.emplace_back(
               nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          // varNames.emplace_back(nVars_pi0.thresholdDeltaComb().GetName());
-          varNames.emplace_back(nVars_pi0.cDeltaComb().GetName());
-          varNames.emplace_back(nVars_pi0.aDeltaComb().GetName());
+          // varNames.emplace_back(nVars_pi0.thresholdDelta_Comb().GetName());
+          varNames.emplace_back(nVars_pi0.cDelta_Comb().GetName());
+          varNames.emplace_back(nVars_pi0.aDelta_Comb().GetName());
           NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
           varNames.emplace_back(
@@ -132,9 +132,9 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
               nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
           varNames.emplace_back(
               nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          // varNames.emplace_back(nVars_gamma.thresholdDeltaComb().GetName());
-          varNames.emplace_back(nVars_gamma.cDeltaComb().GetName());
-          varNames.emplace_back(nVars_gamma.aDeltaComb().GetName());
+          // varNames.emplace_back(nVars_gamma.thresholdDelta_Comb().GetName());
+          varNames.emplace_back(nVars_gamma.cDelta_Comb().GetName());
+          varNames.emplace_back(nVars_gamma.aDelta_Comb().GetName());
           NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
           varNames.emplace_back(
