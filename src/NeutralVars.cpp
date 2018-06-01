@@ -148,29 +148,29 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5100, 5050, 5150),
+          5010, 4960, 5060),
       a1MeanBu_partialRec_(
           ("a1MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3, 0, 10),
+          1.3, 0, 10),
       a2MeanBu_partialRec_(
           ("a2MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -0.007, -0.1, 0.1),
+          -0.004, -0.1, 0.1),
       meanBu_partialRec_(
           ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Mean of partialRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0MeanBu_partialRec_)),
-      // a1MeanBu_partialRec_,
-      // a2MeanBu_partialRec_)),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
+                     a2MeanBu_partialRec_)),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       thresholdDelta_Comb_(
           ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma))
@@ -338,29 +338,32 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5100, 5050, 5150),
+          // 5100, 5050, 5150),
+          5010, 4960, 5060),
       a1MeanBu_partialRec_(
           ("a1MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3, 0, 10),
+          // 3, 0, 10),
+          1.3, 0, 10),
       a2MeanBu_partialRec_(
           ("a2MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -0.007, -0.1, 0.1),
+          -0.004, -0.1, 0.1),
+      // -0.007, -0.1, 0.1),
       meanBu_partialRec_(
           ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Mean of partialRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0MeanBu_partialRec_)),
-      // a1MeanBu_partialRec_,
-      // a2MeanBu_partialRec_)),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
+                     a2MeanBu_partialRec_)),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       thresholdDelta_Comb_(
           ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0))

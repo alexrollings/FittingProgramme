@@ -224,8 +224,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ("a0 of sigma of partialRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          40, 30, 50),
-      // 5, -100, 100),
+          // 40, 30, 50),
+          25, -100, 100),
       a1SigmaBu_partialRec_(
           ("a1SigmaBu_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -249,7 +249,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ("Sigma of partialRec Gaussian " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0SigmaBu_partialRec_ /*, a1SigmaBu_partialRec_ , a2SigmaBu_partialRec_ */))),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0SigmaBu_partialRec_,
+                     a1SigmaBu_partialRec_ /*, a2SigmaBu_partialRec_ */))),
       pdfBu_partialRec_(
           ("pdfBu_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -634,8 +636,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                             ("a0 of sigma of partialRec m[Bu] PDF " +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                                 .c_str(),
-                            40, 30, 50),
-      // 5, -100, 100),
+                            // 40, 30, 50),
+                            25, -100, 100),
       a1SigmaBu_partialRec_(("a1SigmaBu_partialRec_" +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                                 .c_str(),
@@ -657,7 +659,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ("Sigma of partialRec Gaussian " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0SigmaBu_partialRec_ /*, a1SigmaBu_partialRec_ , a2SigmaBu_partialRec_ */))),
+          Configuration::Get().deltaMass(),
+          RooArgList(a0SigmaBu_partialRec_,
+                     a1SigmaBu_partialRec_ /*, a2SigmaBu_partialRec_ */))),
       pdfBu_partialRec_(
           ("pdfBu_partialRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))

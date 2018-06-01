@@ -402,8 +402,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "l");
       break;
       }
-    }
-  legend.AddEntry(pdf_CombHist.get(), "_Combinatorial", "l");
+  }
+  legend.AddEntry(pdf_CombHist.get(),"Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
