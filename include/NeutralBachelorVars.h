@@ -80,6 +80,13 @@ class NeutralBachelorVars {
     return pdfBu_Bu2Dst0h_Dst02D0pi0_;
   }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() { return pdf_Bu2Dst0h_Dst02D0pi0_; }
+  RooAbsReal &sigmaBu_Bu2D0h() {
+    return *sigmaBu_Bu2D0h_;
+  }
+  RooGaussian &pdfBu_Bu2D0h() {
+    return pdfBu_Bu2D0h_;
+  }
+  RooProdPdf &pdf_Bu2D0h() { return pdf_Bu2D0h_; }
 
  private:
   int uniqueId_;
@@ -99,6 +106,9 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0pi0_;
   RooGaussian pdfBu_Bu2Dst0h_Dst02D0pi0_;
   RooProdPdf pdf_Bu2Dst0h_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaBu_Bu2D0h_;
+  RooGaussian pdfBu_Bu2D0h_;
+  RooProdPdf pdf_Bu2D0h_;
 };
 
 template <>

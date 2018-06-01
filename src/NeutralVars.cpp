@@ -249,7 +249,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                           (" Delta_Bu2D0hinatorial thershold " +
                            ComposeName(uniqueId, Neutral::pi0))
                               .c_str(),
-                          0.1),
+                          135),
       cDelta_Bu2D0h_(
           ("cDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_Bu2D0hinatorial c parameter " +
@@ -267,7 +267,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           (" Delta_Bu2D0hinatorial b parameter " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.000001),  // -0.5, 0.5),
+          0.01),  // -0.5, 0.5),
       pdfDelta_Bu2D0h_(
           ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Bu2D0hinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
