@@ -80,13 +80,17 @@ class NeutralBachelorVars {
     return pdfBu_Bu2Dst0h_Dst02D0pi0_;
   }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() { return pdf_Bu2Dst0h_Dst02D0pi0_; }
-  RooAbsReal &sigmaBu_Bu2D0h() {
-    return *sigmaBu_Bu2D0h_;
-  }
-  RooGaussian &pdfBu_Bu2D0h() {
-    return pdfBu_Bu2D0h_;
-  }
+  RooAbsReal &sigmaBu_Bu2D0h() { return *sigmaBu_Bu2D0h_; }
+  RooGaussian &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
   RooProdPdf &pdf_Bu2D0h() { return pdf_Bu2D0h_; }
+  RooAbsReal &sigmaDelta_partialRec() { return *sigmaDelta_partialRec_; }
+  RooRealVar &a0SigmaBu_partialRec() { return a0SigmaBu_partialRec_; }
+  RooRealVar &a1SigmaBu_partialRec() { return a1SigmaBu_partialRec_; }
+  RooRealVar &a2SigmaBu_partialRec() { return a2SigmaBu_partialRec_; }
+  RooGaussian &pdfDelta_partialRec() { return pdfDelta_partialRec_; }
+  RooAbsReal &sigmaBu_partialRec() { return *sigmaBu_partialRec_; }
+  RooGaussian &pdfBu_partialRec() { return pdfBu_partialRec_; }
+  RooProdPdf &pdf_partialRec() { return pdf_partialRec_; }
 
  private:
   int uniqueId_;
@@ -109,6 +113,14 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2D0h_;
   RooGaussian pdfBu_Bu2D0h_;
   RooProdPdf pdf_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> sigmaDelta_partialRec_;
+  RooGaussian pdfDelta_partialRec_;
+  RooRealVar a0SigmaBu_partialRec_;
+  RooRealVar a1SigmaBu_partialRec_;
+  RooRealVar a2SigmaBu_partialRec_;
+  std::unique_ptr<RooAbsReal> sigmaBu_partialRec_;
+  RooGaussian pdfBu_partialRec_;
+  RooProdPdf pdf_partialRec_;
 };
 
 template <>

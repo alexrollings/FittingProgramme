@@ -28,6 +28,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Dst0h_;
   std::unique_ptr<RooRealVar> N_Bu2D0h_;
+  std::unique_ptr<RooRealVar> N_partialRec_;
   std::unique_ptr<RooRealVar> asym_;
 };
 
@@ -36,6 +37,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Dst0h_;
   std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_partialRec_;
   std::unique_ptr<RooRealVar> asym_;
 };
 }  // namespace
@@ -76,6 +78,7 @@ class NeutralBachelorDaughtersVars {
   int uniqueId() { return uniqueId_; }
   RooAbsReal &N_Dst0h() { return *impl_.N_Dst0h_; }
   RooAbsReal &N_Bu2D0h() { return *impl_.N_Bu2D0h_; }
+  RooAbsReal &N_partialRec() { return *impl_.N_partialRec_; }
   RooRealVar &asym() { return *impl_.asym_; }
 
  private:
@@ -105,30 +108,52 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters>::
   switch (neutral) {
     case (Neutral::gamma): {
       N_Dst0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Dst0h_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0h-like events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           100000, 0, 500000));
       N_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Bu2D0h_" +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of Bu2D0h-like events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          20000, 0, 50000));
+      N_partialRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+          ("N_partialRec_" +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of partially reconstructed events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           20000, 0, 50000));
       break;
     }
     case (Neutral::pi0): {
       N_Dst0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Dst0h_" + ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0h-like events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           150000, 0, 500000));
       N_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-          ("N_Dst0pi_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0pi-like events " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Bu2D0h_" +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of Bu2D0h-like events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          20000, 0, 50000));
+      N_partialRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+          ("N_partialRec_" +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of partially reconstructed events " +
+           ComposeName(uniqueId, neutral, Bachelor::pi, daughters))
               .c_str(),
           20000, 0, 50000));
       break;
@@ -140,9 +165,10 @@ template <Neutral neutral, Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : N_Dst0h_(new RooFormulaVar(
-          ("N_Dst0k_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0K-like events, for " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Dst0h_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0h-like events, for " +
+           ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
           "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
@@ -150,14 +176,27 @@ NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters>::
                          .N_Dst0h(),
                      GlobalVars::Get(uniqueId).ratioDst0KDst0pi()))),
       N_Bu2D0h_(new RooFormulaVar(
-          ("N_Dst0k_" + ComposeName(uniqueId, neutral, daughters)).c_str(),
-          ("Total number of Bu2Dst0K-like events, for " +
-           ComposeName(uniqueId, neutral, daughters))
+          ("N_Bu2D0h_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of Bu2D0h-like events, for " +
+           ComposeName(uniqueId, neutral, Bachelor::k, daughters))
               .c_str(),
           "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_Bu2D0h(),
+                     GlobalVars::Get(uniqueId).ratioDst0KDst0pi()))),
+      N_partialRec_(new RooFormulaVar(
+          ("N_partialRec_" +
+           ComposeName(uniqueId, neutral, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of partially reconstructed events, for " +
+           ComposeName(uniqueId, neutral, Bachelor::k, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<neutral, Bachelor::pi,
+                                                  daughters>::Get(uniqueId)
+                         .N_partialRec(),
                      GlobalVars::Get(uniqueId).ratioDst0KDst0pi()))),
       asym_(new RooRealVar(
           ("asym_" + ComposeName(uniqueId, neutral, Bachelor::k, daughters))

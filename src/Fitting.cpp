@@ -100,7 +100,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
        "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
-  legend.AddEntry(pdf_CombHist.get(), "_Combinatorial", "l");
+  legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
 
   return legend;
 }
@@ -179,6 +179,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_partialRec()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfBu_Comb()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kRed));
     frame->SetXTitle(
@@ -210,6 +218,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfDelta_Bu2D0h()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDelta_partialRec()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -321,6 +337,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   pdf_Bu2D0h_Hist->SetLineStyle(kDashed);
   pdf_Bu2D0h_Hist->SetLineWidth(2);
 
+  auto pdf_partialRec_Hist = std::make_unique<TH1D>(
+      ("pdf_partialRec_Hist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pdf_partialRec_Hist", 1, 0, 1);
+  pdf_partialRec_Hist->SetLineColor(kMagenta);
+  pdf_partialRec_Hist->SetLineStyle(kDashed);
+  pdf_partialRec_Hist->SetLineWidth(2);
+
   auto pdf_CombHist = std::make_unique<TH1D>(
       ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -353,6 +378,31 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
+  // Make only pi0 in pi0 mode (gamma removed by veto)
+  switch (neutral) {
+    case (Neutral::pi0): {
+      legend.AddEntry(pdf_partialRec_Hist.get(),
+                      ("B^{" + EnumToLabel(charge) +
+                       "}#rightarrow#font[132]{[}#font[132]{[}" +
+                       EnumToLabel(daughters, charge) +
+                       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+                       HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+                          .c_str(),
+                      "l");
+      break;
+    }
+      case (Neutral::gamma): {
+  legend.AddEntry(
+      pdf_partialRec_Hist.get(),
+      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, charge) +
+       "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
+       HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+          .c_str(),
+      "l");
+      break;
+      }
+    }
   legend.AddEntry(pdf_CombHist.get(), "_Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
@@ -367,6 +417,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
   std::stringstream Bu2D0hLegend;
+  std::stringstream partialRecLegend;
   std::stringstream combLegend;
   Bu2Dst0h_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -396,6 +447,32 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                << pdf.yield_Bu2D0h().getVal()
                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
                << " events";
+  switch (neutral) {
+    case (Neutral::pi0): {
+        partialRecLegend
+            << "B^{" + EnumToLabel(charge) +
+                   "}#rightarrow#font[132]{[}#font[132]{[}" +
+                   EnumToLabel(daughters, charge) +
+                   "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+                   HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+            << pdf.yield_partialRec().getVal()
+            // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+            << " events";
+        break;
+    }
+      case (Neutral::gamma): {
+        partialRecLegend
+            << "B^{" + EnumToLabel(charge) +
+                   "}#rightarrow#font[132]{[}#font[132]{[}" +
+                   EnumToLabel(daughters, charge) +
+                   "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
+                   HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+            << pdf.yield_partialRec().getVal()
+            // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+            << " events";
+      break;
+      }
+    }
   combLegend << "Background: "
              << pdf.yield_Comb().getVal()
              // << " #pm ";
@@ -411,6 +488,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   yieldLegend.AddEntry(blankHist.get(),
                        Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), Bu2D0hLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), partialRecLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), combLegend.str().c_str(), "l");
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //

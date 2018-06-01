@@ -98,12 +98,15 @@ class NeutralVars {
   RooRealVar &bDelta_Bu2D0h() { return bDelta_Bu2D0h_; }
   RooRealVar &cDelta_Bu2D0h() { return cDelta_Bu2D0h_; }
   RooDstD0BG &pdfDelta_Bu2D0h() { return pdfDelta_Bu2D0h_; }
-  RooRealVar &a0MeanBu_Bu2D0h() {
-    return a0MeanBu_Bu2D0h_;
+  RooRealVar &a0MeanBu_Bu2D0h() { return a0MeanBu_Bu2D0h_; }
+  RooPolyVar &meanBu_Bu2D0h() { return meanBu_Bu2D0h_; }
+  RooRealVar &meanDelta_partialRec() {
+    return meanDelta_partialRec_;
   }
-  RooPolyVar &meanBu_Bu2D0h() {
-    return meanBu_Bu2D0h_;
-  }
+  RooRealVar &a0MeanBu_partialRec() { return a0MeanBu_partialRec_; }
+  RooRealVar &a1MeanBu_partialRec() { return a1MeanBu_partialRec_; }
+  RooRealVar &a2MeanBu_partialRec() { return a2MeanBu_partialRec_; }
+  RooPolyVar &meanBu_partialRec() { return meanBu_partialRec_; }
   RooRealVar &thresholdDelta_Comb() { return thresholdDelta_Comb_; }
   RooRealVar &aDelta_Comb() { return aDelta_Comb_; }
   RooRealVar &bDelta_Comb() { return bDelta_Comb_; }
@@ -113,7 +116,9 @@ class NeutralVars {
   RooPolyVar &lambdaBu_Comb() { return lambdaBu_Comb_; }
   RooExponential &pdfBu_Comb() { return pdfBu_Comb_; }
   RooProdPdf &pdf_Comb() { return pdf_Comb_; }
-  RooRealVar &neutralCrossFeedRate_Bu2Dst0h() { return neutralCrossFeedRate_Bu2Dst0h_; }
+  RooRealVar &neutralCrossFeedRate_Bu2Dst0h() {
+    return neutralCrossFeedRate_Bu2Dst0h_;
+  }
 
  private:
   // Indicate if only used by one neutral
@@ -136,6 +141,11 @@ class NeutralVars {
   RooDstD0BG pdfDelta_Bu2D0h_;
   RooRealVar a0MeanBu_Bu2D0h_;
   RooPolyVar meanBu_Bu2D0h_;
+  RooRealVar meanDelta_partialRec_;
+  RooRealVar a0MeanBu_partialRec_;
+  RooRealVar a1MeanBu_partialRec_;
+  RooRealVar a2MeanBu_partialRec_;
+  RooPolyVar meanBu_partialRec_;
   RooRealVar thresholdDelta_Comb_;
   RooRealVar aDelta_Comb_;
   RooRealVar bDelta_Comb_;
