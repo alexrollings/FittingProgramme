@@ -24,12 +24,14 @@ add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
 #${variable} expands variable
-# add_executable(SaveRooDataSet src/SaveRooDataSet.cpp)
+add_executable(SavePlusMinusRoodatasets src/SavePlusMinusRoodatasets.cpp)
+add_executable(SaveTotalRoodataset src/SaveTotalRoodataset.cpp)
 add_executable(Fitting src/Fitting.cpp)
 add_executable(PlotToys src/PlotToys.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
-# target_link_libraries(SaveRooDataSet ${FITTING_LIBS})
+target_link_libraries(SavePlusMinusRoodatasets ${FITTING_LIBS})
+target_link_libraries(SaveTotalRoodataset ${FITTING_LIBS})
 target_link_libraries(Fitting ${FITTING_LIBS})
 target_link_libraries(PlotToys ${FITTING_LIBS})

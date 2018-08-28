@@ -13,12 +13,12 @@ def pass_filename(filename):
 
   # m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+.root", filename)
   #regex says if not an "_" or a "/", it is a group
-  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+.root", filename)
+  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_BDT1_BDT2.root", filename)
 
   if m:
 
-    if not m.group(1) in ["2011", "2012", "2015", "2016"]:
-      sys.exit("Year must be 2011, 2012, 2015 or 2016")
+    if not m.group(1) in ["2011", "2012", "2015", "2016", "2017"]:
+      sys.exit("Year must be 2011, 2012, 2015, 2016 or 2017")
     year = m.group(1)
     #variables declared in python still exist out of scope
 
@@ -29,33 +29,34 @@ def pass_filename(filename):
     else:
       sys.exit("Polarity must be: MagUp or MagDown")
 
-    if m.group(3) == "ButDst0K":
+    if m.group(3) == "Bu2Dst0K":
       bachelor = "k"
-    elif m.group(3) == "ButDst0pi":
+    elif m.group(3) == "Bu2Dst0pi":
       bachelor = "pi"
     else:
       sys.exit("Bachelor must be: pi or K")
 
-    if m.group(4) == "Dst0tD0pi0":
+    if m.group(4) == "Dst02D0pi0":
       neutral = "pi0"
-    elif m.group(4) == "Dst0tD0gamma":
+    elif m.group(4) == "Dst02D0gamma":
       neutral = "gamma"
     else:
       sys.exit("Neutral must be: pi0 or gamma")
 
-    if m.group(5) == "D0tkpi":
+    if m.group(5) == "D02kpi":
       daughters = "kpi"
-    elif m.group(5) == "D0tkk":
+    elif m.group(5) == "D02kk":
       daughters = "kk"
-    elif m.group(5) == "D0tpipi":
+    elif m.group(5) == "D02pipi":
       daughters = "pipi"
-    elif m.group(5) == "D0tpik":
+    elif m.group(5) == "D02pik":
       daughters = "pik"
     else:
       sys.exit("D0 Daughters must be: kpi, kk, pipi or pik")
 
     # print(filename, year, polarity, bachelor, neutral, daughters)
-    subprocess.call(["../build/./SaveRooDataSet", filename, year, polarity, bachelor, neutral, daughters])
+    subprocess.call(["../build/./SavePlusMinusRoodatasets", filename, year, polarity, bachelor, neutral, daughters])
+    subprocess.call(["../build/./SaveTotalRoodataset", filename, year, polarity, bachelor, neutral, daughters])
 
 if os.path.isdir(sys.argv[1]):
   for filename in os.listdir(sys.argv[1]):
