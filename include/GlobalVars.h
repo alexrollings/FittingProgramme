@@ -31,8 +31,6 @@ public:
 
   
   int uniqueId() { return uniqueId_; }
-  RooRealVar &ratioDst0KDst0pi() { return ratioDst0KDst0pi_; }
-  RooConstVar &relativeWidth() { return relativeWidth_; }
 
  private:
   GlobalVars(GlobalVars const &) = delete;
@@ -41,8 +39,6 @@ public:
   GlobalVars &operator=(GlobalVars &&) = delete;
 
   int uniqueId_;
-  RooRealVar ratioDst0KDst0pi_;
-  RooConstVar relativeWidth_;
 };
 
 std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);

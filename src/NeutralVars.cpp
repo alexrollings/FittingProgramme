@@ -51,6 +51,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a1MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a2MeanBu_Bu2Dst0h_Dst02D0gamma_)),
+      relativeWidth_Bu2Dst0h_Dst02D0gamma_(
+          ("relativeWidth_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0gamma "
+           "mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(
+          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0gamma mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- PARTIAL PI0 -------------------- //
       meanDelta_Bu2Dst0h_Dst02D0pi0_(("meanDelta_Bu2Dst0h_Dst02D0pi0_" +
                                       ComposeName(uniqueId, Neutral::gamma))
@@ -90,6 +107,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a1MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
+      relativeWidth_Bu2Dst0h_Dst02D0pi0_(
+          ("relativeWidth_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0pi0 "
+           "mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_(
+          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0pi0 mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- BU2D0H BACKGROUND -------------------- //
       thresholdDelta_Bu2D0h_(
           ("thresholdDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma))
@@ -133,15 +167,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Mean of Bu2D0h m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_Bu2D0h_)),
-      // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
-      // //
-      meanDelta_partialRec_(
-          ("meanDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+      relativeWidth_Bu2D0h_(
+          ("relativeWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          ("Mean of partialRec m[Delta]" +
+          ("Relative Width of k w.r.t. pi modes in Bu2D0h "
+           "mode " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          141, 136, 146),
+          0.95),
+      ratioDst0KDst0pi_Bu2D0h_(
+          ("ratioDst0KDst0pi_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2D0h mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.081, 0.0, 0.1),
+      // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
       a0MeanBu_partialRec_(
           ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -171,6 +212,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(),
           RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
                      a2MeanBu_partialRec_)),
+      relativeWidth_partialRec_(
+          ("relativeWidth_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in partialRec "
+           "mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_partialRec_(
+          ("ratioDst0KDst0pi_partialRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n partialRec mode " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       thresholdDelta_Comb_(
           ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma))
@@ -226,8 +283,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           pdfDelta_Comb_,
-          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())),
-      neutralCrossFeedRate_Bu2Dst0h_() {}
+          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())) {}
 
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
@@ -273,6 +329,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_,
                      a1MeanBu_Bu2Dst0h_Dst02D0pi0_,
                      a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
+      relativeWidth_Bu2Dst0h_Dst02D0pi0_(
+          ("relativeWidth_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0pi0 "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_(
+          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0pi0 mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- NO CROSS FEED BECAUSE OF VETO --------------------
       // //
       meanDelta_Bu2Dst0h_Dst02D0gamma_(),
@@ -280,6 +353,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       a1MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a2MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       meanBu_Bu2Dst0h_Dst02D0gamma_(),
+      relativeWidth_Bu2Dst0h_Dst02D0gamma_(),
+      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(),
       // -------------------- BU2D0H BKG -------------------- //
       thresholdDelta_Bu2D0h_(
           ("thresholdDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0))
@@ -323,47 +398,70 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Mean of Bu2D0h m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_Bu2D0h_)),
+      relativeWidth_Bu2D0h_(
+          ("relativeWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2D0h "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_Bu2D0h_(
+          ("ratioDst0KDst0pi_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2D0h mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
-      // //
-      meanDelta_partialRec_(
-          ("meanDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Mean of partialRec m[Delta]" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          144, 139, 149),
       a0MeanBu_partialRec_(
-          ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+          ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("a0 of mean of partialRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 5100, 5050, 5150),
           5010, 4960, 5060),
       a1MeanBu_partialRec_(
-          ("a1MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+          ("a1MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("a1 of mean of partialRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 3, 0, 10),
           1.3, 0, 10),
       a2MeanBu_partialRec_(
-          ("a2MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+          ("a2MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("a2 of mean of partialRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           -0.004, -0.1, 0.1),
       // -0.007, -0.1, 0.1),
       meanBu_partialRec_(
-          ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+          ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          ("Mean of partialRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
+          ("Mean of partialRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
                      a2MeanBu_partialRec_)),
+      relativeWidth_partialRec_(
+          ("relativeWidth_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in partialRec "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.95),
+      ratioDst0KDst0pi_partialRec_(
+          ("ratioDst0KDst0pi_partialRec_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n partialRec mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.081, 0.0, 0.1),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       thresholdDelta_Comb_(
           ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0))
@@ -419,11 +517,4 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("pdf_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           pdfDelta_Comb_,
-          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())),
-      neutralCrossFeedRate_Bu2Dst0h_(("neutralCrossFeedRate_Bu2Dst0h_" +
-                                      ComposeName(uniqueId, Neutral::pi0))
-                                         .c_str(),
-                                     ("Neutral cross feed rate of Bu2Dst0h " +
-                                      ComposeName(uniqueId, Neutral::pi0))
-                                         .c_str(),
-                                     0.7, 0, 1) {}
+          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())) {}

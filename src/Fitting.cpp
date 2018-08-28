@@ -171,16 +171,16 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2D0h()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
+        RooFit::Components(pdf.pdfBu_Bu2D0h()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kGreen));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_partialRec()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+        RooFit::Components(pdf.pdfBu_partialRec()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kMagenta));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -208,7 +208,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
               ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
           RooFit::ProjWData(categories.fitting, fullDataSet),
           RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
     }
     simPdf.plotOn(
         frame.get(),
@@ -216,8 +216,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2D0h()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen));
+        RooFit::Components(pdf.pdfDelta_Bu2D0h()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kGreen));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -391,19 +391,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                       "l");
       break;
     }
-      case (Neutral::gamma): {
-  legend.AddEntry(
-      pdf_partialRec_Hist.get(),
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) +
-       "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
-       HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-          .c_str(),
-      "l");
+    case (Neutral::gamma): {
+      legend.AddEntry(
+          pdf_partialRec_Hist.get(),
+          ("B^{" + EnumToLabel(charge) +
+           "}#rightarrow#font[132]{[}#font[132]{[}" +
+           EnumToLabel(daughters, charge) +
+           "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
+           HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+              .c_str(),
+          "l");
       break;
-      }
+    }
   }
-  legend.AddEntry(pdf_CombHist.get(),"Combinatorial", "l");
+  legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -449,30 +450,30 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                << " events";
   switch (neutral) {
     case (Neutral::pi0): {
-        partialRecLegend
-            << "B^{" + EnumToLabel(charge) +
-                   "}#rightarrow#font[132]{[}#font[132]{[}" +
-                   EnumToLabel(daughters, charge) +
-                   "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-                   HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-            << pdf.yield_partialRec().getVal()
-            // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-            << " events";
-        break;
-    }
-      case (Neutral::gamma): {
-        partialRecLegend
-            << "B^{" + EnumToLabel(charge) +
-                   "}#rightarrow#font[132]{[}#font[132]{[}" +
-                   EnumToLabel(daughters, charge) +
-                   "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
-                   HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-            << pdf.yield_partialRec().getVal()
-            // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-            << " events";
+      partialRecLegend
+          << "B^{" + EnumToLabel(charge) +
+                 "}#rightarrow#font[132]{[}#font[132]{[}" +
+                 EnumToLabel(daughters, charge) +
+                 "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+                 HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+          << pdf.yield_partialRec().getVal()
+          // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+          << " events";
       break;
-      }
     }
+    case (Neutral::gamma): {
+      partialRecLegend
+          << "B^{" + EnumToLabel(charge) +
+                 "}#rightarrow#font[132]{[}#font[132]{[}" +
+                 EnumToLabel(daughters, charge) +
+                 "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
+                 HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+          << pdf.yield_partialRec().getVal()
+          // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+          << " events";
+      break;
+    }
+  }
   combLegend << "Background: "
              << pdf.yield_Comb().getVal()
              // << " #pm ";
@@ -907,9 +908,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                   &nbdVars_gamma_pi_kpi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::kpi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma());
+              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
               break;
             }
             case Neutral::pi0: {
@@ -917,9 +920,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                                            Daughters::kpi> &nbdVars_pi0_pi_kpi =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kpi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kpi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0());
+              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
               break;
             }
           }
@@ -934,9 +939,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                                            Daughters::kk> &nbdVars_gamma_pi_kk =
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                Daughters::kk>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma());
+              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
               break;
             }
             case Neutral::pi0: {
@@ -944,9 +951,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                                            Daughters::kk> &nbdVars_pi0_pi_kk =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kk>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_kk.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0());
+              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
               break;
             }
           }
@@ -962,9 +971,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                   &nbdVars_gamma_pi_pipi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma());
+              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
               break;
             }
             case Neutral::pi0: {
@@ -973,9 +984,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                   &nbdVars_pi0_pi_pipi =
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pipi.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0());
+              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
               break;
             }
           }
@@ -991,9 +1004,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                   &nbdVars_gamma_pi_pik =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pik>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_gamma_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma());
+              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
               break;
             }
             case Neutral::pi0: {
@@ -1001,9 +1016,11 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                                            Daughters::pik> &nbdVars_pi0_pi_pik =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::pik>::Get(id);
-              auto N_Dst0h_RooRealVar =
-                  dynamic_cast<RooRealVar *>(&nbdVars_pi0_pi_pik.N_Dst0h());
-              N_Dst0h_RooRealVar->setVal(N_Dst0h_RooRealVar->getVal() * 0.9);
+              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
+                  dynamic_cast<RooRealVar *>(
+                      &nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0());
+              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
+                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
               break;
             }
           }
@@ -1149,8 +1166,6 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   GlobalVars &globalVars = GlobalVars::Get(id);
   std::vector<std::string> varNames;
   std::vector<double> varPredictions;
-  varNames.emplace_back(globalVars.ratioDst0KDst0pi().GetName());
-  varPredictions.emplace_back(globalVars.ratioDst0KDst0pi().getVal());
 
   for (auto &n : neutralVec) {
     for (auto &d : daughtersVec) {
@@ -1196,14 +1211,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                            Daughters::kpi> &nbdVars_pi0_pi_kpi =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_kpi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_kpi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::kpi> &nbdVars_pi0_k_kpi =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_kpi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_k_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_k_kpi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               break;
             }
             case Daughters::kk: {
@@ -1211,14 +1230,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                            Daughters::kk> &nbdVars_pi0_pi_kk =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_kk.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_kk.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::kk> &nbdVars_pi0_k_kk =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_kk.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_k_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_k_kk.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               break;
             }
             case Daughters::pipi: {
@@ -1227,15 +1250,19 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                   &nbdVars_pi0_pi_pipi =
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_pipi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_pipi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::pipi>
                   &nbdVars_pi0_k_pipi =
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                    Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_pipi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_k_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_k_pipi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               break;
             }
             case Daughters::pik: {
@@ -1243,14 +1270,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                            Daughters::pik> &nbdVars_pi0_pi_pik =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_pi_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_pi_pik.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_pik.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                            Daughters::pik> &nbdVars_pi0_k_pik =
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
                                                Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_pi0_k_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_pi0_k_pik.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_pi0_k_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_k_pik.asym_Bu2Dst0h_Dst02D0pi0().getVal());
               break;
             }
           }
@@ -1322,15 +1353,19 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                   &nbdVars_gamma_pi_kpi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_pi_kpi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_kpi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::kpi>
                   &nbdVars_gamma_k_kpi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::kpi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_kpi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_kpi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_k_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_k_kpi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               break;
             }
             case Daughters::kk: {
@@ -1338,14 +1373,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                            Daughters::kk> &nbdVars_gamma_pi_kk =
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_pi_kk.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_kk.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::kk> &nbdVars_gamma_k_kk =
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                Daughters::kk>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_kk.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_kk.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_k_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_k_kk.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               break;
             }
             case Daughters::pipi: {
@@ -1354,16 +1393,19 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                   &nbdVars_gamma_pi_pipi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_pipi.asym().GetName());
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
               varPredictions.emplace_back(
-                  nbdVars_gamma_pi_pipi.asym().getVal());
+                  nbdVars_gamma_pi_pipi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::pipi>
                   &nbdVars_gamma_k_pipi =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::pipi>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_pipi.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_pipi.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_k_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_k_pipi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               break;
             }
             case Daughters::pik: {
@@ -1372,15 +1414,19 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                   &nbdVars_gamma_pi_pik =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_pi_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_pi_pik.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pik.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                            Daughters::pik>
                   &nbdVars_gamma_k_pik =
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
                                                    Daughters::pik>::Get(id);
-              varNames.emplace_back(nbdVars_gamma_k_pik.asym().GetName());
-              varPredictions.emplace_back(nbdVars_gamma_k_pik.asym().getVal());
+              varNames.emplace_back(
+                  nbdVars_gamma_k_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_k_pik.asym_Bu2Dst0h_Dst02D0gamma().getVal());
               break;
             }
           }
