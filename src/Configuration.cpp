@@ -20,9 +20,9 @@ Configuration::Configuration()
 
   buMass_.SetName("Bu_M_DTF");
   buMass_.SetTitle("m[Bu]");
-  buMass_.setMax(5805);
-  buMass_.setMin(4995);
-  buMass_.setBins(162);
+  buMass_.setMax(6000);
+  buMass_.setMin(4000);
+  buMass_.setBins(400);
   buMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
@@ -82,16 +82,16 @@ Configuration::Configuration()
   BDT2_.setMin(-0.3);
   BDT2_.setUnit(kNoUnit);
 
-  eventNumber_.SetName("eventNumber");
+  eventNumber_.SetName("eventNumberD");
   eventNumber_.SetTitle("eventNumber");
-  eventNumber_.setMax(0);
-  eventNumber_.setMin(5000000000);
+  eventNumber_.setMax(5000000000);
+  eventNumber_.setMin(0);
   eventNumber_.setUnit(kNoUnit);
 
   runNumber_.SetName("runNumber");
   runNumber_.SetTitle("runNumber");
-  runNumber_.setMax(0);
-  runNumber_.setMin(250000);
+  runNumber_.setMax(250000);
+  runNumber_.setMin(0);
   runNumber_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);

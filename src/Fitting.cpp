@@ -1781,6 +1781,19 @@ int main(int argc, char **argv) {
                   if (inputDataSet == nullptr) {
                     throw std::runtime_error("Data set does not exist.");
                   } else {
+                    RooDataSet *reducedInputDataSet = nullptr;
+                    if (bachelorVec[bCounter] == Bachelor::pi) {
+                      reducedInputDataSet =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "bach_PIDK<12"));
+                    } else {
+                      reducedInputDataSet =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "bach_PIDK>12"));
+                    }
+                    if (reducedInputDataSet == nullptr) {
+                      throw std::runtime_error("Could not reduce input dataset.");
+                    }
                     std::cout << "inputDataSet extracted... \n";
                     fullDataSet.append(*inputDataSet);
                     std::cout << "Appended to full data set...\n";
@@ -1795,8 +1808,16 @@ int main(int argc, char **argv) {
 
     int id = 0;
 
+    RooDataSet *reducedDataSet = nullptr;
+    reducedDataSet = dynamic_cast<RooDataSet *>(
+        fullDataSet.reduce("Bu_M_DTF>4995&&Bu_M_DTF<5805&&BDT1>0.05&&BDT2>0&&"
+                           "pi_D_PIDK<-2&&K_D_PIDK>2"));
+    if (reducedDataSet == nullptr) {
+      throw std::runtime_error("Could not reduce full dataset.");
+    }
+
     auto fullDataHist = std::unique_ptr<RooDataHist>(
-        fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
+        reducedDataSet->binnedClone("fullDataHist", "fullDataHist"));
     auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
@@ -1809,9 +1830,9 @@ int main(int argc, char **argv) {
 
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
+      Plotting1D(id, *p, config, categories, *reducedDataSet, *simPdf,
                  *result.get(), outputDir);
-      Plotting2D(id, *p, config, fullDataSet, *simPdf, outputDir);
+      Plotting2D(id, *p, config, *reducedDataSet, *simPdf, outputDir);
     }
 
     result->Print("v");
