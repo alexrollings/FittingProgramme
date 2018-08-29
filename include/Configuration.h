@@ -35,8 +35,18 @@ class Configuration {
   };
   
   RooRealVar &buMass() { return buMass_; }
-  RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &deltaMass() { return deltaMass_; }
+  RooRealVar &d0Mass() { return d0Mass_; }
+  RooRealVar &neutMass() { return neutMass_; }
+  RooRealVar &d0hMass() { return d0hMass_; }
+  RooRealVar &buPdgId() { return buPdgId_; }
+  RooRealVar &bachPID() { return bachPID_; }
+  RooRealVar &piPID() { return piPID_; }
+  RooRealVar &kPID() { return kPID_; }
+  RooRealVar &BDT1() { return BDT1_; }
+  RooRealVar &BDT2() { return BDT2_; }
+  RooRealVar &eventNumber() { return eventNumber_; }
+  RooRealVar &runNumber() { return runNumber_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
@@ -51,8 +61,18 @@ class Configuration {
 
   Categories categories_;
   RooRealVar buMass_;
-  RooRealVar buPdgId_;
   RooRealVar deltaMass_;
+  RooRealVar d0Mass_;
+  RooRealVar neutMass_;
+  RooRealVar d0hMass_;
+  RooRealVar buPdgId_;
+  RooRealVar bachPID_;
+  RooRealVar piPID_;
+  RooRealVar kPID_;
+  RooRealVar BDT1_;
+  RooRealVar BDT2_;
+  RooRealVar eventNumber_;
+  RooRealVar runNumber_;
   RooArgSet variableArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;

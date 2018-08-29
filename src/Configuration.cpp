@@ -2,19 +2,49 @@
 
 Configuration::Configuration()
     : buMass_("", "", 0, 0, ""),
+      deltaMass_("", "", 0, 0, ""),
+      neutMass_("", "", 0, 0, ""),
+      d0hMass_("", "", 0, 0, ""),
       buPdgId_("", "", 0, 0, ""),
-      deltaMass_("", "", 0, 0, "") {
+      bachPID_("", "", 0, 0, ""),
+      piPID_("", "", 0, 0, ""),
+      kPID_("", "", 0, 0, ""),
+      BDT1_("", "", 0, 0, ""),
+      BDT2_("", "", 0, 0, ""),
+      eventNumber_("", "", 0, 0, ""),
+      runNumber_("", "", 0, 0, "") {
 // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
   constexpr const char *kNoUnit = "";
 
-  buMass_.SetName("Bu_M_DTF_D0Pi0");
+  buMass_.SetName("Bu_M_DTF");
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5805);
   buMass_.setMin(4995);
   buMass_.setBins(162);
   buMass_.setUnit(kMassUnit);
+
+  deltaMass_.SetName("Delta_M");
+  deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
+  deltaMass_.setMax(250);
+  deltaMass_.setMin(0);
+  deltaMass_.setBins(120);
+  deltaMass_.setUnit(kMassUnit);
+
+  neutMass_.SetName("DstNeut_M");
+  neutMass_.SetTitle("m[#pi^{0}]");
+  neutMass_.setMax(185);
+  neutMass_.setMin(110);
+  neutMass_.setBins(75);
+  neutMass_.setUnit(kMassUnit);
+
+  d0hMass_.SetName("D0h_M");
+  d0hMass_.SetTitle("m[D^{0}h]");
+  d0hMass_.setMax(5800);
+  d0hMass_.setMin(4600);
+  d0hMass_.setBins(240);
+  d0hMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Bu_ID");
   buPdgId_.SetTitle("Bu PDG ID");
@@ -22,16 +52,60 @@ Configuration::Configuration()
   buPdgId_.setMin(-550);
   buPdgId_.setUnit(kNoUnit);
 
-  deltaMass_.SetName("Delta_M");
-  deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
-  deltaMass_.setMax(240);
-  deltaMass_.setMin(0);
-  deltaMass_.setBins(120);
-  deltaMass_.setUnit(kMassUnit);
+  bachPID_.SetName("bach_PIDK");
+  bachPID_.SetTitle("Bachelor PIDK");
+  bachPID_.setMax(150);
+  bachPID_.setMin(-150);
+  bachPID_.setUnit(kNoUnit);
+
+  piPID_.SetName("pi_D_PIDK");
+  piPID_.SetTitle("pi D0 daughter PIDK");
+  piPID_.setMax(150);
+  piPID_.setMin(-150);
+  piPID_.setUnit(kNoUnit);
+
+  kPID_.SetName("K_D_PIDK");
+  kPID_.SetTitle("K D0 daughter PIDK");
+  kPID_.setMax(150);
+  kPID_.setMin(-150);
+  kPID_.setUnit(kNoUnit);
+
+  BDT1_.SetName("BDT1");
+  BDT1_.SetTitle("BDT1");
+  BDT1_.setMax(0.5);
+  BDT1_.setMin(-0.2);
+  BDT1_.setUnit(kNoUnit);
+
+  BDT2_.SetName("BDT2");
+  BDT2_.SetTitle("BDT2");
+  BDT2_.setMax(0.4);
+  BDT2_.setMin(-0.3);
+  BDT2_.setUnit(kNoUnit);
+
+  eventNumber_.SetName("eventNumber");
+  eventNumber_.SetTitle("eventNumber");
+  eventNumber_.setMax(0);
+  eventNumber_.setMin(5000000000);
+  eventNumber_.setUnit(kNoUnit);
+
+  runNumber_.SetName("runNumber");
+  runNumber_.SetTitle("runNumber");
+  runNumber_.setMax(0);
+  runNumber_.setMin(250000);
+  runNumber_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);
-  variableArgSet_.add(buPdgId_);
   variableArgSet_.add(deltaMass_);
+  variableArgSet_.add(neutMass_);
+  variableArgSet_.add(d0hMass_);
+  variableArgSet_.add(buPdgId_);
+  variableArgSet_.add(bachPID_);
+  variableArgSet_.add(piPID_);
+  variableArgSet_.add(kPID_);
+  variableArgSet_.add(BDT1_);
+  variableArgSet_.add(BDT2_);
+  variableArgSet_.add(eventNumber_);
+  variableArgSet_.add(runNumber_);
 
   categoryArgSet_.add(categories().polarity);
   categoryArgSet_.add(categories().charge);
