@@ -107,7 +107,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
 void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
-                   TLegend &yieldLegend, std::string const &outputDir) {
+                   TLegend &yieldLegend, std::string const &outputDir, bool fitBool) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -130,121 +130,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
 
-  simPdf.plotOn(
-      frame.get(),
-      RooFit::Slice(
-          categories.fitting,
-          ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-      RooFit::ProjWData(categories.fitting, fullDataSet),
-      RooFit::LineColor(kBlue));
-
-  // auto pullHist = std::unique_ptr<RooHist>(
-  //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
-  // if (pullHist == nullptr) {
-  //   throw std::runtime_error("\npullHist empty.\n");
-  // }
-  RooHist *pullHist = frame->RooPlot::pullHist();
-
-  if (variable == Variable::bu) {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-    if (neutral == Neutral::gamma) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
-    }
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2D0h()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kGreen));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_partialRec()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kMagenta));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Comb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
-    frame->SetXTitle(
-        ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
-  } else {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-    if (neutral == Neutral::gamma) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
-    }
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2D0h()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kGreen));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_partialRec()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Comb()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed));
-    frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
-  }
-
-  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-
-  pullFrame->addPlotable(pullHist /* .get() */, "P");
-  pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
-                      ComposeName(id, neutral, bachelor, daughters, charge))
-                         .c_str());
-  pullFrame->SetTitle("");
-
-  // --------------- plot onto canvas ---------------------
   TCanvas canvas(("canvas_" + EnumToString(variable) + "_" +
                   ComposeName(id, neutral, bachelor, daughters, charge))
                      .c_str(),
@@ -262,30 +147,150 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
 
-  // .get() gets the raw pointer from underneath the smart pointer
-  // FIX THIS
-  // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
+  if (fitBool == true) {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::LineColor(kBlue));
 
-  // Zero line on error plot.
-  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kRed);
-  zeroLine.SetLineStyle(kDashed);
+    // auto pullHist = std::unique_ptr<RooHist>(
+    //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
+    // if (pullHist == nullptr) {
+    //   throw std::runtime_error("\npullHist empty.\n");
+    // }
+    RooHist *pullHist = frame->RooPlot::pullHist();
 
-  canvas.cd();
-  pad2.cd();
-  pullFrame->SetYTitle(" ");
-  pullFrame->SetXTitle(" ");
-  pullFrame->SetLabelSize(0.2, "Y");
-  pullFrame->SetLabelFont(132, "XY");
-  pullFrame->SetLabelOffset(100, "X");
-  pullFrame->SetTitleOffset(100, "X");
-  pullFrame->Draw();
-  zeroLine.Draw("same");
+    if (variable == Variable::bu) {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+      if (neutral == Neutral::gamma) {
+        simPdf.plotOn(frame.get(),
+                      RooFit::Slice(categories.fitting,
+                                    ComposeFittingName(neutral, bachelor,
+                                                       daughters, charge)
+                                        .c_str()),
+                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
+                      RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
+      }
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_Bu2D0h()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kGreen));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_partialRec()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_Comb()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kRed));
+      frame->SetXTitle(
+          ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
+    } else {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
+      if (neutral == Neutral::gamma) {
+        simPdf.plotOn(frame.get(),
+                      RooFit::Slice(categories.fitting,
+                                    ComposeFittingName(neutral, bachelor,
+                                                       daughters, charge)
+                                        .c_str()),
+                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
+                      RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
+      }
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_Bu2D0h()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kGreen));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_partialRec()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_Comb()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kRed));
+      frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
+    }
+
+    std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
+                        ComposeName(id, neutral, bachelor, daughters, charge))
+                           .c_str());
+    pullFrame->SetTitle("");
+
+    // --------------- plot onto canvas ---------------------
+
+    // .get() gets the raw pointer from underneath the smart pointer
+    // FIX THIS
+    // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
+
+    // Zero line on error plot.
+    TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+    zeroLine.SetLineColor(kRed);
+    zeroLine.SetLineStyle(kDashed);
+
+    canvas.cd();
+    pad2.cd();
+    pullFrame->SetYTitle(" ");
+    pullFrame->SetXTitle(" ");
+    pullFrame->SetLabelSize(0.2, "Y");
+    pullFrame->SetLabelFont(132, "XY");
+    pullFrame->SetLabelOffset(100, "X");
+    pullFrame->SetTitleOffset(100, "X");
+    pullFrame->Draw();
+    zeroLine.Draw("same");
+  }
 
   canvas.cd();
   pad1.cd();
   frame->Draw();
-  legend.Draw("same");
+  if (fitBool == true) {
+    legend.Draw("same");
+  }
   // yieldLegend.Draw("same");
   // dataHist->Draw("same");
 
@@ -299,7 +304,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                RooFitResult const &result, std::string const &outputDir) {
+                RooFitResult const &result, std::string const &outputDir,
+                bool fitBool) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -473,8 +479,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       break;
     }
   }
-  combLegend << "Background: "
-             << pdf.yield_Comb().getVal()
+  combLegend << "Background: " << pdf.yield_Comb().getVal()
              // << " #pm ";
              // << backgroundYield.getError()
              << " events";
@@ -493,20 +498,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
   PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,
-                categories, legend, yieldLegend, outputDir);
+                categories, legend, yieldLegend, outputDir, fitBool);
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
   PlotComponent(Variable::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, yieldLegend, outputDir);
+                categories, legend, yieldLegend, outputDir, fitBool);
 }
 
 void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir) {
-  Bachelor bachelor = pdf.bachelor();
-  Daughters daughters = pdf.daughters();
-  Neutral neutral = pdf.neutral();
-  Charge charge = pdf.charge();
-
+                std::string const &outputDir, bool fitBool) {
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
   gStyle->SetTitleOffset(1, "X");
@@ -514,51 +514,11 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
   gStyle->SetTitleOffset(1.5, "Z");
   gStyle->SetPadRightMargin(0.15);
 
-  // Make two-dimensional plot of sampled PDF in x vs y
-  // Plot ONLY the PDF not the SimPDF
-  // auto singlePdf =
-  //     std::unique_ptr<RooAbsPdf>(simPdf.getPdf(pdf.CategoryName().c_str()));
-  auto singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
-  if (singlePdf == nullptr) {
-    throw std::runtime_error("\nSingle pdf empty\n");
-  }
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+  Charge charge = pdf.charge();
 
-  // auto modelHist1d = std::unique_ptr<TH1>(singlePdf->createHistogram(
-  //     ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters,
-  //     charge))
-  //         .c_str(),
-  //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
-  //     RooFit::YVar(config.deltaMass(),
-  //                  RooFit::Binning(config.deltaMass().getBins()))));
-  auto modelHist1d = singlePdf->createHistogram(
-      ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      config.buMass(), RooFit::Binning(config.buMass().getBins()),
-      RooFit::YVar(config.deltaMass(),
-                   RooFit::Binning(config.deltaMass().getBins())));
-  if (modelHist1d == nullptr) {
-    throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
-  }
-  auto modelHist2d =
-      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(modelHist1d /* .get() */));
-  if (modelHist2d == nullptr) {
-    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
-  }
-  modelHist2d->SetTitle("");
-
-  // Make 2D plot of data
-  // Plot ONLY one component of the data
-  // auto dataHist1d = std::unique_ptr<TH1>(fullDataSet.createHistogram(
-  //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters,
-  //     charge))
-  //         .c_str(),
-  //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
-  //     RooFit::YVar(config.deltaMass(),
-  //                  RooFit::Binning(config.deltaMass().getBins())),
-  //     RooFit::Cut(("fitting==fitting::" +
-  //                  ComposeFittingName(neutral, bachelor, daughters,
-  //                  charge))
-  //                     .c_str())));
   auto dataHist1d = fullDataSet.createHistogram(
       ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -577,28 +537,6 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
     throw std::runtime_error("\n2D hist of data returns nullptr\n");
   }
   dataHist2d->SetTitle("");
-
-  modelHist2d->Scale(dataHist2d->Integral() / modelHist2d->Integral());
-
-  TCanvas canvasModel(
-      ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  modelHist2d->SetStats(0);
-  modelHist2d->Draw("colz");
-  modelHist2d->SetTitle(
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str());
-  modelHist2d->Draw("colz");
-  modelHist2d->GetZaxis()->SetRangeUser(-0.00001, modelHist2d->GetMaximum());
-  canvasModel.Update();
-  canvasModel.SaveAs((outputDir + "/" +
-                      ComposeName(id, neutral, bachelor, daughters, charge) +
-                      "_2dPDF.pdf")
-                         .c_str());
 
   // 2D data plot
   TCanvas canvasData(
@@ -619,50 +557,119 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                      ComposeName(id, neutral, bachelor, daughters, charge) +
                      "_2dData.pdf")
                         .c_str());
+  if (fitBool == true) {
+    // Make two-dimensional plot of sampled PDF in x vs y
+    // Plot ONLY the PDF not the SimPDF
+    // auto singlePdf =
+    //     std::unique_ptr<RooAbsPdf>(simPdf.getPdf(pdf.CategoryName().c_str()));
+    auto singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
+    if (singlePdf == nullptr) {
+      throw std::runtime_error("\nSingle pdf empty\n");
+    }
 
-  gStyle->SetTitleOffset(1.2, "Z");
-  // Make a histogram with the Poisson stats in each data bin
-  auto errHist2d = std::unique_ptr<TH2F>(new TH2F(
-      ("errHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", config.buMass().getBins(), config.buMass().getMin(),
-      config.buMass().getMax(), config.deltaMass().getBins(),
-      config.deltaMass().getMin(), config.deltaMass().getMax()));
-  for (int i = 0; i < config.buMass().getBins() * config.deltaMass().getBins();
-       i++) {
-    float n_bin = dataHist2d->GetBinContent(i);
-    float err = sqrt(n_bin);
-    errHist2d->SetBinContent(i, err);
-  }
+    // auto modelHist1d = std::unique_ptr<TH1>(singlePdf->createHistogram(
+    //     ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters,
+    //     charge))
+    //         .c_str(),
+    //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
+    //     RooFit::YVar(config.deltaMass(),
+    //                  RooFit::Binning(config.deltaMass().getBins()))));
+    auto modelHist1d = singlePdf->createHistogram(
+        ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        config.buMass(), RooFit::Binning(config.buMass().getBins()),
+        RooFit::YVar(config.deltaMass(),
+                     RooFit::Binning(config.deltaMass().getBins())));
+    if (modelHist1d == nullptr) {
+      throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
+    }
+    auto modelHist2d =
+        std::unique_ptr<TH2>(dynamic_cast<TH2F *>(modelHist1d /* .get() */));
+    if (modelHist2d == nullptr) {
+      throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+    }
+    modelHist2d->SetTitle("");
 
-  // 2D residuals plot (data - PDF)/err
-  TCanvas canvasRes(
-      ("canvasRes_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  canvasRes.cd();
-  // auto resHist2d_temp = std::unique_ptr<TObject>(dataHist2d->Clone());
-  auto resHist2d_temp = dataHist2d->Clone();
-  if (resHist2d_temp == nullptr) {
-    throw std::runtime_error("\nCould not clone dataHist2d.\n");
+    // Make 2D plot of data
+    // Plot ONLY one component of the data
+    // auto dataHist1d = std::unique_ptr<TH1>(fullDataSet.createHistogram(
+    //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters,
+    //     charge))
+    //         .c_str(),
+    //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
+    //     RooFit::YVar(config.deltaMass(),
+    //                  RooFit::Binning(config.deltaMass().getBins())),
+    //     RooFit::Cut(("fitting==fitting::" +
+    //                  ComposeFittingName(neutral, bachelor, daughters,
+    //                  charge))
+    //                     .c_str())));
+    modelHist2d->Scale(dataHist2d->Integral() / modelHist2d->Integral());
+
+    TCanvas canvasModel(
+        ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    modelHist2d->SetStats(0);
+    modelHist2d->Draw("colz");
+    modelHist2d->SetTitle(("B^{" + EnumToLabel(charge) +
+                           "}#rightarrow#font[132]{[}#font[132]{[}" +
+                           EnumToLabel(daughters, charge) +
+                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                           "^{" + EnumToLabel(charge) + "}")
+                              .c_str());
+    modelHist2d->Draw("colz");
+    modelHist2d->GetZaxis()->SetRangeUser(-0.00001, modelHist2d->GetMaximum());
+    canvasModel.Update();
+    canvasModel.SaveAs((outputDir + "/" +
+                        ComposeName(id, neutral, bachelor, daughters, charge) +
+                        "_2dPDF.pdf")
+                           .c_str());
+
+    gStyle->SetTitleOffset(1.2, "Z");
+    // Make a histogram with the Poisson stats in each data bin
+    auto errHist2d = std::unique_ptr<TH2F>(new TH2F(
+        ("errHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", config.buMass().getBins(), config.buMass().getMin(),
+        config.buMass().getMax(), config.deltaMass().getBins(),
+        config.deltaMass().getMin(), config.deltaMass().getMax()));
+    for (int i = 0;
+         i < config.buMass().getBins() * config.deltaMass().getBins(); i++) {
+      float n_bin = dataHist2d->GetBinContent(i);
+      float err = sqrt(n_bin);
+      errHist2d->SetBinContent(i, err);
+    }
+
+    // 2D residuals plot (data - PDF)/err
+    TCanvas canvasRes(
+        ("canvasRes_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    canvasRes.cd();
+    // auto resHist2d_temp = std::unique_ptr<TObject>(dataHist2d->Clone());
+    auto resHist2d_temp = dataHist2d->Clone();
+    if (resHist2d_temp == nullptr) {
+      throw std::runtime_error("\nCould not clone dataHist2d.\n");
+    }
+    auto resHist2d = std::unique_ptr<TH2F>(
+        dynamic_cast<TH2F *>(resHist2d_temp /* .get() */));
+    if (resHist2d == nullptr) {
+      throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+    }
+    resHist2d->Add(modelHist2d.get(), -1);
+    resHist2d->Divide(errHist2d.get());
+    canvasRes.cd();
+    resHist2d->GetZaxis()->SetTitle("Residual");
+    resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
+    resHist2d->SetStats(0);
+    resHist2d->Draw("colz");
+    canvasRes.Update();
+    canvasRes.SaveAs((outputDir + "/" +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      "_2dResiduals.pdf")
+                         .c_str());
   }
-  auto resHist2d =
-      std::unique_ptr<TH2F>(dynamic_cast<TH2F *>(resHist2d_temp /* .get() */));
-  if (resHist2d == nullptr) {
-    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
-  }
-  resHist2d->Add(modelHist2d.get(), -1);
-  resHist2d->Divide(errHist2d.get());
-  canvasRes.cd();
-  resHist2d->GetZaxis()->SetTitle("Residual");
-  resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
-  resHist2d->SetStats(0);
-  resHist2d->Draw("colz");
-  canvasRes.Update();
-  canvasRes.SaveAs((outputDir + "/" +
-                    ComposeName(id, neutral, bachelor, daughters, charge) +
-                    "_2dResiduals.pdf")
-                       .c_str());
 }
 
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
@@ -673,8 +680,6 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   RooSimultaneous *simPdf = new RooSimultaneous(
       ("simPdf_" + std::to_string(id)).c_str(),
       ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
-
-  std::vector<PdfBase *> pdfs;
 
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
@@ -728,26 +733,26 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                 switch (c) {
                   case Charge::plus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
                              Charge::plus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                              Charge::plus>::Get(id));
                     break;
                   case Charge::minus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
                              Charge::minus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                              Charge::minus>::Get(id));
                     break;
                   case Charge::total:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
                              Charge::total>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                              Charge::total>::Get(id));
                     break;
                 }
@@ -796,26 +801,26 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                 switch (c) {
                   case Charge::plus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
                              Charge::plus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
                              Charge::plus>::Get(id));
                     break;
                   case Charge::minus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
                              Charge::minus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
                              Charge::minus>::Get(id));
                     break;
                   case Charge::total:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
                              Charge::total>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
                              Charge::total>::Get(id));
                     break;
                 }
@@ -864,26 +869,26 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                 switch (c) {
                   case Charge::plus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
                              Charge::plus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
                              Charge::plus>::Get(id));
                     break;
                   case Charge::minus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
                              Charge::minus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
                              Charge::minus>::Get(id));
                     break;
                   case Charge::total:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
                              Charge::total>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
                              Charge::total>::Get(id));
                     break;
                 }
@@ -932,26 +937,26 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                 switch (c) {
                   case Charge::plus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
                              Charge::plus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
                              Charge::plus>::Get(id));
                     break;
                   case Charge::minus:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
                              Charge::minus>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
                              Charge::minus>::Get(id));
                     break;
                   case Charge::total:
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
                              Charge::total>::Get(id));
                     pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
                              Charge::total>::Get(id));
                     break;
                 }
@@ -1112,7 +1117,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Neutral> const &neutralVec,
                   std::vector<Daughters> const &daughtersVec,
                   std::vector<Charge> const &chargeVec,
-                  std::string const &outputDir) {
+                  std::string const &outputDir, bool fitBool) {
   RooRandom::randomGenerator()->SetSeed(15);
   TRandom3 random(0);
   int id = 0;
@@ -1147,31 +1152,33 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
 
-  auto result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
-      *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(), RooFit::Strategy(2),
-      RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
+  std::unique_ptr<RooFitResult> result;
+  if (fitBool == true) {
+    result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
+        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(), RooFit::Strategy(2),
+        RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
+    result->Print("v");
+    std::cout << "Printed result.\n";
+    TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
+                              1000);
+    std::cout << "Created canvas.\n";
+    correlationCanvas.cd();
+    std::cout << "Extracting correlation histogram from result...\n";
+    result->correlationHist()->Draw("colz");
+    std::cout << "Extracted correlation histogram from result.\n";
+    correlationCanvas.Update();
+    std::cout << "Updated canvas.\n";
+    correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+    std::cout << "Save to pdf file.\n";
+  }
 
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
     Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get(),
-               outputDir);
-    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir);
+               outputDir, fitBool);
+    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
 
-  result->Print("v");
-  std::cout << "Printed result.\n";
-
-  TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
-                            1000);
-  std::cout << "Created canvas.\n";
-  correlationCanvas.cd();
-  std::cout << "Extracting correlation histogram from result...\n";
-  result->correlationHist()->Draw("colz");
-  std::cout << "Extracted correlation histogram from result.\n";
-  correlationCanvas.Update();
-  std::cout << "Updated canvas.\n";
-  correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
-  std::cout << "Save to pdf file.\n";
 }
 
 void SaveResultInTree(
@@ -1603,6 +1610,7 @@ int main(int argc, char **argv) {
   // them differently
 
   Toys toys;
+  bool fitBool = false;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -1783,16 +1791,15 @@ int main(int argc, char **argv) {
                   } else {
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (bachelorVec[bCounter] == Bachelor::pi) {
-                      reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "bach_PIDK<12"));
+                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
+                          inputDataSet->reduce("bach_PIDK<12"));
                     } else {
-                      reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "bach_PIDK>12"));
+                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
+                          inputDataSet->reduce("bach_PIDK>12"));
                     }
                     if (reducedInputDataSet == nullptr) {
-                      throw std::runtime_error("Could not reduce input dataset.");
+                      throw std::runtime_error(
+                          "Could not reduce input dataset.");
                     }
                     std::cout << "inputDataSet extracted... \n";
                     fullDataSet.append(*inputDataSet);
@@ -1825,14 +1832,18 @@ int main(int argc, char **argv) {
     auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
-    auto result = std::unique_ptr<RooFitResult>(
-        simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+    std::unique_ptr<RooFitResult> result;
+
+    if (fitBool == true) {
+      result = std::unique_ptr<RooFitResult>(
+          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+    }
 
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
       Plotting1D(id, *p, config, categories, *reducedDataSet, *simPdf,
-                 *result.get(), outputDir);
-      Plotting2D(id, *p, config, *reducedDataSet, *simPdf, outputDir);
+                 *result.get(), outputDir, fitBool);
+      Plotting2D(id, *p, config, *reducedDataSet, *simPdf, outputDir, fitBool);
     }
 
     result->Print("v");
@@ -1851,8 +1862,9 @@ int main(int argc, char **argv) {
 
   } else {
     if (toys == Toys::single) {
+
       RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
-                   outputDir);
+                   outputDir, fitBool);
     } else if (toys == Toys::many) {
       RunManyToys(config, categories, neutralVec, daughtersVec, chargeVec,
                   outputDir /* , nToys */);
