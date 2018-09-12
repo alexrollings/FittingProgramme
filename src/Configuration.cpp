@@ -3,7 +3,7 @@
 Configuration::Configuration()
     : buMass_("", "", 0, 0, ""),
       deltaMass_("", "", 0, 0, ""),
-      neutMass_("", "", 0, 0, ""),
+      pi0Mass_("", "", 0, 0, ""),
       d0hMass_("", "", 0, 0, ""),
       buPdgId_("", "", 0, 0, ""),
       bachPID_("", "", 0, 0, ""),
@@ -11,8 +11,13 @@ Configuration::Configuration()
       kPID_("", "", 0, 0, ""),
       BDT1_("", "", 0, 0, ""),
       BDT2_("", "", 0, 0, ""),
-      eventNumber_("", "", 0, 0, ""),
-      runNumber_("", "", 0, 0, "") {
+      hAngle_("", "", 0, 0, ""),
+      buFitMin_(5000),
+      buFitMax_(5800),
+      buFitBins_(160),
+      deltaFitMin_(0),
+      deltaFitMax_(250),
+      deltaFitBins_(125) {
 // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
@@ -20,24 +25,29 @@ Configuration::Configuration()
 
   buMass_.SetName("Bu_M_DTF");
   buMass_.SetTitle("m[Bu]");
-  buMass_.setMax(6000);
-  buMass_.setMin(4000);
-  buMass_.setBins(400);
+  // FOR MAKING THE ROODATASETS
+  // buMass_.setMax(6000);
+  // buMass_.setMin(4000);
+  // buMass_.setBins(400);
+  // FOR FITTING THE ROODATASETS
+  buMass_.setMax(5805);
+  buMass_.setMin(4995);
+  buMass_.setBins(162);
   buMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(250);
   deltaMass_.setMin(0);
-  deltaMass_.setBins(120);
+  deltaMass_.setBins(125);
   deltaMass_.setUnit(kMassUnit);
 
-  neutMass_.SetName("DstNeut_M");
-  neutMass_.SetTitle("m[#pi^{0}]");
-  neutMass_.setMax(185);
-  neutMass_.setMin(110);
-  neutMass_.setBins(75);
-  neutMass_.setUnit(kMassUnit);
+  pi0Mass_.SetName("Pi0_M");
+  pi0Mass_.SetTitle("m[#pi^{0}]");
+  pi0Mass_.setMax(185);
+  pi0Mass_.setMin(110);
+  pi0Mass_.setBins(75);
+  pi0Mass_.setUnit(kMassUnit);
 
   d0hMass_.SetName("D0h_M");
   d0hMass_.SetTitle("m[D^{0}h]");
@@ -82,21 +92,15 @@ Configuration::Configuration()
   BDT2_.setMin(-0.3);
   BDT2_.setUnit(kNoUnit);
 
-  eventNumber_.SetName("eventNumberD");
-  eventNumber_.SetTitle("eventNumber");
-  eventNumber_.setMax(5000000000);
-  eventNumber_.setMin(0);
-  eventNumber_.setUnit(kNoUnit);
-
-  runNumber_.SetName("runNumber");
-  runNumber_.SetTitle("runNumber");
-  runNumber_.setMax(250000);
-  runNumber_.setMin(0);
-  runNumber_.setUnit(kNoUnit);
+  hAngle_.SetName("DstNeut_Dst0_hAngle");
+  hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
+  hAngle_.setMax(1);
+  hAngle_.setMin(-1);
+  hAngle_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);
   variableArgSet_.add(deltaMass_);
-  variableArgSet_.add(neutMass_);
+  variableArgSet_.add(pi0Mass_);
   variableArgSet_.add(d0hMass_);
   variableArgSet_.add(buPdgId_);
   variableArgSet_.add(bachPID_);
@@ -104,55 +108,26 @@ Configuration::Configuration()
   variableArgSet_.add(kPID_);
   variableArgSet_.add(BDT1_);
   variableArgSet_.add(BDT2_);
-  variableArgSet_.add(eventNumber_);
-  variableArgSet_.add(runNumber_);
+  variableArgSet_.add(hAngle_);
 
-  categoryArgSet_.add(categories().polarity);
-  categoryArgSet_.add(categories().charge);
-  categoryArgSet_.add(categories().daughters);
-  categoryArgSet_.add(categories().bachelor);
-  categoryArgSet_.add(categories().year);
-  categoryArgSet_.add(categories().neutral);
   categoryArgSet_.add(categories().fitting);
+  categoryArgSet_.add(categories().charge);
 
-  fullArgSet_.add(buMass_);
-  fullArgSet_.add(deltaMass_);
+  fullArgSet_.add(variableArgSet_);
   fullArgSet_.add(categoryArgSet_);
+
+  fittingArgSet_.add(buMass_);
+  fittingArgSet_.add(deltaMass_);
 }
 // Categories is a class within a class !!!
 Configuration::Categories::Categories()
-    : polarity("polarity", "polarity"),
-      charge("charge", "charge"),
-      daughters("daughters", "daughters"),
-      bachelor("bachelor", "bachelor"),
-      neutral("neutral", "neutral"),
-      year("year", "year"),
-      fitting("fitting", "fitting") {
-  polarity.defineType(EnumToString(Polarity::up).c_str());
-  polarity.defineType(EnumToString(Polarity::down).c_str());
+    : fitting("fitting", "fitting"),
+      charge("charge", "charge") {
 
-  charge.defineType(EnumToString(Charge::plus).c_str());
-  charge.defineType(EnumToString(Charge::minus).c_str());
-  charge.defineType(EnumToString(Charge::total).c_str());
+  charge.defineType("plus");
+  charge.defineType("minus");
+  charge.defineType("total");
 
-  daughters.defineType(EnumToString(Daughters::kpi).c_str());
-  daughters.defineType(EnumToString(Daughters::kk).c_str());
-  daughters.defineType(EnumToString(Daughters::pipi).c_str());
-  daughters.defineType(EnumToString(Daughters::pik).c_str());
-
-  bachelor.defineType(EnumToString(Bachelor::pi).c_str());
-  bachelor.defineType(EnumToString(Bachelor::k).c_str());
-
-  year.defineType(EnumToString(Year::y2011).c_str());
-  year.defineType(EnumToString(Year::y2012).c_str());
-  year.defineType(EnumToString(Year::y2015).c_str());
-  year.defineType(EnumToString(Year::y2016).c_str());
-
-  neutral.defineType(EnumToString(Neutral::pi0).c_str());
-  neutral.defineType(EnumToString(Neutral::gamma).c_str());
-
-  // PlotOn only takes one category as an option therefore we need to encompass
-  // both bachelor and daughters in the same category
   fitting.defineType(ComposeFittingName(Neutral::pi0, Bachelor::pi,
                                         Daughters::kpi, Charge::plus)
                          .c_str());

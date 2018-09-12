@@ -100,12 +100,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
-    categories.year.setLabel(EnumToString(year).c_str());
-    categories.polarity.setLabel(EnumToString(polarity).c_str());
-    categories.bachelor.setLabel(EnumToString(bachelor).c_str());
-    categories.neutral.setLabel(EnumToString(neutral).c_str());
-    categories.daughters.setLabel(EnumToString(daughters).c_str());
-    categories.charge.setLabel(EnumToString(charge).c_str());
+    categories.charge.setLabel("total");
     categories.fitting.setLabel(ComposeFittingName(neutral, bachelor, daughters, charge).c_str());
 
     // Add category labels to 'extra' data set

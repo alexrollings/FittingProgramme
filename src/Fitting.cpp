@@ -107,7 +107,8 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
 void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
-                   TLegend &yieldLegend, std::string const &outputDir, bool fitBool) {
+                   TLegend &yieldLegend, std::string const &outputDir,
+                   bool fitBool) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -251,7 +252,11 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::ProjWData(categories.fitting, fullDataSet),
           RooFit::Components(pdf.pdfDelta_Comb()), RooFit::LineStyle(kDashed),
           RooFit::LineColor(kRed));
-      frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
+      if (neutral == Neutral::gamma) {
+        frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
+      } else {
+        frame->SetXTitle("m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+      }
     }
 
     std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
@@ -544,7 +549,10 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
           .c_str(),
       "", 1000, 800);
   dataHist2d->SetStats(0);
-  dataHist2d->Draw("colz");
+  if (neutral == Neutral::pi0) {
+    dataHist2d->GetYaxis()->SetTitle(
+        "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+  }
   dataHist2d->SetTitle(
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
        EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
@@ -610,7 +618,10 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
             .c_str(),
         "", 1000, 800);
     modelHist2d->SetStats(0);
-    modelHist2d->Draw("colz");
+    if (neutral == Neutral::pi0) {
+      modelHist2d->GetYaxis()->SetTitle(
+          "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
     modelHist2d->SetTitle(("B^{" + EnumToLabel(charge) +
                            "}#rightarrow#font[132]{[}#font[132]{[}" +
                            EnumToLabel(daughters, charge) +
@@ -660,6 +671,10 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
     resHist2d->Add(modelHist2d.get(), -1);
     resHist2d->Divide(errHist2d.get());
     canvasRes.cd();
+    if (neutral == Neutral::pi0) {
+      resHist2d->GetYaxis()->SetTitle(
+          "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
     resHist2d->GetZaxis()->SetTitle("Residual");
     resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
     resHist2d->SetStats(0);
@@ -681,6 +696,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
       ("simPdf_" + std::to_string(id)).c_str(),
       ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
 
+  std::vector<PdfBase *> pdfs;
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
   for (auto &d : daughtersVec) {
@@ -1155,8 +1171,9 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   std::unique_ptr<RooFitResult> result;
   if (fitBool == true) {
     result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
-        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(), RooFit::Strategy(2),
-        RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
+        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+        RooFit::Offset(true)));
     result->Print("v");
     std::cout << "Printed result.\n";
     TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
@@ -1178,7 +1195,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                outputDir, fitBool);
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
-
 }
 
 void SaveResultInTree(
@@ -1665,7 +1681,8 @@ int main(int argc, char **argv) {
       return 1;
     } else {
       if (!args("toys", toysArg)) {
-        std::cout << "Using default value -polarity=[" << toysArg << "].\n";
+        std::cout << "Using default value -toys=[" << toysArg << "].\n";
+        toys = Toys::none;
       } else if (toysArg == "single") {
         toys = Toys::single;
       } else if (toysArg == "many") {
@@ -1754,27 +1771,18 @@ int main(int argc, char **argv) {
   Configuration::Categories &categories = Configuration::Get().categories();
 
   if (toys == Toys::none) {
-    RooDataSet fullDataSet("dataset", "dataset", config.fullArgSet());
+    std::map<std::string, RooDataSet *> mapCategoryDataset;
 
     // Loop over all options in order to extract correct roodatasets
-    for (unsigned int yCounter = 0; yCounter < yearVec.size(); yCounter++) {
-      for (unsigned int pCounter = 0; pCounter < polarityVec.size();
-           pCounter++) {
-        for (unsigned int bCounter = 0; bCounter < bachelorVec.size();
-             bCounter++) {
-          for (unsigned int dCounter = 0; dCounter < daughtersVec.size();
-               dCounter++) {
-            for (unsigned int cCounter = 0; cCounter < chargeVec.size();
-                 cCounter++) {
-              for (unsigned int nCounter = 0; nCounter < neutralVec.size();
-                   nCounter++) {
-                std::string dsFile =
-                    inputDir + "/" +
-                    ComposeFilename(yearVec[yCounter], polarityVec[pCounter],
-                                    bachelorVec[bCounter], neutralVec[nCounter],
-                                    daughtersVec[dCounter],
-                                    chargeVec[cCounter]) +
-                    ".root";
+    for (auto &y : yearVec) {
+      for (auto &p : polarityVec) {
+        for (auto &b : bachelorVec) {
+          for (auto &n : neutralVec) {
+            for (auto &d : daughtersVec) {
+              for (auto &c : chargeVec) {
+                std::string dsFile = inputDir + "/" +
+                                     ComposeFilename(y, p, b, n, d, c) +
+                                     ".root";
                 std::cout << "Extracting RooDataSet from file ... " << dsFile
                           << "\n";
 
@@ -1789,21 +1797,28 @@ int main(int argc, char **argv) {
                   if (inputDataSet == nullptr) {
                     throw std::runtime_error("Data set does not exist.");
                   } else {
+                    std::cout << "inputDataSet extracted... \n";
+                    inputDataSet->Print();
                     RooDataSet *reducedInputDataSet = nullptr;
-                    if (bachelorVec[bCounter] == Bachelor::pi) {
-                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
-                          inputDataSet->reduce("bach_PIDK<12"));
+                    if (b == Bachelor::pi) {
+                      reducedInputDataSet =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "bach_PIDK<12&&Bu_M_DTF>4995&&Bu_M_DTF<5805&&"
+                              "BDT1>0.05&&BDT2>0&&pi_D_PIDK<-2&&K_D_PIDK>2"));
                     } else {
-                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
-                          inputDataSet->reduce("bach_PIDK>12"));
+                      reducedInputDataSet =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "bach_PIDK>12&&Bu_M_DTF>4995&&Bu_M_DTF<5805&&"
+                              "BDT1>0.05&&BDT2>0&&pi_D_PIDK<-2&&K_D_PIDK>2"));
                     }
                     if (reducedInputDataSet == nullptr) {
                       throw std::runtime_error(
                           "Could not reduce input dataset.");
                     }
-                    std::cout << "inputDataSet extracted... \n";
-                    fullDataSet.append(*inputDataSet);
-                    std::cout << "Appended to full data set...\n";
+                    reducedInputDataSet->Print();
+                    mapCategoryDataset.insert(std::make_pair(
+                        ComposeFittingName(n, b, d, c), reducedInputDataSet));
+                    std::cout << "Added dataset and category to map...\n";
                   }
                 }
               }
@@ -1815,17 +1830,19 @@ int main(int argc, char **argv) {
 
     int id = 0;
 
-    RooDataSet *reducedDataSet = nullptr;
-    reducedDataSet = dynamic_cast<RooDataSet *>(
-        fullDataSet.reduce("Bu_M_DTF>4995&&Bu_M_DTF<5805&&BDT1>0.05&&BDT2>0&&"
-                           "pi_D_PIDK<-2&&K_D_PIDK>2"));
-    if (reducedDataSet == nullptr) {
-      throw std::runtime_error("Could not reduce full dataset.");
-    }
+    RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
+                           RooFit::Index(categories.fitting),
+                           RooFit::Import(mapCategoryDataset));
 
     auto fullDataHist = std::unique_ptr<RooDataHist>(
-        reducedDataSet->binnedClone("fullDataHist", "fullDataHist"));
+        fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
+    if (fullDataHist == nullptr) {
+      throw std::runtime_error("Could not extact binned dataset.");
+    }
     auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
+    if (fullAbsData == nullptr) {
+      throw std::runtime_error("Could not cast to RooAbsData.");
+    }
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
@@ -1841,28 +1858,29 @@ int main(int argc, char **argv) {
 
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, categories, *reducedDataSet, *simPdf,
+      Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
                  *result.get(), outputDir, fitBool);
-      Plotting2D(id, *p, config, *reducedDataSet, *simPdf, outputDir, fitBool);
+      Plotting2D(id, *p, config, fullDataSet, *simPdf, outputDir, fitBool);
     }
 
-    result->Print("v");
-    std::cout << "Printed result.\n";
-    TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
-                              1000);
-    std::cout << "Created canvas.\n";
-    correlationCanvas.cd();
-    std::cout << "Extracting correlation histogram from result...\n";
-    result->correlationHist()->Draw("colz");
-    std::cout << "Extracted correlation histogram from result.\n";
-    correlationCanvas.Update();
-    std::cout << "Updated canvas.\n";
-    correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
-    std::cout << "Save to pdf file.\n";
+    if (fitBool == true) {
+      result->Print("v");
+      std::cout << "Printed result.\n";
+      TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
+                                1000);
+      std::cout << "Created canvas.\n";
+      correlationCanvas.cd();
+      std::cout << "Extracting correlation histogram from result...\n";
+      result->correlationHist()->Draw("colz");
+      std::cout << "Extracted correlation histogram from result.\n";
+      correlationCanvas.Update();
+      std::cout << "Updated canvas.\n";
+      correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+      std::cout << "Save to pdf file.\n";
+    }
 
   } else {
     if (toys == Toys::single) {
-
       RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
                    outputDir, fitBool);
     } else if (toys == Toys::many) {

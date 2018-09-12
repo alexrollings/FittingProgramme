@@ -20,13 +20,8 @@ class Configuration {
   }
   // What about categories???
   struct Categories {
-    RooCategory polarity;
-    RooCategory charge;
-    RooCategory daughters;
-    RooCategory bachelor;
-    RooCategory neutral;
-    RooCategory year;
     RooCategory fitting;
+    RooCategory charge;
     Categories();
     Categories(Categories const &) = delete;
     Categories(Categories &&) = delete;
@@ -34,9 +29,10 @@ class Configuration {
     Categories &operator=(Categories &&) = delete;
   };
   
+  Categories &categories() { return categories_; }
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &deltaMass() { return deltaMass_; }
-  RooRealVar &neutMass() { return neutMass_; }
+  RooRealVar &pi0Mass() { return pi0Mass_; }
   RooRealVar &d0hMass() { return d0hMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &bachPID() { return bachPID_; }
@@ -44,12 +40,17 @@ class Configuration {
   RooRealVar &kPID() { return kPID_; }
   RooRealVar &BDT1() { return BDT1_; }
   RooRealVar &BDT2() { return BDT2_; }
-  RooRealVar &eventNumber() { return eventNumber_; }
-  RooRealVar &runNumber() { return runNumber_; }
+  RooRealVar &hAngle() { return hAngle_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
+  RooArgSet &fittingArgSet() { return fittingArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
-  Categories &categories() { return categories_; }
+  double &buFitMin() { return buFitMin_; }
+  double &buFitMax() { return buFitMax_; }
+  double &buFitBins() { return buFitBins_; }
+  double &deltaFitMin() { return deltaFitMin_; }
+  double &deltaFitMax() { return deltaFitMax_; }
+  double &deltaFitBins() { return deltaFitBins_; }
 
  private:
   Configuration();
@@ -61,7 +62,7 @@ class Configuration {
   Categories categories_;
   RooRealVar buMass_;
   RooRealVar deltaMass_;
-  RooRealVar neutMass_;
+  RooRealVar pi0Mass_;
   RooRealVar d0hMass_;
   RooRealVar buPdgId_;
   RooRealVar bachPID_;
@@ -69,11 +70,17 @@ class Configuration {
   RooRealVar kPID_;
   RooRealVar BDT1_;
   RooRealVar BDT2_;
-  RooRealVar eventNumber_;
-  RooRealVar runNumber_;
+  RooRealVar hAngle_;
   RooArgSet variableArgSet_;
+  RooArgSet fittingArgSet_;
   RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
+  double buFitMin_;
+  double buFitMax_;
+  double buFitBins_;
+  double deltaFitMin_;
+  double deltaFitMax_;
+  double deltaFitBins_;
 };
 
 

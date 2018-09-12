@@ -78,6 +78,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   }
 
   std::cout << "Loading tree " << ttree << " from file " << path << "\n";
+  std::cout << "Entries in tree = " << tree->GetEntries() << "\n";
 
   // Create data set for our ttree variables
   RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree,
@@ -116,11 +117,6 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
-    categories.year.setLabel(EnumToString(year).c_str());
-    categories.polarity.setLabel(EnumToString(polarity).c_str());
-    categories.bachelor.setLabel(EnumToString(bachelor).c_str());
-    categories.neutral.setLabel(EnumToString(neutral).c_str());
-    categories.daughters.setLabel(EnumToString(daughters).c_str());
     categories.charge.setLabel(EnumToString(charge).c_str());
     categories.fitting.setLabel(ComposeFittingName(neutral, bachelor, daughters, charge).c_str());
 
@@ -140,6 +136,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   std::cout << "PlusDataSet contains variables: ";
   reducedPlusDataSet -> printArgs(std::cout);
   std::cout << "\n";
+  reducedPlusDataSet->Print();
  
   std::string dsPlusFileName =
       ComposeFilename(year, polarity, bachelor, neutral, daughters,
@@ -159,6 +156,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   std::cout << "MinusDataSet contains variables: ";
   reducedMinusDataSet -> printArgs(std::cout);
   std::cout << "\n";
+  reducedMinusDataSet->Print();
   std::string dsMinusFileName =
       ComposeFilename(year, polarity, bachelor, neutral, daughters,
                       Charge::minus) +
