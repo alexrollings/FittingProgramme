@@ -189,7 +189,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
               categories.fitting,
               ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
           RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_Bu2D0h()), RooFit::LineStyle(kDashed),
+          RooFit::Components(pdf.pdfBu_overRec()), RooFit::LineStyle(kDashed),
           RooFit::LineColor(kGreen));
       simPdf.plotOn(
           frame.get(),
@@ -199,6 +199,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::ProjWData(categories.fitting, fullDataSet),
           RooFit::Components(pdf.pdfBu_partialRec()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfBu_misRec()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kTeal));
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -234,7 +242,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
               categories.fitting,
               ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
           RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_Bu2D0h()), RooFit::LineStyle(kDashed),
+          RooFit::Components(pdf.pdfDelta_overRec()), RooFit::LineStyle(kDashed),
           RooFit::LineColor(kGreen));
       simPdf.plotOn(
           frame.get(),
@@ -244,6 +252,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::ProjWData(categories.fitting, fullDataSet),
           RooFit::Components(pdf.pdfDelta_partialRec()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdfDelta_misRec()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kTeal));
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -338,14 +354,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineStyle(kDashed);
   pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineWidth(2);
 
-  auto pdf_Bu2D0h_Hist = std::make_unique<TH1D>(
-      ("pdf_Bu2D0h_Hist" +
+  auto pdf_overRec_Hist = std::make_unique<TH1D>(
+      ("pdf_overRec_Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2D0h_Hist", 1, 0, 1);
-  pdf_Bu2D0h_Hist->SetLineColor(kGreen);
-  pdf_Bu2D0h_Hist->SetLineStyle(kDashed);
-  pdf_Bu2D0h_Hist->SetLineWidth(2);
+      "pdf_overRec_Hist", 1, 0, 1);
+  pdf_overRec_Hist->SetLineColor(kGreen);
+  pdf_overRec_Hist->SetLineStyle(kDashed);
+  pdf_overRec_Hist->SetLineWidth(2);
 
   auto pdf_partialRec_Hist = std::make_unique<TH1D>(
       ("pdf_partialRec_Hist" +
@@ -355,6 +371,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   pdf_partialRec_Hist->SetLineColor(kMagenta);
   pdf_partialRec_Hist->SetLineStyle(kDashed);
   pdf_partialRec_Hist->SetLineWidth(2);
+
+  auto pdf_misRec_Hist = std::make_unique<TH1D>(
+      ("pdf_misRec_Hist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pdf_misRec_Hist", 1, 0, 1);
+  pdf_misRec_Hist->SetLineColor(kTeal);
+  pdf_misRec_Hist->SetLineStyle(kDashed);
+  pdf_misRec_Hist->SetLineWidth(2);
 
   auto pdf_CombHist = std::make_unique<TH1D>(
       ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -382,9 +407,17 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           .c_str(),
       "l");
   legend.AddEntry(
-      pdf_Bu2D0h_Hist.get(),
+      pdf_overRec_Hist.get(),
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
        EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+          .c_str(),
+      "l");
+  legend.AddEntry(
+      pdf_misRec_Hist.get(),
+      ("B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, charge) +
+       "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
        EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
@@ -427,8 +460,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
-  std::stringstream Bu2D0hLegend;
+  std::stringstream overRecLegend;
   std::stringstream partialRecLegend;
+  std::stringstream misRecLegend;
   std::stringstream combLegend;
   Bu2Dst0h_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -450,12 +484,19 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
         << " events";
   }
-  Bu2D0hLegend << "B^{" + EnumToLabel(charge) +
+  overRecLegend << "B^{" + EnumToLabel(charge) +
                       "}#rightarrow#font[132]{[}#font[132]{[}" +
                       EnumToLabel(daughters, charge) +
                       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
                       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-               << pdf.yield_Bu2D0h().getVal()
+               << pdf.yield_overRec().getVal()
+               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+               << " events";
+  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) +
+                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
+                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
+               << pdf.yield_misRec().getVal()
                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
                << " events";
   switch (neutral) {
@@ -497,8 +538,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                        "l");
   yieldLegend.AddEntry(blankHist.get(),
                        Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(), Bu2D0hLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), overRecLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), partialRecLegend.str().c_str(), "l");
+  yieldLegend.AddEntry(blankHist.get(), misRecLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), combLegend.str().c_str(), "l");
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
@@ -1626,7 +1668,7 @@ int main(int argc, char **argv) {
   // them differently
 
   Toys toys;
-  bool fitBool = false;
+  bool fitBool = true;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.

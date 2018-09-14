@@ -14,7 +14,7 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
                  ("_Combinatorial Yield " +
                   ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                      .c_str(),
-                 10000, 0, 15000),
+                 200, 0, 1000),
       yields_(("yields_" +
                ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                   .c_str()),

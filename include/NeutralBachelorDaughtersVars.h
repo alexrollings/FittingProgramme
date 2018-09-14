@@ -29,11 +29,12 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi,
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> N_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> N_Bu2D0h_;
+  std::unique_ptr<RooRealVar> N_overRec_;
   std::unique_ptr<RooRealVar> N_partialRec_;
+  std::unique_ptr<RooRealVar> N_misRec_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> asym_Bu2D0h_;
+  std::unique_ptr<RooRealVar> asym_overRec_;
   std::unique_ptr<RooRealVar> asym_partialRec_;
 };
 
@@ -43,11 +44,12 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k,
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_overRec_;
   std::unique_ptr<RooFormulaVar> N_partialRec_;
+  std::unique_ptr<RooRealVar> N_misRec_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> asym_Bu2D0h_;
+  std::unique_ptr<RooRealVar> asym_overRec_;
   std::unique_ptr<RooRealVar> asym_partialRec_;
 };
 
@@ -56,11 +58,12 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooRealVar> N_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> N_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> N_Bu2D0h_;
+  std::unique_ptr<RooRealVar> N_overRec_;
   std::unique_ptr<RooRealVar> N_partialRec_;
+  std::unique_ptr<RooRealVar> N_misRec_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> asym_Bu2D0h_;
+  std::unique_ptr<RooRealVar> asym_overRec_;
   std::unique_ptr<RooRealVar> asym_partialRec_;
 };
 
@@ -69,11 +72,12 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_overRec_;
   std::unique_ptr<RooFormulaVar> N_partialRec_;
+  std::unique_ptr<RooRealVar> N_misRec_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooRealVar> asym_Bu2D0h_;
+  std::unique_ptr<RooRealVar> asym_overRec_;
   std::unique_ptr<RooRealVar> asym_partialRec_;
 };
 
@@ -117,15 +121,16 @@ class NeutralBachelorDaughtersVars {
     return *impl_.N_Bu2Dst0h_Dst02D0gamma_;
   }
   RooAbsReal &N_Bu2Dst0h_Dst02D0pi0() { return *impl_.N_Bu2Dst0h_Dst02D0pi0_; }
-  RooAbsReal &N_Bu2D0h() { return *impl_.N_Bu2D0h_; }
+  RooAbsReal &N_overRec() { return *impl_.N_overRec_; }
   RooAbsReal &N_partialRec() { return *impl_.N_partialRec_; }
+  RooAbsReal &N_misRec() { return *impl_.N_misRec_; }
   RooRealVar &asym_Bu2Dst0h_Dst02D0gamma() {
     return *impl_.asym_Bu2Dst0h_Dst02D0gamma_;
   }
   RooRealVar &asym_Bu2Dst0h_Dst02D0pi0() {
     return *impl_.asym_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &asym_Bu2D0h() { return *impl_.asym_Bu2D0h_; }
+  RooRealVar &asym_overRec() { return *impl_.asym_overRec_; }
   RooRealVar &asym_partialRec() { return *impl_.asym_partialRec_; }
 
  private:
@@ -161,11 +166,11 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
-      asym_Bu2D0h_(new RooRealVar(
-          ("asym_Bu2D0h_" +
+      asym_overRec_(new RooRealVar(
+          ("asym_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          ("asymmetry variable Bu2D0h " +
+          ("asymmetry variable overRec " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
@@ -193,11 +198,11 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           100000, 0, 500000)),
-      N_Bu2D0h_(new RooRealVar(
-          ("N_Bu2D0h_" +
+      N_overRec_(new RooRealVar(
+          ("N_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          ("Total number of Bu2D0h-like events " +
+          ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           20000, 0, 50000)),
@@ -206,6 +211,14 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           ("Total number of partially reconstructed events " +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
+              .c_str(),
+          20000, 0, 50000)),
+      N_misRec_(new RooRealVar(
+          ("N_misRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
           20000, 0, 50000)) {}
@@ -229,11 +242,11 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
-      asym_Bu2D0h_(new RooRealVar(
-          ("asym_Bu2D0h_" +
+      asym_overRec_(new RooRealVar(
+          ("asym_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
-          ("asymmetry variable Bu2D0h " +
+          ("asymmetry variable overRec " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
@@ -271,19 +284,19 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
                          .N_Bu2Dst0h_Dst02D0pi0(),
                      NeutralVars<Neutral::gamma>::Get(uniqueId)
                          .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0()))),
-      N_Bu2D0h_(new RooFormulaVar(
-          ("N_Bu2D0h_" +
+      N_overRec_(new RooFormulaVar(
+          ("N_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
-          ("Total number of Bu2D0h-like events, for " +
+          ("Total number of overRec-like events, for " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
-                         .N_Bu2D0h(),
+                         .N_overRec(),
                      NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2D0h()))),
+                         .ratioDst0KDst0pi_overRec()))),
       N_partialRec_(new RooFormulaVar(
           ("N_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
@@ -296,7 +309,15 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
                                                   daughters>::Get(uniqueId)
                          .N_partialRec(),
                      NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_partialRec()))) {}
+                         .ratioDst0KDst0pi_partialRec()))),
+      N_misRec_(new RooRealVar(
+          ("N_misRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of misRec-like events " +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
+              .c_str(),
+          1600, 0, 4000)) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
@@ -310,11 +331,11 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
-      asym_Bu2D0h_(new RooRealVar(
-          ("asym_Bu2D0h_" +
+      asym_overRec_(new RooRealVar(
+          ("asym_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          ("asymmetry variable Bu2D0h " +
+          ("asymmetry variable overRec " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
@@ -334,15 +355,15 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0pi0-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          50000, 0, 100000)),
-      N_Bu2D0h_(new RooRealVar(
-          ("N_Bu2D0h_" +
+          1500, 0, 10000)),
+      N_overRec_(new RooRealVar(
+          ("N_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          ("Total number of Bu2D0h-like events " +
+          ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          20000, 0, 50000)),
+          2500, 0, 10000)),
       N_partialRec_(new RooRealVar(
           ("N_partialRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -350,7 +371,15 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of partially reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          20000, 0, 50000)) {}
+          2500, 0, 10000)),
+      N_misRec_(new RooRealVar(
+          ("N_misRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of misRec-like events " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          2500, 0, 10000)) {}
 
 
 template <Daughters daughters>
@@ -365,11 +394,11 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
-      asym_Bu2D0h_(new RooRealVar(
-          ("asym_Bu2D0h_" +
+      asym_overRec_(new RooRealVar(
+          ("asym_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          ("asymmetry variable Bu2D0h " +
+          ("asymmetry variable overRec " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           0.001, -1.0, 1.0)),
@@ -395,19 +424,19 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
                          .N_Bu2Dst0h_Dst02D0pi0(),
                      NeutralVars<Neutral::pi0>::Get(uniqueId)
                          .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0()))),
-      N_Bu2D0h_(new RooFormulaVar(
-          ("N_Bu2D0h_" +
+      N_overRec_(new RooFormulaVar(
+          ("N_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          ("Total number of Bu2D0h-like events, for " +
+          ("Total number of overRec-like events, for " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
-                         .N_Bu2D0h(),
+                         .N_overRec(),
                      NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2D0h()))),
+                         .ratioDst0KDst0pi_overRec()))),
       N_partialRec_(new RooFormulaVar(
           ("N_partialRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -420,4 +449,12 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
                                                   daughters>::Get(uniqueId)
                          .N_partialRec(),
                      NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_partialRec()))) {}
+                         .ratioDst0KDst0pi_partialRec()))),
+      N_misRec_(new RooRealVar(
+          ("N_misRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of misRec-like events " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          200, 0, 1000)) {}
