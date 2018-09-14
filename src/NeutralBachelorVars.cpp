@@ -9,16 +9,7 @@ template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- SIGNAL -------------------- //
-    : sigmaDelta_Bu2Dst0h_Dst02D0gamma_(
-          new RooRealVar(("sigmaDelta_Bu2Dst0h_Dst02D0gamma_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma of Bu2Dst0h_Dst02D0gamma Gaussian " +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         // 20, 0, 40)),
-                         5, 0, 10)),
-      pdfDelta_Bu2Dst0h_Dst02D0gamma_(
+    : pdfDelta_Bu2Dst0h_Dst02D0gamma_(
           ("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -28,7 +19,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0gamma(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0gamma_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0gamma()),
       a0SigmaBu_Bu2Dst0h_Dst02D0gamma_(
           ("a0SigmaBu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -98,14 +90,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2Dst0h_Dst02D0gamma_,
                               Configuration::Get().buMass())),
       // -------------------- PARTIAL PI0 -------------------- //
-      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
-          new RooRealVar(("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         8, 0, 10)),
       pdfDelta_Bu2Dst0h_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -116,7 +100,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0pi0_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0SigmaBu_Bu2Dst0h_Dst02D0pi0_(
           ("a0SigmaBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -199,24 +184,17 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).pdfDelta_Bu2D0h(),
           RooFit::Conditional(pdfBu_Bu2D0h_, Configuration::Get().buMass())),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
-      sigmaDelta_partialRec_(
-          new RooRealVar(("sigmaDelta_partialRec_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma of partialRec Gaussian " +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         5, 0, 10)),
-      pdfDelta_partialRec_(("pdfDelta_partialRec_" +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                               .c_str(),
-                           ("partialRec Delta PDF " +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                               .c_str(),
-                           Configuration::Get().deltaMass(),
-                           NeutralVars<Neutral::gamma>::Get(uniqueId)
-                               .meanDelta_Bu2Dst0h_Dst02D0gamma(),
-                           *sigmaDelta_partialRec_),
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          ("partialRec Delta PDF " +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .meanDelta_Bu2Dst0h_Dst02D0gamma(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).sigmaDelta_partialRec()),
       a0SigmaBu_partialRec_(
           ("a0SigmaBu_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -276,20 +254,7 @@ template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- SIGNAL -------------------- //
-    : sigmaDelta_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
-          ("sigmaDelta_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          ("Sigma of Bu2Dst0h_Dst02D0gamma Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .sigmaDelta_Bu2Dst0h_Dst02D0gamma(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0gamma()))),
-      pdfDelta_Bu2Dst0h_Dst02D0gamma_(
+    : pdfDelta_Bu2Dst0h_Dst02D0gamma_(
           ("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -299,7 +264,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0gamma(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0gamma_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0gamma()),
       a0SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
       a1SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
       a2SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
@@ -315,7 +281,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_Bu2Dst0h_Dst02D0gamma(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0gamma()))),
+                  .relativeBuWidth_Bu2Dst0h_Dst02D0gamma()))),
       pdfBu_Bu2Dst0h_Dst02D0gamma_(
           ("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -338,19 +304,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2Dst0h_Dst02D0gamma_,
                               Configuration::Get().buMass())),
       // -------------------- PARTIAL PI0 -------------------- //
-      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(new RooFormulaVar(
-          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .sigmaDelta_Bu2Dst0h_Dst02D0pi0(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0pi0()))),
       pdfDelta_Bu2Dst0h_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -361,7 +314,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0pi0_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
       a1SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
       a2SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
@@ -377,7 +331,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_Bu2Dst0h_Dst02D0pi0(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0pi0()))),
+                  .relativeBuWidth_Bu2Dst0h_Dst02D0pi0()))),
       pdfBu_Bu2Dst0h_Dst02D0pi0_(
           ("pdfBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -412,7 +366,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_Bu2D0h(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2D0h()))),
+                  .relativeBuWidth_Bu2D0h()))),
       pdfBu_Bu2D0h_(
           ("pdfBu_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -432,29 +386,17 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2D0h_, Configuration::Get().buMass())),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
       // //
-      sigmaDelta_partialRec_(new RooFormulaVar(
-          ("sigmaDelta_partialRec_" +
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          ("Sigma of partialRec Gaussian " +
+          ("partialRec Delta PDF " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .sigmaDelta_partialRec(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_Bu2D0h()))),
-      pdfDelta_partialRec_(("pdfDelta_partialRec_" +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                               .c_str(),
-                           ("partialRec Delta PDF " +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                               .c_str(),
-                           Configuration::Get().deltaMass(),
-                           NeutralVars<Neutral::gamma>::Get(uniqueId)
-                               .meanDelta_Bu2Dst0h_Dst02D0gamma(),
-                           *sigmaDelta_partialRec_),
+          Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId)
+              .meanDelta_Bu2Dst0h_Dst02D0gamma(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).sigmaDelta_partialRec()),
       a0SigmaBu_partialRec_(),
       a1SigmaBu_partialRec_(),
       a2SigmaBu_partialRec_(),
@@ -470,7 +412,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_partialRec(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeWidth_partialRec()))),
+                  .relativeBuWidth_partialRec()))),
       pdfBu_partialRec_(
           ("pdfBu_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -495,16 +437,7 @@ template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- SIGNAL -------------------- //
-    : sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
-          new RooRealVar(("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         // 20, 0, 40)),
-                         2, 0, 5)),
-      pdfDelta_Bu2Dst0h_Dst02D0pi0_(
+    : pdfDelta_Bu2Dst0h_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
@@ -514,7 +447,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0pi0_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0SigmaBu_Bu2Dst0h_Dst02D0pi0_(
           ("a0SigmaBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -586,7 +520,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                               Configuration::Get().buMass())),
       // -------------------- NO CROSS FEED BECAUSE OF VETO --------------------
       // //
-      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(nullptr),
       pdfDelta_Bu2Dst0h_Dst02D0gamma_(),
       a0SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
       a1SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
@@ -619,24 +552,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_Bu2D0h(),
           RooFit::Conditional(pdfBu_Bu2D0h_, Configuration::Get().buMass())),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
-      sigmaDelta_partialRec_(
-          new RooRealVar(("sigmaDelta_partialRec_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma of partialRec Gaussian " +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         2, 0, 5)),
-      pdfDelta_partialRec_(("pdfDelta_partialRec_" +
-                            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                               .c_str(),
-                           ("partialRec Delta PDF " +
-                            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                               .c_str(),
-                           Configuration::Get().deltaMass(),
-                           NeutralVars<Neutral::pi0>::Get(uniqueId)
-                               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-                           *sigmaDelta_partialRec_),
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("partialRec Delta PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .meanDelta_Bu2Dst0h_Dst02D0pi0(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).sigmaDelta_partialRec()),
       a0SigmaBu_partialRec_(("a0SigmaBu_partialRec_" +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                                 .c_str(),
@@ -693,20 +619,7 @@ template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- SIGNAL -------------------- //
-    : sigmaDelta_Bu2Dst0h_Dst02D0pi0_(new RooFormulaVar(
-          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                  .sigmaDelta_Bu2Dst0h_Dst02D0pi0(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0pi0()))),
-      pdfDelta_Bu2Dst0h_Dst02D0pi0_(
+    : pdfDelta_Bu2Dst0h_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
@@ -716,7 +629,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-          *sigmaDelta_Bu2Dst0h_Dst02D0pi0_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
       a1SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
       a2SigmaBu_Bu2Dst0h_Dst02D0pi0_(),
@@ -732,7 +646,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_Bu2Dst0h_Dst02D0pi0(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .relativeWidth_Bu2Dst0h_Dst02D0pi0()))),
+                  .relativeBuWidth_Bu2Dst0h_Dst02D0pi0()))),
       pdfBu_Bu2Dst0h_Dst02D0pi0_(
           ("pdfBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -755,7 +669,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                               Configuration::Get().buMass())),
       // -------------------- NO CROSS FEED BECAUSE OF VETO --------------------
       // //
-      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(nullptr),
       pdfDelta_Bu2Dst0h_Dst02D0gamma_(),
       a0SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
       a1SigmaBu_Bu2Dst0h_Dst02D0gamma_(),
@@ -775,7 +688,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_Bu2D0h(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .relativeWidth_Bu2D0h()))),
+                  .relativeBuWidth_Bu2D0h()))),
       pdfBu_Bu2D0h_(
           ("pdfBu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
@@ -793,29 +706,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2D0h_, Configuration::Get().buMass())),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
       // //
-      sigmaDelta_partialRec_(new RooFormulaVar(
-          ("sigmaDelta_partialRec_" +
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          ("Sigma of partialRec Gaussian " +
+          ("partialRec Delta PDF " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                  .sigmaDelta_partialRec(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .relativeWidth_partialRec()))),
-      pdfDelta_partialRec_(("pdfDelta_partialRec_" +
-                            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                               .c_str(),
-                           ("partialRec Delta PDF " +
-                            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                               .c_str(),
-                           Configuration::Get().deltaMass(),
-                           NeutralVars<Neutral::pi0>::Get(uniqueId)
-                               .meanDelta_Bu2Dst0h_Dst02D0pi0(),
-                           *sigmaDelta_partialRec_),
+          Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .meanDelta_Bu2Dst0h_Dst02D0pi0(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).sigmaDelta_partialRec()),
       a0SigmaBu_partialRec_(),
       a1SigmaBu_partialRec_(),
       a2SigmaBu_partialRec_(),
@@ -831,7 +732,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .sigmaBu_partialRec(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .relativeWidth_partialRec()))),
+                  .relativeBuWidth_partialRec()))),
       pdfBu_partialRec_(
           ("pdfBu_partialRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))

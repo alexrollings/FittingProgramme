@@ -51,8 +51,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a1MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a2MeanBu_Bu2Dst0h_Dst02D0gamma_)),
-      relativeWidth_Bu2Dst0h_Dst02D0gamma_(
-          ("relativeWidth_Bu2Dst0h_Dst02D0gamma_" +
+      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(
+          ("sigmaDelta_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Sigma of Bu2Dst0h_Dst02D0gamma Gaussian " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          5, 0, 10),
+      relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(
+          ("relativeBuWidth_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0gamma "
@@ -107,8 +115,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a1MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
-      relativeWidth_Bu2Dst0h_Dst02D0pi0_(
-          ("relativeWidth_Bu2Dst0h_Dst02D0pi0_" +
+      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
+          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          8, 0, 10),
+      relativeBuWidth_Bu2Dst0h_Dst02D0pi0_(
+          ("relativeBuWidth_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0pi0 "
@@ -167,8 +183,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Mean of Bu2D0h m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_Bu2D0h_)),
-      relativeWidth_Bu2D0h_(
-          ("relativeWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma))
+      relativeBuWidth_Bu2D0h_(
+          ("relativeBuWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in Bu2D0h "
            "mode " +
@@ -183,6 +199,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.081, 0.0, 0.1),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
+      sigmaDelta_partialRec_(
+          ("sigmaDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Sigma of partialRec Gaussian " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          5, 0, 10),
       a0MeanBu_partialRec_(
           ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -212,8 +235,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(),
           RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
                      a2MeanBu_partialRec_)),
-      relativeWidth_partialRec_(
-          ("relativeWidth_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+      relativeBuWidth_partialRec_(
+          ("relativeBuWidth_partialRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in partialRec "
            "mode " +
@@ -295,6 +319,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                       ComposeName(uniqueId, Neutral::pi0))
                                          .c_str(),
                                      144, 139, 149),
+      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
+          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2, 0, 5),
       a0MeanBu_Bu2Dst0h_Dst02D0pi0_(
           ("a0MeanBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -329,8 +361,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_,
                      a1MeanBu_Bu2Dst0h_Dst02D0pi0_,
                      a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
-      relativeWidth_Bu2Dst0h_Dst02D0pi0_(
-          ("relativeWidth_Bu2Dst0h_Dst02D0pi0_" +
+      relativeBuWidth_Bu2Dst0h_Dst02D0pi0_(
+          ("relativeBuWidth_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0pi0 "
@@ -349,11 +381,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // -------------------- NO CROSS FEED BECAUSE OF VETO --------------------
       // //
       meanDelta_Bu2Dst0h_Dst02D0gamma_(),
+      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(),
       a0MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a1MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a2MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       meanBu_Bu2Dst0h_Dst02D0gamma_(),
-      relativeWidth_Bu2Dst0h_Dst02D0gamma_(),
+      relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(),
       // -------------------- BU2D0H BKG -------------------- //
       thresholdDelta_Bu2D0h_(
@@ -398,8 +431,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Mean of Bu2D0h m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_Bu2D0h_)),
-      relativeWidth_Bu2D0h_(
-          ("relativeWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0))
+      relativeBuWidth_Bu2D0h_(
+          ("relativeBuWidth_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in Bu2D0h "
            "mode " +
@@ -414,6 +447,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.081, 0.0, 0.1),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
+      sigmaDelta_partialRec_(
+          ("sigmaDelta_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Sigma of partialRec Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2, 0, 5),
       a0MeanBu_partialRec_(
           ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -439,15 +479,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           -0.004, -0.1, 0.1),
       // -0.007, -0.1, 0.1),
       meanBu_partialRec_(
-          ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
+          ("meanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of partialRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(a0MeanBu_partialRec_, a1MeanBu_partialRec_,
                      a2MeanBu_partialRec_)),
-      relativeWidth_partialRec_(
-          ("relativeWidth_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+      relativeBuWidth_partialRec_(
+          ("relativeBuWidth_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("Relative Width of k w.r.t. pi modes in partialRec "
            "mode " +
@@ -455,8 +494,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.95),
       ratioDst0KDst0pi_partialRec_(
-          ("ratioDst0KDst0pi_partialRec_" +
-           ComposeName(uniqueId, Neutral::pi0))
+          ("ratioDst0KDst0pi_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("Ratio of Dst0K yield w.r.t. Dst0pi n partialRec mode " +
            ComposeName(uniqueId, Neutral::pi0))

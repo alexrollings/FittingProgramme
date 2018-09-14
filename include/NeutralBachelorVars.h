@@ -36,9 +36,6 @@ class NeutralBachelorVars {
   }
 
   int uniqueId() { return uniqueId_; }
-  RooAbsReal &sigmaDelta_Bu2Dst0h_Dst02D0gamma() {
-    return *sigmaDelta_Bu2Dst0h_Dst02D0gamma_;
-  }
   RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0gamma() {
     return a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
   }
@@ -58,9 +55,6 @@ class NeutralBachelorVars {
     return pdfBu_Bu2Dst0h_Dst02D0gamma_;
   }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() { return pdf_Bu2Dst0h_Dst02D0gamma_; }
-  RooAbsReal &sigmaDelta_Bu2Dst0h_Dst02D0pi0() {
-    return *sigmaDelta_Bu2Dst0h_Dst02D0pi0_;
-  }
   RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0pi0() {
     return a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
   }
@@ -83,7 +77,6 @@ class NeutralBachelorVars {
   RooAbsReal &sigmaBu_Bu2D0h() { return *sigmaBu_Bu2D0h_; }
   RooGaussian &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
   RooProdPdf &pdf_Bu2D0h() { return pdf_Bu2D0h_; }
-  RooAbsReal &sigmaDelta_partialRec() { return *sigmaDelta_partialRec_; }
   RooRealVar &a0SigmaBu_partialRec() { return a0SigmaBu_partialRec_; }
   RooRealVar &a1SigmaBu_partialRec() { return a1SigmaBu_partialRec_; }
   RooRealVar &a2SigmaBu_partialRec() { return a2SigmaBu_partialRec_; }
@@ -94,7 +87,6 @@ class NeutralBachelorVars {
 
  private:
   int uniqueId_;
-  std::unique_ptr<RooAbsReal> sigmaDelta_Bu2Dst0h_Dst02D0gamma_;
   RooGaussian pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0gamma_;
@@ -102,7 +94,6 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0gamma_;
   RooGaussian pdfBu_Bu2Dst0h_Dst02D0gamma_;
   RooProdPdf pdf_Bu2Dst0h_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> sigmaDelta_Bu2Dst0h_Dst02D0pi0_;
   RooGaussian pdfDelta_Bu2Dst0h_Dst02D0pi0_;
   RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
   RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
@@ -113,7 +104,6 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2D0h_;
   RooGaussian pdfBu_Bu2D0h_;
   RooProdPdf pdf_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> sigmaDelta_partialRec_;
   RooGaussian pdfDelta_partialRec_;
   RooRealVar a0SigmaBu_partialRec_;
   RooRealVar a1SigmaBu_partialRec_;
