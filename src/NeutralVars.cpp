@@ -16,6 +16,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           141, 136, 146),
+      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(
+          ("sigmaDelta_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Sigma of Bu2Dst0h_Dst02D0gamma Gaussian " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          5, 0, 10),
+      pdfDelta_Bu2Dst0h_Dst02D0gamma_(("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
+                                       ComposeName(uniqueId, Neutral::gamma))
+                                          .c_str(),
+                                      ("Bu2Dst0h_Dst02D0gamma Delta PDF " +
+                                       ComposeName(uniqueId, Neutral::gamma))
+                                          .c_str(),
+                                      Configuration::Get().deltaMass(),
+                                      meanDelta_Bu2Dst0h_Dst02D0gamma(),
+                                      sigmaDelta_Bu2Dst0h_Dst02D0gamma()),
       a0MeanBu_Bu2Dst0h_Dst02D0gamma_(
           ("a0MeanBu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -51,14 +68,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a1MeanBu_Bu2Dst0h_Dst02D0gamma_,
                      a2MeanBu_Bu2Dst0h_Dst02D0gamma_)),
-      sigmaDelta_Bu2Dst0h_Dst02D0gamma_(
-          ("sigmaDelta_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Sigma of Bu2Dst0h_Dst02D0gamma Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          5, 0, 10),
       relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(
           ("relativeBuWidth_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -84,6 +93,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),
                                      80, 70, 90),
+      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
+          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          8, 0, 10),
+      pdfDelta_Bu2Dst0h_Dst02D0pi0_(("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("Bu2Dst0h_Dst02D0pi0 Delta PDF " +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    Configuration::Get().deltaMass(),
+                                    meanDelta_Bu2Dst0h_Dst02D0pi0(),
+                                    sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0MeanBu_Bu2Dst0h_Dst02D0pi0_(("a0MeanBu_Bu2Dst0h_Dst02D0pi0_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
@@ -115,14 +141,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   RooArgList(a0MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a1MeanBu_Bu2Dst0h_Dst02D0pi0_,
                                              a2MeanBu_Bu2Dst0h_Dst02D0pi0_)),
-      sigmaDelta_Bu2Dst0h_Dst02D0pi0_(
-          ("sigmaDelta_Bu2Dst0h_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Sigma of Bu2Dst0h_Dst02D0pi0 Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          8, 0, 10),
       relativeBuWidth_Bu2Dst0h_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -140,41 +158,38 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           0.081, 0.0, 0.1),
-      // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
-      thresholdDelta_overRec_(
-          ("thresholdDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma))
+      // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
+      thresholdDelta_bkg_(
+          ("thresholdDelta_bkg_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          (" Delta_overRec thershold " +
-           ComposeName(uniqueId, Neutral::gamma))
+          (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           43),
-      cDelta_overRec_(
-          ("cDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_overRec c parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
+      cDelta_bkg_(
+          ("cDelta_bkg_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // 10, 0.001, 20),
           29, 0, 35),
-      aDelta_overRec_(
-          ("aDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_overRec a parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
+      aDelta_bkg_(
+          ("aDelta_bkg_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // -0.5, -1, 1),
           -0.044, -1, 1),
-      bDelta_overRec_(
-          ("bDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_overRec b parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
+      bDelta_bkg_(
+          ("bDelta_bkg_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // 0.000001),  // -0.5, 0.5),
           0.00473, -1, 1),
+      // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_overRec_,
-          cDelta_overRec_, aDelta_overRec_, bDelta_overRec_),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       a0MeanBu_overRec_(
           ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a0 of mean of overRec m[Bu] PDF " +
@@ -209,6 +224,36 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           5, 0, 10),
+      fracPdfDelta_partialRec_(
+          ("fracPdfDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Fraction of flat pdf w.r.t. peaking pdf for partially "
+           "reconstructed bkg " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          0.5, 0, 1),
+      pdfFlatDelta_partialRec_(
+          ("pdfFlatDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Delta_partialRec flat bkg " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
+      pdfPeakDelta_partialRec_(
+          ("pdfPeakDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("partialRec Delta peaking PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          Configuration::Get().deltaMass(), meanDelta_Bu2Dst0h_Dst02D0gamma_,
+          sigmaDelta_partialRec_),
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("partialRec Delta PDF " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          RooArgSet(pdfPeakDelta_partialRec_, pdfFlatDelta_partialRec_),
+          fracPdfDelta_partialRec_),
       a0MeanBu_partialRec_(
           ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -256,40 +301,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.081, 0.0, 0.1),
       // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
-      thresholdDelta_misRec_(
-          ("thresholdDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          (" Delta_misRec thershold " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          43),
-      cDelta_misRec_(
-          ("cDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_misRec c parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // 10, 0.001, 20),
-          29, 0, 35),
-      aDelta_misRec_(
-          ("aDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_misRec a parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // -0.5, -1, 1),
-          -0.044, -1, 1),
-      bDelta_misRec_(
-          ("bDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_misRec b parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // 0.000001),  // -0.5, 0.5),
-          0.00473, -1, 1),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_misRec_,
-          cDelta_misRec_, aDelta_misRec_, bDelta_misRec_),
+          ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       a0MeanBu_misRec_(
           ("a0MeanBu_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a0 of mean of misRec m[Bu] PDF " +
@@ -302,40 +318,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_misRec_)),
       // -------------------- DST0D0 BACKGROUND -------------------- //
-      thresholdDelta_Comb_(
-          ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Delta _Combinatorial thershold " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          43),
-      cDelta_Comb_(
-          ("cDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta _Combinatorial c parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // 10, 0.001, 20),
-          29, 0, 35),
-      aDelta_Comb_(
-          ("aDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta _Combinatorial a parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // -0.5, -1, 1),
-          -0.044, -1, 1),
-      bDelta_Comb_(
-          ("bDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Delta _Combinatorial b parameter " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // 0.000001),  // -0.5, 0.5),
-          0.00473, -1, 1),
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_Comb_, cDelta_Comb_,
-          aDelta_Comb_, bDelta_Comb_),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       // -------------------- EXPONENTIAL BACKGROUND -------------------- //
       a0LambdaBu_Comb_(
           ("a0LambdaBu_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
@@ -379,6 +367,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           3, 0, 5),
+      pdfDelta_Bu2Dst0h_Dst02D0pi0_(("pdfDelta_Bu2Dst0h_Dst02D0pi0_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      ("Bu2Dst0h_Dst02D0pi0 Delta PDF " +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      Configuration::Get().deltaMass(),
+                                      meanDelta_Bu2Dst0h_Dst02D0pi0(),
+                                      sigmaDelta_Bu2Dst0h_Dst02D0pi0()),
       a0MeanBu_Bu2Dst0h_Dst02D0pi0_(
           ("a0MeanBu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -430,51 +427,46 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           0.081, 0.0, 0.1),
-      // -------------------- NO CROSS FEED BECAUSE OF VETO --------------------
-      // //
+      // ------------------ NO CROSS FEED BECAUSE OF VETO ------------------ //
       meanDelta_Bu2Dst0h_Dst02D0gamma_(),
       sigmaDelta_Bu2Dst0h_Dst02D0gamma_(),
+      pdfDelta_Bu2Dst0h_Dst02D0gamma_(),
       a0MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a1MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       a2MeanBu_Bu2Dst0h_Dst02D0gamma_(),
       meanBu_Bu2Dst0h_Dst02D0gamma_(),
       relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(),
-      // -------------------- OVER RECONSTRUCTED BKG -------------------- //
-      thresholdDelta_overRec_(
-          ("thresholdDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          (" Delta_overRec thershold " +
-           ComposeName(uniqueId, Neutral::pi0))
+      // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
+      thresholdDelta_bkg_(
+          ("thresholdDelta_bkg_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           134.5),
-      cDelta_overRec_(
-          ("cDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_overRec c parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
+      cDelta_bkg_(
+          ("cDelta_bkg_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 10, 0.001, 20),
           3.14),
-      aDelta_overRec_(
-          ("aDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_overRec a parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
+      aDelta_bkg_(
+          ("aDelta_bkg_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // -0.5, -1, 1),
           -0.99),
-      bDelta_overRec_(
-          ("bDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_overRec b parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
+      bDelta_bkg_(
+          ("bDelta_bkg_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           // 0.01),  // -0.5, 0.5),
           -0.058),
+      // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_overRec_,
-          cDelta_overRec_, aDelta_overRec_, bDelta_overRec_),
+          ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       a0MeanBu_overRec_(
           ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean of overRec m[Bu] PDF " +
@@ -508,7 +500,37 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Sigma of partialRec Gaussian " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          6, 0, 10),
+          3, 0, 5),
+      fracPdfDelta_partialRec_(
+          ("fracPdfDelta_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Fraction of flat pdf w.r.t. peaking pdf for partially "
+           "reconstructed bkg " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.5, 0, 1),
+      pdfFlatDelta_partialRec_(
+          ("pdfFlatDelta_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Delta_partialRec flat bkg " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
+      pdfPeakDelta_partialRec_(
+          ("pdfPeakDelta_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("partialRec Delta peaking PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), meanDelta_Bu2Dst0h_Dst02D0pi0_,
+          sigmaDelta_partialRec_),
+      pdfDelta_partialRec_(
+          ("pdfDelta_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("partialRec Delta PDF " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          RooArgSet(pdfPeakDelta_partialRec_, pdfFlatDelta_partialRec_),
+          fracPdfDelta_partialRec_),
       a0MeanBu_partialRec_(
           ("a0MeanBu_partialRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -556,40 +578,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.081, 0.0, 0.1),
       // ------------------ MIS RECONSTRUCTED BACKGROUND ------------------ //
-      thresholdDelta_misRec_(
-          ("thresholdDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          (" Delta_misRec thershold " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          134.5),
-      cDelta_misRec_(
-          ("cDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_misRec c parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          // 10, 0.001, 20),
-          3.14),
-      aDelta_misRec_(
-          ("aDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_misRec a parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          // -0.5, -1, 1),
-          -0.99),
-      bDelta_misRec_(
-          ("bDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_misRec b parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          // 0.01),  // -0.5, 0.5),
-          -0.058),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_misRec_,
-          cDelta_misRec_, aDelta_misRec_, bDelta_misRec_),
+          ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       a0MeanBu_misRec_(
           ("a0MeanBu_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean of misRec m[Bu] PDF " +
@@ -602,39 +595,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(a0MeanBu_misRec_)),
       // -------------------- DST0D0 BACKGROUND -------------------- //
-      thresholdDelta_Comb_(
-          ("thresholdDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Delta _Combinatorial thershold " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          134.5),
-      cDelta_Comb_(
-          ("cDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta _Combinatorial c parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          // 10, 0.001, 20),
-          3.14),
-      aDelta_Comb_(
-          ("aDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta _Combinatorial a parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -0.99),
-      bDelta_Comb_(
-          ("bDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta _Combinatorial b parameter " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          // 0.01),  // -0.5, 0.5),
-          -0.058),
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), thresholdDelta_Comb_, cDelta_Comb_,
-          aDelta_Comb_, bDelta_Comb_),
+          Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
+          aDelta_bkg_, bDelta_bkg_),
       // -------------------- EXPONENTIAL BACKGROUND -------------------- //
       a0LambdaBu_Comb_(
           ("a0LambdaBu_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),

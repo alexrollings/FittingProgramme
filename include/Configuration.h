@@ -2,6 +2,7 @@
 #include "RooCategory.h"
 #include "RooRealVar.h"
 #include "RooConstVar.h"
+#include "RooArgSet.h"
 #include <string>
 
 enum class Polarity { up, down };
