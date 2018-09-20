@@ -51,6 +51,15 @@ class NeutralBachelorVars {
   RooGaussian &pdfBu_Bu2Dst0h_Dst02D0gamma() {
     return pdfBu_Bu2Dst0h_Dst02D0gamma_;
   }
+  // RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0gamma() {
+  //   return *sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  // }
+  // RooFormulaVar &sigmaLBu_Bu2Dst0h_Dst02D0gamma() {
+  //   return sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  // }
+  // RooCruijff &pdfBu_Bu2Dst0h_Dst02D0gamma() {
+  //   return pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  // }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() { return pdf_Bu2Dst0h_Dst02D0gamma_; }
   RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0pi0() {
     return a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
@@ -67,6 +76,15 @@ class NeutralBachelorVars {
   RooGaussian &pdfBu_Bu2Dst0h_Dst02D0pi0() {
     return pdfBu_Bu2Dst0h_Dst02D0pi0_;
   }
+  // RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0pi0() {
+  //   return *sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  // }
+  // RooFormulaVar &sigmaLBu_Bu2Dst0h_Dst02D0pi0() {
+  //   return sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  // }
+  // RooCruijff &pdfBu_Bu2Dst0h_Dst02D0pi0() {
+  //   return pdfBu_Bu2Dst0h_Dst02D0pi0_;
+  // }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() { return pdf_Bu2Dst0h_Dst02D0pi0_; }
   RooAbsReal &sigmaBu_overRec() { return *sigmaBu_overRec_; }
   RooGaussian &pdfBu_overRec() { return pdfBu_overRec_; }
@@ -88,12 +106,18 @@ class NeutralBachelorVars {
   RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0gamma_;
   RooGaussian pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  // std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  // RooFormulaVar sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  // RooCruijff pdfBu_Bu2Dst0h_Dst02D0gamma_;
   RooProdPdf pdf_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
   RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
   RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0pi0_;
   RooGaussian pdfBu_Bu2Dst0h_Dst02D0pi0_;
+  // std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  // RooFormulaVar sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  // RooCruijff pdfBu_Bu2Dst0h_Dst02D0pi0_;
   RooProdPdf pdf_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> sigmaBu_overRec_;
   RooGaussian pdfBu_overRec_;

@@ -24,6 +24,7 @@ class RooRealVar;
 
 class RooCruijff : public RooAbsPdf {
 public:
+  RooCruijff() { };
   RooCruijff(const char *name, const char *title, RooAbsReal& _m,
        RooAbsReal& _m0, RooAbsReal& _sigmaL,  RooAbsReal& _sigmaR,
        RooAbsReal& _alphaL, RooAbsReal& _alphaR);

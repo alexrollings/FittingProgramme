@@ -213,7 +213,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of partially reconstructed events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          20000, 0, 50000)),
+          40000, 0, 50000)),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
