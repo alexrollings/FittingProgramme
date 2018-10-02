@@ -7,6 +7,7 @@
 #include "RooConstVar.h"
 #include "RooFormulaVar.h"
 #include "RooGaussian.h"
+#include "RooCBShape.h"
 #include "RooProdPdf.h"
 
 // Bachelor
@@ -36,56 +37,47 @@ class NeutralBachelorVars {
   }
 
   int uniqueId() { return uniqueId_; }
-  RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0gamma() {
-    return a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooAbsReal &sigmaLBu_Bu2Dst0h_Dst02D0pi0() {
+    return *sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &a1SigmaBu_Bu2Dst0h_Dst02D0gamma() {
-    return a1SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0pi0() {
+    return *sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &a2SigmaBu_Bu2Dst0h_Dst02D0gamma() {
-    return a2SigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape &pdfLBu_Bu2Dst0h_Dst02D0pi0() {
+    return pdfLBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooAbsReal &sigmaBu_Bu2Dst0h_Dst02D0gamma() {
-    return *sigmaBu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape &pdfRBu_Bu2Dst0h_Dst02D0pi0() {
+    return pdfRBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooGaussian &pdfBu_Bu2Dst0h_Dst02D0gamma() {
-    return pdfBu_Bu2Dst0h_Dst02D0gamma_;
-  }
-  // RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0gamma() {
-  //   return *sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
-  // }
-  // RooFormulaVar &sigmaLBu_Bu2Dst0h_Dst02D0gamma() {
-  //   return sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
-  // }
-  // RooCruijff &pdfBu_Bu2Dst0h_Dst02D0gamma() {
-  //   return pdfBu_Bu2Dst0h_Dst02D0gamma_;
-  // }
-  RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() { return pdf_Bu2Dst0h_Dst02D0gamma_; }
-  RooRealVar &a0SigmaBu_Bu2Dst0h_Dst02D0pi0() {
-    return a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooRealVar &a1SigmaBu_Bu2Dst0h_Dst02D0pi0() {
-    return a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooRealVar &a2SigmaBu_Bu2Dst0h_Dst02D0pi0() {
-    return a2SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooAbsReal &sigmaBu_Bu2Dst0h_Dst02D0pi0() {
-    return *sigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooGaussian &pdfBu_Bu2Dst0h_Dst02D0pi0() {
+  RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0pi0() {
     return pdfBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  // RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0pi0() {
-  //   return *sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
-  // }
-  // RooFormulaVar &sigmaLBu_Bu2Dst0h_Dst02D0pi0() {
-  //   return sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
-  // }
-  // RooCruijff &pdfBu_Bu2Dst0h_Dst02D0pi0() {
-  //   return pdfBu_Bu2Dst0h_Dst02D0pi0_;
-  // }
   RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() { return pdf_Bu2Dst0h_Dst02D0pi0_; }
+  RooAbsReal &sigmaLBu_Bu2Dst0h_Dst02D0gamma() {
+    return *sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAbsReal &sigmaRBu_Bu2Dst0h_Dst02D0gamma() {
+    return *sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooCBShape &pdfLBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfLBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooCBShape &pdfRBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfRBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAddPdf &pdfLRBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfLRBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAbsReal &sigmaWideBu_Bu2Dst0h_Dst02D0gamma() {
+    return *sigmaWideBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooGaussian &pdfWideBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfWideBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() {
+    return pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() { return pdf_Bu2Dst0h_Dst02D0gamma_; }
   RooAbsReal &sigmaBu_overRec() { return *sigmaBu_overRec_; }
   RooGaussian &pdfBu_overRec() { return pdfBu_overRec_; }
   RooProdPdf &pdf_overRec() { return pdf_overRec_; }
@@ -101,24 +93,21 @@ class NeutralBachelorVars {
 
  private:
   int uniqueId_;
-  RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0gamma_;
-  RooGaussian pdfBu_Bu2Dst0h_Dst02D0gamma_;
-  // std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
-  // RooFormulaVar sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
-  // RooCruijff pdfBu_Bu2Dst0h_Dst02D0gamma_;
-  RooProdPdf pdf_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a0SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a1SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a2SigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooAbsReal> sigmaBu_Bu2Dst0h_Dst02D0pi0_;
-  RooGaussian pdfBu_Bu2Dst0h_Dst02D0pi0_;
-  // std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
-  // RooFormulaVar sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
-  // RooCruijff pdfBu_Bu2Dst0h_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  RooCBShape pdfLBu_Bu2Dst0h_Dst02D0pi0_;
+  RooCBShape pdfRBu_Bu2Dst0h_Dst02D0pi0_;
+  RooAddPdf pdfBu_Bu2Dst0h_Dst02D0pi0_;
   RooProdPdf pdf_Bu2Dst0h_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> sigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> sigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape pdfLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape pdfRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooAddPdf pdfLRBu_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> sigmaWideBu_Bu2Dst0h_Dst02D0gamma_;
+  RooGaussian pdfWideBu_Bu2Dst0h_Dst02D0gamma_;
+  RooAddPdf pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooProdPdf pdf_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> sigmaBu_overRec_;
   RooGaussian pdfBu_overRec_;
   RooProdPdf pdf_overRec_;

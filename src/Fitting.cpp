@@ -137,6 +137,100 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
 
+  // Everything to be plotted has to be declared outside of a loop, in the scope
+  // of the canvas
+  RooHist *pullHist = nullptr;
+  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+  if (fitBool == true) {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::LineColor(kBlue));
+
+    pullHist = frame->RooPlot::pullHist();
+
+    // In 2D, we have to plot the 2D PDF on the frame
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0pi0().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    if (neutral == Neutral::gamma) {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0gamma().GetName()),
+          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
+          RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    }
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
+    //     RooFit::NumCPU(8, 2));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdf_partialRec()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kMagenta), RooFit::Precision(1e-3),
+    //     RooFit::NumCPU(8, 2));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
+    //     RooFit::NumCPU(8, 2));
+    // simPdf.plotOn(
+    //     frame.get(),
+    //     RooFit::Slice(
+    //         categories.fitting,
+    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+    //     RooFit::ProjWData(categories.fitting, fullDataSet),
+    //     RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
+    //     RooFit::LineColor(kRed), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+
+    if (variable == Variable::delta) {
+      if (neutral == Neutral::gamma) {
+        frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
+      } else {
+        frame->SetXTitle(
+            "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+      }
+    } else {
+      frame->SetXTitle(
+          ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
+    }
+
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
+                        ComposeName(id, neutral, bachelor, daughters, charge))
+                           .c_str());
+    pullFrame->SetTitle("");
+  }
+
+  // --------------- plot onto canvas ---------------------
+
   TCanvas canvas(("canvas_" + EnumToString(variable) + "_" +
                   ComposeName(id, neutral, bachelor, daughters, charge))
                      .c_str(),
@@ -154,154 +248,17 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
 
+  // Everything to be plotted has to be declared outside of a loop, in the scope
+  // of the canvas
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
   if (fitBool == true) {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::LineColor(kBlue));
-
-    // auto pullHist = std::unique_ptr<RooHist>(
-    //     dynamic_cast<RooHist *>(frame->RooPlot::pullHist()));
-    // if (pullHist == nullptr) {
-    //   throw std::runtime_error("\npullHist empty.\n");
-    // }
-    RooHist *pullHist = frame->RooPlot::pullHist();
-
-    if (variable == Variable::bu) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0pi0()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-      if (neutral == Neutral::gamma) {
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
-                                    ComposeFittingName(neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
-                      RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma()),
-                      RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
-      }
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_overRec()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kGreen));
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_misRec()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kTeal));
-      std::cout << "\n\n\n ----------------------------------- \n\n\n";
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_Comb()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kRed));
-      std::cout << "\n\n\n ----- PROJECTING PARTIAL REC ------ \n\n\n";
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfBu_partialRec().GetName()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
-      std::cout << "\n\n\n ----------------------------------- \n\n\n";
-      frame->SetXTitle(
-          ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
-    } else {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0pi0()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue));
-      if (neutral == Neutral::gamma) {
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
-                                    ComposeFittingName(neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
-                      RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma()),
-                      RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange));
-      }
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_overRec()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kGreen));
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_partialRec()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta));
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_misRec()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kTeal));
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdfDelta_Comb()), RooFit::LineStyle(kDashed),
-          RooFit::LineColor(kRed));
-      if (neutral == Neutral::gamma) {
-        frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
-      } else {
-        frame->SetXTitle("m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-      }
-    }
-
-    std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-
-    pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
-                        ComposeName(id, neutral, bachelor, daughters, charge))
-                           .c_str());
-    pullFrame->SetTitle("");
-
-    // --------------- plot onto canvas ---------------------
-
+    // Zero line on error plot.
     // .get() gets the raw pointer from underneath the smart pointer
     // FIX THIS
     // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
-
-    // Zero line on error plot.
-    TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-    zeroLine.SetLineColor(kRed);
-    zeroLine.SetLineStyle(kDashed);
 
     canvas.cd();
     pad2.cd();
@@ -1188,23 +1145,29 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   RooRandom::randomGenerator()->SetSeed(15);
   TRandom3 random(0);
   int id = 0;
+  std::cout << "1" << std::endl;
   auto p = MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec,
                                chargeVec);
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
   std::vector<PdfBase *> pdfs = p.second;
+  std::cout << "2" << std::endl;
 
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+  std::cout << "3" << std::endl;
 
   auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy));
+  std::cout << "4" << std::endl;
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
 
+  std::cout << "5" << std::endl;
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
   // ShiftN_Dst0h(daughtersVec, neutralVec, id);
+  std::cout << "6" << std::endl;
 
   auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -1212,12 +1175,14 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 
   simPdfToFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
+  std::cout << "7" << std::endl;
 
   auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
 
   simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
+  std::cout << "8" << std::endl;
 
   std::unique_ptr<RooFitResult> result;
 
@@ -1226,7 +1191,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
     result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-        RooFit::Offset(true)));
+        RooFit::Offset(true), RooFit::NumCPU(8,2)));
     result->Print("v");
     std::cout << "Printed result.\n";
     TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
@@ -1327,31 +1292,17 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           NeutralVars<Neutral::pi0> &nVars_pi0 =
               NeutralVars<Neutral::pi0>::Get(id);
           varNames.emplace_back(
-              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_pi0.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_pi0.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           varNames.emplace_back(
-              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_pi0.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_pi0.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           varNames.emplace_back(
-              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_pi0.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
-          varNames.emplace_back(
-              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          varNames.emplace_back(
-              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          varNames.emplace_back(
-              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_pi0.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -1438,55 +1389,29 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
           NeutralVars<Neutral::gamma> &nVars_gamma =
               NeutralVars<Neutral::gamma>::Get(id);
           varNames.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+              nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+              nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
           varNames.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+              nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+              nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
           varNames.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
+              nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().getVal());
+              nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
           varNames.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           varNames.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           varNames.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
+              nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
           varPredictions.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
-          varNames.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().getVal());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varPredictions.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().getVal());
+              nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -1615,7 +1540,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     auto result = std::shared_ptr<RooFitResult>(
         simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                           RooFit::Offset(true)));
+                           RooFit::Offset(true), RooFit::NumCPU(8,2)));
     // auto result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
     //     *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
     resultVec.emplace_back(result);
@@ -1893,7 +1818,9 @@ int main(int argc, char **argv) {
 
     if (fitBool == true) {
       result = std::unique_ptr<RooFitResult>(
-          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
+          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+        RooFit::Offset(true), RooFit::NumCPU(8,2)));
     }
 
     // Loop over daughters again to plot correct PDFs
