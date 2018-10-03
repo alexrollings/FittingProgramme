@@ -1,15 +1,15 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "RooDstD0BG.h"
-#include "RooExponential.h"
-#include "RooGaussian.h"
+#include "RooAddPdf.h"
 #include "RooCBShape.h"
 #include "RooCruijff.h"
+#include "RooDstD0BG.h"
+#include "RooExponential.h"
+#include "RooFormulaVar.h"
+#include "RooGaussian.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
-#include "RooAddPdf.h"
-#include "RooFormulaVar.h"
 #include "RooRealVar.h"
 
 // Templated classes/functions mean that the compiler will automatically create
@@ -144,18 +144,10 @@ class NeutralVars {
   RooRealVar &a2SigmaRBu_Bu2Dst0h_Dst02D0pi0() {
     return a2SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &aLBu_Bu2Dst0h_Dst02D0pi0() {
-    return aLBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooRealVar &aRBu_Bu2Dst0h_Dst02D0pi0() {
-    return aRBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooRealVar &nLBu_Bu2Dst0h_Dst02D0pi0() {
-    return nLBu_Bu2Dst0h_Dst02D0pi0_;
-  }
-  RooRealVar &nRBu_Bu2Dst0h_Dst02D0pi0() {
-    return nRBu_Bu2Dst0h_Dst02D0pi0_;
-  }
+  RooRealVar &aLBu_Bu2Dst0h_Dst02D0pi0() { return aLBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &aRBu_Bu2Dst0h_Dst02D0pi0() { return aRBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &nLBu_Bu2Dst0h_Dst02D0pi0() { return nLBu_Bu2Dst0h_Dst02D0pi0_; }
+  RooRealVar &nRBu_Bu2Dst0h_Dst02D0pi0() { return nRBu_Bu2Dst0h_Dst02D0pi0_; }
   RooRealVar &fracLRPdfBu_Bu2Dst0h_Dst02D0pi0() {
     return fracLRPdfBu_Bu2Dst0h_Dst02D0pi0_;
   }
@@ -269,8 +261,27 @@ class NeutralVars {
   RooRealVar &bDelta_bkg() { return bDelta_bkg_; }
   RooRealVar &cDelta_bkg() { return cDelta_bkg_; }
   RooDstD0BG &pdfDelta_overRec() { return pdfDelta_overRec_; }
-  RooRealVar &a0MeanBu_overRec() { return a0MeanBu_overRec_; }
-  RooPolyVar &meanBu_overRec() { return meanBu_overRec_; }
+  // RooRealVar &a0MeanBu_overRec() { return a0MeanBu_overRec_; }
+  // RooPolyVar &meanBu_overRec() { return meanBu_overRec_; }
+  RooRealVar &a0Mean1Bu_overRec() { return a0Mean1Bu_overRec_; }
+  RooRealVar &a1Mean1Bu_overRec() { return a1Mean1Bu_overRec_; }
+  RooRealVar &a2Mean1Bu_overRec() { return a2Mean1Bu_overRec_; }
+  RooPolyVar &mean1Bu_overRec() { return mean1Bu_overRec_; }
+  RooRealVar &a0Mean2Bu_overRec() { return a0Mean2Bu_overRec_; }
+  RooRealVar &a1Mean2Bu_overRec() { return a1Mean2Bu_overRec_; }
+  RooRealVar &a2Mean2Bu_overRec() { return a2Mean2Bu_overRec_; }
+  RooPolyVar &mean2Bu_overRec() { return mean2Bu_overRec_; }
+  RooRealVar &a0SigmaLBu_overRec() { return a0SigmaLBu_overRec_; }
+  RooRealVar &a1SigmaLBu_overRec() { return a1SigmaLBu_overRec_; }
+  RooRealVar &a2SigmaLBu_overRec() { return a2SigmaLBu_overRec_; }
+  RooRealVar &a0SigmaRBu_overRec() { return a0SigmaRBu_overRec_; }
+  RooRealVar &a1SigmaRBu_overRec() { return a1SigmaRBu_overRec_; }
+  RooRealVar &a2SigmaRBu_overRec() { return a2SigmaRBu_overRec_; }
+  RooRealVar &aLBu_overRec() { return aLBu_overRec_; }
+  RooRealVar &aRBu_overRec() { return aRBu_overRec_; }
+  RooRealVar &nLBu_overRec() { return nLBu_overRec_; }
+  RooRealVar &nRBu_overRec() { return nRBu_overRec_; }
+  RooRealVar &fracLRPdfBu_overRec() { return fracLRPdfBu_overRec_; }
   RooRealVar &ratioDst0KDst0pi_overRec() { return ratioDst0KDst0pi_overRec_; }
   RooRealVar &relativeBuWidth_overRec() { return relativeBuWidth_overRec_; }
   RooRealVar &sigmaDelta_partialRec() { return sigmaDelta_partialRec_; }
@@ -285,7 +296,9 @@ class NeutralVars {
   RooRealVar &ratioDst0KDst0pi_partialRec() {
     return ratioDst0KDst0pi_partialRec_;
   }
-  RooRealVar &relativeBuWidth_partialRec() { return relativeBuWidth_partialRec_; }
+  RooRealVar &relativeBuWidth_partialRec() {
+    return relativeBuWidth_partialRec_;
+  }
   RooDstD0BG &pdfDelta_misRec() { return pdfDelta_misRec_; }
   RooRealVar &a0MeanBu_misRec() { return a0MeanBu_misRec_; }
   RooPolyVar &meanBu_misRec() { return meanBu_misRec_; }
@@ -294,7 +307,6 @@ class NeutralVars {
   RooPolyVar &lambdaBu_Comb() { return lambdaBu_Comb_; }
   RooExponential &pdfBu_Comb() { return pdfBu_Comb_; }
   RooProdPdf &pdf_Comb() { return pdf_Comb_; }
-
 
  private:
   // Indicate if only used by one neutral
@@ -370,12 +382,29 @@ class NeutralVars {
   RooRealVar bDelta_bkg_;
   RooRealVar cDelta_bkg_;
   RooDstD0BG pdfDelta_overRec_;
-  RooRealVar a0MeanBu_overRec_;
-  RooPolyVar meanBu_overRec_;
+  RooRealVar a0Mean1Bu_overRec_;
+  RooRealVar a1Mean1Bu_overRec_;
+  RooRealVar a2Mean1Bu_overRec_;
+  RooPolyVar mean1Bu_overRec_;
+  RooRealVar a0Mean2Bu_overRec_;
+  RooRealVar a1Mean2Bu_overRec_;
+  RooRealVar a2Mean2Bu_overRec_;
+  RooPolyVar mean2Bu_overRec_;
+  RooRealVar a0SigmaLBu_overRec_;
+  RooRealVar a1SigmaLBu_overRec_;
+  RooRealVar a2SigmaLBu_overRec_;
+  RooRealVar a0SigmaRBu_overRec_;
+  RooRealVar a1SigmaRBu_overRec_;
+  RooRealVar a2SigmaRBu_overRec_;
+  RooRealVar aLBu_overRec_;
+  RooRealVar aRBu_overRec_;
+  RooRealVar nLBu_overRec_;
+  RooRealVar nRBu_overRec_;
+  RooRealVar fracLRPdfBu_overRec_;
   RooRealVar ratioDst0KDst0pi_overRec_;
   RooRealVar relativeBuWidth_overRec_;
   RooRealVar sigmaDelta_partialRec_;
-  RooRealVar fracPdfDelta_partialRec_; 
+  RooRealVar fracPdfDelta_partialRec_;
   RooDstD0BG pdfFlatDelta_partialRec_;
   RooGaussian pdfPeakDelta_partialRec_;
   RooAddPdf pdfDelta_partialRec_;

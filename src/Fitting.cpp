@@ -174,41 +174,38 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
           RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     }
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
-    //     RooFit::NumCPU(8, 2));
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_partialRec()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kMagenta), RooFit::Precision(1e-3),
-    //     RooFit::NumCPU(8, 2));
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
-    //     RooFit::NumCPU(8, 2));
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kRed), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kGreen), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+      // simPdf.plotOn(
+      //     frame.get(),
+      //     RooFit::Slice(
+      //         categories.fitting,
+      //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+      //     RooFit::ProjWData(categories.fitting, fullDataSet),
+      //     RooFit::Components(pdf.pdf_partialRec()),
+      //     RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+      // simPdf.plotOn(
+      //     frame.get(),
+      //     RooFit::Slice(
+      //         categories.fitting,
+      //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+      //     RooFit::ProjWData(categories.fitting, fullDataSet),
+      //     RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+      //     RooFit::LineColor(kTeal), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+      // simPdf.plotOn(
+      //     frame.get(),
+      //     RooFit::Slice(
+      //         categories.fitting,
+      //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+      //     RooFit::ProjWData(categories.fitting, fullDataSet),
+      //     RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
+      //     RooFit::LineColor(kRed), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
 
     if (variable == Variable::delta) {
       if (neutral == Neutral::gamma) {
@@ -230,7 +227,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   }
 
   // --------------- plot onto canvas ---------------------
-
+  
   TCanvas canvas(("canvas_" + EnumToString(variable) + "_" +
                   ComposeName(id, neutral, bachelor, daughters, charge))
                      .c_str(),
@@ -1142,32 +1139,26 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Daughters> const &daughtersVec,
                   std::vector<Charge> const &chargeVec,
                   std::string const &outputDir, bool fitBool) {
-  RooRandom::randomGenerator()->SetSeed(15);
+  RooRandom::randomGenerator()->SetSeed(30);
   TRandom3 random(0);
   int id = 0;
-  std::cout << "1" << std::endl;
   auto p = MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec,
                                chargeVec);
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
   std::vector<PdfBase *> pdfs = p.second;
-  std::cout << "2" << std::endl;
 
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
-  std::cout << "3" << std::endl;
 
   auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy));
-  std::cout << "4" << std::endl;
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
 
-  std::cout << "5" << std::endl;
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
   // ShiftN_Dst0h(daughtersVec, neutralVec, id);
-  std::cout << "6" << std::endl;
 
   auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       ("simPdfFit_" + std::to_string(id)).c_str(),
@@ -1175,14 +1166,12 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 
   simPdfToFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
-  std::cout << "7" << std::endl;
 
   auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
 
   simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
-  std::cout << "8" << std::endl;
 
   std::unique_ptr<RooFitResult> result;
 

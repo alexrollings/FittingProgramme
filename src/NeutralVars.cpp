@@ -527,17 +527,167 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
           aDelta_bkg_, bDelta_bkg_),
-      a0MeanBu_overRec_(
-          ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean of overRec m[Bu] PDF " +
+      // a0MeanBu_overRec_(
+      //     ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+      //     ("a0 of mean of overRec m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     // 5400, 5350, 5450),
+      //     5400, 5350, 5450),
+      // meanBu_overRec_(
+      //     ("meanBu_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+      //     Configuration::Get().deltaMass(), RooArgList(a0MeanBu_overRec_)),
+      a0Mean1Bu_overRec_(("a0Mean1Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a0 of mean1 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // 5030, 4950, 5550),
+                                    5.2641e+03),
+      a1Mean1Bu_overRec_(("a1Mean1Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a1 of mean1 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // 3, 0, 10),
+                                    3.2770e+00),
+      a2Mean1Bu_overRec_(("a2Mean1Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a2 of mean1 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // -0.007, -0.1, 0.1),
+                                    -8.1688e-03),
+      mean1Bu_overRec_(("mean1Bu_overRec_" +
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  ("Mean1 of overRec m[Bu]" +
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  Configuration::Get().deltaMass(),
+                                  RooArgList(a0Mean1Bu_overRec_,
+                                             a1Mean1Bu_overRec_,
+                                             a2Mean1Bu_overRec_)),
+      a0Mean2Bu_overRec_(("a0Mean2Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a0 of mean2 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // 5030, 4950, 5550),
+                                    5.4396e+03),
+      a1Mean2Bu_overRec_(("a1Mean2Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a1 of mean2 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // 3, 0, 10),
+                                    -1.4957e-02),
+      a2Mean2Bu_overRec_(("a2Mean2Bu_overRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    ("a2 of mean2 of overRec m[Bu]" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    // -0.007, -0.1, 0.1),
+                                    5.8425e-04),
+      mean2Bu_overRec_(("mean2Bu_overRec_" +
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  ("Mean2 of overRec m[Bu]" +
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  Configuration::Get().deltaMass(),
+                                  RooArgList(a0Mean2Bu_overRec_,
+                                             a1Mean2Bu_overRec_,
+                                             a2Mean2Bu_overRec_)),
+      a0SigmaLBu_overRec_(
+          ("a0SigmaLBu_overRec_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5400, 5350, 5450),
-      meanBu_overRec_(
-          ("meanBu_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean of overRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
+          ("a0 of sigmaL of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0MeanBu_overRec_)),
+          // 32, -100, 100),
+          4.5119e+00),
+      a1SigmaLBu_overRec_(
+          ("a1SigmaLBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a1 of sigmaL of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          // 0.09, -10, 10),
+          1.2461e-01),
+      a2SigmaLBu_overRec_(
+          ("a2SigmaLBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a2 of sigmaL of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          // 0.0036, -0.01, 0.01),
+          1.8108e-03),
+      a0SigmaRBu_overRec_(
+          ("a0SigmaRBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a0 of sigmaR of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          -1.0667e+01),
+      a1SigmaRBu_overRec_(
+          ("a1SigmaRBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a1 of sigmaR of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          7.5421e-01),
+      a2SigmaRBu_overRec_(
+          ("a2SigmaRBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a2 of sigmaR of overRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          -2.2312e-03),
+      aLBu_overRec_(
+          ("aLBu_overRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("aL of overRec " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          3.7878e+00),  //2.3, 0, 5),
+      aRBu_overRec_(
+          ("aRBu_overRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("aR of overRec " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          -3.1173e+00),  //4.6, 0, 5),
+      nLBu_overRec_(
+          ("nLBu_overRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("nL of overRec " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          2.7083e+00),  //3.4, 0, 5),
+      nRBu_overRec_(
+          ("nRBu_overRec_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("nR of overRec " + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          3.7229e+01),  //3.5, 0, 5),
+      fracLRPdfBu_overRec_(
+          ("fracLRPdfBu_overRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("Fraction of left w.r.t. right Bu PDF in overRec " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          5.9029e-01),
       relativeBuWidth_overRec_(
           ("relativeBuWidth_overRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -545,14 +695,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            "mode " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          0.95),
+          1),
       ratioDst0KDst0pi_overRec_(
           ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Ratio of Dst0K yield w.r.t. Dst0pi n overRec mode " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          0.081, 0.0, 0.1),
+          0.07768), //, 0.0, 0.1),
       // -------------------- PARTIALLY RECONSTRUCTED BKG --------------------
       sigmaDelta_partialRec_(
           ("sigmaDelta_partialRec_" + ComposeName(uniqueId, Neutral::gamma))
@@ -637,7 +787,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           0.081, 0.0, 0.1),
-      // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
+      // ------------------ MIS-RECONSTRUCTED BACKGROUND ------------------ //
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
@@ -985,17 +1135,36 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           Configuration::Get().deltaMass(), thresholdDelta_bkg_, cDelta_bkg_,
           aDelta_bkg_, bDelta_bkg_),
-      a0MeanBu_overRec_(
-          ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a0 of mean of overRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          5520, 5470, 5570),
-      meanBu_overRec_(
-          ("meanBu_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Mean of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(a0MeanBu_overRec_)),
+      // a0MeanBu_overRec_(
+      //     ("a0MeanBu_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+      //     ("a0 of mean of overRec m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::pi0))
+      //         .c_str(),
+      //     5520, 5470, 5570),
+      // meanBu_overRec_(
+      //     ("meanBu_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+      //     ("Mean of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
+      //         .c_str(),
+      //     Configuration::Get().deltaMass(), RooArgList(a0MeanBu_overRec_)),
+      a0Mean1Bu_overRec_(),
+      a1Mean1Bu_overRec_(),
+      a2Mean1Bu_overRec_(),
+      mean1Bu_overRec_(),
+      a0Mean2Bu_overRec_(),
+      a1Mean2Bu_overRec_(),
+      a2Mean2Bu_overRec_(),
+      mean2Bu_overRec_(),
+      a0SigmaLBu_overRec_(),
+      a1SigmaLBu_overRec_(),
+      a2SigmaLBu_overRec_(),
+      a0SigmaRBu_overRec_(),
+      a1SigmaRBu_overRec_(),
+      a2SigmaRBu_overRec_(),
+      aLBu_overRec_(),
+      aRBu_overRec_(),
+      nLBu_overRec_(),
+      nRBu_overRec_(),
+      fracLRPdfBu_overRec_(),
       relativeBuWidth_overRec_(
           ("relativeBuWidth_overRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),

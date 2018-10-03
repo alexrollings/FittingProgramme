@@ -45,7 +45,7 @@ class PdfBase {
   virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const = 0;
   virtual RooProdPdf &pdf_overRec() const = 0;
   virtual RooDstD0BG &pdfDelta_overRec() const = 0;
-  virtual RooGaussian &pdfBu_overRec() const = 0;
+  virtual RooAddPdf &pdfBu_overRec() const = 0;
   virtual RooProdPdf &pdf_partialRec() const = 0;
   virtual RooAddPdf &pdfDelta_partialRec() const = 0;
   virtual RooGaussian &pdfBu_partialRec() const = 0;
@@ -147,7 +147,7 @@ class Pdf : public PdfBase {
   virtual RooDstD0BG &pdfDelta_overRec() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_overRec();
   }
-  virtual RooGaussian &pdfBu_overRec() const {
+  virtual RooAddPdf &pdfBu_overRec() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_overRec();
   }
@@ -502,10 +502,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdf_Bu2Dst0h_Dst02D0pi0());
   PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
-  // PdfBase::functions_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdf_overRec());
-  // PdfBase::yields_.add(*PdfBase::yield_overRec_);
+  PdfBase::functions_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdf_overRec());
+  PdfBase::yields_.add(*PdfBase::yield_overRec_);
   // PdfBase::functions_.add(
   //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
   //         .pdf_partialRec());

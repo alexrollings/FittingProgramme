@@ -205,7 +205,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          20000, 0, 50000)),
+          20000, 0, 100000)),
       N_partialRec_(new RooRealVar(
           ("N_partialRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -213,7 +213,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of partially reconstructed events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          40000, 0, 50000)),
+          9000, 0, 100000)),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -221,7 +221,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          20000, 0, 50000)) {}
+          5000, 0, 100000)) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
