@@ -190,14 +190,14 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
       //     RooFit::ProjWData(categories.fitting, fullDataSet),
       //     RooFit::Components(pdf.pdf_partialRec()),
       //     RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-      // simPdf.plotOn(
-      //     frame.get(),
-      //     RooFit::Slice(
-      //         categories.fitting,
-      //         ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-      //     RooFit::ProjWData(categories.fitting, fullDataSet),
-      //     RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
-      //     RooFit::LineColor(kTeal), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kTeal), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
       // simPdf.plotOn(
       //     frame.get(),
       //     RooFit::Slice(

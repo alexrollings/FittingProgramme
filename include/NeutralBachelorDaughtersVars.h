@@ -221,7 +221,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          5000, 0, 100000)) {}
+          20000, 0, 100000)) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
