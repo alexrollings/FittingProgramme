@@ -30,9 +30,9 @@ Configuration::Configuration()
   // buMass_.setMin(4000);
   // buMass_.setBins(400);
   // FOR FITTING THE ROODATASETS
-  buMass_.setMax(5805);
-  buMass_.setMin(4995);
-  buMass_.setBins(162);
+  buMass_.setMax(5800);
+  buMass_.setMin(5050);
+  buMass_.setBins(150);
   buMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");

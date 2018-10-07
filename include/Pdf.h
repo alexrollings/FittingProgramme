@@ -28,7 +28,8 @@ class PdfBase {
     return *yield_Bu2Dst0h_Dst02D0gamma_;
   }
   inline RooAbsReal &yield_overRec() { return *yield_overRec_; }
-  inline RooAbsReal &yield_partialRec() { return *yield_partialRec_; }
+  inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0pi0() { return *yield_Bu2Dst0hst_Dst02D0pi0_; }
+  inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0gamma() { return *yield_Bu2Dst0hst_Dst02D0gamma_; }
   inline RooAbsReal &yield_misRec() { return *yield_misRec_; }
   inline RooRealVar &yield_Comb() { return yield_Comb_; }
   inline RooArgList &yields() { return yields_; }
@@ -46,9 +47,24 @@ class PdfBase {
   virtual RooProdPdf &pdf_overRec() const = 0;
   virtual RooDstD0BG &pdfDelta_overRec() const = 0;
   virtual RooAddPdf &pdfBu_overRec() const = 0;
-  virtual RooProdPdf &pdf_partialRec() const = 0;
-  virtual RooAddPdf &pdfDelta_partialRec() const = 0;
-  virtual RooGaussian &pdfBu_partialRec() const = 0;
+  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &meanDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &sigmaLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &sigmaRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &aLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &aRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &nLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooRealVar &nRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooCBShape &pdfLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  // virtual RooGaussian &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
+  // virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooProdPdf &pdf_misRec() const = 0;
   virtual RooDstD0BG &pdfDelta_misRec() const = 0;
   virtual RooAddPdf &pdfBu_misRec() const = 0;
@@ -78,7 +94,8 @@ class PdfBase {
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> yield_overRec_;
-  std::unique_ptr<RooAbsReal> yield_partialRec_;
+  std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0pi0_;
+  std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> yield_misRec_;
   RooRealVar yield_Comb_;
   RooArgList yields_;
@@ -151,18 +168,78 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_overRec();
   }
-  virtual RooProdPdf &pdf_partialRec() const {
+  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_partialRec();
+        .pdf_Bu2Dst0hst_Dst02D0pi0();
   }
-  virtual RooAddPdf &pdfDelta_partialRec() const {
+  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfDelta_partialRec();
+        .pdfDelta_Bu2Dst0hst_Dst02D0pi0();
   }
-  virtual RooGaussian &pdfBu_partialRec() const {
+  virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_partialRec();
+        .pdfBu_Bu2Dst0hst_Dst02D0pi0();
   }
+  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdf_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .pdfDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &meanDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .meanDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .a0MeanBu_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &sigmaLDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .sigmaLDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &sigmaRDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .sigmaRDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &aLDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .aLDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &aRDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .aRDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &nLDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .nLDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooRealVar &nRDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .nRDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooCBShape &pdfLDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .pdfLDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  virtual RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .pdfRDelta_Bu2Dst0hst_Dst02D0gamma();
+  }
+  // virtual RooGaussian &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const {
+  //   return NeutralVars<_neutral>::Get(uniqueId_)
+  //       .pdfDelta_Bu2Dst0hst_Dst02D0gamma();
+  // }
+  virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdfBu_Bu2Dst0hst_Dst02D0gamma();
+  }
+  // virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0gamma() const {
+  //   return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+  //       .pdfBu_Bu2Dst0hst_Dst02D0gamma();
+  // }
   virtual RooProdPdf &pdf_misRec() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdf_misRec();
@@ -207,16 +284,17 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
 Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
     : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
   yield_misRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-    ("yield_misRec_" +
-     ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-        .c_str(),
-    ("misRec Yield " +
-     ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-        .c_str(),
-    "@0",
-    RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                            _daughters>::Get(uniqueId)
-                   .N_misRec())));
+      ("yield_misRec_" +
+       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+          .c_str(),
+      ("misRec Yield " +
+       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+          .c_str(),
+      "@0",
+      RooArgList(
+          NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+              uniqueId)
+              .N_misRec())));
   switch (_charge) {
     case (Charge::minus): {
       yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -233,20 +311,21 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
                                                   _daughters>::Get(uniqueId)
                          .asym_overRec())));
-      yield_partialRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_partialRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("partialRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "(@0/2)*(@1+1)",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_partialRec(),
-                     NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .asym_partialRec())));
+      yield_Bu2Dst0hst_Dst02D0pi0_ =
+          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              "(@0/2)*(@1+1)",
+              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                      _daughters>::Get(uniqueId)
+                             .N_Bu2Dst0hst_Dst02D0pi0(),
+                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                      _daughters>::Get(uniqueId)
+                             .asym_Bu2Dst0hst_Dst02D0pi0())));
       switch (_neutral) {
         case (Neutral::pi0): {
           yield_Bu2Dst0h_Dst02D0pi0_ =
@@ -268,6 +347,7 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                                                    _daughters>::Get(uniqueId)
                           .asym_Bu2Dst0h_Dst02D0pi0())));
           yield_Bu2Dst0h_Dst02D0gamma_ = nullptr;
+          yield_Bu2Dst0hst_Dst02D0gamma_ = nullptr;
           break;
         }
         case (Neutral::gamma): {
@@ -307,6 +387,24 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                       NeutralBachelorDaughtersVars<_neutral, _bachelor,
                                                    _daughters>::Get(uniqueId)
                           .asym_Bu2Dst0h_Dst02D0pi0())));
+          yield_Bu2Dst0hst_Dst02D0gamma_ =
+              std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+                  ("yield_Bu2Dst0hst_Dst02D0gamma_" +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  ("Bu2Dst0hst_Dst02D0gamma Yield " +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  "(@0/2)*(@1+1)",
+                  RooArgList(
+                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                   _daughters>::Get(uniqueId)
+                          .N_Bu2Dst0hst_Dst02D0gamma(),
+                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                   _daughters>::Get(uniqueId)
+                          .asym_Bu2Dst0hst_Dst02D0gamma())));
           break;
         }
       }
@@ -327,20 +425,21 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
                                                   _daughters>::Get(uniqueId)
                          .asym_overRec())));
-      yield_partialRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_partialRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("partialRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "(@0/2)*(1-@1)",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_partialRec(),
-                     NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .asym_partialRec())));
+      yield_Bu2Dst0hst_Dst02D0pi0_ =
+          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              "(@0/2)*(1-@1)",
+              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                      _daughters>::Get(uniqueId)
+                             .N_Bu2Dst0hst_Dst02D0pi0(),
+                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                      _daughters>::Get(uniqueId)
+                             .asym_Bu2Dst0hst_Dst02D0pi0())));
       switch (_neutral) {
         case (Neutral::pi0): {
           yield_Bu2Dst0h_Dst02D0pi0_ =
@@ -362,6 +461,7 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                                                    _daughters>::Get(uniqueId)
                           .asym_Bu2Dst0h_Dst02D0pi0())));
           yield_Bu2Dst0h_Dst02D0gamma_ = nullptr;
+          yield_Bu2Dst0hst_Dst02D0gamma_ = nullptr;
           break;
         }
         case (Neutral::gamma): {
@@ -401,6 +501,24 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                       NeutralBachelorDaughtersVars<_neutral, _bachelor,
                                                    _daughters>::Get(uniqueId)
                           .asym_Bu2Dst0h_Dst02D0pi0())));
+          yield_Bu2Dst0hst_Dst02D0gamma_ =
+              std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+                  ("yield_Bu2Dst0hst_Dst02D0gamma_" +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  ("Bu2Dst0hst_Dst02D0gamma Yield " +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  "(@0/2)*(1-@1)",
+                  RooArgList(
+                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                   _daughters>::Get(uniqueId)
+                          .N_Bu2Dst0hst_Dst02D0gamma(),
+                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                   _daughters>::Get(uniqueId)
+                          .asym_Bu2Dst0hst_Dst02D0gamma())));
           break;
         }
       }
@@ -418,17 +536,18 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
           RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
                                                   _daughters>::Get(uniqueId)
                          .N_overRec())));
-      yield_partialRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_partialRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("partialRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "@0",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_partialRec())));
+      yield_Bu2Dst0hst_Dst02D0pi0_ =
+          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
+               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+                  .c_str(),
+              "@0",
+              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
+                                                      _daughters>::Get(uniqueId)
+                             .N_Bu2Dst0hst_Dst02D0pi0())));
       switch (_neutral) {
         case (Neutral::pi0): {
           yield_Bu2Dst0h_Dst02D0pi0_ =
@@ -442,11 +561,11 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                                _charge))
                       .c_str(),
                   "@0",
-                  RooArgList(
-                      NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                   _daughters>::Get(uniqueId)
-                          .N_Bu2Dst0h_Dst02D0pi0())));
+                  RooArgList(NeutralBachelorDaughtersVars<
+                                 _neutral, _bachelor, _daughters>::Get(uniqueId)
+                                 .N_Bu2Dst0h_Dst02D0pi0())));
           yield_Bu2Dst0h_Dst02D0gamma_ = nullptr;
+          yield_Bu2Dst0hst_Dst02D0gamma_ = nullptr;
           break;
         }
         case (Neutral::gamma): {
@@ -478,6 +597,20 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
                   RooArgList(NeutralBachelorDaughtersVars<
                                  _neutral, _bachelor, _daughters>::Get(uniqueId)
                                  .N_Bu2Dst0h_Dst02D0pi0())));
+          yield_Bu2Dst0hst_Dst02D0gamma_ =
+              std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+                  ("yield_Bu2Dst0hst_Dst02D0gamma_" +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  ("Bu2Dst0hst_Dst02D0gamma Yield " +
+                   ComposeName(uniqueId, _neutral, _bachelor, _daughters,
+                               _charge))
+                      .c_str(),
+                  "@0",
+                  RooArgList(NeutralBachelorDaughtersVars<
+                                 _neutral, _bachelor, _daughters>::Get(uniqueId)
+                                 .N_Bu2Dst0hst_Dst02D0gamma())));
           break;
         }
       }
@@ -492,11 +625,68 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
+  std::cout << "\n\nSignal:";
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .pdf_Bu2Dst0h_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec 2D";
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .pdf_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec Delta:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .pdfDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec a0 mean Bu:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .a0MeanBu_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec mean:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .meanDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec sigma left:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .sigmaLDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec sigma right:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .sigmaRDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec a left:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .aLDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec a right:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .aRDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec n left:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .nLDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec n right:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .nRDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec left Delta:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .pdfLDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\nPartial rec right Delta:";
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .pdfRDelta_Bu2Dst0hst_Dst02D0gamma()
+      .Print();
+  std::cout << "\n\n";
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0h_Dst02D0gamma());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0gamma_);
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdf_Bu2Dst0hst_Dst02D0gamma());
+    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
   }
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -508,8 +698,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   PdfBase::yields_.add(*PdfBase::yield_overRec_);
   // PdfBase::functions_.add(
   //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdf_partialRec());
-  // PdfBase::yields_.add(*PdfBase::yield_partialRec_);
+  //         .pdf_Bu2Dst0hst_Dst02D0pi0());
+  // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdf_misRec());
