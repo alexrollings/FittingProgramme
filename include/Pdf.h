@@ -49,19 +49,9 @@ class PdfBase {
   virtual RooAddPdf &pdfBu_overRec() const = 0;
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &meanDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &sigmaLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &sigmaRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &aLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &aRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &nLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooRealVar &nRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooCBShape &pdfLDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
   // virtual RooGaussian &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
   // virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
@@ -176,7 +166,7 @@ class Pdf : public PdfBase {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_Bu2Dst0hst_Dst02D0pi0();
   }
-  virtual RooGaussian &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
+  virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0hst_Dst02D0pi0();
   }
@@ -187,46 +177,6 @@ class Pdf : public PdfBase {
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &meanDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .meanDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .a0MeanBu_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &sigmaLDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .sigmaLDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &sigmaRDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .sigmaRDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &aLDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .aLDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &aRDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .aRDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &nLDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .nLDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooRealVar &nRDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .nRDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooCBShape &pdfLDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfLDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfRDelta_Bu2Dst0hst_Dst02D0gamma();
   }
   // virtual RooGaussian &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const {
   //   return NeutralVars<_neutral>::Get(uniqueId_)
@@ -625,59 +575,6 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
-  std::cout << "\n\nSignal:";
-  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-      .pdf_Bu2Dst0h_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec 2D";
-  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-      .pdf_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec Delta:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .pdfDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec a0 mean Bu:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .a0MeanBu_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec mean:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .meanDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec sigma left:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .sigmaLDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec sigma right:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .sigmaRDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec a left:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .aLDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec a right:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .aRDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec n left:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .nLDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec n right:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .nRDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec left Delta:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .pdfLDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\nPartial rec right Delta:";
-  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-      .pdfRDelta_Bu2Dst0hst_Dst02D0gamma()
-      .Print();
-  std::cout << "\n\n";
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -696,10 +593,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdf_overRec());
   PdfBase::yields_.add(*PdfBase::yield_overRec_);
-  // PdfBase::functions_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdf_Bu2Dst0hst_Dst02D0pi0());
-  // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
+  PdfBase::functions_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdf_Bu2Dst0hst_Dst02D0pi0());
+  PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
   PdfBase::functions_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdf_misRec());

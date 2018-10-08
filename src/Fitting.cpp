@@ -19,8 +19,10 @@
 #include "TTree.h"
 #include "TTreeReader.h"
 
-#include <chrono>
-#include <thread>
+// #include <chrono>
+// #include <thread>
+  // std::chrono::seconds dura( 5);
+  // std::this_thread::sleep_for( dura );
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -102,7 +104,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
        "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
-  legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
+  // legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
 
   return legend;
 }
@@ -112,10 +114,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &yieldLegend, std::string const &outputDir,
                    bool fitBool) {
-  int x_int = int(log(2 * var.getBins()) / log(2));
-  RooAbsReal::defaultIntegratorConfig()
-      ->getConfigSection("RooIntegrator1D")
-      .setRealValue("fixSteps", x_int);
+  // int x_int = int(log(2 * var.getBins()) / log(2));
+  // RooAbsReal::defaultIntegratorConfig()
+  //     ->getConfigSection("RooIntegrator1D")
+  //     .setRealValue("fixSteps", x_int);
 
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -144,7 +146,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = nullptr;
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  if (fitBool == true) {
+  // if (fitBool == true) {
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -194,16 +196,16 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters,
-    //         charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
-    //     RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
-    //     RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters,
+            charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange+3),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -241,7 +243,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                         ComposeName(id, neutral, bachelor, daughters, charge))
                            .c_str());
     pullFrame->SetTitle("");
-  }
+  // }
 
   // --------------- plot onto canvas ---------------------
 
@@ -305,7 +307,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                RooFitResult const &result, std::string const &outputDir,
+                std::string const &outputDir,
                 bool fitBool) {
   SetStyle();
 
@@ -348,7 +350,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "pdf_Bu2Dst0hst_Dst02D0pi0_Hist", 1, 0, 1);
-  pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineColor(kMagenta);
+  pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineColor(kOrange+3);
   pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineStyle(kDashed);
   pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineWidth(2);
 
@@ -428,7 +430,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
           .c_str(),
       "l");
-  legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
+  // legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
 
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -589,7 +591,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                      ComposeName(id, neutral, bachelor, daughters, charge) +
                      "_2dData.pdf")
                         .c_str());
-  if (fitBool == true) {
+  // if (fitBool == true) {
     // Make two-dimensional plot of sampled PDF in x vs y
     // Plot ONLY the PDF not the SimPDF
     // auto singlePdf =
@@ -708,7 +710,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                       ComposeName(id, neutral, bachelor, daughters, charge) +
                       "_2dResiduals.pdf")
                          .c_str());
-  }
+  // }
 }
 
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
@@ -1167,9 +1169,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   std::vector<PdfBase *> pdfs = p.second;
 
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
-  simPdf->Print();
-  std::chrono::seconds dura( 5);
-  std::this_thread::sleep_for( dura );
 
   std::cout << "1" << std::endl;
   auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
@@ -1220,7 +1219,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   }
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, *result.get(),
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
                outputDir, fitBool);
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
@@ -1838,7 +1837,7 @@ int main(int argc, char **argv) {
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
       Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
-                 *result.get(), outputDir, fitBool);
+                 outputDir, fitBool);
       Plotting2D(id, *p, config, fullDataSet, *simPdf, outputDir, fitBool);
     }
 
