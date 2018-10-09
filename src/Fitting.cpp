@@ -1170,12 +1170,10 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
 
-  std::cout << "1" << std::endl;
   auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
       RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy));
 
-  std::cout << "2" << std::endl;
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
 
