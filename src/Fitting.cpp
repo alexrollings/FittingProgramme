@@ -267,7 +267,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // Everything to be plotted has to be declared outside of a loop, in the scope
   // of the canvas
   TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineColor(kTeal);
   zeroLine.SetLineStyle(kDashed);
 
   if (fitBool == true) {

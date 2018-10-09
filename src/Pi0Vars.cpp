@@ -351,13 +351,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.081, 0.0, 0.1),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
-      Bu2Dst0hst_Dst02D0pi0_meanDelta_(),
-      Bu2Dst0hst_Dst02D0pi0_sigma1Delta_(),
-      Bu2Dst0hst_Dst02D0pi0_sigma2Delta_(),
-      Bu2Dst0hst_Dst02D0pi0_a2Delta_(),
-      Bu2Dst0hst_Dst02D0pi0_a1Delta_(),
-      Bu2Dst0hst_Dst02D0pi0_n2Delta_(),
-      Bu2Dst0hst_Dst02D0pi0_n1Delta_(),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(),
       pdf2Delta_Bu2Dst0hst_Dst02D0pi0_(),
       Bu2Dst0hst_Dst02D0pi0_frac1PdfDelta_(),
@@ -433,13 +426,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           0.081, 0.0, 0.1),
       // ------------------ Gamma PART RECONSTRUCTED BACKGROUND
       // ------------------ //
-      Bu2Dst0hst_Dst02D0gamma_meanDelta_(),
-      Bu2Dst0hst_Dst02D0gamma_sigma1Delta_(),
-      Bu2Dst0hst_Dst02D0gamma_sigma2Delta_(),
-      Bu2Dst0hst_Dst02D0gamma_a2Delta_(),
-      Bu2Dst0hst_Dst02D0gamma_a1Delta_(),
-      Bu2Dst0hst_Dst02D0gamma_n2Delta_(),
-      Bu2Dst0hst_Dst02D0gamma_n1Delta_(),
       pdf1Delta_Bu2Dst0hst_Dst02D0gamma_(),
       pdf2Delta_Bu2Dst0hst_Dst02D0gamma_(),
       Bu2Dst0hst_Dst02D0gamma_frac1PdfDelta_(),
