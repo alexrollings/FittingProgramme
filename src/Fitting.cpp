@@ -1777,13 +1777,15 @@ int main(int argc, char **argv) {
                     if (b == Bachelor::pi) {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "bach_PIDK<12&&Bu_M_DTF>4995&&Bu_M_DTF<5805&&"
-                              "BDT1>0.05&&BDT2>0&&pi_D_PIDK<-2&&K_D_PIDK>2"));
+                              "bach_PIDK<12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
+                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
+                              "D_PIDK<-2&&K_D_PIDK>2"));
                     } else {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "bach_PIDK>12&&Bu_M_DTF>4995&&Bu_M_DTF<5805&&"
-                              "BDT1>0.05&&BDT2>0&&pi_D_PIDK<-2&&K_D_PIDK>2"));
+                              "bach_PIDK>12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
+                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
+                              "D_PIDK<-2&&K_D_PIDK>2"));
                     }
                     if (reducedInputDataSet == nullptr) {
                       throw std::runtime_error(
