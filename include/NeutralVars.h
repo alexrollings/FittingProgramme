@@ -84,8 +84,8 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0pi0_aRDelta() {
     return Bu2Dst0h_Dst02D0pi0_aRDelta_;
   }
-  RooRealVar &nLDelta_Bu2Dst0h_Dst02D0pi0() {
-    return nLDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_nLDelta() {
+    return Bu2Dst0h_Dst02D0pi0_nLDelta_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0pi0_nRDelta() {
     return Bu2Dst0h_Dst02D0pi0_nRDelta_;
@@ -96,60 +96,60 @@ class NeutralVars {
   RooCBShape &pdfRDelta_Bu2Dst0h_Dst02D0pi0() {
     return pdfRDelta_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &fracLRDelta_Bu2Dst0h_Dst02D0pi0() {
-    return fracLRDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_fracLRDelta() {
+    return Bu2Dst0h_Dst02D0pi0_fracLRDelta_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0pi0() {
     return pdfDelta_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &a0Mean1Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a0Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a0Mean1Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_;
   }
-  RooRealVar &a1Mean1Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a1Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a1Mean1Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_;
   }
-  RooRealVar &a2Mean1Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a2Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a2Mean1Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_;
   }
-  RooPolyVar &mean1Bu_Bu2Dst0h_Dst02D0pi0() {
-    return mean1Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooPolyVar &Bu2Dst0h_Dst02D0pi0_mean1Bu() {
+    return Bu2Dst0h_Dst02D0pi0_mean1Bu_;
   }
-  RooRealVar &a0Mean2Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a0Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a0Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a0Mean2Bu_;
   }
-  RooRealVar &a1Mean2Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a1Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a1Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a1Mean2Bu_;
   }
-  RooRealVar &a2Mean2Bu_Bu2Dst0h_Dst02D0pi0() {
-    return a2Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a2Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a2Mean2Bu_;
   }
-  RooPolyVar &mean2Bu_Bu2Dst0h_Dst02D0pi0() {
-    return mean2Bu_Bu2Dst0h_Dst02D0pi0_;
+  RooPolyVar &Bu2Dst0h_Dst02D0pi0_mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_mean2Bu_;
   }
-  RooRealVar &a0SigmaLBu_Bu2Dst0h_Dst02D0pi0() {
-    return a0SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a0SigmaLBu() {
+    return Bu2Dst0h_Dst02D0pi0_a0SigmaLBu_;
   }
-  RooRealVar &a1SigmaLBu_Bu2Dst0h_Dst02D0pi0() {
-    return a1SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a1SigmaLBu() {
+    return Bu2Dst0h_Dst02D0pi0_a1SigmaLBu_;
   }
-  RooRealVar &a2SigmaLBu_Bu2Dst0h_Dst02D0pi0() {
-    return a2SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a2SigmaLBu() {
+    return Bu2Dst0h_Dst02D0pi0_a2SigmaLBu_;
   }
-  RooRealVar &a0SigmaRBu_Bu2Dst0h_Dst02D0pi0() {
-    return a0SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a0SigmaRBu() {
+    return Bu2Dst0h_Dst02D0pi0_a0SigmaRBu_;
   }
-  RooRealVar &a1SigmaRBu_Bu2Dst0h_Dst02D0pi0() {
-    return a1SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a1SigmaRBu() {
+    return Bu2Dst0h_Dst02D0pi0_a1SigmaRBu_;
   }
-  RooRealVar &a2SigmaRBu_Bu2Dst0h_Dst02D0pi0() {
-    return a2SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a2SigmaRBu() {
+    return Bu2Dst0h_Dst02D0pi0_a2SigmaRBu_;
   }
-  RooRealVar &aLBu_Bu2Dst0h_Dst02D0pi0() { return aLBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &aRBu_Bu2Dst0h_Dst02D0pi0() { return aRBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &nLBu_Bu2Dst0h_Dst02D0pi0() { return nLBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &nRBu_Bu2Dst0h_Dst02D0pi0() { return nRBu_Bu2Dst0h_Dst02D0pi0_; }
-  RooRealVar &fracLRPdfBu_Bu2Dst0h_Dst02D0pi0() {
-    return fracLRPdfBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_aLBu() { return Bu2Dst0h_Dst02D0pi0_aLBu_; }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_aRBu() { return Bu2Dst0h_Dst02D0pi0_aRBu_; }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_nLBu() { return Bu2Dst0h_Dst02D0pi0_nLBu_; }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_nRBu() { return Bu2Dst0h_Dst02D0pi0_nRBu_; }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_fracLRPdfBu() {
+    return Bu2Dst0h_Dst02D0pi0_fracLRPdfBu_;
   }
   RooRealVar &ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0() {
     return ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_;
@@ -157,26 +157,26 @@ class NeutralVars {
   RooRealVar &relativeBuWidth_Bu2Dst0h_Dst02D0pi0() {
     return relativeBuWidth_Bu2Dst0h_Dst02D0pi0_;
   }
-  RooRealVar &meanDelta_Bu2Dst0h_Dst02D0gamma() {
-    return meanDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_meanDelta() {
+    return Bu2Dst0h_Dst02D0gamma_meanDelta_;
   }
-  RooRealVar &sigmaLDelta_Bu2Dst0h_Dst02D0gamma() {
-    return sigmaLDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_sigmaLDelta() {
+    return Bu2Dst0h_Dst02D0gamma_sigmaLDelta_;
   }
-  RooRealVar &sigmaRDelta_Bu2Dst0h_Dst02D0gamma() {
-    return sigmaRDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_sigmaRDelta() {
+    return Bu2Dst0h_Dst02D0gamma_sigmaRDelta_;
   }
-  RooRealVar &aLDelta_Bu2Dst0h_Dst02D0gamma() {
-    return aLDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_aLDelta() {
+    return Bu2Dst0h_Dst02D0gamma_aLDelta_;
   }
-  RooRealVar &aRDelta_Bu2Dst0h_Dst02D0gamma() {
-    return aRDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_aRDelta() {
+    return Bu2Dst0h_Dst02D0gamma_aRDelta_;
   }
-  RooRealVar &nLDelta_Bu2Dst0h_Dst02D0gamma() {
-    return nLDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_nLDelta() {
+    return Bu2Dst0h_Dst02D0gamma_nLDelta_;
   }
-  RooRealVar &nRDelta_Bu2Dst0h_Dst02D0gamma() {
-    return nRDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_nRDelta() {
+    return Bu2Dst0h_Dst02D0gamma_nRDelta_;
   }
   RooCBShape &pdfLDelta_Bu2Dst0h_Dst02D0gamma() {
     return pdfLDelta_Bu2Dst0h_Dst02D0gamma_;
@@ -184,71 +184,71 @@ class NeutralVars {
   RooCBShape &pdfRDelta_Bu2Dst0h_Dst02D0gamma() {
     return pdfRDelta_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooRealVar &fracLRDelta_Bu2Dst0h_Dst02D0gamma() {
-    return fracLRDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_fracLRDelta() {
+    return Bu2Dst0h_Dst02D0gamma_fracLRDelta_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
     return pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooRealVar &a0Mean1Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a0Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0Mean1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_;
   }
-  RooRealVar &a1Mean1Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a1Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Mean1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_;
   }
-  RooRealVar &a2Mean1Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a2Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2Mean1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_;
   }
-  RooPolyVar &mean1Bu_Bu2Dst0h_Dst02D0gamma() {
-    return mean1Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooPolyVar &Bu2Dst0h_Dst02D0gamma_mean1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_mean1Bu_;
   }
-  RooRealVar &a0Mean2Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a0Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0Mean2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a0Mean2Bu_;
   }
-  RooRealVar &a1Mean2Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a1Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Mean2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a1Mean2Bu_;
   }
-  RooRealVar &a2Mean2Bu_Bu2Dst0h_Dst02D0gamma() {
-    return a2Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2Mean2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a2Mean2Bu_;
   }
-  RooPolyVar &mean2Bu_Bu2Dst0h_Dst02D0gamma() {
-    return mean2Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooPolyVar &Bu2Dst0h_Dst02D0gamma_mean2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_mean2Bu_;
   }
-  RooRealVar &a0SigmaLBu_Bu2Dst0h_Dst02D0gamma() {
-    return a0SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0SigmaLBu() {
+    return Bu2Dst0h_Dst02D0gamma_a0SigmaLBu_;
   }
-  RooRealVar &a1SigmaLBu_Bu2Dst0h_Dst02D0gamma() {
-    return a1SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1SigmaLBu() {
+    return Bu2Dst0h_Dst02D0gamma_a1SigmaLBu_;
   }
-  RooRealVar &a2SigmaLBu_Bu2Dst0h_Dst02D0gamma() {
-    return a2SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2SigmaLBu() {
+    return Bu2Dst0h_Dst02D0gamma_a2SigmaLBu_;
   }
-  RooRealVar &a0SigmaRBu_Bu2Dst0h_Dst02D0gamma() {
-    return a0SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0SigmaRBu() {
+    return Bu2Dst0h_Dst02D0gamma_a0SigmaRBu_;
   }
-  RooRealVar &a1SigmaRBu_Bu2Dst0h_Dst02D0gamma() {
-    return a1SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1SigmaRBu() {
+    return Bu2Dst0h_Dst02D0gamma_a1SigmaRBu_;
   }
-  RooRealVar &a2SigmaRBu_Bu2Dst0h_Dst02D0gamma() {
-    return a2SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2SigmaRBu() {
+    return Bu2Dst0h_Dst02D0gamma_a2SigmaRBu_;
   }
-  RooRealVar &aLBu_Bu2Dst0h_Dst02D0gamma() {
-    return aLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_aLBu() {
+    return Bu2Dst0h_Dst02D0gamma_aLBu_;
   }
-  RooRealVar &aRBu_Bu2Dst0h_Dst02D0gamma() {
-    return aRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_aRBu() {
+    return Bu2Dst0h_Dst02D0gamma_aRBu_;
   }
-  RooRealVar &nLBu_Bu2Dst0h_Dst02D0gamma() {
-    return nLBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_nLBu() {
+    return Bu2Dst0h_Dst02D0gamma_nLBu_;
   }
-  RooRealVar &nRBu_Bu2Dst0h_Dst02D0gamma() {
-    return nRBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_nRBu() {
+    return Bu2Dst0h_Dst02D0gamma_nRBu_;
   }
-  RooRealVar &fracLRPdfBu_Bu2Dst0h_Dst02D0gamma() {
-    return fracLRPdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_fracLRPdfBu() {
+    return Bu2Dst0h_Dst02D0gamma_fracLRPdfBu_;
   }
-  RooRealVar &fracWidePdfBu_Bu2Dst0h_Dst02D0gamma() {
-    return fracWidePdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_fracWidePdfBu() {
+    return Bu2Dst0h_Dst02D0gamma_fracWidePdfBu_;
   }
   RooRealVar &ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma() {
     return ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_;
@@ -256,54 +256,54 @@ class NeutralVars {
   RooRealVar &relativeBuWidth_Bu2Dst0h_Dst02D0gamma() {
     return relativeBuWidth_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooRealVar &thresholdDelta_bkg() { return thresholdDelta_bkg_; }
-  RooRealVar &aDelta_bkg() { return aDelta_bkg_; }
-  RooRealVar &bDelta_bkg() { return bDelta_bkg_; }
-  RooRealVar &cDelta_bkg() { return cDelta_bkg_; }
+  RooRealVar &bkg_thresholdDelta() { return bkg_thresholdDelta_; }
+  RooRealVar &bkg_aDelta() { return bkg_aDelta_; }
+  RooRealVar &bkg_bDelta() { return bkg_bDelta_; }
+  RooRealVar &bkg_cDelta() { return bkg_cDelta_; }
   RooDstD0BG &pdfDelta_overRec() { return pdfDelta_overRec_; }
-  // RooRealVar &a0MeanBu_overRec() { return a0MeanBu_overRec_; }
-  // RooPolyVar &meanBu_overRec() { return meanBu_overRec_; }
-  RooRealVar &a0Mean1Bu_overRec() { return a0Mean1Bu_overRec_; }
-  RooRealVar &a1Mean1Bu_overRec() { return a1Mean1Bu_overRec_; }
-  RooRealVar &a2Mean1Bu_overRec() { return a2Mean1Bu_overRec_; }
-  RooPolyVar &mean1Bu_overRec() { return mean1Bu_overRec_; }
-  RooRealVar &a0Mean2Bu_overRec() { return a0Mean2Bu_overRec_; }
-  RooRealVar &a1Mean2Bu_overRec() { return a1Mean2Bu_overRec_; }
-  RooRealVar &a2Mean2Bu_overRec() { return a2Mean2Bu_overRec_; }
-  RooPolyVar &mean2Bu_overRec() { return mean2Bu_overRec_; }
-  RooRealVar &a0SigmaLBu_overRec() { return a0SigmaLBu_overRec_; }
-  RooRealVar &a1SigmaLBu_overRec() { return a1SigmaLBu_overRec_; }
-  RooRealVar &a2SigmaLBu_overRec() { return a2SigmaLBu_overRec_; }
-  RooRealVar &a0SigmaRBu_overRec() { return a0SigmaRBu_overRec_; }
-  RooRealVar &a1SigmaRBu_overRec() { return a1SigmaRBu_overRec_; }
-  RooRealVar &a2SigmaRBu_overRec() { return a2SigmaRBu_overRec_; }
-  RooRealVar &aLBu_overRec() { return aLBu_overRec_; }
-  RooRealVar &aRBu_overRec() { return aRBu_overRec_; }
-  RooRealVar &nLBu_overRec() { return nLBu_overRec_; }
-  RooRealVar &nRBu_overRec() { return nRBu_overRec_; }
-  RooRealVar &fracLRPdfBu_overRec() { return fracLRPdfBu_overRec_; }
+  // RooRealVar &overRec_a0MeanBu() { return overRec_a0MeanBu_; }
+  // RooPolyVar &overRec_meanBu() { return overRec_meanBu_; }
+  RooRealVar &overRec_a0Mean1Bu() { return overRec_a0Mean1Bu_; }
+  RooRealVar &overRec_a1Mean1Bu() { return overRec_a1Mean1Bu_; }
+  RooRealVar &overRec_a2Mean1Bu() { return overRec_a2Mean1Bu_; }
+  RooPolyVar &overRec_mean1Bu() { return overRec_mean1Bu_; }
+  RooRealVar &overRec_a0Mean2Bu() { return overRec_a0Mean2Bu_; }
+  RooRealVar &overRec_a1Mean2Bu() { return overRec_a1Mean2Bu_; }
+  RooRealVar &overRec_a2Mean2Bu() { return overRec_a2Mean2Bu_; }
+  RooPolyVar &overRec_mean2Bu() { return overRec_mean2Bu_; }
+  RooRealVar &overRec_a0SigmaLBu() { return overRec_a0SigmaLBu_; }
+  RooRealVar &overRec_a1SigmaLBu() { return overRec_a1SigmaLBu_; }
+  RooRealVar &overRec_a2SigmaLBu() { return overRec_a2SigmaLBu_; }
+  RooRealVar &overRec_a0SigmaRBu() { return overRec_a0SigmaRBu_; }
+  RooRealVar &overRec_a1SigmaRBu() { return overRec_a1SigmaRBu_; }
+  RooRealVar &overRec_a2SigmaRBu() { return overRec_a2SigmaRBu_; }
+  RooRealVar &overRec_aLBu() { return overRec_aLBu_; }
+  RooRealVar &overRec_aRBu() { return overRec_aRBu_; }
+  RooRealVar &overRec_nLBu() { return overRec_nLBu_; }
+  RooRealVar &overRec_nRBu() { return overRec_nRBu_; }
+  RooRealVar &overRec_fracLRPdfBu() { return overRec_fracLRPdfBu_; }
   RooRealVar &ratioDst0KDst0pi_overRec() { return ratioDst0KDst0pi_overRec_; }
   RooRealVar &relativeBuWidth_overRec() { return relativeBuWidth_overRec_; }
-  RooRealVar &meanDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return meanDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_meanDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_meanDelta_;
   }
-  RooRealVar &sigmaLDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return sigmaLDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_sigmaLDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_sigmaLDelta_;
   }
-  RooRealVar &sigmaRDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return sigmaRDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_sigmaRDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_sigmaRDelta_;
   }
-  RooRealVar &aLDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return aLDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_aLDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_aLDelta_;
   }
-  RooRealVar &aRDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return aRDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_aRDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_aRDelta_;
   }
-  RooRealVar &nLDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return nLDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_nLDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_nLDelta_;
   }
-  RooRealVar &nRDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return nRDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_nRDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_nRDelta_;
   }
   RooCBShape &pdfLDelta_Bu2Dst0hst_Dst02D0pi0() {
     return pdfLDelta_Bu2Dst0hst_Dst02D0pi0_;
@@ -311,8 +311,8 @@ class NeutralVars {
   RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0pi0() {
     return pdfRDelta_Bu2Dst0hst_Dst02D0pi0_;
   }
-  RooRealVar &fracLRDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return fracLRDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_fracLRDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_fracLRDelta_;
   }
   RooAddPdf &pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0() {
     return pdfDelta_Bu2Dst0hst_Dst02D0pi0_;
@@ -320,56 +320,56 @@ class NeutralVars {
   RooDstD0BG &pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0() {
     return pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_;
   }
-  RooRealVar &fracPdfFlatDelta_Bu2Dst0hst_Dst02D0pi0() {
-    return fracPdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta() {
+    return Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() {
     return pdfDelta_Bu2Dst0hst_Dst02D0pi0_;
   }
-  RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a0MeanBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a0MeanBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a0MeanBu_;
   }
-  RooRealVar &a1MeanBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a1MeanBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a1MeanBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a1MeanBu_;
   }
-  RooRealVar &a2MeanBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a2MeanBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a2MeanBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a2MeanBu_;
   }
-  RooRealVar &a0SigmaLBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a0SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a0SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a0SigmaLBu_;
   }
-  RooRealVar &a1SigmaLBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a1SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a1SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a1SigmaLBu_;
   }
-  RooRealVar &a2SigmaLBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a2SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a2SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a2SigmaLBu_;
   }
-  RooRealVar &a0SigmaRBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a0SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a0SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a0SigmaRBu_;
   }
-  RooRealVar &a1SigmaRBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a1SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a1SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a1SigmaRBu_;
   }
-  RooRealVar &a2SigmaRBu_Bu2Dst0hst_Dst02D0pi0() {
-    return a2SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_a2SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0pi0_a2SigmaRBu_;
   }
-  RooRealVar &aLBu_Bu2Dst0hst_Dst02D0pi0() {
-    return aLBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_aLBu() {
+    return Bu2Dst0hst_Dst02D0pi0_aLBu_;
   }
-  RooRealVar &aRBu_Bu2Dst0hst_Dst02D0pi0() {
-    return aRBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_aRBu() {
+    return Bu2Dst0hst_Dst02D0pi0_aRBu_;
   }
-  RooRealVar &nLBu_Bu2Dst0hst_Dst02D0pi0() {
-    return nLBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_nLBu() {
+    return Bu2Dst0hst_Dst02D0pi0_nLBu_;
   }
-  RooRealVar &nRBu_Bu2Dst0hst_Dst02D0pi0() {
-    return nRBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_nRBu() {
+    return Bu2Dst0hst_Dst02D0pi0_nRBu_;
   }
-  RooRealVar &fracLRPdfBu_Bu2Dst0hst_Dst02D0pi0() {
-    return fracLRPdfBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar &Bu2Dst0hst_Dst02D0pi0_fracLRPdfBu() {
+    return Bu2Dst0hst_Dst02D0pi0_fracLRPdfBu_;
   }
-  RooPolyVar &meanBu_Bu2Dst0hst_Dst02D0pi0() {
-    return meanBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooPolyVar &Bu2Dst0hst_Dst02D0pi0_meanBu() {
+    return Bu2Dst0hst_Dst02D0pi0_meanBu_;
   }
   RooRealVar &ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0() {
     return ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_;
@@ -404,56 +404,56 @@ class NeutralVars {
   RooCBShape &pdfRDelta_Bu2Dst0hst_Dst02D0gamma() {
     return pdfRDelta_Bu2Dst0hst_Dst02D0gamma_;
   }
-  RooRealVar &fracLRDelta_Bu2Dst0hst_Dst02D0gamma() {
-    return fracLRDelta_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_fracLRDelta() {
+    return Bu2Dst0hst_Dst02D0gamma_fracLRDelta_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() {
     return pdfDelta_Bu2Dst0hst_Dst02D0gamma_;
   }
-  RooRealVar &a0MeanBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a0MeanBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0MeanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a0MeanBu_;
   }
-  RooRealVar &a1MeanBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a1MeanBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1MeanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
   }
-  RooRealVar &a2MeanBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a2MeanBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2MeanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
   }
-  RooPolyVar &meanBu_Bu2Dst0hst_Dst02D0gamma() {
-    return meanBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooPolyVar &Bu2Dst0hst_Dst02D0gamma_meanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_meanBu_;
   }
-  RooRealVar &a0SigmaLBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a0SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a0SigmaLBu_;
   }
-  RooRealVar &a1SigmaLBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a1SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a1SigmaLBu_;
   }
-  RooRealVar &a2SigmaLBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a2SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2SigmaLBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a2SigmaLBu_;
   }
-  RooRealVar &a0SigmaRBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a0SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a0SigmaRBu_;
   }
-  RooRealVar &a1SigmaRBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a1SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a1SigmaRBu_;
   }
-  RooRealVar &a2SigmaRBu_Bu2Dst0hst_Dst02D0gamma() {
-    return a2SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2SigmaRBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a2SigmaRBu_;
   }
-  RooRealVar &aLBu_Bu2Dst0hst_Dst02D0gamma() {
-    return aLBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_aLBu() {
+    return Bu2Dst0hst_Dst02D0gamma_aLBu_;
   }
-  RooRealVar &aRBu_Bu2Dst0hst_Dst02D0gamma() {
-    return aRBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_aRBu() {
+    return Bu2Dst0hst_Dst02D0gamma_aRBu_;
   }
-  RooRealVar &nLBu_Bu2Dst0hst_Dst02D0gamma() {
-    return nLBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_nLBu() {
+    return Bu2Dst0hst_Dst02D0gamma_nLBu_;
   }
-  RooRealVar &nRBu_Bu2Dst0hst_Dst02D0gamma() {
-    return nRBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_nRBu() {
+    return Bu2Dst0hst_Dst02D0gamma_nRBu_;
   }
-  RooRealVar &fracLRPdfBu_Bu2Dst0hst_Dst02D0gamma() {
-    return fracLRPdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_fracLRPdfBu() {
+    return Bu2Dst0hst_Dst02D0gamma_fracLRPdfBu_;
   }
   RooRealVar &ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma() {
     return ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_;
@@ -462,35 +462,35 @@ class NeutralVars {
     return relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_;
   }
   RooDstD0BG &pdfDelta_misRec() { return pdfDelta_misRec_; }
-  RooRealVar &a0Mean1Bu_misRec() { return a0Mean1Bu_misRec_; }
-  RooRealVar &a1Mean1Bu_misRec() { return a1Mean1Bu_misRec_; }
-  RooRealVar &a2Mean1Bu_misRec() { return a2Mean1Bu_misRec_; }
-  RooPolyVar &mean1Bu_misRec() { return mean1Bu_misRec_; }
-  RooRealVar &a0Mean2Bu_misRec() { return a0Mean2Bu_misRec_; }
-  RooRealVar &a1Mean2Bu_misRec() { return a1Mean2Bu_misRec_; }
-  RooRealVar &a2Mean2Bu_misRec() { return a2Mean2Bu_misRec_; }
-  RooPolyVar &mean2Bu_misRec() { return mean2Bu_misRec_; }
-  RooRealVar &a0Mean3Bu_misRec() { return a0Mean3Bu_misRec_; }
-  RooRealVar &a1Mean3Bu_misRec() { return a1Mean3Bu_misRec_; }
-  RooRealVar &a2Mean3Bu_misRec() { return a2Mean3Bu_misRec_; }
-  RooPolyVar &mean3Bu_misRec() { return mean3Bu_misRec_; }
-  RooRealVar &a0Sigma1Bu_misRec() { return a0Sigma1Bu_misRec_; }
-  RooRealVar &a1Sigma1Bu_misRec() { return a1Sigma1Bu_misRec_; }
-  RooRealVar &a2Sigma1Bu_misRec() { return a2Sigma1Bu_misRec_; }
-  RooRealVar &a0Sigma2Bu_misRec() { return a0Sigma2Bu_misRec_; }
-  RooRealVar &a1Sigma2Bu_misRec() { return a1Sigma2Bu_misRec_; }
-  RooRealVar &a2Sigma2Bu_misRec() { return a2Sigma2Bu_misRec_; }
-  RooRealVar &a0Sigma3Bu_misRec() { return a0Sigma3Bu_misRec_; }
-  RooRealVar &a1Sigma3Bu_misRec() { return a1Sigma3Bu_misRec_; }
-  RooRealVar &a2Sigma3Bu_misRec() { return a2Sigma3Bu_misRec_; }
-  RooRealVar &frac1PdfBu_misRec() { return frac1PdfBu_misRec_; }
-  RooRealVar &frac2PdfBu_misRec() { return frac2PdfBu_misRec_; }
-  RooFormulaVar &frac3PdfBu_misRec() { return frac3PdfBu_misRec_; }
+  RooRealVar &misRec_a0Mean1Bu() { return misRec_a0Mean1Bu_; }
+  RooRealVar &misRec_a1Mean1Bu() { return misRec_a1Mean1Bu_; }
+  RooRealVar &misRec_a2Mean1Bu() { return misRec_a2Mean1Bu_; }
+  RooPolyVar &misRec_mean1Bu() { return misRec_mean1Bu_; }
+  RooRealVar &misRec_a0Mean2Bu() { return misRec_a0Mean2Bu_; }
+  RooRealVar &misRec_a1Mean2Bu() { return misRec_a1Mean2Bu_; }
+  RooRealVar &misRec_a2Mean2Bu() { return misRec_a2Mean2Bu_; }
+  RooPolyVar &misRec_mean2Bu() { return misRec_mean2Bu_; }
+  RooRealVar &misRec_a0Mean3Bu() { return misRec_a0Mean3Bu_; }
+  RooRealVar &misRec_a1Mean3Bu() { return misRec_a1Mean3Bu_; }
+  RooRealVar &misRec_a2Mean3Bu() { return misRec_a2Mean3Bu_; }
+  RooPolyVar &misRec_mean3Bu() { return misRec_mean3Bu_; }
+  RooRealVar &misRec_a0Sigma1Bu() { return misRec_a0Sigma1Bu_; }
+  RooRealVar &misRec_a1Sigma1Bu() { return misRec_a1Sigma1Bu_; }
+  RooRealVar &misRec_a2Sigma1Bu() { return misRec_a2Sigma1Bu_; }
+  RooRealVar &misRec_a0Sigma2Bu() { return misRec_a0Sigma2Bu_; }
+  RooRealVar &misRec_a1Sigma2Bu() { return misRec_a1Sigma2Bu_; }
+  RooRealVar &misRec_a2Sigma2Bu() { return misRec_a2Sigma2Bu_; }
+  RooRealVar &misRec_a0Sigma3Bu() { return misRec_a0Sigma3Bu_; }
+  RooRealVar &misRec_a1Sigma3Bu() { return misRec_a1Sigma3Bu_; }
+  RooRealVar &misRec_a2Sigma3Bu() { return misRec_a2Sigma3Bu_; }
+  RooRealVar &misRec_frac1PdfBu() { return misRec_frac1PdfBu_; }
+  RooRealVar &misRec_frac2PdfBu() { return misRec_frac2PdfBu_; }
+  RooFormulaVar &misRec_frac3PdfBu() { return misRec_frac3PdfBu_; }
   RooRealVar &ratioDst0KDst0pi_misRec() { return ratioDst0KDst0pi_misRec_; }
   RooRealVar &relativeBuWidth_misRec() { return relativeBuWidth_misRec_; }
   RooDstD0BG &pdfDelta_Comb() { return pdfDelta_Comb_; }
-  RooRealVar &a0LambdaBu_Comb() { return a0LambdaBu_Comb_; }
-  RooPolyVar &lambdaBu_Comb() { return lambdaBu_Comb_; }
+  RooRealVar &Comb_a0LambdaBu() { return Comb_a0LambdaBu_; }
+  RooPolyVar &Comb_lambdaBu() { return Comb_lambdaBu_; }
   RooExponential &pdfBu_Comb() { return pdfBu_Comb_; }
   RooProdPdf &pdf_Comb() { return pdf_Comb_; }
 
@@ -504,120 +504,120 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0pi0_aRDelta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_aLDelta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_nRDelta_;
-  RooRealVar nLDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_nLDelta_;
   RooCBShape pdfLDelta_Bu2Dst0h_Dst02D0pi0_;
   RooCBShape pdfRDelta_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar fracLRDelta_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_fracLRDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a0Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a1Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a2Mean1Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooPolyVar mean1Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a0Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a1Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a2Mean2Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooPolyVar mean2Bu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a0SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a1SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a2SigmaLBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a0SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a1SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar a2SigmaRBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar aLBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar aRBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar nLBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar nRBu_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar fracLRPdfBu_Bu2Dst0h_Dst02D0pi0_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_;
+  RooPolyVar Bu2Dst0h_Dst02D0pi0_mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a0Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a1Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a2Mean2Bu_;
+  RooPolyVar Bu2Dst0h_Dst02D0pi0_mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a0SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a1SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a2SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a0SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a1SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a2SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_aLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_aRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_nLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_nRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_fracLRPdfBu_;
   RooRealVar ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_;
   RooRealVar relativeBuWidth_Bu2Dst0h_Dst02D0pi0_;
-  RooRealVar meanDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar sigmaLDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar sigmaRDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar aRDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar aLDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar nRDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar nLDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_meanDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_sigmaLDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_sigmaRDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_aRDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_aLDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_nRDelta_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_nLDelta_;
   RooCBShape pdfLDelta_Bu2Dst0h_Dst02D0gamma_;
   RooCBShape pdfRDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar fracLRDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_fracLRDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a0Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a1Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a2Mean1Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooPolyVar mean1Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a0Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a1Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a2Mean2Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooPolyVar mean2Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a0SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a1SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a2SigmaLBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a0SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a1SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar a2SigmaRBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar aLBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar aRBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar nLBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar nRBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar fracLRPdfBu_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar fracWidePdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_;
+  RooPolyVar Bu2Dst0h_Dst02D0gamma_mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a0Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a1Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a2Mean2Bu_;
+  RooPolyVar Bu2Dst0h_Dst02D0gamma_mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a0SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a1SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a2SigmaLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a0SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a1SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a2SigmaRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_aLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_aRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_nLBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_nRBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_fracLRPdfBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_fracWidePdfBu_;
   RooRealVar ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar relativeBuWidth_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar thresholdDelta_bkg_;
-  RooRealVar aDelta_bkg_;
-  RooRealVar bDelta_bkg_;
-  RooRealVar cDelta_bkg_;
+  RooRealVar bkg_thresholdDelta_;
+  RooRealVar bkg_aDelta_;
+  RooRealVar bkg_bDelta_;
+  RooRealVar bkg_cDelta_;
   RooDstD0BG pdfDelta_overRec_;
-  RooRealVar a0Mean1Bu_overRec_;
-  RooRealVar a1Mean1Bu_overRec_;
-  RooRealVar a2Mean1Bu_overRec_;
-  RooPolyVar mean1Bu_overRec_;
-  RooRealVar a0Mean2Bu_overRec_;
-  RooRealVar a1Mean2Bu_overRec_;
-  RooRealVar a2Mean2Bu_overRec_;
-  RooPolyVar mean2Bu_overRec_;
-  RooRealVar a0SigmaLBu_overRec_;
-  RooRealVar a1SigmaLBu_overRec_;
-  RooRealVar a2SigmaLBu_overRec_;
-  RooRealVar a0SigmaRBu_overRec_;
-  RooRealVar a1SigmaRBu_overRec_;
-  RooRealVar a2SigmaRBu_overRec_;
-  RooRealVar aLBu_overRec_;
-  RooRealVar aRBu_overRec_;
-  RooRealVar nLBu_overRec_;
-  RooRealVar nRBu_overRec_;
-  RooRealVar fracLRPdfBu_overRec_;
+  RooRealVar overRec_a0Mean1Bu_;
+  RooRealVar overRec_a1Mean1Bu_;
+  RooRealVar overRec_a2Mean1Bu_;
+  RooPolyVar overRec_mean1Bu_;
+  RooRealVar overRec_a0Mean2Bu_;
+  RooRealVar overRec_a1Mean2Bu_;
+  RooRealVar overRec_a2Mean2Bu_;
+  RooPolyVar overRec_mean2Bu_;
+  RooRealVar overRec_a0SigmaLBu_;
+  RooRealVar overRec_a1SigmaLBu_;
+  RooRealVar overRec_a2SigmaLBu_;
+  RooRealVar overRec_a0SigmaRBu_;
+  RooRealVar overRec_a1SigmaRBu_;
+  RooRealVar overRec_a2SigmaRBu_;
+  RooRealVar overRec_aLBu_;
+  RooRealVar overRec_aRBu_;
+  RooRealVar overRec_nLBu_;
+  RooRealVar overRec_nRBu_;
+  RooRealVar overRec_fracLRPdfBu_;
   RooRealVar ratioDst0KDst0pi_overRec_;
   RooRealVar relativeBuWidth_overRec_;
-  RooRealVar meanDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar sigmaLDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar sigmaRDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar aRDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar aLDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar nRDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar nLDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_meanDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_sigmaLDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_sigmaRDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_aRDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_aLDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_nRDelta_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_nLDelta_;
   RooCBShape pdfLDelta_Bu2Dst0hst_Dst02D0pi0_;
   RooCBShape pdfRDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar fracLRDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_fracLRDelta_;
   RooAddPdf pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_;
   RooDstD0BG pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar fracPdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta_;
   RooAddPdf pdfDelta_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a0MeanBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a1MeanBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a2MeanBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooPolyVar meanBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a0SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a1SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a2SigmaLBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a0SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a1SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar a2SigmaRBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar aLBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar aRBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar nLBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar nRBu_Bu2Dst0hst_Dst02D0pi0_;
-  RooRealVar fracLRPdfBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a0MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a1MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a2MeanBu_;
+  RooPolyVar Bu2Dst0hst_Dst02D0pi0_meanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a0SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a1SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a2SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a0SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a1SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_a2SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_aLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_aRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_nLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_nRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0pi0_fracLRPdfBu_;
   RooRealVar ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_;
   RooRealVar relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_meanDelta_;
@@ -629,55 +629,55 @@ class NeutralVars {
   RooRealVar Bu2Dst0hst_Dst02D0gamma_nLDelta_;
   RooCBShape pdfLDelta_Bu2Dst0hst_Dst02D0gamma_;
   RooCBShape pdfRDelta_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar fracLRDelta_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_fracLRDelta_;
   RooAddPdf pdfDelta_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a0MeanBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a1MeanBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a2MeanBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooPolyVar meanBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a0SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a1SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a2SigmaLBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a0SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a1SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar a2SigmaRBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar aLBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar aRBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar nLBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar nRBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar fracLRPdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a0MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
+  RooPolyVar Bu2Dst0hst_Dst02D0gamma_meanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a0SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a1SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a2SigmaLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a0SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a1SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a2SigmaRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_aLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_aRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_nLBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_nRBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_fracLRPdfBu_;
   RooRealVar ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_;
   RooRealVar relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_;
   RooDstD0BG pdfDelta_misRec_;
-  RooRealVar a0Mean1Bu_misRec_;
-  RooRealVar a1Mean1Bu_misRec_;
-  RooRealVar a2Mean1Bu_misRec_;
-  RooPolyVar mean1Bu_misRec_;
-  RooRealVar a0Mean2Bu_misRec_;
-  RooRealVar a1Mean2Bu_misRec_;
-  RooRealVar a2Mean2Bu_misRec_;
-  RooPolyVar mean2Bu_misRec_;
-  RooRealVar a0Mean3Bu_misRec_;
-  RooRealVar a1Mean3Bu_misRec_;
-  RooRealVar a2Mean3Bu_misRec_;
-  RooPolyVar mean3Bu_misRec_;
-  RooRealVar a0Sigma1Bu_misRec_;
-  RooRealVar a1Sigma1Bu_misRec_;
-  RooRealVar a2Sigma1Bu_misRec_;
-  RooRealVar a0Sigma2Bu_misRec_;
-  RooRealVar a1Sigma2Bu_misRec_;
-  RooRealVar a2Sigma2Bu_misRec_;
-  RooRealVar a0Sigma3Bu_misRec_;
-  RooRealVar a1Sigma3Bu_misRec_;
-  RooRealVar a2Sigma3Bu_misRec_;
-  RooRealVar frac1PdfBu_misRec_;
-  RooRealVar frac2PdfBu_misRec_;
-  RooFormulaVar frac3PdfBu_misRec_;
+  RooRealVar misRec_a0Mean1Bu_;
+  RooRealVar misRec_a1Mean1Bu_;
+  RooRealVar misRec_a2Mean1Bu_;
+  RooPolyVar misRec_mean1Bu_;
+  RooRealVar misRec_a0Mean2Bu_;
+  RooRealVar misRec_a1Mean2Bu_;
+  RooRealVar misRec_a2Mean2Bu_;
+  RooPolyVar misRec_mean2Bu_;
+  RooRealVar misRec_a0Mean3Bu_;
+  RooRealVar misRec_a1Mean3Bu_;
+  RooRealVar misRec_a2Mean3Bu_;
+  RooPolyVar misRec_mean3Bu_;
+  RooRealVar misRec_a0Sigma1Bu_;
+  RooRealVar misRec_a1Sigma1Bu_;
+  RooRealVar misRec_a2Sigma1Bu_;
+  RooRealVar misRec_a0Sigma2Bu_;
+  RooRealVar misRec_a1Sigma2Bu_;
+  RooRealVar misRec_a2Sigma2Bu_;
+  RooRealVar misRec_a0Sigma3Bu_;
+  RooRealVar misRec_a1Sigma3Bu_;
+  RooRealVar misRec_a2Sigma3Bu_;
+  RooRealVar misRec_frac1PdfBu_;
+  RooRealVar misRec_frac2PdfBu_;
+  RooFormulaVar misRec_frac3PdfBu_;
   RooRealVar ratioDst0KDst0pi_misRec_;
   RooRealVar relativeBuWidth_misRec_;
   RooDstD0BG pdfDelta_Comb_;
-  RooRealVar a0LambdaBu_Comb_;
-  RooPolyVar lambdaBu_Comb_;
+  RooRealVar Comb_a0LambdaBu_;
+  RooPolyVar Comb_lambdaBu_;
   RooExponential pdfBu_Comb_;
   RooProdPdf pdf_Comb_;
 };
