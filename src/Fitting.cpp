@@ -50,6 +50,7 @@ std::string EnumToString(Variable variable) {
   }
 }
 
+// Function to set the style for all THists
 void SetStyle() {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
@@ -69,6 +70,8 @@ void SetStyle() {
   gStyle->SetPadLeftMargin(0.1);
 }
 
+// Separate function to make legend for RooPlot - not working right now (same
+// code is in Plotting1D)
 TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
                    PdfBase &pdf) {
   Bachelor bachelor = pdf.bachelor();
@@ -109,6 +112,8 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
   return legend;
 }
 
+// Function to plot 1D projections - written so that it can be used for both bu
+// and delta mass
 void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
@@ -264,8 +269,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
 
-  // Everything to be plotted has to be declared outside of a loop, in the scope
-  // of the canvas
   TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
   zeroLine.SetLineColor(kTeal);
   zeroLine.SetLineStyle(kDashed);
@@ -304,6 +307,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                     .c_str());
 }
 
+// Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
@@ -316,7 +320,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  TLegend legend(0.7, 0.7, 0.97, 0.90);
+  TLegend legend(0.7, 0.65, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdf_Bu2Dst0h_Dst02D0pi0_Hist = std::make_unique<TH1D>(
       ("pdf_Bu2Dst0h_Dst02D0pi0_Hist" +
@@ -535,6 +539,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 categories, legend, yieldLegend, outputDir, fitBool);
 }
 
+// Plot in 2D: data, PDF and residuals
 void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                 std::string const &outputDir, bool fitBool) {
@@ -713,6 +718,8 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
   // }
 }
 
+// Function that returns the simultaneous PDF, the class which collects all the
+// individual components. It is that that we do all our fitting with
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     int const id, Configuration &config, Configuration::Categories &categories,
     std::vector<Neutral> const &neutralVec,
@@ -1019,6 +1026,8 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   return p;
 }
 
+// Sometimes need to shift the starting point of the yields in order to make the
+// toy fit stable (so that the fit actually has to do some work)
 void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
                   std::vector<Neutral> neutralVec, int id) {
   for (auto &d : daughtersVec) {
@@ -1155,6 +1164,7 @@ void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
   }
 }
 
+// Run 1 toy and make 1D and 2D plots
 void RunSingleToy(Configuration &config, Configuration::Categories &categories,
                   std::vector<Neutral> const &neutralVec,
                   std::vector<Daughters> const &daughtersVec,
@@ -1223,6 +1233,9 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   }
 }
 
+// Save all info on variables: value, error; EDM, covariance matrix quality and
+// status of fit for each result stored. One tree and one file created for each
+// variable - should have entries equal to number of toys.
 void SaveResultInTree(
     int const nToys,
     std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
@@ -1230,6 +1243,8 @@ void SaveResultInTree(
     std::string const &outputDir, double randomTag) {
   std::string varName = varNamePlusID.substr(0, varNamePlusID.size() - 2);
 
+  // Add random tag to file name so that when we submit to the batch and run
+  // toys in parallel, files are not overwritten
   TFile treeFile((outputDir + "/Tree_" + varName + "_" +
                   std::to_string(randomTag) + ".root")
                      .c_str(),
@@ -1282,6 +1297,8 @@ void SaveResultInTree(
             << "_" << std::to_string(randomTag) << ".root\n";
 }
 
+// Function we use to do the toy study - run many toys and extract pulls for
+// each variable of interest
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
@@ -1294,222 +1311,115 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   std::vector<std::string> varNames;
   std::vector<double> varPredictions;
 
-  // for (auto &n : neutralVec) {
-  //   for (auto &d : daughtersVec) {
-  //     switch (n) {
-  //       case Neutral::pi0: {
-  //         NeutralVars<Neutral::pi0> &nVars_pi0 =
-  //             NeutralVars<Neutral::pi0>::Get(id);
-  //         varNames.emplace_back(
-  //             nVars_pi0.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_pi0.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         varNames.emplace_back(
-  //             nVars_pi0.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_pi0.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         varNames.emplace_back(
-  //             nVars_pi0.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_pi0.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         switch (d) {
-  //           case Daughters::kpi: {
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                          Daughters::kpi> &nbdVars_pi0_pi_kpi =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                              Daughters::kpi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_pi_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_pi_kpi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                          Daughters::kpi> &nbdVars_pi0_k_kpi =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                              Daughters::kpi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_k_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_k_kpi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             break;
-  //           }
-  //           case Daughters::kk: {
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                          Daughters::kk> &nbdVars_pi0_pi_kk =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                              Daughters::kk>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_pi_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_pi_kk.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                          Daughters::kk> &nbdVars_pi0_k_kk =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                              Daughters::kk>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_k_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_k_kk.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             break;
-  //           }
-  //           case Daughters::pipi: {
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                          Daughters::pipi>
-  //                 &nbdVars_pi0_pi_pipi =
-  //                     NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                                  Daughters::pipi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_pi_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_pi_pipi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                          Daughters::pipi>
-  //                 &nbdVars_pi0_k_pipi =
-  //                     NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                                  Daughters::pipi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_k_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_k_pipi.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             break;
-  //           }
-  //           case Daughters::pik: {
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                          Daughters::pik> &nbdVars_pi0_pi_pik =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-  //                                              Daughters::pik>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_pi_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_pi_pik.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                          Daughters::pik> &nbdVars_pi0_k_pik =
-  //                 NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-  //                                              Daughters::pik>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_pi0_k_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_pi0_k_pik.asym_Bu2Dst0h_Dst02D0pi0().getVal());
-  //             break;
-  //           }
-  //         }
-  //         break;
-  //       }
-  //       case Neutral::gamma: {
-  //         NeutralVars<Neutral::gamma> &nVars_gamma =
-  //             NeutralVars<Neutral::gamma>::Get(id);
-  //         varNames.emplace_back(
-  //             nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
-  //         varNames.emplace_back(
-  //             nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
-  //         varNames.emplace_back(
-  //             nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0gamma().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0gamma().getVal());
-  //         varNames.emplace_back(
-  //             nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a0Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         varNames.emplace_back(
-  //             nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a1Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         varNames.emplace_back(
-  //             nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().GetName());
-  //         varPredictions.emplace_back(
-  //             nVars_gamma.a2Mean1Bu_Bu2Dst0h_Dst02D0pi0().getVal());
-  //         switch (d) {
-  //           case Daughters::kpi: {
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                          Daughters::kpi>
-  //                 &nbdVars_gamma_pi_kpi =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                                  Daughters::kpi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_pi_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_pi_kpi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                          Daughters::kpi>
-  //                 &nbdVars_gamma_k_kpi =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                                  Daughters::kpi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_k_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_k_kpi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             break;
-  //           }
-  //           case Daughters::kk: {
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                          Daughters::kk> &nbdVars_gamma_pi_kk =
-  //                 NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                              Daughters::kk>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_pi_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_pi_kk.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                          Daughters::kk> &nbdVars_gamma_k_kk =
-  //                 NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                              Daughters::kk>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_k_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_k_kk.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             break;
-  //           }
-  //           case Daughters::pipi: {
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                          Daughters::pipi>
-  //                 &nbdVars_gamma_pi_pipi =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                                  Daughters::pipi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_pi_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_pi_pipi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                          Daughters::pipi>
-  //                 &nbdVars_gamma_k_pipi =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                                  Daughters::pipi>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_k_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_k_pipi.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             break;
-  //           }
-  //           case Daughters::pik: {
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                          Daughters::pik>
-  //                 &nbdVars_gamma_pi_pik =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-  //                                                  Daughters::pik>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_pi_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_pi_pik.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                          Daughters::pik>
-  //                 &nbdVars_gamma_k_pik =
-  //                     NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-  //                                                  Daughters::pik>::Get(id);
-  //             varNames.emplace_back(
-  //                 nbdVars_gamma_k_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-  //             varPredictions.emplace_back(
-  //                 nbdVars_gamma_k_pik.asym_Bu2Dst0h_Dst02D0gamma().getVal());
-  //             break;
-  //           }
-  //         }
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
+  // Extract the names of the variables and their starting values
+  for (auto &n : neutralVec) {
+    for (auto &d : daughtersVec) {
+      switch (n) {
+        case Neutral::pi0: {
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kpi>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0().getVal());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_pi0_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0().getVal());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_pi0_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0().getVal());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::pik> &nbdVars_pi0_pi_pik =
+                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                               Daughters::pik>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0().getVal());
+              break;
+            }
+          }
+          break;
+        }
+        case Neutral::gamma: {
+          switch (d) {
+            case Daughters::kpi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>
+                  &nbdVars_gamma_pi_kpi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::kpi>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma().getVal());
+              break;
+            }
+            case Daughters::kk: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kk> &nbdVars_gamma_pi_kk =
+                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                               Daughters::kk>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma().getVal());
+              break;
+            }
+            case Daughters::pipi: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pipi>
+                  &nbdVars_gamma_pi_pipi =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pipi>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma().getVal());
+              break;
+            }
+            case Daughters::pik: {
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::pik>
+                  &nbdVars_gamma_pi_pik =
+                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                                   Daughters::pik>::Get(id);
+              varNames.emplace_back(
+                  nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma().GetName());
+              varPredictions.emplace_back(
+                  nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma().getVal());
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
   // Setting the random seed to 0 is a special case which generates a
   // different seed every time you run. Setting the seed to an integer
   // generates toys in a replicable way, in case you need to debug
@@ -1520,8 +1430,10 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
   std::vector<std::shared_ptr<RooFitResult> > resultVec;
   int nToys = 5;
 
+  // loop over number of toys we want to run. Make simPDF, generate dataset, fit
+  // back and save the result in order to extract the variable info
   for (int id = 0; id < nToys; ++id) {
-    std::cout << "\n\n -------------------------- Running toy #" << id
+    std::cout << "\n\n -------------------------- Running toy #" << id+1
               << " -------------------------- \n\n";
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
@@ -1558,6 +1470,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     result->Print("v");
   }
 
+  // loop over all the variables we are interested in
   for (int n = 0; n < varNames.size(); ++n) {
     SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n],
                      outputDir, randomTag);

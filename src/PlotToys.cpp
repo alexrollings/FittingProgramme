@@ -35,26 +35,11 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
   int id = 0;
   GlobalVars &globalVars = GlobalVars::Get(id);
 
+  // Extract the names of the variables
   for (auto &n : neutralVec) {
     for (auto &d : daughtersVec) {
       switch (n) {
         case Neutral::pi0: {
-          NeutralVars<Neutral::pi0> &nVars_pi0 =
-              NeutralVars<Neutral::pi0>::Get(id);
-          varNames.emplace_back(
-              nVars_pi0.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nVars_pi0.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nVars_pi0.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          NeutralBachelorVars<Neutral::pi0, Bachelor::pi> &nbVars_pi_pi0 =
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(id);
-          varNames.emplace_back(
-              nbVars_pi_pi0.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nbVars_pi_pi0.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nbVars_pi_pi0.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
@@ -62,13 +47,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kpi>::Get(id);
               varNames.emplace_back(
-                  nbdVars_pi0_pi_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kpi> &nbdVars_pi0_k_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::kpi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_k_kpi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+                  nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0().GetName());
               break;
             }
             case Daughters::kk: {
@@ -77,13 +56,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(
-                  nbdVars_pi0_pi_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kk> &nbdVars_pi0_k_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_k_kk.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+                  nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0().GetName());
               break;
             }
             case Daughters::pipi: {
@@ -93,14 +66,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(
-                  nbdVars_pi0_pi_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_k_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_k_pipi.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+                  nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0().GetName());
               break;
             }
             case Daughters::pik: {
@@ -109,48 +75,13 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                Daughters::pik>::Get(id);
               varNames.emplace_back(
-                  nbdVars_pi0_pi_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::pik> &nbdVars_pi0_k_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                               Daughters::pik>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_k_pik.asym_Bu2Dst0h_Dst02D0pi0().GetName());
+                  nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0().GetName());
               break;
             }
           }
           break;
         }
         case Neutral::gamma: {
-          NeutralVars<Neutral::gamma> &nVars_gamma =
-              NeutralVars<Neutral::gamma>::Get(id);
-          varNames.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varNames.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varNames.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varNames.emplace_back(
-              nVars_gamma.a0MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nVars_gamma.a1MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nVars_gamma.a2MeanBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi> &nbVars_pi_gamma =
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
-          varNames.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0gamma().GetName());
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id);
-          varNames.emplace_back(
-              nbVars_pi_gamma.a0SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a1SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
-          varNames.emplace_back(
-              nbVars_pi_gamma.a2SigmaBu_Bu2Dst0h_Dst02D0pi0().GetName());
           switch (d) {
             case Daughters::kpi: {
               NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
@@ -159,14 +90,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::kpi>::Get(id);
               varNames.emplace_back(
-                  nbdVars_gamma_pi_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_k_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::kpi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_k_kpi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+                  nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma().GetName());
               break;
             }
             case Daughters::kk: {
@@ -175,13 +99,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                   NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                Daughters::kk>::Get(id);
               varNames.emplace_back(
-                  nbdVars_gamma_pi_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kk> &nbdVars_gamma_k_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_k_kk.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+                  nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma().GetName());
               break;
             }
             case Daughters::pipi: {
@@ -191,14 +109,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pipi>::Get(id);
               varNames.emplace_back(
-                  nbdVars_gamma_pi_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_k_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_k_pipi.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+                  nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma().GetName());
               break;
             }
             case Daughters::pik: {
@@ -208,14 +119,7 @@ void ExtractVarNames(std::vector<Neutral> const &neutralVec,
                       NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                    Daughters::pik>::Get(id);
               varNames.emplace_back(
-                  nbdVars_gamma_pi_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::pik>
-                  &nbdVars_gamma_k_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                                   Daughters::pik>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_k_pik.asym_Bu2Dst0h_Dst02D0gamma().GetName());
+                  nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma().GetName());
               break;
             }
           }
@@ -276,6 +180,7 @@ void PlotVariables(std::string &inputDir, TChain &chain, TTreeReader &reader,
   reader.Restart();
   unsigned int i = 0;
 
+  // We only want to look at the pulls of the converged fits
   while (reader.Next()) {
     chain.GetEntry(i);
     i++;
@@ -379,10 +284,12 @@ int main(int argc, char **argv) {
 
   ExtractVarNames(neutralVec, daughtersVec, varNames);
 
+  // loop over variables and extract information from trees
   for (unsigned int i = 0; i < varNames.size(); ++i) {
     std::string varName = varNames[i].substr(0, varNames[i].size() - 2);
     std::string tree = varName + "_tree";
     TChain chain(tree.c_str());
+    // Wildcard all the random numbers
     chain.Add((inputDir + "/Tree_" + varName + "_*.root").c_str());
     std::cout << "Plotting for " << chain.GetEntries() << " toys.\n";
     TTreeReader reader(&chain);
