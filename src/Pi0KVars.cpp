@@ -44,7 +44,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0pi0_mean1Bu(),
+              .Bu2Dst0h_Dst02D0pi0_meanBu(),
           *Bu2Dst0h_Dst02D0pi0_sigma1Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_n1Bu()),
@@ -57,7 +57,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().buMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0pi0_mean1Bu(),
+              .Bu2Dst0h_Dst02D0pi0_meanBu(),
           *Bu2Dst0h_Dst02D0pi0_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_n2Bu()),
@@ -87,9 +87,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bu2Dst0h_Dst02D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_Dst02D0gamma_(),
       pdf2Bu_Bu2Dst0h_Dst02D0gamma_(),
-      pdf12Bu_Bu2Dst0h_Dst02D0gamma_(),
-      sigmaWideBu_Bu2Dst0h_Dst02D0gamma_(nullptr),
-      pdfWideBu_Bu2Dst0h_Dst02D0gamma_(),
       pdfBu_Bu2Dst0h_Dst02D0gamma_(),
       pdf_Bu2Dst0h_Dst02D0gamma_(),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
