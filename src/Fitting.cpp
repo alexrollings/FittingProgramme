@@ -1686,16 +1686,24 @@ int main(int argc, char **argv) {
                   } else {
                     std::cout << "inputDataSet extracted... \n";
                     inputDataSet->Print();
+                    RooDataSet *reducedInputDataSet_1 = nullptr;
+                    if (n == Neutral::pi0) {
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "Pi0_M<185&&Pi0_M>110"));
+                    } else {
+                      reducedInputDataSet_1 = inputDataSet;
+                    }
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (b == Bachelor::pi) {
                       reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                          dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK<12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
                               "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
                               "D_PIDK<-2&&K_D_PIDK>2"));
                     } else {
                       reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                          dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK>12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
                               "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
                               "D_PIDK<-2&&K_D_PIDK>2"));
