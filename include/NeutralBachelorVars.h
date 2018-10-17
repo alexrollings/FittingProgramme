@@ -76,44 +76,45 @@ class NeutralBachelorVars {
   RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma1Bu() {
     return *Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
   }
-  RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma2Bu() {
-    return *Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
-  }
-  RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0pi0() {
-    return pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
-  }
-  RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0pi0() {
-    return pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
-  }
-  RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() {
+  // RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma2Bu() {
+  //   return *Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
+  // }
+  // RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0pi0() {
+  //   return pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
+  // }
+  // RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0pi0() {
+  //   return pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
+  // }
+  // RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() {
+  //   return pdfBu_Bu2Dst0hst_Dst02D0pi0_;
+  // }
+  RooCBShape &pdfBu_Bu2Dst0hst_Dst02D0pi0() {
     return pdfBu_Bu2Dst0hst_Dst02D0pi0_;
   }
   RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() { return pdf_Bu2Dst0hst_Dst02D0pi0_; }
   RooAbsReal &Bu2Dst0hst_Dst02D0gamma_sigma1Bu() {
     return *Bu2Dst0hst_Dst02D0gamma_sigma1Bu_;
   }
-  RooAbsReal &Bu2Dst0hst_Dst02D0gamma_sigma2Bu() {
-    return *Bu2Dst0hst_Dst02D0gamma_sigma2Bu_;
-  }
-  RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0gamma() {
-    return pdf1Bu_Bu2Dst0hst_Dst02D0gamma_;
-  }
-  RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0gamma() {
-    return pdf2Bu_Bu2Dst0hst_Dst02D0gamma_;
-  }
-  RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
+  // RooAbsReal &Bu2Dst0hst_Dst02D0gamma_sigma2Bu() {
+  //   return *Bu2Dst0hst_Dst02D0gamma_sigma2Bu_;
+  // }
+  // RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0gamma() {
+  //   return pdf1Bu_Bu2Dst0hst_Dst02D0gamma_;
+  // }
+  // RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0gamma() {
+  //   return pdf2Bu_Bu2Dst0hst_Dst02D0gamma_;
+  // }
+  // RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
+  //   return pdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  // }
+  RooCBShape &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
     return pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   }
   RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() {
     return pdf_Bu2Dst0hst_Dst02D0gamma_;
   }
-  RooAbsReal &sigma1Bu_misRec() { return *sigma1Bu_misRec_; }
-  RooAbsReal &sigma2Bu_misRec() { return *sigma2Bu_misRec_; }
-  RooAbsReal &sigma3Bu_misRec() { return *sigma3Bu_misRec_; }
-  RooGaussian &pdf1Bu_misRec() { return pdf1Bu_misRec_; }
-  RooGaussian &pdf2Bu_misRec() { return pdf2Bu_misRec_; }
-  RooGaussian &pdf3Bu_misRec() { return pdf3Bu_misRec_; }
-  RooAddPdf &pdfBu_misRec() { return pdfBu_misRec_; }
+  RooAbsReal &sigmaBu_misRec() { return *sigmaBu_misRec_; }
+  RooGaussian &pdfBu_misRec() { return pdfBu_misRec_; }
   RooProdPdf &pdf_misRec() { return pdf_misRec_; }
 
  private:
@@ -137,24 +138,21 @@ class NeutralBachelorVars {
   RooAddPdf pdfBu_overRec_;
   RooProdPdf pdf_overRec_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
-  std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
-  RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
-  RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
-  RooAddPdf pdfBu_Bu2Dst0hst_Dst02D0pi0_;
+  // std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
+  // RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
+  // RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
+  // RooAddPdf pdfBu_Bu2Dst0hst_Dst02D0pi0_;
+  RooCBShape pdfBu_Bu2Dst0hst_Dst02D0pi0_;
   RooProdPdf pdf_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0gamma_sigma1Bu_;
-  std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0gamma_sigma2Bu_;
-  RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0gamma_;
-  RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0gamma_;
-  RooAddPdf pdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  // std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0gamma_sigma2Bu_;
+  // RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0gamma_;
+  // RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0gamma_;
+  // RooAddPdf pdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooCBShape pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   RooProdPdf pdf_Bu2Dst0hst_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> sigma1Bu_misRec_;
-  std::unique_ptr<RooAbsReal> sigma2Bu_misRec_;
-  std::unique_ptr<RooAbsReal> sigma3Bu_misRec_;
-  RooGaussian pdf1Bu_misRec_;
-  RooGaussian pdf2Bu_misRec_;
-  RooGaussian pdf3Bu_misRec_;
-  RooAddPdf pdfBu_misRec_;
+  std::unique_ptr<RooAbsReal> sigmaBu_misRec_;
+  RooGaussian pdfBu_misRec_;
   RooProdPdf pdf_misRec_;
 };
 

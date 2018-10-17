@@ -130,25 +130,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdf_overRec_(),
       // ------------------- Pi0 PART RECONSTRUCTED BKG ------------------- //
       Bu2Dst0hst_Dst02D0pi0_sigma1Bu_(nullptr),
-      Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(nullptr),
-      pdf1Bu_Bu2Dst0hst_Dst02D0pi0_(),
-      pdf2Bu_Bu2Dst0hst_Dst02D0pi0_(),
+      // Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(nullptr),
+      // pdf1Bu_Bu2Dst0hst_Dst02D0pi0_(),
+      // pdf2Bu_Bu2Dst0hst_Dst02D0pi0_(),
       pdfBu_Bu2Dst0hst_Dst02D0pi0_(),
       pdf_Bu2Dst0hst_Dst02D0pi0_(),
       // -------------------- Gamma PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0gamma_sigma1Bu_(nullptr),
-      Bu2Dst0hst_Dst02D0gamma_sigma2Bu_(nullptr),
-      pdf1Bu_Bu2Dst0hst_Dst02D0gamma_(),
-      pdf2Bu_Bu2Dst0hst_Dst02D0gamma_(),
+      // Bu2Dst0hst_Dst02D0gamma_sigma2Bu_(nullptr),
+      // pdf1Bu_Bu2Dst0hst_Dst02D0gamma_(),
+      // pdf2Bu_Bu2Dst0hst_Dst02D0gamma_(),
       pdfBu_Bu2Dst0hst_Dst02D0gamma_(),
       pdf_Bu2Dst0hst_Dst02D0gamma_(),
       // -------------------- MIS RECONSTRUCTED BKG -------------------- //
-      sigma1Bu_misRec_(nullptr),
-      sigma2Bu_misRec_(nullptr),
-      sigma3Bu_misRec_(nullptr),
-      pdf1Bu_misRec_(),
-      pdf2Bu_misRec_(),
-      pdf3Bu_misRec_(),
+      sigmaBu_misRec_(nullptr),
       pdfBu_misRec_(),
       pdf_misRec_() {}
 // sigmaBu_misRec_(

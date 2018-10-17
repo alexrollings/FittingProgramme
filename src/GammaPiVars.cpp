@@ -245,30 +245,66 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                              .c_str(),
                          Configuration::Get().deltaMass(),
                          RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu()))),
-      Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(
-          new RooPolyVar(("Bu2Dst0hst_Dst02D0pi0_sigma2Bu_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma2 of Bu PDF of Bu2Dst0hst_Dst02D0pi0 " +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         Configuration::Get().deltaMass(),
-                         RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu()))),
-      pdf1Bu_Bu2Dst0hst_Dst02D0pi0_(
-          ("pdf1Bu_Bu2Dst0hst_Dst02D0pi0_" +
+                                        .Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu()))),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu(),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu()))),
+      // Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(
+      //     new RooPolyVar(("Bu2Dst0hst_Dst02D0pi0_sigma2Bu_" +
+      //                     ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //                        .c_str(),
+      //                    ("Sigma2 of Bu PDF of Bu2Dst0hst_Dst02D0pi0 " +
+      //                     ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //                        .c_str(),
+      //                    Configuration::Get().deltaMass(),
+      //                    RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //                                   .Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu(),
+      //                               NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //                                   .Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu(),
+      //                               NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //                                   .Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu()))),
+      // pdf1Bu_Bu2Dst0hst_Dst02D0pi0_(
+      //     ("pdf1Bu_Bu2Dst0hst_Dst02D0pi0_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0pi0 Bu PDF L " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     Configuration::Get().buMass(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0pi0_meanBu(),
+      //     *Bu2Dst0hst_Dst02D0pi0_sigma1Bu_,
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_a1Bu(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_n1Bu()),
+      // pdf2Bu_Bu2Dst0hst_Dst02D0pi0_(
+      //     ("pdf2Bu_Bu2Dst0hst_Dst02D0pi0_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0pi0 Bu PDF R " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     Configuration::Get().buMass(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0pi0_meanBu(),
+      //     *Bu2Dst0hst_Dst02D0pi0_sigma2Bu_,
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_a2Bu(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_n2Bu()),
+      // pdfBu_Bu2Dst0hst_Dst02D0pi0_(
+      //     ("pdfBu_Bu2Dst0hst_Dst02D0pi0_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0pi0 Bu PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     RooArgSet(pdf1Bu_Bu2Dst0hst_Dst02D0pi0_, pdf2Bu_Bu2Dst0hst_Dst02D0pi0_),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0pi0_frac1PdfBu()),
+      pdfBu_Bu2Dst0hst_Dst02D0pi0_(
+          ("pdfBu_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          ("Bu2Dst0hst_Dst02D0pi0 Bu PDF L " +
+          ("Bu2Dst0hst_Dst02D0pi0 Bu PDF " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
@@ -277,29 +313,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           *Bu2Dst0hst_Dst02D0pi0_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_n1Bu()),
-      pdf2Bu_Bu2Dst0hst_Dst02D0pi0_(
-          ("pdf2Bu_Bu2Dst0hst_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Bu2Dst0hst_Dst02D0pi0 Bu PDF R " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0pi0_meanBu(),
-          *Bu2Dst0hst_Dst02D0pi0_sigma2Bu_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_a2Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0pi0_n2Bu()),
-      pdfBu_Bu2Dst0hst_Dst02D0pi0_(
-          ("pdfBu_Bu2Dst0hst_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Bu2Dst0hst_Dst02D0pi0 Bu PDF " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          RooArgSet(pdf1Bu_Bu2Dst0hst_Dst02D0pi0_, pdf2Bu_Bu2Dst0hst_Dst02D0pi0_),
-          NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0pi0_frac1PdfBu()),
       pdf_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -320,30 +333,66 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                              .c_str(),
                          Configuration::Get().deltaMass(),
                          RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu()))),
-      Bu2Dst0hst_Dst02D0gamma_sigma2Bu_(
-          new RooPolyVar(("Bu2Dst0hst_Dst02D0gamma_sigma2Bu_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         ("Sigma2 of Bu PDF of Bu2Dst0hst_Dst02D0gamma " +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         Configuration::Get().deltaMass(),
-                         RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu(),
-                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                        .Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu()))),
-      pdf1Bu_Bu2Dst0hst_Dst02D0gamma_(
-          ("pdf1Bu_Bu2Dst0hst_Dst02D0gamma_" +
+                                        .Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu()))),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu(),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu()))),
+      // Bu2Dst0hst_Dst02D0gamma_sigma2Bu_(
+      //     new RooPolyVar(("Bu2Dst0hst_Dst02D0gamma_sigma2Bu_" +
+      //                     ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //                        .c_str(),
+      //                    ("Sigma2 of Bu PDF of Bu2Dst0hst_Dst02D0gamma " +
+      //                     ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //                        .c_str(),
+      //                    Configuration::Get().deltaMass(),
+      //                    RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //                                   .Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu(),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu(),
+                                    // NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    //     .Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu()))),
+      // pdf1Bu_Bu2Dst0hst_Dst02D0gamma_(
+      //     ("pdf1Bu_Bu2Dst0hst_Dst02D0gamma_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0gamma Bu PDF L " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     Configuration::Get().buMass(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0gamma_meanBu(),
+      //     *Bu2Dst0hst_Dst02D0gamma_sigma1Bu_,
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_a1Bu(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_n1Bu()),
+      // pdf2Bu_Bu2Dst0hst_Dst02D0gamma_(
+      //     ("pdf2Bu_Bu2Dst0hst_Dst02D0gamma_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0gamma Bu PDF R " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     Configuration::Get().buMass(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0gamma_meanBu(),
+      //     *Bu2Dst0hst_Dst02D0gamma_sigma2Bu_,
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_a2Bu(),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_n2Bu()),
+      // pdfBu_Bu2Dst0hst_Dst02D0gamma_(
+      //     ("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     ("Bu2Dst0hst_Dst02D0gamma Bu PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+      //         .c_str(),
+      //     RooArgSet(pdf1Bu_Bu2Dst0hst_Dst02D0gamma_, pdf2Bu_Bu2Dst0hst_Dst02D0gamma_),
+      //     NeutralVars<Neutral::gamma>::Get(uniqueId)
+      //         .Bu2Dst0hst_Dst02D0gamma_fracPdfBu()),
+      pdfBu_Bu2Dst0hst_Dst02D0gamma_(
+          ("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          ("Bu2Dst0hst_Dst02D0gamma Bu PDF L " +
+          ("Bu2Dst0hst_Dst02D0gamma Bu PDF " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
@@ -352,29 +401,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           *Bu2Dst0hst_Dst02D0gamma_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_n1Bu()),
-      pdf2Bu_Bu2Dst0hst_Dst02D0gamma_(
-          ("pdf2Bu_Bu2Dst0hst_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Bu2Dst0hst_Dst02D0gamma Bu PDF R " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0gamma_meanBu(),
-          *Bu2Dst0hst_Dst02D0gamma_sigma2Bu_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_a2Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0hst_Dst02D0gamma_n2Bu()),
-      pdfBu_Bu2Dst0hst_Dst02D0gamma_(
-          ("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Bu2Dst0hst_Dst02D0gamma Bu PDF " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          RooArgSet(pdf1Bu_Bu2Dst0hst_Dst02D0gamma_, pdf2Bu_Bu2Dst0hst_Dst02D0gamma_),
-          NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0gamma_frac1PdfBu()),
       pdf_Bu2Dst0hst_Dst02D0gamma_(
           ("pdf_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -387,84 +413,28 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2Dst0hst_Dst02D0gamma_,
                               Configuration::Get().buMass())),
       // -------------------- MIS RECONSTRUCTED BKG -------------------- //
-      sigma1Bu_misRec_(new RooPolyVar(
-          ("sigma1Bu_misRec_" +
+      sigmaBu_misRec_(new RooPolyVar(
+          ("sigmaBu_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          ("Sigma1 of Bu PDF of misRec Gaussian " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a0Sigma1Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a1Sigma1Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a2Sigma1Bu()))),
-      sigma2Bu_misRec_(new RooPolyVar(
-          ("sigma2Bu_misRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Sigma2 of Bu PDF of misRec " +
+          ("Sigma of Bu PDF of misRec Gaussian " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a0Sigma2Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a1Sigma2Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a2Sigma2Bu()))),
-      sigma3Bu_misRec_(new RooPolyVar(
-          ("sigma3Bu_misRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("Sigma3 of Bu PDF of misRec " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a0Sigma3Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a1Sigma3Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a2Sigma3Bu()))),
-      pdf1Bu_misRec_(
-          ("pdf1Bu_misRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("misRec Bu PDF 1 " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_mean1Bu(),
-          *sigma1Bu_misRec_),
-      pdf2Bu_misRec_(
-          ("pdf2Bu_misRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("misRec Bu PDF 2 " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_mean2Bu(),
-          *sigma2Bu_misRec_),
-      pdf3Bu_misRec_(
-          ("pdf3Bu_misRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          ("misRec Bu PDF 3 " +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_mean3Bu(),
-          *sigma3Bu_misRec_),
+              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a0SigmaBu(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a1SigmaBu(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a2SigmaBu()))),
       pdfBu_misRec_(
           ("pdfBu_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          ("misRec Bu PDF " +
+          ("misRec Bu PDF  " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          RooArgSet(pdf1Bu_misRec_, pdf2Bu_misRec_, pdf3Bu_misRec_),
-          RooArgSet(
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_frac1PdfBu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_frac2PdfBu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_frac3PdfBu())),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_meanBu(),
+          *sigmaBu_misRec_),
       pdf_misRec_(
           ("pdf_misRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),

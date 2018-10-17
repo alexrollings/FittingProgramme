@@ -465,29 +465,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 43),
-          48),
+          4.5861e+01),
       bkg_cDelta_(
           ("bkg_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 10, 0.001, 20),
-          // 29, 0, 35),
-          5.0179e+01),
+          2.2075e+01),
       bkg_aDelta_(
           ("bkg_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // -0.5, -1, 1),
-          // -0.044, -1, 1),
-          9.2245e-01),
+          9.2608e-01),
       bkg_bDelta_(
           ("bkg_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 0.000001),  // -0.5, 0.5),
-          // 0.00473, -1, 1),
-          -1.0816),
+          -8.8174e-01),
       // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
@@ -495,42 +488,27 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
           bkg_aDelta_, bkg_bDelta_),
-      // overRec_a0MeanBu_(
-      //     ("overRec_a0MeanBu_" + ComposeName(uniqueId,
-      //     Neutral::gamma)).c_str(),
-      //     ("a0 of mean of overRec m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     // 5400, 5350, 5450),
-      //     5400, 5350, 5450),
-      // overRec_meanBu_(
-      //     ("overRec_meanBu_" + ComposeName(uniqueId,
-      //     Neutral::gamma)).c_str(), Configuration::Get().deltaMass(),
-      //     RooArgList(overRec_a0MeanBu_)),
       overRec_a0Mean1Bu_(
           ("overRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a0 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 5030, 4950, 5550),
-          5.2641e+03),
+           5.3395e+03),
       overRec_a1Mean1Bu_(
           ("overRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 3, 0, 10),
-          3.2770e+00),
+          9.2609e-01),
       overRec_a2Mean1Bu_(
           ("overRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // -0.007, -0.1, 0.1),
-          -8.1688e-03),
+          -2.4154e-03),
       overRec_mean1Bu_(
           ("overRec_mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
@@ -544,24 +522,21 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 5030, 4950, 5550),
-          5.4396e+03),
+          5.2972e+03),
       overRec_a1Mean2Bu_(
           ("overRec_a1Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 3, 0, 10),
-          -1.4957e-02),
+          2.5745e+00),
       overRec_a2Mean2Bu_(
           ("overRec_a2Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // -0.007, -0.1, 0.1),
-          5.8425e-04),
+          -7.0262e-03),
       overRec_mean2Bu_(
           ("overRec_mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
@@ -575,68 +550,65 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 32, -100, 100),
-          4.5119e+00),
+          -1.5803e+00),
       overRec_a1Sigma1Bu_(
           ("overRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 0.09, -10, 10),
-          1.2461e-01),
+          4.5827e-01),
       overRec_a2Sigma1Bu_(
           ("overRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          // 0.0036, -0.01, 0.01),
-          1.8108e-03),
+          -1.3711e-03),
       overRec_a0Sigma2Bu_(
           ("overRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a0 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.0667e+01),
+          -1.5846e+01),
       overRec_a1Sigma2Bu_(
           ("overRec_a1Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          7.5421e-01),
+          6.2841e-01),
       overRec_a2Sigma2Bu_(
           ("overRec_a2Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -2.2312e-03),
+          -9.3012e-04),
       overRec_a1Bu_(
           ("overRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          3.7878e+00),  // 2.3, 0, 5),
+          2.6071e+00),
       overRec_a2Bu_(
           ("overRec_a2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a2 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          -3.1173e+00),  // 4.6, 0, 5),
+          -1.3325e+00),
       overRec_n1Bu_(
           ("overRec_n1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("n1 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          2.7083e+00),  // 3.4, 0, 5),
+          1.5161e-01),
       overRec_n2Bu_(
           ("overRec_n2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("n2 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          3.7229e+01),  // 3.5, 0, 5),
+          9.9999e+00),
       overRec_frac1PdfBu_(
           ("overRec_frac1PdfBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Fraction of left w.r.t. right Bu PDF in overRec " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.9029e-01),
+          3.2469e-01),
       relativeBuWidth_overRec_(
           ("relativeBuWidth_overRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -651,7 +623,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n overRec mode " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          0.07768),  //, 0.0, 0.1),
+          0.07768),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
@@ -673,14 +645,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
           Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
-      Bu2Dst0hst_Dst02D0pi0_frac1PdfDelta_(
-          ("Bu2Dst0hst_Dst02D0pi0_frac1PdfDelta_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of left w.r.t. right PDF in Bu2Dst0hst_Dst02D0pi0 " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          8.9266e-01),
       pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -690,7 +654,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0pi0_,
                      pdf2Delta_Bu2Dst0hst_Dst02D0pi0_),
-          Bu2Dst0hst_Dst02D0pi0_frac1PdfDelta_),
+          Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
       pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -700,15 +664,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
           bkg_aDelta_, bkg_bDelta_),
-      Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta_(
-          ("Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta_" +
+      Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          ("Fraction of flat pdf w.r.t. peaking pdf for partially "
+          ("Fraction of peak pdf w.r.t. peaking pdf for partially "
            "reconstructed bkg " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          6.0674e-01),
+          8.5481e-01),
       pdfDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -716,9 +680,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0hst_Dst02D0pi0 Delta PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          RooArgSet(pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_,
-                    pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_),
-          Bu2Dst0hst_Dst02D0pi0_fracPdfFlatDelta_),
+          RooArgSet(pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_,
+                    pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_),
+          Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_),
       Bu2Dst0hst_Dst02D0pi0_a0MeanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_a0MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -726,23 +690,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.7586e+03),
-      Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          3.5646e+00),
-      Bu2Dst0hst_Dst02D0pi0_a2MeanBu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a2MeanBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -1.4359e-02),
+          5.0215e+03),
+      // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     3.5646e+00),
+      // Bu2Dst0hst_Dst02D0pi0_a2MeanBu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a2MeanBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     -1.4359e-02),
       Bu2Dst0hst_Dst02D0pi0_meanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_meanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -751,9 +715,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0hst_Dst02D0pi0_a0MeanBu_,
-                     Bu2Dst0hst_Dst02D0pi0_a1MeanBu_,
-                     Bu2Dst0hst_Dst02D0pi0_a2MeanBu_)),
+          RooArgList(Bu2Dst0hst_Dst02D0pi0_a0MeanBu_)),
+                     // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_,
+                     // Bu2Dst0hst_Dst02D0pi0_a2MeanBu_)),
       Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -761,79 +725,79 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.4387e+01),
-      Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          7.8205e-02),
-      Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          3.1524e-03),
-      Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a0 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          9.8039e+01),
-      Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -7.1628e-01),
-      Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.3805e-03),
+          6.1316e+01),
+      // Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     7.8205e-02),
+      // Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     3.1524e-03),
+      // Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a0 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     9.8039e+01),
+      // Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     -7.1628e-01),
+      // Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     4.3805e-03),
       Bu2Dst0hst_Dst02D0pi0_a1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -3.8309e+00),
-      Bu2Dst0hst_Dst02D0pi0_a2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.2150e+00),
+          3.8685e+00),
+      // Bu2Dst0hst_Dst02D0pi0_a2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     4.2150e+00),
       Bu2Dst0hst_Dst02D0pi0_n1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_n1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("n1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3.5387e+00),
-      Bu2Dst0hst_Dst02D0pi0_n2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("n2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.3416e+01),
-      Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(
-          ("Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0pi0 " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          1.0890e-07),
+          4.6620e+00),
+      // Bu2Dst0hst_Dst02D0pi0_n2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("n2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     4.3416e+01),
+      // Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(
+      //     ("Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0pi0 " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     1.0890e-07),
       relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -873,14 +837,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0gamma_meanDelta_,
           Bu2Dst0h_Dst02D0gamma_sigma2Delta_,
           Bu2Dst0h_Dst02D0gamma_a2Delta_, Bu2Dst0h_Dst02D0gamma_n2Delta_),
-      Bu2Dst0hst_Dst02D0gamma_frac1PdfDelta_(
-          ("Bu2Dst0hst_Dst02D0gamma_frac1PdfDelta_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of left w.r.t. right PDF in Bu2Dst0hst_Dst02D0gamma " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.5168e-01),
       pdfDelta_Bu2Dst0hst_Dst02D0gamma_(
           ("pdfDelta_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -890,7 +846,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0gamma_,
                      pdf2Delta_Bu2Dst0hst_Dst02D0gamma_),
-          Bu2Dst0hst_Dst02D0gamma_frac1PdfDelta_),
+          Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
       Bu2Dst0hst_Dst02D0gamma_a0MeanBu_(
           ("Bu2Dst0hst_Dst02D0gamma_a0MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -898,23 +854,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.9823e+03),
-      Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a1MeanBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          7.2035e-01),
-      Bu2Dst0hst_Dst02D0gamma_a2MeanBu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a2MeanBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -5.2626e-04),
+          5.0874e+03),
+      // Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a1MeanBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     7.2035e-01),
+      // Bu2Dst0hst_Dst02D0gamma_a2MeanBu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a2MeanBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     -5.2626e-04),
       Bu2Dst0hst_Dst02D0gamma_meanBu_(
           ("Bu2Dst0hst_Dst02D0gamma_meanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -923,9 +879,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0hst_Dst02D0gamma_a0MeanBu_,
-                     Bu2Dst0hst_Dst02D0gamma_a1MeanBu_,
-                     Bu2Dst0hst_Dst02D0gamma_a2MeanBu_)),
+          RooArgList(Bu2Dst0hst_Dst02D0gamma_a0MeanBu_)),
+                     // Bu2Dst0hst_Dst02D0gamma_a1MeanBu_,
+                     // Bu2Dst0hst_Dst02D0gamma_a2MeanBu_)),
       Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -933,83 +889,83 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          1.1748e+02),
-      Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -1.0968e+00),
-      Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.5671e-03),
-      Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a0 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          5.8658e+01),
-      Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -2.1932e-01),
-      Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          1.4876e-03),
+           5.0085e+01),
+      // Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     -1.0968e+00),
+      // Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     4.5671e-03),
+      // Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a0 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     5.8658e+01),
+      // Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a1 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     -2.1932e-01),
+      // Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("a2 of sigma2 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     1.4876e-03),
       Bu2Dst0hst_Dst02D0gamma_a1Bu_(("Bu2Dst0hst_Dst02D0gamma_a1Bu_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
                                     ("a1 of Bu2Dst0hst_Dst02D0gamma " +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    -3.1581e+00),  // 2.3, 0, 5),
-      Bu2Dst0hst_Dst02D0gamma_a2Bu_(("Bu2Dst0hst_Dst02D0gamma_a2Bu_" +
-                                     ComposeName(uniqueId, Neutral::gamma))
-                                        .c_str(),
-                                    ("a2 of Bu2Dst0hst_Dst02D0gamma " +
-                                     ComposeName(uniqueId, Neutral::gamma))
-                                        .c_str(),
-                                    -3.0000e+00),  // 4.6, 0, 5),
+                                    2.6564e-01),
+      // Bu2Dst0hst_Dst02D0gamma_a2Bu_(("Bu2Dst0hst_Dst02D0gamma_a2Bu_" +
+      //                                ComposeName(uniqueId, Neutral::gamma))
+      //                                   .c_str(),
+      //                               ("a2 of Bu2Dst0hst_Dst02D0gamma " +
+      //                                ComposeName(uniqueId, Neutral::gamma))
+      //                                   .c_str(),
+      //                               -3.0000e+00),
       Bu2Dst0hst_Dst02D0gamma_n1Bu_(("Bu2Dst0hst_Dst02D0gamma_n1Bu_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
                                     ("n1 of Bu2Dst0hst_Dst02D0gamma " +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    3.6653e-01),  // 3.4, 0, 5),
-      Bu2Dst0hst_Dst02D0gamma_n2Bu_(("Bu2Dst0hst_Dst02D0gamma_n2Bu_" +
-                                     ComposeName(uniqueId, Neutral::gamma))
-                                        .c_str(),
-                                    ("n2 of Bu2Dst0hst_Dst02D0gamma " +
-                                     ComposeName(uniqueId, Neutral::gamma))
-                                        .c_str(),
-                                    5.1129e-01),  // 3.5, 0, 5),
-      Bu2Dst0hst_Dst02D0gamma_frac1PdfBu_(
-          ("Bu2Dst0hst_Dst02D0gamma_frac1PdfBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0gamma " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          2.6816e-01),
+                                    9.9994e+00),
+      // Bu2Dst0hst_Dst02D0gamma_n2Bu_(("Bu2Dst0hst_Dst02D0gamma_n2Bu_" +
+      //                                ComposeName(uniqueId, Neutral::gamma))
+      //                                   .c_str(),
+      //                               ("n2 of Bu2Dst0hst_Dst02D0gamma " +
+      //                                ComposeName(uniqueId, Neutral::gamma))
+      //                                   .c_str(),
+      //                               5.1129e-01),
+      // Bu2Dst0hst_Dst02D0gamma_frac1PdfBu_(
+      //     ("Bu2Dst0hst_Dst02D0gamma_frac1PdfBu_" +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0gamma " +
+      //      ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     2.6816e-01),
       relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_(
           ("relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -1034,162 +990,51 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
           bkg_aDelta_, bkg_bDelta_),
-      misRec_a0Mean1Bu_(
-          ("misRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean1 of misRec m[Bu]" +
+      misRec_a0MeanBu_(
+          ("misRec_a0MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a0 of mean of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.2058e+03),
-      misRec_a1Mean1Bu_(
-          ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a1 of mean1 of misRec m[Bu]" +
+          5.0775e+03),
+      misRec_a1MeanBu_(
+          ("misRec_a1MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a1 of mean of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -4.3289e-02),
-      misRec_a2Mean1Bu_(
-          ("misRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of mean1 of misRec m[Bu]" +
+          2.0715e+00),
+      misRec_a2MeanBu_(
+          ("misRec_a2MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a2 of mean of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          8.2392e-03),
-      misRec_mean1Bu_(
-          ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean1 of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
+          -6.1323e-03),
+      misRec_meanBu_(
+          ("misRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(misRec_a0Mean1Bu_, misRec_a1Mean1Bu_, misRec_a2Mean1Bu_)),
-      misRec_a0Mean2Bu_(
-          ("misRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean2 of misRec m[Bu]" +
+          RooArgList(misRec_a0MeanBu_, misRec_a1MeanBu_, misRec_a2MeanBu_)),
+      misRec_a0SigmaBu_(
+          ("misRec_a0SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a0 of sigma of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.3652e+03),
-      misRec_a1Mean2Bu_(
-          ("misRec_a1Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a1 of mean2 of misRec m[Bu]" +
+          3.2508e+01),
+      misRec_a1SigmaBu_(
+          ("misRec_a1SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a1 of sigma of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          1.4674e-01),
-      misRec_a2Mean2Bu_(
-          ("misRec_a2Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of mean2 of misRec m[Bu]" +
+          4.7098e-01),
+      misRec_a2SigmaBu_(
+          ("misRec_a2SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a2 of sigma of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          8.3082e-03),
-      misRec_mean2Bu_(
-          ("misRec_mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean2 of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(misRec_a0Mean2Bu_, misRec_a1Mean2Bu_, misRec_a2Mean2Bu_)),
-      misRec_a0Mean3Bu_(
-          ("misRec_a0Mean3Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean2 of misRec m[Bu]" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          5.0854e+03),
-      misRec_a1Mean3Bu_(
-          ("misRec_a1Mean3Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a1 of mean2 of misRec m[Bu]" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          1.9793e+00),
-      misRec_a2Mean3Bu_(
-          ("misRec_a2Mean3Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of mean2 of misRec m[Bu]" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -5.5658e-03),
-      misRec_mean3Bu_(
-          ("misRec_mean3Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean2 of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(misRec_a0Mean3Bu_, misRec_a1Mean3Bu_, misRec_a2Mean3Bu_)),
-      misRec_a0Sigma1Bu_(
-          ("misRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a0 of sigma1 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -3.3548e+01),
-      misRec_a1Sigma1Bu_(
-          ("misRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma1 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          7.0068e-01),
-      misRec_a2Sigma1Bu_(
-          ("misRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma1 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -8.3490e-04),
-      misRec_a0Sigma2Bu_(
-          ("misRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a0 of sigma2 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          2.3523e+01),
-      misRec_a1Sigma2Bu_(
-          ("misRec_a1Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma2 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -2.6007e-01),
-      misRec_a2Sigma2Bu_(
-          ("misRec_a2Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma2 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -2.3067e-02),
-      misRec_a0Sigma3Bu_(
-          ("misRec_a0Sigma3Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a0 of sigma3 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          5.1908e+01),
-      misRec_a1Sigma3Bu_(
-          ("misRec_a1Sigma3Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a1 of sigma3 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          5.8331e-01),
-      misRec_a2Sigma3Bu_(
-          ("misRec_a2Sigma3Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of sigma3 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -1.0471e-03),
-      misRec_frac1PdfBu_(
-          ("misRec_frac1PdfBu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of 1st CB Bu PDF in misRec " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          9.2004e-02),
-      misRec_frac2PdfBu_(
-          ("misRec_frac2PdfBu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of 2nd CB Bu PDF in misRec " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          3.4431e-04),
-      misRec_frac3PdfBu_(
-          ("misRec_frac3PdfBu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Fraction of 3rd CB Bu PDF in misRec " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "1-(@0+@1)", RooArgList(misRec_frac1PdfBu_, misRec_frac2PdfBu_)),
+          -2.7586e-04),
       relativeBuWidth_misRec_(
           ("relativeBuWidth_misRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
