@@ -181,29 +181,17 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
     return pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0Mean1Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0MeanBu() {
+    return Bu2Dst0h_Dst02D0gamma_a0MeanBu_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Mean1Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1MeanBu() {
+    return Bu2Dst0h_Dst02D0gamma_a1MeanBu_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2Mean1Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2MeanBu() {
+    return Bu2Dst0h_Dst02D0gamma_a2MeanBu_;
   }
-  RooPolyVar &Bu2Dst0h_Dst02D0gamma_mean1Bu() {
-    return Bu2Dst0h_Dst02D0gamma_mean1Bu_;
-  }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a0Mean2Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a0Mean2Bu_;
-  }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Mean2Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a1Mean2Bu_;
-  }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2Mean2Bu() {
-    return Bu2Dst0h_Dst02D0gamma_a2Mean2Bu_;
-  }
-  RooPolyVar &Bu2Dst0h_Dst02D0gamma_mean2Bu() {
-    return Bu2Dst0h_Dst02D0gamma_mean2Bu_;
+  RooPolyVar &Bu2Dst0h_Dst02D0gamma_meanBu() {
+    return Bu2Dst0h_Dst02D0gamma_meanBu_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu() {
     return Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_;
@@ -484,14 +472,10 @@ class NeutralVars {
   RooCBShape pdf2Delta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_Dst02D0gamma_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_;
-  RooPolyVar Bu2Dst0h_Dst02D0gamma_mean1Bu_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a0Mean2Bu_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a1Mean2Bu_;
-  RooRealVar Bu2Dst0h_Dst02D0gamma_a2Mean2Bu_;
-  RooPolyVar Bu2Dst0h_Dst02D0gamma_mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a0MeanBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a1MeanBu_;
+  RooRealVar Bu2Dst0h_Dst02D0gamma_a2MeanBu_;
+  RooPolyVar Bu2Dst0h_Dst02D0gamma_meanBu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a1Sigma1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a2Sigma1Bu_;

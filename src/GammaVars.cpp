@@ -98,45 +98,41 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0gamma_,
                      pdf2Delta_Bu2Dst0h_Dst02D0gamma_),
           Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
-      Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_(
-          ("Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_" +
+      Bu2Dst0h_Dst02D0gamma_a0MeanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_a0MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a0 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           5.0347e+03),
-      Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_(
-          ("Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_" +
+      Bu2Dst0h_Dst02D0gamma_a1MeanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_a1MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1.9638e+00),
-      Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_(
-          ("Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_" +
+      Bu2Dst0h_Dst02D0gamma_a2MeanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_a2MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -1.7220e-03),
-      Bu2Dst0h_Dst02D0gamma_mean1Bu_(
-          ("Bu2Dst0h_Dst02D0gamma_mean1Bu_" +
+      Bu2Dst0h_Dst02D0gamma_meanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_meanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Mean of Bu2Dst0h_Dst02D0gamma m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0h_Dst02D0gamma_a0Mean1Bu_,
-                     Bu2Dst0h_Dst02D0gamma_a1Mean1Bu_,
-                     Bu2Dst0h_Dst02D0gamma_a2Mean1Bu_)),
-      Bu2Dst0h_Dst02D0gamma_a0Mean2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_a1Mean2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_a2Mean2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_mean2Bu_(),
+          RooArgList(Bu2Dst0h_Dst02D0gamma_a0MeanBu_,
+                     Bu2Dst0h_Dst02D0gamma_a1MeanBu_,
+                     Bu2Dst0h_Dst02D0gamma_a2MeanBu_)),
       Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_(
           ("Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -445,7 +441,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0h_Dst02D0pi0 " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.5448e-01),
+          6.6231e-01),
       relativeBuWidth_Bu2Dst0h_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
