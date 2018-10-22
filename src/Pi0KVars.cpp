@@ -181,7 +181,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "@0*@1",
           RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .misRec_sigma1Bu(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
                   .relativeBuWidth_misRec()))),
@@ -194,7 +194,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "@0*@1",
           RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .misRec_sigma2Bu(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
                   .relativeBuWidth_misRec()))),
@@ -222,7 +222,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           *misRec_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_n2Bu()),
-      pdfBu_misRec_( new RooAddPdf(
+      pdfBu_misRec_(new RooAddPdf(
           ("pdfBu_misRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),

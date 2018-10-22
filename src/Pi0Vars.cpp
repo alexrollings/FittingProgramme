@@ -487,13 +487,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           5.3209e+03),
+      misRec_a1Mean1Bu_(),
+      misRec_a2Mean1Bu_(),
       misRec_mean1Bu_(
           ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(), RooArgList(misRec_a0Mean1Bu_)),
-      misRec_a1Mean1Bu_(),
-      misRec_a2Mean1Bu_(),
       misRec_a0Mean2Bu_(
           ("misRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean of misRec m[Bu] PDF " +

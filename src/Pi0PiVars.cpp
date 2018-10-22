@@ -213,7 +213,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           *misRec_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_n2Bu()),
-      pdfBu_misRec_( new RooAddPdf(
+      pdfBu_misRec_(new RooAddPdf(
           ("pdfBu_misRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
