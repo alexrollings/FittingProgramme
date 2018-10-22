@@ -191,25 +191,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
           RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters,
-            charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange+3),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
-        RooFit::NumCPU(8, 2));
     }
     simPdf.plotOn(
         frame.get(),
@@ -220,6 +201,25 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
+        RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters,
+            charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange+3),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
@@ -467,23 +467,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
         // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
         << " events";
-  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                      EnumToLabel(daughters, charge) +
-                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
-                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
-               << pdf.yield_misRec().getVal()
-               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-               << " events";
-
-  Bu2Dst0hst_Dst02D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-      << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal()
-      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-      << " events";
   Bu2Dst0hst_Dst02D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -508,6 +491,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 << pdf.yield_overRec().getVal()
                 // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
                 << " events";
+  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) +
+                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
+                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
+               << pdf.yield_misRec().getVal()
+               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+               << " events";
+  Bu2Dst0hst_Dst02D0pi0Legend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+      << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal()
+      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+      << " events";
 
   yieldLegend.SetLineColor(kWhite);
   // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13

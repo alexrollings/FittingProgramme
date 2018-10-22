@@ -49,8 +49,7 @@ class PdfBase {
   virtual RooAddPdf &pdfBu_overRec() const = 0;
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  // virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  virtual RooCBShape &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
   // virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
@@ -166,11 +165,7 @@ class Pdf : public PdfBase {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_Bu2Dst0hst_Dst02D0pi0();
   }
-  // virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
-  //   return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-  //       .pdfBu_Bu2Dst0hst_Dst02D0pi0();
-  // }
-  virtual RooCBShape &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
+  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0hst_Dst02D0pi0();
   }
@@ -575,6 +570,11 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
+  std::cout << "1" << std::endl;
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .pdfBu_Bu2Dst0hst_Dst02D0pi0()
+      .Print();
+  std::cout << "2" << std::endl;
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -609,6 +609,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_misRec());
     PdfBase::yields_.add(*PdfBase::yield_misRec_);
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdf_Bu2Dst0hst_Dst02D0pi0());
+    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
   }
   // PdfBase::functions_.add(
   //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdf_Comb());
