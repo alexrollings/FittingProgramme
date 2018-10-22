@@ -195,15 +195,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
-        RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters,
             charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
@@ -220,6 +211,15 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
     }
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
+        RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
+        RooFit::NumCPU(8, 2));
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
@@ -467,15 +467,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
         // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
         << " events";
-  overRecLegend << "B^{" + EnumToLabel(charge) +
-                       "}#rightarrow#font[132]{[}#font[132]{[}" +
-                       EnumToLabel(daughters, charge) +
-                       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) +
-                       "}: "
-                << pdf.yield_overRec().getVal()
-                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-                << " events";
   misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
                       EnumToLabel(daughters, charge) +
                       "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
@@ -508,6 +499,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              // << backgroundYield.getError()
              << " events";
   }
+  overRecLegend << "B^{" + EnumToLabel(charge) +
+                       "}#rightarrow#font[132]{[}#font[132]{[}" +
+                       EnumToLabel(daughters, charge) +
+                       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+                       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) +
+                       "}: "
+                << pdf.yield_overRec().getVal()
+                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+                << " events";
 
   yieldLegend.SetLineColor(kWhite);
   // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
@@ -1686,22 +1686,24 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "Pi0_M<185&&Pi0_M>110"));
+                              "BDT2>0Pi0_M<185&&Pi0_M>110"));
                     } else {
-                      reducedInputDataSet_1 = inputDataSet;
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "BDT2>0.1"));
                     }
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (b == Bachelor::pi) {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK<12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
-                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
+                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&pi_"
                               "D_PIDK<-2&&K_D_PIDK>2&&D0_FD_ZSIG>2"));
                     } else {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK>12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
-                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
+                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&pi_"
                               "D_PIDK<-2&&K_D_PIDK>2&&D0_FD_ZSIG>2"));
                     }
                     if (reducedInputDataSet == nullptr) {

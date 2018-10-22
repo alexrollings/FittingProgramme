@@ -92,40 +92,73 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdfBu_Bu2Dst0h_Dst02D0gamma_(),
       pdf_Bu2Dst0h_Dst02D0gamma_(),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
-      // sigmaBu_overRec_(
-      //     new RooRealVar(("sigmaBu_overRec_" +
-      //                     ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-      //                        .c_str(),
-      //                    ("Sigma of overRec Gaussian " +
-      //                     ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-      //                        .c_str(),
-      //                    100, 50, 150)),
-      // pdfBu_overRec_(
-      //     ("pdfBu_overRec_" + ComposeName(uniqueId, Neutral::pi0,
-      //     Bachelor::pi))
-      //         .c_str(),
-      //     ("overRec Bu PDF " +
-      //      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-      //         .c_str(),
-      //     Configuration::Get().buMass(),
-      //     NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_meanBu(),
-      //     *sigmaBu_overRec_),
-      // pdf_overRec_(
-      //     ("pdf_overRec_" + ComposeName(uniqueId, Neutral::pi0,
-      //     Bachelor::pi))
-      //         .c_str(),
-      //     ("overRec 2D PDF " +
-      //      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-      //         .c_str(),
-      //     NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_overRec(),
-      //     RooFit::Conditional(pdfBu_overRec_,
-      //     Configuration::Get().buMass())),
-      overRec_sigma1Bu_(nullptr),
-      overRec_sigma2Bu_(nullptr),
-      pdf1Bu_overRec_(),
-      pdf2Bu_overRec_(),
-      pdfBu_overRec_(),
-      pdf_overRec_(),
+      overRec_sigma1Bu_(new RooPolyVar(
+          ("overRec_sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("Sigma1 of Bu PDF of overRec Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a0Sigma1Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma1Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .overRec_a2Sigma1Bu()))),
+      overRec_sigma2Bu_(new RooPolyVar(
+          ("overRec_sigma2Bu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("Sigma2 of Bu PDF of overRec " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a0Sigma2Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma2Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .overRec_a2Sigma2Bu()))),
+      pdf1Bu_overRec_(
+          ("pdf1Bu_overRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("overRec Bu PDF L " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_mean1Bu(),
+          *overRec_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_n1Bu()),
+      pdf2Bu_overRec_(
+          ("pdf2Bu_overRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("overRec Bu PDF R " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_mean2Bu(),
+          *overRec_sigma2Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_n2Bu()),
+      pdfBu_overRec_(
+          ("pdfBu_overRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("overRec Bu PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          RooArgSet(pdf1Bu_overRec_, pdf2Bu_overRec_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_frac1PdfBu()),
+      pdf_overRec_(
+          ("pdf_overRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          ("overRec 2D PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_overRec(),
+          RooFit::Conditional(pdfBu_overRec_, Configuration::Get().buMass())),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0pi0_sigma1Bu_(nullptr),
       // Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(nullptr),
