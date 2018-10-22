@@ -82,7 +82,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
   canvas.cd();
   pad1.cd();
 
-  TLegend legend(0.7, 0.7, 0.97, 0.90);
+  TLegend legend(0.7, 0.55, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdfSignalHist = std::make_unique<TH1D>(
       ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
@@ -270,7 +270,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   pad2.Draw();
 
   TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kTeal);
+  zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
   if (fitBool == true) {
@@ -320,7 +320,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  TLegend legend(0.7, 0.65, 0.97, 0.90);
+  TLegend legend(0.7, 0.55, 0.97, 0.90);
   // ------------- Draw Legends -------------- //
   auto pdf_Bu2Dst0h_Dst02D0pi0_Hist = std::make_unique<TH1D>(
       ("pdf_Bu2Dst0h_Dst02D0pi0_Hist" +
@@ -419,11 +419,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           .c_str(),
       "l");
   legend.AddEntry(pdf_misRec_Hist.get(),
-                  ("B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                   EnumToLabel(daughters, charge) +
-                   "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
-                   EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-                      .c_str(),
+                  ("Mis-Reconstructed"),
                   "l");
   // Make only pi0 in pi0 mode (gamma removed by veto)
   legend.AddEntry(
@@ -443,7 +439,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  TLegend yieldLegend(0.12, 0.6, 0.3, 0.8);
+  TLegend yieldLegend(0.12, 0.55, 0.3, 0.8);
 
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
@@ -1700,13 +1696,13 @@ int main(int argc, char **argv) {
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK<12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
                               "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
-                              "D_PIDK<-2&&K_D_PIDK>2"));
+                              "D_PIDK<-2&&K_D_PIDK>2&&D0_FD_ZSIG>2"));
                     } else {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
                               "bach_PIDK>12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
                               "Delta_M>50&&Delta_M<210&&BDT1>0.05&&BDT2>0&&pi_"
-                              "D_PIDK<-2&&K_D_PIDK>2"));
+                              "D_PIDK<-2&&K_D_PIDK>2&&D0_FD_ZSIG>2"));
                     }
                     if (reducedInputDataSet == nullptr) {
                       throw std::runtime_error(
@@ -1731,6 +1727,9 @@ int main(int argc, char **argv) {
                            RooFit::Index(categories.fitting),
                            RooFit::Import(mapCategoryDataset));
 
+    std::cout << "\n\n\n";
+    fullDataSet.Print();
+    std::cout << "\n\n\n";
     auto fullDataHist = std::unique_ptr<RooDataHist>(
         fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
     if (fullDataHist == nullptr) {
