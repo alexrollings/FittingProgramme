@@ -456,31 +456,118 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(),
       relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_(),
       // ------------------ MIS RECONSTRUCTED BACKGROUND ------------------ //
+      misRec_thresholdDelta_(
+          ("misRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1.3537e+02),
+      misRec_cDelta_(
+          ("misRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          8.3057e+00),
+      misRec_aDelta_(
+          ("misRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.1615e-01),
+      misRec_bDelta_(
+          ("misRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          -1.8073e+00),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
-          bkg_aDelta_, bkg_bDelta_),
-      // misRec_a0MeanBu_(
-      //     ("misRec_a0MeanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-      //     ("a0 of mean of misRec m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::pi0))
-      //         .c_str(),
-      //     5260, 5210, 5310),
-      // misRec_meanBu_(
-      //     ("misRec_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-      //     ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
-      //         .c_str(),
-      //     Configuration::Get().deltaMass(), RooArgList(misRec_a0MeanBu_)),
-      misRec_a0MeanBu_(),
-      misRec_a1MeanBu_(),
-      misRec_a2MeanBu_(),
-      misRec_meanBu_(),
-      misRec_a0SigmaBu_(),
-      misRec_a1SigmaBu_(),
-      misRec_a2SigmaBu_(),
-      ratioDst0KDst0pi_misRec_(),
-      relativeBuWidth_misRec_(),
+          Configuration::Get().deltaMass(), misRec_thresholdDelta_, misRec_cDelta_,
+          misRec_aDelta_, misRec_bDelta_),
+      misRec_a0Mean1Bu_(
+          ("misRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a0 of mean of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.3209e+03),
+      misRec_mean1Bu_(
+          ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), RooArgList(misRec_a0Mean1Bu_)),
+      misRec_a1Mean1Bu_(),
+      misRec_a2Mean1Bu_(),
+      misRec_a0Mean2Bu_(
+          ("misRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a0 of mean of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.2852e+03),
+      misRec_mean2Bu_(
+          ("misRec_mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), RooArgList(misRec_a0Mean2Bu_)),
+      misRec_a0Sigma1Bu_(
+          ("misRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a0 of sigma1 of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          8.5416e+01),
+      misRec_a1Sigma1Bu_(),
+      misRec_a2Sigma1Bu_(),
+      misRec_a0Sigma2Bu_(
+          ("misRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a0 of sigma1 of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          6.1166e+01),
+      misRec_a1Bu_(
+          ("misRec_a1Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a1 of misRec " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+           7.1456e-01),
+      misRec_a2Bu_(
+          ("misRec_a2Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a2 of misRec " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+           -1.8906e+00),
+      misRec_n1Bu_(
+          ("misRec_n1Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("n1 of misRec " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+           6.6513e-01),
+      misRec_n2Bu_(
+          ("misRec_n2Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("n2 of misRec " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          9.9913e+00),
+      misRec_frac1PdfBu_(
+          ("misRec_frac1PdfBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Fraction of left w.r.t. right Bu PDF in misRec " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.6450e-01),
+      relativeBuWidth_misRec_(
+          ("relativeBuWidth_misRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in misRec "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1),
+      ratioDst0KDst0pi_misRec_(
+          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.05, 0, 0.1), //CHECK
       // -------------------- DST0D0 BACKGROUND -------------------- //
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),

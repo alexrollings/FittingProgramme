@@ -172,28 +172,70 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdfBu_Bu2Dst0hst_Dst02D0gamma_(),
       pdf_Bu2Dst0hst_Dst02D0gamma_(),
       // -------------------- MIS RECONSTRUCTED BKG -------------------- //
-      sigmaBu_misRec_(nullptr),
-      pdfBu_misRec_(),
-      pdf_misRec_() {}
-// sigmaBu_misRec_(
-//     ("sigmaBu_misRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     ("Sigma of misRec Gaussian " +
-//      ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     60, 40, 80),
-// pdfBu_misRec_(
-//     ("pdfBu_misRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     ("misRec Bu PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     Configuration::Get().buMass(),
-//     NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_meanBu(),
-//     sigmaBu_misRec_),
-// pdf_misRec_(
-//     ("pdf_misRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     ("misRec 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-//         .c_str(),
-//     NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_misRec(),
-//     RooFit::Conditional(pdfBu_misRec_, Configuration::Get().buMass())) {}
+      misRec_sigma1Bu_(new RooFormulaVar(
+          ("misRec_sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("Sigma1 of misRec Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+                  .misRec_sigma1Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .relativeBuWidth_misRec()))),
+      misRec_sigma2Bu_(new RooFormulaVar(
+          ("misRec_sigma2Bu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("Sigma2 of misRec Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+                  .misRec_sigma2Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .relativeBuWidth_misRec()))),
+      pdf1Bu_misRec_(
+          ("pdf1Bu_misRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("misRec Bu PDF L " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_mean1Bu(),
+          *misRec_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_n1Bu()),
+      pdf2Bu_misRec_(
+          ("pdf2Bu_misRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("misRec Bu PDF R " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_mean2Bu(),
+          *misRec_sigma2Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).misRec_n2Bu()),
+      pdfBu_misRec_( new RooAddPdf(
+          ("pdfBu_misRec_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("misRec Bu PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          RooArgSet(pdf1Bu_misRec_, pdf2Bu_misRec_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .misRec_frac1PdfBu())),
+      pdf_misRec_(
+          ("pdf_misRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("misRec 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_misRec(),
+          RooFit::Conditional(*pdfBu_misRec_, Configuration::Get().buMass())) {}

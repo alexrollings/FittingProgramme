@@ -985,56 +985,68 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.02, 0, 1),  //, 0.0, 0.1),
       // ------------------ MIS-RECONSTRUCTED BACKGROUND ------------------ //
+      misRec_thresholdDelta_(),
+      misRec_aDelta_(),
+      misRec_bDelta_(),
+      misRec_cDelta_(),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
           bkg_aDelta_, bkg_bDelta_),
-      misRec_a0MeanBu_(
-          ("misRec_a0MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a0 of mean of misRec m[Bu]" +
+      misRec_a0Mean1Bu_(
+          ("misRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a0 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           5.0775e+03),
-      misRec_a1MeanBu_(
-          ("misRec_a1MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a1 of mean of misRec m[Bu]" +
+      misRec_a1Mean1Bu_(
+          ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a1 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           2.0715e+00),
-      misRec_a2MeanBu_(
-          ("misRec_a2MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of mean of misRec m[Bu]" +
+      misRec_a2Mean1Bu_(
+          ("misRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a2 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -6.1323e-03),
-      misRec_meanBu_(
-          ("misRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
+      misRec_mean1Bu_(
+          ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("Mean1 of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(misRec_a0MeanBu_, misRec_a1MeanBu_, misRec_a2MeanBu_)),
-      misRec_a0SigmaBu_(
-          ("misRec_a0SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+          RooArgList(misRec_a0Mean1Bu_, misRec_a1Mean1Bu_, misRec_a2Mean1Bu_)),
+      misRec_a0Mean2Bu_(),
+      misRec_mean2Bu_(),
+      misRec_a0Sigma1Bu_(
+          ("misRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          ("a0 of sigma of misRec m[Bu] PDF " +
+          ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           3.2508e+01),
-      misRec_a1SigmaBu_(
-          ("misRec_a1SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+      misRec_a1Sigma1Bu_(
+          ("misRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          ("a1 of sigma of misRec m[Bu] PDF " +
+          ("a1 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           4.7098e-01),
-      misRec_a2SigmaBu_(
-          ("misRec_a2SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
+      misRec_a2Sigma1Bu_(
+          ("misRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          ("a2 of sigma of misRec m[Bu] PDF " +
+          ("a2 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -2.7586e-04),
+      misRec_a0Sigma2Bu_(),
+      misRec_a1Bu_(),
+      misRec_a2Bu_(),
+      misRec_n1Bu_(),
+      misRec_n2Bu_(),
+      misRec_frac1PdfBu_(),
       relativeBuWidth_misRec_(
           ("relativeBuWidth_misRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
