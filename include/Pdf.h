@@ -574,6 +574,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
   NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
       .pdfBu_Bu2Dst0hst_Dst02D0pi0()
       .Print();
+  // Print PDF1 and PDF2 -> debug where the error is
   std::cout << "2" << std::endl;
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
