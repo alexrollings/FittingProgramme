@@ -119,10 +119,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &yieldLegend, std::string const &outputDir,
                    bool fitBool) {
-  // int x_int = int(log(2 * var.getBins()) / log(2));
-  // RooAbsReal::defaultIntegratorConfig()
-  //     ->getConfigSection("RooIntegrator1D")
-  //     .setRealValue("fixSteps", x_int);
+  int x_int = int(log(2 * var.getBins()) / log(2));
+  RooAbsReal::defaultIntegratorConfig()
+      ->getConfigSection("RooIntegrator1D")
+      .setRealValue("fixSteps", x_int);
 
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -191,7 +191,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
           RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    }
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -220,6 +219,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
+    }
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
@@ -467,7 +467,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
         // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
         << " events";
-  }
   overRecLegend << "B^{" + EnumToLabel(charge) +
                        "}#rightarrow#font[132]{[}#font[132]{[}" +
                        EnumToLabel(daughters, charge) +
@@ -508,6 +507,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              // << " #pm ";
              // << backgroundYield.getError()
              << " events";
+  }
 
   yieldLegend.SetLineColor(kWhite);
   // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
@@ -520,12 +520,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                          Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
     yieldLegend.AddEntry(blankHist.get(),
                          Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
-  }
   yieldLegend.AddEntry(blankHist.get(), overRecLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(),
                        Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), misRecLegend.str().c_str(), "l");
   yieldLegend.AddEntry(blankHist.get(), combLegend.str().c_str(), "l");
+  }
 
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
   PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,

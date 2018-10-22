@@ -20,9 +20,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                         .Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu(),
                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .Bu2Dst0h_Dst02D0pi0_a1Sigma1Bu(),
-                                    NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .Bu2Dst0h_Dst02D0pi0_a2Sigma1Bu()))),
+                                        .Bu2Dst0h_Dst02D0pi0_a1Sigma1Bu()))),
+                                    // NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                    //     .Bu2Dst0h_Dst02D0pi0_a2Sigma1Bu()))),
       Bu2Dst0h_Dst02D0pi0_sigma2Bu_(
           new RooPolyVar(("Bu2Dst0h_Dst02D0pi0_sigma2Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -34,9 +34,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                         .Bu2Dst0h_Dst02D0pi0_a0Sigma2Bu(),
                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .Bu2Dst0h_Dst02D0pi0_a1Sigma2Bu(),
-                                    NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .Bu2Dst0h_Dst02D0pi0_a2Sigma2Bu()))),
+                                        .Bu2Dst0h_Dst02D0pi0_a1Sigma2Bu()))),
+                                    // NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                    //     .Bu2Dst0h_Dst02D0pi0_a2Sigma2Bu()))),
       pdf1Bu_Bu2Dst0h_Dst02D0pi0_(
           ("pdf1Bu_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
