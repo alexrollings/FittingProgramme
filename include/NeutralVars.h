@@ -260,6 +260,30 @@ class NeutralVars {
   RooRealVar &overRec_frac1PdfBu() { return overRec_frac1PdfBu_; }
   RooRealVar &ratioDst0KDst0pi_overRec() { return ratioDst0KDst0pi_overRec_; }
   RooRealVar &relativeBuWidth_overRec() { return relativeBuWidth_overRec_; }
+  RooRealVar &misRec_thresholdDelta() { return misRec_thresholdDelta_; }
+  RooRealVar &misRec_aDelta() { return misRec_aDelta_; }
+  RooRealVar &misRec_bDelta() { return misRec_bDelta_; }
+  RooRealVar &misRec_cDelta() { return misRec_cDelta_; }
+  RooDstD0BG &pdfDelta_misRec() { return pdfDelta_misRec_; }
+  RooRealVar &misRec_a0Mean1Bu() { return misRec_a0Mean1Bu_; }
+  RooRealVar &misRec_a1Mean1Bu() { return misRec_a1Mean1Bu_; }
+  RooRealVar &misRec_a2Mean1Bu() { return misRec_a2Mean1Bu_; }
+  RooPolyVar &misRec_mean1Bu() { return misRec_mean1Bu_; }
+  RooRealVar &misRec_a0Mean2Bu() { return misRec_a0Mean2Bu_; }
+  RooPolyVar &misRec_mean2Bu() { return misRec_mean2Bu_; }
+  RooRealVar &misRec_a0Sigma1Bu() { return misRec_a0Sigma1Bu_; }
+  RooRealVar &misRec_a1Sigma1Bu() { return misRec_a1Sigma1Bu_; }
+  RooRealVar &misRec_a2Sigma1Bu() { return misRec_a2Sigma1Bu_; }
+  RooRealVar &misRec_a0Sigma2Bu() { return misRec_a0Sigma2Bu_; }
+  RooRealVar &misRec_a1Bu() { return misRec_a1Bu_; }
+  RooRealVar &misRec_a2Bu() { return misRec_a2Bu_; }
+  RooRealVar &misRec_n1Bu() { return misRec_n1Bu_; }
+  RooRealVar &misRec_n2Bu() { return misRec_n2Bu_; }
+  RooRealVar &misRec_frac1PdfBu() {
+    return misRec_frac1PdfBu_;
+  }
+  RooRealVar &ratioDst0KDst0pi_misRec() { return ratioDst0KDst0pi_misRec_; }
+  RooRealVar &relativeBuWidth_misRec() { return relativeBuWidth_misRec_; }
   RooRealVar &Bu2Dst0hst_Dst02D0pi0_meanDelta() {
     return Bu2Dst0hst_Dst02D0pi0_meanDelta_;
   }
@@ -392,30 +416,6 @@ class NeutralVars {
   RooRealVar &relativeBuWidth_Bu2Dst0hst_Dst02D0gamma() {
     return relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_;
   }
-  RooRealVar &misRec_thresholdDelta() { return misRec_thresholdDelta_; }
-  RooRealVar &misRec_aDelta() { return misRec_aDelta_; }
-  RooRealVar &misRec_bDelta() { return misRec_bDelta_; }
-  RooRealVar &misRec_cDelta() { return misRec_cDelta_; }
-  RooDstD0BG &pdfDelta_misRec() { return pdfDelta_misRec_; }
-  RooRealVar &misRec_a0Mean1Bu() { return misRec_a0Mean1Bu_; }
-  RooRealVar &misRec_a1Mean1Bu() { return misRec_a1Mean1Bu_; }
-  RooRealVar &misRec_a2Mean1Bu() { return misRec_a2Mean1Bu_; }
-  RooPolyVar &misRec_mean1Bu() { return misRec_mean1Bu_; }
-  RooRealVar &misRec_a0Mean2Bu() { return misRec_a0Mean2Bu_; }
-  RooPolyVar &misRec_mean2Bu() { return misRec_mean2Bu_; }
-  RooRealVar &misRec_a0Sigma1Bu() { return misRec_a0Sigma1Bu_; }
-  RooRealVar &misRec_a1Sigma1Bu() { return misRec_a1Sigma1Bu_; }
-  RooRealVar &misRec_a2Sigma1Bu() { return misRec_a2Sigma1Bu_; }
-  RooRealVar &misRec_a0Sigma2Bu() { return misRec_a0Sigma2Bu_; }
-  RooRealVar &misRec_a1Bu() { return misRec_a1Bu_; }
-  RooRealVar &misRec_a2Bu() { return misRec_a2Bu_; }
-  RooRealVar &misRec_n1Bu() { return misRec_n1Bu_; }
-  RooRealVar &misRec_n2Bu() { return misRec_n2Bu_; }
-  RooRealVar &misRec_frac1PdfBu() {
-    return misRec_frac1PdfBu_;
-  }
-  RooRealVar &ratioDst0KDst0pi_misRec() { return ratioDst0KDst0pi_misRec_; }
-  RooRealVar &relativeBuWidth_misRec() { return relativeBuWidth_misRec_; }
   RooDstD0BG &pdfDelta_Comb() { return pdfDelta_Comb_; }
   RooRealVar &Comb_a0LambdaBu() { return Comb_a0LambdaBu_; }
   RooPolyVar &Comb_lambdaBu() { return Comb_lambdaBu_; }
@@ -509,6 +509,28 @@ class NeutralVars {
   RooRealVar overRec_frac1PdfBu_;
   RooRealVar ratioDst0KDst0pi_overRec_;
   RooRealVar relativeBuWidth_overRec_;
+  RooRealVar misRec_thresholdDelta_;
+  RooRealVar misRec_aDelta_;
+  RooRealVar misRec_bDelta_;
+  RooRealVar misRec_cDelta_;
+  RooDstD0BG pdfDelta_misRec_;
+  RooRealVar misRec_a0Mean1Bu_;
+  RooRealVar misRec_a1Mean1Bu_;
+  RooRealVar misRec_a2Mean1Bu_;
+  RooPolyVar misRec_mean1Bu_;
+  RooRealVar misRec_a0Mean2Bu_;
+  RooPolyVar misRec_mean2Bu_;
+  RooRealVar misRec_a0Sigma1Bu_;
+  RooRealVar misRec_a1Sigma1Bu_;
+  RooRealVar misRec_a2Sigma1Bu_;
+  RooRealVar misRec_a0Sigma2Bu_;
+  RooRealVar misRec_a1Bu_;
+  RooRealVar misRec_a2Bu_;
+  RooRealVar misRec_n1Bu_;
+  RooRealVar misRec_n2Bu_;
+  RooRealVar misRec_frac1PdfBu_;
+  RooRealVar ratioDst0KDst0pi_misRec_;
+  RooRealVar relativeBuWidth_misRec_;
   RooRealVar Bu2Dst0hst_Dst02D0pi0_meanDelta_;
   RooCBShape pdf1Delta_Bu2Dst0hst_Dst02D0pi0_;
   RooCBShape pdf2Delta_Bu2Dst0hst_Dst02D0pi0_;
@@ -550,28 +572,6 @@ class NeutralVars {
   // RooRealVar Bu2Dst0hst_Dst02D0gamma_frac1PdfBu_;
   RooRealVar ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_;
   RooRealVar relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_;
-  RooRealVar misRec_thresholdDelta_;
-  RooRealVar misRec_aDelta_;
-  RooRealVar misRec_bDelta_;
-  RooRealVar misRec_cDelta_;
-  RooDstD0BG pdfDelta_misRec_;
-  RooRealVar misRec_a0Mean1Bu_;
-  RooRealVar misRec_a1Mean1Bu_;
-  RooRealVar misRec_a2Mean1Bu_;
-  RooPolyVar misRec_mean1Bu_;
-  RooRealVar misRec_a0Mean2Bu_;
-  RooPolyVar misRec_mean2Bu_;
-  RooRealVar misRec_a0Sigma1Bu_;
-  RooRealVar misRec_a1Sigma1Bu_;
-  RooRealVar misRec_a2Sigma1Bu_;
-  RooRealVar misRec_a0Sigma2Bu_;
-  RooRealVar misRec_a1Bu_;
-  RooRealVar misRec_a2Bu_;
-  RooRealVar misRec_n1Bu_;
-  RooRealVar misRec_n2Bu_;
-  RooRealVar misRec_frac1PdfBu_;
-  RooRealVar ratioDst0KDst0pi_misRec_;
-  RooRealVar relativeBuWidth_misRec_;
   RooDstD0BG pdfDelta_Comb_;
   RooRealVar Comb_a0LambdaBu_;
   RooPolyVar Comb_lambdaBu_;

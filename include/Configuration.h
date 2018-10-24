@@ -42,6 +42,7 @@ class Configuration {
   RooRealVar &BDT1() { return BDT1_; }
   RooRealVar &BDT2() { return BDT2_; }
   RooRealVar &hAngle() { return hAngle_; }
+  RooRealVar &d0FdSig() { return d0FdSig_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &fittingArgSet() { return fittingArgSet_; }
   RooArgSet &categoryArgSet() { return categoryArgSet_; }
@@ -72,6 +73,7 @@ class Configuration {
   RooRealVar BDT1_;
   RooRealVar BDT2_;
   RooRealVar hAngle_;
+  RooRealVar d0FdSig_;
   RooArgSet variableArgSet_;
   RooArgSet fittingArgSet_;
   RooArgSet categoryArgSet_;

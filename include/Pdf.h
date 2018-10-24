@@ -59,6 +59,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfBu_misRec() const = 0;
   virtual RooExponential &pdfBu_Comb() const = 0;
   virtual RooDstD0BG &pdfDelta_Comb() const = 0;
+  virtual RooRealVar &overRec_frac1PdfBu() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -201,6 +202,9 @@ class Pdf : public PdfBase {
   }
   virtual RooDstD0BG &pdfDelta_Comb() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Comb();
+  }
+  virtual RooRealVar &overRec_frac1PdfBu() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).overRec_frac1PdfBu();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
@@ -570,11 +574,15 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
-  std::cout << "1" << std::endl;
-  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-      .pdfBu_Bu2Dst0hst_Dst02D0pi0()
-      .Print();
-  std::cout << "2" << std::endl;
+  // std::cout << "1" << std::endl;
+  // std::cout << "uniqueId: " << PdfBase::uniqueId_ << std::endl;
+  // NeutralVars<_neutral>::Get(PdfBase::uniqueId_).Test();
+  // NeutralVars<_neutral>::Get(PdfBase::uniqueId_).overRec_frac1PdfBu().Print();
+  // std::cout << "2" << std::endl;
+  // NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //     .pdfBu_Bu2Dst0hst_Dst02D0pi0()
+  //     .Print();
+  // std::cout << "3" << std::endl;
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
