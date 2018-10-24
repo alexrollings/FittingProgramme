@@ -50,6 +50,13 @@ class PdfBase {
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0pi0() const = 0;
+  virtual RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma1Bu() const = 0;
+  virtual RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma2Bu() const = 0;
+  virtual RooPolyVar &Bu2Dst0hst_Dst02D0pi0_meanBu() const = 0;
+  virtual RooPolyVar &Bu2Dst0h_Dst02D0pi0_meanBu() const = 0;
+  virtual RooPolyVar &misRec_mean1Bu() const = 0;
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
   // virtual RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
@@ -168,6 +175,34 @@ class Pdf : public PdfBase {
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0hst_Dst02D0pi0();
+  }
+  virtual RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdf1Bu_Bu2Dst0hst_Dst02D0pi0();
+  }
+  virtual RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdf2Bu_Bu2Dst0hst_Dst02D0pi0();
+  }
+  virtual RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma1Bu() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .Bu2Dst0hst_Dst02D0pi0_sigma1Bu();
+  }
+  virtual RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma2Bu() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .Bu2Dst0hst_Dst02D0pi0_sigma2Bu();
+  }
+  virtual RooPolyVar &Bu2Dst0hst_Dst02D0pi0_meanBu() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .Bu2Dst0hst_Dst02D0pi0_meanBu();
+  }
+  virtual RooPolyVar &Bu2Dst0h_Dst02D0pi0_meanBu() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .Bu2Dst0h_Dst02D0pi0_meanBu();
+  }
+  virtual RooPolyVar &misRec_mean1Bu() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .misRec_mean1Bu();
   }
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -570,12 +605,40 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
-  std::cout << "1" << std::endl;
+  std::cout << "Bu mean1 mis rec:" << std::endl;
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .misRec_mean1Bu()
+      .Print();
+  std::cout << "Bu mean signal:" << std::endl;
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .Bu2Dst0h_Dst02D0pi0_meanBu()
+      .Print();
+  std::cout << "Bu mean:" << std::endl;
+  NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+      .Bu2Dst0hst_Dst02D0pi0_meanBu()
+      .Print();
+  std::cout << "Bu sigma 1:" << std::endl;
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .Bu2Dst0hst_Dst02D0pi0_sigma1Bu()
+      .Print();
+  std::cout << "Bu sigma 2:" << std::endl;
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .Bu2Dst0hst_Dst02D0pi0_sigma2Bu()
+      .Print();
+  std::cout << "Bu PDF 1:" << std::endl;
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .pdf1Bu_Bu2Dst0hst_Dst02D0pi0()
+      .Print();
+  std::cout << "Bu PDF 2:" << std::endl;
+  NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      .pdf2Bu_Bu2Dst0hst_Dst02D0pi0()
+      .Print();
+  std::cout << "Bu PDF:" << std::endl;
   NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
       .pdfBu_Bu2Dst0hst_Dst02D0pi0()
       .Print();
   // Print PDF1 and PDF2 -> debug where the error is
-  std::cout << "2" << std::endl;
+  std::cout << "Done." << std::endl;
   if (_neutral == Neutral::gamma) {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
