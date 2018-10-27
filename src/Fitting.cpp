@@ -119,16 +119,19 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &yieldLegend, std::string const &outputDir,
                    bool fitBool) {
-  int x_int = int(log(2 * var.getBins()) / log(2));
-  RooAbsReal::defaultIntegratorConfig()
-      ->getConfigSection("RooIntegrator1D")
-      .setRealValue("fixSteps", x_int);
-
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
   int id = 0;
+
+  // Integration trick to speed up plotting projections. Only works in pi0 mode.
+  if (neutral==Neutral::pi0)  {
+    int x_int = int(log(2 * var.getBins()) / log(2));
+    RooAbsReal::defaultIntegratorConfig()
+        ->getConfigSection("RooIntegrator1D")
+        .setRealValue("fixSteps", x_int);
+        }
 
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
@@ -1688,9 +1691,9 @@ int main(int argc, char **argv) {
                               "BDT2>0Pi0_M<185&&Pi0_M>110"));
                     } else {
                       reducedInputDataSet_1 = inputDataSet;
-                      // reducedInputDataSet_1 =
-                      //     dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                      //         "BDT2>0.1"));
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "BDT2>0.1"));
                     }
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (b == Bachelor::pi) {

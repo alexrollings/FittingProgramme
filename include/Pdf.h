@@ -624,6 +624,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdf_misRec());
+    PdfBase::yields_.add(*PdfBase::yield_misRec_);
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_overRec());
     PdfBase::yields_.add(*PdfBase::yield_overRec_);
     PdfBase::functions_.add(
