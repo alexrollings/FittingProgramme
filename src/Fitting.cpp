@@ -1196,12 +1196,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   simPdfToFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-  // auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-  //     "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
-  //
-  // simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
-  //     dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
-
   std::unique_ptr<RooFitResult> result;
 
   if (fitBool == true) {
