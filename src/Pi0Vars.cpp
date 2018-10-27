@@ -479,7 +479,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.05, 0, 0.1),  // CHECK
+          0.05, 0, 0.1),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0pi0_meanDelta_(("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +
                                        ComposeName(uniqueId, Neutral::pi0))
@@ -573,8 +573,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          // -6.1952e+01),
-          8.1565e+01),
+          -6.1952e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -590,8 +589,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          // -9.9049e+01),
-          3.5989e+01),
+          -9.9049e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -648,7 +646,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0pi0 mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.081, 0.0, 0.1),
+          0.02, -1, 1),
       // ------------------ Gamma PART RECONSTRUCTED BACKGROUND
       // ------------------ //
       pdf1Delta_Bu2Dst0hst_Dst02D0gamma_(),
