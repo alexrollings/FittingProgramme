@@ -1196,16 +1196,16 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   simPdfToFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-  auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-      "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
-
-  simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
-      dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
+  // auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+  //     "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
+  //
+  // simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
+  //     dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
 
   std::unique_ptr<RooFitResult> result;
 
   if (fitBool == true) {
-    result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
+    result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
         RooFit::NumCPU(8, 2)));
