@@ -625,6 +625,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.07768),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
+      Bu2Dst0hst_Dst02D0pi0_meanDelta_(),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -691,6 +692,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           5.0215e+03),
+      Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(),
       // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
@@ -726,6 +728,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           6.1316e+01),
+      Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(),
+      Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(),
+      Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(),
       // Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
@@ -772,6 +777,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           3.8685e+00),
+      Bu2Dst0hst_Dst02D0pi0_a2Bu_(),
       // Bu2Dst0hst_Dst02D0pi0_a2Bu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId, Neutral::gamma))
       //         .c_str(),
@@ -784,6 +790,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("n1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           4.6620e+00),
+      Bu2Dst0hst_Dst02D0pi0_n2Bu_(),
       // Bu2Dst0hst_Dst02D0pi0_n2Bu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId, Neutral::gamma))
       //         .c_str(),
@@ -798,6 +805,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //      ComposeName(uniqueId, Neutral::gamma))
       //         .c_str(),
       //     1.0890e-07),
+      Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(),
       relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))

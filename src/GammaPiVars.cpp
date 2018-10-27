@@ -246,6 +246,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
                          .Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu()))),
+      Bu2Dst0hst_Dst02D0pi0_sigma2Bu_(nullptr),
+      pdf1Bu_Bu2Dst0hst_Dst02D0pi0_(),
+      pdf2Bu_Bu2Dst0hst_Dst02D0pi0_(),
       // NeutralVars<Neutral::gamma>::Get(uniqueId)
       //     .Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu(),
       // NeutralVars<Neutral::gamma>::Get(uniqueId)
@@ -303,7 +306,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       //     pdf2Bu_Bu2Dst0hst_Dst02D0pi0_),
       //     NeutralVars<Neutral::gamma>::Get(uniqueId)
       //         .Bu2Dst0hst_Dst02D0pi0_frac1PdfBu()),
-      pdfBu_Bu2Dst0hst_Dst02D0pi0_(
+      pdfBu_Bu2Dst0hst_Dst02D0pi0_(new RooCBShape(
           ("pdfBu_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -317,7 +320,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0hst_Dst02D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0pi0_n1Bu()),
+              .Bu2Dst0hst_Dst02D0pi0_n1Bu())),
       pdf_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -327,7 +330,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .pdfDelta_Bu2Dst0hst_Dst02D0pi0(),
-          RooFit::Conditional(pdfBu_Bu2Dst0hst_Dst02D0pi0_,
+          RooFit::Conditional(*pdfBu_Bu2Dst0hst_Dst02D0pi0_,
                               Configuration::Get().buMass())),
       // -------------------- Gamma PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0gamma_sigma1Bu_(new RooPolyVar(

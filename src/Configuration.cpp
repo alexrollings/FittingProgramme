@@ -12,6 +12,7 @@ Configuration::Configuration()
       BDT1_("", "", 0, 0, ""),
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
+      d0FdSig_("", "", 0, 0, ""),
       buFitMin_(5000),
       buFitMax_(5800),
       buFitBins_(160),
@@ -38,7 +39,7 @@ Configuration::Configuration()
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(210);
-  deltaMass_.setMin(50);
+  deltaMass_.setMin(130);
   deltaMass_.setBins(100);
   deltaMass_.setUnit(kMassUnit);
 
@@ -96,7 +97,13 @@ Configuration::Configuration()
   hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
   hAngle_.setMax(1);
   hAngle_.setMin(-1);
-  hAngle_.setUnit(kNoUnit);
+
+  d0FdSig_.setUnit(kNoUnit);
+  d0FdSig_.SetName("D0_FD_ZSIG");
+  d0FdSig_.SetTitle("D0 z-axis flight distance significance");
+  d0FdSig_.setMax(300);
+  d0FdSig_.setMin(-100);
+  d0FdSig_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);
   variableArgSet_.add(deltaMass_);
@@ -109,6 +116,7 @@ Configuration::Configuration()
   variableArgSet_.add(BDT1_);
   variableArgSet_.add(BDT2_);
   variableArgSet_.add(hAngle_);
+  variableArgSet_.add(d0FdSig_);
 
   categoryArgSet_.add(categories().fitting);
   categoryArgSet_.add(categories().charge);

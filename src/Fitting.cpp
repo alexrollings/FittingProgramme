@@ -119,16 +119,19 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &yieldLegend, std::string const &outputDir,
                    bool fitBool) {
-  int x_int = int(log(2 * var.getBins()) / log(2));
-  RooAbsReal::defaultIntegratorConfig()
-      ->getConfigSection("RooIntegrator1D")
-      .setRealValue("fixSteps", x_int);
-
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
   int id = 0;
+
+  // Integration trick to speed up plotting projections. Only works in pi0 mode.
+  if (neutral==Neutral::pi0)  {
+    int x_int = int(log(2 * var.getBins()) / log(2));
+    RooAbsReal::defaultIntegratorConfig()
+        ->getConfigSection("RooIntegrator1D")
+        .setRealValue("fixSteps", x_int);
+        }
 
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
@@ -191,12 +194,12 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
           RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    }
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters,
-            charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange+3),
@@ -215,7 +218,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters,
+            charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
@@ -467,23 +471,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
         // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
         << " events";
-  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                      EnumToLabel(daughters, charge) +
-                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
-                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
-               << pdf.yield_misRec().getVal()
-               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-               << " events";
-
-  Bu2Dst0hst_Dst02D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-      << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal()
-      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-      << " events";
   Bu2Dst0hst_Dst02D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -508,6 +495,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 << pdf.yield_overRec().getVal()
                 // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
                 << " events";
+  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) +
+                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
+                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
+               << pdf.yield_misRec().getVal()
+               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+               << " events";
+  Bu2Dst0hst_Dst02D0pi0Legend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
+      << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal()
+      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
+      << " events";
 
   yieldLegend.SetLineColor(kWhite);
   // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
@@ -1194,16 +1197,10 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   simPdfToFit = std::unique_ptr<RooSimultaneous>(
       dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-  auto simPdfToFitFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-      "simPdfToFitFit", "simPdfToFitFit", categories.fitting));
-
-  simPdfToFitFit = std::unique_ptr<RooSimultaneous>(
-      dynamic_cast<RooSimultaneous *>(simPdfToFit->Clone()));
-
   std::unique_ptr<RooFitResult> result;
 
   if (fitBool == true) {
-    result = std::unique_ptr<RooFitResult>(simPdfToFitFit->fitTo(
+    result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
         RooFit::NumCPU(8, 2)));
@@ -1688,9 +1685,9 @@ int main(int argc, char **argv) {
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
                               "BDT2>0Pi0_M<185&&Pi0_M>110"));
                     } else {
-                      reducedInputDataSet_1 = inputDataSet;
-                          // dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                          //     "BDT2>0.1"));
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                              "BDT2>0.1"));
                     }
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (b == Bachelor::pi) {
