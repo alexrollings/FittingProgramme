@@ -33,14 +33,15 @@ Configuration::Configuration()
   // FOR FITTING THE ROODATASETS
   buMass_.setMax(5800);
   buMass_.setMin(5050);
-  buMass_.setBins(150);
+  buMass_.setBins(75);
   buMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(210);
   deltaMass_.setMin(50);
-  deltaMass_.setBins(100);
+  // deltaMass_.setMin(130);
+  deltaMass_.setBins(50);
   deltaMass_.setUnit(kMassUnit);
 
   pi0Mass_.SetName("Pi0_M");
@@ -366,8 +367,11 @@ Year StringToEnum<Year>(std::string const &year) {
     return Year::y2015;
   } else if (year == "2016") {
     return Year::y2016;
+  } else if (year == "2017") {
+    return Year::y2017;
   }
-  throw std::invalid_argument("Year must take a value in [2011/2012/2015]");
+  throw std::invalid_argument(
+      "Year must take a value in [2011/2012/2015/2016/2017]");
 }
 
 std::string EnumToString(Year year) {
@@ -380,6 +384,8 @@ std::string EnumToString(Year year) {
       return "2015";
     case Year::y2016:
       return "2016";
+    case Year::y2017:
+      return "2017";
   }
 }
 

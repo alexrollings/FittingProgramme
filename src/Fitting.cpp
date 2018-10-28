@@ -60,56 +60,14 @@ void SetStyle() {
   gStyle->SetTitleSize(0.03, "XY");
   gStyle->SetLabelSize(0.024, "XY");
   gStyle->SetLegendFont(132);
+  gStyle->SetLegendTextSize(0.025);
   gStyle->SetTitleOffset(0.9, "X");
   gStyle->SetTitleOffset(1.1, "Y");
   gStyle->SetTitleOffset(0.9, "Z");
-  gStyle->SetLegendTextSize(0.03);
   gStyle->SetPadTopMargin(0.1);
   gStyle->SetPadRightMargin(0.03);
   gStyle->SetPadBottomMargin(0.09);
   gStyle->SetPadLeftMargin(0.1);
-}
-
-// Separate function to make legend for RooPlot - not working right now (same
-// code is in Plotting1D)
-TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
-                   PdfBase &pdf) {
-  Bachelor bachelor = pdf.bachelor();
-  Daughters daughters = pdf.daughters();
-  Neutral neutral = pdf.neutral();
-  Charge charge = pdf.charge();
-
-  canvas.cd();
-  pad1.cd();
-
-  TLegend legend(0.7, 0.55, 0.97, 0.90);
-  // ------------- Draw Legends -------------- //
-  auto pdfSignalHist = std::make_unique<TH1D>(
-      ("pdfSignalHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
-      "pdfSignalHist", 1, 0, 1);
-  pdfSignalHist->SetLineColor(kBlue);
-  pdfSignalHist->SetLineStyle(kDashed);
-  pdfSignalHist->SetLineWidth(2);
-
-  auto pdf_CombHist = std::make_unique<TH1D>(
-      ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters)).c_str(),
-      "pdf_CombHist", 1, 0, 1);
-  pdf_CombHist->SetLineColor(kRed);
-  pdf_CombHist->SetLineStyle(kDashed);
-  pdf_CombHist->SetLineWidth(2);
-
-  // legend.SetHeader("Physics Backgrounds");
-  legend.AddEntry(
-      pdfSignalHist.get(),
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{0}*}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str(),
-      "l");
-  // legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
-
-  return legend;
 }
 
 // Function to plot 1D projections - written so that it can be used for both bu
@@ -117,7 +75,7 @@ TLegend MakeLegend(int const id, TCanvas &canvas, TPad &pad1, TPad &pad2,
 void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
-                   TLegend &yieldLegend, std::string const &outputDir,
+                   TLegend &lumiLegend, std::string const &outputDir,
                    bool fitBool) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -297,10 +255,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   canvas.cd();
   pad1.cd();
   frame->Draw();
+  lumiLegend.Draw("same");
   if (fitBool == true) {
     legend.Draw("same");
   }
-  // yieldLegend.Draw("same");
   // dataHist->Draw("same");
 
   canvas.Update();
@@ -314,8 +272,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir,
-                bool fitBool) {
+                std::string const &outputDir, bool fitBool,
+                std::string &labelString, RooFitResult *result) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -323,126 +281,69 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  TLegend legend(0.7, 0.55, 0.97, 0.90);
+  TLegend legend(0.7, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
-  auto pdf_Bu2Dst0h_Dst02D0pi0_Hist = std::make_unique<TH1D>(
-      ("pdf_Bu2Dst0h_Dst02D0pi0_Hist" +
+  auto Bu2Dst0h_Dst02D0pi0Hist = std::make_unique<TH1D>(
+      ("Bu2Dst0h_Dst02D0pi0Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0h_Dst02D0pi0_Hist", 1, 0, 1);
-  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineColor(kBlue);
-  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineStyle(kDashed);
-  pdf_Bu2Dst0h_Dst02D0pi0_Hist->SetLineWidth(2);
+      "Bu2Dst0h_Dst02D0pi0Hist", 1, 0, 1);
+  Bu2Dst0h_Dst02D0pi0Hist->SetLineColor(kBlue);
+  Bu2Dst0h_Dst02D0pi0Hist->SetLineStyle(kDashed);
+  Bu2Dst0h_Dst02D0pi0Hist->SetLineWidth(2);
 
-  auto pdf_Bu2Dst0h_Dst02D0gamma_Hist = std::make_unique<TH1D>(
-      ("pdf_Bu2Dst0h_Dst02D0gamma_Hist" +
+  auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0h_Dst02D0gammaHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0h_Dst02D0gamma_Hist", 1, 0, 1);
-  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineColor(kOrange);
-  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineStyle(kDashed);
-  pdf_Bu2Dst0h_Dst02D0gamma_Hist->SetLineWidth(2);
+      "Bu2Dst0h_Dst02D0gammaHist", 1, 0, 1);
+  Bu2Dst0h_Dst02D0gammaHist->SetLineColor(kOrange);
+  Bu2Dst0h_Dst02D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
 
-  auto pdf_overRec_Hist = std::make_unique<TH1D>(
-      ("pdf_overRec_Hist" +
+  auto overRecHist = std::make_unique<TH1D>(
+      ("overRecHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_overRec_Hist", 1, 0, 1);
-  pdf_overRec_Hist->SetLineColor(kGreen);
-  pdf_overRec_Hist->SetLineStyle(kDashed);
-  pdf_overRec_Hist->SetLineWidth(2);
+      "overRecHist", 1, 0, 1);
+  overRecHist->SetLineColor(kGreen);
+  overRecHist->SetLineStyle(kDashed);
+  overRecHist->SetLineWidth(2);
 
-  auto pdf_Bu2Dst0hst_Dst02D0pi0_Hist = std::make_unique<TH1D>(
-      ("pdf_Bu2Dst0hst_Dst02D0pi0_Hist" +
+  auto Bu2Dst0hst_Dst02D0pi0Hist = std::make_unique<TH1D>(
+      ("Bu2Dst0hst_Dst02D0pi0Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0hst_Dst02D0pi0_Hist", 1, 0, 1);
-  pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineColor(kOrange+3);
-  pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineStyle(kDashed);
-  pdf_Bu2Dst0hst_Dst02D0pi0_Hist->SetLineWidth(2);
+      "Bu2Dst0hst_Dst02D0pi0Hist", 1, 0, 1);
+  Bu2Dst0hst_Dst02D0pi0Hist->SetLineColor(kOrange + 3);
+  Bu2Dst0hst_Dst02D0pi0Hist->SetLineStyle(kDashed);
+  Bu2Dst0hst_Dst02D0pi0Hist->SetLineWidth(2);
 
-  auto pdf_Bu2Dst0hst_Dst02D0gamma_Hist = std::make_unique<TH1D>(
-      ("pdf_Bu2Dst0hst_Dst02D0gamma_Hist" +
+  auto Bu2Dst0hst_Dst02D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0hst_Dst02D0gammaHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_Bu2Dst0hst_Dst02D0gamma_Hist", 1, 0, 1);
-  pdf_Bu2Dst0hst_Dst02D0gamma_Hist->SetLineColor(kMagenta);
-  pdf_Bu2Dst0hst_Dst02D0gamma_Hist->SetLineStyle(kDashed);
-  pdf_Bu2Dst0hst_Dst02D0gamma_Hist->SetLineWidth(2);
+      "Bu2Dst0hst_Dst02D0gammaHist", 1, 0, 1);
+  Bu2Dst0hst_Dst02D0gammaHist->SetLineColor(kMagenta);
+  Bu2Dst0hst_Dst02D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0hst_Dst02D0gammaHist->SetLineWidth(2);
 
-  auto pdf_misRec_Hist = std::make_unique<TH1D>(
-      ("pdf_misRec_Hist" +
+  auto misRecHist = std::make_unique<TH1D>(
+      ("misRecHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_misRec_Hist", 1, 0, 1);
-  pdf_misRec_Hist->SetLineColor(kTeal);
-  pdf_misRec_Hist->SetLineStyle(kDashed);
-  pdf_misRec_Hist->SetLineWidth(2);
+      "misRecHist", 1, 0, 1);
+  misRecHist->SetLineColor(kTeal);
+  misRecHist->SetLineStyle(kDashed);
+  misRecHist->SetLineWidth(2);
 
-  auto pdf_CombHist = std::make_unique<TH1D>(
-      ("pdf_CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto CombHist = std::make_unique<TH1D>(
+      ("CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pdf_CombHist", 1, 0, 1);
-  pdf_CombHist->SetLineColor(kRed);
-  pdf_CombHist->SetLineStyle(kDashed);
-  pdf_CombHist->SetLineWidth(2);
-
-  // legend.SetHeader("Physics Backgrounds");
-  legend.AddEntry(
-      pdf_Bu2Dst0h_Dst02D0pi0_Hist.get(),
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) +
-       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-          .c_str(),
-      "l");
-  if (neutral == Neutral::gamma) {
-    legend.AddEntry(pdf_Bu2Dst0h_Dst02D0gamma_Hist.get(),
-                    ("B^{" + EnumToLabel(charge) +
-                     "}#rightarrow#font[132]{[}#font[132]{[}" +
-                     EnumToLabel(daughters, charge) +
-                     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                     EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-                        .c_str(),
-                    "l");
-    legend.AddEntry(pdf_Bu2Dst0hst_Dst02D0gamma_Hist.get(),
-                    ("B^{" + EnumToLabel(charge) +
-                     "}#rightarrow#font[132]{[}#font[132]{[}" +
-                     EnumToLabel(daughters, charge) +
-                     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                     HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-                        .c_str(),
-                    "l");
-  }
-  legend.AddEntry(
-      pdf_overRec_Hist.get(),
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-          .c_str(),
-      "l");
-  legend.AddEntry(pdf_misRec_Hist.get(),
-                  ("Mis-Reconstructed"),
-                  "l");
-  // Make only pi0 in pi0 mode (gamma removed by veto)
-  legend.AddEntry(
-      pdf_Bu2Dst0hst_Dst02D0pi0_Hist.get(),
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) +
-       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-       HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
-          .c_str(),
-      "l");
-  // legend.AddEntry(pdf_CombHist.get(), "Combinatorial", "l");
-
-  auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "blankHist", 1, 0, 1);
-  blankHist->SetLineColor(kWhite);
-  blankHist->SetLineWidth(2);
-
-  TLegend yieldLegend(0.12, 0.55, 0.3, 0.8);
+      "CombHist", 1, 0, 1);
+  CombHist->SetLineColor(kRed);
+  CombHist->SetLineStyle(kDashed);
+  CombHist->SetLineWidth(2);
 
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
@@ -456,85 +357,123 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-      << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal()
-      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-      << " events";
+             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  if (fitBool == true && labelString != "TOY") {
+    Bu2Dst0h_Dst02D0pi0Legend
+        << " ~ " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal();
+        // << " pm "
+        // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
+        // << " events";
+  }
   if (neutral == Neutral::gamma) {
     Bu2Dst0h_Dst02D0gammaLegend
         << "B^{" + EnumToLabel(charge) +
                "}#rightarrow#font[132]{[}#font[132]{[}" +
                EnumToLabel(daughters, charge) +
                "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-               EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-        << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal()
-        // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-        << " events";
-  Bu2Dst0hst_Dst02D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-      << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal()
-      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-      << " events";
-  combLegend << "Background: "
-             << pdf.yield_Comb().getVal()
-             // << " #pm ";
-             // << backgroundYield.getError()
-             << " events";
+               EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+    if (fitBool == true && labelString != "TOY") {
+      Bu2Dst0h_Dst02D0gammaLegend << " ~ "
+                                  << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
+      // << " pm "
+      // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
+      // << " events";
+    }
+    Bu2Dst0hst_Dst02D0gammaLegend
+        << "B^{" + EnumToLabel(charge) +
+               "}#rightarrow#font[132]{[}#font[132]{[}" +
+               EnumToLabel(daughters, charge) +
+               "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+               HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+    if (fitBool == true && labelString != "TOY") {
+      Bu2Dst0hst_Dst02D0gammaLegend
+          << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
+      // << " pm "
+      // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
+      // << " events";
+    }
   }
   overRecLegend << "B^{" + EnumToLabel(charge) +
                        "}#rightarrow#font[132]{[}#font[132]{[}" +
                        EnumToLabel(daughters, charge) +
-                       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-                       EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) +
-                       "}: "
-                << pdf.yield_overRec().getVal()
-                // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-                << " events";
-  misRecLegend << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                      EnumToLabel(daughters, charge) +
-                      "#font[132]{]}_{D^{0}}#pi^{#mp}#font[132]{]}_{D^{#mp}}" +
-                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}:"
-               << pdf.yield_misRec().getVal()
-               // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-               << " events";
+                       "#font[132]{]}_{D^{0}}" + EnumToLabel(bachelor) + "^{" +
+                       EnumToLabel(charge) + "}";
+  if (fitBool == true && labelString != "TOY") {
+    overRecLegend << " ~ " << pdf.yield_overRec().getVal();
+    // << " pm "
+    // << pdf.yield_overRec().getPropagatedError(*result)
+    // << " events";
+  }
+  misRecLegend << "Mis-Reconstructed";
+  if (fitBool == true && labelString != "TOY") {
+    misRecLegend << " ~ " << pdf.yield_misRec().getVal();
+    // << " pm "
+    // << pdf.yield_misRec().getPropagatedError(*result) << " events";
+  }
   Bu2Dst0hst_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}: "
-      << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal()
-      // << " #pm " << pdf.yieldSignal().getPropagatedError(*result)
-      << " events";
-
-  yieldLegend.SetLineColor(kWhite);
-  // yieldLegend.AddEntry(blankHist.get(), "#int L dt = 4.8 #pm 0.13
-  // fb^{-1}",
-  //                       "l");
-  yieldLegend.AddEntry(blankHist.get(), Bu2Dst0h_Dst02D0pi0Legend.str().c_str(),
-                       "l");
-  if (neutral == Neutral::gamma) {
-    yieldLegend.AddEntry(blankHist.get(),
-                         Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
-    yieldLegend.AddEntry(blankHist.get(),
-                         Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(), overRecLegend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(),
-                       Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(), misRecLegend.str().c_str(), "l");
-  yieldLegend.AddEntry(blankHist.get(), combLegend.str().c_str(), "l");
+             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  if (fitBool == true && labelString != "TOY") {
+    Bu2Dst0hst_Dst02D0pi0Legend << " ~ "
+                                << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal();
+    // << " pm "
+    // << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getPropagatedError(*result)
+    // << " events";
   }
 
+  legend.SetLineColor(kWhite);
+  legend.AddEntry(Bu2Dst0h_Dst02D0pi0Hist.get(),
+                  Bu2Dst0h_Dst02D0pi0Legend.str().c_str(), "l");
+  if (neutral == Neutral::gamma) {
+    legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
+                    Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
+    legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
+                    Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
+  }
+  legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
+  legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
+                  Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
+  legend.AddEntry(misRecHist.get(), misRecLegend.str().c_str(), "l");
+
+  TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
+  auto blankHist = std::make_unique<TH1D>(
+      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "blankHist", 1, 0, 1);
+  blankHist->SetLineColor(kWhite);
+  blankHist->SetLineWidth(2);
+  lumiLegend.SetTextSize(0.03);
+  lumiLegend.SetLineColor(kWhite);
+  lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
+  // Blank entry to make space for integration symbol
+  lumiLegend.AddEntry(blankHist.get(), " ", "l");
+
+  if (labelString == "TOY") {
+    lumiLegend.SetTextSize(0.07);
+    legend.SetY1(0.55);
+    legend.SetY2(0.7);
+    lumiLegend.SetY1(0.7);
+    lumiLegend.SetY2(0.8);
+    if (neutral == Neutral::gamma) {
+      legend.SetY2(0.75);
+      lumiLegend.SetY1(0.75);
+      // legend.SetY1(0.6);
+      // legend.SetY2(0.87);
+      // lumiLegend.SetX1(0.15);
+      // lumiLegend.SetX2(0.25);
+      // lumiLegend.SetY1(0.65);
+      // lumiLegend.SetY2(0.8);
+    }
+  }
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
   PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,
-                categories, legend, yieldLegend, outputDir, fitBool);
+                categories, legend, lumiLegend, outputDir, fitBool);
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
   PlotComponent(Variable::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, yieldLegend, outputDir, fitBool);
+                categories, legend, lumiLegend, outputDir, fitBool);
 }
 
 // Plot in 2D: data, PDF and residuals
@@ -713,7 +652,34 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                       ComposeName(id, neutral, bachelor, daughters, charge) +
                       "_2dResiduals.pdf")
                          .c_str());
-  // }
+
+    // 1D residuals plot (sum over all 2D bins)
+    TCanvas canvasRes1d(
+        ("canvasRes1d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    canvasRes1d.cd();
+    TH1F resHist1d(
+        ("resHist1d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 130, -6, 6);
+    for (int i = 0; i < config.buMass().getBins() * config.deltaMass().getBins(); i++) {
+      float n_bin = resHist2d->GetBinContent(i);
+      if (n_bin != 0) {
+        resHist1d.Fill(n_bin);
+      }
+    }
+    resHist1d.GetXaxis()->SetTitle("Residual");
+    resHist1d.GetYaxis()->SetTitle("Entries");
+    resHist1d.SetTitle("");
+    resHist1d.SetStats(0);
+    resHist1d.Draw();
+    canvasRes1d.Update();
+    canvasRes1d.SaveAs((outputDir + "/" +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      "_1dResiduals.pdf")
+                         .c_str());
+    // }
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -1217,10 +1183,12 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
     correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
     std::cout << "Save to pdf file.\n";
   }
+  // Label plots to indicate Toy
+  std::string lumiString = "TOY";
   // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
     Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
-               outputDir, fitBool);
+               outputDir, fitBool, lumiString, result.get());
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
 }
@@ -1515,8 +1483,7 @@ int main(int argc, char **argv) {
     // continuing
     ParseArguments args(argc, argv);  // object instantiated
 
-    // std::string yearArg("2011,2012,2015,2016");
-    std::string yearArg("2011,2012,2015");
+    std::string yearArg("2011,2012,2015,2016,2017");
     std::string polarityArg("up,down");
     std::string bachelorArg("pi,k");
     std::string neutralArg("gamma,pi0");
@@ -1652,8 +1619,25 @@ int main(int argc, char **argv) {
   if (toys == Toys::none) {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
 
+    // Add up lumi in order to convert into string to go on plots
+    double lumi = 0;
+    double lumiErr = 0;
     // Loop over all options in order to extract correct roodatasets
     for (auto &y : yearVec) {
+      if (y == Year::y2011) {
+        lumi += 0.98;
+        lumiErr += 0.02;
+      } else if (y == Year::y2012) {
+        lumi += 1.99;
+        lumiErr += 0.02;
+      } else if (y == Year::y2015) {
+        lumi += 0.28;
+        lumiErr += 0.01;
+      } else if (y == Year::y2016) {
+        lumi += 1.65;
+      } else if (y == Year::y2017) {
+        lumi += 1.03;
+      }
       for (auto &p : polarityVec) {
         for (auto &b : bachelorVec) {
           for (auto &n : neutralVec) {
@@ -1682,7 +1666,7 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0Pi0_M<185&&Pi0_M>110"));
+                              "BDT2>0&&Pi0_M<185&&Pi0_M>110"));
                     } else {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
@@ -1752,10 +1736,16 @@ int main(int argc, char **argv) {
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     }
 
+    // String for lumi label on 1D projection plots
+    std::ostringstream lumiStream, lumiErrStream;
+    lumiStream << std::setprecision(2) << lumi;
+    lumiErrStream << std::setprecision(2) << lumiErr;
+    std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
+                             lumiErrStream.str() + " fb^{-1}";
     // Loop over daughters again to plot correct PDFs
     for (auto &p : pdfs) {
       Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
-                 outputDir, fitBool);
+                 outputDir, fitBool, lumiString, result.get());
       Plotting2D(id, *p, config, fullDataSet, *simPdf, outputDir, fitBool);
     }
 

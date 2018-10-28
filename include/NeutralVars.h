@@ -580,7 +580,7 @@ class NeutralVars {
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
-// below)...
+// below)..g.
 // Now we just need to define the constructors separately so the values are
 // different
 

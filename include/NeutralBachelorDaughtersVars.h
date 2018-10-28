@@ -403,7 +403,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0pi0-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          4560, 0, 10000)),
+          1140, 0, 10000)),
       N_overRec_(new RooRealVar(
           ("N_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -411,7 +411,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          4275, 0, 10000)),
+          875, 0, 10000)),
       N_Bu2Dst0hst_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -419,7 +419,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0pi0 reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          9405, 0, 10000)),
+          2350, 0, 10000)),
       N_Bu2Dst0hst_Dst02D0gamma_(nullptr),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
@@ -428,7 +428,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          5700, 0, 10000)) {}
+          1400, 0, 10000)) {}
 
 
 template <Daughters daughters>
