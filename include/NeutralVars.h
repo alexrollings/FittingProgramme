@@ -368,9 +368,9 @@ class NeutralVars {
   RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0MeanBu() {
     return Bu2Dst0hst_Dst02D0gamma_a0MeanBu_;
   }
-  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1MeanBu() {
-  //   return Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
-  // }
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1MeanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
+  }
   // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2MeanBu() {
   //   return Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
   // }
@@ -556,7 +556,7 @@ class NeutralVars {
   RooCBShape pdf2Delta_Bu2Dst0hst_Dst02D0gamma_;
   RooAddPdf pdfDelta_Bu2Dst0hst_Dst02D0gamma_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_a0MeanBu_;
-  // RooRealVar Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
   // RooRealVar Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
   RooPolyVar Bu2Dst0hst_Dst02D0gamma_meanBu_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_;

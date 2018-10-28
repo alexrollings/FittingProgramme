@@ -653,7 +653,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdf2Delta_Bu2Dst0hst_Dst02D0gamma_(),
       pdfDelta_Bu2Dst0hst_Dst02D0gamma_(),
       Bu2Dst0hst_Dst02D0gamma_a0MeanBu_(),
-      // Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(),
+      Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(),
       // Bu2Dst0hst_Dst02D0gamma_a2MeanBu_(),
       Bu2Dst0hst_Dst02D0gamma_meanBu_(),
       Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_(),

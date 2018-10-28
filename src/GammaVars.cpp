@@ -691,16 +691,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.0488e+03),
-      Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(),
-      // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     3.5646e+00),
+          5.0334e+03),
+      // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(),
+      Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
+          ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          3.3632e-01),
       // Bu2Dst0hst_Dst02D0pi0_a2MeanBu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a2MeanBu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
@@ -717,8 +717,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0hst_Dst02D0pi0_a0MeanBu_)),
-                     // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_,
+          RooArgList(Bu2Dst0hst_Dst02D0pi0_a0MeanBu_,
+                     Bu2Dst0hst_Dst02D0pi0_a1MeanBu_)),
                      // Bu2Dst0hst_Dst02D0pi0_a2MeanBu_)),
       Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a0Sigma1Bu_" +
@@ -727,7 +727,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          6.1316e+01),
+          4.2790e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(),
       Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(),
@@ -863,14 +863,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           5.0444e+03),
-      // Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(
-      //     ("Bu2Dst0hst_Dst02D0gamma_a1MeanBu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a1 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     7.2035e-01),
+      Bu2Dst0hst_Dst02D0gamma_a1MeanBu_(
+          ("Bu2Dst0hst_Dst02D0gamma_a1MeanBu_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          ("a1 of mean of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          3.4039e-01),
       // Bu2Dst0hst_Dst02D0gamma_a2MeanBu_(
       //     ("Bu2Dst0hst_Dst02D0gamma_a2MeanBu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
@@ -887,8 +887,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0hst_Dst02D0gamma_a0MeanBu_)),
-                     // Bu2Dst0hst_Dst02D0gamma_a1MeanBu_,
+          RooArgList(Bu2Dst0hst_Dst02D0gamma_a0MeanBu_,
+                     Bu2Dst0hst_Dst02D0gamma_a1MeanBu_)),
                      // Bu2Dst0hst_Dst02D0gamma_a2MeanBu_)),
       Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_" +
@@ -897,7 +897,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-           5.0085e+01),
+            4.4029e+01),
       // Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_(
       //     ("Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
