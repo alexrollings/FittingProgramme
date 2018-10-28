@@ -375,7 +375,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           0.07768),  // CHECK
       // ------------------ MIS RECONSTRUCTED BACKGROUND ------------------ //
       // misRec_thresholdDelta_(
-      //     ("misRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+      //     ("misRec_thresholdDelta_" + ComposeName(uniqueId,
+      //     Neutral::pi0)).c_str(),
       //     (" Delta_misRec thershold " + ComposeName(uniqueId, Neutral::pi0))
       //         .c_str(),
       //     1.3437e+02),
@@ -410,31 +411,38 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.3209e+03),
-      misRec_a1Mean1Bu_(),
+          5.2476e+03),
+      misRec_a1Mean1Bu_(
+          ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a1 of mean of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2.1392e-01),
       misRec_a2Mean1Bu_(),
       misRec_mean1Bu_(
           ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(misRec_a0Mean1Bu_)),
+          Configuration::Get().deltaMass(),
+          RooArgList(misRec_a0Mean1Bu_, misRec_a1Mean1Bu_)),
       misRec_a0Mean2Bu_(
           ("misRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.2852e+03),
+          5.2954e+03),
       misRec_mean2Bu_(
           ("misRec_mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), RooArgList(misRec_a0Mean2Bu_)),
+          Configuration::Get().deltaMass(),
+          RooArgList(misRec_a0Mean2Bu_, misRec_a1Mean1Bu_)),
       misRec_a0Sigma1Bu_(
           ("misRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          8.5416e+01),
+          5.7378e+01),
       misRec_a1Sigma1Bu_(),
       misRec_a2Sigma1Bu_(),
       misRec_a0Sigma2Bu_(
@@ -442,7 +450,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          6.1166e+01),
+          7.8502e+01),
       misRec_a1Bu_(
           ("misRec_a1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -481,13 +489,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.05, 0, 0.1),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
-      Bu2Dst0hst_Dst02D0pi0_meanDelta_(("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +
-                                       ComposeName(uniqueId, Neutral::pi0))
-                                          .c_str(),
-                                      ("Mean of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
-                                       ComposeName(uniqueId, Neutral::pi0))
-                                          .c_str(),
-                                      1.4367e+02),
+      Bu2Dst0hst_Dst02D0pi0_meanDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Mean of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1.4367e+02),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -508,20 +517,25 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
-      pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(("pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_" +
-                                     ComposeName(uniqueId, Neutral::pi0))
-                                        .c_str(),
-                                    ("Bu2Dst0hst_Dst02D0pi0 Delta Peaking PDF " +
-                                     ComposeName(uniqueId, Neutral::pi0))
-                                        .c_str(),
-                                    RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0pi0_,
-                                               pdf2Delta_Bu2Dst0hst_Dst02D0pi0_),
-                                    Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
+      pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(
+          ("pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Bu2Dst0hst_Dst02D0pi0 Delta Peaking PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0pi0_,
+                     pdf2Delta_Bu2Dst0hst_Dst02D0pi0_),
+          Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
       pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_(
-          ("pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Delta_Bu2Dst0hst_Dst02D0pi0 PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get().deltaMass(), misRec_thresholdDelta_, misRec_cDelta_,
-          misRec_aDelta_, misRec_bDelta_),
+          ("pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Delta_Bu2Dst0hst_Dst02D0pi0 PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(), misRec_thresholdDelta_,
+          misRec_cDelta_, misRec_aDelta_, misRec_bDelta_),
       Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -558,7 +572,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           9.5885e-01),
       Bu2Dst0hst_Dst02D0pi0_meanBu_(
-          ("Bu2Dst0hst_Dst02D0pi0_meanBu_" + ComposeName(uniqueId, Neutral::pi0))
+          ("Bu2Dst0hst_Dst02D0pi0_meanBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("Mean of Bu2Dst0hst_Dst02D0pi0 m[Bu]" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -621,7 +636,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           ("n2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-           3.5744e+00),
+          3.5744e+00),
       Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(
           ("Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -698,6 +713,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           pdfDelta_Comb_,
           RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())) {
-        std::cout << "Neutral vars managed to construct itself\n" << std::flush;
+  std::cout << "Neutral vars managed to construct itself\n" << std::flush;
       
       }
