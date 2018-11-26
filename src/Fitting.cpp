@@ -112,7 +112,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = nullptr;
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  // if (fitBool == true) {
+  if (fitBool == true) {
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -181,6 +181,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
+        }
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
@@ -204,12 +205,13 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
     }
 
-    pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
-                        ComposeName(id, neutral, bachelor, daughters, charge))
-                           .c_str());
-    pullFrame->SetTitle("");
-  // }
+    if (fitBool == true) {
+      pullFrame->addPlotable(pullHist /* .get() */, "P");
+      pullFrame->SetName(("pullFrame_" + EnumToString(variable) + "_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str());
+      pullFrame->SetTitle("");
+    }
 
   // --------------- plot onto canvas ---------------------
 
@@ -533,7 +535,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                      ComposeName(id, neutral, bachelor, daughters, charge) +
                      "_2dData.pdf")
                         .c_str());
-  // if (fitBool == true) {
+  if (fitBool == true) {
     // Make two-dimensional plot of sampled PDF in x vs y
     // Plot ONLY the PDF not the SimPDF
     // auto singlePdf =
@@ -679,7 +681,7 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
                       ComposeName(id, neutral, bachelor, daughters, charge) +
                       "_1dResiduals.pdf")
                          .c_str());
-    // }
+    }
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -1473,7 +1475,7 @@ int main(int argc, char **argv) {
   // them differently
 
   Toys toys;
-  bool fitBool = true;
+  bool fitBool = false;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -1622,7 +1624,13 @@ int main(int argc, char **argv) {
     // Add up lumi in order to convert into string to go on plots
     double lumi = 0;
     double lumiErr = 0;
-    // Loop over all options in order to extract correct roodatasets
+
+    // Loop over all options in
+    // order to extract correct roodatasets.
+    // Need to append each year, polarity to dataset at each key in map, as key
+    // labelled by n, b, d, c and must be unique. Need counter so that initially
+    // key-value pair is created, then after appended
+    unsigned int counter = 0;
     for (auto &y : yearVec) {
       if (y == Year::y2011) {
         lumi += 0.98;
@@ -1666,11 +1674,11 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0&&Pi0_M<185&&Pi0_M>110"));
+                              "BDT2>0.05&&Pi0_M<185&&Pi0_M>110"));
                     } else {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0.1"));
+                              "BDT2>0.05"));
                     }
                     RooDataSet *reducedInputDataSet = nullptr;
                     if (b == Bachelor::pi) {
@@ -1691,15 +1699,29 @@ int main(int argc, char **argv) {
                           "Could not reduce input dataset.");
                     }
                     reducedInputDataSet->Print();
-                    mapCategoryDataset.insert(std::make_pair(
-                        ComposeFittingName(n, b, d, c), reducedInputDataSet));
-                    std::cout << "Added dataset and category to map...\n";
+                    if (counter == 0) {
+                      mapCategoryDataset.insert(std::make_pair(
+                          ComposeFittingName(n, b, d, c), reducedInputDataSet));
+                      std::cout << "Created key-value pair for category " +
+                                       ComposeFittingName(n, b, d, c) +
+                                       " and dataset " +
+                                       EnumToString(y) + "_" +
+                                       EnumToString(p) + ".\n";
+                    } else {
+                      mapCategoryDataset[ComposeFittingName(n, b, d, c)]
+                          ->append(*reducedInputDataSet);
+                      std::cout << "Appended dataset " + EnumToString(y) +
+                                       "_" + EnumToString(p) +
+                                       " to category " +
+                                       ComposeFittingName(n, b, d, c) + ".\n";
+                    }
                   }
                 }
               }
             }
           }
         }
+        ++counter;
       }
     }
 
