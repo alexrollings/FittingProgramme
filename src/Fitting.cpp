@@ -1618,6 +1618,11 @@ int main(int argc, char **argv) {
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
 
+  // Raise lower mass boundary in delta mass for pi0 plots 
+  if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
+    config.deltaMass().setMin(130);
+  }
+
   if (toys == Toys::none) {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
 
@@ -1674,7 +1679,7 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0.05&&Pi0_M<185&&Pi0_M>110"));
+                              "BDT2>0&&Pi0_M<185&&Pi0_M>110"));
                     } else {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
@@ -1704,7 +1709,8 @@ int main(int argc, char **argv) {
                           ComposeFittingName(n, b, d, c), reducedInputDataSet));
                       std::cout << "Created key-value pair for category " +
                                        ComposeFittingName(n, b, d, c) +
-                                       " and dataset " +
+                                       " and "
+                                       "dataset " +
                                        EnumToString(y) + "_" +
                                        EnumToString(p) + ".\n";
                     } else {
@@ -1712,7 +1718,7 @@ int main(int argc, char **argv) {
                           ->append(*reducedInputDataSet);
                       std::cout << "Appended dataset " + EnumToString(y) +
                                        "_" + EnumToString(p) +
-                                       " to category " +
+                                       "to category " +
                                        ComposeFittingName(n, b, d, c) + ".\n";
                     }
                   }
