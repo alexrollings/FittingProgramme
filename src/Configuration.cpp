@@ -26,11 +26,6 @@ Configuration::Configuration()
 
   buMass_.SetName("Bu_M_DTF");
   buMass_.SetTitle("m[Bu]");
-  // FOR MAKING THE ROODATASETS
-  // buMass_.setMax(6000);
-  // buMass_.setMin(4000);
-  // buMass_.setBins(400);
-  // FOR FITTING THE ROODATASETS
   buMass_.setMax(5800);
   buMass_.setMin(5050);
   buMass_.setBins(75);
@@ -40,7 +35,6 @@ Configuration::Configuration()
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(210);
   deltaMass_.setMin(50);
-  // deltaMass_.setMin(130);
   deltaMass_.setBins(50);
   deltaMass_.setUnit(kMassUnit);
 
@@ -48,14 +42,12 @@ Configuration::Configuration()
   pi0Mass_.SetTitle("m[#pi^{0}]");
   pi0Mass_.setMax(185);
   pi0Mass_.setMin(110);
-  pi0Mass_.setBins(75);
   pi0Mass_.setUnit(kMassUnit);
 
   d0hMass_.SetName("D0h_M");
   d0hMass_.SetTitle("m[D^{0}h]");
-  d0hMass_.setMax(5800);
-  d0hMass_.setMin(4600);
-  d0hMass_.setBins(240);
+  d0hMass_.setMax(9000);
+  d0hMass_.setMin(3500);
   d0hMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Bu_ID");

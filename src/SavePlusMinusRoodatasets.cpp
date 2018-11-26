@@ -49,6 +49,12 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   // Initialise RooRealVars now neutral has been specified
   Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
+  config.buMass().setMax(6000);
+  config.buMass().setMin(4000);
+  config.buMass().setBins(400);
+  config.deltaMass().setMin(0);
+  config.deltaMass().setMax(250);
+  config.deltaMass().setBins(125);
 
   // Create DataSet and feed it the ArgSet, which
   // defines how many columns it
