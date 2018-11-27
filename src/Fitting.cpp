@@ -1632,10 +1632,6 @@ int main(int argc, char **argv) {
 
     // Loop over all options in
     // order to extract correct roodatasets.
-    // Need to append each year, polarity to dataset at each key in map, as key
-    // labelled by n, b, d, c and must be unique. Need counter so that initially
-    // key-value pair is created, then after appended
-    unsigned int counter = 0;
     for (auto &y : yearVec) {
       if (y == Year::y2011) {
         lumi += 0.98;
@@ -1679,7 +1675,7 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0&&Pi0_M<185&&Pi0_M>110"));
+                              "BDT2>0.05&&Pi0_M<185&&Pi0_M>110"));
                     } else {
                       reducedInputDataSet_1 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
@@ -1704,15 +1700,18 @@ int main(int argc, char **argv) {
                           "Could not reduce input dataset.");
                     }
                     reducedInputDataSet->Print();
-                    if (counter == 0) {
+                    // Need to append each year, polarity to dataset at each key
+                    // in map, as key labelled by n, b, d, c and must be unique.
+                    if (mapCategoryDataset.find(ComposeFittingName(
+                            n, b, d, c)) == mapCategoryDataset.end()) {
                       mapCategoryDataset.insert(std::make_pair(
                           ComposeFittingName(n, b, d, c), reducedInputDataSet));
                       std::cout << "Created key-value pair for category " +
                                        ComposeFittingName(n, b, d, c) +
                                        " and "
                                        "dataset " +
-                                       EnumToString(y) + "_" +
-                                       EnumToString(p) + ".\n";
+                                       EnumToString(y) + "_" + EnumToString(p) +
+                                       ".\n";
                     } else {
                       mapCategoryDataset[ComposeFittingName(n, b, d, c)]
                           ->append(*reducedInputDataSet);
@@ -1727,7 +1726,6 @@ int main(int argc, char **argv) {
             }
           }
         }
-        ++counter;
       }
     }
 
