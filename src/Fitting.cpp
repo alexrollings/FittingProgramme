@@ -1171,6 +1171,16 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
         RooFit::NumCPU(8, 2)));
+  }
+  // Label plots to indicate Toy
+  std::string lumiString = "TOY";
+  // Loop over daughters again to plot correct PDFs
+  for (auto &p : pdfs) {
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
+               outputDir, fitBool, lumiString, result.get());
+    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
+  }
+  if (fitBool == true) {
     result->Print("v");
     std::cout << "Printed result.\n";
     TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
@@ -1184,14 +1194,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
     std::cout << "Updated canvas.\n";
     correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
     std::cout << "Save to pdf file.\n";
-  }
-  // Label plots to indicate Toy
-  std::string lumiString = "TOY";
-  // Loop over daughters again to plot correct PDFs
-  for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
-               outputDir, fitBool, lumiString, result.get());
-    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
 }
 
