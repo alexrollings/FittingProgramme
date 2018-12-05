@@ -494,21 +494,21 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-           5.3395e+03),
+           5.2022e+03),
       overRec_a1Mean1Bu_(
           ("overRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          9.2609e-01),
+          4.4709e+00),
       overRec_a2Mean1Bu_(
           ("overRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean1 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -2.4154e-03),
+          -1.2101e-02),
       overRec_mean1Bu_(
           ("overRec_mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
@@ -522,21 +522,21 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.2972e+03),
+          5.3536e+03),
       overRec_a1Mean2Bu_(
           ("overRec_a1Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          2.5745e+00),
+          1.5054e+00),
       overRec_a2Mean2Bu_(
           ("overRec_a2Mean2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of mean2 of overRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -7.0262e-03),
+          -3.7428e-03),
       overRec_mean2Bu_(
           ("overRec_mean2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
@@ -550,65 +550,59 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.5803e+00),
+          2.3696e+01),
       overRec_a1Sigma1Bu_(
           ("overRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.5827e-01),
+          -3.5232e-01),
       overRec_a2Sigma1Bu_(
           ("overRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.3711e-03),
+          3.6077e-03),
       overRec_a0Sigma2Bu_(
           ("overRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a0 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.5846e+01),
+          -1.6106e+01),
       overRec_a1Sigma2Bu_(
           ("overRec_a1Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          6.2841e-01),
+          7.1468e-01),
       overRec_a2Sigma2Bu_(
           ("overRec_a2Sigma2Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -9.3012e-04),
+          -1.4613e-03),
       overRec_a1Bu_(
           ("overRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          2.6071e+00),
-      overRec_a2Bu_(
-          ("overRec_a2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("a2 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          -1.3325e+00),
+           2.7665e+00),
+      overRec_a2Bu_(),
       overRec_n1Bu_(
           ("overRec_n1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("n1 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          1.5161e-01),
-      overRec_n2Bu_(
-          ("overRec_n2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          ("n2 of overRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          9.9999e+00),
+          1.4306e-06),
+      overRec_n2Bu_(),
       overRec_frac1PdfBu_(
           ("overRec_frac1PdfBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("Fraction of left w.r.t. right Bu PDF in overRec " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3.2469e-01),
+          4.4483e-01),
       relativeBuWidth_overRec_(
           ("relativeBuWidth_overRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
