@@ -1475,7 +1475,7 @@ int main(int argc, char **argv) {
   // them differently
 
   Toys toys;
-  bool fitBool = false;
+  bool fitBool = true;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
