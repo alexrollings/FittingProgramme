@@ -465,22 +465,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.5861e+01),
+          5.2160e+01),
       bkg_cDelta_(
           ("bkg_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          2.2075e+01),
+          4.2450e+01),
       bkg_aDelta_(
           ("bkg_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          9.2608e-01),
+          1.0341e+00),
       bkg_bDelta_(
           ("bkg_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -8.8174e-01),
+          -1.2284e+00),
       // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
