@@ -69,8 +69,8 @@ class NeutralVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  RooRealVar &Bu2Dst0h_Dst02D0pi0_mean1Delta() {
-    return Bu2Dst0h_Dst02D0pi0_mean1Delta_;
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_meanDelta() {
+    return Bu2Dst0h_Dst02D0pi0_meanDelta_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0pi0_sigma1Delta() {
     return Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
@@ -426,7 +426,7 @@ class NeutralVars {
   // Indicate if only used by one neutral
 
   int uniqueId_;
-  RooRealVar Bu2Dst0h_Dst02D0pi0_mean1Delta_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_meanDelta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_sigma2Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a2Delta_;

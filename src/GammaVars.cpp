@@ -235,10 +235,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.07930, -1, 1),  //, 0.0, 0.1),
       // -------------------- PARTIAL PI0 -------------------- //
-      Bu2Dst0h_Dst02D0pi0_mean1Delta_(("Bu2Dst0h_Dst02D0pi0_mean1Delta_" +
+      Bu2Dst0h_Dst02D0pi0_meanDelta_(("Bu2Dst0h_Dst02D0pi0_meanDelta_" +
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),
-                                      ("Mean1 of Bu2Dst0h_Dst02D0pi0 m[Delta]" +
+                                      ("Mean of Bu2Dst0h_Dst02D0pi0 m[Delta]" +
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),
                                       8.6718e+01),
@@ -291,7 +291,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_Dst02D0pi0 Delta left PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma1Delta_, Bu2Dst0h_Dst02D0pi0_a1Delta_,
           Bu2Dst0h_Dst02D0pi0_n1Delta_),
       pdf2Delta_Bu2Dst0h_Dst02D0pi0_(
@@ -301,7 +301,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_Dst02D0pi0 Delta right PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean2Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
       Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_(
@@ -609,7 +609,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.07768),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
-      Bu2Dst0hst_Dst02D0pi0_meanDelta_(),
+      Bu2Dst0hst_Dst02D0pi0_meanDelta_(("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +
+                                       ComposeName(uniqueId, Neutral::gamma))
+                                          .c_str(),
+                                      ("Mean of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
+                                       ComposeName(uniqueId, Neutral::gamma))
+                                          .c_str(),
+                                      9.2966e+01),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -617,7 +623,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0hst_Dst02D0pi0 Delta left PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma1Delta_, Bu2Dst0h_Dst02D0pi0_a1Delta_,
           Bu2Dst0h_Dst02D0pi0_n1Delta_),
       pdf2Delta_Bu2Dst0hst_Dst02D0pi0_(
@@ -627,7 +633,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0hst_Dst02D0pi0 Delta right PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
       pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(

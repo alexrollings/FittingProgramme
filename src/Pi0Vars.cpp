@@ -7,7 +7,7 @@
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     // -------------------- SIGNAL -------------------- //
-    : Bu2Dst0h_Dst02D0pi0_mean1Delta_(("Bu2Dst0h_Dst02D0pi0_mean1Delta_" +
+    : Bu2Dst0h_Dst02D0pi0_meanDelta_(("Bu2Dst0h_Dst02D0pi0_meanDelta_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
                                       ("Mean of Bu2Dst0h_Dst02D0pi0 m[Delta]" +
@@ -59,7 +59,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_Dst02D0pi0 Delta left PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma1Delta_, Bu2Dst0h_Dst02D0pi0_a1Delta_,
           Bu2Dst0h_Dst02D0pi0_n1Delta_),
       pdf2Delta_Bu2Dst0h_Dst02D0pi0_(
@@ -69,7 +69,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_Dst02D0pi0 Delta right PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_mean1Delta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
       Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_(
