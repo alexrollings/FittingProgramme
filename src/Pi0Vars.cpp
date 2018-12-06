@@ -14,7 +14,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
                                       1.4262e+02),
-      Bu2Dst0h_Dst02D0pi0_mean2Delta_(),
       Bu2Dst0h_Dst02D0pi0_sigma1Delta_(("Bu2Dst0h_Dst02D0pi0_sigma1Delta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),

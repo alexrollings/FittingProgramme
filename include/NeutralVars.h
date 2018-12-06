@@ -72,9 +72,6 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0pi0_mean1Delta() {
     return Bu2Dst0h_Dst02D0pi0_mean1Delta_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0pi0_mean2Delta() {
-    return Bu2Dst0h_Dst02D0pi0_mean2Delta_;
-  }
   RooRealVar &Bu2Dst0h_Dst02D0pi0_sigma1Delta() {
     return Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
   }
@@ -389,9 +386,9 @@ class NeutralVars {
   RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu() {
     return Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_;
   }
-  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu() {
-    return Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_;
-  }
+  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu() {
+  //   return Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_;
+  // }
   // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu() {
   //   return Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_;
   // }
@@ -430,7 +427,6 @@ class NeutralVars {
 
   int uniqueId_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_mean1Delta_;
-  RooRealVar Bu2Dst0h_Dst02D0pi0_mean2Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_sigma2Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a2Delta_;
