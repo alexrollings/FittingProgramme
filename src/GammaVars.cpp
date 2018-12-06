@@ -1005,19 +1005,19 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.0775e+03),
+          5.1137e+03),
       misRec_a1Mean1Bu_(
           ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          2.0715e+00),
+          1.9263e+00),
       misRec_a2Mean1Bu_(
           ("misRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a2 of mean1 of misRec m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -6.1323e-03),
+          -5.1276e-03),
       misRec_mean1Bu_(
           ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean1 of misRec m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
