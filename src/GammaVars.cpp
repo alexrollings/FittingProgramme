@@ -681,7 +681,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.0334e+03),
+          5.0126e+03),
       // Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(),
       Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
@@ -690,7 +690,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3.3632e-01),
+          5.2402e-02),
       // Bu2Dst0hst_Dst02D0pi0_a2MeanBu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a2MeanBu_" +
       //      ComposeName(uniqueId, Neutral::gamma))
@@ -717,7 +717,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.2790e+01),
+          4.9718e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(),
       Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(),
