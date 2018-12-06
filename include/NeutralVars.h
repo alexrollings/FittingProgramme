@@ -371,24 +371,24 @@ class NeutralVars {
   RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1MeanBu() {
     return Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
   }
-  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2MeanBu() {
-  //   return Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
-  // }
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2MeanBu() {
+    return Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
+  }
   RooPolyVar &Bu2Dst0hst_Dst02D0gamma_meanBu() {
     return Bu2Dst0hst_Dst02D0gamma_meanBu_;
   }
   RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu() {
     return Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_;
   }
-  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu() {
-  //   return Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_;
-  // }
-  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu() {
-  //   return Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_;
-  // }
-  // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu() {
-  //   return Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_;
-  // }
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu() {
+    return Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_;
+  }
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu() {
+    return Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_;
+  }
+  RooRealVar &Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu() {
+    return Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_;
+  }
   // RooRealVar &Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu() {
   //   return Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_;
   // }
@@ -557,11 +557,11 @@ class NeutralVars {
   RooAddPdf pdfDelta_Bu2Dst0hst_Dst02D0gamma_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_a0MeanBu_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_a1MeanBu_;
-  // RooRealVar Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a2MeanBu_;
   RooPolyVar Bu2Dst0hst_Dst02D0gamma_meanBu_;
   RooRealVar Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu_;
-  // RooRealVar Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_;
-  // RooRealVar Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu_;
+  RooRealVar Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu_;
   // RooRealVar Bu2Dst0hst_Dst02D0gamma_a0Sigma2Bu_;
   // RooRealVar Bu2Dst0hst_Dst02D0gamma_a1Sigma2Bu_;
   // RooRealVar Bu2Dst0hst_Dst02D0gamma_a2Sigma2Bu_;
