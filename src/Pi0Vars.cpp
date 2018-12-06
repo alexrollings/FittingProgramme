@@ -89,33 +89,33 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                     RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0pi0_,
                                                pdf2Delta_Bu2Dst0h_Dst02D0pi0_),
                                     Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
-      Bu2Dst0h_Dst02D0pi0_a0MeanBu_(
-          ("Bu2Dst0h_Dst02D0pi0_a0MeanBu_" +
+      Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_(
+          ("Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          ("a0 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
+          ("a0 of mean1 of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           5.0645e+03),
-      Bu2Dst0h_Dst02D0pi0_a1MeanBu_(
-          ("Bu2Dst0h_Dst02D0pi0_a1MeanBu_" +
+      Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_(
+          ("Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          ("a1 of mean of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
+          ("a1 of mean1 of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1.5183e+00),
-      Bu2Dst0h_Dst02D0pi0_a2MeanBu_(),
-      Bu2Dst0h_Dst02D0pi0_meanBu_(
-          ("Bu2Dst0h_Dst02D0pi0_meanBu_" + ComposeName(uniqueId, Neutral::pi0))
+      Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_(),
+      Bu2Dst0h_Dst02D0pi0_mean1Bu_(
+          ("Bu2Dst0h_Dst02D0pi0_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          ("Mean of Bu2Dst0h_Dst02D0pi0 m[Bu]" +
+          ("Mean1 of Bu2Dst0h_Dst02D0pi0 m[Bu]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(Bu2Dst0h_Dst02D0pi0_a0MeanBu_,
-                     Bu2Dst0h_Dst02D0pi0_a1MeanBu_)),
-      // Bu2Dst0h_Dst02D0pi0_a2MeanBu_)),
+          RooArgList(Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_,
+                     Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_)),
+      // Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_)),
       Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_(
           ("Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))

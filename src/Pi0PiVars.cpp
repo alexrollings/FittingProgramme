@@ -44,7 +44,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_meanBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_mean1Bu(),
           *Bu2Dst0h_Dst02D0pi0_sigma1Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_n1Bu()),
@@ -56,7 +56,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_meanBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_mean1Bu(),
           *Bu2Dst0h_Dst02D0pi0_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_n2Bu()),

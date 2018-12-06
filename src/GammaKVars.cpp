@@ -123,7 +123,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().buMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0pi0_meanBu(),
+              .Bu2Dst0h_Dst02D0pi0_mean1Bu(),
           *Bu2Dst0h_Dst02D0pi0_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
@@ -137,7 +137,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().buMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0pi0_meanBu(),
+              .Bu2Dst0h_Dst02D0pi0_mean1Bu(),
           *Bu2Dst0h_Dst02D0pi0_sigma2Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_Dst02D0pi0_a2Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
