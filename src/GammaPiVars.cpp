@@ -340,11 +340,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu()))),
-      // NeutralVars<Neutral::gamma>::Get(uniqueId)
-      //     .Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu(),
-      // NeutralVars<Neutral::gamma>::Get(uniqueId)
-      //     .Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu()))),
+                         .Bu2Dst0hst_Dst02D0gamma_a0Sigma1Bu(),
+                     NeutralVars<Neutral::gamma>::Get(uniqueId)
+                         .Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu(),
+                     NeutralVars<Neutral::gamma>::Get(uniqueId)
+                         .Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu()))),
       // Bu2Dst0hst_Dst02D0gamma_sigma2Bu_(
       //     new RooPolyVar(("Bu2Dst0hst_Dst02D0gamma_sigma2Bu_" +
       //                     ComposeName(uniqueId, Neutral::gamma,
