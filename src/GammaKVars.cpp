@@ -437,7 +437,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       misRec_sigma2Bu_(nullptr),
       pdf1Bu_misRec_(),
       pdf2Bu_misRec_(),
-      pdfBu_misRec_(new RooGaussian(
+      pdfBu_misRec_(new RooCBShape(
           ("pdfBu_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -446,7 +446,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().buMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_mean1Bu(),
-          *misRec_sigma1Bu_)),
+          *misRec_sigma1Bu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_a1Bu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).misRec_n1Bu())),
       pdf_misRec_(
           ("pdf_misRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),

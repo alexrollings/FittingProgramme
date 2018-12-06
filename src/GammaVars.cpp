@@ -1032,25 +1032,31 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          3.2508e+01),
+          -1.2908e+01),
       misRec_a1Sigma1Bu_(
           ("misRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.7098e-01),
+          9.6805e-01),
       misRec_a2Sigma1Bu_(
           ("misRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -2.7586e-04),
+          -1.4419e-03),
       misRec_a0Sigma2Bu_(),
-      misRec_a1Bu_(),
+      misRec_a1Bu_(
+          ("misRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("a1 of misRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          1.1678e+00),
       misRec_a2Bu_(),
-      misRec_n1Bu_(),
+      misRec_n1Bu_(
+          ("misRec_n1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("n1 of misRec " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          2.8331e+00),
       misRec_n2Bu_(),
       misRec_frac1PdfBu_(),
       relativeBuWidth_misRec_(
