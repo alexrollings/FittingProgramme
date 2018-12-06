@@ -761,13 +761,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //      ComposeName(uniqueId, Neutral::gamma))
       //         .c_str(),
       //     4.3805e-03),
-      Bu2Dst0hst_Dst02D0pi0_a1Bu_(("Bu2Dst0hst_Dst02D0pi0_a1Bu_" +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  ("a1 of Bu2Dst0hst_Dst02D0pi0 " +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  3.8685e+00),
+      Bu2Dst0hst_Dst02D0pi0_a1Bu_(),
       Bu2Dst0hst_Dst02D0pi0_a2Bu_(),
       // Bu2Dst0hst_Dst02D0pi0_a2Bu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId,
@@ -777,13 +771,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //     Neutral::gamma))
       //         .c_str(),
       //     4.2150e+00),
-      Bu2Dst0hst_Dst02D0pi0_n1Bu_(("Bu2Dst0hst_Dst02D0pi0_n1Bu_" +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  ("n1 of Bu2Dst0hst_Dst02D0pi0 " +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  4.6620e+00),
+      Bu2Dst0hst_Dst02D0pi0_n1Bu_(),
       Bu2Dst0hst_Dst02D0pi0_n2Bu_(),
       // Bu2Dst0hst_Dst02D0pi0_n2Bu_(
       //     ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId,
