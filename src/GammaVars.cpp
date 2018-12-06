@@ -437,24 +437,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a1 of Bu2Dst0h_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           2.1782e+00),
-      Bu2Dst0h_Dst02D0pi0_a2Bu_(
-          ("Bu2Dst0h_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("a2 of Bu2Dst0h_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -1.3363e+00),
+      Bu2Dst0h_Dst02D0pi0_a2Bu_(),
       Bu2Dst0h_Dst02D0pi0_n1Bu_(
           ("Bu2Dst0h_Dst02D0pi0_n1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("n1 of Bu2Dst0h_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           3.9931e-01),
-      Bu2Dst0h_Dst02D0pi0_n2Bu_(
-          ("Bu2Dst0h_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("n2 of Bu2Dst0h_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          9.8572e+01),
+      Bu2Dst0h_Dst02D0pi0_n2Bu_(),
       Bu2Dst0h_Dst02D0pi0_frac1PdfBu_(
           ("Bu2Dst0h_Dst02D0pi0_frac1PdfBu_" +
            ComposeName(uniqueId, Neutral::gamma))
