@@ -114,6 +114,18 @@ class NeutralVars {
   RooPolyVar &Bu2Dst0h_Dst02D0pi0_mean1Bu() {
     return Bu2Dst0h_Dst02D0pi0_mean1Bu_;
   }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a0Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a0Mean2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a1Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a1Mean2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_a2Mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_a2Mean2Bu_;
+  }
+  RooPolyVar &Bu2Dst0h_Dst02D0pi0_mean2Bu() {
+    return Bu2Dst0h_Dst02D0pi0_mean2Bu_;
+  }
   RooRealVar &Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu() {
     return Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_;
   }
@@ -441,6 +453,10 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_;
   RooPolyVar Bu2Dst0h_Dst02D0pi0_mean1Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a0Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a1Mean2Bu_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_a2Mean2Bu_;
+  RooPolyVar Bu2Dst0h_Dst02D0pi0_mean2Bu_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a1Sigma1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a2Sigma1Bu_;

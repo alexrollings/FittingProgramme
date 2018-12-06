@@ -116,6 +116,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooArgList(Bu2Dst0h_Dst02D0pi0_a0Mean1Bu_,
                      Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_)),
       // Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_)),
+      Bu2Dst0h_Dst02D0pi0_a0Mean2Bu_(),
+      Bu2Dst0h_Dst02D0pi0_a1Mean2Bu_(),
+      Bu2Dst0h_Dst02D0pi0_a2Mean2Bu_(),
+      Bu2Dst0h_Dst02D0pi0_mean2Bu_(),
       Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_(
           ("Bu2Dst0h_Dst02D0pi0_a0Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
