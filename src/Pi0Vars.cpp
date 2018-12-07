@@ -256,23 +256,87 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(),
           Bu2Dst0h_Dst02D0gamma_thresholdDelta_, Bu2Dst0h_Dst02D0gamma_cDelta_,
           Bu2Dst0h_Dst02D0gamma_aDelta_, Bu2Dst0h_Dst02D0gamma_bDelta_)),
-      Bu2Dst0h_Dst02D0gamma_a0MeanBu_(),
-      Bu2Dst0h_Dst02D0gamma_a1MeanBu_(),
+      Bu2Dst0h_Dst02D0gamma_a0MeanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_a0MeanBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a0 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          4.9983e+03),
+      Bu2Dst0h_Dst02D0gamma_a1MeanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_a1MeanBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a1 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2.3119e+00),
       Bu2Dst0h_Dst02D0gamma_a2MeanBu_(),
-      Bu2Dst0h_Dst02D0gamma_meanBu_(),
-      Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_(),
-      Bu2Dst0h_Dst02D0gamma_a1Sigma1Bu_(),
+      Bu2Dst0h_Dst02D0gamma_meanBu_(
+          ("Bu2Dst0h_Dst02D0gamma_meanBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Mean of Bu2Dst0h_Dst02D0gamma m[Bu]" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          RooArgList(Bu2Dst0h_Dst02D0gamma_a0MeanBu_,
+                     Bu2Dst0h_Dst02D0gamma_a1MeanBu_)),
+      Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_(
+          ("Bu2Dst0h_Dst02D0gamma_a0Sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a0 of sigma1 of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          4.9764e+00),
+      Bu2Dst0h_Dst02D0gamma_a1Sigma1Bu_(
+          ("Bu2Dst0h_Dst02D0gamma_a1Sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a1 of sigma1 of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2.4775e-01),
       Bu2Dst0h_Dst02D0gamma_a2Sigma1Bu_(),
       Bu2Dst0h_Dst02D0gamma_a0Sigma2Bu_(),
       Bu2Dst0h_Dst02D0gamma_a1Sigma2Bu_(),
       Bu2Dst0h_Dst02D0gamma_a2Sigma2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_a1Bu_(),
+      Bu2Dst0h_Dst02D0gamma_a1Bu_(("Bu2Dst0h_Dst02D0gamma_a1Bu_" +
+                                   ComposeName(uniqueId, Neutral::pi0))
+                                      .c_str(),
+                                  ("a1 of Bu2Dst0h_Dst02D0gamma " +
+                                   ComposeName(uniqueId, Neutral::pi0))
+                                      .c_str(),
+                                  2.2666e+00),
       Bu2Dst0h_Dst02D0gamma_a2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_n1Bu_(),
+      Bu2Dst0h_Dst02D0gamma_n1Bu_(("Bu2Dst0h_Dst02D0gamma_n1Bu_" +
+                                   ComposeName(uniqueId, Neutral::pi0))
+                                      .c_str(),
+                                  ("n1 of Bu2Dst0h_Dst02D0gamma " +
+                                   ComposeName(uniqueId, Neutral::pi0))
+                                      .c_str(),
+                                  5.6139e-04),
       Bu2Dst0h_Dst02D0gamma_n2Bu_(),
       Bu2Dst0h_Dst02D0gamma_frac1PdfBu_(),
-      relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(),
-      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(),
+      relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(
+          ("relativeBuWidth_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2Dst0h_Dst02D0gamma "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1),
+      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(
+          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0gamma mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.07930, -1, 1),  //, 0.0, 0.1),
       // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
       bkg_thresholdDelta_(
           ("bkg_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
