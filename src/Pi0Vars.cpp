@@ -545,25 +545,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       misRec_a1Bu_(
           ("misRec_a1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          7.1456e-01),
-      misRec_a2Bu_(
-          ("misRec_a2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          -1.8906e+00),
+          1.3177e+00),
+      misRec_a2Bu_(),
       misRec_n1Bu_(
           ("misRec_n1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("n1 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          6.6513e-01),
-      misRec_n2Bu_(
-          ("misRec_n2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("n2 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          9.9913e+00),
-      misRec_frac1PdfBu_(
-          ("misRec_frac1PdfBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Fraction of left w.r.t. right Bu PDF in misRec " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          5.6450e-01),
+          2.2579e-01),
+      misRec_n2Bu_(),
+      misRec_frac1PdfBu_(),
       relativeBuWidth_misRec_(
           ("relativeBuWidth_misRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
