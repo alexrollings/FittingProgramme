@@ -86,7 +86,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0h_Dst02D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_Dst02D0gamma_(),
       pdf2Bu_Bu2Dst0h_Dst02D0gamma_(),
-      pdfBu_Bu2Dst0h_Dst02D0gamma_(),
+      pdfBu_Bu2Dst0h_Dst02D0gamma_(nullptr),
       pdf_Bu2Dst0h_Dst02D0gamma_(),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       overRec_sigma1Bu_(new RooPolyVar(

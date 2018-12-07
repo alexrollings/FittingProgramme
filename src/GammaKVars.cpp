@@ -65,7 +65,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .Bu2Dst0h_Dst02D0gamma_a2Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_n2Bu()),
-      pdfBu_Bu2Dst0h_Dst02D0gamma_(
+      pdfBu_Bu2Dst0h_Dst02D0gamma_(new RooAddPdf(
           ("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -75,7 +75,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooArgSet(pdf1Bu_Bu2Dst0h_Dst02D0gamma_,
                     pdf2Bu_Bu2Dst0h_Dst02D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0gamma_frac1PdfBu()),
+              .Bu2Dst0h_Dst02D0gamma_frac1PdfBu())),
       pdf_Bu2Dst0h_Dst02D0gamma_(
           ("pdf_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -85,7 +85,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .pdfDelta_Bu2Dst0h_Dst02D0gamma(),
-          RooFit::Conditional(pdfBu_Bu2Dst0h_Dst02D0gamma_,
+          RooFit::Conditional(*pdfBu_Bu2Dst0h_Dst02D0gamma_,
                               Configuration::Get().buMass())),
       // -------------------- PARTIAL PI0 -------------------- //
       Bu2Dst0h_Dst02D0pi0_sigma1Bu_(new RooFormulaVar(
