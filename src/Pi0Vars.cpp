@@ -318,21 +318,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_Dst02D0gamma_a0Sigma2Bu_(),
       Bu2Dst0h_Dst02D0gamma_a1Sigma2Bu_(),
       Bu2Dst0h_Dst02D0gamma_a2Sigma2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_a1Bu_(("Bu2Dst0h_Dst02D0gamma_a1Bu_" +
-                                   ComposeName(uniqueId, Neutral::pi0))
-                                      .c_str(),
-                                  ("a1 of Bu2Dst0h_Dst02D0gamma " +
-                                   ComposeName(uniqueId, Neutral::pi0))
-                                      .c_str(),
-                                  2.5937e+00),
+      Bu2Dst0h_Dst02D0gamma_a1Bu_(
+          ("Bu2Dst0h_Dst02D0gamma_a1Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("a1 of Bu2Dst0h_Dst02D0gamma " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          2.5937e+00),
       Bu2Dst0h_Dst02D0gamma_a2Bu_(),
-      Bu2Dst0h_Dst02D0gamma_n1Bu_(("Bu2Dst0h_Dst02D0gamma_n1Bu_" +
-                                   ComposeName(uniqueId, Neutral::pi0))
-                                      .c_str(),
-                                  ("n1 of Bu2Dst0h_Dst02D0gamma " +
-                                   ComposeName(uniqueId, Neutral::pi0))
-                                      .c_str(),
-                                  3.7248e-01),
+      Bu2Dst0h_Dst02D0gamma_n1Bu_(
+          ("Bu2Dst0h_Dst02D0gamma_n1Bu_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("n1 of Bu2Dst0h_Dst02D0gamma " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          3.7248e-01),
       Bu2Dst0h_Dst02D0gamma_n2Bu_(),
       Bu2Dst0h_Dst02D0gamma_frac1PdfBu_(),
       relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(
@@ -359,7 +357,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       bkg_bDelta_(),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       overRec_thresholdDelta_(
-          ("overRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("overRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
           (" Delta_overRec thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1.3415e+02),
@@ -381,8 +380,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get().deltaMass(), overRec_thresholdDelta_, overRec_cDelta_,
-          overRec_aDelta_, overRec_bDelta_),
+          Configuration::Get().deltaMass(), overRec_thresholdDelta_,
+          overRec_cDelta_, overRec_aDelta_, overRec_bDelta_),
       overRec_a0Mean1Bu_(
           ("overRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
@@ -623,6 +622,38 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0pi0_,
                      pdf2Delta_Bu2Dst0hst_Dst02D0pi0_),
           Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
+      Bu2Dst0hst_Dst02D0pi0_thresholdDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_thresholdDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0hst_Dst02D0pi0 thershold " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1.3415e+02),
+      Bu2Dst0hst_Dst02D0pi0_cDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_cDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0hst_Dst02D0pi0 c parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          9.6754e+00),
+      Bu2Dst0hst_Dst02D0pi0_aDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_aDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0hst_Dst02D0pi0 a parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+           5.6990e-01),
+      Bu2Dst0hst_Dst02D0pi0_bDelta_(
+          ("Bu2Dst0hst_Dst02D0pi0_bDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0hst_Dst02D0pi0 b parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          -1.9117e+00),
       pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -630,8 +661,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Delta_Bu2Dst0hst_Dst02D0pi0 PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), misRec_thresholdDelta_,
-          misRec_cDelta_, misRec_aDelta_, misRec_bDelta_),
+          Configuration::Get().deltaMass(),
+          Bu2Dst0hst_Dst02D0pi0_thresholdDelta_, Bu2Dst0hst_Dst02D0pi0_cDelta_,
+          Bu2Dst0hst_Dst02D0pi0_aDelta_, Bu2Dst0hst_Dst02D0pi0_bDelta_),
       Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -640,7 +672,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            "reconstructed bkg " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          6.5423e-01),
+          6.2453e-01),
       pdfDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))

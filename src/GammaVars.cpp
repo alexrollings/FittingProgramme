@@ -677,6 +677,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0pi0_,
                      pdf2Delta_Bu2Dst0hst_Dst02D0pi0_),
           Bu2Dst0h_Dst02D0pi0_frac1PdfDelta_),
+      Bu2Dst0hst_Dst02D0pi0_thresholdDelta_(),
+      Bu2Dst0hst_Dst02D0pi0_cDelta_(),
+      Bu2Dst0hst_Dst02D0pi0_aDelta_(),
+      Bu2Dst0hst_Dst02D0pi0_bDelta_(),
       pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfFlatDelta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
