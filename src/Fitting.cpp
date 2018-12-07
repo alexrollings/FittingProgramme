@@ -1519,7 +1519,7 @@ int main(int argc, char **argv) {
                 << ">\n";
       std::cout << "    -daughters=<choice {kpi,kk,pipi,pik} default: "
                 << daughtersArg << ">\n";
-      std::cout << "    -split=<choice {kTrue/kFalse} default: " << chargeArg
+      std::cout << "    -charge=<choice {plus/minus/total} default: " << chargeArg
                 << ">\n";
       std::cout << "    -toys=<choice {single, many, none} default: none>"
                 << "\n";
@@ -1787,8 +1787,6 @@ int main(int argc, char **argv) {
       std::cout << "Extracting correlation histogram from result...\n";
       result->correlationHist()->Draw("colz");
       std::cout << "Extracted correlation histogram from result.\n";
-      correlationCanvas.Update();
-      std::cout << "Updated canvas.\n";
       correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
       std::cout << "Save to pdf file.\n";
     }

@@ -209,7 +209,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           Configuration::Get().buMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).overRec_mean2Bu(),
           *overRec_sigma2Bu_)),
-      pdfBu_overRec_(
+      pdfBu_overRec_(new RooAddPdf(
           ("pdfBu_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -217,7 +217,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           RooArgSet(pdf1Bu_overRec_, *pdf2Bu_overRec_),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).overRec_frac1PdfBu()),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).overRec_frac1PdfBu())),
       pdf_overRec_(
           ("pdf_overRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -225,7 +225,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).pdfDelta_overRec(),
-          RooFit::Conditional(pdfBu_overRec_, Configuration::Get().buMass())),
+          RooFit::Conditional(*pdfBu_overRec_, Configuration::Get().buMass())),
       // ------------------ Pi0 PART RECONSTRUCTED BKG ------------------ //
       Bu2Dst0hst_Dst02D0pi0_sigma1Bu_(new RooFormulaVar(
           ("Bu2Dst0hst_Dst02D0pi0_sigma1Bu_" +
