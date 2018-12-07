@@ -71,7 +71,7 @@ class NeutralBachelorVars {
   RooAbsReal &overRec_sigma2Bu() { return *overRec_sigma2Bu_; }
   RooCBShape &pdf1Bu_overRec() { return pdf1Bu_overRec_; }
   RooAbsPdf &pdf2Bu_overRec() { return *pdf2Bu_overRec_; }
-  RooAbsPdf &pdfBu_overRec() { return *pdfBu_overRec_; }
+  RooAddPdf &pdfBu_overRec() { return pdfBu_overRec_; }
   RooProdPdf &pdf_overRec() { return pdf_overRec_; }
   RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma1Bu() {
     return *Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
@@ -113,16 +113,9 @@ class NeutralBachelorVars {
   RooAbsReal &misRec_sigma1Bu() {
     return *misRec_sigma1Bu_;
   }
-  RooAbsReal &misRec_sigma2Bu() {
-    return *misRec_sigma2Bu_;
+  RooCBShape &pdfBu_misRec() {
+    return pdfBu_misRec_;
   }
-  RooCBShape &pdf1Bu_misRec() {
-    return pdf1Bu_misRec_;
-  }
-  RooCBShape &pdf2Bu_misRec() {
-    return pdf2Bu_misRec_;
-  }
-  RooAbsPdf &pdfBu_misRec() { return *pdfBu_misRec_; }
   RooProdPdf &pdf_misRec() { return pdf_misRec_; }
 
  private:
@@ -143,7 +136,7 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> overRec_sigma2Bu_;
   RooCBShape pdf1Bu_overRec_;
   std::unique_ptr<RooAbsPdf> pdf2Bu_overRec_;
-  std::unique_ptr<RooAbsPdf> pdfBu_overRec_;
+  RooAddPdf pdfBu_overRec_;
   RooProdPdf pdf_overRec_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
@@ -159,10 +152,7 @@ class NeutralBachelorVars {
   RooCBShape pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   RooProdPdf pdf_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> misRec_sigma1Bu_;
-  std::unique_ptr<RooAbsReal> misRec_sigma2Bu_;
-  RooCBShape pdf1Bu_misRec_;
-  RooCBShape pdf2Bu_misRec_;
-  std::unique_ptr<RooAbsPdf> pdfBu_misRec_;
+  RooCBShape pdfBu_misRec_;
   RooProdPdf pdf_misRec_;
 };
 
