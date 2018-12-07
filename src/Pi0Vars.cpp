@@ -576,7 +576,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Mean of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.4367e+02),
+          1.4356e+02),
+      Bu2Dst0hst_Dst02D0pi0_sigma1Delta_(
+          ("Bu2Dst0hst_Dst02D0pi0_sigma1Delta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          3.2922e+00),
+      Bu2Dst0hst_Dst02D0pi0_sigma2Delta_(
+          ("Bu2Dst0hst_Dst02D0pi0_sigma2Delta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1.9212e+00),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -585,7 +601,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0pi0_meanDelta_,
-          Bu2Dst0h_Dst02D0pi0_sigma1Delta_, Bu2Dst0h_Dst02D0pi0_a1Delta_,
+          Bu2Dst0hst_Dst02D0pi0_sigma1Delta_, Bu2Dst0h_Dst02D0pi0_a1Delta_,
           Bu2Dst0h_Dst02D0pi0_n1Delta_),
       pdf2Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf2Delta_Bu2Dst0hst_Dst02D0pi0_" +
@@ -595,7 +611,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0pi0_meanDelta_,
-          Bu2Dst0h_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
+          Bu2Dst0hst_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
       pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_" +
