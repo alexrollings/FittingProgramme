@@ -187,9 +187,6 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0gamma_frac1PdfDelta() {
     return Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_;
   }
-  RooAbsPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
-    return *pdfDelta_Bu2Dst0h_Dst02D0gamma_;
-  }
   RooRealVar &Bu2Dst0h_Dst02D0gamma_thresholdDelta() {
     return Bu2Dst0h_Dst02D0gamma_thresholdDelta_;
   }
@@ -201,6 +198,9 @@ class NeutralVars {
   }
   RooRealVar &Bu2Dst0h_Dst02D0gamma_cDelta() {
     return Bu2Dst0h_Dst02D0gamma_cDelta_;
+  }
+  RooAbsPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
+    return *pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0gamma_a0MeanBu() {
     return Bu2Dst0h_Dst02D0gamma_a0MeanBu_;
@@ -492,11 +492,11 @@ class NeutralVars {
   RooCBShape pdf1Delta_Bu2Dst0h_Dst02D0gamma_;
   RooCBShape pdf2Delta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_;
-  std::unique_ptr<RooAbsPdf> pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_thresholdDelta_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_aDelta_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_bDelta_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_cDelta_;
+  std::unique_ptr<RooAbsPdf> pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a0MeanBu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a1MeanBu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a2MeanBu_;
