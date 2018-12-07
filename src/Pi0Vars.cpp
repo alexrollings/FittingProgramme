@@ -690,7 +690,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.9506e+03),
+          4.9860e+03),
       Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -698,7 +698,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a1 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          9.5885e-01),
+          6.9242e-01),
       Bu2Dst0hst_Dst02D0pi0_meanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_meanBu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -716,7 +716,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -6.1952e+01),
+          -9.4263e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -724,55 +724,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a1 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          7.3381e-01),
-      Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("a0 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -9.9049e+01),
-      Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("a1 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          9.5144e-01),
+          9.5285e-01),
       Bu2Dst0hst_Dst02D0pi0_a1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Bu_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("a1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           3.8134e+00),
-      Bu2Dst0hst_Dst02D0pi0_a2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("a2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -2.8253e+00),
       Bu2Dst0hst_Dst02D0pi0_n1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_n1Bu_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           ("n1 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1.8084e+00),
-      Bu2Dst0hst_Dst02D0pi0_n2Bu_(
-          ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("n2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          3.5744e+00),
-      Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(
-          ("Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0pi0 " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          4.1296e-01),
       relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))

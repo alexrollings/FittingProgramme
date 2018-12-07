@@ -754,77 +754,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           4.9718e+01),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(),
-      Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(),
-      Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(),
-      // Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a1 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     7.8205e-02),
-      // Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a2Sigma1Bu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a2 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     3.1524e-03),
-      // Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a0Sigma2Bu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a0 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     9.8039e+01),
-      // Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a1Sigma2Bu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a1 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     -7.1628e-01),
-      // Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a2Sigma2Bu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("a2 of sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     4.3805e-03),
       Bu2Dst0hst_Dst02D0pi0_a1Bu_(),
-      Bu2Dst0hst_Dst02D0pi0_a2Bu_(),
-      // Bu2Dst0hst_Dst02D0pi0_a2Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_a2Bu_" + ComposeName(uniqueId,
-      //     Neutral::gamma))
-      //         .c_str(),
-      //     ("a2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId,
-      //     Neutral::gamma))
-      //         .c_str(),
-      //     4.2150e+00),
       Bu2Dst0hst_Dst02D0pi0_n1Bu_(),
-      Bu2Dst0hst_Dst02D0pi0_n2Bu_(),
-      // Bu2Dst0hst_Dst02D0pi0_n2Bu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_n2Bu_" + ComposeName(uniqueId,
-      //     Neutral::gamma))
-      //         .c_str(),
-      //     ("n2 of Bu2Dst0hst_Dst02D0pi0 " + ComposeName(uniqueId,
-      //     Neutral::gamma))
-      //         .c_str(),
-      //     4.3416e+01),
-      // Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(
-      //     ("Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_" +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0hst_Dst02D0pi0 " +
-      //      ComposeName(uniqueId, Neutral::gamma))
-      //         .c_str(),
-      //     1.0890e-07),
-      Bu2Dst0hst_Dst02D0pi0_frac1PdfBu_(),
       relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma))
