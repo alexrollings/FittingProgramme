@@ -512,13 +512,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.2476e+03),
+          5.2643e+03),
       misRec_a1Mean1Bu_(
           ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of mean of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          2.1392e-01),
+          1.7208e-01),
       misRec_a2Mean1Bu_(),
       misRec_mean1Bu_(
           ("misRec_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -526,32 +526,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(misRec_a0Mean1Bu_, misRec_a1Mean1Bu_)),
-      misRec_a0Mean2Bu_(
-          ("misRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a0 of mean of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          5.2954e+03),
-      misRec_mean2Bu_(
-          ("misRec_mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Mean of misRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          Configuration::Get().deltaMass(),
-          RooArgList(misRec_a0Mean2Bu_, misRec_a1Mean1Bu_)),
+      misRec_a0Mean2Bu_(),
+      misRec_mean2Bu_(),
       misRec_a0Sigma1Bu_(
           ("misRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.7378e+01),
+          8.4868e+01),
       misRec_a1Sigma1Bu_(),
       misRec_a2Sigma1Bu_(),
-      misRec_a0Sigma2Bu_(
-          ("misRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a0 of sigma1 of misRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          7.8502e+01),
+      misRec_a0Sigma2Bu_(),
       misRec_a1Bu_(
           ("misRec_a1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of misRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
