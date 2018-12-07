@@ -185,7 +185,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Fraction of left w.r.t. right Bu PDF in Bu2Dst0h_Dst02D0pi0 " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          2.8927e-01),
+          7.2451e-01),
       relativeBuWidth_Bu2Dst0h_Dst02D0pi0_(
           ("relativeBuWidth_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
