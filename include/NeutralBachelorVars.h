@@ -95,8 +95,8 @@ class NeutralBachelorVars {
   // RooAddPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
   //   return pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   // }
-  RooCBShape &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
-    return pdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() {
+    return *pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   }
   RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() {
     return pdf_Bu2Dst0hst_Dst02D0gamma_;
@@ -137,7 +137,7 @@ class NeutralBachelorVars {
   // RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0gamma_;
   // RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0gamma_;
   // RooAddPdf pdfBu_Bu2Dst0hst_Dst02D0gamma_;
-  RooCBShape pdfBu_Bu2Dst0hst_Dst02D0gamma_;
+  std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_Dst02D0gamma_;
   RooProdPdf pdf_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> misRec_sigma1Bu_;
   RooCBShape pdfBu_misRec_;

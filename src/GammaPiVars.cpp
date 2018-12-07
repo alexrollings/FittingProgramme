@@ -331,7 +331,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       //     pdf2Bu_Bu2Dst0hst_Dst02D0gamma_),
       //     NeutralVars<Neutral::gamma>::Get(uniqueId)
       //         .Bu2Dst0hst_Dst02D0gamma_fracPdfBu()),
-      pdfBu_Bu2Dst0hst_Dst02D0gamma_(
+      pdfBu_Bu2Dst0hst_Dst02D0gamma_(new RooCBShape(
           ("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -345,7 +345,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0hst_Dst02D0gamma_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0gamma_n1Bu()),
+              .Bu2Dst0hst_Dst02D0gamma_n1Bu())),
       pdf_Bu2Dst0hst_Dst02D0gamma_(
           ("pdf_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -355,7 +355,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .pdfDelta_Bu2Dst0hst_Dst02D0gamma(),
-          RooFit::Conditional(pdfBu_Bu2Dst0hst_Dst02D0gamma_,
+          RooFit::Conditional(*pdfBu_Bu2Dst0hst_Dst02D0gamma_,
                               Configuration::Get().buMass())),
       // -------------------- MIS RECONSTRUCTED BKG -------------------- //
       misRec_sigma1Bu_(new RooPolyVar(
