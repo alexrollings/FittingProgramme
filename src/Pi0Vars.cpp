@@ -481,12 +481,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.07768),  // CHECK
       // ------------------ MIS RECONSTRUCTED BACKGROUND ------------------ //
-      // misRec_thresholdDelta_(
-      //     ("misRec_thresholdDelta_" + ComposeName(uniqueId,
-      //     Neutral::pi0)).c_str(),
-      //     (" Delta_misRec thershold " + ComposeName(uniqueId, Neutral::pi0))
-      //         .c_str(),
-      //     1.3437e+02),
       misRec_thresholdDelta_(
           ("misRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -497,17 +491,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("misRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          8.3057e+00),
+          5.3883e+00),
       misRec_aDelta_(
           ("misRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.1615e-01),
+          5.1119e-01),
       misRec_bDelta_(
           ("misRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -1.8073e+00),
+          1.0746e-01),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
