@@ -135,8 +135,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           RooArgList(
               NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a0Sigma1Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma1Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a2Sigma1Bu()))),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma1Bu()))),
       overRec_sigma2Bu_(new RooPolyVar(
           ("overRec_sigma2Bu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -147,8 +146,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().deltaMass(),
           RooArgList(
               NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a0Sigma2Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma2Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a2Sigma2Bu()))),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).overRec_a1Sigma2Bu()))),
       pdf1Bu_overRec_(
           ("pdf1Bu_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))

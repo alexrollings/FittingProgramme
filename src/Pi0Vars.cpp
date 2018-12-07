@@ -387,82 +387,62 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("overRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.5651e+03),
+          4.9051e+03),
       overRec_a1Mean1Bu_(
           ("overRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -1.3327e+00),
-      overRec_a2Mean1Bu_(
-          ("overRec_a2Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          4.9439e-03),
+          -1.5164e+00),
+      overRec_a2Mean1Bu_(),
       overRec_mean1Bu_(
           ("overRec_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(overRec_a0Mean1Bu_, overRec_a1Mean1Bu_,
-                     overRec_a2Mean1Bu_)),
+          RooArgList(overRec_a0Mean1Bu_, overRec_a1Mean1Bu_)),
       overRec_a0Mean2Bu_(
           ("overRec_a0Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.8357e+03),
+          5.4205e+03),
       overRec_a1Mean2Bu_(
           ("overRec_a1Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          7.6626e+00),
-      overRec_a2Mean2Bu_(
-          ("overRec_a2Mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -1.9999e-02),
+          6.1879e-01),
+      overRec_a2Mean2Bu_(),
       overRec_mean2Bu_(
           ("overRec_mean2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Mean2 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          RooArgList(overRec_a0Mean2Bu_, overRec_a1Mean2Bu_,
-                     overRec_a2Mean2Bu_)),
+          RooArgList(overRec_a0Mean2Bu_, overRec_a1Mean2Bu_)),
       overRec_a0Sigma1Bu_(
           ("overRec_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -1.2592e+02),
+          4.8044e+02),
       overRec_a1Sigma1Bu_(
           ("overRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of sigma1 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.4318e+00),
-      overRec_a2Sigma1Bu_(
-          ("overRec_a2Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of sigma1 of overRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -2.8420e-03),
+          3.0576e+00),
+      overRec_a2Sigma1Bu_(),
       overRec_a0Sigma2Bu_(
           ("overRec_a0Sigma2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -4.2326e+02),
+          -6.1401e+01),
       overRec_a1Sigma2Bu_(
           ("overRec_a1Sigma2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of sigma2 of overRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.7441e+00),
-      overRec_a2Sigma2Bu_(
-          ("overRec_a2Sigma2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("a2 of sigma2 of overRec m[Bu] PDF " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -1.1290e-02),
+          6.9554e-01),
+      overRec_a2Sigma2Bu_(),
       overRec_a1Bu_(
           ("overRec_a1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of overRec " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
