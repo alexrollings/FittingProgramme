@@ -8,12 +8,12 @@ template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     // -------------------- SIGNAL -------------------- //
     : Bu2Dst0h_Dst02D0pi0_meanDelta_(("Bu2Dst0h_Dst02D0pi0_meanDelta_" +
-                                       ComposeName(uniqueId, Neutral::pi0))
-                                          .c_str(),
-                                      ("Mean of Bu2Dst0h_Dst02D0pi0 m[Delta]" +
-                                       ComposeName(uniqueId, Neutral::pi0))
-                                          .c_str(),
-                                      1.4262e+02),
+                                      ComposeName(uniqueId, Neutral::pi0))
+                                         .c_str(),
+                                     ("Mean of Bu2Dst0h_Dst02D0pi0 m[Delta]" +
+                                      ComposeName(uniqueId, Neutral::pi0))
+                                         .c_str(),
+                                     1.4262e+02),
       Bu2Dst0h_Dst02D0pi0_sigma1Delta_(("Bu2Dst0h_Dst02D0pi0_sigma1Delta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
@@ -215,26 +215,47 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdf2Delta_Bu2Dst0h_Dst02D0gamma_(),
       Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_(),
       Bu2Dst0h_Dst02D0gamma_thresholdDelta_(
-          ("Bu2Dst0h_Dst02D0gamma_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_Bu2Dst0h_Dst02D0gamma thershold " + ComposeName(uniqueId, Neutral::pi0))
+          ("Bu2Dst0h_Dst02D0gamma_thresholdDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0h_Dst02D0gamma thershold " +
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1.4992e+02),
       Bu2Dst0h_Dst02D0gamma_cDelta_(
-          ("Bu2Dst0h_Dst02D0gamma_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_Bu2Dst0h_Dst02D0gamma c parameter " + ComposeName(uniqueId, Neutral::pi0))
+          ("Bu2Dst0h_Dst02D0gamma_cDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0h_Dst02D0gamma c parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1.9413e+01),
       Bu2Dst0h_Dst02D0gamma_aDelta_(
-          ("Bu2Dst0h_Dst02D0gamma_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_Bu2Dst0h_Dst02D0gamma a parameter " + ComposeName(uniqueId, Neutral::pi0))
+          ("Bu2Dst0h_Dst02D0gamma_aDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0h_Dst02D0gamma a parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           7.1083e-01),
       Bu2Dst0h_Dst02D0gamma_bDelta_(
-          ("Bu2Dst0h_Dst02D0gamma_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_Bu2Dst0h_Dst02D0gamma b parameter " + ComposeName(uniqueId, Neutral::pi0))
+          ("Bu2Dst0h_Dst02D0gamma_bDelta_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          (" Delta_Bu2Dst0h_Dst02D0gamma b parameter " +
+           ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           -1.2743e+00),
-      pdfDelta_Bu2Dst0h_Dst02D0gamma_(nullptr),
+      pdfDelta_Bu2Dst0h_Dst02D0gamma_(new RooDstD0BG(
+          ("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Delta_Bu2Dst0h_Dst02D0gamma PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          Configuration::Get().deltaMass(),
+          Bu2Dst0h_Dst02D0gamma_thresholdDelta_, Bu2Dst0h_Dst02D0gamma_cDelta_,
+          Bu2Dst0h_Dst02D0gamma_aDelta_, Bu2Dst0h_Dst02D0gamma_bDelta_)),
       Bu2Dst0h_Dst02D0gamma_a0MeanBu_(),
       Bu2Dst0h_Dst02D0gamma_a1MeanBu_(),
       Bu2Dst0h_Dst02D0gamma_a2MeanBu_(),
