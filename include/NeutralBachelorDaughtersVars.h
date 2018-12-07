@@ -440,7 +440,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0pi0 reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          2350, 0, 20000)),
+          1500, 0, 20000)),
       N_Bu2Dst0hst_Dst02D0gamma_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -448,7 +448,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0gamma reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          1200, 0, 20000)),
+          600, 0, 20000)),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))

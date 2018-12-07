@@ -830,8 +830,24 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           -1.0600e-02),
       Bu2Dst0hst_Dst02D0gamma_a1Bu_(),
       Bu2Dst0hst_Dst02D0gamma_n1Bu_(),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(),
-      relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_(),
+      relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_(
+          ("relativeBuWidth_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Relative Width of k w.r.t. pi modes in Bu2Dst0hst_Dst02D0gamma "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1),
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0gamma "
+           "mode " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          0.02, 0, 1),  //, 0.0, 0.1),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),

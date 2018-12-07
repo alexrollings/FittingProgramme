@@ -468,10 +468,6 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0gamma_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_Bu2Dst0hst_Dst02D0gamma());
-    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
-    PdfBase::functions_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0h_Dst02D0pi0());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
     PdfBase::functions_.add(
@@ -486,6 +482,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0hst_Dst02D0pi0());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdf_Bu2Dst0hst_Dst02D0gamma());
+    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,
