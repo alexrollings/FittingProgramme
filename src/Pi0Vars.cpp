@@ -96,7 +96,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean1 of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.0645e+03),
+          5.0382e+03),
       Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_(
           ("Bu2Dst0h_Dst02D0pi0_a1Mean1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -104,7 +104,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a1 of mean1 of Bu2Dst0h_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.5183e+00),
+          1.7081e+00),
       Bu2Dst0h_Dst02D0pi0_a2Mean1Bu_(),
       Bu2Dst0h_Dst02D0pi0_mean1Bu_(
           ("Bu2Dst0h_Dst02D0pi0_mean1Bu_" + ComposeName(uniqueId, Neutral::pi0))
