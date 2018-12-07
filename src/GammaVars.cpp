@@ -88,7 +88,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           2.7402e-01),
-      pdfDelta_Bu2Dst0h_Dst02D0gamma_(
+      pdfDelta_Bu2Dst0h_Dst02D0gamma_(new RooAddPdf(
           ("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -97,7 +97,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0gamma_,
                      pdf2Delta_Bu2Dst0h_Dst02D0gamma_),
-          Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
+          Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_)),
       Bu2Dst0h_Dst02D0gamma_thresholdDelta_(),
       Bu2Dst0h_Dst02D0gamma_aDelta_(),
       Bu2Dst0h_Dst02D0gamma_bDelta_(),
