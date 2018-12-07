@@ -803,7 +803,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0gamma_meanDelta_,
           Bu2Dst0h_Dst02D0gamma_sigma2Delta_, Bu2Dst0h_Dst02D0gamma_a2Delta_,
           Bu2Dst0h_Dst02D0gamma_n2Delta_),
-      pdfDelta_Bu2Dst0hst_Dst02D0gamma_(
+      pdfDelta_Bu2Dst0hst_Dst02D0gamma_(new RooAddPdf(
           ("pdfDelta_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -812,7 +812,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           RooArgList(pdf1Delta_Bu2Dst0hst_Dst02D0gamma_,
                      pdf2Delta_Bu2Dst0hst_Dst02D0gamma_),
-          Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
+          Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_)),
       Bu2Dst0hst_Dst02D0gamma_a0MeanBu_(
           ("Bu2Dst0hst_Dst02D0gamma_a0MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
