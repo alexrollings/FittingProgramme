@@ -369,7 +369,14 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
-    : asym_Bu2Dst0h_Dst02D0gamma_(nullptr),
+    : asym_Bu2Dst0h_Dst02D0gamma_(new RooRealVar(
+          ("asym_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          ("asymmetry variable Bu2Dst0h_Dst02D0gamma " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          0.001, -1.0, 1.0)),
       asym_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("asym_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -395,7 +402,14 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
               .c_str(),
           0.001, -1.0, 1.0)),
       asym_Bu2Dst0hst_Dst02D0gamma_(nullptr),
-      N_Bu2Dst0h_Dst02D0gamma_(nullptr),
+      N_Bu2Dst0h_Dst02D0gamma_(new RooRealVar(
+          ("N_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0h_Dst02D0gamma-like events " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          300, 0, 20000)),
       N_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -434,7 +448,14 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
-    : asym_Bu2Dst0h_Dst02D0gamma_(nullptr),
+    : asym_Bu2Dst0h_Dst02D0gamma_(new RooRealVar(
+          ("asym_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          ("asymmetry variable Bu2Dst0h_Dst02D0gamma " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          0.001, -1.0, 1.0)),
       asym_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("asym_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -460,7 +481,19 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
               .c_str(),
           0.001, -1.0, 1.0)),
       asym_Bu2Dst0hst_Dst02D0gamma_(nullptr),
-      N_Bu2Dst0h_Dst02D0gamma_(),
+      N_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
+          ("N_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of Bu2Dst0h_Dst02D0gamma-like events, for " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                                  daughters>::Get(uniqueId)
+                         .N_Bu2Dst0h_Dst02D0gamma(),
+                     NeutralVars<Neutral::pi0>::Get(uniqueId)
+                         .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma()))),
       N_Bu2Dst0h_Dst02D0pi0_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))

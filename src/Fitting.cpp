@@ -133,7 +133,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0pi0().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    if (neutral == Neutral::gamma) {
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -143,6 +142,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
           RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0gamma().GetName()),
           RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
           RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    if (neutral == Neutral::gamma) {
       simPdf.plotOn(
           frame.get(),
           RooFit::Slice(
@@ -363,24 +363,24 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   if (fitBool == true && labelString != "TOY") {
     Bu2Dst0h_Dst02D0pi0Legend
         << " ~ " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal();
-        // << " pm "
-        // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
-        // << " events";
+    // << " pm "
+    // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
+    // << " events";
+  }
+  Bu2Dst0h_Dst02D0gammaLegend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  if (fitBool == true && labelString != "TOY") {
+    Bu2Dst0h_Dst02D0gammaLegend << " ~ "
+                                << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
+    // << " pm "
+    // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
+    // << " events";
   }
   if (neutral == Neutral::gamma) {
-    Bu2Dst0h_Dst02D0gammaLegend
-        << "B^{" + EnumToLabel(charge) +
-               "}#rightarrow#font[132]{[}#font[132]{[}" +
-               EnumToLabel(daughters, charge) +
-               "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-               EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-    if (fitBool == true && labelString != "TOY") {
-      Bu2Dst0h_Dst02D0gammaLegend << " ~ "
-                                  << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
-      // << " pm "
-      // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
-      // << " events";
-    }
     Bu2Dst0hst_Dst02D0gammaLegend
         << "B^{" + EnumToLabel(charge) +
                "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -429,9 +429,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_Dst02D0pi0Hist.get(),
                   Bu2Dst0h_Dst02D0pi0Legend.str().c_str(), "l");
+  legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
+                  Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
   if (neutral == Neutral::gamma) {
-    legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
-                    Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
     legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
                     Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
   }
