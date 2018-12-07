@@ -353,32 +353,36 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           0.07930, -1, 1),  //, 0.0, 0.1),
       // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
-      bkg_thresholdDelta_(
-          ("bkg_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          1.3437e+02),
-      bkg_cDelta_(
-          ("bkg_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          4.5080e+00),
-      bkg_aDelta_(
-          ("bkg_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          5.3530e-01),
-      bkg_bDelta_(
-          ("bkg_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          -2.4844e-01),
+      bkg_thresholdDelta_(),
+      bkg_cDelta_(),
+      bkg_aDelta_(),
+      bkg_bDelta_(),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
+      overRec_thresholdDelta_(
+          ("overRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_overRec thershold " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          1.3415e+02),
+      overRec_cDelta_(
+          ("overRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_overRec c parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.8018e+00),
+      overRec_aDelta_(
+          ("overRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_overRec a parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          5.3768e-01),
+      overRec_bDelta_(
+          ("overRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          (" Delta_overRec b parameter " + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          -4.4782e-01),
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
-          bkg_aDelta_, bkg_bDelta_),
+          Configuration::Get().deltaMass(), overRec_thresholdDelta_, overRec_cDelta_,
+          overRec_aDelta_, overRec_bDelta_),
       overRec_a0Mean1Bu_(
           ("overRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))

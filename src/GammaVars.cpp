@@ -497,6 +497,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           -1.2284e+00),
       // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
+      overRec_thresholdDelta_(),
+      overRec_aDelta_(),
+      overRec_bDelta_(),
+      overRec_cDelta_(),
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::gamma))

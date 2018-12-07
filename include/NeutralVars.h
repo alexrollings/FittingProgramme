@@ -257,6 +257,10 @@ class NeutralVars {
   RooRealVar &bkg_aDelta() { return bkg_aDelta_; }
   RooRealVar &bkg_bDelta() { return bkg_bDelta_; }
   RooRealVar &bkg_cDelta() { return bkg_cDelta_; }
+  RooRealVar &overRec_thresholdDelta() { return overRec_thresholdDelta_; }
+  RooRealVar &overRec_aDelta() { return overRec_aDelta_; }
+  RooRealVar &overRec_bDelta() { return overRec_bDelta_; }
+  RooRealVar &overRec_cDelta() { return overRec_cDelta_; }
   RooDstD0BG &pdfDelta_overRec() { return pdfDelta_overRec_; }
   // RooRealVar &overRec_a0MeanBu() { return overRec_a0MeanBu_; }
   // RooPolyVar &overRec_meanBu() { return overRec_meanBu_; }
@@ -518,6 +522,10 @@ class NeutralVars {
   RooRealVar bkg_aDelta_;
   RooRealVar bkg_bDelta_;
   RooRealVar bkg_cDelta_;
+  RooRealVar overRec_thresholdDelta_;
+  RooRealVar overRec_aDelta_;
+  RooRealVar overRec_bDelta_;
+  RooRealVar overRec_cDelta_;
   RooDstD0BG pdfDelta_overRec_;
   RooRealVar overRec_a0Mean1Bu_;
   RooRealVar overRec_a1Mean1Bu_;
