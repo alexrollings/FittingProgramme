@@ -76,15 +76,6 @@ class NeutralBachelorVars {
   RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma1Bu() {
     return *Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
   }
-  RooAbsReal &Bu2Dst0hst_Dst02D0pi0_sigma2Bu() {
-    return *Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
-  }
-  RooCBShape &pdf1Bu_Bu2Dst0hst_Dst02D0pi0() {
-    return pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
-  }
-  RooCBShape &pdf2Bu_Bu2Dst0hst_Dst02D0pi0() {
-    return pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
-  }
   RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() {
     return *pdfBu_Bu2Dst0hst_Dst02D0pi0_;
   }
@@ -139,9 +130,6 @@ class NeutralBachelorVars {
   RooAddPdf pdfBu_overRec_;
   RooProdPdf pdf_overRec_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma1Bu_;
-  std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0pi0_sigma2Bu_;
-  RooCBShape pdf1Bu_Bu2Dst0hst_Dst02D0pi0_;
-  RooCBShape pdf2Bu_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_Dst02D0pi0_;
   RooProdPdf pdf_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> Bu2Dst0hst_Dst02D0gamma_sigma1Bu_;
