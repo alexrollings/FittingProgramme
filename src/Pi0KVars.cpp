@@ -83,12 +83,45 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           RooFit::Conditional(pdfBu_Bu2Dst0h_Dst02D0pi0_,
                               Configuration::Get().buMass())),
       // ------------------ NO CROSS FEED BECAUSE OF VETO ------------------ //
-      Bu2Dst0h_Dst02D0gamma_sigma1Bu_(nullptr),
+      Bu2Dst0h_Dst02D0gamma_sigma1Bu_(new RooFormulaVar(
+          ("Bu2Dst0h_Dst02D0gamma_sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("Sigma1 of Bu2Dst0h_Dst02D0gamma Gaussian " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+                  .Bu2Dst0h_Dst02D0gamma_sigma1Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .relativeBuWidth_Bu2Dst0h_Dst02D0gamma()))),
       Bu2Dst0h_Dst02D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_Dst02D0gamma_(),
       pdf2Bu_Bu2Dst0h_Dst02D0gamma_(),
-      pdfBu_Bu2Dst0h_Dst02D0gamma_(nullptr),
-      pdf_Bu2Dst0h_Dst02D0gamma_(),
+      pdfBu_Bu2Dst0h_Dst02D0gamma_(new RooCBShape(
+          ("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("Bu2Dst0h_Dst02D0gamma Bu PDF R " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0gamma_meanBu(),
+          *Bu2Dst0h_Dst02D0gamma_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0gamma_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0gamma_n1Bu())),
+      pdf_Bu2Dst0h_Dst02D0gamma_(
+          ("pdf_Bu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          ("Bu2Dst0h_Dst02D0gamma 2D PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .pdfDelta_Bu2Dst0h_Dst02D0gamma(),
+          RooFit::Conditional(*pdfBu_Bu2Dst0h_Dst02D0gamma_,
+                              Configuration::Get().buMass())),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       overRec_sigma1Bu_(new RooFormulaVar(
           ("overRec_sigma1Bu_" +
