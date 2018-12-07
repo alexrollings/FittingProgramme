@@ -512,7 +512,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.2643e+03),
+          5.2613e+03),
       misRec_a1Mean1Bu_(
           ("misRec_a1Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of mean of misRec m[Bu] PDF " +
@@ -533,8 +533,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of misRec m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          8.4868e+01),
-      misRec_a1Sigma1Bu_(),
+          -5.8429e+01),
+      misRec_a1Sigma1Bu_(
+          ("misRec_a1Sigma1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("a1 of sigma1 of misRec m[Bu] PDF " +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          8.0849e-01),
       misRec_a2Sigma1Bu_(),
       misRec_a0Sigma2Bu_(),
       misRec_a1Bu_(
