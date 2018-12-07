@@ -133,26 +133,24 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0pi0().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0gamma().GetName()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-          RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    if (neutral == Neutral::gamma) {
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              categories.fitting,
-              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-          RooFit::ProjWData(categories.fitting, fullDataSet),
-          RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
-          RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
-          RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    }
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0gamma().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -160,7 +158,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange+3),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange + 3),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
@@ -380,20 +378,18 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
     // << " events";
   }
-  if (neutral == Neutral::gamma) {
+  Bu2Dst0hst_Dst02D0gammaLegend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  if (fitBool == true && labelString != "TOY") {
     Bu2Dst0hst_Dst02D0gammaLegend
-        << "B^{" + EnumToLabel(charge) +
-               "}#rightarrow#font[132]{[}#font[132]{[}" +
-               EnumToLabel(daughters, charge) +
-               "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-               HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-    if (fitBool == true && labelString != "TOY") {
-      Bu2Dst0hst_Dst02D0gammaLegend
-          << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
-      // << " pm "
-      // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
-      // << " events";
-    }
+        << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
+    // << " pm "
+    // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
+    // << " events";
   }
   overRecLegend << "B^{" + EnumToLabel(charge) +
                        "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -431,10 +427,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                   Bu2Dst0h_Dst02D0pi0Legend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
                   Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
-  if (neutral == Neutral::gamma) {
-    legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
-                    Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
-  }
+  legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
+                  Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
   legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
                   Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
