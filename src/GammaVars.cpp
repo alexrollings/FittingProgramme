@@ -98,6 +98,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0gamma_,
                      pdf2Delta_Bu2Dst0h_Dst02D0gamma_),
           Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
+      Bu2Dst0h_Dst02D0gamma_thresholdDelta_(),
+      Bu2Dst0h_Dst02D0gamma_aDelta_(),
+      Bu2Dst0h_Dst02D0gamma_bDelta_(),
+      Bu2Dst0h_Dst02D0gamma_cDelta_(),
       Bu2Dst0h_Dst02D0gamma_a0MeanBu_(
           ("Bu2Dst0h_Dst02D0gamma_a0MeanBu_" +
            ComposeName(uniqueId, Neutral::gamma))
