@@ -485,17 +485,17 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("bkg_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          4.2450e+01),
+          4.2450e+01, 0, 50),
       bkg_aDelta_(
           ("bkg_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          1.0341e+00),
+          1.0341e+00, -10, 10),
       bkg_bDelta_(
           ("bkg_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.2284e+00),
+          -1.2284e+00, -10, 10),
       // ------------------ OVER RECONSTRUCTED BACKGROUND ------------------ //
       overRec_thresholdDelta_(),
       overRec_aDelta_(),
