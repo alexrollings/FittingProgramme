@@ -27,7 +27,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        ("Sigma right of Bu2Dst0h_Dst02D0pi0 " +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
-                                       1.5829e+00, 0, 5),
+                                       1.5829e+00),//, 0, 5),
       Bu2Dst0h_Dst02D0pi0_a1Delta_(
           ("Bu2Dst0h_Dst02D0pi0_a1Delta_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
