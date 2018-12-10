@@ -583,7 +583,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          3.2922e+00),
+          3.2922e+00, 0, 5),
       Bu2Dst0hst_Dst02D0pi0_sigma2Delta_(
           ("Bu2Dst0hst_Dst02D0pi0_sigma2Delta_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -591,7 +591,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.9212e+00),
+          1.9212e+00, 5, 25),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
