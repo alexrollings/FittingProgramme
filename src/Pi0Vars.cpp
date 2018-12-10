@@ -361,7 +361,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3318e+02);//1.3537e+02, 132, 136),
+          1.3318e+02),//1.3537e+02, 132, 136),
       misRec_cDelta_(
           ("misRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
@@ -449,7 +449,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_overRec thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3318e+02);//1.3415e+02, 132, 136),
+          1.3318e+02),//1.3415e+02, 132, 136),
       overRec_cDelta_(
           ("overRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_overRec c parameter " + ComposeName(uniqueId, Neutral::pi0))
@@ -609,7 +609,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2Dst0hst_Dst02D0pi0 Delta right PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), Bu2Dst0hst_Dst02D0pi0_meanDelta_,
+          Configuration::Get().deltaMass(), Bu2Dst0h_Dst02D0pi0_meanDelta_,
           Bu2Dst0hst_Dst02D0pi0_sigma2Delta_, Bu2Dst0h_Dst02D0pi0_a2Delta_,
           Bu2Dst0h_Dst02D0pi0_n2Delta_),
       pdfPeakDelta_Bu2Dst0hst_Dst02D0pi0_(
@@ -629,7 +629,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           (" Delta_Bu2Dst0hst_Dst02D0pi0 thershold " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3318e+02);//1.3415e+02, 132, 136),
+          1.3318e+02),//1.3415e+02, 132, 136),
       Bu2Dst0hst_Dst02D0pi0_cDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_cDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -662,8 +662,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          Bu2Dst0hst_Dst02D0pi0Rec_thresholdDelta_, Bu2Dst0hst_Dst02D0pi0Rec_cDelta_,
-          Bu2Dst0hst_Dst02D0pi0Rec_aDelta_, Bu2Dst0hst_Dst02D0pi0Rec_bDelta_),
+          Bu2Dst0hst_Dst02D0pi0_thresholdDelta_, Bu2Dst0hst_Dst02D0pi0_cDelta_,
+          Bu2Dst0hst_Dst02D0pi0_aDelta_, Bu2Dst0hst_Dst02D0pi0_bDelta_),
       Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
