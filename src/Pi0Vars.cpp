@@ -690,7 +690,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.9860e+03),
+          4.9860e+03, 4500, 5500),
       Bu2Dst0hst_Dst02D0pi0_a1MeanBu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1MeanBu_" +
            ComposeName(uniqueId, Neutral::pi0))
