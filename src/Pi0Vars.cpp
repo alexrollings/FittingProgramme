@@ -591,7 +591,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Sigma2 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.9212e+00, 5, 25),
+          1.9212e+00),
       pdf1Delta_Bu2Dst0hst_Dst02D0pi0_(
           ("pdf1Delta_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0))
