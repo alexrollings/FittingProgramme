@@ -380,8 +380,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdfDelta_overRec_(
           ("pdfDelta_overRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_overRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          Configuration::Get().deltaMass(), overRec_thresholdDelta_,
-          overRec_cDelta_, overRec_aDelta_, overRec_bDelta_),
+          Configuration::Get().deltaMass(), misRec_thresholdDelta_,
+          misRec_cDelta_, misRec_aDelta_, misRec_bDelta_),
       overRec_a0Mean1Bu_(
           ("overRec_a0Mean1Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 of mean1 of overRec m[Bu]" + ComposeName(uniqueId, Neutral::pi0))
@@ -662,8 +662,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           Configuration::Get().deltaMass(),
-          Bu2Dst0hst_Dst02D0pi0_thresholdDelta_, Bu2Dst0hst_Dst02D0pi0_cDelta_,
-          Bu2Dst0hst_Dst02D0pi0_aDelta_, Bu2Dst0hst_Dst02D0pi0_bDelta_),
+          misRec_thresholdDelta_, misRec_cDelta_,
+          misRec_aDelta_, misRec_bDelta_),
       Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_fracPdfPeakDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
