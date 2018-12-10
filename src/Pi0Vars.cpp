@@ -361,7 +361,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_overRec thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3415e+02),
+          1.3415e+02, 132, 136),
       overRec_cDelta_(
           ("overRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_overRec c parameter " + ComposeName(uniqueId, Neutral::pi0))
@@ -485,7 +485,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3537e+02),
+          1.3537e+02, 132, 136),
       misRec_cDelta_(
           ("misRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
@@ -629,7 +629,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           (" Delta_Bu2Dst0hst_Dst02D0pi0 thershold " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3415e+02),
+          1.3415e+02, 132, 136),
       Bu2Dst0hst_Dst02D0pi0_cDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_cDelta_" +
            ComposeName(uniqueId, Neutral::pi0))
