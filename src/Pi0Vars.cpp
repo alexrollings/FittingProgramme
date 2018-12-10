@@ -20,14 +20,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        ("Sigma left of Bu2Dst0h_Dst02D0pi0 " +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
-                                       3.0664e+00),
+                                       3.0664e+00, 0, 5),
       Bu2Dst0h_Dst02D0pi0_sigma2Delta_(("Bu2Dst0h_Dst02D0pi0_sigma2Delta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
                                        ("Sigma right of Bu2Dst0h_Dst02D0pi0 " +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
-                                       1.5829e+00),
+                                       1.5829e+00, 5, 20),
       Bu2Dst0h_Dst02D0pi0_a1Delta_(
           ("Bu2Dst0h_Dst02D0pi0_a1Delta_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
