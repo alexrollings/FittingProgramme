@@ -202,7 +202,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0pi0 mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.07930, 0, 0.1),
+          0.07930, 0, 1),
       // ------------------ NO CROSS FEED BECAUSE OF VETO ------------------ //
       Bu2Dst0h_Dst02D0gamma_meanDelta_(),
       Bu2Dst0h_Dst02D0gamma_sigma1Delta_(),
@@ -349,7 +349,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0gamma mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.07930, 0, 0.1),  //, 0.0, 0.1),
+          0.07930, 0, 1),  //, 0.0, 0.1),
       // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
       bkg_thresholdDelta_(),
       bkg_cDelta_(),
@@ -442,7 +442,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.05, 0, 0.1),
+          0.05, 0, 1),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       overRec_thresholdDelta_(
           ("overRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0))
@@ -583,7 +583,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Delta]" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          3.2922e+00, 0, 5),
+          3.2922e+00),// 0, 10),
       Bu2Dst0hst_Dst02D0pi0_sigma2Delta_(
           ("Bu2Dst0hst_Dst02D0pi0_sigma2Delta_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -753,7 +753,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0pi0 mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          0.02, 0, 0.1),
+          0.02, 0, 1),
       // ------------------ Gamma PART RECONSTRUCTED BACKGROUND
       // ------------------ //
       Bu2Dst0hst_Dst02D0gamma_meanDelta_(),
