@@ -366,17 +366,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("misRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.3883e+00),
+          5.3883e+00, 0, 35),
       misRec_aDelta_(
           ("misRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.1119e-01),
+          5.1119e-01, -10, 10),
       misRec_bDelta_(
           ("misRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.0746e-01),
+          1.0746e-01, -10, 10),
       pdfDelta_misRec_(
           ("pdfDelta_misRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_misRec PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
