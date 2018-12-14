@@ -52,7 +52,8 @@ class Configuration {
   double &buFitBins() { return buFitBins_; }
   double &deltaFitMin() { return deltaFitMin_; }
   double &deltaFitMax() { return deltaFitMax_; }
-  double &deltaFitBins() { return deltaFitBins_; }
+  
+  RooConstVar &pidEff() { return pidEff_; }
 
  private:
   Configuration();
@@ -84,6 +85,8 @@ class Configuration {
   double deltaFitMin_;
   double deltaFitMax_;
   double deltaFitBins_;
+  
+  RooConstVar pidEff_;
 };
 
 

@@ -18,7 +18,8 @@ Configuration::Configuration()
       buFitBins_(160),
       deltaFitMin_(0),
       deltaFitMax_(250),
-      deltaFitBins_(125) {
+      deltaFitBins_(125),
+      pidEff_("pidEff", "PID Efficiency of kaon", 0.65) {
 // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
