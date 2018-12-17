@@ -75,7 +75,10 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0pi0_sigma1Delta() {
     return Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0pi0_sigma2Delta() {
+  RooRealVar &Bu2Dst0h_Dst02D0pi0_sigmaDeltaRatio() {
+    return Bu2Dst0h_Dst02D0pi0_sigmaDeltaRatio_;
+  }
+  RooFormulaVar &Bu2Dst0h_Dst02D0pi0_sigma2Delta() {
     return Bu2Dst0h_Dst02D0pi0_sigma2Delta_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0pi0_a1Delta() {
@@ -456,7 +459,8 @@ class NeutralVars {
   int uniqueId_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_meanDelta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_sigma1Delta_;
-  RooRealVar Bu2Dst0h_Dst02D0pi0_sigma2Delta_;
+  RooRealVar Bu2Dst0h_Dst02D0pi0_sigmaDeltaRatio_;
+  RooFormulaVar Bu2Dst0h_Dst02D0pi0_sigma2Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a2Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_a1Delta_;
   RooRealVar Bu2Dst0h_Dst02D0pi0_n2Delta_;
