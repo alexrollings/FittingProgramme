@@ -542,7 +542,7 @@ class NeutralVars {
   RooRealVar Bu2D0hst_a1Sigma1Bu_;
   RooRealVar Bu2D0hst_a2Sigma1Bu_;
   RooRealVar Bu2D0hst_a0Sigma2Bu_;
-  RooRealVar Bu2D0hst_a0Sigma2Bu_;
+  RooRealVar Bu2D0hst_a1Sigma2Bu_;
   RooRealVar Bu2D0hst_a1Bu_;
   RooRealVar Bu2D0hst_a2Bu_;
   RooRealVar Bu2D0hst_n1Bu_;

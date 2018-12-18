@@ -176,7 +176,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             ComposeFittingName(neutral, bachelor, daughters,
             charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.pdf_Bu2D0hst()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
         }
@@ -404,7 +404,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
   misRecLegend << "Mis-Reconstructed";
   if (fitBool == true && labelString != "TOY") {
-    misRecLegend << " ~ " << pdf.yield_misRec().getVal();
+    misRecLegend << " ~ " << pdf.yield_Bu2D0hst().getVal();
     // << " pm "
     // << pdf.yield_misRec().getPropagatedError(*result) << " events";
   }

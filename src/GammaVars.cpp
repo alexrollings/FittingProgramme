@@ -1027,6 +1027,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           -1.4419e-03),
       Bu2D0hst_a0Sigma2Bu_(),
+      Bu2D0hst_a1Sigma2Bu_(),
       Bu2D0hst_a1Bu_(
           ("Bu2D0hst_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of Bu2D0hst " + ComposeName(uniqueId, Neutral::gamma)).c_str(),

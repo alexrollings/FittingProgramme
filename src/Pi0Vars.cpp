@@ -472,9 +472,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2D0hst_n2Bu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("n2 of Bu2D0hst " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           1.7660e+00),
-      Bu2D0h_frac1PdfBu_(
-          ("Bu2D0h_frac1PdfBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          ("Fraction of left w.r.t. right Bu PDF in Bu2D0h " +
+      Bu2D0hst_frac1PdfBu_(
+          ("Bu2D0hst_frac1PdfBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          ("Fraction of left w.r.t. right Bu PDF in Bu2D0hst " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           7.8868e-01),
