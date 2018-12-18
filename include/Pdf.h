@@ -30,7 +30,7 @@ class PdfBase {
   inline RooAbsReal &yield_overRec() { return *yield_overRec_; }
   inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0pi0() { return *yield_Bu2Dst0hst_Dst02D0pi0_; }
   inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0gamma() { return *yield_Bu2Dst0hst_Dst02D0gamma_; }
-  inline RooAbsReal &yield_misRec() { return *yield_misRec_; }
+  inline RooAbsReal &yield_Bu2D0hst() { return *yield_Bu2D0hst_; }
   inline RooRealVar &yield_Comb() { return yield_Comb_; }
   inline RooArgList &yields() { return yields_; }
   inline RooArgList &functions() { return functions_; }
@@ -53,9 +53,9 @@ class PdfBase {
   virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAbsPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooProdPdf &pdf_misRec() const = 0;
-  virtual RooDstD0BG &pdfDelta_misRec() const = 0;
-  virtual RooCBShape &pdfBu_misRec() const = 0;
+  virtual RooProdPdf &pdf_Bu2D0hst() const = 0;
+  virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
+  virtual RooAbsPdf &pdfBu_Bu2D0hst() const = 0;
   virtual RooExponential &pdfBu_Comb() const = 0;
   virtual RooDstD0BG &pdfDelta_Comb() const = 0;
   virtual RooRealVar &overRec_frac1PdfBu() const = 0;
@@ -85,7 +85,7 @@ class PdfBase {
   std::unique_ptr<RooAbsReal> yield_overRec_;
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> yield_misRec_;
+  std::unique_ptr<RooAbsReal> yield_Bu2D0hst_;
   RooRealVar yield_Comb_;
   RooArgList yields_;
   RooArgList functions_;
@@ -181,16 +181,16 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0hst_Dst02D0gamma();
   }
-  virtual RooProdPdf &pdf_misRec() const {
+  virtual RooProdPdf &pdf_Bu2D0hst() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_misRec();
+        .pdf_Bu2D0hst();
   }
-  virtual RooDstD0BG &pdfDelta_misRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_misRec();
+  virtual RooDstD0BG &pdfDelta_Bu2D0hst() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2D0hst();
   }
-  virtual RooCBShape &pdfBu_misRec() const {
+  virtual RooAbsPdf &pdfBu_Bu2D0hst() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_misRec();
+        .pdfBu_Bu2D0hst();
   }
   virtual RooExponential &pdfBu_Comb() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Comb();
@@ -227,18 +227,18 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
 // uniqueId?
 Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
     : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
-  yield_misRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("yield_misRec_" +
+  yield_Bu2D0hst_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+      ("yield_Bu2D0hst_" +
        ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
           .c_str(),
-      ("misRec Yield " +
+      ("Bu2D0hst Yield " +
        ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
           .c_str(),
       "@0",
       RooArgList(
           NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
               uniqueId)
-              .N_misRec())));
+              .N_Bu2D0hst())));
   switch (_charge) {
     case (Charge::minus): {
       yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -472,8 +472,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_misRec());
-    PdfBase::yields_.add(*PdfBase::yield_misRec_);
+            .pdf_Bu2D0hst());
+    PdfBase::yields_.add(*PdfBase::yield_Bu2D0hst_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_overRec());
