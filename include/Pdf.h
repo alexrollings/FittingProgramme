@@ -31,6 +31,7 @@ class PdfBase {
   inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0pi0() { return *yield_Bu2Dst0hst_Dst02D0pi0_; }
   inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0gamma() { return *yield_Bu2Dst0hst_Dst02D0gamma_; }
   inline RooAbsReal &yield_Bu2D0hst() { return *yield_Bu2D0hst_; }
+  inline RooAbsReal &yield_Bd2Dsth() { return *yield_Bd2Dsth_; }
   inline RooRealVar &yield_Comb() { return yield_Comb_; }
   inline RooArgList &yields() { return yields_; }
   inline RooArgList &functions() { return functions_; }
@@ -56,6 +57,9 @@ class PdfBase {
   virtual RooProdPdf &pdf_Bu2D0hst() const = 0;
   virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
   virtual RooCBShape &pdfBu_Bu2D0hst() const = 0;
+  virtual RooProdPdf &pdf_Bd2Dsth() const = 0;
+  virtual RooDstD0BG &pdfDelta_Bd2Dsth() const = 0;
+  virtual RooCBShape &pdfBu_Bd2Dsth() const = 0;
   virtual RooExponential &pdfBu_Comb() const = 0;
   virtual RooDstD0BG &pdfDelta_Comb() const = 0;
   virtual RooRealVar &overRec_frac1PdfBu() const = 0;
@@ -86,6 +90,7 @@ class PdfBase {
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooAbsReal> yield_Bu2D0hst_;
+  std::unique_ptr<RooAbsReal> yield_Bd2Dsth_;
   RooRealVar yield_Comb_;
   RooArgList yields_;
   RooArgList functions_;
@@ -192,6 +197,17 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2D0hst();
   }
+  virtual RooProdPdf &pdf_Bd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdf_Bd2Dsth();
+  }
+  virtual RooDstD0BG &pdfDelta_Bd2Dsth() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bd2Dsth();
+  }
+  virtual RooCBShape &pdfBu_Bd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdfBu_Bd2Dsth();
+  }
   virtual RooExponential &pdfBu_Comb() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Comb();
   }
@@ -239,6 +255,18 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
           NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
               uniqueId)
               .N_Bu2D0hst())));
+  yield_Bd2Dsth_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+      ("yield_Bd2Dsth_" +
+       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+          .c_str(),
+      ("Bd2Dsth Yield " +
+       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+          .c_str(),
+      "@0",
+      RooArgList(
+          NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+              uniqueId)
+              .N_Bd2Dsth())));
   switch (_charge) {
     case (Charge::minus): {
       yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -474,6 +502,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2D0hst());
     PdfBase::yields_.add(*PdfBase::yield_Bu2D0hst_);
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdf_Bd2Dsth());
+    PdfBase::yields_.add(*PdfBase::yield_Bd2Dsth_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_overRec());
