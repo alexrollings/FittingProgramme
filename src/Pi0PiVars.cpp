@@ -308,10 +308,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_mean1Bu(),
-          *Bu2D0hst_sigma1Bu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_n1Bu()),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_mean2Bu(),
+          *Bu2D0hst_sigma2Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_n2Bu()),
       pdfBu_Bu2D0hst_(new RooAddPdf(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
