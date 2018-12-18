@@ -242,17 +242,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                          .Bu2Dst0hst_Dst02D0gamma_a1Sigma1Bu(),
                      NeutralVars<Neutral::pi0>::Get(uniqueId)
                          .Bu2Dst0hst_Dst02D0gamma_a2Sigma1Bu()))),
-      pdfBu_Bu2Dst0hst_Dst02D0gamma_(new RooGaussian(
-          ("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          ("Bu2Dst0hst_Dst02D0gamma Bu PDF " +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          Configuration::Get().buMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0hst_Dst02D0gamma_meanBu(),
-          *Bu2Dst0hst_Dst02D0gamma_sigma1Bu_)),
+      pdfBu_Bu2Dst0hst_Dst02D0gamma_(
+          new RooGaussian(("pdfBu_Bu2Dst0hst_Dst02D0gamma_" +
+                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                              .c_str(),
+                          ("Bu2Dst0hst_Dst02D0gamma Bu PDF " +
+                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                              .c_str(),
+                          Configuration::Get().buMass(),
+                          NeutralVars<Neutral::pi0>::Get(uniqueId)
+                              .Bu2Dst0hst_Dst02D0gamma_meanBu(),
+                          *Bu2Dst0hst_Dst02D0gamma_sigma1Bu_)),
       pdf_Bu2Dst0hst_Dst02D0gamma_(
           ("pdf_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -292,7 +292,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdf_Bu2D0hst_(
           ("pdf_Bu2D0hst_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          ("Bu2D0hst 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+          ("Bu2D0hst 2D PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_Bu2D0hst(),
           RooFit::Conditional(pdfBu_Bu2D0hst_, Configuration::Get().buMass())),
@@ -309,8 +310,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::pi0>::Get(uniqueId).Bd2Dsth_a0SigmaBu(),
               NeutralVars<Neutral::pi0>::Get(uniqueId).Bd2Dsth_a1SigmaBu()))),
       pdfBu_Bd2Dsth_(
-          ("pdfBu_Bd2Dsth_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+          ("pdfBu_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           ("Bd2Dsth of 2 CBs in Bu PDF " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -323,7 +323,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdf_Bd2Dsth_(
           ("pdf_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          ("Bd2Dsth 2D PDF " + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+          ("Bd2Dsth 2D PDF " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).pdfDelta_Bd2Dsth(),
-          RooFit::Conditional(pdfBu_Bd2Dsth_, Configuration::Get().buMass())) {}
+          RooFit::Conditional(pdfBu_Bd2Dsth_, Configuration::Get().buMass())),
+      // -------------------- MIS-REC PDF -------------------- //
+      misRec_fracPdf_(("misRec_fracPdf_" +
+                       ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                          .c_str(),
+                      "", 3.093, 0, 5),
+      pdf_misRec_(("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
+                   ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                      .c_str(),
+                  ("Bu2Dst0h_Dst02D0pi0 of 2 CBs in Bu PDF " +
+                   ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                      .c_str(),
+                  RooArgSet(pdf_Bu2D0hst_, pdf_Bd2Dsth_), misRec_fracPdf_) {}

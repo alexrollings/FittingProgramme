@@ -370,4 +370,16 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).pdfDelta_Bd2Dsth(),
-          RooFit::Conditional(pdfBu_Bd2Dsth_, Configuration::Get().buMass())) {}
+          RooFit::Conditional(pdfBu_Bd2Dsth_, Configuration::Get().buMass())),
+      // -------------------- MIS-REC PDF -------------------- //
+      misRec_fracPdf_(("misRec_fracPdf_" +
+                       ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                          .c_str(),
+                      "", 2.50, 0, 5),
+      pdf_misRec_(("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
+                   ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                      .c_str(),
+                  ("Bu2Dst0h_Dst02D0gamma of 2 CBs in Bu PDF " +
+                   ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                      .c_str(),
+                  RooArgSet(pdf_Bu2D0hst_, pdf_Bd2Dsth_), misRec_fracPdf_) {}
