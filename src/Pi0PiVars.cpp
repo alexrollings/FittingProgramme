@@ -333,7 +333,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                        ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                           .c_str(),
                       // "", 0.756),//, 0, 1), 
-                      "", 0.756),//, 0, 1), 
+                      "", 0.756, 0, 1), 
       pdf_misRec_(("pdfBu_misRec_" +
                    ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                       .c_str(),
