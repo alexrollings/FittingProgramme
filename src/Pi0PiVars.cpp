@@ -312,17 +312,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           *Bu2D0hst_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_n2Bu()),
-      pdfBu_Bu2D0hst_(new RooAddPdf(
+      pdfBu_Bu2D0hst_(new RooCBShape(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           ("Bu2D0hst of 2 CBs in Bu PDF " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          RooArgSet(pdf1Bu_Bu2D0hst_,
-                    pdf2Bu_Bu2D0hst_),
-          NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2D0hst_frac1PdfBu())),
+          // RooArgSet(pdf1Bu_Bu2D0hst_,
+          //           pdf2Bu_Bu2D0hst_),
+          // NeutralVars<Neutral::pi0>::Get(uniqueId)
+          //     .Bu2D0hst_frac1PdfBu())),
+          Configuration::Get().buMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_mean1Bu(),
+          *Bu2D0hst_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_n1Bu())),
       pdf_Bu2D0hst_(
           ("pdf_Bu2D0hst_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
