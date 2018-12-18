@@ -266,8 +266,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                               Configuration::Get().buMass())),
       // -------------------- MIS RECONSTRUCTED BKG -------------------- //
       // -------------------- Bu2D0hst COMPONENT -------------------- //
-      Bu2D0hst_sigma1Bu_(new RooPolyVar(
-          ("Bu2D0hst_sigma1Bu_" +
+      Bu2D0hst_sigmaBu_(new RooPolyVar(
+          ("Bu2D0hst_sigmaBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           ("Sigma1 of Bu PDF of Bu2D0hst Gaussian " +
@@ -275,8 +275,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(
-              NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a0Sigma1Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a1Sigma1Bu()))),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a0SigmaBu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a1SigmaBu()))),
       pdfBu_Bu2D0hst_(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -285,10 +285,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           Configuration::Get().buMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_mean1Bu(),
-          *Bu2D0hst_sigma1Bu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_n1Bu()),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_meanBu(),
+          *Bu2D0hst_sigmaBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_aBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0hst_nBu()),
       pdf_Bu2D0hst_(
           ("pdf_Bu2D0hst_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
