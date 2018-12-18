@@ -1065,50 +1065,33 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           0.05, 0, 0.1),
       // ------------------ Bd2Dsth COMPONENT ------------------ //
-      Bd2Dsth_thresholdDelta_(
-          ("Bd2Dsth_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          6.7237e+01),
-      Bd2Dsth_cDelta_(
-          ("Bd2Dsth_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          4.7874e+01),//, 0, 35),
-      Bd2Dsth_aDelta_(
-          ("Bd2Dsth_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          8.8301e-01),//, -10, 10),
-      Bd2Dsth_bDelta_(
-          ("Bd2Dsth_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          -9.9972e-01),//, -10, 10),
+      Bd2Dsth_thresholdDelta_(),
+      Bd2Dsth_cDelta_(),
+      Bd2Dsth_aDelta_(),
+      Bd2Dsth_bDelta_(),
       pdfDelta_Bd2Dsth_(
           ("pdfDelta_Bd2Dsth_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Delta_Bd2Dsth PDF " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          Configuration::Get().deltaMass(), Bd2Dsth_thresholdDelta_, Bd2Dsth_cDelta_,
-          Bd2Dsth_aDelta_, Bd2Dsth_bDelta_),
+          Configuration::Get().deltaMass(), Bu2D0hst_thresholdDelta_, Bu2D0hst_cDelta_,
+          Bu2D0hst_aDelta_, Bu2D0hst_bDelta_),
       Bd2Dsth_a0MeanBu_(
           ("Bd2Dsth_a0MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a0 of mean1 of Bd2Dsth m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.2623e+03),//, 4500, 5600),
+          5.0873e+03),//, 4500, 5600),
       Bd2Dsth_a1MeanBu_(
           ("Bd2Dsth_a1MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of mean1 of Bd2Dsth m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -1.1142e+00),
+          2.4822e+00),
       Bd2Dsth_a2MeanBu_(
           ("Bd2Dsth_a2MeanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a2 of mean1 of Bd2Dsth m[Bu]" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          5.1761e-03),
+          -6.5217e-03),
       Bd2Dsth_meanBu_(
           ("Bd2Dsth_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("Mean1 of Bd2Dsth m[Bu]" + ComposeName(uniqueId, Neutral::gamma))
@@ -1121,29 +1104,29 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -8.4602e+01),//, -100, 100),
+          1.2821e+01),//, -100, 100),
       Bd2Dsth_a1SigmaBu_(
           ("Bd2Dsth_a1SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a1 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          2.4802e+00),
+          5.1122e-01),
       Bd2Dsth_a2SigmaBu_(
           ("Bd2Dsth_a2SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           ("a2 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          -6.8355e-03),
+          -2.1553e-04),
       Bd2Dsth_aBu_(
           ("Bd2Dsth_aBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of Bd2Dsth " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          1.2916e+00),
+          2.5926e+00),
       Bd2Dsth_nBu_(
           ("Bd2Dsth_nBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("n1 of Bd2Dsth " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          3.4602e+00),
+          2.4846e-01),
       relativeBuWidth_Bd2Dsth_(
           ("relativeBuWidth_Bd2Dsth_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
