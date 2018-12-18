@@ -335,7 +335,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misRec_fracPdf_(("misRec_fracPdf_" +
                        ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                           .c_str(),
-                      "", 3.093, 0, 5), // Not necessarily 3.093
+                      "", 0.756, 0, 1), 
       pdf_misRec_(("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
                    ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                       .c_str(),
