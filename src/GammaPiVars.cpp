@@ -319,6 +319,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a1Sigma1Bu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a2Sigma1Bu()))),
       Bu2D0hst_sigma2Bu_(nullptr),
+      pdf1Bu_Bu2D0hst_(),
+      pdf2Bu_Bu2D0hst_(),
       pdfBu_Bu2D0hst_(new RooCBShape(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
