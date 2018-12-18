@@ -376,7 +376,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                           .c_str(),
                       "", 0.714, 0, 1),
-      pdf_misRec_(("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
+      pdf_misRec_(("pdf_misRec_" +
                    ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                       .c_str(),
                   ("Bu2Dst0h_Dst02D0gamma of 2 CBs in Bu PDF " +

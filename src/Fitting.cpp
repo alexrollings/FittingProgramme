@@ -112,7 +112,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = nullptr;
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  if (fitBool == true) {
+  // if (fitBool == true) {
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
@@ -176,10 +176,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             ComposeFittingName(neutral, bachelor, daughters,
             charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.pdf_misRec().GetName()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
-        }
+        // }
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
