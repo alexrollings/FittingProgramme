@@ -55,7 +55,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
   virtual RooProdPdf &pdf_Bu2D0hst() const = 0;
   virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
-  virtual RooAbsPdf &pdfBu_Bu2D0hst() const = 0;
+  virtual RooCBShape &pdfBu_Bu2D0hst() const = 0;
   virtual RooExponential &pdfBu_Comb() const = 0;
   virtual RooDstD0BG &pdfDelta_Comb() const = 0;
   virtual RooRealVar &overRec_frac1PdfBu() const = 0;
@@ -188,7 +188,7 @@ class Pdf : public PdfBase {
   virtual RooDstD0BG &pdfDelta_Bu2D0hst() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2D0hst();
   }
-  virtual RooAbsPdf &pdfBu_Bu2D0hst() const {
+  virtual RooCBShape &pdfBu_Bu2D0hst() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2D0hst();
   }

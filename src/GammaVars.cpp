@@ -1003,8 +1003,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           Configuration::Get().deltaMass(),
           RooArgList(Bu2D0hst_a0Mean1Bu_, Bu2D0hst_a1Mean1Bu_, Bu2D0hst_a2Mean1Bu_)),
-      Bu2D0hst_a0Mean2Bu_(),
-      Bu2D0hst_mean2Bu_(),
       Bu2D0hst_a0Sigma1Bu_(
           ("Bu2D0hst_a0Sigma1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -1026,19 +1024,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           -1.4419e-03),
-      Bu2D0hst_a0Sigma2Bu_(),
-      Bu2D0hst_a1Sigma2Bu_(),
       Bu2D0hst_a1Bu_(
           ("Bu2D0hst_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("a1 of Bu2D0hst " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           1.1678e+00),
-      Bu2D0hst_a2Bu_(),
       Bu2D0hst_n1Bu_(
           ("Bu2D0hst_n1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           ("n1 of Bu2D0hst " + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           2.8331e+00),
-      Bu2D0hst_n2Bu_(),
-      Bu2D0hst_frac1PdfBu_(),
       relativeBuWidth_Bu2D0hst_(
           ("relativeBuWidth_Bu2D0hst_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),

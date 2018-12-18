@@ -318,10 +318,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a0Sigma1Bu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a1Sigma1Bu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a2Sigma1Bu()))),
-      Bu2D0hst_sigma2Bu_(nullptr),
-      pdf1Bu_Bu2D0hst_(),
-      pdf2Bu_Bu2D0hst_(),
-      pdfBu_Bu2D0hst_(new RooCBShape(
+      pdfBu_Bu2D0hst_(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -332,7 +329,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_mean1Bu(),
           *Bu2D0hst_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_a1Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_n1Bu())),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_n1Bu()),
       pdf_Bu2D0hst_(
           ("pdf_Bu2D0hst_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -340,4 +337,4 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).pdfDelta_Bu2D0hst(),
-          RooFit::Conditional(*pdfBu_Bu2D0hst_, Configuration::Get().buMass())) {}
+          RooFit::Conditional(pdfBu_Bu2D0hst_, Configuration::Get().buMass())) {}
