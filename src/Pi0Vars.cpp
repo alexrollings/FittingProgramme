@@ -461,22 +461,22 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           (" Delta_bkg thershold " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.3500e+02),
+          1.3582e+02),
       Bd2Dsth_cDelta_(
           ("Bd2Dsth_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.2074e+01, 0, 35),
+          2.2255e+00, 0, 35),
       Bd2Dsth_aDelta_(
           ("Bd2Dsth_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.4492e-01, -10, 10),
+          5.1186e-01, -10, 10),
       Bd2Dsth_bDelta_(
           ("Bd2Dsth_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -6.6503e-01, -10, 10),
+          5.5552e-01, -10, 10),
       pdfDelta_Bd2Dsth_(
           ("pdfDelta_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Bd2Dsth PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -487,13 +487,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.3577e+03),//, 4800, 5800),
+          5.2558e+03),//, 4800, 5800),
       Bd2Dsth_a1MeanBu_(
           ("Bd2Dsth_a1MeanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of mean of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -3.6259e-02),
+          2.5728e-01),
       Bd2Dsth_a2MeanBu_(),
       Bd2Dsth_meanBu_(
           ("Bd2Dsth_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -506,22 +506,22 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -6.4972e+01),//, -100, 100),
+          -1.5319e+01),//, -100, 100),
       Bd2Dsth_a1SigmaBu_(
           ("Bd2Dsth_a1SigmaBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          7.1136e-01),
+          5.1142e-01),
       Bd2Dsth_a2SigmaBu_(),
       Bd2Dsth_aBu_(
           ("Bd2Dsth_aBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of Bd2Dsth " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          1.7680e-04),
+          3.3223e+00),
       Bd2Dsth_nBu_(
           ("Bd2Dsth_nBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("n1 of Bd2Dsth " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          3.3954e-03),
+          1.2393e+00),
       relativeBuWidth_Bd2Dsth_(
           ("relativeBuWidth_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
