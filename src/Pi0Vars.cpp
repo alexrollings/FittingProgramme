@@ -384,17 +384,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2D0hst_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          1.2074e+01, 0, 35),
+          1.2074e+01),//, 0, 35),
       Bu2D0hst_aDelta_(
           ("Bu2D0hst_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          4.4492e-01, -10, 10),
+          4.4492e-01),//, -10, 10),
       Bu2D0hst_bDelta_(
           ("Bu2D0hst_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -6.6503e-01, -10, 10),
+          -6.6503e-01),//, -10, 10),
       pdfDelta_Bu2D0hst_(
           ("pdfDelta_Bu2D0hst_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Bu2D0hst PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
@@ -466,17 +466,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bd2Dsth_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg c parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          2.2255e+00, 0, 35),
+          2.2255e+00),//, 0, 35),
       Bd2Dsth_aDelta_(
           ("Bd2Dsth_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg a parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.1186e-01, -10, 10),
+          5.1186e-01),//, -10, 10),
       Bd2Dsth_bDelta_(
           ("Bd2Dsth_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           (" Delta_bkg b parameter " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.5552e-01, -10, 10),
+          5.5552e-01),//, -10, 10),
       pdfDelta_Bd2Dsth_(
           ("pdfDelta_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Bd2Dsth PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),

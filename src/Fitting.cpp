@@ -179,7 +179,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_Bu2D0hst()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
-        }
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
