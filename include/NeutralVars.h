@@ -276,13 +276,27 @@ class NeutralVars {
   RooRealVar &Bu2D0hst_nBu() { return Bu2D0hst_nBu_; }
   RooRealVar &ratioDst0KDst0pi_Bu2D0hst () { return ratioDst0KDst0pi_Bu2D0hst_; }
   RooRealVar &relativeBuWidth_Bu2D0hst  () { return relativeBuWidth_Bu2D0hst_; }
+  RooRealVar &Bd2Dsth_thresholdDelta() { return Bd2Dsth_thresholdDelta_; }
+  RooRealVar &Bd2Dsth_aDelta() { return Bd2Dsth_aDelta_; }
+  RooRealVar &Bd2Dsth_bDelta() { return Bd2Dsth_bDelta_; }
+  RooRealVar &Bd2Dsth_cDelta() { return Bd2Dsth_cDelta_; }
+  RooDstD0BG &pdfDelta_Bd2Dsth () { return pdfDelta_Bd2Dsth_; }
+  RooRealVar &Bd2Dsth_a0MeanBu() { return Bd2Dsth_a0MeanBu_; }
+  RooRealVar &Bd2Dsth_a1MeanBu() { return Bd2Dsth_a1MeanBu_; }
+  RooRealVar &Bd2Dsth_a2MeanBu() { return Bd2Dsth_a2MeanBu_; }
+  RooPolyVar &Bd2Dsth_meanBu() { return Bd2Dsth_meanBu_; }
+  RooRealVar &Bd2Dsth_a0SigmaBu() { return Bd2Dsth_a0SigmaBu_; }
+  RooRealVar &Bd2Dsth_a1SigmaBu() { return Bd2Dsth_a1SigmaBu_; }
+  RooRealVar &Bd2Dsth_a2SigmaBu() { return Bd2Dsth_a2SigmaBu_; }
+  RooRealVar &Bd2Dsth_aBu() { return Bd2Dsth_aBu_; }
+  RooRealVar &Bd2Dsth_nBu() { return Bd2Dsth_nBu_; }
+  RooRealVar &ratioDst0KDst0pi_Bd2Dsth () { return ratioDst0KDst0pi_Bd2Dsth_; }
+  RooRealVar &relativeBuWidth_Bd2Dsth  () { return relativeBuWidth_Bd2Dsth_; }
   RooRealVar &overRec_thresholdDelta() { return overRec_thresholdDelta_; }
   RooRealVar &overRec_aDelta() { return overRec_aDelta_; }
   RooRealVar &overRec_bDelta() { return overRec_bDelta_; }
   RooRealVar &overRec_cDelta() { return overRec_cDelta_; }
   RooDstD0BG &pdfDelta_overRec() { return pdfDelta_overRec_; }
-  // RooRealVar &overRec_a0MeanBu() { return overRec_a0MeanBu_; }
-  // RooPolyVar &overRec_meanBu() { return overRec_meanBu_; }
   RooRealVar &overRec_a0Mean1Bu() { return overRec_a0Mean1Bu_; }
   RooRealVar &overRec_a1Mean1Bu() { return overRec_a1Mean1Bu_; }
   RooRealVar &overRec_a2Mean1Bu() { return overRec_a2Mean1Bu_; }
@@ -534,6 +548,22 @@ class NeutralVars {
   RooRealVar Bu2D0hst_nBu_;
   RooRealVar ratioDst0KDst0pi_Bu2D0hst_;
   RooRealVar relativeBuWidth_Bu2D0hst_;
+  RooRealVar Bd2Dsth_thresholdDelta_;
+  RooRealVar Bd2Dsth_aDelta_;
+  RooRealVar Bd2Dsth_bDelta_;
+  RooRealVar Bd2Dsth_cDelta_;
+  RooDstD0BG pdfDelta_Bd2Dsth_;
+  RooRealVar Bd2Dsth_a0MeanBu_;
+  RooRealVar Bd2Dsth_a1MeanBu_;
+  RooRealVar Bd2Dsth_a2MeanBu_;
+  RooPolyVar Bd2Dsth_meanBu_;
+  RooRealVar Bd2Dsth_a0SigmaBu_;
+  RooRealVar Bd2Dsth_a1SigmaBu_;
+  RooRealVar Bd2Dsth_a2SigmaBu_;
+  RooRealVar Bd2Dsth_aBu_;
+  RooRealVar Bd2Dsth_nBu_;
+  RooRealVar ratioDst0KDst0pi_Bd2Dsth_;
+  RooRealVar relativeBuWidth_Bd2Dsth_;
   RooRealVar overRec_thresholdDelta_;
   RooRealVar overRec_aDelta_;
   RooRealVar overRec_bDelta_;
