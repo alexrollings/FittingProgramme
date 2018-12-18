@@ -448,13 +448,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2D0hst_(
-          ("ratioDst0KDst0pi_Bu2D0hst_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2D0hst mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.05, 0, 1),
       // ------------------ Bd2Dsth COMPONENT ------------------ //
       Bd2Dsth_thresholdDelta_(
           ("Bd2Dsth_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0))
@@ -530,10 +523,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bd2Dsth_(
-          ("ratioDst0KDst0pi_Bd2Dsth_" + ComposeName(uniqueId, Neutral::pi0))
+      // -------------------- MIS RECONSTRUCTED RATIO -------------------- //
+      ratioDst0KDst0pi_misRec_(
+          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bd2Dsth mode " +
+          ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           0.05, 0, 1),

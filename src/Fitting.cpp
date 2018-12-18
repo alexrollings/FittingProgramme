@@ -176,18 +176,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
             ComposeFittingName(neutral, bachelor, daughters,
             charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bu2D0hst()), RooFit::LineStyle(kDashed),
+        RooFit::Components(pdf.pdf_misRec()), RooFit::LineStyle(kDashed),
         RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
-        RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters,
-            charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bd2Dsth()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kRed), RooFit::Precision(1e-3),
         RooFit::NumCPU(8, 2));
         }
     // simPdf.plotOn(
@@ -338,23 +328,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0hst_Dst02D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0hst_Dst02D0gammaHist->SetLineWidth(2);
 
-  auto Bu2D0hstHist = std::make_unique<TH1D>(
-      ("Bu2D0hstHist" +
+  auto misRecHist = std::make_unique<TH1D>(
+      ("misRecHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "Bu2D0hstHist", 1, 0, 1);
-  Bu2D0hstHist->SetLineColor(kTeal);
-  Bu2D0hstHist->SetLineStyle(kDashed);
-  Bu2D0hstHist->SetLineWidth(2);
-
-  auto Bd2DsthHist = std::make_unique<TH1D>(
-      ("Bd2DsthHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bd2DsthHist", 1, 0, 1);
-  Bd2DsthHist->SetLineColor(kRed);
-  Bd2DsthHist->SetLineStyle(kDashed);
-  Bd2DsthHist->SetLineWidth(2);
+      "misRecHist", 1, 0, 1);
+  misRecHist->SetLineColor(kTeal);
+  misRecHist->SetLineStyle(kDashed);
+  misRecHist->SetLineWidth(2);
 
   auto CombHist = std::make_unique<TH1D>(
       ("CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -369,8 +350,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   std::stringstream overRecLegend;
   std::stringstream Bu2Dst0hst_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0hst_Dst02D0gammaLegend;
-  std::stringstream Bu2D0hstLegend;
-  std::stringstream Bd2DsthLegend;
+  std::stringstream misRecLegend;
+  // std::stringstream Bu2D0hstLegend;
+  // std::stringstream Bd2DsthLegend;
   std::stringstream combLegend;
   Bu2Dst0h_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -422,25 +404,31 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     // << pdf.yield_overRec().getPropagatedError(*result)
     // << " events";
   }
-  Bu2D0hstLegend << "B^{" + EnumToLabel(charge) +
-                       "}#rightarrow#font[132]{[}#font[132]{[}" +
-                       EnumToLabel(daughters, charge) +
-                       "#font[132]{]}_{D^{0}}" + HstLabel(bachelor) + "^{" +
-                       EnumToLabel(charge) + "}";
+  // Bu2D0hstLegend << "B^{" + EnumToLabel(charge) +
+  //                      "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //                      EnumToLabel(daughters, charge) +
+  //                      "#font[132]{]}_{D^{0}}" + HstLabel(bachelor) + "^{" +
+  //                      EnumToLabel(charge) + "}";
+  // if (fitBool == true && labelString != "TOY") {
+  //   Bu2D0hstLegend << " ~ " << pdf.yield_Bu2D0hst().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bu2D0hst().getPropagatedError(*result) << " events";
+  // }
+  // Bd2DsthLegend
+  //     << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+  //            EnumToLabel(daughters, charge) +
+  //            "#font[132]{]}_{D^{0}}#pi^{#pm}#font[132]{]}_{D^{+}*}" +
+  //            EnumToLabel(bachelor) + "^{-}";
+  // if (fitBool == true && labelString != "TOY") {
+  //   Bd2DsthLegend << " ~ " << pdf.yield_Bd2Dsth().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bd2Dsth().getPropagatedError(*result) << " events";
+  // }
+  misRecLegend << "Mis-Reconstructed Bkg";
   if (fitBool == true && labelString != "TOY") {
-    Bu2D0hstLegend << " ~ " << pdf.yield_Bu2D0hst().getVal();
+    misRecLegend << " ~ " << pdf.yield_misRec().getVal();
     // << " pm "
-    // << pdf.yield_Bu2D0hst().getPropagatedError(*result) << " events";
-  }
-  Bd2DsthLegend
-      << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{#pm}#font[132]{]}_{D^{+}*}" +
-             EnumToLabel(bachelor) + "^{-}";
-  if (fitBool == true && labelString != "TOY") {
-    Bd2DsthLegend << " ~ " << pdf.yield_Bd2Dsth().getVal();
-    // << " pm "
-    // << pdf.yield_Bd2Dsth().getPropagatedError(*result) << " events";
+    // << pdf.yield_misRec().getPropagatedError(*result) << " events";
   }
   Bu2Dst0hst_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -466,8 +454,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
                   Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
-  legend.AddEntry(Bu2D0hstHist.get(), Bu2D0hstLegend.str().c_str(), "l");
-  legend.AddEntry(Bd2DsthHist.get(), Bd2DsthLegend.str().c_str(), "l");
+  legend.AddEntry(misRecHist.get(), misRecLegend.str().c_str(), "l");
+  // legend.AddEntry(Bu2D0hstHist.get(), Bu2D0hstLegend.str().c_str(), "l");
+  // legend.AddEntry(Bd2DsthHist.get(), Bd2DsthLegend.str().c_str(), "l");
 
   TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
   auto blankHist = std::make_unique<TH1D>(
