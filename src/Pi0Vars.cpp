@@ -941,8 +941,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), over_thresholdDelta_, over_cDelta_,
-          over_aDelta_, over_bDelta_),
+          Configuration::Get().deltaMass(), overRec_thresholdDelta_, overRec_cDelta_,
+          overRec_aDelta_, overRec_bDelta_),
       Comb_a0LambdaBu_(
           ("Comb_a0LambdaBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 component for Bu _Combinatorial constant " +

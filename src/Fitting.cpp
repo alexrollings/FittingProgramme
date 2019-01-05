@@ -337,13 +337,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   misRecHist->SetLineStyle(kDashed);
   misRecHist->SetLineWidth(2);
 
-  auto CombHist = std::make_unique<TH1D>(
-      ("CombHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto combHist = std::make_unique<TH1D>(
+      ("combHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "CombHist", 1, 0, 1);
-  CombHist->SetLineColor(kRed);
-  CombHist->SetLineStyle(kDashed);
-  CombHist->SetLineWidth(2);
+      "combHist", 1, 0, 1);
+  combHist->SetLineColor(kRed);
+  combHist->SetLineStyle(kDashed);
+  combHist->SetLineWidth(2);
 
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
@@ -445,7 +445,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
   combLegend << "Combinatoric Bkg";
   if (fitBool == true && labelString != "TOY" && neutral == Neutral::pi0) {
-    combLegend << " ~ " << pdf.yield_comb().getVal();
+    combLegend << " ~ " << pdf.yield_Comb().getVal();
     // << " pm "
     // << pdf.yield_comb().getPropagatedError(*result) << " events";
   }
