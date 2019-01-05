@@ -1097,7 +1097,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          1.2821e+01),//, -100, 100),
+          1.2821e+01),//, 0, 50),
       Bd2Dsth_a1SigmaBu_(
           ("Bd2Dsth_a1SigmaBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),

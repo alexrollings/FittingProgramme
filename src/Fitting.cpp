@@ -1674,7 +1674,7 @@ int main(int argc, char **argv) {
       } else if (y == Year::y2016) {
         lumi += 1.65;
       } else if (y == Year::y2017) {
-        lumi += 1.16;
+        lumi += 1.7;
       }
       for (auto &p : polarityVec) {
         for (auto &b : bachelorVec) {
