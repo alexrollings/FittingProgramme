@@ -33,6 +33,7 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi,
   std::unique_ptr<RooRealVar> N_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> N_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> N_misRec_;
+  // std::unique_ptr<RooRealVar> N_Comb_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> asym_overRec_;
@@ -50,6 +51,7 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k,
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misRec_;
+  // std::unique_ptr<RooRealVar> N_Comb_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> asym_overRec_;
@@ -66,6 +68,7 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters> {
   std::unique_ptr<RooRealVar> N_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> N_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> N_misRec_;
+  std::unique_ptr<RooRealVar> N_Comb_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> asym_overRec_;
@@ -82,6 +85,7 @@ struct NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters> {
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0hst_Dst02D0pi0_;
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0hst_Dst02D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misRec_;
+  std::unique_ptr<RooRealVar> N_Comb_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0gamma_;
   std::unique_ptr<RooRealVar> asym_Bu2Dst0h_Dst02D0pi0_;
   std::unique_ptr<RooRealVar> asym_overRec_;
@@ -137,6 +141,7 @@ class NeutralBachelorDaughtersVars {
     return *impl_.N_Bu2Dst0hst_Dst02D0gamma_;
   }
   RooAbsReal &N_misRec() { return *impl_.N_misRec_; }
+  RooAbsReal &N_Comb() { return *impl_.N_Comb_; }
   RooRealVar &asym_Bu2Dst0h_Dst02D0gamma() {
     return *impl_.asym_Bu2Dst0h_Dst02D0gamma_;
   }
@@ -478,7 +483,15 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          1400, 0, 20000)) {}
+          1400, 0, 20000)),
+      N_Comb_(new RooRealVar(
+          ("N_Comb_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          ("Total number of comb-like events " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
+              .c_str(),
+          1000, 0, 50000)) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
@@ -608,4 +621,12 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
                          .N_misRec(),
                      NeutralVars<Neutral::pi0>::Get(uniqueId)
                          .ratioDst0KDst0pi_misRec(),
-                     Configuration::Get().pidEff()))) {}
+                     Configuration::Get().pidEff()))),
+      N_Comb_(new RooRealVar(
+          ("N_Comb_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          ("Total number of comb-like events " +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
+              .c_str(),
+          100, 0, 5000)) {}

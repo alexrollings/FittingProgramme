@@ -258,6 +258,20 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
           NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
               uniqueId)
               .N_misRec())));
+  if (neutral == Neutral::pi0) {
+    yield_Comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("yield_Comb_" +
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        ("Comb Yield " +
+         ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
+            .c_str(),
+        "@0",
+        RooArgList(
+            NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+                uniqueId)
+                .N_Comb())));
+    }
   switch (_charge) {
     case (Charge::minus): {
       yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -505,6 +519,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0hst_Dst02D0gamma());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
+    if (neutral == Neutral::pi0) {
+      PdfBase::functions_.add(
+          NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+              .pdf_Comb());
+      PdfBase::yields_.add(*PdfBase::yield_Comb_);
+    }
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,

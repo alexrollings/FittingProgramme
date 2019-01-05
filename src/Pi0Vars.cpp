@@ -936,14 +936,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           0.02, 0, 1),  //, 0.0, 0.1),
-      // -------------------- DST0D0 BACKGROUND -------------------- //
+      // -------------------- EXPONENTIAL BACKGROUND -------------------- //
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("Delta_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          Configuration::Get().deltaMass(), bkg_thresholdDelta_, bkg_cDelta_,
-          bkg_aDelta_, bkg_bDelta_),
-      // -------------------- EXPONENTIAL BACKGROUND -------------------- //
+          Configuration::Get().deltaMass(), over_thresholdDelta_, over_cDelta_,
+          over_aDelta_, over_bDelta_),
       Comb_a0LambdaBu_(
           ("Comb_a0LambdaBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a0 component for Bu _Combinatorial constant " +
@@ -964,7 +963,4 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("pdf_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("_Combinatorial PDF " + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           pdfDelta_Comb_,
-          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())) {
-  std::cout << "Neutral vars managed to construct itself\n" << std::flush;
-      
-      }
+          RooFit::Conditional(pdfBu_Comb_, Configuration::Get().buMass())) {}

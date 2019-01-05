@@ -173,23 +173,23 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters,
-            charge).c_str()),
+            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_misRec().GetName()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kTeal), RooFit::Precision(1e-3),
-        RooFit::NumCPU(8, 2));
-        // }
-    // simPdf.plotOn(
-    //     frame.get(),
-    //     RooFit::Slice(
-    //         categories.fitting,
-    //         ComposeFittingName(neutral, bachelor, daughters,
-    //         charge).c_str()),
-    //     RooFit::ProjWData(categories.fitting, fullDataSet),
-    //     RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
-    //     RooFit::LineColor(kRed), RooFit::Precision(1e-3), RooFit::NumCPU(8,
-    //     2));
+        RooFit::Components(pdf.pdf_misRec().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kTeal),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    // }
+    if (neutral == Neutral::pi0) {
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              categories.fitting,
+              ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
+          RooFit::ProjWData(categories.fitting, fullDataSet),
+          RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
+          RooFit::LineColor(kRed), RooFit::Precision(1e-3),
+          RooFit::NumCPU(8, 2));
+    }
 
     if (variable == Variable::delta) {
       if (neutral == Neutral::gamma) {
@@ -443,6 +443,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     // << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getPropagatedError(*result)
     // << " events";
   }
+  combLegend << "Combinatoric Bkg";
+  if (fitBool == true && labelString != "TOY" && neutral == Neutral::pi0) {
+    combLegend << " ~ " << pdf.yield_comb().getVal();
+    // << " pm "
+    // << pdf.yield_comb().getPropagatedError(*result) << " events";
+  }
 
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_Dst02D0pi0Hist.get(),
@@ -455,6 +461,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
                   Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
   legend.AddEntry(misRecHist.get(), misRecLegend.str().c_str(), "l");
+  if (neutral == Neutral::pi0) {
+    legend.AddEntry(combHist.get(), combLegend.str().c_str(), "l");
+  }
   // legend.AddEntry(Bu2D0hstHist.get(), Bu2D0hstLegend.str().c_str(), "l");
   // legend.AddEntry(Bd2DsthHist.get(), Bd2DsthLegend.str().c_str(), "l");
 
