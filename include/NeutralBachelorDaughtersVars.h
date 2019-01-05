@@ -215,7 +215,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0gamma-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          7250, 0, 20000)),
+          40000, 0, 200000)),
+          // 7250, 0, 20000)),
       N_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -223,8 +224,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0pi0-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          // 6572)),
-          5750, 0, 20000)),
+          27750, 0, 200000)),
+          // 5750, 0, 20000)),
       N_overRec_(new RooRealVar(
           ("N_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -232,7 +233,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          4750, 0, 20000)),
+          43500, 0, 200000)),
+          // 4750, 0, 20000)),
       N_Bu2Dst0hst_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -240,7 +242,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0pi0 reconstructed events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          1075, 0, 20000)),
+          4732, 0, 200000)),
+          // 1075, 0, 20000)),
       N_Bu2Dst0hst_Dst02D0gamma_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -248,7 +251,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0gamma reconstructed events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          1200, 0, 20000)),
+          12383, 0, 200000)),
+          // 1200, 0, 20000)),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
@@ -256,7 +260,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, daughters))
               .c_str(),
-          4500, 0, 50000)) {}
+          100000, 0, 200000)) {}
+          // 4500, 0, 50000)) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
@@ -438,7 +443,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0gamma-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          300, 0, 20000)),
+          1185, 0, 55000)), //RAISE
       N_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -446,7 +451,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0h_Dst02D0pi0-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          1140, 0, 20000)),
+          8700, 0, 55000)),
       N_overRec_(new RooRealVar(
           ("N_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -454,7 +459,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of overRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          875, 0, 20000)),
+          6900, 0, 55000)),
       N_Bu2Dst0hst_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -462,7 +467,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0pi0 reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          1500, 0, 20000)),
+          3900, 0, 55000)),
       N_Bu2Dst0hst_Dst02D0gamma_(new RooRealVar(
           ("N_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -470,7 +475,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of Bu2Dst0hst_Dst02D0gamma reconstructed events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          600, 0, 20000)),
+          870, 0, 55000)),
       N_misRec_(new RooRealVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -478,7 +483,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
           ("Total number of misRec-like events " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
-          1400, 0, 20000)) {}
+          30325, 0, 55000)) /*LOWER*/ {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
