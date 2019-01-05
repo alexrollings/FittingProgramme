@@ -280,7 +280,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of mean of Bu2Dst0h_Dst02D0gamma m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          5.1425e+03),
+          5.1425e+03, 5130, 5153),
       Bu2Dst0h_Dst02D0gamma_a1MeanBu_(
           ("Bu2Dst0h_Dst02D0gamma_a1MeanBu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -499,7 +499,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bd2Dsth m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -1.5319e+01),//, -100, 100),
+          -1.5319e+01, -30, -10),
       Bd2Dsth_a1SigmaBu_(
           ("Bd2Dsth_a1SigmaBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           ("a1 of sigma1 of Bd2Dsth m[Bu] PDF " +
@@ -804,7 +804,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("a0 of sigma1 of Bu2Dst0hst_Dst02D0pi0 m[Bu] PDF " +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
-          -9.4263e+01),  //, -100, 100),
+          -9.4263e+01),//, -150, -0.001),
       Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_(
           ("Bu2Dst0hst_Dst02D0pi0_a1Sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0))
