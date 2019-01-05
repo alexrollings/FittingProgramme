@@ -509,12 +509,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0hst_Dst02D0gamma());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
-    if (_neutral == Neutral::pi0) {
-      PdfBase::functions_.add(
-          NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-              .pdf_Comb());
-      PdfBase::yields_.add(PdfBase::yield_Comb_);
-    }
+    // if (_neutral == Neutral::pi0) {
+    //   PdfBase::functions_.add(
+    //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+    //           .pdf_Comb());
+    //   PdfBase::yields_.add(PdfBase::yield_Comb_);
+    // }
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,
