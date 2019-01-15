@@ -652,7 +652,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Ratio of Dst0K yield w.r.t. Dst0pi n overRec mode " +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          0.07768),
+          0.07768, 0, 1),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0pi0_meanDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +

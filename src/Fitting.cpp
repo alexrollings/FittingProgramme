@@ -256,9 +256,9 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   pad1.cd();
   frame->Draw();
   lumiLegend.Draw("same");
-  if (fitBool == true) {
-    legend.Draw("same");
-  }
+  // if (fitBool == true) {
+  legend.Draw("same");
+  // }
   // dataHist->Draw("same");
 
   canvas.Update();
@@ -281,7 +281,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  TLegend legend(0.7, 0.53, 0.85, 0.8);
+  TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_Dst02D0pi0Hist = std::make_unique<TH1D>(
       ("Bu2Dst0h_Dst02D0pi0Hist" +
@@ -345,14 +345,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   combHist->SetLineStyle(kDashed);
   combHist->SetLineWidth(2);
 
+  auto blankHist = std::make_unique<TH1D>(
+      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "blankHist", 1, 0, 1);
+  blankHist->SetLineColor(kWhite);
+  blankHist->SetLineWidth(2);
+
   std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
   std::stringstream overRecLegend;
   std::stringstream Bu2Dst0hst_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0hst_Dst02D0gammaLegend;
-  std::stringstream misRecLegend;
-  // std::stringstream Bu2D0hstLegend;
-  // std::stringstream Bd2DsthLegend;
+  std::stringstream misRecLegendBu;
+  std::stringstream misRecLegendBd;
   std::stringstream combLegend;
   Bu2Dst0h_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -360,120 +366,90 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  if (fitBool == true && labelString != "TOY") {
-    Bu2Dst0h_Dst02D0pi0Legend
-        << " ~ " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal();
-    // << " pm "
-    // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
-    // << " events";
-  }
   Bu2Dst0h_Dst02D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  if (fitBool == true && labelString != "TOY") {
-    Bu2Dst0h_Dst02D0gammaLegend << " ~ "
-                                << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
-    // << " pm "
-    // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
-    // << " events";
-  }
   Bu2Dst0hst_Dst02D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  if (fitBool == true && labelString != "TOY") {
-    Bu2Dst0hst_Dst02D0gammaLegend
-        << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
-    // << " pm "
-    // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
-    // << " events";
-  }
   overRecLegend << "B^{" + EnumToLabel(charge) +
                        "}#rightarrow#font[132]{[}#font[132]{[}" +
                        EnumToLabel(daughters, charge) +
                        "#font[132]{]}_{D^{0}}" + EnumToLabel(bachelor) + "^{" +
                        EnumToLabel(charge) + "}";
-  if (fitBool == true && labelString != "TOY") {
-    overRecLegend << " ~ " << pdf.yield_overRec().getVal();
-    // << " pm "
-    // << pdf.yield_overRec().getPropagatedError(*result)
-    // << " events";
-  }
-  // Bu2D0hstLegend << "B^{" + EnumToLabel(charge) +
-  //                      "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //                      EnumToLabel(daughters, charge) +
-  //                      "#font[132]{]}_{D^{0}}" + HstLabel(bachelor) + "^{" +
-  //                      EnumToLabel(charge) + "}";
-  // if (fitBool == true && labelString != "TOY") {
-  //   Bu2D0hstLegend << " ~ " << pdf.yield_Bu2D0hst().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bu2D0hst().getPropagatedError(*result) << " events";
-  // }
-  // Bd2DsthLegend
-  //     << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-  //            EnumToLabel(daughters, charge) +
-  //            "#font[132]{]}_{D^{0}}#pi^{#pm}#font[132]{]}_{D^{+}*}" +
-  //            EnumToLabel(bachelor) + "^{-}";
-  // if (fitBool == true && labelString != "TOY") {
-  //   Bd2DsthLegend << " ~ " << pdf.yield_Bd2Dsth().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bd2Dsth().getPropagatedError(*result) << " events";
-  // }
-  misRecLegend << "Mis-Reconstructed Bkg";
-  if (fitBool == true && labelString != "TOY") {
-    misRecLegend << " ~ " << pdf.yield_misRec().getVal();
-    // << " pm "
-    // << pdf.yield_misRec().getPropagatedError(*result) << " events";
-  }
+  misRecLegendBu << "B^{" + EnumToLabel(charge) +
+                      "}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+                      HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "},";
+  misRecLegendBd << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) +
+                      "#font[132]{]}_{D^{0}}#pi^{#pm}#font[132]{]}_{D^{+}*}" +
+                      EnumToLabel(bachelor) + "^{#mp}";
   Bu2Dst0hst_Dst02D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
              HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  if (fitBool == true && labelString != "TOY") {
-    Bu2Dst0hst_Dst02D0pi0Legend << " ~ "
-                                << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal();
-    // << " pm "
-    // << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getPropagatedError(*result)
-    // << " events";
-  }
-  combLegend << "Combinatoric Bkg";
-  if (fitBool == true && labelString != "TOY" && neutral == Neutral::pi0) {
-    combLegend << " ~ " << pdf.yield_Comb().getVal();
-    // << " pm "
-    // << pdf.yield_comb().getPropagatedError(*result) << " events";
-  }
+  combLegend << "Combinatorial Bkg";
+  // if (fitBool == true && labelString != "TOY") {
+  //   Bu2Dst0h_Dst02D0gammaLegend << " ~ "
+  //                               << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
+  //   // << " events";
+  //   Bu2Dst0h_Dst02D0pi0Legend
+  //       << " ~ " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
+  //   // << " events";
+  //   Bu2Dst0hst_Dst02D0gammaLegend
+  //       << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
+  //   // << " events";
+  //   overRecLegend << " ~ " << pdf.yield_overRec().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_overRec().getPropagatedError(*result)
+  //   // << " events";
+  //   misRecLegendBd << " ~ " << pdf.yield_misRec().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_misRec().getPropagatedError(*result) << " events";
+  //   Bu2Dst0hst_Dst02D0pi0Legend << " ~ "
+  //                               << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal();
+  //   // << " pm "
+  //   // << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getPropagatedError(*result)
+  //   // << " events";
+  //   // if (neutral == Neutral::pi0) {
+  //   //   combLegend << " ~ " << pdf.yield_Comb().getVal();
+  //   //   // << " pm "
+  //   //   // << pdf.yield_comb().getPropagatedError(*result) << " events";
+  //   // }
+  // }
 
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_Dst02D0pi0Hist.get(),
                   Bu2Dst0h_Dst02D0pi0Legend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
                   Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
+  legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
+  legend.AddEntry(misRecHist.get(), misRecLegendBu.str().c_str(), "l");
+  legend.AddEntry(blankHist.get(), misRecLegendBd.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
                   Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
-  legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
                   Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
-  legend.AddEntry(misRecHist.get(), misRecLegend.str().c_str(), "l");
   // if (neutral == Neutral::pi0) {
   //   legend.AddEntry(combHist.get(), combLegend.str().c_str(), "l");
   // }
-  // legend.AddEntry(Bu2D0hstHist.get(), Bu2D0hstLegend.str().c_str(), "l");
-  // legend.AddEntry(Bd2DsthHist.get(), Bd2DsthLegend.str().c_str(), "l");
 
   TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
-  auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "blankHist", 1, 0, 1);
-  blankHist->SetLineColor(kWhite);
-  blankHist->SetLineWidth(2);
   lumiLegend.SetTextSize(0.03);
   lumiLegend.SetLineColor(kWhite);
   lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
