@@ -76,7 +76,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
-                   bool fitBool) {
+                   bool fitBool, Configuration &config) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -100,9 +100,16 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
        EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
        "^{" + EnumToLabel(charge) + "}")
           .c_str())));
-
+  
+  if (neutral == Neutral::pi0) {
+    config.deltaMass().setRange("selected", 160, 210);
+  } else {
+    config.deltaMass().setRange("selected", 180, 210);
+  }
+  
   fullDataSet.plotOn(
       frame.get(),
+      RooFit::CutRange("selected"),
       RooFit::Cut(("fitting==fitting::" +
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
@@ -115,6 +122,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // if (fitBool == true) {
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -126,6 +134,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
     // In 2D, we have to plot the 2D PDF on the frame
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -135,6 +144,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -144,6 +154,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -153,6 +164,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -162,6 +174,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -171,6 +184,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
+        RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -475,10 +489,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
   PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,
-                categories, legend, lumiLegend, outputDir, fitBool);
+                categories, legend, lumiLegend, outputDir, fitBool, config);
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
   PlotComponent(Variable::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, lumiLegend, outputDir, fitBool);
+                categories, legend, lumiLegend, outputDir, fitBool, config);
 }
 
 // Plot in 2D: data, PDF and residuals
