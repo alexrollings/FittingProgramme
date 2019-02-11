@@ -109,7 +109,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   
   fullDataSet.plotOn(
       frame.get(),
-      RooFit::CutRange("selected"),
+      // RooFit::CutRange("selected"),
       RooFit::Cut(("fitting==fitting::" +
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
@@ -122,7 +122,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   // if (fitBool == true) {
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -134,7 +134,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
     // In 2D, we have to plot the 2D PDF on the frame
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -144,7 +144,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -154,7 +154,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -164,7 +164,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -174,7 +174,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -184,7 +184,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::NumCPU(8, 2));
     simPdf.plotOn(
         frame.get(),
-        RooFit::ProjectionRange("selected"),
+        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -1639,7 +1639,7 @@ int main(int argc, char **argv) {
 
   // Raise lower mass boundary in delta mass for pi0 plots 
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
-    config.deltaMass().setMin(130);
+    config.deltaMass().setMin(134);
   }
 
   if (toys == Toys::none) {
