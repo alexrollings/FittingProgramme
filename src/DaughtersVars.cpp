@@ -8,7 +8,7 @@ template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : R_CP_overRec_(),
       ratioDst0KDst0pi_overRec_(new RooRealVar(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Daughters::kpi))
+          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::kpi))
               .c_str(),
           "", 0.07768, 0, 1)),  // CHECK
       ratioDst0KDst0pi_misRec_(
@@ -26,7 +26,7 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           ("R_CP_overRec_" + ComposeName(uniqueId, Daughters::kk)).c_str(), "",
           1, 0.5, 1.5),
       ratioDst0KDst0pi_overRec_(new RooFormulaVar(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Daughters::kk))
+          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::kk))
               .c_str(),
           "", "@0*@1",
           RooArgList(DaughtersVars<Daughters::kpi>::Get(uniqueId)
@@ -47,7 +47,7 @@ DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
           ("R_CP_overRec_" + ComposeName(uniqueId, Daughters::pipi)).c_str(), "",
           1, 0.5, 1.5),
       ratioDst0KDst0pi_overRec_(new RooFormulaVar(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Daughters::pipi))
+          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::pipi))
               .c_str(),
           "", "@0*@1",
           RooArgList(DaughtersVars<Daughters::kpi>::Get(uniqueId)
@@ -66,7 +66,7 @@ template <>
 DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
     : R_CP_overRec_(),
       ratioDst0KDst0pi_overRec_(new RooRealVar(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Daughters::pik))
+          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::pik))
               .c_str(),
           "", 0.07768, 0, 1)),  // CHECK
       ratioDst0KDst0pi_misRec_(
