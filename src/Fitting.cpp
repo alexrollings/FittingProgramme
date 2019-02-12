@@ -1192,26 +1192,28 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   // Label plots to indicate Toy
   std::string lumiString = "TOY";
   // Loop over daughters again to plot correct PDFs
-  for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
-               outputDir, fitBool, lumiString, result.get());
-    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
-  }
   if (fitBool == true) {
     result->Print("v");
-    std::cout << "Printed result.\n";
-    TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
-                              1000);
-    std::cout << "Created canvas.\n";
-    correlationCanvas.cd();
-    std::cout << "Extracting correlation histogram from result...\n";
-    result->correlationHist()->Draw("colz");
-    std::cout << "Extracted correlation histogram from result.\n";
-    correlationCanvas.Update();
-    std::cout << "Updated canvas.\n";
-    correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
-    std::cout << "Save to pdf file.\n";
+    TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
+    TH2* corrHist = result->correlationHist();
+    corrHist->SetStats(0);
+    corrHist->SetTitle(" ");
+    corrCanvas.cd();
+    gStyle->SetLabelSize(0.005, "XY");
+    gStyle->SetLabelSize(0.015, "Z");
+    gPad->SetLeftMargin(0.3);
+    gPad->SetRightMargin(0.2);
+    gPad->SetBottomMargin(0.21);
+    gPad->SetTopMargin(0.05);
+    corrHist->Draw("colz");
+    corrCanvas.Update();
+    corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
   }
+  // for (auto &p : pdfs) {
+  //   Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
+  //              outputDir, fitBool, lumiString, result.get());
+  //   Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
+  // }
 }
 
 // Save all info on variables: value, error; EDM, covariance matrix quality and
@@ -1796,16 +1798,20 @@ int main(int argc, char **argv) {
 
     if (fitBool == true) {
       result->Print("v");
-      std::cout << "Printed result.\n";
-      TCanvas correlationCanvas("correlationCanvas", "correlationCanvas", 1000,
-                                1000);
-      std::cout << "Created canvas.\n";
-      correlationCanvas.cd();
-      std::cout << "Extracting correlation histogram from result...\n";
-      result->correlationHist()->Draw("colz");
-      std::cout << "Extracted correlation histogram from result.\n";
-      correlationCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
-      std::cout << "Save to pdf file.\n";
+      TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
+      TH2 *corrHist = result->correlationHist();
+      corrHist->SetStats(0);
+      corrHist->SetTitle(" ");
+      corrCanvas.cd();
+      gStyle->SetLabelSize(0.005, "XY");
+      gStyle->SetLabelSize(0.015, "Z");
+      gPad->SetLeftMargin(0.3);
+      gPad->SetRightMargin(0.2);
+      gPad->SetBottomMargin(0.21);
+      gPad->SetTopMargin(0.05);
+      corrHist->Draw("colz");
+      corrCanvas.Update();
+      corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
     }
 
   } else {
