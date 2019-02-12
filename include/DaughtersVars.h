@@ -15,7 +15,8 @@
 // your
 // class/function (unless you explicitly specialize, see below).
 
-template <Daughters daughters> class DaughtersVars {
+template <Daughters daughters>
+class DaughtersVars {
 
   // One template specialization == One entirely separate class in practice
   // These will give two different instances:
@@ -23,13 +24,42 @@ template <Daughters daughters> class DaughtersVars {
   //   DaughtersVars<Daughters::pi0>::Get()
   // All happens automatically :-)
   
-public:  
-  static DaughtersVars<daughters> &Get() {
-    static DaughtersVars<daughters> singleton;
-    return singleton;
+ public:
+  // Inline Constructor
+  DaughtersVars(int uniqueId_);
+  // Inline Destructor - can both be implemented externally too:
+  ~DaughtersVars() {}
+  // Class Human
+  // {
+  // public:
+  //  ~Human(); //Destructor declaration
+  // };
+  //:: is the scoping operator. Destructor definition/implementation
+  // Human::~Human();
+  // { // code }
+  // Invoked when a class is deleted or goes out of scope: good place to reset
+  // variables/release dynamically allocated memory
+
+  using This_t = DaughtersVars<daughters>;
+
+  // Get() method of PDF now doesn't always return the same PDF, but the same
+  // PDF for the given ID
+  static This_t &Get(int uniqueId_) {
+    static std::map<int, std::shared_ptr<This_t>> singletons;
+    // An iterator to a map is a std::pair<key, value>, so we need to call
+    // i->second to get the value
+    auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
+    if (it == singletons.end()) {
+      // If it doesn't, create it as a new unique_ptr by calling emplace, which
+      // will forward the pointer to the constructor of std::unique_ptr
+      it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
+               .first;
+    }
+    return *it->second;
   }
 
   // If RooShit wasn't so shit we would pass a const reference
+  int uniqueId() { return uniqueId_; }
   // RooRealVar &R_cp_Bu2D0H() { return R_cp_Bu2D0H_; }
   // RooConstVar &R_cp_Bu2D0Hst() { return R_cp_Bu2D0Hst_; }
   // RooAbsReal &R_Dk_vs_Dpi_Bu2D0H() { return *R_Dk_vs_Dpi_Bu2D0H_; }
@@ -39,11 +69,10 @@ public:
 private:
   // When we DO need to specialize certain cases, we can still do that (see
   // below)...
-  DaughtersVars();
-  ~DaughtersVars() {}
 
   // Indicate if only used by one daughters
 
+  int uniqueId_;
   // RooRealVar R_cp_Bu2D0H_;
   // RooConstVar R_cp_Bu2D0Hst_;
   // std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2D0H_;
@@ -55,8 +84,8 @@ private:
 // different
 
 // ...by telling it exactly which specializations we are providing:
-template <> DaughtersVars<Daughters::kpi>::DaughtersVars();
-template <> DaughtersVars<Daughters::kk>::DaughtersVars();
-template <> DaughtersVars<Daughters::pipi>::DaughtersVars();
-template <> DaughtersVars<Daughters::pik>::DaughtersVars();
+template <> DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId);
+template <> DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId);
+template <> DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId);
+template <> DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId);
 // Then we can safely put these in the .cpp-file somewhere to be linked later.

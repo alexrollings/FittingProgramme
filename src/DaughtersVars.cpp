@@ -4,7 +4,7 @@
 // Daughters specializations
 // Make general and have a switch statement for daughtersSF()
 template <>
-DaughtersVars<Daughters::kpi>::DaughtersVars()
+DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     // : R_cp_Bu2D0H_(), R_cp_Bu2D0Hst_(),
       // R_Dk_vs_Dpi_Bu2D0H_(
       //     new RooRealVar("R_Dk_vs_Dpi_Bu2D0H_kpi",
@@ -19,7 +19,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars()
     : daughtersSF_(1.0) {}
 
 template <>
-DaughtersVars<Daughters::kk>::DaughtersVars()
+DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
     // : R_cp_Bu2D0H_("R_cp_Bu2D0H_kk",
     //                "R_dk_vs_dpi_Bu2D0H[kk]/R_dk_vs_dpi_Bu2D0H[kpi]", 1, 0.5,
     //                1.5),
@@ -43,7 +43,7 @@ DaughtersVars<Daughters::kk>::DaughtersVars()
     : daughtersSF_(0.102) {}
 
 template <>
-DaughtersVars<Daughters::pipi>::DaughtersVars()
+DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
     // : R_cp_Bu2D0H_("R_cp_Bu2D0H_pipi",
     //                "R_dk_vs_dpi_Bu2D0H[pipi]/R_dk_vs_dpi_Bu2D0H[kpi]", 1, 0.5,
     //                1.5),
@@ -67,7 +67,7 @@ DaughtersVars<Daughters::pipi>::DaughtersVars()
     : daughtersSF_(0.0361) {}
 
 template <>
-DaughtersVars<Daughters::pik>::DaughtersVars()
+DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
     // : R_cp_Bu2D0H_(), R_cp_Bu2D0Hst_(),
     //   R_Dk_vs_Dpi_Bu2D0H_(
     //       new RooRealVar("R_Dk_vs_Dpi_Bu2D0H_pik",
