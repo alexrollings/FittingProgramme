@@ -28,3 +28,7 @@ std::string ComposeName(int uniqueId, Neutral neutral, Daughters daughters) {
 std::string ComposeName(int uniqueId, Neutral neutral) {
   return EnumToString(neutral) + "_" + std::to_string(uniqueId);
 }
+
+std::string ComposeName(int uniqueId, Daughters daughters) {
+  return EnumToString(daughters) + "_" + std::to_string(uniqueId);
+}

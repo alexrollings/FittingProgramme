@@ -352,7 +352,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
           RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_overRec(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
+                     DaughtersVars<daughters>::Get(uniqueId)
                          .ratioDst0KDst0pi_overRec(),
                      Configuration::Get().pidEff()))),
       N_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
@@ -396,7 +396,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
           RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_misRec(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
+                     DaughtersVars<daughters>::Get(uniqueId)
                          .ratioDst0KDst0pi_misRec(),
                      Configuration::Get().pidEff()))) {}
 
@@ -580,7 +580,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_overRec(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
+                     DaughtersVars<daughters>::Get(uniqueId)
                          .ratioDst0KDst0pi_overRec(),
                      Configuration::Get().pidEff()))),
       N_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
@@ -624,6 +624,6 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
                                                   daughters>::Get(uniqueId)
                          .N_misRec(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
+                     DaughtersVars<daughters>::Get(uniqueId)
                          .ratioDst0KDst0pi_misRec(),
                      Configuration::Get().pidEff()))) {}

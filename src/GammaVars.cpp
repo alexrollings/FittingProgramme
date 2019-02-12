@@ -646,13 +646,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      ratioDst0KDst0pi_overRec_(
-          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n overRec mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.07768, 0, 1),
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0pi0_meanDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +
@@ -1128,14 +1121,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      // -------------------- MIS RECONSTRUCTED RATIO -------------------- //
-      ratioDst0KDst0pi_misRec_(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.05, 0, 0.1),
       // -------------------- DST0D0 BACKGROUND -------------------- //
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),

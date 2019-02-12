@@ -523,14 +523,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      // -------------------- MIS RECONSTRUCTED RATIO -------------------- //
-      ratioDst0KDst0pi_misRec_(
-          ("ratioDst0KDst0pi_misRec_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n misRec mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.05, 0, 1),
       // -------------------- OVER RECONSTRUCTED BKG -------------------- //
       overRec_thresholdDelta_(
           ("overRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::pi0))
@@ -648,13 +640,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_overRec_(
-          ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n overRec mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.07768, 0, 1),  // CHECK
       // -------------------- Pi0 PART RECONSTRUCTED BKG --------------------
       Bu2Dst0hst_Dst02D0pi0_meanDelta_(
           ("Bu2Dst0hst_Dst02D0pi0_meanDelta_" +

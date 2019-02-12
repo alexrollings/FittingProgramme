@@ -60,10 +60,9 @@ class DaughtersVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  // RooRealVar &R_cp_Bu2D0H() { return R_cp_Bu2D0H_; }
-  // RooConstVar &R_cp_Bu2D0Hst() { return R_cp_Bu2D0Hst_; }
-  // RooAbsReal &R_Dk_vs_Dpi_Bu2D0H() { return *R_Dk_vs_Dpi_Bu2D0H_; }
-  // RooAbsReal &R_Dk_vs_Dpi_Bu2D0Hst() { return *R_Dk_vs_Dpi_Bu2D0Hst_; }
+  RooRealVar &R_CP_overRec() { return R_CP_overRec_; }
+  RooAbsReal &ratioDst0KDst0pi_overRec() { return *ratioDst0KDst0pi_overRec_; }
+  RooRealVar &ratioDst0KDst0pi_misRec () { return ratioDst0KDst0pi_misRec_; }
   const double &daughtersSF() { return daughtersSF_; }
 
 private:
@@ -73,10 +72,9 @@ private:
   // Indicate if only used by one daughters
 
   int uniqueId_;
-  // RooRealVar R_cp_Bu2D0H_;
-  // RooConstVar R_cp_Bu2D0Hst_;
-  // std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2D0H_;
-  // std::unique_ptr<RooAbsReal> R_Dk_vs_Dpi_Bu2D0Hst_;
+  RooRealVar R_CP_overRec_;
+  std::unique_ptr<RooAbsReal> ratioDst0KDst0pi_overRec_;
+  RooRealVar ratioDst0KDst0pi_misRec_;
   const double daughtersSF_;
 };
 
