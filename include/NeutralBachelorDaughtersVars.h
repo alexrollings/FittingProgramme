@@ -3,6 +3,7 @@
 #include "DaughtersVars.h"
 #include "GlobalVars.h"
 #include "NeutralBachelorDaughtersVars.h"
+#include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
 #include "RooAbsReal.h"
 #include "RooFormulaVar.h"
