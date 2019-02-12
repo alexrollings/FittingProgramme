@@ -1194,17 +1194,17 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   // Loop over daughters again to plot correct PDFs
   if (fitBool == true) {
     result->Print("v");
-    TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
+    TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
     TH2* corrHist = result->correlationHist();
     corrHist->SetStats(0);
     corrHist->SetTitle(" ");
     corrCanvas.cd();
-    gStyle->SetLabelSize(0.005, "XY");
-    gStyle->SetLabelSize(0.015, "Z");
-    gPad->SetLeftMargin(0.3);
-    gPad->SetRightMargin(0.2);
-    gPad->SetBottomMargin(0.21);
+    gPad->SetLeftMargin(0.2);
+    gPad->SetRightMargin(0.1);
+    gPad->SetBottomMargin(0.15);
     gPad->SetTopMargin(0.05);
+    corrHist->SetLabelSize(0.015, "XY");
+    corrHist->SetLabelSize(0.02, "Z");
     corrHist->Draw("colz");
     corrCanvas.Update();
     corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
@@ -1803,7 +1803,7 @@ int main(int argc, char **argv) {
       corrHist->SetStats(0);
       corrHist->SetTitle(" ");
       corrCanvas.cd();
-      gStyle->SetLabelSize(0.005, "XY");
+      gStyle->SetLabelSize(0.001, "XY");
       gStyle->SetLabelSize(0.015, "Z");
       gPad->SetLeftMargin(0.3);
       gPad->SetRightMargin(0.2);

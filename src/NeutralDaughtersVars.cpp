@@ -66,24 +66,24 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, 0, 2.5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0gamma_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
-      //         .c_str(),
-      //     "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0pi0_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
-      //         .c_str(),
-      //     "", 1, 0.5, 1.5),
-      R_CP_Bu2Dst0hst_Dst02D0gamma_(),
-      R_CP_Bu2Dst0hst_Dst02D0pi0_(),
+          "", 1, 0, 2.5),
+      R_CP_Bu2Dst0hst_Dst02D0gamma_(
+          ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
+              .c_str(),
+          "", 1, 0, 2.5),
+      R_CP_Bu2Dst0hst_Dst02D0pi0_(
+          ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
+              .c_str(),
+          "", 1, 0, 2.5),
+      // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
+      // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
@@ -102,32 +102,32 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
               NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
                   .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
               R_CP_Bu2Dst0h_Dst02D0pi0_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(
-      //         NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
-      //             .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-      //         R_CP_Bu2Dst0hst_Dst02D0gamma_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(
-      //         NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
-      //             .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-      //         R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::pi0,
-                                                      Daughters::kk>(
-              uniqueId)),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::pi0,
-                                                        Daughters::kk>(
-              uniqueId)) {}
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+              R_CP_Bu2Dst0hst_Dst02D0gamma_))),
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+              R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::pi0,
+      //                                                 Daughters::kk>(
+      //         uniqueId)),
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::pi0,
+      //                                                   Daughters::kk>(
+      //         uniqueId)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
@@ -136,24 +136,24 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, 0, 2.5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0gamma_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
-      //         .c_str(),
-      //     "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0pi0_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
-      //         .c_str(),
-      //     "", 1, 0.5, 1.5),
-      R_CP_Bu2Dst0hst_Dst02D0gamma_(),
-      R_CP_Bu2Dst0hst_Dst02D0pi0_(),
+          "", 1, 0, 2.5),
+      R_CP_Bu2Dst0hst_Dst02D0gamma_(
+          ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
+              .c_str(),
+          "", 1, 0, 2.5),
+      R_CP_Bu2Dst0hst_Dst02D0pi0_(
+          ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
+              .c_str(),
+          "", 1, 0, 2.5),
+      // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
+      // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
@@ -172,32 +172,32 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
               NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
                   .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
               R_CP_Bu2Dst0h_Dst02D0pi0_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(
-      //         NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
-      //             .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-      //         R_CP_Bu2Dst0hst_Dst02D0gamma_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(
-      //         NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
-      //             .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-      //         R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::pi0,
-                                                      Daughters::pipi>(
-              uniqueId)),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::pi0,
-                                                        Daughters::pipi>(
-              uniqueId)) {}
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+              R_CP_Bu2Dst0hst_Dst02D0gamma_))),
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
+              .c_str(),
+          "@0*@1",
+          RooArgList(
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+              R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::pi0,
+      //                                                 Daughters::pipi>(
+      //         uniqueId)),
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::pi0,
+      //                                                   Daughters::pipi>(
+      //         uniqueId)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersVars(
@@ -258,18 +258,18 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
               .c_str(),
           "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0gamma_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
-      //         .c_str(),
-      //     "", 1, 0, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0pi0_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
-      //         .c_str(),
-      //     "", 1, 0, 1.5),
-      R_CP_Bu2Dst0hst_Dst02D0gamma_(),
-      R_CP_Bu2Dst0hst_Dst02D0pi0_(),
+      R_CP_Bu2Dst0hst_Dst02D0gamma_(
+          ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
+              .c_str(),
+          "", 1, 0, 1.5),
+      R_CP_Bu2Dst0hst_Dst02D0pi0_(
+          ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
+              .c_str(),
+          "", 1, 0, 1.5),
+      // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
+      // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
@@ -288,32 +288,32 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
                          uniqueId)
                          .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
                      R_CP_Bu2Dst0h_Dst02D0pi0_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-      //                    uniqueId)
-      //                    .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-      //                R_CP_Bu2Dst0hst_Dst02D0gamma_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-      //                    uniqueId)
-      //                    .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-      //                R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::gamma,
-                                                      Daughters::kk>(
-              uniqueId)),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::gamma,
-                                                        Daughters::kk>(
-              uniqueId)) {}
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
+                         uniqueId)
+                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+                     R_CP_Bu2Dst0hst_Dst02D0gamma_))),
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
+                         uniqueId)
+                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+                     R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::gamma,
+      //                                                 Daughters::kk>(
+      //         uniqueId)),
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::gamma,
+      //                                                   Daughters::kk>(
+      //         uniqueId)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
@@ -328,18 +328,18 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
               .c_str(),
           "", 1, 0.5, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0gamma_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
-      //         .c_str(),
-      //     "", 1, 0, 1.5),
-      // R_CP_Bu2Dst0hst_Dst02D0pi0_(
-      //     ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
-      //         .c_str(),
-      //     "", 1, 0, 1.5),
-      R_CP_Bu2Dst0hst_Dst02D0gamma_(),
-      R_CP_Bu2Dst0hst_Dst02D0pi0_(),
+      R_CP_Bu2Dst0hst_Dst02D0gamma_(
+          ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
+              .c_str(),
+          "", 1, 0, 1.5),
+      R_CP_Bu2Dst0hst_Dst02D0pi0_(
+          ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
+              .c_str(),
+          "", 1, 0, 1.5),
+      // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
+      // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
@@ -358,32 +358,32 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
                          uniqueId)
                          .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
                      R_CP_Bu2Dst0h_Dst02D0pi0_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-      //                    uniqueId)
-      //                    .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-      //                R_CP_Bu2Dst0hst_Dst02D0gamma_))),
-      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
-      //     ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-      //      ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
-      //         .c_str(),
-      //     "@0*@1",
-      //     RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-      //                    uniqueId)
-      //                    .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-      //                R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::gamma,
-                                                      Daughters::pipi>(
-              uniqueId)),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::gamma,
-                                                        Daughters::pipi>(
-              uniqueId)) {}
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
+                         uniqueId)
+                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+                     R_CP_Bu2Dst0hst_Dst02D0gamma_))),
+      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(new RooFormulaVar(
+          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
+                         uniqueId)
+                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+                     R_CP_Bu2Dst0hst_Dst02D0pi0_))) {}
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0<Neutral::gamma,
+      //                                                 Daughters::pipi>(
+      //         uniqueId)),
+      // ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
+      //     Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma<Neutral::gamma,
+      //                                                   Daughters::pipi>(
+      //         uniqueId)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersVars(

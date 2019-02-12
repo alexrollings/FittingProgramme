@@ -24,7 +24,7 @@ template <>
 DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
     : R_CP_overRec_(
           ("R_CP_overRec_" + ComposeName(uniqueId, Daughters::kk)).c_str(), "",
-          1, 0.5, 1.5),
+          1, 0.5, 2),
       ratioDst0KDst0pi_overRec_(new RooFormulaVar(
           ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::kk))
               .c_str(),
@@ -45,7 +45,7 @@ template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
     : R_CP_overRec_(
           ("R_CP_overRec_" + ComposeName(uniqueId, Daughters::pipi)).c_str(), "",
-          1, 0.5, 1.5),
+          1, 0.5, 2),
       ratioDst0KDst0pi_overRec_(new RooFormulaVar(
           ("ratioDst0KDst0pi_overRec_" + ComposeName(uniqueId, Daughters::pipi))
               .c_str(),
