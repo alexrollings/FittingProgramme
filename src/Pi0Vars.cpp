@@ -212,14 +212,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_(
-          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0pi0 mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.07930, 0, 1),
       // ------------------ NO CROSS FEED BECAUSE OF VETO ------------------ //
       Bu2Dst0h_Dst02D0gamma_meanDelta_(),
       Bu2Dst0h_Dst02D0gamma_sigma1Delta_(),
@@ -359,14 +351,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(
-          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0gamma mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.07930, 0, 1),  //, 0.0, 0.1),
       // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
       bkg_thresholdDelta_(),
       bkg_cDelta_(),
@@ -819,14 +803,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           0.95),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0pi0 mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.02, 0, 1),
       // ------------------ Gamma PART RECONSTRUCTED BACKGROUND
       // ------------------ //
       Bu2Dst0hst_Dst02D0gamma_meanDelta_(),
@@ -912,15 +888,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0gamma "
-           "mode " +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          0.02, 0, 1),  //, 0.0, 0.1),
       // -------------------- EXPONENTIAL BACKGROUND -------------------- //
       pdfDelta_Comb_(
           ("pdfDelta_Comb_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),

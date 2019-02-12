@@ -8,14 +8,14 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(int unqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
                          ComposeName(neutral, daughters, uniqueId))
                             .c_str(),
-                        "", 0.078, 0.05, 0.1);
+                        "", 0.07930, 0, 1),
 }
 
 RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(int unqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
                          ComposeName(neutral, daughters, uniqueId))
                             .c_str(),
-                        "", 0.078, 0.05, 0.1);
+                        "", 0.07930, 0, 1),
 }
 
 template <Neutral neutral, Daughters daughters>
@@ -23,7 +23,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(int unqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
                          ComposeName(neutral, daughters, uniqueId))
                             .c_str(),
-                        "", 0.078, 0.05, 0.1);
+                        "", 0.02, 0, 1),
 }
 
 template <Neutral neutral, Daughters daughters>
@@ -31,7 +31,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(int unqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
                          ComposeName(neutral, daughters, uniqueId))
                             .c_str(),
-                        "", 0.078, 0.05, 0.1);
+                        "", 0.02, 0, 1),
 }
 
 template <>

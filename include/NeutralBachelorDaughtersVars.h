@@ -1,9 +1,9 @@
 #pragma once
 #include "Configuration.h"
+#include "DaughtersVars.h"
 #include "GlobalVars.h"
 #include "NeutralBachelorDaughtersVars.h"
 #include "NeutralVars.h"
-#include "DaughtersVars.h"
 #include "RooAbsReal.h"
 #include "RooFormulaVar.h"
 // Templated classes/functions mean that the compiler will automatically create
@@ -321,12 +321,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0h_Dst02D0gamma(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0h_Dst02D0gamma(),
+              NeutralDaughtersVars<Neutral::gamma, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(),
+              Configuration::Get().pidEff()))),
       N_Bu2Dst0h_Dst02D0pi0_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
@@ -335,12 +336,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0h_Dst02D0pi0(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0h_Dst02D0pi0(),
+              NeutralDaughtersVars<Neutral::gamma, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
+              Configuration::Get().pidEff()))),
       N_overRec_(new RooFormulaVar(
           ("N_overRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
@@ -363,12 +365,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0hst_Dst02D0pi0(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0hst_Dst02D0pi0(),
+              NeutralDaughtersVars<Neutral::gamma, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+              Configuration::Get().pidEff()))),
       N_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
@@ -378,12 +381,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0hst_Dst02D0gamma(),
-                     NeutralVars<Neutral::gamma>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0hst_Dst02D0gamma(),
+              NeutralDaughtersVars<Neutral::gamma, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+              Configuration::Get().pidEff()))),
       N_misRec_(new RooFormulaVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
@@ -393,12 +397,12 @@ NeutralBachelorDaughtersVarsImpl<Neutral::gamma, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_misRec(),
-                     DaughtersVars<daughters>::Get(uniqueId)
-                         .ratioDst0KDst0pi_misRec(),
-                     Configuration::Get().pidEff()))) {}
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_misRec(),
+              DaughtersVars<daughters>::Get(uniqueId).ratioDst0KDst0pi_misRec(),
+              Configuration::Get().pidEff()))) {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
@@ -451,7 +455,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
           DaughtersVars<daughters>::Get(uniqueId).daughtersSF() * 1185, 0,
-          DaughtersVars<daughters>::Get(uniqueId).daughtersSF() * 55000)),  // RAISE
+          DaughtersVars<daughters>::Get(uniqueId).daughtersSF() *
+              55000)),  // RAISE
       N_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
@@ -496,7 +501,8 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::pi, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, daughters))
               .c_str(),
           DaughtersVars<daughters>::Get(uniqueId).daughtersSF() * 30325, 0,
-          DaughtersVars<daughters>::Get(uniqueId).daughtersSF() * 55000)) /*LOWER*/ {}
+          DaughtersVars<daughters>::Get(uniqueId).daughtersSF() *
+              55000)) /*LOWER*/ {}
 
 template <Daughters daughters>
 NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
@@ -549,12 +555,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0h_Dst02D0gamma(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0h_Dst02D0gamma(),
+              NeutralDaughtersVars<Neutral::pi0, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(),
+              Configuration::Get().pidEff()))),
       N_Bu2Dst0h_Dst02D0pi0_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -563,12 +570,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0h_Dst02D0pi0(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0h_Dst02D0pi0(),
+              NeutralDaughtersVars<Neutral::pi0, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(),
+              Configuration::Get().pidEff()))),
       N_overRec_(new RooFormulaVar(
           ("N_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -591,12 +599,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0hst_Dst02D0pi0(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0hst_Dst02D0pi0(),
+              NeutralDaughtersVars<Neutral::pi0, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(),
+              Configuration::Get().pidEff()))),
       N_Bu2Dst0hst_Dst02D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -606,12 +615,13 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_Bu2Dst0hst_Dst02D0gamma(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId)
-                         .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
-                     Configuration::Get().pidEff()))),
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_Bu2Dst0hst_Dst02D0gamma(),
+              NeutralDaughtersVars<Neutral::pi0, daughters>::Get(uniqueId)
+                  .ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(),
+              Configuration::Get().pidEff()))),
       N_misRec_(new RooFormulaVar(
           ("N_misRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -621,9 +631,9 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
           "@0*@1*@2",
-          RooArgList(NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                  daughters>::Get(uniqueId)
-                         .N_misRec(),
-                     DaughtersVars<daughters>::Get(uniqueId)
-                         .ratioDst0KDst0pi_misRec(),
-                     Configuration::Get().pidEff()))) {}
+          RooArgList(
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           daughters>::Get(uniqueId)
+                  .N_misRec(),
+              DaughtersVars<daughters>::Get(uniqueId).ratioDst0KDst0pi_misRec(),
+              Configuration::Get().pidEff()))) {}

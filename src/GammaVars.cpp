@@ -230,14 +230,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(
-          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0gamma mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.07930, -1, 1),  //, 0.0, 0.1),
       // -------------------- PARTIAL PI0 -------------------- //
       Bu2Dst0h_Dst02D0pi0_meanDelta_(("Bu2Dst0h_Dst02D0pi0_meanDelta_" +
                                       ComposeName(uniqueId, Neutral::gamma))
@@ -482,14 +474,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_(
-          ("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0h_Dst02D0pi0 mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.07930, -1, 1),  //, 0.0, 0.1),
       // ------------------ DSTD0BKG PARAMETERS (SHARED) ------------------ //
       bkg_thresholdDelta_(
           ("bkg_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
@@ -775,14 +759,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_(
-          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0pi0 mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.02, -1, 1),
       // ------------------ Gamma PART RECONSTRUCTED BACKGROUND
       // ------------------ //
       Bu2Dst0hst_Dst02D0gamma_meanDelta_(
@@ -952,16 +928,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           1),
-      ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_(
-          ("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          ("Ratio of Dst0K yield w.r.t. Dst0pi n Bu2Dst0hst_Dst02D0gamma "
-           "mode " +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          0.02, 0, 1),  //, 0.0, 0.1),
-      // ------------------ MIS-RECONSTRUCTED BACKGROUND ------------------ //
       // ------------------ Bu2D0hst COMPONENT ------------------ //
       Bu2D0hst_thresholdDelta_(
           ("Bu2D0hst_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
