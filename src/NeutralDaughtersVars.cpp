@@ -66,22 +66,22 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0hst_Dst02D0gamma_(
           ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0hst_Dst02D0pi0_(
           ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
       // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
@@ -136,22 +136,22 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0hst_Dst02D0gamma_(
           ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       R_CP_Bu2Dst0hst_Dst02D0pi0_(
           ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 2.5),
+          "", 1, 0, 5),
       // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
       // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(

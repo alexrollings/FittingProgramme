@@ -515,7 +515,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           ("asymmetry variable Bu2Dst0h_Dst02D0gamma " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)),
+          0.001, -1.0, 2.0)),
       asym_Bu2Dst0h_Dst02D0pi0_(new RooRealVar(
           ("asym_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -523,7 +523,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           ("asymmetry variable Bu2Dst0h_Dst02D0pi0 " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)),
+          0.001, -1.0, 2.0)),
       asym_overRec_(new RooRealVar(
           ("asym_overRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -531,7 +531,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           ("asymmetry variable overRec " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)),
+          0.001, -1.0, 2.0)),
       asym_Bu2Dst0hst_Dst02D0pi0_(new RooRealVar(
           ("asym_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -539,7 +539,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           ("asymmetry variable Bu2Dst0hst_Dst02D0pi0 " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)),
+          0.001, -1.0, 2.0)),
       asym_Bu2Dst0hst_Dst02D0gamma_(new RooRealVar(
           ("asym_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
@@ -547,7 +547,7 @@ NeutralBachelorDaughtersVarsImpl<Neutral::pi0, Bachelor::k, daughters>::
           ("asymmetry variable Bu2Dst0hst_Dst02D0gamma " +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))
               .c_str(),
-          0.001, -1.0, 1.0)),
+          0.001, -1.0, 2.0)),
       N_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k, daughters))

@@ -1192,6 +1192,11 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   // Label plots to indicate Toy
   std::string lumiString = "TOY";
   // Loop over daughters again to plot correct PDFs
+  for (auto &p : pdfs) {
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
+               outputDir, fitBool, lumiString, result.get());
+    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
+  }
   if (fitBool == true) {
     result->Print("v");
     TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
@@ -1209,11 +1214,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
     corrCanvas.Update();
     corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
   }
-  // for (auto &p : pdfs) {
-  //   Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
-  //              outputDir, fitBool, lumiString, result.get());
-  //   Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
-  // }
 }
 
 // Save all info on variables: value, error; EDM, covariance matrix quality and
@@ -1628,6 +1628,7 @@ int main(int argc, char **argv) {
       }
       try {
         chargeVec = ExtractEnumList<Charge>(chargeArg);
+        std::cout << "Using value -charge=[" << chargeArg << "].\n";
       } catch (std::invalid_argument) {
         std::cerr << "charge assignment failed, please specify: "
                      "-charge=[plus,minus] or -charge=[total].\n";
