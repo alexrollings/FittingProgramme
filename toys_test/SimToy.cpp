@@ -24,6 +24,7 @@
 #include "TApplication.h"
 #include "TAxis.h"
 #include "TCanvas.h"
+#include "TApplication.h"
 #include "TChain.h"
 #include "TFile.h"
 #include "TH2.h"
@@ -33,15 +34,19 @@
 #include "TTreeReader.h"
 
 void SimToy() {
+  TApplication app("app", 0, 0);
   RooRandom::randomGenerator()->SetSeed(15);
 
-  int delta_low = 50;
+  int delta_low = 0;
   int delta_high = 210;
 
   int delta_nbins = (delta_high - delta_low) / 2;
 
   RooRealVar deltaMass("Delta_M", "m[D^{*0}] - m[D^{0}]", delta_low, delta_high,
 		       "MeV/c^{2}");
+  
+  deltaMass.setRange("range_pi0", 135, 210);
+  deltaMass.setRange("range_gamma", 50, 210);
 
   deltaMass.setBins(delta_nbins);
 
@@ -100,6 +105,14 @@ void SimToy() {
 				deltaMass, meanDeltaSigGamma2,
 				sigmaDeltaSigGamma2);
 
+  RooRealVar meanDeltaSigGamma3("meanDeltaSigGamma3", "Mean of Sig m[Delta]",
+				25, 20, 30);
+  RooRealVar sigmaDeltaSigGamma3("sigmaDeltaSigGamma3",
+				 "Sigma of pi Delta Gaussian", 10, 0, 20);
+  RooGaussian pdfDeltaSigGamma3("pdfDeltaSigGamma3", "Sig pi Delta PDF",
+				deltaMass, meanDeltaSigGamma3,
+				sigmaDeltaSigGamma3);
+
   // Background
   RooRealVar thDeltaBkgGamma("thDeltaBkgGamma", "", 5.2160e+01);  //, 30, 50);
 
@@ -116,25 +129,44 @@ void SimToy() {
   RooRealVar crossFeed("crossFeed", "", 1.5, 0, 5);
   RooFormulaVar yieldSigGamma2("yieldSigGamma2", "", "@0*@1",
 			       RooArgList(yieldSigPi0, crossFeed));
+  RooRealVar yieldSigGamma3("yieldSigGamma3", "", 2000, 0, 5000);
   RooRealVar yieldBkgGamma("yieldBkgGamma", "", 20000, 0, 50000);
 
   RooArgSet yieldsGamma;
   yieldsGamma.add(yieldSigGamma1);
   yieldsGamma.add(yieldSigGamma2);
+  yieldsGamma.add(yieldSigGamma3);
   yieldsGamma.add(yieldBkgGamma);
   RooArgSet functionsGamma;
   functionsGamma.add(pdfDeltaSigGamma1);
   functionsGamma.add(pdfDeltaSigGamma2);
+  functionsGamma.add(pdfDeltaSigGamma3);
   functionsGamma.add(pdfDeltaBkgGamma);
 
   RooAddPdf pdfGamma("pdfGamma", "", functionsGamma, yieldsGamma);
 
   // Generate datasets
 
-  auto dataPi0 =
+  auto dataPi0_1 =
       std::unique_ptr<RooDataSet>(pdfPi0.generate(RooArgSet(deltaMass), 11000));
-  auto dataGamma = std::unique_ptr<RooDataSet>(
-      pdfGamma.generate(RooArgSet(deltaMass), 23500));
+  std::unique_ptr<RooDataSet> dataPi0;
+  dataPi0 =
+      std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(dataPi0_1->reduce(
+          RooFit::CutRange("range==range::range_pi0"))));
+  if (dataPi0.get() == nullptr) {
+    throw std::runtime_error("Could not reduce pi0 input dataset.");
+  }
+  // dataPi0->Print();
+  auto dataGamma_1 =
+      std::unique_ptr<RooDataSet>(pdfGamma.generate(RooArgSet(deltaMass), 11000));
+  std::unique_ptr<RooDataSet> dataGamma;
+  dataGamma =
+      std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(dataGamma_1->reduce(
+          RooFit::CutRange("range==range::range_gamma"))));
+  if (dataGamma.get() == nullptr) {
+    throw std::runtime_error("Could not reduce gamma input dataset.");
+  }
+  // dataGamma->Print();
 
   RooDataSet combData("combData", "", RooArgSet(deltaMass),
 		      RooFit::Index(neutral),
@@ -147,9 +179,14 @@ void SimToy() {
   simPdf.addPdf(pdfGamma, "gamma");
 
   std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
-      simPdf.fitTo(combData, RooFit::Extended(kTRUE), RooFit::Save(),
-		   RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-		   RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+      simPdf.fitTo(combData, RooFit::Extended(true),
+                   RooFit::Range("range_neutral"),
+                   // RooFit::SumCoefRange("range"),
+                   RooFit::SplitRange(true),
+                   RooFit::Save(),
+                   RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                   RooFit::Offset(true))); 
+                   // RooFit::NumCPU(8, 2)));
 
   // Plot
   std::unique_ptr<RooPlot> framePi0(deltaMass.frame(RooFit::Title("#pi^{0}")));
@@ -190,11 +227,17 @@ void SimToy() {
 		RooFit::ProjWData(neutral, combData),
 		RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
 		RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+  simPdf.plotOn(frameGamma.get(), RooFit::Slice(neutral, "gamma"),
+		RooFit::Components(pdfDeltaSigGamma3.GetName()),
+		RooFit::ProjWData(neutral, combData),
+		RooFit::LineStyle(kDashed), RooFit::Precision(1e-3),
+		RooFit::NumCPU(8, 2));
 
   TCanvas canvas("canvas", "canvas", 1000, 400);
   canvas.SetTitle(" ");
   canvas.Divide(2);
   canvas.cd(1);
+  canvas.SetLogy();
   gPad->SetLeftMargin(0.15);
   framePi0->GetYaxis()->SetTitleOffset(1.4);
   framePi0->Draw();
@@ -206,6 +249,7 @@ void SimToy() {
   canvas.SaveAs("SimToy.pdf");
 
   result->Print("v");
+  app.Run(true);
 }
 
 int main() {
