@@ -362,9 +362,11 @@ Year StringToEnum<Year>(std::string const &year) {
     return Year::y2016;
   } else if (year == "2017") {
     return Year::y2017;
+  } else if (year == "2018") {
+    return Year::y2018;
   }
   throw std::invalid_argument(
-      "Year must take a value in [2011/2012/2015/2016/2017]");
+      "Year must take a value in [2011/2012/2015/2016/2017/2018]");
 }
 
 std::string EnumToString(Year year) {
@@ -379,6 +381,8 @@ std::string EnumToString(Year year) {
       return "2016";
     case Year::y2017:
       return "2017";
+    case Year::y2018:
+      return "2018";
   }
 }
 

@@ -1506,7 +1506,7 @@ int main(int argc, char **argv) {
     // continuing
     ParseArguments args(argc, argv);  // object instantiated
 
-    std::string yearArg("2011,2012,2015,2016,2017");
+    std::string yearArg("2011,2012,2015,2016,2017,2018");
     std::string polarityArg("up,down");
     std::string bachelorArg("pi,k");
     std::string neutralArg("gamma,pi0");
@@ -1668,6 +1668,8 @@ int main(int argc, char **argv) {
         lumi += 1.65;
       } else if (y == Year::y2017) {
         lumi += 1.7;
+      } else if (y == Year::y2018) {
+        lumi += 2.19;
       }
       for (auto &p : polarityVec) {
         for (auto &b : bachelorVec) {
