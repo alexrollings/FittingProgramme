@@ -7,8 +7,10 @@ Configuration::Configuration()
       d0hMass_("", "", 0, 0, ""),
       buPdgId_("", "", 0, 0, ""),
       bachPID_("", "", 0, 0, ""),
-      piPID_("", "", 0, 0, ""),
-      kPID_("", "", 0, 0, ""),
+      h1ID_("", "", 0, 0, ""),
+      h2ID_("", "", 0, 0, ""),
+      h1PID_("", "", 0, 0, ""),
+      h2PID_("", "", 0, 0, ""),
       BDT1_("", "", 0, 0, ""),
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
@@ -63,17 +65,29 @@ Configuration::Configuration()
   bachPID_.setMin(-150);
   bachPID_.setUnit(kNoUnit);
 
-  piPID_.SetName("pi_D_PIDK");
-  piPID_.SetTitle("pi D0 daughter PIDK");
-  piPID_.setMax(150);
-  piPID_.setMin(-150);
-  piPID_.setUnit(kNoUnit);
+  h1ID_.SetName("h1_D_ID");
+  h1ID_.SetTitle("h1 D0 daughter ID");
+  h1ID_.setMax(550);
+  h1ID_.setMin(-550);
+  h1ID_.setUnit(kNoUnit);
 
-  kPID_.SetName("K_D_PIDK");
-  kPID_.SetTitle("K D0 daughter PIDK");
-  kPID_.setMax(150);
-  kPID_.setMin(-150);
-  kPID_.setUnit(kNoUnit);
+  h2ID_.SetName("h2_D_ID");
+  h2ID_.SetTitle("h2 D0 daughter ID");
+  h2ID_.setMax(550);
+  h2ID_.setMin(-550);
+  h2ID_.setUnit(kNoUnit);
+
+  h1PID_.SetName("h1_D_PIDK");
+  h1PID_.SetTitle("h1 D0 daughter PIDK");
+  h1PID_.setMax(150);
+  h1PID_.setMin(-150);
+  h1PID_.setUnit(kNoUnit);
+
+  h2PID_.SetName("h2_D_PIDK");
+  h2PID_.SetTitle("h2 D0 daughter PIDK");
+  h2PID_.setMax(150);
+  h2PID_.setMin(-150);
+  h2PID_.setUnit(kNoUnit);
 
   BDT1_.SetName("BDT1");
   BDT1_.SetTitle("BDT1");
@@ -105,8 +119,10 @@ Configuration::Configuration()
   variableArgSet_.add(d0hMass_);
   variableArgSet_.add(buPdgId_);
   variableArgSet_.add(bachPID_);
-  variableArgSet_.add(piPID_);
-  variableArgSet_.add(kPID_);
+  variableArgSet_.add(h2ID_);
+  variableArgSet_.add(h2ID_);
+  variableArgSet_.add(h1PID_);
+  variableArgSet_.add(h1PID_);
   variableArgSet_.add(BDT1_);
   variableArgSet_.add(BDT2_);
   variableArgSet_.add(hAngle_);

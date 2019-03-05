@@ -1695,29 +1695,48 @@ int main(int argc, char **argv) {
                   } else {
                     std::cout << "inputDataSet extracted... \n";
                     inputDataSet->Print();
-                    RooDataSet *reducedInputDataSet_1 = nullptr;
+                    RooDataSet *reducedInputDataSet_2 = nullptr;
                     if (n == Neutral::pi0) {
-                      reducedInputDataSet_1 =
+                      reducedInputDataSet_2 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0.05&&Pi0_M<185&&Pi0_M>110"));
+                              "Bu_M_DTF>5050&&Bu_M_DTF<5800&&Delta_M>50&&Delta_"
+                              "M<210&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
+                              "110"));
                     } else {
-                      reducedInputDataSet_1 =
+                      reducedInputDataSet_2 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0.05"));
+                              "BDT2>0.05&&BDT2>0.05"));
                     }
-                    RooDataSet *reducedInputDataSet = nullptr;
+                    RooDataSet *reducedInputDataSet_1 = nullptr;
                     if (b == Bachelor::pi) {
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(reducedInputDataSet_2->reduce(
+                              "bach_PIDK<12"));
+                    } else {
+                      reducedInputDataSet_1 =
+                          dynamic_cast<RooDataSet *>(reducedInputDataSet_2->reduce(
+                              "bach_PIDK>12"));
+                    }
+                    if (reducedInputDataSet_1 == nullptr) {
+                      throw std::runtime_error(
+                          "Could not reduce input dataset.");
+                    }
+                    reducedInputDataSet_1->Print();
+                    RooDataSet *reducedInputDataSet = nullptr;
+                    if (d == Daughters::kpi || d == Daughters::pik) {
+                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_1->reduce(
+                              "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
+                              "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+                              "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
+                    } else if (d == Daughters::kk) {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
-                              "bach_PIDK<12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
-                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&pi_"
-                              "D_PIDK<-2&&K_D_PIDK>2"));
+                              "h1_D_PIDK>2&&h2_D_PIDK>2"));
                     } else {
                       reducedInputDataSet =
                           dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
-                              "bach_PIDK>12&&Bu_M_DTF>5050&&Bu_M_DTF<5800&&"
-                              "Delta_M>50&&Delta_M<210&&BDT1>0.05&&pi_"
-                              "D_PIDK<-2&&K_D_PIDK>2"));
+                              "h1_D_PIDK<-2&&h2_D_PIDK<-2"));
                     }
                     if (reducedInputDataSet == nullptr) {
                       throw std::runtime_error(
