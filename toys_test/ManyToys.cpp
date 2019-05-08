@@ -32,12 +32,9 @@
 #include "TTreeReader.h"
 
 void GenerateToys(std::string const &outputDir) {
-  RooRandom::randomGenerator()->SetSeed(0);
-  TRandom3 random(0);
-  double randomTag = random.Rndm();
 
   // Number of toys to run
-  Int_t n_toys = 1000;
+  Int_t n_toys = 10;
 
   // Number of events to generate
   Int_t n_events = 100000;
@@ -62,27 +59,17 @@ void GenerateToys(std::string const &outputDir) {
   double a1_mean_init = 2.1375;
   double a2_mean_init = -0.0062;
 
-  TFile treeFile(
-      (outputDir + "/TreeFile_" + std::to_string(randomTag) + ".root").c_str(),
-      "recreate");
-  TTree tree("tree", "tree");
-
-  // save variable value, error, and fit quality variables
-  double a0Mean, a0MeanErr, a1Mean, a1MeanErr, a2Mean, a2MeanErr, EDM;
-  int covQual, fitStatus;
-
-  tree.Branch("a0Mean", &a0Mean, "a0Mean/D");
-  tree.Branch("a0MeanErr", &a0MeanErr, "a0MeanErr/D");
-  tree.Branch("a1Mean", &a1Mean, "a1Mean/D");
-  tree.Branch("a1MeanErr", &a1MeanErr, "a1MeanErr/D");
-  tree.Branch("a2Mean", &a2Mean, "a2Mean/D");
-  tree.Branch("a2MeanErr", &a2MeanErr, "a2MeanErr/D");
-  tree.Branch("EDM", &EDM, "EDM/D");
-  tree.Branch("covQual", &covQual, "covQual/I");
-  tree.Branch("fitStatus", &fitStatus, "fitStatus/I");
-
   // run n_toys fits and store the values in the histograms
   for (int i = 0; i < n_toys; i++) {
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double randomTag = random.Rndm();
+
+    TFile outputFile(
+        (outputDir + "/ResultFile" + std::to_string(randomTag) + ".root")
+            .c_str(),
+        "recreate");
+
     // DEFINE PDFs
     RooRealVar delta_mean("delta_mean", "delta_mean", 145, 140, 150);
     RooRealVar delta_sigma("delta_sigma", "delta_sigma", 20, 0, 40);
@@ -113,56 +100,15 @@ void GenerateToys(std::string const &outputDir) {
     RooFitResult *result = 0;
     result = pdf_tot.fitTo(*toyAbsData, RooFit::Save(true));
 
-    RooAbsArg *a0MeanAbsArg =
-        const_cast<RooAbsArg *>(result->floatParsFinal().find("a0_mean"));
-
-    RooRealVar *a0MeanVar = dynamic_cast<RooRealVar *>(a0MeanAbsArg);
-    if (a0MeanVar == nullptr) {
-      std::stringstream output;
-      output << "No value found in variable a0_mean";
-      throw std::runtime_error(output.str());
-    }
-
-    RooAbsArg *a1MeanAbsArg =
-        const_cast<RooAbsArg *>(result->floatParsFinal().find("a1_mean"));
-
-    RooRealVar *a1MeanVar = dynamic_cast<RooRealVar *>(a1MeanAbsArg);
-    if (a1MeanVar == nullptr) {
-      std::stringstream output;
-      output << "No value found in variable a1_mean";
-      throw std::runtime_error(output.str());
-    }
-
-    RooAbsArg *a2MeanAbsArg =
-        const_cast<RooAbsArg *>(result->floatParsFinal().find("a2_mean"));
-
-    RooRealVar *a2MeanVar = dynamic_cast<RooRealVar *>(a2MeanAbsArg);
-    if (a2MeanVar == nullptr) {
-      std::stringstream output;
-      output << "No value found in variable a2_mean";
-      throw std::runtime_error(output.str());
-    }
-
-    a0Mean = a0MeanVar->getVal();
-    a0MeanErr = a0MeanVar->getError();
-    a1Mean = a1MeanVar->getVal();
-    a1MeanErr = a1MeanVar->getError();
-    a2Mean = a2MeanVar->getVal();
-    a2MeanErr = a2MeanVar->getError();
-    EDM = result->edm();
-    fitStatus = result->status();
-    covQual = result->covQual();
+    outputFile.cd();
+    result->SetName(("Result" + std::to_string(randomTag)).c_str());
     result->Print("v");
-
-    tree.Fill();
-  }
-  treeFile.cd();
-  tree.Write("", TObject::kOverwrite);
-  treeFile.Write();
-  treeFile.Close();
-
-  std::cout << "Result saved in file " << outputDir << "/Tree_"
+    result->Write();
+    outputFile.Close();
+  
+    std::cout << "Result saved in file " << outputDir << "/ResultFile"
             << std::to_string(randomTag) << ".root\n";
+  }
 }
 
 int main(int argc, char *argv[]) {
