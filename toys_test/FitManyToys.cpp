@@ -12,6 +12,7 @@
 #include "RooPlot.h"
 #include "RooGaussian.h"
 #include "TAxis.h"
+#include "TLegend.h"
 #include "TCanvas.h"
 #include "TChain.h"
 #include "TFile.h"
@@ -30,6 +31,12 @@ std::vector<std::string> SplitByComma(std::string const &str) {
     stringVector.emplace_back(tempString);
   }
   return stringVector;
+}
+
+std::string to_string_with_precision(double value) {
+  std::ostringstream out;
+  out << std::setprecision(4) << value;
+  return out.str();
 }
 
 int main(int argc, char *argv[]) {
@@ -181,10 +188,10 @@ int main(int argc, char *argv[]) {
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
     RooRealVar valMean(("valMean_" + paramName).c_str(), "", initialVec[i],
-                       valHist.GetXaxis()->GetXmin(),
-                       valHist.GetXaxis()->GetXmax());
-    RooRealVar valSigma(("valSigma_" + paramName).c_str(), "", valRange / 5, 0,
-                        valRange);
+                       val.getMin(), val.getMax());
+    RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
+                        (val.getMax() - val.getMin()) / 5, 0,
+                        val.getMax() - val.getMin());
     RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
                         valSigma);
     auto valResult =
@@ -193,32 +200,89 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
     valFrame->GetXaxis()->SetTitle(paramName.c_str());
     valDH.plotOn(valFrame.get());
-    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed));
+    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
     valDH.plotOn(valFrame.get());
     varCanvas.cd(1);
     valFrame->Draw();
+    
+    auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
+    blankHist->SetLineColor(kWhite);
+    TLegend valLegend(0.65, 0.78, 0.85, 0.88);
+    valLegend.SetTextSize(0.03);
+    valLegend.SetLineColor(kWhite);
+    std::stringstream valMeanString, valSigmaString;
+    valMeanString << "#mu = " << to_string_with_precision(valMean.getVal());
+    valSigmaString << "#sigma = " << to_string_with_precision(valSigma.getVal());
+    valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
+    valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
+    valLegend.Draw("same");
 
     RooRealVar err(("err_" + paramName).c_str(), "",
                    errHist.GetXaxis()->GetXmin(),
                    errHist.GetXaxis()->GetXmax());
     RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
                       RooFit::Import(errHist));
+    RooRealVar errMean(("errMean_" + paramName).c_str(), "", (err.getMax() - err.getMin()) / 2,
+                       err.getMin(), err.getMax());
+    RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
+                        (err.getMax() - err.getMin()) / 5, 0,
+                        err.getMax() - err.getMin());
+    RooGaussian errGaus(("errGauss_" + paramName).c_str(), "", err, errMean,
+                        errSigma);
+    auto errResult =
+        std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
+    errResult->Print("v");
     std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
     errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
     errDH.plotOn(errFrame.get());
+    errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
+    errDH.plotOn(errFrame.get());
     varCanvas.cd(2);
     errFrame->Draw();
+
+    TLegend errLegend(0.65, 0.78, 0.85, 0.88);
+    errLegend.SetTextSize(0.03);
+    errLegend.SetLineColor(kWhite);
+    std::stringstream errMeanString, errSigmaString;
+    errMeanString << "#mu = " << to_string_with_precision(errMean.getVal());
+    errSigmaString << "#sigma = " << to_string_with_precision(errSigma.getVal());
+    errLegend.AddEntry(blankHist.get(), errMeanString.str().c_str(), "l");
+    errLegend.AddEntry(blankHist.get(), errSigmaString.str().c_str(), "l");
+    errLegend.Draw("same");
 
     RooRealVar pull(("pull_" + paramName).c_str(), "",
                    pullHist.GetXaxis()->GetXmin(),
                    pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
                       RooFit::Import(pullHist));
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", (pull.getMax() - pull.getMin()) / 2,
+                       pull.getMin(), pull.getMax());
+    RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "",
+                        (pull.getMax() - pull.getMin()) / 5, 0,
+                        pull.getMax() - pull.getMin());
+    RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
+                        pullSigma);
+    auto pullResult =
+        std::unique_ptr<RooFitResult>(pullGaus.fitTo(pullDH, RooFit::Save()));
+    pullResult->Print("v");
     std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
     pullFrame->GetXaxis()->SetTitle((paramName + " Pull").c_str());
     pullDH.plotOn(pullFrame.get());
+    pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
+    pullDH.plotOn(pullFrame.get());
     varCanvas.cd(3);
     pullFrame->Draw();
+
+    TLegend pullLegend(0.65, 0.78, 0.85, 0.88);
+    pullLegend.SetTextSize(0.03);
+    pullLegend.SetLineColor(kWhite);
+    std::stringstream pullMeanString, pullSigmaString;
+    pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal());
+    pullSigmaString << "#sigma = " << to_string_with_precision(pullSigma.getVal());
+    pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
+    pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
+    pullLegend.Draw("same");
+
     varCanvas.SaveAs((outputDir + "/ValErrPull_" + paramName + ".pdf").c_str());
   }
 
