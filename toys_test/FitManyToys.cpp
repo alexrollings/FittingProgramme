@@ -5,8 +5,12 @@
 #include <string>
 #include <vector>
 #include "RooRealVar.h"
-#include "TAxis.h"
+#include "RooArgList.h"
+#include "RooArgSet.h"
+#include "RooDataHist.h"
 #include "RooFitResult.h"
+#include "RooPlot.h"
+#include "TAxis.h"
 #include "TCanvas.h"
 #include "TChain.h"
 #include "TFile.h"
@@ -29,7 +33,8 @@ std::vector<std::string> SplitByComma(std::string const &str) {
 
 int main(int argc, char *argv[]) {
   if (argc < 3) {
-    std::cerr << "Pass comma separated string of filenames storing RooFitResults and output directory.\n";
+    std::cerr << "Pass comma separated string of filenames storing "
+                 "RooFitResults and output directory.\n";
     return 1;
   }
   std::vector<std::string> resultFiles = SplitByComma(argv[1]);
@@ -57,66 +62,37 @@ int main(int argc, char *argv[]) {
   RooArgList initialPars0 = resultVec[0].floatParsInit();
   double nParams = initialPars0.getSize();
   std::cout << "Number of parameters stored in results = " << nParams << "\n";
-  std::vector<TH1D> valHistVec(nParams);
-  std::vector<TH1D> errHistVec(nParams);
-  std::vector<TH1D> pullHistVec(nParams);
-  // std::unique_ptr<RooAbsArg> paramAbsArg;
-  // std::unique_ptr<RooRealVar> paramReal;
-  RooAbsArg* paramAbsArg = nullptr;
-  RooRealVar* paramRealVar = nullptr;
 
-  for (double i = 0; i < nParams; ++i) {
-    std::string varName = initialPars0.at(i)->GetName();
-    std::cout << "Extracting parameter " << varName << std::endl;
-    paramAbsArg = initialPars0.find(varName.c_str());
-    // paramAbsArg = std::unique_ptr<RooAbsArg>(initialPars0.find(varName.c_str()));
-    // if (paramAbsArg == nullptr) {
-    //   throw std::runtime_error(
-    //       "Could not extract RooAbsArg from RooArgList for " + varName);
-    // }
-    paramRealVar = dynamic_cast<RooRealVar *>(paramAbsArg);
-    // paramRealVar =
-    //     std::unique_ptr<RooRealVar>(dynamic_cast<RooRealVar *>(paramAbsArg.get()));
-    // if (paramRealVar == nullptr) {
-    //   throw std::runtime_error("Could not cast " + varName + " to RooRealVar.");
-    // }
-    double varMax = paramRealVar->getMax();
-    double varMin = paramRealVar->getMin();
-    TH1D valHist(("valHist_" + varName).c_str(), "", 50, varMin, varMax);
-    valHist.SetStats(0);
-    valHist.SetTitle(" ");
-    valHist.GetXaxis()->SetTitle(varName.c_str());
-    valHistVec[i] = valHist;
-    TH1D errHist(("errHist_" + varName).c_str(), "", 50, -(varMax - varMin) / 10,
-                 (varMax - varMin) / 10);
-    errHist.SetStats(0);
-    errHist.SetTitle(" ");
-    errHist.GetXaxis()->SetTitle((varName + " Error").c_str());
-    errHistVec[i] = errHist;
-    TH1D pullHist(("pullHist_" + varName).c_str(), "", 50, -5, 5);
-    pullHist.SetStats(0);
-    pullHist.SetTitle(" ");
-    pullHist.GetXaxis()->SetTitle((varName + " Pull").c_str());
-    pullHistVec[i] = pullHist;
-  }
-
-  // Check result quality and print out stats 
+  // Check result quality and print out stats
   double nUnConv = 0;
   double nFPD = 0;
   double nMINOS = 0;
-  // Fill histograms with elements of vectors: change max/min depending on
-  // values
-  // Loop over each result
-  RooAbsArg* initialAbsArg = nullptr;
-  RooRealVar* initialRealVar = nullptr;
-  RooAbsArg* finalAbsArg = nullptr;
-  RooRealVar* finalRealVar = nullptr;
+  
+  // Save values into vectors and set max/min depending on
+  // values: one max/min for each parameter (but all results)
+  std::vector<double> valMin(nParams, 1000000);
+  std::vector<double> valMax(nParams, -1000000);
+  std::vector<double> errMin(nParams, 1000000);
+  std::vector<double> errMax(nParams, -1000000);
+  std::vector<double> pullMin(nParams, 1000000);
+  std::vector<double> pullMax(nParams, -1000000);
+  std::vector<std::vector<double> > valVec(resultVec.size(),
+                                           std::vector<double>(nParams));
+  std::vector<std::vector<double> > errVec(resultVec.size(),
+                                           std::vector<double>(nParams));
+  std::vector<std::vector<double> > pullVec(resultVec.size(),
+                                            std::vector<double>(nParams));
 
-  for (auto &result : resultVec) {
-    // Check quality of result 
-    // double edm = result.edm();
-    double fitStatus = result.status();
-    double covQual = result.covQual();
+  RooAbsArg *initialAbsArg = nullptr;
+  RooRealVar *initialRealVar = nullptr;
+  RooAbsArg *finalAbsArg = nullptr;
+  RooRealVar *finalRealVar = nullptr;
+
+  for (double j = 0; j < resultVec.size(); ++j) {
+    // Check quality of result
+    // double edm = resultVec[j].edm();
+    double fitStatus = resultVec[j].status();
+    double covQual = resultVec[j].covQual();
     if (covQual < 2) {
       nUnConv++;
     } else if (covQual < 3) {
@@ -124,14 +100,15 @@ int main(int argc, char *argv[]) {
     } else if (fitStatus != 0) {
       nMINOS++;
     } else {
-      RooArgList initialPars = result.floatParsInit();
-      RooArgList finalPars = result.floatParsFinal();
+      RooArgList initialPars = resultVec[j].floatParsInit();
+      RooArgList finalPars = resultVec[j].floatParsFinal();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
         initialAbsArg = initialPars.find(initialPars.at(i)->GetName());
         initialRealVar = dynamic_cast<RooRealVar *>(initialAbsArg);
         finalAbsArg = finalPars.find(finalPars.at(i)->GetName());
         finalRealVar = dynamic_cast<RooRealVar *>(finalAbsArg);
+        finalRealVar->Print();
         // auto initialRealVar =
         //     std::unique_ptr<RooRealVar>(dynamic_cast<RooRealVar *>(
         //         initialPars.find(initialPars.at(i)->GetName())));
@@ -143,38 +120,92 @@ int main(int argc, char *argv[]) {
         double finalVal = finalRealVar->getVal();
         double finalErr = finalRealVar->getError();
         double pull = (finalVal - initialVal) / finalErr;
-        // Check histogram ranges
-        if (abs(pull) > 5) {
-          pullHistVec[i].SetBins(50, -(abs(pull)*5/4), abs(pull)*5/4);
+        std::cout << finalPars.at(i)->GetName() << " = " << finalVal << " ± "
+                  << finalErr << " with pull " << pull << " and initial val "
+                  << initialVal << "\n";
+        // Fill histograms
+        valVec[j][i] = finalVal;
+        errVec[j][i] = finalErr;
+        pullVec[j][i] = pull;
+
+        if (finalVal > valMax[i]) {
+          valMax[i] = finalVal;
         }
-        double varMax = initialRealVar->getMax();
-        double varMin = initialRealVar->getMin();
-        if (abs(finalErr) > (varMax - varMin) / 10) {
-          errHistVec[i].SetBins(50, -(abs(finalErr) + (varMax - varMin) / 10),
-                                (abs(finalErr) + (varMax - varMin) / 10));
+        if (finalVal < valMin[i]) {
+          valMin[i] = finalVal;
         }
-        // Fill histograms 
-        valHistVec[i].Fill(finalVal);
-        errHistVec[i].Fill(finalErr);
-        pullHistVec[i].Fill(pull);
+        if (finalErr > errMax[i]) {
+          errMax[i] = finalErr;
+        }
+        if (finalErr < errMin[i]) {
+          errMin[i] = finalErr;
+        }
+        if (pull > pullMax[i]) {
+          pullMax[i] = pull;
+        }
+        if (pull < pullMin[i]) {
+          pullMin[i] = pull;
+        }
       }
     }
   }
 
-  // Plot histograms onto canvas and save
+  // Loop over params, create histogram for each and fill with values from result
   for (double i = 0; i < nParams; ++i) {
-    std::string varName = initialPars0.at(i)->GetName();
-    TCanvas varCanvas((varName + "Canvas").c_str(), " ",
-                      1500, 500);
+    std::string paramName = initialPars0.at(i)->GetName();
+    std::cout << "Extracting parameter " << paramName << std::endl;
+
+    double valRange = valMax[i] - valMin[i];
+    TH1D valHist(("valHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+                 valMin[i] - valRange/5, valMax[i] + valRange/5);
+    double errRange = errMax[i] - errMin[i];
+    TH1D errHist(("errHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+                 errMin[i] - errRange/5, errMax[i] + errRange/5);
+    double pullRange = pullMax[i] - pullMin[i];
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+                 pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+    for (double j = 0; j < round(resultVec.size() / 5); ++j) {
+      valHist.Fill(valVec[j][i]);
+      errHist.Fill(errVec[j][i]);
+      pullHist.Fill(pullVec[j][i]);
+    }
+    TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
     varCanvas.Divide(3, 1);
+    // Create RRVs for each parameter's value, error and pull
+    // Make into function and pass relevant histogram
+    RooRealVar val(("val_" + paramName).c_str(), "",
+                   valHist.GetXaxis()->GetXmin(),
+                   valHist.GetXaxis()->GetXmax());
+    RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
+                      RooFit::Import(valHist));
+    std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
+    valFrame->GetXaxis()->SetTitle(paramName.c_str());
+    valDH.plotOn(valFrame.get());
     varCanvas.cd(1);
-    valHistVec[i].Draw();
+    valFrame->Draw();
+
+    RooRealVar err(("err_" + paramName).c_str(), "",
+                   errHist.GetXaxis()->GetXmin(),
+                   errHist.GetXaxis()->GetXmax());
+    RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
+                      RooFit::Import(errHist));
+    std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
+    errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
+    errDH.plotOn(errFrame.get());
     varCanvas.cd(2);
-    errHistVec[i].Draw();
+    errFrame->Draw();
+
+    RooRealVar pull(("pull_" + paramName).c_str(), "",
+                   pullHist.GetXaxis()->GetXmin(),
+                   pullHist.GetXaxis()->GetXmax());
+    RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
+                      RooFit::Import(pullHist));
+    std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
+    pullFrame->GetXaxis()->SetTitle((paramName + " Pull").c_str());
+    pullDH.plotOn(pullFrame.get());
     varCanvas.cd(3);
-    pullHistVec[i].Draw();
-    varCanvas.SaveAs(
-        (outputDir + "/ValErrPull_" + varName + ".pdf").c_str());
+    pullFrame->Draw();
+    varCanvas.SaveAs((outputDir + "/ValErrPull_" + paramName + ".pdf").c_str());
   }
 
   std::cout << "\nQuality of fits:\n"
