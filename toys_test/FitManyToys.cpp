@@ -10,6 +10,7 @@
 #include "RooDataHist.h"
 #include "RooFitResult.h"
 #include "RooPlot.h"
+#include "RooGaussian.h"
 #include "TAxis.h"
 #include "TCanvas.h"
 #include "TChain.h"
@@ -53,8 +54,6 @@ int main(int argc, char *argv[]) {
                                filename.substr(14, 8) + " from " + filename);
     } else {
       resultVec.emplace_back(*result.get());
-      // std::cout << "Extracted Result" + filename.substr(14, 8) + " from " +
-      //                  filename  + "\n";
     }
   }
 
@@ -76,6 +75,8 @@ int main(int argc, char *argv[]) {
   std::vector<double> errMax(nParams, -1000000);
   std::vector<double> pullMin(nParams, 1000000);
   std::vector<double> pullMax(nParams, -1000000);
+  // Save initial values for starting point of mean
+  std::vector<double> initialVec(nParams);
   std::vector<std::vector<double> > valVec(resultVec.size(),
                                            std::vector<double>(nParams));
   std::vector<std::vector<double> > errVec(resultVec.size(),
@@ -124,6 +125,7 @@ int main(int argc, char *argv[]) {
                   << finalErr << " with pull " << pull << " and initial val "
                   << initialVal << "\n";
         // Fill histograms
+        initialVec[i] = initialVal;
         valVec[j][i] = finalVal;
         errVec[j][i] = finalErr;
         pullVec[j][i] = pull;
@@ -178,8 +180,20 @@ int main(int argc, char *argv[]) {
                    valHist.GetXaxis()->GetXmax());
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
+    RooRealVar valMean(("valMean_" + paramName).c_str(), "", initialVec[i],
+                       valHist.GetXaxis()->GetXmin(),
+                       valHist.GetXaxis()->GetXmax());
+    RooRealVar valSigma(("valSigma_" + paramName).c_str(), "", valRange / 5, 0,
+                        valRange);
+    RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
+                        valSigma);
+    auto valResult =
+        std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
+    valResult->Print("v");
     std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
     valFrame->GetXaxis()->SetTitle(paramName.c_str());
+    valDH.plotOn(valFrame.get());
+    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed));
     valDH.plotOn(valFrame.get());
     varCanvas.cd(1);
     valFrame->Draw();
