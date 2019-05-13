@@ -385,9 +385,7 @@ void Plotting2D(Neutral neutral, Bachelor bachelor, RooRealVar &buMass,
                          .c_str());
 }
 
-void GenerateToys(std::string const &outputDir) {
-  // Number of toys to run
-  Int_t n_toys = 1;
+void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
 
   int bu_low = 5045;
   int bu_high = 5805;
@@ -410,8 +408,8 @@ void GenerateToys(std::string const &outputDir) {
   fitting.defineType("pi0_pi");
   fitting.defineType("pi0_K");
 
-  // run n_toys fits and store the values in the histograms
-  for (int i = 0; i < n_toys; i++) {
+  // run nToys fits and store the values in the histograms
+  for (int i = 0; i < nToys; i++) {
     RooRandom::randomGenerator()->SetSeed(0);
     TRandom3 random(0);
     double randomTag = random.Rndm();
@@ -543,7 +541,7 @@ void GenerateToys(std::string const &outputDir) {
     std::cout << "Result saved in file " << outputDir << "/ResultFile"
               << std::to_string(randomTag) << ".root\n";
 
-    if (i == 0) {
+    if (toPlot == true && i == 0) {
       std::cout << "Plotting projections of m[Bu]\n";
       PlotComponent(Neutral::pi0, Bachelor::pi, Variable::bu, buMass,
                     toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdfCombPi,
@@ -568,11 +566,21 @@ void GenerateToys(std::string const &outputDir) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Enter output directory.\n";
+  if (argc < 3) {
+    std::cerr << "Enter output directory and number of toys. Optional argument to plot toys = plot\n";
     return 1;
   }
   std::string outputDir = argv[1];
-  GenerateToys(outputDir);
+  int nToys = std::atoi(argv[2]);
+  bool toPlot = false;
+  if (argc == 4) {
+    std::string plotString = argv[3];
+    if (plotString == "plot") {
+      toPlot = true;
+    } else {
+      std::cout << "Not plotting: if desired, specify plot as third argument\n";
+    }
+  }
+  GenerateToys(outputDir, nToys, toPlot);
   return 0;
 }
