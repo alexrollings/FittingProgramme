@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
 #include "RooRealVar.h"
 #include "RooArgList.h"
 #include "RooArgSet.h"
@@ -55,12 +56,15 @@ int main(int argc, char *argv[]) {
   for (auto &filename : resultFiles) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
-        file->FindObjectAny(("Result" + filename.substr(14, 8)).c_str())));
+        file->FindObjectAny(("Result" + filename.substr(filename.length()-13, 8)).c_str())));
     if (result == nullptr) {
       throw std::runtime_error("Could not extract Result" +
-                               filename.substr(14, 8) + " from " + filename);
+                               filename.substr(filename.length()-13, 8) + " from " + filename);
     } else {
       resultVec.emplace_back(*result.get());
+      std::cout << "Extracted Result"
+                << filename.substr(filename.length() - 13, 8) << " from "
+                << filename << "\n";
     }
   }
 
@@ -96,6 +100,8 @@ int main(int argc, char *argv[]) {
   RooAbsArg *finalAbsArg = nullptr;
   RooRealVar *finalRealVar = nullptr;
 
+  std::cout << "Number of results saved = " << resultVec.size() << "\n";
+
   for (double j = 0; j < resultVec.size(); ++j) {
     // Check quality of result
     // double edm = resultVec[j].edm();
@@ -116,7 +122,6 @@ int main(int argc, char *argv[]) {
         initialRealVar = dynamic_cast<RooRealVar *>(initialAbsArg);
         finalAbsArg = finalPars.find(finalPars.at(i)->GetName());
         finalRealVar = dynamic_cast<RooRealVar *>(finalAbsArg);
-        finalRealVar->Print();
         // auto initialRealVar =
         //     std::unique_ptr<RooRealVar>(dynamic_cast<RooRealVar *>(
         //         initialPars.find(initialPars.at(i)->GetName())));
@@ -128,9 +133,6 @@ int main(int argc, char *argv[]) {
         double finalVal = finalRealVar->getVal();
         double finalErr = finalRealVar->getError();
         double pull = (finalVal - initialVal) / finalErr;
-        std::cout << finalPars.at(i)->GetName() << " = " << finalVal << " ± "
-                  << finalErr << " with pull " << pull << " and initial val "
-                  << initialVal << "\n";
         // Fill histograms
         initialVec[i] = initialVal;
         valVec[j][i] = finalVal;
@@ -161,17 +163,24 @@ int main(int argc, char *argv[]) {
 
   // Loop over params, create histogram for each and fill with values from result
   for (double i = 0; i < nParams; ++i) {
-    std::string paramName = initialPars0.at(i)->GetName();
-    std::cout << "Extracting parameter " << paramName << std::endl;
+    // Extract parameter names using regular expression in order to remove _#
+    std::string fullName = initialPars0.at(i)->GetName();
+    // std::cout << "Full parameter name = " << fullName << "\n";
+    std::regex rexp("([A-Za-z0-9]+)_[0-9]+");
+    std::smatch match;
+    std::regex_search(fullName, match, rexp);
+    std::string paramName = match[1];
+    // std::cout << "After regex, parameter name = " << paramName << "\n";
+
 
     double valRange = valMax[i] - valMin[i];
-    TH1D valHist(("valHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+    TH1D valHist(("valHist_" + paramName).c_str(), "", round(resultVec.size()/10),
                  valMin[i] - valRange/5, valMax[i] + valRange/5);
     double errRange = errMax[i] - errMin[i];
-    TH1D errHist(("errHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+    TH1D errHist(("errHist_" + paramName).c_str(), "", round(resultVec.size()/10),
                  errMin[i] - errRange/5, errMax[i] + errRange/5);
     double pullRange = pullMax[i] - pullMin[i];
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", round(resultVec.size()/5),
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", round(resultVec.size()/10),
                  pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       valHist.Fill(valVec[j][i]);
@@ -200,7 +209,7 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
     valFrame->GetXaxis()->SetTitle(paramName.c_str());
     valDH.plotOn(valFrame.get());
-    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
+    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(2));
     valDH.plotOn(valFrame.get());
     varCanvas.cd(1);
     valFrame->Draw();
@@ -235,7 +244,7 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
     errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
     errDH.plotOn(errFrame.get());
-    errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
+    errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(2));
     errDH.plotOn(errFrame.get());
     varCanvas.cd(2);
     errFrame->Draw();
@@ -268,7 +277,7 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
     pullFrame->GetXaxis()->SetTitle((paramName + " Pull").c_str());
     pullDH.plotOn(pullFrame.get());
-    pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(1));
+    pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed), RooFit::LineWidth(2));
     pullDH.plotOn(pullFrame.get());
     varCanvas.cd(3);
     pullFrame->Draw();
