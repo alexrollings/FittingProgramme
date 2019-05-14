@@ -36,7 +36,7 @@ std::vector<std::string> SplitByComma(std::string const &str) {
 
 std::string to_string_with_precision(double value) {
   std::ostringstream out;
-  out << std::setprecision(4) << value;
+  out << std::setprecision(3) << value;
   return out.str();
 }
 
@@ -174,14 +174,17 @@ int main(int argc, char *argv[]) {
 
 
     double valRange = valMax[i] - valMin[i];
-    TH1D valHist(("valHist_" + paramName).c_str(), "", round(resultVec.size()/10),
+    // TH1D valHist(("valHist_" + paramName).c_str(), "", round(resultVec.size()/20),
+    TH1D valHist(("valHist_" + paramName).c_str(), "", 50,
                  valMin[i] - valRange/5, valMax[i] + valRange/5);
     double errRange = errMax[i] - errMin[i];
-    TH1D errHist(("errHist_" + paramName).c_str(), "", round(resultVec.size()/10),
+    // TH1D errHist(("errHist_" + paramName).c_str(), "", round(resultVec.size()/20),
+    TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
                  errMin[i] - errRange/5, errMax[i] + errRange/5);
-    double pullRange = pullMax[i] - pullMin[i];
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", round(resultVec.size()/10),
-                 pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+    // double pullRange = pullMax[i] - pullMin[i];
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", round(resultVec.size()/10),
+    //              pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       valHist.Fill(valVec[j][i]);
       errHist.Fill(errVec[j][i]);
@@ -216,12 +219,14 @@ int main(int argc, char *argv[]) {
     
     auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
     blankHist->SetLineColor(kWhite);
-    TLegend valLegend(0.65, 0.78, 0.85, 0.88);
+    TLegend valLegend(0.5, 0.78, 0.85, 0.88);
     valLegend.SetTextSize(0.03);
     valLegend.SetLineColor(kWhite);
     std::stringstream valMeanString, valSigmaString;
     valMeanString << "#mu = " << to_string_with_precision(valMean.getVal());
+    valMeanString << " #pm " << to_string_with_precision(valMean.getPropagatedError(*valResult.get()));
     valSigmaString << "#sigma = " << to_string_with_precision(valSigma.getVal());
+    valSigmaString << " #pm " << to_string_with_precision(valSigma.getPropagatedError(*valResult.get()));
     valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
     valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
     valLegend.Draw("same");
@@ -231,7 +236,8 @@ int main(int argc, char *argv[]) {
                    errHist.GetXaxis()->GetXmax());
     RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
                       RooFit::Import(errHist));
-    RooRealVar errMean(("errMean_" + paramName).c_str(), "", (err.getMax() - err.getMin()) / 2,
+    RooRealVar errMean(("errMean_" + paramName).c_str(), "",
+                       err.getMin() + (err.getMax() - err.getMin()) / 2,
                        err.getMin(), err.getMax());
     RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
                         (err.getMax() - err.getMin()) / 5, 0,
@@ -249,12 +255,14 @@ int main(int argc, char *argv[]) {
     varCanvas.cd(2);
     errFrame->Draw();
 
-    TLegend errLegend(0.65, 0.78, 0.85, 0.88);
+    TLegend errLegend(0.5, 0.78, 0.85, 0.88);
     errLegend.SetTextSize(0.03);
     errLegend.SetLineColor(kWhite);
     std::stringstream errMeanString, errSigmaString;
     errMeanString << "#mu = " << to_string_with_precision(errMean.getVal());
+    errMeanString << " #pm " << to_string_with_precision(errMean.getPropagatedError(*errResult.get()));
     errSigmaString << "#sigma = " << to_string_with_precision(errSigma.getVal());
+    errSigmaString << " #pm " << to_string_with_precision(errSigma.getPropagatedError(*errResult.get()));
     errLegend.AddEntry(blankHist.get(), errMeanString.str().c_str(), "l");
     errLegend.AddEntry(blankHist.get(), errSigmaString.str().c_str(), "l");
     errLegend.Draw("same");
@@ -263,12 +271,11 @@ int main(int argc, char *argv[]) {
                    pullHist.GetXaxis()->GetXmin(),
                    pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
-                      RooFit::Import(pullHist));
-    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", (pull.getMax() - pull.getMin()) / 2,
-                       pull.getMin(), pull.getMax());
-    RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "",
-                        (pull.getMax() - pull.getMin()) / 5, 0,
-                        pull.getMax() - pull.getMin());
+                       RooFit::Import(pullHist));
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", 0, pull.getMin(),
+                        pull.getMax());
+    RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "", 1, 0,
+                         pull.getMax() - pull.getMin());
     RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
                         pullSigma);
     auto pullResult =
@@ -282,12 +289,14 @@ int main(int argc, char *argv[]) {
     varCanvas.cd(3);
     pullFrame->Draw();
 
-    TLegend pullLegend(0.65, 0.78, 0.85, 0.88);
+    TLegend pullLegend(0.55, 0.78, 0.85, 0.88);
     pullLegend.SetTextSize(0.03);
     pullLegend.SetLineColor(kWhite);
     std::stringstream pullMeanString, pullSigmaString;
     pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal());
+    pullMeanString << " #pm " << to_string_with_precision(pullMean.getPropagatedError(*pullResult.get()));
     pullSigmaString << "#sigma = " << to_string_with_precision(pullSigma.getVal());
+    pullSigmaString << " #pm " << to_string_with_precision(pullSigma.getPropagatedError(*pullResult.get()));
     pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
