@@ -451,7 +451,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
           1.4219e+02);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
-        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00 + 5);
+        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
     // RooRealVar sigmaRatioDeltaSignal(
     //     ("sigmaRatioDeltaSignal_" + std::to_string(i)).c_str(), "", 0.87952);
     // RooFormulaVar sigma2DeltaSignal(
@@ -501,7 +501,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     RooRealVar a0Sigma1BuSignalPi(
         // ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 
           // 4.9764e+00);
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 60);
+        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 10);
     // RooRealVar a1Sigma1BuSignalPi(
     //     ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 
           // 2.4775e-01);
