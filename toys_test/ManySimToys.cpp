@@ -384,7 +384,6 @@ void Plotting2D(Neutral neutral, Bachelor bachelor, RooRealVar &buMass,
   canvasRes1d.SaveAs((outputDir + "/plots/" + FittingName(neutral, bachelor) +
                       "_1dResiduals.pdf")
                          .c_str());
-
 }
 
 void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
@@ -407,7 +406,7 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
 void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
   int bu_low = 5055;
   int bu_high = 5805;
-  int delta_low = 80;//134;
+  int delta_low = 80;  // 134;
   int delta_high = 210;
 
   int bu_nbins = (bu_high - bu_low) / 10;
@@ -447,8 +446,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
-                               "",
-          1.4219e+02);
+                               "", 1.4219e+02);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
         ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
@@ -480,7 +478,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //     meanDeltaSignal, sigma2DeltaSignal, a2DeltaSignal, n2DeltaSignal);
     // RooRealVar fracPdf1DeltaSignal(
     //     ("fracPdf1DeltaSignal_" + std::to_string(i)).c_str(), "",
-          // 2.7402e-01);
+    // 2.7402e-01);
     // RooAddPdf pdfDeltaSignal(
     //     ("pdfDeltaSignal_" + std::to_string(i)).c_str(), "",
     //     RooArgSet(pdfDeltaSignal1, pdfDeltaSignal2), fracPdf1DeltaSignal);
@@ -499,39 +497,37 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0Sigma1BuSignalPi(
-        // ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // 4.9764e+00);
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 10);
-    // RooRealVar a1Sigma1BuSignalPi(
-    //     ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // 2.4775e-01);
-    // RooRealVar a2Sigma1BuSignalPi(
-    //     ("a2Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // -5.0502e-04);
+        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 4.9764e+00);
+    // 60);
+    RooRealVar a1Sigma1BuSignalPi(
+        ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.4775e-01);
+    RooRealVar a2Sigma1BuSignalPi(
+        ("a2Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", -5.0502e-04);
     RooPolyVar sigma1BuSignalPi(
         ("sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
-        RooArgList(a0Sigma1BuSignalPi/* , a1Sigma1BuSignalPi, a2Sigma1BuSignalPi */));
+        RooArgList(a0Sigma1BuSignalPi, a1Sigma1BuSignalPi, a2Sigma1BuSignalPi));
     // RooRealVar a0Sigma2BuSignalPi(
-        // ("a0Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // 1.3464e+02);
+    // ("a0Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "",
+    // 1.3464e+02);
     // RooRealVar a1Sigma2BuSignalPi(
-    //     ("a1Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // -1.7163e+00);
+    //     ("a1Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "",
+    // -1.7163e+00);
     // RooRealVar a2Sigma2BuSignalPi(
-    //     ("a2Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", 
-          // 6.0422e-03);
+    //     ("a2Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "",
+    // 6.0422e-03);
     // RooPolyVar sigma2BuSignalPi(
     //     ("sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
-    //     RooArgList(a0Sigma2BuSignalPi#<{(| , a1Sigma2BuSignalPi, a2Sigma2BuSignalPi |)}>#));
+    //     RooArgList(a0Sigma2BuSignalPi#<{(| , a1Sigma2BuSignalPi,
+    //     a2Sigma2BuSignalPi |)}>#));
     // ---------------------------- Tails ----------------------------
     // RooRealVar a1BuSignal(("a1BuSignal_" + std::to_string(i)).c_str(), "",
     //                               2.2666e+00);
     // RooRealVar a2BuSignal(("a2BuSignal_" + std::to_string(i)).c_str(), "",
-                                  // -9.3624e-01);
+    // -9.3624e-01);
     // RooRealVar n1BuSignal(("n1BuSignal_" + std::to_string(i)).c_str(), "",
     //                               5.6139e-04);
     // RooRealVar n2BuSignal(("n2BuSignal_" + std::to_string(i)).c_str(), "",
-                                  // 2.4093e+01);
+    // 2.4093e+01);
     // ---------------------------- PDFs ----------------------------
     // RooRealVar fracPdf1BuSignal(
     //     ("fracPdf1BuSignal_" + std::to_string(i)).c_str(), "",
@@ -611,19 +607,21 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                          deltaMass, RooArgList(a0MeanBuBkg, a1MeanBuBkg, a2MeanBuBkg));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0SigmaBuBkgPi(("a0SigmaBuBkgPi_" + std::to_string(i)).c_str(),
-          //"", 1.2821e+01);
+                              //"", 1.2821e+01);
                               "", 200);
-    // RooRealVar a1SigmaBuBkgPi(("a1SigmaBuBkgPi_" + std::to_string(i)).c_str(),
-          // "", 5.1122e-01);
-    // RooRealVar a2SigmaBuBkgPi(("a2SigmaBuBkgPi_" + std::to_string(i)).c_str(),
-          // "", -2.1553e-04);
+    // RooRealVar a1SigmaBuBkgPi(("a1SigmaBuBkgPi_" +
+    // std::to_string(i)).c_str(),
+    // "", 5.1122e-01);
+    // RooRealVar a2SigmaBuBkgPi(("a2SigmaBuBkgPi_" +
+    // std::to_string(i)).c_str(),
+    // "", -2.1553e-04);
     RooPolyVar sigmaBuBkgPi(("sigmaBuBkgPi_" + std::to_string(i)).c_str(), "",
                             deltaMass,
-                            RooArgList(a0SigmaBuBkgPi/* , a1SigmaBuBkgPi */));
+                            RooArgList(a0SigmaBuBkgPi /* , a1SigmaBuBkgPi */));
     // ---------------------------- Tails ----------------------------
-    // RooRealVar aBuBkg(("aBuBkg_" + std::to_string(i)).c_str(), "", 
-          // 2.5926e+00);
-    // RooRealVar nBuBkg(("nBuBkg_" + std::to_string(i)).c_str(), "", 
+    // RooRealVar aBuBkg(("aBuBkg_" + std::to_string(i)).c_str(), "",
+    // 2.5926e+00);
+    // RooRealVar nBuBkg(("nBuBkg_" + std::to_string(i)).c_str(), "",
     //       2.4846e-01);
     // ---------------------------- PDFs ----------------------------
     RooGaussian pdfBuBkgPi(("pdfBuBkgPi_" + std::to_string(i)).c_str(), "",
@@ -639,9 +637,9 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaRelativeWidthBkg(
         ("sigmaRelativeWidthBkg_" + std::to_string(i)).c_str(), "", 0.95);
-    RooFormulaVar sigmaBuBkgK(
-        ("sigmaBuBkgK_" + std::to_string(i)).c_str(), "", "@0*@1",
-        RooArgList(sigmaBuBkgPi, sigmaRelativeWidthBkg));
+    RooFormulaVar sigmaBuBkgK(("sigmaBuBkgK_" + std::to_string(i)).c_str(), "",
+                              "@0*@1",
+                              RooArgList(sigmaBuBkgPi, sigmaRelativeWidthBkg));
     // ---------------------------- PDFs ----------------------------
     RooGaussian pdfBuBkgK(("pdfBuBkgK_" + std::to_string(i)).c_str(), "",
                           buMass, meanBuBkg, sigmaBuBkgK);
