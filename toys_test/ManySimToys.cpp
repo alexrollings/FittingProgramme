@@ -654,11 +654,11 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
 
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldSignalPi(("yieldSignalPi_" + std::to_string(i)).c_str(), "",
-                             3000, 1000, 9000);
-                             // 40000, 0, 100000);
+                             // 3000, 1000, 9000);
+                             40000, 20000, 60000);
     RooRealVar yieldBkgPi(("yieldBkgPi_" + std::to_string(i)).c_str(), "",
-                          7000, 1000, 9000);
-                          // 100000, 0, 200000);
+                          // 7000, 1000, 9000);
+                          100000, 70000, 130000);
     RooRealVar yieldRatioSignal(
         ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.08, 0.06, 1);
     RooFormulaVar yieldSignalK(("yieldSignalK_" + std::to_string(i)).c_str(),
