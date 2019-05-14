@@ -601,14 +601,14 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                            deltaMass, lambdaDeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0MeanBuBkg(("a0MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          // 5.0873e+03);
-                           5.220e+03);
-    // RooRealVar a1MeanBuBkg(("a1MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          // 2.4822e+00);
-    // RooRealVar a2MeanBuBkg(("a2MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          // -6.5217e-03);
+          5.0873e+03);
+                           // 5.220e+03);
+    RooRealVar a1MeanBuBkg(("a1MeanBuBkg_" + std::to_string(i)).c_str(), "",
+          2.4822e+00);
+    RooRealVar a2MeanBuBkg(("a2MeanBuBkg_" + std::to_string(i)).c_str(), "",
+          -6.5217e-03);
     RooPolyVar meanBuBkg(("meanBuBkg_" + std::to_string(i)).c_str(), "",
-                         deltaMass, RooArgList(a0MeanBuBkg/* , a1MeanBuBkg */));
+                         deltaMass, RooArgList(a0MeanBuBkg, a1MeanBuBkg, a2MeanBuBkg));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0SigmaBuBkgPi(("a0SigmaBuBkgPi_" + std::to_string(i)).c_str(),
           //"", 1.2821e+01);
