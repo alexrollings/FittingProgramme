@@ -584,22 +584,21 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //
     // ---------------------------- π/K shared PDFs: Delta
     // ----------------------------
-    // RooRealVar thresholdDeltaBkg(
-    //     ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 
-          // 5.2160e+01);
-    // RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
-          // 4.2450e+01);
-    // RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-          // 1.0341e+00);
-    // RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
-          // -1.2284e+00);
-    // RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
-    //                        deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
-    //                        bDeltaBkg);
-    RooRealVar lambdaDeltaBkg(
-        ("lambdaDeltaBkg_" + std::to_string(i)).c_str(), "", 0.01);
-    RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
-                               deltaMass, lambdaDeltaBkg);
+    RooRealVar thresholdDeltaBkg(
+        ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.2160e+01);
+    RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         4.2450e+01);
+    RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         1.0341e+00);
+    RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         -1.2284e+00);
+    RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
+                           deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
+                           bDeltaBkg);
+    // RooRealVar lambdaDeltaBkg(
+    //     ("lambdaDeltaBkg_" + std::to_string(i)).c_str(), "", 0.01);
+    // RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
+    //                            deltaMass, lambdaDeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0MeanBuBkg(("a0MeanBuBkg_" + std::to_string(i)).c_str(), "",
           // 5.0873e+03);
