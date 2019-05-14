@@ -580,33 +580,32 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //
     // ---------------------------- π/K shared PDFs: Delta
     // ----------------------------
-    // RooRealVar thresholdDeltaBkg(
-    //     ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "",
-    // 5.2160e+01);
-    // RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
-    // 4.2450e+01);
-    // RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-    // 1.0341e+00);
-    // RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
-    // -1.2284e+00);
-    // RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
-    //                        deltaMass, thresholdDeltaBkg, cDeltaBkg,
-    //                        aDeltaBkg, bDeltaBkg);
-    RooRealVar lambdaDeltaBkg(("lambdaDeltaBkg_" + std::to_string(i)).c_str(),
-                              "", 0.01);
-    RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
-                               deltaMass, lambdaDeltaBkg);
+    RooRealVar thresholdDeltaBkg(
+        ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.2160e+01);
+    RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         4.2450e+01);
+    RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         1.0341e+00);
+    RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
+                         -1.2284e+00);
+    RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
+                           deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
+                           bDeltaBkg);
+    // RooRealVar lambdaDeltaBkg(("lambdaDeltaBkg_" + std::to_string(i)).c_str(),
+    //                           "", 0.01);
+    // RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
+    //                            deltaMass, lambdaDeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0MeanBuBkg(("a0MeanBuBkg_" + std::to_string(i)).c_str(), "",
-                           // 5.0873e+03);
-                           5.220e+03);
-    // RooRealVar a1MeanBuBkg(("a1MeanBuBkg_" + std::to_string(i)).c_str(), "",
-    // 2.4822e+00);
-    // RooRealVar a2MeanBuBkg(("a2MeanBuBkg_" + std::to_string(i)).c_str(), "",
-    // -6.5217e-03);
+                           5.0873e+03);
+    // 5.220e+03);
+    RooRealVar a1MeanBuBkg(("a1MeanBuBkg_" + std::to_string(i)).c_str(), "",
+    2.4822e+00);
+    RooRealVar a2MeanBuBkg(("a2MeanBuBkg_" + std::to_string(i)).c_str(), "",
+    -6.5217e-03);
     RooPolyVar meanBuBkg(("meanBuBkg_" + std::to_string(i)).c_str(), "",
                          deltaMass,
-                         RooArgList(a0MeanBuBkg /* , a1MeanBuBkg */));
+                         RooArgList(a0MeanBuBkg, a1MeanBuBkg, a2MeanBuBkg));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0SigmaBuBkgPi(("a0SigmaBuBkgPi_" + std::to_string(i)).c_str(),
                               //"", 1.2821e+01);
@@ -654,11 +653,11 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
 
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldSignalPi(("yieldSignalPi_" + std::to_string(i)).c_str(), "",
-                             3000, 1000, 9000);
-    // 40000, 0, 100000);
-    RooRealVar yieldBkgPi(("yieldBkgPi_" + std::to_string(i)).c_str(), "", 7000,
-                          1000, 9000);
-    // 100000, 0, 200000);
+                             // 3000, 1000, 9000);
+                             40000, 20000, 60000);
+    RooRealVar yieldBkgPi(("yieldBkgPi_" + std::to_string(i)).c_str(), "",
+                          // 7000, 1000, 9000);
+                          100000, 70000, 130000);
     RooRealVar yieldRatioSignal(
         ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.08, 0.06, 1);
     RooFormulaVar yieldSignalK(("yieldSignalK_" + std::to_string(i)).c_str(),
