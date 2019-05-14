@@ -1216,70 +1216,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   }
 }
 
-// Save all info on variables: value, error; EDM, covariance matrix quality and
-// status of fit for each result stored. One tree and one file created for each
-// variable - should have entries equal to number of toys.
-void SaveResultInTree(
-    int const nToys,
-    std::vector<std::shared_ptr<RooFitResult> > const &resultVec,
-    std::string const &varNamePlusID, double varPrediction,
-    std::string const &outputDir, double randomTag) {
-  std::string varName = varNamePlusID.substr(0, varNamePlusID.size() - 2);
-
-  // Add random tag to file name so that when we submit to the batch and run
-  // toys in parallel, files are not overwritten
-  TFile treeFile((outputDir + "/Tree_" + varName + "_" +
-                  std::to_string(randomTag) + ".root")
-                     .c_str(),
-                 "recreate");
-  TTree tree((varName + "_tree").c_str(), (varName + "_tree").c_str());
-
-  // save variable value, error, and fit quality variables
-  double varVal, varErr, EDM;
-  int covQual, fitStatus;
-
-  tree.Branch(varName.c_str(), &varVal, (varName + "/D").c_str());
-  tree.Branch((varName + "_Err").c_str(), &varErr,
-              (varName + "_Err/D").c_str());
-  tree.Branch((varName + "_Prediction").c_str(), &varPrediction,
-              (varName + "_Prediction/D").c_str());
-  tree.Branch("EDM", &EDM, "EDM/D");
-  tree.Branch("covQual", &covQual, "covQual/I");
-  tree.Branch("fitStatus", &fitStatus, "fitStatus/I");
-
-  for (int id = 0; id < nToys; ++id) {
-    RooAbsArg *varAbsArg =
-        const_cast<RooAbsArg *>(resultVec[id]->floatParsFinal().find(
-            (varName + "_" + std::to_string(id)).c_str()));
-
-    RooRealVar *var = dynamic_cast<RooRealVar *>(varAbsArg);
-    if (var == nullptr) {
-      std::stringstream output;
-      output << "No value found in variable " << varName;
-      throw std::runtime_error(output.str());
-    }
-
-    varVal = var->getVal();
-    varErr = var->getError();
-    EDM = resultVec[id]->edm();
-    fitStatus = resultVec[id]->status();
-    covQual = resultVec[id]->covQual();
-
-    tree.Fill();
-    if (EDM > 0.2) {
-      std::cout << "\n\nEDM VALUE > 0.2\n\n";
-      resultVec[id]->Print("v");
-    }
-  }
-  treeFile.cd();
-  tree.Write("", TObject::kOverwrite);
-  treeFile.Write();
-  treeFile.Close();
-
-  std::cout << "Result saved in file " << outputDir << "/Tree_" << varName
-            << "_" << std::to_string(randomTag) << ".root\n";
-}
-
 // Function we use to do the toy study - run many toys and extract pulls for
 // each variable of interest
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
@@ -1287,137 +1223,25 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Daughters> const &daughtersVec,
                  std::vector<Charge> const &chargeVec,
                  std::string const &outputDir /* , int nToys */) {
-  // Extract names and predictions of all the variables we want to obtain
-  // pulls for
-  int id = 0;
-  GlobalVars &globalVars = GlobalVars::Get(id);
-  std::vector<std::string> varNames;
-  std::vector<double> varPredictions;
+  int nToys = 2;
 
-  // Extract the names of the variables and their starting values
-  for (auto &n : neutralVec) {
-    for (auto &d : daughtersVec) {
-      switch (n) {
-        case Neutral::pi0: {
-          switch (d) {
-            case Daughters::kpi: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kpi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0().getVal());
-              break;
-            }
-            case Daughters::kk: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_pi0_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0().getVal());
-              break;
-            }
-            case Daughters::pipi: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0().getVal());
-              break;
-            }
-            case Daughters::pik: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pik> &nbdVars_pi0_pi_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::pik>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0().getVal());
-              break;
-            }
-          }
-          break;
-        }
-        case Neutral::gamma: {
-          switch (d) {
-            case Daughters::kpi: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_pi_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::kpi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma().getVal());
-              break;
-            }
-            case Daughters::kk: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_gamma_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma().getVal());
-              break;
-            }
-            case Daughters::pipi: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma().getVal());
-              break;
-            }
-            case Daughters::pik: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pik>
-                  &nbdVars_gamma_pi_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pik>::Get(id);
-              varNames.emplace_back(
-                  nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma().GetName());
-              varPredictions.emplace_back(
-                  nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma().getVal());
-              break;
-            }
-          }
-          break;
-        }
-      }
-    }
-  }
-  // Setting the random seed to 0 is a special case which generates a
-  // different seed every time you run. Setting the seed to an integer
-  // generates toys in a replicable way, in case you need to debug
-  // something.
-  RooRandom::randomGenerator()->SetSeed(0);
-  TRandom3 random(0);
-  double randomTag = random.Rndm();
-  std::vector<std::shared_ptr<RooFitResult> > resultVec;
-  int nToys = 5;
-
-  // loop over number of toys we want to run. Make simPDF, generate dataset, fit
-  // back and save the result in order to extract the variable info
   for (int id = 0; id < nToys; ++id) {
+    // Setting the random seed to 0 is a special case which generates a
+    // different seed every time you run. Setting the seed to an integer
+    // generates toys in a replicable way, in case you need to debug
+    // something.
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double randomTag = random.Rndm();
+
+    TFile outputFile(
+        (outputDir + "/ResultFile" + std::to_string(randomTag) + ".root")
+            .c_str(),
+        "recreate");
+
     std::cout << "\n\n -------------------------- Running toy #" << id+1
               << " -------------------------- \n\n";
+
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
     auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
@@ -1445,18 +1269,18 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                            RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-    // auto result = std::unique_ptr<RooFitResult>(simPdfToFit->fitTo(
-    //     *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save()));
-    resultVec.emplace_back(result);
     // save names and predictions of all variables we want to calculate
     // pulls for
     result->Print("v");
-  }
 
-  // loop over all the variables we are interested in
-  for (int n = 0; n < varNames.size(); ++n) {
-    SaveResultInTree(nToys, resultVec, varNames[n], varPredictions[n],
-                     outputDir, randomTag);
+    outputFile.cd();
+    result->SetName(("Result" + std::to_string(randomTag)).c_str());
+    result->Print("v");
+    result->Write();
+    outputFile.Close();
+
+    std::cout << "Result saved in file " << outputDir << "/ResultFile"
+              << std::to_string(randomTag) << ".root\n";
   }
 }
 
