@@ -489,26 +489,26 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_Bu2Dst0h_Dst02D0gamma());
     PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0gamma_);
-    PdfBase::functions_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_Bu2Dst0h_Dst02D0pi0());
-    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
+    // PdfBase::functions_.add(
+    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+    //         .pdf_Bu2Dst0h_Dst02D0pi0());
+    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdf_misRec());
     PdfBase::yields_.add(*PdfBase::yield_misRec_);
-    PdfBase::functions_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_overRec());
-    PdfBase::yields_.add(*PdfBase::yield_overRec_);
-    PdfBase::functions_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_Bu2Dst0hst_Dst02D0pi0());
-    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
-    PdfBase::functions_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_Bu2Dst0hst_Dst02D0gamma());
-    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
+    // PdfBase::functions_.add(
+    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+    //         .pdf_overRec());
+    // PdfBase::yields_.add(*PdfBase::yield_overRec_);
+    // PdfBase::functions_.add(
+    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+    //         .pdf_Bu2Dst0hst_Dst02D0pi0());
+    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
+    // PdfBase::functions_.add(
+    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+    //         .pdf_Bu2Dst0hst_Dst02D0gamma());
+    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
     // if (_neutral == Neutral::pi0) {
     //   PdfBase::functions_.add(
     //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
