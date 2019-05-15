@@ -405,9 +405,9 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
 }
 
 void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
-  int bu_low = 5055;
-  int bu_high = 5805;
-  int delta_low = 80;//134;
+  int bu_low = 5050;
+  int bu_high = 5800;
+  int delta_low = 50;//134;
   int delta_high = 210;
 
   int bu_nbins = (bu_high - bu_low) / 10;
@@ -608,7 +608,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                            deltaMass, lambdaDeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0Mean1BuBkg(("a0Mean1BuBkg_" + std::to_string(i)).c_str(), "",
-                            5.0873e+03);
+                            5.0873e+03-80);
     RooRealVar a1Mean1BuBkg(("a1Mean1BuBkg_" + std::to_string(i)).c_str(), "",
                             2.4822e+00);
     RooRealVar a2Mean1BuBkg(("a2Mean1BuBkg_" + std::to_string(i)).c_str(), "",
@@ -617,7 +617,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                           deltaMass,
                           RooArgList(a0Mean1BuBkg, a1Mean1BuBkg, a2Mean1BuBkg));
     RooRealVar a0Mean2BuBkg(("a0Mean2BuBkg_" + std::to_string(i)).c_str(), "",
-                            5.2623e+03);
+                            5.2623e+03-80);
     RooRealVar a1Mean2BuBkg(("a1Mean2BuBkg_" + std::to_string(i)).c_str(), "",
                             -1.1142e+00);
     RooRealVar a2Mean2BuBkg(("a2Mean2BuBkg_" + std::to_string(i)).c_str(), "",
