@@ -586,9 +586,9 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                           1.0341e+00);
     RooRealVar b1DeltaBkg(("b1DeltaBkg_" + std::to_string(i)).c_str(), "",
                           -1.2284e+00);
-    RooDstD0BG pdf1DeltaBkg(("pdf1DeltaBkg_" + std::to_string(i)).c_str(), "",
-                            deltaMass, threshold1DeltaBkg, c1DeltaBkg,
-                            a1DeltaBkg, b1DeltaBkg);
+    // RooDstD0BG pdf1DeltaBkg(("pdf1DeltaBkg_" + std::to_string(i)).c_str(), "",
+    //                         deltaMass, threshold1DeltaBkg, c1DeltaBkg,
+    //                         a1DeltaBkg, b1DeltaBkg);
     RooRealVar threshold2DeltaBkg(
         ("threshold2DeltaBkg_" + std::to_string(i)).c_str(), "", 6.7237e+01);
     RooRealVar c2DeltaBkg(("c2DeltaBkg_" + std::to_string(i)).c_str(), "",
@@ -597,15 +597,18 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                           8.8301e-01);
     RooRealVar b2DeltaBkg(("b2DeltaBkg_" + std::to_string(i)).c_str(), "",
                           -9.9972e-01);
-    RooDstD0BG pdf2DeltaBkg(("pdf2DeltaBkg_" + std::to_string(i)).c_str(), "",
-                            deltaMass, threshold2DeltaBkg, c2DeltaBkg,
-                            a2DeltaBkg, b2DeltaBkg);
+    // RooDstD0BG pdf2DeltaBkg(("pdf2DeltaBkg_" + std::to_string(i)).c_str(), "",
+    //                         deltaMass, threshold2DeltaBkg, c2DeltaBkg,
+    //                         a2DeltaBkg, b2DeltaBkg);
 
-    // RooRealVar lambdaDeltaBkg(
-    //     ("lambdaDeltaBkg_" + std::to_string(i)).c_str(), "", 0.01);
-    // RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(),
-    // "",
-    //                            deltaMass, lambdaDeltaBkg);
+    RooRealVar lambda1DeltaBkg(("lambda1DeltaBkg_" + std::to_string(i)).c_str(),
+                              "", 0.01);
+    RooExponential pdf1DeltaBkg(("pdf1DeltaBkg_" + std::to_string(i)).c_str(), "",
+                               deltaMass, lambda1DeltaBkg);
+    RooRealVar lambda2DeltaBkg(("lambda2DeltaBkg_" + std::to_string(i)).c_str(),
+                              "", 0.00001);
+    RooExponential pdf2DeltaBkg(("pdf2DeltaBkg_" + std::to_string(i)).c_str(), "",
+                               deltaMass, lambda2DeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0Mean1BuBkg(("a0Mean1BuBkg_" + std::to_string(i)).c_str(), "",
                             5.0873e+03-80);
