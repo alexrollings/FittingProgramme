@@ -447,27 +447,24 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
-                               "",
-          1.4219e+02);
+                               "", 1.4219e+02);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
         ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
-    // RooRealVar sigmaRatioDeltaSignal(
-    //     ("sigmaRatioDeltaSignal_" + std::to_string(i)).c_str(), "", 0.87952);
-    // RooFormulaVar sigma2DeltaSignal(
-    //     ("sigma2DeltaSignal_" + std::to_string(i)).c_str(), "@0*@1",
-    //     RooArgSet(sigma1DeltaSignal, sigmaRatioDeltaSignal));
+    RooRealVar sigmaRatioDeltaSignal(
+        ("sigmaRatioDeltaSignal_" + std::to_string(i)).c_str(), "", 0.87952);
+    RooFormulaVar sigma2DeltaSignal(
+        ("sigma2DeltaSignal_" + std::to_string(i)).c_str(), "@0*@1",
+        RooArgSet(sigma1DeltaSignal, sigmaRatioDeltaSignal));
     // ---------------------------- Tails ----------------------------
     RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(), "",
                              2.0251e+00);
-    // RooRealVar a2DeltaSignal(("a2DeltaSignal_" + std::to_string(i)).c_str(),
-    // "",
-    // -5.9224e-01);
+    RooRealVar a2DeltaSignal(("a2DeltaSignal_" + std::to_string(i)).c_str(), "",
+                             -5.9224e-01);
     RooRealVar n1DeltaSignal(("n1DeltaSignal_" + std::to_string(i)).c_str(), "",
                              3.0344e+00);
-    // RooRealVar n2DeltaSignal(("n2DeltaSignal_" + std::to_string(i)).c_str(),
-    // "",
-    // 4.8427e+00);
+    RooRealVar n2DeltaSignal(("n2DeltaSignal_" + std::to_string(i)).c_str(), "",
+                             4.8427e+00);
     // ---------------------------- PDFs ----------------------------
     // RooGaussian pdfDeltaSignal1(
     //     ("pdfDeltaSignal1_" + std::to_string(i)).c_str(), "", deltaMass,
@@ -475,15 +472,15 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     RooCBShape pdfDeltaSignal1(("pdfDeltaSignal1_" + std::to_string(i)).c_str(),
                                "", deltaMass, meanDeltaSignal,
                                sigma1DeltaSignal, a1DeltaSignal, n1DeltaSignal);
-    // RooCBShape pdfDeltaSignal2(
-    //     ("pdfDeltaSignal2_" + std::to_string(i)).c_str(), "", deltaMass,
-    //     meanDeltaSignal, sigma2DeltaSignal, a2DeltaSignal, n2DeltaSignal);
-    // RooRealVar fracPdf1DeltaSignal(
-    //     ("fracPdf1DeltaSignal_" + std::to_string(i)).c_str(), "",
-          // 2.7402e-01);
-    // RooAddPdf pdfDeltaSignal(
-    //     ("pdfDeltaSignal_" + std::to_string(i)).c_str(), "",
-    //     RooArgSet(pdfDeltaSignal1, pdfDeltaSignal2), fracPdf1DeltaSignal);
+    RooCBShape pdfDeltaSignal2(
+        ("pdfDeltaSignal2_" + std::to_string(i)).c_str(), "", deltaMass,
+        meanDeltaSignal, sigma2DeltaSignal, a2DeltaSignal, n2DeltaSignal);
+    RooRealVar fracPdf1DeltaSignal(
+        ("fracPdf1DeltaSignal_" + std::to_string(i)).c_str(), "",
+          2.7402e-01);
+    RooAddPdf pdfDeltaSignal(
+        ("pdfDeltaSignal_" + std::to_string(i)).c_str(), "",
+        RooArgSet(pdfDeltaSignal1, pdfDeltaSignal2), fracPdf1DeltaSignal);
 
     // ---------------------------- π PDFs: Bu ----------------------------
     // ---------------------------- Signal ----------------------------
