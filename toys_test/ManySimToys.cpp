@@ -405,8 +405,8 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
 }
 
 void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
-  int bu_low = 5055;
-  int bu_high = 5805;
+  int bu_low = 5050;
+  int bu_high = 5800;
   int delta_low = 80;//134;
   int delta_high = 210;
 
@@ -447,7 +447,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
-                               "", 1.4219e+02);
+                               "", 1.4219e+02+5);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
         ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
@@ -496,7 +496,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0Sigma1BuSignalPi(
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 4.9764e+00);
+        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 4.9764e+00+30);
     RooRealVar a1Sigma1BuSignalPi(
         ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.4775e-01);
     RooRealVar a2Sigma1BuSignalPi(
