@@ -450,7 +450,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                                "", 1.4219e+02);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
-        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00+5);
+        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
     RooRealVar sigmaRatioDeltaSignal(
         ("sigmaRatioDeltaSignal_" + std::to_string(i)).c_str(), "", 0.87952);
     RooFormulaVar sigma2DeltaSignal(
