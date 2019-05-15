@@ -550,7 +550,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaRelativeWidthSignal(
-        ("sigmaRelativeWidthSignal_" + std::to_string(i)).c_str(), "", 0.95);
+        ("sigmaRelativeWidthSignal_" + std::to_string(i)).c_str(), "", 1);
     RooFormulaVar sigma1BuSignalK(
         ("sigma1BuSignalK_" + std::to_string(i)).c_str(), "", "@0*@1",
         RooArgList(sigma1BuSignalPi, sigmaRelativeWidthSignal));
@@ -579,13 +579,13 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- π/K shared PDFs: Delta
     // ----------------------------
     RooRealVar thresholdDeltaBkg(
-        ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.2160e+01);
+        ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 6.7237e+01);
     RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
-                         4.2450e+01);
+                         4.7874e+01);
     RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-                         1.0341e+00);
+                         8.8301e-01);
     RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
-                         -1.2284e+00);
+                         -9.9972e-01);
     RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
                            deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
                            bDeltaBkg);
@@ -595,14 +595,14 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                            deltaMass, lambdaDeltaBkg);
     // ---------------------------- π PDFs: Bu ----------------------------
     RooRealVar a0MeanBuBkg(("a0MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          5.0873e+03);
-                           // 5.220e+03);
+                           5.0873e+03);
     RooRealVar a1MeanBuBkg(("a1MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          2.4822e+00);
+                           2.4822e+00);
     RooRealVar a2MeanBuBkg(("a2MeanBuBkg_" + std::to_string(i)).c_str(), "",
-          -6.5217e-03);
+                           -6.5217e-03);
     RooPolyVar meanBuBkg(("meanBuBkg_" + std::to_string(i)).c_str(), "",
-                         deltaMass, RooArgList(a0MeanBuBkg, a1MeanBuBkg, a2MeanBuBkg));
+                         deltaMass,
+                         RooArgList(a0MeanBuBkg, a1MeanBuBkg, a2MeanBuBkg));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0SigmaBuBkgPi(("a0SigmaBuBkgPi_" + std::to_string(i)).c_str(),
                               "", 1.2821e+01+100);
@@ -631,7 +631,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- K PDFs: Bu ----------------------------
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaRelativeWidthBkg(
-        ("sigmaRelativeWidthBkg_" + std::to_string(i)).c_str(), "", 0.95);
+        ("sigmaRelativeWidthBkg_" + std::to_string(i)).c_str(), "", 1);
     RooFormulaVar sigmaBuBkgK(
         ("sigmaBuBkgK_" + std::to_string(i)).c_str(), "", "@0*@1",
         RooArgList(sigmaBuBkgPi, sigmaRelativeWidthBkg));
@@ -653,12 +653,12 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                           // 7000, 1000, 9000);
                           100000, 70000, 130000);
     RooRealVar yieldRatioSignal(
-        ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.08, 0.06, 1);
+        ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.07930, 0, 1);
     RooFormulaVar yieldSignalK(("yieldSignalK_" + std::to_string(i)).c_str(),
                                "", "@0*@1",
                                RooArgList(yieldSignalPi, yieldRatioSignal));
     RooRealVar yieldRatioBkg(("yieldRatioBkg_" + std::to_string(i)).c_str(), "",
-                             0.08, 0.06, 1);
+                             0.05, 0, 1);
     RooFormulaVar yieldBkgK(("yieldBkgK_" + std::to_string(i)).c_str(), "",
                             "@0*@1", RooArgList(yieldBkgPi, yieldRatioBkg));
 
@@ -706,7 +706,6 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // meanDeltaSignal.setVal(142);
 
     RooFitResult *result = 0;
-    std::cout << "9" << std::endl;
     // ---------------------------- Fit Sim PDF to toy
     // ----------------------------
     result = simPdf.fitTo(*toyAbsData, RooFit::Save(true));
