@@ -701,6 +701,23 @@ void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
     }
 }
 
+void PlotCorrelations(RooFitResult *result, std::string const &outputDir) {
+  TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
+  TH2 *corrHist = result->correlationHist();
+  corrHist->SetStats(0);
+  corrHist->SetTitle(" ");
+  corrCanvas.cd();
+  gStyle->SetLabelSize(0.001, "XY");
+  gStyle->SetLabelSize(0.015, "Z");
+  gPad->SetLeftMargin(0.3);
+  gPad->SetRightMargin(0.2);
+  gPad->SetBottomMargin(0.21);
+  gPad->SetTopMargin(0.05);
+  corrHist->Draw("colz");
+  corrCanvas.Update();
+  corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+}
+
 // Function that returns the simultaneous PDF, the class which collects all the
 // individual components. It is that that we do all our fitting with
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
@@ -1191,28 +1208,14 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   }
   // Label plots to indicate Toy
   std::string lumiString = "TOY";
-  // Loop over daughters again to plot correct PDFs
   for (auto &p : pdfs) {
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf,
-               outputDir, fitBool, lumiString, result.get());
+    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
+               fitBool, lumiString, result.get());
     Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
   if (fitBool == true) {
     result->Print("v");
-    TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
-    TH2* corrHist = result->correlationHist();
-    corrHist->SetStats(0);
-    corrHist->SetTitle(" ");
-    corrCanvas.cd();
-    gPad->SetLeftMargin(0.2);
-    gPad->SetRightMargin(0.1);
-    gPad->SetBottomMargin(0.15);
-    gPad->SetTopMargin(0.05);
-    corrHist->SetLabelSize(0.015, "XY");
-    corrHist->SetLabelSize(0.02, "Z");
-    corrHist->Draw("colz");
-    corrCanvas.Update();
-    corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+    PlotCorrelations(result.get(), outputDir);
   }
 }
 
@@ -1223,7 +1226,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Daughters> const &daughtersVec,
                  std::vector<Charge> const &chargeVec,
                  std::string const &outputDir /* , int nToys */) {
-  int nToys = 2;
+  int nToys = 1;
 
   for (int id = 0; id < nToys; ++id) {
     // Setting the random seed to 0 is a special case which generates a
@@ -1337,6 +1340,7 @@ int main(int argc, char **argv) {
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
     std::string toysArg("none");
+    int nToys = 1;
 
     // We always want to simultaneously fir the pi AND k bachelor modes
     // together
@@ -1366,6 +1370,8 @@ int main(int argc, char **argv) {
                 << ">\n";
       std::cout << "    -toys=<choice {single, many, none} default: none>"
                 << "\n";
+      std::cout << "    If toys=many, you can specify -nToys=<#, default = " << nToys << ">"
+                << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
@@ -1386,6 +1392,14 @@ int main(int argc, char **argv) {
         std::cerr << "Please specify correct toy option: "
                      "-toys=[single,many,none] (optional)\n";
         return 1;
+      }
+
+      if (toys == Toys::many) {
+        if (!args("nToys", nToys)) {
+          std::cout << "Using default and running " << nToys << " toy.\n";
+        } else {
+          std::cout << "Running " << nToys << " toys.\n";
+        }
       }
 
       if (!args("inputDir", inputDir) && toys == Toys::none) {
@@ -1644,20 +1658,7 @@ int main(int argc, char **argv) {
 
     if (fitBool == true) {
       result->Print("v");
-      TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
-      TH2 *corrHist = result->correlationHist();
-      corrHist->SetStats(0);
-      corrHist->SetTitle(" ");
-      corrCanvas.cd();
-      gStyle->SetLabelSize(0.001, "XY");
-      gStyle->SetLabelSize(0.015, "Z");
-      gPad->SetLeftMargin(0.3);
-      gPad->SetRightMargin(0.2);
-      gPad->SetBottomMargin(0.21);
-      gPad->SetTopMargin(0.05);
-      corrHist->Draw("colz");
-      corrCanvas.Update();
-      corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+      PlotCorrelations(result.get(), outputDir);
     }
 
   } else {

@@ -37,8 +37,10 @@ Configuration::Configuration()
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
   deltaMass_.setMax(210);
-  deltaMass_.setMin(50);
+  deltaMass_.setMin(60);
   deltaMass_.setBins(50);
+  // deltaMass_.setMin(50);
+  // deltaMass_.setBins(50);
   deltaMass_.setUnit(kMassUnit);
 
   pi0Mass_.SetName("Pi0_M");

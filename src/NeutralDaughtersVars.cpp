@@ -9,7 +9,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma(int uniqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_" +
                          ComposeName(uniqueId, neutral, daughters))
                             .c_str(),
-                        "", 0.07930, 0, 1);
+                        "", 0.07930, -1, 1);
 }
 
 template <Neutral neutral, Daughters daughters>
@@ -17,7 +17,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0(int uniqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0h_Dst02D0pi0_" +
                          ComposeName(uniqueId, neutral, daughters))
                             .c_str(),
-                        "", 0.07930, 0, 1);
+                        "", 0.07930, -1, 1);
 }
 
 template <Neutral neutral, Daughters daughters>
@@ -25,7 +25,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0(int uniqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0pi0_" +
                          ComposeName(uniqueId, neutral, daughters))
                             .c_str(),
-                        "", 0.02, 0, 1);
+                        "", 0.02, -1, 1);
 }
 
 template <Neutral neutral, Daughters daughters>
@@ -33,7 +33,7 @@ RooRealVar *Make_ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma(int uniqueId) {
   return new RooRealVar(("ratioDst0KDst0pi_Bu2Dst0hst_Dst02D0gamma_" +
                          ComposeName(uniqueId, neutral, daughters))
                             .c_str(),
-                        "", 0.02, 0, 1);
+                        "", 0.02, -1, 1);
 }
 
 template <>
@@ -252,22 +252,22 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0hst_Dst02D0gamma_(
           ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
               .c_str(),
-          "", 1, 0, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0hst_Dst02D0pi0_(
           ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
               .c_str(),
-          "", 1, 0, 1.5),
+          "", 1, -1.5, 1.5),
       // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
       // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
@@ -322,22 +322,22 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
           ("R_CP_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0h_Dst02D0pi0_(
           ("R_CP_Bu2Dst0h_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
               .c_str(),
-          "", 1, 0.5, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0hst_Dst02D0gamma_(
           ("R_CP_Bu2Dst0hst_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 1.5),
+          "", 1, -1.5, 1.5),
       R_CP_Bu2Dst0hst_Dst02D0pi0_(
           ("R_CP_Bu2Dst0hst_Dst02D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Daughters::pipi))
               .c_str(),
-          "", 1, 0, 1.5),
+          "", 1, -1.5, 1.5),
       // R_CP_Bu2Dst0hst_Dst02D0gamma_(),
       // R_CP_Bu2Dst0hst_Dst02D0pi0_(),
       ratioDst0KDst0pi_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
