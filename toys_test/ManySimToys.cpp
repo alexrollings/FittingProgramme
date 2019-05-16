@@ -669,7 +669,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                          pdf2DeltaBkg,
                          RooFit::Conditional(pdf2BuBkgPi, buMass));
     RooRealVar fracPdf1Bkg(("fracPdf1Bkg_" + std::to_string(i)).c_str(), "",
-                           0.714, 0, 1);
+                           0.714);//, 0, 1);
     RooAddPdf pdfBkgPi(("pdfBkgPi_" + std::to_string(i)).c_str(), "",
                        RooArgSet(pdf1BkgPi, pdf2BkgPi), fracPdf1Bkg);
 
@@ -703,17 +703,17 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldSignalPi(("yieldSignalPi_" + std::to_string(i)).c_str(), "",
                              // 3000, 1000, 9000);
-                             40000, 20000, 60000);
+                             40000, -1000000, 1000000);
     RooRealVar yieldBkgPi(("yieldBkgPi_" + std::to_string(i)).c_str(), "",
                           // 7000, 1000, 9000);
-                          100000, 70000, 130000);
+                          100000, -1000000, 1000000);
     RooRealVar yieldRatioSignal(
-        ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.07930, 0, 1);
+        ("yieldRatioSignal_" + std::to_string(i)).c_str(), "", 0.07930, -1, 1);
     RooFormulaVar yieldSignalK(("yieldSignalK_" + std::to_string(i)).c_str(),
                                "", "@0*@1",
                                RooArgList(yieldSignalPi, yieldRatioSignal));
     RooRealVar yieldRatioBkg(("yieldRatioBkg_" + std::to_string(i)).c_str(), "",
-                             0.05, 0, 1);
+                             0.05, -1, 1);
     RooFormulaVar yieldBkgK(("yieldBkgK_" + std::to_string(i)).c_str(), "",
                             "@0*@1", RooArgList(yieldBkgPi, yieldRatioBkg));
 
