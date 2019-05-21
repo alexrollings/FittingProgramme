@@ -539,7 +539,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                             fracPdf1BuSignal);
     // ---------------------------- π Total PDF ----------------------------
     RooProdPdf pdfSignalPi(("pdfSignalPi_" + std::to_string(i)).c_str(), "",
-                           pdfDeltaSignal1,
+                           pdfDeltaSignal,
                            RooFit::Conditional(pdfBuSignalPi1, buMass));
 
     // ---------------------------- K PDFs: Bu ----------------------------
@@ -569,7 +569,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                            fracPdf1BuSignal);
     // ---------------------------- K Total PDF ----------------------------
     RooProdPdf pdfSignalK(("pdfSignalK_" + std::to_string(i)).c_str(), "",
-                          pdfDeltaSignal1,
+                          pdfDeltaSignal,
                           RooFit::Conditional(pdfBuSignalK1, buMass));
 
     // ---------------------------- Background ----------------------------
