@@ -530,7 +530,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                           "", buMass, meanBuSignal, sigma1BuSignalPi,
     //                           a1BuSignal, n1BuSignal);
     RooGaussian pdfBuSignalPi2(("pdfBuSignalPi2_" + std::to_string(i)).c_str(),
-                               "", buMass, meanBuSignal, sigma1BuSignalPi);
+                               "", buMass, meanBuSignal, sigma2BuSignalPi);
     // RooCBShape pdfBuSignalPi2(("pdfBuSignalPi2_" + std::to_string(i)).c_str(),
     //                           "", buMass, meanBuSignal, sigma2BuSignalPi,
     //                           a2BuSignal, n2BuSignal);
@@ -540,7 +540,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- π Total PDF ----------------------------
     RooProdPdf pdfSignalPi(("pdfSignalPi_" + std::to_string(i)).c_str(), "",
                            pdfDeltaSignal,
-                           RooFit::Conditional(pdfBuSignalPi1, buMass));
+                           RooFit::Conditional(pdfBuSignalPi, buMass));
 
     // ---------------------------- K PDFs: Bu ----------------------------
     // ---------------------------- Signal ----------------------------
@@ -560,7 +560,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                          buMass, meanBuSignal, sigma1BuSignalK, a1BuSignal,
     //                          n1BuSignal);
     RooGaussian pdfBuSignalK2(("pdfBuSignalK2_" + std::to_string(i)).c_str(),
-                              "", buMass, meanBuSignal, sigma1BuSignalK);
+                              "", buMass, meanBuSignal, sigma2BuSignalK);
     // RooCBShape pdfBuSignalK2(("pdfBuSignalK2_" + std::to_string(i)).c_str(), "",
     //                          buMass, meanBuSignal, sigma2BuSignalK, a2BuSignal,
     //                          n2BuSignal);
@@ -570,7 +570,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- K Total PDF ----------------------------
     RooProdPdf pdfSignalK(("pdfSignalK_" + std::to_string(i)).c_str(), "",
                           pdfDeltaSignal,
-                          RooFit::Conditional(pdfBuSignalK1, buMass));
+                          RooFit::Conditional(pdfBuSignalK, buMass));
 
     // ---------------------------- Background ----------------------------
     //
