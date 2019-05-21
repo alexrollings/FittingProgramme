@@ -484,34 +484,33 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar a0MeanBuSignal(("a0MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 5.0275e+03, 4500, 5500);
+                              "", 5.0271e+03, 4500, 5500);
     RooRealVar a1MeanBuSignal(("a1MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 1.9640e+00, -10, 10);
+                              "", 1.9687e+00, -10, 10);
     RooRealVar a2MeanBuSignal(("a2MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", -1.2691e-03);//, -0.1, 0.1);
+                              "", -1.2851e-03);//, -0.1, 0.1);
     RooPolyVar meanBuSignal(
         ("meanBuSignal_" + std::to_string(i)).c_str(), "", deltaMass,
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
-    RooRealVar a0Sigma1BuSignalPi(
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.8644e+02);//, -400, 400);
-    RooRealVar a1Sigma1BuSignalPi(
-        ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", -3.3018e+00);//, -10, 10);
-    RooRealVar a2Sigma1BuSignalPi(
-        ("a2Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 1.1373e-02);//, -0.1, 0.1);
+    RooRealVar a0SigmaBuSignalPi(
+        ("a0SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 3.6392e+02);//, -500, 500);
+    RooRealVar a1SigmaBuSignalPi(
+        ("a1SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", -4.4737e+00);//, -10, 10);
+    RooRealVar a2SigmaBuSignalPi(
+        ("a2SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 1.5741e-02);//, -0.1, 0.1);
 
     RooPolyVar sigma1BuSignalPi(
         ("sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
-        RooArgList(a0Sigma1BuSignalPi, a1Sigma1BuSignalPi, a2Sigma1BuSignalPi));
-    RooRealVar a0Sigma2BuSignalPi(
-        ("a0Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", 1.3767e+02, -400, 400);
-    RooRealVar a1Sigma2BuSignalPi(
-        ("a1Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", -1.6965e+00);
-    RooRealVar a2Sigma2BuSignalPi(
-        ("a2Sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", 5.9787e-03);
-    RooPolyVar sigma2BuSignalPi(
-        ("sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
-        RooArgList(a0Sigma2BuSignalPi, a1Sigma2BuSignalPi, a2Sigma2BuSignalPi));
+        RooArgList(a0SigmaBuSignalPi, a1SigmaBuSignalPi, a2SigmaBuSignalPi));
+
+    RooRealVar sigma21FracBuSignal(
+        ("sigma21FracBuSignal_" + std::to_string(i)).c_str(), "", 3.7667e-01);
+
+    RooFormulaVar sigma2BuSignalPi(
+        ("sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", "@0*@1",
+        RooArgSet(sigma1BuSignalPi, sigma21FracBuSignal));
+
     // ---------------------------- Tails ----------------------------
     // RooRealVar a1BuSignal(("a1BuSignal_" + std::to_string(i)).c_str(), "",
     //                       2.2666e+00);
@@ -523,7 +522,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     //                       2.4093e+01);
     // ---------------------------- PDFs ----------------------------
     RooRealVar fracPdf1BuSignal(
-        ("fracPdf1BuSignal_" + std::to_string(i)).c_str(), "", 6.2675e-02);
+        ("fracPdf1BuSignal_" + std::to_string(i)).c_str(), "", 6.2109e-02);
     RooGaussian pdfBuSignalPi1(("pdfBuSignalPi1_" + std::to_string(i)).c_str(),
                                "", buMass, meanBuSignal, sigma1BuSignalPi);
     // RooCBShape pdfBuSignalPi1(("pdfBuSignalPi1_" + std::to_string(i)).c_str(),
@@ -540,7 +539,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- π Total PDF ----------------------------
     RooProdPdf pdfSignalPi(("pdfSignalPi_" + std::to_string(i)).c_str(), "",
                            pdfDeltaSignal,
-                           RooFit::Conditional(pdfBuSignalPi2, buMass));
+                           RooFit::Conditional(pdfBuSignalPi, buMass));
 
     // ---------------------------- K PDFs: Bu ----------------------------
     // ---------------------------- Signal ----------------------------
@@ -570,7 +569,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- K Total PDF ----------------------------
     RooProdPdf pdfSignalK(("pdfSignalK_" + std::to_string(i)).c_str(), "",
                           pdfDeltaSignal,
-                          RooFit::Conditional(pdfBuSignalK2, buMass));
+                          RooFit::Conditional(pdfBuSignalK, buMass));
 
     // ---------------------------- Background ----------------------------
     //
