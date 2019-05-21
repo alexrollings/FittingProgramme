@@ -484,17 +484,17 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar a0MeanBuSignal(("a0MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 5.0275e+03);//, 4500, 5500);
+                              "", 5.0275e+03, 4500, 5500);
     RooRealVar a1MeanBuSignal(("a1MeanBuSignal_" + std::to_string(i)).c_str(),
                               "", 1.9640e+00, -10, 10);
     RooRealVar a2MeanBuSignal(("a2MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", -1.2691e-03, -0.1, 0.1);
+                              "", -1.2691e-03);//, -0.1, 0.1);
     RooPolyVar meanBuSignal(
         ("meanBuSignal_" + std::to_string(i)).c_str(), "", deltaMass,
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0Sigma1BuSignalPi(
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.8644e+02);//, 100, 400);
+        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.8644e+02, -400, 400);
     RooRealVar a1Sigma1BuSignalPi(
         ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", -3.3018e+00);//, -10, 10);
     RooRealVar a2Sigma1BuSignalPi(
