@@ -498,14 +498,14 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     RooRealVar a1SigmaBuSignalPi(
         ("a1SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", -4.4737e+00);//, -10, 10);
     RooRealVar a2SigmaBuSignalPi(
-        ("a2SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 1.5741e-02, -0.1, 0.1);
+        ("a2SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 1.5741e-02);//, -0.1, 0.1);
 
     RooPolyVar sigma1BuSignalPi(
         ("sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
         RooArgList(a0SigmaBuSignalPi, a1SigmaBuSignalPi, a2SigmaBuSignalPi));
 
     RooRealVar sigma21FracBuSignal(
-        ("sigma21FracBuSignal_" + std::to_string(i)).c_str(), "", 3.7667e-01);
+        ("sigma21FracBuSignal_" + std::to_string(i)).c_str(), "", 3.7667e-01, -1, 1);
 
     RooFormulaVar sigma2BuSignalPi(
         ("sigma2BuSignalPi_" + std::to_string(i)).c_str(), "", "@0*@1",
