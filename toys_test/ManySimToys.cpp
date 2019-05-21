@@ -494,7 +494,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0Sigma1BuSignalPi(
-        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.8644e+02, -400, 400);
+        ("a0Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", 2.8644e+02);//, -400, 400);
     RooRealVar a1Sigma1BuSignalPi(
         ("a1Sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", -3.3018e+00, -10, 10);
     RooRealVar a2Sigma1BuSignalPi(
