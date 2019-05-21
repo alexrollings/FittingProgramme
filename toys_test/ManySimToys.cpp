@@ -486,7 +486,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     RooRealVar a0MeanBuSignal(("a0MeanBuSignal_" + std::to_string(i)).c_str(),
                               "", 5.0275e+03, 4500, 5500);
     RooRealVar a1MeanBuSignal(("a1MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 1.9640e+00);//, -10, 10);
+                              "", 1.9640e+00, -10, 10);
     RooRealVar a2MeanBuSignal(("a2MeanBuSignal_" + std::to_string(i)).c_str(),
                               "", -1.2691e-03);//, -0.1, 0.1);
     RooPolyVar meanBuSignal(
