@@ -446,10 +446,10 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
-                               "", 1.4219e+02, 141, 143);
+                               "", 1.4219e+02);//, 141, 143);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1DeltaSignal(
-        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00);
+        ("sigma1DeltaSignal_" + std::to_string(i)).c_str(), "", 9.0429e+00, 5, 15);
     RooRealVar sigmaRatioDeltaSignal(
         ("sigmaRatioDeltaSignal_" + std::to_string(i)).c_str(), "", 0.87958);
     RooFormulaVar sigma2DeltaSignal(
@@ -484,9 +484,9 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar a0MeanBuSignal(("a0MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 5.0271e+03, 4500, 5500);
+                              "", 5.0271e+03);//, 4500, 5500);
     RooRealVar a1MeanBuSignal(("a1MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 1.9687e+00, -10, 10);
+                              "", 1.9687e+00);//, -10, 10);
     RooRealVar a2MeanBuSignal(("a2MeanBuSignal_" + std::to_string(i)).c_str(),
                               "", -1.2851e-03);//, -0.1, 0.1);
     RooPolyVar meanBuSignal(
