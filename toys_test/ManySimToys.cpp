@@ -122,7 +122,7 @@ std::string FittingName(Neutral neutral, Bachelor bachelor) {
 void PlotComponent(Neutral neutral, Bachelor bachelor, Variable variable,
                    RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooProdPdf &sig, RooProdPdf &bkg,
+                   RooProdPdf &sig, RooAddPdf &bkg,
                    std::string const &outputDir) {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
@@ -617,9 +617,9 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
                           deltaMass,
                           RooArgList(a0Mean1BuBkg, a1Mean1BuBkg, a2Mean1BuBkg));
     RooRealVar a0Mean2BuBkg(("a0Mean2BuBkg_" + std::to_string(i)).c_str(), "",
-                            5.0900e+03);
+                            5.0900e+03, -4500, 5500);
     RooRealVar a1Mean2BuBkg(("a1Mean2BuBkg_" + std::to_string(i)).c_str(), "",
-                            1.5989e+00);
+                            1.5989e+00, -10, 10);
     RooRealVar a2Mean2BuBkg(("a2Mean2BuBkg_" + std::to_string(i)).c_str(), "",
                             -4.4125e-03);
     RooPolyVar mean2BuBkg(("mean2BuBkg_" + std::to_string(i)).c_str(), "",
@@ -725,7 +725,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     yieldsPi.add(yieldBkgPi);
     RooArgSet functionsPi;
     functionsPi.add(pdfSignalPi);
-    functionsPi.add(pdf1BkgPi);
+    functionsPi.add(pdfBkgPi);
     RooAddPdf pdfPi(("pdfPi_" + std::to_string(i)).c_str(), "", functionsPi,
                     yieldsPi);
 
@@ -734,7 +734,7 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     yieldsK.add(yieldBkgK);
     RooArgSet functionsK;
     functionsK.add(pdfSignalK);
-    functionsK.add(pdf1BkgK);
+    functionsK.add(pdfBkgK);
     RooAddPdf pdfK(("pdfK_" + std::to_string(i)).c_str(), "", functionsK,
                    yieldsK);
 
@@ -781,17 +781,17 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     if (toPlot == true && i == 0) {
       std::cout << "Plotting projections of m[Bu]\n";
       PlotComponent(Neutral::pi0, Bachelor::pi, Variable::bu, buMass,
-                    toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdf1BkgPi,
+                    toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdfBkgPi,
                     outputDir);
       PlotComponent(Neutral::pi0, Bachelor::k, Variable::bu, buMass,
-                    toyDataHist.get(), simPdf, fitting, pdfSignalK, pdf1BkgK,
+                    toyDataHist.get(), simPdf, fitting, pdfSignalK, pdfBkgK,
                     outputDir);
       std::cout << "Plotting projections of m[Delta]\n";
       PlotComponent(Neutral::pi0, Bachelor::pi, Variable::delta, deltaMass,
-                    toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdf1BkgPi,
+                    toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdfBkgPi,
                     outputDir);
       PlotComponent(Neutral::pi0, Bachelor::k, Variable::delta, deltaMass,
-                    toyDataHist.get(), simPdf, fitting, pdfSignalK, pdf1BkgK,
+                    toyDataHist.get(), simPdf, fitting, pdfSignalK, pdfBkgK,
                     outputDir);
       std::cout << "Plotting in 2D\n";
       Plotting2D(Neutral::pi0, Bachelor::pi, buMass, deltaMass,
