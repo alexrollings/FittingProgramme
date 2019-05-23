@@ -14,7 +14,7 @@ if os.path.isdir(sys.argv[1]):
   for filename in os.listdir(sys.argv[1]):
     pass_filename(sys.argv[1]+"/"+filename, file_list)
   subprocess.call([
-      "./FitManyToys", ",".join(file_list), output_dir
+      "./PlotToys", ",".join(file_list), output_dir
   ])
   # print("./FitManyToys " + ",".join(file_list))
 else:
