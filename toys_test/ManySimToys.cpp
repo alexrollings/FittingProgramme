@@ -150,7 +150,7 @@ void PlotComponent(Neutral neutral, Bachelor bachelor, Variable variable,
           title = "m[D^{*0}]-m[D^{0}]";
           break;
         case Neutral::pi0:
-          title = "m[D^{*0}]-m[D^{0}] - m[#pi^{0}]";
+          title = "m[D^{*0}]-m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG}";
           break;
       }
       break;
@@ -396,7 +396,7 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   gPad->SetRightMargin(0.1);
   gPad->SetBottomMargin(0.15);
   gPad->SetTopMargin(0.05);
-  corrHist->SetLabelSize(0.015, "XY");
+  corrHist->SetLabelSize(0.04, "XY");
   corrHist->SetLabelSize(0.02, "Z");
   corrHist->Draw("colz");
   corrCanvas.Update();
@@ -423,8 +423,8 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
 
   // ---------------------------- Categories ----------------------------
   RooCategory fitting("fitting", "fitting");
-  fitting.defineType("pi0_pi");
-  fitting.defineType("pi0_K");
+  fitting.defineType("gamma_pi");
+  fitting.defineType("gamma_K");
 
   // ---------------------------- Make simPDF for each toy in loop
   // ----------------------------
@@ -484,21 +484,21 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar a0MeanBuSignal(("a0MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 5.0271e+03);//, 4500, 5500);
+                              "", 5.0271e+03, 4500, 5500);
     RooRealVar a1MeanBuSignal(("a1MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", 1.9687e+00);//, -10, 10);
+                              "", 1.9687e+00, -10, 10);
     RooRealVar a2MeanBuSignal(("a2MeanBuSignal_" + std::to_string(i)).c_str(),
-                              "", -1.2851e-03);//, -0.1, 0.1);
+                              "", -1.2851e-03, -0.1, 0.1);
     RooPolyVar meanBuSignal(
         ("meanBuSignal_" + std::to_string(i)).c_str(), "", deltaMass,
         RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
     // ---------------------------- Sigmas ----------------------------
     RooRealVar a0SigmaBuSignalPi(
-        ("a0SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 3.6392e+02);//, 300, 400);
+        ("a0SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 3.6392e+02, 300, 400);
     RooRealVar a1SigmaBuSignalPi(
-        ("a1SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", -4.4737e+00);//, -10, 10);
+        ("a1SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", -4.4737e+00, -10, 10);
     RooRealVar a2SigmaBuSignalPi(
-        ("a2SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 1.5741e-02);//, -0.1, 0.1);
+        ("a2SigmaBuSignalPi_" + std::to_string(i)).c_str(), "", 1.5741e-02, -0.1, 0.1);
 
     RooPolyVar sigma1BuSignalPi(
         ("sigma1BuSignalPi_" + std::to_string(i)).c_str(), "", deltaMass,
@@ -742,8 +742,8 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     RooSimultaneous simPdf(("simPdf_" + std::to_string(i)).c_str(), "",
                            fitting);
-    simPdf.addPdf(pdfPi, "pi0_pi");
-    simPdf.addPdf(pdfK, "pi0_K");
+    simPdf.addPdf(pdfPi, "gamma_pi");
+    simPdf.addPdf(pdfK, "gamma_K");
 
     double nEvtsPerToy = simPdf.expectedEvents(fitting);
     std::cout << "Generating toy dataset..." << std::endl;
@@ -780,23 +780,23 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     if (toPlot == true && i == 0) {
       std::cout << "Plotting projections of m[Bu]\n";
-      PlotComponent(Neutral::pi0, Bachelor::pi, Variable::bu, buMass,
+      PlotComponent(Neutral::gamma, Bachelor::pi, Variable::bu, buMass,
                     toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdfBkgPi,
                     outputDir);
-      PlotComponent(Neutral::pi0, Bachelor::k, Variable::bu, buMass,
+      PlotComponent(Neutral::gamma, Bachelor::k, Variable::bu, buMass,
                     toyDataHist.get(), simPdf, fitting, pdfSignalK, pdfBkgK,
                     outputDir);
       std::cout << "Plotting projections of m[Delta]\n";
-      PlotComponent(Neutral::pi0, Bachelor::pi, Variable::delta, deltaMass,
+      PlotComponent(Neutral::gamma, Bachelor::pi, Variable::delta, deltaMass,
                     toyDataHist.get(), simPdf, fitting, pdfSignalPi, pdfBkgPi,
                     outputDir);
-      PlotComponent(Neutral::pi0, Bachelor::k, Variable::delta, deltaMass,
+      PlotComponent(Neutral::gamma, Bachelor::k, Variable::delta, deltaMass,
                     toyDataHist.get(), simPdf, fitting, pdfSignalK, pdfBkgK,
                     outputDir);
       std::cout << "Plotting in 2D\n";
-      Plotting2D(Neutral::pi0, Bachelor::pi, buMass, deltaMass,
+      Plotting2D(Neutral::gamma, Bachelor::pi, buMass, deltaMass,
                  toyDataHist.get(), simPdf, fitting, outputDir);
-      Plotting2D(Neutral::pi0, Bachelor::k, buMass, deltaMass,
+      Plotting2D(Neutral::gamma, Bachelor::k, buMass, deltaMass,
                  toyDataHist.get(), simPdf, fitting, outputDir);
       std::cout << "Plotting correlation matrix\n";
       PlotCorrMatrix(result, outputDir);
