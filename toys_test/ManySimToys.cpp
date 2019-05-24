@@ -722,19 +722,19 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     // ----------------------------
     RooArgSet yieldsPi;
     yieldsPi.add(yieldSignalPi);
-    yieldsPi.add(yieldBkgPi);
+    // yieldsPi.add(yieldBkgPi);
     RooArgSet functionsPi;
     functionsPi.add(pdfSignalPi);
-    functionsPi.add(pdfBkgPi);
+    // functionsPi.add(pdfBkgPi);
     RooAddPdf pdfPi(("pdfPi_" + std::to_string(i)).c_str(), "", functionsPi,
                     yieldsPi);
 
     RooArgSet yieldsK;
     yieldsK.add(yieldSignalK);
-    yieldsK.add(yieldBkgK);
+    // yieldsK.add(yieldBkgK);
     RooArgSet functionsK;
     functionsK.add(pdfSignalK);
-    functionsK.add(pdfBkgK);
+    // functionsK.add(pdfBkgK);
     RooAddPdf pdfK(("pdfK_" + std::to_string(i)).c_str(), "", functionsK,
                    yieldsK);
 
