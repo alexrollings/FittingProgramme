@@ -282,7 +282,7 @@ void GenerateToys(std::string const &outputDir) {
 
   RooRandom::randomGenerator()->SetSeed(0);
   TRandom3 random(0);
-  double randomTag = random.Rndm();
+  // double randomTag = random.Rndm();
 
   // ---------------------------- PDFs ----------------------------
   //
@@ -346,12 +346,12 @@ void GenerateToys(std::string const &outputDir) {
 
   // ---------------------------- Background ----------------------------
   //
-  RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01);
+  RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
   RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
   // ---------------------------- π/K shared PDFs: Bu
   // ----------------------------
-  RooRealVar lambdaBuBkg("lambdaBuBkg", "", 0.01);
-  RooExponential pdfBuBkg("pdfBuBkg", "", deltaMass, lambdaBuBkg);
+  RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005, -0.1, 0.1);
+  RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
 
   // ---------------------------- π/K shared Total PDF
   // ----------------------------
@@ -359,7 +359,7 @@ void GenerateToys(std::string const &outputDir) {
 
   // ---------------------------- Yields ----------------------------
   RooRealVar yieldSignal("yieldSignal", "", 40000, -1000000, 1000000);
-  RooRealVar fracBkgYield("fracBkgYield", "", 0.2, 0, 1);
+  RooRealVar fracBkgYield("fracBkgYield", "", 0.8, 0, 1);
   RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
                          RooArgSet(yieldSignal, fracBkgYield));
 
