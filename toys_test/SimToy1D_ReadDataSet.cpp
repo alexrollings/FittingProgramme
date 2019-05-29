@@ -237,12 +237,12 @@ void GenerateToys(std::string const &path) {
   
   // ---------------------------- Background ----------------------------
   //
-  RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01);
+  RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
   RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
  
   // ---------------------------- π/K shared PDFs: Bu
   // ----------------------------
-  RooRealVar lambdaBuBkg("lambdaBuBkg", "", 0.01);
+  RooRealVar lambdaBuBkg("lambdaBuBkg", "", 0.01, -0.1, 0.1);
   RooExponential pdfBuBkg("pdfBuBkg", "", deltaMass, lambdaBuBkg);
 
   // ---------------------------- Yields ----------------------------

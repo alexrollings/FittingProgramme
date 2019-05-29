@@ -461,52 +461,13 @@ void GenerateToys(std::string const &outputDir, int nToys, bool toPlot) {
     simPdf.addPdf(pdfBuK, "bu_gamma_K");
     simPdf.addPdf(pdfDeltaK, "delta_gamma_K");
 
-    // Generate datasets
-    // std::cout << "Generating toy datasets..." << std::endl;
-    //
-    // auto dataBuPi = std::unique_ptr<RooDataSet>(
-    //     pdfBuPi.generate(RooArgSet(buMass), simPdf.expectedEvents(fitting)));
-    // if (dataBuPi.get() == nullptr) {
-    //   throw std::runtime_error("Could not generate BuPi dataset.");
-    // }
-    // dataBuPi->SetName(("dataBuPi_" + std::to_string(i)).c_str());
-    // auto dataDeltaPi = std::unique_ptr<RooDataSet>(pdfDeltaPi.generate(
-    //     RooArgSet(deltaMass), simPdf.expectedEvents(fitting)));
-    // if (dataDeltaPi.get() == nullptr) {
-    //   throw std::runtime_error("Could not generate DeltaPi dataset.");
-    // }
-    // dataDeltaPi->SetName(("dataDeltaPi_" + std::to_string(i)).c_str());
-    // auto dataBuK = std::unique_ptr<RooDataSet>(
-    //     pdfBuK.generate(RooArgSet(buMass), simPdf.expectedEvents(fitting)));
-    // if (dataBuK.get() == nullptr) {
-    //   throw std::runtime_error("Could not generate BuK dataset.");
-    // }
-    // dataBuK->SetName(("dataBuK_" + std::to_string(i)).c_str());
-    // auto dataDeltaK = std::unique_ptr<RooDataSet>(pdfDeltaK.generate(
-    //     RooArgSet(deltaMass), simPdf.expectedEvents(fitting)));
-    // if (dataDeltaK.get() == nullptr) {
-    //   throw std::runtime_error("Could not generate DeltaK dataset.");
-    // }
-    // dataDeltaPi->SetName(("dataDeltaPi_" + std::to_string(i)).c_str());
-    //
-    // std::cout << "Combining datasets..." << std::endl;
-    // RooDataSet combData(("combData" + std::to_string(i)).c_str(), "",
-    //                     RooArgSet(buMass, deltaMass), RooFit::Index(fitting),
-    //                     RooFit::Import("bu_gamma_pi", *dataBuPi.get()),
-    //                     RooFit::Import("delta_gamma_pi", *dataDeltaPi.get()),
-    //                     RooFit::Import("bu_gamma_k", *dataBuK.get()),
-    //                     RooFit::Import("delta_gamma_k", *dataDeltaK.get()));
-    //
-    // auto toyDataHist = std::unique_ptr<RooDataHist>(
-    //     combData.binnedClone(("toyDataHist_" + std::to_string(i)).c_str(),
-    //                          ("toyDataHist" + std::to_string(i)).c_str()));
-    // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+
+    // ---------------------------- Generate toy dataset
+    // ----------------------------
     //
     double nEvtsPerToy = simPdf.expectedEvents(fitting);
     std::cout << "Generating toy dataset..." << std::endl;
 
-    // ---------------------------- Generate toy dataset
-    // ----------------------------
     RooDataSet *toyDataSet =
         simPdf.generate(RooArgSet(buMass, deltaMass, fitting), nEvtsPerToy);
     std::cout << "Generated!" << std::endl;
