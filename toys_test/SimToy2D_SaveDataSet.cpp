@@ -290,7 +290,7 @@ void GenerateToys(std::string const &outputDir) {
   // ---------------------------- Mean ----------------------------
   RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4257e+02);  //, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.4700e+00);  //, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.4700e+00, 5, 15);
   // ---------------------------- Tails ----------------------------
   RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.6863e+00);
   RooRealVar a2DeltaSignal("a2DeltaSignal", "", -5.6811e-01);
@@ -309,14 +309,14 @@ void GenerateToys(std::string const &outputDir) {
   // ---------------------------- π PDFs: Bu ----------------------------
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar a0MeanBuSignal("a0MeanBuSignal", "", 5.0461e+03);  //, 4500, 5500);
-  RooRealVar a1MeanBuSignal("a1MeanBuSignal", "", 1.7714e+00);  //, -10, 10);
+  RooRealVar a0MeanBuSignal("a0MeanBuSignal", "", 5.0461e+03);//, 4500, 5500);
+  RooRealVar a1MeanBuSignal("a1MeanBuSignal", "", 1.7714e+00);//, -10, 10);
   RooRealVar a2MeanBuSignal("a2MeanBuSignal", "", -8.0785e-04);  //, -0.1, 0.1);
   RooPolyVar meanBuSignal(
       "meanBuSignal", "", deltaMass,
       RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar a0SigmaBuSignal("a0SigmaBuSignal", "",  3.3762e+02);  //, 300, 400);
+  RooRealVar a0SigmaBuSignal("a0SigmaBuSignal", "",  3.3762e+02);//, 300, 400);
   RooRealVar a1SigmaBuSignal("a1SigmaBuSignal", "", -4.1666e+00);  //, -10, 10);
   RooRealVar a2SigmaBuSignal("a2SigmaBuSignal", "",
                              1.4773e-02);
@@ -398,7 +398,7 @@ void GenerateToys(std::string const &outputDir) {
 
   // ---------------------------- Yields ----------------------------
   RooRealVar yieldSignal("yieldSignal", "", 40000, -1000000, 1000000);
-  RooRealVar fracBkgYield("fracBkgYield", "", 0.8, 0, 1);
+  RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
   RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
                          RooArgSet(yieldSignal, fracBkgYield));
 
