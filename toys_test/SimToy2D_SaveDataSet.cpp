@@ -69,7 +69,7 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   std::string title;
   switch (variable) {
     case Variable::bu:
-      title = "m[D^{*0}]";
+      title = "m[D^{*0}#pi] - m[D^{*0}]";
       break;
     case Variable::delta:
       title = "m[D^{*0}]-m[D^{0}]";
@@ -272,7 +272,7 @@ void GenerateToys(std::string const &outputDir) {
   int delta_nbins = (delta_high - delta_low) / 2;
 
   // ---------------------------- Fitting Vars ----------------------------
-  RooRealVar buMass("Bu_M_DTF_D0", "m[D^{*0}#pi^{#pm}]", bu_low, bu_high,
+  RooRealVar buMass("Bu_Delta_M", "m[D^{*0}#pi^{#pm}] - m[D^{*0}]", bu_low, bu_high,
                     "MeV/c^{2}");
   RooRealVar deltaMass("Delta_M", "m[D^{*0}] - m[D^{0}]", delta_low, delta_high,
                        "MeV/c^{2}");
@@ -288,20 +288,20 @@ void GenerateToys(std::string const &outputDir) {
   //
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4257e+02);  //, 135, 150);
+  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4262e+02);//, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.4700e+00, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.5655e+00);//, 5, 15);
   // ---------------------------- Tails ----------------------------
-  RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.6863e+00);
-  RooRealVar a2DeltaSignal("a2DeltaSignal", "", -5.6811e-01);
-  RooRealVar n1DeltaSignal("n1DeltaSignal", "", 4.0630e+00);
-  RooRealVar n2DeltaSignal("n2DeltaSignal", "", 4.4013e+00);
+  RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9114e+00);
+  RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.2924e-01);
+  RooRealVar n1DeltaSignal("n1DeltaSignal", "", 1.3484e+00);
+  RooRealVar n2DeltaSignal("n2DeltaSignal", "", 2.9966e+00);
   // ---------------------------- PDFs ----------------------------
   RooCBShape pdfDeltaSignal1("pdfDeltaSignal1", "", deltaMass, meanDeltaSignal,
                              sigmaDeltaSignal, a1DeltaSignal, n1DeltaSignal);
   RooCBShape pdfDeltaSignal2("pdfDeltaSignal2", "", deltaMass, meanDeltaSignal,
                              sigmaDeltaSignal, a2DeltaSignal, n2DeltaSignal);
-  RooRealVar fracPdf1DeltaSignal("fracPdf1DeltaSignal", "", 2.8498e-01);
+  RooRealVar fracPdf1DeltaSignal("fracPdf1DeltaSignal", "", 1.7974e-01);
   RooAddPdf pdfDeltaSignal("pdfDeltaSignal", "",
                            RooArgSet(pdfDeltaSignal1, pdfDeltaSignal2),
                            fracPdf1DeltaSignal);
@@ -309,30 +309,30 @@ void GenerateToys(std::string const &outputDir) {
   // ---------------------------- π PDFs: Bu ----------------------------
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar a0MeanBuSignal("a0MeanBuSignal", "", 5.0461e+03);//, 4500, 5500);
-  RooRealVar a1MeanBuSignal("a1MeanBuSignal", "", 1.7714e+00);//, -10, 10);
-  RooRealVar a2MeanBuSignal("a2MeanBuSignal", "", -8.0785e-04);  //, -0.1, 0.1);
+  RooRealVar a0MeanBuSignal("a0MeanBuSignal", "", 5.1775e+03);//, 4500, 5500);
+  RooRealVar a1MeanBuSignal("a1MeanBuSignal", "", 8.9812e-01);//, -10, 10);
+  RooRealVar a2MeanBuSignal("a2MeanBuSignal", "", -1.2112e-03);  //, -0.1, 0.1);
   RooPolyVar meanBuSignal(
       "meanBuSignal", "", deltaMass,
       RooArgList(a0MeanBuSignal, a1MeanBuSignal, a2MeanBuSignal));
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar a0SigmaBuSignal("a0SigmaBuSignal", "",  3.3762e+02);//, 300, 400);
-  RooRealVar a1SigmaBuSignal("a1SigmaBuSignal", "", -4.1666e+00);  //, -10, 10);
+  RooRealVar a0SigmaBuSignal("a0SigmaBuSignal", "", 2.8964e+02);//, 300, 400);
+  RooRealVar a1SigmaBuSignal("a1SigmaBuSignal", "", -3.4715e+00);  //, -10, 10);
   RooRealVar a2SigmaBuSignal("a2SigmaBuSignal", "",
-                             1.4773e-02);
+                             1.2308e-02);
 
   RooPolyVar sigma1BuSignal(
       "sigma1BuSignal", "", deltaMass,
       RooArgList(a0SigmaBuSignal, a1SigmaBuSignal, a2SigmaBuSignal));
 
   RooRealVar sigma21FracBuSignal("sigma21FracBuSignal", "",
-                                  3.8961e-01);  //, -1, 1);
+                                  4.1617e-01);  //, -1, 1);
 
   RooFormulaVar sigma2BuSignal("sigma2BuSignal", "", "@0*@1",
                                RooArgSet(sigma1BuSignal, sigma21FracBuSignal));
 
   // ---------------------------- PDFs ----------------------------
-  RooRealVar fracPdf1BuSignal("fracPdf1BuSignal", "",  5.6000e-02);
+  RooRealVar fracPdf1BuSignal("fracPdf1BuSignal", "",  6.3417e-02);
   RooGaussian pdfBuSignal1("pdfBuSignal1", "", buMass, meanBuSignal,
                            sigma1BuSignal);
   RooGaussian pdfBuSignal2("pdfBuSignal2", "", buMass, meanBuSignal,
@@ -345,56 +345,57 @@ void GenerateToys(std::string const &outputDir) {
                        RooFit::Conditional(pdfBuSignal, buMass));
 
   // ---------------------------- Background ----------------------------
-  //
-  // RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
-  // RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
 
-  RooRealVar thresholdDeltaBkg("thresholdDeltaBkg", "", 4.7048e+01);
-  RooRealVar cDeltaBkg("cDeltaBkg", "", 6.2583e+01);
-  RooRealVar aDeltaBkg("aDeltaBkg", "", 8.1939e-01);
-  RooRealVar bDeltaBkg("bDeltaBkg", "", -7.9655e-01);
-  RooDstD0BG pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, thresholdDeltaBkg,
-                         cDeltaBkg, aDeltaBkg, bDeltaBkg);
+  RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
+  RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
+
+  // RooRealVar thresholdDeltaBkg("thresholdDeltaBkg", "", 4.7048e+01);
+  // RooRealVar cDeltaBkg("cDeltaBkg", "", 6.2583e+01);
+  // RooRealVar aDeltaBkg("aDeltaBkg", "", 8.1939e-01);
+  // RooRealVar bDeltaBkg("bDeltaBkg", "", -7.9655e-01);
+  // RooDstD0BG pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, thresholdDeltaBkg,
+  //                        cDeltaBkg, aDeltaBkg, bDeltaBkg);
   // ---------------------------- π/K shared PDFs: Bu
   // ----------------------------
-  // RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005, -0.1, 0.1);
-  // RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
+  RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005, -0.1, 0.1);
+  RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
 
-  RooRealVar a0Mean1BuBkg("a0Mean1BuBkg", "",
-                          5.1083e+03);  //, 4500, 5500);
-  RooRealVar a1Mean1BuBkg("a1Mean1BuBkg", "",
-                          2.4092e+00);  //, -10, 10);
-  RooRealVar a2Mean1BuBkg("a2Mean1BuBkg", "",
-                          -5.4048e-03);  //, -0.1, 0.1);
-  RooPolyVar mean1BuBkg("mean1BuBkg", "", deltaMass,
-                        RooArgList(a0Mean1BuBkg, a1Mean1BuBkg, a2Mean1BuBkg));
-  RooRealVar a0Mean2BuBkg("a0Mean2BuBkg", "",
-                          5.0444e+03);  //, -4500, 5500);
-  RooRealVar a1Mean2BuBkg("a1Mean2BuBkg", "",
-                          2.0779e+00);  //, -10, 10);
-  RooRealVar a2Mean2BuBkg("a2Mean2BuBkg", "",
-                          -6.3321e-03);  //, -0.1, 0.1);
-  RooPolyVar mean2BuBkg("mean2BuBkg", "", deltaMass,
-                        RooArgList(a0Mean2BuBkg, a1Mean2BuBkg, a2Mean2BuBkg));
-  // ---------------------------- Sigmas ----------------------------
-  RooRealVar a0Sigma1BuBkg("a0Sigma1BuBkg", "", 9.8314e+00);   //, -300, 300);
-  RooRealVar a1Sigma1BuBkg("a1Sigma1BuBkg", "", 5.8179e-01);   //, -10, 10);
-  RooRealVar a2Sigma1BuBkg("a2Sigma1BuBkg", "", -7.5647e-04);  //, -0.1, 0.1);
-  RooPolyVar sigma1BuBkg(
-      "sigma1BuBkg", "", deltaMass,
-      RooArgList(a0Sigma1BuBkg, a1Sigma1BuBkg, a2Sigma1BuBkg));
-  RooRealVar sigmaFracBuBkg("sigmaFracBuBkg", "", 8.0270e-01);  //, -0.1, 0.1);
-  RooFormulaVar sigma2BuBkg("sigma2BuBkg", "", "@0*@1",
-                            RooArgSet(sigma1BuBkg, sigmaFracBuBkg));
-
-  RooRealVar fracPdf1BuBkg("fracPdf1BuBkg", "", 5.2225e-01);
-  RooGaussian pdfBuBkg1("pdfBuBkg1", "", buMass, mean1BuBkg, sigma1BuBkg);
-  RooGaussian pdfBuBkg2("pdfBuBkg2", "", buMass, mean2BuBkg, sigma2BuBkg);
-  RooAddPdf pdfBuBkg("pdfBuBkg", "", RooArgSet(pdfBuBkg1, pdfBuBkg2),
-                     fracPdf1BuBkg);
-  // ---------------------------- π Total PDF ----------------------------
-  RooProdPdf pdfBkg("pdfBkg", "", pdfDeltaBkg,
-                    RooFit::Conditional(pdfBuBkg, buMass));
+  // RooRealVar a0Mean1BuBkg("a0Mean1BuBkg", "",
+  //                         5.1083e+03);  //, 4500, 5500);
+  // RooRealVar a1Mean1BuBkg("a1Mean1BuBkg", "",
+  //                         2.4092e+00);  //, -10, 10);
+  // RooRealVar a2Mean1BuBkg("a2Mean1BuBkg", "",
+  //                         -5.4048e-03);  //, -0.1, 0.1);
+  // RooPolyVar mean1BuBkg("mean1BuBkg", "", deltaMass,
+  //                       RooArgList(a0Mean1BuBkg, a1Mean1BuBkg, a2Mean1BuBkg));
+  // RooRealVar a0Mean2BuBkg("a0Mean2BuBkg", "",
+  //                         5.0444e+03);  //, -4500, 5500);
+  // RooRealVar a1Mean2BuBkg("a1Mean2BuBkg", "",
+  //                         2.0779e+00);  //, -10, 10);
+  // RooRealVar a2Mean2BuBkg("a2Mean2BuBkg", "",
+  //                         -6.3321e-03);  //, -0.1, 0.1);
+  // RooPolyVar mean2BuBkg("mean2BuBkg", "", deltaMass,
+  //                       RooArgList(a0Mean2BuBkg, a1Mean2BuBkg, a2Mean2BuBkg));
+  // // ---------------------------- Sigmas ----------------------------
+  // RooRealVar a0Sigma1BuBkg("a0Sigma1BuBkg", "", 9.8314e+00);   //, -300, 300);
+  // RooRealVar a1Sigma1BuBkg("a1Sigma1BuBkg", "", 5.8179e-01);   //, -10, 10);
+  // RooRealVar a2Sigma1BuBkg("a2Sigma1BuBkg", "", -7.5647e-04);  //, -0.1, 0.1);
+  // RooPolyVar sigma1BuBkg(
+  //     "sigma1BuBkg", "", deltaMass,
+  //     RooArgList(a0Sigma1BuBkg, a1Sigma1BuBkg, a2Sigma1BuBkg));
+  // RooRealVar sigmaFracBuBkg("sigmaFracBuBkg", "", 8.0270e-01);  //, -0.1, 0.1);
+  // RooFormulaVar sigma2BuBkg("sigma2BuBkg", "", "@0*@1",
+  //                           RooArgSet(sigma1BuBkg, sigmaFracBuBkg));
+  //
+  // RooRealVar fracPdf1BuBkg("fracPdf1BuBkg", "", 5.2225e-01);
+  // RooGaussian pdfBuBkg1("pdfBuBkg1", "", buMass, mean1BuBkg, sigma1BuBkg);
+  // RooGaussian pdfBuBkg2("pdfBuBkg2", "", buMass, mean2BuBkg, sigma2BuBkg);
+  // RooAddPdf pdfBuBkg("pdfBuBkg", "", RooArgSet(pdfBuBkg1, pdfBuBkg2),
+  //                    fracPdf1BuBkg);
+  // // ---------------------------- π Total PDF ----------------------------
+  // RooProdPdf pdfBkg("pdfBkg", "", pdfDeltaBkg,
+  //                   RooFit::Conditional(pdfBuBkg, buMass));
+  RooProdPdf pdfBkg("pdfBkg", "", RooArgSet(pdfDeltaBkg, pdfBuBkg));
 
   // ---------------------------- Yields ----------------------------
   RooRealVar yieldSignal("yieldSignal", "", 40000, -1000000, 1000000);
