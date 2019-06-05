@@ -277,13 +277,13 @@ void GenerateToys(std::string const &path) {
   // MC efficiency * 2D signal yield
   // Delta cut efficiency = 0.91467
   RooRealVar yieldBuSignal("yieldBuSignal", "", 36587, 0, 1000000);
-  RooRealVar fracBuBkgYield("fracBuBkgYield", "", 0.8, 0, 1);
+  RooRealVar fracBuBkgYield("fracBuBkgYield", "", 0.33613, 0, 1);
   RooFormulaVar yieldBuBkg("yielBuBkg", "", "@0*@1",
                          RooArgSet(yieldBuSignal, fracBuBkgYield));
 
   // Bu cut efficiency = 0.95157
   RooRealVar yieldDeltaSignal("yieldDeltaSignal", "", 38062, 0, 1000000);
-  RooRealVar fracDeltaBkgYield("fracDeltaBkgYield", "", 0.8, 0, 1);
+  RooRealVar fracDeltaBkgYield("fracDeltaBkgYield", "", 0.16613, 0, 1);
   RooFormulaVar yieldDeltaBkg("yielDeltaBkg", "", "@0*@1",
                          RooArgSet(yieldDeltaSignal, fracDeltaBkgYield));
 
@@ -330,6 +330,7 @@ void GenerateToys(std::string const &path) {
   if (dataBu_tmp.get() == nullptr) {
     throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
   }
+  dataBu_tmp->Print();
   auto dataBu = std::unique_ptr<RooDataSet>(
       dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
   if (dataBu.get() == nullptr) {
@@ -342,6 +343,7 @@ void GenerateToys(std::string const &path) {
   if (dataDelta_tmp.get() == nullptr) {
     throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
   }
+  dataDelta_tmp->Print();
   auto dataDelta = std::unique_ptr<RooDataSet>(
       dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
   if (dataDelta.get() == nullptr) {
