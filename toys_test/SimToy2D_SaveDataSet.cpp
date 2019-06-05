@@ -399,9 +399,10 @@ void GenerateToys(std::string const &outputDir) {
 
   // ---------------------------- Yields ----------------------------
   RooRealVar yieldSignal("yieldSignal", "", 40000, -1000000, 1000000);
-  RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
-  RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
-                         RooArgSet(yieldSignal, fracBkgYield));
+  RooRealVar yieldBkg("yieldBkg", "", 32000, -1000000, 1000000);
+  // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
+  // RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
+  //                        RooArgSet(yieldSignal, fracBkgYield));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------

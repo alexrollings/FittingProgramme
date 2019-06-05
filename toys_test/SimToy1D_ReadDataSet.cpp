@@ -21,6 +21,7 @@
 #include "RooProdPdf.h"
 #include "RooRandom.h"
 #include "RooRealVar.h"
+#include "RooConstVar.h"
 #include "RooSimultaneous.h"
 #include "RooTreeData.h"
 #include "TApplication.h"
@@ -195,9 +196,9 @@ void GenerateToys(std::string const &path) {
   //
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02, 135, 150);
+  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02);//, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00);//, 5, 15);
   // ---------------------------- Tails ----------------------------
   RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9251e+00);
   RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.4405e-01);
@@ -216,9 +217,9 @@ void GenerateToys(std::string const &path) {
   // ---------------------------- PDFs: Bu ----------------------------
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03, 5280, 5290);
+  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03);//, 5280, 5290);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaBuSignal("sigmaBuSignal", "", 2.0182e+01, 15, 30);  //, 300, 400);
+  RooRealVar sigmaBuSignal("sigmaBuSignal", "", 2.0783e+01);//, 15, 30);  //, 300, 400);
 
   // ---------------------------- Tails ----------------------------
   RooRealVar a1BuSignal("a1BuSignal", "", 1.6160e+00);
@@ -274,18 +275,34 @@ void GenerateToys(std::string const &path) {
   //                    fracPdf1BuBkg);
 
   // ---------------------------- Yields ----------------------------
-  // MC efficiency * 2D signal yield
-  // Delta cut efficiency = 0.91467
-  RooRealVar yieldBuSignal("yieldBuSignal", "", 36587, 0, 1000000);
-  RooRealVar fracBuBkgYield("fracBuBkgYield", "", 0.33613, 0, 1);
-  RooFormulaVar yieldBuBkg("yielBuBkg", "", "@0*@1",
-                         RooArgSet(yieldBuSignal, fracBuBkgYield));
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000); 
+  
+  RooConstVar boxEffSignal("boxEffSignal", "", 0.86895);
+  RooConstVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
+  RooConstVar buCutEffSignal("buCutEffSignal", "", 0.95157);
 
-  // Bu cut efficiency = 0.95157
-  RooRealVar yieldDeltaSignal("yieldDeltaSignal", "", 38062, 0, 1000000);
-  RooRealVar fracDeltaBkgYield("fracDeltaBkgYield", "", 0.16613, 0, 1);
-  RooFormulaVar yieldDeltaBkg("yielDeltaBkg", "", "@0*@1",
-                         RooArgSet(yieldDeltaSignal, fracDeltaBkgYield));
+  RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
+                              RooArgList(yieldTotSignal, deltaCutEffSignal));
+  RooFormulaVar yieldDeltaSignal("yieldDeltaSignal", "", "@0*@1",
+                                 RooArgList(yieldTotSignal, buCutEffSignal));
+  RooFormulaVar yieldSharedSignal("yieldSharedSignal", "", "@0*@1",
+                                 RooArgList(yieldTotSignal, boxEffSignal));
+
+  RooRealVar yieldTotBkg("yieldTotBkg", "", 32000, 0, 100000); 
+  // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
+  // RooFormulaVar yieldTotBkg("yieldTotBkg", "", "@0*@1",
+  //                        RooArgSet(yieldTotSignal, fracBkgYield));
+  
+  RooConstVar boxEffBkg("boxEffBkg", "", 0.05669);
+  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613);//, 0, 1);
+  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613);//, 0, 1);
+
+  RooFormulaVar yieldBuBkg("yieldBuBkg", "", "@0*@1",
+                              RooArgList(yieldTotBkg, deltaCutEffBkg));
+  RooFormulaVar yieldDeltaBkg("yieldDeltaBkg", "", "@0*@1",
+                                 RooArgList(yieldTotBkg, buCutEffBkg));
+  RooFormulaVar yieldSharedBkg("yieldSharedBkg", "", "@0*@1",
+                                 RooArgList(yieldTotBkg, boxEffBkg));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------
@@ -380,6 +397,19 @@ void GenerateToys(std::string const &path) {
   std::cout << "Plotting correlation matrix\n";
   PlotCorrMatrix(result.get(), path);
   result->Print("v");
+
+  double errYieldTotSignal =
+      yieldTotSignal.getPropagatedError(*result) *
+      (yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2) +
+       (1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()));
+  double errYieldTotBkg =
+      yieldTotBkg.getPropagatedError(*result) *
+      (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +
+       (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
+  std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
+            << errYieldTotSignal << "\n";
+  std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
+            << errYieldTotBkg << "\n";
 }
 
 int main(int argc, char *argv[]) {
