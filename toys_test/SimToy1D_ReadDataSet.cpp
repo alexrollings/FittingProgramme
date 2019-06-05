@@ -195,14 +195,14 @@ void GenerateToys(std::string const &path) {
   //
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4262e+02, 135, 150);
+  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.5655e+00, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00, 5, 15);
   // ---------------------------- Tails ----------------------------
-  RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9114e+00);
-  RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.2924e-01);
-  RooRealVar n1DeltaSignal("n1DeltaSignal", "", 1.3484e+00);
-  RooRealVar n2DeltaSignal("n2DeltaSignal", "", 2.9966e+00);
+  RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9251e+00);
+  RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.4405e-01);
+  RooRealVar n1DeltaSignal("n1DeltaSignal", "", 1.0441e+00);
+  RooRealVar n2DeltaSignal("n2DeltaSignal", "", 4.2875e+00);
   // ---------------------------- PDFs ----------------------------
   RooCBShape pdfDeltaSignal1("pdfDeltaSignal1", "", deltaMass, meanDeltaSignal,
                              sigmaDeltaSignal, a1DeltaSignal, n1DeltaSignal);
@@ -221,12 +221,12 @@ void GenerateToys(std::string const &path) {
   RooRealVar sigmaBuSignal("sigmaBuSignal", "", 2.0182e+01, 15, 30);  //, 300, 400);
 
   // ---------------------------- Tails ----------------------------
-  RooRealVar a1BuSignal("a1BuSignal", "", 1.6867e+00);
-  RooRealVar a2BuSignal("a2BuSignal", "", -1.5218e+00);
-  RooRealVar n1BuSignal("n1BuSignal", "", 7.3885e+00);
-  RooRealVar n2BuSignal("n2BuSignal", "", 6.4191e+00);
+  RooRealVar a1BuSignal("a1BuSignal", "", 1.6160e+00);
+  RooRealVar a2BuSignal("a2BuSignal", "", -1.5208e+00);
+  RooRealVar n1BuSignal("n1BuSignal", "", 9.9933e+00);
+  RooRealVar n2BuSignal("n2BuSignal", "", 6.4413e+00);
   // ---------------------------- PDFs ----------------------------
-  RooRealVar fracPdf1BuSignal("fracPdf1BuSignal", "", 9.1502e-02);
+  RooRealVar fracPdf1BuSignal("fracPdf1BuSignal", "", 7.4517e-01);
   RooCBShape pdfBuSignal1("pdfBuSignal1", "", buMass, meanBuSignal,
                             sigmaBuSignal, a1BuSignal, n1BuSignal);
   RooCBShape pdfBuSignal2("pdfBuSignal2", "", buMass, meanBuSignal,
@@ -274,26 +274,38 @@ void GenerateToys(std::string const &path) {
   //                    fracPdf1BuBkg);
 
   // ---------------------------- Yields ----------------------------
-  RooRealVar yieldSignal("yieldSignal", "", 40000, 0, 1000000);
-  RooRealVar fracBkgYield("fracBkgYield", "", 0.8, 0, 1);
-  RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
-                         RooArgSet(yieldSignal, fracBkgYield));
+  // MC efficiency * 2D signal yield
+  // Delta cut efficiency = 0.91467
+  RooRealVar yieldBuSignal("yieldBuSignal", "", 36587, 0, 1000000);
+  RooRealVar fracBuBkgYield("fracBuBkgYield", "", 0.8, 0, 1);
+  RooFormulaVar yieldBuBkg("yielBuBkg", "", "@0*@1",
+                         RooArgSet(yieldBuSignal, fracBuBkgYield));
+
+  // Bu cut efficiency = 0.95157
+  RooRealVar yieldDeltaSignal("yieldDeltaSignal", "", 38062, 0, 1000000);
+  RooRealVar fracDeltaBkgYield("fracDeltaBkgYield", "", 0.8, 0, 1);
+  RooFormulaVar yieldDeltaBkg("yielDeltaBkg", "", "@0*@1",
+                         RooArgSet(yieldDeltaSignal, fracDeltaBkgYield));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------
-  RooArgSet yields;
-  yields.add(yieldSignal);
-  yields.add(yieldBkg);
+  RooArgSet yieldsBu;
+  yieldsBu.add(yieldBuSignal);
+  yieldsBu.add(yieldBuBkg);
 
   RooArgSet functionsBu;
   functionsBu.add(pdfBuSignal);
   functionsBu.add(pdfBuBkg);
-  RooAddPdf pdfBu("pdfBu", "", functionsBu, yields);
+  RooAddPdf pdfBu("pdfBu", "", functionsBu, yieldsBu);
+
+  RooArgSet yieldsDelta;
+  yieldsDelta.add(yieldDeltaSignal);
+  yieldsDelta.add(yieldDeltaBkg);
 
   RooArgSet functionsDelta;
   functionsDelta.add(pdfDeltaSignal);
   functionsDelta.add(pdfDeltaBkg);
-  RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yields);
+  RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yieldsDelta);
 
   // ---------------------------- Construct Sim PDF
   // ----------------------------
