@@ -316,6 +316,7 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
+  
   int bu_low = 5050;
   int bu_high = 5800;
   int delta_low = 60;  // 134;
@@ -338,13 +339,64 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   fitting.defineType("bu");
   fitting.defineType("delta");
 
+
+  // ---------------------------- Read in toy dataset
+  // ----------------------------
+  TFile in((path + "/DataFile.root").c_str(), "READ");
+  RooDataSet *inputDataSet;
+  gDirectory->GetObject("toyDataSet", inputDataSet);
+  if (inputDataSet == nullptr) {
+    throw std::runtime_error("Data set does not exist.");
+  } else {
+    std::cout << "inputDataSet extracted... \n";
+    inputDataSet->Print();
+  }
+
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+              .c_str())));
+  if (dataBu_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
+  }
+  auto dataBu = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
+  if (dataBu.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
+  }
+  double nBu = dataBu->numEntries();
+
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+              .c_str())));
+  if (dataDelta_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
+  }
+  auto dataDelta = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
+  if (dataDelta.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+  }
+  double nDelta = dataDelta->numEntries();
+
+  RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
+                      RooFit::Index(fitting),
+                      RooFit::Import("bu", *dataBu.get()),
+                      RooFit::Import("delta", *dataDelta.get()));
+  combData.Print();
+
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      combData.binnedClone("toyDataHist", "toyDataHist"));
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+
   // ---------------------------- PDFs ----------------------------
   //
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02);  //, 135, 150);
+  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00);  //, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00, 5, 15);
   // ---------------------------- Tails ----------------------------
   RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9251e+00);
   RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.4405e-01);
@@ -363,10 +415,10 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   // ---------------------------- PDFs: Bu ----------------------------
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03);  //, 5280, 5290);
+  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03, 5280, 5290);
   // ---------------------------- Sigmas ----------------------------
   RooRealVar sigmaBuSignal("sigmaBuSignal", "",
-                           2.0783e+01);  //, 15, 30);  //, 300, 400);
+                           2.0783e+01, 18, 24);  //, 300, 400);
 
   // ---------------------------- Tails ----------------------------
   RooRealVar a1BuSignal("a1BuSignal", "", 1.6160e+00);
@@ -432,12 +484,8 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
                          box_bu_low, box_bu_high, boxEffSignal,
                          deltaCutEffSignal, buCutEffSignal);
 
-  RooRealVar boxEffBkg("boxEffBkg", "", 0.05669, 0, 1);
-  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613, 0, 1);
-  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613, 0, 1);
-
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000*boxEffSignal.getVal(), 0, 100000);
   // ---------------------------- Yields ----------------------------
-  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000);
 
   RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
                               RooArgList(yieldTotSignal, deltaCutEffSignal));
@@ -446,17 +494,24 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   RooFormulaVar yieldSharedSignal("yieldSharedSignal", "", "@0*@1",
                                   RooArgList(yieldTotSignal, boxEffSignal));
 
-  RooRealVar yieldTotBkg("yieldTotBkg", "", 32000, 0, 100000);
+  // Temporary solution to calculate bkg efficiencies
+  double nBuBkg = nBu - 40000 * deltaCutEffSignal.getVal();
+  double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
+
+  RooRealVar yieldBuBkg("yieldBuBkg", "", nBuBkg, 0, 100000);
+  RooRealVar yieldDeltaBkg("yieldDeltaBkg", "", nDeltaBkg, 0, 100000);
+  
+  // RooRealVar yieldTotBkg("yieldTotBkg", "", (nBuBkg + nDeltaBkg), 0, 100000);
   // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
   // RooFormulaVar yieldTotBkg("yieldTotBkg", "", "@0*@1",
   //                        RooArgSet(yieldTotSignal, fracBkgYield));
 
-  RooFormulaVar yieldBuBkg("yieldBuBkg", "", "@0*@1",
-                           RooArgList(yieldTotBkg, deltaCutEffBkg));
-  RooFormulaVar yieldDeltaBkg("yieldDeltaBkg", "", "@0*@1",
-                              RooArgList(yieldTotBkg, buCutEffBkg));
-  RooFormulaVar yieldSharedBkg("yieldSharedBkg", "", "@0*@1",
-                               RooArgList(yieldTotBkg, boxEffBkg));
+  // RooFormulaVar yieldBuBkg("yieldBuBkg", "", "@0*@1",
+  //                          RooArgList(yieldTotBkg, deltaCutEffBkg));
+  // RooFormulaVar yieldDeltaBkg("yieldDeltaBkg", "", "@0*@1",
+  //                             RooArgList(yieldTotBkg, buCutEffBkg));
+  // RooFormulaVar yieldSharedBkg("yieldSharedBkg", "", "@0*@1",
+  //                              RooArgList(yieldTotBkg, boxEffBkg));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------
@@ -484,57 +539,6 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   simPdf.addPdf(pdfBu, "bu");
   simPdf.addPdf(pdfDelta, "delta");
 
-  // ---------------------------- Read in toy dataset
-  // ----------------------------
-  TFile in((path + "/DataFile.root").c_str(), "READ");
-  RooDataSet *inputDataSet;
-  gDirectory->GetObject("toyDataSet", inputDataSet);
-  if (inputDataSet == nullptr) {
-    throw std::runtime_error("Data set does not exist.");
-  } else {
-    std::cout << "inputDataSet extracted... \n";
-    inputDataSet->Print();
-  }
-
-  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
-              .c_str())));
-  if (dataBu_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
-  }
-  dataBu_tmp->Print();
-  auto dataBu = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
-  if (dataBu.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
-  }
-  dataBu->Print();
-
-  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-              .c_str())));
-  if (dataDelta_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
-  }
-  dataDelta_tmp->Print();
-  auto dataDelta = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
-  if (dataDelta.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
-  }
-  dataDelta->Print();
-
-  RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
-                      RooFit::Index(fitting),
-                      RooFit::Import("bu", *dataBu.get()),
-                      RooFit::Import("delta", *dataDelta.get()));
-  combData.Print();
-
-  auto toyDataHist = std::unique_ptr<RooDataHist>(
-      combData.binnedClone("toyDataHist", "toyDataHist"));
-  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
   // meanDeltaSignal.setVal(142);
 
@@ -556,18 +560,30 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   PlotCorrMatrix(result.get(), path);
   result->Print("v");
 
+  TFile outputFile(
+      (path + "/1d_results/ResultFile_" + box_delta_low + "_" + box_delta_high +
+       "_" + box_bu_low + "_" + box_bu_high + ".root")
+          .c_str(),
+      "recreate");
+  outputFile.cd();
+  result->SetName(("Result_" + box_delta_low + "_" + box_delta_high + "_" +
+                   box_bu_low + "_" + box_bu_high)
+                      .c_str());
+  result->Write();
+  outputFile.Close();
+
   double errYieldTotSignal =
       yieldTotSignal.getPropagatedError(*result) *
       (yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2) +
        (1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()));
-  double errYieldTotBkg =
-      yieldTotBkg.getPropagatedError(*result) *
-      (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +
-       (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
   std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
             << errYieldTotSignal << "\n";
-  std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
-            << errYieldTotBkg << "\n";
+  // double errYieldTotBkg =
+  //     yieldTotBkg.getPropagatedError(*result) *
+  //     (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +
+  //      (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
+  // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
+  //           << errYieldTotBkg << "\n";
 }
 
 int main(int argc, char *argv[]) {
