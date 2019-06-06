@@ -8,6 +8,7 @@
 #include "RooArgSet.h"
 #include "RooCBShape.h"
 #include "RooCategory.h"
+#include "RooConstVar.h"
 #include "RooDataHist.h"
 #include "RooDataSet.h"
 #include "RooDstD0BG.h"
@@ -21,7 +22,6 @@
 #include "RooProdPdf.h"
 #include "RooRandom.h"
 #include "RooRealVar.h"
-#include "RooConstVar.h"
 #include "RooSimultaneous.h"
 #include "RooTreeData.h"
 #include "TApplication.h"
@@ -49,11 +49,9 @@ std::string EnumToString(Variable variable) {
   }
 }
 
-void PlotComponent(Variable variable,
-                   RooRealVar &var, RooDataHist *dataHist,
+void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooAddPdf &sig, RooAbsPdf &bkg,
-                   std::string const &path) {
+                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &path) {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
@@ -85,47 +83,40 @@ void PlotComponent(Variable variable,
   RooHist *pullHist = nullptr;
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  dataHist->plotOn(frame.get(),
-                   RooFit::Cut(("fitting==fitting::" +
-                                EnumToString(variable))
-                                   .c_str()));
-  simPdf.plotOn(
+  dataHist->plotOn(
       frame.get(),
-      RooFit::Slice(fitting, EnumToString(variable).c_str()),
+      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
+  simPdf.plotOn(
+      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
       RooFit::ProjWData(fitting, *dataHist), RooFit::LineColor(kBlue));
   pullHist = frame->RooPlot::pullHist();
-  simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
-                RooFit::Components(sig.GetName()), RooFit::LineColor(kBlue),
-                RooFit::LineStyle(kDashed));
-  simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
-                RooFit::Components(bkg.GetName()), RooFit::LineColor(kRed),
-                RooFit::LineStyle(kDashed));
+  simPdf.plotOn(
+      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(sig.GetName()),
+      RooFit::LineColor(kBlue), RooFit::LineStyle(kDashed));
+  simPdf.plotOn(
+      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg.GetName()),
+      RooFit::LineColor(kRed), RooFit::LineStyle(kDashed));
 
-  dataHist->plotOn(frame.get(),
-                   RooFit::Cut(("fitting==fitting::" +
-                                EnumToString(variable))
-                                   .c_str()));
+  dataHist->plotOn(
+      frame.get(),
+      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
 
   if (pullHist != 0) {
     pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(
-        ("pullFrame_" + EnumToString(variable)).c_str());
+    pullFrame->SetName(("pullFrame_" + EnumToString(variable)).c_str());
     pullFrame->SetTitle("");
   }
 
-  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(),
-                 "", 1200, 1000);
+  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200, 1000);
 
-  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "",
-            0.0, 0.14, 1.0, 1.0, kWhite);
+  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "", 0.0, 0.14, 1.0, 1.0,
+            kWhite);
   pad1.Draw();
 
-  TPad pad2(("pad2_" + EnumToString(variable)).c_str(), "",
-            0.0, 0.05, 1.0, 0.15, kWhite);
+  TPad pad2(("pad2_" + EnumToString(variable)).c_str(), "", 0.0, 0.05, 1.0,
+            0.15, kWhite);
   pad2.Draw();
 
   TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
@@ -147,9 +138,8 @@ void PlotComponent(Variable variable,
   pad1.cd();
   frame->Draw();
   canvas.Update();
-  canvas.SaveAs((path + "/1d_plots/" +
-                 EnumToString(variable) + ".pdf")
-                    .c_str());
+  canvas.SaveAs(
+      (path + "/1d_plots/" + EnumToString(variable) + ".pdf").c_str());
 }
 
 void PlotCorrMatrix(RooFitResult *result, std::string const &path) {
@@ -169,7 +159,10 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &path) {
   corrCanvas.SaveAs((path + "/1d_plots/CorrelationMatrix.pdf").c_str());
 }
 
-void GenerateToys(std::string const &path) {
+void GenerateToys(std::string const &path, std::string const &box_delta_low,
+                  std::string const &box_delta_high,
+                  std::string const &box_bu_low,
+                  std::string const &box_bu_high) {
   int bu_low = 5050;
   int bu_high = 5800;
   int delta_low = 60;  // 134;
@@ -179,8 +172,8 @@ void GenerateToys(std::string const &path) {
   int delta_nbins = (delta_high - delta_low) / 2;
 
   // ---------------------------- Fitting Vars ----------------------------
-  RooRealVar buMass("Bu_Delta_M", "m[D^{*0}#pi^{#pm}] - m[D^{*0}]", bu_low, bu_high,
-                    "MeV/c^{2}");
+  RooRealVar buMass("Bu_Delta_M", "m[D^{*0}#pi^{#pm}] - m[D^{*0}]", bu_low,
+                    bu_high, "MeV/c^{2}");
   RooRealVar deltaMass("Delta_M", "m[D^{*0}] - m[D^{0}]", delta_low, delta_high,
                        "MeV/c^{2}");
 
@@ -196,9 +189,9 @@ void GenerateToys(std::string const &path) {
   //
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02);//, 135, 150);
+  RooRealVar meanDeltaSignal("meanDeltaSignal", "", 1.4276e+02);  //, 135, 150);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00);//, 5, 15);
+  RooRealVar sigmaDeltaSignal("sigmaDeltaSignal", "", 8.6601e+00);  //, 5, 15);
   // ---------------------------- Tails ----------------------------
   RooRealVar a1DeltaSignal("a1DeltaSignal", "", 1.9251e+00);
   RooRealVar a2DeltaSignal("a2DeltaSignal", "", -7.4405e-01);
@@ -217,9 +210,10 @@ void GenerateToys(std::string const &path) {
   // ---------------------------- PDFs: Bu ----------------------------
   // ---------------------------- Signal ----------------------------
   // ---------------------------- Mean ----------------------------
-  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03);//, 5280, 5290);
+  RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03);  //, 5280, 5290);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaBuSignal("sigmaBuSignal", "", 2.0783e+01);//, 15, 30);  //, 300, 400);
+  RooRealVar sigmaBuSignal("sigmaBuSignal", "",
+                           2.0783e+01);  //, 15, 30);  //, 300, 400);
 
   // ---------------------------- Tails ----------------------------
   RooRealVar a1BuSignal("a1BuSignal", "", 1.6160e+00);
@@ -229,13 +223,13 @@ void GenerateToys(std::string const &path) {
   // ---------------------------- PDFs ----------------------------
   RooRealVar fracPdf1BuSignal("fracPdf1BuSignal", "", 7.4517e-01);
   RooCBShape pdfBuSignal1("pdfBuSignal1", "", buMass, meanBuSignal,
-                            sigmaBuSignal, a1BuSignal, n1BuSignal);
+                          sigmaBuSignal, a1BuSignal, n1BuSignal);
   RooCBShape pdfBuSignal2("pdfBuSignal2", "", buMass, meanBuSignal,
-                            sigmaBuSignal, a2BuSignal, n2BuSignal);
+                          sigmaBuSignal, a2BuSignal, n2BuSignal);
   RooAddPdf pdfBuSignal("pdfBuSignal", "",
-                          RooArgSet(pdfBuSignal1, pdfBuSignal2),
-                          fracPdf1BuSignal);
-  
+                        RooArgSet(pdfBuSignal1, pdfBuSignal2),
+                        fracPdf1BuSignal);
+
   // ---------------------------- Background ----------------------------
   //
   RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
@@ -256,8 +250,10 @@ void GenerateToys(std::string const &path) {
   // RooRealVar mean1BuBkg("mean1BuBkg", "", 5.3544e+03, 5300, 5400);
   // RooRealVar mean2BuBkg("mean2BuBkg", "", 5.2230e+03, 5200, 5250);
   // // ---------------------------- Sigmas ----------------------------
-  // RooRealVar sigma1BuBkg("sigma1BuBkg", "", 8.6260e+01, 50, 100);        //, 5, 15);
-  // RooRealVar sigmaFracBuBkg("sigmaFracBuBkg", "", 8.2710e-01, 0, 1);  //, -0.1, 0.1);
+  // RooRealVar sigma1BuBkg("sigma1BuBkg", "", 8.6260e+01, 50, 100);        //,
+  // 5, 15);
+  // RooRealVar sigmaFracBuBkg("sigmaFracBuBkg", "", 8.2710e-01, 0, 1);  //,
+  // -0.1, 0.1);
   // RooFormulaVar sigma2BuBkg("sigma2BuBkg", "", "@0*@1",
   //                           RooArgSet(sigma1BuBkg, sigmaFracBuBkg));
   // // ---------------------------- Tails ----------------------------
@@ -275,34 +271,34 @@ void GenerateToys(std::string const &path) {
   //                    fracPdf1BuBkg);
 
   // ---------------------------- Yields ----------------------------
-  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000); 
-  
   RooConstVar boxEffSignal("boxEffSignal", "", 0.86895);
   RooConstVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
   RooConstVar buCutEffSignal("buCutEffSignal", "", 0.95157);
+
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000);
 
   RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
                               RooArgList(yieldTotSignal, deltaCutEffSignal));
   RooFormulaVar yieldDeltaSignal("yieldDeltaSignal", "", "@0*@1",
                                  RooArgList(yieldTotSignal, buCutEffSignal));
   RooFormulaVar yieldSharedSignal("yieldSharedSignal", "", "@0*@1",
-                                 RooArgList(yieldTotSignal, boxEffSignal));
+                                  RooArgList(yieldTotSignal, boxEffSignal));
 
-  RooRealVar yieldTotBkg("yieldTotBkg", "", 32000, 0, 100000); 
+  RooRealVar yieldTotBkg("yieldTotBkg", "", 32000, 0, 100000);
   // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
   // RooFormulaVar yieldTotBkg("yieldTotBkg", "", "@0*@1",
   //                        RooArgSet(yieldTotSignal, fracBkgYield));
-  
-  RooConstVar boxEffBkg("boxEffBkg", "", 0.05669);
-  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613);//, 0, 1);
-  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613);//, 0, 1);
+
+  RooRealVar boxEffBkg("boxEffBkg", "", 0.05669, 0, 1);
+  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613, 0, 1);
+  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613, 0, 1);
 
   RooFormulaVar yieldBuBkg("yieldBuBkg", "", "@0*@1",
-                              RooArgList(yieldTotBkg, deltaCutEffBkg));
+                           RooArgList(yieldTotBkg, deltaCutEffBkg));
   RooFormulaVar yieldDeltaBkg("yieldDeltaBkg", "", "@0*@1",
-                                 RooArgList(yieldTotBkg, buCutEffBkg));
+                              RooArgList(yieldTotBkg, buCutEffBkg));
   RooFormulaVar yieldSharedBkg("yieldSharedBkg", "", "@0*@1",
-                                 RooArgList(yieldTotBkg, boxEffBkg));
+                               RooArgList(yieldTotBkg, boxEffBkg));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------
@@ -342,8 +338,10 @@ void GenerateToys(std::string const &path) {
     inputDataSet->Print();
   }
 
-  auto dataBu_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-      inputDataSet->reduce("Delta_M>125&&Delta_M<175")));
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+              .c_str())));
   if (dataBu_tmp.get() == nullptr) {
     throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
   }
@@ -355,8 +353,10 @@ void GenerateToys(std::string const &path) {
   }
   dataBu->Print();
 
-  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-      inputDataSet->reduce("Bu_Delta_M>5230&&Bu_Delta_M<5330")));
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+              .c_str())));
   if (dataDelta_tmp.get() == nullptr) {
     throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
   }
@@ -369,9 +369,9 @@ void GenerateToys(std::string const &path) {
   dataDelta->Print();
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
-		      RooFit::Index(fitting),
-		      RooFit::Import("bu", *dataBu.get()),
-		      RooFit::Import("delta", *dataDelta.get()));
+                      RooFit::Index(fitting),
+                      RooFit::Import("bu", *dataBu.get()),
+                      RooFit::Import("delta", *dataDelta.get()));
   combData.Print();
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -413,11 +413,16 @@ void GenerateToys(std::string const &path) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cerr << "Enter directory\n";
+  if (argc < 6) {
+    std::cerr << "Enter directory and box limits: delta_low, "
+                 "delta_high, bu_low, bu_high\n";
     return 1;
   }
   std::string path = argv[1];
-  GenerateToys(path);
+  std::string box_delta_low = argv[2];
+  std::string box_delta_high = argv[3];
+  std::string box_bu_low = argv[4];
+  std::string box_bu_high = argv[5];
+  GenerateToys(path, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
   return 0;
 }
