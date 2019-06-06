@@ -37,6 +37,17 @@
 #include "TTreeReader.h"
 
 enum class Variable { bu, delta };
+enum class Mode {
+  Bd2Dstpi,
+  Bu2D0pi,
+  Bu2D0rho,
+  Bu2Dst0pi_D0gamma,
+  Bu2Dst0pi_D0pi0,
+  Bu2Dst0rho_D0gamma,
+  Bu2Dst0rho_D0pi0,
+  Bs2D0Kpi,
+  Bs2Dst0Kpi
+};
 
 std::string EnumToString(Variable variable) {
   switch (variable) {
@@ -48,6 +59,43 @@ std::string EnumToString(Variable variable) {
       break;
   }
 }
+
+std::string EnumToString(Mode mode) {
+  switch (mode) {
+    case Mode::Bd2Dstpi:
+      return "Bd2Dstpi";
+      break;
+    case Mode::Bu2D0pi:
+      return "Bu2D0pi";
+      break;
+    case Mode::Bu2D0rho:
+      return "Bu2D0rho";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma:
+      return "Bu2Dst0pi_D0gamma";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0:
+      return "Bu2Dst0pi_D0pi0";
+      break;
+    case Mode::Bu2Dst0rho_D0gamma:
+      return "Bu2Dst0rho_D0gamma";
+      break;
+    case Mode::Bu2Dst0rho_D0pi0:
+      return "Bu2Dst0rho_D0pi0";
+    case Mode::Bs2D0Kpi:
+      return "Bs2D0Kpi";
+      break;
+    case Mode::Bs2Dst0Kpi:
+      return "Bs2Dst0Kpi";
+      break;
+  }
+}
+
+void ExtractBoxEfficiencies(Mode mode, int box_delta_low, int box_delta_high,
+                            int box_bu_low, int box_bu_high,
+                            RooRealVar &boxEffSignal,
+                            RooRealVar &deltaCutEffSignal,
+                            RooRealVar &buCutEffSignal) {}
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
@@ -270,11 +318,21 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   // RooAddPdf pdfBuBkg("pdfBuBkg", "", RooArgSet(pdfBuBkg1, pdfBuBkg2),
   //                    fracPdf1BuBkg);
 
-  // ---------------------------- Yields ----------------------------
-  RooConstVar boxEffSignal("boxEffSignal", "", 0.86895);
-  RooConstVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
-  RooConstVar buCutEffSignal("buCutEffSignal", "", 0.95157);
+  // ---------------------------- Efficiencies ----------------------------
+  RooRealVar boxEffSignal("boxEffSignal", "", 0.86895);
+  RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
+  RooRealVar buCutEffSignal("buCutEffSignal", "", 0.95157);
 
+  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, std::stoi(box_delta_low),
+                         std::stoi(box_delta_high), std::stoi(box_bu_low),
+                         std::stoi(box_bu_high), boxEffSignal,
+                         deltaCutEffSignal, buCutEffSignal);
+
+  RooRealVar boxEffBkg("boxEffBkg", "", 0.05669, 0, 1);
+  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613, 0, 1);
+  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613, 0, 1);
+
+  // ---------------------------- Yields ----------------------------
   RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000);
 
   RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
@@ -288,10 +346,6 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
   // RooFormulaVar yieldTotBkg("yieldTotBkg", "", "@0*@1",
   //                        RooArgSet(yieldTotSignal, fracBkgYield));
-
-  RooRealVar boxEffBkg("boxEffBkg", "", 0.05669, 0, 1);
-  RooRealVar deltaCutEffBkg("deltaCutEffBkg", "", 0.33613, 0, 1);
-  RooRealVar buCutEffBkg("buCutEffBkg", "", 0.16613, 0, 1);
 
   RooFormulaVar yieldBuBkg("yieldBuBkg", "", "@0*@1",
                            RooArgList(yieldTotBkg, deltaCutEffBkg));
