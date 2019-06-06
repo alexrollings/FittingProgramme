@@ -44,9 +44,7 @@ enum class Mode {
   Bu2Dst0pi_D0gamma,
   Bu2Dst0pi_D0pi0,
   Bu2Dst0rho_D0gamma,
-  Bu2Dst0rho_D0pi0,
-  Bs2D0Kpi,
-  Bs2Dst0Kpi
+  Bu2Dst0rho_D0pi0
 };
 
 std::string EnumToString(Variable variable) {
@@ -82,20 +80,127 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bu2Dst0rho_D0pi0:
       return "Bu2Dst0rho_D0pi0";
-    case Mode::Bs2D0Kpi:
-      return "Bs2D0Kpi";
-      break;
-    case Mode::Bs2Dst0Kpi:
-      return "Bs2Dst0Kpi";
-      break;
   }
 }
 
-void ExtractBoxEfficiencies(Mode mode, int box_delta_low, int box_delta_high,
-                            int box_bu_low, int box_bu_high,
-                            RooRealVar &boxEffSignal,
-                            RooRealVar &deltaCutEffSignal,
-                            RooRealVar &buCutEffSignal) {}
+void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
+                            std::string const &box_delta_high,
+                            std::string const &box_bu_low,
+                            std::string const &box_bu_high, RooRealVar &boxEff,
+                            RooRealVar &deltaCutEff, RooRealVar &buCutEff) {
+  std::string inputfile_1(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2011_MagUp/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2011_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_2(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2011_MagDown/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2011_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_3(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2012_MagUp/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2012_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_4(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2012_MagDown/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2012_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_5(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2015_MagUp/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_6(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2015_MagDown/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_7(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2016_MagUp/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string inputfile_8(
+      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+      "_2016_MagDown/"
+      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
+      EnumToString(mode) + "_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+  std::string ttree("BtoDstar0h3_h1h2gammaTuple");
+
+  TChain chain(ttree.c_str());
+
+  chain.Add(inputfile_1.c_str());
+  chain.Add(inputfile_2.c_str());
+  chain.Add(inputfile_3.c_str());
+  chain.Add(inputfile_4.c_str());
+  chain.Add(inputfile_5.c_str());
+  chain.Add(inputfile_6.c_str());
+  chain.Add(inputfile_7.c_str());
+  chain.Add(inputfile_8.c_str());
+
+  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma) {
+    std::string inputfile_9(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+        "_2015_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+        "cross_feed_removed/" +
+        EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_10(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+        "_ReDecay_2015_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+        "cross_feed_removed/" +
+        EnumToString(mode) +
+        "_ReDecay_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_11(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+        "_ReDecay_2016_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+        "cross_feed_removed/" +
+        EnumToString(mode) +
+        "_ReDecay_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_12(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
+        "_ReDecay_2016_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+        "cross_feed_removed/" +
+        EnumToString(mode) +
+        "_ReDecay_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    chain.Add(inputfile_9.c_str());
+    chain.Add(inputfile_10.c_str());
+    chain.Add(inputfile_11.c_str());
+    chain.Add(inputfile_12.c_str());
+  }
+
+  chain.GetEntry(0);
+
+  TTreeReader reader(&chain);
+  
+  TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
+  TTreeReaderValue<double> Delta_M(reader, "Delta_M");
+
+  double nInitial = chain.GetEntries();
+  double nDeltaWindow = chain.GetEntries(
+      ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high).c_str());
+  double nBuWindow = chain.GetEntries(
+      ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high).c_str());
+  double nBox = chain.GetEntries(("Delta_M>" + box_delta_low + "&&Delta_M<" +
+                                  box_delta_high + "&&Bu_Delta_M>" +
+                                  box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+                                     .c_str());
+
+  deltaCutEff.setVal(nDeltaWindow/nInitial);
+  buCutEff.setVal(nBuWindow/nInitial);
+  boxEff.setVal(nBox / nInitial);
+
+  std::cout << "Set efficiencies :\n"
+            << "\tDelta Window =\t" << nDeltaWindow / nInitial
+            << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
+            << nBox / nInitial << "\n";
+}
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
@@ -323,9 +428,8 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
   RooRealVar buCutEffSignal("buCutEffSignal", "", 0.95157);
 
-  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, std::stoi(box_delta_low),
-                         std::stoi(box_delta_high), std::stoi(box_bu_low),
-                         std::stoi(box_bu_high), boxEffSignal,
+  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
+                         box_bu_low, box_bu_high, boxEffSignal,
                          deltaCutEffSignal, buCutEffSignal);
 
   RooRealVar boxEffBkg("boxEffBkg", "", 0.05669, 0, 1);
