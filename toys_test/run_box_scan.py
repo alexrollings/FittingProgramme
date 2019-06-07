@@ -2,9 +2,9 @@ import os, re, subprocess, sys
 # import numpy as np
 
 
-path = sys.argv[1]
-if os.path.isfile(path + "/DataFile.root"):
-    output_dir = path + "/1d_results"
+input_file = sys.argv[1]
+output_dir = sys.argv[2]
+if os.path.isfile(input_file):
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 

@@ -204,7 +204,7 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &path) {
+                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &outputDir) {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
@@ -292,10 +292,10 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   frame->Draw();
   canvas.Update();
   canvas.SaveAs(
-      (path + "/1d_plots/" + EnumToString(variable) + ".pdf").c_str());
+      (outputDir + "/1d_plots/" + EnumToString(variable) + ".pdf").c_str());
 }
 
-void PlotCorrMatrix(RooFitResult *result, std::string const &path) {
+void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -309,10 +309,10 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &path) {
   corrHist->SetLabelSize(0.02, "Z");
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((path + "/1d_plots/CorrelationMatrix.pdf").c_str());
+  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
 }
 
-void GenerateToys(std::string const &path, std::string const &box_delta_low,
+void GenerateToys(std::string const &input, std::string const &outputDir std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
@@ -342,7 +342,7 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
 
   // ---------------------------- Read in toy dataset
   // ----------------------------
-  TFile in((path + "/DataFile.root").c_str(), "READ");
+  TFile in(input.c_str(), "READ");
   RooDataSet *inputDataSet;
   gDirectory->GetObject("toyDataSet", inputDataSet);
   if (inputDataSet == nullptr) {
@@ -484,7 +484,7 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
                          box_bu_low, box_bu_high, boxEffSignal,
                          deltaCutEffSignal, buCutEffSignal);
 
-  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000*boxEffSignal.getVal(), 0, 100000);
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000);
   // ---------------------------- Yields ----------------------------
 
   RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
@@ -552,30 +552,19 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
 
   std::cout << "Plotting projections of m[Bu]\n";
   PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-                pdfBuSignal, pdfBuBkg, path);
+                pdfBuSignal, pdfBuBkg, outputDir);
   std::cout << "Plotting projections of m[Delta]\n";
   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-                pdfDeltaSignal, pdfDeltaBkg, path);
+                pdfDeltaSignal, pdfDeltaBkg, outputDir);
   std::cout << "Plotting correlation matrix\n";
-  PlotCorrMatrix(result.get(), path);
+  PlotCorrMatrix(result.get(), outputDir);
   result->Print("v");
 
-  TFile outputFile(
-      (path + "/1d_results/ResultFile_" + box_delta_low + "_" + box_delta_high +
-       "_" + box_bu_low + "_" + box_bu_high + ".root")
-          .c_str(),
-      "recreate");
-  outputFile.cd();
-  result->SetName(("Result_" + box_delta_low + "_" + box_delta_high + "_" +
-                   box_bu_low + "_" + box_bu_high)
-                      .c_str());
-  result->Write();
-  outputFile.Close();
 
   double errYieldTotSignal =
       yieldTotSignal.getPropagatedError(*result) *
-      (yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2) +
-       (1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()));
+      std::sqrt(pow((yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2)),2) +
+       pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()),2));
   std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
             << errYieldTotSignal << "\n";
   // double errYieldTotBkg =
@@ -584,19 +573,35 @@ void GenerateToys(std::string const &path, std::string const &box_delta_low,
   //      (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
   // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
   //           << errYieldTotBkg << "\n";
+  TFile outputFile(
+      (outputDir + "/1d_results/Result_" + box_delta_low + "_" + box_delta_high +
+       "_" + box_bu_low + "_" + box_bu_high + ".root")
+          .c_str(),
+      "recreate");
+  outputFile.cd();
+  result->SetName(("Result_" + box_delta_low + "_" + box_delta_high + "_" +
+                   box_bu_low + "_" + box_bu_high)
+                      .c_str());
+  result->Write();
+  TTree tree("tree", "");
+  tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D"); 
+  tree.Fill();
+  outputFile.Write();
+  outputFile.Close();
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 6) {
-    std::cerr << "Enter directory and box limits: delta_low, "
+  if (argc < 7) {
+    std::cerr << "Enter input file, output directory and box limits: delta_low, "
                  "delta_high, bu_low, bu_high\n";
     return 1;
   }
-  std::string path = argv[1];
-  std::string box_delta_low = argv[2];
-  std::string box_delta_high = argv[3];
-  std::string box_bu_low = argv[4];
-  std::string box_bu_high = argv[5];
-  GenerateToys(path, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+  std::string input = argv[1];
+  std::string outputDir = argv[2];
+  std::string box_delta_low = argv[3];
+  std::string box_delta_high = argv[4];
+  std::string box_bu_low = argv[5];
+  std::string box_bu_high = argv[6];
+  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
   return 0;
 }
