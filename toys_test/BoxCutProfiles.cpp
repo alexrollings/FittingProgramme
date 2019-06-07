@@ -82,12 +82,12 @@ int main(int argc, char *argv[]) {
   double nFPD = 0;
   double nMINOS = 0;
 
-  double yieldMin = -1000000.0;
-  double yieldMax = 1000000.0;
-  double errMin = -1000000.0;
-  double errMax = 1000000.0;
-  double percErrMin = -1000000.0;
-  double percErrMax = 1000000.0;
+  double yieldMax = -1000000.0;
+  double yieldMin = 1000000.0;
+  double errMax = -1000000.0;
+  double errMin = 1000000.0;
+  double percErrMax = -1000000.0;
+  double percErrMin = 1000000.0;
 
   for (unsigned int d = 0; d < delta_bins; ++d) {
     for (unsigned int b = 0; b < delta_bins; ++b) {
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
                              yieldVal);
               errHist.Fill(xLabel.c_str(), yLabel.c_str(),
                            yieldErr);
-              double percErr = yieldVal / yieldErr * 100;
+              double percErr = yieldErr / yieldVal * 100;
               percErrHist.Fill(xLabel.c_str(),
                                yLabel.c_str(),
                                percErr);
@@ -191,6 +191,9 @@ int main(int argc, char *argv[]) {
   yieldHist.GetYaxis()->SetTitle("(m[D^{*0}] - m[D^{0}]) Window MeV/c^{2}");
   yieldHist.GetZaxis()->SetTitle("Signal Yield");
   double yieldRange = yieldMax - yieldMin;
+  std::cout << yieldMax << "\n";
+  std::cout << yieldMin << "\n";
+  std::cout << yieldRange << "\n";
   yieldHist.GetZaxis()->SetRangeUser(yieldMin - yieldRange / 5,
                                      yieldMax + yieldRange / 5);
   yieldHist.SetTitle(" ");
