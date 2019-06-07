@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   double percErrMin = 1000000.0;
 
   for (unsigned int d = 0; d < delta_bins; ++d) {
-    for (unsigned int b = 0; b < delta_bins; ++b) {
+    for (unsigned int b = 0; b < bu_bins; ++b) {
       std::string resultName =
           "Result_" + delta_low_high[d] + "_" + bu_low_high[b];
       std::string fileName = path + "/1d_results/" + resultName + ".root";
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
         if (result == nullptr) {
           throw std::runtime_error("Could not extract result from " + fileName);
         } else {
-          std::cout << "Extracted result from " << fileName << "\n";
+          // std::cout << "Extracted result from " << fileName << "\n";
           // Extract tree containing true error
           auto tree = std::unique_ptr<TTree>(
               dynamic_cast<TTree *>(file->FindObjectAny("tree")));
@@ -113,16 +113,19 @@ int main(int argc, char *argv[]) {
           if (tree == nullptr) {
             throw std::runtime_error("Could not extract tree from " + fileName);
           } else {
-            std::cout << "Extracted tree from " << fileName << "\n";
+            // std::cout << "Extracted tree from " << fileName << "\n";
             // Check fit quality
             double fitStatus = result->status();
             double covQual = result->covQual();
             if (covQual < 2) {
+              std::cout << resultName << " unconverged\n";
               nUnConv++;
             } else if (covQual < 3) {
               nFPD++;
+              std::cout << resultName << " FPD\n";
             } else if (fitStatus != 0) {
               nMINOS++;
+              std::cout << resultName << " has MINOS problems\n";
             } else {
               // Extract total yield from result
               RooArgList finalPars = result->floatParsFinal();
@@ -145,9 +148,9 @@ int main(int argc, char *argv[]) {
               errHist.Fill(xLabel.c_str(), yLabel.c_str(),
                            yieldErr);
               double percErr = yieldErr / yieldVal * 100;
-              percErrHist.Fill(xLabel.c_str(),
-                               yLabel.c_str(),
-                               percErr);
+              percErrHist.Fill(xLabel.c_str(), yLabel.c_str(), percErr);
+              // std::cout << yLabel << " vs " << xLabel << " = \t" << yieldVal
+              //           << " ± " << yieldErr << "\n";
 
               // Set max and min values in order to set z range in TH2s
               // (otherwise starts from 0)
@@ -179,10 +182,10 @@ int main(int argc, char *argv[]) {
   }
 
   std::cout << "\nQuality of fits:\n"
-            << "Unconverged: " << nUnConv / bu_bins * delta_bins * 100 << " %\n"
-            << "Forced positive definite: " << nFPD / bu_bins * delta_bins * 100
+            << "Unconverged: " << nUnConv / (bu_bins * delta_bins) * 100 << " %\n"
+            << "Forced positive definite: " << nFPD / (bu_bins * delta_bins) * 100
             << " %\n"
-            << "MINOS problems: " << nMINOS / bu_bins * delta_bins * 100
+            << "MINOS problems: " << nMINOS / (bu_bins * delta_bins) * 100
             << " %\n";
 
   TCanvas yieldCanvas("yieldCanvas", "", 1500, 1000);
@@ -191,16 +194,16 @@ int main(int argc, char *argv[]) {
   yieldHist.GetYaxis()->SetTitle("(m[D^{*0}] - m[D^{0}]) Window MeV/c^{2}");
   yieldHist.GetZaxis()->SetTitle("Signal Yield");
   double yieldRange = yieldMax - yieldMin;
-  std::cout << yieldMax << "\n";
-  std::cout << yieldMin << "\n";
-  std::cout << yieldRange << "\n";
+  // std::cout << yieldMax << "\n";
+  // std::cout << yieldMin << "\n";
+  // std::cout << yieldRange << "\n";
   yieldHist.GetZaxis()->SetRangeUser(yieldMin - yieldRange / 5,
                                      yieldMax + yieldRange / 5);
   yieldHist.SetTitle(" ");
   yieldHist.SetStats(0);
   yieldHist.Draw("colz");
 
-  yieldCanvas.SaveAs((path + "/YieldBoxScan.pdf").c_str());
+  yieldCanvas.SaveAs((path + "/1d_results/YieldBoxScan.pdf").c_str());
 
   TCanvas errCanvas("errCanvas", "", 1500, 1000);
 
@@ -214,7 +217,7 @@ int main(int argc, char *argv[]) {
   errHist.SetStats(0);
   errHist.Draw("colz");
 
-  errCanvas.SaveAs((path + "/ErrBoxScan.pdf").c_str());
+  errCanvas.SaveAs((path + "/1d_results/ErrBoxScan.pdf").c_str());
 
   TCanvas percErrCanvas("percErrCanvas", "", 1500, 1000);
 
@@ -228,7 +231,7 @@ int main(int argc, char *argv[]) {
   percErrHist.SetStats(0);
   percErrHist.Draw("colz");
 
-  percErrCanvas.SaveAs((path + "/PercErrBoxScan.pdf").c_str());
+  percErrCanvas.SaveAs((path + "/1d_results/PercErrBoxScan.pdf").c_str());
 
   return 1;
 }
