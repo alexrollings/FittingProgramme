@@ -10,17 +10,6 @@ def pass_info(filename, file_list, delta_low, delta_high, bu_low, bu_high):
         bu_low.append(m.group(3))
         bu_high.append(m.group(4))
 
-# if os.path.isdir(sys.argv[1]):
-#   output_dir = sys.argv[1] + "/plots"
-#   if not os.path.exists(output_dir):
-#     os.mkdir(output_dir)
-#   file_list = []
-#   for filename in os.listdir(sys.argv[1]):
-#     pass_filename(sys.argv[1]+"/"+filename, file_list)
-#   subprocess.call([
-#       "./FitManyToys", ",".join(file_list), output_dir
-#   ])
-# print("./FitManyToys " + ",".join(file_list))
 if os.path.isdir(sys.argv[1] + "/1d_results"):
     output_dir = sys.argv[1]
     file_list = []
