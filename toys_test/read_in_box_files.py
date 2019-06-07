@@ -13,14 +13,14 @@ def pass_info(filename, delta_low, delta_high, bu_low, bu_high):
 
 
 path = sys.argv[1]
-if os.path.isdir(path + "/1d_results"):
+if os.path.isdir(path):
     output_dir = path
     # Unique box dimensions: unordered set
     delta_low = set()
     delta_high = set()
     bu_low = set()
     bu_high = set()
-    for filename in os.listdir(path + "/1d_results"):
+    for filename in os.listdir(path):
         pass_info(path + "/" + filename, delta_low, delta_high, bu_low,
                   bu_high)
     # Re-order limits so that when they are plotted, axes go from small -> big window
@@ -42,4 +42,4 @@ if os.path.isdir(path + "/1d_results"):
     # print("./BoxCutProfiles " + path + " " + ",".join(delta_low_high) + " " +
     #       ",".join(bu_low_high))
 else:
-    print(path + "/1d_results is not a directory")
+    print(path + " is not a directory")

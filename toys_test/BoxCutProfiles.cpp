@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     for (unsigned int b = 0; b < bu_bins; ++b) {
       std::string resultName =
           "Result_" + delta_low_high[d] + "_" + bu_low_high[b];
-      std::string fileName = path + "/1d_results/" + resultName + ".root";
+      std::string fileName = path + "/" + resultName + ".root";
       // Open file
       if (fexists(fileName)) {
         auto file = std::unique_ptr<TFile>(TFile::Open(fileName.c_str()));
@@ -203,7 +203,7 @@ int main(int argc, char *argv[]) {
   yieldHist.SetStats(0);
   yieldHist.Draw("colz");
 
-  yieldCanvas.SaveAs((path + "/1d_results/YieldBoxScan.pdf").c_str());
+  yieldCanvas.SaveAs((path + "/YieldBoxScan.pdf").c_str());
 
   TCanvas errCanvas("errCanvas", "", 1500, 1000);
 
@@ -217,7 +217,7 @@ int main(int argc, char *argv[]) {
   errHist.SetStats(0);
   errHist.Draw("colz");
 
-  errCanvas.SaveAs((path + "/1d_results/ErrBoxScan.pdf").c_str());
+  errCanvas.SaveAs((path + "/ErrBoxScan.pdf").c_str());
 
   TCanvas percErrCanvas("percErrCanvas", "", 1500, 1000);
 
@@ -231,7 +231,7 @@ int main(int argc, char *argv[]) {
   percErrHist.SetStats(0);
   percErrHist.Draw("colz");
 
-  percErrCanvas.SaveAs((path + "/1d_results/PercErrBoxScan.pdf").c_str());
+  percErrCanvas.SaveAs((path + "/PercErrBoxScan.pdf").c_str());
 
   return 1;
 }
