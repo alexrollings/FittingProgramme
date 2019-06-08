@@ -178,19 +178,29 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
   chain.GetEntry(0);
 
   TTreeReader reader(&chain);
-  
+
   TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
   TTreeReaderValue<double> Delta_M(reader, "Delta_M");
 
-  double nInitial = chain.GetEntries();
-  double nDeltaWindow = chain.GetEntries(
-      ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high).c_str());
-  double nBuWindow = chain.GetEntries(
-      ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high).c_str());
-  double nBox = chain.GetEntries(("Delta_M>" + box_delta_low + "&&Delta_M<" +
-                                  box_delta_high + "&&Bu_Delta_M>" +
-                                  box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-                                     .c_str());
+  double nInitial = chain.GetEntries(
+      "BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
+      "DTF_D0<5800");
+  double nDeltaWindow =
+      chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
+                        "DTF_D0>5050&&Bu_M_DTF_D0<5800&&Delta_M>" +
+                        box_delta_low + "&&Delta_M<" + box_delta_high)
+                           .c_str());
+  double nBuWindow =
+      chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
+                        "DTF_D0>5050&&Bu_M_DTF_D0<5800&&Bu_Delta_M>" +
+                        box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+                           .c_str());
+  double nBox = chain.GetEntries(
+      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
+       "DTF_D0<5800&&Delta_M>" +
+       box_delta_low + "&&Delta_M<" + box_delta_high + "&&Bu_Delta_M>" +
+       box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+          .c_str());
 
   deltaCutEff.setVal(nDeltaWindow/nInitial);
   buCutEff.setVal(nBuWindow/nInitial);
@@ -312,11 +322,11 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
 }
 
-void GenerateToys(std::string const &input, std::string const &outputDir std::string const &box_delta_low,
+void GenerateToys(std::string const &input, std::string const &outputDir,
+                  std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
-  
   int bu_low = 5050;
   int bu_high = 5800;
   int delta_low = 60;  // 134;
@@ -550,14 +560,14 @@ void GenerateToys(std::string const &input, std::string const &outputDir std::st
           RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  std::cout << "Plotting projections of m[Bu]\n";
-  PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-                pdfBuSignal, pdfBuBkg, outputDir);
-  std::cout << "Plotting projections of m[Delta]\n";
-  PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-                pdfDeltaSignal, pdfDeltaBkg, outputDir);
-  std::cout << "Plotting correlation matrix\n";
-  PlotCorrMatrix(result.get(), outputDir);
+  // std::cout << "Plotting projections of m[Bu]\n";
+  // PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
+  //               pdfBuSignal, pdfBuBkg, outputDir);
+  // std::cout << "Plotting projections of m[Delta]\n";
+  // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
+  //               pdfDeltaSignal, pdfDeltaBkg, outputDir);
+  // std::cout << "Plotting correlation matrix\n";
+  // PlotCorrMatrix(result.get(), outputDir);
   result->Print("v");
 
 
@@ -574,7 +584,7 @@ void GenerateToys(std::string const &input, std::string const &outputDir std::st
   // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
   //           << errYieldTotBkg << "\n";
   TFile outputFile(
-      (outputDir + "/1d_results/Result_" + box_delta_low + "_" + box_delta_high +
+      (outputDir + "/Result_" + box_delta_low + "_" + box_delta_high +
        "_" + box_bu_low + "_" + box_bu_high + ".root")
           .c_str(),
       "recreate");
