@@ -314,124 +314,175 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
 }
 
-RooDataSet ExtractDataSetFromMC(RooRealVar &buMass, RooRealVar &deltaMass,
-                                RooCategory &fitting,
+bool fexists(std::string const &filename) {
+  std::ifstream infile(filename.c_str());
+  return infile.is_open();
+}
+
+RooDataSet ExtractDataSetFromMC(std::string const &input, RooRealVar &buMass,
+                                RooRealVar &deltaMass, RooCategory &fitting,
                                 std::string const &box_bu_low,
                                 std::string const &box_bu_high,
                                 std::string const &box_delta_low,
                                 std::string const &box_delta_high, double &nBu,
                                 double &nDelta) {
-  std::string inputfile_1(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/Bu2Dst0pi_D0gamma_2011_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2011_MagUp_BDT1_BDT2_PID.root");
-  std::string inputfile_2(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
-      "Bu2Dst0pi_D0gamma_2011_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2011_MagDown_BDT1_BDT2_PID.root");
-  std::string inputfile_3(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/Bu2Dst0pi_D0gamma_2012_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2012_MagUp_BDT1_BDT2_PID.root");
-  std::string inputfile_4(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
-      "Bu2Dst0pi_D0gamma_2012_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2012_MagDown_BDT1_BDT2_PID.root");
-  std::string inputfile_5(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/Bu2Dst0pi_D0gamma_2015_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2015_MagUp_BDT1_BDT2_PID.root");
-  std::string inputfile_6(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
-      "Bu2Dst0pi_D0gamma_2015_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2015_MagDown_BDT1_BDT2_PID.root");
-  std::string inputfile_7(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/Bu2Dst0pi_D0gamma_2016_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2016_MagUp_BDT1_BDT2_PID.root");
-  std::string inputfile_8(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
-      "Bu2Dst0pi_D0gamma_2016_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
-      "Bu2Dst0pi_D0gamma_2016_MagDown_BDT1_BDT2_PID.root");
-  std::string ttree("BtoDstar0h3_h1h2gammaTuple");
+  RooDataSet *inputDataSet = nullptr;
 
-  TChain chain(ttree.c_str());
+  if (!fexists(input)) {
+    std::string inputfile_1(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2011_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2011_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_2(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2011_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2011_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_3(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2012_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2012_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_4(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2012_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2012_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_5(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2015_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_6(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2015_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_7(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2016_MagUp/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string inputfile_8(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0gamma_2016_MagDown/"
+        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/"
+        "Bu2Dst0pi_D0gamma_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
+    std::string ttree("BtoDstar0h3_h1h2gammaTuple");
 
-  chain.Add(inputfile_1.c_str());
-  chain.Add(inputfile_2.c_str());
-  chain.Add(inputfile_3.c_str());
-  chain.Add(inputfile_4.c_str());
-  chain.Add(inputfile_5.c_str());
-  chain.Add(inputfile_6.c_str());
-  chain.Add(inputfile_7.c_str());
-  chain.Add(inputfile_8.c_str());
+    TChain chain(ttree.c_str());
 
-  chain.GetEntry(0);
+    chain.Add(inputfile_1.c_str());
+    chain.Add(inputfile_2.c_str());
+    chain.Add(inputfile_3.c_str());
+    chain.Add(inputfile_4.c_str());
+    chain.Add(inputfile_5.c_str());
+    chain.Add(inputfile_6.c_str());
+    chain.Add(inputfile_7.c_str());
+    chain.Add(inputfile_8.c_str());
 
-  TTreeReader reader(&chain);
+    chain.GetEntry(0);
 
-  TTreeReaderValue<int> Bu_BKGCAT(reader, "Bu_BKGCAT");
-  TTreeReaderValue<double> Bu_M_DTF_D0(reader, "Bu_M_DTF_D0");
-  TTreeReaderValue<double> Delta_M(reader, "Delta_M");
-  TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
-  TTreeReaderValue<double> D0_M(reader, "D0_M");
-  TTreeReaderValue<double> D0h_M(reader, "D0h_M");
-  TTreeReaderValue<double> D0_M_DOUBLESW_KP(reader, "D0_M_DOUBLESW_KP");
-  TTreeReaderValue<float> BDT1(reader, "BDT1");
-  TTreeReaderValue<float> BDT2(reader, "BDT2");
-  TTreeReaderValue<double> D0_FD_ZSIG(reader, "D0_FD_ZSIG");
+    TTreeReader reader(&chain);
 
-  TFile file("tree_file.root", "RECREATE");
+    TTreeReaderValue<double> Bu_M_DTF_D0(reader, "Bu_M_DTF_D0");
+    TTreeReaderValue<double> Delta_M(reader, "Delta_M");
+    TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
+    TTreeReaderValue<double> D0_M(reader, "D0_M");
+    TTreeReaderValue<double> D0h_M(reader, "D0h_M");
+    TTreeReaderValue<double> D0_M_DOUBLESW_KP(reader, "D0_M_DOUBLESW_KP");
+    TTreeReaderValue<float> BDT1(reader, "BDT1");
+    TTreeReaderValue<float> BDT2(reader, "BDT2");
+    TTreeReaderValue<double> D0_FD_ZSIG(reader, "D0_FD_ZSIG");
 
-  TTree *newTree = dynamic_cast<TTree *>(chain.GetTree()->CloneTree(0));
-  if (newTree == nullptr) {
-    throw std::runtime_error("File did not contain ttree.");
-  }
+    TFile file("tree_file.root", "RECREATE");
 
-  int i = 0;
+    TTree *newTree = dynamic_cast<TTree *>(chain.GetTree()->CloneTree(0));
+    if (newTree == nullptr) {
+      throw std::runtime_error("File did not contain ttree.");
+    }
 
-  while (reader.Next()) {
-    chain.GetEntry(i);
-    i++;
-    if (*BDT2 > 0.05 && *BDT1 > 0.05 && abs(*D0_M - 1864) < 25 &&
-        *Bu_M_DTF_D0 < 5800 && *Bu_M_DTF_D0 > 5050 &&
-        *Delta_M > std::stod(box_delta_low) &&
-        *Delta_M < std::stod(box_delta_high) &&
-        *Bu_Delta_M > std::stod(box_bu_low) &&
-        *Bu_Delta_M < std::stod(box_bu_high) &&
+    int i = 0;
 
-        abs(*D0_M_DOUBLESW_KP - 1864) > 15 && *Bu_BKGCAT == 0 &&
-        *D0_FD_ZSIG > 2 && *D0h_M > 4950) {
-      newTree->Fill();
+    while (reader.Next()) {
+      chain.GetEntry(i);
+      i++;
+      if (*BDT2 > 0.05 && *BDT1 > 0.05 && abs(*D0_M - 1864) < 25 &&
+          *Bu_M_DTF_D0 < 5800 && *Bu_M_DTF_D0 > 5050 && *Bu_M_DTF_D0 < 5800 &&
+          *Bu_M_DTF_D0 > 5050 && *Delta_M > 50 && *Delta_M < 210 &&
+          abs(*D0_M_DOUBLESW_KP - 1864) > 15 && *D0_FD_ZSIG > 2 &&
+          *D0h_M > 4950) {
+        newTree->Fill();
+      }
+    }
+
+    inputDataSet = new RooDataSet("inputDataSet", "inputDataSet", newTree,
+                                  RooArgSet(buMass, deltaMass));
+
+    TFile dataFile(input.c_str(), "RECREATE");
+    inputDataSet->Write("inputDataSet");
+    dataFile.Close();
+
+    std::cout << "MC roodataset saved in " << input << "\n";
+  } else {
+    std::cout << "Extracting roodataset from " << input << "\n";
+
+    TFile inData(input.c_str(), "READ");
+    gDirectory->GetObject("inputDataSet", inputDataSet);
+    inData.Close();
+
+    if (inputDataSet == nullptr) {
+      throw std::runtime_error("Data set does not exist.");
+    } else {
+      std::cout << "\n\n\n Dataset extracted. \n\n";
+      inputDataSet->Print();
     }
   }
 
-  RooDataSet dataBu("dataBu", "dataBu", newTree, RooArgSet(buMass));
-  dataBu.Print();
-  nBu = dataBu.numEntries();
-  RooDataSet dataDelta("dataDelta", "dataDelta", newTree, RooArgSet(deltaMass));
-  dataDelta.Print();
-  nDelta = dataDelta.numEntries();
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+              .c_str())));
+  if (dataBu_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
+  }
+  auto dataBu = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
+  if (dataBu.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
+  }
+  nBu = dataBu->numEntries();
+
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+              .c_str())));
+  if (dataDelta_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
+  }
+  auto dataDelta = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
+  if (dataDelta.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+  }
+  nDelta = dataDelta->numEntries();
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
-                      RooFit::Index(fitting), RooFit::Import("bu", dataBu),
-                      RooFit::Import("delta", dataDelta));
-
+                      RooFit::Index(fitting),
+                      RooFit::Import("bu", *dataBu.get()),
+                      RooFit::Import("delta", *dataDelta.get()));
   return combData;
 }
 
-void GenerateToys(std::string const &outputDir,
+void GenerateToys(std::string const &input, std::string const &outputDir,
                   std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
-  int bu_low = 5050;
-  int bu_high = 5800;
-  int delta_low = 60;  // 134;
+  int bu_low = 5150;
+  int bu_high = 5400;
+  int delta_low = 100;  // 134;
   int delta_high = 210;
 
   int bu_nbins = (bu_high - bu_low) / 10;
@@ -454,9 +505,9 @@ void GenerateToys(std::string const &outputDir,
   // ---------------------------- Read in toy dataset
   // ----------------------------
   double nBu, nDelta;
-  RooDataSet combData =
-      ExtractDataSetFromMC(buMass, deltaMass, fitting, box_bu_low, box_bu_high,
-                           box_delta_low, box_delta_high, nBu, nDelta);
+  RooDataSet combData = ExtractDataSetFromMC(
+      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high, box_delta_low,
+      box_delta_high, nBu, nDelta);
 
   combData.Print();
 
@@ -515,7 +566,7 @@ void GenerateToys(std::string const &outputDir,
                          box_bu_low, box_bu_high, boxEffSignal,
                          deltaCutEffSignal, buCutEffSignal);
 
-  RooRealVar yieldTotSignal("yieldTotSignal", "", 40000, 0, 100000);
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 12000*boxEffSignal.getVal(), 0, 15000);
   // ---------------------------- Yields ----------------------------
 
   RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
@@ -608,18 +659,17 @@ void GenerateToys(std::string const &outputDir,
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 6) {
-    std::cerr
-        << "Enter output directory and box limits: delta_low, "
-           "delta_high, bu_low, bu_high\n";
+  if (argc < 7) {
+    std::cerr << "Enter input file, output directory and box limits: delta_low, "
+                 "delta_high, bu_low, bu_high\n";
     return 1;
   }
-  std::string outputDir = argv[1];
-  std::string box_delta_low = argv[2];
-  std::string box_delta_high = argv[3];
-  std::string box_bu_low = argv[4];
-  std::string box_bu_high = argv[5];
-  GenerateToys(outputDir, box_delta_low, box_delta_high, box_bu_low,
-               box_bu_high);
+  std::string input = argv[1];
+  std::string outputDir = argv[2];
+  std::string box_delta_low = argv[3];
+  std::string box_delta_high = argv[4];
+  std::string box_bu_low = argv[5];
+  std::string box_bu_high = argv[6];
+  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
   return 0;
 }
