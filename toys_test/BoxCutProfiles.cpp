@@ -76,6 +76,10 @@ int main(int argc, char *argv[]) {
   TH2D errHist("errHist", "", bu_bins, 0, bu_bins, delta_bins, 0, delta_bins);
   TH2D percErrHist("precentageErrHist", "", bu_bins, 0, bu_bins, delta_bins, 0,
                    delta_bins);
+  // Error correction should tend to sqrt(2) when shared yield tends to total
+  // yield and tend to 1 when shared yield tends to 0
+  TH2D errCorrHist("errCorrectionHist", "", bu_bins, 0, bu_bins, delta_bins, 0,
+                   delta_bins);
 
   // Check result quality and print out stats
   double nUnConv = 0;
@@ -88,6 +92,8 @@ int main(int argc, char *argv[]) {
   double errMin = 1000000.0;
   double percErrMax = -1000000.0;
   double percErrMin = 1000000.0;
+  double errCorrMax = -1000000.0;
+  double errCorrMin = 1000000.0;
 
   for (unsigned int d = 0; d < delta_bins; ++d) {
     for (unsigned int b = 0; b < bu_bins; ++b) {
@@ -133,6 +139,7 @@ int main(int argc, char *argv[]) {
               RooRealVar *yieldRealVar =
                   dynamic_cast<RooRealVar *>(yieldAbsArg);
               double yieldVal = yieldRealVar->getVal();
+              double fitErr = yieldRealVar->getError();
 
               // Get corrected error from tree
               double yieldErr;
@@ -149,6 +156,8 @@ int main(int argc, char *argv[]) {
                            yieldErr);
               double percErr = yieldErr / yieldVal * 100;
               percErrHist.Fill(xLabel.c_str(), yLabel.c_str(), percErr);
+              double errCorr = yieldErr / fitErr;
+              errCorrHist.Fill(xLabel.c_str(), yLabel.c_str(), errCorr);
               // std::cout << yLabel << " vs " << xLabel << " = \t" << yieldVal
               //           << " ± " << yieldErr << "\n";
 
@@ -171,6 +180,12 @@ int main(int argc, char *argv[]) {
               }
               if (percErr < percErrMin) {
                 percErrMin = percErr;
+              }
+              if (errCorr > errCorrMax) {
+                errCorrMax = errCorr;
+              }
+              if (errCorr < errCorrMin) {
+                errCorrMin = errCorr;
               }
             }
           }
@@ -232,6 +247,20 @@ int main(int argc, char *argv[]) {
   percErrHist.Draw("colz");
 
   percErrCanvas.SaveAs((path + "/PercErrBoxScan.pdf").c_str());
+
+  TCanvas errCorrCanvas("errCorrCanvas", "", 1500, 1000);
+
+  errCorrHist.GetXaxis()->SetTitle("(m[B^{#pm}] - m[D^{*0}]) Window MeV/c^{2}");
+  errCorrHist.GetYaxis()->SetTitle("(m[D^{*0}] - m[D^{0}]) Window MeV/c^{2}");
+  errCorrHist.GetZaxis()->SetTitle("Signal Yield \% Error");
+  double errCorrRange = errCorrMax - errCorrMin;
+  errCorrHist.GetZaxis()->SetRangeUser(errCorrMin - errCorrRange / 5,
+                                       errCorrMax + errCorrRange / 5);
+  errCorrHist.SetTitle(" ");
+  errCorrHist.SetStats(0);
+  errCorrHist.Draw("colz");
+
+  errCorrCanvas.SaveAs((path + "/ErrCorrectionBoxScan.pdf").c_str());
 
   return 1;
 }
