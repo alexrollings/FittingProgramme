@@ -374,8 +374,8 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
   return combData;
 }
 
-void GenerateToys(std::string const &input,
-                  std::string const &outputDir, std::string const &box_delta_low,
+void GenerateToys(std::string const &input, std::string const &outputDir,
+                  std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
@@ -401,12 +401,12 @@ void GenerateToys(std::string const &input,
   fitting.defineType("bu");
   fitting.defineType("delta");
 
-
   // ---------------------------- Read in toy dataset
   // ----------------------------
   double nBu, nDelta;
   RooDataSet combData = ExtractDataSetFromToy(
-      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high, box_delta_low,
+      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high,
+      box_delta_low,
       box_delta_high, nBu, nDelta);
   combData.Print();
 
@@ -585,6 +585,7 @@ void GenerateToys(std::string const &input,
   result->Print("v");
 
 
+  // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
   double errYieldTotSignal =
       yieldTotSignal.getPropagatedError(*result) *
       std::sqrt(pow((yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2)),2) +
