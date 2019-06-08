@@ -87,7 +87,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
                             std::string const &box_delta_high,
                             std::string const &box_bu_low,
                             std::string const &box_bu_high, RooRealVar &boxEff,
-                            RooRealVar &deltaCutEff, RooRealVar &buCutEff) {
+                            RooRealVar &deltaCutEff, RooRealVar &buCutEff,
+                            RooRealVar &orEff) {
   std::string inputfile_1(
       "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
       "_2011_MagUp/"
@@ -201,15 +202,23 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
        box_delta_low + "&&Delta_M<" + box_delta_high + "&&Bu_Delta_M>" +
        box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
           .c_str());
+  double nOr = chain.GetEntries(
+      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
+       "DTF_D0<5800&&((Delta_M>" +
+       box_delta_low + "&&Delta_M<" + box_delta_high + ")||(Bu_Delta_M>" +
+       box_bu_low + "&&Bu_Delta_M<" + box_bu_high + "))")
+          .c_str());
 
   deltaCutEff.setVal(nDeltaWindow / nInitial);
   buCutEff.setVal(nBuWindow / nInitial);
   boxEff.setVal(nBox / nInitial);
+  orEff.setVal(nOr / nInitial);
 
   std::cout << "Set efficiencies :\n"
             << "\tDelta Window =\t" << nDeltaWindow / nInitial
             << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
-            << nBox / nInitial << "\n";
+            << nBox / nInitial << "\n"
+            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n";
 }
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
@@ -558,33 +567,38 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
                           sigmaBuSignal, a2BuSignal, n2BuSignal);
 
   // ---------------------------- Efficiencies ----------------------------
-  RooRealVar boxEffSignal("boxEffSignal", "", 0.86895);
-  RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 0.91467);
-  RooRealVar buCutEffSignal("buCutEffSignal", "", 0.95157);
+  RooRealVar orEffSignal("orEffSignal", "", 1);
+  RooRealVar boxEffSignal("boxEffSignal", "", 1);
+  RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 1);
+  RooRealVar buCutEffSignal("buCutEffSignal", "", 1);
 
   ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
                          box_bu_low, box_bu_high, boxEffSignal,
-                         deltaCutEffSignal, buCutEffSignal);
+                         deltaCutEffSignal, buCutEffSignal, orEffSignal);
 
-  RooRealVar yieldTotSignal("yieldTotSignal", "", 12000*boxEffSignal.getVal(), 0, 15000);
+  RooRealVar yieldTotSignal("yieldTotSignal", "", 14000 * orEffSignal.getVal(),
+                            0, 15000);
   // ---------------------------- Yields ----------------------------
 
-  RooFormulaVar yieldBuSignal("yieldBuSignal", "", "@0*@1",
-                              RooArgList(yieldTotSignal, deltaCutEffSignal));
+  RooFormulaVar yieldBuSignal(
+      "yieldBuSignal", "", "(@0/@1)*@2",
+      RooArgList(deltaCutEffSignal, orEffSignal, yieldTotSignal));
   RooFormulaVar yieldBuSignal1("yieldBuSignal1", "", "@0*@1",
                                RooArgList(yieldBuSignal, fracPdf1BuSignal));
   RooFormulaVar yieldBuSignal2("yieldBuSignal2", "", "@0*(1-@1)",
                                RooArgList(yieldBuSignal, fracPdf1BuSignal));
-  RooFormulaVar yieldDeltaSignal("yieldDeltaSignal", "", "@0*@1",
-                                 RooArgList(yieldTotSignal, buCutEffSignal));
+  RooFormulaVar yieldDeltaSignal(
+      "yieldDeltaSignal", "", "(@0/@1)*@2",
+      RooArgList(buCutEffSignal, orEffSignal, yieldTotSignal));
   RooFormulaVar yieldDeltaSignal1(
       "yieldDeltaSignal1", "", "@0*@1",
       RooArgList(yieldDeltaSignal, fracPdf1DeltaSignal));
   RooFormulaVar yieldDeltaSignal2(
       "yieldDeltaSignal2", "", "@0*(1-@1)",
       RooArgList(yieldDeltaSignal, fracPdf1DeltaSignal));
-  RooFormulaVar yieldSharedSignal("yieldSharedSignal", "", "@0*@1",
-                                  RooArgList(yieldTotSignal, boxEffSignal));
+  RooFormulaVar yieldSharedSignal(
+      "yieldSharedSignal", "", "(@0/@1)*@2",
+      RooArgList(boxEffSignal, orEffSignal, yieldTotSignal));
 
   // ---------------------------- Add PDFs and yields
   // ----------------------------
@@ -660,8 +674,9 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
 int main(int argc, char *argv[]) {
   if (argc < 7) {
-    std::cerr << "Enter input file, output directory and box limits: delta_low, "
-                 "delta_high, bu_low, bu_high\n";
+    std::cerr
+        << "Enter input file, output directory and box limits: delta_low, "
+           "delta_high, bu_low, bu_high\n";
     return 1;
   }
   std::string input = argv[1];
@@ -670,6 +685,7 @@ int main(int argc, char *argv[]) {
   std::string box_delta_high = argv[4];
   std::string box_bu_low = argv[5];
   std::string box_bu_high = argv[6];
-  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low,
+               box_bu_high);
   return 0;
 }
