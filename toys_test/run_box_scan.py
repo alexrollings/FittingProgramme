@@ -26,8 +26,7 @@ if __name__ == "__main__":
 
     output_dir = args.output
     mc = args.mc
-    if not mc:
-        input_file = args.input_file
+    input_file = args.input_file
 
     if not mc:
         if not os.path.isfile(input_file):
