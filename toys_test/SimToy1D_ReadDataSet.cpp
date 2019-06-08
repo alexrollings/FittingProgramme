@@ -322,8 +322,60 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
 }
 
-void GenerateToys(std::string const &input, std::string const &outputDir,
-                  std::string const &box_delta_low,
+RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
+                                 RooRealVar &deltaMass, RooCategory &fitting,
+                                 std::string const &box_bu_low,
+                                 std::string const &box_bu_high,
+                                 std::string const &box_delta_low,
+                                 std::string const &box_delta_high, double &nBu,
+                                 double &nDelta) {
+  RooDataSet *inputDataSet;
+  TFile in(input.c_str(), "READ");
+  gDirectory->GetObject("toyDataSet", inputDataSet);
+  if (inputDataSet == nullptr) {
+    throw std::runtime_error("Data set does not exist.");
+  } else {
+    std::cout << "inputDataSet extracted... \n";
+    inputDataSet->Print();
+  }
+
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+              .c_str())));
+  if (dataBu_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
+  }
+  auto dataBu = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
+  if (dataBu.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
+  }
+  nBu = dataBu->numEntries();
+
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+              .c_str())));
+  if (dataDelta_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
+  }
+  auto dataDelta = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
+  if (dataDelta.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+  }
+  nDelta = dataDelta->numEntries();
+
+  RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
+                      RooFit::Index(fitting),
+                      RooFit::Import("bu", *dataBu.get()),
+                      RooFit::Import("delta", *dataDelta.get()));
+  return combData;
+}
+
+void GenerateToys(std::string const &input,
+                  std::string const &outputDir, std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
                   std::string const &box_bu_high) {
@@ -352,48 +404,10 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
   // ---------------------------- Read in toy dataset
   // ----------------------------
-  TFile in(input.c_str(), "READ");
-  RooDataSet *inputDataSet;
-  gDirectory->GetObject("toyDataSet", inputDataSet);
-  if (inputDataSet == nullptr) {
-    throw std::runtime_error("Data set does not exist.");
-  } else {
-    std::cout << "inputDataSet extracted... \n";
-    inputDataSet->Print();
-  }
-
-  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
-              .c_str())));
-  if (dataBu_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
-  }
-  auto dataBu = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
-  if (dataBu.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
-  }
-  double nBu = dataBu->numEntries();
-
-  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-              .c_str())));
-  if (dataDelta_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
-  }
-  auto dataDelta = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
-  if (dataDelta.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
-  }
-  double nDelta = dataDelta->numEntries();
-
-  RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
-                      RooFit::Index(fitting),
-                      RooFit::Import("bu", *dataBu.get()),
-                      RooFit::Import("delta", *dataDelta.get()));
+  double nBu, nDelta;
+  RooDataSet combData = ExtractDataSetFromToy(
+      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high, box_delta_low,
+      box_delta_high, nBu, nDelta);
   combData.Print();
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -560,14 +574,14 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
           RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  // std::cout << "Plotting projections of m[Bu]\n";
-  // PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-  //               pdfBuSignal, pdfBuBkg, outputDir);
-  // std::cout << "Plotting projections of m[Delta]\n";
-  // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-  //               pdfDeltaSignal, pdfDeltaBkg, outputDir);
-  // std::cout << "Plotting correlation matrix\n";
-  // PlotCorrMatrix(result.get(), outputDir);
+  std::cout << "Plotting projections of m[Bu]\n";
+  PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
+                pdfBuSignal, pdfBuBkg, outputDir);
+  std::cout << "Plotting projections of m[Delta]\n";
+  PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
+                pdfDeltaSignal, pdfDeltaBkg, outputDir);
+  std::cout << "Plotting correlation matrix\n";
+  PlotCorrMatrix(result.get(), outputDir);
   result->Print("v");
 
 
