@@ -87,7 +87,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
                             std::string const &box_delta_high,
                             std::string const &box_bu_low,
                             std::string const &box_bu_high, RooRealVar &boxEff,
-                            RooRealVar &deltaCutEff, RooRealVar &buCutEff, RooRealVar &orEff) {
+                            RooRealVar &deltaCutEff, RooRealVar &buCutEff,
+                            RooRealVar &orEff) {
   std::string inputfile_1(
       "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
       "_2011_MagUp/"
@@ -208,8 +209,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
        box_bu_low + "&&Bu_Delta_M<" + box_bu_high + "))")
           .c_str());
 
-  deltaCutEff.setVal(nDeltaWindow/nInitial);
-  buCutEff.setVal(nBuWindow/nInitial);
+  deltaCutEff.setVal(nDeltaWindow / nInitial);
+  buCutEff.setVal(nBuWindow / nInitial);
   boxEff.setVal(nBox / nInitial);
   orEff.setVal(nOr / nInitial);
 
@@ -222,7 +223,11 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &outputDir) {
+                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &outputDir,
+                   std::string const &box_bu_low,
+                   std::string const &box_bu_high,
+                   std::string const &box_delta_low,
+                   std::string const &box_delta_high) {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
@@ -309,11 +314,17 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   pad1.cd();
   frame->Draw();
   canvas.Update();
-  canvas.SaveAs(
-      (outputDir + "/1d_plots/" + EnumToString(variable) + ".pdf").c_str());
+  canvas.SaveAs((outputDir + "/1d_plots/" + EnumToString(variable) + "_" +
+                 box_delta_low + "_" + box_delta_high + "_" + box_bu_low + "_" +
+                 box_bu_high + ".pdf")
+                    .c_str());
 }
 
-void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
+void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
+                    std::string const &box_bu_low,
+                    std::string const &box_bu_high,
+                    std::string const &box_delta_low,
+                    std::string const &box_delta_high) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -327,7 +338,10 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   corrHist->SetLabelSize(0.02, "Z");
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
+  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf" + "_" +
+                     box_delta_low + "_" + box_delta_high + "_" + box_bu_low +
+                     "_" + box_bu_high + ".pdf")
+                        .c_str());
 }
 
 RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
@@ -413,8 +427,7 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
   // ----------------------------
   double nBu, nDelta;
   RooDataSet combData = ExtractDataSetFromToy(
-      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high,
-      box_delta_low,
+      input, buMass, deltaMass, fitting, box_bu_low, box_bu_high, box_delta_low,
       box_delta_high, nBu, nDelta);
   combData.Print();
 
@@ -449,8 +462,8 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
   // ---------------------------- Mean ----------------------------
   RooRealVar meanBuSignal("meanBuSignal", "", 5.2819e+03, 5280, 5290);
   // ---------------------------- Sigmas ----------------------------
-  RooRealVar sigmaBuSignal("sigmaBuSignal", "",
-                           2.0783e+01, 18, 24);  //, 300, 400);
+  RooRealVar sigmaBuSignal("sigmaBuSignal", "", 2.0783e+01, 18,
+                           24);  //, 300, 400);
 
   // ---------------------------- Tails ----------------------------
   RooRealVar a1BuSignal("a1BuSignal", "", 1.6160e+00);
@@ -537,7 +550,7 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
   RooRealVar yieldBuBkg("yieldBuBkg", "", nBuBkg, 0, 100000);
   RooRealVar yieldDeltaBkg("yieldDeltaBkg", "", nDeltaBkg, 0, 100000);
-  
+
   // RooRealVar yieldTotBkg("yieldTotBkg", "", (nBuBkg + nDeltaBkg), 0, 100000);
   // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
   // RooFormulaVar yieldTotBkg("yieldTotBkg", "", "@0*@1",
@@ -576,7 +589,6 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
   simPdf.addPdf(pdfBu, "bu");
   simPdf.addPdf(pdfDelta, "delta");
 
-
   // meanDeltaSignal.setVal(142);
 
   // ---------------------------- Fit Sim PDF to toy
@@ -589,22 +601,35 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
   std::cout << "Plotting projections of m[Bu]\n";
   PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-                pdfBuSignal, pdfBuBkg, outputDir);
+                pdfBuSignal, pdfBuBkg, outputDir, box_delta_low, box_delta_high,
+                box_bu_low, box_bu_high);
   std::cout << "Plotting projections of m[Delta]\n";
   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-                pdfDeltaSignal, pdfDeltaBkg, outputDir);
+                pdfDeltaSignal, pdfDeltaBkg, outputDir, box_delta_low,
+                box_delta_high, box_bu_low, box_bu_high);
   std::cout << "Plotting correlation matrix\n";
-  PlotCorrMatrix(result.get(), outputDir);
+  PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                 box_bu_low, box_bu_high);
   result->Print("v");
-
 
   // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
   double errYieldTotSignal =
       yieldTotSignal.getPropagatedError(*result) *
-      std::sqrt(pow((yieldSharedSignal.getVal() / yieldTotSignal.getVal() * std::sqrt(2)),2) +
-       pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()),2));
+      std::sqrt(
+          pow(((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
+               std::sqrt(2)),
+              2) +
+          pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()), 2));
+  std::cout << "Box = " << box_delta_low << "-" << box_delta_high
+            << " " << box_bu_low << "-" << box_bu_high << "\n";
+  std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() << " ± "
+            << yieldSharedSignal.getPropagatedError(*result) << "\n";
   std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
             << errYieldTotSignal << "\n";
+  std::cout << "Corrected error / fit Error = "
+            << errYieldTotSignal / yieldTotSignal.getPropagatedError(*result) << "\n";
+  std::cout << "Corrected error / fit Error = "
+            << errYieldTotSignal / yieldTotSignal.getError() << "\n";
   // double errYieldTotBkg =
   //     yieldTotBkg.getPropagatedError(*result) *
   //     (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +
@@ -612,8 +637,8 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
   // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
   //           << errYieldTotBkg << "\n";
   TFile outputFile(
-      (outputDir + "/Result_" + box_delta_low + "_" + box_delta_high +
-       "_" + box_bu_low + "_" + box_bu_high + ".root")
+      (outputDir + "/Result_" + box_delta_low + "_" + box_delta_high + "_" +
+       box_bu_low + "_" + box_bu_high + ".root")
           .c_str(),
       "recreate");
   outputFile.cd();
@@ -622,7 +647,7 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
                       .c_str());
   result->Write();
   TTree tree("tree", "");
-  tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D"); 
+  tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D");
   tree.Fill();
   outputFile.Write();
   outputFile.Close();
@@ -630,8 +655,9 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
 int main(int argc, char *argv[]) {
   if (argc < 7) {
-    std::cerr << "Enter input file, output directory and box limits: delta_low, "
-                 "delta_high, bu_low, bu_high\n";
+    std::cerr
+        << "Enter input file, output directory and box limits: delta_low, "
+           "delta_high, bu_low, bu_high\n";
     return 1;
   }
   std::string input = argv[1];
@@ -640,6 +666,7 @@ int main(int argc, char *argv[]) {
   std::string box_delta_high = argv[4];
   std::string box_bu_low = argv[5];
   std::string box_bu_high = argv[6];
-  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low,
+               box_bu_high);
   return 0;
 }

@@ -223,7 +223,11 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   std::string const &outputDir) {
+                   std::string const &outputDir,
+                   std::string const &box_bu_low,
+                   std::string const &box_bu_high,
+                   std::string const &box_delta_low,
+                   std::string const &box_delta_high) {
   gStyle->SetTitleFont(132, "XYZ");
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
@@ -303,10 +307,18 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   frame->Draw();
   canvas.Update();
   canvas.SaveAs(
-      (outputDir + "/1d_plots/" + EnumToString(variable) + ".pdf").c_str());
+      (outputDir + "/1d_plots/" + EnumToString(variable) + "_" +
+                 box_delta_low + "_" + box_delta_high + "_" + box_bu_low + "_" +
+                 box_bu_high + ".pdf")
+                    .c_str());
+
 }
 
-void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
+void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
+                    std::string const &box_bu_low,
+                    std::string const &box_bu_high,
+                    std::string const &box_delta_low,
+                    std::string const &box_delta_high) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -320,7 +332,11 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
   corrHist->SetLabelSize(0.02, "Z");
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf").c_str());
+  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix" + "_" +
+                 box_delta_low + "_" + box_delta_high + "_" + box_bu_low + "_" +
+                 box_bu_high + ".pdf")
+                    .c_str());
+
 }
 
 bool fexists(std::string const &filename) {
@@ -638,23 +654,40 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 
   std::cout << "Plotting projections of m[Bu]\n";
   PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-                outputDir);
+                outputDir, box_delta_low, box_delta_high,
+                box_bu_low, box_bu_high);
   std::cout << "Plotting projections of m[Delta]\n";
   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-                outputDir);
+                outputDir, box_delta_low, box_delta_high,
+                box_bu_low, box_bu_high);
   std::cout << "Plotting correlation matrix\n";
-  PlotCorrMatrix(result.get(), outputDir);
+  PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                box_bu_low, box_bu_high);
+
   result->Print("v");
 
+  // double errYieldTotSignal =
+  //     yieldTotSignal.getPropagatedError(*result) *
+  //     std::sqrt(
+  //         pow((yieldSharedSignal.getVal() / yieldTotSignal.getVal() *
+  //              std::sqrt(2)),
+  //             2) +
+  //         pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()), 2));
   double errYieldTotSignal =
-      yieldTotSignal.getPropagatedError(*result) *
-      std::sqrt(
-          pow((yieldSharedSignal.getVal() / yieldTotSignal.getVal() *
-               std::sqrt(2)),
-              2) +
-          pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()), 2));
+      yieldTotSignal.getPropagatedError(*result) * (
+          (yieldSharedSignal.getVal() / yieldTotSignal.getVal() *
+               std::sqrt(2)) +
+          (1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()));
+  std::cout << "Box = " << box_delta_low << "-" << box_delta_high
+            << " " << box_bu_low << "-" << box_bu_high << "\n";
+  std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() << " ± "
+            << yieldSharedSignal.getPropagatedError(*result) << "\n";
   std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
             << errYieldTotSignal << "\n";
+  std::cout << "Corrected error / fit Error = "
+            << errYieldTotSignal / yieldTotSignal.getPropagatedError(*result) << "\n";
+  std::cout << "Corrected error / fit Error = "
+            << errYieldTotSignal / yieldTotSignal.getError() << "\n";
   TFile outputFile(
       (outputDir + "/Result_" + box_delta_low + "_" + box_delta_high + "_" +
        box_bu_low + "_" + box_bu_high + ".root")

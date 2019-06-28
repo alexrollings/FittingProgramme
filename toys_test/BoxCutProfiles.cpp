@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
   // yield and tend to 1 when shared yield tends to 0
   TH2D errCorrHist("errCorrectionHist", "", bu_bins, 0, bu_bins, delta_bins, 0,
                    delta_bins);
+  TH1D errCorrHist_constDeltaWindow("errCorrectionHist_constDeltaWindow", "", bu_bins, 0, bu_bins);
 
   // Check result quality and print out stats
   double nUnConv = 0;
@@ -158,6 +159,7 @@ int main(int argc, char *argv[]) {
               percErrHist.Fill(xLabel.c_str(), yLabel.c_str(), percErr);
               double errCorr = yieldErr / fitErr;
               errCorrHist.Fill(xLabel.c_str(), yLabel.c_str(), errCorr);
+              errCorrHist_constDeltaWindow.Fill(xLabel.c_str(), errCorr);
               // std::cout << yLabel << " vs " << xLabel << " = \t" << yieldVal
               //           << " ± " << yieldErr << "\n";
 
@@ -186,6 +188,10 @@ int main(int argc, char *argv[]) {
               }
               if (errCorr < errCorrMin) {
                 errCorrMin = errCorr;
+                std::cout << "For box " << xLabel << " " << yLabel << ":\n"
+                          << "Corrected error = " << yieldErr << "\n"
+                          << "Fit error = " << fitErr << "\n"
+                          << "New minimum = " << errCorr << "\n";
               }
             }
           }
@@ -252,8 +258,9 @@ int main(int argc, char *argv[]) {
 
   errCorrHist.GetXaxis()->SetTitle("(m[B^{#pm}] - m[D^{*0}]) Window MeV/c^{2}");
   errCorrHist.GetYaxis()->SetTitle("(m[D^{*0}] - m[D^{0}]) Window MeV/c^{2}");
-  errCorrHist.GetZaxis()->SetTitle("Signal Yield \% Error");
+  errCorrHist.GetZaxis()->SetTitle("Corrected Error / Fit Error");
   double errCorrRange = errCorrMax - errCorrMin;
+  std::cout << errCorrMin << "\n";
   errCorrHist.GetZaxis()->SetRangeUser(errCorrMin - errCorrRange / 5,
                                        errCorrMax + errCorrRange / 5);
   errCorrHist.SetTitle(" ");
@@ -261,6 +268,16 @@ int main(int argc, char *argv[]) {
   errCorrHist.Draw("colz");
 
   errCorrCanvas.SaveAs((path + "/ErrCorrectionBoxScan.pdf").c_str());
+
+  TCanvas errCorrCanvas_constDeltaWindow("errCorrCanvas_constDeltaWindow", "", 1500, 1000);
+
+  errCorrHist_constDeltaWindow.GetXaxis()->SetTitle("(m[B^{#pm}] - m[D^{*0}]) Window MeV/c^{2}");
+  errCorrHist_constDeltaWindow.GetYaxis()->SetTitle("Corrected Error / Fit Error");
+  errCorrHist_constDeltaWindow.SetTitle(" ");
+  errCorrHist_constDeltaWindow.SetStats(0);
+  errCorrHist_constDeltaWindow.Draw();
+
+  errCorrCanvas_constDeltaWindow.SaveAs((path + "/ErrCorrectionBoxScan_constDeltaWindow.pdf").c_str());
 
   return 1;
 }
