@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
 #include "RooAddPdf.h"
 #include "RooArgSet.h"
 #include "RooCBShape.h"
@@ -81,6 +82,23 @@ std::string EnumToString(Mode mode) {
     case Mode::Bu2Dst0rho_D0pi0:
       return "Bu2Dst0rho_D0pi0";
   }
+}
+
+std::vector<std::string> SplitByComma(std::string const &str) {
+  std::stringstream ss;
+  ss.str(str);
+  std::string tempString;
+  std::vector<std::string> stringVector;
+  // '' = char
+  while (std::getline(ss, tempString, ',')) {
+    stringVector.emplace_back(tempString);
+  }
+  return stringVector;
+}
+
+bool file_exists(const std::string &name) {
+  std::ifstream infile(name);
+  return infile.good();
 }
 
 void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
@@ -396,7 +414,7 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
   return combData;
 }
 
-void GenerateToys(std::string const &input, std::string const &outputDir,
+void FitToys(std::string const &input, std::string const &outputDir,
                   std::string const &box_delta_low,
                   std::string const &box_delta_high,
                   std::string const &box_bu_low,
@@ -599,17 +617,17 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
           RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  std::cout << "Plotting projections of m[Bu]\n";
-  PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-                pdfBuSignal, pdfBuBkg, outputDir, box_delta_low, box_delta_high,
-                box_bu_low, box_bu_high);
-  std::cout << "Plotting projections of m[Delta]\n";
-  PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
-                pdfDeltaSignal, pdfDeltaBkg, outputDir, box_delta_low,
-                box_delta_high, box_bu_low, box_bu_high);
-  std::cout << "Plotting correlation matrix\n";
-  PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-                 box_bu_low, box_bu_high);
+  // std::cout << "Plotting projections of m[Bu]\n";
+  // PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
+  //               pdfBuSignal, pdfBuBkg, outputDir, box_delta_low, box_delta_high,
+  //               box_bu_low, box_bu_high);
+  // std::cout << "Plotting projections of m[Delta]\n";
+  // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf, fitting,
+  //               pdfDeltaSignal, pdfDeltaBkg, outputDir, box_delta_low,
+  //               box_delta_high, box_bu_low, box_bu_high);
+  // std::cout << "Plotting correlation matrix\n";
+  // PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+  //                box_bu_low, box_bu_high);
   result->Print("v");
 
   // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
@@ -636,9 +654,13 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
   //      (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
   // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
   //           << errYieldTotBkg << "\n";
+  std::regex rexp(".+_([0-9].[0-9]+).root");
+  std::smatch match;
+  std::regex_search(input, match, rexp);
+  std::string rndm = match[1];
   TFile outputFile(
-      (outputDir + "/Result_" + box_delta_low + "_" + box_delta_high + "_" +
-       box_bu_low + "_" + box_bu_high + ".root")
+      (outputDir + "/Result_" + rndm + "_" + box_delta_low + "_" +
+       box_delta_high + "_" + box_bu_low + "_" + box_bu_high + ".root")
           .c_str(),
       "recreate");
   outputFile.cd();
@@ -646,9 +668,10 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
                    box_bu_low + "_" + box_bu_high)
                       .c_str());
   result->Write();
-  TTree tree("tree", "");
-  tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D");
-  tree.Fill();
+  // Don't save corrected error for now - see if we can get error from pulls
+  // TTree tree("tree", "");
+  // tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D");
+  // tree.Fill();
   outputFile.Write();
   outputFile.Close();
 }
@@ -656,17 +679,31 @@ void GenerateToys(std::string const &input, std::string const &outputDir,
 int main(int argc, char *argv[]) {
   if (argc < 7) {
     std::cerr
-        << "Enter input file, output directory and box limits: delta_low, "
+        << "Enter input file vector, output directory and box limits: delta_low, "
            "delta_high, bu_low, bu_high\n";
     return 1;
   }
-  std::string input = argv[1];
+
+  std::vector<std::string> filenames;
+  {
+    std::string input = argv[1];
+    filenames = SplitByComma(input);
+  }
+
   std::string outputDir = argv[2];
   std::string box_delta_low = argv[3];
   std::string box_delta_high = argv[4];
   std::string box_bu_low = argv[5];
   std::string box_bu_high = argv[6];
-  GenerateToys(input, outputDir, box_delta_low, box_delta_high, box_bu_low,
-               box_bu_high);
+
+  for (auto &file : filenames) {
+    if (!file_exists(file)) {
+      std::cerr << file << " does not exist.\n";
+      return 1;
+    } else {
+      FitToys(file, outputDir, box_delta_low, box_delta_high, box_bu_low,
+                   box_bu_high);
+    }
+  }
   return 0;
 }
