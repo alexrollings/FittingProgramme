@@ -2,8 +2,8 @@ import os, re, subprocess, sys, argparse
 #re = regular expressions
 
 def pass_filename(filename, file_list, delta_low, delta_high, bu_low, bu_high):
-    m = re.search("ResultFile0.[0-9]+_" + delta_low + '_' + delta_high + '_' +
-                  bu_low + '_' + bu_high + ".root", filename)
+    m = re.search("Result_0\.[0-9]+_" + delta_low + '_' + delta_high + '_' +
+                  bu_low + '_' + bu_high + "\.root", filename)
     if m:
         file_list.append(filename)
 
@@ -55,7 +55,8 @@ if __name__ == "__main__":
     output_dir = input_dir + '/' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+    # print("./FitManyToys " + ",".join(file_list))
+    # print(file_list)
     subprocess.call([
         "./FitManyToys", ",".join(file_list), output_dir
     ])
-    print("./FitManyToys " + ",".join(file_list))
