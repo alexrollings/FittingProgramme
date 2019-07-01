@@ -346,7 +346,7 @@ void GenerateToys(std::string const &outputDir, int nToys) {
 
     // ---------------------------- Background ----------------------------
 
-    RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01, -0.1, 0.1);
+    RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01);//, -0.1, 0.1);
     RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
 
     // RooRealVar thresholdDeltaBkg("thresholdDeltaBkg", "", 4.7048e+01);
@@ -357,7 +357,7 @@ void GenerateToys(std::string const &outputDir, int nToys) {
     //                        cDeltaBkg, aDeltaBkg, bDeltaBkg);
     // ---------------------------- π/K shared PDFs: Bu
     // ----------------------------
-    RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005, -0.1, 0.1);
+    RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005);//, -0.1, 0.1);
     RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
 
     // RooRealVar a0Mean1BuBkg("a0Mean1BuBkg", "",
@@ -399,7 +399,7 @@ void GenerateToys(std::string const &outputDir, int nToys) {
 
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldSignal("yieldSignal", "", 40000, -1000000, 1000000);
-    RooRealVar yieldBkg("yieldBkg", "", 32000, -1000000, 1000000);
+    RooRealVar yieldBkg("yieldBkg", "", 80000, -1000000, 1000000);
     // RooRealVar fracBkgYield("fracBkgYield", "", 0.8, -5, 5);
     // RooFormulaVar yieldBkg("yieldBkg", "", "@0*@1",
     //                        RooArgSet(yieldSignal, fracBkgYield));

@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp(".+_([0-9].[0-9]+)_[0-9]+_[0-9]+_[0-9]+_[0-9]+.root");
     std::smatch fileMatch;
-    std::regex_search(filename, match, fileRexp);
+    std::regex_search(filename, fileMatch, fileRexp);
     std::string rndm = fileMatch[1];
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
         file->FindObjectAny(("Result_" + rndm).c_str())));
