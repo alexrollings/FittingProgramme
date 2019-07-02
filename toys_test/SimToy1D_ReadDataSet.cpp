@@ -478,7 +478,7 @@ void FitToys(std::vector<std::string> const &filenames,
           // 150);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaDeltaSignal(
-          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.6601e+00);//, 5,
+          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7278e+00);//8.6601e+00, 5,
           // 15);
       // ---------------------------- Tails ----------------------------
       RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(),
@@ -506,10 +506,10 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanBuSignal(("meanBuSignal_" + std::to_string(i)).c_str(), "",
-                              5.2819e+03);//, 5280, 5290);
+                              5.2834e+03);//5.2819e+03, 5280, 5290);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaBuSignal(("sigmaBuSignal_" + std::to_string(i)).c_str(),
-                               "", 2.0783e+01);//, 18,
+                               "", 2.1232e+01);//2.0783e+01, 18,
                                // 24);  //, 300, 400);
 
       // ---------------------------- Tails ----------------------------
