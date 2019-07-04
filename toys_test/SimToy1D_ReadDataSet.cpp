@@ -474,21 +474,21 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanDeltaSignal(
-          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4276e+02);//, 135,
-          // 150);
+          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02, 140,
+          145);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaDeltaSignal(
-          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7278e+00);//8.6601e+00, 5,
-          // 15);
+          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00, 5, 15);
+          // 8.6601e+00, 5, 15);
       // ---------------------------- Tails ----------------------------
       RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(),
-                               "", 2.0594e+00);//1.9251e+00, 0, 5);
+                               "", 2.0640e+00);//, 0, 5);//1.9251e+00, 0, 5);
       RooRealVar a2DeltaSignal(("a2DeltaSignal_" + std::to_string(i)).c_str(),
-                               "", -7.2644e-01);//-7.4405e-01, -5, -0.0001);
+                               "", -7.2834e-01, -5, -0.0001);//-7.4405e-01, -5, -0.0001);
       RooRealVar n1DeltaSignal(("n1DeltaSignal_" + std::to_string(i)).c_str(),
-                               "", 1.9167e+00);//1.0441e+00, 0, 10);
+                               "", 1.8569e+00);//, 0, 10);//1.0441e+00, 0, 10);
       RooRealVar n2DeltaSignal(("n2DeltaSignal_" + std::to_string(i)).c_str(),
-                               "", 3.3427e+00);//4.2875e+00, 0, 10);
+                               "", 3.3122e+00);//, 0, 10);//4.2875e+00, 0, 10);
       // ---------------------------- PDFs ----------------------------
       RooCBShape pdfDeltaSignal1(
           ("pdfDeltaSignal1_" + std::to_string(i)).c_str(), "", deltaMass,
@@ -506,10 +506,10 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanBuSignal(("meanBuSignal_" + std::to_string(i)).c_str(), "",
-                              5.2834e+03);//5.2819e+03, 5280, 5290);
+                              5.2834e+03);//, 5280, 5290);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaBuSignal(("sigmaBuSignal_" + std::to_string(i)).c_str(),
-                               "", 2.1232e+01);//2.0783e+01, 18,
+                               "", 2.1232e+01);//, 18,
                                // 24);  //, 300, 400);
 
       // ---------------------------- Tails ----------------------------
@@ -675,19 +675,21 @@ void FitToys(std::vector<std::string> const &filenames,
               RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
               RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-      // std::cout << "Plotting projections of m[Bu]\n";
-      // PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
-      //               pdfBuSignal, pdfBuBkg, outputDir, box_delta_low,
-      //               box_delta_high,
-      //               box_bu_low, box_bu_high);
-      // std::cout << "Plotting projections of m[Delta]\n";
-      // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-      // fitting,
-      //               pdfDeltaSignal, pdfDeltaBkg, outputDir, box_delta_low,
-      //               box_delta_high, box_bu_low, box_bu_high);
-      // std::cout << "Plotting correlation matrix\n";
-      // PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-      //                box_bu_low, box_bu_high);
+      if (i == 0) {
+        std::cout << "Plotting projections of m[Bu]\n";
+        PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf, fitting,
+                      pdfBuSignal, pdfBuBkg, outputDir, box_delta_low,
+                      box_delta_high,
+                      box_bu_low, box_bu_high);
+        std::cout << "Plotting projections of m[Delta]\n";
+        PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
+        fitting,
+                      pdfDeltaSignal, pdfDeltaBkg, outputDir, box_delta_low,
+                      box_delta_high, box_bu_low, box_bu_high);
+        std::cout << "Plotting correlation matrix\n";
+        PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                       box_bu_low, box_bu_high);
+      }
       result->Print("v");
 
       // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
@@ -731,9 +733,13 @@ void FitToys(std::vector<std::string> const &filenames,
       result->Write();
       // Don't save corrected error for now - see if we can get error from pulls
       // TTree tree("tree", "");
-      // tree.Branch("errYieldTotSignal", &errYieldTotSignal,
-      // "errYieldTotSignal/D");
+      // tree.Branch("errYieldTotSignal", &errYieldTotSignal, "errYieldTotSignal/D");
+      // double orEffSignalD = orEffSignal.getVal();
+      // tree.Branch("orEffSignal", &orEffSignalD, "orEffSignal/D");
+      // double boxEffSignalD = boxEffSignal.getVal();
+      // tree.Branch("boxEffSignal", &boxEffSignalD, "boxEffSignal/D");
       // tree.Fill();
+      // tree.Write();
       outputFile.Write();
       outputFile.Close();
     }
