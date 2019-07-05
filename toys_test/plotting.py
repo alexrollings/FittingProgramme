@@ -1,5 +1,6 @@
 import math, re, os, sys, glob
 from ROOT import TFile, RooFitResult, RooGaussian, RooDataSet
+import root_numpy as r_np
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
@@ -24,34 +25,63 @@ if os.path.isdir(path):
         bu_high.append(m.group(1))
         file_list.append(filename)
 
+# Want to plot in ascending order
+bu_high.sort()
+file_list.sort()
+
 cwd = os.getcwd()
 os.chdir(path)
-pars_fit = []
 
 # Array to store pull widths and error on width
-signal_yield_pull_widths = [[None]*len(file_list),[None]*len(file_list)]
-print(signal_yield_pull_widths)
-print(signal_yield_pull_widths[0])
+signal_yield_pull_widths = np.zeros(shape=(2, len(file_list)))
+# Array to store mean total signal yield and std dev
+signal_yield = np.zeros(shape=(2, len(file_list)))
+
+# Name of branches in tree (box and or effs)
+branch_names = ['orEffSignal', 'boxEffSignal']
+# Array to store efficiencies in
+box_eff = np.zeros(len(file_list))
+or_eff = np.zeros(len(file_list))
 
 # Loop over files and extract result of interest
 for i in range(0,len(file_list)):
   tf = TFile(file_list[i])
   # In result, params are stored in order mean [0], std dev [1]
-  result = tf.Get("Result_Pull_yieldTotSignal")
+  result_yield_pull_widths = tf.Get("Result_Pull_yieldTotSignal")
+  result_yield = tf.Get("Result_Val_yieldTotSignal")
+  result_yield_err = tf.Get("Result_Err_yieldTotSignal")
   # Final values of fit to pulls
-  pars_fit = result.floatParsFinal()
+  pars_yield_pull_widths = result_yield_pull_widths.floatParsFinal()
+  pars_yield = result_yield.floatParsFinal()
+  pars_yield_err = result_yield_err.floatParsFinal()
   # Save value and error of width for each box dimn
-  signal_yield_pull_widths[0][i] = pars_fit[1].getVal()
-  signal_yield_pull_widths[1][i] = pars_fit[1].getError()
+  signal_yield_pull_widths[0][i] = pars_yield_pull_widths[1].getVal()
+  signal_yield_pull_widths[1][i] = pars_yield_pull_widths[1].getError()
+  signal_yield[0][i] = pars_yield[0].getVal()
+  signal_yield[1][i] = pars_yield_err[0].getVal()
 
-print(signal_yield_pull_widths)
+  # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
+  eff_tree = r_np.root2array(file_list[i], "tree", branch_names)
+  or_eff[i] = eff_tree[0][0]
+  box_eff[i] = eff_tree[0][1]
 
-fig = plt.figure()
-plt.errorbar(bu_high, signal_yield_pull_widths[0], yerr=signal_yield_pull_widths[1])
-# Double events in box yield or single?
-plt.xlabel('Box Dimn')
-plt.ylabel('Pull width')
-plt.show()
+shared_yield = np.divide(np.multiply(signal_yield[0], box_eff), or_eff)
+
+# Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
+n_mc_events = 14508
+box_eff = np.vstack([box_eff, np.sqrt(n_mc_events*np.multiply(box_eff,np.ones(len(file_list))-box_eff))/n_mc_events])
+or_eff = np.vstack([or_eff, np.sqrt(n_mc_events*np.multiply(or_eff,np.ones(len(file_list))-or_eff))/n_mc_events])
+
+# Combine with error on total yield (uncertainties package)
+# Overlay with function for error correction, with same x axis, multiplied by starting pull width (as < 1)
+# Propagate uncertainties with uncertainties package
+
+# fig = plt.figure()
+# plt.errorbar(shared_yield, signal_yield_pull_widths[0], yerr=signal_yield_pull_widths[1])
+# plt.title('Total Signal Yield')
+# plt.xlabel('Number of Double-Counted Events')
+# plt.ylabel('Pull Width')
+# plt.show()
 
 
 # total_yield = 40000
