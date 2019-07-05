@@ -13,7 +13,13 @@ if __name__ == "__main__":
         '-i',
         '--input_dir',
         type=str,
-        help='Directory where datasets should be stored',
+        help='Directory where results are stored',
+        required=True)
+    parser.add_argument(
+        '-o',
+        '--output_dir',
+        type=str,
+        help='Directory where folder for PDFs and results should be created',
         required=True)
     parser.add_argument(
         '-dl',
@@ -42,6 +48,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     input_dir = args.input_dir
+    output_dir = args.output_dir
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
@@ -52,9 +59,14 @@ if __name__ == "__main__":
     file_list = []
     for filename in os.listdir(input_dir):
         pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
-    output_dir = input_dir + '/' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+    results_dir = output_dir + '/results'
+    if not os.path.exists(results_dir):
+        os.mkdir(results_dir)
+    plots_dir = output_dir + '/plots'
+    if not os.path.exists(plots_dir):
+        os.mkdir(plots_dir)
     # print("./FitManyToys " + ",".join(file_list))
     # print(file_list)
     subprocess.call([

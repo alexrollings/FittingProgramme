@@ -2,13 +2,17 @@
 import os, re, subprocess, sys, argparse
 from string import Template
 import subprocess as sp
+import multiprocessing as mp
 
 
-def run_process(command):
-    p = sp.Popen(command)
-    p.wait()
+def run_process(script):
+    p = sp.Popen(["sh", script], stdout=sp.PIPE, stderr=sp.PIPE)
+    stdout, stderr = p.communicate()
+    with open(os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
+        out_file.write(stdout)
+    with open(os.path.splitext(os.path.basename(script))[0] + '.err', 'w') as err_file:
+        err_file.write(stderr)
     return p.returncode
-
 
 def make_shell_script(templatePath, scriptPath, substitutions):
     with open(templatePath, "r") as templateFile:
@@ -20,10 +24,11 @@ def make_shell_script(templatePath, scriptPath, substitutions):
         with open(scriptPath, "w") as scriptFile:
             scriptFile.write(scriptString)
 
+
 def pass_filename(filename, file_list):
-  m = re.search("DataFile_0.[0-9]+.root", filename)
-  if m:
-    file_list.append(filename)
+    m = re.search("DataFile_0.[0-9]+.root", filename)
+    if m:
+        file_list.append(filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -58,11 +63,7 @@ if __name__ == "__main__":
         help='Upper delta mass range',
         required=True)
     parser.add_argument(
-        '-bl',
-        '--bu_low',
-        type=str,
-        help='Lower bu mass range',
-        required=True)
+        '-bl', '--bu_low', type=str, help='Lower bu mass range', required=True)
     parser.add_argument(
         '-bh',
         '--bu_high',
@@ -85,23 +86,26 @@ if __name__ == "__main__":
         os.mkdir(output_dir)
     file_list = []
     for filename in os.listdir(input_dir):
-      pass_filename(input_dir+"/"+filename, file_list)
+        pass_filename(input_dir + "/" + filename, file_list)
 
     # rounds down: check if any left at the end
     n_fits_per_job = len(file_list) / n_jobs
     n_remainder = len(file_list) - (n_fits_per_job * n_jobs)
 
     templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/shell_scripts/fit_1d.sh.tmpl"
-    for i in range(0, n_jobs+1):
+    scriptList = []
+    for i in range(0, n_jobs + 1):
         if i == n_jobs:
             if n_remainder:
-                files = ",".join(file_list[len(file_list)-n_remainder:])
+                files = ",".join(file_list[len(file_list) - n_remainder:])
             else:
                 continue
         else:
-            files = ",".join(file_list[i*n_fits_per_job:(i+1)*n_fits_per_job])
+            files = ",".join(
+                file_list[i * n_fits_per_job:(i + 1) * n_fits_per_job])
         scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/fit_1d_" + str(
-            i) + ".sh"
+            i
+        ) + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
         substitutions = {
             "nJob":
             i,
@@ -123,4 +127,13 @@ if __name__ == "__main__":
             bu_high
         }
         make_shell_script(templatePath, scriptPath, substitutions)
-        run_process(["qsub", scriptPath])
+        scriptList.append(scriptPath)
+        # run_process(["qsub", scriptPath])
+        # run_process(["nohup", "sh", scriptPath, "> nohup_" + str(i) + ".out"])
+        # run_process(["qsub", "-q", "testing", scriptPath])
+    if n_remainder == 0:
+        n_processes = n_jobs
+    else:
+        n_processes = n_jobs + 1
+    p = mp.Pool(n_processes)
+    p.map(run_process, scriptList)
