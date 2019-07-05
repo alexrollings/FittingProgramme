@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l cput=01:59:59 
-#PBS -N FIT_${nJob} 
+#PBS -N FIT_${nJob}_${DELTALOW}_${DELTAHIGH}_${BULOW}_${BUHIGH}
 
 export GCCROOT=/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/

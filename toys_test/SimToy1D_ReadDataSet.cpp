@@ -446,6 +446,79 @@ void FitToys(std::vector<std::string> const &filenames,
   RooRealVar boxEffSignal("boxEffSignal", "", 1);
   RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 1);
   RooRealVar buCutEffSignal("buCutEffSignal", "", 1);
+  
+  double a2DeltaVal, meanDeltaVal, sigmaDeltaVal;
+  if (std::stoi(box_bu_high) == 5360) {
+    a2DeltaVal = -7.2190e-01;
+    meanDeltaVal = 1.4277e+02;
+    sigmaDeltaVal = 8.7264e+00;
+  } else if (std::stoi(box_bu_high) == 5350) {
+    a2DeltaVal = -7.2698e-01;
+    meanDeltaVal = 1.4276e+02;
+    sigmaDeltaVal = 8.7195e+00;
+  } else if (std::stoi(box_bu_high) == 5340) {
+    a2DeltaVal = -7.3603e-01;
+    meanDeltaVal = 1.4275e+02;
+    sigmaDeltaVal = 8.6937e+00;
+  } else if (std::stoi(box_bu_high) == 5330) {
+    a2DeltaVal = -7.5835e-01;
+    meanDeltaVal = 1.4275e+02;
+    sigmaDeltaVal = 8.6786e+00;
+  } else if (std::stoi(box_bu_high) == 5320) {
+    a2DeltaVal = -7.8634e-01;
+    meanDeltaVal = 1.4266e+02;
+    sigmaDeltaVal = 8.6644e+00;
+  } else if (std::stoi(box_bu_high) == 5310) {
+    a2DeltaVal = -8.2444e-01;
+    meanDeltaVal = 1.4250e+02;
+    sigmaDeltaVal = 8.6223e+00;
+  } else if (std::stoi(box_bu_high) == 5300) {
+    a2DeltaVal = -8.5594e-01;
+    meanDeltaVal = 1.4215e+02;
+    sigmaDeltaVal = 8.5430e+00;
+  } else if (std::stoi(box_bu_high) == 5290) {
+    a2DeltaVal = -8.9696e-01;
+    meanDeltaVal = 1.4168e+02;
+    sigmaDeltaVal = 8.4596e+00;
+  } else if (std::stoi(box_bu_high) == 5280) {
+    a2DeltaVal = -8.9336e-01;
+    meanDeltaVal = 1.4089e+02;
+    sigmaDeltaVal = 8.3475e+00;
+  } else if (std::stoi(box_bu_high) == 5270) {
+    a2DeltaVal = -9.0617e-01;
+    meanDeltaVal = 1.4007e+02;
+    sigmaDeltaVal = 8.4106e+00;
+  } else if (std::stoi(box_bu_high) == 5260) {
+    a2DeltaVal = -9.3522e-01;
+    meanDeltaVal = 1.3950e+02;
+    sigmaDeltaVal = 8.3672e+00;
+  } else if (std::stoi(box_bu_high) == 5250) {
+    a2DeltaVal = -8.2290e-01;
+    meanDeltaVal = 1.3874e+02;
+    sigmaDeltaVal = 8.1266e+00;
+  } else if (std::stoi(box_bu_high) == 5240) {
+    a2DeltaVal = -5.0851e-01;
+    meanDeltaVal = 1.3771e+02;
+    sigmaDeltaVal = 7.8642e+00;
+  } else if (std::stoi(box_bu_high) == 5230) {
+    a2DeltaVal = -1.9972e-01;
+    meanDeltaVal = 1.3651e+02;
+    sigmaDeltaVal = 6.8620e+00;
+  } else if (std::stoi(box_bu_high) == 5220) {
+    a2DeltaVal = -2.7735e-02;
+    meanDeltaVal = 1.3730e+02;
+    sigmaDeltaVal = 6.3788e+00;
+  } else if (std::stoi(box_bu_high) == 5210) {
+    a2DeltaVal = -2.6097e-03;
+    meanDeltaVal = 1.4209e+02;
+    sigmaDeltaVal = 5.5830e+00;
+  } else if (std::stoi(box_bu_high) == 5200) {
+    a2DeltaVal = -1.0712e-03;
+    meanDeltaVal = 1.4308e+02;
+    sigmaDeltaVal = 5.1589e+00;
+  } else {
+    std::cout << "No value set for a2DeltaVal, using default";
+  }
 
   ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
                          box_bu_low, box_bu_high, boxEffSignal,
@@ -474,17 +547,19 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanDeltaSignal(
-          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02, 140,
-          145);
+          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02);//, 135, 150);
+      meanDeltaSignal.setVal(meanDeltaVal);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaDeltaSignal(
-          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00, 5, 15);
+          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00);//, 5, 15);
+      sigmaDeltaSignal.setVal(sigmaDeltaVal);
           // 8.6601e+00, 5, 15);
       // ---------------------------- Tails ----------------------------
       RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(),
                                "", 2.0640e+00);//, 0, 5);//1.9251e+00, 0, 5);
       RooRealVar a2DeltaSignal(("a2DeltaSignal_" + std::to_string(i)).c_str(),
-                               "", -7.2834e-01, -5, -0.0001);//-7.4405e-01, -5, -0.0001);
+                               "", -7.2834e-01);//, -5, -0.001);//-7.4405e-01, -5, -0.0001);
+      a2DeltaSignal.setVal(a2DeltaVal);
       RooRealVar n1DeltaSignal(("n1DeltaSignal_" + std::to_string(i)).c_str(),
                                "", 1.8569e+00);//, 0, 10);//1.0441e+00, 0, 10);
       RooRealVar n2DeltaSignal(("n2DeltaSignal_" + std::to_string(i)).c_str(),
@@ -613,9 +688,9 @@ void FitToys(std::vector<std::string> const &filenames,
       double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
 
       RooRealVar yieldBuBkg(("yieldBuBkg_" + std::to_string(i)).c_str(), "",
-                            nBuBkg);//, 0, 100000);
+                            nBuBkg, 0, 100000);
       RooRealVar yieldDeltaBkg(("yieldDeltaBkg_" + std::to_string(i)).c_str(),
-                               "", nDeltaBkg);//, 0, 100000);
+                               "", nDeltaBkg, 0, 100000);
 
       // RooRealVar yieldTotBkg(("yieldTotBkg_" + std::to_string(i)).c_str(),
       // "", (nBuBkg + nDeltaBkg), 0,
