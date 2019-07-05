@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 from matplotlib import rc
 from scipy import stats
+from uncertainties import ufloat
 
 path = sys.argv[1]
 
@@ -33,15 +34,17 @@ cwd = os.getcwd()
 os.chdir(path)
 
 # Array to store pull widths and error on width
-signal_yield_pull_widths = np.zeros(shape=(2, len(file_list)))
+signal_yield_pull_widths = np.zeros(len(file_list))
 # Array to store mean total signal yield and std dev
-signal_yield = np.zeros(shape=(2, len(file_list)))
+signal_yield = np.zeros(len(file_list))
 
 # Name of branches in tree (box and or effs)
 branch_names = ['orEffSignal', 'boxEffSignal']
 # Array to store efficiencies in
 box_eff = np.zeros(len(file_list))
 or_eff = np.zeros(len(file_list))
+# n_mc needed to calculate error on efficiencies
+n_mc_events = 14508
 
 # Loop over files and extract result of interest
 for i in range(0,len(file_list)):
@@ -55,22 +58,20 @@ for i in range(0,len(file_list)):
   pars_yield = result_yield.floatParsFinal()
   pars_yield_err = result_yield_err.floatParsFinal()
   # Save value and error of width for each box dimn
-  signal_yield_pull_widths[0][i] = pars_yield_pull_widths[1].getVal()
-  signal_yield_pull_widths[1][i] = pars_yield_pull_widths[1].getError()
-  signal_yield[0][i] = pars_yield[0].getVal()
-  signal_yield[1][i] = pars_yield_err[0].getVal()
+  signal_yield_pull_widths[i] = ufloat(pars_yield_pull_widths[1].getVal(), pars_yield_pull_widths[1].getError())
+  signal_yield_pull_widths[i] = ufloat(pars_yield[0].getVal(), pars_yield_err[0].getVal())
 
   # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
   eff_tree = r_np.root2array(file_list[i], "tree", branch_names)
-  or_eff[i] = eff_tree[0][0]
-  box_eff[i] = eff_tree[0][1]
+  # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
+  or_eff[i] = ufloat(eff_tree[0][0], math.sqrt(n_mc_events*eff_tree[0][0]*(1-eff_tree[0][0]))/n_mc_events)
+  box_eff[i] = ufloat(eff_tree[0][1], math.sqrt(n_mc_events*eff_tree[0][1]*(1-eff_tree[0][1]))/n_mc_events)
 
-shared_yield = np.divide(np.multiply(signal_yield[0], box_eff), or_eff)
-
-# Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
-n_mc_events = 14508
-box_eff = np.vstack([box_eff, np.sqrt(n_mc_events*np.multiply(box_eff,np.ones(len(file_list))-box_eff))/n_mc_events])
-or_eff = np.vstack([or_eff, np.sqrt(n_mc_events*np.multiply(or_eff,np.ones(len(file_list))-or_eff))/n_mc_events])
+print(signal_yield_pull_widths)
+print(signal_yield)
+print(box_eff)
+print(or_eff)
+# shared_yield = np.divide(np.multiply(signal_yield[0], box_eff), or_eff)
 
 # Combine with error on total yield (uncertainties package)
 # Overlay with function for error correction, with same x axis, multiplied by starting pull width (as < 1)
