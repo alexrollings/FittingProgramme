@@ -77,9 +77,9 @@ linear_err_fn = initial_width*(np.multiply(np.divide(np.ones(len(file_list))*mat
 quadratic_err_fn = initial_width*unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))
 
 fig = plt.figure()
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths), label='Pseudo-experiments')
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\\frac{N_{S}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{S}}{N_{T}}$')
 plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\sqrt{(\\frac{N_{S}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{S}}{N_{T}})^{2}}$')
+plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\\frac{N_{S}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{S}}{N_{T}}$')
+plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths), label='Pseudo-experiments')
 plt.legend(loc='upper left')
 plt.xlabel('$N_{S}$')
 plt.ylabel('$N_{T}$ Pull Width')
