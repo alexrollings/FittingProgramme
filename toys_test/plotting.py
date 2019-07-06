@@ -83,5 +83,6 @@ plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_y
 plt.legend(loc='upper left')
 plt.xlabel('$N_{S}$')
 plt.ylabel('$N_{T}$ Pull Width')
-plt.show()
+# plt.show()
+fig.savefig("shared_yield_vs_sig_pull_width.pdf")
 
