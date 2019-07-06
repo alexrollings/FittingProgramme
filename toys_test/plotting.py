@@ -7,6 +7,7 @@ import matplotlib.mlab as mlab
 from matplotlib import rc
 from scipy import stats
 from uncertainties import unumpy, ufloat
+from uncertainties.umath import *
 
 path = sys.argv[1]
 
@@ -58,6 +59,8 @@ for i in range(0,len(file_list)):
   pars_yield = result_yield.floatParsFinal()
   pars_yield_err = result_yield_err.floatParsFinal()
   # Save value and error of width for each box dimn
+  if i == 0:
+    initial_width = ufloat(pars_yield_pull_widths[1].getVal(), pars_yield_pull_widths[1].getError())
   signal_yield_pull_widths.append(ufloat(pars_yield_pull_widths[1].getVal(), pars_yield_pull_widths[1].getError()))
   signal_yield.append(ufloat(pars_yield[0].getVal(), pars_yield_err[0].getVal()))
 
@@ -67,33 +70,18 @@ for i in range(0,len(file_list)):
   or_eff.append(ufloat(eff_tree[0][0], math.sqrt(n_mc_events*eff_tree[0][0]*(1-eff_tree[0][0]))/n_mc_events))
   box_eff.append(ufloat(eff_tree[0][1], math.sqrt(n_mc_events*eff_tree[0][1]*(1-eff_tree[0][1]))/n_mc_events))
 
-shared_yield = np.divide(np.multiply(signal_yield[0], box_eff), or_eff)
+shared_yield = np.array(np.divide(np.multiply(signal_yield[0], box_eff), or_eff), dtype=object)
 
-# Overlay with function for error correction, with same x axis, multiplied by starting pull width (as < 1)
-# Propagate uncertainties with uncertainties package
+linear_err_fn = initial_width*(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield) + np.divide((signal_yield-shared_yield), signal_yield))
+# sqrt from unumpy as can handle uncertainty types
+quadratic_err_fn = initial_width*unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))
 
 fig = plt.figure()
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths))
-plt.title('Signal Yield')
+plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths), label='Data points')
+plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\\frac{Y_{S}\sqrt{2}}{Y_{T}}+\\frac{Y_{T}-Y_{S}}{Y_{T}}$')
+plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\sqrt{(\\frac{Y_{S}\sqrt{2}}{Y_{T}})^{2}+(\\frac{Y_{T}-Y_{S}}{Y_{T}})^{2}}$')
+plt.legend(loc='upper left')
 plt.xlabel('Number of Double-Counted Events')
-plt.ylabel('Pull Width')
+plt.ylabel('Signal Yield Pull Width')
 plt.show()
-
-
-# total_yield = 40000
-# x = shared yield
-# x = np.arange(0, total_yield, 2000)
-# xerr = np.sqrt(x)
-# y = error correction (corrected error / fit error)
-# y = pull width of total signal yield
-# y = x*(math.sqrt(2)/total_yield) + (total_yield - x)/total_yield
-# Overlay with function:
-# f(x) = x*(math.sqrt(2)/total_yield) + (total_yield - x)/total_yield
-# Propagate uncertainties
-
-# plt.errorbar(x, y, xerr=xerr)
-# Double events in box yield or single?
-# plt.xlabel('Box yield')
-# plt.ylabel('Pull width')
-# plt.show()
 
