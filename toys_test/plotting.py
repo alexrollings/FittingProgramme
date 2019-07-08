@@ -71,18 +71,21 @@ for i in range(0,len(file_list)):
   box_eff.append(ufloat(eff_tree[0][1], math.sqrt(n_mc_events*eff_tree[0][1]*(1-eff_tree[0][1]))/n_mc_events))
 
 shared_yield = np.array(np.divide(np.multiply(signal_yield[0], box_eff), or_eff), dtype=object)
+frac_shared_yield = np.divide(shared_yield, signal_yield)
 
-linear_err_fn = initial_width*(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield) + np.divide((signal_yield-shared_yield), signal_yield))
+linear_err_fn = (np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield) + np.divide((signal_yield-shared_yield), signal_yield))
 # sqrt from unumpy as can handle uncertainty types
-quadratic_err_fn = initial_width*unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))
+quadratic_err_fn = unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))
+
+signal_yield_pull_widths = np.divide(signal_yield_pull_widths, np.ones(len(file_list))*initial_width)
 
 fig = plt.figure()
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\sqrt{(\\frac{N_{S}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{S}}{N_{T}})^{2}}$')
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{0}}{\sigma_{fit}}=\\frac{N_{S}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{S}}{N_{T}}$')
-plt.errorbar(unumpy.nominal_values(shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths), label='Pseudo-experiments')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{T}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{T}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(signal_yield_pull_widths), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(signal_yield_pull_widths), label='Pseudo-experiments')
 plt.legend(loc='upper left')
-plt.xlabel('$N_{S}$')
+plt.xlabel('$N_{Box}/N_{T}$')
 plt.ylabel('$N_{T}$ Pull Width')
-# plt.show()
+plt.show()
 fig.savefig("shared_yield_vs_sig_pull_width.pdf")
 
