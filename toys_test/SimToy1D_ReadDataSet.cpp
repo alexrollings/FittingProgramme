@@ -236,7 +236,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
             << "\tDelta Window =\t" << nDeltaWindow / nInitial
             << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
             << nBox / nInitial << "\n"
-            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n";
+            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n"
+            << "\t# events initially =\t" << nInitial << "\n";
 }
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
@@ -547,11 +548,11 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanDeltaSignal(
-          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02);//, 135, 150);
+          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02, 135, 150);
       meanDeltaSignal.setVal(meanDeltaVal);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaDeltaSignal(
-          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00);//, 5, 15);
+          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00, 5, 15);
       sigmaDeltaSignal.setVal(sigmaDeltaVal);
           // 8.6601e+00, 5, 15);
       // ---------------------------- Tails ----------------------------
@@ -770,24 +771,21 @@ void FitToys(std::vector<std::string> const &filenames,
       // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
       double errYieldTotSignal =
           yieldTotSignal.getPropagatedError(*result) *
-          std::sqrt(
-              pow(((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
-                   std::sqrt(2)),
-                  2) +
-              pow((1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal()),
-                  2));
-      std::cout << "Box = " << box_delta_low << "-" << box_delta_high << " "
-                << box_bu_low << "-" << box_bu_high << "\n";
-      std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() << " ± "
-                << yieldSharedSignal.getPropagatedError(*result) << "\n";
-      std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
-                << errYieldTotSignal << "\n";
-      std::cout << "Corrected error / fit Error = "
-                << errYieldTotSignal /
-                       yieldTotSignal.getPropagatedError(*result)
-                << "\n";
-      std::cout << "Corrected error / fit Error = "
-                << errYieldTotSignal / yieldTotSignal.getError() << "\n";
+          ((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
+                   std::sqrt(2)+
+              1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal());
+      // std::cout << "Box = " << box_delta_low << "-" << box_delta_high << " "
+      //           << box_bu_low << "-" << box_bu_high << "\n";
+      // std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() << " ± "
+      //           << yieldSharedSignal.getPropagatedError(*result) << "\n";
+      // std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
+      //           << errYieldTotSignal << "\n";
+      // std::cout << "Corrected error / fit Error = "
+      //           << errYieldTotSignal /
+      //                  yieldTotSignal.getPropagatedError(*result)
+      //           << "\n";
+      // std::cout << "Corrected error / fit Error = "
+      //           << errYieldTotSignal / yieldTotSignal.getError() << "\n";
       // double errYieldTotBkg =
       //     yieldTotBkg.getPropagatedError(*result) *
       //     (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +

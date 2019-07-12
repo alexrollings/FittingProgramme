@@ -454,9 +454,9 @@ void GenerateToys(std::string const &outputDir, int nToys) {
     dsFile.Close();
     std::cout << "Saved " << randomTag<< " dataset\n"; 
 
-    // auto toyDataHist = std::unique_ptr<RooDataHist>(
-    //     toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
-    // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+    auto toyDataHist = std::unique_ptr<RooDataHist>(
+        toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+    auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     // meanDeltaSignal.setVal(142);
 
@@ -474,8 +474,8 @@ void GenerateToys(std::string const &outputDir, int nToys) {
     // std::cout << "Plotting projections of m[Delta]\n";
     // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), pdf, pdfSignal,
     //               pdfBkg, outputDir);
-    // std::cout << "Plotting in 2D\n";
-    // Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
+    std::cout << "Plotting in 2D\n";
+    Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
     // std::cout << "Plotting correlation matrix\n";
     // PlotCorrMatrix(result.get(), outputDir);
     //
