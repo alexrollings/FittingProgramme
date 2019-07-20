@@ -421,7 +421,7 @@ void FitToys(std::vector<std::string> const &filenames,
              std::string const &box_bu_high) {
   int bu_low = 5050;
   int bu_high = 5800;
-  int delta_low = 60;  // 134;
+  int delta_low = 70;  // 134;
   int delta_high = 210;
 
   int bu_nbins = (bu_high - bu_low) / 10;
@@ -557,11 +557,11 @@ void FitToys(std::vector<std::string> const &filenames,
       // ---------------------------- Signal ----------------------------
       // ---------------------------- Mean ----------------------------
       RooRealVar meanDeltaSignal(
-          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02, 135, 150);
+          ("meanDeltaSignal_" + std::to_string(i)).c_str(), "", 1.4280e+02);//, 135, 150);
       meanDeltaSignal.setVal(meanDeltaVal);
       // ---------------------------- Sigmas ----------------------------
       RooRealVar sigmaDeltaSignal(
-          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00, 5, 15);
+          ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "", 8.7003e+00);//, 2, 15);
       sigmaDeltaSignal.setVal(sigmaDeltaVal);
           // 8.6601e+00, 5, 15);
       // ---------------------------- Tails ----------------------------
@@ -627,13 +627,13 @@ void FitToys(std::vector<std::string> const &filenames,
       //                            "", deltaMass, lambdaDeltaBkg);
 
       RooRealVar thresholdDeltaBkg(
-          ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.2128e+01);
+          ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.2128e+01, 0, 80);
       RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
-                           3.6381e+01);
+                           3.6381e+01, 0, 100);
       RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-                           1.1156e+00);
+                           1.1156e+00, -2, 2);
       RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
-                           -1.4343e+00);
+                           -1.4343e+00, -2, 2);
       RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
                              deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
                              bDeltaBkg);
