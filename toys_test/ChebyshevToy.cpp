@@ -84,8 +84,8 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
   dataHist->plotOn(frame.get());
-  // pdf.plotOn(frame.get(), RooFit::LineColor(kBlue));
-  // pullHist = frame->RooPlot::pullHist();
+  pdf.plotOn(frame.get(), RooFit::LineColor(kBlue));
+  pullHist = frame->RooPlot::pullHist();
 
   // dataHist->plotOn(frame.get());
 
@@ -105,20 +105,20 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
             0.15, kWhite);
   pad2.Draw();
 
-  // TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  // zeroLine.SetLineColor(kRed);
-  // zeroLine.SetLineStyle(kDashed);
-  //
-  // canvas.cd();
-  // pad2.cd();
-  // pullFrame->SetYTitle(" ");
-  // pullFrame->SetXTitle(" ");
-  // pullFrame->SetLabelSize(0.2, "Y");
-  // pullFrame->SetLabelFont(132, "XY");
-  // pullFrame->SetLabelOffset(100, "X");
-  // pullFrame->SetTitleOffset(100, "X");
-  // pullFrame->Draw();
-  // zeroLine.Draw("same");
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
+  canvas.cd();
+  pad2.cd();
+  pullFrame->SetYTitle(" ");
+  pullFrame->SetXTitle(" ");
+  pullFrame->SetLabelSize(0.2, "Y");
+  pullFrame->SetLabelFont(132, "XY");
+  pullFrame->SetLabelOffset(100, "X");
+  pullFrame->SetTitleOffset(100, "X");
+  pullFrame->Draw();
+  zeroLine.Draw("same");
 
   canvas.cd();
   pad1.cd();
@@ -404,13 +404,13 @@ void GenerateToys(std::string const &outputDir) {
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
-  // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
-  // std::unique_ptr<RooFitResult> result =
-  //     std::unique_ptr<RooFitResult>(pdf.fitTo(
-  //         *toyAbsData, RooFit::Extended(true), RooFit::SplitRange(true),
-  //         RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-  //         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+  std::unique_ptr<RooFitResult> result =
+      std::unique_ptr<RooFitResult>(pdf.fitTo(
+          *toyAbsData, RooFit::Extended(true), RooFit::SplitRange(true),
+          RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+          RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
   // ---------------------------- Plot if specified
   // ----------------------------
@@ -421,10 +421,10 @@ void GenerateToys(std::string const &outputDir) {
   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), pdf, outputDir);
   std::cout << "Plotting in 2D\n";
   Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
-  // std::cout << "Plotting correlation matrix\n";
-  // PlotCorrMatrix(result.get(), outputDir);
+  std::cout << "Plotting correlation matrix\n";
+  PlotCorrMatrix(result.get(), outputDir);
 
-  // result->Print("v");
+  result->Print("v");
 }
 
 int main(int argc, char *argv[]) {
