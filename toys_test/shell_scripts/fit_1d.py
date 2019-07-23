@@ -26,7 +26,7 @@ def make_shell_script(templatePath, scriptPath, substitutions):
 
 
 def pass_filename(filename, file_list):
-    m = re.search("DataFile_0.[0-9]+.root", filename)
+    m = re.search("DataFile[0-9]D_0.[0-9]+.root", filename)
     if m:
         file_list.append(filename)
 
