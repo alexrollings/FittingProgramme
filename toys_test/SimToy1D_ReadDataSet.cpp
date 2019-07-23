@@ -735,7 +735,28 @@ void FitToys(bool fitDontSave, int &nIter,
       simPdf.addPdf(pdfBu, "bu");
       simPdf.addPdf(pdfDelta, "delta");
 
-      if (fitDontSave == true) {
+      if (fitDontSave == false) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+
+        double nEvtsPerToy = yieldTotSignal.getVal() + yieldTotBkg.getVal();
+        std::cout << "Generating toy dataset with " << nEvtsPerToy
+                  << " events\n";
+
+        RooDataSet *toyDataSet =
+            simPdf.generate(RooArgSet(buMass, deltaMass, fitting), nEvtsPerToy);
+        std::cout << "Generated!" << std::endl;
+        toyDataSet->Print();
+
+        double randomTag = random.Rndm();
+        TFile dsFile(
+            (outputDir + "/DataFile_" + std::to_string(randomTag) + ".root")
+                .c_str(),
+            "RECREATE");
+        toyDataSet->Write("toyDataSet");
+        dsFile.Close();
+        std::cout << "Saved " << randomTag << " dataset\n";
+      } else {
         double nBu, nDelta;
         // ---------------------------- Read in toy dataset
         // ----------------------------
@@ -778,13 +799,16 @@ void FitToys(bool fitDontSave, int &nIter,
         //     ((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
         //              std::sqrt(2)+
         //         1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal());
-        // std::cout << "Box = " << box_delta_low << "-" << box_delta_high << "
+        // std::cout << "Box = " << box_delta_low << "-" << box_delta_high <<
+        // "
         // "
         //           << box_bu_low << "-" << box_bu_high << "\n";
-        // std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() <<
+        // std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal()
+        // <<
         // " ± "
         //           << yieldSharedSignal.getPropagatedError(*result) << "\n";
-        // std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
+        // std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ±
+        // "
         //           << errYieldTotSignal << "\n";
         // std::cout << "Corrected error / fit Error = "
         //           << errYieldTotSignal /
@@ -794,7 +818,8 @@ void FitToys(bool fitDontSave, int &nIter,
         //           << errYieldTotSignal / yieldTotSignal.getError() << "\n";
         // double errYieldTotBkg =
         //     yieldTotBkg.getPropagatedError(*result) *
-        //     (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2) +
+        //     (yieldSharedBkg.getVal() / yieldTotBkg.getVal() * std::sqrt(2)
+        //     +
         //      (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
         // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
         //           << errYieldTotBkg << "\n";
