@@ -4,6 +4,10 @@ from string import Template
 import subprocess as sp
 import multiprocessing as mp
 
+def submit_to_batch(command):
+    p = sp.Popen(command)
+    p.wait()
+    return p.returncode
 
 def run_process(script):
     p = sp.Popen(["sh", script], stdout=sp.PIPE, stderr=sp.PIPE)
@@ -25,27 +29,22 @@ def make_shell_script(templatePath, scriptPath, substitutions):
             scriptFile.write(scriptString)
 
 
-def pass_filename(filename, file_list):
-    m = re.search("DataFile" + dim + "D_0.[0-9]+.root", filename)
-    if m:
-        file_list.append(filename)
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-i',
-        '--input_dir',
-        type=str,
-        help='Directory where datasets should be stored',
-        required=True)
     parser.add_argument(
         '-o',
         '--output_dir',
         type=str,
-        help='Directory where results should be stored',
+        help='Directory where datsets should be stored',
         required=True)
     parser.add_argument(
-        '-n',
+        '-t',
+        '--n_toys',
+        type=int,
+        help='Number of toy datasets to generate per job',
+        required=True)
+    parser.add_argument(
+        '-j',
         '--n_jobs',
         type=int,
         help='Number of jobs to run on batch',
@@ -70,47 +69,23 @@ if __name__ == "__main__":
         type=str,
         help='Upper bu mass range',
         required=True)
-    parser.add_argument(
-        '-d',
-        '--dim',
-        type=str,
-        help='Dimension of dataset (1/2)',
-        required=True)
     args = parser.parse_args()
 
-    input_dir = args.input_dir
     output_dir = args.output_dir
+    n_toys = args.n_toys
     n_jobs = args.n_jobs
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
     bu_high = args.bu_high
-    dim = args.dim
 
-    if not os.path.isdir(input_dir):
-        sys.exit(input_dir + " is not a directory")
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    file_list = []
-    for filename in os.listdir(input_dir):
-        pass_filename(input_dir + "/" + filename, file_list, dim)
 
-    # rounds down: check if any left at the end
-    n_fits_per_job = len(file_list) / n_jobs
-    n_remainder = len(file_list) - (n_fits_per_job * n_jobs)
-
-    templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/shell_scripts/fit_1d.sh.tmpl"
+    templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/shell_scripts/generate_1d.sh.tmpl"
     scriptList = []
-    for i in range(0, n_jobs + 1):
-        if i == n_jobs:
-            if n_remainder:
-                files = ",".join(file_list[len(file_list) - n_remainder:])
-            else:
-                continue
-        else:
-            files = ",".join(
-                file_list[i * n_fits_per_job:(i + 1) * n_fits_per_job])
-        scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/fit_1d_" + str(
+    for i in range(0, n_jobs):
+        scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/generate_1d_" + str(
             i
         ) + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
         substitutions = {
@@ -120,8 +95,6 @@ if __name__ == "__main__":
             "/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6",
             "LD_LIBRARY_PATH":
             "/home/rollings/Software/install/lib64:/home/rollings/Software/install/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib:/home/rollings/Software/install/lib:64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib::/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/",
-            "FILES":
-            files,
             "PATH":
             output_dir,
             "DELTALOW":
@@ -131,16 +104,14 @@ if __name__ == "__main__":
             "BULOW":
             bu_low,
             "BUHIGH":
-            bu_high
+            bu_high,
+            "NTOYS":
+            n_toys
         }
         make_shell_script(templatePath, scriptPath, substitutions)
         scriptList.append(scriptPath)
-        # run_process(["qsub", scriptPath])
-        # run_process(["nohup", "sh", scriptPath, "> nohup_" + str(i) + ".out"])
-        # run_process(["qsub", "-q", "testing", scriptPath])
-    if n_remainder == 0:
-        n_processes = n_jobs
-    else:
-        n_processes = n_jobs + 1
-    p = mp.Pool(n_processes)
+        # submit_to_batch(["qsub", scriptPath])
+        # submit_to_batch(["nohup", "sh", scriptPath, "> nohup_" + str(i) + ".out"])
+        # submit_to_batch(["qsub", "-q", "testing", scriptPath])
+    p = mp.Pool(n_jobs)
     p.map(run_process, scriptList)
