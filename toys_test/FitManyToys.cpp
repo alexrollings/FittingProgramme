@@ -387,11 +387,11 @@ int main(int argc, char *argv[]) {
     // round(resultVec.size()/20),
     TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
                  errMin[i] - errRange / 5, errMax[i] + errRange / 5);
-    // double pullRange = pullMax[i] - pullMin[i];
-    // TH1D pullHist(("pullHist_" + paramName).c_str(), "",
+    double pullRange = pullMax[i] - pullMin[i];
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
     // round(resultVec.size()/10),
-    //              pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
+                 pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       initValHist.Fill(initValVec[j][i]);
       valHist.Fill(valVec[j][i]);
@@ -416,7 +416,8 @@ int main(int argc, char *argv[]) {
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
     RooRealVar valMean(("valMean_" + paramName).c_str(), "", initialVec[i],
-                       val.getMin(), val.getMax());
+                       val.getMin() - (val.getMax() - val.getMin()),
+                       val.getMax() + (val.getMax() - val.getMin()));
     RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
                         (val.getMax() - val.getMin()) / 5, 0,
                         val.getMax() - val.getMin());
@@ -504,8 +505,9 @@ int main(int argc, char *argv[]) {
                     pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
                        RooFit::Import(pullHist));
-    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", 0, pull.getMin(),
-                        pull.getMax());
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", 0,
+                        pull.getMin() - (pull.getMax() - pull.getMin()),
+                        pull.getMax() + (pull.getMax() - pull.getMin()));
     RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "", 1, 0,
                          pull.getMax() - pull.getMin());
     RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
