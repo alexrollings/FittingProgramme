@@ -415,7 +415,7 @@ int main(int argc, char *argv[]) {
                    valHist.GetXaxis()->GetXmax());
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
-    RooRealVar valMean(("valMean_" + paramName).c_str(), "", initialVec[i],
+    RooRealVar valMean(("valMean_" + paramName).c_str(), "", //initialVec[i],
                        val.getMin() - (val.getMax() - val.getMin()),
                        val.getMax() + (val.getMax() - val.getMin()));
     RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
@@ -505,7 +505,7 @@ int main(int argc, char *argv[]) {
                     pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
                        RooFit::Import(pullHist));
-    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", 0,
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", //0,
                         pull.getMin() - (pull.getMax() - pull.getMin()),
                         pull.getMax() + (pull.getMax() - pull.getMin()));
     RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "", 1, 0,
