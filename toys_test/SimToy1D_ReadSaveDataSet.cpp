@@ -741,17 +741,31 @@ void FitToys(bool fitDontSave, int &nIter,
       double nEvtsPerToy = yieldTotSignal.getVal() + yieldTotBkg.getVal();
       std::cout << "Generating toy dataset with " << nEvtsPerToy << " events\n";
 
-      RooDataSet *toyDataSet =
-          simPdf.generate(RooArgSet(buMass, deltaMass, fitting), nEvtsPerToy);
+      // Generate bu and delta mass datasets separately
+      RooDataSet *buDataSet =
+          simPdf.generate(RooArgSet(buMass), nEvtsPerToy);
       std::cout << "Generated!" << std::endl;
-      toyDataSet->Print();
+      buDataSet->SetName("buDataSet");
+      buDataSet->Print();
+
+      RooDataSet *deltaDataSet =
+          simPdf.generate(RooArgSet(deltaMass), nEvtsPerToy);
+      std::cout << "Generated!" << std::endl;
+      deltaDataSet->SetName("deltaDataSet");
+      deltaDataSet->Print();
+
+      // RooDataSet *toyDataSet =
+      //     simPdf.generate(RooArgSet(buMass, deltaMass, fitting), nEvtsPerToy);
+      // std::cout << "Generated!" << std::endl;
+      // toyDataSet->Print();
 
       double randomTag = random.Rndm();
       TFile dsFile(
           (outputDir + "/DataFile1D_" + std::to_string(randomTag) + ".root")
               .c_str(),
           "RECREATE");
-      toyDataSet->Write("toyDataSet");
+      buDataSet->Write("buDataSet");
+      deltaDataSet->Write("deltaDataSet");
       dsFile.Close();
       std::cout << "Saved " << randomTag << " dataset\n";
     } else {
