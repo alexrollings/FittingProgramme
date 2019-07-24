@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::vector<std::string> resultFiles = SplitByComma(argv[1]);
-  std::cout << resultFiles.size();
+  // std::cout << resultFiles.size();
   std::string outputDir = argv[2];
 
   // Loop over filenames, open the files, then extract the RooFitResults and
@@ -237,7 +237,7 @@ int main(int argc, char *argv[]) {
   // Create vector of histograms: automatically make histograms for the value,
   RooArgList initialPars0 = resultVec[0].floatParsInit();
   double nParams = initialPars0.getSize();
-  std::cout << "Number of parameters stored in results = " << nParams << "\n";
+  // std::cout << "Number of parameters stored in results = " << nParams << "\n";
 
   // Check result quality and print out stats
   double nUnConv = 0;
@@ -309,10 +309,10 @@ int main(int argc, char *argv[]) {
         valVec[j][i] = finalVal;
         errVec[j][i] = finalErr;
         pullVec[j][i] = pull;
-        std::cout << initialPars.at(i)->GetName()
-                  << "\tInital Val = " << initialVal
-                  << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
-                  << "\tPull = " << pull << "\n";
+        // std::cout << initialPars.at(i)->GetName()
+        //           << "\tInital Val = " << initialVal
+        //           << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
+        //           << "\tPull = " << pull << "\n";
 
         if (initialVal > initValMax[i]) {
           initValMax[i] = initialVal;
@@ -555,11 +555,11 @@ int main(int argc, char *argv[]) {
   // tree.Fill();
   outputFile.Write();
   outputFile.Close();
-  std::cout << resultVec.size() << "\n"
-            << initValVec.size() << "\n"
-            << valVec.size() << "\n"
-            << errVec.size() << "\n"
-            << pullVec.size();
+  std::cout << "Number of toys: " << resultVec.size() << "\n";
+            // << initValVec.size() << "\n"
+            // << valVec.size() << "\n"
+            // << errVec.size() << "\n"
+            // << pullVec.size();
 
   std::cout << "\nQuality of fits:\n"
             << "Unconverged: " << nUnConv / resultVec.size() * 100 << " %\n"
