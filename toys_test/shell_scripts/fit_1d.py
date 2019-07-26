@@ -25,8 +25,16 @@ def make_shell_script(templatePath, scriptPath, substitutions):
             scriptFile.write(scriptString)
 
 
-def pass_filename(filename, file_list):
-    m = re.search("DataFile" + dim + "D_0.[0-9]+.root", filename)
+def pass_filename(filename, file_list, dim, delta_low, delta_high, bu_low, bu_high):
+    if dim == "1":
+        m = re.search("DataFile" + dim + "D_" + delta_low + "_" + delta_high +
+                      "_" + bu_low + "_" + bu_high + "_0.[0-9]+.root",
+                      filename)
+    elif dim == "2":
+        m = re.search("DataFile" + dim + "D_0.[0-9]+.root", filename)
+        # m = re.search("DataFile_0.[0-9]+.root", filename)
+    else:
+        sys.exit("Dimension = 1/2")
     if m:
         file_list.append(filename)
 
@@ -93,7 +101,7 @@ if __name__ == "__main__":
         os.mkdir(output_dir)
     file_list = []
     for filename in os.listdir(input_dir):
-        pass_filename(input_dir + "/" + filename, file_list, dim)
+        pass_filename(input_dir + "/" + filename, file_list, dim, delta_low, delta_high, bu_low, bu_high)
 
     # rounds down: check if any left at the end
     n_fits_per_job = len(file_list) / n_jobs
