@@ -88,4 +88,6 @@ plt.xlabel('$N_{Box}/N_{T}$')
 plt.ylabel('$N_{T}$ Pull Width')
 fig.show()
 fig.savefig("shared_yield_vs_sig_pull_width.pdf")
+plt.show()
+
 
