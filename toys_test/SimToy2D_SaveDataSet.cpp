@@ -448,15 +448,15 @@ void GenerateToys(std::string const &outputDir, int nToys) {
 
     double randomTag = random.Rndm();
     TFile dsFile(
-        (outputDir + "/DataFile_" + std::to_string(randomTag) + ".root").c_str(),
+        (outputDir + "/DataFile2D_" + std::to_string(randomTag) + ".root").c_str(),
         "RECREATE");
     toyDataSet->Write("toyDataSet");
     dsFile.Close();
     std::cout << "Saved " << randomTag<< " dataset\n"; 
 
-    auto toyDataHist = std::unique_ptr<RooDataHist>(
-        toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
-    auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+    // auto toyDataHist = std::unique_ptr<RooDataHist>(
+    //     toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+    // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     // meanDeltaSignal.setVal(142);
 

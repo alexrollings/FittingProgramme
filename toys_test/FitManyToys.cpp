@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::vector<std::string> resultFiles = SplitByComma(argv[1]);
-  std::cout << resultFiles.size();
+  // std::cout << resultFiles.size();
   std::string outputDir = argv[2];
 
   // Loop over filenames, open the files, then extract the RooFitResults and
@@ -237,7 +237,7 @@ int main(int argc, char *argv[]) {
   // Create vector of histograms: automatically make histograms for the value,
   RooArgList initialPars0 = resultVec[0].floatParsInit();
   double nParams = initialPars0.getSize();
-  std::cout << "Number of parameters stored in results = " << nParams << "\n";
+  // std::cout << "Number of parameters stored in results = " << nParams << "\n";
 
   // Check result quality and print out stats
   double nUnConv = 0;
@@ -309,10 +309,10 @@ int main(int argc, char *argv[]) {
         valVec[j][i] = finalVal;
         errVec[j][i] = finalErr;
         pullVec[j][i] = pull;
-        std::cout << initialPars.at(i)->GetName()
-                  << "\tInital Val = " << initialVal
-                  << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
-                  << "\tPull = " << pull << "\n";
+        // std::cout << initialPars.at(i)->GetName()
+        //           << "\tInital Val = " << initialVal
+        //           << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
+        //           << "\tPull = " << pull << "\n";
 
         if (initialVal > initValMax[i]) {
           initValMax[i] = initialVal;
@@ -387,11 +387,11 @@ int main(int argc, char *argv[]) {
     // round(resultVec.size()/20),
     TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
                  errMin[i] - errRange / 5, errMax[i] + errRange / 5);
-    // double pullRange = pullMax[i] - pullMin[i];
-    // TH1D pullHist(("pullHist_" + paramName).c_str(), "",
+    double pullRange = pullMax[i] - pullMin[i];
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
     // round(resultVec.size()/10),
-    //              pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
+                 pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       initValHist.Fill(initValVec[j][i]);
       valHist.Fill(valVec[j][i]);
@@ -415,8 +415,9 @@ int main(int argc, char *argv[]) {
                    valHist.GetXaxis()->GetXmax());
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
-    RooRealVar valMean(("valMean_" + paramName).c_str(), "", initialVec[i],
-                       val.getMin(), val.getMax());
+    RooRealVar valMean(("valMean_" + paramName).c_str(), "", //initialVec[i],
+                       val.getMin() - (val.getMax() - val.getMin()),
+                       val.getMax() + (val.getMax() - val.getMin()));
     RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
                         (val.getMax() - val.getMin()) / 5, 0,
                         val.getMax() - val.getMin());
@@ -504,8 +505,9 @@ int main(int argc, char *argv[]) {
                     pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
                        RooFit::Import(pullHist));
-    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", 0, pull.getMin(),
-                        pull.getMax());
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", //0,
+                        pull.getMin() - (pull.getMax() - pull.getMin()),
+                        pull.getMax() + (pull.getMax() - pull.getMin()));
     RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "", 1, 0,
                          pull.getMax() - pull.getMin());
     RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
@@ -553,11 +555,11 @@ int main(int argc, char *argv[]) {
   // tree.Fill();
   outputFile.Write();
   outputFile.Close();
-  std::cout << resultVec.size() << "\n"
-            << initValVec.size() << "\n"
-            << valVec.size() << "\n"
-            << errVec.size() << "\n"
-            << pullVec.size();
+  std::cout << "Number of toys: " << resultVec.size() << "\n";
+            // << initValVec.size() << "\n"
+            // << valVec.size() << "\n"
+            // << errVec.size() << "\n"
+            // << pullVec.size();
 
   std::cout << "\nQuality of fits:\n"
             << "Unconverged: " << nUnConv / resultVec.size() * 100 << " %\n"

@@ -73,9 +73,9 @@ for i in range(0,len(file_list)):
 shared_yield = np.array(np.divide(np.multiply(signal_yield[0], box_eff), or_eff), dtype=object)
 frac_shared_yield = np.divide(shared_yield, signal_yield)
 
-linear_err_fn = (np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield) + np.divide((signal_yield-shared_yield), signal_yield))
+linear_err_fn = (np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield) + np.divide((signal_yield-shared_yield), signal_yield))*initial_width
 # sqrt from unumpy as can handle uncertainty types
-quadratic_err_fn = unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))
+quadratic_err_fn = unumpy.sqrt(np.square(np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield), shared_yield)) + np.square(np.divide((signal_yield-shared_yield), signal_yield)))*initial_width
 
 # signal_yield_pull_widths = np.divide(signal_yield_pull_widths, np.ones(len(file_list))*initial_width)
 
