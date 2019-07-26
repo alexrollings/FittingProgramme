@@ -483,11 +483,11 @@ void FitToys(bool fitDontSave, int &nIter,
                          box_bu_low, box_bu_high, boxEffBkg, deltaCutEffBkg,
                          buCutEffBkg, orEffBkg);
 
-  double a2DeltaVal = -7.4405e-01;//-7.2190e-01;
+  double a2DeltaVal = -7.2190e-01;
   double meanDeltaVal = 1.4277e+02;
   double sigmaDeltaVal = 8.7264e+00;
   if (std::stoi(box_bu_high) == 5360) {
-    a2DeltaVal = -7.4405e-01;
+    a2DeltaVal = -7.2190e-01;
     meanDeltaVal = 1.4277e+02;
     sigmaDeltaVal = 8.7264e+00;
   } else if (std::stoi(box_bu_high) == 5350) {
@@ -565,12 +565,12 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
                                "",
-                               meanDeltaVal, 135, 150);
+                               meanDeltaVal);//, 135, 150);
     // meanDeltaSignal.setVal(meanDeltaVal);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaDeltaSignal(
         ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "",
-        sigmaDeltaVal, 2, 15);
+        sigmaDeltaVal);//, 2, 15);
     // sigmaDeltaSignal.setVal(sigmaDeltaVal);
     // 8.6601e+00, 5, 15);
     // ---------------------------- Tails ----------------------------
@@ -601,10 +601,10 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanBuSignal(("meanBuSignal_" + std::to_string(i)).c_str(), "",
-                            5.2834e+03, 5275, 5290);
+                            5.2834e+03);//, 5275, 5290);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuSignal(("sigmaBuSignal_" + std::to_string(i)).c_str(), "",
-                             2.1232e+01, 15, 30);  //, 300, 400);
+                             2.1232e+01);//, 15, 30);  //, 300, 400);
 
     // ---------------------------- Tails ----------------------------
     RooRealVar a1BuSignal(("a1BuSignal_" + std::to_string(i)).c_str(), "",
@@ -639,11 +639,11 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar thresholdDeltaBkg(
         ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "",
-        4.2908e+01, 35, 60);
+        4.2908e+01);//, 35, 60);
     RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
                          3.6381e+01);//, 0, 100);
     RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-                         1.1499e+00, -2, 2);
+                         1.1499e+00);//, -2, 2);
     RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
                          -1.4343e+00);//, -2, 2);
     RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
@@ -659,12 +659,12 @@ void FitToys(bool fitDontSave, int &nIter,
     //                         buMass, lambdaBuBkg);
     // // ---------------------------- Mean ----------------------------
     RooRealVar meanBuBkg(("meanBuBkg_" + std::to_string(i)).c_str(), "",
-                         5.2970e+03, 5280, 5310);
+                         5.2970e+03);//, 5280, 5310);
     // RooRealVar mean2BuBkg(("mean2BuBkg_" + std::to_string(i)).c_str(), "",
     // 5.2230e+03, 5200, 5250);
     // // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuBkg(("sigmaBuBkg_" + std::to_string(i)).c_str(), "",
-                          9.6292e+01, 50, 150);  //,
+                          9.6292e+01);//, 50, 150);  //,
     // 5, 15);
     // RooRealVar sigmaFracBuBkg(("sigmaFracBuBkg_" +
     // std::to_string(i)).c_str(), "", 8.2710e-01, 0, 1);  //,
@@ -765,26 +765,26 @@ void FitToys(bool fitDontSave, int &nIter,
       // - completely flat in delta mass dimension (data has no structure)
       RooDataSet *buDataSet =
           pdfBu.generate(RooArgSet(buMass), nEvtsPerToyBu);
-      std::cout << "Generated!" << std::endl;
+      std::cout << "Generated!\n";
       buDataSet->SetName("buDataSet");
       buDataSet->Print();
 
       RooDataSet *deltaDataSet =
           pdfDelta.generate(RooArgSet(deltaMass), nEvtsPerToyDelta);
-      std::cout << "Generated!" << std::endl;
+      std::cout << "Generated!\n";
       deltaDataSet->SetName("deltaDataSet");
       deltaDataSet->Print();
 
       // RooDataSet *toyDataSet =
       //     simPdf.generate(RooArgSet(buMass, deltaMass, fitting), nEvtsPerToy);
-      // std::cout << "Generated!" << std::endl;
       // toyDataSet->Print();
 
       double randomTag = random.Rndm();
-      TFile dsFile(
-          (outputDir + "/DataFile1D_" + std::to_string(randomTag) + ".root")
-              .c_str(),
-          "RECREATE");
+      TFile dsFile((outputDir + "/DataFile1D_" + box_delta_low + "_" +
+                    box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
+                    "_" + std::to_string(randomTag) + ".root")
+                       .c_str(),
+                   "RECREATE");
       buDataSet->Write("buDataSet");
       deltaDataSet->Write("deltaDataSet");
       dsFile.Close();
@@ -793,12 +793,13 @@ void FitToys(bool fitDontSave, int &nIter,
       if (!file_exists(filenames[i])) {
         std::cerr << filenames[i] << " does not exist.\n";
       } else {
-        std::regex rexp("DataFile([0-9])D_([0-9].[0-9]+).root");
+        std::regex rexp(
+            "DataFile([0-9])D_[0-9]+_[0-9]+_[0-9]+_[0-9]+_([0-9].[0-9]+).root");
         std::smatch match;
         std::regex_search(filenames[i], match, rexp);
         std::string dim = match[1];
+        std::cout << "Dimension = " << dim << "\n";
         std::string rndm = match[2];
-        std::cout << "Dimension = " << dim << "\n"; 
         // double nBu, nDelta;
         // ---------------------------- Read in toy dataset
         // ----------------------------
