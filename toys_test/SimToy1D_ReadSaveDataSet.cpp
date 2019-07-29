@@ -262,7 +262,7 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   std::string title;
   switch (variable) {
     case Variable::bu:
-      title = "m[D^{*0}#pi] - m[D^{*0}] + m[D^{*0}]_{{PDG}";
+      title = "m[D^{*0}#pi] - m[D^{*0}] + m[D^{*0}]_{PDG}";
       break;
     case Variable::delta:
       title = "m[D^{*0}] - m[D^{0}]";
@@ -466,6 +466,11 @@ void FitToys(bool fitDontSave, int &nIter,
   RooCategory fitting("fitting", "fitting");
   fitting.defineType("bu");
   fitting.defineType("delta");
+  
+  // ---------------------------- Yield Starting points ----------------------------
+  double initYieldSig = 40000;
+  double initYieldB02Dstpi = initYieldSig*0.643; 
+  double initYieldBu2D0rho = initYieldSig*0.973; 
 
   // ---------------------------- Efficiencies ----------------------------
   // Outside of loop as all datasets have same box dimensions
@@ -743,7 +748,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
-                              "", 40000 * orEffSignal.getVal(), -100000,
+                              "", initYieldSig * orEffSignal.getVal(), -100000,
                               100000);
     RooFormulaVar yieldBuSignal(
         ("yieldBuSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
@@ -765,11 +770,9 @@ void FitToys(bool fitDontSave, int &nIter,
     // std::to_string(i)).c_str(),
     //                          "", nDeltaBkg, 0, 100000);
 
-    RooRealVar yieldFracB02Dstpi(("B02Dstpi_" + std::to_string(i)).c_str(), "",
-                                 0.643);
-    RooFormulaVar yieldTotB02Dstpi(
-        ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "", "@0*@1",
-        RooArgList(yieldTotSignal, yieldFracB02Dstpi));
+    RooRealVar yieldTotB02Dstpi(
+        ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
+        initYieldB02Dstpi * orEffB02Dstpi.getVal(), -100000, 100000);
     RooFormulaVar yieldBuB02Dstpi(
         ("yieldBuB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
@@ -780,11 +783,9 @@ void FitToys(bool fitDontSave, int &nIter,
         ("yieldSharedB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(boxEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
 
-    RooRealVar yieldFracBu2D0rho(("Bu2D0rho_" + std::to_string(i)).c_str(), "",
-                                 0.973);
-    RooFormulaVar yieldTotBu2D0rho(
-        ("yieldTotBu2D0rho_" + std::to_string(i)).c_str(), "", "@0*@1",
-        RooArgList(yieldTotSignal, yieldFracBu2D0rho));
+    RooRealVar yieldTotBu2D0rho(
+        ("yieldTotBu2D0rho_" + std::to_string(i)).c_str(), "",
+        initYieldBu2D0rho * orEffBu2D0rho.getVal(), -100000, 100000);
     RooFormulaVar yieldBuBu2D0rho(
         ("yieldBuBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
@@ -904,21 +905,21 @@ void FitToys(bool fitDontSave, int &nIter,
                          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                          RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-        // if (i == 0) {
-        //   std::cout << "Plotting projections of m[Bu]\n";
-        //   PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-        //                 fitting, pdfBuSignal, pdfBuB02Dstpi, pdfBuBu2D0rho,
-        //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
-        //                 box_bu_high);
-        //   std::cout << "Plotting projections of m[Delta]\n";
-        //   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-        //                 fitting, pdfDeltaSignal, pdfDeltaB02Dstpi,
-        //                 pdfDeltaBu2D0rho, outputDir, box_delta_low,
-        //                 box_delta_high, box_bu_low, box_bu_high);
-        //   std::cout << "Plotting correlation matrix\n";
-        //   PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-        //                  box_bu_low, box_bu_high);
-        // }
+        if (i == 0) {
+          std::cout << "Plotting projections of m[Bu]\n";
+          PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
+                        fitting, pdfBuSignal, pdfBuB02Dstpi, pdfBuBu2D0rho,
+                        outputDir, box_delta_low, box_delta_high, box_bu_low,
+                        box_bu_high);
+          std::cout << "Plotting projections of m[Delta]\n";
+          PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
+                        fitting, pdfDeltaSignal, pdfDeltaB02Dstpi,
+                        pdfDeltaBu2D0rho, outputDir, box_delta_low,
+                        box_delta_high, box_bu_low, box_bu_high);
+          std::cout << "Plotting correlation matrix\n";
+          PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                         box_bu_low, box_bu_high);
+        }
         result->Print("v");
 
         // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
