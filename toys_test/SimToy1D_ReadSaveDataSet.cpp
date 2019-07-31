@@ -501,80 +501,80 @@ void FitToys(bool fitDontSave, int &nIter,
                          box_bu_low, box_bu_high, boxEffBu2D0rho,
                          deltaCutEffBu2D0rho, buCutEffBu2D0rho, orEffBu2D0rho);
 
-  double a2DeltaVal = -7.2924e-01;
-  double meanDeltaVal = 1.4256e+02;
-  double sigmaDeltaVal = 8.4936e+00;
-  if (std::stoi(box_bu_high) == 5360) {
-    a2DeltaVal = -7.2924e-01;
-    meanDeltaVal = 1.4256e+02;
-    sigmaDeltaVal = 8.4936e+00;
-  } else if (std::stoi(box_bu_high) == 5350) {
-    a2DeltaVal = -7.2698e-01;
-    meanDeltaVal = 1.4276e+02;
-    sigmaDeltaVal = 8.7195e+00;
-  } else if (std::stoi(box_bu_high) == 5340) {
-    a2DeltaVal = -7.3603e-01;
-    meanDeltaVal = 1.4275e+02;
-    sigmaDeltaVal = 8.6937e+00;
-  } else if (std::stoi(box_bu_high) == 5330) {
-    a2DeltaVal = -7.5835e-01;
-    meanDeltaVal = 1.4275e+02;
-    sigmaDeltaVal = 8.6786e+00;
-  } else if (std::stoi(box_bu_high) == 5320) {
-    a2DeltaVal = -7.8634e-01;
-    meanDeltaVal = 1.4266e+02;
-    sigmaDeltaVal = 8.6644e+00;
-  } else if (std::stoi(box_bu_high) == 5310) {
-    a2DeltaVal = -8.2444e-01;
-    meanDeltaVal = 1.4250e+02;
-    sigmaDeltaVal = 8.6223e+00;
-  } else if (std::stoi(box_bu_high) == 5300) {
-    a2DeltaVal = -8.5594e-01;
-    meanDeltaVal = 1.4215e+02;
-    sigmaDeltaVal = 8.5430e+00;
-  } else if (std::stoi(box_bu_high) == 5290) {
-    a2DeltaVal = -8.9696e-01;
-    meanDeltaVal = 1.4168e+02;
-    sigmaDeltaVal = 8.4596e+00;
-  } else if (std::stoi(box_bu_high) == 5280) {
-    a2DeltaVal = -8.9336e-01;
-    meanDeltaVal = 1.4089e+02;
-    sigmaDeltaVal = 8.3475e+00;
-  } else if (std::stoi(box_bu_high) == 5270) {
-    a2DeltaVal = -9.0617e-01;
-    meanDeltaVal = 1.4007e+02;
-    sigmaDeltaVal = 8.4106e+00;
-  } else if (std::stoi(box_bu_high) == 5260) {
-    a2DeltaVal = -9.3522e-01;
-    meanDeltaVal = 1.3950e+02;
-    sigmaDeltaVal = 8.3672e+00;
-  } else if (std::stoi(box_bu_high) == 5250) {
-    a2DeltaVal = -8.2290e-01;
-    meanDeltaVal = 1.3874e+02;
-    sigmaDeltaVal = 8.1266e+00;
-  } else if (std::stoi(box_bu_high) == 5240) {
-    a2DeltaVal = -5.0851e-01;
-    meanDeltaVal = 1.3771e+02;
-    sigmaDeltaVal = 7.8642e+00;
-  } else if (std::stoi(box_bu_high) == 5230) {
-    a2DeltaVal = -1.9972e-01;
-    meanDeltaVal = 1.3651e+02;
-    sigmaDeltaVal = 6.8620e+00;
-  } else if (std::stoi(box_bu_high) == 5220) {
-    a2DeltaVal = -2.7735e-02;
-    meanDeltaVal = 1.3730e+02;
-    sigmaDeltaVal = 6.3788e+00;
-  } else if (std::stoi(box_bu_high) == 5210) {
-    a2DeltaVal = -2.6097e-03;
-    meanDeltaVal = 1.4209e+02;
-    sigmaDeltaVal = 5.5830e+00;
-  } else if (std::stoi(box_bu_high) == 5200) {
-    a2DeltaVal = -1.0712e-03;
-    meanDeltaVal = 1.4308e+02;
-    sigmaDeltaVal = 5.1589e+00;
-  } else {
-    std::cout << "No value set for a2DeltaVal, using default";
-  }
+  // double a2DeltaVal = -7.2924e-01;
+  // double meanDeltaVal = 1.4256e+02;
+  // double sigmaDeltaVal = 8.4936e+00;
+  // if (std::stoi(box_bu_high) == 5360) {
+  //   a2DeltaVal = -7.2924e-01;
+  //   meanDeltaVal = 1.4256e+02;
+  //   sigmaDeltaVal = 8.4936e+00;
+  // } else if (std::stoi(box_bu_high) == 5350) {
+  //   a2DeltaVal = -7.2698e-01;
+  //   meanDeltaVal = 1.4276e+02;
+  //   sigmaDeltaVal = 8.7195e+00;
+  // } else if (std::stoi(box_bu_high) == 5340) {
+  //   a2DeltaVal = -7.3603e-01;
+  //   meanDeltaVal = 1.4275e+02;
+  //   sigmaDeltaVal = 8.6937e+00;
+  // } else if (std::stoi(box_bu_high) == 5330) {
+  //   a2DeltaVal = -7.5835e-01;
+  //   meanDeltaVal = 1.4275e+02;
+  //   sigmaDeltaVal = 8.6786e+00;
+  // } else if (std::stoi(box_bu_high) == 5320) {
+  //   a2DeltaVal = -7.8634e-01;
+  //   meanDeltaVal = 1.4266e+02;
+  //   sigmaDeltaVal = 8.6644e+00;
+  // } else if (std::stoi(box_bu_high) == 5310) {
+  //   a2DeltaVal = -8.2444e-01;
+  //   meanDeltaVal = 1.4250e+02;
+  //   sigmaDeltaVal = 8.6223e+00;
+  // } else if (std::stoi(box_bu_high) == 5300) {
+  //   a2DeltaVal = -8.5594e-01;
+  //   meanDeltaVal = 1.4215e+02;
+  //   sigmaDeltaVal = 8.5430e+00;
+  // } else if (std::stoi(box_bu_high) == 5290) {
+  //   a2DeltaVal = -8.9696e-01;
+  //   meanDeltaVal = 1.4168e+02;
+  //   sigmaDeltaVal = 8.4596e+00;
+  // } else if (std::stoi(box_bu_high) == 5280) {
+  //   a2DeltaVal = -8.9336e-01;
+  //   meanDeltaVal = 1.4089e+02;
+  //   sigmaDeltaVal = 8.3475e+00;
+  // } else if (std::stoi(box_bu_high) == 5270) {
+  //   a2DeltaVal = -9.0617e-01;
+  //   meanDeltaVal = 1.4007e+02;
+  //   sigmaDeltaVal = 8.4106e+00;
+  // } else if (std::stoi(box_bu_high) == 5260) {
+  //   a2DeltaVal = -9.3522e-01;
+  //   meanDeltaVal = 1.3950e+02;
+  //   sigmaDeltaVal = 8.3672e+00;
+  // } else if (std::stoi(box_bu_high) == 5250) {
+  //   a2DeltaVal = -8.2290e-01;
+  //   meanDeltaVal = 1.3874e+02;
+  //   sigmaDeltaVal = 8.1266e+00;
+  // } else if (std::stoi(box_bu_high) == 5240) {
+  //   a2DeltaVal = -5.0851e-01;
+  //   meanDeltaVal = 1.3771e+02;
+  //   sigmaDeltaVal = 7.8642e+00;
+  // } else if (std::stoi(box_bu_high) == 5230) {
+  //   a2DeltaVal = -1.9972e-01;
+  //   meanDeltaVal = 1.3651e+02;
+  //   sigmaDeltaVal = 6.8620e+00;
+  // } else if (std::stoi(box_bu_high) == 5220) {
+  //   a2DeltaVal = -2.7735e-02;
+  //   meanDeltaVal = 1.3730e+02;
+  //   sigmaDeltaVal = 6.3788e+00;
+  // } else if (std::stoi(box_bu_high) == 5210) {
+  //   a2DeltaVal = -2.6097e-03;
+  //   meanDeltaVal = 1.4209e+02;
+  //   sigmaDeltaVal = 5.5830e+00;
+  // } else if (std::stoi(box_bu_high) == 5200) {
+  //   a2DeltaVal = -1.0712e-03;
+  //   meanDeltaVal = 1.4308e+02;
+  //   sigmaDeltaVal = 5.1589e+00;
+  // } else {
+  //   std::cout << "No value set for a2DeltaVal, using default";
+  // }
 
   // Loop over data files and perform 1D fit to each dataset
   for (int i = 0; i < nIter; ++i) {
@@ -583,23 +583,22 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
                                "",
-                               meanDeltaVal);  //, 135, 150);
+                               1.4233e+02);  //, 135, 150);
     // meanDeltaSignal.setVal(meanDeltaVal);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaDeltaSignal(
         ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "",
-        sigmaDeltaVal);  //, 2, 15);
+        8.1675e+00);  //, 2, 15);
     // sigmaDeltaSignal.setVal(sigmaDeltaVal);
     // ---------------------------- Tails ----------------------------
     RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(), "",
-                             1.9114e+00);  //, 0, 5);
+                             1.5109e+00);  //, 0, 5);
     RooRealVar a2DeltaSignal(("a2DeltaSignal_" + std::to_string(i)).c_str(), "",
-                             a2DeltaVal);  //, -5, -0.001);
-    a2DeltaSignal.setVal(a2DeltaVal);
+                             -5.7023e-01);  //, -5, -0.001);
     RooRealVar n1DeltaSignal(("n1DeltaSignal_" + std::to_string(i)).c_str(), "",
-                             1.3484e+00);  //, 0, 10);
+                             6.0060e+00);  //, 0, 10);
     RooRealVar n2DeltaSignal(("n2DeltaSignal_" + std::to_string(i)).c_str(), "",
-                             2.9966e+00);  //, 0, 10);
+                             7.8408e+00);  //, 0, 10);
     // ---------------------------- PDFs ----------------------------
     RooCBShape pdfDeltaSignal1(("pdfDeltaSignal1_" + std::to_string(i)).c_str(),
                                "", deltaMass, meanDeltaSignal, sigmaDeltaSignal,
@@ -608,7 +607,7 @@ void FitToys(bool fitDontSave, int &nIter,
                                "", deltaMass, meanDeltaSignal, sigmaDeltaSignal,
                                a2DeltaSignal, n2DeltaSignal);
     RooRealVar fracPdf1DeltaSignal(
-        ("fracPdf1DeltaSignal_" + std::to_string(i)).c_str(), "", 1.7974e-01);
+        ("fracPdf1DeltaSignal_" + std::to_string(i)).c_str(), "", 2.6638e-01);
     RooAddPdf pdfDeltaSignal(("pdfDeltaSignal_" + std::to_string(i)).c_str(),
                              "", RooArgSet(pdfDeltaSignal1, pdfDeltaSignal2),
                              fracPdf1DeltaSignal);
@@ -620,20 +619,20 @@ void FitToys(bool fitDontSave, int &nIter,
                             5.2819e+03);  //, 5275, 5290);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuSignal(("sigmaBuSignal_" + std::to_string(i)).c_str(), "",
-                             2.0436e+01);  //, 15, 30);  //, 300, 400);
+                             2.0051e+01);  //, 15, 30);  //, 300, 400);
 
     // ---------------------------- Tails ----------------------------
     RooRealVar a1BuSignal(("a1BuSignal_" + std::to_string(i)).c_str(), "",
-                          1.9632e+00);  // 0, 5);
+                          1.6184e+00);  // 0, 5);
     RooRealVar a2BuSignal(("a2BuSignal_" + std::to_string(i)).c_str(), "",
-                          -1.0726e+00);  // -5, -0.0001);
+                          -1.6623e+00);  // -5, -0.0001);
     RooRealVar n1BuSignal(("n1BuSignal_" + std::to_string(i)).c_str(), "",
-                          6.5030e+00);  // 0, 10);
+                          8.6469e+00);  // 0, 10);
     RooRealVar n2BuSignal(("n2BuSignal_" + std::to_string(i)).c_str(), "",
-                          1.0561e+01);  // 0, 10);
+                          5.2563e+00);  // 0, 10);
     // ---------------------------- PDFs ----------------------------
     RooRealVar fracPdf1BuSignal(
-        ("fracPdf1BuSignal_" + std::to_string(i)).c_str(), "", 7.4517e-01);
+        ("fracPdf1BuSignal_" + std::to_string(i)).c_str(), "", 6.8457e-01);
     RooCBShape pdfBuSignal1(("pdfBuSignal1_" + std::to_string(i)).c_str(), "",
                             buMass, meanBuSignal, sigmaBuSignal, a1BuSignal,
                             n1BuSignal);
@@ -656,16 +655,16 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar thresholdDeltaB02Dstpi(
         ("thresholdDeltaB02Dstpi_" + std::to_string(i)).c_str(), "",
-        5.2128e+01);  //, 35, 60);
+        5.1941e+01);  //, 36, 60);
     RooRealVar cDeltaB02Dstpi(("cDeltaB02Dstpi_" + std::to_string(i)).c_str(),
                               "",
-                              3.6381e+01);  //, 0, 100);
+                              3.3620e+01);  //, 0, 100);
     RooRealVar aDeltaB02Dstpi(("aDeltaB02Dstpi_" + std::to_string(i)).c_str(),
                               "",
-                              1.1156e+00);  //, -2, 2);
+                              1.1496e+00);  //, -2, 2);
     RooRealVar bDeltaB02Dstpi(("bDeltaB02Dstpi_" + std::to_string(i)).c_str(),
                               "",
-                              -1.4343e+00);  //, -2, 2);
+                              -1.5445e+00);  //, -2, 2);
     RooDstD0BG pdfDeltaB02Dstpi(
         ("pdfDeltaB02Dstpi_" + std::to_string(i)).c_str(), "", deltaMass,
         thresholdDeltaB02Dstpi, cDeltaB02Dstpi, aDeltaB02Dstpi, bDeltaB02Dstpi);
@@ -680,10 +679,10 @@ void FitToys(bool fitDontSave, int &nIter,
     // // ---------------------------- Mean ----------------------------
     RooRealVar meanBuB02Dstpi(("meanBuB02Dstpi_" + std::to_string(i)).c_str(),
                               "",
-                              5.2970e+03);  //, 5280, 5310);
+                              5.3029e+03);  //, 5280, 5310);
     // // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuB02Dstpi(("sigmaBuB02Dstpi_" + std::to_string(i)).c_str(),
-                               "", 9.6292e+01);  //, 50, 100);
+                               "", 9.0395e+01);  //, 50, 100);
     // // ---------------------------- PDFs ----------------------------
     RooGaussian pdfBuB02Dstpi(("pdfBuB02Dstpi_" + std::to_string(i)).c_str(),
                               "", buMass, meanBuB02Dstpi, sigmaBuB02Dstpi);
@@ -692,16 +691,16 @@ void FitToys(bool fitDontSave, int &nIter,
     // ----------------------------
     RooRealVar thresholdDeltaBu2D0rho(
         ("thresholdDeltaBu2D0rho_" + std::to_string(i)).c_str(), "",
-        5.1070e+01);  //, 35, 60);
+        6.1120e+01);  //, 35, 60);
     RooRealVar cDeltaBu2D0rho(("cDeltaBu2D0rho_" + std::to_string(i)).c_str(),
                               "",
-                              5.2740e+01);  //, 0, 100);
+                              4.1718e+01);  //, 0, 100);
     RooRealVar aDeltaBu2D0rho(("aDeltaBu2D0rho_" + std::to_string(i)).c_str(),
                               "",
-                              8.5307e-01);  //, -2, 2);
+                              7.5318e-01);  //, -2, 2);
     RooRealVar bDeltaBu2D0rho(("bDeltaBu2D0rho_" + std::to_string(i)).c_str(),
                               "",
-                              -8.6988e-01);  //, -2, 2);
+                              -8.7192e-01);  //, -2, 2);
     RooDstD0BG pdfDeltaBu2D0rho(
         ("pdfDeltaBu2D0rho_" + std::to_string(i)).c_str(), "", deltaMass,
         thresholdDeltaBu2D0rho, cDeltaBu2D0rho, aDeltaBu2D0rho, bDeltaBu2D0rho);
@@ -709,30 +708,30 @@ void FitToys(bool fitDontSave, int &nIter,
     // // ---------------------------- Mean ----------------------------
     RooRealVar mean1BuBu2D0rho(("mean1BuBu2D0rho_" + std::to_string(i)).c_str(),
                                "",
-                               5.3403e+03);  //, 5280, 5310);
+                               5.3216e+03);  //, 5280, 5310);
     RooRealVar mean2BuBu2D0rho(("mean2BuBu2D0rho_" + std::to_string(i)).c_str(),
                                "",
-                               5.1917e+03);  //, 5200, 5250);
+                               5.1959e+03);  //, 5200, 5250);
     // // ---------------------------- Sigmas ----------------------------
     RooRealVar sigma1BuBu2D0rho(
         ("sigma1BuBu2D0rho_" + std::to_string(i)).c_str(), "",
-        8.2450e+01);  //, 50, 150);  //,
+        8.4638e+01);  //, 50, 150);  //,
     // 5, 15);
     RooRealVar sigma1FracBuBu2D0rho(
         ("sigma1FracBuBu2D0rho_" + std::to_string(i)).c_str(), "",
-        9.0480e-01);  //, 0, 1);
+        7.4804e-01);  //, 0, 1);
     RooFormulaVar sigma2BuBu2D0rho(
         ("sigma2BuBu2D0rho_" + std::to_string(i)).c_str(), "", "@0*@1",
         RooArgSet(sigma1BuBu2D0rho, sigma1FracBuBu2D0rho));
     // // ---------------------------- Tails ----------------------------
     RooRealVar a1BuBu2D0rho(("a1BuBu2D0rho_" + std::to_string(i)).c_str(), "",
-                            1.3201e+00);
+                            1.4678e+00);
     RooRealVar a2BuBu2D0rho(("a2BuBu2D0rho_" + std::to_string(i)).c_str(), "",
-                            -4.2096e+00);
+                            -5.0000e+00);
     RooRealVar n1BuBu2D0rho(("n1BuBu2D0rho_" + std::to_string(i)).c_str(), "",
-                            5.0195e+01);
+                            9.9905e+01);
     RooRealVar n2BuBu2D0rho(("n2BuBu2D0rho_" + std::to_string(i)).c_str(), "",
-                            3.8065e+00);
+                            9.6146e+00);
     // // ---------------------------- PDFs ----------------------------
     RooCBShape pdfBuBu2D0rho1(("pdfBuBu2D0rho1_" + std::to_string(i)).c_str(),
                               "", buMass, mean1BuBu2D0rho, sigma1BuBu2D0rho,
@@ -741,7 +740,7 @@ void FitToys(bool fitDontSave, int &nIter,
                               "", buMass, mean2BuBu2D0rho, sigma2BuBu2D0rho,
                               a2BuBu2D0rho, n2BuBu2D0rho);
     RooRealVar fracPdf1BuBu2D0rho(
-        ("fracPdf1BuBu2D0rho_" + std::to_string(i)).c_str(), "", 4.9050e-01);
+        ("fracPdf1BuBu2D0rho_" + std::to_string(i)).c_str(), "", 6.4226e-01);
     RooAddPdf pdfBuBu2D0rho(("pdfBuBu2D0rho_" + std::to_string(i)).c_str(), "",
                             RooArgSet(pdfBuBu2D0rho1, pdfBuBu2D0rho2),
                             fracPdf1BuBu2D0rho);
