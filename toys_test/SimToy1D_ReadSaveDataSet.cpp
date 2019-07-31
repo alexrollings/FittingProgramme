@@ -240,7 +240,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
                    RooAddPdf &sig, RooAbsPdf &bkg1, RooAbsPdf &bkg2,
-                   std::string const &outputDir, std::string const &box_bu_low,
+                   RooAbsPdf &bkg3, std::string const &outputDir,
+                   std::string const &box_bu_low,
                    std::string const &box_bu_high,
                    std::string const &box_delta_low,
                    std::string const &box_delta_high) {
@@ -289,11 +290,15 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
       RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg1.GetName()),
-      RooFit::LineColor(kRed), RooFit::LineStyle(kDashed));
+      RooFit::LineColor(kOrange), RooFit::LineStyle(kDashed));
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
       RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg2.GetName()),
-      RooFit::LineColor(kOrange), RooFit::LineStyle(kDashed));
+      RooFit::LineColor(kRed), RooFit::LineStyle(kDashed));
+  simPdf.plotOn(
+      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg3.GetName()),
+      RooFit::LineColor(kMagenta), RooFit::LineStyle(kDashed));
 
   dataHist->plotOn(
       frame.get(),
@@ -358,7 +363,7 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
   corrHist->SetLabelSize(0.02, "Z");
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf" + "_" +
+  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix" + "_" +
                      box_delta_low + "_" + box_delta_high + "_" + box_bu_low +
                      "_" + box_bu_high + ".pdf")
                         .c_str());
@@ -466,11 +471,13 @@ void FitToys(bool fitDontSave, int &nIter,
   RooCategory fitting("fitting", "fitting");
   fitting.defineType("bu");
   fitting.defineType("delta");
-  
-  // ---------------------------- Yield Starting points ----------------------------
+
+  // ---------------------------- Yield Starting points
+  // ----------------------------
   double initYieldSig = 40000;
-  double initYieldB02Dstpi = initYieldSig*0.643; 
-  double initYieldBu2D0rho = initYieldSig*0.973; 
+  double initYieldBu2Dst0pi_D0pi0 = initYieldSig * 0.916;
+  double initYieldB02Dstpi = initYieldSig * 0.643;
+  double initYieldBu2D0rho = initYieldSig * 0.973;
 
   // ---------------------------- Efficiencies ----------------------------
   // Outside of loop as all datasets have same box dimensions
@@ -482,6 +489,16 @@ void FitToys(bool fitDontSave, int &nIter,
   ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
                          box_bu_low, box_bu_high, boxEffSignal,
                          deltaCutEffSignal, buCutEffSignal, orEffSignal);
+
+  RooRealVar orEffBu2Dst0pi_D0pi0("orEffBu2Dst0pi_D0pi0", "", 1);
+  RooRealVar boxEffBu2Dst0pi_D0pi0("boxEffBu2Dst0pi_D0pi0", "", 1);
+  RooRealVar deltaCutEffBu2Dst0pi_D0pi0("deltaCutEffBu2Dst0pi_D0pi0", "", 1);
+  RooRealVar buCutEffBu2Dst0pi_D0pi0("buCutEffBu2Dst0pi_D0pi0", "", 1);
+
+  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0pi0, box_delta_low, box_delta_high,
+                         box_bu_low, box_bu_high, boxEffBu2Dst0pi_D0pi0,
+                         deltaCutEffBu2Dst0pi_D0pi0, buCutEffBu2Dst0pi_D0pi0,
+                         orEffBu2Dst0pi_D0pi0);
 
   RooRealVar orEffB02Dstpi("orEffB02Dstpi", "", 1);
   RooRealVar boxEffB02Dstpi("boxEffB02Dstpi", "", 1);
@@ -501,80 +518,6 @@ void FitToys(bool fitDontSave, int &nIter,
                          box_bu_low, box_bu_high, boxEffBu2D0rho,
                          deltaCutEffBu2D0rho, buCutEffBu2D0rho, orEffBu2D0rho);
 
-  // double a2DeltaVal = -7.2924e-01;
-  // double meanDeltaVal = 1.4256e+02;
-  // double sigmaDeltaVal = 8.4936e+00;
-  // if (std::stoi(box_bu_high) == 5360) {
-  //   a2DeltaVal = -7.2924e-01;
-  //   meanDeltaVal = 1.4256e+02;
-  //   sigmaDeltaVal = 8.4936e+00;
-  // } else if (std::stoi(box_bu_high) == 5350) {
-  //   a2DeltaVal = -7.2698e-01;
-  //   meanDeltaVal = 1.4276e+02;
-  //   sigmaDeltaVal = 8.7195e+00;
-  // } else if (std::stoi(box_bu_high) == 5340) {
-  //   a2DeltaVal = -7.3603e-01;
-  //   meanDeltaVal = 1.4275e+02;
-  //   sigmaDeltaVal = 8.6937e+00;
-  // } else if (std::stoi(box_bu_high) == 5330) {
-  //   a2DeltaVal = -7.5835e-01;
-  //   meanDeltaVal = 1.4275e+02;
-  //   sigmaDeltaVal = 8.6786e+00;
-  // } else if (std::stoi(box_bu_high) == 5320) {
-  //   a2DeltaVal = -7.8634e-01;
-  //   meanDeltaVal = 1.4266e+02;
-  //   sigmaDeltaVal = 8.6644e+00;
-  // } else if (std::stoi(box_bu_high) == 5310) {
-  //   a2DeltaVal = -8.2444e-01;
-  //   meanDeltaVal = 1.4250e+02;
-  //   sigmaDeltaVal = 8.6223e+00;
-  // } else if (std::stoi(box_bu_high) == 5300) {
-  //   a2DeltaVal = -8.5594e-01;
-  //   meanDeltaVal = 1.4215e+02;
-  //   sigmaDeltaVal = 8.5430e+00;
-  // } else if (std::stoi(box_bu_high) == 5290) {
-  //   a2DeltaVal = -8.9696e-01;
-  //   meanDeltaVal = 1.4168e+02;
-  //   sigmaDeltaVal = 8.4596e+00;
-  // } else if (std::stoi(box_bu_high) == 5280) {
-  //   a2DeltaVal = -8.9336e-01;
-  //   meanDeltaVal = 1.4089e+02;
-  //   sigmaDeltaVal = 8.3475e+00;
-  // } else if (std::stoi(box_bu_high) == 5270) {
-  //   a2DeltaVal = -9.0617e-01;
-  //   meanDeltaVal = 1.4007e+02;
-  //   sigmaDeltaVal = 8.4106e+00;
-  // } else if (std::stoi(box_bu_high) == 5260) {
-  //   a2DeltaVal = -9.3522e-01;
-  //   meanDeltaVal = 1.3950e+02;
-  //   sigmaDeltaVal = 8.3672e+00;
-  // } else if (std::stoi(box_bu_high) == 5250) {
-  //   a2DeltaVal = -8.2290e-01;
-  //   meanDeltaVal = 1.3874e+02;
-  //   sigmaDeltaVal = 8.1266e+00;
-  // } else if (std::stoi(box_bu_high) == 5240) {
-  //   a2DeltaVal = -5.0851e-01;
-  //   meanDeltaVal = 1.3771e+02;
-  //   sigmaDeltaVal = 7.8642e+00;
-  // } else if (std::stoi(box_bu_high) == 5230) {
-  //   a2DeltaVal = -1.9972e-01;
-  //   meanDeltaVal = 1.3651e+02;
-  //   sigmaDeltaVal = 6.8620e+00;
-  // } else if (std::stoi(box_bu_high) == 5220) {
-  //   a2DeltaVal = -2.7735e-02;
-  //   meanDeltaVal = 1.3730e+02;
-  //   sigmaDeltaVal = 6.3788e+00;
-  // } else if (std::stoi(box_bu_high) == 5210) {
-  //   a2DeltaVal = -2.6097e-03;
-  //   meanDeltaVal = 1.4209e+02;
-  //   sigmaDeltaVal = 5.5830e+00;
-  // } else if (std::stoi(box_bu_high) == 5200) {
-  //   a2DeltaVal = -1.0712e-03;
-  //   meanDeltaVal = 1.4308e+02;
-  //   sigmaDeltaVal = 5.1589e+00;
-  // } else {
-  //   std::cout << "No value set for a2DeltaVal, using default";
-  // }
 
   // Loop over data files and perform 1D fit to each dataset
   for (int i = 0; i < nIter; ++i) {
@@ -643,15 +586,73 @@ void FitToys(bool fitDontSave, int &nIter,
                           RooArgSet(pdfBuSignal1, pdfBuSignal2),
                           fracPdf1BuSignal);
 
+    // ---------------------------- Bu2Dst0pi_D0pi0 ----------------------------
+    // ---------------------------- Mean ----------------------------
+    RooRealVar meanDeltaBu2Dst0pi_D0pi0(
+        ("meanDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        8.6075e+01);  //, 80, 90);
+    // meanDeltaBu2Dst0pi_D0pi0.setVal(meanDeltaVal);
+    // ---------------------------- Sigmas ----------------------------
+    RooRealVar sigmaDeltaBu2Dst0pi_D0pi0(
+        ("sigmaDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        9.2845e+00);  //, 2, 15);
+    // sigmaDeltaBu2Dst0pi_D0pi0.setVal(sigmaDeltaVal);
+    // ---------------------------- Tails ----------------------------
+    RooRealVar a1DeltaBu2Dst0pi_D0pi0(
+        ("a1DeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        4.2812e-01);  //, 0, 5);
+    RooRealVar a2DeltaBu2Dst0pi_D0pi0(
+        ("a2DeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        -7.3982e-01);  //, -5, -0.001);
+    RooRealVar n1DeltaBu2Dst0pi_D0pi0(
+        ("n1DeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        9.9912e+01);  //, 0, 10);
+    RooRealVar n2DeltaBu2Dst0pi_D0pi0(
+        ("n2DeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        7.0288e+00);  //, 0, 10);
+    // ---------------------------- PDFs ----------------------------
+    RooCBShape pdfDeltaBu2Dst0pi_D0pi01(
+        ("pdfDeltaBu2Dst0pi_D0pi01_" + std::to_string(i)).c_str(), "",
+        deltaMass, meanDeltaBu2Dst0pi_D0pi0, sigmaDeltaBu2Dst0pi_D0pi0,
+        a1DeltaBu2Dst0pi_D0pi0, n1DeltaBu2Dst0pi_D0pi0);
+    RooCBShape pdfDeltaBu2Dst0pi_D0pi02(
+        ("pdfDeltaBu2Dst0pi_D0pi02_" + std::to_string(i)).c_str(), "",
+        deltaMass, meanDeltaBu2Dst0pi_D0pi0, sigmaDeltaBu2Dst0pi_D0pi0,
+        a2DeltaBu2Dst0pi_D0pi0, n2DeltaBu2Dst0pi_D0pi0);
+    RooRealVar fracPdf1DeltaBu2Dst0pi_D0pi0(
+        ("fracPdf1DeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        2.9911e-01);
+    RooAddPdf pdfDeltaBu2Dst0pi_D0pi0(
+        ("pdfDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        RooArgSet(pdfDeltaBu2Dst0pi_D0pi01, pdfDeltaBu2Dst0pi_D0pi02),
+        fracPdf1DeltaBu2Dst0pi_D0pi0);
+
+    // ---------------------------- PDFs: Bu ----------------------------
+    // ---------------------------- Bu2Dst0pi_D0pi0 ----------------------------
+    // ---------------------------- Mean ----------------------------
+    RooRealVar meanBuBu2Dst0pi_D0pi0(
+        ("meanBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        5.3431e+03);  //, 5300, 5400);
+    // ---------------------------- Sigmas ----------------------------
+    RooRealVar sigmaBuBu2Dst0pi_D0pi0(
+        ("sigmaBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        4.6911e+01);  //, 15, 50);
+
+    // ---------------------------- Tails ----------------------------
+    RooRealVar aBuBu2Dst0pi_D0pi0(
+        ("aBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        9.8213e-01);  // 0, 5);
+    RooRealVar nBuBu2Dst0pi_D0pi0(
+        ("nBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        10);  // 0, 100);
+    // ---------------------------- PDFs ----------------------------
+    RooCBShape pdfBuBu2Dst0pi_D0pi0(
+        ("pdfBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "", buMass,
+        meanBuBu2Dst0pi_D0pi0, sigmaBuBu2Dst0pi_D0pi0, aBuBu2Dst0pi_D0pi0,
+        nBuBu2Dst0pi_D0pi0);
+
     // ---------------------------- B02Dstpi Background
     // ----------------------------
-    //
-    // RooRealVar lambdaDeltaBkg(("lambdaDeltaBkg_" +
-    // std::to_string(i)).c_str(),
-    //                           "", 0.01);//, -0.1, 0.1);
-    // RooExponential pdfDeltaBkg(("pdfDeltaBkg_" +
-    // std::to_string(i)).c_str(),
-    //                            "", deltaMass, lambdaDeltaBkg);
 
     RooRealVar thresholdDeltaB02Dstpi(
         ("thresholdDeltaB02Dstpi_" + std::to_string(i)).c_str(), "",
@@ -671,11 +672,6 @@ void FitToys(bool fitDontSave, int &nIter,
 
     // ---------------------------- π/K shared PDFs: Bu
     // ----------------------------
-    // RooRealVar lambdaBuBkg(("lambdaBuBkg_" + std::to_string(i)).c_str(),
-    // "",
-    //                        -0.005);//, -0.1, 0.1);
-    // RooExponential pdfBuBkg(("pdfBuBkg_" + std::to_string(i)).c_str(), "",
-    //                         buMass, lambdaBuBkg);
     // // ---------------------------- Mean ----------------------------
     RooRealVar meanBuB02Dstpi(("meanBuB02Dstpi_" + std::to_string(i)).c_str(),
                               "",
@@ -769,6 +765,23 @@ void FitToys(bool fitDontSave, int &nIter,
     // std::to_string(i)).c_str(),
     //                          "", nDeltaBkg, 0, 100000);
 
+    RooRealVar yieldTotBu2Dst0pi_D0pi0(
+        ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -100000, 100000);
+    RooFormulaVar yieldBuBu2Dst0pi_D0pi0(
+        ("yieldBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(deltaCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                   yieldTotBu2Dst0pi_D0pi0));
+    RooFormulaVar yieldDeltaBu2Dst0pi_D0pi0(
+        ("yieldDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2", RooArgList(buCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                                 yieldTotBu2Dst0pi_D0pi0));
+    RooFormulaVar yieldSharedBu2Dst0pi_D0pi0(
+        ("yieldSharedBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2", RooArgList(boxEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                                 yieldTotBu2Dst0pi_D0pi0));
+
     RooRealVar yieldTotB02Dstpi(
         ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
         initYieldB02Dstpi * orEffB02Dstpi.getVal(), -100000, 100000);
@@ -800,11 +813,13 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooArgSet yieldsDelta;
     yieldsDelta.add(yieldDeltaSignal);
+    yieldsDelta.add(yieldDeltaBu2Dst0pi_D0pi0);
     yieldsDelta.add(yieldDeltaB02Dstpi);
     yieldsDelta.add(yieldDeltaBu2D0rho);
 
     RooArgSet functionsDelta;
     functionsDelta.add(pdfDeltaSignal);
+    functionsDelta.add(pdfDeltaBu2Dst0pi_D0pi0);
     functionsDelta.add(pdfDeltaB02Dstpi);
     functionsDelta.add(pdfDeltaBu2D0rho);
     RooAddPdf pdfDelta(("pdfDelta_" + std::to_string(i)).c_str(), "",
@@ -812,11 +827,13 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooArgSet yieldsBu;
     yieldsBu.add(yieldBuSignal);
+    yieldsBu.add(yieldBuBu2Dst0pi_D0pi0);
     yieldsBu.add(yieldBuB02Dstpi);
     yieldsBu.add(yieldBuBu2D0rho);
 
     RooArgSet functionsBu;
     functionsBu.add(pdfBuSignal);
+    functionsBu.add(pdfBuBu2Dst0pi_D0pi0);
     functionsBu.add(pdfBuB02Dstpi);
     functionsBu.add(pdfBuBu2D0rho);
     RooAddPdf pdfBu(("pdfBu_" + std::to_string(i)).c_str(), "", functionsBu,
@@ -827,10 +844,11 @@ void FitToys(bool fitDontSave, int &nIter,
       TRandom3 random(0);
 
       double nEvtsPerToyBu = yieldBuSignal.getVal() + yieldBuB02Dstpi.getVal() +
-                             yieldBuBu2D0rho.getVal();
-      double nEvtsPerToyDelta = yieldDeltaSignal.getVal() +
-                                yieldDeltaB02Dstpi.getVal() +
-                                yieldDeltaBu2D0rho.getVal();
+                             yieldBuBu2D0rho.getVal() +
+                             yieldBuBu2Dst0pi_D0pi0.getVal();
+      double nEvtsPerToyDelta =
+          yieldDeltaSignal.getVal() + yieldDeltaB02Dstpi.getVal() +
+          yieldDeltaBu2D0rho.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal();
       // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
       // events\n";
 
@@ -907,14 +925,14 @@ void FitToys(bool fitDontSave, int &nIter,
         if (i == 0) {
           std::cout << "Plotting projections of m[Bu]\n";
           PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-                        fitting, pdfBuSignal, pdfBuB02Dstpi, pdfBuBu2D0rho,
-                        outputDir, box_delta_low, box_delta_high, box_bu_low,
-                        box_bu_high);
+                        fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0,
+                        pdfBuB02Dstpi, pdfBuBu2D0rho, outputDir, box_delta_low,
+                        box_delta_high, box_bu_low, box_bu_high);
           std::cout << "Plotting projections of m[Delta]\n";
           PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-                        fitting, pdfDeltaSignal, pdfDeltaB02Dstpi,
-                        pdfDeltaBu2D0rho, outputDir, box_delta_low,
-                        box_delta_high, box_bu_low, box_bu_high);
+                        fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+                        pdfDeltaB02Dstpi, pdfDeltaBu2D0rho, outputDir,
+                        box_delta_low, box_delta_high, box_bu_low, box_bu_high);
           std::cout << "Plotting correlation matrix\n";
           PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
                          box_bu_low, box_bu_high);
