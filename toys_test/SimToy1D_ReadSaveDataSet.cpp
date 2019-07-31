@@ -498,7 +498,7 @@ void FitToys(bool fitDontSave, int &nIter,
              std::string const &box_bu_high) {
   int bu_low = 5050;
   int bu_high = 5800;
-  int delta_low = 60;  // 134;
+  int delta_low = 70;  // 134;
   int delta_high = 210;
 
   int bu_nbins = (bu_high - bu_low) / 10;
