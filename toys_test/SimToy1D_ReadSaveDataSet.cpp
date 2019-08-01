@@ -31,6 +31,7 @@
 #include "TChain.h"
 #include "TFile.h"
 #include "TH2.h"
+#include "TLegend.h"
 #include "TLine.h"
 #include "TPad.h"
 #include "TRandom3.h"
@@ -199,7 +200,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
   chain.Add(inputfile_7.c_str());
   chain.Add(inputfile_8.c_str());
 
-  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma && mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
+  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
+      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
     std::string inputfile_9(
         "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToDirString(mode) +
         "_2015_MagUp/"
@@ -278,8 +280,8 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooAddPdf &sig, RooAbsPdf &bkg1, RooAbsPdf &bkg2,
-                   RooAbsPdf &bkg3, RooAbsPdf &bkg4, RooAbsPdf &bkg5,
+                   RooAddPdf &sigPdf, RooAbsPdf &bkg1Pdf, RooAbsPdf &bkg2Pdf,
+                   RooAbsPdf &bkg3Pdf, RooAbsPdf &bkg4Pdf,
                    std::string const &outputDir, std::string const &box_bu_low,
                    std::string const &box_bu_high,
                    std::string const &box_delta_low,
@@ -324,28 +326,24 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   pullHist = frame->RooPlot::pullHist();
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(sig.GetName()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(sigPdf.GetName()),
       RooFit::LineColor(kBlue), RooFit::LineStyle(kDashed));
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg1.GetName()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg1Pdf.GetName()),
       RooFit::LineColor(kOrange), RooFit::LineStyle(kDashed));
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg2.GetName()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg2Pdf.GetName()),
       RooFit::LineColor(kRed), RooFit::LineStyle(kDashed));
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg3.GetName()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg3Pdf.GetName()),
       RooFit::LineColor(kMagenta), RooFit::LineStyle(kDashed));
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg4.GetName()),
+      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg4Pdf.GetName()),
       RooFit::LineColor(kGreen), RooFit::LineStyle(kDashed));
-  simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg5.GetName()),
-      RooFit::LineColor(kTeal), RooFit::LineStyle(kDashed));
 
   dataHist->plotOn(
       frame.get(),
@@ -356,6 +354,41 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
     pullFrame->SetName(("pullFrame_" + EnumToString(variable)).c_str());
     pullFrame->SetTitle("");
   }
+
+  TLegend legend(0.71, 0.65, 0.95, 0.88);
+  // ------------- Draw Legends -------------- //
+  auto sigHist = std::make_unique<TH1D>(
+      ("sigHist_" + EnumToString(variable)).c_str(), "sigHist", 1, 0, 1);
+  sigHist->SetLineColor(kBlue);
+  sigHist->SetLineStyle(kDashed);
+  sigHist->SetLineWidth(2);
+  auto bkg1Hist = std::make_unique<TH1D>(
+      ("bkg1Hist_" + EnumToString(variable)).c_str(), "bkg1Hist", 1, 0, 1);
+  bkg1Hist->SetLineColor(kOrange);
+  bkg1Hist->SetLineStyle(kDashed);
+  bkg1Hist->SetLineWidth(2);
+  auto bkg2Hist = std::make_unique<TH1D>(
+      ("bkg2Hist_" + EnumToString(variable)).c_str(), "bkg2Hist", 1, 0, 1);
+  bkg2Hist->SetLineColor(kRed);
+  bkg2Hist->SetLineStyle(kDashed);
+  bkg2Hist->SetLineWidth(2);
+  auto bkg3Hist = std::make_unique<TH1D>(
+      ("bkg3Hist_" + EnumToString(variable)).c_str(), "bkg3Hist", 1, 0, 1);
+  bkg3Hist->SetLineColor(kMagenta);
+  bkg3Hist->SetLineStyle(kDashed);
+  bkg3Hist->SetLineWidth(2);
+  auto bkg4Hist = std::make_unique<TH1D>(
+      ("bkg4Hist_" + EnumToString(variable)).c_str(), "bkg4Hist", 1, 0, 1);
+  bkg4Hist->SetLineColor(kGreen);
+  bkg4Hist->SetLineStyle(kDashed);
+  bkg4Hist->SetLineWidth(2);
+
+  legend.SetLineColor(kWhite);
+  legend.AddEntry(sigHist.get(), sigPdf.GetName(), "l");
+  legend.AddEntry(bkg1Hist.get(), bkg1Pdf.GetName(), "l");
+  legend.AddEntry(bkg2Hist.get(), bkg2Pdf.GetName(), "l");
+  legend.AddEntry(bkg3Hist.get(), bkg3Pdf.GetName(), "l");
+  legend.AddEntry(bkg4Hist.get(), bkg4Pdf.GetName(), "l");
 
   TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200, 1000);
 
@@ -385,6 +418,7 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   canvas.cd();
   pad1.cd();
   frame->Draw();
+  legend.Draw("same");
   canvas.Update();
   canvas.SaveAs((outputDir + "/1d_plots/" + EnumToString(variable) + "_" +
                  box_delta_low + "_" + box_delta_high + "_" + box_bu_low + "_" +
@@ -725,8 +759,7 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- WN_Bu2Dst0pi_D0gamma Background
     // ----------------------------
     RooRealVar thresholdDeltaWN_Bu2Dst0pi_D0gamma(
-        ("thresholdDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(),
-        "",
+        ("thresholdDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
         5.4508e+01);  //, 36, 60);
     RooRealVar cDeltaWN_Bu2Dst0pi_D0gamma(
         ("cDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
@@ -764,8 +797,7 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- WN_Bu2Dst0pi_D0pi0 Background
     // ----------------------------
     RooRealVar thresholdDeltaWN_Bu2Dst0pi_D0pi0(
-        ("thresholdDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(),
-        "",
+        ("thresholdDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
         5.1771e+01);  //, 36, 60);
     RooRealVar cDeltaWN_Bu2Dst0pi_D0pi0(
         ("cDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
@@ -778,9 +810,8 @@ void FitToys(bool fitDontSave, int &nIter,
         -1.4204e+00);  //, -2, 2);
     RooDstD0BG pdfDeltaWN_Bu2Dst0pi_D0pi0(
         ("pdfDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        deltaMass, thresholdDeltaWN_Bu2Dst0pi_D0pi0,
-        cDeltaWN_Bu2Dst0pi_D0pi0, aDeltaWN_Bu2Dst0pi_D0pi0,
-        bDeltaWN_Bu2Dst0pi_D0pi0);
+        deltaMass, thresholdDeltaWN_Bu2Dst0pi_D0pi0, cDeltaWN_Bu2Dst0pi_D0pi0,
+        aDeltaWN_Bu2Dst0pi_D0pi0, bDeltaWN_Bu2Dst0pi_D0pi0);
     // ---------------------------- π/K shared PDFs: Bu
     // ----------------------------
     // // ---------------------------- Sigmas ----------------------------
@@ -791,6 +822,31 @@ void FitToys(bool fitDontSave, int &nIter,
     RooCBShape pdfBuWN_Bu2Dst0pi_D0pi0(
         ("pdfBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "", buMass,
         meanBuWN, sigmaBuWN_Bu2Dst0pi_D0pi0, aBuWN, nBuWN);
+
+    // ---------------------------- Total Wrong Neutral Background
+    // ----------------------------
+    RooRealVar fracPdfDeltaWN_Bu2Dst0pi_D0gamma(
+        ("fracPdfDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal() /
+            (initYieldWN_Bu2Dst0pi_D0gamma *
+                 buCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
+             initYieldWN_Bu2Dst0pi_D0pi0 *
+                 buCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
+    RooAddPdf pdfDeltaWN(
+        ("pdfDeltaWN_" + std::to_string(i)).c_str(), "",
+        RooArgSet(pdfDeltaWN_Bu2Dst0pi_D0gamma, pdfDeltaWN_Bu2Dst0pi_D0pi0),
+        fracPdfDeltaWN_Bu2Dst0pi_D0gamma);
+    RooRealVar fracPdfBuWN_Bu2Dst0pi_D0gamma(
+        ("fracPdfBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal() /
+            (initYieldWN_Bu2Dst0pi_D0gamma *
+                 deltaCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
+             initYieldWN_Bu2Dst0pi_D0pi0 *
+                 deltaCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
+    RooAddPdf pdfBuWN(
+        ("pdfBuWN_" + std::to_string(i)).c_str(), "",
+        RooArgSet(pdfBuWN_Bu2Dst0pi_D0gamma, pdfBuWN_Bu2Dst0pi_D0pi0),
+        fracPdfBuWN_Bu2Dst0pi_D0gamma);
 
     // ---------------------------- B02Dstpi Background
     // ----------------------------
@@ -963,6 +1019,14 @@ void FitToys(bool fitDontSave, int &nIter,
         RooArgList(boxEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
                    yieldTotWN_Bu2Dst0pi_D0gamma));
 
+    RooFormulaVar yieldBuWN(
+        ("yieldBuWN_" + std::to_string(i)).c_str(), "", "@0+@1",
+        RooArgList(yieldBuWN_Bu2Dst0pi_D0pi0, yieldBuWN_Bu2Dst0pi_D0gamma));
+    RooFormulaVar yieldDeltaWN(("yieldDeltaWN_" + std::to_string(i)).c_str(),
+                               "", "@0+@1",
+                               RooArgList(yieldDeltaWN_Bu2Dst0pi_D0pi0,
+                                          yieldDeltaWN_Bu2Dst0pi_D0gamma));
+
     RooRealVar yieldTotB02Dstpi(
         ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
         initYieldB02Dstpi * orEffB02Dstpi.getVal(), -100000, 100000);
@@ -995,16 +1059,14 @@ void FitToys(bool fitDontSave, int &nIter,
     RooArgSet yieldsDelta;
     yieldsDelta.add(yieldDeltaSignal);
     yieldsDelta.add(yieldDeltaBu2Dst0pi_D0pi0);
-    yieldsDelta.add(yieldDeltaWN_Bu2Dst0pi_D0gamma);
-    yieldsDelta.add(yieldDeltaWN_Bu2Dst0pi_D0pi0);
+    yieldsDelta.add(yieldDeltaWN);
     yieldsDelta.add(yieldDeltaB02Dstpi);
     yieldsDelta.add(yieldDeltaBu2D0rho);
 
     RooArgSet functionsDelta;
     functionsDelta.add(pdfDeltaSignal);
     functionsDelta.add(pdfDeltaBu2Dst0pi_D0pi0);
-    functionsDelta.add(pdfDeltaWN_Bu2Dst0pi_D0gamma);
-    functionsDelta.add(pdfDeltaWN_Bu2Dst0pi_D0pi0);
+    functionsDelta.add(pdfDeltaWN);
     functionsDelta.add(pdfDeltaB02Dstpi);
     functionsDelta.add(pdfDeltaBu2D0rho);
     RooAddPdf pdfDelta(("pdfDelta_" + std::to_string(i)).c_str(), "",
@@ -1013,16 +1075,14 @@ void FitToys(bool fitDontSave, int &nIter,
     RooArgSet yieldsBu;
     yieldsBu.add(yieldBuSignal);
     yieldsBu.add(yieldBuBu2Dst0pi_D0pi0);
-    yieldsBu.add(yieldBuWN_Bu2Dst0pi_D0gamma);
-    yieldsBu.add(yieldBuWN_Bu2Dst0pi_D0pi0);
+    yieldsBu.add(yieldBuWN);
     yieldsBu.add(yieldBuB02Dstpi);
     yieldsBu.add(yieldBuBu2D0rho);
 
     RooArgSet functionsBu;
     functionsBu.add(pdfBuSignal);
     functionsBu.add(pdfBuBu2Dst0pi_D0pi0);
-    functionsBu.add(pdfBuWN_Bu2Dst0pi_D0gamma);
-    functionsBu.add(pdfBuWN_Bu2Dst0pi_D0pi0);
+    functionsBu.add(pdfBuWN);
     functionsBu.add(pdfBuB02Dstpi);
     functionsBu.add(pdfBuBu2D0rho);
     RooAddPdf pdfBu(("pdfBu_" + std::to_string(i)).c_str(), "", functionsBu,
@@ -1035,13 +1095,11 @@ void FitToys(bool fitDontSave, int &nIter,
       double nEvtsPerToyBu = yieldBuSignal.getVal() + yieldBuB02Dstpi.getVal() +
                              yieldBuBu2D0rho.getVal() +
                              yieldBuBu2Dst0pi_D0pi0.getVal() +
-                             yieldBuWN_Bu2Dst0pi_D0gamma.getVal() +
-                             yieldBuWN_Bu2Dst0pi_D0pi0.getVal();
+                             yieldBuWN.getVal();
       double nEvtsPerToyDelta =
           yieldDeltaSignal.getVal() + yieldDeltaB02Dstpi.getVal() +
           yieldDeltaBu2D0rho.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
-          yieldDeltaWN_Bu2Dst0pi_D0gamma.getVal() +
-          yieldDeltaWN_Bu2Dst0pi_D0pi0.getVal();
+          yieldDeltaWN.getVal();
       // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
       // events\n";
 
@@ -1118,17 +1176,15 @@ void FitToys(bool fitDontSave, int &nIter,
         if (i == 0) {
           std::cout << "Plotting projections of m[Bu]\n";
           PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-                        fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0,
-                        pdfBuWN_Bu2Dst0pi_D0gamma, pdfBuWN_Bu2Dst0pi_D0pi0,
+                        fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuWN,
                         pdfBuB02Dstpi, pdfBuBu2D0rho, outputDir, box_delta_low,
                         box_delta_high, box_bu_low, box_bu_high);
           std::cout << "Plotting projections of m[Delta]\n";
           PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
                         fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaWN_Bu2Dst0pi_D0gamma,
-                        pdfDeltaWN_Bu2Dst0pi_D0pi0, pdfDeltaB02Dstpi,
-                        pdfDeltaBu2D0rho, outputDir, box_delta_low,
-                        box_delta_high, box_bu_low, box_bu_high);
+                        pdfDeltaWN, pdfDeltaB02Dstpi, pdfDeltaBu2D0rho,
+                        outputDir, box_delta_low, box_delta_high, box_bu_low,
+                        box_bu_high);
           std::cout << "Plotting correlation matrix\n";
           PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
                          box_bu_low, box_bu_high);
