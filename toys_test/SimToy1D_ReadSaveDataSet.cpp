@@ -281,7 +281,7 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
                    RooSimultaneous &simPdf, RooCategory &fitting,
                    RooAddPdf &sigPdf, RooAbsPdf &bkg1Pdf, RooAbsPdf &bkg2Pdf,
-                   RooAbsPdf &bkg3Pdf, RooAbsPdf &bkg4Pdf,
+                   RooAbsPdf &bkg3Pdf,// RooAbsPdf &bkg4Pdf,
                    std::string const &outputDir, std::string const &box_bu_low,
                    std::string const &box_bu_high,
                    std::string const &box_delta_low,
@@ -339,11 +339,11 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   simPdf.plotOn(
       frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
       RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg3Pdf.GetName()),
-      RooFit::LineColor(kMagenta), RooFit::LineStyle(kDashed));
-  simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg4Pdf.GetName()),
       RooFit::LineColor(kGreen), RooFit::LineStyle(kDashed));
+  // simPdf.plotOn(
+  //     frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
+  //     RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg4Pdf.GetName()),
+  //     RooFit::LineColor(kMagenta), RooFit::LineStyle(kDashed));
 
   dataHist->plotOn(
       frame.get(),
@@ -374,21 +374,21 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
   bkg2Hist->SetLineWidth(2);
   auto bkg3Hist = std::make_unique<TH1D>(
       ("bkg3Hist_" + EnumToString(variable)).c_str(), "bkg3Hist", 1, 0, 1);
-  bkg3Hist->SetLineColor(kMagenta);
+  bkg3Hist->SetLineColor(kGreen);
   bkg3Hist->SetLineStyle(kDashed);
   bkg3Hist->SetLineWidth(2);
-  auto bkg4Hist = std::make_unique<TH1D>(
-      ("bkg4Hist_" + EnumToString(variable)).c_str(), "bkg4Hist", 1, 0, 1);
-  bkg4Hist->SetLineColor(kGreen);
-  bkg4Hist->SetLineStyle(kDashed);
-  bkg4Hist->SetLineWidth(2);
+  // auto bkg4Hist = std::make_unique<TH1D>(
+  //     ("bkg4Hist_" + EnumToString(variable)).c_str(), "bkg4Hist", 1, 0, 1);
+  // bkg4Hist->SetLineColor(kMagenta);
+  // bkg4Hist->SetLineStyle(kDashed);
+  // bkg4Hist->SetLineWidth(2);
 
   legend.SetLineColor(kWhite);
   legend.AddEntry(sigHist.get(), sigPdf.GetName(), "l");
   legend.AddEntry(bkg1Hist.get(), bkg1Pdf.GetName(), "l");
   legend.AddEntry(bkg2Hist.get(), bkg2Pdf.GetName(), "l");
   legend.AddEntry(bkg3Hist.get(), bkg3Pdf.GetName(), "l");
-  legend.AddEntry(bkg4Hist.get(), bkg4Pdf.GetName(), "l");
+  // legend.AddEntry(bkg4Hist.get(), bkg4Pdf.GetName(), "l");
 
   TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200, 1000);
 
@@ -742,6 +742,13 @@ void FitToys(bool fitDontSave, int &nIter,
         ("yieldSharedBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(boxEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
 
+    RooFormulaVar yieldBuMisRec(("yieldBuMisRec_" + std::to_string(i)).c_str(),
+                                "", "@0+@1",
+                                RooArgList(yieldBuB02Dstpi, yieldBuBu2D0rho));
+    RooFormulaVar yieldDeltaMisRec(
+        ("yieldDeltaMisRec_" + std::to_string(i)).c_str(), "", "@0+@1",
+        RooArgList(yieldDeltaB02Dstpi, yieldDeltaBu2D0rho));
+
     // ---------------------------- PDFs ----------------------------
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
@@ -1048,6 +1055,23 @@ void FitToys(bool fitDontSave, int &nIter,
     RooAddPdf pdfBuBu2D0rho(("pdfBuBu2D0rho_" + std::to_string(i)).c_str(), "",
                             RooArgSet(pdfBuBu2D0rho1, pdfBuBu2D0rho2),
                             fracPdf1BuBu2D0rho);
+    // ---------------------------- Total Mis-Reconstructed Background
+    // ----------------------------
+    // RooRealVar fracPdfDeltaMisRec_B02Dstpi(
+    //     ("fracPdfDeltaMisRec_B02Dstpi_" + std::to_string(i)).c_str(),
+    //     "",
+    //     initYieldB02Dstpi * buCutEffB02Dstpi.getVal()
+    //     /
+    //         (initYieldB02Dstpi *
+    //              buCutEffB02Dstpi.getVal() +
+    //          initYieldBu2D0rho *
+    //              buCutEffBu2D0rho.getVal()));
+    RooAddPdf pdfDeltaMisRec(("pdfDeltaMisRec_" + std::to_string(i)).c_str(), "",
+                         RooArgSet(pdfDeltaB02Dstpi, pdfDeltaBu2D0rho),
+                         RooArgSet(yieldDeltaB02Dstpi, yieldDeltaBu2D0rho));
+    RooAddPdf pdfBuMisRec(("pdfBuMisRec_" + std::to_string(i)).c_str(), "",
+                      RooArgSet(pdfBuB02Dstpi, pdfBuBu2D0rho),
+                      RooArgSet(yieldBuB02Dstpi, yieldBuBu2D0rho));
 
     // ---------------------------- Add PDFs and yields
     // ----------------------------
@@ -1056,15 +1080,13 @@ void FitToys(bool fitDontSave, int &nIter,
     yieldsDelta.add(yieldDeltaSignal);
     yieldsDelta.add(yieldDeltaBu2Dst0pi_D0pi0);
     yieldsDelta.add(yieldDeltaWN);
-    yieldsDelta.add(yieldDeltaB02Dstpi);
-    yieldsDelta.add(yieldDeltaBu2D0rho);
+    yieldsDelta.add(yieldDeltaMisRec);
 
     RooArgSet functionsDelta;
     functionsDelta.add(pdfDeltaSignal);
     functionsDelta.add(pdfDeltaBu2Dst0pi_D0pi0);
     functionsDelta.add(pdfDeltaWN);
-    functionsDelta.add(pdfDeltaB02Dstpi);
-    functionsDelta.add(pdfDeltaBu2D0rho);
+    functionsDelta.add(pdfDeltaMisRec);
     RooAddPdf pdfDelta(("pdfDelta_" + std::to_string(i)).c_str(), "",
                        functionsDelta, yieldsDelta);
 
@@ -1072,15 +1094,13 @@ void FitToys(bool fitDontSave, int &nIter,
     yieldsBu.add(yieldBuSignal);
     yieldsBu.add(yieldBuBu2Dst0pi_D0pi0);
     yieldsBu.add(yieldBuWN);
-    yieldsBu.add(yieldBuB02Dstpi);
-    yieldsBu.add(yieldBuBu2D0rho);
+    yieldsBu.add(yieldBuMisRec);
 
     RooArgSet functionsBu;
     functionsBu.add(pdfBuSignal);
     functionsBu.add(pdfBuBu2Dst0pi_D0pi0);
     functionsBu.add(pdfBuWN);
-    functionsBu.add(pdfBuB02Dstpi);
-    functionsBu.add(pdfBuBu2D0rho);
+    functionsBu.add(pdfBuMisRec);
     RooAddPdf pdfBu(("pdfBu_" + std::to_string(i)).c_str(), "", functionsBu,
                     yieldsBu);
 
@@ -1088,14 +1108,12 @@ void FitToys(bool fitDontSave, int &nIter,
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
 
-      double nEvtsPerToyBu = yieldBuSignal.getVal() + yieldBuB02Dstpi.getVal() +
-                             yieldBuBu2D0rho.getVal() +
+      double nEvtsPerToyBu = yieldBuSignal.getVal() +
                              yieldBuBu2Dst0pi_D0pi0.getVal() +
-                             yieldBuWN.getVal();
+                             yieldBuWN.getVal() + yieldBuMisRec.getVal();
       double nEvtsPerToyDelta =
-          yieldDeltaSignal.getVal() + yieldDeltaB02Dstpi.getVal() +
-          yieldDeltaBu2D0rho.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
-          yieldDeltaWN.getVal();
+          yieldDeltaSignal.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
+          yieldDeltaWN.getVal() + yieldDeltaMisRec.getVal();
       // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
       // events\n";
 
@@ -1173,12 +1191,12 @@ void FitToys(bool fitDontSave, int &nIter,
           std::cout << "Plotting projections of m[Bu]\n";
           PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
                         fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuWN,
-                        pdfBuB02Dstpi, pdfBuBu2D0rho, outputDir, box_delta_low,
+                        pdfBuMisRec, outputDir, box_delta_low,
                         box_delta_high, box_bu_low, box_bu_high);
           std::cout << "Plotting projections of m[Delta]\n";
           PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
                         fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaWN, pdfDeltaB02Dstpi, pdfDeltaBu2D0rho,
+                        pdfDeltaWN, pdfDeltaMisRec,
                         outputDir, box_delta_low, box_delta_high, box_bu_low,
                         box_bu_high);
           std::cout << "Plotting correlation matrix\n";
