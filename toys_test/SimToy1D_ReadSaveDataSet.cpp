@@ -557,8 +557,8 @@ void FitToys(bool fitDontSave, int &nIter,
   // ----------------------------
   double initYieldSig = 40000;
   double initYieldBu2Dst0pi_D0pi0 = initYieldSig * 0.916;
-  double initYieldWN_Bu2Dst0pi_D0gamma = initYieldSig * 0.473;
-  double initYieldWN_Bu2Dst0pi_D0pi0 = initYieldSig * 0.809;
+  double initYieldWN = initYieldSig * (0.473+0.809);
+  // double initYieldWN_Bu2Dst0pi_D0pi0 = initYieldSig * 0.809;
   double initYieldB02Dstpi = initYieldSig * 0.643;
   double initYieldBu2D0rho = initYieldSig * 0.973;
 
@@ -668,53 +668,22 @@ void FitToys(bool fitDontSave, int &nIter,
         "(@0/@1)*@2", RooArgList(boxEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
                                  yieldTotBu2Dst0pi_D0pi0));
 
-    RooRealVar yieldTotWN_Bu2Dst0pi_D0pi0(
-        ("yieldTotWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0pi0 * orEffWN_Bu2Dst0pi_D0pi0.getVal(), -100000,
-        100000);
-    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0pi0(
-        ("yieldBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0pi0(
-        ("yieldDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(buCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0pi0(
-        ("yieldSharedWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(boxEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-
-    RooRealVar yieldTotWN_Bu2Dst0pi_D0gamma(
-        ("yieldTotWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0gamma * orEffWN_Bu2Dst0pi_D0gamma.getVal(),
+    RooRealVar yieldTotWN(
+        ("yieldTotWN_" + std::to_string(i)).c_str(), "",
+        initYieldWN * orEffWN_Bu2Dst0pi_D0gamma.getVal(),
         -100000, 100000);
-    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0gamma(
-        ("yieldBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0gamma(
-        ("yieldDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
+    RooFormulaVar yieldBuWN(("yieldBuWN_" + std::to_string(i)).c_str(), "",
+                            "(@0/@1)*@2",
+                            RooArgList(deltaCutEffWN_Bu2Dst0pi_D0gamma,
+                                       orEffWN_Bu2Dst0pi_D0gamma, yieldTotWN));
+    RooFormulaVar yieldDeltaWN(
+        ("yieldDeltaWN_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(buCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0gamma(
-        ("yieldSharedWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
+                   yieldTotWN));
+    RooFormulaVar yieldSharedWN(
+        ("yieldSharedWN_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(boxEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-
-    RooFormulaVar yieldBuWN(
-        ("yieldBuWN_" + std::to_string(i)).c_str(), "", "@0+@1",
-        RooArgList(yieldBuWN_Bu2Dst0pi_D0pi0, yieldBuWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldDeltaWN(("yieldDeltaWN_" + std::to_string(i)).c_str(),
-                               "", "@0+@1",
-                               RooArgList(yieldDeltaWN_Bu2Dst0pi_D0pi0,
-                                          yieldDeltaWN_Bu2Dst0pi_D0gamma));
+                   yieldTotWN));
 
     RooRealVar yieldTotB02Dstpi(
         ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
@@ -879,93 +848,36 @@ void FitToys(bool fitDontSave, int &nIter,
         meanBuBu2Dst0pi_D0pi0, sigmaBuBu2Dst0pi_D0pi0, aBuBu2Dst0pi_D0pi0,
         nBuBu2Dst0pi_D0pi0);
 
-    // ---------------------------- WN_Bu2Dst0pi_D0gamma Background
+    // ---------------------------- Wrong Neutral Background
     // ----------------------------
-    RooRealVar thresholdDeltaWN_Bu2Dst0pi_D0gamma(
-        ("thresholdDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        5.4508e+01);  //, 36, 60);
-    RooRealVar cDeltaWN_Bu2Dst0pi_D0gamma(
-        ("cDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        4.7038e+01);  //, 0, 100);
-    RooRealVar aDeltaWN_Bu2Dst0pi_D0gamma(
-        ("aDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        9.5652e-01);  //, -2, 2);
-    RooRealVar bDeltaWN_Bu2Dst0pi_D0gamma(
-        ("bDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        -1.1593e+00);  //, -2, 2);
-    RooDstD0BG pdfDeltaWN_Bu2Dst0pi_D0gamma(
-        ("pdfDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        deltaMass, thresholdDeltaWN_Bu2Dst0pi_D0gamma,
-        cDeltaWN_Bu2Dst0pi_D0gamma, aDeltaWN_Bu2Dst0pi_D0gamma,
-        bDeltaWN_Bu2Dst0pi_D0gamma);
+    RooRealVar thresholdDeltaWN(
+        ("thresholdDeltaWN_" + std::to_string(i)).c_str(), "",
+        6.1226e+01);  //, 40, 70);
+    RooRealVar cDeltaWN(("cDeltaWN_" + std::to_string(i)).c_str(), "",
+                        3.2440e+01);  //, 0, 100);
+    RooRealVar aDeltaWN(("aDeltaWN_" + std::to_string(i)).c_str(), "",
+                        1.2283e+00);  //, -2, 2);
+    RooRealVar bDeltaWN(("bDeltaWN_" + std::to_string(i)).c_str(), "",
+                        -1.7603e+00);  //, -2, 2);
+    RooDstD0BG pdfDeltaWN(("pdfDeltaWN_" + std::to_string(i)).c_str(), "",
+                          deltaMass, thresholdDeltaWN, cDeltaWN, aDeltaWN,
+                          bDeltaWN);
     // ---------------------------- π/K shared PDFs: Bu
     // ----------------------------
     // // ---------------------------- Mean ----------------------------
     RooRealVar meanBuWN(("meanBuWN_" + std::to_string(i)).c_str(), "",
-                        5.3095e+03);  //, 5280, 5310);
+                        5.3099e+03);  //, 5280, 5310);
     // // ---------------------------- Sigmas ----------------------------
-    RooRealVar sigmaBuWN_Bu2Dst0pi_D0gamma(
-        ("sigmaBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        1.0391e+02);  //, 50, 100);
+    RooRealVar sigmaBuWN(("sigmaBuWN_" + std::to_string(i)).c_str(), "",
+                         9.1344e+01);  //, 50, 100);
     // ---------------------------- Tails ----------------------------
     RooRealVar aBuWN(("aBuWN_" + std::to_string(i)).c_str(), "",
-                     2.9986e+00);  // 0, 5);
+                     2.8402e+00);  // 0, 5);
     RooRealVar nBuWN(("nBuWN_" + std::to_string(i)).c_str(), "",
-                     2.9986e+00);  // 0, 100);
+                     2.1360e+00);  // 0, 100);
     // ---------------------------- PDFs ----------------------------
-    RooCBShape pdfBuWN_Bu2Dst0pi_D0gamma(
-        ("pdfBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "", buMass,
-        meanBuWN, sigmaBuWN_Bu2Dst0pi_D0gamma, aBuWN, nBuWN);
-
-    // ---------------------------- WN_Bu2Dst0pi_D0pi0 Background
-    // ----------------------------
-    RooRealVar thresholdDeltaWN_Bu2Dst0pi_D0pi0(
-        ("thresholdDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        5.1771e+01);  //, 36, 60);
-    RooRealVar cDeltaWN_Bu2Dst0pi_D0pi0(
-        ("cDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        3.6426e+01);  //, 0, 100);
-    RooRealVar aDeltaWN_Bu2Dst0pi_D0pi0(
-        ("aDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        1.0995e+00);  //, -2, 2);
-    RooRealVar bDeltaWN_Bu2Dst0pi_D0pi0(
-        ("bDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        -1.4204e+00);  //, -2, 2);
-    RooDstD0BG pdfDeltaWN_Bu2Dst0pi_D0pi0(
-        ("pdfDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        deltaMass, thresholdDeltaWN_Bu2Dst0pi_D0pi0, cDeltaWN_Bu2Dst0pi_D0pi0,
-        aDeltaWN_Bu2Dst0pi_D0pi0, bDeltaWN_Bu2Dst0pi_D0pi0);
-    // ---------------------------- π/K shared PDFs: Bu
-    // ----------------------------
-    // // ---------------------------- Sigmas ----------------------------
-    RooRealVar sigmaBuWN_Bu2Dst0pi_D0pi0(
-        ("sigmaBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        1.0391e+02);  //, 50, 100);
-    // ---------------------------- PDFs ----------------------------
-    RooCBShape pdfBuWN_Bu2Dst0pi_D0pi0(
-        ("pdfBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "", buMass,
-        meanBuWN, sigmaBuWN_Bu2Dst0pi_D0pi0, aBuWN, nBuWN);
-
-    // ---------------------------- Total Wrong Neutral Background
-    // ----------------------------
-    // RooRealVar fracPdfDeltaWN_Bu2Dst0pi_D0gamma(
-    //     ("fracPdfDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(),
-    //     "",
-    //     initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal()
-    //     /
-    //         (initYieldWN_Bu2Dst0pi_D0gamma *
-    //              buCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
-    //          initYieldWN_Bu2Dst0pi_D0pi0 *
-    //              buCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
-    RooAddPdf pdfDeltaWN(
-        ("pdfDeltaWN_" + std::to_string(i)).c_str(), "",
-        RooArgSet(pdfDeltaWN_Bu2Dst0pi_D0gamma, pdfDeltaWN_Bu2Dst0pi_D0pi0),
-        RooArgSet(yieldDeltaWN_Bu2Dst0pi_D0gamma,
-                  yieldDeltaWN_Bu2Dst0pi_D0pi0));
-    RooAddPdf pdfBuWN(
-        ("pdfBuWN_" + std::to_string(i)).c_str(), "",
-        RooArgSet(pdfBuWN_Bu2Dst0pi_D0gamma, pdfBuWN_Bu2Dst0pi_D0pi0),
-        RooArgSet(yieldBuWN_Bu2Dst0pi_D0gamma, yieldBuWN_Bu2Dst0pi_D0pi0));
+    RooCBShape pdfBuWN(("pdfBuWN_" + std::to_string(i)).c_str(), "", buMass,
+                       meanBuWN, sigmaBuWN, aBuWN, nBuWN);
 
     // ---------------------------- B02Dstpi Background
     // ----------------------------
@@ -1080,13 +992,13 @@ void FitToys(bool fitDontSave, int &nIter,
     yieldsDelta.add(yieldDeltaSignal);
     yieldsDelta.add(yieldDeltaBu2Dst0pi_D0pi0);
     yieldsDelta.add(yieldDeltaWN);
-    yieldsDelta.add(yieldDeltaMisRec);
+    // yieldsDelta.add(yieldDeltaMisRec);
 
     RooArgSet functionsDelta;
     functionsDelta.add(pdfDeltaSignal);
     functionsDelta.add(pdfDeltaBu2Dst0pi_D0pi0);
     functionsDelta.add(pdfDeltaWN);
-    functionsDelta.add(pdfDeltaMisRec);
+    // functionsDelta.add(pdfDeltaMisRec);
     RooAddPdf pdfDelta(("pdfDelta_" + std::to_string(i)).c_str(), "",
                        functionsDelta, yieldsDelta);
 
@@ -1094,13 +1006,13 @@ void FitToys(bool fitDontSave, int &nIter,
     yieldsBu.add(yieldBuSignal);
     yieldsBu.add(yieldBuBu2Dst0pi_D0pi0);
     yieldsBu.add(yieldBuWN);
-    yieldsBu.add(yieldBuMisRec);
+    // yieldsBu.add(yieldBuMisRec);
 
     RooArgSet functionsBu;
     functionsBu.add(pdfBuSignal);
     functionsBu.add(pdfBuBu2Dst0pi_D0pi0);
     functionsBu.add(pdfBuWN);
-    functionsBu.add(pdfBuMisRec);
+    // functionsBu.add(pdfBuMisRec);
     RooAddPdf pdfBu(("pdfBu_" + std::to_string(i)).c_str(), "", functionsBu,
                     yieldsBu);
 
@@ -1110,10 +1022,10 @@ void FitToys(bool fitDontSave, int &nIter,
 
       double nEvtsPerToyBu = yieldBuSignal.getVal() +
                              yieldBuBu2Dst0pi_D0pi0.getVal() +
-                             yieldBuWN.getVal() + yieldBuMisRec.getVal();
+                             yieldBuWN.getVal();// + yieldBuMisRec.getVal();
       double nEvtsPerToyDelta =
           yieldDeltaSignal.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
-          yieldDeltaWN.getVal() + yieldDeltaMisRec.getVal();
+          yieldDeltaWN.getVal();// + yieldDeltaMisRec.getVal();
       // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
       // events\n";
 
