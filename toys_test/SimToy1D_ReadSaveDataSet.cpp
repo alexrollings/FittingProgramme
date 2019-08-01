@@ -1187,22 +1187,22 @@ void FitToys(bool fitDontSave, int &nIter,
                          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                          RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-        if (i == 0) {
-          std::cout << "Plotting projections of m[Bu]\n";
-          PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-                        fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuWN,
-                        pdfBuMisRec, outputDir, box_delta_low,
-                        box_delta_high, box_bu_low, box_bu_high);
-          std::cout << "Plotting projections of m[Delta]\n";
-          PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-                        fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaWN, pdfDeltaMisRec,
-                        outputDir, box_delta_low, box_delta_high, box_bu_low,
-                        box_bu_high);
-          std::cout << "Plotting correlation matrix\n";
-          PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-                         box_bu_low, box_bu_high);
-        }
+        // if (i == 0) {
+        //   std::cout << "Plotting projections of m[Bu]\n";
+        //   PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
+        //                 fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuWN,
+        //                 pdfBuMisRec, outputDir, box_delta_low,
+        //                 box_delta_high, box_bu_low, box_bu_high);
+        //   std::cout << "Plotting projections of m[Delta]\n";
+        //   PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
+        //                 fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+        //                 pdfDeltaWN, pdfDeltaMisRec,
+        //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
+        //                 box_bu_high);
+        //   std::cout << "Plotting correlation matrix\n";
+        //   PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+        //                  box_bu_low, box_bu_high);
+        // }
         result->Print("v");
 
         // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
