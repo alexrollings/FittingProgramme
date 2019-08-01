@@ -626,6 +626,122 @@ void FitToys(bool fitDontSave, int &nIter,
 
   // Loop over data files and perform 1D fit to each dataset
   for (int i = 0; i < nIter; ++i) {
+    // ---------------------------- Yields ----------------------------
+    RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
+                              "", initYieldSig * orEffSignal.getVal(), -100000,
+                              100000);
+    RooFormulaVar yieldBuSignal(
+        ("yieldBuSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(deltaCutEffSignal, orEffSignal, yieldTotSignal));
+    RooFormulaVar yieldDeltaSignal(
+        ("yieldDeltaSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(buCutEffSignal, orEffSignal, yieldTotSignal));
+    RooFormulaVar yieldSharedSignal(
+        ("yieldSharedSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(boxEffSignal, orEffSignal, yieldTotSignal));
+
+    // // Bkg yields when using exponential
+    // double nBuBkg = nBu - 40000 * deltaCutEffSignal.getVal();
+    // double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
+    //
+    // RooRealVar yieldBuBkg(("yieldBuBkg_" + std::to_string(i)).c_str(), "",
+    //                       nBuBkg, 0, 100000);
+    // RooRealVar yieldDeltaBkg(("yieldDeltaBkg_" +
+    // std::to_string(i)).c_str(),
+    //                          "", nDeltaBkg, 0, 100000);
+
+    RooRealVar yieldTotBu2Dst0pi_D0pi0(
+        ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -100000,
+        100000);
+    RooFormulaVar yieldBuBu2Dst0pi_D0pi0(
+        ("yieldBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(deltaCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                   yieldTotBu2Dst0pi_D0pi0));
+    RooFormulaVar yieldDeltaBu2Dst0pi_D0pi0(
+        ("yieldDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2", RooArgList(buCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                                 yieldTotBu2Dst0pi_D0pi0));
+    RooFormulaVar yieldSharedBu2Dst0pi_D0pi0(
+        ("yieldSharedBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2", RooArgList(boxEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
+                                 yieldTotBu2Dst0pi_D0pi0));
+
+    RooRealVar yieldTotWN_Bu2Dst0pi_D0pi0(
+        ("yieldTotWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        initYieldWN_Bu2Dst0pi_D0pi0 * orEffWN_Bu2Dst0pi_D0pi0.getVal(), -100000,
+        100000);
+    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0pi0(
+        ("yieldBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
+                   yieldTotWN_Bu2Dst0pi_D0pi0));
+    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0pi0(
+        ("yieldDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(buCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
+                   yieldTotWN_Bu2Dst0pi_D0pi0));
+    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0pi0(
+        ("yieldSharedWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(boxEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
+                   yieldTotWN_Bu2Dst0pi_D0pi0));
+
+    RooRealVar yieldTotWN_Bu2Dst0pi_D0gamma(
+        ("yieldTotWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        initYieldWN_Bu2Dst0pi_D0gamma * orEffWN_Bu2Dst0pi_D0gamma.getVal(),
+        -100000, 100000);
+    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0gamma(
+        ("yieldBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
+                   yieldTotWN_Bu2Dst0pi_D0gamma));
+    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0gamma(
+        ("yieldDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(buCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
+                   yieldTotWN_Bu2Dst0pi_D0gamma));
+    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0gamma(
+        ("yieldSharedWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+        "(@0/@1)*@2",
+        RooArgList(boxEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
+                   yieldTotWN_Bu2Dst0pi_D0gamma));
+
+    RooFormulaVar yieldBuWN(
+        ("yieldBuWN_" + std::to_string(i)).c_str(), "", "@0+@1",
+        RooArgList(yieldBuWN_Bu2Dst0pi_D0pi0, yieldBuWN_Bu2Dst0pi_D0gamma));
+    RooFormulaVar yieldDeltaWN(("yieldDeltaWN_" + std::to_string(i)).c_str(),
+                               "", "@0+@1",
+                               RooArgList(yieldDeltaWN_Bu2Dst0pi_D0pi0,
+                                          yieldDeltaWN_Bu2Dst0pi_D0gamma));
+
+    RooRealVar yieldTotB02Dstpi(
+        ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
+        initYieldB02Dstpi * orEffB02Dstpi.getVal(), -100000, 100000);
+    RooFormulaVar yieldBuB02Dstpi(
+        ("yieldBuB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(deltaCutEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
+    RooFormulaVar yieldDeltaB02Dstpi(
+        ("yieldDeltaB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(buCutEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
+    RooFormulaVar yieldSharedB02Dstpi(
+        ("yieldSharedB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(boxEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
+
+    RooRealVar yieldTotBu2D0rho(
+        ("yieldTotBu2D0rho_" + std::to_string(i)).c_str(), "",
+        initYieldBu2D0rho * orEffBu2D0rho.getVal(), -100000, 100000);
+    RooFormulaVar yieldBuBu2D0rho(
+        ("yieldBuBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(deltaCutEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
+    RooFormulaVar yieldDeltaBu2D0rho(
+        ("yieldDeltaBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(buCutEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
+    RooFormulaVar yieldSharedBu2D0rho(
+        ("yieldSharedBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
+        RooArgList(boxEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
+
     // ---------------------------- PDFs ----------------------------
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
@@ -825,28 +941,24 @@ void FitToys(bool fitDontSave, int &nIter,
 
     // ---------------------------- Total Wrong Neutral Background
     // ----------------------------
-    RooRealVar fracPdfDeltaWN_Bu2Dst0pi_D0gamma(
-        ("fracPdfDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal() /
-            (initYieldWN_Bu2Dst0pi_D0gamma *
-                 buCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
-             initYieldWN_Bu2Dst0pi_D0pi0 *
-                 buCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
+    // RooRealVar fracPdfDeltaWN_Bu2Dst0pi_D0gamma(
+    //     ("fracPdfDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(),
+    //     "",
+    //     initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal()
+    //     /
+    //         (initYieldWN_Bu2Dst0pi_D0gamma *
+    //              buCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
+    //          initYieldWN_Bu2Dst0pi_D0pi0 *
+    //              buCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
     RooAddPdf pdfDeltaWN(
         ("pdfDeltaWN_" + std::to_string(i)).c_str(), "",
         RooArgSet(pdfDeltaWN_Bu2Dst0pi_D0gamma, pdfDeltaWN_Bu2Dst0pi_D0pi0),
-        fracPdfDeltaWN_Bu2Dst0pi_D0gamma);
-    RooRealVar fracPdfBuWN_Bu2Dst0pi_D0gamma(
-        ("fracPdfBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0gamma * buCutEffWN_Bu2Dst0pi_D0gamma.getVal() /
-            (initYieldWN_Bu2Dst0pi_D0gamma *
-                 deltaCutEffWN_Bu2Dst0pi_D0gamma.getVal() +
-             initYieldWN_Bu2Dst0pi_D0pi0 *
-                 deltaCutEffWN_Bu2Dst0pi_D0pi0.getVal()));
+        RooArgSet(yieldDeltaWN_Bu2Dst0pi_D0gamma,
+                  yieldDeltaWN_Bu2Dst0pi_D0pi0));
     RooAddPdf pdfBuWN(
         ("pdfBuWN_" + std::to_string(i)).c_str(), "",
         RooArgSet(pdfBuWN_Bu2Dst0pi_D0gamma, pdfBuWN_Bu2Dst0pi_D0pi0),
-        fracPdfBuWN_Bu2Dst0pi_D0gamma);
+        RooArgSet(yieldBuWN_Bu2Dst0pi_D0gamma, yieldBuWN_Bu2Dst0pi_D0pi0));
 
     // ---------------------------- B02Dstpi Background
     // ----------------------------
@@ -936,122 +1048,6 @@ void FitToys(bool fitDontSave, int &nIter,
     RooAddPdf pdfBuBu2D0rho(("pdfBuBu2D0rho_" + std::to_string(i)).c_str(), "",
                             RooArgSet(pdfBuBu2D0rho1, pdfBuBu2D0rho2),
                             fracPdf1BuBu2D0rho);
-
-    // ---------------------------- Yields ----------------------------
-    RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
-                              "", initYieldSig * orEffSignal.getVal(), -100000,
-                              100000);
-    RooFormulaVar yieldBuSignal(
-        ("yieldBuSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(deltaCutEffSignal, orEffSignal, yieldTotSignal));
-    RooFormulaVar yieldDeltaSignal(
-        ("yieldDeltaSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(buCutEffSignal, orEffSignal, yieldTotSignal));
-    RooFormulaVar yieldSharedSignal(
-        ("yieldSharedSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(boxEffSignal, orEffSignal, yieldTotSignal));
-
-    // // Bkg yields when using exponential
-    // double nBuBkg = nBu - 40000 * deltaCutEffSignal.getVal();
-    // double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
-    //
-    // RooRealVar yieldBuBkg(("yieldBuBkg_" + std::to_string(i)).c_str(), "",
-    //                       nBuBkg, 0, 100000);
-    // RooRealVar yieldDeltaBkg(("yieldDeltaBkg_" +
-    // std::to_string(i)).c_str(),
-    //                          "", nDeltaBkg, 0, 100000);
-
-    RooRealVar yieldTotBu2Dst0pi_D0pi0(
-        ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -100000,
-        100000);
-    RooFormulaVar yieldBuBu2Dst0pi_D0pi0(
-        ("yieldBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(deltaCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
-                   yieldTotBu2Dst0pi_D0pi0));
-    RooFormulaVar yieldDeltaBu2Dst0pi_D0pi0(
-        ("yieldDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2", RooArgList(buCutEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
-                                 yieldTotBu2Dst0pi_D0pi0));
-    RooFormulaVar yieldSharedBu2Dst0pi_D0pi0(
-        ("yieldSharedBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2", RooArgList(boxEffBu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0,
-                                 yieldTotBu2Dst0pi_D0pi0));
-
-    RooRealVar yieldTotWN_Bu2Dst0pi_D0pi0(
-        ("yieldTotWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0pi0 * orEffWN_Bu2Dst0pi_D0pi0.getVal(), -100000,
-        100000);
-    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0pi0(
-        ("yieldBuWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0pi0(
-        ("yieldDeltaWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(buCutEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0pi0(
-        ("yieldSharedWN_Bu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(boxEffWN_Bu2Dst0pi_D0pi0, orEffWN_Bu2Dst0pi_D0pi0,
-                   yieldTotWN_Bu2Dst0pi_D0pi0));
-
-    RooRealVar yieldTotWN_Bu2Dst0pi_D0gamma(
-        ("yieldTotWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        initYieldWN_Bu2Dst0pi_D0gamma * orEffWN_Bu2Dst0pi_D0gamma.getVal(),
-        -100000, 100000);
-    RooFormulaVar yieldBuWN_Bu2Dst0pi_D0gamma(
-        ("yieldBuWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(deltaCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldDeltaWN_Bu2Dst0pi_D0gamma(
-        ("yieldDeltaWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(buCutEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldSharedWN_Bu2Dst0pi_D0gamma(
-        ("yieldSharedWN_Bu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        "(@0/@1)*@2",
-        RooArgList(boxEffWN_Bu2Dst0pi_D0gamma, orEffWN_Bu2Dst0pi_D0gamma,
-                   yieldTotWN_Bu2Dst0pi_D0gamma));
-
-    RooFormulaVar yieldBuWN(
-        ("yieldBuWN_" + std::to_string(i)).c_str(), "", "@0+@1",
-        RooArgList(yieldBuWN_Bu2Dst0pi_D0pi0, yieldBuWN_Bu2Dst0pi_D0gamma));
-    RooFormulaVar yieldDeltaWN(("yieldDeltaWN_" + std::to_string(i)).c_str(),
-                               "", "@0+@1",
-                               RooArgList(yieldDeltaWN_Bu2Dst0pi_D0pi0,
-                                          yieldDeltaWN_Bu2Dst0pi_D0gamma));
-
-    RooRealVar yieldTotB02Dstpi(
-        ("yieldTotB02Dstpi_" + std::to_string(i)).c_str(), "",
-        initYieldB02Dstpi * orEffB02Dstpi.getVal(), -100000, 100000);
-    RooFormulaVar yieldBuB02Dstpi(
-        ("yieldBuB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(deltaCutEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
-    RooFormulaVar yieldDeltaB02Dstpi(
-        ("yieldDeltaB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(buCutEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
-    RooFormulaVar yieldSharedB02Dstpi(
-        ("yieldSharedB02Dstpi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(boxEffB02Dstpi, orEffB02Dstpi, yieldTotB02Dstpi));
-
-    RooRealVar yieldTotBu2D0rho(
-        ("yieldTotBu2D0rho_" + std::to_string(i)).c_str(), "",
-        initYieldBu2D0rho * orEffBu2D0rho.getVal(), -100000, 100000);
-    RooFormulaVar yieldBuBu2D0rho(
-        ("yieldBuBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(deltaCutEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
-    RooFormulaVar yieldDeltaBu2D0rho(
-        ("yieldDeltaBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(buCutEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
-    RooFormulaVar yieldSharedBu2D0rho(
-        ("yieldSharedBu2D0rho_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
-        RooArgList(boxEffBu2D0rho, orEffBu2D0rho, yieldTotBu2D0rho));
 
     // ---------------------------- Add PDFs and yields
     // ----------------------------
