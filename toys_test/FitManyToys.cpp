@@ -365,7 +365,7 @@ int main(int argc, char *argv[]) {
     // Extract parameter names using regular expression in order to remove _#
     std::string fullName = initialPars0.at(i)->GetName();
     // std::cout << "Full parameter name = " << fullName << "\n";
-    std::regex rexp("([A-Za-z0-9]+)_[0-9]+");
+    std::regex rexp("([A-Za-z0-9_]+)_[0-9]+");
     std::smatch match;
     std::regex_search(fullName, match, rexp);
     std::string paramName = match[1];
