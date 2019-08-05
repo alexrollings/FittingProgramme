@@ -457,15 +457,15 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
                         .c_str());
 }
 
-RooDataSet ExtractDataSetFromToy(std::string const &input, std::string &dim,
-                                 RooRealVar &buMass, RooRealVar &deltaMass,
-                                 RooCategory &fitting,
-                                 std::string const &box_bu_low,
-                                 std::string const &box_bu_high,
-                                 std::string const &box_delta_low,
-                                 std::string const &box_delta_high) {
+RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
+                          RooRealVar &buMass, RooRealVar &deltaMass,
+                          RooCategory &fitting, std::string const &box_bu_low,
+                          std::string const &box_bu_high,
+                          std::string const &box_delta_low,
+                          std::string const &box_delta_high, bool toy) {
   TFile in(input.c_str(), "READ");
-  if (dim == "1") {
+  if (toy == true && dim == "1") {
+    std::cout << "Extracting 1D toy dataset.\n";
     RooDataSet *dataDelta;
     gDirectory->GetObject("deltaDataSet", dataDelta);
     if (dataDelta == nullptr) {
@@ -489,7 +489,20 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, std::string &dim,
     std::cout << "1D: returning combDataSet\n";
   } else {
     RooDataSet *inputDataSet;
-    gDirectory->GetObject("toyDataSet", inputDataSet);
+    std::string rdsName;
+    std::string cutString = "";
+    if (toy == true) {
+      std::cout << "Extracting 2D toy dataset.\n";
+      rdsName = "toyDataSet";
+    } else {
+      std::cout << "Extracting 2D dataset with cuts applied.\n";
+      rdsName = "inputDataSet";
+      cutString =
+          "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&(abs(h1_D_ID)==211&&h1_D_PIDK<"
+          "-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+          "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2))";
+    }
+    gDirectory->GetObject(rdsName.c_str(), inputDataSet);
     if (inputDataSet == nullptr) {
       throw std::runtime_error("Data set does not exist.");
     } else {
@@ -498,7 +511,7 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, std::string &dim,
     }
     auto dataBu_tmp = std::unique_ptr<RooDataSet>(
         dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-            ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+            ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high + cutString)
                 .c_str())));
     if (dataBu_tmp.get() == nullptr) {
       throw std::runtime_error(
@@ -512,7 +525,7 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, std::string &dim,
 
     auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
         dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-            ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+            ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high + cutString)
                 .c_str())));
     if (dataDelta_tmp.get() == nullptr) {
       throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
@@ -536,7 +549,7 @@ void FitToys(bool fitDontSave, int &nIter,
              std::vector<std::string> const &filenames,
              std::string const &outputDir, std::string const &box_delta_low,
              std::string const &box_delta_high, std::string const &box_bu_low,
-             std::string const &box_bu_high) {
+             std::string const &box_bu_high, bool toy) {
   int bu_low = 5050;
   int bu_high = 5800;
   int delta_low = 70;  // 134;
@@ -956,150 +969,203 @@ void FitToys(bool fitDontSave, int &nIter,
     RooAddPdf pdfBu(("pdfBu_" + std::to_string(i)).c_str(), "", functionsBu,
                     yieldsBu);
 
-    if (fitDontSave == false) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
+    // ---------------------------- Construct Sim PDF
+    // ----------------------------
+    RooSimultaneous simPdf(("simPdf_" + std::to_string(i)).c_str(), "",
+                           fitting);
+    simPdf.addPdf(pdfDelta, "delta");
+    simPdf.addPdf(pdfBu, "bu");
 
-      double nEvtsPerToyBu = yieldBuSignal.getVal() +
-                             yieldBuBu2Dst0pi_D0pi0.getVal() +
-                             yieldBuMisRec.getVal() + yieldBuBu2D0pi.getVal();
-      double nEvtsPerToyDelta =
-          yieldDeltaSignal.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
-          yieldDeltaMisRec.getVal() + yieldDeltaBu2D0pi.getVal();
-      // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
-      // events\n";
-
-      // Generate bu and delta mass datasets separately from individual PDFs
-      // Saving simPdf as one PDF reduces number of events by 1/2 in each
-      // dimension
-      // Saving each variable from simPdf doesn't work (not sure what it does!)
-      // - completely flat in delta mass dimension (data has no structure)
-      RooDataSet *buDataSet = pdfBu.generate(RooArgSet(buMass), nEvtsPerToyBu);
-      std::cout << "Generated!\n";
-      buDataSet->SetName("buDataSet");
-      buDataSet->Print();
-
-      RooDataSet *deltaDataSet =
-          pdfDelta.generate(RooArgSet(deltaMass), nEvtsPerToyDelta);
-      std::cout << "Generated!\n";
-      deltaDataSet->SetName("deltaDataSet");
-      deltaDataSet->Print();
-
-      // RooDataSet *toyDataSet =
-      //     simPdf.generate(RooArgSet(buMass, deltaMass, fitting),
-      //     nEvtsPerToy);
-      // toyDataSet->Print();
-
-      double randomTag = random.Rndm();
-      TFile dsFile((outputDir + "/DataFile1D_" + box_delta_low + "_" +
-                    box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
-                    "_" + std::to_string(randomTag) + ".root")
-                       .c_str(),
-                   "RECREATE");
-      buDataSet->Write("buDataSet");
-      deltaDataSet->Write("deltaDataSet");
-      dsFile.Close();
-      std::cout << "Saved " << randomTag << " dataset\n";
-    } else {
-      if (!file_exists(filenames[i])) {
-        std::cerr << filenames[i] << " does not exist.\n";
-      } else {
-        std::regex rexp(
-            "DataFile([0-9])D_[0-9]+_[0-9]+_[0-9]+_[0-9]+_([0-9].[0-9]+).root");
-        std::smatch match;
-        std::regex_search(filenames[i], match, rexp);
-        std::string dim = match[1];
-        std::cout << "Dimension = " << dim << "\n";
-        std::string rndm = match[2];
-        // double nBu, nDelta;
-        // ---------------------------- Read in toy dataset
-        // ----------------------------
-        RooDataSet combData = ExtractDataSetFromToy(
-            filenames[i], dim, buMass, deltaMass, fitting, box_bu_low,
-            box_bu_high, box_delta_low, box_delta_high);
-        combData.Print();
-
-        auto toyDataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
-            ("toyDataHist_" + std::to_string(i)).c_str(), "toyDataHist"));
-        auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-        toyAbsData->SetName(("toyAbsData_" + std::to_string(i)).c_str());
-
-        // ---------------------------- Construct Sim PDF
-        // ----------------------------
-        RooSimultaneous simPdf(("simPdf_" + std::to_string(i)).c_str(), "",
-                               fitting);
-        simPdf.addPdf(pdfDelta, "delta");
-        simPdf.addPdf(pdfBu, "bu");
-
-        // ---------------------------- Fit Sim PDF to toy
-        // ----------------------------
-        std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
-            simPdf.fitTo(*toyAbsData, RooFit::Extended(true),
-                         RooFit::SplitRange(true), RooFit::Save(),
-                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-
-        if (i == 0) {
-          std::cout << "Plotting projections of m[Bu]\n";
-          PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-                        fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuMisRec,
-                        pdfBuBu2D0pi, outputDir, box_delta_low, box_delta_high,
-                        box_bu_low, box_bu_high);
-          std::cout << "Plotting projections of m[Delta]\n";
-          PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-                        fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
-                        box_delta_low, box_delta_high, box_bu_low, box_bu_high);
-          std::cout << "Plotting correlation matrix\n";
-          PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-                         box_bu_low, box_bu_high);
+    if (toy == false) {
+      RooDataSet combData;
+      std::string dim = "2";
+      std::vector<RooDataSet> dsVec;
+      for (unsigned int f = 0; f < filenames.size(); ++i) {
+        if (f == 0) {
+          combData = ExtractDataSet(filenames[f], dim, buMass, deltaMass,
+                                    fitting, box_bu_low, box_bu_high,
+                                    box_delta_low, box_delta_high, toy);
+        } else {
+          dsVec.emplace_back(ExtractDataSet(filenames[f], dim, buMass, deltaMass,
+                                    fitting, box_bu_low, box_bu_high,
+                                    box_delta_low, box_delta_high, toy));
         }
-        result->Print("v");
+      }
+      for (auto &ds : dsVec) {
+        combData.append(ds);
+      }
+      combData.Print();
 
-        // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
-        // double errYieldTotSignal =
-        //     yieldTotSignal.getPropagatedError(*result) *
-        //     ((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
-        //              std::sqrt(2)+
-        //         1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal());
-        // std::cout << "Box = " << box_delta_low << "-" << box_delta_high <<
-        // "
-        // "
-        //           << box_bu_low << "-" << box_bu_high << "\n";
-        // std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal()
-        // <<
-        // " ± "
-        //           << yieldSharedSignal.getPropagatedError(*result) << "\n";
-        // std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ±
-        // "
-        //           << errYieldTotSignal << "\n";
-        // std::cout << "Corrected error / fit Error = "
-        //           << errYieldTotSignal /
-        //                  yieldTotSignal.getPropagatedError(*result)
-        //           << "\n";
-        // std::cout << "Corrected error / fit Error = "
-        //           << errYieldTotSignal / yieldTotSignal.getError() << "\n";
-        TFile outputFile(
-            (outputDir + "/Result_" + rndm + "_" + box_delta_low + "_" +
-             box_delta_high + "_" + box_bu_low + "_" + box_bu_high + ".root")
-                .c_str(),
-            "recreate");
-        outputFile.cd();
-        result->SetName(("Result_" + rndm).c_str());
-        result->Write();
-        // Don't save corrected error for now - see if we can get error from
-        // pulls
-        // TTree tree("tree", "");
-        // tree.Branch("errYieldTotSignal", &errYieldTotSignal,
-        // "errYieldTotSignal/D");
-        // double orEffSignalD = orEffSignal.getVal();
-        // tree.Branch("orEffSignal", &orEffSignalD, "orEffSignal/D");
-        // double boxEffSignalD = boxEffSignal.getVal();
-        // tree.Branch("boxEffSignal", &boxEffSignalD, "boxEffSignal/D");
-        // tree.Fill();
-        // tree.Write();
-        outputFile.Write();
-        outputFile.Close();
+      // auto dataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
+      //     ("dataHist_" + std::to_string(i)).c_str(), "dataHist"));
+      // auto absData = dynamic_cast<RooAbsData *>(dataHist.get());
+      // absData->SetName(("absData_" + std::to_string(i)).c_str());
+      //
+      // std::unique_ptr<RooFitResult> result =
+      //     std::unique_ptr<RooFitResult>(simPdf.fitTo(
+      //         *absData, RooFit::Extended(true), RooFit::SplitRange(true),
+      //         RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+      //         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+      //
+      // std::cout << "Plotting projections of m[Bu]\n";
+      // PlotComponent(Variable::bu, buMass, dataHist.get(), simPdf, fitting,
+      //               pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuMisRec,
+      //               pdfBuBu2D0pi, outputDir, box_delta_low, box_delta_high,
+      //               box_bu_low, box_bu_high);
+      // std::cout << "Plotting projections of m[Delta]\n";
+      // PlotComponent(Variable::delta, deltaMass, dataHist.get(), simPdf,
+      //               fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+      //               pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir, box_delta_low,
+      //               box_delta_high, box_bu_low, box_bu_high);
+      // std::cout << "Plotting correlation matrix\n";
+      // PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+      //                box_bu_low, box_bu_high);
+      //
+      // result->Print("v");
+
+    } else {
+      if (fitDontSave == false) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+
+        double nEvtsPerToyBu = yieldBuSignal.getVal() +
+                               yieldBuBu2Dst0pi_D0pi0.getVal() +
+                               yieldBuMisRec.getVal() + yieldBuBu2D0pi.getVal();
+        double nEvtsPerToyDelta =
+            yieldDeltaSignal.getVal() + yieldDeltaBu2Dst0pi_D0pi0.getVal() +
+            yieldDeltaMisRec.getVal() + yieldDeltaBu2D0pi.getVal();
+        // std::cout << "Generating toy dataset with " << nEvtsPerToy << "
+        // events\n";
+
+        // Generate bu and delta mass datasets separately from individual PDFs
+        // Saving simPdf as one PDF reduces number of events by 1/2 in each
+        // dimension
+        // Saving each variable from simPdf doesn't work (not sure what it
+        // does!)
+        // - completely flat in delta mass dimension (data has no structure)
+        RooDataSet *buDataSet =
+            pdfBu.generate(RooArgSet(buMass), nEvtsPerToyBu);
+        std::cout << "Generated!\n";
+        buDataSet->SetName("buDataSet");
+        buDataSet->Print();
+
+        RooDataSet *deltaDataSet =
+            pdfDelta.generate(RooArgSet(deltaMass), nEvtsPerToyDelta);
+        std::cout << "Generated!\n";
+        deltaDataSet->SetName("deltaDataSet");
+        deltaDataSet->Print();
+
+        // RooDataSet *toyDataSet =
+        //     simPdf.generate(RooArgSet(buMass, deltaMass, fitting),
+        //     nEvtsPerToy);
+        // toyDataSet->Print();
+
+        double randomTag = random.Rndm();
+        TFile dsFile((outputDir + "/DataFile1D_" + box_delta_low + "_" +
+                      box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
+                      "_" + std::to_string(randomTag) + ".root")
+                         .c_str(),
+                     "RECREATE");
+        buDataSet->Write("buDataSet");
+        deltaDataSet->Write("deltaDataSet");
+        dsFile.Close();
+        std::cout << "Saved " << randomTag << " dataset\n";
+      } else {
+        if (!file_exists(filenames[i])) {
+          std::cerr << filenames[i] << " does not exist.\n";
+        } else {
+          std::regex rexp(
+              "DataFile([0-9])D_[0-9]+_[0-9]+_[0-9]+_[0-9]+_([0-9].[0-9]+)."
+              "root");
+          std::smatch match;
+          std::regex_search(filenames[i], match, rexp);
+          std::string dim = match[1];
+          std::cout << "Dimension = " << dim << "\n";
+          std::string rndm = match[2];
+          // double nBu, nDelta;
+          // ---------------------------- Read in toy dataset
+          // ----------------------------
+          RooDataSet combData = ExtractDataSet(
+              filenames[i], dim, buMass, deltaMass, fitting, box_bu_low,
+              box_bu_high, box_delta_low, box_delta_high, toy);
+          combData.Print();
+
+          auto toyDataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
+              ("toyDataHist_" + std::to_string(i)).c_str(), "toyDataHist"));
+          auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+          toyAbsData->SetName(("toyAbsData_" + std::to_string(i)).c_str());
+
+          // ---------------------------- Fit Sim PDF to toy
+          // ----------------------------
+          std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
+              simPdf.fitTo(*toyAbsData, RooFit::Extended(true),
+                           RooFit::SplitRange(true), RooFit::Save(),
+                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+
+          if (i == 0) {
+            std::cout << "Plotting projections of m[Bu]\n";
+            PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
+                          fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0,
+                          pdfBuMisRec, pdfBuBu2D0pi, outputDir, box_delta_low,
+                          box_delta_high, box_bu_low, box_bu_high);
+            std::cout << "Plotting projections of m[Delta]\n";
+            PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
+                          fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+                          pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
+                          box_delta_low, box_delta_high, box_bu_low,
+                          box_bu_high);
+            std::cout << "Plotting correlation matrix\n";
+            PlotCorrMatrix(result.get(), outputDir, box_delta_low,
+                           box_delta_high, box_bu_low, box_bu_high);
+          }
+          result->Print("v");
+
+          // Essentially just fitErr * sqrt((boxEff * sqrt(2))^2 + (1-boxEff)^2)
+          // double errYieldTotSignal =
+          //     yieldTotSignal.getPropagatedError(*result) *
+          //     ((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
+          //              std::sqrt(2)+
+          //         1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal());
+          // std::cout << "Box = " << box_delta_low << "-" << box_delta_high <<
+          // "
+          // "
+          //           << box_bu_low << "-" << box_bu_high << "\n";
+          // std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal()
+          // <<
+          // " ± "
+          //           << yieldSharedSignal.getPropagatedError(*result) << "\n";
+          // std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ±
+          // "
+          //           << errYieldTotSignal << "\n";
+          // std::cout << "Corrected error / fit Error = "
+          //           << errYieldTotSignal /
+          //                  yieldTotSignal.getPropagatedError(*result)
+          //           << "\n";
+          // std::cout << "Corrected error / fit Error = "
+          //           << errYieldTotSignal / yieldTotSignal.getError() << "\n";
+          TFile outputFile(
+              (outputDir + "/Result_" + rndm + "_" + box_delta_low + "_" +
+               box_delta_high + "_" + box_bu_low + "_" + box_bu_high + ".root")
+                  .c_str(),
+              "recreate");
+          outputFile.cd();
+          result->SetName(("Result_" + rndm).c_str());
+          result->Write();
+          // Don't save corrected error for now - see if we can get error from
+          // pulls
+          // TTree tree("tree", "");
+          // tree.Branch("errYieldTotSignal", &errYieldTotSignal,
+          // "errYieldTotSignal/D");
+          // double orEffSignalD = orEffSignal.getVal();
+          // tree.Branch("orEffSignal", &orEffSignalD, "orEffSignal/D");
+          // double boxEffSignalD = boxEffSignal.getVal();
+          // tree.Branch("boxEffSignal", &boxEffSignalD, "boxEffSignal/D");
+          // tree.Fill();
+          // tree.Write();
+          outputFile.Write();
+          outputFile.Close();
+        }
       }
     }
   }
@@ -1107,13 +1173,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
 int main(int argc, char *argv[]) {
   bool fitDontSave = true;
-
-  if (argc < 7) {
-    std::cerr << "Enter input file vector OR option: save, output directory "
-                 "box limits: delta_low, delta_high, bu_low, bu_high, and if "
-                 "saving nToys\n";
-    return 1;
-  }
+  bool toy = true;
 
   int nIter;
   std::vector<std::string> filenames;
@@ -1129,9 +1189,27 @@ int main(int argc, char *argv[]) {
     nIter = std::atoi(argv[7]);
     std::cout << "RooDataSet will be created and saved to file.\n";
   } else {
+    if (argc < 8) {
+      std::cerr << "Enter input file vector, "
+                   "output directory "
+                   "box limits: delta_low, delta_high, bu_low, bu_high, "
+                   "roodataset type: toy/data\n";
+      return 1;
+    }
     filenames = SplitByComma(input);
-    nIter = filenames.size();
     std::cout << "RooDataSets will be fit to and results saved.\n";
+    std::string dsType = argv[7];
+    if (dsType == "toy") {
+      std::cout << "Fitting to toy datasets.\n";
+      nIter = filenames.size();
+    } else if (dsType == "data") {
+      std::cout << "Fitting to data.\n";
+      nIter = 1;
+    } else {
+      std::cerr
+          << "8th argument must be toy/data when fitting to RooDataSets.\n";
+      return 1;
+    }
   }
 
   std::string outputDir = argv[2];
@@ -1141,7 +1219,7 @@ int main(int argc, char *argv[]) {
   std::string box_bu_high = argv[6];
 
   FitToys(fitDontSave, nIter, filenames, outputDir, box_delta_low,
-          box_delta_high, box_bu_low, box_bu_high);
+          box_delta_high, box_bu_low, box_bu_high, toy);
 
   return 0;
 }
