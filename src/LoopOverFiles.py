@@ -13,12 +13,12 @@ def pass_filename(filename):
 
   # m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+.root", filename)
   #regex says if not an "_" or a "/", it is a group
-  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_BDT1_BDT2.root", filename)
+  m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_BDT1_BDT2_MERemoved.root", filename)
 
   if m:
 
-    if not m.group(1) in ["2011", "2012", "2015", "2016", "2017"]:
-      sys.exit("Year must be 2011, 2012, 2015, 2016 or 2017")
+    if not m.group(1) in ["2011", "2012", "2015", "2016", "2017", "2018"]:
+      sys.exit("Year must be 2011, 2012, 2015, 2016, 2017 or 2018")
     year = m.group(1)
     #variables declared in python still exist out of scope
 
