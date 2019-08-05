@@ -122,6 +122,7 @@ Configuration::Configuration()
   d0FdSig_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);
+  variableArgSet_.add(buDeltaMass_);
   variableArgSet_.add(deltaMass_);
   variableArgSet_.add(pi0Mass_);
   variableArgSet_.add(d0hMass_);
@@ -142,7 +143,7 @@ Configuration::Configuration()
   fullArgSet_.add(variableArgSet_);
   fullArgSet_.add(categoryArgSet_);
 
-  fittingArgSet_.add(buMass_);
+  fittingArgSet_.add(buDeltaMass_);
   fittingArgSet_.add(deltaMass_);
 }
 // Categories is a class within a class !!!
