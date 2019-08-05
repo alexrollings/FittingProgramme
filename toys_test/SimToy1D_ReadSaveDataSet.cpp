@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <regex>
 #include <sstream>
@@ -271,7 +272,7 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
   boxEff.setVal(nBox / nInitial);
   orEff.setVal(nOr / nInitial);
 
-  std::cout << "Set efficiencies :\n"
+  std::cout << "Set efficiencies for " << EnumToString(mode) << " :\n"
             << "\tDelta Window =\t" << nDeltaWindow / nInitial
             << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
             << nBox / nInitial << "\n"
@@ -563,9 +564,16 @@ void FitToys(bool fitDontSave, int &nIter,
   // ----------------------------
   double initYieldSig = 40000;
   double initYieldBu2Dst0pi_D0pi0 = initYieldSig * 0.916;
-  double initYieldMisRec = initYieldSig * (0.473 + 0.809 + 0.643 + 0.973);
+  double fracMisRec_Bu2Dst0pi_D0gamma_WN = 0.473;
+  double fracMisRec_Bu2Dst0pi_D0pi0_WN = 0.809;
+  double fracMisRec_Bd2Dstpi = 0.643;
+  double fracMisRec_Bu2D0rho = 0.973;
+  double fracMisRec = fracMisRec_Bu2Dst0pi_D0gamma_WN +
+                      fracMisRec_Bu2Dst0pi_D0pi0_WN + fracMisRec_Bd2Dstpi +
+                      fracMisRec_Bu2D0rho;
+  double initYieldMisRec = initYieldSig * (fracMisRec);
   double initYieldBu2D0pi = initYieldSig * (1.54);
-  // double initYieldWN_Bu2Dst0pi_D0pi0 = initYieldSig * 0.809;
+  // double initYieldBu2Dst0pi_D0pi0_WN = initYieldSig * 0.809;
   // double initYieldBd2Dstpi = initYieldSig * 0.643;
   // double initYieldBu2D0rho = initYieldSig * 0.973;
 
@@ -590,14 +598,44 @@ void FitToys(bool fitDontSave, int &nIter,
                          deltaCutEffBu2Dst0pi_D0pi0, buCutEffBu2Dst0pi_D0pi0,
                          orEffBu2Dst0pi_D0pi0);
 
-  RooRealVar orEffMisRec("orEffMisRec", "", 1);
-  RooRealVar boxEffMisRec("boxEffMisRec", "", 1);
-  RooRealVar deltaCutEffMisRec("deltaCutEffMisRec", "", 1);
-  RooRealVar buCutEffMisRec("buCutEffMisRec", "", 1);
+  double orEffMisRecVal = 0.0;
+  double boxEffMisRecVal = 0.0;
+  double deltaCutEffMisRecVal = 0.0;
+  double buCutEffMisRecVal = 0.0;
 
-  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0pi0_WN, box_delta_low,
-                         box_delta_high, box_bu_low, box_bu_high, boxEffMisRec,
-                         deltaCutEffMisRec, buCutEffMisRec, orEffMisRec);
+  std::map<Mode, double> misRecModesMap = {
+      {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0pi_D0pi0_WN / fracMisRec},
+      {Mode::Bu2Dst0pi_D0gamma_WN,
+       fracMisRec_Bu2Dst0pi_D0gamma_WN / fracMisRec},
+      {Mode::Bu2D0rho, fracMisRec_Bu2D0rho / fracMisRec},
+      {Mode::Bd2Dstpi, fracMisRec_Bd2Dstpi / fracMisRec}};
+
+  for (auto &m : misRecModesMap) {
+    RooRealVar orEffTemp("orEffTemp", "", 1);
+    RooRealVar boxEffTemp("boxEffTemp", "", 1);
+    RooRealVar deltaCutEffTemp("deltaCutEffTemp", "", 1);
+    RooRealVar buCutEffTemp("buCutEffTemp", "", 1);
+
+    ExtractBoxEfficiencies(m.first, box_delta_low, box_delta_high, box_bu_low,
+                           box_bu_high, boxEffTemp, deltaCutEffTemp,
+                           buCutEffTemp, orEffTemp);
+
+    orEffMisRecVal += orEffTemp.getVal() * m.second;
+    boxEffMisRecVal += boxEffTemp.getVal() * m.second;
+    deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
+    buCutEffMisRecVal += buCutEffTemp.getVal() * m.second;
+  }
+
+  RooRealVar orEffMisRec("orEffMisRec", "", orEffMisRecVal);
+  RooRealVar boxEffMisRec("boxEffMisRec", "", boxEffMisRecVal);
+  RooRealVar deltaCutEffMisRec("deltaCutEffMisRec", "", deltaCutEffMisRecVal);
+  RooRealVar buCutEffMisRec("buCutEffMisRec", "", buCutEffMisRecVal);
+
+  std::cout << "Set MisRec efficiencies :\n"
+            << "\tDelta Window =\t" << deltaCutEffMisRec.getVal()
+            << "\tBu Window =\t" << buCutEffMisRec.getVal() << "\tBox =\t"
+            << boxEffMisRec.getVal() << "\n"
+            << "\tDelta OR Bu =\t" << orEffMisRec.getVal() << "\n";
 
   RooRealVar orEffBu2D0pi("orEffBu2D0pi", "", 1);
   RooRealVar boxEffBu2D0pi("boxEffBu2D0pi", "", 1);
