@@ -32,6 +32,7 @@ class Configuration {
   
   Categories &categories() { return categories_; }
   RooRealVar &buMass() { return buMass_; }
+  RooRealVar &buDeltaMass() { return buDeltaMass_; }
   RooRealVar &deltaMass() { return deltaMass_; }
   RooRealVar &pi0Mass() { return pi0Mass_; }
   RooRealVar &d0hMass() { return d0hMass_; }
@@ -66,6 +67,7 @@ class Configuration {
 
   Categories categories_;
   RooRealVar buMass_;
+  RooRealVar buDeltaMass_;
   RooRealVar deltaMass_;
   RooRealVar pi0Mass_;
   RooRealVar d0hMass_;

@@ -2,6 +2,7 @@
 
 Configuration::Configuration()
     : buMass_("", "", 0, 0, ""),
+      buDeltaMass_("", "", 0, 0, ""),
       deltaMass_("", "", 0, 0, ""),
       pi0Mass_("", "", 0, 0, ""),
       d0hMass_("", "", 0, 0, ""),
@@ -34,13 +35,18 @@ Configuration::Configuration()
   buMass_.setBins(75);
   buMass_.setUnit(kMassUnit);
 
+  buDeltaMass_.SetName("Bu_Delta_M");
+  buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
+  buDeltaMass_.setMax(5800);
+  buDeltaMass_.setMin(5050);
+  buDeltaMass_.setBins(75);
+  buDeltaMass_.setUnit(kMassUnit);
+
   deltaMass_.SetName("Delta_M");
-  deltaMass_.SetTitle("m[D^{*0} - m[D^{0}]");
-  deltaMass_.setMax(210);
-  deltaMass_.setMin(60);
-  deltaMass_.setBins(50);
-  // deltaMass_.setMin(50);
-  // deltaMass_.setBins(50);
+  deltaMass_.SetTitle("m[D^{*0}] - m[D^{0}]");
+  deltaMass_.setMax(190);
+  deltaMass_.setMin(70);
+  deltaMass_.setBins(70);
   deltaMass_.setUnit(kMassUnit);
 
   pi0Mass_.SetName("Pi0_M");
