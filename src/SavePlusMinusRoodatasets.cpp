@@ -52,6 +52,9 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   config.buMass().setMax(6000);
   config.buMass().setMin(4000);
   config.buMass().setBins(400);
+  config.buDeltaMass().setMax(6000);
+  config.buDeltaMass().setMin(4000);
+  config.buDeltaMass().setBins(400);
   config.deltaMass().setMin(0);
   config.deltaMass().setMax(250);
   config.deltaMass().setBins(125);
