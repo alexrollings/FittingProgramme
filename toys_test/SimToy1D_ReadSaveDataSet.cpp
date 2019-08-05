@@ -607,16 +607,6 @@ void FitToys(bool fitDontSave, int &nIter,
         ("yieldSharedSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(boxEffSignal, orEffSignal, yieldTotSignal));
 
-    // // Bkg yields when using exponential
-    // double nBuBkg = nBu - 40000 * deltaCutEffSignal.getVal();
-    // double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
-    //
-    // RooRealVar yieldBuBkg(("yieldBuBkg_" + std::to_string(i)).c_str(), "",
-    //                       nBuBkg, 0, 100000);
-    // RooRealVar yieldDeltaBkg(("yieldDeltaBkg_" +
-    // std::to_string(i)).c_str(),
-    //                          "", nDeltaBkg, 0, 100000);
-
     RooRealVar yieldTotBu2Dst0pi_D0pi0(
         ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
         initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -100000,
@@ -808,6 +798,23 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- PDFs ----------------------------
     RooCBShape pdfBuMisRec(("pdfBuMisRec_" + std::to_string(i)).c_str(), "", buMass,
                        meanBuMisRec, sigmaBuMisRec, aBuMisRec, nBuMisRec);
+
+    // // ---------------------------- Mean ----------------------------
+    // RooRealVar meanBuMisRec(("meanBuMisRec_" + std::to_string(i)).c_str(), "",
+    //                     5.3164e+03);  //, 5280, 5310);
+    // // // ---------------------------- Sigmas ----------------------------
+    // RooRealVar sigmaLBuMisRec(("sigmaLBuMisRec_" + std::to_string(i)).c_str(), "",
+    //                      1.1455e+02);  //, 50, 100);
+    // RooRealVar sigmaRBuMisRec(("sigmaRBuMisRec_" + std::to_string(i)).c_str(), "",
+    //                      8.5687e+01);  //, 50, 100);
+    // // ---------------------------- Tails ----------------------------
+    // RooRealVar aLBuMisRec(("aLBuMisRec_" + std::to_string(i)).c_str(), "",
+    //                  2.4412e-05);  // 0, 5);
+    // RooRealVar aRBuMisRec(("aRBuMisRec_" + std::to_string(i)).c_str(), "",
+    //                  1.8396e-07);  // 0, 100);
+    // // ---------------------------- PDFs ----------------------------
+    // RooCruijff pdfBuMisRec(("pdfBuMisRec_" + std::to_string(i)).c_str(), "", buMass,
+    //                    meanBuMisRec, sigmaLBuMisRec, aLBuMisRec, aRBuMisRec);
 
     // ---------------------------- Add PDFs and yields
     // ----------------------------
