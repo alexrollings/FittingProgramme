@@ -128,10 +128,10 @@ Configuration::Configuration()
   variableArgSet_.add(d0hMass_);
   variableArgSet_.add(buPdgId_);
   variableArgSet_.add(bachPID_);
-  variableArgSet_.add(h2ID_);
+  variableArgSet_.add(h1ID_);
   variableArgSet_.add(h2ID_);
   variableArgSet_.add(h1PID_);
-  variableArgSet_.add(h1PID_);
+  variableArgSet_.add(h2PID_);
   variableArgSet_.add(BDT1_);
   variableArgSet_.add(BDT2_);
   variableArgSet_.add(hAngle_);
