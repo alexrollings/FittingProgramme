@@ -730,12 +730,12 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaSignal(("meanDeltaSignal_" + std::to_string(i)).c_str(),
                                "",
-                               1.4233e+02);  //, 135, 150);
+                               1.4233e+02, 135, 150);
     // meanDeltaSignal.setVal(meanDeltaVal);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaDeltaSignal(
         ("sigmaDeltaSignal_" + std::to_string(i)).c_str(), "",
-        8.1675e+00);  //, 2, 15);
+        8.1675e+00, 2, 15);
     // sigmaDeltaSignal.setVal(sigmaDeltaVal);
     // ---------------------------- Tails ----------------------------
     RooRealVar a1DeltaSignal(("a1DeltaSignal_" + std::to_string(i)).c_str(), "",
@@ -763,10 +763,10 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Signal ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanBuSignal(("meanBuSignal_" + std::to_string(i)).c_str(), "",
-                            5.2819e+03);  //, 5275, 5290);
+                            5.2819e+03, 5275, 5290);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuSignal(("sigmaBuSignal_" + std::to_string(i)).c_str(), "",
-                             2.0051e+01);  //, 15, 30);  //, 300, 400);
+                             2.0051e+01, 15, 30);  //, 300, 400);
 
     // ---------------------------- Tails ----------------------------
     RooRealVar a1BuSignal(("a1BuSignal_" + std::to_string(i)).c_str(), "",
@@ -794,12 +794,12 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaBu2Dst0pi_D0pi0(
         ("meanDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        8.6075e+01);  //, 80, 90);
+        8.6075e+01, 80, 90);
     // meanDeltaBu2Dst0pi_D0pi0.setVal(meanDeltaVal);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaDeltaBu2Dst0pi_D0pi0(
         ("sigmaDeltaBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        9.2845e+00);  //, 2, 15);
+        9.2845e+00, 2, 15);
     // sigmaDeltaBu2Dst0pi_D0pi0.setVal(sigmaDeltaVal);
     // ---------------------------- Tails ----------------------------
     RooRealVar a1DeltaBu2Dst0pi_D0pi0(
@@ -873,10 +873,10 @@ void FitToys(bool fitDontSave, int &nIter,
     // ----------------------------
     // // ---------------------------- Mean ----------------------------
     RooRealVar meanBuMisRec(("meanBuMisRec_" + std::to_string(i)).c_str(), "",
-                            5.2991e+03);  //, 5280, 5310);
+                            5.2991e+03, 5280, 5310);
     // // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaBuMisRec(("sigmaBuMisRec_" + std::to_string(i)).c_str(), "",
-                             9.4812e+01);  //, 50, 100);
+                             9.4812e+01, 80, 110);
     // ---------------------------- Tails ----------------------------
     RooRealVar aBuMisRec(("aBuMisRec_" + std::to_string(i)).c_str(), "",
                          2.6265e+00);  // 0, 5);
@@ -926,14 +926,14 @@ void FitToys(bool fitDontSave, int &nIter,
     // ----------------------------
     // ---------------------------- Mean ----------------------------
     RooRealVar meanBuBu2D0pi(("meanBuBu2D0pi_" + std::to_string(i)).c_str(), "",
-                             5.5263e+03);  //, 5280, 5310);
+                             5.5263e+03);//, 5500, 5550);
     // // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaLBuBu2D0pi(("sigmaLBuBu2D0pi_" + std::to_string(i)).c_str(),
                                "",
-                               8.8227e+01);  //, 50, 100);
+                               8.8227e+01);//, 70, 100);
     RooRealVar sigmaRBuBu2D0pi(("sigmaRBuBu2D0pi_" + std::to_string(i)).c_str(),
                                "",
-                               8.8227e+01);  //, 50, 100);
+                               7.6224e+01);//, 70, 100);
     // ---------------------------- Tails ----------------------------
     RooRealVar aLBuBu2D0pi(("aLBuBu2D0pi_" + std::to_string(i)).c_str(), "",
                            6.7243e-09);  // 0, 5);
@@ -999,34 +999,48 @@ void FitToys(bool fitDontSave, int &nIter,
       std::cout << "Appended roodatasets" << std::endl;
       combData.Print();
 
-      // auto dataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
-      //     ("dataHist_" + std::to_string(i)).c_str(), "dataHist"));
-      // auto absData = dynamic_cast<RooAbsData *>(dataHist.get());
-      // absData->SetName(("absData_" + std::to_string(i)).c_str());
-      //
-      // std::unique_ptr<RooFitResult> result =
-      //     std::unique_ptr<RooFitResult>(simPdf.fitTo(
-      //         *absData, RooFit::Extended(true), RooFit::SplitRange(true),
-      //         RooFit::Save(), RooFit::Strategy(2),
-      //         RooFit::Minimizer("Minuit2"),
-      //         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-      //
-      // std::cout << "Plotting projections of m[Bu]\n";
-      // PlotComponent(Variable::bu, buMass, dataHist.get(), simPdf, dimension,
-      //               pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuMisRec,
-      //               pdfBuBu2D0pi, outputDir, box_delta_low, box_delta_high,
-      //               box_bu_low, box_bu_high);
-      // std::cout << "Plotting projections of m[Delta]\n";
-      // PlotComponent(Variable::delta, deltaMass, dataHist.get(), simPdf,
-      //               dimension, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-      //               pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
-      //               box_delta_low,
-      //               box_delta_high, box_bu_low, box_bu_high);
-      // std::cout << "Plotting correlation matrix\n";
-      // PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-      //                box_bu_low, box_bu_high);
-      //
-      // result->Print("v");
+      auto dataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
+          ("dataHist_" + std::to_string(i)).c_str(), "dataHist"));
+      auto absData = dynamic_cast<RooAbsData *>(dataHist.get());
+      absData->SetName(("absData_" + std::to_string(i)).c_str());
+
+      std::unique_ptr<RooFitResult> result =
+          std::unique_ptr<RooFitResult>(simPdf.fitTo(
+              *absData, RooFit::Extended(true), RooFit::SplitRange(true),
+              RooFit::Save(), RooFit::Strategy(2),
+              RooFit::Minimizer("Minuit2"),
+              RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+
+      std::cout << "Plotting projections of m[Bu]\n";
+      PlotComponent(Variable::bu, buMass, dataHist.get(), simPdf, dimension,
+                    pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuMisRec,
+                    pdfBuBu2D0pi, outputDir, box_delta_low, box_delta_high,
+                    box_bu_low, box_bu_high);
+      std::cout << "Plotting projections of m[Delta]\n";
+      PlotComponent(Variable::delta, deltaMass, dataHist.get(), simPdf,
+                    dimension, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+                    pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
+                    box_delta_low,
+                    box_delta_high, box_bu_low, box_bu_high);
+      std::cout << "Plotting correlation matrix\n";
+      PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                     box_bu_low, box_bu_high);
+
+      result->Print("v");
+
+      double errYieldTotSignal =
+          yieldTotSignal.getPropagatedError(*result) *
+          ((yieldSharedSignal.getVal() / yieldTotSignal.getVal()) *
+               std::sqrt(2) +
+           1 - yieldSharedSignal.getVal() / yieldTotSignal.getVal());
+      std::cout << "yieldSharedSignal = " << yieldSharedSignal.getVal() << " ± "
+                << yieldSharedSignal.getPropagatedError(*result) << "\n";
+      std::cout << "yieldTotSignal = " << yieldTotSignal.getVal() << " ± "
+                << errYieldTotSignal << "\n";
+      std::cout << "Corrected error / fit Error = "
+                << errYieldTotSignal /
+                       yieldTotSignal.getPropagatedError(*result)
+                << "\n";
 
     } else {
       if (fitDontSave == false) {
