@@ -482,9 +482,10 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
       std::cout << "dataBu extracted... \n";
       dataBu->Print();
     }
-    RooDataSet combData(
-        ("combData_" + std::to_string(it)).c_str(), "", RooArgSet(buMass, deltaMass), RooFit::Index(dimension),
-        RooFit::Import("delta", *dataDelta), RooFit::Import("bu", *dataBu));
+    RooDataSet combData(("combData_" + std::to_string(it)).c_str(), "",
+                        RooArgSet(buMass, deltaMass), RooFit::Index(dimension),
+                        RooFit::Import("delta", *dataDelta),
+                        RooFit::Import("bu", *dataBu));
     return combData;
     std::cout << "1D: returning combDataSet\n";
   } else {
@@ -498,7 +499,8 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
       std::cout << "Extracting 2D dataset with cuts applied.\n";
       rdsName = "inputDataSet";
       cutString =
-          "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&((abs(h1_D_ID)==211&&h1_D_PIDK<"
+          "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&((abs(h1_D_ID)==211&&h1_D_"
+          "PIDK<"
           "-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2))&&((abs(h2_D_ID)==211&&h2_D_"
           "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2))";
     }
@@ -509,10 +511,10 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
       std::cout << "inputDataSet extracted... \n";
       inputDataSet->Print();
     }
-    auto dataBu_tmp = std::unique_ptr<RooDataSet>(
-        dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-            ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high + cutString)
-                .c_str())));
+    auto dataBu_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+        inputDataSet->reduce(("Delta_M>" + box_delta_low + "&&Delta_M<" +
+                              box_delta_high + cutString)
+                                 .c_str())));
     std::cout << "Formula compiled\n";
     if (dataBu_tmp.get() == nullptr) {
       throw std::runtime_error(
@@ -525,10 +527,10 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
     }
     dataBu->Print();
 
-    auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
-        dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-            ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high + cutString)
-                .c_str())));
+    auto dataDelta_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+        inputDataSet->reduce(("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" +
+                              box_bu_high + cutString)
+                                 .c_str())));
     if (dataDelta_tmp.get() == nullptr) {
       throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
     }
@@ -539,8 +541,8 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
     }
     dataDelta->Print();
 
-    RooDataSet combData(("combData_" + std::to_string(it)).c_str(), "", RooArgSet(buMass, deltaMass),
-                        RooFit::Index(dimension),
+    RooDataSet combData(("combData_" + std::to_string(it)).c_str(), "",
+                        RooArgSet(buMass, deltaMass), RooFit::Index(dimension),
                         RooFit::Import("bu", *dataBu.get()),
                         RooFit::Import("delta", *dataDelta.get()));
     combData.Print();
@@ -981,29 +983,18 @@ void FitToys(bool fitDontSave, int &nIter,
     simPdf.addPdf(pdfBu, "bu");
 
     if (toy == false) {
-      RooDataSet combData;
       std::string dim = "2";
       std::vector<RooDataSet> dsVec;
       std::cout << "Number of datasets = " << filenames.size() << "\n";
       for (unsigned int f = 0; f < filenames.size(); ++f) {
-        if (f == 0) {
-          combData = ExtractDataSet(filenames[f], dim, buMass, deltaMass,
-                                    dimension, box_bu_low, box_bu_high,
-                                    box_delta_low, box_delta_high, toy, f);
-          std::cout << "First dataset =\n";
-          combData.Print();
-        } else {
-          dsVec.emplace_back(ExtractDataSet(filenames[f], dim, buMass, deltaMass,
-                                    dimension, box_bu_low, box_bu_high,
-                                    box_delta_low, box_delta_high, toy, f));
-          dsVec[f-1].Print();
-        }
+        dsVec.emplace_back(ExtractDataSet(
+            filenames[f], dim, buMass, deltaMass, dimension, box_bu_low,
+            box_bu_high, box_delta_low, box_delta_high, toy, f));
       }
       std::cout << "Entries in dsVec = " << dsVec.size() << "\n";
-      for (auto &ds : dsVec) {
-        std::cout << "1" << std::endl; 
-        combData.append(ds);
-        std::cout << "2" << std::endl; 
+      RooDataSet combData = dsVec[0];
+      for (unsigned int d = 0; d < dsVec.size()-1; ++d) {
+        combData.append(dsVec[d+1]);
       }
       std::cout << "Appended roodatasets" << std::endl;
       combData.Print();
@@ -1016,7 +1007,8 @@ void FitToys(bool fitDontSave, int &nIter,
       // std::unique_ptr<RooFitResult> result =
       //     std::unique_ptr<RooFitResult>(simPdf.fitTo(
       //         *absData, RooFit::Extended(true), RooFit::SplitRange(true),
-      //         RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+      //         RooFit::Save(), RooFit::Strategy(2),
+      //         RooFit::Minimizer("Minuit2"),
       //         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
       //
       // std::cout << "Plotting projections of m[Bu]\n";
@@ -1027,7 +1019,8 @@ void FitToys(bool fitDontSave, int &nIter,
       // std::cout << "Plotting projections of m[Delta]\n";
       // PlotComponent(Variable::delta, deltaMass, dataHist.get(), simPdf,
       //               dimension, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
-      //               pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir, box_delta_low,
+      //               pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
+      //               box_delta_low,
       //               box_delta_high, box_bu_low, box_bu_high);
       // std::cout << "Plotting correlation matrix\n";
       // PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
