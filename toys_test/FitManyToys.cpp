@@ -398,13 +398,13 @@ int main(int argc, char *argv[]) {
       errHist.Fill(errVec[j][i]);
       pullHist.Fill(pullVec[j][i]);
     }
-    TCanvas initValCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
-    initValHist.GetXaxis()->SetTitle(paramName.c_str());
-    initValHist.Draw();
-    initValCanvas.SaveAs((outputDir + "/plots/" + deltaLow + "_" + deltaHigh +
-                          "_" + buLow + "_" + buHigh + "_" + paramName +
-                          "_initVal.pdf")
-                             .c_str());
+    // TCanvas initValCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
+    // initValHist.GetXaxis()->SetTitle(paramName.c_str());
+    // initValHist.Draw();
+    // initValCanvas.SaveAs((outputDir + "/plots/" + deltaLow + "_" + deltaHigh +
+    //                       "_" + buLow + "_" + buHigh + "_" + paramName +
+    //                       "_initVal.pdf")
+    //                          .c_str());
 
     TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
     varCanvas.Divide(3, 1);
