@@ -281,7 +281,7 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 }
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
-                   RooSimultaneous &simPdf, RooCategory &fitting,
+                   RooSimultaneous &simPdf, RooCategory &dimension,
                    RooAddPdf &sigPdf, RooAbsPdf &bkg1Pdf, RooAbsPdf &bkg2Pdf,
                    RooAbsPdf &bkg3Pdf, std::string const &outputDir,
                    std::string const &box_bu_low,
@@ -321,40 +321,40 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
 
   dataHist->plotOn(
       frame.get(),
-      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
+      RooFit::Cut(("dimension==dimension::" + EnumToString(variable)).c_str()));
   simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::LineColor(kBlue));
+      frame.get(), RooFit::Slice(dimension, EnumToString(variable).c_str()),
+      RooFit::ProjWData(dimension, *dataHist), RooFit::LineColor(kBlue));
   pullHist = frame->RooPlot::pullHist();
   simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
+                RooFit::Slice(dimension, EnumToString(variable).c_str()),
+                RooFit::ProjWData(dimension, *dataHist),
                 RooFit::Components(sigPdf.GetName()), RooFit::LineColor(kBlue),
                 RooFit::LineStyle(kDashed));
   simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
+                RooFit::Slice(dimension, EnumToString(variable).c_str()),
+                RooFit::ProjWData(dimension, *dataHist),
                 RooFit::Components(bkg1Pdf.GetName()),
                 RooFit::LineColor(kOrange), RooFit::LineStyle(kDashed));
   simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
+                RooFit::Slice(dimension, EnumToString(variable).c_str()),
+                RooFit::ProjWData(dimension, *dataHist),
                 RooFit::Components(bkg2Pdf.GetName()), RooFit::LineColor(kRed),
                 RooFit::LineStyle(kDashed));
   simPdf.plotOn(frame.get(),
-                RooFit::Slice(fitting, EnumToString(variable).c_str()),
-                RooFit::ProjWData(fitting, *dataHist),
+                RooFit::Slice(dimension, EnumToString(variable).c_str()),
+                RooFit::ProjWData(dimension, *dataHist),
                 RooFit::Components(bkg3Pdf.GetName()),
                 RooFit::LineColor(kGreen), RooFit::LineStyle(kDashed));
   // simPdf.plotOn(
-  //     frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-  //     RooFit::ProjWData(fitting, *dataHist),
+  //     frame.get(), RooFit::Slice(dimension, EnumToString(variable).c_str()),
+  //     RooFit::ProjWData(dimension, *dataHist),
   //     RooFit::Components(bkg4Pdf.GetName()),
   //     RooFit::LineColor(kMagenta), RooFit::LineStyle(kDashed));
 
   dataHist->plotOn(
       frame.get(),
-      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
+      RooFit::Cut(("dimension==dimension::" + EnumToString(variable)).c_str()));
 
   if (pullHist != 0) {
     pullFrame->addPlotable(pullHist /* .get() */, "P");
@@ -459,10 +459,10 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
 
 RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
                           RooRealVar &buMass, RooRealVar &deltaMass,
-                          RooCategory &fitting, std::string const &box_bu_low,
+                          RooCategory &dimension, std::string const &box_bu_low,
                           std::string const &box_bu_high,
                           std::string const &box_delta_low,
-                          std::string const &box_delta_high, bool toy) {
+                          std::string const &box_delta_high, bool toy, int it) {
   TFile in(input.c_str(), "READ");
   if (toy == true && dim == "1") {
     std::cout << "Extracting 1D toy dataset.\n";
@@ -483,7 +483,7 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
       dataBu->Print();
     }
     RooDataSet combData(
-        "combData", "", RooArgSet(buMass, deltaMass), RooFit::Index(fitting),
+        ("combData_" + std::to_string(it)).c_str(), "", RooArgSet(buMass, deltaMass), RooFit::Index(dimension),
         RooFit::Import("delta", *dataDelta), RooFit::Import("bu", *dataBu));
     return combData;
     std::cout << "1D: returning combDataSet\n";
@@ -498,8 +498,8 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
       std::cout << "Extracting 2D dataset with cuts applied.\n";
       rdsName = "inputDataSet";
       cutString =
-          "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&(abs(h1_D_ID)==211&&h1_D_PIDK<"
-          "-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+          "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&((abs(h1_D_ID)==211&&h1_D_PIDK<"
+          "-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2))&&((abs(h2_D_ID)==211&&h2_D_"
           "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2))";
     }
     gDirectory->GetObject(rdsName.c_str(), inputDataSet);
@@ -513,6 +513,7 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
         dynamic_cast<RooDataSet *>(inputDataSet->reduce(
             ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high + cutString)
                 .c_str())));
+    std::cout << "Formula compiled\n";
     if (dataBu_tmp.get() == nullptr) {
       throw std::runtime_error(
           "Could not reduce inputDataSet with delta mass.");
@@ -522,6 +523,7 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
     if (dataBu.get() == nullptr) {
       throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
     }
+    dataBu->Print();
 
     auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
         dynamic_cast<RooDataSet *>(inputDataSet->reduce(
@@ -535,11 +537,13 @@ RooDataSet ExtractDataSet(std::string const &input, std::string &dim,
     if (dataDelta.get() == nullptr) {
       throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
     }
+    dataDelta->Print();
 
-    RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
-                        RooFit::Index(fitting),
+    RooDataSet combData(("combData_" + std::to_string(it)).c_str(), "", RooArgSet(buMass, deltaMass),
+                        RooFit::Index(dimension),
                         RooFit::Import("bu", *dataBu.get()),
                         RooFit::Import("delta", *dataDelta.get()));
+    combData.Print();
     return combData;
     std::cout << "2D: returning combDataSet\n";
   }
@@ -558,7 +562,7 @@ void FitToys(bool fitDontSave, int &nIter,
   int bu_nbins = (bu_high - bu_low) / 10;
   int delta_nbins = (delta_high - delta_low) / 2;
 
-  // ---------------------------- Fitting Vars ----------------------------
+  // ---------------------------- dimension Vars ----------------------------
   RooRealVar buMass("Bu_Delta_M",
                     "m[D^{*0}#pi^{#pm}] - m[D^{*0}] + m[D^{*0}]_{PDG}", bu_low,
                     bu_high, "MeV/c^{2}");
@@ -569,9 +573,9 @@ void FitToys(bool fitDontSave, int &nIter,
   deltaMass.setBins(delta_nbins);
 
   // ---------------------------- Categories ----------------------------
-  RooCategory fitting("fitting", "fitting");
-  fitting.defineType("bu");
-  fitting.defineType("delta");
+  RooCategory dimension("dimension", "dimension");
+  dimension.defineType("bu");
+  dimension.defineType("delta");
 
   // ---------------------------- Yield Starting points
   // ----------------------------
@@ -972,7 +976,7 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Construct Sim PDF
     // ----------------------------
     RooSimultaneous simPdf(("simPdf_" + std::to_string(i)).c_str(), "",
-                           fitting);
+                           dimension);
     simPdf.addPdf(pdfDelta, "delta");
     simPdf.addPdf(pdfBu, "bu");
 
@@ -980,20 +984,28 @@ void FitToys(bool fitDontSave, int &nIter,
       RooDataSet combData;
       std::string dim = "2";
       std::vector<RooDataSet> dsVec;
-      for (unsigned int f = 0; f < filenames.size(); ++i) {
+      std::cout << "Number of datasets = " << filenames.size() << "\n";
+      for (unsigned int f = 0; f < filenames.size(); ++f) {
         if (f == 0) {
           combData = ExtractDataSet(filenames[f], dim, buMass, deltaMass,
-                                    fitting, box_bu_low, box_bu_high,
-                                    box_delta_low, box_delta_high, toy);
+                                    dimension, box_bu_low, box_bu_high,
+                                    box_delta_low, box_delta_high, toy, f);
+          std::cout << "First dataset =\n";
+          combData.Print();
         } else {
           dsVec.emplace_back(ExtractDataSet(filenames[f], dim, buMass, deltaMass,
-                                    fitting, box_bu_low, box_bu_high,
-                                    box_delta_low, box_delta_high, toy));
+                                    dimension, box_bu_low, box_bu_high,
+                                    box_delta_low, box_delta_high, toy, f));
+          dsVec[f-1].Print();
         }
       }
+      std::cout << "Entries in dsVec = " << dsVec.size() << "\n";
       for (auto &ds : dsVec) {
+        std::cout << "1" << std::endl; 
         combData.append(ds);
+        std::cout << "2" << std::endl; 
       }
+      std::cout << "Appended roodatasets" << std::endl;
       combData.Print();
 
       // auto dataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
@@ -1008,13 +1020,13 @@ void FitToys(bool fitDontSave, int &nIter,
       //         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
       //
       // std::cout << "Plotting projections of m[Bu]\n";
-      // PlotComponent(Variable::bu, buMass, dataHist.get(), simPdf, fitting,
+      // PlotComponent(Variable::bu, buMass, dataHist.get(), simPdf, dimension,
       //               pdfBuSignal, pdfBuBu2Dst0pi_D0pi0, pdfBuMisRec,
       //               pdfBuBu2D0pi, outputDir, box_delta_low, box_delta_high,
       //               box_bu_low, box_bu_high);
       // std::cout << "Plotting projections of m[Delta]\n";
       // PlotComponent(Variable::delta, deltaMass, dataHist.get(), simPdf,
-      //               fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+      //               dimension, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
       //               pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir, box_delta_low,
       //               box_delta_high, box_bu_low, box_bu_high);
       // std::cout << "Plotting correlation matrix\n";
@@ -1056,7 +1068,7 @@ void FitToys(bool fitDontSave, int &nIter,
         deltaDataSet->Print();
 
         // RooDataSet *toyDataSet =
-        //     simPdf.generate(RooArgSet(buMass, deltaMass, fitting),
+        //     simPdf.generate(RooArgSet(buMass, deltaMass, dimension),
         //     nEvtsPerToy);
         // toyDataSet->Print();
 
@@ -1085,9 +1097,10 @@ void FitToys(bool fitDontSave, int &nIter,
           // double nBu, nDelta;
           // ---------------------------- Read in toy dataset
           // ----------------------------
+          int it = 0;
           RooDataSet combData = ExtractDataSet(
-              filenames[i], dim, buMass, deltaMass, fitting, box_bu_low,
-              box_bu_high, box_delta_low, box_delta_high, toy);
+              filenames[i], dim, buMass, deltaMass, dimension, box_bu_low,
+              box_bu_high, box_delta_low, box_delta_high, toy, it);
           combData.Print();
 
           auto toyDataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
@@ -1106,12 +1119,12 @@ void FitToys(bool fitDontSave, int &nIter,
           if (i == 0) {
             std::cout << "Plotting projections of m[Bu]\n";
             PlotComponent(Variable::bu, buMass, toyDataHist.get(), simPdf,
-                          fitting, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0,
+                          dimension, pdfBuSignal, pdfBuBu2Dst0pi_D0pi0,
                           pdfBuMisRec, pdfBuBu2D0pi, outputDir, box_delta_low,
                           box_delta_high, box_bu_low, box_bu_high);
             std::cout << "Plotting projections of m[Delta]\n";
             PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), simPdf,
-                          fitting, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
+                          dimension, pdfDeltaSignal, pdfDeltaBu2Dst0pi_D0pi0,
                           pdfDeltaMisRec, pdfDeltaBu2D0pi, outputDir,
                           box_delta_low, box_delta_high, box_bu_low,
                           box_bu_high);
@@ -1204,6 +1217,7 @@ int main(int argc, char *argv[]) {
       nIter = filenames.size();
     } else if (dsType == "data") {
       std::cout << "Fitting to data.\n";
+      toy = false;
       nIter = 1;
     } else {
       std::cerr
