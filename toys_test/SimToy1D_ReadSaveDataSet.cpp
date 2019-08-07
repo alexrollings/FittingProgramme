@@ -581,7 +581,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
   // ---------------------------- Yield Starting points
   // ----------------------------
-  double initYieldSig = 40000;
+  double initYieldSig = 5.1958e+04;
   double initYieldBu2Dst0pi_D0pi0 = initYieldSig * 0.916;
   double fracMisRec_Bu2Dst0pi_D0gamma_WN = 0.473;
   double fracMisRec_Bu2Dst0pi_D0pi0_WN = 0.809;
@@ -669,8 +669,8 @@ void FitToys(bool fitDontSave, int &nIter,
   for (int i = 0; i < nIter; ++i) {
     // ---------------------------- Yields ----------------------------
     RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
-                              "", initYieldSig * orEffSignal.getVal(), -100000,
-                              100000);
+                              "", initYieldSig * orEffSignal.getVal(), -1000000,
+                              1000000);
     RooFormulaVar yieldBuSignal(
         ("yieldBuSignal_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffSignal, orEffSignal, yieldTotSignal));
@@ -683,8 +683,8 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar yieldTotBu2Dst0pi_D0pi0(
         ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -100000,
-        100000);
+        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -1000000,
+        1000000);
     RooFormulaVar yieldBuBu2Dst0pi_D0pi0(
         ("yieldBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
         "(@0/@1)*@2",
@@ -701,7 +701,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar yieldTotMisRec(("yieldTotMisRec_" + std::to_string(i)).c_str(),
                               "", initYieldMisRec * orEffMisRec.getVal(),
-                              -100000, 100000);
+                              -1000000, 1000000);
     RooFormulaVar yieldBuMisRec(
         ("yieldBuMisRec_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffMisRec, orEffMisRec, yieldTotMisRec));
@@ -714,7 +714,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar yieldTotBu2D0pi(("yieldTotBu2D0pi_" + std::to_string(i)).c_str(),
                                "", initYieldBu2D0pi * orEffBu2D0pi.getVal(),
-                               -100000, 100000);
+                               -1000000, 1000000);
     RooFormulaVar yieldBuBu2D0pi(
         ("yieldBuBu2D0pi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffBu2D0pi, orEffBu2D0pi, yieldTotBu2D0pi));
@@ -941,8 +941,8 @@ void FitToys(bool fitDontSave, int &nIter,
                            2.1226e-11);//, 0, 1);
     // ---------------------------- PDFs ----------------------------
     RooCruijff pdfBuBu2D0pi(("pdfBuBu2D0pi_" + std::to_string(i)).c_str(), "",
-                            buMass, meanBuBu2D0pi, sigmaLBuBu2D0pi, aLBuBu2D0pi,
-                            aRBuBu2D0pi);
+                            buMass, meanBuBu2D0pi, sigmaLBuBu2D0pi,
+                            sigmaRBuBu2D0pi, aLBuBu2D0pi, aRBuBu2D0pi);
 
     // ---------------------------- Add PDFs and yields
     // ----------------------------
