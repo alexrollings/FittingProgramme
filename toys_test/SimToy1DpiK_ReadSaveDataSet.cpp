@@ -569,12 +569,12 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
       std::cout << "Extracting 2D dataset with cuts applied.\n";
       if (bachelor == Bachelor::pi) {
         cutString =
-            "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&((abs(h1_D_ID)==211&&h1_D_"
+            "BDT1>0.05&&BDT2>0.05&&bach_PIDK<12&&((abs(h1_D_ID)==211&&h1_D_"
             "PIDK<-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2))&&((abs(h2_D_ID)==211&&"
             "h2_D_PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2))";
       } else {
         cutString =
-            "&&BDT1>0.05&&BDT2>0.05&&bach_PIDK>12&&((abs(h1_D_ID)==211&&h1_D_"
+            "BDT1>0.05&&BDT2>0.05&&bach_PIDK>12&&((abs(h1_D_ID)==211&&h1_D_"
             "PIDK<-2)||(abs(h1_D_ID)==321&&h1_D_PIDK>2))&&((abs(h2_D_ID)==211&&"
             "h2_D_PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2))";
       }
