@@ -42,6 +42,7 @@
 #include "TTreeReader.h"
 
 enum class Variable { bu, delta };
+enum class Option { saveD1DToy, save2DToy, fitD1DToy, fit2DToy, fitData };
 enum class Bachelor { pi, K };
 enum class Mode {
   Bd2Dstpi,
@@ -617,12 +618,12 @@ RooDataSet ExtractDataSet(Bachelor bachelor, std::string const &input,
   }
 }
 
-void FitToys(bool fitDontSave, int &nIter,
+void FitToys(Option option, int &nIter,
              std::vector<std::string> const &filenamesPi,
              std::vector<std::string> const &filenamesK,
              std::string const &outputDir, std::string const &box_delta_low,
              std::string const &box_delta_high, std::string const &box_bu_low,
-             std::string const &box_bu_high, bool toy) {
+             std::string const &box_bu_high) {
   int bu_low = 5050;
   int bu_high = 5800;
   int delta_low = 70;  // 134;
@@ -694,7 +695,7 @@ void FitToys(bool fitDontSave, int &nIter,
       {Mode::Bu2D0rho, fracMisRecPi_Bu2D0rho / fracMisRecPi},
       {Mode::Bd2Dstpi, fracMisRecPi_Bd2Dstpi / fracMisRecPi}};
 
-  if (fitDontSave == true || toy == true) {
+  if (option != save2DToys) {
     ExtractBoxEfficiencies(
         Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high, box_bu_low,
         box_bu_high, boxEffBu2Dst0pi_D0gamma, deltaCutEffBu2Dst0pi_D0gamma,
@@ -1615,82 +1616,134 @@ void FitToys(bool fitDontSave, int &nIter,
 }
 
 int main(int argc, char *argv[]) {
-  bool fitDontSave = true;
-  bool toy = true;
-
-  int nIter;
-  std::vector<std::string> filenamesPi;
-  std::vector<std::string> filenamesK;
-  std::string outputDir;
-  std::string box_delta_low;
-  std::string box_delta_high;
-  std::string box_bu_low;
-  std::string box_bu_high;
-
-  std::string input1 = argv[1];
-  if (input1 == "save") {
-    fitDontSave = false;
-    if (argc < 9) {
-      std::cerr << "Enter option: save, output directory "
-                   "box limits: delta_low, delta_high, bu_low, bu_high, and "
-                   "nToys, dataset generation from toy/data\n";
-      return 1;
-    }
-    outputDir = argv[2];
-    box_delta_low = argv[3];
-    box_delta_high = argv[4];
-    box_bu_low = argv[5];
-    box_bu_high = argv[6];
-    nIter = std::atoi(argv[7]);
-    std::cout << "RooDataSet will be created and saved to file.\n";
-  } else {
-    if (argc < 9) {
-      std::cerr << "Enter input file string for pi bachelor, input file string "
-                   "for K bachelor,"
-                   "output directory, "
-                   "box limits: delta_low, delta_high, bu_low, bu_high, "
-                   "roodataset type: toy/data\n";
-      return 1;
-    }
-    filenamesPi = SplitByComma(input1);
-    {
-      std::string input2 = argv[2];
-      filenamesK = SplitByComma(input2);
-    }
-    if (filenamesK.size() != filenamesPi.size()) {
-      std::cerr << "Number of files for π bachelor = " << filenamesPi.size()
-                << ", number of files for K bachelor = " << filenamesK.size()
-                << "\n";
-      return 1;
-    }
-    outputDir = argv[3];
-    box_delta_low = argv[4];
-    box_delta_high = argv[5];
-    box_bu_low = argv[6];
-    box_bu_high = argv[7];
-    std::cout << "RooDataSets will be fit to and results saved.\n";
-  }
-
-  std::string dsType = argv[8];
-  if (dsType == "toy") {
-    std::cout << "Fitting to toy datasets.\n";
-    if (fitDontSave == true) {
-      nIter = filenamesPi.size();
-    }
-  } else if (dsType == "data") {
-    std::cout << "Fitting to data.\n";
-    if (fitDontSave == true) {
-      nIter = 1;
-    }
-    toy = false;
-  } else {
-    std::cerr << "Final argument is " << dsType
-              << " and must be toy/data when fitting to RooDataSets.\n";
+  std::string instructions1 =
+      "\t1) Saving D1D toy datasets generated from the D1D model:\n\t\t Enter: "
+      "'1', output directory, low delta "
+      "box dimn, high delta box dimn, low bu box dimn, high bu box dimn, # of "
+      "datasets to save\n";
+  std::string instructions2 =
+      "\t2) Saving a 2D toy dataset generated from 2D data:\n\t\t Enter: '2', "
+      "output directory, low delta box "
+      "dimn, high delta box dimn, low bu box dimn, high bu box dimn, # of "
+      "datasets to save, π input "
+      "datasets, K input datasets\n";
+  std::string instructions3 =
+      "\t3) Fitting the D1D model to D1D toy datasets:\n\t\t Enter: '3', "
+      "output directory, low delta box dimn, high delta "
+      "box dimn, low bu box dimn, high bu box dimn, π input datasets, K input "
+      "datasets\n";
+  std::string instructions4 =
+      "\t4) Fitting the D1D model to 2D toy datasets:\n\t\t Enter: '4', "
+      "output directory, low delta box dimn, high delta box dimn, "
+      "low bu box dimn, high bu box dimn, 2D input datasets\n";
+  std::string instructions5 =
+      "\t5) Fitting the D1D model to data:\n\t\t Enter: '5', "
+      "output directory, low delta box dimn, high delta box dimn, low bu box "
+      "dimn, high bu box dimn, π input datasets, K input datasets\n";
+  std::string instructions = "There are 5 options for running this macro:\n" +
+                             instructions1 + instructions2 + instructions3 +
+                             instructions4 + instructions5;
+  if (argc < 2) {
+    std::cerr << instructions;
     return 1;
   }
 
-  FitToys(fitDontSave, nIter, filenamesPi, filenamesK, outputDir, box_delta_low,
-          box_delta_high, box_bu_low, box_bu_high, toy);
+  Option option;
+  {
+    int nOption = std::atoi(argv[1]);
+    if (nOption == 1) {
+      option = Option::saveD1DToy;
+      if (argc != 8) {
+        std::cerr << instructions1;
+        return 1;
+      }
+    } else if (nOption == 2) {
+      option = Option::save2DToy;
+      if (argc != 10) {
+        std::cerr << instructions2;
+        return 1;
+      }
+    } else if (nOption == 3) {
+      option = Option::fitD1DToy;
+      if (argc != 9) {
+        std::cerr << instructions3;
+        return 1;
+      }
+    } else if (nOption == 4) {
+      option = Option::fit2DToy;
+      if (argc != 8) {
+        std::cerr << instructions4;
+        return 1;
+      }
+    } else if (nOption == 5) {
+      option = Option::fitData;
+      if (argc != 9) {
+        std::cerr << instructions5;
+        return 1;
+      }
+    } else {
+      std::cerr << instructions;
+      return 1;
+    }
+  }
+
+  std::string outputDir = argv[2];
+  std::string box_delta_low = argv[3];
+  std::string box_delta_high = argv[4];
+  std::string box_bu_low = argv[5];
+  std::string box_bu_high = argv[6];
+  int nIter;
+  std::vector<std::string> filenames;
+  std::vector<std::string> filenamesK;
+
+  if (option == Option::saveD1DToy) {
+    nIter = std::atoi(argv[7]);
+  } else if (option == Option::Save2DToy) {
+    nIter = std::atoi(argv[7]);
+    std::string inpu2Pi = argv[8];
+    filenames = SplitByComma(inpu2Pi);
+    std::string inputK = argv[9];
+    filenamesK = SplitByComma(inputK);
+    if (filenames.size() != filenamesK.size()) {
+      std::cerr
+          << "Must provide same number of π and K datasets. Currently, π = "
+          << filenames.size() << " and K = " << filenamesK.size() << "\n";
+    }
+  } else if (option == Option::fitD1DToy) {
+    std::string inputPi = argv[7];
+    filenames = SplitByComma(inputPi);
+    std::string inputK = argv[8];
+    filenamesK = SplitByComma(inputK);
+    if (filenames.size() != filenamesK.size()) {
+      std::cerr
+          << "Must provide same number of π and K datasets. Currently, π = "
+          << filenames.size() << " and K = " << filenamesK.size() << "\n";
+    }
+    nIter = filenames.size();
+  } else if (option == Option::fit2DToy) {
+    std::string input = argv[7];
+    filenames = SplitByComma(input);
+    if (filenames.size() != filenamesK.size()) {
+      std::cerr
+          << "Must provide same number of π and K datasets. Currently, π = "
+          << filenames.size() << " and K = " << filenamesK.size() << "\n";
+    }
+    nIter = filenames.size();
+  } else {
+    std::string inpu2Pi = argv[7];
+    filenames = SplitByComma(inpu2Pi);
+    std::string inputK = argv[8];
+    filenamesK = SplitByComma(inputK);
+    if (filenames.size() != filenamesK.size()) {
+      std::cerr
+          << "Must provide same number of π and K datasets. Currently, π = "
+          << filenames.size() << " and K = " << filenamesK.size() << "\n";
+    }
+    nIter = 1;
+  }
+
+  FitToys(option, nIter, filenames, filenamesK, outputDir, box_delta_low,
+          box_delta_high, box_bu_low, box_bu_high);
 
   return 0;
 }
