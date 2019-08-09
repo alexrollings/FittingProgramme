@@ -320,7 +320,7 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
 void PlotComponent(Variable variable, Bachelor bachelor, RooRealVar &var,
                    RooDataHist *dataHist, RooSimultaneous &simPdf,
-                   RooCategory &category, RooAddPdf &sigPdf, RooAbsPdf &bkg1Pdf,
+                   RooCategory &category, RooAbsPdf &sigPdf, RooAbsPdf &bkg1Pdf,
                    RooAbsPdf &bkg2Pdf, RooAbsPdf &bkg3Pdf,
                    std::string const &outputDir, std::string const &box_bu_low,
                    std::string const &box_bu_high,
@@ -743,8 +743,8 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Pi Yields ----------------------------
     RooRealVar yieldTotBu2Dst0pi_D0gamma(
         ("yieldTotBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        initYieldBu2Dst0pi_D0gamma * orEffBu2Dst0pi_D0gamma.getVal());//, -1000000,
-        // 1000000);
+        initYieldBu2Dst0pi_D0gamma * orEffBu2Dst0pi_D0gamma.getVal(), -1000000,
+        1000000);
     RooFormulaVar yieldBuBu2Dst0pi_D0gamma(
         ("yieldBuBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
         "(@0/@1)*@2",
@@ -763,8 +763,8 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar yieldTotBu2Dst0pi_D0pi0(
         ("yieldTotBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
-        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal());//, -1000000,
-        // 1000000);
+        initYieldBu2Dst0pi_D0pi0 * orEffBu2Dst0pi_D0pi0.getVal(), -1000000,
+        1000000);
     RooFormulaVar yieldBuBu2Dst0pi_D0pi0(
         ("yieldBuBu2Dst0pi_D0pi0_" + std::to_string(i)).c_str(), "",
         "(@0/@1)*@2",
@@ -781,7 +781,7 @@ void FitToys(bool fitDontSave, int &nIter,
 
     RooRealVar yieldTotMisRecPi(
         ("yieldTotMisRecPi_" + std::to_string(i)).c_str(), "",
-        initYieldMisRecPi * orEffMisRecPi.getVal());//, -1000000, 1000000);
+        initYieldMisRecPi * orEffMisRecPi.getVal(), -1000000, 1000000);
     RooFormulaVar yieldBuMisRecPi(
         ("yieldBuMisRecPi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffMisRecPi, orEffMisRecPi, yieldTotMisRecPi));
@@ -793,8 +793,8 @@ void FitToys(bool fitDontSave, int &nIter,
         RooArgList(boxEffMisRecPi, orEffMisRecPi, yieldTotMisRecPi));
 
     RooRealVar yieldTotBu2D0pi(("yieldTotBu2D0pi_" + std::to_string(i)).c_str(),
-                               "", initYieldBu2D0pi * orEffBu2D0pi.getVal());//,
-                               // -1000000, 1000000);
+                               "", initYieldBu2D0pi * orEffBu2D0pi.getVal(),
+                               -1000000, 1000000);
     RooFormulaVar yieldBuBu2D0pi(
         ("yieldBuBu2D0pi_" + std::to_string(i)).c_str(), "", "(@0/@1)*@2",
         RooArgList(deltaCutEffBu2D0pi, orEffBu2D0pi, yieldTotBu2D0pi));
@@ -807,8 +807,8 @@ void FitToys(bool fitDontSave, int &nIter,
 
     // ---------------------------- K Yields ----------------------------
     RooRealVar ratioTotBu2Dst0K_D0gamma(
-        ("ratioTotBu2Dst0K_D0gamma_" + std::to_string(i)).c_str(), "", 0.07930);//,
-        // -1, 1);
+        ("ratioTotBu2Dst0K_D0gamma_" + std::to_string(i)).c_str(), "", 0.07930,
+        -1, 1);
     RooFormulaVar yieldTotBu2Dst0K_D0gamma(
         ("yieldTotBu2Dst0K_D0gamma_" + std::to_string(i)).c_str(), "",
         "@0*@1*@2", RooArgList(yieldTotBu2Dst0pi_D0gamma,
@@ -830,8 +830,8 @@ void FitToys(bool fitDontSave, int &nIter,
                    yieldTotBu2Dst0K_D0gamma));
 
     RooRealVar ratioTotBu2Dst0K_D0pi0(
-        ("ratioTotBu2Dst0K_D0pi0_" + std::to_string(i)).c_str(), "", 0.07930);//,
-        // -1, 1);
+        ("ratioTotBu2Dst0K_D0pi0_" + std::to_string(i)).c_str(), "", 0.07930,
+        -1, 1);
     RooFormulaVar yieldTotBu2Dst0K_D0pi0(
         ("yieldTotBu2Dst0K_D0pi0_" + std::to_string(i)).c_str(), "", "@0*@1*@2",
         RooArgList(yieldTotBu2Dst0pi_D0pi0, ratioTotBu2Dst0K_D0pi0, pidEff));
@@ -849,7 +849,7 @@ void FitToys(bool fitDontSave, int &nIter,
                                  yieldTotBu2Dst0K_D0pi0));
 
     RooRealVar ratioTotMisRecK(("ratioTotMisRecK_" + std::to_string(i)).c_str(),
-                               "", 0.06);//, -1, 1);
+                               "", 0.06, -1, 1);
     RooFormulaVar yieldTotMisRecK(
         ("yieldTotMisRecK_" + std::to_string(i)).c_str(), "", "@0*@1*@2",
         RooArgList(yieldTotBu2Dst0pi_D0pi0, ratioTotMisRecK, pidEff));
@@ -864,7 +864,7 @@ void FitToys(bool fitDontSave, int &nIter,
         RooArgList(boxEffMisRecPi, orEffMisRecPi, yieldTotMisRecK));
 
     RooRealVar ratioTotBu2D0K(("ratioTotBu2D0K_" + std::to_string(i)).c_str(),
-                              "", 0.07768);//, -1, 1);
+                              "", 0.07768, -1, 1);
     RooFormulaVar yieldTotBu2D0K(
         ("yieldTotBu2D0K_" + std::to_string(i)).c_str(), "", "@0*@1*@2",
         RooArgList(yieldTotBu2Dst0pi_D0pi0, ratioTotBu2D0K, pidEff));
@@ -886,7 +886,7 @@ void FitToys(bool fitDontSave, int &nIter,
     // ---------------------------- Mean ----------------------------
     RooRealVar meanDeltaBu2Dst0pi_D0gamma(
         ("meanDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
-        1.4233e+02, 135, 150);
+        1.4233e+02);//, 135, 150);
     // ---------------------------- Sigmas ----------------------------
     RooRealVar sigmaDeltaBu2Dst0pi_D0gamma(
         ("sigmaDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
@@ -920,6 +920,31 @@ void FitToys(bool fitDontSave, int &nIter,
         ("pdfDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
         RooArgSet(pdfDeltaBu2Dst0pi_D0gamma1, pdfDeltaBu2Dst0pi_D0gamma2),
         fracPdf1DeltaBu2Dst0pi_D0gamma);
+
+    // // ---------------------------- Mean ----------------------------
+    // RooRealVar meanDeltaBu2Dst0pi_D0gamma(
+    //     ("meanDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+    //     1.4141e+02, 135, 145);
+    // // // ---------------------------- Sigmas π ----------------------------
+    // RooRealVar sigmaLDeltaBu2Dst0pi_D0gamma(
+    //     ("sigmaLDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+    //     7.0374e+00, 2, 10);
+    // RooRealVar sigmaRDeltaBu2Dst0pi_D0gamma(
+    //     ("sigmaRDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+    //     9.8254e+00, 2, 15);
+    // // ---------------------------- Tails ----------------------------
+    // RooRealVar aLDeltaBu2Dst0pi_D0gamma(
+    //     ("aLDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+    //     9.7299e-02);
+    // RooRealVar aRDeltaBu2Dst0pi_D0gamma(
+    //     ("aRDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "",
+    //     2.6434e-01);
+    // // ---------------------------- PDF ----------------------------
+    // RooCruijff pdfDeltaBu2Dst0pi_D0gamma(
+    //     ("pdfDeltaBu2Dst0pi_D0gamma_" + std::to_string(i)).c_str(), "", deltaMass,
+    //     meanDeltaBu2Dst0pi_D0gamma, sigmaLDeltaBu2Dst0pi_D0gamma,
+    //     sigmaRDeltaBu2Dst0pi_D0gamma, aLDeltaBu2Dst0pi_D0gamma,
+    //     aRDeltaBu2Dst0pi_D0gamma);
 
     // ---------------------------- PDFs: Bu: π/K separate
     // ----------------------------
@@ -1281,68 +1306,85 @@ void FitToys(bool fitDontSave, int &nIter,
       auto dataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
           ("dataHist_" + std::to_string(i)).c_str(), "dataHist"));
 
-      // if (fitDontSave == false) {
-      //   RooHistPdf histPdf(("histPdf_" + std::to_string(i)).c_str(), "",
-      //                      RooArgSet(buMass, deltaMass), datahist, 2);
-      // }
+      if (fitDontSave == false) {
+        RooHistPdf histPdf(("histPdf_" + std::to_string(i)).c_str(), "",
+                           RooArgSet(buMass, deltaMass), *dataHist.get(), 2);
 
-      auto absData = dynamic_cast<RooAbsData *>(dataHist.get());
-      absData->SetName(("absData_" + std::to_string(i)).c_str());
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
 
-      std::unique_ptr<RooFitResult> result =
-          std::unique_ptr<RooFitResult>(simPdf.fitTo(
-              *absData, RooFit::Extended(true), RooFit::SplitRange(true),
-              RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-              RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+        RooDataSet *toyDataSet =
+            histPdf.generate(RooArgSet(buMass, deltaMass), combData.numEntries());
+        std::cout << "Generated!" << std::endl;
+        toyDataSet->Print();
 
-      std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
-      PlotComponent(Variable::bu, Bachelor::pi, buMass, dataHist.get(), simPdf,
-                    category, pdfBuBu2Dst0pi_D0gamma, pdfBuBu2Dst0pi_D0pi0,
-                    pdfBuMisRecPi, pdfBuBu2D0pi, outputDir, box_delta_low,
-                    box_delta_high, box_bu_low, box_bu_high);
-      std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
-      PlotComponent(Variable::delta, Bachelor::pi, deltaMass, dataHist.get(),
-                    simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
-                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi, pdfDeltaBu2D0pi,
-                    outputDir, box_delta_low, box_delta_high, box_bu_low,
-                    box_bu_high);
-      std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
-      PlotComponent(Variable::bu, Bachelor::K, buMass, dataHist.get(), simPdf,
-                    category, pdfBuBu2Dst0K_D0gamma, pdfBuBu2Dst0K_D0pi0,
-                    pdfBuMisRecK, pdfBuBu2D0K, outputDir, box_delta_low,
-                    box_delta_high, box_bu_low, box_bu_high);
-      std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
-      PlotComponent(Variable::delta, Bachelor::K, deltaMass, dataHist.get(),
-                    simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
-                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi, pdfDeltaBu2D0pi,
-                    outputDir, box_delta_low, box_delta_high, box_bu_low,
-                    box_bu_high);
-      std::cout << "Plotting correlation matrix\n";
-      PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-                     box_bu_low, box_bu_high);
+        double randomTag = random.Rndm();
+        TFile dsFile(
+            (outputDir + "/DataFile2D_" + std::to_string(randomTag) + ".root")
+                .c_str(),
+            "RECREATE");
+        toyDataSet->Write("toyDataSet");
+        dsFile.Close();
+        std::cout << "Saved " << randomTag << " dataset\n";
+      } else {
+        auto absData = dynamic_cast<RooAbsData *>(dataHist.get());
+        absData->SetName(("absData_" + std::to_string(i)).c_str());
 
-      result->Print("v");
+        std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
+            simPdf.fitTo(*absData, RooFit::Extended(true),
+                         RooFit::SplitRange(true), RooFit::Save(),
+                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-      double errYieldTotBu2Dst0pi_D0gamma =
-          yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result) *
-          ((yieldSharedBu2Dst0pi_D0gamma.getVal() /
-            yieldTotBu2Dst0pi_D0gamma.getVal()) *
-               std::sqrt(2) +
-           1 -
-           yieldSharedBu2Dst0pi_D0gamma.getVal() /
-               yieldTotBu2Dst0pi_D0gamma.getVal());
-      std::cout << "yieldSharedBu2Dst0pi_D0gamma = "
-                << yieldSharedBu2Dst0pi_D0gamma.getVal() << " ± "
-                << yieldSharedBu2Dst0pi_D0gamma.getPropagatedError(*result)
-                << "\n";
-      std::cout << "yieldTotBu2Dst0pi_D0gamma = "
-                << yieldTotBu2Dst0pi_D0gamma.getVal() << " ± "
-                << errYieldTotBu2Dst0pi_D0gamma << "\n";
-      std::cout << "Corrected error / fit Error = "
-                << errYieldTotBu2Dst0pi_D0gamma /
-                       yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result)
-                << "\n";
+        std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
+        PlotComponent(Variable::bu, Bachelor::pi, buMass, dataHist.get(),
+                      simPdf, category, pdfBuBu2Dst0pi_D0gamma,
+                      pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
+                      outputDir, box_delta_low, box_delta_high, box_bu_low,
+                      box_bu_high);
+        std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
+        PlotComponent(Variable::delta, Bachelor::pi, deltaMass, dataHist.get(),
+                      simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
+                      pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi,
+                      pdfDeltaBu2D0pi, outputDir, box_delta_low, box_delta_high,
+                      box_bu_low, box_bu_high);
+        std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
+        PlotComponent(Variable::bu, Bachelor::K, buMass, dataHist.get(), simPdf,
+                      category, pdfBuBu2Dst0K_D0gamma, pdfBuBu2Dst0K_D0pi0,
+                      pdfBuMisRecK, pdfBuBu2D0K, outputDir, box_delta_low,
+                      box_delta_high, box_bu_low, box_bu_high);
+        std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
+        PlotComponent(Variable::delta, Bachelor::K, deltaMass, dataHist.get(),
+                      simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
+                      pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi,
+                      pdfDeltaBu2D0pi, outputDir, box_delta_low, box_delta_high,
+                      box_bu_low, box_bu_high);
+        std::cout << "Plotting correlation matrix\n";
+        PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+                       box_bu_low, box_bu_high);
 
+        result->Print("v");
+
+        double errYieldTotBu2Dst0pi_D0gamma =
+            yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result) *
+            ((yieldSharedBu2Dst0pi_D0gamma.getVal() /
+              yieldTotBu2Dst0pi_D0gamma.getVal()) *
+                 std::sqrt(2) +
+             1 -
+             yieldSharedBu2Dst0pi_D0gamma.getVal() /
+                 yieldTotBu2Dst0pi_D0gamma.getVal());
+        std::cout << "yieldSharedBu2Dst0pi_D0gamma = "
+                  << yieldSharedBu2Dst0pi_D0gamma.getVal() << " ± "
+                  << yieldSharedBu2Dst0pi_D0gamma.getPropagatedError(*result)
+                  << "\n";
+        std::cout << "yieldTotBu2Dst0pi_D0gamma = "
+                  << yieldTotBu2Dst0pi_D0gamma.getVal() << " ± "
+                  << errYieldTotBu2Dst0pi_D0gamma << "\n";
+        std::cout << "Corrected error / fit Error = "
+                  << errYieldTotBu2Dst0pi_D0gamma /
+                         yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result)
+                  << "\n";
+      }
     } else {
       if (fitDontSave == false) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -1458,37 +1500,37 @@ void FitToys(bool fitDontSave, int &nIter,
                            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                            RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-          // if (i == 0) {
-          //   std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
-          //   PlotComponent(Variable::bu, Bachelor::pi, buMass, toyDataHist.get(),
-          //                 simPdf, category, pdfBuBu2Dst0pi_D0gamma,
-          //                 pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
-          //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
-          //                 box_bu_high);
-          //   std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
-          //   PlotComponent(Variable::delta, Bachelor::pi, deltaMass,
-          //                 toyDataHist.get(), simPdf, category,
-          //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
-          //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-          //                 box_delta_low, box_delta_high, box_bu_low,
-          //                 box_bu_high);
-          //   std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
-          //   PlotComponent(Variable::bu, Bachelor::K, buMass, toyDataHist.get(),
-          //                 simPdf, category, pdfBuBu2Dst0K_D0gamma,
-          //                 pdfBuBu2Dst0K_D0pi0, pdfBuMisRecK, pdfBuBu2D0K,
-          //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
-          //                 box_bu_high);
-          //   std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
-          //   PlotComponent(Variable::delta, Bachelor::K, deltaMass,
-          //                 toyDataHist.get(), simPdf, category,
-          //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
-          //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-          //                 box_delta_low, box_delta_high, box_bu_low,
-          //                 box_bu_high);
-          //   std::cout << "Plotting correlation matrix\n";
-          //   PlotCorrMatrix(result.get(), outputDir, box_delta_low,
-          //                  box_delta_high, box_bu_low, box_bu_high);
-          // }
+          if (i == 0) {
+            std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
+            PlotComponent(Variable::bu, Bachelor::pi, buMass, toyDataHist.get(),
+                          simPdf, category, pdfBuBu2Dst0pi_D0gamma,
+                          pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
+                          outputDir, box_delta_low, box_delta_high, box_bu_low,
+                          box_bu_high);
+            std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
+            PlotComponent(Variable::delta, Bachelor::pi, deltaMass,
+                          toyDataHist.get(), simPdf, category,
+                          pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
+                          pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
+                          box_delta_low, box_delta_high, box_bu_low,
+                          box_bu_high);
+            std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
+            PlotComponent(Variable::bu, Bachelor::K, buMass, toyDataHist.get(),
+                          simPdf, category, pdfBuBu2Dst0K_D0gamma,
+                          pdfBuBu2Dst0K_D0pi0, pdfBuMisRecK, pdfBuBu2D0K,
+                          outputDir, box_delta_low, box_delta_high, box_bu_low,
+                          box_bu_high);
+            std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
+            PlotComponent(Variable::delta, Bachelor::K, deltaMass,
+                          toyDataHist.get(), simPdf, category,
+                          pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
+                          pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
+                          box_delta_low, box_delta_high, box_bu_low,
+                          box_bu_high);
+            std::cout << "Plotting correlation matrix\n";
+            PlotCorrMatrix(result.get(), outputDir, box_delta_low,
+                           box_delta_high, box_bu_low, box_bu_high);
+          }
           result->Print("v");
           if (meanDeltaBu2Dst0pi_D0gamma.getError() > 0.069) {
             std::cout << "GAMMA DELTA MEAN IN SECOND MIN\n";
