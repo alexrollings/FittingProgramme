@@ -113,6 +113,19 @@ std::string EnumToString(Bachelor bachelor) {
   }
 }
 
+std::string EnumToLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "#pi";
+      break;
+    case Bachelor::K:
+      return "K";
+      break;
+    default:
+      return " ";
+  }
+}
+
 std::string EnumToString(Mode mode) {
   switch (mode) {
     case Mode::Bd2Dstpi:
@@ -642,6 +655,157 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
       std::cout << "2D: returning combDataSet\n";
     }
   }
+}
+
+void PlotGeneratedData(Bachelor bachelor, RooRealVar &buMass,
+                       RooRealVar &deltaMass, RooDataHist *dataHist,
+                       RooDataSet *toyData, RooHistPdf &histPdf,
+                       std::string const &outputDir) {
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.02);
+  gStyle->SetTitleSize(0.08, "Z");
+  gStyle->SetTitleSize(0.035, "XY");
+  gStyle->SetLabelSize(0.03, "XY");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.5, "Y");
+  gStyle->SetTitleOffset(0.95, "Z");
+  gStyle->SetPadTopMargin(0.1);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.1);
+  gStyle->SetPadLeftMargin(0.12);
+
+  RooPlot *frame1 = buMass.frame(RooFit::Title(
+      ("m[D^{*0}" + EnumToLabel(bachelor) + "] - m[D^{*0}] + m[D^{*0}]_{PDG}")
+          .c_str()));
+  dataHist->plotOn(frame1);
+  toyData->plotOn(frame1, RooFit::LineColor(kBlue));
+
+  RooPlot *frame2 = deltaMass.frame(RooFit::Title("m[D^{*0}] - m[D^{0}]"));
+  dataHist->plotOn(frame2);
+  toyData->plotOn(frame2, RooFit::LineColor(kBlue));
+
+  TCanvas canvas_1d("canvas_1d", "canvas", 1800, 900);
+  canvas_1d.Divide(2, 1);
+
+  canvas_1d.cd(1);
+  frame1->Draw();
+
+  canvas_1d.cd(2);
+  frame2->Draw();
+
+  canvas_1d.Update();
+  canvas_1d.SaveAs(
+      (outputDir + "/plots/1DProjections_" + EnumToString(bachelor) + ".pdf")
+          .c_str());
+
+  int nContours = 255;
+
+  gStyle->SetNumberContours(nContours);
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(0.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.2, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  // Make two-dimensional plot of sampled PDF in x vs y
+  TH2F *histModel = (TH2F *)histPdf.createHistogram(
+      ("histModel_" + EnumToString(bachelor)).c_str(), buMass,
+      RooFit::Binning(buMass.getBins()),
+      RooFit::YVar(deltaMass, RooFit::Binning(deltaMass.getBins())));
+  histModel->SetTitle("");
+
+  // Make 2D plot of data
+  TH2F *histData = (TH2F *)dataHist->createHistogram(
+      "Bu_Delta_M,Delta_M", buMass.getBins(), deltaMass.getBins());
+  histData->SetName(("histData_" + EnumToString(bachelor)).c_str());
+  histData->SetTitle("");
+
+  TH2F *histToy = (TH2F *)toyData->createHistogram(
+      "Bu_Delta_M,Delta_M", buMass.getBins(), deltaMass.getBins());
+  histToy->SetName(("histToy_" + EnumToString(bachelor)).c_str());
+  histToy->SetTitle("");
+
+  // Scale model plot to total number of data events
+  histModel->Scale(histData->Integral());
+
+  // Make a histogram with the Poisson stats in each data bin
+  TH2F histDataErr(("histDataErr_" + EnumToString(bachelor)).c_str(), "",
+                   buMass.getBins(), buMass.getMin(), buMass.getMax(),
+                   deltaMass.getBins(), deltaMass.getMin(), deltaMass.getMax());
+  for (int i = 0; i < buMass.getBins() * deltaMass.getBins(); i++) {
+    float n_bin = histData->GetBinContent(i);
+    float err = sqrt(n_bin);
+    histDataErr.SetBinContent(i, err);
+  }
+
+  // 2D PDF plot
+  TCanvas canvas2DPdf("canvas2DPdf", "", 1000, 800);
+  histModel->SetStats(0);
+  histModel->Draw("colz");
+  histModel->SetTitle(
+      "B^{#pm}#rightarrow#font[132]{[}#font[132]{[}K^{#pm}#pi^{#"
+      "mp}#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}#pi^{#"
+      "pm}");
+  histModel->Draw("colz");
+  canvas2DPdf.Update();
+  canvas2DPdf.SaveAs(
+      (outputDir + "/plots/2DHistPdf_" + EnumToString(bachelor) + ".pdf")
+          .c_str());
+
+  // 2D data plot
+  TCanvas canvas2DData("canvas2DData", "", 1000, 800);
+  histData->SetStats(0);
+  histData->Draw("colz");
+  histData->SetTitle(
+      "B^{#pm}#rightarrow#font[132]{[}#font[132]{[}K^{#pm}#pi^{#"
+      "mp}#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}#pi^{#"
+      "pm}");
+  histData->Draw("colz");
+  canvas2DData.Update();
+  canvas2DData.SaveAs(
+      (outputDir + "/plots/2DData_" + EnumToString(bachelor) + ".pdf").c_str());
+
+  // 2D toy data plot
+  TCanvas canvas2DToy("canvas2DToy", "", 1000, 800);
+  histToy->SetStats(0);
+  histToy->Draw("colz");
+  histToy->SetTitle(
+      "B^{#pm}#rightarrow#font[132]{[}#font[132]{[}K^{#pm}#pi^{#"
+      "mp}#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}#pi^{#"
+      "pm}");
+  histToy->Draw("colz");
+  canvas2DToy.Update();
+  canvas2DToy.SaveAs(
+      (outputDir + "/plots/2DToyData_" + EnumToString(bachelor) + ".pdf")
+          .c_str());
+
+  // const int n = 7;
+  // double red[n] = {0.000, 0.000, 0.000, 0.000, 1.000, 1.000, 1.000};
+  // double green[n] = {0.800, 0.800, 0.000, 0.000, 0.000, 0.000, 0.600};
+  // double blue[n] = {0.000, 0.800, 1.000, 0.200, 1.000, 0.000, 0.000};
+  // double length[n] = {0.000, 0.167, 0.333, 0.5, 0.667, 0.833, 1.000};
+  //
+  // TColor::CreateGradientColorTable(n, length, red, green, blue, nContours);
+
+  // 2D residuals plot (data - PDF)/err
+  TCanvas canvas2DRes("canvas2DRes", "", 1000, 800);
+  canvas2DRes.cd();
+  TH2F *histDataNew = (TH2F *)histData->Clone();
+  histDataNew->SetName(("histDataNew_" + EnumToString(bachelor)).c_str());
+  histDataNew->Add(histToy, -1);
+  histDataNew->Divide(&histDataErr);
+  canvas2DRes.cd();
+  histDataNew->GetZaxis()->SetTitle("Residual");
+  histDataNew->GetZaxis()->SetRangeUser(-6.0, 6.0);
+  histDataNew->SetStats(0);
+  histDataNew->Draw("colz");
+  canvas2DRes.Update();
+  canvas2DRes.SaveAs(
+      (outputDir + "/plots/2DResiduals_" + EnumToString(bachelor) + ".pdf")
+          .c_str());
 }
 
 void FitToys(Option option, int &nIter,
@@ -1448,6 +1612,11 @@ void FitToys(Option option, int &nIter,
                                                combDataK.numEntries());
       std::cout << "Generated K dataset!" << std::endl;
       toyDataK->Print();
+
+      PlotGeneratedData(Bachelor::pi, buMass, deltaMass, dataHistPi.get(), toyDataPi,
+                        histPdfPi, outputDir);
+      PlotGeneratedData(Bachelor::K, buMass, deltaMass, dataHistK.get(), toyDataK,
+                        histPdfK, outputDir);
 
       double randomTag = random.Rndm();
       TFile dsFilePi(
