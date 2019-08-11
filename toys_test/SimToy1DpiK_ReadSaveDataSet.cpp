@@ -580,8 +580,9 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
       }
       RooDataSet *inputDataSet_tmp;
       gDirectory->GetObject("inputDataSet", inputDataSet_tmp);
+      // Reduce # RRVs as binnedClone() only works with < 4
       inputDataSet = dynamic_cast<RooDataSet *>(
-          inputDataSet_tmp->reduce(cutString.c_str()));
+          inputDataSet_tmp->reduce(RooArgSet(buMass, deltaMass), cutString.c_str()));
     }
     if (inputDataSet == nullptr) {
       throw std::runtime_error("Data set does not exist.");
@@ -590,6 +591,9 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
       inputDataSet->Print();
     }
     if (option == Option::save2DToy) {
+      inputDataSet->SetName(
+          ("inputDataSet_" + EnumToString(bachelor) + "_" + std::to_string(it))
+              .c_str());
       return *inputDataSet;
       std::cout << "Returning 2D dataset for " << EnumToString(bachelor)
                 << " bachelor.\n";
