@@ -921,11 +921,13 @@ void FitToys(Option option, int &nIter,
                                  deltaCutEffMisRecPiVal);
   RooRealVar buCutEffMisRecPi("buCutEffMisRecPi", "", buCutEffMisRecPiVal);
 
-  std::cout << "Set MisRecPi efficiencies :\n"
-            << "\tDelta Window =\t" << deltaCutEffMisRecPi.getVal()
-            << "\tBu Window =\t" << buCutEffMisRecPi.getVal() << "\tBox =\t"
-            << boxEffMisRecPi.getVal() << "\n"
-            << "\tDelta OR Bu =\t" << orEffMisRecPi.getVal() << "\n";
+  if (option != Option::save2DToy) {
+    std::cout << "Set MisRecPi efficiencies :\n"
+              << "\tDelta Window =\t" << deltaCutEffMisRecPi.getVal()
+              << "\tBu Window =\t" << buCutEffMisRecPi.getVal() << "\tBox =\t"
+              << boxEffMisRecPi.getVal() << "\n"
+              << "\tDelta OR Bu =\t" << orEffMisRecPi.getVal() << "\n";
+  }
 
   RooConstVar pidEff("pidEff", "", 0.64);
 
@@ -1474,6 +1476,8 @@ void FitToys(Option option, int &nIter,
                   EnumToCategory(Variable::delta, Bachelor::K).c_str());
     simPdf.addPdf(pdfBuK, EnumToCategory(Variable::bu, Bachelor::K).c_str());
 
+    std::cout << "Created simPdf for iteration " << i << "\n";
+
     if (option == Option::fitData) {
       std::vector<RooDataSet> dsVec;
       std::cout << "Number of datasets = "
@@ -1560,6 +1564,7 @@ void FitToys(Option option, int &nIter,
                        yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result)
                 << "\n";
     } else if (option == Option::save2DToy) {
+      std::cout << "Option: saving 2D toy\n";
       std::vector<RooDataSet> dsVecPi;
       std::vector<RooDataSet> dsVecK;
       std::cout << "Number of datasets = "
@@ -1570,6 +1575,8 @@ void FitToys(Option option, int &nIter,
         } else if (!file_exists(filenamesK[f])) {
           std::cerr << filenamesK[f] << " does not exist.\n";
         } else {
+          std::cout << "Extracting dataset for " << filenamesPi[f] << " and "
+                    << filenamesK[f] << "\n";
           dsVecPi.emplace_back(ExtractDataSet(
               option, Bachelor::pi, filenamesPi[f], buMass, deltaMass, category,
               box_bu_low, box_bu_high, box_delta_low, box_delta_high, f));
@@ -1613,10 +1620,10 @@ void FitToys(Option option, int &nIter,
       std::cout << "Generated K dataset!" << std::endl;
       toyDataK->Print();
 
-      PlotGeneratedData(Bachelor::pi, buMass, deltaMass, dataHistPi.get(), toyDataPi,
-                        histPdfPi, outputDir);
-      PlotGeneratedData(Bachelor::K, buMass, deltaMass, dataHistK.get(), toyDataK,
-                        histPdfK, outputDir);
+      // PlotGeneratedData(Bachelor::pi, buMass, deltaMass, dataHistPi.get(), toyDataPi,
+      //                   histPdfPi, outputDir);
+      // PlotGeneratedData(Bachelor::K, buMass, deltaMass, dataHistK.get(), toyDataK,
+      //                   histPdfK, outputDir);
 
       double randomTag = random.Rndm();
       TFile dsFilePi(
@@ -1861,8 +1868,7 @@ int main(int argc, char *argv[]) {
       "datasets to save\n";
   std::string instructions2 =
       "\t2) Saving a 2D toy dataset generated from 2D data:\n\t\t Enter: '2', "
-      "output directory, low delta box "
-      "dimn, high delta box dimn, low bu box dimn, high bu box dimn, # of "
+      "output directory,# of "
       "datasets to save, π input "
       "datasets, K input datasets\n";
   std::string instructions3 =
@@ -1898,7 +1904,7 @@ int main(int argc, char *argv[]) {
       }
     } else if (nOption == 2) {
       option = Option::save2DToy;
-      if (argc != 10) {
+      if (argc != 6) {
         std::cerr << instructions2;
         return 1;
       }
@@ -1927,21 +1933,25 @@ int main(int argc, char *argv[]) {
   }
 
   std::string outputDir = argv[2];
-  std::string box_delta_low = argv[3];
-  std::string box_delta_high = argv[4];
-  std::string box_bu_low = argv[5];
-  std::string box_bu_high = argv[6];
+  std::string box_delta_low = "";
+  std::string box_delta_high = "";
+  std::string box_bu_low = "";
+  std::string box_bu_high = "";
   int nIter;
   std::vector<std::string> filenames;
   std::vector<std::string> filenamesK;
 
   if (option == Option::saveD1DToy) {
+    box_delta_low = argv[3];
+    box_delta_high = argv[4];
+    box_bu_low = argv[5];
+    box_bu_high = argv[6];
     nIter = std::atoi(argv[7]);
   } else if (option == Option::save2DToy) {
-    nIter = std::atoi(argv[7]);
-    std::string inputPi = argv[8];
+    nIter = std::atoi(argv[3]);
+    std::string inputPi = argv[4];
     filenames = SplitByComma(inputPi);
-    std::string inputK = argv[9];
+    std::string inputK = argv[5];
     filenamesK = SplitByComma(inputK);
     if (filenames.size() != filenamesK.size()) {
       std::cerr
@@ -1949,6 +1959,10 @@ int main(int argc, char *argv[]) {
           << filenames.size() << " and K = " << filenamesK.size() << "\n";
     }
   } else {
+    box_delta_low = argv[3];
+    box_delta_high = argv[4];
+    box_bu_low = argv[5];
+    box_bu_high = argv[6];
     std::string inputPi = argv[7];
     filenames = SplitByComma(inputPi);
     std::string inputK = argv[8];
@@ -1959,6 +1973,10 @@ int main(int argc, char *argv[]) {
           << filenames.size() << " and K = " << filenamesK.size() << "\n";
     }
     if (option == Option::fitData) {
+      box_delta_low = argv[3];
+      box_delta_high = argv[4];
+      box_bu_low = argv[5];
+      box_bu_high = argv[6];
       nIter = 1;
     } else {
       nIter = filenames.size();
