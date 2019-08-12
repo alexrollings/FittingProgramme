@@ -135,28 +135,23 @@ if __name__ == "__main__":
     n_fits_per_job = len(file_list_pi) / n_jobs
     n_remainder = len(file_list_pi) - (n_fits_per_job * n_jobs)
 
-    templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/shell_scripts/fit_1d_piK.sh.tmpl"
+    templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/shell_scripts/fit_piK.sh.tmpl"
     scriptList = []
-    print("1")
     for i in range(0, n_jobs + 1):
-        print("2")
         if i == n_jobs:
-            print("3")
             if n_remainder:
                 files_pi = ",".join(file_list_pi[len(file_list_pi) - n_remainder:])
                 files_K = ",".join(file_list_K[len(file_list_K) - n_remainder:])
             else:
                 continue
         else:
-            print("4")
             files_pi = ",".join(
                 file_list_pi[i * n_fits_per_job:(i + 1) * n_fits_per_job])
             files_K = ",".join(
                 file_list_K[i * n_fits_per_job:(i + 1) * n_fits_per_job])
-        scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/fit_1d_piK_" + str(
+        scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/fit_" + dim + "d_piK_" + str(
             i
         ) + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
-        print("5")
         substitutions = {
             "nJob":
             i,
@@ -181,10 +176,8 @@ if __name__ == "__main__":
             "BUHIGH":
             bu_high
         }
-        print("6")
         make_shell_script(templatePath, scriptPath, substitutions)
         scriptList.append(scriptPath)
-        print(scriptPath)
         # run_process(["qsub", scriptPath])
         # run_process(["nohup", "sh", scriptPath, "> nohup_" + str(i) + ".out"])
         # run_process(["qsub", "-q", "testing", scriptPath])
@@ -192,6 +185,5 @@ if __name__ == "__main__":
         n_processes = n_jobs
     else:
         n_processes = n_jobs + 1
-    print("6")
-    # p = mp.Pool(n_processes)
-    # p.map(run_process, scriptList)
+    p = mp.Pool(n_processes)
+    p.map(run_process, scriptList)

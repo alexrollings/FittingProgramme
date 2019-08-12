@@ -1715,14 +1715,10 @@ void FitToys(Option option, int &nIter,
       } else if (!file_exists(filenamesK[i])) {
         std::cerr << filenamesK[i] << " does not exist.\n";
       } else {
-        std::regex rexp(
-            "DataFile[A-Za-z]+([0-9])D_[0-9]+_[0-9]+_[0-9]+_[0-9]+_([0-9].[0-"
-            "9]+)."
-            "root");
+        std::regex rexp("[A-Za-z0-9_]+_([0-9].[0-9]+).root");
         std::smatch match;
         std::regex_search(filenamesPi[i], match, rexp);
-        std::string dim = match[1];
-        std::string rndm = match[2];
+        std::string rndm = match[1];
 
         // ---------------------------- Read in toy dataset
         // ----------------------------
@@ -1749,35 +1745,35 @@ void FitToys(Option option, int &nIter,
                          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                          RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-        if (i == 0) {
-          std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
-          PlotComponent(Variable::bu, Bachelor::pi, buMass, toyDataHist.get(),
-                        simPdf, category, pdfBuBu2Dst0pi_D0gamma,
-                        pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
-                        outputDir, box_delta_low, box_delta_high, box_bu_low,
-                        box_bu_high);
-          std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
-          PlotComponent(Variable::delta, Bachelor::pi, deltaMass,
-                        toyDataHist.get(), simPdf, category,
-                        pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-                        box_delta_low, box_delta_high, box_bu_low, box_bu_high);
-          std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
-          PlotComponent(Variable::bu, Bachelor::K, buMass, toyDataHist.get(),
-                        simPdf, category, pdfBuBu2Dst0K_D0gamma,
-                        pdfBuBu2Dst0K_D0pi0, pdfBuMisRecK, pdfBuBu2D0K,
-                        outputDir, box_delta_low, box_delta_high, box_bu_low,
-                        box_bu_high);
-          std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
-          PlotComponent(Variable::delta, Bachelor::K, deltaMass,
-                        toyDataHist.get(), simPdf, category,
-                        pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
-                        pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-                        box_delta_low, box_delta_high, box_bu_low, box_bu_high);
-          std::cout << "Plotting correlation matrix\n";
-          PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
-                         box_bu_low, box_bu_high);
-        }
+        // if (i == 0) {
+        //   std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
+        //   PlotComponent(Variable::bu, Bachelor::pi, buMass, toyDataHist.get(),
+        //                 simPdf, category, pdfBuBu2Dst0pi_D0gamma,
+        //                 pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
+        //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
+        //                 box_bu_high);
+        //   std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
+        //   PlotComponent(Variable::delta, Bachelor::pi, deltaMass,
+        //                 toyDataHist.get(), simPdf, category,
+        //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
+        //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
+        //                 box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+        //   std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
+        //   PlotComponent(Variable::bu, Bachelor::K, buMass, toyDataHist.get(),
+        //                 simPdf, category, pdfBuBu2Dst0K_D0gamma,
+        //                 pdfBuBu2Dst0K_D0pi0, pdfBuMisRecK, pdfBuBu2D0K,
+        //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
+        //                 box_bu_high);
+        //   std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
+        //   PlotComponent(Variable::delta, Bachelor::K, deltaMass,
+        //                 toyDataHist.get(), simPdf, category,
+        //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
+        //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
+        //                 box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+        //   std::cout << "Plotting correlation matrix\n";
+        //   PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+        //                  box_bu_low, box_bu_high);
+        // }
         result->Print("v");
         // if (meanDeltaBu2Dst0pi_D0gamma.getError() > 0.069) {
         //   std::cout << "GAMMA DELTA MEAN IN SECOND MIN\n";
@@ -1831,6 +1827,12 @@ void FitToys(Option option, int &nIter,
         // std::cout << "Corrected error / fit Error = "
         //           << errYieldTotBu2Dst0pi_D0gamma /
         //           yieldTotBu2Dst0pi_D0gamma.getError() << "\n";
+        std::string dim;
+        if (option == Option::fit2DToy) {
+          dim = "2";
+        } else {
+          dim = "1";
+        }
         TFile outputFile((outputDir + "/Result" + dim + "D_" + rndm + "_" +
                           box_delta_low + "_" + box_delta_high + "_" +
                           box_bu_low + "_" + box_bu_high + ".root")
@@ -1855,6 +1857,7 @@ void FitToys(Option option, int &nIter,
         // tree.Write();
         outputFile.Write();
         outputFile.Close();
+        std::cout << "Written result to file " << outputFile.GetName() << "\n";
       }
     }
   }
