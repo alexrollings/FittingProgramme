@@ -61,7 +61,7 @@ if __name__ == "__main__":
         '--input_dir',
         type=str,
         help='Directory where datasets should be stored',
-        required=False)
+        required=True)
     parser.add_argument(
         '-t',
         '--n_toys',
@@ -114,16 +114,17 @@ if __name__ == "__main__":
             sys.exit("For 1D generation, have to give box dimensions")
     elif dim == "2":
         print("Generating 2D datasets.")
-        if input_dir == "":
-            sys.exit("For 2D generation, have to give directory where data rds are stored.")
-        else:
-            for filename in os.listdir(input_dir):
-                pass_filename_pi(input_dir, filename, file_list_pi)
-                pass_filename_K(input_dir, filename, file_list_K)
-            if len(file_list_pi) != len(file_list_K):
-                sys.exit("Different number of datasets for π and K")
     else:
         sys.exit("-dim=1/2")
+
+    if input_dir == "":
+        sys.exit("For toy generation, have to give directory where data rds are stored.")
+    else:
+        for filename in os.listdir(input_dir):
+            pass_filename_pi(input_dir, filename, file_list_pi)
+            pass_filename_K(input_dir, filename, file_list_K)
+        if len(file_list_pi) != len(file_list_K):
+            sys.exit("Different number of datasets for π and K")
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
@@ -132,9 +133,7 @@ if __name__ == "__main__":
     scriptList = []
     for i in range(0, n_jobs):
         if dim == "1":
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/generate_1d_" + str(
-                i
-            ) + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/generate_1d_" + str(i) + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
             substitutions = {
                 "nJob":
                 i,
@@ -153,7 +152,11 @@ if __name__ == "__main__":
                 "BUHIGH":
                 bu_high,
                 "NTOYS":
-                n_toys
+                n_toys,
+                "FILESPi":
+                ",".join(file_list_pi),
+                "FILESK":
+                ",".join(file_list_K)
             }
         else:
             scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/toys_test/tmp/generate_2d_" + str(
