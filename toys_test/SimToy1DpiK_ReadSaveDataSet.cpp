@@ -572,7 +572,7 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
                        *dataBu));
     return combData;
     std::cout << "1D: returning combDataSet\n";
-  } else { 
+  } else {
     RooDataSet *inputDataSet;
     std::string cutString = "";
     if (option == Option::fit2DToy) {
@@ -594,8 +594,8 @@ RooDataSet ExtractDataSet(Option option, Bachelor bachelor,
       RooDataSet *inputDataSet_tmp;
       gDirectory->GetObject("inputDataSet", inputDataSet_tmp);
       // Reduce # RRVs as binnedClone() only works with < 4
-      inputDataSet = dynamic_cast<RooDataSet *>(
-          inputDataSet_tmp->reduce(RooArgSet(buMass, deltaMass), cutString.c_str()));
+      inputDataSet = dynamic_cast<RooDataSet *>(inputDataSet_tmp->reduce(
+          RooArgSet(buMass, deltaMass), cutString.c_str()));
     }
     if (inputDataSet == nullptr) {
       throw std::runtime_error("Data set does not exist.");
@@ -930,6 +930,14 @@ void FitToys(Option option, int &nIter,
   }
 
   RooConstVar pidEff("pidEff", "", 0.64);
+
+  // When generating toys from datafit, only want to perform data fit once, then
+  // loop over # of toys to generate
+  int nToys = 1;
+  if (option == Option::saveD1DToy) {
+    nToys = nIter;
+    nIter = 1;
+  }
 
   // Loop over data files and perform 1D fit to each dataset
   for (int i = 0; i < nIter; ++i) {
@@ -1478,7 +1486,7 @@ void FitToys(Option option, int &nIter,
 
     std::cout << "Created simPdf for iteration " << i << "\n";
 
-    if (option == Option::fitData) {
+    if (option == Option::fitData || option == Option::saveD1DToy) {
       std::vector<RooDataSet> dsVec;
       std::cout << "Number of datasets = "
                 << filenamesPi.size() + filenamesK.size() << "\n";
@@ -1516,6 +1524,7 @@ void FitToys(Option option, int &nIter,
               RooFit::Save(), RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
               RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
+      if (option == Option::fitData) {
       std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
       PlotComponent(Variable::bu, Bachelor::pi, buMass, dataHist.get(), simPdf,
                     category, pdfBuBu2Dst0pi_D0gamma, pdfBuBu2Dst0pi_D0pi0,
@@ -1524,18 +1533,21 @@ void FitToys(Option option, int &nIter,
       std::cout << "Plotting projections of m[Delta] for π bachelor.\n";
       PlotComponent(Variable::delta, Bachelor::pi, deltaMass, dataHist.get(),
                     simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
-                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi, pdfDeltaBu2D0pi,
+                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi,
+                    pdfDeltaBu2D0pi,
                     outputDir, box_delta_low, box_delta_high, box_bu_low,
                     box_bu_high);
       std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
-      PlotComponent(Variable::bu, Bachelor::K, buMass, dataHist.get(), simPdf,
+      PlotComponent(Variable::bu, Bachelor::K, buMass, dataHist.get(),
+      simPdf,
                     category, pdfBuBu2Dst0K_D0gamma, pdfBuBu2Dst0K_D0pi0,
                     pdfBuMisRecK, pdfBuBu2D0K, outputDir, box_delta_low,
                     box_delta_high, box_bu_low, box_bu_high);
       std::cout << "Plotting projections of m[Delta] for K bachelor.\n";
       PlotComponent(Variable::delta, Bachelor::K, deltaMass, dataHist.get(),
                     simPdf, category, pdfDeltaBu2Dst0pi_D0gamma,
-                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi, pdfDeltaBu2D0pi,
+                    pdfDeltaBu2Dst0pi_D0pi0, pdfDeltaMisRecPi,
+                    pdfDeltaBu2D0pi,
                     outputDir, box_delta_low, box_delta_high, box_bu_low,
                     box_bu_high);
       std::cout << "Plotting correlation matrix\n";
@@ -1563,6 +1575,82 @@ void FitToys(Option option, int &nIter,
                 << errYieldTotBu2Dst0pi_D0gamma /
                        yieldTotBu2Dst0pi_D0gamma.getPropagatedError(*result)
                 << "\n";
+      } else if (option == Option::saveD1DToy) {
+        for (int t = 0; t < nToys; ++t) {
+          RooRandom::randomGenerator()->SetSeed(0);
+          TRandom3 random(0);
+          double randomTag = random.Rndm();
+
+          double nEvtsPerToyBuPi = yieldBuBu2Dst0pi_D0gamma.getVal() +
+                                   yieldBuBu2Dst0pi_D0pi0.getVal() +
+                                   yieldBuMisRecPi.getVal() +
+                                   yieldBuBu2D0pi.getVal();
+          double nEvtsPerToyDeltaPi = yieldDeltaBu2Dst0pi_D0gamma.getVal() +
+                                      yieldDeltaBu2Dst0pi_D0pi0.getVal() +
+                                      yieldDeltaMisRecPi.getVal() +
+                                      yieldDeltaBu2D0pi.getVal();
+
+          // Generate bu and delta mass datasets separately from individual PDFs
+          // Saving simPdf as one PDF reduces number of events by 1/2 in each
+          // dimension
+          // Saving each variable from simPdf doesn't work (not sure what it
+          // does!)
+          // - completely flat in delta mass dimension (data has no structure)
+          RooDataSet *buPiDataSet =
+              pdfBuPi.generate(RooArgSet(buMass), nEvtsPerToyBuPi);
+          std::cout << "Generated!\n";
+          buPiDataSet->SetName("buPiDataSet");
+          buPiDataSet->Print();
+
+          RooDataSet *deltaPiDataSet =
+              pdfDeltaPi.generate(RooArgSet(deltaMass), nEvtsPerToyDeltaPi);
+          std::cout << "Generated!\n";
+          deltaPiDataSet->SetName("deltaPiDataSet");
+          deltaPiDataSet->Print();
+
+          TFile dsPiFile(
+              (outputDir + "/DataFilePi1D_" + box_delta_low + "_" +
+               box_delta_high + "_" + box_bu_low + "_" + box_bu_high + "_" +
+               std::to_string(randomTag) + ".root")
+                  .c_str(),
+              "RECREATE");
+          buPiDataSet->Write("buPiDataSet");
+          deltaPiDataSet->Write("deltaPiDataSet");
+          dsPiFile.Close();
+
+          double nEvtsPerToyBuK = yieldBuBu2Dst0K_D0gamma.getVal() +
+                                  yieldBuBu2Dst0K_D0pi0.getVal() +
+                                  yieldBuMisRecK.getVal() +
+                                  yieldBuBu2D0K.getVal();
+          double nEvtsPerToyDeltaK = yieldDeltaBu2Dst0K_D0gamma.getVal() +
+                                     yieldDeltaBu2Dst0K_D0pi0.getVal() +
+                                     yieldDeltaMisRecK.getVal() +
+                                     yieldDeltaBu2D0K.getVal();
+
+          RooDataSet *buKDataSet =
+              pdfBuK.generate(RooArgSet(buMass), nEvtsPerToyBuK);
+          std::cout << "Generated!\n";
+          buKDataSet->SetName("buKDataSet");
+          buKDataSet->Print();
+
+          RooDataSet *deltaKDataSet =
+              pdfDeltaK.generate(RooArgSet(deltaMass), nEvtsPerToyDeltaK);
+          std::cout << "Generated!\n";
+          deltaKDataSet->SetName("deltaKDataSet");
+          deltaKDataSet->Print();
+
+          TFile dsKFile((outputDir + "/DataFileK1D_" + box_delta_low + "_" +
+                         box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
+                         "_" + std::to_string(randomTag) + ".root")
+                            .c_str(),
+                        "RECREATE");
+          buKDataSet->Write("buKDataSet");
+          deltaKDataSet->Write("deltaKDataSet");
+          dsKFile.Close();
+
+          std::cout << "Saved " << randomTag << " datasets\n";
+        }
+      }
     } else if (option == Option::save2DToy) {
       std::cout << "Option: saving 2D toy\n";
       std::vector<RooDataSet> dsVecPi;
@@ -1620,9 +1708,11 @@ void FitToys(Option option, int &nIter,
       std::cout << "Generated K dataset!" << std::endl;
       toyDataK->Print();
 
-      // PlotGeneratedData(Bachelor::pi, buMass, deltaMass, dataHistPi.get(), toyDataPi,
+      // PlotGeneratedData(Bachelor::pi, buMass, deltaMass, dataHistPi.get(),
+      // toyDataPi,
       //                   histPdfPi, outputDir);
-      // PlotGeneratedData(Bachelor::K, buMass, deltaMass, dataHistK.get(), toyDataK,
+      // PlotGeneratedData(Bachelor::K, buMass, deltaMass, dataHistK.get(),
+      // toyDataK,
       //                   histPdfK, outputDir);
 
       double randomTag = random.Rndm();
@@ -1639,76 +1729,6 @@ void FitToys(Option option, int &nIter,
       toyDataK->Write("inputDataSet");
       dsFileK.Close();
       std::cout << "Saved " << randomTag << " datasets for π and K\n";
-    } else if (option == Option::saveD1DToy) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
-      double randomTag = random.Rndm();
-
-      double nEvtsPerToyBuPi =
-          yieldBuBu2Dst0pi_D0gamma.getVal() + yieldBuBu2Dst0pi_D0pi0.getVal() +
-          yieldBuMisRecPi.getVal() + yieldBuBu2D0pi.getVal();
-      double nEvtsPerToyDeltaPi = yieldDeltaBu2Dst0pi_D0gamma.getVal() +
-                                  yieldDeltaBu2Dst0pi_D0pi0.getVal() +
-                                  yieldDeltaMisRecPi.getVal() +
-                                  yieldDeltaBu2D0pi.getVal();
-
-      // Generate bu and delta mass datasets separately from individual PDFs
-      // Saving simPdf as one PDF reduces number of events by 1/2 in each
-      // dimension
-      // Saving each variable from simPdf doesn't work (not sure what it
-      // does!)
-      // - completely flat in delta mass dimension (data has no structure)
-      RooDataSet *buPiDataSet =
-          pdfBuPi.generate(RooArgSet(buMass), nEvtsPerToyBuPi);
-      std::cout << "Generated!\n";
-      buPiDataSet->SetName("buPiDataSet");
-      buPiDataSet->Print();
-
-      RooDataSet *deltaPiDataSet =
-          pdfDeltaPi.generate(RooArgSet(deltaMass), nEvtsPerToyDeltaPi);
-      std::cout << "Generated!\n";
-      deltaPiDataSet->SetName("deltaPiDataSet");
-      deltaPiDataSet->Print();
-
-      TFile dsPiFile((outputDir + "/DataFilePi1D_" + box_delta_low + "_" +
-                      box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
-                      "_" + std::to_string(randomTag) + ".root")
-                         .c_str(),
-                     "RECREATE");
-      buPiDataSet->Write("buPiDataSet");
-      deltaPiDataSet->Write("deltaPiDataSet");
-      dsPiFile.Close();
-
-      double nEvtsPerToyBuK = yieldBuBu2Dst0K_D0gamma.getVal() +
-                              yieldBuBu2Dst0K_D0pi0.getVal() +
-                              yieldBuMisRecK.getVal() + yieldBuBu2D0K.getVal();
-      double nEvtsPerToyDeltaK = yieldDeltaBu2Dst0K_D0gamma.getVal() +
-                                 yieldDeltaBu2Dst0K_D0pi0.getVal() +
-                                 yieldDeltaMisRecK.getVal() +
-                                 yieldDeltaBu2D0K.getVal();
-
-      RooDataSet *buKDataSet =
-          pdfBuK.generate(RooArgSet(buMass), nEvtsPerToyBuK);
-      std::cout << "Generated!\n";
-      buKDataSet->SetName("buKDataSet");
-      buKDataSet->Print();
-
-      RooDataSet *deltaKDataSet =
-          pdfDeltaK.generate(RooArgSet(deltaMass), nEvtsPerToyDeltaK);
-      std::cout << "Generated!\n";
-      deltaKDataSet->SetName("deltaKDataSet");
-      deltaKDataSet->Print();
-
-      TFile dsKFile((outputDir + "/DataFileK1D_" + box_delta_low + "_" +
-                     box_delta_high + "_" + box_bu_low + "_" + box_bu_high +
-                     "_" + std::to_string(randomTag) + ".root")
-                        .c_str(),
-                    "RECREATE");
-      buKDataSet->Write("buKDataSet");
-      deltaKDataSet->Write("deltaKDataSet");
-      dsKFile.Close();
-
-      std::cout << "Saved " << randomTag << " datasets\n";
     } else {
       if (!file_exists(filenamesPi[i])) {
         std::cerr << filenamesPi[i] << " does not exist.\n";
@@ -1747,7 +1767,8 @@ void FitToys(Option option, int &nIter,
 
         // if (i == 0) {
         //   std::cout << "Plotting projections of m[Bu] for π bachelor.\n";
-        //   PlotComponent(Variable::bu, Bachelor::pi, buMass, toyDataHist.get(),
+        //   PlotComponent(Variable::bu, Bachelor::pi, buMass,
+        //   toyDataHist.get(),
         //                 simPdf, category, pdfBuBu2Dst0pi_D0gamma,
         //                 pdfBuBu2Dst0pi_D0pi0, pdfBuMisRecPi, pdfBuBu2D0pi,
         //                 outputDir, box_delta_low, box_delta_high, box_bu_low,
@@ -1757,7 +1778,8 @@ void FitToys(Option option, int &nIter,
         //                 toyDataHist.get(), simPdf, category,
         //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
         //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-        //                 box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+        //                 box_delta_low, box_delta_high, box_bu_low,
+        //                 box_bu_high);
         //   std::cout << "Plotting projections of m[Bu] for K bachelor.\n";
         //   PlotComponent(Variable::bu, Bachelor::K, buMass, toyDataHist.get(),
         //                 simPdf, category, pdfBuBu2Dst0K_D0gamma,
@@ -1769,9 +1791,11 @@ void FitToys(Option option, int &nIter,
         //                 toyDataHist.get(), simPdf, category,
         //                 pdfDeltaBu2Dst0pi_D0gamma, pdfDeltaBu2Dst0pi_D0pi0,
         //                 pdfDeltaMisRecPi, pdfDeltaBu2D0pi, outputDir,
-        //                 box_delta_low, box_delta_high, box_bu_low, box_bu_high);
+        //                 box_delta_low, box_delta_high, box_bu_low,
+        //                 box_bu_high);
         //   std::cout << "Plotting correlation matrix\n";
-        //   PlotCorrMatrix(result.get(), outputDir, box_delta_low, box_delta_high,
+        //   PlotCorrMatrix(result.get(), outputDir, box_delta_low,
+        //   box_delta_high,
         //                  box_bu_low, box_bu_high);
         // }
         result->Print("v");
@@ -1868,7 +1892,8 @@ int main(int argc, char *argv[]) {
       "\t1) Saving D1D toy datasets generated from the D1D model:\n\t\t Enter: "
       "'1', output directory, low delta "
       "box dimn, high delta box dimn, low bu box dimn, high bu box dimn, # of "
-      "datasets to save\n";
+      "datasets to save, π datsets, K datasets (generate toys from PDF after "
+      "fit to data)\n";
   std::string instructions2 =
       "\t2) Saving a 2D toy dataset generated from 2D data:\n\t\t Enter: '2', "
       "output directory,# of "
@@ -1901,7 +1926,7 @@ int main(int argc, char *argv[]) {
     int nOption = std::atoi(argv[1]);
     if (nOption == 1) {
       option = Option::saveD1DToy;
-      if (argc != 8) {
+      if (argc != 10) {
         std::cerr << instructions1;
         return 1;
       }
@@ -1950,6 +1975,15 @@ int main(int argc, char *argv[]) {
     box_bu_low = argv[5];
     box_bu_high = argv[6];
     nIter = std::atoi(argv[7]);
+    std::string inputPi = argv[8];
+    filenames = SplitByComma(inputPi);
+    std::string inputK = argv[9];
+    filenamesK = SplitByComma(inputK);
+    if (filenames.size() != filenamesK.size()) {
+      std::cerr
+          << "Must provide same number of π and K datasets. Currently, π = "
+          << filenames.size() << " and K = " << filenamesK.size() << "\n";
+    }
   } else if (option == Option::save2DToy) {
     nIter = std::atoi(argv[3]);
     std::string inputPi = argv[4];
