@@ -19,10 +19,6 @@
 #include "TTree.h"
 #include "TTreeReader.h"
 
-// #include <chrono>
-// #include <thread>
-  // std::chrono::seconds dura( 5);
-  // std::this_thread::sleep_for( dura );
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -39,16 +35,6 @@
 #include "Pdf.h"
 
 enum class Toys { single, many, none };
-enum class Variable { bu, delta };
-
-std::string EnumToString(Variable variable) {
-  switch (variable) {
-    case Variable::bu:
-      return "bu";
-    case Variable::delta:
-      return "delta";
-  }
-}
 
 // Function to set the style for all THists
 void SetStyle() {
@@ -83,14 +69,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   Charge charge = pdf.charge();
   int id = 0;
 
-  // Integration trick to speed up plotting projections. Only works in pi0 mode.
-  if (neutral==Neutral::pi0)  {
-    int x_int = int(log(2 * var.getBins()) / log(2));
-    RooAbsReal::defaultIntegratorConfig()
-        ->getConfigSection("RooIntegrator1D")
-        .setRealValue("fixSteps", x_int);
-        }
-
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
 
@@ -101,15 +79,8 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
        "^{" + EnumToLabel(charge) + "}")
           .c_str())));
   
-  if (neutral == Neutral::pi0) {
-    config.deltaMass().setRange("selected", 160, 210);
-  } else {
-    config.deltaMass().setRange("selected", 180, 210);
-  }
-  
   fullDataSet.plotOn(
       frame.get(),
-      // RooFit::CutRange("selected"),
       RooFit::Cut(("fitting==fitting::" +
                    ComposeFittingName(neutral, bachelor, daughters, charge))
                       .c_str()));
@@ -119,22 +90,10 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
   RooHist *pullHist = nullptr;
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  // if (fitBool == true) {
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::LineColor(kBlue));
-
     pullHist = frame->RooPlot::pullHist();
 
-    // In 2D, we have to plot the 2D PDF on the frame
     simPdf.plotOn(
         frame.get(),
-        // RooFit::ProjectionRange("selected"),
         RooFit::Slice(
             categories.fitting,
             ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
@@ -142,68 +101,6 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
         RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0pi0().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bu2Dst0h_Dst02D0gamma().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0gamma()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_Bu2Dst0hst_Dst02D0pi0()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange + 3),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_overRec()), RooFit::LineStyle(kDashed),
-        RooFit::LineColor(kGreen), RooFit::Precision(1e-3),
-        RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        // RooFit::ProjectionRange("selected"),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdf_misRec().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kTeal),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    // }
-    // if (neutral == Neutral::pi0) {
-    //   simPdf.plotOn(
-    //       frame.get(),
-    //       RooFit::Slice(
-    //           categories.fitting,
-    //           ComposeFittingName(neutral, bachelor, daughters, charge).c_str()),
-    //       RooFit::ProjWData(categories.fitting, fullDataSet),
-    //       RooFit::Components(pdf.pdf_Comb()), RooFit::LineStyle(kDashed),
-    //       RooFit::LineColor(kRed), RooFit::Precision(1e-3),
-    //       RooFit::NumCPU(8, 2));
-    // }
 
     if (variable == Variable::delta) {
       if (neutral == Neutral::gamma) {
@@ -214,7 +111,7 @@ void PlotComponent(Variable variable, RooRealVar &var, PdfBase &pdf,
       }
     } else {
       frame->SetXTitle(
-          ("m[D*^{0}" + EnumToLabel(bachelor) + "] (MeV/c^{2})").c_str());
+          ("m[D*^{0}" + EnumToLabel(bachelor) + "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})").c_str());
     }
 
     if (fitBool == true) {
@@ -294,18 +191,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
+  Variable variable = pdf.variable();
 
   TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
-  auto Bu2Dst0h_Dst02D0pi0Hist = std::make_unique<TH1D>(
-      ("Bu2Dst0h_Dst02D0pi0Hist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0h_Dst02D0pi0Hist", 1, 0, 1);
-  Bu2Dst0h_Dst02D0pi0Hist->SetLineColor(kBlue);
-  Bu2Dst0h_Dst02D0pi0Hist->SetLineStyle(kDashed);
-  Bu2Dst0h_Dst02D0pi0Hist->SetLineWidth(2);
-
   auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(
       ("Bu2Dst0h_Dst02D0gammaHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -315,50 +204,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_Dst02D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
 
-  auto overRecHist = std::make_unique<TH1D>(
-      ("overRecHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "overRecHist", 1, 0, 1);
-  overRecHist->SetLineColor(kGreen);
-  overRecHist->SetLineStyle(kDashed);
-  overRecHist->SetLineWidth(2);
-
-  auto Bu2Dst0hst_Dst02D0pi0Hist = std::make_unique<TH1D>(
-      ("Bu2Dst0hst_Dst02D0pi0Hist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0hst_Dst02D0pi0Hist", 1, 0, 1);
-  Bu2Dst0hst_Dst02D0pi0Hist->SetLineColor(kOrange + 3);
-  Bu2Dst0hst_Dst02D0pi0Hist->SetLineStyle(kDashed);
-  Bu2Dst0hst_Dst02D0pi0Hist->SetLineWidth(2);
-
-  auto Bu2Dst0hst_Dst02D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0hst_Dst02D0gammaHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0hst_Dst02D0gammaHist", 1, 0, 1);
-  Bu2Dst0hst_Dst02D0gammaHist->SetLineColor(kMagenta);
-  Bu2Dst0hst_Dst02D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0hst_Dst02D0gammaHist->SetLineWidth(2);
-
-  auto misRecHist = std::make_unique<TH1D>(
-      ("misRecHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "misRecHist", 1, 0, 1);
-  misRecHist->SetLineColor(kTeal);
-  misRecHist->SetLineStyle(kDashed);
-  misRecHist->SetLineWidth(2);
-
-  auto combHist = std::make_unique<TH1D>(
-      ("combHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "combHist", 1, 0, 1);
-  combHist->SetLineColor(kRed);
-  combHist->SetLineStyle(kDashed);
-  combHist->SetLineWidth(2);
-
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -366,102 +211,17 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  std::stringstream Bu2Dst0h_Dst02D0pi0Legend;
   std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
-  std::stringstream overRecLegend;
-  std::stringstream Bu2Dst0hst_Dst02D0pi0Legend;
-  std::stringstream Bu2Dst0hst_Dst02D0gammaLegend;
-  std::stringstream misRecLegendBu;
-  std::stringstream misRecLegendBd;
-  std::stringstream combLegend;
-  Bu2Dst0h_Dst02D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   Bu2Dst0h_Dst02D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  Bu2Dst0hst_Dst02D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  overRecLegend << "B^{" + EnumToLabel(charge) +
-                       "}#rightarrow#font[132]{[}#font[132]{[}" +
-                       EnumToLabel(daughters, charge) +
-                       "#font[132]{]}_{D^{0}}" + EnumToLabel(bachelor) + "^{" +
-                       EnumToLabel(charge) + "}";
-  misRecLegendBu << "B^{" + EnumToLabel(charge) +
-                      "}#rightarrow#font[132]{[}#font[132]{[}" +
-                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-                      HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "},";
-  misRecLegendBd << "B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-                      EnumToLabel(daughters, charge) +
-                      "#font[132]{]}_{D^{0}}#pi^{#pm}#font[132]{]}_{D^{+}*}" +
-                      EnumToLabel(bachelor) + "^{#mp}";
-  Bu2Dst0hst_Dst02D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  combLegend << "Combinatorial Bkg";
-  // if (fitBool == true && labelString != "TOY") {
-  //   Bu2Dst0h_Dst02D0gammaLegend << " ~ "
-  //                               << pdf.yield_Bu2Dst0h_Dst02D0gamma().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bu2Dst0h_Dst02D0gamma().getPropagatedError(*result)
-  //   // << " events";
-  //   Bu2Dst0h_Dst02D0pi0Legend
-  //       << " ~ " << pdf.yield_Bu2Dst0h_Dst02D0pi0().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bu2Dst0h_Dst02D0pi0().getPropagatedError(*result)
-  //   // << " events";
-  //   Bu2Dst0hst_Dst02D0gammaLegend
-  //       << " ~ " << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bu2Dst0hst_Dst02D0gamma().getPropagatedError(*result)
-  //   // << " events";
-  //   overRecLegend << " ~ " << pdf.yield_overRec().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_overRec().getPropagatedError(*result)
-  //   // << " events";
-  //   misRecLegendBd << " ~ " << pdf.yield_misRec().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_misRec().getPropagatedError(*result) << " events";
-  //   Bu2Dst0hst_Dst02D0pi0Legend << " ~ "
-  //                               << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getVal();
-  //   // << " pm "
-  //   // << pdf.yield_Bu2Dst0hst_Dst02D0pi0().getPropagatedError(*result)
-  //   // << " events";
-  //   // if (neutral == Neutral::pi0) {
-  //   //   combLegend << " ~ " << pdf.yield_Comb().getVal();
-  //   //   // << " pm "
-  //   //   // << pdf.yield_comb().getPropagatedError(*result) << " events";
-  //   // }
-  // }
 
   legend.SetLineColor(kWhite);
-  legend.AddEntry(Bu2Dst0h_Dst02D0pi0Hist.get(),
-                  Bu2Dst0h_Dst02D0pi0Legend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
                   Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
-  legend.AddEntry(overRecHist.get(), overRecLegend.str().c_str(), "l");
-  legend.AddEntry(misRecHist.get(), misRecLegendBu.str().c_str(), "l");
-  legend.AddEntry(blankHist.get(), misRecLegendBd.str().c_str(), "l");
-  legend.AddEntry(Bu2Dst0hst_Dst02D0gammaHist.get(),
-                  Bu2Dst0hst_Dst02D0gammaLegend.str().c_str(), "l");
-  legend.AddEntry(Bu2Dst0hst_Dst02D0pi0Hist.get(),
-                  Bu2Dst0hst_Dst02D0pi0Legend.str().c_str(), "l");
-  // if (neutral == Neutral::pi0) {
-  //   legend.AddEntry(combHist.get(), combLegend.str().c_str(), "l");
-  // }
 
   TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
   lumiLegend.SetTextSize(0.03);
@@ -488,217 +248,11 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
   }
   // ---- PLOTTING FOR BU MASS COMPONENT ---- //
-  PlotComponent(Variable::bu, config.buMass(), pdf, fullDataSet, simPdf,
+  PlotComponent(Variable::bu, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 categories, legend, lumiLegend, outputDir, fitBool, config);
   // ---- PLOTTING FOR DELTA MASS COMPONENT ---- //
   PlotComponent(Variable::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
                 categories, legend, lumiLegend, outputDir, fitBool, config);
-}
-
-// Plot in 2D: data, PDF and residuals
-void Plotting2D(int const id, PdfBase &pdf, Configuration &config,
-                RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir, bool fitBool) {
-  gStyle->SetTitleSize(0.03, "XYZ");
-  gStyle->SetLabelSize(0.025, "XYZ");
-  gStyle->SetTitleOffset(1, "X");
-  gStyle->SetTitleOffset(1.2, "Y");
-  gStyle->SetTitleOffset(1.5, "Z");
-  gStyle->SetPadRightMargin(0.15);
-
-  Bachelor bachelor = pdf.bachelor();
-  Daughters daughters = pdf.daughters();
-  Neutral neutral = pdf.neutral();
-  Charge charge = pdf.charge();
-
-  auto dataHist1d = fullDataSet.createHistogram(
-      ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      config.buMass(), RooFit::Binning(config.buMass().getBins()),
-      RooFit::YVar(config.deltaMass(),
-                   RooFit::Binning(config.deltaMass().getBins())),
-      RooFit::Cut(("fitting==fitting::" +
-                   ComposeFittingName(neutral, bachelor, daughters, charge))
-                      .c_str()));
-  if (dataHist1d == nullptr) {
-    throw std::runtime_error("\n1D hist of data returns nullptr\n");
-  }
-  auto dataHist2d =
-      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(dataHist1d /* .get() */));
-  if (dataHist2d == nullptr) {
-    throw std::runtime_error("\n2D hist of data returns nullptr\n");
-  }
-  dataHist2d->SetTitle("");
-
-  // 2D data plot
-  TCanvas canvasData(
-      ("canvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  dataHist2d->SetStats(0);
-  if (neutral == Neutral::pi0) {
-    dataHist2d->GetYaxis()->SetTitle(
-        "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-  }
-  dataHist2d->SetTitle(
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str());
-  dataHist2d->Draw("colz");
-  canvasData.Update();
-  canvasData.SaveAs((outputDir + "/" +
-                     ComposeName(id, neutral, bachelor, daughters, charge) +
-                     "_2dData.pdf")
-                        .c_str());
-  if (fitBool == true) {
-    // Make two-dimensional plot of sampled PDF in x vs y
-    // Plot ONLY the PDF not the SimPDF
-    // auto singlePdf =
-    //     std::unique_ptr<RooAbsPdf>(simPdf.getPdf(pdf.CategoryName().c_str()));
-    auto singlePdf = simPdf.getPdf(pdf.CategoryName().c_str());
-    if (singlePdf == nullptr) {
-      throw std::runtime_error("\nSingle pdf empty\n");
-    }
-
-    // auto modelHist1d = std::unique_ptr<TH1>(singlePdf->createHistogram(
-    //     ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters,
-    //     charge))
-    //         .c_str(),
-    //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
-    //     RooFit::YVar(config.deltaMass(),
-    //                  RooFit::Binning(config.deltaMass().getBins()))));
-    auto modelHist1d = singlePdf->createHistogram(
-        ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        config.buMass(), RooFit::Binning(config.buMass().getBins()),
-        RooFit::YVar(config.deltaMass(),
-                     RooFit::Binning(config.deltaMass().getBins())));
-    if (modelHist1d == nullptr) {
-      throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
-    }
-    auto modelHist2d =
-        std::unique_ptr<TH2>(dynamic_cast<TH2F *>(modelHist1d /* .get() */));
-    if (modelHist2d == nullptr) {
-      throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
-    }
-    modelHist2d->SetTitle("");
-
-    // Make 2D plot of data
-    // Plot ONLY one component of the data
-    // auto dataHist1d = std::unique_ptr<TH1>(fullDataSet.createHistogram(
-    //     ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters,
-    //     charge))
-    //         .c_str(),
-    //     config.buMass(), RooFit::Binning(config.buMass().getBins()),
-    //     RooFit::YVar(config.deltaMass(),
-    //                  RooFit::Binning(config.deltaMass().getBins())),
-    //     RooFit::Cut(("fitting==fitting::" +
-    //                  ComposeFittingName(neutral, bachelor, daughters,
-    //                  charge))
-    //                     .c_str())));
-    modelHist2d->Scale(dataHist2d->Integral() / modelHist2d->Integral());
-
-    TCanvas canvasModel(
-        ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 1000, 800);
-    modelHist2d->SetStats(0);
-    if (neutral == Neutral::pi0) {
-      modelHist2d->GetYaxis()->SetTitle(
-          "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-    }
-    modelHist2d->SetTitle(("B^{" + EnumToLabel(charge) +
-                           "}#rightarrow#font[132]{[}#font[132]{[}" +
-                           EnumToLabel(daughters, charge) +
-                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                           "^{" + EnumToLabel(charge) + "}")
-                              .c_str());
-    modelHist2d->Draw("colz");
-    modelHist2d->GetZaxis()->SetRangeUser(-0.00001, modelHist2d->GetMaximum());
-    canvasModel.Update();
-    canvasModel.SaveAs((outputDir + "/" +
-                        ComposeName(id, neutral, bachelor, daughters, charge) +
-                        "_2dPDF.pdf")
-                           .c_str());
-
-    gStyle->SetTitleOffset(1.2, "Z");
-    // Make a histogram with the Poisson stats in each data bin
-    auto errHist2d = std::unique_ptr<TH2F>(new TH2F(
-        ("errHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", config.buMass().getBins(), config.buMass().getMin(),
-        config.buMass().getMax(), config.deltaMass().getBins(),
-        config.deltaMass().getMin(), config.deltaMass().getMax()));
-    for (int i = 0;
-         i < config.buMass().getBins() * config.deltaMass().getBins(); i++) {
-      float n_bin = dataHist2d->GetBinContent(i);
-      float err = sqrt(n_bin);
-      errHist2d->SetBinContent(i, err);
-    }
-
-    // 2D residuals plot (data - PDF)/err
-    TCanvas canvasRes(
-        ("canvasRes_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 1000, 800);
-    canvasRes.cd();
-    // auto resHist2d_temp = std::unique_ptr<TObject>(dataHist2d->Clone());
-    auto resHist2d_temp = dataHist2d->Clone();
-    if (resHist2d_temp == nullptr) {
-      throw std::runtime_error("\nCould not clone dataHist2d.\n");
-    }
-    auto resHist2d = std::unique_ptr<TH2F>(
-        dynamic_cast<TH2F *>(resHist2d_temp /* .get() */));
-    if (resHist2d == nullptr) {
-      throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
-    }
-    resHist2d->Add(modelHist2d.get(), -1);
-    resHist2d->Divide(errHist2d.get());
-    canvasRes.cd();
-    if (neutral == Neutral::pi0) {
-      resHist2d->GetYaxis()->SetTitle(
-          "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-    }
-    resHist2d->GetZaxis()->SetTitle("Residual");
-    resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
-    resHist2d->SetStats(0);
-    resHist2d->Draw("colz");
-    canvasRes.Update();
-    canvasRes.SaveAs((outputDir + "/" +
-                      ComposeName(id, neutral, bachelor, daughters, charge) +
-                      "_2dResiduals.pdf")
-                         .c_str());
-
-    // 1D residuals plot (sum over all 2D bins)
-    TCanvas canvasRes1d(
-        ("canvasRes1d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 1000, 800);
-    canvasRes1d.cd();
-    TH1F resHist1d(
-        ("resHist1d_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 130, -6, 6);
-    for (int i = 0; i < config.buMass().getBins() * config.deltaMass().getBins(); i++) {
-      float n_bin = resHist2d->GetBinContent(i);
-      if (n_bin != 0) {
-        resHist1d.Fill(n_bin);
-      }
-    }
-    resHist1d.GetXaxis()->SetTitle("Residual");
-    resHist1d.GetYaxis()->SetTitle("Entries");
-    resHist1d.SetTitle("");
-    resHist1d.SetStats(0);
-    resHist1d.Draw();
-    canvasRes1d.Update();
-    canvasRes1d.SaveAs((outputDir + "/" +
-                      ComposeName(id, neutral, bachelor, daughters, charge) +
-                      "_1dResiduals.pdf")
-                         .c_str());
-    }
 }
 
 void PlotCorrelations(RooFitResult *result, std::string const &outputDir) {
@@ -732,289 +286,21 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   std::vector<PdfBase *> pdfs;
   // d is a reference to an element od the vector
   // Downside: don't have direct access to the index
-  for (auto &d : daughtersVec) {
-    switch (d) {
-      case Daughters::kpi: {
-        // emplace_back creates
-        // the
-        // object then moves it into the vector      // You only have to
-        // pass
-        // the arguments as if you were constructing the vector type The
-        // operators required to do this are not supported by RooFit so we
-        // have
-        // to use a vector of pointers
-
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-
-            case Neutral::pi0:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-          }
-        }
+  for (auto &n : neutralVec) {
+    switch (n) {
+      case Neutral::gamma:
+        pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                               Charge::total>::Get(id));
+        pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                               Charge::total>::Get(id));
         break;
-      }
-      case Daughters::kk: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-
-            case Neutral::pi0:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-          }
-        }
+      case Neutral::pi0:
+        pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                               Charge::total>::Get(id));
+        pdfs.emplace_back(
+            &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(
+                id));
         break;
-      }
-      case Daughters::pipi: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-
-            case Neutral::pi0:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-          }
-        }
-        break;
-      }
-      case Daughters::pik: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-
-            case Neutral::pi0:
-              for (auto &c : chargeVec) {
-                switch (c) {
-                  case Charge::plus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                             Charge::plus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                             Charge::plus>::Get(id));
-                    break;
-                  case Charge::minus:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                             Charge::minus>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                             Charge::minus>::Get(id));
-                    break;
-                  case Charge::total:
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
-                             Charge::total>::Get(id));
-                    pdfs.emplace_back(
-                        &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
-                             Charge::total>::Get(id));
-                    break;
-                }
-              }
-              break;
-          }
-        }
-        break;
-      }
     }
   }
 
@@ -1024,144 +310,6 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 
   auto p = std::make_pair(simPdf, pdfs);
   return p;
-}
-
-// Sometimes need to shift the starting point of the yields in order to make the
-// toy fit stable (so that the fit actually has to do some work)
-void ShiftN_Dst0h(std::vector<Daughters> daughtersVec,
-                  std::vector<Neutral> neutralVec, int id) {
-  for (auto &d : daughtersVec) {
-    switch (d) {
-      case Daughters::kpi: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>
-                  &nbdVars_gamma_pi_kpi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::kpi>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_gamma_pi_kpi.N_Bu2Dst0h_Dst02D0gamma());
-              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi> &nbdVars_pi0_pi_kpi =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kpi>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_pi0_pi_kpi.N_Bu2Dst0h_Dst02D0pi0());
-              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::kk: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_gamma_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_gamma_pi_kk.N_Bu2Dst0h_Dst02D0gamma());
-              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kk> &nbdVars_pi0_pi_kk =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::kk>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_pi0_pi_kk.N_Bu2Dst0h_Dst02D0pi0());
-              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::pipi: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_gamma_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_gamma_pi_pipi.N_Bu2Dst0h_Dst02D0gamma());
-              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pipi>
-                  &nbdVars_pi0_pi_pipi =
-                      NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                                   Daughters::pipi>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_pi0_pi_pipi.N_Bu2Dst0h_Dst02D0pi0());
-              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
-              break;
-            }
-          }
-        }
-        break;
-      }
-      case Daughters::pik: {
-        for (auto &n : neutralVec) {
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::pik>
-                  &nbdVars_gamma_pi_pik =
-                      NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                                   Daughters::pik>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0gamma_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_gamma_pi_pik.N_Bu2Dst0h_Dst02D0gamma());
-              N_Bu2Dst0h_Dst02D0gamma_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0gamma_RooRealVar->getVal() * 0.9);
-              break;
-            }
-            case Neutral::pi0: {
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::pik> &nbdVars_pi0_pi_pik =
-                  NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                               Daughters::pik>::Get(id);
-              auto N_Bu2Dst0h_Dst02D0pi0_RooRealVar =
-                  dynamic_cast<RooRealVar *>(
-                      &nbdVars_pi0_pi_pik.N_Bu2Dst0h_Dst02D0pi0());
-              N_Bu2Dst0h_Dst02D0pi0_RooRealVar->setVal(
-                  N_Bu2Dst0h_Dst02D0pi0_RooRealVar->getVal() * 0.9);
-              break;
-            }
-          }
-        }
-        break;
-      }
-    }
-  }
 }
 
 // Run 1 toy and make 1D and 2D plots
@@ -1181,7 +329,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
 
   auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-      RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+      RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
       nEvtsPerToy));
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -1211,7 +359,6 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   for (auto &p : pdfs) {
     Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
                fitBool, lumiString, result.get());
-    Plotting2D(id, *p, config, *toyAbsData, *simPdf, outputDir, fitBool);
   }
   if (fitBool == true) {
     result->Print("v");
@@ -1251,7 +398,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
 
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
     auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-        RooArgSet(config.buMass(), config.deltaMass(), categories.fitting),
+        RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
         nEvtsPerToy));
     toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
     auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -1537,8 +684,8 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_2 =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "Bu_M_DTF>5050&&Bu_M_DTF<5800&&Delta_M>50&&Delta_"
-                              "M<210&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
+                              "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>50&&Delta_"
+                              "M<190&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
                               "110"));
                     } else {
                       reducedInputDataSet_2 =
@@ -1653,7 +800,6 @@ int main(int argc, char **argv) {
     for (auto &p : pdfs) {
       Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
                  outputDir, fitBool, lumiString, result.get());
-      Plotting2D(id, *p, config, fullDataSet, *simPdf, outputDir, fitBool);
     }
 
     if (fitBool == true) {
