@@ -32,7 +32,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_meanBu(),
-          *Bu2Dst0h_Dst02D0gamma_sigma2Bu_,
+          *Bu2Dst0h_Dst02D0gamma_sigmaBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_a2Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)

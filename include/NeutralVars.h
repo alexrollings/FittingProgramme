@@ -99,6 +99,27 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() {
     return pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_meanBu() {
+    return Bu2Dst0h_Dst02D0gamma_meanBu_;
+  }
+  RooRealVar &relativeBuWidth_Bu2Dst0h_Dst02D0gamma() {
+    return relativeBuWidth_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a1Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_a2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_a2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_n1Bu() {
+    return Bu2Dst0h_Dst02D0gamma_n1Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_n2Bu() {
+    return Bu2Dst0h_Dst02D0gamma_n2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_frac1PdfBu() {
+    return Bu2Dst0h_Dst02D0gamma_frac1PdfBu_;
+  }
 
  private:
   // Indicate if only used by one neutral
@@ -115,6 +136,7 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_meanBu_;
+  RooRealVar relativeBuWidth_Bu2Dst0h_Dst02D0gamma_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a2Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_a1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_n2Bu_;
