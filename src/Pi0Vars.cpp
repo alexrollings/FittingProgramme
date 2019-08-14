@@ -99,4 +99,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_Dst02D0gamma_frac1Pdf_" +
            ComposeName(uniqueId, Variable::buDelta, Neutral::pi0))
               .c_str(),
-          "", 6.8457e-01) {}
+          "", 6.8457e-01,)
+      ratioKpi_Bu2Dst0h_Dst02D0gamma_(("ratioKpi_Bu2Dst0h_Dst02D0gamma_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", 0.07930) {}

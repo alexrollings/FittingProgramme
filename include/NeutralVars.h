@@ -120,6 +120,9 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0gamma_frac1PdfBu() {
     return Bu2Dst0h_Dst02D0gamma_frac1PdfBu_;
   }
+  RooRealVar &ratioKpi_Bu2Dst0h_Dst02D0gamma() {
+    return ratioKpi_Bu2Dst0h_Dst02D0gamma_;
+  }
 
  private:
   // Indicate if only used by one neutral
@@ -142,6 +145,7 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0gamma_n2Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_n1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfBu_;
+  RooRealVar ratioKpi_Bu2Dst0h_Dst02D0gamma_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

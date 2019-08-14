@@ -49,6 +49,12 @@ class NeutralBachelorVars {
   RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() {
     return pdfBu_Bu2Dst0h_Dst02D0gamma_;
   }
+  RooAbsReal &N_Delta_Bu2Dst0h_Dst02D0gamma() {
+    return *N_Delta_Bu2Dst0h_Dst02D0gamma_;
+  }
+  RooAbsReal &N_Bu_Bu2Dst0h_Dst02D0gamma() {
+    return *N_Bu_Bu2Dst0h_Dst02D0gamma_;
+  }
 
  private:
   int uniqueId_;
@@ -56,6 +62,8 @@ class NeutralBachelorVars {
   RooCBShape pdf1Bu_Bu2Dst0h_Dst02D0gamma_;
   RooCBShape pdf2Bu_Bu2Dst0h_Dst02D0gamma_;
   RooAddPdf pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> N_Delta_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bu2Dst0h_Dst02D0gamma_;
 };
 
 template <>
