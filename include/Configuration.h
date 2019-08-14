@@ -11,6 +11,7 @@ enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015, y2016, y2017, y2018 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus, total };
+enum class Variable { buDelta, delta };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
@@ -104,43 +105,19 @@ std::string EnumToString(Bachelor);
 std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
+std::string EnumToString(Variable);
 
-std::string EnumToLabel(Charge charge);
-std::string EnumToLabel(Daughters, Charge charge);
+std::string EnumToLabel(Charge);
+std::string EnumToLabel(Daughters, Charge);
 std::string EnumToLabel(Bachelor);
 std::string EnumToLabel(Neutral);
 std::string MissIdLabel(Bachelor);
 std::string CrossFeedLabel(Neutral);
 std::string HstLabel(Bachelor);
 
-std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
-                            Neutral neutral, Daughters daughters,
-                            Charge charge);
+std::string ComposeFilename(Year year, Polarity polarity,
+                            Bachelor bachelor, Neutral neutral,
+                            Daughters daughters, Charge charge);
 
-std::string ComposeFittingName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeFittingName(Variable variable, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
-template <Neutral neutral>
-constexpr Neutral SwapNeutral();
-
-template <>
-constexpr Neutral SwapNeutral<Neutral::gamma>() {
-  return Neutral::pi0; 
-}
-
-template <>
-constexpr Neutral SwapNeutral<Neutral::pi0>() {
-  return Neutral::gamma;
-}
-
-template <Bachelor bachelor>
-constexpr Bachelor SwapBachelor();
-
-template <>
-constexpr Bachelor SwapBachelor<Bachelor::k>() {
-  return Bachelor::pi; 
-}
-
-template <>
-constexpr Bachelor SwapBachelor<Bachelor::pi>() {
-  return Bachelor::k;
-}
