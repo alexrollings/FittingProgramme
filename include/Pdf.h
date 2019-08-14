@@ -16,54 +16,20 @@ class PdfBase {
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
   inline int uniqueId() const { return uniqueId_; }
+  inline Variable variable() const { return variable_; }
   inline Bachelor bachelor() const { return bachelor_; }
   inline Neutral neutral() const { return neutral_; }
   inline Daughters daughters() const { return daughters_; }
   inline Charge charge() const { return charge_; }
 
-  inline RooAbsReal &yield_Bu2Dst0h_Dst02D0pi0() {
-    return *yield_Bu2Dst0h_Dst02D0pi0_;
-  }
-  inline RooAbsReal &yield_Bu2Dst0h_Dst02D0gamma() {
-    return *yield_Bu2Dst0h_Dst02D0gamma_;
-  }
-  inline RooAbsReal &yield_overRec() { return *yield_overRec_; }
-  inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0pi0() { return *yield_Bu2Dst0hst_Dst02D0pi0_; }
-  inline RooAbsReal &yield_Bu2Dst0hst_Dst02D0gamma() { return *yield_Bu2Dst0hst_Dst02D0gamma_; }
-  inline RooAbsReal &yield_misRec() { return *yield_misRec_; }
-  inline RooRealVar &yield_Comb() { return yield_Comb_; }
   inline RooArgList &yields() { return yields_; }
   inline RooArgList &functions() { return functions_; }
   inline RooAddPdf &addPdf() { return *addPdf_; }
 
   // std::unique_ptr<RooAddPdf> addPdf_;
 
-  virtual RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() const = 0;
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0pi0() const = 0;
-  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0pi0() const = 0;
-  virtual RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() const = 0;
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const = 0;
-  virtual RooAbsPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const = 0;
-  virtual RooProdPdf &pdf_overRec() const = 0;
-  virtual RooDstD0BG &pdfDelta_overRec() const = 0;
-  virtual RooAddPdf &pdfBu_overRec() const = 0;
-  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const = 0;
-  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const = 0;
-  virtual RooProdPdf &pdf_Bu2D0hst() const = 0;
-  virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
-  virtual RooCBShape &pdfBu_Bu2D0hst() const = 0;
-  virtual RooProdPdf &pdf_Bd2Dsth() const = 0;
-  virtual RooDstD0BG &pdfDelta_Bd2Dsth() const = 0;
-  virtual RooCBShape &pdfBu_Bd2Dsth() const = 0;
-  virtual RooAddPdf &pdf_misRec() const = 0;
-  virtual RooExponential &pdfBu_Comb() const = 0;
-  virtual RooDstD0BG &pdfDelta_Comb() const = 0;
-  virtual RooProdPdf &pdf_Comb() const = 0;
-  virtual RooRealVar &overRec_frac1PdfBu() const = 0;
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const = 0;
+  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -71,36 +37,31 @@ class PdfBase {
   // function needs to be const when you don't change the object when the
   // function is called
   inline std::string CategoryName() const {
-    return ComposeFittingName(neutral_, bachelor_, daughters_, charge_);
+    return ComposeFittingName(variable_, neutral_, bachelor_, daughters_,
+                              charge_);
   }
 
  protected:  // Can be accessed by deriving classes
-  PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor, Daughters daughters,
-          Charge charge);
+  PdfBase(int uniqueId, Variable variable, Neutral neutral, Bachelor bachelor,
+          Daughters daughters, Charge charge);
   virtual ~PdfBase() {}
 
   int uniqueId_;
+  Variable variable_;
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
   Charge charge_;
 
-  std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0pi0_;
-  std::unique_ptr<RooAbsReal> yield_Bu2Dst0h_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> yield_overRec_;
-  std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0pi0_;
-  std::unique_ptr<RooAbsReal> yield_Bu2Dst0hst_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> yield_misRec_;
-  RooRealVar yield_Comb_;
   RooArgList yields_;
   RooArgList functions_;
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          Charge _charge>
+template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+          Daughters _daughters, Charge _charge>
 class Pdf : public PdfBase {
-  using This_t = Pdf<_neutral, _bachelor, _daughters, _charge>;
+  using This_t = Pdf<_variable, _neutral, _bachelor, _daughters, _charge>;
 
  public:
   // Get() method of PDF now doesn't always return the same PDF, but the same
@@ -119,7 +80,6 @@ class Pdf : public PdfBase {
     return *it->second;
   }
 
-  void AssignMissIdYields();
   void CreateRooAddPdf();
 
   // pdf_Bu2Dst0h_Dst02D0neut are made in another class, but we only deal with
@@ -127,102 +87,13 @@ class Pdf : public PdfBase {
   // executable. Give PDF functions to retrieve them
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
-  virtual RooProdPdf &pdf_Bu2Dst0h_Dst02D0pi0() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bu2Dst0h_Dst02D0pi0();
-  }
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0pi0() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfDelta_Bu2Dst0h_Dst02D0pi0();
-  }
-  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0pi0() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2Dst0h_Dst02D0pi0();
-  }
-  virtual RooProdPdf &pdf_Bu2Dst0h_Dst02D0gamma() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bu2Dst0h_Dst02D0gamma();
-  }
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const {
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_Bu2Dst0h_Dst02D0gamma();
   }
-  virtual RooAbsPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const {
+  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_Dst02D0gamma();
-  }
-  virtual RooProdPdf &pdf_overRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_overRec();
-  }
-  virtual RooDstD0BG &pdfDelta_overRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_overRec();
-  }
-  virtual RooAddPdf &pdfBu_overRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_overRec();
-  }
-  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0pi0() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bu2Dst0hst_Dst02D0pi0();
-  }
-  virtual RooAddPdf &pdfDelta_Bu2Dst0hst_Dst02D0pi0() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfDelta_Bu2Dst0hst_Dst02D0pi0();
-  }
-  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0pi0() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2Dst0hst_Dst02D0pi0();
-  }
-  virtual RooProdPdf &pdf_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfDelta_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooAbsPdf &pdfBu_Bu2Dst0hst_Dst02D0gamma() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2Dst0hst_Dst02D0gamma();
-  }
-  virtual RooProdPdf &pdf_Bu2D0hst() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bu2D0hst();
-  }
-  virtual RooDstD0BG &pdfDelta_Bu2D0hst() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2D0hst();
-  }
-  virtual RooCBShape &pdfBu_Bu2D0hst() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2D0hst();
-  }
-  virtual RooProdPdf &pdf_Bd2Dsth() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_Bd2Dsth();
-  }
-  virtual RooAddPdf &pdf_misRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdf_misRec();
-  }
-  virtual RooDstD0BG &pdfDelta_Bd2Dsth() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bd2Dsth();
-  }
-  virtual RooCBShape &pdfBu_Bd2Dsth() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bd2Dsth();
-  }
-  virtual RooExponential &pdfBu_Comb() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Comb();
-  }
-  virtual RooDstD0BG &pdfDelta_Comb() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Comb();
-  }
-  virtual RooProdPdf &pdf_Comb() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdf_Comb();
-  }
-  virtual RooRealVar &overRec_frac1PdfBu() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).overRec_frac1PdfBu();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
@@ -244,284 +115,43 @@ class Pdf : public PdfBase {
 // variable
 // We have to do it in the text of the constructor because it's a field of
 // PDFBase, not PDF
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          Charge _charge>
+template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+          Daughters _daughters, Charge _charge>
 // How does it know it's the same unique ID when one is uniqueId_ and the other
 // uniqueId?
-Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
-    : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
-  yield_misRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("yield_misRec_" +
-       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-          .c_str(),
-      ("misRec Yield " +
-       ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-          .c_str(),
-      "@0",
-      RooArgList(
-          NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
-              uniqueId)
-              .N_misRec())));
-  switch (_charge) {
-    case (Charge::minus): {
-      yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_overRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("overRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "(@0/2)*(@1+1)",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_overRec(),
-                     NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .asym_overRec())));
-      yield_Bu2Dst0hst_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(@1+1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0pi0(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0hst_Dst02D0pi0())));
-      yield_Bu2Dst0h_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(@1+1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0gamma(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0h_Dst02D0gamma())));
-      yield_Bu2Dst0h_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(@1+1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0pi0(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0h_Dst02D0pi0())));
-      yield_Bu2Dst0hst_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(@1+1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0gamma(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0hst_Dst02D0gamma())));
-    } break;
-    case (Charge::plus): {
-      yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_overRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("overRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "(@0/2)*(1-@1)",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_overRec(),
-                     NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .asym_overRec())));
-      yield_Bu2Dst0hst_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(1-@1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0pi0(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0hst_Dst02D0pi0())));
-      yield_Bu2Dst0h_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(1-@1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0gamma(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0h_Dst02D0gamma())));
-      yield_Bu2Dst0h_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(1-@1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0pi0(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0h_Dst02D0pi0())));
-      yield_Bu2Dst0hst_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "(@0/2)*(1-@1)",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0gamma(),
-                         NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .asym_Bu2Dst0hst_Dst02D0gamma())));
-    } break;
-    case (Charge::total): {
-      yield_overRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("yield_overRec_" +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          ("overRec Yield " +
-           ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-              .c_str(),
-          "@0",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                  _daughters>::Get(uniqueId)
-                         .N_overRec())));
-      yield_Bu2Dst0hst_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0pi0())));
-      yield_Bu2Dst0h_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0gamma())));
-      yield_Bu2Dst0h_Dst02D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0h_Dst02D0pi0_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0h_Dst02D0pi0 Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0h_Dst02D0pi0())));
-      yield_Bu2Dst0hst_Dst02D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("yield_Bu2Dst0hst_Dst02D0gamma_" +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              ("Bu2Dst0hst_Dst02D0gamma Yield " +
-               ComposeName(uniqueId, _neutral, _bachelor, _daughters, _charge))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorDaughtersVars<_neutral, _bachelor,
-                                                      _daughters>::Get(uniqueId)
-                             .N_Bu2Dst0hst_Dst02D0gamma())));
-    } break;
-  }
+Pdf<_variable, _neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
+    : PdfBase(uniqueId, _variable_ _neutral, _bachelor, _daughters, _charge) {
   CreateRooAddPdf();
 }
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
-          Charge _charge>
-void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateRooAddPdf() {
+template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+          Daughters _daughters, Charge _charge>
+void Pdf<_variable, _neutral, _bachelor, _daughters,
+         _charge>::CreateRooAddPdf() {
+  if (_variable == Variable::delta) {
+    PdfBase::functions_.add(
+        NeutralVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2Dst0h_Dst02D0gamma());
+    PdfBase::yields_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_Bu2Dst0h_Dst02D0gamma());
+  } else {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_Bu2Dst0h_Dst02D0gamma());
-    PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0gamma_);
-    // PdfBase::functions_.add(
-    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-    //         .pdf_Bu2Dst0h_Dst02D0pi0());
-    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0h_Dst02D0pi0_);
-    PdfBase::functions_.add(
+            .pdfBu_Bu2Dst0h_Dst02D0gamma());
+    PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdf_misRec());
-    PdfBase::yields_.add(*PdfBase::yield_misRec_);
-    // PdfBase::functions_.add(
-    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-    //         .pdf_overRec());
-    // PdfBase::yields_.add(*PdfBase::yield_overRec_);
-    // PdfBase::functions_.add(
-    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-    //         .pdf_Bu2Dst0hst_Dst02D0pi0());
-    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0pi0_);
-    // PdfBase::functions_.add(
-    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-    //         .pdf_Bu2Dst0hst_Dst02D0gamma());
-    // PdfBase::yields_.add(*PdfBase::yield_Bu2Dst0hst_Dst02D0gamma_);
-    // if (_neutral == Neutral::pi0) {
-    //   PdfBase::functions_.add(
-    //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-    //           .pdf_Comb());
-    //   PdfBase::yields_.add(PdfBase::yield_Comb_);
-    // }
+            .N_Bu_Bu2Dst0h_Dst02D0gamma());
+  }
 
-  PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(
-      new RooAddPdf(("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,
-                                          _bachelor, _daughters, _charge))
-                        .c_str(),
-                    ("pdf_" + ComposeName(PdfBase::uniqueId_, _neutral,
-                                          _bachelor, _daughters, _charge))
-                        .c_str(),
-                    PdfBase::functions_, PdfBase::yields_));
+  PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _variable, _neutral, _bachelor,
+                            _daughters, _charge))
+          .c_str(),
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _variable, _neutral, _bachelor,
+                            _daughters, _charge))
+          .c_str(),
+      PdfBase::functions_, PdfBase::yields_));
 }

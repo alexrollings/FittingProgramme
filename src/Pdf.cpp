@@ -1,25 +1,19 @@
 #include "Pdf.h"
 
-PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
-                 Daughters daughters, Charge charge)
+PdfBase::PdfBase(int uniqueId, Variable variable, Neutral neutral,
+                 Bachelor bachelor, Daughters daughters, Charge charge)
     : neutral_(neutral),
+      variable_(variable),
       bachelor_(bachelor),
       daughters_(daughters),
       charge_(charge),
       uniqueId_(uniqueId),
       addPdf_(nullptr),
-      yield_Comb_(("yield_Comb_" +
-                  ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-                     .c_str(),
-                 ("_Combinatorial Yield " +
-                  ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-                     .c_str(),
-                 200, 0, 1000),
-      yields_(("yields_" +
-               ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+      yields_(("yields_" + ComposeName(uniqueId, variable, neutral, bachelor,
+                                       daughters, charge))
                   .c_str()),
-      functions_(("functions_" +
-                  ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+      functions_(("functions_" + ComposeName(uniqueId, variable, neutral,
+                                             bachelor, daughters, charge))
                      .c_str()) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
