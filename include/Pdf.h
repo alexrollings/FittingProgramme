@@ -2,7 +2,6 @@
 #include <map>
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
@@ -120,7 +119,7 @@ template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
 // How does it know it's the same unique ID when one is uniqueId_ and the other
 // uniqueId?
 Pdf<_variable, _neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
-    : PdfBase(uniqueId, _variable_ _neutral, _bachelor, _daughters, _charge) {
+    : PdfBase(uniqueId, _variable, _neutral, _bachelor, _daughters, _charge) {
   CreateRooAddPdf();
 }
 
@@ -132,7 +131,7 @@ void Pdf<_variable, _neutral, _bachelor, _daughters,
          _charge>::CreateRooAddPdf() {
   if (_variable == Variable::delta) {
     PdfBase::functions_.add(
-        NeutralVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
             .pdfDelta_Bu2Dst0h_Dst02D0gamma());
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -155,3 +154,8 @@ void Pdf<_variable, _neutral, _bachelor, _daughters,
           .c_str(),
       PdfBase::functions_, PdfBase::yields_));
 }
+
+// Need to be able to access the add Pdfs as well as the simPdf
+// Generate dataset for delta and buDelta separately when running pseudoexperiments
+// New category: variable (bu/delta) - for now not made separate classes
+// Lots of if statements ?? PlotComponent

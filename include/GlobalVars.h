@@ -50,4 +50,5 @@ std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
 std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
                         Daughters daughters);
 std::string ComposeName(int uniqueId, Variable variable, Neutral neutral);
+std::string ComposeName(int uniqueId, Neutral neutral);
 std::string ComposeName(int uniqueId, Variable variable, Daughters daughters);

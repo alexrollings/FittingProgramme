@@ -72,8 +72,8 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_Dst02D0gamma_meanDelta() {
     return Bu2Dst0h_Dst02D0gamma_meanDelta_;
   }
-  RooRealVar &Bu2Dst0h_Dst02D0gamma_sigma1Delta() {
-    return Bu2Dst0h_Dst02D0gamma_sigma1Delta_;
+  RooRealVar &Bu2Dst0h_Dst02D0gamma_sigmaDelta() {
+    return Bu2Dst0h_Dst02D0gamma_sigmaDelta_;
   }
   RooRealVar &Bu2Dst0h_Dst02D0gamma_a1Delta() {
     return Bu2Dst0h_Dst02D0gamma_a1Delta_;

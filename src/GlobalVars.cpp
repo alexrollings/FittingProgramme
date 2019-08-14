@@ -33,6 +33,10 @@ std::string ComposeName(int uniqueId, Variable variable, Neutral neutral) {
          std::to_string(uniqueId);
 }
 
+std::string ComposeName(int uniqueId, Neutral neutral) {
+  return EnumToString(neutral) + "_" + std::to_string(uniqueId);
+}
+
 std::string ComposeName(int uniqueId, Variable variable, Daughters daughters) {
   return EnumToString(variable) + "_" + EnumToString(daughters) + "_" +
          std::to_string(uniqueId);
