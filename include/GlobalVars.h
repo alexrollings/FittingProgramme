@@ -41,14 +41,14 @@ public:
   int uniqueId_;
 };
 
-std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge);
-std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor, Daughters daughters);
-std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor);
-std::string ComposeName(int uniqueId, Variable variable, Neutral neutral,
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Daughters daughters);
-std::string ComposeName(int uniqueId, Variable variable, Neutral neutral);
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral);
 std::string ComposeName(int uniqueId, Neutral neutral);
-std::string ComposeName(int uniqueId, Variable variable, Daughters daughters);
+std::string ComposeName(int uniqueId, Mass mass, Daughters daughters);

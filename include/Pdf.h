@@ -15,7 +15,7 @@ class PdfBase {
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
   inline int uniqueId() const { return uniqueId_; }
-  inline Variable variable() const { return variable_; }
+  inline Mass mass() const { return mass_; }
   inline Bachelor bachelor() const { return bachelor_; }
   inline Neutral neutral() const { return neutral_; }
   inline Daughters daughters() const { return daughters_; }
@@ -36,17 +36,17 @@ class PdfBase {
   // function needs to be const when you don't change the object when the
   // function is called
   inline std::string CategoryName() const {
-    return ComposeFittingName(variable_, neutral_, bachelor_, daughters_,
+    return ComposeFittingName(mass_, neutral_, bachelor_, daughters_,
                               charge_);
   }
 
  protected:  // Can be accessed by deriving classes
-  PdfBase(int uniqueId, Variable variable, Neutral neutral, Bachelor bachelor,
+  PdfBase(int uniqueId, Mass mass, Neutral neutral, Bachelor bachelor,
           Daughters daughters, Charge charge);
   virtual ~PdfBase() {}
 
   int uniqueId_;
-  Variable variable_;
+  Mass mass_;
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
@@ -57,10 +57,10 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdf_;
 };
 
-template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
 class Pdf : public PdfBase {
-  using This_t = Pdf<_variable, _neutral, _bachelor, _daughters, _charge>;
+  using This_t = Pdf<_mass, _neutral, _bachelor, _daughters, _charge>;
 
  public:
   // Get() method of PDF now doesn't always return the same PDF, but the same
@@ -117,22 +117,22 @@ class Pdf : public PdfBase {
 // Can't make a list of different types. Pdfs have different types because of
 // the templating. They all inheret from PDFBase, so we can make a list of
 // PDFBase objects
-template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
 // How does it know it's the same unique ID when one is uniqueId_ and the other
 // uniqueId?
-Pdf<_variable, _neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
-    : PdfBase(uniqueId, _variable, _neutral, _bachelor, _daughters, _charge) {
+Pdf<_mass, _neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
+    : PdfBase(uniqueId, _mass, _neutral, _bachelor, _daughters, _charge) {
   CreateRooAddPdf();
 }
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
+template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
-void Pdf<_variable, _neutral, _bachelor, _daughters,
+void Pdf<_mass, _neutral, _bachelor, _daughters,
          _charge>::CreateRooAddPdf() {
-  if (_variable == Variable::delta) {
+  if (_mass == Mass::delta) {
     PdfBase::functions_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
             .pdfDelta_Bu2Dst0h_Dst02D0gamma());
@@ -149,13 +149,13 @@ void Pdf<_variable, _neutral, _bachelor, _daughters,
   }
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeName(PdfBase::uniqueId_, _variable, _neutral, _bachelor,
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _mass, _neutral, _bachelor,
                             _daughters, _charge))
           .c_str(),
-      ("pdf_" + ComposeName(PdfBase::uniqueId_, _variable, _neutral, _bachelor,
+      ("pdf_" + ComposeName(PdfBase::uniqueId_, _mass, _neutral, _bachelor,
                             _daughters, _charge))
           .c_str(),
       PdfBase::functions_, PdfBase::yields_));
 }
 
-// addPdf - put in own class (e.g. VariableVars)
+// addPdf - put in own class (e.g. MassVars)

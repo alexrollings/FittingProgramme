@@ -11,7 +11,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     // -------------------- SIGNAL -------------------- //
     : Bu2Dst0h_Dst02D0gamma_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_Dst02D0gamma_sigma_" +
-           ComposeName(uniqueId, Variable::buDelta, Neutral::gamma,
+           ComposeName(uniqueId, Mass::buDelta, Neutral::gamma,
                        Bachelor::k))
               .c_str(),
           "", "@0*@1",
@@ -21,7 +21,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralVars<Neutral::gamma>::Get(uniqueId)
                   .relativeBuWidth_Bu2Dst0h_Dst02D0gamma()))),
       pdf1Bu_Bu2Dst0h_Dst02D0gamma_(("pdf1_Bu2Dst0h_Dst02D0gamma_" +
-                                     ComposeName(uniqueId, Variable::buDelta,
+                                     ComposeName(uniqueId, Mass::buDelta,
                                                  Neutral::gamma, Bachelor::k))
                                         .c_str(),
                                     "", Configuration::Get().buDeltaMass(),
@@ -33,7 +33,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                     NeutralVars<Neutral::gamma>::Get(uniqueId)
                                         .Bu2Dst0h_Dst02D0gamma_n1Bu()),
       pdf2Bu_Bu2Dst0h_Dst02D0gamma_(("pdf2_Bu2Dst0h_Dst02D0gamma_" +
-                                     ComposeName(uniqueId, Variable::buDelta,
+                                     ComposeName(uniqueId, Mass::buDelta,
                                                  Neutral::gamma, Bachelor::k))
                                         .c_str(),
                                     "", Configuration::Get().buDeltaMass(),
@@ -45,7 +45,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                     NeutralVars<Neutral::gamma>::Get(uniqueId)
                                         .Bu2Dst0h_Dst02D0gamma_n2Bu()),
       pdfBu_Bu2Dst0h_Dst02D0gamma_(("pdf_Bu2Dst0h_Dst02D0gamma_" +
-                                    ComposeName(uniqueId, Variable::buDelta,
+                                    ComposeName(uniqueId, Mass::buDelta,
                                                 Neutral::gamma, Bachelor::k))
                                        .c_str(),
                                    "",
@@ -55,7 +55,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                        .Bu2Dst0h_Dst02D0gamma_frac1PdfBu()),
       N_Delta_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Variable::delta, Neutral::gamma, Bachelor::k))
+           ComposeName(uniqueId, Mass::delta, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", "@0*@1",
           RooArgSet(
@@ -65,7 +65,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   .ratioKpi_Bu2Dst0h_Dst02D0gamma()))),
       N_Bu_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Variable::buDelta, Neutral::gamma, Bachelor::k))
+           ComposeName(uniqueId, Mass::buDelta, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", "@0*@1",
           RooArgSet(

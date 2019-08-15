@@ -11,7 +11,7 @@ enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015, y2016, y2017, y2018 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus, total };
-enum class Variable { buDelta, delta };
+enum class Mass { buDelta, delta };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
@@ -105,7 +105,7 @@ std::string EnumToString(Bachelor);
 std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
-std::string EnumToString(Variable);
+std::string EnumToString(Mass);
 
 std::string EnumToLabel(Charge);
 std::string EnumToLabel(Daughters, Charge);
@@ -119,5 +119,5 @@ std::string ComposeFilename(Year year, Polarity polarity,
                             Bachelor bachelor, Neutral neutral,
                             Daughters daughters, Charge charge);
 
-std::string ComposeFittingName(Variable variable, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 

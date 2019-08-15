@@ -63,7 +63,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                    TLegend &lumiLegend, std::string const &outputDir,
                    bool fitBool, Configuration &config) {
   Bachelor bachelor = pdf.bachelor();
-  Variable variable = pdf.variable();
+  Mass mass = pdf.mass();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
@@ -81,7 +81,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   fullDataSet.plotOn(
       frame.get(), RooFit::Cut(("fitting==fitting::" +
-                                ComposeFittingName(variable, neutral, bachelor,
+                                ComposeFittingName(mass, neutral, bachelor,
                                                    daughters, charge))
                                    .c_str()));
 
@@ -92,12 +92,12 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   pullHist = frame->RooPlot::pullHist();
 
-  if (variable == Variable::buDelta) {
+  if (mass == Mass::buDelta) {
     simPdf.plotOn(
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(variable, neutral, bachelor, daughters, charge)
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                 .c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma().GetName()),
@@ -108,7 +108,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
         frame.get(),
         RooFit::Slice(
             categories.fitting,
-            ComposeFittingName(variable, neutral, bachelor, daughters, charge)
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                 .c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma().GetName()),
@@ -116,7 +116,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   }
 
-  if (variable == Variable::delta) {
+  if (mass == Mass::delta) {
     if (neutral == Neutral::gamma) {
       frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
     } else {
@@ -131,7 +131,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   if (fitBool == true) {
     pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + ComposeName(id, variable, neutral,
+    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral,
                                                    bachelor, daughters, charge))
                            .c_str());
     pullFrame->SetTitle("");
@@ -139,19 +139,19 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   // --------------- plot onto canvas ---------------------
 
-  TCanvas canvas(("canvas_" + ComposeName(id, variable, neutral, bachelor,
+  TCanvas canvas(("canvas_" + ComposeName(id, mass, neutral, bachelor,
                                           daughters, charge))
                      .c_str(),
                  "canvas", 1200, 1000);
 
   TPad pad1(("pad1_" +
-             ComposeName(id, variable, neutral, bachelor, daughters, charge))
+             ComposeName(id, mass, neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
   pad1.Draw();
 
   TPad pad2(("pad2_" +
-             ComposeName(id, variable, neutral, bachelor, daughters, charge))
+             ComposeName(id, mass, neutral, bachelor, daughters, charge))
                 .c_str(),
             "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
   pad2.Draw();
@@ -190,7 +190,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   canvas.Update();
   canvas.SaveAs(
       (outputDir + "/" +
-       ComposeName(id, variable, neutral, bachelor, daughters, charge) + ".pdf")
+       ComposeName(id, mass, neutral, bachelor, daughters, charge) + ".pdf")
           .c_str());
 }
 
@@ -206,13 +206,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
-  Variable variable = pdf.variable();
+  Mass mass = pdf.mass();
 
   TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(
       ("Bu2Dst0h_Dst02D0gammaHist" +
-       ComposeName(id, variable, neutral, bachelor, daughters, charge))
+       ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0h_Dst02D0gammaHist", 1, 0, 1);
   Bu2Dst0h_Dst02D0gammaHist->SetLineColor(kOrange);
@@ -220,7 +220,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
 
   auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" + ComposeName(id, variable, neutral, bachelor, daughters, charge))
+      ("blankHist" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
       "blankHist", 1, 0, 1);
   blankHist->SetLineColor(kWhite);
@@ -263,7 +263,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
   }
   
-  if (variable == Variable::delta) {
+  if (mass == Mass::delta) {
     PlotComponent(config.deltaMass(), pdf, fullDataSet, simPdf, categories,
                   legend, lumiLegend, outputDir, fitBool, config);
   } else {
@@ -306,23 +306,23 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   for (auto &n : neutralVec) {
     switch (n) {
       case Neutral::gamma:
-        pdfs.emplace_back(&Pdf<Variable::buDelta, Neutral::gamma, Bachelor::pi,
+        pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::delta, Neutral::gamma, Bachelor::pi,
+        pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::buDelta, Neutral::gamma, Bachelor::k,
+        pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::delta, Neutral::gamma, Bachelor::k,
+        pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
                                Daughters::kpi, Charge::total>::Get(id));
         break;
       case Neutral::pi0:
-        pdfs.emplace_back(&Pdf<Variable::buDelta, Neutral::pi0, Bachelor::pi,
+        pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::delta, Neutral::pi0, Bachelor::pi,
+        pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::buDelta, Neutral::pi0, Bachelor::k,
+        pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                Daughters::kpi, Charge::total>::Get(id));
-        pdfs.emplace_back(&Pdf<Variable::delta, Neutral::pi0, Bachelor::k,
+        pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
                                Daughters::kpi, Charge::total>::Get(id));
         break;
     }
@@ -391,7 +391,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
 }
 
 // Function we use to do the toy study - run many toys and extract pulls for
-// each variable of interest
+// each mass of interest
 void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
@@ -443,7 +443,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
         simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                            RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-    // save names and predictions of all variables we want to calculate
+    // save names and predictions of all masss we want to calculate
     // pulls for
     result->Print("v");
 

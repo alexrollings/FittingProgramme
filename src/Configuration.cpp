@@ -151,28 +151,28 @@ Configuration::Categories::Categories()
     : fitting("fitting", "fitting") {
 
 
-  fitting.defineType(ComposeFittingName(Variable::buDelta, Neutral::pi0, Bachelor::pi,
+  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::delta, Neutral::pi0, Bachelor::pi,
+  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::buDelta, Neutral::pi0, Bachelor::k,
+  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::delta, Neutral::pi0, Bachelor::k,
+  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::buDelta, Neutral::gamma, Bachelor::pi,
+  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::delta, Neutral::gamma, Bachelor::pi,
+  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::buDelta, Neutral::gamma, Bachelor::k,
+  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
                                         Daughters::kpi, Charge::total)
                          .c_str());
-  fitting.defineType(ComposeFittingName(Variable::delta, Neutral::gamma, Bachelor::k,
+  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
                                         Daughters::kpi, Charge::total)
                          .c_str());
 }
@@ -332,11 +332,11 @@ std::string EnumToString(Charge charge) {
 
 }
 
-std::string EnumToString(Variable variable) {
-  switch (variable) {
-    case Variable::buDelta:
+std::string EnumToString(Mass mass) {
+  switch (mass) {
+    case Mass::buDelta:
       return "buDelta";
-    case Variable::delta:
+    case Mass::delta:
       return "delta";
   }
 }
@@ -349,9 +349,9 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
-std::string ComposeFittingName(Variable variable, Neutral neutral, Bachelor bachelor,
+std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor,
                         Daughters daughters, Charge charge) {
-  return EnumToString(variable) + "_" + EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+  return EnumToString(mass) + "_" + EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 
