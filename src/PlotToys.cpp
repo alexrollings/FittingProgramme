@@ -349,7 +349,7 @@ int main(int argc, char *argv[]) {
   //                        buLow, buHigh, boxEffSignal, orEffSignal);
 
   // File to save results
-  // TFile outputFile((outputDir + "/toy_results/Result_" + deltaLow + "_" +
+  // TFile outputFile((outputDir + "/results/Result_" + deltaLow + "_" +
   //                   deltaHigh + "_" + buLow + "_" + buHigh + ".root")
   //                      .c_str(),
   //                  "recreate");

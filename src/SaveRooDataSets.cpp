@@ -17,9 +17,7 @@
 std::string dsPath("/data/lhcb/users/rollings/roodatasets/d1d_fit/");
 
 void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
-                    Bachelor bachelor, Neutral neutral,
-                    Daughters daughters) {
-
+                    Bachelor bachelor, Neutral neutral, Daughters daughters) {
   // using namespace RooFit;
 
   // StaticVars::polarityCat() is a function returning a const reference to
@@ -92,92 +90,47 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   // Create data set for our ttree variables
   RooDataSet inputDataSet("inputDataSet", "Input Data Set", tree,
                           config.variableArgSet());
+  std::cout << "Created inputDataSet:\n";
+  inputDataSet.Print();
 
-  // Create data set to store categories
-  RooDataSet extraDataSet("extraDataSet", "Category Data Set",
-                          config.categoryArgSet());
+  std::string dsFileName = ComposeFilename(year, polarity, bachelor, neutral,
+                                           daughters, Charge::total) +
+                           ".root";
+  std::cout << "Saving total data set to file: " << dsPath + dsFileName << "\n";
+  TFile dsFile((dsPath + dsFileName).c_str(), "RECREATE");
+  inputDataSet.Write("inputDataSet");
+  dsFile.Close();
 
-  std::cout << "Finished loading tree.\n";
+  auto plusDataSet = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet.reduce("Bu_ID>0")));
+  std::cout << "Created plusDataSet:\n";
+  plusDataSet->Print();
 
-  // Loop over data set, find RooCategory for each event and set it's label
-  for (int i = 0; i < inputDataSet.numEntries(); i++) {
-    // RooDataSet::get() returns a const pointer to a RooArgSet for event i (why
-    // we must use RooArgSet not RooArgList)
-    RooArgSet const *row = inputDataSet.get(i);
-    // TString has an automatic converter to const char* array. String doesn't.
-    // RooAbsArg::find() finds object with name in list. Null pointer returned
-    // if the name isn't found
-    RooRealVar *idBuPtr =
-        dynamic_cast<RooRealVar *>(row->find(config.buPdgId().GetName()));
-    if (idBuPtr == nullptr) {
-      std::stringstream output;
-      output << "No value for ID[Bu] for event " << i << ".";
-      throw std::runtime_error(output.str());
-    }
-
-    Charge charge;
-
-    if (idBuPtr->getVal() < 0) {
-      charge = Charge::minus;
-    } else if (idBuPtr->getVal() > 0) {
-      charge = Charge::plus;
-    };
-
-    // Adding the categories to RooArgSet added a pointer to the value's memory
-    // address. Therefore changing their values changes changes what is stored
-    // in catArgSet.
-    categories.chargeCat.setLabel(EnumToString(charge).c_str());
-    categories.fitting.setLabel(ComposeFittingName(neutral, bachelor, daughters, charge).c_str());
-
-    // Add category labels to 'extra' data set
-    extraDataSet.add(config.categoryArgSet());
-    // Add here copies the values from rooArgSet
-  }
-
-  std::cout << "exited loop" << std::endl;
-  // Merge data set containing variables with that containing categories
-  inputDataSet.merge(&extraDataSet);
-
-  RooDataSet *plusDataSet =
-      dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::plus"));
-
-  RooDataSet *reducedPlusDataSet = dynamic_cast<RooDataSet *>(plusDataSet->reduce(config.fullArgSet()));
-  std::cout << "PlusDataSet contains variables: ";
-  reducedPlusDataSet -> printArgs(std::cout);
-  std::cout << "\n";
-  reducedPlusDataSet->Print();
- 
   std::string dsPlusFileName =
       ComposeFilename(year, polarity, bachelor, neutral, daughters,
                       Charge::plus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsPlusFileName << "\n";
   TFile dsPlusFile((dsPath + dsPlusFileName).c_str(), "RECREATE");
-  reducedPlusDataSet->Write("inputDataSet");
+  plusDataSet.get()->Write("inputDataSet");
   dsPlusFile.Close();
 
-  RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
-      inputDataSet.reduce("chargeCat==chargeCat::minus"));
-  //  Charge in the formula it corresponds to the string we have in the
-  //  constructor of Categories as RooFit only knows the strings you've given it
-  RooDataSet *reducedMinusDataSet =
-      dynamic_cast<RooDataSet *>(minusDataSet->reduce(config.fullArgSet()));
-  std::cout << "MinusDataSet contains variables: ";
-  reducedMinusDataSet -> printArgs(std::cout);
-  std::cout << "\n";
-  reducedMinusDataSet->Print();
+  auto minusDataSet = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet.reduce("Bu_ID<0")));
+  std::cout << "Created minusDataSet:\n";
+  minusDataSet->Print();
+
   std::string dsMinusFileName =
       ComposeFilename(year, polarity, bachelor, neutral, daughters,
                       Charge::minus) +
       ".root";
   std::cout << "Saving data set to file: " << dsPath + dsMinusFileName << "\n";
   TFile dsMinusFile((dsPath + dsMinusFileName).c_str(), "RECREATE");
-  reducedMinusDataSet->Write("inputDataSet");
+  minusDataSet.get()->Write("inputDataSet");
   dsMinusFile.Close();
 }
 
 int main(int argc, char **argv) {
-
   std::string path = argv[1];
   Year year = StringToEnum<Year>(argv[2]);
   Polarity polarity = StringToEnum<Polarity>(argv[3]);

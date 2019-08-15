@@ -13,7 +13,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_Dst02D0gamma_sigmaBu_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         "", 2.0051e+01)),
+                         "", 2.0051e+01, 15, 30)),
       pdf1Bu_Bu2Dst0h_Dst02D0gamma_(
           ("pdf1Bu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

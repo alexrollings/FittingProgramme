@@ -61,7 +61,7 @@ if __name__ == "__main__":
         pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    # results_dir = output_dir + '/toy_results'
+    # results_dir = output_dir + '/results'
     # if not os.path.exists(results_dir):
     #     os.mkdir(results_dir)
     plots_dir = output_dir + '/plots'

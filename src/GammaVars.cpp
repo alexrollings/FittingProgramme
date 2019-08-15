@@ -11,11 +11,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     : Bu2Dst0h_Dst02D0gamma_meanDelta_(("Bu2Dst0h_Dst02D0gamma_meanDelta_" +
                                         ComposeName(uniqueId, Neutral::gamma))
                                            .c_str(),
-                                       "", 1.4233e+02),
+                                       "", 1.4233e+02, 135, 150),
       Bu2Dst0h_Dst02D0gamma_sigmaDelta_(("Bu2Dst0h_Dst02D0gamma_sigmaDelta_" +
                                          ComposeName(uniqueId, Neutral::gamma))
                                             .c_str(),
-                                        "", 8.1675e+00),
+                                        "", 8.1675e+00, 2, 15),
       Bu2Dst0h_Dst02D0gamma_a1Delta_(("Bu2Dst0h_Dst02D0gamma_a1Delta_" +
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),
@@ -62,7 +62,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_Dst02D0gamma_meanBu_(("Bu2Dst0h_Dst02D0gamma_meanBu_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    "", 5.2819e+03),
+                                    "", 5.2819e+03, 5270, 5290),
       relativeBuWidth_Bu2Dst0h_Dst02D0gamma_(
           ("relativeBuWidth_Bu2Dst0h_Dst02D0gammaBu_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -91,4 +91,4 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       ratioKpi_Bu2Dst0h_Dst02D0gamma_(("ratioKpi_Bu2Dst0h_Dst02D0gamma_" +
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),
-                                      "", 0.07930) {}
+                                      "", 0.07930, -1, 1) {}
