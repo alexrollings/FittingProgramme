@@ -114,6 +114,9 @@ class Pdf : public PdfBase {
 // variable
 // We have to do it in the text of the constructor because it's a field of
 // PDFBase, not PDF
+// Can't make a list of different types. Pdfs have different types because of
+// the templating. They all inheret from PDFBase, so we can make a list of
+// PDFBase objects
 template <Variable _variable, Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
 // How does it know it's the same unique ID when one is uniqueId_ and the other
@@ -155,7 +158,4 @@ void Pdf<_variable, _neutral, _bachelor, _daughters,
       PdfBase::functions_, PdfBase::yields_));
 }
 
-// Need to be able to access the add Pdfs as well as the simPdf
-// Generate dataset for delta and buDelta separately when running pseudoexperiments
-// New category: variable (bu/delta) - for now not made separate classes
-// Lots of if statements ?? PlotComponent
+// addPdf - put in own class (e.g. VariableVars)
