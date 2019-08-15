@@ -350,14 +350,24 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
   std::vector<PdfBase *> pdfs = p.second;
 
-  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+  std::map<std::string, RooDataSet *> mapCategoryToy;
+  for (auto &p : pdfs) {
+    double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+    auto tempToy = p->addPdf().generate(
+        RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
+        nEvtsPerToy);
+    mapCategoryToy.insert(std::make_pair(
+        ComposeFittingName(p->mass(), p->neutral(), p->bachelor(),
+                           p->daughters(), p->charge()),
+        tempToy));
+  }
 
-  auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-      RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
-      nEvtsPerToy));
+  RooDataSet toyDataSet(
+      ("toyDataSet_" + std::to_string(id)).c_str(), "", config.fittingArgSet(),
+      RooFit::Index(categories.fitting), RooFit::Import(mapCategoryToy));
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
-      toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+      toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
 
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
