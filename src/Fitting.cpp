@@ -33,8 +33,6 @@
 #include "ParseArguments.h"
 #include "Pdf.h"
 
-enum class Toys { single, many, none };
-
 // Function to set the style for all THists
 void SetStyle() {
   gStyle->SetTitleFont(132, "XYZ");
@@ -84,13 +82,20 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                                 ComposeFittingName(mass, neutral, bachelor,
                                                    daughters, charge))
                                    .c_str()));
+  simPdf.plotOn(
+      frame.get(),
+      RooFit::Slice(
+          categories.fitting,
+          ComposeFittingName(mass, neutral, bachelor, daughters, charge).c_str()),
+      RooFit::ProjWData(categories.fitting, fullDataSet),
+      RooFit::LineColor(kBlue));
 
   // Everything to be plotted has to be declared outside of a loop, in the scope
   // of the canvas
-  // RooHist *pullHist = nullptr;
-  // std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-  //
-  // pullHist = frame->RooPlot::pullHist();
+  RooHist *pullHist = nullptr;
+  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+  pullHist = frame->RooPlot::pullHist();
 
   if (mass == Mass::buDelta) {
     simPdf.plotOn(
@@ -129,13 +134,13 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                          .c_str());
   }
 
-  // if (fitBool == true) {
-  //   pullFrame->addPlotable(pullHist #<{(| .get() |)}>#, "P");
-  //   pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral,
-  //                                                  bachelor, daughters, charge))
-  //                          .c_str());
-  //   pullFrame->SetTitle("");
-  // }
+  if (fitBool == true) {
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral,
+                                                   bachelor, daughters, charge))
+                           .c_str());
+    pullFrame->SetTitle("");
+  }
 
   // --------------- plot onto canvas ---------------------
 
@@ -160,23 +165,23 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  // if (fitBool == true) {
-  //   // Zero line on error plot.
-  //   // .get() gets the raw pointer from underneath the smart pointer
-  //   // FIX THIS
-  //   // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
-  //
-  //   canvas.cd();
-  //   pad2.cd();
-  //   pullFrame->SetYTitle(" ");
-  //   pullFrame->SetXTitle(" ");
-  //   pullFrame->SetLabelSize(0.2, "Y");
-  //   pullFrame->SetLabelFont(132, "XY");
-  //   pullFrame->SetLabelOffset(100, "X");
-  //   pullFrame->SetTitleOffset(100, "X");
-  //   pullFrame->Draw();
-  //   zeroLine.Draw("same");
-  // }
+  if (fitBool == true) {
+    // Zero line on error plot.
+    // .get() gets the raw pointer from underneath the smart pointer
+    // FIX THIS
+    // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
+
+    canvas.cd();
+    pad2.cd();
+    pullFrame->SetYTitle(" ");
+    pullFrame->SetXTitle(" ");
+    pullFrame->SetLabelSize(0.2, "Y");
+    pullFrame->SetLabelFont(132, "XY");
+    pullFrame->SetLabelOffset(100, "X");
+    pullFrame->SetTitleOffset(100, "X");
+    pullFrame->Draw();
+    zeroLine.Draw("same");
+  }
 
   canvas.cd();
   pad1.cd();
@@ -398,8 +403,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Neutral> const &neutralVec,
                  std::vector<Daughters> const &daughtersVec,
                  std::vector<Charge> const &chargeVec,
-                 std::string const &outputDir /* , int nToys */) {
-  int nToys = 2;
+                 std::string const &outputDir, int nToys) {
 
   for (int id = 0; id < nToys; ++id) {
     // Setting the random seed to 0 is a special case which generates a
@@ -455,8 +459,8 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     result->Write();
     outputFile.Close();
 
-    std::cout << "Result saved in file " << outputDir << "/ResultFile"
-              << std::to_string(randomTag) << ".root\n";
+    std::cout << "Result saved in file " << outputDir << outputFile.GetName()
+              << "\n";
   }
 }
 
@@ -495,8 +499,8 @@ int main(int argc, char **argv) {
   // Still want to load both charges:plus and minus, we just fit with
   // them differently
 
-  Toys toys;
   bool fitBool = true;
+  int nToys = 0;
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -512,8 +516,7 @@ int main(int argc, char **argv) {
     std::string neutralArg("gamma,pi0");
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
-    std::string toysArg("none");
-    int nToys = 1;
+    int toysArg = 0;
 
     // We always want to simultaneously fir the pi AND k bachelor modes
     // together
@@ -541,11 +544,11 @@ int main(int argc, char **argv) {
                 << daughtersArg << ">\n";
       std::cout << "    -charge=<choice {plus/minus/total} default: " << chargeArg
                 << ">\n";
-      std::cout << "    -toys=<choice {single, many, none} default: none>"
-                << "\n";
-      std::cout << "    If toys=many, you can specify -nToys=<#, default = " << nToys << ">"
-                << "\n";
       std::cout << "To specify multiple options, separate them by commas.\n";
+      std::cout << "    -toys=<# toys>"
+                << "\n";
+      std::cout << "    Optional: if you want to run toys. If # toys = 1, toys "
+                   "will also be plotted.\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "\n";
@@ -553,29 +556,13 @@ int main(int argc, char **argv) {
       return 1;
     } else {
       if (!args("toys", toysArg)) {
-        std::cout << "Using default value -toys=[" << toysArg << "].\n";
-        toys = Toys::none;
-      } else if (toysArg == "single") {
-        toys = Toys::single;
-      } else if (toysArg == "many") {
-        toys = Toys::many;
-      } else if (toysArg == "none") {
-        toys = Toys::none;
+        std::cout << "Running data fit.\n";
       } else {
-        std::cerr << "Please specify correct toy option: "
-                     "-toys=[single,many,none] (optional)\n";
-        return 1;
-      }
+        nToys = toysArg;
+        std::cout << "Running " << nToys << " toys\n";
+      } 
 
-      if (toys == Toys::many) {
-        if (!args("nToys", nToys)) {
-          std::cout << "Using default and running " << nToys << " toy.\n";
-        } else {
-          std::cout << "Running " << nToys << " toys.\n";
-        }
-      }
-
-      if (!args("inputDir", inputDir) && toys == Toys::none) {
+      if (!args("inputDir", inputDir) && nToys == 0) {
         std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
         return 1;
       }
@@ -656,7 +643,7 @@ int main(int argc, char **argv) {
     config.deltaMass().setMin(134);
   }
 
-  // if (toys == Toys::none) {
+  // if (nToys == 0) {
   //   std::map<std::string, RooDataSet *> mapCategoryDataset;
   //
   //   // Add up lumi in order to convert into string to go on plots
@@ -834,13 +821,13 @@ int main(int argc, char **argv) {
   //   }
   //
   // } else {
-    if (toys == Toys::single) {
+    if (nToys == 1) {
       std::cout << "Running single toy\n";
       RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
                    outputDir, fitBool);
-    } else if (toys == Toys::many) {
+    } else {
       RunManyToys(config, categories, neutralVec, daughtersVec, chargeVec,
-                  outputDir /* , nToys */);
+                  outputDir, nToys);
     }
   // }
 
