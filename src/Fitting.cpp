@@ -357,12 +357,10 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   
   std::cout << "Generated toy data set\n";
 
-  // auto toyDataHist = std::unique_ptr<RooDataHist>(
-  //     toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
-  auto toyDataHist = toyDataSet->binnedClone("toyDataHist", "toyDataHist");
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
 
-  // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist/* .get() */);
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
   // ShiftN_Dst0h(daughtersVec, neutralVec, id);
 
@@ -401,7 +399,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                  std::vector<Daughters> const &daughtersVec,
                  std::vector<Charge> const &chargeVec,
                  std::string const &outputDir /* , int nToys */) {
-  int nToys = 1;
+  int nToys = 2;
 
   for (int id = 0; id < nToys; ++id) {
     // Setting the random seed to 0 is a special case which generates a
@@ -413,7 +411,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     double randomTag = random.Rndm();
 
     TFile outputFile(
-        (outputDir + "/ResultFile" + std::to_string(randomTag) + ".root")
+        (outputDir + "/ResultFile_" + std::to_string(randomTag) + ".root")
             .c_str(),
         "recreate");
 
