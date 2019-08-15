@@ -194,7 +194,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   canvas.Update();
   canvas.SaveAs(
-      (outputDir + "/" +
+      (outputDir + "/plots/" +
        ComposeName(id, mass, neutral, bachelor, daughters, charge) + ".pdf")
           .c_str());
 }
@@ -291,7 +291,7 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir) {
   gPad->SetTopMargin(0.05);
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/CorrelationMatrix.pdf").c_str());
+  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix.pdf").c_str());
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -415,7 +415,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     double randomTag = random.Rndm();
 
     TFile outputFile(
-        (outputDir + "/ResultFile_" + std::to_string(randomTag) + ".root")
+        (outputDir + "/results/ResultFile_" + std::to_string(randomTag) + ".root")
             .c_str(),
         "recreate");
 
@@ -459,7 +459,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     result->Write();
     outputFile.Close();
 
-    std::cout << "Result saved in file " << outputDir << outputFile.GetName()
+    std::cout << "Result saved in file " << outputFile.GetName()
               << "\n";
   }
 }
