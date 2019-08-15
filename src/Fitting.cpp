@@ -87,10 +87,10 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
 
   // Everything to be plotted has to be declared outside of a loop, in the scope
   // of the canvas
-  RooHist *pullHist = nullptr;
-  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-
-  pullHist = frame->RooPlot::pullHist();
+  // RooHist *pullHist = nullptr;
+  // std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+  //
+  // pullHist = frame->RooPlot::pullHist();
 
   if (mass == Mass::buDelta) {
     simPdf.plotOn(
@@ -129,13 +129,13 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                          .c_str());
   }
 
-  if (fitBool == true) {
-    pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral,
-                                                   bachelor, daughters, charge))
-                           .c_str());
-    pullFrame->SetTitle("");
-  }
+  // if (fitBool == true) {
+  //   pullFrame->addPlotable(pullHist #<{(| .get() |)}>#, "P");
+  //   pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral,
+  //                                                  bachelor, daughters, charge))
+  //                          .c_str());
+  //   pullFrame->SetTitle("");
+  // }
 
   // --------------- plot onto canvas ---------------------
 
@@ -160,23 +160,23 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  if (fitBool == true) {
-    // Zero line on error plot.
-    // .get() gets the raw pointer from underneath the smart pointer
-    // FIX THIS
-    // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
-
-    canvas.cd();
-    pad2.cd();
-    pullFrame->SetYTitle(" ");
-    pullFrame->SetXTitle(" ");
-    pullFrame->SetLabelSize(0.2, "Y");
-    pullFrame->SetLabelFont(132, "XY");
-    pullFrame->SetLabelOffset(100, "X");
-    pullFrame->SetTitleOffset(100, "X");
-    pullFrame->Draw();
-    zeroLine.Draw("same");
-  }
+  // if (fitBool == true) {
+  //   // Zero line on error plot.
+  //   // .get() gets the raw pointer from underneath the smart pointer
+  //   // FIX THIS
+  //   // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
+  //
+  //   canvas.cd();
+  //   pad2.cd();
+  //   pullFrame->SetYTitle(" ");
+  //   pullFrame->SetXTitle(" ");
+  //   pullFrame->SetLabelSize(0.2, "Y");
+  //   pullFrame->SetLabelFont(132, "XY");
+  //   pullFrame->SetLabelOffset(100, "X");
+  //   pullFrame->SetTitleOffset(100, "X");
+  //   pullFrame->Draw();
+  //   zeroLine.Draw("same");
+  // }
 
   canvas.cd();
   pad1.cd();
@@ -215,7 +215,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0h_Dst02D0gammaHist", 1, 0, 1);
-  Bu2Dst0h_Dst02D0gammaHist->SetLineColor(kOrange);
+  Bu2Dst0h_Dst02D0gammaHist->SetLineColor(kBlue);
   Bu2Dst0h_Dst02D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
 
@@ -350,26 +350,19 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
   std::vector<PdfBase *> pdfs = p.second;
 
-  std::map<std::string, RooDataSet *> mapCategoryToy;
-  for (auto &p : pdfs) {
-    double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
-    auto tempToy = p->addPdf().generate(
-        RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
-        nEvtsPerToy);
-    mapCategoryToy.insert(std::make_pair(
-        ComposeFittingName(p->mass(), p->neutral(), p->bachelor(),
-                           p->daughters(), p->charge()),
-        tempToy));
-  }
+  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+  auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
+      RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
+      nEvtsPerToy));
+  
+  std::cout << "Generated toy data set\n";
 
-  RooDataSet toyDataSet(
-      ("toyDataSet_" + std::to_string(id)).c_str(), "", config.fittingArgSet(),
-      RooFit::Index(categories.fitting), RooFit::Import(mapCategoryToy));
+  // auto toyDataHist = std::unique_ptr<RooDataHist>(
+  //     toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
+  auto toyDataHist = toyDataSet->binnedClone("toyDataHist", "toyDataHist");
 
-  auto toyDataHist = std::unique_ptr<RooDataHist>(
-      toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
-
-  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+  // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist/* .get() */);
 
   // ShiftN_Dst0h(daughtersVec, neutralVec, id);
 
@@ -391,6 +384,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   // Label plots to indicate Toy
   std::string lumiString = "TOY";
   for (auto &p : pdfs) {
+    std::cout << "Plotting " << p->addPdf().GetName() << "\n";;
     Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
                fitBool, lumiString, result.get());
   }
@@ -843,6 +837,7 @@ int main(int argc, char **argv) {
   //
   // } else {
     if (toys == Toys::single) {
+      std::cout << "Running single toy\n";
       RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
                    outputDir, fitBool);
     } else if (toys == Toys::many) {

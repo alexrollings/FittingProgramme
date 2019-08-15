@@ -126,7 +126,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
     // Adding the categories to RooArgSet added a pointer to the value's memory
     // address. Therefore changing their values changes changes what is stored
     // in catArgSet.
-    categories.charge.setLabel(EnumToString(charge).c_str());
+    categories.chargeCat.setLabel(EnumToString(charge).c_str());
     categories.fitting.setLabel(ComposeFittingName(neutral, bachelor, daughters, charge).c_str());
 
     // Add category labels to 'extra' data set
@@ -139,7 +139,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   inputDataSet.merge(&extraDataSet);
 
   RooDataSet *plusDataSet =
-      dynamic_cast<RooDataSet *>(inputDataSet.reduce("charge==charge::plus"));
+      dynamic_cast<RooDataSet *>(inputDataSet.reduce("chargeCat==chargeCat::plus"));
 
   RooDataSet *reducedPlusDataSet = dynamic_cast<RooDataSet *>(plusDataSet->reduce(config.fullArgSet()));
   std::cout << "PlusDataSet contains variables: ";
@@ -157,7 +157,7 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
   dsPlusFile.Close();
 
   RooDataSet *minusDataSet = dynamic_cast<RooDataSet *>(
-      inputDataSet.reduce("charge==charge::minus"));
+      inputDataSet.reduce("chargeCat==chargeCat::minus"));
   //  Charge in the formula it corresponds to the string we have in the
   //  constructor of Categories as RooFit only knows the strings you've given it
   RooDataSet *reducedMinusDataSet =

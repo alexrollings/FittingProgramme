@@ -23,7 +23,7 @@ class Configuration {
   // What about categories???
   struct Categories {
     RooCategory fitting;
-    RooCategory charge;
+    RooCategory chargeCat;
     Categories();
     Categories(Categories const &) = delete;
     Categories(Categories &&) = delete;
