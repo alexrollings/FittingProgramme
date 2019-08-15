@@ -137,23 +137,14 @@ Configuration::Configuration()
   variableArgSet_.add(hAngle_);
   variableArgSet_.add(d0FdSig_);
 
-  categoryArgSet_.add(categories().fitting);
-  categoryArgSet_.add(categories().chargeCat);
-
   fullArgSet_.add(variableArgSet_);
-  fullArgSet_.add(categoryArgSet_);
 
   fittingArgSet_.add(buDeltaMass_);
   fittingArgSet_.add(deltaMass_);
 }
 // Categories is a class within a class !!!
 Configuration::Categories::Categories()
-    : fitting("fitting", "fitting"),
-      chargeCat("chargeCat", "chargeCat") {
-
-  chargeCat.defineType("plus");
-  chargeCat.defineType("minus");
-  chargeCat.defineType("total");
+    : fitting("fitting", "fitting") {
 
   fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                         Daughters::kpi, Charge::total)

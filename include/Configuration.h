@@ -23,7 +23,6 @@ class Configuration {
   // What about categories???
   struct Categories {
     RooCategory fitting;
-    RooCategory chargeCat;
     Categories();
     Categories(Categories const &) = delete;
     Categories(Categories &&) = delete;
@@ -49,7 +48,6 @@ class Configuration {
   RooRealVar &d0FdSig() { return d0FdSig_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &fittingArgSet() { return fittingArgSet_; }
-  RooArgSet &categoryArgSet() { return categoryArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
   double &buFitMin() { return buFitMin_; }
   double &buFitMax() { return buFitMax_; }
@@ -84,7 +82,6 @@ class Configuration {
   RooRealVar d0FdSig_;
   RooArgSet variableArgSet_;
   RooArgSet fittingArgSet_;
-  RooArgSet categoryArgSet_;
   RooArgSet fullArgSet_;
   double buFitMin_;
   double buFitMax_;

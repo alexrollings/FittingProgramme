@@ -693,73 +693,120 @@ int main(int argc, char **argv) {
                   } else {
                     std::cout << "inputDataSet extracted... \n";
                     inputDataSet->Print();
-                    RooDataSet *reducedInputDataSet_2 = nullptr;
+                    RooDataSet *reducedInputDataSet_n = nullptr;
                     if (n == Neutral::pi0) {
-                      reducedInputDataSet_2 =
+                      reducedInputDataSet_n =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "Bu_M_DTF>5050&&Bu_M_DTF<5800&&Delta_M>50&&Delta_"
-                              "M<210&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
+                              "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>135&&"
+                              "Delta_"
+                              "M<190&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
                               "110"));
                     } else {
-                      reducedInputDataSet_2 =
+                      reducedInputDataSet_n =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "BDT2>0.05&&BDT2>0.05"));
+                              "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>135&&"
+                              "Delta_"
+                              "M<190&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
+                              "110"));
                     }
-                    RooDataSet *reducedInputDataSet_1 = nullptr;
-                    if (b == Bachelor::pi) {
-                      reducedInputDataSet_1 =
-                          dynamic_cast<RooDataSet *>(reducedInputDataSet_2->reduce(
-                              "bach_PIDK<12"));
-                    } else {
-                      reducedInputDataSet_1 =
-                          dynamic_cast<RooDataSet *>(reducedInputDataSet_2->reduce(
-                              "bach_PIDK>12"));
-                    }
-                    if (reducedInputDataSet_1 == nullptr) {
+                    if (reducedInputDataSet_n == nullptr) {
                       throw std::runtime_error(
-                          "Could not reduce input dataset.");
+                          "Could not reduce input w/ neutral cuts dataset.");
                     }
-                    reducedInputDataSet_1->Print();
-                    RooDataSet *reducedInputDataSet = nullptr;
+                    RooDataSet *reducedInputDataSet_b = nullptr;
+                    if (b == Bachelor::pi) {
+                      reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_n->reduce("bach_PIDK<12"));
+                    } else {
+                      reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_n->reduce("bach_PIDK>12"));
+                    }
+                    if (reducedInputDataSet_b == nullptr) {
+                      throw std::runtime_error(
+                          "Could not reduce input dataset w/ bachelor cuts.");
+                    }
+                    RooDataSet *reducedInputDataSet_d = nullptr;
                     if (d == Daughters::kpi || d == Daughters::pik) {
-                      reducedInputDataSet = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_1->reduce(
+                      reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_b->reduce(
                               "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
                               "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
                               "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
                     } else if (d == Daughters::kk) {
-                      reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
+                      reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_b->reduce(
                               "h1_D_PIDK>2&&h2_D_PIDK>2"));
                     } else {
-                      reducedInputDataSet =
-                          dynamic_cast<RooDataSet *>(reducedInputDataSet_1->reduce(
+                      reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_b->reduce(
                               "h1_D_PIDK<-2&&h2_D_PIDK<-2"));
                     }
-                    if (reducedInputDataSet == nullptr) {
+                    if (reducedInputDataSet_d == nullptr) {
                       throw std::runtime_error(
-                          "Could not reduce input dataset.");
+                          "Could not reduce input dataset w/ daughter cuts.");
                     }
-                    reducedInputDataSet->Print();
+                    // ALSO APPLY BOX CUTS HERE
+                    RooDataSet *buDeltaInputDataSet = nullptr;
+                    buDeltaInputDataSet = dynamic_cast<RooDataSet *>(
+                        reducedInputDataSet_d->reduce(config.buDeltaMass()));
+                    if (buDeltaInputDataSet == nullptr) {
+                      throw std::runtime_error(
+                          "Could not reduce dataset down to buDeltaMass.");
+                    }
+                    RooDataSet *deltaInputDataSet = nullptr;
+                    deltaInputDataSet = dynamic_cast<RooDataSet *>(
+                        reducedInputDataSet_d->reduce(config.deltaMass()));
+                    if (deltaInputDataSet == nullptr) {
+                      throw std::runtime_error(
+                          "Could not reduce dataset down to deltaMass.");
+                    }
                     // Need to append each year, polarity to dataset at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
                     if (mapCategoryDataset.find(ComposeFittingName(
-                            n, b, d, c)) == mapCategoryDataset.end()) {
+                            Mass::buDelta, n, b, d, c)) == mapCategoryDataset.end()) {
                       mapCategoryDataset.insert(std::make_pair(
-                          ComposeFittingName(n, b, d, c), reducedInputDataSet));
-                      std::cout << "Created key-value pair for category " +
-                                       ComposeFittingName(n, b, d, c) +
-                                       " and "
-                                       "dataset " +
-                                       EnumToString(y) + "_" + EnumToString(p) +
-                                       ".\n";
+                          ComposeFittingName(Mass::buDelta, n, b, d, c),
+                          buDeltaInputDataSet));
+                      std::cout
+                          << "Created key-value pair for category " +
+                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
+                                 " and "
+                                 "dataset " +
+                                 EnumToString(y) + "_" + EnumToString(p) +
+                                 ".\n";
                     } else {
-                      mapCategoryDataset[ComposeFittingName(n, b, d, c)]
-                          ->append(*reducedInputDataSet);
-                      std::cout << "Appended dataset " + EnumToString(y) +
-                                       "_" + EnumToString(p) +
-                                       "to category " +
-                                       ComposeFittingName(n, b, d, c) + ".\n";
+                      mapCategoryDataset[ComposeFittingName(Mass::buDelta, n, b,
+                                                            d, c)]
+                          ->append(*buDeltaInputDataSet);
+                      std::cout
+                          << "Appended dataset " + EnumToString(Mass::buDelta) +
+                                 EnumToString(y) + "_" + EnumToString(p) +
+                                 "to category " +
+                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
+                                 ".\n";
+                    }
+                    if (mapCategoryDataset.find(ComposeFittingName(
+                            Mass::delta, n, b, d, c)) == mapCategoryDataset.end()) {
+                      mapCategoryDataset.insert(std::make_pair(
+                          ComposeFittingName(Mass::delta, n, b, d, c),
+                          deltaInputDataSet));
+                      std::cout
+                          << "Created key-value pair for category " +
+                                 ComposeFittingName(Mass::delta, n, b, d, c) +
+                                 " and "
+                                 "dataset " +
+                                 EnumToString(y) + "_" + EnumToString(p) +
+                                 ".\n";
+                    } else {
+                      mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
+                                                            d, c)]
+                          ->append(*deltaInputDataSet);
+                      std::cout
+                          << "Appended dataset " + EnumToString(Mass::delta) +
+                                 EnumToString(y) + "_" + EnumToString(p) +
+                                 "to category " +
+                                 ComposeFittingName(Mass::delta, n, b, d, c) +
+                                 ".\n";
                     }
                   }
                 }
