@@ -69,7 +69,9 @@ if __name__ == "__main__":
     if not os.path.exists(plots_dir):
         os.mkdir(plots_dir)
     # print("./PlotToys " + ",".join(file_list))
-    # print(file_list)
-    subprocess.call([
-        "./PlotToys", ",".join(file_list), output_dir
-    ])
+    if len(file_list) != 0:
+        subprocess.call([
+            "./PlotToys", ",".join(file_list), output_dir
+        ])
+    else:
+        sys.exit("File list empty")
