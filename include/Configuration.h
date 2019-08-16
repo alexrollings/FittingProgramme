@@ -76,6 +76,9 @@ class Configuration {
   void SetBuDeltaLow(int val) { buDeltaLow() = val; }
   void SetBuDeltaHigh(int val) { buDeltaHigh() = val; }
 
+  std::string &gammaCutString() { return gammaCutString_; }
+  std::string &pi0CutString() { return pi0CutString_; }
+
   RooConstVar &pidEff() { return pidEff_; }
 
  private:
@@ -114,6 +117,8 @@ class Configuration {
   int deltaHigh_;
   int buDeltaLow_;
   int buDeltaHigh_;
+  std::string gammaCutString_;
+  std::string pi0CutString_;
   
   RooConstVar pidEff_;
 };

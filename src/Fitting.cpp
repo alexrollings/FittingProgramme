@@ -216,6 +216,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Charge charge = pdf.charge();
   Mass mass = pdf.mass();
 
+  if (charge == Charge::plus) {
+    std::cout << "plus\n";
+  } else if (charge == Charge::minus) {
+    std::cout << "minus\n";
+  } else {
+    std::cout << "total\n";
+  }
+
   TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(
@@ -809,17 +817,10 @@ int main(int argc, char **argv) {
                     if (n == Neutral::pi0) {
                       reducedInputDataSet_n =
                           dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>135&&"
-                              "Delta_"
-                              "M<190&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
-                              "110"));
+                              config.gammaCutString().c_str()));
                     } else {
-                      reducedInputDataSet_n =
-                          dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                              "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&"
-                              "Delta_"
-                              "M<190&&BDT1>0.05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>"
-                              "110"));
+                      reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
+                          inputDataSet->reduce(config.pi0CutString().c_str()));
                     }
                     if (reducedInputDataSet_n == nullptr) {
                       throw std::runtime_error(
