@@ -123,6 +123,19 @@ class NeutralVars {
   RooRealVar &ratioKpi_Bu2Dst0h_Dst02D0gamma() {
     return ratioKpi_Bu2Dst0h_Dst02D0gamma_;
   }
+  RooConstVar &orEffBu2Dst0h_Dst02D0gamma() {
+    return orEffBu2Dst0h_Dst02D0gamma_;
+  }
+  RooConstVar &boxEffBu2Dst0h_Dst02D0gamma() {
+    return boxEffBu2Dst0h_Dst02D0gamma_;
+  }
+  RooConstVar &buDeltaCutEffBu2Dst0h_Dst02D0gamma() {
+    return buDeltaCutEffBu2Dst0h_Dst02D0gamma_;
+  }
+  RooConstVar &deltaCutEffBu2Dst0h_Dst02D0gamma() {
+    return deltaCutEffBu2Dst0h_Dst02D0gamma_;
+  }
+
 
  private:
   // Indicate if only used by one neutral
@@ -146,13 +159,21 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0gamma_n1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfBu_;
   RooRealVar ratioKpi_Bu2Dst0h_Dst02D0gamma_;
+  RooConstVar orEffBu2Dst0h_Dst02D0gamma_; 
+  RooConstVar boxEffBu2Dst0h_Dst02D0gamma_; 
+  RooConstVar buDeltaCutEffBu2Dst0h_Dst02D0gamma_; 
+  RooConstVar deltaCutEffBu2Dst0h_Dst02D0gamma_; 
 };
+
+// Function to be called in constructor of NVars, in order to construct
+// efficiency RCVars
+void SetEfficiencies(Mode mode, RooConstVar &orEff, RooConstVar &boxEff,
+                     RooConstVar &buDeltaCutEff, RooConstVar &deltaCutEff);
 
 // When we DO need to specialize certain cases, we can still do that (see
 // below)..g.
 // Now we just need to define the constructors separately so the values are
 // different
-
 // ...by telling it exactly which specializations we are providing:
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId);

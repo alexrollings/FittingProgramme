@@ -216,14 +216,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Charge charge = pdf.charge();
   Mass mass = pdf.mass();
 
-  if (charge == Charge::plus) {
-    std::cout << "plus\n";
-  } else if (charge == Charge::minus) {
-    std::cout << "minus\n";
-  } else {
-    std::cout << "total\n";
-  }
-
   TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(

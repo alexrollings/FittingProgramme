@@ -1,6 +1,15 @@
 #include "GlobalVars.h"
 #include "NeutralVars.h"
 
+void SetEfficiencies(Mode mode, RooConstVar &orEff, RooConstVar &boxEff,
+                     RooConstVar &buDeltaCutEff, RooConstVar &deltaCutEff) {
+  std::cout << "For " << EnumToString(mode) << ":\n"
+            << "\t orEff = " << orEff.getVal() << "\n"
+            << "\t boxEff = " << boxEff.getVal() << "\n"
+            << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+            << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+}
+
 // Neutral specialisations
 // Constructor followed by : ... { is an initialisation list, can also but in
 // body of constructor (except for RooFit as RooFit uses singleton classes,
@@ -32,20 +41,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),
                                      "", 7.8408e+00),
-      pdf1Delta_Bu2Dst0h_Dst02D0gamma_(
-          ("pdf1Delta_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          Bu2Dst0h_Dst02D0gamma_meanDelta_, Bu2Dst0h_Dst02D0gamma_sigmaDelta_,
-          Bu2Dst0h_Dst02D0gamma_a1Delta_, Bu2Dst0h_Dst02D0gamma_n1Delta_),
-      pdf2Delta_Bu2Dst0h_Dst02D0gamma_(
-          ("pdf2Delta_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          Bu2Dst0h_Dst02D0gamma_meanDelta_, Bu2Dst0h_Dst02D0gamma_sigmaDelta_,
-          Bu2Dst0h_Dst02D0gamma_a2Delta_, Bu2Dst0h_Dst02D0gamma_n2Delta_),
+      pdf1Delta_Bu2Dst0h_Dst02D0gamma_(("pdf1Delta_Bu2Dst0h_Dst02D0gamma_" +
+                                        ComposeName(uniqueId, Neutral::gamma))
+                                           .c_str(),
+                                       "", Configuration::Get().deltaMass(),
+                                       Bu2Dst0h_Dst02D0gamma_meanDelta_,
+                                       Bu2Dst0h_Dst02D0gamma_sigmaDelta_,
+                                       Bu2Dst0h_Dst02D0gamma_a1Delta_,
+                                       Bu2Dst0h_Dst02D0gamma_n1Delta_),
+      pdf2Delta_Bu2Dst0h_Dst02D0gamma_(("pdf2Delta_Bu2Dst0h_Dst02D0gamma_" +
+                                        ComposeName(uniqueId, Neutral::gamma))
+                                           .c_str(),
+                                       "", Configuration::Get().deltaMass(),
+                                       Bu2Dst0h_Dst02D0gamma_meanDelta_,
+                                       Bu2Dst0h_Dst02D0gamma_sigmaDelta_,
+                                       Bu2Dst0h_Dst02D0gamma_a2Delta_,
+                                       Bu2Dst0h_Dst02D0gamma_n2Delta_),
       Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_(
           ("Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_" +
            ComposeName(uniqueId, Neutral::gamma))
@@ -55,9 +66,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("pdfDelta_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "",
-          RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0gamma_,
-                     pdf2Delta_Bu2Dst0h_Dst02D0gamma_),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_Dst02D0gamma_,
+                         pdf2Delta_Bu2Dst0h_Dst02D0gamma_),
           Bu2Dst0h_Dst02D0gamma_frac1PdfDelta_),
       Bu2Dst0h_Dst02D0gamma_meanBu_(("Bu2Dst0h_Dst02D0gamma_meanBu_" +
                                      ComposeName(uniqueId, Neutral::gamma))
@@ -91,4 +101,26 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       ratioKpi_Bu2Dst0h_Dst02D0gamma_(("ratioKpi_Bu2Dst0h_Dst02D0gamma_" +
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),
-                                      "", 0.07930, -1, 1) {}
+                                      "", 0.07930, -1, 1),
+      orEffBu2Dst0h_Dst02D0gamma_(("orEffBu2Dst0h_Dst02D0gamma_" +
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  "", 1),
+      boxEffBu2Dst0h_Dst02D0gamma_(("boxEffBu2Dst0h_Dst02D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 1),
+      buDeltaCutEffBu2Dst0h_Dst02D0gamma_(
+          ("buDeltaCutEffBu2Dst0h_Dst02D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "", 1),
+      deltaCutEffBu2Dst0h_Dst02D0gamma_(("deltaCutEffBu2Dst0h_Dst02D0gamma_" +
+                                         ComposeName(uniqueId, Neutral::gamma))
+                                            .c_str(),
+                                        "", 1) {
+  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_Dst02D0gamma_,
+                  boxEffBu2Dst0h_Dst02D0gamma_,
+                  buDeltaCutEffBu2Dst0h_Dst02D0gamma_,
+                  deltaCutEffBu2Dst0h_Dst02D0gamma_);
+}
