@@ -54,11 +54,17 @@ class Configuration {
   double &buFitBins() { return buFitBins_; }
   double &deltaFitMin() { return deltaFitMin_; }
   double &deltaFitMax() { return deltaFitMax_; }
-  int deltaLow() { return deltaLow_; }
-  int deltaHigh() { return deltaHigh_; }
-  int buDeltaLow() { return buDeltaLow_; }
-  int buDeltaHigh() { return buDeltaHigh_; }
-  
+
+  int &deltaLow() { return deltaLow_; }
+  int &deltaHigh() { return deltaHigh_; }
+  int &buDeltaLow() { return buDeltaLow_; }
+  int &buDeltaHigh() { return buDeltaHigh_; }
+
+  void SetDeltaLow(int val) { deltaLow() = val; }
+  void SetDeltaHigh(int val) { deltaHigh() = val; }
+  void SetBuDeltaLow(int val) { buDeltaLow() = val; }
+  void SetBuDeltaHigh(int val) { buDeltaHigh() = val; }
+
   RooConstVar &pidEff() { return pidEff_; }
 
  private:
@@ -125,4 +131,3 @@ std::string ComposeFilename(Year year, Polarity polarity,
                             Daughters daughters, Charge charge);
 
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
-
