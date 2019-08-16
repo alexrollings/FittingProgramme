@@ -12,6 +12,17 @@ enum class Year { y2011, y2012, y2015, y2016, y2017, y2018 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus, total };
 enum class Mass { buDelta, delta };
+enum class Mode {
+  Bd2Dstpi,
+  Bu2D0pi,
+  Bu2D0rho,
+  Bu2Dst0pi_D0gamma,
+  Bu2Dst0pi_D0gamma_WN,
+  Bu2Dst0pi_D0pi0,
+  Bu2Dst0pi_D0pi0_WN,
+  Bu2Dst0rho_D0gamma,
+  Bu2Dst0rho_D0pi0
+};
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {
@@ -117,6 +128,7 @@ std::string EnumToString(Year);
 std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
 std::string EnumToString(Mass);
+std::string EnumToString(Mode);
 
 std::string EnumToLabel(Charge);
 std::string EnumToLabel(Daughters, Charge);

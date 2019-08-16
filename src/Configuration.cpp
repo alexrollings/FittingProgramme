@@ -604,6 +604,32 @@ std::string EnumToString(Mass mass) {
   }
 }
 
+std::string EnumToString(Mode mode) {
+  switch (mode) {
+    case Mode::Bd2Dstpi:
+      return "Bd2Dstpi";
+      break;
+    case Mode::Bu2D0pi:
+      return "Bu2D0pi";
+      break;
+    case Mode::Bu2D0rho:
+      return "Bu2D0rho";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma:
+      return "Bu2Dst0pi_D0gamma";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma_WN:
+      return "Bu2Dst0pi_D0gamma_WN";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0:
+      return "Bu2Dst0pi_D0pi0";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0_WN:
+      return "Bu2Dst0pi_D0pi0_WN";
+      break;
+  }
+}
+
 std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
                             Neutral neutral, Daughters daughters,
                             Charge charge) {
