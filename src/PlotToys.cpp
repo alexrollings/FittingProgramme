@@ -216,8 +216,8 @@ int main(int argc, char *argv[]) {
   for (auto &filename : resultFiles) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp(
-        // ".+_([0-9].[0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+).root");
-        ".+_([0-9].[0-9]+).root");
+        ".+_([0-9].[0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+).root");
+        // ".+_([0-9].[0-9]+).root");
     std::smatch fileMatch;
     std::regex_search(filename, fileMatch, fileRexp);
     std::string rndm = fileMatch[1];
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
     // buLow = fileMatch[4];
     // buHigh = fileMatch[5];
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
-        file->FindObjectAny(("Result" + rndm).c_str())));
+        file->FindObjectAny(("Result_" + rndm).c_str())));
     if (result == nullptr) {
       throw std::runtime_error("Could not extract Result from " + filename);
     } else {

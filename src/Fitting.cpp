@@ -195,7 +195,10 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
                  ComposeName(id, mass, neutral, bachelor, daughters, charge) +
-                 ".pdf")
+                 "_" + std::to_string(config.deltaLow()) + "_" +
+                 std::to_string(config.deltaHigh()) + "_" +
+                 std::to_string(config.buDeltaLow()) + "_" +
+                 std::to_string(config.buDeltaHigh()) + ".pdf")
                     .c_str());
 }
 
@@ -286,7 +289,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
 }
 
-void PlotCorrelations(RooFitResult *result, std::string const &outputDir) {
+void PlotCorrelations(RooFitResult *result, std::string const &outputDir, Configuration &config) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -300,7 +303,12 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir) {
   gPad->SetTopMargin(0.05);
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix.pdf").c_str());
+  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix_" + "_" +
+                     std::to_string(config.deltaLow()) + "_" +
+                     std::to_string(config.deltaHigh()) + "_" +
+                     std::to_string(config.buDeltaLow()) + "_" +
+                     std::to_string(config.buDeltaHigh()) + ".pdf")
+                        .c_str());
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -456,7 +464,7 @@ void RunSingleToy(Configuration &config, Configuration::Categories &categories,
   }
   if (fitBool == true) {
     result->Print("v");
-    PlotCorrelations(result.get(), outputDir);
+    PlotCorrelations(result.get(), outputDir, config);
   }
 }
 
@@ -476,10 +484,14 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     TRandom3 random(0);
     double randomTag = random.Rndm();
 
-    TFile outputFile((outputDir + "/results/ResultFile_" +
-                      std::to_string(randomTag) + ".root")
-                         .c_str(),
-                     "recreate");
+    TFile outputFile(
+        (outputDir + "/results/Result_" + std::to_string(randomTag) +
+         "_" + std::to_string(config.deltaLow()) + "_" +
+         std::to_string(config.deltaHigh()) + "_" +
+         std::to_string(config.buDeltaLow()) + "_" +
+         std::to_string(config.buDeltaHigh()) + ".pdf")
+            .c_str(),
+        "recreate");
 
     std::cout << "\n\n -------------------------- Running toy #" << id + 1
               << " -------------------------- \n\n";
@@ -516,7 +528,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     result->Print("v");
 
     outputFile.cd();
-    result->SetName(("Result" + std::to_string(randomTag)).c_str());
+    result->SetName(("Result_" + std::to_string(randomTag)).c_str());
     result->Print("v");
     result->Write();
     outputFile.Close();
@@ -970,7 +982,7 @@ int main(int argc, char **argv) {
 
     if (fitBool == true) {
       result->Print("v");
-      PlotCorrelations(result.get(), outputDir);
+      PlotCorrelations(result.get(), outputDir, config);
     }
 
   } else if (nToys == 1) {
