@@ -137,6 +137,9 @@ class NeutralVars {
   RooRealVar &deltaCutEffBu2Dst0h_Dst02D0gamma() {
     return deltaCutEffBu2Dst0h_Dst02D0gamma_;
   }
+  double &initFAVSignalYield() {
+    return initFAVSignalYield_;
+  }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -167,6 +170,7 @@ class NeutralVars {
   RooRealVar boxEffBu2Dst0h_Dst02D0gamma_;
   RooRealVar buDeltaCutEffBu2Dst0h_Dst02D0gamma_;
   RooRealVar deltaCutEffBu2Dst0h_Dst02D0gamma_;
+  double initFAVSignalYield_;
 };
 
 // Function to be called in constructor of NVars, in order to construct

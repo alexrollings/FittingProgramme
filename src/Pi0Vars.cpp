@@ -91,7 +91,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       ratioKpi_Bu2Dst0h_Dst02D0gamma_(("ratioKpi_Bu2Dst0h_Dst02D0gamma_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
-                                      "", 0.07930) {
+                                      "", 0.07930),
+      initFAVSignalYield_(("initFAVSignalYield_" +
+                           ComposeName(uniqueId, Neutral::pi0))
+                              .c_str(),
+                          "", 5.1958e+04) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_Dst02D0gamma_,
                   boxEffBu2Dst0h_Dst02D0gamma_,
                   buDeltaCutEffBu2Dst0h_Dst02D0gamma_,
