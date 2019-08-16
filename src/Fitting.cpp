@@ -562,6 +562,7 @@ int main(int argc, char **argv) {
 
   bool fitBool = false;
   int nToys = 0;
+  Configuration &config = Configuration::Get();
 
   // By letting the ParseArguments object go out of scope it will print a
   // warning if the user specified any unknown options.
@@ -578,6 +579,10 @@ int main(int argc, char **argv) {
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
     int toysArg = 0;
+    int deltaLowArg = 0;
+    int deltaHighArg = 0;
+    int buDeltaLowArg = 0;
+    int buDeltaHighArg = 0;
 
     // We always want to simultaneously fir the pi AND k bachelor modes
     // together
@@ -590,6 +595,8 @@ int main(int argc, char **argv) {
                 << "\n";
       std::cout << "-outputDir=<output directory> \n"
                 << "\n";
+      std::cout << "Give box dimensions:\n"
+                << "    -dl=#, -dh=#, -bl=#, -bh=#\n";
       std::cout << "Followed by the possible options:\n";
       std::cout << "\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
@@ -616,6 +623,47 @@ int main(int argc, char **argv) {
 
       return 1;
     } else {
+      if (!args("bl", buDeltaLowArg)) {
+        std::cout
+            << "Using default value for lower buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaLow()) + "\n";
+      } else {
+        config.SetBuDeltaLow(buDeltaLowArg);
+        std::cout
+            << "Set value for lower buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaLow()) + "\n";
+      }
+      if (!args("bh", buDeltaHighArg)) {
+        std::cout
+            << "Using default value for upper buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaHigh()) + "\n";
+      } else {
+        config.SetBuDeltaHigh(buDeltaHighArg);
+        std::cout
+            << "Set value for upper buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaHigh()) + "\n";
+      }
+      if (!args("dl", deltaLowArg)) {
+        std::cout
+            << "Using default value for lower delta mass box threshold: " +
+                   std::to_string(config.deltaLow()) + "\n";
+      } else {
+        config.SetDeltaLow(deltaLowArg);
+        std::cout
+            << "Set value for lower delta mass box threshold: " +
+                   std::to_string(config.deltaLow()) + "\n";
+      }
+      if (!args("dh", deltaHighArg)) {
+        std::cout
+            << "Using default value for upper delta mass box threshold: " +
+                   std::to_string(config.deltaHigh()) + "\n";
+      } else {
+        config.SetDeltaHigh(deltaHighArg);
+        std::cout
+            << "Set value for upper delta mass box threshold: " +
+                   std::to_string(config.deltaHigh()) + "\n";
+      }
+
       if (!args("toys", toysArg)) {
         std::cout << "Running data fit.\n";
       } else {
@@ -696,7 +744,6 @@ int main(int argc, char **argv) {
     }
   }
 
-  Configuration &config = Configuration::Get();
   Configuration::Categories &categories = Configuration::Get().categories();
 
   // Raise lower mass boundary in delta mass for pi0 plots
@@ -809,14 +856,22 @@ int main(int argc, char **argv) {
                     // ALSO APPLY BOX CUTS HERE
                     RooDataSet *buDeltaInputDataSet = nullptr;
                     buDeltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(config.buDeltaMass()));
+                        reducedInputDataSet_d->reduce(config.buDeltaMass(),
+                            ("Delta_M>" + std::to_string(config.deltaLow()) +
+                             "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                                .c_str()));
                     if (buDeltaInputDataSet == nullptr) {
                       throw std::runtime_error(
                           "Could not reduce dataset down to buDeltaMass.");
                     }
                     RooDataSet *deltaInputDataSet = nullptr;
                     deltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(config.deltaMass()));
+                        reducedInputDataSet_d->reduce(config.deltaMass(),
+                            ("Bu_Delta_M>" +
+                             std::to_string(config.buDeltaLow()) +
+                             "&&Bu_Delta_M<" +
+                             std::to_string(config.buDeltaHigh()))
+                                .c_str()));
                     if (deltaInputDataSet == nullptr) {
                       throw std::runtime_error(
                           "Could not reduce dataset down to deltaMass.");
