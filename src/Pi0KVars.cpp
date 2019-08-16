@@ -27,8 +27,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_meanBu(),
           *Bu2Dst0h_Dst02D0gamma_sigmaBu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0gamma_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0gamma_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_n1Bu()),
       pdf2Bu_Bu2Dst0h_Dst02D0gamma_(
@@ -39,19 +38,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_meanBu(),
           *Bu2Dst0h_Dst02D0gamma_sigmaBu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0gamma_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_Dst02D0gamma_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_Dst02D0gamma_n2Bu()),
-      pdfBu_Bu2Dst0h_Dst02D0gamma_(
-          ("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "",
-          RooArgSet(pdf1Bu_Bu2Dst0h_Dst02D0gamma_,
-                    pdf2Bu_Bu2Dst0h_Dst02D0gamma_),
-          NeutralVars<Neutral::pi0>::Get(uniqueId)
-              .Bu2Dst0h_Dst02D0gamma_frac1PdfBu()),
+      pdfBu_Bu2Dst0h_Dst02D0gamma_(("pdfBu_Bu2Dst0h_Dst02D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::pi0,
+                                                Bachelor::k))
+                                       .c_str(),
+                                   "", RooArgSet(pdf1Bu_Bu2Dst0h_Dst02D0gamma_,
+                                                 pdf2Bu_Bu2Dst0h_Dst02D0gamma_),
+                                   NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                       .Bu2Dst0h_Dst02D0gamma_frac1PdfBu()),
       N_Delta_Bu2Dst0h_Dst02D0gamma_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -66,9 +63,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("N_Bu_Bu2Dst0h_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", "@0*@1",
+          "", "@0*@1*@2",
           RooArgSet(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                   .N_Bu_Bu2Dst0h_Dst02D0gamma(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .ratioKpi_Bu2Dst0h_Dst02D0gamma()))) {}
+                  .ratioKpi_Bu2Dst0h_Dst02D0gamma(),
+              Configuration::Get().pidEff()))) {}
