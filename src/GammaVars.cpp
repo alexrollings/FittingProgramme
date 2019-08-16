@@ -1,15 +1,6 @@
 #include "GlobalVars.h"
 #include "NeutralVars.h"
 
-void SetEfficiencies(Mode mode, RooConstVar &orEff, RooConstVar &boxEff,
-                     RooConstVar &buDeltaCutEff, RooConstVar &deltaCutEff) {
-  std::cout << "For " << EnumToString(mode) << ":\n"
-            << "\t orEff = " << orEff.getVal() << "\n"
-            << "\t boxEff = " << boxEff.getVal() << "\n"
-            << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-            << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
-}
-
 // Neutral specialisations
 // Constructor followed by : ... { is an initialisation list, can also but in
 // body of constructor (except for RooFit as RooFit uses singleton classes,

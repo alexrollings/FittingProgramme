@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "Configuration.h"
 #include "GlobalVars.h"
 #include "RooAddPdf.h"
@@ -11,6 +12,7 @@
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
 #include "RooRealVar.h"
+#include "TChain.h"
 
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -123,19 +125,21 @@ class NeutralVars {
   RooRealVar &ratioKpi_Bu2Dst0h_Dst02D0gamma() {
     return ratioKpi_Bu2Dst0h_Dst02D0gamma_;
   }
-  RooConstVar &orEffBu2Dst0h_Dst02D0gamma() {
+  RooRealVar &orEffBu2Dst0h_Dst02D0gamma() {
     return orEffBu2Dst0h_Dst02D0gamma_;
   }
-  RooConstVar &boxEffBu2Dst0h_Dst02D0gamma() {
+  RooRealVar &boxEffBu2Dst0h_Dst02D0gamma() {
     return boxEffBu2Dst0h_Dst02D0gamma_;
   }
-  RooConstVar &buDeltaCutEffBu2Dst0h_Dst02D0gamma() {
+  RooRealVar &buDeltaCutEffBu2Dst0h_Dst02D0gamma() {
     return buDeltaCutEffBu2Dst0h_Dst02D0gamma_;
   }
-  RooConstVar &deltaCutEffBu2Dst0h_Dst02D0gamma() {
+  RooRealVar &deltaCutEffBu2Dst0h_Dst02D0gamma() {
     return deltaCutEffBu2Dst0h_Dst02D0gamma_;
   }
 
+  void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
+                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
 
  private:
   // Indicate if only used by one neutral
@@ -159,16 +163,144 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_Dst02D0gamma_n1Bu_;
   RooRealVar Bu2Dst0h_Dst02D0gamma_frac1PdfBu_;
   RooRealVar ratioKpi_Bu2Dst0h_Dst02D0gamma_;
-  RooConstVar orEffBu2Dst0h_Dst02D0gamma_; 
-  RooConstVar boxEffBu2Dst0h_Dst02D0gamma_; 
-  RooConstVar buDeltaCutEffBu2Dst0h_Dst02D0gamma_; 
-  RooConstVar deltaCutEffBu2Dst0h_Dst02D0gamma_; 
+  RooRealVar orEffBu2Dst0h_Dst02D0gamma_;
+  RooRealVar boxEffBu2Dst0h_Dst02D0gamma_;
+  RooRealVar buDeltaCutEffBu2Dst0h_Dst02D0gamma_;
+  RooRealVar deltaCutEffBu2Dst0h_Dst02D0gamma_;
 };
 
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
-void SetEfficiencies(Mode mode, RooConstVar &orEff, RooConstVar &boxEff,
-                     RooConstVar &buDeltaCutEff, RooConstVar &deltaCutEff);
+// Anything defined outside the class definition needs the scope :: operator
+template <Neutral neutral>
+void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
+                                           RooRealVar &boxEff,
+                                           RooRealVar &buDeltaCutEff,
+                                           RooRealVar &deltaCutEff) {
+  std::string modeString = EnumToString(mode);
+  std::string dirString;
+  std::cout << "Calculating and setting efficiencies for " << modeString
+            << ":\n";
+  if (mode == Mode::Bu2Dst0pi_D0gamma_WN || mode == Mode::Bu2Dst0pi_D0pi0_WN) {
+    // To remove _WN for directory
+    dirString = modeString.substr(0, modeString.size() - 3);
+  } else {
+    dirString = modeString;
+  }
+
+  std::string path;
+  switch (neutral) {
+    case Neutral::gamma:
+      path =
+          "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+          "cross_feed_removed/";
+      break;
+    case Neutral::pi0:
+      path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+      break;
+  }
+
+  std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagUp/" + path + modeString +
+                          "_2011_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagDown/" + path + modeString +
+                          "_2011_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagUp/" + path + modeString +
+                          "_2012_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagDown/" + path + modeString +
+                          "_2012_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagUp/" + path + modeString +
+                          "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagDown/" + path + modeString +
+                          "_2015_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagUp/" + path + modeString +
+                          "_2016_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagDown/" + path + modeString +
+                          "_2016_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string ttree("BtoDstar0h3_h1h2gammaTuple");
+
+  TChain chain(ttree.c_str());
+
+  chain.Add(inputfile_1.c_str());
+  chain.Add(inputfile_2.c_str());
+  chain.Add(inputfile_3.c_str());
+  chain.Add(inputfile_4.c_str());
+  chain.Add(inputfile_5.c_str());
+  chain.Add(inputfile_6.c_str());
+  chain.Add(inputfile_7.c_str());
+  chain.Add(inputfile_8.c_str());
+
+  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
+      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
+    std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                            dirString + "_2015_MagUp/" + path + modeString +
+                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2015_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagUp/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
+    chain.Add(inputfile_9.c_str());
+    chain.Add(inputfile_10.c_str());
+    chain.Add(inputfile_11.c_str());
+    chain.Add(inputfile_12.c_str());
+  }
+
+  std::string dlString = std::to_string(Configuration::Get().deltaLow());
+  std::string dhString = std::to_string(Configuration::Get().deltaHigh());
+  std::string blString = std::to_string(Configuration::Get().buDeltaLow());
+  std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
+  std::string cutString;
+
+  switch (neutral) {
+    case Neutral::gamma:
+      cutString = Configuration::Get().gammaCutString();
+      break;
+    case Neutral::pi0:
+      cutString = Configuration::Get().pi0CutString();
+      break;
+  }
+
+  double nInitial =
+      chain.GetEntries(Configuration::Get().gammaCutString().c_str());
+  double nDeltaCut = chain.GetEntries(
+      (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString).c_str());
+  double nBuDeltaCut = chain.GetEntries(
+      (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+          .c_str());
+  double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+                                  "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+                                  blString + "&&Bu_Delta_M<" + bhString)
+                                     .c_str());
+  double nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                 "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                                 blString + "&&Bu_Delta_M<" + bhString + "))")
+                                    .c_str());
+
+  deltaCutEff.setVal(nDeltaCut / nInitial);
+  buDeltaCutEff.setVal(nBuDeltaCut / nInitial);
+  boxEff.setVal(nBox / nInitial);
+  orEff.setVal(nOr / nInitial);
+
+  std::cout << "\t orEff = " << orEff.getVal() << "\n"
+            << "\t boxEff = " << boxEff.getVal() << "\n"
+            << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+            << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+}
 
 // When we DO need to specialize certain cases, we can still do that (see
 // below)..g.
