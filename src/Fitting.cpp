@@ -82,44 +82,44 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                                   ComposeFittingName(mass, neutral, bachelor,
                                                      daughters, charge))
                                      .c_str()));
-  // simPdf.plotOn(frame.get(),
-  //               RooFit::Slice(categories.fitting,
-  //                             ComposeFittingName(mass, neutral, bachelor,
-  //                                                daughters, charge)
-  //                                 .c_str()),
-  //               RooFit::ProjWData(categories.fitting, fullDataSet),
-  //               RooFit::LineColor(kBlue));
-  //
-  // // Everything to be plotted has to be declared outside of a loop, in the scope
-  // // of the canvas
-  // RooHist *pullHist = nullptr;
-  // std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-  //
-  // pullHist = frame->RooPlot::pullHist();
-  //
-  // if (mass == Mass::buDelta) {
-  //   simPdf.plotOn(
-  //       frame.get(),
-  //       RooFit::Slice(
-  //           categories.fitting,
-  //           ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-  //               .c_str()),
-  //       RooFit::ProjWData(categories.fitting, fullDataSet),
-  //       RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma().GetName()),
-  //       RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-  //       RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-  // } else {
-  //   simPdf.plotOn(
-  //       frame.get(),
-  //       RooFit::Slice(
-  //           categories.fitting,
-  //           ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-  //               .c_str()),
-  //       RooFit::ProjWData(categories.fitting, fullDataSet),
-  //       RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma().GetName()),
-  //       RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-  //       RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-  // }
+  simPdf.plotOn(frame.get(),
+                RooFit::Slice(categories.fitting,
+                              ComposeFittingName(mass, neutral, bachelor,
+                                                 daughters, charge)
+                                  .c_str()),
+                RooFit::ProjWData(categories.fitting, fullDataSet),
+                RooFit::LineColor(kBlue));
+
+  // Everything to be plotted has to be declared outside of a loop, in the scope
+  // of the canvas
+  RooHist *pullHist = nullptr;
+  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+  pullHist = frame->RooPlot::pullHist();
+
+  if (mass == Mass::buDelta) {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+  } else {
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+  }
 
   if (mass == Mass::delta) {
     if (neutral == Neutral::gamma) {
@@ -134,13 +134,13 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                          .c_str());
   }
 
-  // if (fitBool == true) {
-  //   pullFrame->addPlotable(pullHist #<{(| .get() |)}>#, "P");
-  //   pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
-  //                                                  daughters, charge))
-  //                          .c_str());
-  //   pullFrame->SetTitle("");
-  // }
+  if (fitBool == true) {
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
+                                                   daughters, charge))
+                           .c_str());
+    pullFrame->SetTitle("");
+  }
 
   // --------------- plot onto canvas ---------------------
 
@@ -155,33 +155,33 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
       "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
   pad1.Draw();
 
-  // TPad pad2(
-  //     ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
-  // pad2.Draw();
-  //
-  // TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  // zeroLine.SetLineColor(kRed);
-  // zeroLine.SetLineStyle(kDashed);
-  //
-  // if (fitBool == true) {
-  //   // Zero line on error plot.
-  //   // .get() gets the raw pointer from underneath the smart pointer
-  //   // FIX THIS
-  //   // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
-  //
-  //   canvas.cd();
-  //   pad2.cd();
-  //   pullFrame->SetYTitle(" ");
-  //   pullFrame->SetXTitle(" ");
-  //   pullFrame->SetLabelSize(0.2, "Y");
-  //   pullFrame->SetLabelFont(132, "XY");
-  //   pullFrame->SetLabelOffset(100, "X");
-  //   pullFrame->SetTitleOffset(100, "X");
-  //   pullFrame->Draw();
-  //   zeroLine.Draw("same");
-  // }
+  TPad pad2(
+      ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pad2", 0.0, 0.05, 1.0, 0.15, kWhite);
+  pad2.Draw();
+
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
+  if (fitBool == true) {
+    // Zero line on error plot.
+    // .get() gets the raw pointer from underneath the smart pointer
+    // FIX THIS
+    // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
+
+    canvas.cd();
+    pad2.cd();
+    pullFrame->SetYTitle(" ");
+    pullFrame->SetXTitle(" ");
+    pullFrame->SetLabelSize(0.2, "Y");
+    pullFrame->SetLabelFont(132, "XY");
+    pullFrame->SetLabelOffset(100, "X");
+    pullFrame->SetTitleOffset(100, "X");
+    pullFrame->Draw();
+    zeroLine.Draw("same");
+  }
 
   canvas.cd();
   pad1.cd();
@@ -489,7 +489,7 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
          "_" + std::to_string(config.deltaLow()) + "_" +
          std::to_string(config.deltaHigh()) + "_" +
          std::to_string(config.buDeltaLow()) + "_" +
-         std::to_string(config.buDeltaHigh()) + ".pdf")
+         std::to_string(config.buDeltaHigh()) + ".root")
             .c_str(),
         "recreate");
 
@@ -572,7 +572,7 @@ int main(int argc, char **argv) {
   // Still want to load both charges:plus and minus, we just fit with
   // them differently
 
-  bool fitBool = false;
+  bool fitBool = true;
   int nToys = 0;
   Configuration &config = Configuration::Get();
 
@@ -979,7 +979,6 @@ int main(int argc, char **argv) {
     }
 
   } else if (nToys == 1) {
-    std::cout << "Running single toy\n";
     RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
                  outputDir, fitBool);
   } else {
