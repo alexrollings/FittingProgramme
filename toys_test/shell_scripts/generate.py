@@ -108,6 +108,9 @@ if __name__ == "__main__":
     file_list_pi = []
     file_list_K = []
 
+    if n_jobs > 8:
+      sys.exit("Can't use more than 8 cores.")
+
     if dim == "1" :
         print("Generating 1D datasets.")
         if delta_low == "" or delta_high == "" or bu_low == "" or bu_high == "":

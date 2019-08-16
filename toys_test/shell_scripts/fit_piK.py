@@ -109,6 +109,9 @@ if __name__ == "__main__":
     bu_high = args.bu_high
     dim = args.dim
 
+    if n_jobs > 8:
+      sys.exit("Can't use more than 8 cores.")
+
     if dim == "1":
         n_option = "3"
     elif dim == "2":
