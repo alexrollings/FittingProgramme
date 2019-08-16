@@ -64,7 +64,7 @@ if __name__ == "__main__":
     templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate.sh.tmpl"
     scriptList = []
     for i in range(0, n_jobs):
-        scriptPath = os.getcwd() + "generate_" + str(i) + ".sh.tmpl"
+        scriptPath = os.getcwd() + "/generate_" + str(i) + ".sh.tmpl"
         substitutions = {
             "nJob":
             i,
