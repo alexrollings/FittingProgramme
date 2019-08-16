@@ -529,7 +529,6 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
 
     outputFile.cd();
     result->SetName(("Result_" + std::to_string(randomTag)).c_str());
-    result->Print("v");
     result->Write();
     outputFile.Close();
 
