@@ -20,7 +20,7 @@ class Configuration {
     static Configuration singleton;
     return singleton;
   }
-  // What about categories???
+  
   struct Categories {
     RooCategory fitting;
     Categories();
@@ -54,6 +54,10 @@ class Configuration {
   double &buFitBins() { return buFitBins_; }
   double &deltaFitMin() { return deltaFitMin_; }
   double &deltaFitMax() { return deltaFitMax_; }
+  int deltaLow() { return deltaLow_; }
+  int deltaHigh() { return deltaHigh_; }
+  int buDeltaLow() { return buDeltaLow_; }
+  int buDeltaHigh() { return buDeltaHigh_; }
   
   RooConstVar &pidEff() { return pidEff_; }
 
@@ -89,6 +93,10 @@ class Configuration {
   double deltaFitMin_;
   double deltaFitMax_;
   double deltaFitBins_;
+  int deltaLow_;
+  int deltaHigh_;
+  int buDeltaLow_;
+  int buDeltaHigh_;
   
   RooConstVar pidEff_;
 };
