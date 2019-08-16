@@ -145,7 +145,7 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
             .pdfBu_Bu2Dst0h_Dst02D0gamma());
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Bu_Bu2Dst0h_Dst02D0gamma());
+            .N_BuDelta_Bu2Dst0h_Dst02D0gamma());
   }
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(

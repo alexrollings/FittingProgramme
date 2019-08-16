@@ -92,12 +92,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
                                       "", 0.07930),
-      initFAVSignalYield_(("initFAVSignalYield_" +
-                           ComposeName(uniqueId, Neutral::pi0))
-                              .c_str(),
-                          "", 5.1958e+04) {
-  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_Dst02D0gamma_,
-                  boxEffBu2Dst0h_Dst02D0gamma_,
-                  buDeltaCutEffBu2Dst0h_Dst02D0gamma_,
-                  deltaCutEffBu2Dst0h_Dst02D0gamma_);
+      initYieldFAVSignal_(5.1958e+04) {
+  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_Dst02D0gamma_,
+                  boxEffBu2Dst0pi_Dst02D0gamma_,
+                  buDeltaCutEffBu2Dst0pi_Dst02D0gamma_,
+                  deltaCutEffBu2Dst0pi_Dst02D0gamma_);
 }
