@@ -58,6 +58,12 @@ class NeutralBachelorVars {
   RooFormulaVar &N_BuDelta_Bu2Dst0h_Dst02D0gamma() {
     return N_BuDelta_Bu2Dst0h_Dst02D0gamma_;
   }
+  RooRealVar &MisRec_sigmaBu() {
+    return MisRec_sigmaBu_;
+  }
+  RooCBShape &pdfBu_MisRec() {
+    return pdfBu_MisRec_;
+  }
 
  private:
   int uniqueId_;
@@ -68,6 +74,8 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> N_Bu2Dst0h_Dst02D0gamma_;
   RooFormulaVar N_Delta_Bu2Dst0h_Dst02D0gamma_;
   RooFormulaVar N_BuDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooRealVar MisRec_sigmaBu_;
+  RooCBShape pdfBu_MisRec_;
 };
 
 template <>

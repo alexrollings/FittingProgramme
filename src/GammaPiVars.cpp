@@ -72,4 +72,16 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                        .deltaCutEffBu2Dst0pi_Dst02D0gamma(),
                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
                                        .orEffBu2Dst0pi_Dst02D0gamma(),
-                                   *N_Bu2Dst0h_Dst02D0gamma_)) {}
+                                   *N_Bu2Dst0h_Dst02D0gamma_)),
+      MisRec_sigmaBu_(("MisRec_sigmaBu_" +
+                       ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                          .c_str(),
+                      "", 9.4812e+01),
+      pdfBu_MisRec_(("pdfBu_MisRec_" +
+                     ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                        .c_str(),
+                    "", Configuration::Get().buDeltaMass(),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
+                    MisRec_sigmaBu_,
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aBu(),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()) {}

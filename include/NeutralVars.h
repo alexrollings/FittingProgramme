@@ -160,10 +160,10 @@ class NeutralVars {
   RooRealVar &MisRec_meanBu() {
     return MisRec_meanBu_;
   }
-  RooRealVar &MisRec_a1Bu() {
+  RooRealVar &MisRec_aBu() {
     return MisRec_aBu_;
   }
-  RooRealVar &MisRec_a2Bu() {
+  RooRealVar &MisRec_nBu() {
     return MisRec_nBu_;
   }
   RooRealVar &ratioKpi_MisRec() {

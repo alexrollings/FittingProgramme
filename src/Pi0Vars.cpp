@@ -111,6 +111,46 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                              .c_str(),
                                          "", 1),
       initYieldFAVSignal_(5.1958e+04),
+      MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", 5.7223e+01),
+      MisRec_aDelta_(("MisRec_aDelta_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", 1.2396e+00),
+      MisRec_bDelta_(("MisRec_bDelta_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", -1.7973e+00),
+      MisRec_cDelta_(("MisRec_cDelta_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", 3.1867e+01),
+      pdfDelta_MisRec_(("pdfDelta_MisRec_" +
+                                        ComposeName(uniqueId, Neutral::pi0))
+                                           .c_str(),
+                                       "", Configuration::Get().deltaMass(),
+                                       MisRec_thresholdDelta_,
+                                       MisRec_cDelta_,
+                                       MisRec_aDelta_,
+                                       MisRec_bDelta_),
+      MisRec_meanBu_(("MisRec_meanBu_" +
+                                     ComposeName(uniqueId, Neutral::pi0))
+                                        .c_str(),
+                                    "", 5.2991e+03),
+      MisRec_aBu_(("MisRec_aBu_" +
+                                     ComposeName(uniqueId, Neutral::pi0))
+                                        .c_str(),
+                                    "", 2.6265e+00),
+      MisRec_nBu_(("MisRec_nBu_" +
+                                     ComposeName(uniqueId, Neutral::pi0))
+                                        .c_str(),
+                                    "", 9.9921e-01),
+      ratioKpi_MisRec_(("ratioKpi_MisRec_" +
+                                       ComposeName(uniqueId, Neutral::pi0))
+                                          .c_str(),
+                                      "", 0.06, -1, 1),
       orEffMisRec_(("orEffMisRec_" +
                                     ComposeName(uniqueId, Neutral::pi0))
                                        .c_str(),
