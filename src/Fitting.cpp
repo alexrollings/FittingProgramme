@@ -337,7 +337,7 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir, Config
   gPad->SetTopMargin(0.05);
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix_" + "_" +
+  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix_" +
                      std::to_string(config.deltaLow()) + "_" +
                      std::to_string(config.deltaHigh()) + "_" +
                      std::to_string(config.buDeltaLow()) + "_" +
