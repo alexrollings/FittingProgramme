@@ -27,8 +27,8 @@ class PdfBase {
 
   // std::unique_ptr<RooAddPdf> addPdf_;
 
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const = 0;
-  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const = 0;
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooDstD0BG &pdfDelta_MisRec() const = 0;
   virtual RooCBShape &pdfBu_MisRec() const = 0;
 
@@ -88,13 +88,13 @@ class Pdf : public PdfBase {
   // executable. Give PDF functions to retrieve them
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_Dst02D0gamma() const {
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfDelta_Bu2Dst0h_Dst02D0gamma();
+        .pdfDelta_Bu2Dst0h_D0gamma();
   }
-  virtual RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() const {
+  virtual RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2Dst0h_Dst02D0gamma();
+        .pdfBu_Bu2Dst0h_D0gamma();
   }
   virtual RooDstD0BG &pdfDelta_MisRec() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
@@ -145,10 +145,10 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
   if (_mass == Mass::delta) {
     PdfBase::functions_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0h_Dst02D0gamma());
+            .pdfDelta_Bu2Dst0h_D0gamma());
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_Bu2Dst0h_Dst02D0gamma());
+            .N_Delta_Bu2Dst0h_D0gamma());
     PdfBase::functions_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
             .pdfDelta_MisRec());
@@ -158,10 +158,10 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
   } else {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBu_Bu2Dst0h_Dst02D0gamma());
+            .pdfBu_Bu2Dst0h_D0gamma());
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_BuDelta_Bu2Dst0h_Dst02D0gamma());
+            .N_BuDelta_Bu2Dst0h_D0gamma());
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_MisRec());

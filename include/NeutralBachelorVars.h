@@ -37,26 +37,26 @@ class NeutralBachelorVars {
   }
 
   int uniqueId() { return uniqueId_; }
-  RooAbsReal &Bu2Dst0h_Dst02D0gamma_sigmaBu() {
-    return *Bu2Dst0h_Dst02D0gamma_sigmaBu_;
+  RooAbsReal &Bu2Dst0h_D0gamma_sigmaBu() {
+    return *Bu2Dst0h_D0gamma_sigmaBu_;
   }
-  RooCBShape &pdf1Bu_Bu2Dst0h_Dst02D0gamma() {
-    return pdf1Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape &pdf1Bu_Bu2Dst0h_D0gamma() {
+    return pdf1Bu_Bu2Dst0h_D0gamma_;
   }
-  RooCBShape &pdf2Bu_Bu2Dst0h_Dst02D0gamma() {
-    return pdf2Bu_Bu2Dst0h_Dst02D0gamma_;
+  RooCBShape &pdf2Bu_Bu2Dst0h_D0gamma() {
+    return pdf2Bu_Bu2Dst0h_D0gamma_;
   }
-  RooAddPdf &pdfBu_Bu2Dst0h_Dst02D0gamma() {
-    return pdfBu_Bu2Dst0h_Dst02D0gamma_;
+  RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() {
+    return pdfBu_Bu2Dst0h_D0gamma_;
   }
-  RooAbsReal &N_Bu2Dst0h_Dst02D0gamma() {
-    return *N_Bu2Dst0h_Dst02D0gamma_;
+  RooAbsReal &N_Bu2Dst0h_D0gamma() {
+    return *N_Bu2Dst0h_D0gamma_;
   }
-  RooFormulaVar &N_Delta_Bu2Dst0h_Dst02D0gamma() {
-    return N_Delta_Bu2Dst0h_Dst02D0gamma_;
+  RooFormulaVar &N_Delta_Bu2Dst0h_D0gamma() {
+    return N_Delta_Bu2Dst0h_D0gamma_;
   }
-  RooFormulaVar &N_BuDelta_Bu2Dst0h_Dst02D0gamma() {
-    return N_BuDelta_Bu2Dst0h_Dst02D0gamma_;
+  RooFormulaVar &N_BuDelta_Bu2Dst0h_D0gamma() {
+    return N_BuDelta_Bu2Dst0h_D0gamma_;
   }
   RooRealVar &MisRec_sigmaBu() {
     return MisRec_sigmaBu_;
@@ -76,13 +76,13 @@ class NeutralBachelorVars {
 
  private:
   int uniqueId_;
-  std::unique_ptr<RooAbsReal> Bu2Dst0h_Dst02D0gamma_sigmaBu_;
-  RooCBShape pdf1Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooCBShape pdf2Bu_Bu2Dst0h_Dst02D0gamma_;
-  RooAddPdf pdfBu_Bu2Dst0h_Dst02D0gamma_;
-  std::unique_ptr<RooAbsReal> N_Bu2Dst0h_Dst02D0gamma_;
-  RooFormulaVar N_Delta_Bu2Dst0h_Dst02D0gamma_;
-  RooFormulaVar N_BuDelta_Bu2Dst0h_Dst02D0gamma_;
+  std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigmaBu_;
+  RooCBShape pdf1Bu_Bu2Dst0h_D0gamma_;
+  RooCBShape pdf2Bu_Bu2Dst0h_D0gamma_;
+  RooAddPdf pdfBu_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooAbsReal> N_Bu2Dst0h_D0gamma_;
+  RooFormulaVar N_Delta_Bu2Dst0h_D0gamma_;
+  RooFormulaVar N_BuDelta_Bu2Dst0h_D0gamma_;
   RooRealVar MisRec_sigmaBu_;
   RooCBShape pdfBu_MisRec_;
   std::unique_ptr<RooAbsReal> N_MisRec_;

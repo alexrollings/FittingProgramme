@@ -105,7 +105,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
             ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                 .c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma().GetName()),
+        RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
@@ -126,7 +126,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
             ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                 .c_str()),
         RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma().GetName()),
+        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(
@@ -246,14 +246,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   TLegend legend(0.71, 0.53, 0.85, 0.8);
   // ------------- Draw Legends -------------- //
-  auto Bu2Dst0h_Dst02D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0h_Dst02D0gammaHist" +
+  auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0h_D0gammaHist" +
        ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
-      "Bu2Dst0h_Dst02D0gammaHist", 1, 0, 1);
-  Bu2Dst0h_Dst02D0gammaHist->SetLineColor(kBlue);
-  Bu2Dst0h_Dst02D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
+      "Bu2Dst0h_D0gammaHist", 1, 0, 1);
+  Bu2Dst0h_D0gammaHist->SetLineColor(kBlue);
+  Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0h_D0gammaHist->SetLineWidth(2);
 
   auto MisRecHist = std::make_unique<TH1D>(
       ("MisRecHist" +
@@ -272,8 +272,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  std::stringstream Bu2Dst0h_Dst02D0gammaLegend;
-  Bu2Dst0h_Dst02D0gammaLegend
+  std::stringstream Bu2Dst0h_D0gammaLegend;
+  Bu2Dst0h_D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
@@ -284,8 +284,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       << "Mis-Reconstructed Bkg";
 
   legend.SetLineColor(kWhite);
-  legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
-                  Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
+  legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
+                  Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
   legend.AddEntry(MisRecHist.get(),
                   MisRecLegend.str().c_str(), "l");
 
