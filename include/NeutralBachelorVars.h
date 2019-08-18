@@ -37,6 +37,7 @@ class NeutralBachelorVars {
   }
 
   int uniqueId() { return uniqueId_; }
+  // -------------------- Bu2Dst0h_D0gamma -------------------- //
   RooAbsReal &Bu2Dst0h_D0gamma_sigmaBu() {
     return *Bu2Dst0h_D0gamma_sigmaBu_;
   }
@@ -58,6 +59,23 @@ class NeutralBachelorVars {
   RooFormulaVar &N_BuDelta_Bu2Dst0h_D0gamma() {
     return N_BuDelta_Bu2Dst0h_D0gamma_;
   }
+  // -------------------- Bu2Dst0h_D0pi0 -------------------- //
+  RooRealVar &Bu2Dst0h_D0pi0_sigmaBu() {
+    return Bu2Dst0h_D0pi0_sigmaBu_;
+  }
+  RooCBShape &pdfBu_Bu2Dst0h_D0pi0() {
+    return pdfBu_Bu2Dst0h_D0pi0_;
+  }
+  RooAbsReal &N_Bu2Dst0h_D0pi0() {
+    return *N_Bu2Dst0h_D0pi0_;
+  }
+  RooFormulaVar &N_Delta_Bu2Dst0h_D0pi0() {
+    return N_Delta_Bu2Dst0h_D0pi0_;
+  }
+  RooFormulaVar &N_BuDelta_Bu2Dst0h_D0pi0() {
+    return N_BuDelta_Bu2Dst0h_D0pi0_;
+  }
+  // -------------------- MIS-REC -------------------- //
   RooRealVar &MisRec_sigmaBu() {
     return MisRec_sigmaBu_;
   }
@@ -76,6 +94,7 @@ class NeutralBachelorVars {
 
  private:
   int uniqueId_;
+  // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigmaBu_;
   RooCBShape pdf1Bu_Bu2Dst0h_D0gamma_;
   RooCBShape pdf2Bu_Bu2Dst0h_D0gamma_;
@@ -83,6 +102,13 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> N_Bu2Dst0h_D0gamma_;
   RooFormulaVar N_Delta_Bu2Dst0h_D0gamma_;
   RooFormulaVar N_BuDelta_Bu2Dst0h_D0gamma_;
+  // -------------------- Bu2Dst0h_D0pi0 -------------------- //
+  RooRealVar Bu2Dst0h_D0pi0_sigmaBu_;
+  RooCBShape pdfBu_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooAbsReal> N_Bu2Dst0h_D0pi0_;
+  RooFormulaVar N_Delta_Bu2Dst0h_D0pi0_;
+  RooFormulaVar N_BuDelta_Bu2Dst0h_D0pi0_;
+  // -------------------- MIS-REC -------------------- //
   RooRealVar MisRec_sigmaBu_;
   RooCBShape pdfBu_MisRec_;
   std::unique_ptr<RooAbsReal> N_MisRec_;
