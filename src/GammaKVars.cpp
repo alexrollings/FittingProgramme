@@ -91,4 +91,33 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
                     MisRec_sigmaBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aBu(),
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()) {}
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()),
+      N_MisRec_(new RooFormulaVar(
+          ("N_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1*@2",
+          RooArgSet(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
+                  .N_MisRec(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId)
+                  .ratioKpi_MisRec(),
+              Configuration::Get().pidEff()))),
+      N_Delta_MisRec_(
+          ("N_Delta_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                       .buDeltaCutEffBu2Dst0pi_Dst02D0gamma(),
+                                   NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                       .orEffBu2Dst0pi_Dst02D0gamma(),
+                                   *N_MisRec_)),
+      N_BuDelta_MisRec_(
+          ("N_BuDelta_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                       .deltaCutEffBu2Dst0pi_Dst02D0gamma(),
+                                   NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                       .orEffBu2Dst0pi_Dst02D0gamma(),
+                                   *N_MisRec_)) {}
