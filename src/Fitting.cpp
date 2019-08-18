@@ -108,6 +108,16 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
         RooFit::Components(pdf.pdfBu_Bu2Dst0h_Dst02D0gamma().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_MisRec().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   } else {
     simPdf.plotOn(
         frame.get(),
@@ -118,6 +128,16 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
         RooFit::ProjWData(categories.fitting, fullDataSet),
         RooFit::Components(pdf.pdfDelta_Bu2Dst0h_Dst02D0gamma().GetName()),
         RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDelta_MisRec().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
         RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   }
 
@@ -235,6 +255,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_Dst02D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0h_Dst02D0gammaHist->SetLineWidth(2);
 
+  auto MisRecHist = std::make_unique<TH1D>(
+      ("MisRecHist" +
+       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "MisRecHist", 1, 0, 1);
+  MisRecHist->SetLineColor(kRed);
+  MisRecHist->SetLineStyle(kDashed);
+  MisRecHist->SetLineWidth(2);
+
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" +
        ComposeName(id, mass, neutral, bachelor, daughters, charge))
@@ -250,10 +279,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  std::stringstream MisRecLegend;
+  MisRecLegend
+      << "Mis-Reconstructed Bkg";
 
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_Dst02D0gammaHist.get(),
                   Bu2Dst0h_Dst02D0gammaLegend.str().c_str(), "l");
+  legend.AddEntry(MisRecHist.get(),
+                  MisRecLegend.str().c_str(), "l");
 
   TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
   lumiLegend.SetTextSize(0.03);
