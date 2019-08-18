@@ -104,18 +104,18 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .buDeltaCutEffBu2Dst0pi_D0gamma(),
+                                       .buDeltaCutEffBu2Dst0pi_D0pi0(),
                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .orEffBu2Dst0pi_D0gamma(),
+                                       .orEffBu2Dst0pi_D0pi0(),
                                    *N_Bu2Dst0h_D0pi0_)),
       N_BuDelta_Bu2Dst0h_D0pi0_(
           ("N_BuDelta_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .deltaCutEffBu2Dst0pi_D0gamma(),
+                                       .deltaCutEffBu2Dst0pi_D0pi0(),
                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .orEffBu2Dst0pi_D0gamma(),
+                                       .orEffBu2Dst0pi_D0pi0(),
                                    *N_Bu2Dst0h_D0pi0_)),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaBu_(("MisRec_sigmaBu_" +
