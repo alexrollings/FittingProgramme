@@ -142,6 +142,33 @@ class NeutralVars {
     return deltaCutEffBu2Dst0pi_Dst02D0gamma_;
   }
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
+  RooRealVar &MisRec_thresholdDelta() {
+    return MisRec_thresholdDelta_;
+  }
+  RooRealVar &MisRec_aDelta() {
+    return MisRec_aDelta_;
+  }
+  RooRealVar &MisRec_bDelta() {
+    return MisRec_bDelta_;
+  }
+  RooRealVar &MisRec_cDelta() {
+    return MisRec_cDelta_;
+  }
+  RooDstD0BG &pdfDelta_MisRec() {
+    return pdfDelta_MisRec_;
+  }
+  RooRealVar &MisRec_meanBu() {
+    return MisRec_meanBu_;
+  }
+  RooRealVar &MisRec_a1Bu() {
+    return MisRec_aBu_;
+  }
+  RooRealVar &MisRec_a2Bu() {
+    return MisRec_nBu_;
+  }
+  RooRealVar &ratioKpi_MisRec() {
+    return ratioKpi_MisRec_;
+  }
   RooRealVar &orEffMisRec() {
     return orEffMisRec_;
   }
@@ -194,6 +221,15 @@ class NeutralVars {
   RooRealVar buDeltaCutEffBu2Dst0pi_Dst02D0gamma_;
   RooRealVar deltaCutEffBu2Dst0pi_Dst02D0gamma_;
   double initYieldFAVSignal_;
+  RooRealVar MisRec_thresholdDelta_;
+  RooRealVar MisRec_aDelta_;
+  RooRealVar MisRec_bDelta_;
+  RooRealVar MisRec_cDelta_;
+  RooDstD0BG pdfDelta_MisRec_;
+  RooRealVar MisRec_meanBu_;
+  RooRealVar MisRec_aBu_;
+  RooRealVar MisRec_nBu_;
+  RooRealVar ratioKpi_MisRec_;
   RooRealVar orEffMisRec_;
   RooRealVar boxEffMisRec_;
   RooRealVar buDeltaCutEffMisRec_;
