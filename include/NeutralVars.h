@@ -142,6 +142,27 @@ class NeutralVars {
     return deltaCutEffBu2Dst0pi_Dst02D0gamma_;
   }
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
+  RooRealVar &orEffMisRec() {
+    return orEffMisRec_;
+  }
+  RooRealVar &boxEffMisRec() {
+    return boxEffMisRec_;
+  }
+  RooRealVar &buDeltaCutEffMisRec() {
+    return buDeltaCutEffMisRec_;
+  }
+  RooRealVar &deltaCutEffMisRec() {
+    return deltaCutEffMisRec_;
+  }
+  double &fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN() {
+    return fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN_;
+  }
+  double &fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN() {
+    return fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN_;
+  }
+  double &fracMisRec_Bu2D0rho() { return fracMisRec_Bu2D0rho_; }
+  double &fracMisRec_Bd2Dstpi() { return fracMisRec_Bd2Dstpi_; }
+  double &initYieldFAVMisRec() { return initYieldFAVMisRec_; }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -173,6 +194,16 @@ class NeutralVars {
   RooRealVar buDeltaCutEffBu2Dst0pi_Dst02D0gamma_;
   RooRealVar deltaCutEffBu2Dst0pi_Dst02D0gamma_;
   double initYieldFAVSignal_;
+  RooRealVar orEffMisRec_;
+  RooRealVar boxEffMisRec_;
+  RooRealVar buDeltaCutEffMisRec_;
+  RooRealVar deltaCutEffMisRec_;
+  double fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN_;
+  double fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN_;
+  double fracMisRec_Bu2D0rho_;
+  double fracMisRec_Bd2Dstpi_;
+  double fracMisRec_;
+  double initYieldFAVMisRec_;
 };
 
 // inline allows a function to be defined multiple times. Templated functions
@@ -216,7 +247,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     std::string dirString;
     std::cout << txtFileName
               << " doesn't exist - calculating and setting efficiencies for "
-              << modeString << ":\n";
+              << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
       // To remove _WN for directory
@@ -346,7 +377,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   } else {
     // If exists, read in from txt file
     std::cout << txtFileName << " exists - reading efficiencies for "
-              << modeString << ":\n";
+              << modeString << "...\n";
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
     std::unordered_map<std::string, double> effMap;
@@ -365,10 +396,10 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
   }
-  std::cout << "\t orEff = " << orEff.getVal() << "\n"
-            << "\t boxEff = " << boxEff.getVal() << "\n"
-            << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-            << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
 }
 
 // When we DO need to specialize certain cases, we can still do that (see

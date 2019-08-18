@@ -94,25 +94,95 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                           .c_str(),
                                       "", 0.07930, -1, 1),
       orEffBu2Dst0pi_Dst02D0gamma_(("orEffBu2Dst0pi_Dst02D0gamma_" +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  "", 1),
-      boxEffBu2Dst0pi_Dst02D0gamma_(("boxEffBu2Dst0pi_Dst02D0gamma_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 1),
+      boxEffBu2Dst0pi_Dst02D0gamma_(("boxEffBu2Dst0pi_Dst02D0gamma_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    "", 1),
       buDeltaCutEffBu2Dst0pi_Dst02D0gamma_(
           ("buDeltaCutEffBu2Dst0pi_Dst02D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 1),
       deltaCutEffBu2Dst0pi_Dst02D0gamma_(("deltaCutEffBu2Dst0pi_Dst02D0gamma_" +
-                                         ComposeName(uniqueId, Neutral::gamma))
-                                            .c_str(),
-                                        "", 1),
-      initYieldFAVSignal_(5.1958e+04) {
+                                          ComposeName(uniqueId, Neutral::gamma))
+                                             .c_str(),
+                                         "", 1),
+      initYieldFAVSignal_(5.1958e+04),
+      orEffMisRec_(("orEffMisRec_" +
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 1),
+      boxEffMisRec_(("boxEffMisRec_" +
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    "", 1),
+      buDeltaCutEffMisRec_(
+          ("buDeltaCutEffMisRec_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "", 1),
+      deltaCutEffMisRec_(("deltaCutEffMisRec_" +
+                                          ComposeName(uniqueId, Neutral::gamma))
+                                             .c_str(),
+                                         "", 1),
+      fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN_(0.473),
+      fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN_(0.809),
+      fracMisRec_Bu2D0rho_(0.809),
+      fracMisRec_Bd2Dstpi_(0.643),
+      fracMisRec_(fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN_ +
+                          fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN_ +
+                          fracMisRec_Bu2D0rho_ + fracMisRec_Bd2Dstpi_),
+      initYieldFAVMisRec_(initYieldFAVSignal_*fracMisRec_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_Dst02D0gamma_,
                   boxEffBu2Dst0pi_Dst02D0gamma_,
                   buDeltaCutEffBu2Dst0pi_Dst02D0gamma_,
                   deltaCutEffBu2Dst0pi_Dst02D0gamma_);
+  std::cout << "\t orEffBu2Dst0pi_Dst02D0gamma = "
+            << orEffBu2Dst0pi_Dst02D0gamma_.getVal() << "\n"
+            << "\t boxEffBu2Dst0pi_Dst02D0gamma = "
+            << boxEffBu2Dst0pi_Dst02D0gamma_.getVal() << "\n"
+            << "\t buDeltaCutEffBu2Dst0pi_Dst02D0gamma = "
+            << buDeltaCutEffBu2Dst0pi_Dst02D0gamma_.getVal() << "\n"
+            << "\t deltaCutEffBu2Dst0pi_Dst02D0gamma = "
+            << deltaCutEffBu2Dst0pi_Dst02D0gamma_.getVal() << "\n";
+
+  std::map<Mode, double> misRecModesMap = {
+      {Mode::Bu2Dst0pi_D0pi0_WN,
+       fracMisRec_Bu2Dst0pi_Dst02D0pi0_WN_ / fracMisRec_},
+      {Mode::Bu2Dst0pi_D0gamma_WN,
+       fracMisRec_Bu2Dst0pi_Dst02D0gamma_WN_ / fracMisRec_},
+      {Mode::Bu2D0rho, fracMisRec_Bu2D0rho_ / fracMisRec_},
+      {Mode::Bd2Dstpi, fracMisRec_Bd2Dstpi_ / fracMisRec_}};
+
+  double orEffMisRecVal = 0.0;
+  double boxEffMisRecVal = 0.0;
+  double buDeltaCutEffMisRecVal = 0.0;
+  double deltaCutEffMisRecVal = 0.0;
+
+  for (auto &m : misRecModesMap) {
+    RooRealVar orEffTemp("orEffTemp", "", 1);
+    RooRealVar boxEffTemp("boxEffTemp", "", 1);
+    RooRealVar buDeltaCutEffTemp("buDeltaCutEffTemp", "", 1);
+    RooRealVar deltaCutEffTemp("deltaCutEffTemp", "", 1);
+
+    SetEfficiencies(m.first, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
+                    deltaCutEffTemp);
+
+    orEffMisRecVal += orEffTemp.getVal() * m.second;
+    boxEffMisRecVal += boxEffTemp.getVal() * m.second;
+    buDeltaCutEffMisRecVal += buDeltaCutEffTemp.getVal() * m.second;
+    deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
+  }
+  orEffMisRec_.setVal(orEffMisRecVal);
+  boxEffMisRec_.setVal(boxEffMisRecVal);
+  buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
+  deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
+  std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
+            << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
+            << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
+            << "\n"
+            << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() << "\n";
 }
