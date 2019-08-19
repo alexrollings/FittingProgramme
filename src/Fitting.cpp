@@ -826,6 +826,9 @@ int main(int argc, char **argv) {
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
     config.deltaMass().setMin(134);
   }
+    
+  // Declar simPDF before any if statements so that it can be passed to RunToys no matter what
+  std::unique_ptr<RooSimultaneous> simPdf;
 
   if (inputDir != "") {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
@@ -1017,7 +1020,7 @@ int main(int argc, char **argv) {
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
-    auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+    simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
     std::unique_ptr<RooFitResult> result;
