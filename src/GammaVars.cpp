@@ -351,4 +351,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
             << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
             << "\n"
             << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() << "\n";
+
+  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0pi_, boxEffBu2D0pi_,
+                  buDeltaCutEffBu2D0pi_, deltaCutEffBu2D0pi_);
+  std::cout << "\t orEffBu2D0pi = " << orEffBu2D0pi_.getVal() << "\n"
+            << "\t boxEffBu2D0pi = " << boxEffBu2D0pi_.getVal() << "\n"
+            << "\t buDeltaCutEffBu2D0pi = " << buDeltaCutEffBu2D0pi_.getVal()
+            << "\n"
+            << "\t deltaCutEffBu2D0pi = " << deltaCutEffBu2D0pi_.getVal()
+            << "\n";
 }
