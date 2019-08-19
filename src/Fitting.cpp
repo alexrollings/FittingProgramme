@@ -520,7 +520,8 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 
 // Function we use to do the toy study - run many toys and extract pulls for
 // each mass of interest
-void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
+// void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
+void RunToys(RooSimultaneous* simPdf,
              std::vector<PdfBase *> &pdfs, Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
@@ -538,7 +539,8 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     if (simPdf == nullptr) {
       auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                    daughtersVec, chargeVec);
-      simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+      // simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+      simPdf = p.first;
       pdfs = p.second;
     }
 
@@ -556,12 +558,16 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
                                 ("toyDataHist" + std::to_string(id)).c_str()));
     auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
-    auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+    // auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+    //     ("simPdfFit_" + std::to_string(id)).c_str(),
+    //     ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
+    auto simPdfToFit = new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
-        ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
+        ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting);
 
-    simPdfToFit = std::unique_ptr<RooSimultaneous>(
-        dynamic_cast<RooSimultaneous *>(simPdf.get()->Clone()));
+    // simPdfToFit = std::unique_ptr<RooSimultaneous>(
+    //     dynamic_cast<RooSimultaneous *>(simPdf.get()->Clone()));
+    simPdfToFit = dynamic_cast<RooSimultaneous *>(simPdf->Clone());
 
     std::shared_ptr<RooFitResult> result;
     if (fitBool == true) {
@@ -833,7 +839,8 @@ int main(int argc, char **argv) {
   }
     
   // Declare simPDF before any if statements so that it can be passed to RunToys no matter what
-  std::unique_ptr<RooSimultaneous> simPdf;
+  // std::unique_ptr<RooSimultaneous> simPdf;
+  RooSimultaneous *simPdf = nullptr;
   std::vector<PdfBase *> pdfs;
 
   if (inputDir != "") {
@@ -1026,7 +1033,8 @@ int main(int argc, char **argv) {
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
-    simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+    // simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+    simPdf = p.first;
     pdfs = p.second;
 
     std::unique_ptr<RooFitResult> result;
