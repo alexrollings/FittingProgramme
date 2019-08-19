@@ -33,6 +33,8 @@ class PdfBase {
   virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0() const = 0;
   virtual RooDstD0BG &pdfDelta_MisRec() const = 0;
   virtual RooCBShape &pdfBu_MisRec() const = 0;
+  virtual RooDstD0BG &pdfDelta_Bu2D0h() const = 0;
+  virtual RooCruijff &pdfBu_Bu2D0h() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -114,6 +116,14 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_MisRec();
   }
+  virtual RooDstD0BG &pdfDelta_Bu2D0h() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .pdfDelta_Bu2D0h();
+  }
+  virtual RooCruijff &pdfBu_Bu2D0h() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdfBu_Bu2D0h();
+  }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
   // singleton)
@@ -171,6 +181,12 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Delta_MisRec());
+    PdfBase::functions_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2D0h());
+    PdfBase::yields_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_Bu2D0h());
   } else {
     PdfBase::functions_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -190,6 +206,12 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_BuDelta_MisRec());
+    PdfBase::functions_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdfBu_Bu2D0h());
+    PdfBase::yields_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_BuDelta_Bu2D0h());
   }
 
   PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(

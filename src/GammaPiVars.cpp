@@ -166,7 +166,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                         .c_str(),
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_meanBu(),
-                    *Bu2D0h_sigmaLBu_, *Bu2D0h_sigmaLBu_,
+                    *Bu2D0h_sigmaLBu_, *Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBu()),
       N_Bu2D0h_(new RooRealVar(
