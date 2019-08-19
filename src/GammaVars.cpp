@@ -186,7 +186,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                       .c_str(),
                                   "", 1),
       fracBu2Dst0pi_D0pi0_(0.916),
-      initYieldFAVBu2Dst0pi_D0pi0_(initYieldFAVBu2Dst0pi_D0gamma_*fracBu2Dst0pi_D0pi0_),
+      initYieldFAVBu2Dst0pi_D0pi0_(
+          initYieldFAVBu2Dst0pi_D0gamma_ *fracBu2Dst0pi_D0pi0_),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
@@ -238,10 +239,59 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracMisRec_(fracMisRec_Bu2Dst0pi_D0gamma_WN_ +
                   fracMisRec_Bu2Dst0pi_D0pi0_WN_ + fracMisRec_Bu2D0rho_ +
                   fracMisRec_Bd2Dstpi_),
-      initYieldFAVMisRec_(initYieldFAVBu2Dst0pi_D0gamma_ *fracMisRec_) {
+      initYieldFAVMisRec_(initYieldFAVBu2Dst0pi_D0gamma_ *fracMisRec_),
+      // -------------------- Bu2D0h -------------------- //
+      Bu2D0h_thresholdDelta_(("Bu2D0h_thresholdDelta_" +
+                              ComposeName(uniqueId, Neutral::gamma))
+                                 .c_str(),
+                             "", 6.7773e+01),
+      Bu2D0h_aDelta_(
+          ("Bu2D0h_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.8996e-01),
+      Bu2D0h_bDelta_(
+          ("Bu2D0h_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", -5.6691e-01),
+      Bu2D0h_cDelta_(
+          ("Bu2D0h_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 6.2156e+01),
+      pdfDelta_Bu2D0h_(
+          ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", Configuration::Get().deltaMass(), Bu2D0h_thresholdDelta_,
+          Bu2D0h_cDelta_, Bu2D0h_aDelta_, Bu2D0h_bDelta_),
+      Bu2D0h_meanBu_(
+          ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.5263e+03),
+      relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
+                               ComposeName(uniqueId, Neutral::gamma))
+                                  .c_str(),
+                              "", 0.95),
+      Bu2D0h_aLBu_(
+          ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          6.7243e-09),
+      Bu2D0h_aRBu_(
+          ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          2.1226e-11),
+      ratioKpi_Bu2D0h_(
+          ("ratioKpi_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 0.07768, -1, 1),
+      orEffBu2D0pi_(
+          ("orEffBu2D0pi_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      boxEffBu2D0pi_(
+          ("boxEffBu2D0pi_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 1),
+      buDeltaCutEffBu2D0pi_(("buDeltaCutEffBu2D0pi_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 1),
+      deltaCutEffBu2D0pi_(("deltaCutEffBu2D0pi_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 1),
+      fracBu2D0pi_(1.54),
+      initYieldFAVBu2D0pi_(initYieldFAVBu2Dst0pi_D0gamma_ *fracBu2D0pi_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_D0gamma_,
-                  boxEffBu2Dst0pi_D0gamma_,
-                  buDeltaCutEffBu2Dst0pi_D0gamma_,
+                  boxEffBu2Dst0pi_D0gamma_, buDeltaCutEffBu2Dst0pi_D0gamma_,
                   deltaCutEffBu2Dst0pi_D0gamma_);
   std::cout << "\t orEffBu2Dst0pi_D0gamma = "
             << orEffBu2Dst0pi_D0gamma_.getVal() << "\n"
