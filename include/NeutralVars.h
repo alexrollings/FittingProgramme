@@ -8,13 +8,8 @@
 #include "GlobalVars.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"
-#include "RooCruijff.h"
 #include "RooDstD0BG.h"
-#include "RooExponential.h"
 #include "RooFormulaVar.h"
-#include "RooGaussian.h"
-#include "RooPolyVar.h"
-#include "RooProdPdf.h"
 #include "RooRealVar.h"
 #include "TChain.h"
 
@@ -369,7 +364,7 @@ class NeutralVars {
   double fracMisRec_Bd2Dstpi_;
   double fracMisRec_;
   double initYieldFAVMisRec_;
-  // -------------------- OVER-REC -------------------- //
+  // -------------------- Bu2D0h -------------------- //
   RooRealVar Bu2D0h_thresholdDelta_;
   RooRealVar Bu2D0h_aDelta_;
   RooRealVar Bu2D0h_bDelta_;

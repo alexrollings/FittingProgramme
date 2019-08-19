@@ -5,9 +5,9 @@
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"
+#include "RooCruijff.h"
 #include "RooConstVar.h"
 #include "RooFormulaVar.h"
-#include "RooGaussian.h"
 #include "RooProdPdf.h"
 
 // Bachelor
@@ -91,6 +91,25 @@ class NeutralBachelorVars {
   RooFormulaVar &N_BuDelta_MisRec() {
     return N_BuDelta_MisRec_;
   }
+  // -------------------- Bu2D0h -------------------- //
+  RooAbsReal &Bu2D0h_sigmaLBu() {
+    return *Bu2D0h_sigmaLBu_;
+  }
+  RooAbsReal &Bu2D0h_sigmaRBu() {
+    return *Bu2D0h_sigmaRBu_;
+  }
+  RooCruijff &pdfBu_Bu2D0h() {
+    return pdfBu_Bu2D0h_;
+  }
+  RooAbsReal &N_Bu2D0h() {
+    return *N_Bu2D0h_;
+  }
+  RooFormulaVar &N_Delta_Bu2D0h() {
+    return N_Delta_Bu2D0h_;
+  }
+  RooFormulaVar &N_BuDelta_Bu2D0h() {
+    return N_BuDelta_Bu2D0h_;
+  }
 
  private:
   int uniqueId_;
@@ -114,6 +133,13 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> N_MisRec_;
   RooFormulaVar N_Delta_MisRec_;
   RooFormulaVar N_BuDelta_MisRec_;
+  // -------------------- Bu2D0h -------------------- //
+  std::unique_ptr<RooAbsReal> Bu2D0h_sigmaLBu_;
+  std::unique_ptr<RooAbsReal> Bu2D0h_sigmaRBu_;
+  RooCruijff pdfBu_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_Bu2D0h_;
+  RooFormulaVar N_Delta_Bu2D0h_;
+  RooFormulaVar N_BuDelta_Bu2D0h_;
 };
 
 template <>
