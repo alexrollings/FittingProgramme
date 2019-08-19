@@ -521,25 +521,25 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 // Function we use to do the toy study - run many toys and extract pulls for
 // each mass of interest
 void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
-             std::vector<PdfBase *> &pdfs, Configuration &config,
+             Configuration &config,
              Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
              std::vector<Charge> const &chargeVec, std::string const &outputDir,
              int nToys, bool fitBool) {
-  for (int id = 0; id < nToys; ++id) {
-    std::cout << "\n\n -------------------------- Running toy #" << id + 1
+  // Start from 1 as id = 0 is data fit params
+  for (int id = 1; id < nToys+1; ++id) {
+    std::cout << "\n\n -------------------------- Running toy #" << id
               << " -------------------------- \n\n";
     // Setting the random seed to 0 is a special case which generates a
     // different seed every time you run. Setting the seed to an integer
     // generates toys in a replicable way, in case you need to debug
     // something.
 
+    auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+                                 daughtersVec, chargeVec);
     if (simPdf == nullptr) {
-      auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                   daughtersVec, chargeVec);
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-      pdfs = p.second;
     }
 
     RooRandom::randomGenerator()->SetSeed(0);
@@ -559,9 +559,8 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
         ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
-
-    simPdfToFit = std::unique_ptr<RooSimultaneous>(
-        dynamic_cast<RooSimultaneous *>(simPdf.get()->Clone()));
+    
+    simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> result;
     if (fitBool == true) {
@@ -572,6 +571,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     }
     if (id == 0) {
       std::string lumiString = "TOY";
+      auto pdfs = p.second;
       for (auto &p : pdfs) {
         std::cout << "Plotting " << p->addPdf().GetName() << "\n";
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
@@ -834,7 +834,6 @@ int main(int argc, char **argv) {
     
   // Declare simPDF before any if statements so that it can be passed to RunToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
-  std::vector<PdfBase *> pdfs;
 
   if (inputDir != "") {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
@@ -1027,7 +1026,7 @@ int main(int argc, char **argv) {
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-    pdfs = p.second;
+    auto pdfs = p.second;
 
     std::unique_ptr<RooFitResult> result;
 
@@ -1061,11 +1060,11 @@ int main(int argc, char **argv) {
       } else {
         result->Print("v");
       }
-      RunToys(simPdf, pdfs, config, categories, neutralVec, daughtersVec, chargeVec,
+      RunToys(simPdf, config, categories, neutralVec, daughtersVec, chargeVec,
               outputDir, nToys, fitBool);
     }
   } else {
-    RunToys(simPdf, pdfs, config, categories, neutralVec, daughtersVec, chargeVec, 
+    RunToys(simPdf, config, categories, neutralVec, daughtersVec, chargeVec, 
             outputDir, nToys, fitBool);
   }
 
