@@ -518,93 +518,27 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
   return p;
 }
 
-// Run 1 toy and make 1D and 2D plots
-void RunSingleToy(Configuration &config, Configuration::Categories &categories,
-                  std::vector<Neutral> const &neutralVec,
-                  std::vector<Daughters> const &daughtersVec,
-                  std::vector<Charge> const &chargeVec,
-                  std::string const &outputDir, bool fitBool) {
-  RooRandom::randomGenerator()->SetSeed(30);
-  TRandom3 random(0);
-  int id = 0;
-  auto p = MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec,
-                               chargeVec);
-  auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-  std::vector<PdfBase *> pdfs = p.second;
-
-  double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
-  auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-      RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
-      nEvtsPerToy));
-
-  std::cout << "Generated toy data set\n";
-
-  auto toyDataHist = std::unique_ptr<RooDataHist>(
-      toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
-
-  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-
-  // ShiftN_Dst0h(daughtersVec, neutralVec, id);
-
-  auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-      ("simPdfFit_" + std::to_string(id)).c_str(),
-      ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
-
-  simPdfToFit = std::unique_ptr<RooSimultaneous>(
-      dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
-
-  std::unique_ptr<RooFitResult> result;
-
-  if (fitBool == true) {
-    result = std::unique_ptr<RooFitResult>(
-        simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-  }
-  // Label plots to indicate Toy
-  std::string lumiString = "TOY";
-  for (auto &p : pdfs) {
-    std::cout << "Plotting " << p->addPdf().GetName() << "\n";
-    Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
-               fitBool, lumiString, result.get());
-  }
-  if (fitBool == true) {
-    result->Print("v");
-    PlotCorrelations(result.get(), outputDir, config);
-  }
-}
-
 // Function we use to do the toy study - run many toys and extract pulls for
 // each mass of interest
-void RunManyToys(Configuration &config, Configuration::Categories &categories,
-                 std::vector<Neutral> const &neutralVec,
-                 std::vector<Daughters> const &daughtersVec,
-                 std::vector<Charge> const &chargeVec,
-                 std::string const &outputDir, int nToys) {
+void RunToys(Configuration &config, Configuration::Categories &categories,
+             std::vector<Neutral> const &neutralVec,
+             std::vector<Daughters> const &daughtersVec,
+             std::vector<Charge> const &chargeVec, std::string const &outputDir,
+             int nToys, bool fitBool) {
   for (int id = 0; id < nToys; ++id) {
+    std::cout << "\n\n -------------------------- Running toy #" << id + 1
+              << " -------------------------- \n\n";
     // Setting the random seed to 0 is a special case which generates a
     // different seed every time you run. Setting the seed to an integer
     // generates toys in a replicable way, in case you need to debug
     // something.
-    RooRandom::randomGenerator()->SetSeed(0);
-    TRandom3 random(0);
-    double randomTag = random.Rndm();
-
-    TFile outputFile(
-        (outputDir + "/results/Result_" + std::to_string(randomTag) +
-         "_" + std::to_string(config.deltaLow()) + "_" +
-         std::to_string(config.deltaHigh()) + "_" +
-         std::to_string(config.buDeltaLow()) + "_" +
-         std::to_string(config.buDeltaHigh()) + ".root")
-            .c_str(),
-        "recreate");
-
-    std::cout << "\n\n -------------------------- Running toy #" << id + 1
-              << " -------------------------- \n\n";
-
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
     auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double randomTag = random.Rndm();
 
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
     auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
@@ -616,8 +550,6 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
                                 ("toyDataHist" + std::to_string(id)).c_str()));
     auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
-    // ShiftN_Dst0h(daughtersVec, neutralVec, id);
-
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
         ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
@@ -625,20 +557,44 @@ void RunManyToys(Configuration &config, Configuration::Categories &categories,
     simPdfToFit = std::unique_ptr<RooSimultaneous>(
         dynamic_cast<RooSimultaneous *>(simPdf->Clone()));
 
-    auto result = std::shared_ptr<RooFitResult>(
-        simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-    // save names and predictions of all masss we want to calculate
-    // pulls for
-    result->Print("v");
+    std::shared_ptr<RooFitResult> result;
+    if (fitBool == true) {
+      result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+          *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+          RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+    }
+    if (id == 0) {
+      std::vector<PdfBase *> pdfs = p.second;
+      std::string lumiString = "TOY";
+      for (auto &p : pdfs) {
+        std::cout << "Plotting " << p->addPdf().GetName() << "\n";
+        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
+                   fitBool, lumiString, result.get());
+      }
+      if (fitBool == true) {
+        PlotCorrelations(result.get(), outputDir, config);
+      }
+    }
 
-    outputFile.cd();
-    result->SetName(("Result_" + std::to_string(randomTag)).c_str());
-    result->Write();
-    outputFile.Close();
+    if (fitBool == true) {
+      result->Print("v");
+      TFile outputFile(
+          (outputDir + "/results/Result_" + std::to_string(randomTag) + "_" +
+           std::to_string(config.deltaLow()) + "_" +
+           std::to_string(config.deltaHigh()) + "_" +
+           std::to_string(config.buDeltaLow()) + "_" +
+           std::to_string(config.buDeltaHigh()) + ".root")
+              .c_str(),
+          "recreate");
 
-    std::cout << "Result saved in file " << outputFile.GetName() << "\n";
+      outputFile.cd();
+      result->SetName(("Result_" + std::to_string(randomTag)).c_str());
+      result->Write();
+      outputFile.Close();
+
+      std::cout << "Result saved in file " << outputFile.GetName() << "\n";
+    }
   }
 }
 
@@ -667,7 +623,8 @@ bool fexists(std::string const &filename) {
 }
 
 int main(int argc, char **argv) {
-  std::string inputDir, outputDir;
+  std::string inputDir = "";
+  std::string outputDir;
   std::vector<Year> yearVec;
   std::vector<Polarity> polarityVec;
   std::vector<Bachelor> bachelorVec;
@@ -708,14 +665,13 @@ int main(int argc, char **argv) {
     if (args("help")) {
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
-      std::cout << "Type ./Fitting -inputDir=<RooDataSets directory name> \n"
-                << "\n";
-      std::cout << "-outputDir=<output directory> \n"
-                << "\n";
+      std::cout << "Type ./Fitting \n"
+                << "-inputDir=<RooDataSets directory name> if fitting to data "
+                   "or toy generated from data \n"
+                << "-outputDir=<output directory> \n";
       std::cout << "Give box dimensions:\n"
                 << "    -dl=#, -dh=#, -bl=#, -bh=#\n";
       std::cout << "Followed by the possible options:\n";
-      std::cout << "\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
                 << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
@@ -791,9 +747,12 @@ int main(int argc, char **argv) {
       if (!args("inputDir", inputDir) && nToys == 0) {
         std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
         return 1;
+      } else {
+        std::cout << "Generating toy from PDF MC shapes.\n";
       }
+
       if (!args("outputDir", outputDir)) {
-        std::cout << "Specify output directory (-outputDir=<path>).\n";
+        std::cerr << "Specify output directory (-outputDir=<path>).\n";
         return 1;
       }
       // Year
@@ -868,7 +827,7 @@ int main(int argc, char **argv) {
     config.deltaMass().setMin(134);
   }
 
-  if (nToys == 0) {
+  if (inputDir != "") {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
 
     // Add up lumi in order to convert into string to go on plots
@@ -966,7 +925,8 @@ int main(int argc, char **argv) {
                     // ALSO APPLY BOX CUTS HERE
                     RooDataSet *buDeltaInputDataSet = nullptr;
                     buDeltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(config.buDeltaMass(),
+                        reducedInputDataSet_d->reduce(
+                            config.buDeltaMass(),
                             ("Delta_M>" + std::to_string(config.deltaLow()) +
                              "&&Delta_M<" + std::to_string(config.deltaHigh()))
                                 .c_str()));
@@ -976,7 +936,8 @@ int main(int argc, char **argv) {
                     }
                     RooDataSet *deltaInputDataSet = nullptr;
                     deltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(config.deltaMass(),
+                        reducedInputDataSet_d->reduce(
+                            config.deltaMass(),
                             ("Bu_Delta_M>" +
                              std::to_string(config.buDeltaLow()) +
                              "&&Bu_Delta_M<" +
@@ -988,15 +949,16 @@ int main(int argc, char **argv) {
                     }
                     // Need to append each year, polarity to dataset at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
-                    if (mapCategoryDataset.find(ComposeFittingName(
-                            Mass::buDelta, n, b, d, c)) == mapCategoryDataset.end()) {
+                    if (mapCategoryDataset.find(
+                            ComposeFittingName(Mass::buDelta, n, b, d, c)) ==
+                        mapCategoryDataset.end()) {
                       mapCategoryDataset.insert(std::make_pair(
                           ComposeFittingName(Mass::buDelta, n, b, d, c),
                           buDeltaInputDataSet));
                       std::cout
                           << "Created key-value pair for category " +
                                  ComposeFittingName(Mass::buDelta, n, b, d, c) +
-                                 " and corresponding dataset\n"; 
+                                 " and corresponding dataset\n";
                     } else {
                       mapCategoryDataset[ComposeFittingName(Mass::buDelta, n, b,
                                                             d, c)]
@@ -1004,17 +966,18 @@ int main(int argc, char **argv) {
                       std::cout
                           << "Appended dataset to category " +
                                  ComposeFittingName(Mass::buDelta, n, b, d, c) +
-                                 "\n"; 
+                                 "\n";
                     }
-                    if (mapCategoryDataset.find(ComposeFittingName(
-                            Mass::delta, n, b, d, c)) == mapCategoryDataset.end()) {
+                    if (mapCategoryDataset.find(
+                            ComposeFittingName(Mass::delta, n, b, d, c)) ==
+                        mapCategoryDataset.end()) {
                       mapCategoryDataset.insert(std::make_pair(
                           ComposeFittingName(Mass::delta, n, b, d, c),
                           deltaInputDataSet));
                       std::cout
                           << "Created key-value pair for category " +
                                  ComposeFittingName(Mass::delta, n, b, d, c) +
-                                 " and corresponding dataset\n"; 
+                                 " and corresponding dataset\n";
                     } else {
                       mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
                                                             d, c)]
@@ -1066,31 +1029,31 @@ int main(int argc, char **argv) {
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     }
 
-    // String for lumi label on 1D projection plots
-    std::ostringstream lumiStream, lumiErrStream;
-    lumiStream << std::setprecision(2) << lumi;
-    lumiErrStream << std::setprecision(2) << lumiErr;
-    std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
-                             lumiErrStream.str() + " fb^{-1}";
-    // Loop over daughters again to plot correct PDFs
-    for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, categories, fullDataSet, *simPdf,
-                 outputDir, fitBool, lumiString, result.get());
-    }
+    if (nToys == 0) {
+      // String for lumi label on 1D projection plots
+      std::ostringstream lumiStream, lumiErrStream;
+      lumiStream << std::setprecision(2) << lumi;
+      lumiErrStream << std::setprecision(2) << lumiErr;
+      std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
+                               lumiErrStream.str() + " fb^{-1}";
+      // Loop over daughters again to plot correct PDFs
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
+                   fitBool, lumiString, result.get());
+      }
 
-    if (fitBool == true) {
-      result->Print("v");
-      PlotCorrelations(result.get(), outputDir, config);
+      if (fitBool == true) {
+        result->Print("v");
+        PlotCorrelations(result.get(), outputDir, config);
+      }
+    } else {
+      RunToys(config, categories, neutralVec, daughtersVec, chargeVec,
+              outputDir, nToys, fitBool);
     }
-
-  } else if (nToys == 1) {
-    RunSingleToy(config, categories, neutralVec, daughtersVec, chargeVec,
-                 outputDir, fitBool);
   } else {
-    RunManyToys(config, categories, neutralVec, daughtersVec, chargeVec,
-                outputDir, nToys);
+    RunToys(config, categories, neutralVec, daughtersVec, chargeVec, 
+            outputDir, nToys, fitBool);
   }
 
-
-return 0;
+  return 0;
 }
