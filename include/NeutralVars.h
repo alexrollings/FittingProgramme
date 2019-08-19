@@ -251,6 +251,45 @@ class NeutralVars {
   double &fracMisRec_Bu2D0rho() { return fracMisRec_Bu2D0rho_; }
   double &fracMisRec_Bd2Dstpi() { return fracMisRec_Bd2Dstpi_; }
   double &initYieldFAVMisRec() { return initYieldFAVMisRec_; }
+  // -------------------- Bu2D0h -------------------- //
+  RooRealVar &Bu2D0pi_thresholdDelta() {
+    return Bu2D0pi_thresholdDelta_;
+  }
+  RooRealVar &Bu2D0pi_aDelta() {
+    return Bu2D0pi_aDelta_;
+  }
+  RooRealVar &Bu2D0pi_bDelta() {
+    return Bu2D0pi_bDelta_;
+  }
+  RooRealVar &Bu2D0pi_cDelta() {
+    return Bu2D0pi_cDelta_;
+  }
+  RooRealVar &relativeBuWidth_Bu2D0h() {
+    return relativeBuWidth_Bu2D0h_;
+  }
+  RooRealVar &Bu2D0h_aLBu() {
+    return Bu2D0h_aLBu_;
+  }
+  RooRealVar &Bu2D0h_aRBu() {
+    return Bu2D0h_aRBu_;
+  }
+  RooRealVar &ratioKpi_Bu2D0h() {
+    return ratioKpi_Bu2D0h_;
+  }
+  RooRealVar &orEffBu2D0pi() {
+    return orEffBu2D0pi_;
+  }
+  RooRealVar &boxEffBu2D0pi() {
+    return boxEffBu2D0pi_;
+  }
+  RooRealVar &buDeltaCutEffBu2D0pi() {
+    return buDeltaCutEffBu2D0pi_;
+  }
+  RooRealVar &deltaCutEffBu2D0pi() {
+    return deltaCutEffBu2D0pi_;
+  }
+  double &fracBu2D0pi() { return fracBu2D0pi_; }
+  double &initYieldFAVBu2D0pi() { return initYieldFAVBu2D0pi_; }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -324,6 +363,21 @@ class NeutralVars {
   double fracMisRec_Bd2Dstpi_;
   double fracMisRec_;
   double initYieldFAVMisRec_;
+  // -------------------- OVER-REC -------------------- //
+  RooRealVar Bu2D0pi_thresholdDelta_;
+  RooRealVar Bu2D0pi_aDelta_;
+  RooRealVar Bu2D0pi_bDelta_;
+  RooRealVar Bu2D0pi_cDelta_;
+  RooRealVar relativeBuWidth_Bu2D0h_;
+  RooRealVar Bu2D0h_aLBu_;
+  RooRealVar Bu2D0h_aRBu_;
+  RooRealVar ratioKpi_Bu2D0h_;
+  RooRealVar orEffBu2D0pi_;
+  RooRealVar boxEffBu2D0pi_;
+  RooRealVar buDeltaCutEffBu2D0pi_;
+  RooRealVar deltaCutEffBu2D0pi_;
+  double fracBu2D0pi_;
+  double initYieldFAVBu2D0pi_;
 };
 
 // inline allows a function to be defined multiple times. Templated functions
