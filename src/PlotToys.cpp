@@ -211,6 +211,7 @@ int main(int argc, char *argv[]) {
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
   std::vector<RooFitResult> resultVec;
+  std::vector<RooFitResult> dataResultVec;
   std::string deltaLow, deltaHigh, buLow, buHigh;
 
   for (auto &filename : resultFiles) {
@@ -233,11 +234,19 @@ int main(int argc, char *argv[]) {
       resultVec.emplace_back(*result.get());
       // std::cout << "Extracted Result from " << filename << "\n";
     }
+    auto dataResult = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
+        file->FindObjectAny("DataFitResult")));
+    if (dataResult == nullptr) {
+      throw std::runtime_error("Could not extract DataFitResult from " + filename);
+    } else {
+      dataResultVec.emplace_back(*dataResult.get());
+      // std::cout << "Extracted Result from " << filename << "\n";
+    }
   }
 
   // Create vector of histograms: automatically make histograms for the value,
-  RooArgList initialPars0 = resultVec[0].floatParsInit();
-  double nParams = initialPars0.getSize();
+  RooArgList finalPars0 = resultVec[0].floatParsFinal();
+  double nParams = finalPars0.getSize();
   // std::cout << "Number of parameters stored in results = " << nParams << "\n";
 
   // Check result quality and print out stats
@@ -285,7 +294,8 @@ int main(int argc, char *argv[]) {
     } else if (fitStatus != 0) {
       nMINOS++;
     } else {
-      RooArgList initialPars = resultVec[j].floatParsInit();
+      // Initial pars are final pars of data fit (PDF toy was generated from)
+      RooArgList initialPars = dataResultVec[j].floatParsFinal();
       RooArgList finalPars = resultVec[j].floatParsFinal();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
@@ -364,7 +374,7 @@ int main(int argc, char *argv[]) {
   // result
   for (double i = 0; i < nParams; ++i) {
     // Extract parameter names using regular expression in order to remove _#
-    std::string fullName = initialPars0.at(i)->GetName();
+    std::string fullName = finalPars0.at(i)->GetName();
     // std::cout << "Full parameter name = " << fullName << "\n";
     std::regex rexp("([A-Za-z0-9_]+)_[0-9]+");
     std::smatch match;
