@@ -87,26 +87,27 @@ if __name__ == "__main__":
     bu_high = args.bu_high
 
     if n_jobs > 10:
-      sys.exit("Can't use more than 10 cores.")
+        sys.exit("Can't use more than 10 cores.")
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
     if delta_low == None:
-      delta_low = 125
+        delta_low = 125
     if delta_high == None:
-      delta_high = 170
+        delta_high = 170
     if bu_low == None:
-      bu_low = 5240
+        bu_low = 5240
     if bu_high == None:
-      bu_high = 5330
+        bu_high = 5330
 
     scriptList = []
     for i in range(0, n_jobs):
         if input_dir == None:
             print("Generating toys from MC PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_mc.sh.tmpl"
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_" + str(i) + ".sh.tmpl"
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
+                i) + ".sh.tmpl"
             substitutions = {
                 "nJob":
                 i,
@@ -132,7 +133,7 @@ if __name__ == "__main__":
         else:
             print("Generating toys from data PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_data.sh.tmpl"
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_" + str(i) + ".sh.tmpl"
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_"+ delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh.tmpl"
             substitutions = {
                 "nJob":
                 i,
