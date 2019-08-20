@@ -574,7 +574,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       auto pdfs = p.second;
       for (auto &p : pdfs) {
         std::cout << "Plotting " << p->addPdf().GetName() << "\n";
-        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
+        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit, outputDir,
                    fitBool, lumiString, result.get());
       }
       if (fitBool == true) {
