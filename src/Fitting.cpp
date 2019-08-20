@@ -521,14 +521,14 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 // Function we use to do the toy study - run many toys and extract pulls for
 // each mass of interest
 void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
-             Configuration &config,
-             Configuration::Categories &categories,
+             std::unique_ptr<RooFitResult> &dataFitResult,
+             Configuration &config, Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
              std::vector<Charge> const &chargeVec, std::string const &outputDir,
              int nToys, bool fitBool) {
   // Start from 1 as id = 0 is data fit params
-  for (int id = 1; id < nToys+1; ++id) {
+  for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
               << " -------------------------- \n\n";
     // Setting the random seed to 0 is a special case which generates a
@@ -559,7 +559,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
         ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
-    
+
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> result;
@@ -569,7 +569,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     }
-    if (id == 0) {
+    if (id == 1) {
       std::string lumiString = "TOY";
       auto pdfs = p.second;
       for (auto &p : pdfs) {
@@ -596,9 +596,11 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       outputFile.cd();
       result->SetName(("Result_" + std::to_string(randomTag)).c_str());
       result->Write();
+      dataFitResult->SetName("DataFitResult");
+      dataFitResult->Write();
       outputFile.Close();
 
-      std::cout << "Result saved in file " << outputFile.GetName() << "\n";
+      std::cout << "Results saved to file " << outputFile.GetName() << "\n";
     }
   }
 }
@@ -707,9 +709,8 @@ int main(int argc, char **argv) {
                    std::to_string(config.buDeltaLow()) + "\n";
       } else {
         config.SetBuDeltaLow(buDeltaLowArg);
-        std::cout
-            << "Set value for lower buDelta mass box threshold: " +
-                   std::to_string(config.buDeltaLow()) + "\n";
+        std::cout << "Set value for lower buDelta mass box threshold: " +
+                         std::to_string(config.buDeltaLow()) + "\n";
       }
       if (!args("bh", buDeltaHighArg)) {
         std::cout
@@ -717,9 +718,8 @@ int main(int argc, char **argv) {
                    std::to_string(config.buDeltaHigh()) + "\n";
       } else {
         config.SetBuDeltaHigh(buDeltaHighArg);
-        std::cout
-            << "Set value for upper buDelta mass box threshold: " +
-                   std::to_string(config.buDeltaHigh()) + "\n";
+        std::cout << "Set value for upper buDelta mass box threshold: " +
+                         std::to_string(config.buDeltaHigh()) + "\n";
       }
       if (!args("dl", deltaLowArg)) {
         std::cout
@@ -727,9 +727,8 @@ int main(int argc, char **argv) {
                    std::to_string(config.deltaLow()) + "\n";
       } else {
         config.SetDeltaLow(deltaLowArg);
-        std::cout
-            << "Set value for lower delta mass box threshold: " +
-                   std::to_string(config.deltaLow()) + "\n";
+        std::cout << "Set value for lower delta mass box threshold: " +
+                         std::to_string(config.deltaLow()) + "\n";
       }
       if (!args("dh", deltaHighArg)) {
         std::cout
@@ -737,9 +736,8 @@ int main(int argc, char **argv) {
                    std::to_string(config.deltaHigh()) + "\n";
       } else {
         config.SetDeltaHigh(deltaHighArg);
-        std::cout
-            << "Set value for upper delta mass box threshold: " +
-                   std::to_string(config.deltaHigh()) + "\n";
+        std::cout << "Set value for upper delta mass box threshold: " +
+                         std::to_string(config.deltaHigh()) + "\n";
       }
 
       if (!args("toys", toysArg)) {
@@ -831,9 +829,11 @@ int main(int argc, char **argv) {
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
     config.deltaMass().setMin(134);
   }
-    
-  // Declare simPDF before any if statements so that it can be passed to RunToys no matter what
+
+  // Declare simPDF and result before any if statements so that it can be passed
+  // to RunToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
+  std::unique_ptr<RooFitResult> result;
 
   if (inputDir != "") {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
@@ -1028,8 +1028,6 @@ int main(int argc, char **argv) {
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
-    std::unique_ptr<RooFitResult> result;
-
     if (fitBool == true) {
       result = std::unique_ptr<RooFitResult>(
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
@@ -1056,16 +1054,17 @@ int main(int argc, char **argv) {
       }
     } else {
       if (simPdf == nullptr) {
-        std::cerr << "SimPdf not defined: using MC shapes." << "\n";
+        std::cerr << "SimPdf not defined: using MC shapes."
+                  << "\n";
       } else {
         result->Print("v");
       }
-      RunToys(simPdf, config, categories, neutralVec, daughtersVec, chargeVec,
-              outputDir, nToys, fitBool);
+      RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+              chargeVec, outputDir, nToys, fitBool);
     }
   } else {
-    RunToys(simPdf, config, categories, neutralVec, daughtersVec, chargeVec, 
-            outputDir, nToys, fitBool);
+    RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+            chargeVec, outputDir, nToys, fitBool);
   }
 
   return 0;
