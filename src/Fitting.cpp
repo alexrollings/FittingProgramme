@@ -596,8 +596,10 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       outputFile.cd();
       result->SetName(("Result_" + std::to_string(randomTag)).c_str());
       result->Write();
-      dataFitResult->SetName("DataFitResult");
-      dataFitResult->Write();
+      if (dataFitResult != nullptr) {
+        dataFitResult->SetName("DataFitResult");
+        dataFitResult->Write();
+      }
       outputFile.Close();
 
       std::cout << "Results saved to file " << outputFile.GetName() << "\n";
