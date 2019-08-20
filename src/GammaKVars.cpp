@@ -97,7 +97,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .N_Bu2Dst0h_D0pi0(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .ratioKpi_Bu2Dst0h_D0pi0(),
+              // Ratio shared for gamma and π0 for now (constraint)
+                  .ratioKpi_Bu2Dst0h_D0gamma(),
+                  // .ratioKpi_Bu2Dst0h_D0pi0(),
               Configuration::Get().pidEff()))),
       N_Delta_Bu2Dst0h_D0pi0_(
           ("N_Delta_Bu2Dst0h_D0pi0_" +

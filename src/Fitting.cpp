@@ -1069,5 +1069,6 @@ int main(int argc, char **argv) {
             chargeVec, outputDir, nToys, fitBool);
   }
 
+  std::cout << "end" << std::endl;
   return 0;
 }
