@@ -38,22 +38,24 @@ os.chdir(path)
 signal_yield_pull_widths = []
 # Array to store mean total signal yield and std dev
 signal_yield = []
+# Array to store mean total signal yield error and std dev
+signal_yield_err = []
 
 # Name of branches in tree (box and or effs)
 branch_names = ['orEffSignal', 'boxEffSignal']
 # Array to store efficiencies in
 box_eff = []
 or_eff = []
-# n_mc needed to calculate error on efficiencies
+# n_mc needed to calculate error on efficiencies (for gamma mode)
 n_mc_events = 14508
 
 # Loop over files and extract result of interest
 for i in range(0,len(file_list)):
   tf = TFile(file_list[i])
   # In result, params are stored in order mean [0], std dev [1]
-  result_yield_pull_widths = tf.Get("Result_Pull_yieldTotSignal")
-  result_yield = tf.Get("Result_Val_yieldTotSignal")
-  result_yield_err = tf.Get("Result_Err_yieldTotSignal")
+  result_yield_pull_widths = tf.Get("Result_Pull_N_Bu2Dst0h_D0gamma")
+  result_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma")
+  result_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma")
   # Final values of fit to pulls
   pars_yield_pull_widths = result_yield_pull_widths.floatParsFinal()
   pars_yield = result_yield.floatParsFinal()
@@ -63,6 +65,7 @@ for i in range(0,len(file_list)):
     initial_width = ufloat(pars_yield_pull_widths[1].getVal(), pars_yield_pull_widths[1].getError())
   signal_yield_pull_widths.append(ufloat(pars_yield_pull_widths[1].getVal(), pars_yield_pull_widths[1].getError()))
   signal_yield.append(ufloat(pars_yield[0].getVal(), pars_yield_err[0].getVal()))
+  signal_yield_err.append(ufloat(pars_yield_err[0].getVal(), pars_yield_err[1].getVal()))
 
   # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
   eff_tree = r_np.root2array(file_list[i], "tree", branch_names)
@@ -86,8 +89,18 @@ plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(sig
 plt.legend(loc='upper left')
 plt.xlabel('$N_{Box}/N_{T}$')
 plt.ylabel('$N_{T}$ Pull Width')
-fig.show()
+# fig.show()
 fig.savefig("shared_yield_vs_sig_pull_width.pdf")
-plt.show()
+# plt.show()
 
+fig = plt.figure()
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(linear_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(linear_err_fn), label='$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(signal_yield_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(signal_yield_err), label='Pseudo-experiments')
+plt.legend(loc='upper left')
+plt.xlabel('$N_{Box}/N_{T}$')
+plt.ylabel('$N_{T}$ Error')
+# fig.show()
+fig.savefig("shared_yield_vs_sig_yield_err.pdf")
+# plt.show()
 
