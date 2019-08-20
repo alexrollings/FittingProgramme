@@ -55,18 +55,51 @@ if __name__ == "__main__":
         type=str,
         help='Path to RDS of data: required to generate toys from data PDF',
         required=False)
+    parser.add_argument(
+        '-dl',
+        '--delta_low',
+        type=str,
+        help='Lower delta mass range',
+        required=False)
+    parser.add_argument(
+        '-dh',
+        '--delta_high',
+        type=str,
+        help='Upper delta mass range',
+        required=False)
+    parser.add_argument(
+        '-bl', '--bu_low', type=str, help='Lower bu mass range', required=False)
+    parser.add_argument(
+        '-bh',
+        '--bu_high',
+        type=str,
+        help='Upper bu mass range',
+        required=False)
     args = parser.parse_args()
 
     output_dir = args.output_dir
     n_toys = args.n_toys
     n_jobs = args.n_jobs
     input_dir = args.input_dir
+    delta_low = args.delta_low
+    delta_high = args.delta_high
+    bu_low = args.bu_low
+    bu_high = args.bu_high
 
     if n_jobs > 10:
       sys.exit("Can't use more than 10 cores.")
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+
+    if delta_low == None:
+      delta_low = 125
+    if delta_high == None:
+      delta_high = 170
+    if bu_low == None:
+      bu_low = 5240
+    if bu_high == None:
+      bu_high = 5330
 
     scriptList = []
     for i in range(0, n_jobs):
@@ -84,7 +117,15 @@ if __name__ == "__main__":
                 "PATH":
                 output_dir,
                 "NTOYS":
-                n_toys
+                n_toys,
+                "DL":
+                delta_low,
+                "DH":
+                delta_high,
+                "BL":
+                bu_low,
+                "BH":
+                bu_high
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
@@ -104,7 +145,15 @@ if __name__ == "__main__":
                 "NTOYS":
                 n_toys,
                 "INPUT":
-                input_dir
+                input_dir,
+                "DL":
+                delta_low,
+                "DH":
+                delta_high,
+                "BL":
+                bu_low,
+                "BH":
+                bu_high
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
