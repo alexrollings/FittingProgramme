@@ -246,8 +246,6 @@ int main(int argc, char *argv[]) {
   tree.Branch("boxEffSignal", &boxEffSignal, "boxEffSignal/D");
   tree.Fill();
   tree.Write();
-  outputFile.Write();
-  outputFile.Close();
 
   // Loop over params, create histogram for each and fill with values from
   // result
@@ -308,7 +306,7 @@ int main(int argc, char *argv[]) {
         std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
     valResult->Print("v");
     valResult->SetName(("Result_Val_" + paramName).c_str());
-    // valResult->Write();
+    valResult->Write();
     std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
     valFrame->GetXaxis()->SetTitle(paramName.c_str());
     valDH.plotOn(valFrame.get());
@@ -354,7 +352,7 @@ int main(int argc, char *argv[]) {
         std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
     errResult->Print("v");
     errResult->SetName(("Result_Err_" + paramName).c_str());
-    // errResult->Write();
+    errResult->Write();
     std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
     errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
     errDH.plotOn(errFrame.get());
@@ -397,7 +395,7 @@ int main(int argc, char *argv[]) {
         std::unique_ptr<RooFitResult>(pullGaus.fitTo(pullDH, RooFit::Save()));
     pullResult->Print("v");
     pullResult->SetName(("Result_Pull_" + paramName).c_str());
-    // pullResult->Write();
+    pullResult->Write();
     std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
     pullFrame->GetXaxis()->SetTitle((paramName + " Pull").c_str());
     pullDH.plotOn(pullFrame.get());
@@ -435,6 +433,9 @@ int main(int argc, char *argv[]) {
     //                   "_ValErrPull.pdf")
     //                      .c_str());
   }
+
+  outputFile.Write();
+  outputFile.Close();
   std::cout << "Number of toys: " << resultVec.size() << "\n";
             // << initValVec.size() << "\n"
             // << valVec.size() << "\n"
