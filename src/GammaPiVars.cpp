@@ -90,8 +90,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                      .initYieldFAVBu2Dst0pi_D0pi0() *
                                  NeutralVars<Neutral::gamma>::Get(uniqueId)
                                      .orEffBu2Dst0pi_D0pi0()
-                                     .getVal(),
-                         -1000000, 1000000)),
+                                     .getVal())),
+                         // -1000000, 1000000)),
       N_Delta_Bu2Dst0h_D0pi0_(
           ("N_Delta_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

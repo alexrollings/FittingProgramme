@@ -22,6 +22,12 @@ if __name__ == "__main__":
         help='Directory where folder for PDFs and results should be created',
         required=True)
     parser.add_argument(
+        '-n',
+        '--neutral',
+        type=str,
+        help='Neutral',
+        required=True)
+    parser.add_argument(
         '-dl',
         '--delta_low',
         type=str,
@@ -49,6 +55,7 @@ if __name__ == "__main__":
 
     input_dir = args.input_dir
     output_dir = args.output_dir
+    neutral = args.neutral
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
@@ -71,7 +78,7 @@ if __name__ == "__main__":
     # print("./PlotToys " + ",".join(file_list))
     if len(file_list) != 0:
         subprocess.call([
-            "./PlotToys", ",".join(file_list), output_dir
+            "./PlotToys", neutral, ",".join(file_list), output_dir
         ])
     else:
         sys.exit("File list empty")

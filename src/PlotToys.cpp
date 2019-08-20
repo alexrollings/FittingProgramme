@@ -21,41 +21,8 @@
 #include "TPad.h"
 #include "TStyle.h"
 #include "TTreeReader.h"
-
-enum class Mode {
-  Bd2Dstpi,
-  Bu2D0pi,
-  Bu2D0rho,
-  Bu2Dst0pi_D0gamma,
-  Bu2Dst0pi_D0pi0,
-  Bu2Dst0rho_D0gamma,
-  Bu2Dst0rho_D0pi0
-};
-
-std::string EnumToString(Mode mode) {
-  switch (mode) {
-    case Mode::Bd2Dstpi:
-      return "Bd2Dstpi";
-      break;
-    case Mode::Bu2D0pi:
-      return "Bu2D0pi";
-      break;
-    case Mode::Bu2D0rho:
-      return "Bu2D0rho";
-      break;
-    case Mode::Bu2Dst0pi_D0gamma:
-      return "Bu2Dst0pi_D0gamma";
-      break;
-    case Mode::Bu2Dst0pi_D0pi0:
-      return "Bu2Dst0pi_D0pi0";
-      break;
-    case Mode::Bu2Dst0rho_D0gamma:
-      return "Bu2Dst0rho_D0gamma";
-      break;
-    case Mode::Bu2Dst0rho_D0pi0:
-      return "Bu2Dst0rho_D0pi0";
-  }
-}
+#include "Configuration.h"
+#include "NeutralVars.h"
 
 std::vector<std::string> SplitByComma(std::string const &str) {
   std::stringstream ss;
@@ -75,157 +42,44 @@ std::string to_string_with_precision(double value) {
   return out.str();
 }
 
-void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
-                            std::string const &box_delta_high,
-                            std::string const &box_bu_low,
-                            std::string const &box_bu_high, double &boxEff,
-                            double &orEff) {
-  std::string inputfile_1(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2011_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2011_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_2(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2011_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2011_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_3(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2012_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2012_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_4(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2012_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2012_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_5(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2015_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_6(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2015_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_7(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2016_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_8(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2016_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string ttree("BtoDstar0h3_h1h2gammaTuple");
-
-  TChain chain(ttree.c_str());
-
-  chain.Add(inputfile_1.c_str());
-  chain.Add(inputfile_2.c_str());
-  chain.Add(inputfile_3.c_str());
-  chain.Add(inputfile_4.c_str());
-  chain.Add(inputfile_5.c_str());
-  chain.Add(inputfile_6.c_str());
-  chain.Add(inputfile_7.c_str());
-  chain.Add(inputfile_8.c_str());
-
-  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma) {
-    std::string inputfile_9(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_2015_MagUp/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_10(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2015_MagDown/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_11(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2016_MagUp/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_12(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2016_MagDown/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-    chain.Add(inputfile_9.c_str());
-    chain.Add(inputfile_10.c_str());
-    chain.Add(inputfile_11.c_str());
-    chain.Add(inputfile_12.c_str());
-  }
-
-  chain.GetEntry(0);
-
-  TTreeReader reader(&chain);
-
-  TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
-  TTreeReaderValue<double> Delta_M(reader, "Delta_M");
-
-  double nInitial = chain.GetEntries(
-      "BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-      "DTF_D0<5800");
-  double nBox = chain.GetEntries(
-      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5800&&Delta_M>" +
-       box_delta_low + "&&Delta_M<" + box_delta_high + "&&Bu_Delta_M>" +
-       box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-          .c_str());
-  double nOr = chain.GetEntries(
-      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5800&&((Delta_M>" +
-       box_delta_low + "&&Delta_M<" + box_delta_high + ")||(Bu_Delta_M>" +
-       box_bu_low + "&&Bu_Delta_M<" + box_bu_high + "))")
-          .c_str());
-
-  boxEff = nBox / nInitial;
-  orEff = nOr / nInitial;
-
-  std::cout << "Set efficiencies :\n"
-            << "\tBox =\t" << nBox / nInitial << "\n"
-            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n";
-}
-
 int main(int argc, char *argv[]) {
-  if (argc < 3) {
-    std::cerr << "Pass comma separated string of filenames storing "
+  if (argc < 4) {
+    std::cerr << "Pass neutral, comma separated string of filenames storing "
                  "RooFitResults and output directory.\n";
     return 1;
   }
-  std::vector<std::string> resultFiles = SplitByComma(argv[1]);
+  std::string neutString = argv[1];
+  Neutral neutral;
+  if (neutString == "gamma") {
+    neutral = Neutral::gamma;
+  } else if (neutString == "pi0") {
+    neutral = Neutral::pi0;
+  } else {
+    std::cerr << "Neutral = gamma/pi0";
+    return 1;
+  }
+
+  std::vector<std::string> resultFiles = SplitByComma(argv[2]);
   // std::cout << resultFiles.size();
-  std::string outputDir = argv[2];
+  std::string outputDir = argv[3];
 
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
   std::vector<RooFitResult> resultVec;
   std::vector<RooFitResult> dataResultVec;
-  std::string deltaLow, deltaHigh, buLow, buHigh;
 
+  Configuration &config = Configuration::Get();
   for (auto &filename : resultFiles) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp(
         ".+_([0-9].[0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+).root");
-        // ".+_([0-9].[0-9]+).root");
     std::smatch fileMatch;
     std::regex_search(filename, fileMatch, fileRexp);
     std::string rndm = fileMatch[1];
-    // deltaLow = fileMatch[2];
-    // deltaHigh = fileMatch[3];
-    // buLow = fileMatch[4];
-    // buHigh = fileMatch[5];
+    config.SetDeltaLow(std::stod(fileMatch[2]));
+    config.SetDeltaHigh(std::stod(fileMatch[3]));
+    config.SetBuDeltaLow(std::stod(fileMatch[4]));
+    config.SetBuDeltaHigh(std::stod(fileMatch[5]));
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
         file->FindObjectAny(("Result_" + rndm).c_str())));
     if (result == nullptr) {
@@ -352,23 +206,48 @@ int main(int argc, char *argv[]) {
       }
     }
   }
-  // Extract box efficiencies for calulcations with toys
-  // double boxEffSignal, orEffSignal;
-  //
-  // ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, deltaLow, deltaHigh,
-  //                        buLow, buHigh, boxEffSignal, orEffSignal);
+
+  double boxEffSignal, orEffSignal;
+  {
+    RooRealVar orEffSignalRRV("orEffSignalRRV", "", 1);
+    RooRealVar boxEffSignalRRV("boxEffSignalRRV", "", 1);
+    RooRealVar buDeltaCutEffSignalRRV("buDeltaCutEffSignalRRV", "", 1);
+    RooRealVar deltaCutEffSignalRRV("deltaCutEffSignalRRV", "", 1);
+
+    // Create temporary NVars object in order to set efficiencies
+    int id = 0;
+    if (neutral == Neutral::gamma) {
+      NeutralVars<Neutral::gamma> neutralVars(id);
+      neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
+                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
+                                  deltaCutEffSignalRRV);
+    } else {
+      NeutralVars<Neutral::pi0> neutralVars(id);
+      neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
+                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
+                                  deltaCutEffSignalRRV);
+    }
+
+    orEffSignal = orEffSignalRRV.getVal();
+    boxEffSignal = boxEffSignalRRV.getVal();
+  }
 
   // File to save results
-  // TFile outputFile((outputDir + "/results/Result_" + deltaLow + "_" +
-  //                   deltaHigh + "_" + buLow + "_" + buHigh + ".root")
-  //                      .c_str(),
-  //                  "recreate");
-  // outputFile.cd();
-  // TTree tree("tree", "");
-  // tree.Branch("orEffSignal", &orEffSignal, "orEffSignal/D");
-  // tree.Branch("boxEffSignal", &boxEffSignal, "boxEffSignal/D");
-  // tree.Fill();
-  // tree.Write();
+  TFile outputFile(
+      (outputDir + "/results/Result_" + std::to_string(config.deltaLow()) +
+       "_" + std::to_string(config.deltaHigh()) + "_" +
+       std::to_string(config.buDeltaLow()) + "_" +
+       std::to_string(config.buDeltaHigh()) + ".root")
+          .c_str(),
+      "recreate");
+  outputFile.cd();
+  TTree tree("tree", "");
+  tree.Branch("orEffSignal", &orEffSignal, "orEffSignal/D");
+  tree.Branch("boxEffSignal", &boxEffSignal, "boxEffSignal/D");
+  tree.Fill();
+  tree.Write();
+  outputFile.Write();
+  outputFile.Close();
 
   // Loop over params, create histogram for each and fill with values from
   // result
@@ -383,8 +262,6 @@ int main(int argc, char *argv[]) {
     // std::cout << "After regex, parameter name = " << paramName << "\n";
 
     double initValRange = initValMax[i] - initValMin[i];
-    // TH1D initValHist(("initValHist_" + paramName).c_str(), "",
-    // round(resultVec.size()/20),
     TH1D initValHist(("initValHist_" + paramName).c_str(), "", 50,
                      initValMin[i] - initValRange / 5,
                      initValMax[i] + initValRange / 5);
@@ -409,13 +286,6 @@ int main(int argc, char *argv[]) {
       errHist.Fill(errVec[j][i]);
       pullHist.Fill(pullVec[j][i]);
     }
-    // TCanvas initValCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
-    // initValHist.GetXaxis()->SetTitle(paramName.c_str());
-    // initValHist.Draw();
-    // initValCanvas.SaveAs((outputDir + "/plots/" + deltaLow + "_" + deltaHigh +
-    //                       "_" + buLow + "_" + buHigh + "_" + paramName +
-    //                       "_initVal.pdf")
-    //                          .c_str());
 
     TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
     varCanvas.Divide(3, 1);
@@ -554,21 +424,17 @@ int main(int argc, char *argv[]) {
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
 
-    // varCanvas.SaveAs((outputDir + "/plots/" + deltaLow + "_" + deltaHigh + "_" +
-    //                   buLow + "_" + buHigh + "_" + paramName +
-    //                   "_ValErrPull.pdf")
-    //                      .c_str());
-    varCanvas.SaveAs((outputDir + "/plots/" + paramName +
+    varCanvas.SaveAs((outputDir + "/plots/" +
+                      std::to_string(config.deltaLow()) + "_" +
+                      std::to_string(config.deltaHigh()) + "_" +
+                      std::to_string(config.buDeltaLow()) + "_" +
+                      std::to_string(config.buDeltaHigh()) + "_" + paramName +
                       "_ValErrPull.pdf")
                          .c_str());
+    // varCanvas.SaveAs((outputDir + "/plots/" + paramName +
+    //                   "_ValErrPull.pdf")
+    //                      .c_str());
   }
-  // Don't save corrected error for now - see if we can get error from pulls
-  // TTree tree("tree", "");
-  // tree.Branch("errYieldTotSignal", &errYieldTotSignal,
-  // "errYieldTotSignal/D");
-  // tree.Fill();
-  // outputFile.Write();
-  // outputFile.Close();
   std::cout << "Number of toys: " << resultVec.size() << "\n";
             // << initValVec.size() << "\n"
             // << valVec.size() << "\n"
