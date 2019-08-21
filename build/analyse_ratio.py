@@ -94,13 +94,26 @@ plt.ylabel('Pull Width')
 plt.title('$N_{D^{*}K^{\\pm}}/N_{D^{*}\pi^{\\pm}}$')
 fig.savefig("box_yield_vs_ratio_pull_width.pdf")
 
-# ideal_err_fun =
+# NK_T = Nπ_T * R
+signal_yield_k = np.multiply(signal_yield_arr, ratio_val_arr)
+# Ideal error function = sqrt( N_T / (N_BOX/N_T) +1 ): 2 when N_BOX = N_T, 1 when N_BOX = 0
+# For Nπ_T:
+signal_yield_pi_ideal_err = unumpy.sqrt(np.divide(signal_yield_arr, (frac_shared_yield + np.ones(len(file_list)))))
+# For NK_T:
+signal_yield_k_ideal_err = unumpy.sqrt(np.divide(signal_yield_k, (frac_shared_yield + np.ones(len(file_list)))))
+# Make ideal unumpy arrays by combining values and ideal error
+signal_yield_pi_ideal = unumpy.uarray(unumpy.nominal_values(signal_yield_arr), unumpy.nominal_values(signal_yield_pi_ideal_err))
+signal_yield_k_ideal = unumpy.uarray(unumpy.nominal_values(signal_yield_k), unumpy.nominal_values(signal_yield_k_ideal_err))
+# In order to calculate ideal ratio error with unumpy
+ratio_ideal = np.divide(signal_yield_k_ideal, signal_yield_pi_ideal)
+# corrected_err = np.multiply(np.multiply(frac_shared_yield, unumpy.sqrt(np.ones(len(file_list))*2)) + np.divide((signal_yield_arr - shared_yield), signal_yield_arr), signal_yield_err_arr)
 
-print(frac_shared_yield)
 fig = plt.figure()
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.std_devs(ratio_ideal), xerr=unumpy.std_devs(frac_shared_yield), label='Stat Error')
+# plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(corrected_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(corrected_err), label='Corrected Error')
 plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(ratio_err_arr), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(ratio_err_arr), label='Pseudo-experiments')
+plt.legend(loc='best')
 plt.xlabel('$N_{Box}/N_{T}$')
 plt.ylabel('Error')
 plt.title('$N_{D^{*}K^{\\pm}}/N_{D^{*}\pi^{\\pm}}$')
 fig.savefig("box_yield_vs_ratio_err.pdf")
-
