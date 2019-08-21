@@ -48,21 +48,17 @@ if __name__ == "__main__":
   bu_low = args.bu_low
   bu_high = args.bu_high
 
-  m = re.search("Result(0.[0-9]+)_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".root", filename)
-  if m:
-    rndm = m.group(1)
-  else:
-    sys.exit("No file matching regex")
+  filename = path + "/DataResult_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".root"
 
   tf = TFile(filename)
-  result = tf.Get("Result_" + rndm)
+  result = tf.Get("fitresult_simPdf_0_fullDataHist")
 
   if result == None:
-    sys.exit("Could not extract Result_" + rndm + " from " + filename)
+    sys.exit("Could not extract result from " + filename)
 
   #List of params we want, with their value and error
   #Use these to calculate all the other yields
-  vars = ["N_Bu2Dst0h_D0gamma_gamma_pi", "N_Bu2Dst0h_D0gamma_gamma_k"]
+  vars = ["N_Bu2Dst0h_D0gamma_gamma_pi_0", "N_Bu2Dst0h_D0gamma_gamma_k_0"]
 
   #Dict to add the values and errors of the observables into
   obs = {}
