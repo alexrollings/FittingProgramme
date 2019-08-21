@@ -82,32 +82,16 @@ if __name__ == "__main__":
     for b in range(0,len(vars)):
       corr[a,b] = result.correlation(vars[a],vars[b])
 
-  print(corr)
+  # Returns numbers with the correct uncertainties and correlations, given the covariance matric
+  (obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"], obs["N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) = u.correlated_values_norm([obs["N_Bu2Dst0h_D0gamma_gamma_pi_0"], obs["N_Bu2Dst0h_D0gamma_gamma_k_0"]], corr)
+
+  #Ratio D*K/D*π
+  obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs["N_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
+  print("ratioKpi_Bu2Dst0h_D0gamma_gamma = " + str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]))
 
 
-  # (obs["n_dpi_LL_%s_corr" % k], obs["n_dpi_DD_%s_corr" % k], obs["R_dk_vs_dpi_KPi_%s_corr" % k], obs["R_dk_vs_dpi_PiK_%s_corr" % k], obs["R_%s_corr" % k]) = u.correlated_values_norm([obs["n_dpi_LL_%s" % k], obs["n_dpi_DD_%s" % k], obs["R_dk_vs_dpi_KPi_%s" % k], obs["R_dk_vs_dpi_PiK_%s" % k], obs["R_%s" % k]] , corr[k])
-  #
-  # #Total Dpi yield
-  # obs["n_dpi_%s" % k] = obs["n_dpi_DD_%s_corr" % k] + obs["n_dpi_LL_%s_corr" % k]
-  # #print(obs["n_dpi_%s" % k])
-  #
-  # #Total Dpi SS yield
-  # obs["n_dpi_SS_%s" % k] = (obs["R_%s_corr" % k]/(1.0 + obs["R_%s_corr" % k])) * obs["n_dpi_%s" % k]
-  # print(obs["n_dpi_SS_%s" % k])
-  #
-  # obs["n_dpi_OS_%s" % k] = (1.0/(1.0 + obs["R_%s_corr" % k])) * obs["n_dpi_%s" % k]
-  # print(obs["n_dpi_OS_%s" % k])
-  #
-  # obs["n_dk_SS_%s" % k] = obs["R_dk_vs_dpi_KPi_%s_corr" % k] * obs["n_dpi_SS_%s" % k]
-  # print(obs["n_dk_SS_%s" % k])
-  #
-  # obs["n_dk_OS_%s" % k] = obs["R_dk_vs_dpi_PiK_%s_corr" % k] * obs["n_dpi_OS_%s" % k]
-  # print(obs["n_dk_OS_%s" % k])
-  #
-  #
-  #
-  #
-  #
+
+
   # file = open("../results/Yields_%s.tex" % years, "w")
   # file.write("\\begin{table}[t]\n")
   # file.write("\\centering\n")
