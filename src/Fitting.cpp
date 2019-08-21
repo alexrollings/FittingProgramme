@@ -1053,6 +1053,53 @@ int main(int argc, char **argv) {
       if (fitBool == true) {
         result->Print("v");
         PlotCorrelations(result.get(), outputDir, config);
+        // Save RFR of data and efficiencies to calculate observables with
+        // corrected errors
+        TFile outputFile((outputDir + "/results/DataResult_" +
+                          std::to_string(config.deltaLow()) + "_" +
+                          std::to_string(config.deltaHigh()) + "_" +
+                          std::to_string(config.buDeltaLow()) + "_" +
+                          std::to_string(config.buDeltaHigh()) + ".root")
+                             .c_str(),
+                         "recreate");
+        result->Write();
+        TTree tree("tree", "");
+        for (auto &n : neutralVec) {
+          double boxEffSignal, orEffSignal;
+          int id=0;
+          RooRealVar orEffSignalRRV(
+              ("orEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+          RooRealVar boxEffSignalRRV(
+              ("boxEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+          RooRealVar buDeltaCutEffSignalRRV(
+              ("buDeltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+          RooRealVar deltaCutEffSignalRRV(
+              ("deltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+          switch (n) {
+            case Neutral::gamma: {
+              NeutralVars<Neutral::gamma> gVars(id);
+              gVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
+                                    boxEffSignalRRV, buDeltaCutEffSignalRRV,
+                                    deltaCutEffSignalRRV);
+            } break;
+            case Neutral::pi0: {
+              NeutralVars<Neutral::pi0> pVars(id);
+              pVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
+                                    boxEffSignalRRV, buDeltaCutEffSignalRRV,
+                                    deltaCutEffSignalRRV);
+            } break;
+          }
+          orEffSignal = orEffSignalRRV.getVal();
+          boxEffSignal = boxEffSignalRRV.getVal();
+          tree.Branch(("orEffSignal_" + EnumToString(n)).c_str(), &orEffSignal,
+                      ("orEffSignal_" + EnumToString(n) + "/D").c_str());
+          tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(), &boxEffSignal,
+                      ("boxEffSignal_" + EnumToString(n) + "/D").c_str());
+          tree.Fill();
+        }
+        tree.Write();
+        outputFile.Write();
+        outputFile.Close();
       }
     } else {
       if (simPdf == nullptr) {

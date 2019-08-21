@@ -407,7 +407,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   if (!file_exists(txtFileName)) {
     std::string dirString;
     std::cout << txtFileName
-              << " doesn't exist - calculating and setting efficiencies for "
+              << " doesn't exist:\n\tCalculating and setting efficiencies for "
               << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
@@ -537,7 +537,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     buDeltaCutEff.setVal(buDeltaCutEffVal);
   } else {
     // If exists, read in from txt file
-    std::cout << txtFileName << " exists - reading efficiencies for "
+    std::cout << txtFileName << " exists:\n\tReading efficiencies for "
               << modeString << "...\n";
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
