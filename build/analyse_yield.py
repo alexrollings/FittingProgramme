@@ -87,13 +87,24 @@ plt.ylabel('Pull Width')
 plt.title('$N_{D^{*}\pi^{\\pm}}$')
 fig.savefig("box_yield_vs_signal_yield_pull_width.pdf")
 
-# ideal_err_fun =
+# Percentage N_T error = N_T error / N_T: to adjust for changed in N_T
+signal_yield_perc_err = np.divide(signal_yield_err_arr, signal_yield_arr)*100
+print(signal_yield_perc_err)
+# Ideal error function = sqrt( N_T / (N_BOX/N_T) +1 ): 2 when N_BOX = N_T, 1 when N_BOX = 0
+ideal_perc_err_fn = np.divide(unumpy.sqrt(np.divide(signal_yield_arr, (frac_shared_yield + np.ones(len(file_list))))), signal_yield_arr)*100
+print(ideal_perc_err_fn)
+# Corrected error function = ((N_BOX/N_T * sqrt(2)) + (1-(N_BOX/N_T))) * N_T fit error
+corrected_err = np.multiply(np.multiply(frac_shared_yield, unumpy.sqrt(np.ones(len(file_list))*2)) + np.divide((signal_yield_arr - shared_yield), signal_yield_arr), signal_yield_err_arr)
+corrected_perc_err = np.divide(corrected_err, signal_yield_arr)*100
+print(corrected_perc_err)
 
-print(frac_shared_yield)
 fig = plt.figure()
-plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(signal_yield_err_arr), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(signal_yield_err_arr), label='Pseudo-experiments')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(ideal_perc_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(ideal_perc_err_fn), label='$\sigma = \sqrt{N_{D^{*}\pi^{\\pm}}}$')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(corrected_perc_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(corrected_perc_err), label='Corrected Error')
+plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(signal_yield_perc_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(signal_yield_perc_err), label='Pseudo-experiments')
+plt.legend(loc='best')
 plt.xlabel('$N_{Box}/N_{T}$')
-plt.ylabel('Error')
+plt.ylabel('$\%$ Error')
 plt.title('$N_{D^{*}\pi^{\\pm}}$')
 fig.savefig("box_yield_vs_signal_yield_err.pdf")
 
