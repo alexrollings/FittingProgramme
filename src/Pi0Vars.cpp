@@ -86,10 +86,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::pi0))
                                        .c_str(),
                                    "", 6.8457e-01),
-      ratioKpi_Bu2Dst0h_D0gamma_(("ratioKpi_Bu2Dst0h_D0gamma_" +
-                                  ComposeName(uniqueId, Neutral::pi0))
-                                     .c_str(),
-                                 "", 0.07930, -1, 1),
       orEffBu2Dst0pi_D0gamma_(("orEffBu2Dst0pi_D0gamma_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
@@ -165,10 +161,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                            ComposeName(uniqueId, Neutral::pi0))
                               .c_str(),
                           "", 10),
-      ratioKpi_Bu2Dst0h_D0pi0_(("ratioKpi_Bu2Dst0h_D0pi0_" +
-                                ComposeName(uniqueId, Neutral::pi0))
-                                   .c_str(),
-                               "", 0.07930, -1, 1),
       orEffBu2Dst0pi_D0pi0_(("orEffBu2Dst0pi_D0pi0_" +
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),
@@ -215,9 +207,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_nBu_(
           ("MisRec_nBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           9.9921e-01),
-      ratioKpi_MisRec_(
-          ("ratioKpi_MisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", 0.06, -1, 1),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
@@ -271,9 +260,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           2.1226e-11),
-      ratioKpi_Bu2D0h_(
-          ("ratioKpi_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", 0.07768, -1, 1),
       orEffBu2D0pi_(
           ("orEffBu2D0pi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
