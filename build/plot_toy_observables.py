@@ -221,8 +221,16 @@ if __name__ == "__main__":
     yields_k_stat_err = unumpy.sqrt(
         np.divide(yields_k, (frac_yields_k + np.ones(len(box_dims)))))
     yields_k_stat_perc_err = np.divide(yields_k_stat_err, yields_k) * 100
-    ratio_stat_err = np.divide(yields_pi_stat_err, yields_k_stat_err)
-    ratio_stat_perc_err = np.divide(ratio_stat_err, ratio) * 100
+
+    # To calculate ratio stat error, need to put in form of yields ± error again
+    yields_pi_stat = unumpy.uarray(unumpy.nominal_values(yields_pi),
+    unumpy.nominal_values(yields_pi_stat_err))
+    yields_k_stat = unumpy.uarray(unumpy.nominal_values(yields_k),
+    unumpy.nominal_values(yields_k_stat_err))
+    ratio_stat = np.divide(yields_k_stat, yields_pi_stat)
+    # print(ratio)
+    # print(ratio_old)
+    # print(ratio_stat)
 
     fig = plt.figure()
     plt.errorbar(unumpy.nominal_values(frac_yields_pi),
@@ -280,11 +288,11 @@ if __name__ == "__main__":
                            unumpy.nominal_values(ratio_old)) * 100,
                  xerr=unumpy.std_devs(frac_yields_pi),
                  label='Fit error')
-    # plt.errorbar(unumpy.nominal_values(frac_yields_pi),
-    #              unumpy.nominal_values(yields_pi_stat_perc_err),
-    #              xerr=unumpy.std_devs(frac_yields_pi),
-    #              yerr=unumpy.std_devs(yields_pi_stat_perc_err),
-    #              label='Stat Error')
+    plt.errorbar(unumpy.nominal_values(frac_yields_pi),
+                 np.divide(unumpy.std_devs(ratio_stat),
+                 unumpy.nominal_values(ratio))*100,
+                 xerr=unumpy.std_devs(frac_yields_pi),
+                 label='Stat Error')
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
