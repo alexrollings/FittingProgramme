@@ -104,19 +104,32 @@ if __name__ == "__main__":
                 # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
                 obs[dim + "_" + p_name] = [p.getVal(), p.getError()]
 
+        print(dim)
+        print("Total yield initital = " + str(obs[dim +
+        "_N_Bu2Dst0h_D0gamma_gamma_pi_0"]))
+
         yield_tot_pi = ufloat(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"]
                               [0], obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"][1])
+
+        print("Total yield extracted = " + str(yield_tot_pi))
+
         yield_box_pi = np.divide(np.multiply(
             yield_tot_pi, box_eff[dim]), or_eff[dim])
+
+        print("Box yield = " + str(yield_box_pi))
+
         obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"][1] = ((unumpy.nominal_values(yield_box_pi)/unumpy.nominal_values(yield_tot_pi)*math.sqrt(
-            2))+(1-unumpy.nominal_values(yield_tot_pi)/unumpy.nominal_values(yield_box_pi)))*unumpy.std_devs(yield_tot_pi)
+            2))+(1-unumpy.nominal_values(yield_box_pi)/unumpy.nominal_values(yield_tot_pi)))*unumpy.std_devs(yield_tot_pi)
+
+        print("Total yield finally = " + str(obs[dim +
+        "_N_Bu2Dst0h_D0gamma_gamma_pi_0"]) + "\n\n")
 
         yield_tot_k = ufloat(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"]
                              [0], obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"][1])
         yield_box_k = np.divide(np.multiply(
             yield_tot_k, box_eff[dim]), or_eff[dim])
         obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"][1] = ((unumpy.nominal_values(yield_box_k)/unumpy.nominal_values(yield_tot_k)*math.sqrt(
-            2))+(1-unumpy.nominal_values(yield_tot_k)/unumpy.nominal_values(yield_box_k)))*unumpy.std_devs(yield_tot_k)
+            2))+(1-unumpy.nominal_values(yield_box_k)/unumpy.nominal_values(yield_tot_k)))*unumpy.std_devs(yield_tot_k)
 
         #Fill correlation matrix - double counting doesn't effect this
         for a in range(0,len(variables)):
@@ -141,9 +154,7 @@ if __name__ == "__main__":
         obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_k_0"] = obs[dim +
         "_N_box_Bu2Dst0h_D0gamma_gamma_k_0"] / obs[dim +
         "_N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]
-        print(obs[dim + "_N_box_Bu2Dst0h_D0gamma_gamma_pi_0"])
 
-    # print(obs)
 
     yields_pi = []
     yields_k = []
@@ -156,17 +167,28 @@ if __name__ == "__main__":
       frac_yields_pi.append(obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_pi_0"])
       frac_yields_k.append(obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_k_0"])
 
-    # print(yields_pi)
-    # print(frac_yields_pi)
+# ideal_err_fn = unumpy.sqrt(np.divide(signal_yield_arr, (frac_shared_yield + np.ones(len(file_list)))))
+# ideal_perc_err_fn = np.divide(ideal_err_fn, signal_yield_arr)*100
 
     fig = plt.figure()
     plt.errorbar(unumpy.nominal_values(frac_yields_pi),
-    np.divide(unumpy.std_devs(yields_pi), unumpy.nominal_values(yields_pi)), xerr=unumpy.std_devs(frac_yields_pi), label='Pseudo-experiments')
+    np.divide(unumpy.std_devs(yields_pi), unumpy.nominal_values(yields_pi)),
+    xerr=unumpy.std_devs(frac_yields_pi), label='Corrected error')
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
     plt.title('$N_{D^{*}\pi^{\\pm}}$')
-    fig.savefig("box_yield_vs_signal_yield_err.pdf")
+    fig.savefig("box_yield_vs_signal_yield_pi_err.pdf")
+
+    fig = plt.figure()
+    plt.errorbar(unumpy.nominal_values(frac_yields_k),
+    np.divide(unumpy.std_devs(yields_k), unumpy.nominal_values(yields_k)),
+    xerr=unumpy.std_devs(frac_yields_k), label='Corrected error')
+    plt.legend(loc='best')
+    plt.xlabel('$N_{Box}/N_{T}$')
+    plt.ylabel('$\%$ Error')
+    plt.title('$N_{D^{*}\k^{\\pm}}$')
+    fig.savefig("box_yield_vs_signal_yield_k_err.pdf")
 
 
 
