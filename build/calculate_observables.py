@@ -55,6 +55,8 @@ if __name__ == "__main__":
   result = tf.Get("fitresult_simPdf_0_fullDataHist")
   if result == None:
     sys.exit("Could not extract result from " + filename)
+  #Floating fit parameters
+  pars = result.floatParsFinal()
 
   branch_names = ['orEffSignal_gamma', 'boxEffSignal_gamma']
   n_mc_events = 14508
@@ -65,33 +67,43 @@ if __name__ == "__main__":
 
   #List of params we want, with their value and error
   #Use these to calculate all the other yields
-  vars = ["N_Bu2Dst0h_D0gamma_gamma_pi_0", "N_Bu2Dst0h_D0gamma_gamma_k_0"]
+  variables = ["N_Bu2Dst0h_D0gamma_gamma_pi_0", "N_Bu2Dst0h_D0gamma_gamma_k_0"]
   #Dict to add the values and errors of the observables into
   obs = {}
   #Correlation matrix
-  corr = np.ones((len(vars),len(vars)))
-  #Floating fit parameters
-  pars = result.floatParsFinal()
+  corr = np.ones((len(variables),len(variables)))
 
   for i in range(0,len(pars)):
     p = pars[i]
     p_name = p.GetName()
-    if(p_name in vars):
-      obs[p_name] = (p.getVal(),p.getError())
+    if(p_name in variables):
+      # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
+      obs[p_name] = [p.getVal(),p.getError()]
 
-  #Fill correlation matrix
-  for a in range(0,len(vars)):
-    for b in range(0,len(vars)):
-      corr[a,b] = result.correlation(vars[a],vars[b])
+  yield_tot_pi = ufloat(obs["N_Bu2Dst0h_D0gamma_gamma_pi_0"][0], obs["N_Bu2Dst0h_D0gamma_gamma_pi_0"][1])
+  yield_box_pi = np.divide(np.multiply(yield_tot_pi, box_eff), or_eff)
+  obs["N_Bu2Dst0h_D0gamma_gamma_pi_0"][1] = ((unumpy.nominal_values(yield_box_pi)/unumpy.nominal_values(yield_tot_pi)*math.sqrt(2))+(1-unumpy.nominal_values(yield_tot_pi)/unumpy.nominal_values(yield_box_pi)))*unumpy.std_devs(yield_tot_pi)
+
+  yield_tot_k = ufloat(obs["N_Bu2Dst0h_D0gamma_gamma_k_0"][0], obs["N_Bu2Dst0h_D0gamma_gamma_k_0"][1])
+  yield_box_k = np.divide(np.multiply(yield_tot_k, box_eff), or_eff)
+  obs["N_Bu2Dst0h_D0gamma_gamma_k_0"][1] = ((unumpy.nominal_values(yield_box_k)/unumpy.nominal_values(yield_tot_k)*math.sqrt(2))+(1-unumpy.nominal_values(yield_tot_k)/unumpy.nominal_values(yield_box_k)))*unumpy.std_devs(yield_tot_k)
+
+  # Convert dict values from lists to tuples to make them immutable (easier to debug)
+  obs = {key:tuple(lst) for key, lst in obs.items()}
+
+  #Fill correlation matrix - double counting doesn't effect this
+  for a in range(0,len(variables)):
+    for b in range(0,len(variables)):
+      corr[a,b] = result.correlation(variables[a],variables[b])
 
   # Returns numbers with the correct uncertainties and correlations, given the covariance matric
   (obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"], obs["N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) = u.correlated_values_norm([obs["N_Bu2Dst0h_D0gamma_gamma_pi_0"], obs["N_Bu2Dst0h_D0gamma_gamma_k_0"]], corr)
 
   #Ratio D*K/D*π
   obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs["N_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
+  print("N_Bu2Dst0h_D0gamma_gamma_pi_0_corr = " + str(obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]))
+  print("N_Bu2Dst0h_D0gamma_gamma_k_0_corr = " + str(obs["N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]))
   print("ratioKpi_Bu2Dst0h_D0gamma_gamma = " + str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]))
-
-  obs["N_box_Bu2Dst0h_D0gamma_gamma_pi_0_corr"] = (obs["N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]*box_eff)/or_eff
 
   # file = open("../results/Yields_%s.tex" % years, "w")
   # file.write("\\begin{table}[t]\n")
