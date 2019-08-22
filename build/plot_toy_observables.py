@@ -46,21 +46,20 @@ if __name__ == "__main__":
     delta_high = args.delta_high
     bu_low = args.bu_low
 
-    file_list = []
     bu_high = []
 
     # Loop over files in directory and append to list those that match regex
     if os.path.isdir(path):
-        for filename in os.listdir(path):
+        for root_file in os.listdir(path):
             m = re.search("DataResult_" + delta_low + "_" +
-                          delta_high + "_" + bu_low + "_([0-9]+).root", filename)
+                          delta_high + "_" + bu_low + "_([0-9]+).root",
+                          root_file)
             if m:
                 # Save upper bu dimn for each result
                 bu_high.append(m.group(1))
 
     # Want to plot in ascending order
     bu_high.sort()
-    file_list.sort()
     os.chdir(path)
 
     box_dims = []
@@ -76,21 +75,28 @@ if __name__ == "__main__":
     branch_names = ['orEffSignal_gamma', 'boxEffSignal_gamma']
     n_mc_events = 14508
 
-    for dim in box_dims:
-        tf = TFile("DataResult_" + dim + ".root")
-        result = tf.Get("fitresult_simPdf_0_fullDataHist")
-        if result == None:
-            sys.exit("Could not extract result from DataResult_" + dim + ".root")
+    result = {}
+    eff_tree = {}
+    or_eff = {}
+    box_eff = {}
+    corr = {key:np.ones((len(variables),len(variables))) for key in box_dims}
 
-        eff_tree = r_np.root2array(filename, "tree", branch_names)
+    for dim in box_dims:
+        filename = "DataResult_" + dim + ".root"
+        tf = TFile(filename)
+        result[dim] = tf.Get("fitresult_simPdf_0_fullDataHist")
+        if result[dim] == None:
+            sys.exit("Could not extract result from " + filename)
+
+        eff_tree[dim] = r_np.root2array(filename, "tree", branch_names)
         # Efficiencies stoted in uncertainties array with binomial error
-        or_eff = ufloat(eff_tree[0][0], math.sqrt(
-            n_mc_events*eff_tree[0][0]*(1-eff_tree[0][0]))/n_mc_events)
-        box_eff = ufloat(eff_tree[0][1], math.sqrt(
-            n_mc_events*eff_tree[0][1]*(1-eff_tree[0][1]))/n_mc_events)
+        or_eff[dim] = ufloat(eff_tree[dim][0][0], math.sqrt(
+            n_mc_events*eff_tree[dim][0][0]*(1-eff_tree[dim][0][0]))/n_mc_events)
+        box_eff[dim] = ufloat(eff_tree[dim][0][1], math.sqrt(
+            n_mc_events*eff_tree[dim][0][1]*(1-eff_tree[dim][0][1]))/n_mc_events)
 
         # Floating fit parameters
-        pars = result.floatParsFinal()
+        pars = result[dim].floatParsFinal()
         for i in range(0, len(pars)):
             p = pars[i]
             p_name = p.GetName()
@@ -101,28 +107,27 @@ if __name__ == "__main__":
         yield_tot_pi = ufloat(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"]
                               [0], obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"][1])
         yield_box_pi = np.divide(np.multiply(
-            yield_tot_pi, box_eff), or_eff)
+            yield_tot_pi, box_eff[dim]), or_eff[dim])
         obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0"][1] = ((unumpy.nominal_values(yield_box_pi)/unumpy.nominal_values(yield_tot_pi)*math.sqrt(
             2))+(1-unumpy.nominal_values(yield_tot_pi)/unumpy.nominal_values(yield_box_pi)))*unumpy.std_devs(yield_tot_pi)
 
         yield_tot_k = ufloat(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"]
                              [0], obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"][1])
         yield_box_k = np.divide(np.multiply(
-            yield_tot_k, box_eff), or_eff)
+            yield_tot_k, box_eff[dim]), or_eff[dim])
         obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0"][1] = ((unumpy.nominal_values(yield_box_k)/unumpy.nominal_values(yield_tot_k)*math.sqrt(
             2))+(1-unumpy.nominal_values(yield_tot_k)/unumpy.nominal_values(yield_box_k)))*unumpy.std_devs(yield_tot_k)
 
         #Fill correlation matrix - double counting doesn't effect this
-        corr = np.ones((len(variables),len(variables)))
         for a in range(0,len(variables)):
           for b in range(0,len(variables)):
-            corr[a,b] = result.correlation(variables[a],variables[b])
+            corr[dim][a,b] = result[dim].correlation(variables[a],variables[b])
 
     # Returns numbers with the correct uncertainties and correlations, given the covariance matric
         (obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"], obs[dim +
         "_N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) = u.correlated_values_norm([obs[dim +
         "_N_Bu2Dst0h_D0gamma_gamma_pi_0"], obs[dim +
-        "_N_Bu2Dst0h_D0gamma_gamma_k_0"]], corr)
+        "_N_Bu2Dst0h_D0gamma_gamma_k_0"]], corr[dim])
 
         # Ratio D*K/D*π
         obs[dim + "_ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
@@ -136,19 +141,32 @@ if __name__ == "__main__":
         obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_k_0"] = obs[dim +
         "_N_box_Bu2Dst0h_D0gamma_gamma_k_0"] / obs[dim +
         "_N_Bu2Dst0h_D0gamma_gamma_k_0_corr"]
+        print(obs[dim + "_N_box_Bu2Dst0h_D0gamma_gamma_pi_0"])
 
-    print(obs)
+    # print(obs)
 
-    # fig = plt.figure()
-    # plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(ideal_perc_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(ideal_perc_err_fn), label='Stat Error')
-    # plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(corrected_perc_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(corrected_perc_err), label='Corrected Error')
-    # # plt.errorbar(unumpy.nominal_values(frac_shared_yield), corrected_perc_err_fn, xerr=unumpy.std_devs(frac_shared_yield), label='Corrected Error Convolution')
-    # plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(signal_yield_perc_err), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(signal_yield_perc_err), label='Pseudo-experiments')
-    # plt.legend(loc='best')
-    # plt.xlabel('$N_{Box}/N_{T}$')
-    # plt.ylabel('$\%$ Error')
-    # plt.title('$N_{D^{*}\pi^{\\pm}}$')
-    # fig.savefig("box_yield_vs_signal_yield_err.pdf")
-    #
+    yields_pi = []
+    yields_k = []
+    frac_yields_pi = []
+    frac_yields_k = []
+
+    for dim in box_dims:
+      yields_pi.append(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_pi_0_corr"])
+      yields_k.append(obs[dim + "_N_Bu2Dst0h_D0gamma_gamma_k_0_corr"])
+      frac_yields_pi.append(obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_pi_0"])
+      frac_yields_k.append(obs[dim + "_N_frac_box_Bu2Dst0h_D0gamma_gamma_k_0"])
+
+    # print(yields_pi)
+    # print(frac_yields_pi)
+
+    fig = plt.figure()
+    plt.errorbar(unumpy.nominal_values(frac_yields_pi),
+    np.divide(unumpy.std_devs(yields_pi), unumpy.nominal_values(yields_pi)), xerr=unumpy.std_devs(frac_yields_pi), label='Pseudo-experiments')
+    plt.legend(loc='best')
+    plt.xlabel('$N_{Box}/N_{T}$')
+    plt.ylabel('$\%$ Error')
+    plt.title('$N_{D^{*}\pi^{\\pm}}$')
+    fig.savefig("box_yield_vs_signal_yield_err.pdf")
+
 
 
