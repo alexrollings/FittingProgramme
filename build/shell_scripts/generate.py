@@ -107,7 +107,7 @@ if __name__ == "__main__":
             print("Generating toys from MC PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_mc.sh.tmpl"
             scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
-                i) + ".sh.tmpl"
+                i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         else:
             print("Generating toys from data PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_data.sh.tmpl"
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_"+ delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh.tmpl"
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_"+ delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
