@@ -79,8 +79,6 @@ class Configuration {
   std::string &gammaCutString() { return gammaCutString_; }
   std::string &pi0CutString() { return pi0CutString_; }
 
-  RooConstVar &pidEff() { return pidEff_; }
-
  private:
   Configuration();
   Configuration(Configuration const &) = delete;
@@ -119,8 +117,6 @@ class Configuration {
   int buDeltaHigh_;
   std::string gammaCutString_;
   std::string pi0CutString_;
-  
-  RooConstVar pidEff_;
 };
 
 
