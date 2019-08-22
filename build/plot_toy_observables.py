@@ -296,5 +296,5 @@ if __name__ == "__main__":
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
-    plt.title('$N_{D^{*}\pi^{\\pm}} / N_{D^{*}\pi^{\\pm}}$')
+    plt.title('$N_{D^{*}K^{\\pm}} / N_{D^{*}\pi^{\\pm}}$')
     fig.savefig("box_yields_vs_ratio_err.pdf")
