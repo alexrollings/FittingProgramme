@@ -69,7 +69,8 @@ for i in range(0,len(file_list)):
   or_eff.append(ufloat(eff_tree[0][0], math.sqrt(n_mc_events*eff_tree[0][0]*(1-eff_tree[0][0]))/n_mc_events))
   box_eff.append(ufloat(eff_tree[0][1], math.sqrt(n_mc_events*eff_tree[0][1]*(1-eff_tree[0][1]))/n_mc_events))
 
-shared_yield = np.array(np.divide(np.multiply(signal_yield_arr[0], box_eff), or_eff), dtype=object)
+# shared_yield = np.array(np.divide(np.multiply(signal_yield_arr[0], box_eff), or_eff), dtype=object)
+shared_yield = np.divide(np.multiply(signal_yield_arr, box_eff), or_eff)
 frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
 linear_err_fn = (np.multiply(np.divide(np.ones(len(file_list))*math.sqrt(2), signal_yield_arr), shared_yield) + np.divide((signal_yield_arr-shared_yield), signal_yield_arr))*initial_width
@@ -89,15 +90,12 @@ fig.savefig("box_yield_vs_signal_yield_pull_width.pdf")
 
 # Percentage N_T error = N_T error / N_T: to adjust for changed in N_T
 signal_yield_perc_err = np.divide(signal_yield_err_arr, signal_yield_arr)*100
-print(signal_yield_perc_err)
 # Ideal error function = sqrt( N_T / (N_BOX/N_T) +1 ): 2 when N_BOX = N_T, 1 when N_BOX = 0
 ideal_err_fn = unumpy.sqrt(np.divide(signal_yield_arr, (frac_shared_yield + np.ones(len(file_list)))))
 ideal_perc_err_fn = np.divide(ideal_err_fn, signal_yield_arr)*100
-print(ideal_perc_err_fn)
 # Corrected error = ((N_BOX/N_T * sqrt(2)) + (1-(N_BOX/N_T))) * N_T fit error
 corrected_err = np.multiply(np.multiply(frac_shared_yield, unumpy.sqrt(np.ones(len(file_list))*2)) + np.divide((signal_yield_arr - shared_yield), signal_yield_arr), signal_yield_err_arr)
 corrected_perc_err = np.divide(corrected_err, signal_yield_arr)*100
-print(corrected_perc_err)
 
 # print(len(unumpy.nominal_values(signal_yield_perc_err)))
 # print(len(unumpy.nominal_values(ideal_perc_err_fn)))
