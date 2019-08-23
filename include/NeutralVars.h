@@ -122,9 +122,6 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0gamma_frac1PdfBu() {
     return Bu2Dst0h_D0gamma_frac1PdfBu_;
   }
-  RooAbsReal &ratioKpi_Bu2Dst0h_D0gamma() {
-    return *ratioKpi_Bu2Dst0h_D0gamma_;
-  }
   RooRealVar &orEffBu2Dst0pi_D0gamma() {
     return orEffBu2Dst0pi_D0gamma_;
   }
@@ -178,9 +175,6 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_nBu() {
     return Bu2Dst0h_D0pi0_nBu_;
   }
-  RooAbsReal &ratioKpi_Bu2Dst0h_D0pi0() {
-    return *ratioKpi_Bu2Dst0h_D0pi0_;
-  }
   RooRealVar &orEffBu2Dst0pi_D0pi0() {
     return orEffBu2Dst0pi_D0pi0_;
   }
@@ -221,9 +215,6 @@ class NeutralVars {
   }
   RooRealVar &MisRec_nBu() {
     return MisRec_nBu_;
-  }
-  RooAbsReal &ratioKpi_MisRec() {
-    return *ratioKpi_MisRec_;
   }
   RooRealVar &orEffMisRec() {
     return orEffMisRec_;
@@ -274,9 +265,6 @@ class NeutralVars {
   RooRealVar &Bu2D0h_aRBu() {
     return Bu2D0h_aRBu_;
   }
-  RooAbsReal &ratioKpi_Bu2D0h() {
-    return *ratioKpi_Bu2D0h_;
-  }
   RooRealVar &orEffBu2D0pi() {
     return orEffBu2D0pi_;
   }
@@ -317,7 +305,6 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_D0gamma_n2Bu_;
   RooRealVar Bu2Dst0h_D0gamma_n1Bu_;
   RooRealVar Bu2Dst0h_D0gamma_frac1PdfBu_;
-  std::unique_ptr<RooAbsReal> ratioKpi_Bu2Dst0h_D0gamma_;
   RooRealVar orEffBu2Dst0pi_D0gamma_;
   RooRealVar boxEffBu2Dst0pi_D0gamma_;
   RooRealVar buDeltaCutEffBu2Dst0pi_D0gamma_;
@@ -337,7 +324,6 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_D0pi0_meanBu_;
   RooRealVar Bu2Dst0h_D0pi0_aBu_;
   RooRealVar Bu2Dst0h_D0pi0_nBu_;
-  std::unique_ptr<RooAbsReal> ratioKpi_Bu2Dst0h_D0pi0_;
   RooRealVar orEffBu2Dst0pi_D0pi0_;
   RooRealVar boxEffBu2Dst0pi_D0pi0_;
   RooRealVar buDeltaCutEffBu2Dst0pi_D0pi0_;
@@ -353,7 +339,6 @@ class NeutralVars {
   RooRealVar MisRec_meanBu_;
   RooRealVar MisRec_aBu_;
   RooRealVar MisRec_nBu_;
-  std::unique_ptr<RooAbsReal> ratioKpi_MisRec_;
   RooRealVar orEffMisRec_;
   RooRealVar boxEffMisRec_;
   RooRealVar buDeltaCutEffMisRec_;
@@ -374,7 +359,6 @@ class NeutralVars {
   RooRealVar relativeBuWidth_Bu2D0h_;
   RooRealVar Bu2D0h_aLBu_;
   RooRealVar Bu2D0h_aRBu_;
-  std::unique_ptr<RooAbsReal> ratioKpi_Bu2D0h_;
   RooRealVar orEffBu2D0pi_;
   RooRealVar boxEffBu2D0pi_;
   RooRealVar buDeltaCutEffBu2D0pi_;

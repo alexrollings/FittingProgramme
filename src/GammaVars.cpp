@@ -86,7 +86,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 6.8457e-01),
-      ratioKpi_Bu2Dst0h_D0gamma_(nullptr),
       orEffBu2Dst0pi_D0gamma_(("orEffBu2Dst0pi_D0gamma_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
@@ -162,7 +161,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
                           "", 10),
-      ratioKpi_Bu2Dst0h_D0pi0_(nullptr),
       orEffBu2Dst0pi_D0pi0_(("orEffBu2Dst0pi_D0pi0_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
@@ -209,7 +207,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       MisRec_nBu_(
           ("MisRec_nBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           9.9921e-01),
-      ratioKpi_MisRec_(nullptr),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
@@ -263,7 +260,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           2.1226e-11),
-      ratioKpi_Bu2D0h_(nullptr),
       orEffBu2D0pi_(
           ("orEffBu2D0pi_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
@@ -280,37 +276,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           "", 1),
       fracBu2D0pi_(1.54),
       initYieldFAVBu2D0pi_(initYieldFAVBu2Dst0pi_D0gamma_ *fracBu2D0pi_) {
-  if (Configuration::Get().fit1D() == false) {
-    ratioKpi_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooConstVar>(new RooConstVar(
-        ("ratioKpi_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::gamma))
-            .c_str(),
-        "", 0.07930));
-    ratioKpi_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooConstVar>(new RooConstVar(
-        ("ratioKpi_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
-            .c_str(),
-        "", 0.07930));
-    ratioKpi_MisRec_ = std::unique_ptr<RooConstVar>(new RooConstVar(
-        ("ratioKpi_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-        "", 0.06));
-    ratioKpi_Bu2D0h_ = std::unique_ptr<RooConstVar>(new RooConstVar(
-        ("ratioKpi_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-        "", 0.07768));
-  } else {
-    ratioKpi_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("ratioKpi_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::gamma))
-            .c_str(),
-        "", 0.07930, -1, 1));
-    ratioKpi_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("ratioKpi_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
-            .c_str(),
-        "", 0.07930, -1, 1));
-    ratioKpi_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("ratioKpi_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-        "", 0.06, -1, 1));
-    ratioKpi_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("ratioKpi_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-        "", 0.07768, -1, 1));
-  }
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_D0gamma_,
                   boxEffBu2Dst0pi_D0gamma_, buDeltaCutEffBu2Dst0pi_D0gamma_,
                   deltaCutEffBu2Dst0pi_D0gamma_);
