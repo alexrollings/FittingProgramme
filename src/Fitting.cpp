@@ -1107,7 +1107,8 @@ int main(int argc, char **argv) {
         result->Write();
         TTree tree("tree", "");
         for (auto &n : neutralVec) {
-          double boxEffSignal, orEffSignal;
+          double boxEffSignal, orEffSignal, buDeltaCutEffSignal,
+              deltaCutEffSignal;
           int id = 0;
           RooRealVar orEffSignalRRV(
               ("orEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
@@ -1133,11 +1134,20 @@ int main(int argc, char **argv) {
           }
           orEffSignal = orEffSignalRRV.getVal();
           boxEffSignal = boxEffSignalRRV.getVal();
+          buDeltaCutEffSignal = buDeltaCutEffSignalRRV.getVal();
+          deltaCutEffSignal = deltaCutEffSignalRRV.getVal();
           tree.Branch(("orEffSignal_" + EnumToString(n)).c_str(), &orEffSignal,
                       ("orEffSignal_" + EnumToString(n) + "/D").c_str());
           tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(),
                       &boxEffSignal,
                       ("boxEffSignal_" + EnumToString(n) + "/D").c_str());
+          tree.Branch(
+              ("buDeltaCutEffSignal_" + EnumToString(n)).c_str(),
+              &buDeltaCutEffSignal,
+              ("buDeltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
+          tree.Branch(("deltaCutEffSignal_" + EnumToString(n)).c_str(),
+                      &deltaCutEffSignal,
+                      ("deltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
           tree.Fill();
         }
         tree.Write();
