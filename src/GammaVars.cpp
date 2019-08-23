@@ -314,28 +314,28 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_D0gamma_,
                   boxEffBu2Dst0pi_D0gamma_, buDeltaCutEffBu2Dst0pi_D0gamma_,
                   deltaCutEffBu2Dst0pi_D0gamma_);
-  std::cout << "\t orEffBu2Dst0pi_D0gamma = "
-            << orEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-            << "\t boxEffBu2Dst0pi_D0gamma = "
-            << boxEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-            << "\t buDeltaCutEffBu2Dst0pi_D0gamma = "
-            << buDeltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-            << "\t deltaCutEffBu2Dst0pi_D0gamma = "
-            << deltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n";
+  // std::cout << "\t orEffBu2Dst0pi_D0gamma = "
+  //           << orEffBu2Dst0pi_D0gamma_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0pi_D0gamma = "
+  //           << boxEffBu2Dst0pi_D0gamma_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0pi_D0gamma = "
+  //           << buDeltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0pi_D0gamma = "
+  //           << deltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n";
 
   SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0_,
                   boxEffBu2Dst0pi_D0pi0_,
                   buDeltaCutEffBu2Dst0pi_D0pi0_,
                   deltaCutEffBu2Dst0pi_D0pi0_);
-  std::cout << "\t orEffBu2Dst0pi_D0pi0 = "
-            << orEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-            << "\t boxEffBu2Dst0pi_D0pi0 = "
-            << boxEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-            << "\t buDeltaCutEffBu2Dst0pi_D0pi0 = "
-            << buDeltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-            << "\t deltaCutEffBu2Dst0pi_D0pi0 = "
-            << deltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n";
-
+  // std::cout << "\t orEffBu2Dst0pi_D0pi0 = "
+  //           << orEffBu2Dst0pi_D0pi0_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0pi_D0pi0 = "
+  //           << boxEffBu2Dst0pi_D0pi0_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0pi_D0pi0 = "
+  //           << buDeltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0pi_D0pi0 = "
+  //           << deltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n";
+  //
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
        fracMisRec_Bu2Dst0pi_D0pi0_WN_ / fracMisRec_},
@@ -367,18 +367,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   boxEffMisRec_.setVal(boxEffMisRecVal);
   buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
   deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
-  std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
-            << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
-            << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
-            << "\n"
-            << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() << "\n";
+  // std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
+  //           << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
+  //           << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() << "\n";
 
   SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0pi_, boxEffBu2D0pi_,
                   buDeltaCutEffBu2D0pi_, deltaCutEffBu2D0pi_);
-  std::cout << "\t orEffBu2D0pi = " << orEffBu2D0pi_.getVal() << "\n"
-            << "\t boxEffBu2D0pi = " << boxEffBu2D0pi_.getVal() << "\n"
-            << "\t buDeltaCutEffBu2D0pi = " << buDeltaCutEffBu2D0pi_.getVal()
-            << "\n"
-            << "\t deltaCutEffBu2D0pi = " << deltaCutEffBu2D0pi_.getVal()
-            << "\n";
+  // std::cout << "\t orEffBu2D0pi = " << orEffBu2D0pi_.getVal() << "\n"
+  //           << "\t boxEffBu2D0pi = " << boxEffBu2D0pi_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2D0pi = " << buDeltaCutEffBu2D0pi_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffBu2D0pi = " << deltaCutEffBu2D0pi_.getVal()
+  //           << "\n";
 }
