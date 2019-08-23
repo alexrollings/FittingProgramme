@@ -59,7 +59,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                    RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
-                   bool fitBool, Configuration &config, bool fit1D) {
+                   bool fitBool, Configuration &config) {
   Bachelor bachelor = pdf.bachelor();
   Mass mass = pdf.mass();
   Daughters daughters = pdf.daughters();
@@ -245,7 +245,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   // dataHist->Draw("same");
 
   std::string fileLabel;
-  if (fit1D == false) {
+  if (config.fit1D() == false) {
     fileLabel = std::to_string(config.deltaLow()) + "_" +
                 std::to_string(config.deltaHigh()) + "_" +
                 std::to_string(config.buDeltaLow()) + "_" +
@@ -266,7 +266,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                 std::string const &outputDir, bool fitBool,
-                std::string &labelString, RooFitResult *result, bool fit1D) {
+                std::string &labelString, RooFitResult *result) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -385,15 +385,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   if (mass == Mass::delta) {
     PlotComponent(config.deltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config, fit1D);
+                  legend, lumiLegend, outputDir, fitBool, config);
   } else {
     PlotComponent(config.buDeltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config, fit1D);
+                  legend, lumiLegend, outputDir, fitBool, config);
   }
 }
 
 void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
-                      Configuration &config, bool fit1D) {
+                      Configuration &config) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -408,7 +408,7 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
   corrHist->Draw("colz");
   corrCanvas.Update();
   std::string fileLabel;
-  if (fit1D == false) {
+  if (config.fit1D() == false) {
     fileLabel = std::to_string(config.deltaLow()) + "_" +
                 std::to_string(config.deltaHigh()) + "_" +
                 std::to_string(config.buDeltaLow()) + "_" +
@@ -427,7 +427,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     int const id, Configuration &config, Configuration::Categories &categories,
     std::vector<Neutral> const &neutralVec,
     std::vector<Daughters> const &daughtersVec,
-    std::vector<Charge> const &chargeVec, bool fit1D) {
+    std::vector<Charge> const &chargeVec) {
   RooSimultaneous *simPdf = new RooSimultaneous(
       ("simPdf_" + std::to_string(id)).c_str(),
       ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
@@ -446,7 +446,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                        Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(
                     &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
                          Daughters::kpi, Charge::total>::Get(id));
@@ -460,7 +460,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                        Daughters::kpi, Charge::plus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(
                     &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
                          Daughters::kpi, Charge::plus>::Get(id));
@@ -474,7 +474,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                        Daughters::kpi, Charge::minus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(
                     &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
                          Daughters::kpi, Charge::minus>::Get(id));
@@ -491,7 +491,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                      Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
                                        Daughters::kpi, Charge::total>::Get(id));
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
@@ -503,7 +503,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                      Daughters::kpi, Charge::plus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
                                        Daughters::kpi, Charge::plus>::Get(id));
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
@@ -515,7 +515,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                      Daughters::kpi, Charge::minus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              if (fit1D == false) {
+              if (config.fit1D() == false) {
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
                                        Daughters::kpi, Charge::minus>::Get(id));
                 pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
@@ -544,7 +544,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
              std::vector<Charge> const &chargeVec, std::string const &outputDir,
-             int nToys, bool fitBool, bool fit1D) {
+             int nToys, bool fitBool) {
   // Start from 1 as id = 0 is data fit params
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
@@ -555,7 +555,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     // something.
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec, fit1D);
+                                 daughtersVec, chargeVec);
     if (simPdf == nullptr) {
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
@@ -566,7 +566,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
 
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
-    if (fit1D == false) {
+    if (config.fit1D() == false) {
       toyDataSet = std::unique_ptr<RooDataSet>(
           simPdf->generate(RooArgSet(config.buDeltaMass(), config.deltaMass(),
                                      categories.fitting),
@@ -600,17 +600,17 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       for (auto &p : pdfs) {
         std::cout << "Plotting " << p->addPdf().GetName() << "\n";
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
-                   outputDir, fitBool, lumiString, result.get(), fit1D);
+                   outputDir, fitBool, lumiString, result.get());
       }
       if (fitBool == true) {
-        PlotCorrelations(result.get(), outputDir, config, fit1D);
+        PlotCorrelations(result.get(), outputDir, config);
       }
     }
 
     if (fitBool == true) {
       result->Print("v");
       std::string fileLabel;
-      if (fit1D == false) {
+      if (config.fit1D() == false) {
         fileLabel = std::to_string(config.deltaLow()) + "_" +
                     std::to_string(config.deltaHigh()) + "_" +
                     std::to_string(config.buDeltaLow()) + "_" +
@@ -673,7 +673,6 @@ int main(int argc, char **argv) {
   // them differently
 
   bool fitBool = true;
-  bool fit1D = false;
   int nToys = 0;
   Configuration &config = Configuration::Get();
 
@@ -793,7 +792,7 @@ int main(int argc, char **argv) {
       }
       if (args("1D")) {
         std::cout << "Running 1D fit.\n";
-        fit1D = true;
+        config.fit1D() = true;
       }
       // Year
       // args matches "year" to string given in command line and assigns
@@ -1000,7 +999,7 @@ int main(int argc, char **argv) {
                                  ComposeFittingName(Mass::buDelta, n, b, d, c) +
                                  "\n";
                     }
-                    if (fit1D == false) {
+                    if (config.fit1D() == false) {
                       RooDataSet *deltaInputDataSet = nullptr;
                       deltaInputDataSet = dynamic_cast<RooDataSet *>(
                           reducedInputDataSet_d->reduce(
@@ -1063,7 +1062,7 @@ int main(int argc, char **argv) {
     }
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec, fit1D);
+                                 daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
@@ -1084,16 +1083,16 @@ int main(int argc, char **argv) {
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
-                   fitBool, lumiString, result.get(), fit1D);
+                   fitBool, lumiString, result.get());
       }
 
       if (fitBool == true) {
         result->Print("v");
-        PlotCorrelations(result.get(), outputDir, config, fit1D);
+        PlotCorrelations(result.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
         std::string fileLabel;
-        if (fit1D == false) {
+        if (config.fit1D() == false) {
           fileLabel = std::to_string(config.deltaLow()) + "_" +
                       std::to_string(config.deltaHigh()) + "_" +
                       std::to_string(config.buDeltaLow()) + "_" +
@@ -1153,11 +1152,11 @@ int main(int argc, char **argv) {
         result->Print("v");
       }
       RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-              chargeVec, outputDir, nToys, fitBool, fit1D);
+              chargeVec, outputDir, nToys, fitBool);
     }
   } else {
     RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-            chargeVec, outputDir, nToys, fitBool, fit1D);
+            chargeVec, outputDir, nToys, fitBool);
   }
 
   return 0;
