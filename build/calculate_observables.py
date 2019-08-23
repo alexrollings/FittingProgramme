@@ -17,12 +17,11 @@ if __name__ == "__main__":
         type=str,
         help='Directory where results are stored and PDFs will be saved',
         required=True)
-    parser.add_argument(
-        '-f',
-        '--fit',
-        type=str,
-        help='Fit type = 1d/d1d',
-        required=True)
+    parser.add_argument('-f',
+                        '--fit',
+                        type=str,
+                        help='Fit type = 1d/d1d',
+                        required=True)
     parser.add_argument('-dl',
                         '--delta_low',
                         type=str,
@@ -37,12 +36,12 @@ if __name__ == "__main__":
                         '--bu_low',
                         type=str,
                         help='Lower bu mass range',
-                        required=True)
+                        required=False)
     parser.add_argument('-bh',
                         '--bu_high',
                         type=str,
                         help='Upper bu mass range',
-                        required=True)
+                        required=False)
     args = parser.parse_args()
 
     path = args.path
@@ -53,6 +52,9 @@ if __name__ == "__main__":
     bu_high = args.bu_high
 
     if fit == "d1d":
+        if bu_low == None or bu_high == None:
+            sys.exit("Must specify bu dimensions: -bl and -bh for d1d fit")
+
         filename = path + "/DataResult_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".root"
 
         tf = TFile(filename)
@@ -99,7 +101,8 @@ if __name__ == "__main__":
             (unumpy.nominal_values(yield_box_pi) /
              unumpy.nominal_values(yield_tot_pi) * math.sqrt(2)) +
             (1 - unumpy.nominal_values(yield_tot_pi) /
-             unumpy.nominal_values(yield_box_pi))) * unumpy.std_devs(yield_tot_pi)
+             unumpy.nominal_values(yield_box_pi))
+        ) * unumpy.std_devs(yield_tot_pi)
 
         yield_tot_k = ufloat(obs["N_Bu2Dst0h_D0gamma_gamma_k_0"][0],
                              obs["N_Bu2Dst0h_D0gamma_gamma_k_0"][1])
@@ -108,7 +111,8 @@ if __name__ == "__main__":
             (unumpy.nominal_values(yield_box_k) /
              unumpy.nominal_values(yield_tot_k) * math.sqrt(2)) +
             (1 - unumpy.nominal_values(yield_tot_k) /
-             unumpy.nominal_values(yield_box_k))) * unumpy.std_devs(yield_tot_k)
+             unumpy.nominal_values(yield_box_k))
+        ) * unumpy.std_devs(yield_tot_k)
 
         # Convert dict values from lists to tuples to make them immutable (easier to debug)
         obs = {key: tuple(lst) for key, lst in obs.items()}
@@ -151,7 +155,7 @@ if __name__ == "__main__":
         # file.write("\\label{tab:yields}\n")
         # file.write("\\end{table}")
         # file.close()
-    else:
+    elif fit == "1d":
         filename = path + "/DataResult_" + delta_low + "_" + delta_high + ".root"
 
         tf = TFile(filename)
@@ -164,7 +168,8 @@ if __name__ == "__main__":
         #List of params we want, with their value and error
         #Use these to calculate all the other yields
         variables = [
-            "N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0", "N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0"
+            "N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0",
+            "N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0"
         ]
         #Dict to add the values and errors of the observables into
         obs = {}
@@ -194,18 +199,39 @@ if __name__ == "__main__":
 
         # Returns numbers with the correct uncertainties and correlations, given the covariance matric
         (obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr"],
-         obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) = u.correlated_values_norm([
+         obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"]
+         ) = u.correlated_values_norm([
              obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0"],
              obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0"]
          ], corr)
 
         #Ratio D*K/D*π
         obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs[
-            "N_BuDelta_u2Dst0h_D0gamma_gamma_k_0_corr"] / obs[
-                "N_BuDelta_u2Dst0h_D0gamma_gamma_pi_0_corr"]
-        print("N_BuDelta_u2Dst0h_D0gamma_gamma_pi_0_corr = " +
-              str(obs["N_BuDelta_u2Dst0h_D0gamma_gamma_pi_0_corr"]))
-        print("N_BuDelta_u2Dst0h_D0gamma_gamma_k_0_corr = " +
-              str(obs["N_BuDelta_u2Dst0h_D0gamma_gamma_k_0_corr"]))
+            "N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs[
+                "N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
+        print("N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr = " +
+              str(obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]) +
+              "\t % error = " + str(
+                  np.divide(
+                      unumpy.std_devs(
+                          obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]),
+                      unumpy.nominal_values(
+                          obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_pi_0_corr"])*100)))
+        print("N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr = " +
+              str(obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) +
+              "\t % error = " + str(
+                  np.divide(
+                      unumpy.std_devs(
+                          obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"]),
+                      unumpy.nominal_values(
+                          obs["N_BuDelta_Bu2Dst0h_D0gamma_gamma_k_0_corr"])*100)))
         print("ratioKpi_Bu2Dst0h_D0gamma_gamma = " +
-              str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]))
+              str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]) +
+              "\t % error = " + str(
+                  np.divide(
+                      unumpy.std_devs(
+                          obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]),
+                      unumpy.nominal_values(
+                          obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"])*100)))
+    else:
+        sys.exit("-f/--fit = 1d/d1d")
