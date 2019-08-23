@@ -39,16 +39,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0gamma_, pdf2Bu_Bu2Dst0h_D0gamma_),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_D0gamma_frac1PdfBu()),
-      N_Bu2Dst0h_D0gamma_(
-          ("N_Bu2Dst0h_D0gamma_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         "", NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                     .initYieldFAVBu2Dst0pi_D0gamma() *
-                                 NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                     .orEffBu2Dst0pi_D0gamma()
-                                     .getVal()*0.07930,
-                         -1000000, 1000000),
+      N_Bu2Dst0h_D0gamma_(("N_Bu2Dst0h_D0gamma_" +
+                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                              .c_str(),
+                          "", NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                      .initYieldFAVBu2Dst0pi_D0gamma() *
+                                  NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                      .orEffBu2Dst0pi_D0gamma()
+                                      .getVal(),
+                          -1000000, 1000000),
       N_Delta_Bu2Dst0h_D0gamma_(
           ("N_Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -58,15 +57,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                    NeutralVars<Neutral::pi0>::Get(uniqueId)
                                        .orEffBu2Dst0pi_D0gamma(),
                                    N_Bu2Dst0h_D0gamma_)),
-      N_BuDelta_Bu2Dst0h_D0gamma_(
-          ("N_BuDelta_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                       .deltaCutEffBu2Dst0pi_D0gamma(),
-                                   NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                       .orEffBu2Dst0pi_D0gamma(),
-                                   N_Bu2Dst0h_D0gamma_)),
+      N_BuDelta_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_sigmaBu_(("Bu2Dst0h_D0pi0_sigmaBu_" +
                                ComposeName(uniqueId, Neutral::pi0,
@@ -82,16 +73,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Bu2Dst0h_D0pi0_sigmaBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_aBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_nBu()),
-      N_Bu2Dst0h_D0pi0_(
-          ("N_Bu2Dst0h_D0pi0_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         "", NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                     .initYieldFAVBu2Dst0pi_D0pi0() *
-                                 NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                     .orEffBu2Dst0pi_D0pi0()
-                                     .getVal()),
-                         // -1000000, 1000000)),
+      N_Bu2Dst0h_D0pi0_(("N_Bu2Dst0h_D0pi0_" +
+                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                            .c_str(),
+                        "", NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                    .initYieldFAVBu2Dst0pi_D0pi0() *
+                                NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                    .orEffBu2Dst0pi_D0pi0()
+                                    .getVal(),
+                        -1000000, 1000000),
       N_Delta_Bu2Dst0h_D0pi0_(
           ("N_Delta_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -102,16 +92,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                   .buDeltaCutEffBu2Dst0pi_D0pi0(),
               NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0pi_D0pi0(),
               N_Bu2Dst0h_D0pi0_)),
-      N_BuDelta_Bu2Dst0h_D0pi0_(
-          ("N_BuDelta_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .deltaCutEffBu2Dst0pi_D0pi0(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0pi_D0pi0(),
-              N_Bu2Dst0h_D0pi0_)),
+      N_BuDelta_Bu2Dst0h_D0pi0_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaBu_(("MisRec_sigmaBu_" +
                        ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -141,15 +122,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::pi0>::Get(uniqueId).buDeltaCutEffMisRec(),
               NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec(),
               N_MisRec_)),
-      N_BuDelta_MisRec_(
-          ("N_BuDelta_MisRec_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffMisRec(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec(),
-              N_MisRec_)),
+      N_BuDelta_MisRec_(nullptr),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_sigmaLBu_(new RooRealVar(("Bu2D0h_sigmaLBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
@@ -186,12 +159,84 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::pi0>::Get(uniqueId).buDeltaCutEffBu2D0pi(),
               NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0pi(),
               N_Bu2D0h_)),
-      N_BuDelta_Bu2D0h_(
-          ("N_BuDelta_Bu2D0h_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffBu2D0pi(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0pi(),
-              N_Bu2D0h_)) {}
+      N_BuDelta_Bu2D0h_(nullptr) {
+  if (Configuration::Get().fit1D() == false) {
+    N_BuDelta_Bu2Dst0h_D0gamma_ =
+        std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+            ("N_BuDelta_Bu2Dst0h_D0gamma_" +
+             ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                .c_str(),
+            "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                         .deltaCutEffBu2Dst0pi_D0gamma(),
+                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                         .orEffBu2Dst0pi_D0gamma(),
+                                     N_Bu2Dst0h_D0gamma_)));
+    N_BuDelta_Bu2Dst0h_D0pi0_ =
+        std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+            ("N_BuDelta_Bu2Dst0h_D0pi0_" +
+             ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                .c_str(),
+            "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                         .deltaCutEffBu2Dst0pi_D0pi0(),
+                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                         .orEffBu2Dst0pi_D0pi0(),
+                                     N_Bu2Dst0h_D0pi0_)));
+    N_BuDelta_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_BuDelta_MisRec_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(
+            NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffMisRec(),
+            NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec(),
+            N_MisRec_)));
+    N_BuDelta_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_BuDelta_Bu2D0h_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(
+            NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffBu2D0pi(),
+            NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0pi(),
+            N_Bu2D0h_)));
+  } else {
+    N_BuDelta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(
+        new RooRealVar(("N_BuDelta_Bu2Dst0h_D0gamma_" +
+                        ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                           .c_str(),
+                       "", NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                   .initYieldFAVBu2Dst0pi_D0gamma() *
+                               NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                   .deltaCutEffBu2Dst0pi_D0gamma()
+                                   .getVal(),
+                       -100000, 100000));
+    N_BuDelta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(
+        new RooRealVar(("N_BuDelta_Bu2Dst0h_D0pi0_" +
+                        ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+                           .c_str(),
+                       "", NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                   .initYieldFAVBu2Dst0pi_D0pi0() *
+                               NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                   .deltaCutEffBu2Dst0pi_D0pi0()
+                                   .getVal(),
+                       -100000, 100000));
+    N_BuDelta_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_BuDelta_MisRec_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "", NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
+                NeutralVars<Neutral::pi0>::Get(uniqueId)
+                    .deltaCutEffMisRec()
+                    .getVal(),
+        -100000, 100000));
+    N_BuDelta_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_BuDelta_Bu2D0h_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "", NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
+                NeutralVars<Neutral::pi0>::Get(uniqueId)
+                    .deltaCutEffMisRec()
+                    .getVal(),
+        -100000, 100000));
+  }
+}
