@@ -59,7 +59,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                    RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
-                   bool fitBool, Configuration &config) {
+                   bool fitBool, Configuration &config, bool fit1D) {
   Bachelor bachelor = pdf.bachelor();
   Mass mass = pdf.mass();
   Daughters daughters = pdf.daughters();
@@ -98,87 +98,79 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   pullHist = frame->RooPlot::pullHist();
 
   if (mass == Mass::buDelta) {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_MisRec().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfBu_Bu2D0h().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfBu_MisRec().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfBu_Bu2D0h().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   } else {
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_MisRec().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-    simPdf.plotOn(
-        frame.get(),
-        RooFit::Slice(
-            categories.fitting,
-            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                .c_str()),
-        RooFit::ProjWData(categories.fitting, fullDataSet),
-        RooFit::Components(pdf.pdfDelta_Bu2D0h().GetName()),
-        RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen),
-        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfDelta_MisRec().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kRed),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfDelta_Bu2D0h().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   }
 
   if (mass == Mass::delta) {
@@ -252,13 +244,20 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   // }
   // dataHist->Draw("same");
 
+  std::string fileLabel;
+  if (fit1D == false) {
+    fileLabel = std::to_string(config.deltaLow()) + "_" +
+                std::to_string(config.deltaHigh()) + "_" +
+                std::to_string(config.buDeltaLow()) + "_" +
+                std::to_string(config.buDeltaHigh());
+  } else {
+    fileLabel = std::to_string(config.deltaLow()) + "_" +
+                std::to_string(config.deltaHigh());
+  }
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
                  ComposeName(id, mass, neutral, bachelor, daughters, charge) +
-                 "_" + std::to_string(config.deltaLow()) + "_" +
-                 std::to_string(config.deltaHigh()) + "_" +
-                 std::to_string(config.buDeltaLow()) + "_" +
-                 std::to_string(config.buDeltaHigh()) + ".pdf")
+                 "_" + fileLabel + ".pdf")
                     .c_str());
 }
 
@@ -267,7 +266,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                 std::string const &outputDir, bool fitBool,
-                std::string &labelString, RooFitResult *result) {
+                std::string &labelString, RooFitResult *result, bool fit1D) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -345,8 +344,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream MisRecLegend;
-  MisRecLegend
-      << "Mis-Reconstructed Bkg";
+  MisRecLegend << "Mis-Reconstructed Bkg";
   std::stringstream Bu2D0hLegend;
   Bu2D0hLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
                       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
@@ -355,12 +353,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
                   Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
-  legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(),
-                  Bu2Dst0h_D0pi0Legend.str().c_str(), "l");
-  legend.AddEntry(MisRecHist.get(),
-                  MisRecLegend.str().c_str(), "l");
-  legend.AddEntry(Bu2D0hHist.get(),
-                  Bu2D0hLegend.str().c_str(), "l");
+  legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(), Bu2Dst0h_D0pi0Legend.str().c_str(),
+                  "l");
+  legend.AddEntry(MisRecHist.get(), MisRecLegend.str().c_str(), "l");
+  legend.AddEntry(Bu2D0hHist.get(), Bu2D0hLegend.str().c_str(), "l");
 
   TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
   lumiLegend.SetTextSize(0.03);
@@ -389,14 +385,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   if (mass == Mass::delta) {
     PlotComponent(config.deltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config);
+                  legend, lumiLegend, outputDir, fitBool, config, fit1D);
   } else {
     PlotComponent(config.buDeltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config);
+                  legend, lumiLegend, outputDir, fitBool, config, fit1D);
   }
 }
 
-void PlotCorrelations(RooFitResult *result, std::string const &outputDir, Configuration &config) {
+void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
+                      Configuration &config, bool fit1D) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
   TH2 *corrHist = result->correlationHist();
   corrHist->SetStats(0);
@@ -410,12 +407,18 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir, Config
   gPad->SetTopMargin(0.05);
   corrHist->Draw("colz");
   corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/plots/CorrelationMatrix_" +
-                     std::to_string(config.deltaLow()) + "_" +
-                     std::to_string(config.deltaHigh()) + "_" +
-                     std::to_string(config.buDeltaLow()) + "_" +
-                     std::to_string(config.buDeltaHigh()) + ".pdf")
-                        .c_str());
+  std::string fileLabel;
+  if (fit1D == false) {
+    fileLabel = std::to_string(config.deltaLow()) + "_" +
+                std::to_string(config.deltaHigh()) + "_" +
+                std::to_string(config.buDeltaLow()) + "_" +
+                std::to_string(config.buDeltaHigh());
+  } else {
+    fileLabel = std::to_string(config.deltaLow()) + "_" +
+                std::to_string(config.deltaHigh());
+  }
+  corrCanvas.SaveAs(
+      (outputDir + "/plots/CorrelationMatrix_" + fileLabel + ".pdf").c_str());
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -424,7 +427,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     int const id, Configuration &config, Configuration::Categories &categories,
     std::vector<Neutral> const &neutralVec,
     std::vector<Daughters> const &daughtersVec,
-    std::vector<Charge> const &chargeVec) {
+    std::vector<Charge> const &chargeVec, bool fit1D) {
   RooSimultaneous *simPdf = new RooSimultaneous(
       ("simPdf_" + std::to_string(id)).c_str(),
       ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
@@ -441,34 +444,43 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
               pdfs.emplace_back(
                   &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
                        Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                                     Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                     Daughters::kpi, Charge::total>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(
+                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
+                         Daughters::kpi, Charge::total>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
+                                       Daughters::kpi, Charge::total>::Get(id));
+              }
               break;
             case Charge::plus:
               pdfs.emplace_back(
                   &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
                        Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                                     Daughters::kpi, Charge::plus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                     Daughters::kpi, Charge::plus>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(
+                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
+                         Daughters::kpi, Charge::plus>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
+                                       Daughters::kpi, Charge::plus>::Get(id));
+              }
               break;
             case Charge::minus:
               pdfs.emplace_back(
                   &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
                        Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                                     Daughters::kpi, Charge::minus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                     Daughters::kpi, Charge::minus>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(
+                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
+                         Daughters::kpi, Charge::minus>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
+                                       Daughters::kpi, Charge::minus>::Get(id));
+              }
               break;
           }
           break;
@@ -477,32 +489,38 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             case Charge::total:
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                      Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
+                                       Daughters::kpi, Charge::total>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
+                                       Daughters::kpi, Charge::total>::Get(id));
+              }
               break;
             case Charge::plus:
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::plus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::plus>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
+                                       Daughters::kpi, Charge::plus>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
+                                       Daughters::kpi, Charge::plus>::Get(id));
+              }
               break;
             case Charge::minus:
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::minus>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::minus>::Get(id));
+              if (fit1D == false) {
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
+                                       Daughters::kpi, Charge::minus>::Get(id));
+                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
+                                       Daughters::kpi, Charge::minus>::Get(id));
+              }
               break;
           }
           break;
@@ -526,7 +544,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
              std::vector<Charge> const &chargeVec, std::string const &outputDir,
-             int nToys, bool fitBool) {
+             int nToys, bool fitBool, bool fit1D) {
   // Start from 1 as id = 0 is data fit params
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
@@ -537,7 +555,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     // something.
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec);
+                                 daughtersVec, chargeVec, fit1D);
     if (simPdf == nullptr) {
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
@@ -547,9 +565,16 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     double randomTag = random.Rndm();
 
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
-    auto toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-        RooArgSet(config.buDeltaMass(), config.deltaMass(), categories.fitting),
-        nEvtsPerToy));
+    std::unique_ptr<RooDataSet> toyDataSet;
+    if (fit1D == false) {
+      toyDataSet = std::unique_ptr<RooDataSet>(
+          simPdf->generate(RooArgSet(config.buDeltaMass(), config.deltaMass(),
+                                     categories.fitting),
+                           nEvtsPerToy));
+    } else {
+      toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
+          RooArgSet(config.buDeltaMass(), categories.fitting), nEvtsPerToy));
+    }
     toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
     auto toyDataHist = std::unique_ptr<RooDataHist>(
         toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
@@ -574,23 +599,28 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       auto pdfs = p.second;
       for (auto &p : pdfs) {
         std::cout << "Plotting " << p->addPdf().GetName() << "\n";
-        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit, outputDir,
-                   fitBool, lumiString, result.get());
+        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
+                   outputDir, fitBool, lumiString, result.get(), fit1D);
       }
       if (fitBool == true) {
-        PlotCorrelations(result.get(), outputDir, config);
+        PlotCorrelations(result.get(), outputDir, config, fit1D);
       }
     }
 
     if (fitBool == true) {
       result->Print("v");
+      std::string fileLabel;
+      if (fit1D == false) {
+        fileLabel = std::to_string(config.deltaLow()) + "_" +
+                    std::to_string(config.deltaHigh()) + "_" +
+                    std::to_string(config.buDeltaLow()) + "_" +
+                    std::to_string(config.buDeltaHigh());
+      } else {
+        fileLabel = std::to_string(config.deltaLow()) + "_" +
+                    std::to_string(config.deltaHigh());
+      }
       TFile outputFile(
-          (outputDir + "/results/Result_" + std::to_string(randomTag) + "_" +
-           std::to_string(config.deltaLow()) + "_" +
-           std::to_string(config.deltaHigh()) + "_" +
-           std::to_string(config.buDeltaLow()) + "_" +
-           std::to_string(config.buDeltaHigh()) + ".root")
-              .c_str(),
+          (outputDir + "/results/DataResult_" + fileLabel + ".root").c_str(),
           "recreate");
 
       outputFile.cd();
@@ -601,7 +631,6 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
         dataFitResult->Write();
       }
       outputFile.Close();
-
       std::cout << "Results saved to file " << outputFile.GetName() << "\n";
     }
   }
@@ -644,6 +673,7 @@ int main(int argc, char **argv) {
   // them differently
 
   bool fitBool = true;
+  bool fit1D = false;
   int nToys = 0;
   Configuration &config = Configuration::Get();
 
@@ -681,6 +711,7 @@ int main(int argc, char **argv) {
       std::cout << "Give box dimensions:\n"
                 << "    -dl=#, -dh=#, -bl=#, -bh=#\n";
       std::cout << "Followed by the possible options:\n";
+      std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
                 << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
@@ -759,6 +790,10 @@ int main(int argc, char **argv) {
       if (!args("outputDir", outputDir)) {
         std::cerr << "Specify output directory (-outputDir=<path>).\n";
         return 1;
+      }
+      if (args("1D")) {
+        std::cout << "Running 1D fit.\n";
+        fit1D = true;
       }
       // Year
       // args matches "year" to string given in command line and assigns
@@ -944,19 +979,6 @@ int main(int argc, char **argv) {
                       throw std::runtime_error(
                           "Could not reduce dataset down to buDeltaMass.");
                     }
-                    RooDataSet *deltaInputDataSet = nullptr;
-                    deltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(
-                            config.deltaMass(),
-                            ("Bu_Delta_M>" +
-                             std::to_string(config.buDeltaLow()) +
-                             "&&Bu_Delta_M<" +
-                             std::to_string(config.buDeltaHigh()))
-                                .c_str()));
-                    if (deltaInputDataSet == nullptr) {
-                      throw std::runtime_error(
-                          "Could not reduce dataset down to deltaMass.");
-                    }
                     // Need to append each year, polarity to dataset at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
                     if (mapCategoryDataset.find(
@@ -978,24 +1000,39 @@ int main(int argc, char **argv) {
                                  ComposeFittingName(Mass::buDelta, n, b, d, c) +
                                  "\n";
                     }
-                    if (mapCategoryDataset.find(
-                            ComposeFittingName(Mass::delta, n, b, d, c)) ==
-                        mapCategoryDataset.end()) {
-                      mapCategoryDataset.insert(std::make_pair(
-                          ComposeFittingName(Mass::delta, n, b, d, c),
-                          deltaInputDataSet));
-                      std::cout
-                          << "Created key-value pair for category " +
-                                 ComposeFittingName(Mass::delta, n, b, d, c) +
-                                 " and corresponding dataset\n";
-                    } else {
-                      mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
-                                                            d, c)]
-                          ->append(*deltaInputDataSet);
-                      std::cout
-                          << "Appended dataset to category " +
-                                 ComposeFittingName(Mass::delta, n, b, d, c) +
-                                 "\n";
+                    if (fit1D == false) {
+                      RooDataSet *deltaInputDataSet = nullptr;
+                      deltaInputDataSet = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_d->reduce(
+                              config.deltaMass(),
+                              ("Bu_Delta_M>" +
+                               std::to_string(config.buDeltaLow()) +
+                               "&&Bu_Delta_M<" +
+                               std::to_string(config.buDeltaHigh()))
+                                  .c_str()));
+                      if (deltaInputDataSet == nullptr) {
+                        throw std::runtime_error(
+                            "Could not reduce dataset down to deltaMass.");
+                      }
+                      if (mapCategoryDataset.find(
+                              ComposeFittingName(Mass::delta, n, b, d, c)) ==
+                          mapCategoryDataset.end()) {
+                        mapCategoryDataset.insert(std::make_pair(
+                            ComposeFittingName(Mass::delta, n, b, d, c),
+                            deltaInputDataSet));
+                        std::cout
+                            << "Created key-value pair for category " +
+                                   ComposeFittingName(Mass::delta, n, b, d, c) +
+                                   " and corresponding dataset\n";
+                      } else {
+                        mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
+                                                              d, c)]
+                            ->append(*deltaInputDataSet);
+                        std::cout
+                            << "Appended dataset to category " +
+                                   ComposeFittingName(Mass::delta, n, b, d, c) +
+                                   "\n";
+                      }
                     }
                   }
                 }
@@ -1026,7 +1063,7 @@ int main(int argc, char **argv) {
     }
 
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec);
+                                 daughtersVec, chargeVec, fit1D);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
 
@@ -1047,26 +1084,32 @@ int main(int argc, char **argv) {
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
-                   fitBool, lumiString, result.get());
+                   fitBool, lumiString, result.get(), fit1D);
       }
 
       if (fitBool == true) {
         result->Print("v");
-        PlotCorrelations(result.get(), outputDir, config);
+        PlotCorrelations(result.get(), outputDir, config, fit1D);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
-        TFile outputFile((outputDir + "/results/DataResult_" +
-                          std::to_string(config.deltaLow()) + "_" +
-                          std::to_string(config.deltaHigh()) + "_" +
-                          std::to_string(config.buDeltaLow()) + "_" +
-                          std::to_string(config.buDeltaHigh()) + ".root")
-                             .c_str(),
-                         "recreate");
+        std::string fileLabel;
+        if (fit1D == false) {
+          fileLabel = std::to_string(config.deltaLow()) + "_" +
+                      std::to_string(config.deltaHigh()) + "_" +
+                      std::to_string(config.buDeltaLow()) + "_" +
+                      std::to_string(config.buDeltaHigh());
+        } else {
+          fileLabel = std::to_string(config.deltaLow()) + "_" +
+                      std::to_string(config.deltaHigh());
+        }
+        TFile outputFile(
+            (outputDir + "/results/DataResult_" + fileLabel + ".root").c_str(),
+            "recreate");
         result->Write();
         TTree tree("tree", "");
         for (auto &n : neutralVec) {
           double boxEffSignal, orEffSignal;
-          int id=0;
+          int id = 0;
           RooRealVar orEffSignalRRV(
               ("orEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
           RooRealVar boxEffSignalRRV(
@@ -1093,7 +1136,8 @@ int main(int argc, char **argv) {
           boxEffSignal = boxEffSignalRRV.getVal();
           tree.Branch(("orEffSignal_" + EnumToString(n)).c_str(), &orEffSignal,
                       ("orEffSignal_" + EnumToString(n) + "/D").c_str());
-          tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(), &boxEffSignal,
+          tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(),
+                      &boxEffSignal,
                       ("boxEffSignal_" + EnumToString(n) + "/D").c_str());
           tree.Fill();
         }
@@ -1109,13 +1153,12 @@ int main(int argc, char **argv) {
         result->Print("v");
       }
       RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-              chargeVec, outputDir, nToys, fitBool);
+              chargeVec, outputDir, nToys, fitBool, fit1D);
     }
   } else {
     RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-            chargeVec, outputDir, nToys, fitBool);
+            chargeVec, outputDir, nToys, fitBool, fit1D);
   }
 
-  
   return 0;
 }
