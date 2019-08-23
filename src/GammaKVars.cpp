@@ -52,7 +52,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                   NeutralVars<Neutral::gamma>::Get(uniqueId)
                                       .orEffBu2Dst0pi_D0gamma()
                                       .getVal() *
-                                  0.07930,
+                                  NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                      .ratioKpi_Bu2Dst0h_D0gamma()
+                                      .getVal(),
                           -1000000, 1000000),
       N_Delta_Bu2Dst0h_D0gamma_(
           ("N_Delta_Bu2Dst0h_D0gamma_" +
@@ -95,7 +97,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                 NeutralVars<Neutral::gamma>::Get(uniqueId)
                                     .orEffBu2Dst0pi_D0pi0()
                                     .getVal() *
-                                0.07930,
+                                NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                    .ratioKpi_Bu2Dst0h_D0pi0()
+                                    .getVal(),
                         -1000000, 1000000),
       N_Delta_Bu2Dst0h_D0pi0_(
           ("N_Delta_Bu2Dst0h_D0pi0_" +
@@ -137,7 +141,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   NeutralVars<Neutral::gamma>::Get(uniqueId)
                       .orEffMisRec()
                       .getVal() *
-                  0.06,
+                  NeutralVars<Neutral::gamma>::Get(uniqueId)
+                      .ratioKpi_MisRec()
+                      .getVal(),
           -1000000, 1000000),
       N_Delta_MisRec_(
           ("N_Delta_MisRec_" +
@@ -193,7 +199,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   NeutralVars<Neutral::gamma>::Get(uniqueId)
                       .orEffBu2D0pi()
                       .getVal() *
-                  0.07768,
+                  NeutralVars<Neutral::gamma>::Get(uniqueId)
+                      .ratioKpi_Bu2D0h()
+                      .getVal(),
           -1000000, 1000000),
       N_Delta_Bu2D0h_(
           ("N_Delta_Bu2D0h_" +

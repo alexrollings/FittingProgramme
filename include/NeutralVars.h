@@ -274,7 +274,7 @@ class NeutralVars {
   RooRealVar &Bu2D0h_aRBu() {
     return Bu2D0h_aRBu_;
   }
-  RooAbsReal &ratioKpi_Bu2D0pi() {
+  RooAbsReal &ratioKpi_Bu2D0h() {
     return *ratioKpi_Bu2D0h_;
   }
   RooRealVar &orEffBu2D0pi() {
