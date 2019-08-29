@@ -167,10 +167,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                          .c_str(),
                                      "", 5.3424e+03),
       misId_Bu2Dst0h_D0gamma_sigma1Bu_(("misId_Bu2Dst0h_D0gamma_sigma1Bu_" +
-                                       ComposeName(uniqueId, Neutral::gamma,
-                                                   Bachelor::pi))
-                                          .c_str(),
-                                      "", 2.7876e+01),
+                                        ComposeName(uniqueId, Neutral::gamma,
+                                                    Bachelor::pi))
+                                           .c_str(),
+                                       "", 2.7876e+01),
       misId_Bu2Dst0h_D0gamma_sigma2Bu_(),
       misId_Bu2Dst0h_D0gamma_a1Bu_(("misId_Bu2Dst0h_D0gamma_a1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
@@ -196,29 +196,52 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ("pdf1Bu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), misId_Bu2Dst0h_D0gamma_meanBu_,
-          misId_Bu2Dst0h_D0gamma_sigma1Bu_, misId_Bu2Dst0h_D0gamma_a1Bu_,
-          misId_Bu2Dst0h_D0gamma_n1Bu_),
+          "", Configuration::Get().buDeltaMass(),
+          misId_Bu2Dst0h_D0gamma_meanBu_, misId_Bu2Dst0h_D0gamma_sigma1Bu_,
+          misId_Bu2Dst0h_D0gamma_a1Bu_, misId_Bu2Dst0h_D0gamma_n1Bu_),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(
           ("pdf2Bu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), misId_Bu2Dst0h_D0gamma_meanBu_,
-          misId_Bu2Dst0h_D0gamma_sigma1Bu_, misId_Bu2Dst0h_D0gamma_a2Bu_,
-          misId_Bu2Dst0h_D0gamma_n2Bu_),
+          "", Configuration::Get().buDeltaMass(),
+          misId_Bu2Dst0h_D0gamma_meanBu_, misId_Bu2Dst0h_D0gamma_sigma1Bu_,
+          misId_Bu2Dst0h_D0gamma_a2Bu_, misId_Bu2Dst0h_D0gamma_n2Bu_),
       misId_Bu2Dst0h_D0gamma_frac1PdfBu_(("misId_Bu2Dst0h_D0gamma_frac1PdfBu_" +
                                           ComposeName(uniqueId, Neutral::gamma,
                                                       Bachelor::pi))
                                              .c_str(),
                                          "", 5.7615e-02),
-      pdfBu_misId_Bu2Dst0h_D0gamma_(new RooAddPdf(("pdfBu_misId_Bu2Dst0h_D0gamma_" +
+      pdfBu_misId_Bu2Dst0h_D0gamma_(
+          new RooAddPdf(("pdfBu_misId_Bu2Dst0h_D0gamma_" +
+                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                            .c_str(),
+                        "", RooArgList(pdf1Bu_misId_Bu2Dst0h_D0gamma_,
+                                       pdf2Bu_misId_Bu2Dst0h_D0gamma_),
+                        misId_Bu2Dst0h_D0gamma_frac1PdfBu_)),
+      orEffMisId_Bu2Dst0h_D0gamma_(("orEffMisId_Bu2Dst0h_D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::gamma,
+                                                Bachelor::pi))
+                                       .c_str(),
+                                   "", 1),
+      boxEffMisId_Bu2Dst0h_D0gamma_(("boxEffMisId_Bu2Dst0h_D0gamma_" +
                                      ComposeName(uniqueId, Neutral::gamma,
                                                  Bachelor::pi))
                                         .c_str(),
-                                    "",
-                                    RooArgList(pdf1Bu_misId_Bu2Dst0h_D0gamma_,
-                                               pdf2Bu_misId_Bu2Dst0h_D0gamma_),
-                                    misId_Bu2Dst0h_D0gamma_frac1PdfBu_)) {
+                                    "", 1),
+      buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(
+          ("buDeltaCutEffMisId_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "", 1),
+      deltaCutEffMisId_Bu2Dst0h_D0gamma_(("deltaCutEffMisId_Bu2Dst0h_D0gamma_" +
+                                          ComposeName(uniqueId, Neutral::gamma,
+                                                      Bachelor::pi))
+                                             .c_str(),
+                                         "", 1) {
+  SetMisIdEfficiencies(Mode::Bu2Dst0K_D0gamma, orEffMisId_Bu2Dst0h_D0gamma_,
+                  boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
+                  deltaCutEffMisId_Bu2Dst0h_D0gamma_);
+
   if (Configuration::Get().fit1D() == false) {
     N_Bu_Bu2Dst0h_D0gamma_ =
         std::unique_ptr<RooFormulaVar>(new RooFormulaVar(

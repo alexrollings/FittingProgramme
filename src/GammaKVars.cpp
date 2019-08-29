@@ -218,7 +218,31 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           misId_Bu2Dst0h_D0gamma_meanBu_, misId_Bu2Dst0h_D0gamma_sigma1Bu_,
           misId_Bu2Dst0h_D0gamma_sigma2Bu_, misId_Bu2Dst0h_D0gamma_a1Bu_,
-          misId_Bu2Dst0h_D0gamma_a2Bu_)) {
+          misId_Bu2Dst0h_D0gamma_a2Bu_)),
+      orEffMisId_Bu2Dst0h_D0gamma_(("orEffMisId_Bu2Dst0h_D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::gamma,
+                                                Bachelor::k))
+                                       .c_str(),
+                                   "", 1),
+      boxEffMisId_Bu2Dst0h_D0gamma_(("boxEffMisId_Bu2Dst0h_D0gamma_" +
+                                     ComposeName(uniqueId, Neutral::gamma,
+                                                 Bachelor::k))
+                                        .c_str(),
+                                    "", 1),
+      buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(
+          ("buDeltaCutEffMisId_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 1),
+      deltaCutEffMisId_Bu2Dst0h_D0gamma_(("deltaCutEffMisId_Bu2Dst0h_D0gamma_" +
+                                          ComposeName(uniqueId, Neutral::gamma,
+                                                      Bachelor::k))
+                                             .c_str(),
+                                         "", 1) {
+  SetMisIdEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffMisId_Bu2Dst0h_D0gamma_,
+                  boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
+                  deltaCutEffMisId_Bu2Dst0h_D0gamma_);
+
   if (Configuration::Get().fit1D() == false) {
     N_Bu_Bu2Dst0h_D0gamma_ =
         std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
