@@ -86,6 +86,7 @@ class Pdf : public PdfBase {
   }
 
   void CreateRooAddPdf();
+  // void AssignMissIdYields();
 
   // pdf_Bu2Dst0h_Dst02D0neut are made in another class, but we only deal with
   // PDF in the
@@ -224,4 +225,38 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
       PdfBase::functions_, PdfBase::yields_));
 }
 
-// addPdf - put in own class (e.g. MassVars)
+//
+// Assign miss-ID yields in a separate function after the PDF objects have been
+// constructed to avoid cyclic dependancy (deadlock)
+// template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
+//           RunType _runType>
+// void Pdf<_neutral, _bachelor, _daughters, _runType>::AssignMissIdYields() {
+//   switch (_bachelor) {
+//     case Bachelor::pi:
+//       PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+//           ("missIdYield_" + ComposeName(_neutral, _bachelor, _daughters))
+//               .c_str(),
+//           ("missId yield " + ComposeName(_neutral, _bachelor, _daughters))
+//               .c_str(),
+//           "@0*(1-@1)*@2",
+//           RooArgList(
+//               SpecialisedVars<_neutral, SwapBachelor<_bachelor>(), _daughters,
+//                               _runType>::Get()
+//                   .N_Dh(),
+//               NeutralVars<_neutral>::Get().crossFeedRate(),
+//               NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate())));
+//       break;
+//     case Bachelor::k:
+//       PdfBase::missIdYield_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+//           ("missIdYield_" + ComposeName(_neutral, _bachelor, _daughters))
+//               .c_str(),
+//           "missId yield", "@0*(@1+@2)",
+//           RooArgList(
+//               NeutralBachelorVars<_neutral, _bachelor>::Get().missIdRate(),
+//               Pdf<_neutral, Bachelor::pi, _daughters, _runType>::Get()
+//                   .signalYield(),
+//               Pdf<_neutral, Bachelor::pi, _daughters, _runType>::Get()
+//                   .nonTmSignalYield())));
+//       break;
+//   }
+// }

@@ -446,6 +446,14 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                        Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+          // .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+          //     .CreateRooAddPdf();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
+          //     .AssignMissIdYields();
+          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
+          //     .CreateRooAddPdf();
               if (config.fit1D() == false) {
                 pdfs.emplace_back(
                     &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
