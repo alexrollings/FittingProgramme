@@ -506,7 +506,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     double nDeltaCut = chain.GetEntries(
         (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
             .c_str());
-    double nBuDeltaCut = chain.GetEntries(
+    double nBuCut = chain.GetEntries(
         (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
             .c_str());
     double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
@@ -521,7 +521,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     double orEffVal = nOr / nInitial;
     double boxEffVal = nBox / nInitial;
     double deltaCutEffVal = nDeltaCut / nInitial;
-    double buDeltaCutEffVal = nBuDeltaCut / nInitial;
+    double buDeltaCutEffVal = nBuCut / nInitial;
 
     std::ofstream outFile;
     outFile.open(txtFileName);
