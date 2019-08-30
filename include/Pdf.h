@@ -15,15 +15,17 @@ class PdfBase {
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
   inline int uniqueId() const { return uniqueId_; }
-  inline Mass mass() const { return mass_; }
   inline Bachelor bachelor() const { return bachelor_; }
   inline Neutral neutral() const { return neutral_; }
   inline Daughters daughters() const { return daughters_; }
   inline Charge charge() const { return charge_; }
 
-  inline RooArgList &yields() { return yields_; }
-  inline RooArgList &functions() { return functions_; }
-  inline RooAddPdf &addPdf() { return *addPdf_; }
+  inline RooArgList &yieldsBu() { return yieldsBu_; }
+  inline RooArgList &yieldsDelta() { return yieldsDelta_; }
+  inline RooArgList &functionsBu() { return functionsBu_; }
+  inline RooArgList &functionsDelta() { return functionsDelta_; }
+  inline RooAddPdf &addPdfBu() { return *addPdfBu_; }
+  inline RooAddPdf &addPdfDelta() { return *addPdfDelta_; }
 
   // std::unique_ptr<RooAddPdf> addPdf_;
 
@@ -43,32 +45,34 @@ class PdfBase {
   // as the function will be present in multiple compiltation unit
   // function needs to be const when you don't change the object when the
   // function is called
-  inline std::string CategoryName() const {
-    return ComposeFittingName(mass_, neutral_, bachelor_, daughters_,
+  inline std::string CategoryName(Mass mass) const {
+    return ComposeFittingName(mass, neutral_, bachelor_, daughters_,
                               charge_);
   }
 
  protected:  // Can be accessed by deriving classes
-  PdfBase(int uniqueId, Mass mass, Neutral neutral, Bachelor bachelor,
+  PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
           Daughters daughters, Charge charge);
   virtual ~PdfBase() {}
 
   int uniqueId_;
-  Mass mass_;
   Neutral neutral_;
   Bachelor bachelor_;
   Daughters daughters_;
   Charge charge_;
 
-  RooArgList yields_;
-  RooArgList functions_;
-  std::unique_ptr<RooAddPdf> addPdf_;
+  RooArgList yieldsBu_;
+  RooArgList yieldsDelta_;
+  RooArgList functionsBu_;
+  RooArgList functionsDelta_;
+  std::unique_ptr<RooAddPdf> addPdfBu_;
+  std::unique_ptr<RooAddPdf> addPdfDelta_;
 };
 
-template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
+template <Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
 class Pdf : public PdfBase {
-  using This_t = Pdf<_mass, _neutral, _bachelor, _daughters, _charge>;
+  using This_t = Pdf<_neutral, _bachelor, _daughters, _charge>;
 
  public:
   // Get() method of PDF now doesn't always return the same PDF, but the same
@@ -87,7 +91,8 @@ class Pdf : public PdfBase {
     return *it->second;
   }
 
-  void CreateRooAddPdf();
+  void CreateBuAddPdf();
+  void CreateDeltaAddPdf();
   // void AssignMissIdYields();
 
   // pdf_Bu2Dst0h_Dst02D0neut are made in another class, but we only deal with
@@ -158,95 +163,104 @@ class Pdf : public PdfBase {
 // Can't make a list of different types. Pdfs have different types because of
 // the templating. They all inheret from PDFBase, so we can make a list of
 // PDFBase objects
-template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
+template <Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
 // How does it know it's the same unique ID when one is uniqueId_ and the other
 // uniqueId?
-Pdf<_mass, _neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
-    : PdfBase(uniqueId, _mass, _neutral, _bachelor, _daughters, _charge) {
-  CreateRooAddPdf();
+Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
+    : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
+  CreateBuAddPdf();
+  if (Configuration::Get().fit1D() == false) {
+    CreateDeltaAddPdf();
+  }
 }
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
-template <Mass _mass, Neutral _neutral, Bachelor _bachelor,
+template <Neutral _neutral, Bachelor _bachelor,
           Daughters _daughters, Charge _charge>
-void Pdf<_mass, _neutral, _bachelor, _daughters,
-         _charge>::CreateRooAddPdf() {
-  if (_mass == Mass::delta) {
-    PdfBase::functions_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0h_D0gamma());
-    PdfBase::yields_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_Bu2Dst0h_D0gamma());
-    // misId delta mass shape same as non misId
-    PdfBase::functions_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_misId_Bu2Dst0h_D0gamma());
-    PdfBase::yields_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_misId_Bu2Dst0h_D0gamma());
-    PdfBase::functions_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0h_D0pi0());
-    PdfBase::yields_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_Bu2Dst0h_D0pi0());
-    PdfBase::functions_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_MisRec());
-    PdfBase::yields_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_MisRec());
-    PdfBase::functions_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2D0h());
-    PdfBase::yields_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .N_Delta_Bu2D0h());
-  } else {
-    PdfBase::functions_.add(
+void Pdf<_neutral, _bachelor, _daughters,
+         _charge>::CreateBuAddPdf() {
+    PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_Bu2Dst0h_D0gamma());
-    PdfBase::yields_.add(
+    PdfBase::yieldsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Bu_Bu2Dst0h_D0gamma());
-    PdfBase::functions_.add(
+    PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_misId_Bu2Dst0h_D0gamma());
-    PdfBase::yields_.add(
+    PdfBase::yieldsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Bu_misId_Bu2Dst0h_D0gamma());
-    PdfBase::functions_.add(
+    PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_Bu2Dst0h_D0pi0());
-    PdfBase::yields_.add(
+    PdfBase::yieldsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Bu_Bu2Dst0h_D0pi0());
-    PdfBase::functions_.add(
+    PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_MisRec());
-    PdfBase::yields_.add(
+    PdfBase::yieldsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Bu_MisRec());
-    PdfBase::functions_.add(
+    PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_Bu2D0h());
-    PdfBase::yields_.add(
+    PdfBase::yieldsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Bu_Bu2D0h());
-  }
 
-  PdfBase::addPdf_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
-      ("pdf_" + ComposeName(PdfBase::uniqueId_, _mass, _neutral, _bachelor,
+  PdfBase::addPdfBu_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("addPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                             _daughters, _charge))
-          .c_str(),
-      ("pdf_" + ComposeName(PdfBase::uniqueId_, _mass, _neutral, _bachelor,
-                            _daughters, _charge))
-          .c_str(),
-      PdfBase::functions_, PdfBase::yields_));
+          .c_str(), "",
+      PdfBase::functionsBu_, PdfBase::yieldsBu_));
 }
+
+template <Neutral _neutral, Bachelor _bachelor,
+          Daughters _daughters, Charge _charge>
+void Pdf<_neutral, _bachelor, _daughters,
+         _charge>::CreateDeltaAddPdf() {
+    PdfBase::functionsDelta_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2Dst0h_D0gamma());
+    PdfBase::yieldsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_Bu2Dst0h_D0gamma());
+    PdfBase::functionsDelta_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_misId_Bu2Dst0h_D0gamma());
+    PdfBase::yieldsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_misId_Bu2Dst0h_D0gamma());
+    PdfBase::functionsDelta_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2Dst0h_D0pi0());
+    PdfBase::yieldsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_Bu2Dst0h_D0pi0());
+    PdfBase::functionsDelta_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_MisRec());
+    PdfBase::yieldsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_MisRec());
+    PdfBase::functionsDelta_.add(
+        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2D0h());
+    PdfBase::yieldsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .N_Delta_Bu2D0h());
+
+  PdfBase::addPdfDelta_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("addPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
+                            _daughters, _charge))
+          .c_str(), "",
+      PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
+}
+
 
 //
 // Assign miss-ID yields in a separate function after the PDF objects have been

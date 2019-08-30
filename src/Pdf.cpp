@@ -1,21 +1,30 @@
 #include "Pdf.h"
 
-PdfBase::PdfBase(int uniqueId, Mass mass, Neutral neutral,
+PdfBase::PdfBase(int uniqueId, Neutral neutral,
                  Bachelor bachelor, Daughters daughters, Charge charge)
     : neutral_(neutral),
-      mass_(mass),
       bachelor_(bachelor),
       daughters_(daughters),
       charge_(charge),
       uniqueId_(uniqueId),
-      addPdf_(nullptr),
-      yields_(("yields_" + ComposeName(uniqueId, mass, neutral, bachelor,
+      addPdfBu_(nullptr),
+      addPdfDelta_(nullptr),
+      yieldsBu_(("yieldsBu_" + ComposeName(uniqueId, neutral, bachelor,
                                        daughters, charge))
                   .c_str()),
-      functions_(("functions_" + ComposeName(uniqueId, mass, neutral,
+      yieldsDelta_(("yieldsDelta_" + ComposeName(uniqueId, neutral, bachelor,
+                                       daughters, charge))
+                  .c_str()),
+      functionsBu_(("functionsBu_" + ComposeName(uniqueId, neutral,
+                                             bachelor, daughters, charge))
+                     .c_str()),
+      functionsDelta_(("functionsDelta_" + ComposeName(uniqueId, neutral,
                                              bachelor, daughters, charge))
                      .c_str()) {}
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
-  simPdf.addPdf(*addPdf_, CategoryName().c_str());
+  simPdf.addPdf(*addPdfBu_, CategoryName(Mass::buDelta).c_str());
+  if (Configuration::Get().fit1D() == false) {
+    simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
+  }
 }

@@ -55,13 +55,12 @@ void SetStyle() {
 
 // Function to plot 1D projections - written so that it can be used for both bu
 // and delta mass
-void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
-                   RooSimultaneous const &simPdf,
+void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
+                   RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
                    bool fitBool, Configuration &config) {
   Bachelor bachelor = pdf.bachelor();
-  Mass mass = pdf.mass();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
@@ -98,6 +97,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
   pullHist = frame->RooPlot::pullHist();
 
   if (mass == Mass::buDelta) {
+    std::cout << "Plotting " << pdf.addPdfBu().GetName() << "\n";
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -145,6 +145,7 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                   RooFit::LineStyle(kDashed), RooFit::LineColor(kGreen),
                   RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
   } else {
+    std::cout << "Plotting " << pdf.addPdfDelta().GetName() << "\n";
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -293,7 +294,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
-  Mass mass = pdf.mass();
 
   if (charge == Charge::plus) {
     std::cout << "plus\n";
@@ -307,7 +307,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0gammaHist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0h_D0gammaHist", 1, 0, 1);
   Bu2Dst0h_D0gammaHist->SetLineColor(kBlue);
@@ -316,7 +316,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   auto misId_Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
       ("misId_Bu2Dst0h_D0gammaHist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "misId_Bu2Dst0h_D0gammaHist", 1, 0, 1);
   misId_Bu2Dst0h_D0gammaHist->SetLineColor(kMagenta);
@@ -325,7 +325,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   auto Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0pi0Hist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0h_D0pi0Hist", 1, 0, 1);
   Bu2Dst0h_D0pi0Hist->SetLineColor(kOrange);
@@ -333,8 +333,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_D0pi0Hist->SetLineWidth(2);
 
   auto MisRecHist = std::make_unique<TH1D>(
-      ("MisRecHist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+      ("MisRecHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "MisRecHist", 1, 0, 1);
   MisRecHist->SetLineColor(kRed);
@@ -342,8 +341,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   MisRecHist->SetLineWidth(2);
 
   auto Bu2D0hHist = std::make_unique<TH1D>(
-      ("Bu2D0hHist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+      ("Bu2D0hHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2D0hHist", 1, 0, 1);
   Bu2D0hHist->SetLineColor(kGreen);
@@ -351,8 +349,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2D0hHist->SetLineWidth(2);
 
   auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" +
-       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "blankHist", 1, 0, 1);
   blankHist->SetLineColor(kWhite);
@@ -422,12 +419,11 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
   }
 
-  if (mass == Mass::delta) {
-    PlotComponent(config.deltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config);
-  } else {
-    PlotComponent(config.buDeltaMass(), pdf, fullDataSet, simPdf, categories,
-                  legend, lumiLegend, outputDir, fitBool, config);
+  PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
+                categories, legend, lumiLegend, outputDir, fitBool, config);
+  if (config.fit1D() == false) {
+    PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
+                  categories, legend, lumiLegend, outputDir, fitBool, config);
   }
 }
 
@@ -480,10 +476,9 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
         case Neutral::gamma:
           switch (c) {
             case Charge::total:
-              pdfs.emplace_back(
-                  &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                       Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
+                                     Daughters::kpi, Charge::total>::Get(id));
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
               // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
               // .AssignMissIdYields();
@@ -493,81 +488,40 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
               //     .AssignMissIdYields();
               // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
               //     .CreateRooAddPdf();
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(
-                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                         Daughters::kpi, Charge::total>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                       Daughters::kpi, Charge::total>::Get(id));
-              }
               break;
             case Charge::plus:
-              pdfs.emplace_back(
-                  &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                       Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
                                      Daughters::kpi, Charge::plus>::Get(id));
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(
-                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                         Daughters::kpi, Charge::plus>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                       Daughters::kpi, Charge::plus>::Get(id));
-              }
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k,
+                                     Daughters::kpi, Charge::plus>::Get(id));
               break;
             case Charge::minus:
-              pdfs.emplace_back(
-                  &Pdf<Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                       Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi,
                                      Daughters::kpi, Charge::minus>::Get(id));
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(
-                    &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,
-                         Daughters::kpi, Charge::minus>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::gamma, Bachelor::k,
-                                       Daughters::kpi, Charge::minus>::Get(id));
-              }
+              pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k,
+                                     Daughters::kpi, Charge::minus>::Get(id));
               break;
           }
           break;
         case Neutral::pi0:
           switch (c) {
             case Charge::total:
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total>::Get(id));
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                       Daughters::kpi, Charge::total>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                       Daughters::kpi, Charge::total>::Get(id));
-              }
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                     Charge::total>::Get(id));
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                                     Charge::total>::Get(id));
               break;
             case Charge::plus:
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::plus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::plus>::Get(id));
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                       Daughters::kpi, Charge::plus>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                       Daughters::kpi, Charge::plus>::Get(id));
-              }
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                     Charge::plus>::Get(id));
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                                     Charge::plus>::Get(id));
               break;
             case Charge::minus:
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::minus>::Get(id));
-              pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::minus>::Get(id));
-              if (config.fit1D() == false) {
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::pi,
-                                       Daughters::kpi, Charge::minus>::Get(id));
-                pdfs.emplace_back(&Pdf<Mass::delta, Neutral::pi0, Bachelor::k,
-                                       Daughters::kpi, Charge::minus>::Get(id));
-              }
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                                     Charge::minus>::Get(id));
+              pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                                     Charge::minus>::Get(id));
               break;
           }
           break;
@@ -647,7 +601,6 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       std::string lumiString = "TOY";
       auto pdfs = p.second;
       for (auto &p : pdfs) {
-        std::cout << "Plotting " << p->addPdf().GetName() << "\n";
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
                    outputDir, fitBool, lumiString, result.get());
       }
