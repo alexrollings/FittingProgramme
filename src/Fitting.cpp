@@ -601,9 +601,9 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     // generates toys in a replicable way, in case you need to debug
     // something.
 
-    auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec);
     if (simPdf == nullptr) {
+      auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+                                   daughtersVec, chargeVec);
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
 
@@ -632,6 +632,8 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
         ("simPdfFit_" + std::to_string(id)).c_str(),
         ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
 
+    auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+                                 daughtersVec, chargeVec);
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> result;
