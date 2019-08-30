@@ -372,7 +372,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream Bu2Dst0h_D0pi0Legend;
   Bu2Dst0h_D0pi0Legend
       << "B^{" + EnumToLabel(charge) +

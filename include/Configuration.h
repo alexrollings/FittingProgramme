@@ -138,7 +138,7 @@ std::string EnumToLabel(Charge);
 std::string EnumToLabel(Daughters, Charge);
 std::string EnumToLabel(Bachelor);
 std::string EnumToLabel(Neutral);
-std::string MissIdLabel(Bachelor);
+std::string MisIdLabel(Bachelor);
 std::string CrossFeedLabel(Neutral);
 std::string HstLabel(Bachelor);
 

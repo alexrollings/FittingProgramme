@@ -712,7 +712,7 @@ std::string EnumToLabel(Neutral neutral) {
   }
 }
 
-std::string MissIdLabel(Bachelor bachelor) {
+std::string MisIdLabel(Bachelor bachelor) {
   switch (bachelor) {
     case Bachelor::pi:
       return "K";
