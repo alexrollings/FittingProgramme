@@ -86,19 +86,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::pi0))
                                        .c_str(),
                                    "", 6.8457e-01),
-      orEffBu2Dst0pi_D0gamma_(("orEffBu2Dst0pi_D0gamma_" +
+      orEffBu2Dst0h_D0gamma_(("orEffBu2Dst0h_D0gamma_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
                               "", 1),
-      boxEffBu2Dst0pi_D0gamma_(("boxEffBu2Dst0pi_D0gamma_" +
+      boxEffBu2Dst0h_D0gamma_(("boxEffBu2Dst0h_D0gamma_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
                                "", 1),
-      buDeltaCutEffBu2Dst0pi_D0gamma_(("buDeltaCutEffBu2Dst0pi_D0gamma_" +
+      buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
                                       "", 1),
-      deltaCutEffBu2Dst0pi_D0gamma_(("deltaCutEffBu2Dst0pi_D0gamma_" +
+      deltaCutEffBu2Dst0h_D0gamma_(("deltaCutEffBu2Dst0h_D0gamma_" +
                                      ComposeName(uniqueId, Neutral::pi0))
                                         .c_str(),
                                     "", 1),
@@ -161,19 +161,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                            ComposeName(uniqueId, Neutral::pi0))
                               .c_str(),
                           "", 10),
-      orEffBu2Dst0pi_D0pi0_(("orEffBu2Dst0pi_D0pi0_" +
+      orEffBu2Dst0h_D0pi0_(("orEffBu2Dst0h_D0pi0_" +
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),
                             "", 1),
-      boxEffBu2Dst0pi_D0pi0_(("boxEffBu2Dst0pi_D0pi0_" +
+      boxEffBu2Dst0h_D0pi0_(("boxEffBu2Dst0h_D0pi0_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
                              "", 1),
-      buDeltaCutEffBu2Dst0pi_D0pi0_(("buDeltaCutEffBu2Dst0pi_D0pi0_" +
+      buDeltaCutEffBu2Dst0h_D0pi0_(("buDeltaCutEffBu2Dst0h_D0pi0_" +
                                      ComposeName(uniqueId, Neutral::pi0))
                                         .c_str(),
                                     "", 1),
-      deltaCutEffBu2Dst0pi_D0pi0_(("deltaCutEffBu2Dst0pi_D0pi0_" +
+      deltaCutEffBu2Dst0h_D0pi0_(("deltaCutEffBu2Dst0h_D0pi0_" +
                                    ComposeName(uniqueId, Neutral::pi0))
                                       .c_str(),
                                   "", 1),
@@ -260,46 +260,46 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           2.1226e-11),
-      orEffBu2D0pi_(
-          ("orEffBu2D0pi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+      orEffBu2D0h_(
+          ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
-      boxEffBu2D0pi_(
-          ("boxEffBu2D0pi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+      boxEffBu2D0h_(
+          ("boxEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 1),
-      buDeltaCutEffBu2D0pi_(("buDeltaCutEffBu2D0pi_" +
+      buDeltaCutEffBu2D0h_(("buDeltaCutEffBu2D0h_" +
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),
                             "", 1),
-      deltaCutEffBu2D0pi_(("deltaCutEffBu2D0pi_" +
+      deltaCutEffBu2D0h_(("deltaCutEffBu2D0h_" +
                            ComposeName(uniqueId, Neutral::pi0))
                               .c_str(),
                           "", 1),
       fracBu2D0pi_(1.54),
       initYieldFAVBu2D0pi_(initYieldFAVBu2Dst0pi_D0gamma_ *fracBu2D0pi_) {
-  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0pi_D0gamma_,
-                  boxEffBu2Dst0pi_D0gamma_, buDeltaCutEffBu2Dst0pi_D0gamma_,
-                  deltaCutEffBu2Dst0pi_D0gamma_);
-  // std::cout << "\t orEffBu2Dst0pi_D0gamma = "
-  //           << orEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-  //           << "\t boxEffBu2Dst0pi_D0gamma = "
-  //           << boxEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-  //           << "\t buDeltaCutEffBu2Dst0pi_D0gamma = "
-  //           << buDeltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n"
-  //           << "\t deltaCutEffBu2Dst0pi_D0gamma = "
-  //           << deltaCutEffBu2Dst0pi_D0gamma_.getVal() << "\n";
+  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
+                  boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
+                  deltaCutEffBu2Dst0h_D0gamma_);
+  // std::cout << "\t orEffBu2Dst0h_D0gamma = "
+  //           << orEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0h_D0gamma = "
+  //           << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
+  //           << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0gamma = "
+  //           << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
 
-  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0pi_D0pi0_,
-                  boxEffBu2Dst0pi_D0pi0_,
-                  buDeltaCutEffBu2Dst0pi_D0pi0_,
-                  deltaCutEffBu2Dst0pi_D0pi0_);
-  // std::cout << "\t orEffBu2Dst0pi_D0pi0 = "
-  //           << orEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-  //           << "\t boxEffBu2Dst0pi_D0pi0 = "
-  //           << boxEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-  //           << "\t buDeltaCutEffBu2Dst0pi_D0pi0 = "
-  //           << buDeltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffBu2Dst0pi_D0pi0 = "
-  //           << deltaCutEffBu2Dst0pi_D0pi0_.getVal() << "\n";
+  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
+                  boxEffBu2Dst0h_D0pi0_,
+                  buDeltaCutEffBu2Dst0h_D0pi0_,
+                  deltaCutEffBu2Dst0h_D0pi0_);
+  // std::cout << "\t orEffBu2Dst0h_D0pi0 = "
+  //           << orEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0h_D0pi0 = "
+  //           << boxEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
+  //           << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0pi0 = "
+  //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
   //
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
@@ -338,12 +338,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   //           << "\n"
   //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() << "\n";
 
-  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0pi_, boxEffBu2D0pi_,
-                  buDeltaCutEffBu2D0pi_, deltaCutEffBu2D0pi_);
-  // std::cout << "\t orEffBu2D0pi = " << orEffBu2D0pi_.getVal() << "\n"
-  //           << "\t boxEffBu2D0pi = " << boxEffBu2D0pi_.getVal() << "\n"
-  //           << "\t buDeltaCutEffBu2D0pi = " << buDeltaCutEffBu2D0pi_.getVal()
+  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0h_, boxEffBu2D0h_,
+                  buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_);
+  // std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
+  //           << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
   //           << "\n"
-  //           << "\t deltaCutEffBu2D0pi = " << deltaCutEffBu2D0pi_.getVal()
+  //           << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
   //           << "\n";
 }
