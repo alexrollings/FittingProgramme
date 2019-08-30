@@ -101,6 +101,9 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() {
     return pdfDelta_Bu2Dst0h_D0gamma_;
   }
+  RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() {
+    return pdfDelta_misId_Bu2Dst0h_D0gamma_;
+  }
   RooRealVar &Bu2Dst0h_D0gamma_meanBu() {
     return Bu2Dst0h_D0gamma_meanBu_;
   }
@@ -298,6 +301,7 @@ class NeutralVars {
   RooCBShape pdf2Delta_Bu2Dst0h_D0gamma_;
   RooRealVar Bu2Dst0h_D0gamma_frac1PdfDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_D0gamma_;
+  RooAddPdf pdfDelta_misId_Bu2Dst0h_D0gamma_;
   RooRealVar Bu2Dst0h_D0gamma_meanBu_;
   RooRealVar relativeBuWidth_Bu2Dst0h_D0gamma_;
   RooRealVar Bu2Dst0h_D0gamma_a2Bu_;

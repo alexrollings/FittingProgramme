@@ -107,6 +107,16 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                   RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
                   RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
                   RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -144,6 +154,16 @@ void PlotComponent(RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
                   RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
                   RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
                   RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -294,6 +314,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0h_D0gammaHist->SetLineWidth(2);
 
+  auto misId_Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
+      ("misId_Bu2Dst0h_D0gammaHist" +
+       ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "misId_Bu2Dst0h_D0gammaHist", 1, 0, 1);
+  misId_Bu2Dst0h_D0gammaHist->SetLineColor(kMagenta);
+  misId_Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
+  misId_Bu2Dst0h_D0gammaHist->SetLineWidth(2);
+
   auto Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0pi0Hist" +
        ComposeName(id, mass, neutral, bachelor, daughters, charge))
@@ -336,6 +365,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  std::stringstream misId_Bu2Dst0h_D0gammaLegend;
+  // SWAP BACH LABEL
+  misId_Bu2Dst0h_D0gammaLegend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream Bu2Dst0h_D0pi0Legend;
   Bu2Dst0h_D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -353,6 +390,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   legend.SetLineColor(kWhite);
   legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
                   Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
+  legend.AddEntry(misId_Bu2Dst0h_D0gammaHist.get(),
+                  misId_Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(), Bu2Dst0h_D0pi0Legend.str().c_str(),
                   "l");
   legend.AddEntry(MisRecHist.get(), MisRecLegend.str().c_str(), "l");
@@ -446,14 +485,14 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                        Daughters::kpi, Charge::total>::Get(id));
               pdfs.emplace_back(&Pdf<Mass::buDelta, Neutral::gamma, Bachelor::k,
                                      Daughters::kpi, Charge::total>::Get(id));
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
-          // .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .AssignMissIdYields();
-          // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
-          //     .CreateRooAddPdf();
+              // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+              // .AssignMissIdYields();
+              // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, runType>::Get()
+              //     .CreateRooAddPdf();
+              // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
+              //     .AssignMissIdYields();
+              // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, runType>::Get()
+              //     .CreateRooAddPdf();
               if (config.fit1D() == false) {
                 pdfs.emplace_back(
                     &Pdf<Mass::delta, Neutral::gamma, Bachelor::pi,

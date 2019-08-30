@@ -30,6 +30,7 @@ class PdfBase {
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0() const = 0;
   virtual RooDstD0BG &pdfDelta_MisRec() const = 0;
@@ -102,7 +103,11 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_D0gamma();
   }
-  virtual RooAddPdf &pdfBu_misId_Bu2Dst0h_D0gamma() const {
+  virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .pdfDelta_misId_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_misId_Bu2Dst0h_D0gamma();
   }
@@ -178,7 +183,7 @@ void Pdf<_mass, _neutral, _bachelor, _daughters,
     // misId delta mass shape same as non misId
     PdfBase::functions_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0h_D0gamma());
+            .pdfDelta_misId_Bu2Dst0h_D0gamma());
     PdfBase::yields_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .N_Delta_misId_Bu2Dst0h_D0gamma());
