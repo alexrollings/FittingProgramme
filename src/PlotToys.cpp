@@ -70,16 +70,26 @@ int main(int argc, char *argv[]) {
 
   Configuration &config = Configuration::Get();
   for (auto &filename : resultFiles) {
+    std::string rndm;
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp(
-        ".+_([0-9].[0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+).root");
+        ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+    std::regex fileRexp1D(
+        ".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
     std::smatch fileMatch;
-    std::regex_search(filename, fileMatch, fileRexp);
-    std::string rndm = fileMatch[1];
-    config.SetDeltaLow(std::stod(fileMatch[2]));
-    config.SetDeltaHigh(std::stod(fileMatch[3]));
-    config.SetBuDeltaLow(std::stod(fileMatch[4]));
-    config.SetBuDeltaHigh(std::stod(fileMatch[5]));
+    if(std::regex_search(filename, fileMatch, fileRexp)) {
+      config.SetDeltaLow(std::stod(fileMatch[1]));
+      config.SetDeltaHigh(std::stod(fileMatch[2]));
+      config.SetBuDeltaLow(std::stod(fileMatch[3]));
+      config.SetBuDeltaHigh(std::stod(fileMatch[4]));
+      rndm = fileMatch[5];
+    } else if(std::regex_search(filename, fileMatch, fileRexp1D)) {
+      config.SetDeltaLow(std::stod(fileMatch[1]));
+      config.SetDeltaHigh(std::stod(fileMatch[2]));
+      rndm = fileMatch[3];
+    } else {
+      throw std::runtime_error("Could not find filename with correct regex pattern");
+    }
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
         file->FindObjectAny(("Result_" + rndm).c_str())));
     if (result == nullptr) {

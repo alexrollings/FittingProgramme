@@ -2,8 +2,13 @@ import os, re, subprocess, sys, argparse
 #re = regular expressions
 
 def pass_filename(filename, file_list, delta_low, delta_high, bu_low, bu_high):
-    m = re.search("Result_0\.[0-9]+_" + delta_low + '_' + delta_high + '_' +
-                  bu_low + '_' + bu_high + "\.root", filename)
+    m = re.search("Result_" + delta_low + '_' + delta_high + '_' +
+                  bu_low + '_' + bu_high + "_0\.[0-9]+\.root", filename)
+    if m:
+        file_list.append(filename)
+
+def pass_filename(filename, file_list, delta_low, delta_high):
+    m = re.search("Result_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
     if m:
         file_list.append(filename)
 
@@ -21,6 +26,12 @@ if __name__ == "__main__":
         type=str,
         help='Directory where folder for PDFs and results should be created',
         required=True)
+    parser.add_argument(
+        '-d',
+        '--dim',
+        type=str,
+        help='Dimension',
+        required=False)
     parser.add_argument(
         '-n',
         '--neutral',
@@ -60,12 +71,24 @@ if __name__ == "__main__":
     delta_high = args.delta_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+    dim = args.dim
+
+    if dim == None:
+        print("Analysing results from D1D toys")
+        dim = ""
+    elif dim == "1":
+        print("Analysing results from 1D toys")
+    else:
+        sys.exit("Set -d=1 or nothing")
 
     if not os.path.isdir(input_dir):
         sys.exit(input_dir + ' is not a directory')
     file_list = []
     for filename in os.listdir(input_dir):
-        pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
+        if dim == None:
+            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
+        else:
+            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high)
         # pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
