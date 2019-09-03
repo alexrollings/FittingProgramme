@@ -735,9 +735,10 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
         fileLabel = std::to_string(config.deltaLow()) + "_" +
                     std::to_string(config.deltaHigh());
       }
-      TFile outputFile(
-          (outputDir + "/results/DataResult_" + fileLabel + ".root").c_str(),
-          "recreate");
+      TFile outputFile((outputDir + "/results/Result_" + fileLabel + "_" +
+                        std::to_string(randomTag) ".root")
+                           .c_str(),
+                       "recreate");
 
       outputFile.cd();
       result->SetName(("Result_" + std::to_string(randomTag)).c_str());
