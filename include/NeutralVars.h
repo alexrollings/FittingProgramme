@@ -169,6 +169,9 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() {
     return pdfDelta_Bu2Dst0h_D0pi0_;
   }
+  RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() {
+    return pdfDelta_misId_Bu2Dst0h_D0pi0_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_meanBu() {
     return Bu2Dst0h_D0pi0_meanBu_;
   }
@@ -209,6 +212,9 @@ class NeutralVars {
   }
   RooDstD0BG &pdfDelta_MisRec() {
     return pdfDelta_MisRec_;
+  }
+  RooDstD0BG &pdfDelta_misId_MisRec() {
+    return pdfDelta_misId_MisRec_;
   }
   RooRealVar &MisRec_meanBu() {
     return MisRec_meanBu_;
@@ -255,6 +261,9 @@ class NeutralVars {
   }
   RooDstD0BG &pdfDelta_Bu2D0h() {
     return pdfDelta_Bu2D0h_;
+  }
+  RooDstD0BG &pdfDelta_misId_Bu2D0h() {
+    return pdfDelta_misId_Bu2D0h_;
   }
   RooRealVar &Bu2D0h_meanBu() {
     return Bu2D0h_meanBu_;
@@ -325,6 +334,7 @@ class NeutralVars {
   RooCBShape pdf2Delta_Bu2Dst0h_D0pi0_;
   RooRealVar Bu2Dst0h_D0pi0_frac1PdfDelta_;
   RooAddPdf pdfDelta_Bu2Dst0h_D0pi0_;
+  RooAddPdf pdfDelta_misId_Bu2Dst0h_D0pi0_;
   RooRealVar Bu2Dst0h_D0pi0_meanBu_;
   RooRealVar Bu2Dst0h_D0pi0_aBu_;
   RooRealVar Bu2Dst0h_D0pi0_nBu_;
@@ -340,6 +350,7 @@ class NeutralVars {
   RooRealVar MisRec_bDelta_;
   RooRealVar MisRec_cDelta_;
   RooDstD0BG pdfDelta_MisRec_;
+  RooDstD0BG pdfDelta_misId_MisRec_;
   RooRealVar MisRec_meanBu_;
   RooRealVar MisRec_aBu_;
   RooRealVar MisRec_nBu_;
@@ -359,6 +370,7 @@ class NeutralVars {
   RooRealVar Bu2D0h_bDelta_;
   RooRealVar Bu2D0h_cDelta_;
   RooDstD0BG pdfDelta_Bu2D0h_;
+  RooDstD0BG pdfDelta_misId_Bu2D0h_;
   RooRealVar Bu2D0h_meanBu_;
   RooRealVar relativeBuWidth_Bu2D0h_;
   RooRealVar Bu2D0h_aLBu_;
