@@ -77,18 +77,10 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0gamma_sigmaDelta() {
     return Bu2Dst0h_D0gamma_sigmaDelta_;
   }
-  RooRealVar &Bu2Dst0h_D0gamma_a1Delta() {
-    return Bu2Dst0h_D0gamma_a1Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_a2Delta() {
-    return Bu2Dst0h_D0gamma_a2Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_n1Delta() {
-    return Bu2Dst0h_D0gamma_n1Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_n2Delta() {
-    return Bu2Dst0h_D0gamma_n2Delta_;
-  }
+  RooRealVar &Bu2Dst0h_D0gamma_a1Delta() { return Bu2Dst0h_D0gamma_a1Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_a2Delta() { return Bu2Dst0h_D0gamma_a2Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n1Delta() { return Bu2Dst0h_D0gamma_n1Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n2Delta() { return Bu2Dst0h_D0gamma_n2Delta_; }
   RooCBShape &pdf1Delta_Bu2Dst0h_D0gamma() {
     return pdf1Delta_Bu2Dst0h_D0gamma_;
   }
@@ -98,145 +90,73 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0gamma_frac1PdfDelta() {
     return Bu2Dst0h_D0gamma_frac1PdfDelta_;
   }
-  RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() {
-    return pdfDelta_Bu2Dst0h_D0gamma_;
-  }
+  RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() { return pdfDelta_Bu2Dst0h_D0gamma_; }
   RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() {
     return pdfDelta_misId_Bu2Dst0h_D0gamma_;
   }
-  RooRealVar &Bu2Dst0h_D0gamma_meanBu() {
-    return Bu2Dst0h_D0gamma_meanBu_;
-  }
+  RooRealVar &Bu2Dst0h_D0gamma_meanBu() { return Bu2Dst0h_D0gamma_meanBu_; }
   RooRealVar &relativeBuWidth_Bu2Dst0h_D0gamma() {
     return relativeBuWidth_Bu2Dst0h_D0gamma_;
   }
-  RooRealVar &Bu2Dst0h_D0gamma_a1Bu() {
-    return Bu2Dst0h_D0gamma_a1Bu_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_a2Bu() {
-    return Bu2Dst0h_D0gamma_a2Bu_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_n1Bu() {
-    return Bu2Dst0h_D0gamma_n1Bu_;
-  }
-  RooRealVar &Bu2Dst0h_D0gamma_n2Bu() {
-    return Bu2Dst0h_D0gamma_n2Bu_;
-  }
+  RooRealVar &Bu2Dst0h_D0gamma_a1Bu() { return Bu2Dst0h_D0gamma_a1Bu_; }
+  RooRealVar &Bu2Dst0h_D0gamma_a2Bu() { return Bu2Dst0h_D0gamma_a2Bu_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n1Bu() { return Bu2Dst0h_D0gamma_n1Bu_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n2Bu() { return Bu2Dst0h_D0gamma_n2Bu_; }
   RooRealVar &Bu2Dst0h_D0gamma_frac1PdfBu() {
     return Bu2Dst0h_D0gamma_frac1PdfBu_;
   }
-  RooRealVar &orEffBu2Dst0h_D0gamma() {
-    return orEffBu2Dst0h_D0gamma_;
-  }
-  RooRealVar &boxEffBu2Dst0h_D0gamma() {
-    return boxEffBu2Dst0h_D0gamma_;
-  }
+  RooRealVar &orEffBu2Dst0h_D0gamma() { return orEffBu2Dst0h_D0gamma_; }
+  RooRealVar &boxEffBu2Dst0h_D0gamma() { return boxEffBu2Dst0h_D0gamma_; }
   RooRealVar &buDeltaCutEffBu2Dst0h_D0gamma() {
     return buDeltaCutEffBu2Dst0h_D0gamma_;
   }
   RooRealVar &deltaCutEffBu2Dst0h_D0gamma() {
     return deltaCutEffBu2Dst0h_D0gamma_;
   }
-  double &initYieldFAVBu2Dst0pi_D0gamma() { return initYieldFAVBu2Dst0pi_D0gamma_; }
+  double &initYieldFAVBu2Dst0pi_D0gamma() {
+    return initYieldFAVBu2Dst0pi_D0gamma_;
+  }
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-  RooRealVar &Bu2Dst0h_D0pi0_meanDelta() {
-    return Bu2Dst0h_D0pi0_meanDelta_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_sigmaDelta() {
-    return Bu2Dst0h_D0pi0_sigmaDelta_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_a1Delta() {
-    return Bu2Dst0h_D0pi0_a1Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_a2Delta() {
-    return Bu2Dst0h_D0pi0_a2Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_n1Delta() {
-    return Bu2Dst0h_D0pi0_n1Delta_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_n2Delta() {
-    return Bu2Dst0h_D0pi0_n2Delta_;
-  }
-  RooCBShape &pdf1Delta_Bu2Dst0h_D0pi0() {
-    return pdf1Delta_Bu2Dst0h_D0pi0_;
-  }
-  RooCBShape &pdf2Delta_Bu2Dst0h_D0pi0() {
-    return pdf2Delta_Bu2Dst0h_D0pi0_;
-  }
+  RooRealVar &Bu2Dst0h_D0pi0_meanDelta() { return Bu2Dst0h_D0pi0_meanDelta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_sigmaDelta() { return Bu2Dst0h_D0pi0_sigmaDelta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_a1Delta() { return Bu2Dst0h_D0pi0_a1Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_a2Delta() { return Bu2Dst0h_D0pi0_a2Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n1Delta() { return Bu2Dst0h_D0pi0_n1Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n2Delta() { return Bu2Dst0h_D0pi0_n2Delta_; }
+  RooCBShape &pdf1Delta_Bu2Dst0h_D0pi0() { return pdf1Delta_Bu2Dst0h_D0pi0_; }
+  RooCBShape &pdf2Delta_Bu2Dst0h_D0pi0() { return pdf2Delta_Bu2Dst0h_D0pi0_; }
   RooRealVar &Bu2Dst0h_D0pi0_frac1PdfDelta() {
     return Bu2Dst0h_D0pi0_frac1PdfDelta_;
   }
-  RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() {
-    return pdfDelta_Bu2Dst0h_D0pi0_;
-  }
+  RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() { return pdfDelta_Bu2Dst0h_D0pi0_; }
   RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() {
     return pdfDelta_misId_Bu2Dst0h_D0pi0_;
   }
-  RooRealVar &Bu2Dst0h_D0pi0_meanBu() {
-    return Bu2Dst0h_D0pi0_meanBu_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_aBu() {
-    return Bu2Dst0h_D0pi0_aBu_;
-  }
-  RooRealVar &Bu2Dst0h_D0pi0_nBu() {
-    return Bu2Dst0h_D0pi0_nBu_;
-  }
-  RooRealVar &orEffBu2Dst0h_D0pi0() {
-    return orEffBu2Dst0h_D0pi0_;
-  }
-  RooRealVar &boxEffBu2Dst0h_D0pi0() {
-    return boxEffBu2Dst0h_D0pi0_;
-  }
+  RooRealVar &Bu2Dst0h_D0pi0_meanBu() { return Bu2Dst0h_D0pi0_meanBu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_aBu() { return Bu2Dst0h_D0pi0_aBu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_nBu() { return Bu2Dst0h_D0pi0_nBu_; }
+  RooRealVar &orEffBu2Dst0h_D0pi0() { return orEffBu2Dst0h_D0pi0_; }
+  RooRealVar &boxEffBu2Dst0h_D0pi0() { return boxEffBu2Dst0h_D0pi0_; }
   RooRealVar &buDeltaCutEffBu2Dst0h_D0pi0() {
     return buDeltaCutEffBu2Dst0h_D0pi0_;
   }
-  RooRealVar &deltaCutEffBu2Dst0h_D0pi0() {
-    return deltaCutEffBu2Dst0h_D0pi0_;
-  }
-  double &fracBu2Dst0pi_D0pi0() {
-    return fracBu2Dst0pi_D0pi0_;
-  }
+  RooRealVar &deltaCutEffBu2Dst0h_D0pi0() { return deltaCutEffBu2Dst0h_D0pi0_; }
+  double &fracBu2Dst0pi_D0pi0() { return fracBu2Dst0pi_D0pi0_; }
   double &initYieldFAVBu2Dst0pi_D0pi0() { return initYieldFAVBu2Dst0pi_D0pi0_; }
   // -------------------- MIS-REC -------------------- //
-  RooRealVar &MisRec_thresholdDelta() {
-    return MisRec_thresholdDelta_;
-  }
-  RooRealVar &MisRec_aDelta() {
-    return MisRec_aDelta_;
-  }
-  RooRealVar &MisRec_bDelta() {
-    return MisRec_bDelta_;
-  }
-  RooRealVar &MisRec_cDelta() {
-    return MisRec_cDelta_;
-  }
-  RooDstD0BG &pdfDelta_MisRec() {
-    return pdfDelta_MisRec_;
-  }
-  RooDstD0BG &pdfDelta_misId_MisRec() {
-    return pdfDelta_misId_MisRec_;
-  }
-  RooRealVar &MisRec_meanBu() {
-    return MisRec_meanBu_;
-  }
-  RooRealVar &MisRec_aBu() {
-    return MisRec_aBu_;
-  }
-  RooRealVar &MisRec_nBu() {
-    return MisRec_nBu_;
-  }
-  RooRealVar &orEffMisRec() {
-    return orEffMisRec_;
-  }
-  RooRealVar &boxEffMisRec() {
-    return boxEffMisRec_;
-  }
-  RooRealVar &buDeltaCutEffMisRec() {
-    return buDeltaCutEffMisRec_;
-  }
-  RooRealVar &deltaCutEffMisRec() {
-    return deltaCutEffMisRec_;
-  }
+  RooRealVar &MisRec_thresholdDelta() { return MisRec_thresholdDelta_; }
+  RooRealVar &MisRec_aDelta() { return MisRec_aDelta_; }
+  RooRealVar &MisRec_bDelta() { return MisRec_bDelta_; }
+  RooRealVar &MisRec_cDelta() { return MisRec_cDelta_; }
+  RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
+  RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
+  RooRealVar &MisRec_meanBu() { return MisRec_meanBu_; }
+  RooRealVar &MisRec_aBu() { return MisRec_aBu_; }
+  RooRealVar &MisRec_nBu() { return MisRec_nBu_; }
+  RooRealVar &orEffMisRec() { return orEffMisRec_; }
+  RooRealVar &boxEffMisRec() { return boxEffMisRec_; }
+  RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
+  RooRealVar &deltaCutEffMisRec() { return deltaCutEffMisRec_; }
   double &fracMisRec_Bu2Dst0pi_D0gamma_WN() {
     return fracMisRec_Bu2Dst0pi_D0gamma_WN_;
   }
@@ -247,48 +167,20 @@ class NeutralVars {
   double &fracMisRec_Bd2Dstpi() { return fracMisRec_Bd2Dstpi_; }
   double &initYieldFAVMisRec() { return initYieldFAVMisRec_; }
   // -------------------- Bu2D0h -------------------- //
-  RooRealVar &Bu2D0h_thresholdDelta() {
-    return Bu2D0h_thresholdDelta_;
-  }
-  RooRealVar &Bu2D0h_aDelta() {
-    return Bu2D0h_aDelta_;
-  }
-  RooRealVar &Bu2D0h_bDelta() {
-    return Bu2D0h_bDelta_;
-  }
-  RooRealVar &Bu2D0h_cDelta() {
-    return Bu2D0h_cDelta_;
-  }
-  RooDstD0BG &pdfDelta_Bu2D0h() {
-    return pdfDelta_Bu2D0h_;
-  }
-  RooDstD0BG &pdfDelta_misId_Bu2D0h() {
-    return pdfDelta_misId_Bu2D0h_;
-  }
-  RooRealVar &Bu2D0h_meanBu() {
-    return Bu2D0h_meanBu_;
-  }
-  RooRealVar &relativeBuWidth_Bu2D0h() {
-    return relativeBuWidth_Bu2D0h_;
-  }
-  RooRealVar &Bu2D0h_aLBu() {
-    return Bu2D0h_aLBu_;
-  }
-  RooRealVar &Bu2D0h_aRBu() {
-    return Bu2D0h_aRBu_;
-  }
-  RooRealVar &orEffBu2D0h() {
-    return orEffBu2D0h_;
-  }
-  RooRealVar &boxEffBu2D0h() {
-    return boxEffBu2D0h_;
-  }
-  RooRealVar &buDeltaCutEffBu2D0h() {
-    return buDeltaCutEffBu2D0h_;
-  }
-  RooRealVar &deltaCutEffBu2D0h() {
-    return deltaCutEffBu2D0h_;
-  }
+  RooRealVar &Bu2D0h_thresholdDelta() { return Bu2D0h_thresholdDelta_; }
+  RooRealVar &Bu2D0h_aDelta() { return Bu2D0h_aDelta_; }
+  RooRealVar &Bu2D0h_bDelta() { return Bu2D0h_bDelta_; }
+  RooRealVar &Bu2D0h_cDelta() { return Bu2D0h_cDelta_; }
+  RooDstD0BG &pdfDelta_Bu2D0h() { return pdfDelta_Bu2D0h_; }
+  RooDstD0BG &pdfDelta_misId_Bu2D0h() { return pdfDelta_misId_Bu2D0h_; }
+  RooRealVar &Bu2D0h_meanBu() { return Bu2D0h_meanBu_; }
+  RooRealVar &relativeBuWidth_Bu2D0h() { return relativeBuWidth_Bu2D0h_; }
+  RooRealVar &Bu2D0h_aLBu() { return Bu2D0h_aLBu_; }
+  RooRealVar &Bu2D0h_aRBu() { return Bu2D0h_aRBu_; }
+  RooRealVar &orEffBu2D0h() { return orEffBu2D0h_; }
+  RooRealVar &boxEffBu2D0h() { return boxEffBu2D0h_; }
+  RooRealVar &buDeltaCutEffBu2D0h() { return buDeltaCutEffBu2D0h_; }
+  RooRealVar &deltaCutEffBu2D0h() { return deltaCutEffBu2D0h_; }
   double &fracBu2D0pi() { return fracBu2D0pi_; }
   double &initYieldFAVBu2D0pi() { return initYieldFAVBu2D0pi_; }
 
@@ -423,7 +315,8 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   if (!file_exists(txtFileName)) {
     std::string dirString;
     // std::cout << txtFileName
-    //           << " doesn't exist:\n\tCalculating and setting efficiencies for "
+    //           << " doesn't exist:\n\tCalculating and setting efficiencies for
+    //           "
     //           << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
