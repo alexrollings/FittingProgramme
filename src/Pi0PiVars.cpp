@@ -151,21 +151,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", 1),
-      N_misId_Bu2Dst0h_D0gamma_(
-          ("N_misId_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "@0*(1-@1)",
-          RooArgList(N_tot_Bu2Dst0h_D0gamma_, pidEff_Bu2Dst0h_D0gamma_)),
-      N_Delta_misId_Bu2Dst0h_D0gamma_(
-          ("N_Delta_misId_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                     orEffMisId_Bu2Dst0h_D0gamma_,
-                     N_misId_Bu2Dst0h_D0gamma_)),
-      N_Bu_misId_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_sigmaBu_(
           ("Bu2Dst0h_D0pi0_sigmaBu_" +
@@ -285,14 +270,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
                                          .orEffBu2Dst0h_D0gamma(),
                                      N_Bu2Dst0h_D0gamma_)));
-    N_Bu_misId_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
-        new RooFormulaVar(("N_Bu_misId_Bu2Dst0h_D0gamma_" +
-                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                              .c_str(),
-                          "(@0/@1)*@2",
-                          RooArgList(deltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                                     orEffMisId_Bu2Dst0h_D0gamma_,
-                                     N_misId_Bu2Dst0h_D0gamma_)));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -327,12 +304,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
             .c_str(),
         "@0*@1",
-        RooArgList(N_tot_Bu2Dst0h_D0gamma_, pidEff_Bu2Dst0h_D0gamma_)));
-    N_Bu_misId_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("N_Bu_misId_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-            .c_str(),
-        "@0*(1-@1)",
         RooArgList(N_tot_Bu2Dst0h_D0gamma_, pidEff_Bu2Dst0h_D0gamma_)));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(
         new RooRealVar(("N_Bu_Bu2Dst0h_D0pi0_" +
