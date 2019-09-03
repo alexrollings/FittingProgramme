@@ -668,7 +668,9 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     // something.
 
     if (simPdf == nullptr) {
-      auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+      // id=0, equivalent to what would be the data fit
+      int tmpId = 0;
+      auto p = MakeSimultaneousPdf(tmpId, config, categories, neutralVec,
                                    daughtersVec, chargeVec);
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
