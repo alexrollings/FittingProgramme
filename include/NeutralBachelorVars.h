@@ -118,7 +118,13 @@ class NeutralBachelorVars {
   RooCBShape &pdfBu_Bu2Dst0h_D0pi0() {
     return pdfBu_Bu2Dst0h_D0pi0_;
   }
-  RooRealVar &N_Bu2Dst0h_D0pi0() {
+  RooRealVar &N_tot_Bu2Dst0h_D0pi0() {
+    return N_tot_Bu2Dst0h_D0pi0_;
+  }
+  RooConstVar &pidEff_Bu2Dst0h_D0pi0() {
+    return pidEff_Bu2Dst0h_D0pi0_;
+  }
+  RooFormulaVar &N_Bu2Dst0h_D0pi0() {
     return N_Bu2Dst0h_D0pi0_;
   }
   RooFormulaVar &N_Delta_Bu2Dst0h_D0pi0() {

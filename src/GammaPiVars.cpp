@@ -355,17 +355,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
             .c_str(),
         "@0*@1",
         RooArgList(N_tot_Bu2Dst0h_D0gamma_, pidEff_Bu2Dst0h_D0gamma_)));
-    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(
-        new RooRealVar(("N_Bu_Bu2Dst0h_D0pi0_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                           .c_str(),
-                       "",
-                       NeutralVars<Neutral::gamma>::Get(uniqueId)
-                               .initYieldFAVBu2Dst0pi_D0pi0() *
-                           NeutralVars<Neutral::gamma>::Get(uniqueId)
-                               .deltaCutEffBu2Dst0h_D0pi0()
-                               .getVal(),
-                       -1000000, 1000000));
+    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0h_D0pi0_" +
+         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+            .c_str(),
+        "@0*@1",
+        RooArgList(N_tot_Bu2Dst0h_D0pi0_, pidEff_Bu2Dst0h_D0pi0_)));
     N_Bu_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
             .c_str(),
