@@ -155,6 +155,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
           Bu2Dst0h_D0pi0_frac1PdfDelta_),
+      pdfDelta_misId_Bu2Dst0h_D0pi0_(
+          ("pdfDelta_misId_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
+          Bu2Dst0h_D0pi0_frac1PdfDelta_),
       Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -204,6 +209,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
           MisRec_cDelta_, MisRec_aDelta_, MisRec_bDelta_),
+      pdfDelta_misId_MisRec_(
+          ("pdfDelta_misId_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
+          MisRec_cDelta_, MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 5.2991e+03, 5290, 5310),
@@ -251,6 +260,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", 6.2156e+01),
       pdfDelta_Bu2D0h_(
           ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", Configuration::Get().deltaMass(), Bu2D0h_thresholdDelta_,
+          Bu2D0h_cDelta_, Bu2D0h_aDelta_, Bu2D0h_bDelta_),
+      pdfDelta_misId_Bu2D0h_(
+          ("pdfDelta_misId_Bu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", Configuration::Get().deltaMass(), Bu2D0h_thresholdDelta_,
           Bu2D0h_cDelta_, Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
