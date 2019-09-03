@@ -56,6 +56,12 @@ if __name__ == "__main__":
         help='Path to RDS of data: required to generate toys from data PDF',
         required=False)
     parser.add_argument(
+        '-d',
+        '--dim',
+        type=str,
+        help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
+        required=False)
+    parser.add_argument(
         '-dl',
         '--delta_low',
         type=str,
@@ -81,10 +87,20 @@ if __name__ == "__main__":
     n_toys = args.n_toys
     n_jobs = args.n_jobs
     input_dir = args.input_dir
+    dim = args.dim
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+
+    if dim == None:
+        print("Set dim="": performing D1D toys")
+        dim = ""
+    elif dim == "1":
+        print("Performing 1D toys to BuDelta mass")
+        dim = "-1D"
+    else:
+        sys.exit("Set -d=1 or nothing")
 
     if n_jobs > 10:
         sys.exit("Can't use more than 10 cores.")
@@ -126,7 +142,9 @@ if __name__ == "__main__":
                 "BL":
                 bu_low,
                 "BH":
-                bu_high
+                bu_high,
+                "DIM":
+                dim
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
@@ -154,7 +172,9 @@ if __name__ == "__main__":
                 "BL":
                 bu_low,
                 "BH":
-                bu_high
+                bu_high,
+                "DIM":
+                dim
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
