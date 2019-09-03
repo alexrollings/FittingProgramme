@@ -238,9 +238,9 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
   // exists, if not, calculate eff and save in txt file
   if (!file_exists(txtFileName)) {
     std::string dirString;
-    std::cout << txtFileName
-              << " doesn't exist:\n\tCalculating and setting efficiencies for "
-              << modeString << "...\n";
+    // std::cout << txtFileName
+    //           << " doesn't exist:\n\tCalculating and setting efficiencies for "
+    //           << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
       // To remove _WN for directory
@@ -408,8 +408,8 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
     buDeltaCutEff.setVal(buDeltaCutEffVal);
   } else {
     // If exists, read in from txt file
-    std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-              << modeString << "...\n";
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << modeString << "...\n";
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
     std::unordered_map<std::string, double> effMap;
@@ -428,10 +428,10 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
   }
-  std::cout << "\t orEff = " << orEff.getVal() << "\n"
-            << "\t boxEff = " << boxEff.getVal() << "\n"
-            << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-            << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
 }
 
 template <>

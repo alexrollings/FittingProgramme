@@ -315,20 +315,6 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
       }
       break;
     case Bachelor::k:
-      std::cout << "\n\n N tot = "
-                << Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
-                       PdfBase::uniqueId_)
-                       .N_tot_Bu2Dst0h_D0gamma()
-                       .getVal()
-                << "\n\n"
-                << std::endl;
-      std::cout << "\n\n PID eff = "
-                << NeutralBachelorVars<_neutral, Bachelor::pi>::Get(
-                       PdfBase::uniqueId_)
-                       .pidEff_Bu2Dst0h_D0gamma()
-                       .getVal()
-                << "\n\n"
-                << std::endl;
       PdfBase::N_misId_Bu2Dst0h_D0gamma_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_misId_Bu2Dst0h_D0gamma_" + ComposeName(PdfBase::uniqueId_,
