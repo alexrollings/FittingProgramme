@@ -150,10 +150,36 @@ class NeutralBachelorVars {
   RooAbsReal &Bu2D0h_sigmaLBu() { return *Bu2D0h_sigmaLBu_; }
   RooAbsReal &Bu2D0h_sigmaRBu() { return *Bu2D0h_sigmaRBu_; }
   RooCruijff &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
-  RooRealVar &N_Bu2D0h() { return N_Bu2D0h_; }
+  RooRealVar &N_tot_Bu2D0h() { return N_tot_Bu2D0h_; }
+  RooConstVar &pidEff_Bu2D0h() { return pidEff_Bu2D0h_; }
+  RooFormulaVar &N_Bu2D0h() { return N_Bu2D0h_; }
   RooFormulaVar &N_Delta_Bu2D0h() { return N_Delta_Bu2D0h_; }
   RooAbsReal &N_Bu_Bu2D0h() { return *N_Bu_Bu2D0h_; }
   // -------------------- Mis-ID ------------------- //
+  RooRealVar &misId_Bu2D0h_meanBu() {
+    return misId_Bu2D0h_meanBu_;
+  }
+  RooRealVar &misId_Bu2D0h_sigmaLBu() {
+    return misId_Bu2D0h_sigmaLBu_;
+  }
+  RooRealVar &misId_Bu2D0h_sigmaRBu() {
+    return misId_Bu2D0h_sigmaRBu_;
+  }
+  RooRealVar &misId_Bu2D0h_aLBu() { return misId_Bu2D0h_aLBu_; }
+  RooRealVar &misId_Bu2D0h_aRBu() { return misId_Bu2D0h_aRBu_; }
+  RooCruijff &pdfBu_misId_Bu2D0h() {
+    return pdfBu_misId_Bu2D0h_;
+  }
+  RooRealVar &orEffMisId_Bu2D0h() { return orEffMisId_Bu2D0h_; }
+  RooRealVar &boxEffMisId_Bu2D0h() {
+    return boxEffMisId_Bu2D0h_;
+  }
+  RooRealVar &buDeltaCutEffMisId_Bu2D0h() {
+    return buDeltaCutEffMisId_Bu2D0h_;
+  }
+  RooRealVar &deltaCutEffMisId_Bu2D0h() {
+    return deltaCutEffMisId_Bu2D0h_;
+  }
 
   void SetMisIdEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                             RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -223,10 +249,22 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsReal> Bu2D0h_sigmaLBu_;
   std::unique_ptr<RooAbsReal> Bu2D0h_sigmaRBu_;
   RooCruijff pdfBu_Bu2D0h_;
-  RooRealVar N_Bu2D0h_;
+  RooRealVar N_tot_Bu2D0h_;
+  RooConstVar pidEff_Bu2D0h_;
+  RooFormulaVar N_Bu2D0h_;
   RooFormulaVar N_Delta_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
   // -------------------- Mis-ID ------------------- //
+  RooRealVar misId_Bu2D0h_meanBu_;
+  RooRealVar misId_Bu2D0h_sigmaLBu_;
+  RooRealVar misId_Bu2D0h_sigmaRBu_;
+  RooRealVar misId_Bu2D0h_aLBu_;
+  RooRealVar misId_Bu2D0h_aRBu_;
+  RooCruijff pdfBu_misId_Bu2D0h_;
+  RooRealVar orEffMisId_Bu2D0h_; 
+  RooRealVar boxEffMisId_Bu2D0h_;
+  RooRealVar buDeltaCutEffMisId_Bu2D0h_;
+  RooRealVar deltaCutEffMisId_Bu2D0h_;
 };
 
 template <Neutral neutral, Bachelor bachelor>
