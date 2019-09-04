@@ -1,14 +1,12 @@
 import os, re, subprocess, sys, argparse
 #re = regular expressions
 
-def pass_filename(filename, file_list, delta_low, delta_high, bu_low, bu_high):
-    m = re.search("Result_" + delta_low + '_' + delta_high + '_' +
-                  bu_low + '_' + bu_high + "_0\.[0-9]+\.root", filename)
-    if m:
-        file_list.append(filename)
-
-def pass_filename(filename, file_list, delta_low, delta_high):
-    m = re.search("Result_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
+def pass_filename(filename, file_list, delta_low, delta_high, bu_low=None, bu_high=None):
+    if bu_low != None and bu_high != None:
+        m = re.search("Result_" + delta_low + '_' + delta_high + '_' +
+                      bu_low + '_' + bu_high + "_0\.[0-9]+\.root", filename)
+    else:
+        m = re.search("Result_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
     if m:
         file_list.append(filename)
 
@@ -75,7 +73,6 @@ if __name__ == "__main__":
 
     if dim == None:
         print("Analysing results from D1D toys")
-        dim = ""
     elif dim == "1":
         print("Analysing results from 1D toys")
     else:
@@ -85,10 +82,10 @@ if __name__ == "__main__":
         sys.exit(input_dir + ' is not a directory')
     file_list = []
     for filename in os.listdir(input_dir):
-        if dim == None:
-            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
-        else:
+        if dim == "1":
             pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high)
+        else:
+            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
         # pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
