@@ -448,10 +448,14 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
     outFile.close();
 
-    orEff.setVal(orEffVal);
     boxEff.setVal(boxEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
     buDeltaCutEff.setVal(buDeltaCutEffVal);
+    if (Configuration::Get().fit1D() == false) {
+      orEff.setVal(orEffVal);
+    } else {
+      orEff.setVal(deltaCutEffVal);
+    }
   } else {
     // If exists, read in from txt file
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
@@ -469,10 +473,14 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
           std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
     }
     // Use map key to set correct efficiency values
-    orEff.setVal(effMap.at("orEff"));
     boxEff.setVal(effMap.at("boxEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    if (Configuration::Get().fit1D() == false) {
+      orEff.setVal(effMap.at("orEff"));
+    } else {
+      orEff.setVal(effMap.at("deltaCutEff"));
+    }
   }
   // std::cout << "\t orEff = " << orEff.getVal() << "\n"
   //           << "\t boxEff = " << boxEff.getVal() << "\n"

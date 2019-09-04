@@ -315,8 +315,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   if (!file_exists(txtFileName)) {
     std::string dirString;
     // std::cout << txtFileName
-    //           << " doesn't exist:\n\tCalculating and setting efficiencies for
-    //           "
+    //           << " doesn't exist:\n\tCalculating and setting efficiencies for"
     //           << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
@@ -440,10 +439,15 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
     outFile.close();
 
-    orEff.setVal(orEffVal);
+    // for 1D fit, orEff = deltaCutEff 
     boxEff.setVal(boxEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
     buDeltaCutEff.setVal(buDeltaCutEffVal);
+    if (Configuration::Get().fit1D() == false) {
+      orEff.setVal(orEffVal);
+    } else {
+      orEff.setVal(deltaCutEffVal);
+    }
   } else {
     // If exists, read in from txt file
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
@@ -461,10 +465,14 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
           std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
     }
     // Use map key to set correct efficiency values
-    orEff.setVal(effMap.at("orEff"));
     boxEff.setVal(effMap.at("boxEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    if (Configuration::Get().fit1D() == false) {
+      orEff.setVal(effMap.at("orEff"));
+    } else {
+      orEff.setVal(effMap.at("deltaCutEff"));
+    }
   }
   // std::cout << "\t orEff = " << orEff.getVal() << "\n"
   //           << "\t boxEff = " << boxEff.getVal() << "\n"
