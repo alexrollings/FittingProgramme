@@ -359,8 +359,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
             .c_str(),
-        "@0*@1",
-        RooArgList(N_tot_Bu2Dst0h_D0pi0_, pidEff_Bu2Dst0h_D0pi0_)));
+        "@0*@1", RooArgList(N_tot_Bu2Dst0h_D0pi0_, pidEff_Bu2Dst0h_D0pi0_)));
     N_Bu_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
             .c_str(),
