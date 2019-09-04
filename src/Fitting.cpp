@@ -126,6 +126,16 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                   RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName()),
                   RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
                   RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kCyan),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -174,6 +184,16 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                   RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName()),
                   RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
                   RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(
+        frame.get(),
+        RooFit::Slice(
+            categories.fitting,
+            ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                .c_str()),
+        RooFit::ProjWData(categories.fitting, fullDataSet),
+        RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName()),
+        RooFit::LineStyle(kDashed), RooFit::LineColor(kCyan),
+        RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(categories.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
@@ -332,6 +352,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Bu2Dst0h_D0pi0Hist->SetLineStyle(kDashed);
   Bu2Dst0h_D0pi0Hist->SetLineWidth(2);
 
+  auto misId_Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
+      ("misId_Bu2Dst0h_D0pi0Hist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "misId_Bu2Dst0h_D0pi0Hist", 1, 0, 1);
+  misId_Bu2Dst0h_D0pi0Hist->SetLineColor(kCyan);
+  misId_Bu2Dst0h_D0pi0Hist->SetLineStyle(kDashed);
+  misId_Bu2Dst0h_D0pi0Hist->SetLineWidth(2);
+
   auto MisRecHist = std::make_unique<TH1D>(
       ("MisRecHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -363,7 +392,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream misId_Bu2Dst0h_D0gammaLegend;
-  // SWAP BACH LABEL
   misId_Bu2Dst0h_D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -377,6 +405,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              EnumToLabel(daughters, charge) +
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
              EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  std::stringstream misId_Bu2Dst0h_D0pi0Legend;
+  misId_Bu2Dst0h_D0pi0Legend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
+             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream MisRecLegend;
   MisRecLegend << "Mis-Reconstructed Bkg";
   std::stringstream Bu2D0hLegend;
@@ -391,6 +426,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                   misId_Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
   legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(), Bu2Dst0h_D0pi0Legend.str().c_str(),
                   "l");
+  legend.AddEntry(misId_Bu2Dst0h_D0pi0Hist.get(),
+                  misId_Bu2Dst0h_D0pi0Legend.str().c_str(), "l");
   legend.AddEntry(MisRecHist.get(), MisRecLegend.str().c_str(), "l");
   legend.AddEntry(Bu2D0hHist.get(), Bu2D0hLegend.str().c_str(), "l");
 
@@ -682,10 +719,12 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
     if (config.fit1D() == false) {
+    std::cout << "1" << std::endl;
       toyDataSet = std::unique_ptr<RooDataSet>(
           simPdf->generate(RooArgSet(config.buDeltaMass(), config.deltaMass(),
                                      categories.fitting),
                            nEvtsPerToy));
+    std::cout << "2" << std::endl;
     } else {
       toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
           RooArgSet(config.buDeltaMass(), categories.fitting), nEvtsPerToy));
