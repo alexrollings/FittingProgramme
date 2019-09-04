@@ -283,6 +283,39 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 1),
+      // -------------------- MIS-REC -------------------- //
+      MisRec_sigmaBu_(("MisRec_sigmaBu_" +
+                       ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                          .c_str(),
+                      "", 9.4812e+01),
+      pdfBu_MisRec_(
+          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
+          MisRec_sigmaBu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aBu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()),
+      N_MisRec_(
+          ("N_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
+              NeutralVars<Neutral::gamma>::Get(uniqueId)
+                  .orEffMisRec()
+                  .getVal() *
+              0.06,
+          -1000000, 1000000),
+      N_Delta_MisRec_(
+          ("N_Delta_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*@2",
+          RooArgList(
+              NeutralVars<Neutral::gamma>::Get(uniqueId).buDeltaCutEffMisRec(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec(),
+              N_MisRec_)),
+      N_Bu_MisRec_(nullptr),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_sigmaLBu_(new RooFormulaVar(
           ("Bu2D0h_sigmaLBu_" +
@@ -389,8 +422,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
             .c_str(),
-        "@0*@1",
-        RooArgList(N_tot_Bu2Dst0h_D0pi0_, pidEff_Bu2Dst0h_D0pi0_)));
+        "@0*@1", RooArgList(N_tot_Bu2Dst0h_D0pi0_, pidEff_Bu2Dst0h_D0pi0_)));
     N_Bu_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
             .c_str(),
