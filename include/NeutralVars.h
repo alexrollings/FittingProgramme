@@ -182,8 +182,8 @@ class NeutralVars {
   RooRealVar &boxEffBu2D0h() { return boxEffBu2D0h_; }
   RooRealVar &buDeltaCutEffBu2D0h() { return buDeltaCutEffBu2D0h_; }
   RooRealVar &deltaCutEffBu2D0h() { return deltaCutEffBu2D0h_; }
-  double &fracBu2D0pi() { return fracBu2D0pi_; }
-  double &initYieldFAVBu2D0pi() { return initYieldFAVBu2D0pi_; }
+  double &fracBu2D0h() { return fracBu2D0h_; }
+  double &initYieldFAVBu2D0h() { return initYieldFAVBu2D0h_; }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -272,8 +272,8 @@ class NeutralVars {
   RooRealVar boxEffBu2D0h_;
   RooRealVar buDeltaCutEffBu2D0h_;
   RooRealVar deltaCutEffBu2D0h_;
-  double fracBu2D0pi_;
-  double initYieldFAVBu2D0pi_;
+  double fracBu2D0h_;
+  double initYieldFAVBu2D0h_;
 };
 
 // inline allows a function to be defined multiple times. Templated functions

@@ -142,14 +142,15 @@ class NeutralBachelorVars {
   // -------------------- MIS-REC -------------------- //
   RooRealVar &MisRec_sigmaBu() { return MisRec_sigmaBu_; }
   RooCBShape &pdfBu_MisRec() { return pdfBu_MisRec_; }
-  RooRealVar &N_MisRec() { return N_MisRec_; }
-  RooFormulaVar &N_Delta_MisRec() { return N_Delta_MisRec_; }
-  RooAbsReal &N_Bu_MisRec() { return *N_Bu_MisRec_; }
+  RooRealVar &N_tot_MisRec() { return N_tot_MisRec_; }
   double &pidEff_Bu2Dst0h_D0gamma_WN() { return pidEff_Bu2Dst0h_D0gamma_WN_; }
   double &pidEff_Bu2Dst0h_D0pi0_WN() { return pidEff_Bu2Dst0h_D0pi0_WN_; }
   double &pidEff_Bu2D0hst() { return pidEff_Bu2D0hst_; }
   double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
   RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
+  RooFormulaVar &N_MisRec() { return N_MisRec_; }
+  RooFormulaVar &N_Delta_MisRec() { return N_Delta_MisRec_; }
+  RooAbsReal &N_Bu_MisRec() { return *N_Bu_MisRec_; }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_MisRec_mean1Bu() {
     return misId_MisRec_mean1Bu_;
@@ -272,14 +273,15 @@ class NeutralBachelorVars {
   // -------------------- MIS-REC -------------------- //
   RooRealVar MisRec_sigmaBu_;
   RooCBShape pdfBu_MisRec_;
-  RooRealVar N_MisRec_;
-  RooFormulaVar N_Delta_MisRec_;
-  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  RooRealVar N_tot_MisRec_;
   double pidEff_Bu2Dst0h_D0gamma_WN_;
   double pidEff_Bu2Dst0h_D0pi0_WN_;
   double pidEff_Bu2D0hst_;
   double pidEff_Bd2Dsth_;
   RooConstVar pidEff_MisRec_;
+  RooFormulaVar N_MisRec_;
+  RooFormulaVar N_Delta_MisRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_MisRec_mean1Bu_;
   RooRealVar misId_MisRec_mean2Bu_;
