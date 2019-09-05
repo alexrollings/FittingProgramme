@@ -287,6 +287,17 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                  .fracMisRec_Bd2Dsth()) /
               NeutralVars<Neutral::gamma>::Get(uniqueId).fracMisRec()),
       // -------------------- Mis-ID ------------------- //
+      misId_MisRec_meanBu_(),
+      misId_MisRec_sigma1Bu_(),
+      misId_MisRec_sigma2Bu_(),
+      misId_MisRec_a2Bu_(),
+      misId_MisRec_a1Bu_(),
+      misId_MisRec_n2Bu_(),
+      misId_MisRec_n1Bu_(),
+      pdf1Bu_misId_MisRec_(),
+      pdf2Bu_misId_MisRec_(),
+      misId_MisRec_frac1PdfBu_(),
+      pdfBu_misId_MisRec_(),
       orEffMisId_MisRec_(),
       boxEffMisId_MisRec_(),
       buDeltaCutEffMisId_MisRec_(),

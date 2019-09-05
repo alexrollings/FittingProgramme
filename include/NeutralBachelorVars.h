@@ -151,6 +151,39 @@ class NeutralBachelorVars {
   double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
   RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
   // -------------------- Mis-ID ------------------- //
+  RooRealVar &misId_MisRec_meanBu() {
+    return misId_MisRec_meanBu_;
+  }
+  RooRealVar &misId_MisRec_sigma1Bu() {
+    return misId_MisRec_sigma1Bu_;
+  }
+  RooRealVar &misId_MisRec_sigma2Bu() {
+    return misId_MisRec_sigma2Bu_;
+  }
+  RooRealVar &misId_MisRec_a1Bu() {
+    return misId_MisRec_a1Bu_;
+  }
+  RooRealVar &misId_MisRec_a2Bu() {
+    return misId_MisRec_a2Bu_;
+  }
+  RooRealVar &misId_MisRec_n1Bu() {
+    return misId_MisRec_n1Bu_;
+  }
+  RooRealVar &misId_MisRec_n2Bu() {
+    return misId_MisRec_n2Bu_;
+  }
+  RooCBShape &pdf1Bu_misId_MisRec() {
+    return pdf1Bu_misId_MisRec_;
+  }
+  RooCBShape &pdf2Bu_misId_MisRec() {
+    return pdf2Bu_misId_MisRec_;
+  }
+  RooRealVar &misId_MisRec_frac1PdfBu() {
+    return misId_MisRec_frac1PdfBu_;
+  }
+  RooAddPdf &pdfBu_misId_MisRec() {
+    return pdfBu_misId_MisRec_;
+  }
   RooRealVar &orEffMisId_MisRec() { return orEffMisId_MisRec_; }
   RooRealVar &boxEffMisId_MisRec() { return boxEffMisId_MisRec_; }
   RooRealVar &buDeltaCutEffMisId_MisRec() { return buDeltaCutEffMisId_MisRec_; }
@@ -245,6 +278,17 @@ class NeutralBachelorVars {
   double pidEff_Bd2Dsth_;
   RooConstVar pidEff_MisRec_;
   // -------------------- Mis-ID ------------------- //
+  RooRealVar misId_MisRec_meanBu_;
+  RooRealVar misId_MisRec_sigma1Bu_;
+  RooRealVar misId_MisRec_sigma2Bu_;
+  RooRealVar misId_MisRec_a2Bu_;
+  RooRealVar misId_MisRec_a1Bu_;
+  RooRealVar misId_MisRec_n2Bu_;
+  RooRealVar misId_MisRec_n1Bu_;
+  RooCBShape pdf1Bu_misId_MisRec_;
+  RooCBShape pdf2Bu_misId_MisRec_;
+  RooRealVar misId_MisRec_frac1PdfBu_;
+  RooAddPdf pdfBu_misId_MisRec_;
   RooRealVar orEffMisId_MisRec_;
   RooRealVar boxEffMisId_MisRec_;
   RooRealVar buDeltaCutEffMisId_MisRec_;
