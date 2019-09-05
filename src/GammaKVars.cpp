@@ -316,6 +316,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec(),
               N_MisRec_)),
       N_Bu_MisRec_(nullptr),
+      pidEff_Bu2Dst0h_D0gamma_WN_(),
+      pidEff_Bu2Dst0h_D0pi0_WN_(),
+      pidEff_Bu2D0hst_(),
+      pidEff_Bd2Dsth_(),
+      pidEff_MisRec_(),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_sigmaLBu_(new RooFormulaVar(
           ("Bu2D0h_sigmaLBu_" +
