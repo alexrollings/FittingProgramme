@@ -107,7 +107,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 1),
-      initYieldFAVBu2Dst0pi_D0gamma_(5.1958e+04),
+      initYieldFAVBu2Dst0h_D0gamma_(5.1958e+04),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_meanDelta_(
           ("Bu2Dst0h_D0pi0_meanDelta_" + ComposeName(uniqueId, Neutral::gamma))
@@ -188,9 +188,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("deltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 1),
-      fracBu2Dst0pi_D0pi0_(0.916),
-      initYieldFAVBu2Dst0pi_D0pi0_(initYieldFAVBu2Dst0pi_D0gamma_ *
-                                   fracBu2Dst0pi_D0pi0_),
+      fracBu2Dst0h_D0pi0_(0.916),
+      initYieldFAVBu2Dst0h_D0pi0_(initYieldFAVBu2Dst0h_D0gamma_ *
+                                   fracBu2Dst0h_D0pi0_),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(
           ("MisRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
@@ -237,14 +237,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("deltaCutEffMisRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 1),
-      fracMisRec_Bu2Dst0pi_D0gamma_WN_(0.473),
-      fracMisRec_Bu2Dst0pi_D0pi0_WN_(0.809),
-      fracMisRec_Bu2D0rho_(0.809),
-      fracMisRec_Bd2Dstpi_(0.643),
-      fracMisRec_(fracMisRec_Bu2Dst0pi_D0gamma_WN_ +
-                  fracMisRec_Bu2Dst0pi_D0pi0_WN_ + fracMisRec_Bu2D0rho_ +
-                  fracMisRec_Bd2Dstpi_),
-      initYieldFAVMisRec_(initYieldFAVBu2Dst0pi_D0gamma_ * fracMisRec_),
+      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.473),
+      fracMisRec_Bu2Dst0h_D0pi0_WN_(0.809),
+      fracMisRec_Bu2D0hst_(0.809),
+      fracMisRec_Bd2Dsth_(0.643),
+      fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
+                  fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
+                  fracMisRec_Bd2Dsth_),
+      initYieldFAVMisRec_(initYieldFAVBu2Dst0h_D0gamma_ * fracMisRec_),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_thresholdDelta_(
           ("Bu2D0h_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
@@ -296,7 +296,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", 1),
       fracBu2D0pi_(1.54),
-      initYieldFAVBu2D0pi_(initYieldFAVBu2Dst0pi_D0gamma_ * fracBu2D0pi_) {
+      initYieldFAVBu2D0pi_(initYieldFAVBu2Dst0h_D0gamma_ * fracBu2D0pi_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
                   boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
                   deltaCutEffBu2Dst0h_D0gamma_);
@@ -322,11 +322,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
   //
   std::map<Mode, double> misRecModesMap = {
-      {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0pi_D0pi0_WN_ / fracMisRec_},
+      {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
       {Mode::Bu2Dst0pi_D0gamma_WN,
-       fracMisRec_Bu2Dst0pi_D0gamma_WN_ / fracMisRec_},
-      {Mode::Bu2D0rho, fracMisRec_Bu2D0rho_ / fracMisRec_},
-      {Mode::Bd2Dstpi, fracMisRec_Bd2Dstpi_ / fracMisRec_}};
+       fracMisRec_Bu2Dst0h_D0gamma_WN_ / fracMisRec_},
+      {Mode::Bu2D0rho, fracMisRec_Bu2D0hst_ / fracMisRec_},
+      {Mode::Bd2Dstpi, fracMisRec_Bd2Dsth_ / fracMisRec_}};
 
   double orEffMisRecVal = 0.0;
   double boxEffMisRecVal = 0.0;

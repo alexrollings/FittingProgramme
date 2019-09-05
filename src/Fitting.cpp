@@ -760,12 +760,10 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
     double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
     if (config.fit1D() == false) {
-    std::cout << "1" << std::endl;
       toyDataSet = std::unique_ptr<RooDataSet>(
           simPdf->generate(RooArgSet(config.buDeltaMass(), config.deltaMass(),
                                      categories.fitting),
                            nEvtsPerToy));
-    std::cout << "2" << std::endl;
     } else {
       toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
           RooArgSet(config.buDeltaMass(), categories.fitting), nEvtsPerToy));

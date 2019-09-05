@@ -50,7 +50,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "",
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .initYieldFAVBu2Dst0pi_D0gamma() *
+                  .initYieldFAVBu2Dst0h_D0gamma() *
               NeutralVars<Neutral::gamma>::Get(uniqueId)
                   .orEffBu2Dst0h_D0gamma()
                   .getVal() *
@@ -177,7 +177,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                 .c_str(),
                             "",
                             NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                    .initYieldFAVBu2Dst0pi_D0pi0() *
+                                    .initYieldFAVBu2Dst0h_D0pi0() *
                                 NeutralVars<Neutral::gamma>::Get(uniqueId)
                                     .orEffBu2Dst0h_D0pi0()
                                     .getVal() *

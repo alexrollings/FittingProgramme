@@ -145,6 +145,11 @@ class NeutralBachelorVars {
   RooRealVar &N_MisRec() { return N_MisRec_; }
   RooFormulaVar &N_Delta_MisRec() { return N_Delta_MisRec_; }
   RooAbsReal &N_Bu_MisRec() { return *N_Bu_MisRec_; }
+  double &pidEff_Bu2Dst0h_D0gamma_WN() { return pidEff_Bu2Dst0h_D0gamma_WN_; }
+  double &pidEff_Bu2Dst0h_D0pi0_WN() { return pidEff_Bu2Dst0h_D0pi0_WN_; }
+  double &pidEff_Bu2D0hst() { return pidEff_Bu2D0hst_; }
+  double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
+  RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2D0h -------------------- //
   RooAbsReal &Bu2D0h_sigmaLBu() { return *Bu2D0h_sigmaLBu_; }
@@ -244,6 +249,11 @@ class NeutralBachelorVars {
   RooRealVar N_MisRec_;
   RooFormulaVar N_Delta_MisRec_;
   std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  double pidEff_Bu2Dst0h_D0gamma_WN_;
+  double pidEff_Bu2Dst0h_D0pi0_WN_;
+  double pidEff_Bu2D0hst_;
+  double pidEff_Bd2Dsth_;
+  RooConstVar pidEff_MisRec_;
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2D0h -------------------- //
   std::unique_ptr<RooAbsReal> Bu2D0h_sigmaLBu_;
