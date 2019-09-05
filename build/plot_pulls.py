@@ -53,13 +53,13 @@ if __name__ == "__main__":
         '--bu_low',
         type=str,
         help='Lower bu mass range',
-        required=True)
+        required=False)
     parser.add_argument(
         '-bh',
         '--bu_high',
         type=str,
         help='Upper bu mass range',
-        required=True)
+        required=False)
     args = parser.parse_args()
 
     input_dir = args.input_dir
@@ -73,6 +73,8 @@ if __name__ == "__main__":
 
     if dim == None:
         print("Analysing results from D1D toys")
+        if bu_low == None or bu_high == None:
+          sys.exit("Specify -bl= and -bh=")
     elif dim == "1":
         print("Analysing results from 1D toys")
     else:

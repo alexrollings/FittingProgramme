@@ -109,13 +109,13 @@ if __name__ == "__main__":
         os.mkdir(output_dir)
 
     if delta_low == None:
-        delta_low = 125
+        delta_low = "125"
     if delta_high == None:
-        delta_high = 170
+        delta_high = "170"
     if bu_low == None:
-        bu_low = 5240
+        bu_low = "5240"
     if bu_high == None:
-        bu_high = 5330
+        bu_high = "5330"
 
     scriptList = []
     for i in range(0, n_jobs):
