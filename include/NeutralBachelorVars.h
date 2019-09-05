@@ -151,6 +151,10 @@ class NeutralBachelorVars {
   double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
   RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
   // -------------------- Mis-ID ------------------- //
+  RooRealVar &orEffMisId_MisRec() { return orEffMisId_MisRec_; }
+  RooRealVar &boxEffMisId_MisRec() { return boxEffMisId_MisRec_; }
+  RooRealVar &buDeltaCutEffMisId_MisRec() { return buDeltaCutEffMisId_MisRec_; }
+  RooRealVar &deltaCutEffMisId_MisRec() { return deltaCutEffMisId_MisRec_; }
   // -------------------- Bu2D0h -------------------- //
   RooAbsReal &Bu2D0h_sigmaLBu() { return *Bu2D0h_sigmaLBu_; }
   RooAbsReal &Bu2D0h_sigmaRBu() { return *Bu2D0h_sigmaRBu_; }
@@ -161,30 +165,16 @@ class NeutralBachelorVars {
   RooFormulaVar &N_Delta_Bu2D0h() { return N_Delta_Bu2D0h_; }
   RooAbsReal &N_Bu_Bu2D0h() { return *N_Bu_Bu2D0h_; }
   // -------------------- Mis-ID ------------------- //
-  RooRealVar &misId_Bu2D0h_meanBu() {
-    return misId_Bu2D0h_meanBu_;
-  }
-  RooRealVar &misId_Bu2D0h_sigmaLBu() {
-    return misId_Bu2D0h_sigmaLBu_;
-  }
-  RooRealVar &misId_Bu2D0h_sigmaRBu() {
-    return misId_Bu2D0h_sigmaRBu_;
-  }
+  RooRealVar &misId_Bu2D0h_meanBu() { return misId_Bu2D0h_meanBu_; }
+  RooRealVar &misId_Bu2D0h_sigmaLBu() { return misId_Bu2D0h_sigmaLBu_; }
+  RooRealVar &misId_Bu2D0h_sigmaRBu() { return misId_Bu2D0h_sigmaRBu_; }
   RooRealVar &misId_Bu2D0h_aLBu() { return misId_Bu2D0h_aLBu_; }
   RooRealVar &misId_Bu2D0h_aRBu() { return misId_Bu2D0h_aRBu_; }
-  RooCruijff &pdfBu_misId_Bu2D0h() {
-    return pdfBu_misId_Bu2D0h_;
-  }
+  RooCruijff &pdfBu_misId_Bu2D0h() { return pdfBu_misId_Bu2D0h_; }
   RooRealVar &orEffMisId_Bu2D0h() { return orEffMisId_Bu2D0h_; }
-  RooRealVar &boxEffMisId_Bu2D0h() {
-    return boxEffMisId_Bu2D0h_;
-  }
-  RooRealVar &buDeltaCutEffMisId_Bu2D0h() {
-    return buDeltaCutEffMisId_Bu2D0h_;
-  }
-  RooRealVar &deltaCutEffMisId_Bu2D0h() {
-    return deltaCutEffMisId_Bu2D0h_;
-  }
+  RooRealVar &boxEffMisId_Bu2D0h() { return boxEffMisId_Bu2D0h_; }
+  RooRealVar &buDeltaCutEffMisId_Bu2D0h() { return buDeltaCutEffMisId_Bu2D0h_; }
+  RooRealVar &deltaCutEffMisId_Bu2D0h() { return deltaCutEffMisId_Bu2D0h_; }
 
   void SetMisIdEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                             RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -255,6 +245,10 @@ class NeutralBachelorVars {
   double pidEff_Bd2Dsth_;
   RooConstVar pidEff_MisRec_;
   // -------------------- Mis-ID ------------------- //
+  RooRealVar orEffMisId_MisRec_;
+  RooRealVar boxEffMisId_MisRec_;
+  RooRealVar buDeltaCutEffMisId_MisRec_;
+  RooRealVar deltaCutEffMisId_MisRec_;
   // -------------------- Bu2D0h -------------------- //
   std::unique_ptr<RooAbsReal> Bu2D0h_sigmaLBu_;
   std::unique_ptr<RooAbsReal> Bu2D0h_sigmaRBu_;
@@ -271,7 +265,7 @@ class NeutralBachelorVars {
   RooRealVar misId_Bu2D0h_aLBu_;
   RooRealVar misId_Bu2D0h_aRBu_;
   RooCruijff pdfBu_misId_Bu2D0h_;
-  RooRealVar orEffMisId_Bu2D0h_; 
+  RooRealVar orEffMisId_Bu2D0h_;
   RooRealVar boxEffMisId_Bu2D0h_;
   RooRealVar buDeltaCutEffMisId_Bu2D0h_;
   RooRealVar deltaCutEffMisId_Bu2D0h_;
@@ -296,7 +290,8 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
   if (!file_exists(txtFileName)) {
     std::string dirString;
     // std::cout << txtFileName
-    //           << " doesn't exist:\n\tCalculating and setting efficiencies for"
+    //           << " doesn't exist:\n\tCalculating and setting efficiencies
+    //           for"
     //           << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
