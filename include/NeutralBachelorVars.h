@@ -151,8 +151,11 @@ class NeutralBachelorVars {
   double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
   RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
   // -------------------- Mis-ID ------------------- //
-  RooRealVar &misId_MisRec_meanBu() {
-    return misId_MisRec_meanBu_;
+  RooRealVar &misId_MisRec_mean1Bu() {
+    return misId_MisRec_mean1Bu_;
+  }
+  RooRealVar &misId_MisRec_mean2Bu() {
+    return misId_MisRec_mean2Bu_;
   }
   RooRealVar &misId_MisRec_sigma1Bu() {
     return misId_MisRec_sigma1Bu_;
@@ -278,7 +281,8 @@ class NeutralBachelorVars {
   double pidEff_Bd2Dsth_;
   RooConstVar pidEff_MisRec_;
   // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_MisRec_meanBu_;
+  RooRealVar misId_MisRec_mean1Bu_;
+  RooRealVar misId_MisRec_mean2Bu_;
   RooRealVar misId_MisRec_sigma1Bu_;
   RooRealVar misId_MisRec_sigma2Bu_;
   RooRealVar misId_MisRec_a2Bu_;

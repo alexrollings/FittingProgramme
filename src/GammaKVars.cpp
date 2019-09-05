@@ -322,6 +322,63 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       pidEff_Bd2Dsth_(),
       pidEff_MisRec_(),
       // -------------------- Mis-ID ------------------- //
+      misId_MisRec_mean1Bu_(("misId_MisRec_mean1Bu_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", 5.3618e+03),
+      misId_MisRec_mean2Bu_(("misId_MisRec_mean2Bu_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", 5.3405e+02),
+      misId_MisRec_sigma1Bu_(
+          ("misId_MisRec_sigma1Bu_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 1.0688e+02),
+      misId_MisRec_sigma2Bu_(
+          ("misId_MisRec_sigma2Bu_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 2.5076e+01),
+      misId_MisRec_a1Bu_(("misId_MisRec_a1Bu_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 4.2797e+00),
+      misId_MisRec_a2Bu_(("misId_MisRec_a2Bu_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", -3.5055e-01),
+      misId_MisRec_n1Bu_(("misId_MisRec_n1Bu_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 4.5529e+00),
+      misId_MisRec_n2Bu_(("misId_MisRec_n2Bu_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 6.1098e+00),
+      pdf1Bu_misId_MisRec_(("pdf1Bu_misId_MisRec_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", Configuration::Get().buDeltaMass(),
+                           misId_MisRec_mean1Bu_, misId_MisRec_sigma1Bu_,
+                           misId_MisRec_a1Bu_, misId_MisRec_n1Bu_),
+      pdf2Bu_misId_MisRec_(("pdf2Bu_misId_MisRec_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", Configuration::Get().buDeltaMass(),
+                           misId_MisRec_mean2Bu_, misId_MisRec_sigma2Bu_,
+                           misId_MisRec_a2Bu_, misId_MisRec_n2Bu_),
+      misId_MisRec_frac1PdfBu_(
+          ("misId_MisRec_frac1PdfBu_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 5.9833e-01),
+      pdfBu_misId_MisRec_(
+          ("pdfBu_misId_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", RooArgList(pdf1Bu_misId_MisRec_, pdf2Bu_misId_MisRec_),
+          misId_MisRec_frac1PdfBu_),
       orEffMisId_MisRec_(("orEffMisId_MisRec_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                              .c_str(),
@@ -496,13 +553,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   } else {
     orEffMisId_MisRec_.setVal(deltaCutEffMisId_MisRecVal);
   }
-  std::cout << "\t orEffMisId_MisRec = " << orEffMisId_MisRec_.getVal() << "\n"
-            << "\t boxEffMisId_MisRec = " << boxEffMisId_MisRec_.getVal()
-            << "\n"
-            << "\t buDeltaCutEffMisId_MisRec = "
-            << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
-            << "\t deltaCutEffMisId_MisRec = "
-            << deltaCutEffMisId_MisRec_.getVal() << "\n";
+  // std::cout << "\t orEffMisId_MisRec = " << orEffMisId_MisRec_.getVal() << "\n"
+  //           << "\t boxEffMisId_MisRec = " << boxEffMisId_MisRec_.getVal()
+  //           << "\n"
+  //           << "\t buDeltaCutEffMisId_MisRec = "
+  //           << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
+  //           << "\t deltaCutEffMisId_MisRec = "
+  //           << deltaCutEffMisId_MisRec_.getVal() << "\n";
 
   SetMisIdEfficiencies(Mode::Bu2D0pi, orEffMisId_Bu2D0h_,
                        boxEffMisId_Bu2D0h_,
