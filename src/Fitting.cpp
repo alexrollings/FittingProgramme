@@ -329,20 +329,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   // }
   // dataHist->Draw("same");
 
-  std::string fileLabel;
-  if (config.fit1D() == false) {
-    fileLabel = std::to_string(config.deltaLow()) + "_" +
-                std::to_string(config.deltaHigh()) + "_" +
-                std::to_string(config.buDeltaLow()) + "_" +
-                std::to_string(config.buDeltaHigh());
-  } else {
-    fileLabel = std::to_string(config.deltaLow()) + "_" +
-                std::to_string(config.deltaHigh());
-  }
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
                  ComposeName(id, mass, neutral, bachelor, daughters, charge) +
-                 "_" + fileLabel + ".pdf")
+                 "_" + config.ReturnBoxString() + ".pdf")
                     .c_str());
 }
 
@@ -555,18 +545,8 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
   gPad->SetTopMargin(0.05);
   corrHist->Draw("colz");
   corrCanvas.Update();
-  std::string fileLabel;
-  if (config.fit1D() == false) {
-    fileLabel = std::to_string(config.deltaLow()) + "_" +
-                std::to_string(config.deltaHigh()) + "_" +
-                std::to_string(config.buDeltaLow()) + "_" +
-                std::to_string(config.buDeltaHigh());
-  } else {
-    fileLabel = std::to_string(config.deltaLow()) + "_" +
-                std::to_string(config.deltaHigh());
-  }
   corrCanvas.SaveAs(
-      (outputDir + "/plots/CorrelationMatrix_" + fileLabel + ".pdf").c_str());
+      (outputDir + "/plots/CorrelationMatrix_" + config.ReturnBoxString() + ".pdf").c_str());
 }
 
 // Function that returns the simultaneous PDF, the class which collects all the
@@ -838,17 +818,7 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
 
     if (fitBool == true) {
       result->Print("v");
-      std::string fileLabel;
-      if (config.fit1D() == false) {
-        fileLabel = std::to_string(config.deltaLow()) + "_" +
-                    std::to_string(config.deltaHigh()) + "_" +
-                    std::to_string(config.buDeltaLow()) + "_" +
-                    std::to_string(config.buDeltaHigh());
-      } else {
-        fileLabel = std::to_string(config.deltaLow()) + "_" +
-                    std::to_string(config.deltaHigh());
-      }
-      TFile outputFile((outputDir + "/results/Result_" + fileLabel + "_" +
+      TFile outputFile((outputDir + "/results/Result_" + config.ReturnBoxString() + "_" +
                         std::to_string(randomTag) + ".root")
                            .c_str(),
                        "recreate");
@@ -1321,18 +1291,8 @@ int main(int argc, char **argv) {
         PlotCorrelations(result.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
-        std::string fileLabel;
-        if (config.fit1D() == false) {
-          fileLabel = std::to_string(config.deltaLow()) + "_" +
-                      std::to_string(config.deltaHigh()) + "_" +
-                      std::to_string(config.buDeltaLow()) + "_" +
-                      std::to_string(config.buDeltaHigh());
-        } else {
-          fileLabel = std::to_string(config.deltaLow()) + "_" +
-                      std::to_string(config.deltaHigh());
-        }
         TFile outputFile(
-            (outputDir + "/results/DataResult_" + fileLabel + ".root").c_str(),
+            (outputDir + "/results/DataResult_" + config.ReturnBoxString() + ".root").c_str(),
             "recreate");
         result->Write();
         TTree tree("tree", "");

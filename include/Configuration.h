@@ -76,6 +76,8 @@ class Configuration {
   void SetBuDeltaLow(int val) { buDeltaLow() = val; }
   void SetBuDeltaHigh(int val) { buDeltaHigh() = val; }
 
+  std::string ReturnBoxString();
+
   std::string &gammaCutString() { return gammaCutString_; }
   std::string &pi0CutString() { return pi0CutString_; }
 
@@ -121,7 +123,6 @@ class Configuration {
   std::string pi0CutString_;
   bool fit1D_;
 };
-
 
 template <typename Enum> Enum StringToEnum(std::string const &);
 

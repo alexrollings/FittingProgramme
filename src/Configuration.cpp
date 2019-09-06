@@ -446,6 +446,17 @@ Configuration::Categories::Categories()
                          .c_str());
 }
 
+// Function returns delta mass string if 1D fit, full box dimns if D1D fit
+std::string Configuration::ReturnBoxString() {
+  if (fit1D_ == true) {
+    return std::to_string(deltaLow_) + "_" + std::to_string(deltaHigh_);
+  } else {
+    return std::to_string(deltaLow_) + "_" + std::to_string(deltaHigh_) + "_" +
+           std::to_string(buDeltaLow_) + "_" + std::to_string(buDeltaHigh_);
+  }
+}
+
+
 // Need a template for this as each enum option is a different 'type'
 template <>
 Polarity StringToEnum<Polarity>(std::string const &polarity) {

@@ -5,6 +5,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Configuration.h"
+#include "NeutralVars.h"
+#include "ParseArguments.h"
 #include "RooArgList.h"
 #include "RooArgSet.h"
 #include "RooDataHist.h"
@@ -21,8 +24,6 @@
 #include "TPad.h"
 #include "TStyle.h"
 #include "TTreeReader.h"
-#include "Configuration.h"
-#include "NeutralVars.h"
 
 std::vector<std::string> SplitByComma(std::string const &str) {
   std::stringstream ss;
@@ -59,6 +60,13 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  ParseArguments args(argc, argv);  // object instantiated
+  Configuration &config = Configuration::Get();
+  if (args("1D")) {
+    std::cout << "Running 1D fit.\n";
+    config.fit1D() = true;
+  }
+
   std::vector<std::string> resultFiles = SplitByComma(argv[2]);
   // std::cout << resultFiles.size();
   std::string outputDir = argv[3];
@@ -68,27 +76,35 @@ int main(int argc, char *argv[]) {
   std::vector<RooFitResult> resultVec;
   std::vector<RooFitResult> dataResultVec;
 
-  Configuration &config = Configuration::Get();
   for (auto &filename : resultFiles) {
     std::string rndm;
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
-    std::regex fileRexp(
-        ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
-    std::regex fileRexp1D(
-        ".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
-    std::smatch fileMatch;
-    if(std::regex_search(filename, fileMatch, fileRexp)) {
-      config.SetDeltaLow(std::stod(fileMatch[1]));
-      config.SetDeltaHigh(std::stod(fileMatch[2]));
-      config.SetBuDeltaLow(std::stod(fileMatch[3]));
-      config.SetBuDeltaHigh(std::stod(fileMatch[4]));
-      rndm = fileMatch[5];
-    } else if(std::regex_search(filename, fileMatch, fileRexp1D)) {
-      config.SetDeltaLow(std::stod(fileMatch[1]));
-      config.SetDeltaHigh(std::stod(fileMatch[2]));
-      rndm = fileMatch[3];
+    std::regex fileRexp1D(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+    if (config.fit1D() == false) {
+      std::regex fileRexp(
+          ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+      std::smatch fileMatch;
+      if (std::regex_search(filename, fileMatch, fileRexp)) {
+        config.SetDeltaLow(std::stod(fileMatch[1]));
+        config.SetDeltaHigh(std::stod(fileMatch[2]));
+        config.SetBuDeltaLow(std::stod(fileMatch[3]));
+        config.SetBuDeltaHigh(std::stod(fileMatch[4]));
+        rndm = fileMatch[5];
+      } else {
+        throw std::runtime_error(
+            "Could not find filename with correct regex pattern");
+      }
     } else {
-      throw std::runtime_error("Could not find filename with correct regex pattern");
+      std::regex fileRexp(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+      std::smatch fileMatch;
+      if (std::regex_search(filename, fileMatch, fileRexp)) {
+        config.SetDeltaLow(std::stod(fileMatch[1]));
+        config.SetDeltaHigh(std::stod(fileMatch[2]));
+        rndm = fileMatch[3];
+      } else {
+        throw std::runtime_error(
+            "Could not find filename with correct regex pattern");
+      }
     }
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
         file->FindObjectAny(("Result_" + rndm).c_str())));
@@ -98,10 +114,11 @@ int main(int argc, char *argv[]) {
       resultVec.emplace_back(*result.get());
       // std::cout << "Extracted Result from " << filename << "\n";
     }
-    auto dataResult = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
-        file->FindObjectAny("DataFitResult")));
+    auto dataResult = std::unique_ptr<RooFitResult>(
+        dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
     if (dataResult == nullptr) {
-      throw std::runtime_error("Could not extract DataFitResult from " + filename);
+      throw std::runtime_error("Could not extract DataFitResult from " +
+                               filename);
     } else {
       dataResultVec.emplace_back(*dataResult.get());
       // std::cout << "Extracted Result from " << filename << "\n";
@@ -111,7 +128,8 @@ int main(int argc, char *argv[]) {
   // Create vector of histograms: automatically make histograms for the value,
   RooArgList finalPars0 = resultVec[0].floatParsFinal();
   double nParams = finalPars0.getSize();
-  // std::cout << "Number of parameters stored in results = " << nParams << "\n";
+  // std::cout << "Number of parameters stored in results = " << nParams <<
+  // "\n";
 
   // Check result quality and print out stats
   double nUnConv = 0;
@@ -244,10 +262,7 @@ int main(int argc, char *argv[]) {
 
   // File to save results
   TFile outputFile(
-      (outputDir + "/results/Result_" + std::to_string(config.deltaLow()) +
-       "_" + std::to_string(config.deltaHigh()) + "_" +
-       std::to_string(config.buDeltaLow()) + "_" +
-       std::to_string(config.buDeltaHigh()) + ".root")
+      (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
   outputFile.cd();
@@ -285,8 +300,8 @@ int main(int argc, char *argv[]) {
                  errMin[i] - errRange / 5, errMax[i] + errRange / 5);
     double pullRange = pullMax[i] - pullMin[i];
     TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
-    // round(resultVec.size()/10),
-                 pullMin[i] - pullRange/5, pullMax[i] + pullRange/5);
+                  // round(resultVec.size()/10),
+                  pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
     // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       initValHist.Fill(initValVec[j][i]);
@@ -304,7 +319,7 @@ int main(int argc, char *argv[]) {
                    valHist.GetXaxis()->GetXmax());
     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                       RooFit::Import(valHist));
-    RooRealVar valMean(("valMean_" + paramName).c_str(), "", //initialVec[i],
+    RooRealVar valMean(("valMean_" + paramName).c_str(), "",  // initialVec[i],
                        val.getMin() - (val.getMax() - val.getMin()),
                        val.getMax() + (val.getMax() - val.getMin()));
     RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
@@ -394,7 +409,7 @@ int main(int argc, char *argv[]) {
                     pullHist.GetXaxis()->GetXmax());
     RooDataHist pullDH(("pullDH_" + paramName).c_str(), "", RooArgSet(pull),
                        RooFit::Import(pullHist));
-    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "", //0,
+    RooRealVar pullMean(("pullMean_" + paramName).c_str(), "",  // 0,
                         pull.getMin() - (pull.getMax() - pull.getMin()),
                         pull.getMax() + (pull.getMax() - pull.getMin()));
     RooRealVar pullSigma(("pullSigma_" + paramName).c_str(), "", 1, 0,
@@ -432,12 +447,8 @@ int main(int argc, char *argv[]) {
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
 
-    varCanvas.SaveAs((outputDir + "/plots/" +
-                      std::to_string(config.deltaLow()) + "_" +
-                      std::to_string(config.deltaHigh()) + "_" +
-                      std::to_string(config.buDeltaLow()) + "_" +
-                      std::to_string(config.buDeltaHigh()) + "_" + paramName +
-                      "_ValErrPull.pdf")
+    varCanvas.SaveAs((outputDir + "/plots/" + config.ReturnBoxString() + "_" +
+                      paramName + "_ValErrPull.pdf")
                          .c_str());
     // varCanvas.SaveAs((outputDir + "/plots/" + paramName +
     //                   "_ValErrPull.pdf")
@@ -447,10 +458,10 @@ int main(int argc, char *argv[]) {
   outputFile.Write();
   outputFile.Close();
   std::cout << "Number of toys: " << resultVec.size() << "\n";
-            // << initValVec.size() << "\n"
-            // << valVec.size() << "\n"
-            // << errVec.size() << "\n"
-            // << pullVec.size();
+  // << initValVec.size() << "\n"
+  // << valVec.size() << "\n"
+  // << errVec.size() << "\n"
+  // << pullVec.size();
 
   std::cout << "\nQuality of fits:\n"
             << "Unconverged: " << nUnConv / resultVec.size() * 100 << " %\n"
