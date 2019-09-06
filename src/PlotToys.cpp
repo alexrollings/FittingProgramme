@@ -62,10 +62,12 @@ int main(int argc, char *argv[]) {
 
   ParseArguments args(argc, argv);  // object instantiated
   Configuration &config = Configuration::Get();
+  std::cout << config.ReturnBoxString() << "\n";
   if (args("1D")) {
     std::cout << "Running 1D fit.\n";
     config.fit1D() = true;
   }
+  std::cout << config.ReturnBoxString() << "\n";
 
   std::vector<std::string> resultFiles = SplitByComma(argv[2]);
   // std::cout << resultFiles.size();
