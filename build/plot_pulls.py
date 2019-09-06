@@ -74,7 +74,7 @@ if __name__ == "__main__":
     if dim == None:
         print("Analysing results from D1D toys")
         if bu_low == None or bu_high == None:
-          sys.exit("Specify -bl= and -bh=")
+            sys.exit("Specify -bl= and -bh=")
     elif dim == "1":
         print("Analysing results from 1D toys")
     else:
@@ -101,11 +101,13 @@ if __name__ == "__main__":
     if len(file_list) != 0:
         if dim == "1":
             subprocess.call([
-                "./PlotToys", neutral, ",".join(file_list), output_dir
+                "./PlotToys", "-neutral=" + neutral,
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-1D"
             ])
         else:
             subprocess.call([
-                "./PlotToys", neutral, ",".join(file_list), output_dir, "-1D"
+                "./PlotToys", "-neutral=" + neutral,
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir
             ])
     else:
         sys.exit("File list empty")

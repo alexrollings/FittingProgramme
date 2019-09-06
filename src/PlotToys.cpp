@@ -44,34 +44,45 @@ std::string to_string_with_precision(double value) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 4) {
-    std::cerr << "Pass neutral, comma separated string of filenames storing "
-                 "RooFitResults and output directory.\n";
-    return 1;
-  }
-  std::string neutString = argv[1];
-  Neutral neutral;
-  if (neutString == "gamma") {
-    neutral = Neutral::gamma;
-  } else if (neutString == "pi0") {
-    neutral = Neutral::pi0;
-  } else {
-    std::cerr << "Neutral = gamma/pi0";
-    return 1;
-  }
-
-  ParseArguments args(argc, argv);  // object instantiated
   Configuration &config = Configuration::Get();
-  std::cout << config.ReturnBoxString() << "\n";
-  if (args("1D")) {
-    std::cout << "Running 1D fit.\n";
-    config.fit1D() = true;
-  }
-  std::cout << config.ReturnBoxString() << "\n";
+  Neutral neutral;
+  std::string outputDir;
+  std::vector<std::string> resultFiles;
 
-  std::vector<std::string> resultFiles = SplitByComma(argv[2]);
-  // std::cout << resultFiles.size();
-  std::string outputDir = argv[3];
+  {
+    ParseArguments args(argc, argv);
+
+    std::string neutralArg;
+    if (!args("neutral", neutralArg)) {
+      std::cerr << "Specity value -neutral=[pi0/gamma]\n";
+      return 1;
+    }
+    try {
+      neutral = StringToEnum<Neutral>(neutralArg);
+    } catch (std::invalid_argument) {
+      std::cerr << "neutral assignment failed, please specify: "
+                   "-neutral=[pi0/gamma].\n";
+      return 1;
+    }
+
+    if (!args("outputDir", outputDir)) {
+      std::cerr << "Specify output directory (-outputDir=<path>).\n";
+      return 1;
+    }
+
+    if (args("1D")) {
+      config.fit1D() = true;
+    }
+
+    std::string files;
+    if (!args("files", files)) {
+      std::cerr
+          << "Pass comma reparated list of files containing RooFitResults "
+             "(-files=<list>).\n";
+      return 1;
+    }
+    resultFiles = SplitByComma(files);
+  }
 
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
