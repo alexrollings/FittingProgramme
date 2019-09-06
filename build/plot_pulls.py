@@ -99,8 +99,13 @@ if __name__ == "__main__":
         os.mkdir(plots_dir)
     # print("./PlotToys " + ",".join(file_list))
     if len(file_list) != 0:
-        subprocess.call([
-            "./PlotToys", neutral, ",".join(file_list), output_dir
-        ])
+        if dim == "1":
+            subprocess.call([
+                "./PlotToys", neutral, ",".join(file_list), output_dir
+            ])
+        else:
+            subprocess.call([
+                "./PlotToys", neutral, ",".join(file_list), output_dir, "-1D"
+            ])
     else:
         sys.exit("File list empty")
