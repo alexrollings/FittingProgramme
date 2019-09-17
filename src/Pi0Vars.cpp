@@ -7,7 +7,6 @@
 // unless we use pointers
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
-    // -------------------- Bu2Dst0h_D0gamma -------------------- //
     // -------------------- Bu2Dst0h_D0pi0 -------------------- //
     : Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::pi0))
@@ -65,13 +64,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                  .c_str(),
                              "", 5.2719e+03),
       relativeBuWidth1_Bu2Dst0h_D0pi0_(("relativeBuWidth1_Bu2Dst0h_D0pi0Bu_" +
-                                         ComposeName(uniqueId, Neutral::pi0))
-                                            .c_str(),
-                                        "", 0.95),
+                                        ComposeName(uniqueId, Neutral::pi0))
+                                           .c_str(),
+                                       "", 0.95),
       relativeBuWidth2_Bu2Dst0h_D0pi0_(("relativeBuWidth2_Bu2Dst0h_D0pi0Bu_" +
-                                         ComposeName(uniqueId, Neutral::pi0))
-                                            .c_str(),
-                                        "", 0.95),
+                                        ComposeName(uniqueId, Neutral::pi0))
+                                           .c_str(),
+                                       "", 0.95),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -98,8 +97,87 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 1),
       fracBu2Dst0h_D0pi0_(),
-      initYieldFAVBu2Dst0h_D0pi0_(15000) {
+      initYieldFAVBu2Dst0h_D0pi0_(15000),
+      // -------------------- Bu2Dst0h_D0gamma -------------------- //
+      Bu2Dst0h_D0gamma_meanDelta_(),
+      Bu2Dst0h_D0gamma_sigmaDelta_(),
+      Bu2Dst0h_D0gamma_a1Delta_(),
+      Bu2Dst0h_D0gamma_a2Delta_(),
+      Bu2Dst0h_D0gamma_n1Delta_(),
+      Bu2Dst0h_D0gamma_n2Delta_(),
+      pdf1Delta_Bu2Dst0h_D0gamma_(),
+      pdf2Delta_Bu2Dst0h_D0gamma_(),
+      Bu2Dst0h_D0gamma_frac1PdfDelta_(),
+      Bu2Dst0h_D0gamma_thresholdDelta_(("Bu2Dst0h_D0gamma_thresholdDelta_" +
+                                        ComposeName(uniqueId, Neutral::pi0))
+                                           .c_str(),
+                                       "", 1.5593e+02),
+      Bu2Dst0h_D0gamma_aDelta_(("Bu2Dst0h_D0gamma_aDelta_" +
+                                ComposeName(uniqueId, Neutral::pi0))
+                                   .c_str(),
+                               "", 8.9498e-02),
+      Bu2Dst0h_D0gamma_bDelta_(("Bu2Dst0h_D0gamma_bDelta_" +
+                                ComposeName(uniqueId, Neutral::pi0))
+                                   .c_str(),
+                               "", -4.7042e-01),
+      Bu2Dst0h_D0gamma_cDelta_(("Bu2Dst0h_D0gamma_cDelta_" +
+                                ComposeName(uniqueId, Neutral::pi0))
+                                   .c_str(),
+                               "", 1.3164e+01),
+      pdfDelta_Bu2Dst0h_D0gamma_(new RooDstD0BG(
+          ("pdfDelta_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          Bu2Dst0h_D0gamma_thresholdDelta_, Bu2Dst0h_D0gamma_cDelta_,
+          Bu2Dst0h_D0gamma_aDelta_, Bu2Dst0h_D0gamma_bDelta_)),
+      Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
+                                ComposeName(uniqueId, Neutral::pi0))
+                                   .c_str(),
+                               "", 5.2871e+03),
+      relativeBuWidth1_Bu2Dst0h_D0gamma_(
+          ("relativeBuWidth1_Bu2Dst0h_D0gammaBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", 0.95),
+      relativeBuWidth2_Bu2Dst0h_D0gamma_(
+          ("relativeBuWidth2_Bu2Dst0h_D0gammaBu_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", 0.95),
+      Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
+                              ComposeName(uniqueId, Neutral::pi0))
+                                 .c_str(),
+                             "", 5.5196e-02),
+      Bu2Dst0h_D0gamma_a2Bu_(("Bu2Dst0h_D0gamma_a2Bu_" +
+                              ComposeName(uniqueId, Neutral::pi0))
+                                 .c_str(),
+                             "", 6.7200e-03),
+      Bu2Dst0h_D0gamma_n1Bu_(),
+      Bu2Dst0h_D0gamma_n2Bu_(),
+      Bu2Dst0h_D0gamma_frac1PdfBu_(),
+      orEffBu2Dst0h_D0gamma_(("orEffBu2Dst0h_D0gamma_" +
+                              ComposeName(uniqueId, Neutral::pi0))
+                                 .c_str(),
+                             "", 1),
+      boxEffBu2Dst0h_D0gamma_(("boxEffBu2Dst0h_D0gamma_" +
+                               ComposeName(uniqueId, Neutral::pi0))
+                                  .c_str(),
+                              "", 1),
+      buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
+                                      ComposeName(uniqueId, Neutral::pi0))
+                                         .c_str(),
+                                     "", 1),
+      deltaCutEffBu2Dst0h_D0gamma_(("deltaCutEffBu2Dst0h_D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::pi0))
+                                       .c_str(),
+                                   "", 1),
+      fracBu2Dst0h_D0gamma_(0.207),
+      initYieldFAVBu2Dst0h_D0gamma_(
+          initYieldFAVBu2Dst0h_D0pi0_* fracBu2Dst0h_D0gamma_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
                   boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
                   deltaCutEffBu2Dst0h_D0pi0_);
+  SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
+                  boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
+                  deltaCutEffBu2Dst0h_D0gamma_);
 }

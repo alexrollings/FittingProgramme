@@ -71,10 +71,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_D0gamma_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 5.2819e+03, 5275, 5290),
-      relativeBuWidth_Bu2Dst0h_D0gamma_(("relativeBuWidth_Bu2Dst0h_D0gammaBu_" +
+      relativeBuWidth1_Bu2Dst0h_D0gamma_(("relativeBuWidth1_Bu2Dst0h_D0gammaBu_" +
                                          ComposeName(uniqueId, Neutral::gamma))
                                             .c_str(),
                                         "", 0.95),
+      relativeBuWidth2_Bu2Dst0h_D0gamma_(),
       Bu2Dst0h_D0gamma_a1Bu_(
           ("Bu2Dst0h_D0gamma_a1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -111,6 +112,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 1),
+      fracBu2Dst0h_D0gamma_(),
       initYieldFAVBu2Dst0h_D0gamma_(5.1958e+04),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_meanDelta_(

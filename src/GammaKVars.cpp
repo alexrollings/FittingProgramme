@@ -18,7 +18,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .Bu2Dst0h_D0gamma_sigmaBu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeBuWidth_Bu2Dst0h_D0gamma()))),
+                  .relativeBuWidth1_Bu2Dst0h_D0gamma()))),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
