@@ -36,7 +36,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
                                         .orEffBu2Dst0h_D0pi0()
                                         .getVal(),
-                            -1000000, 1000000),
+                            // -1000000, 1000000),
+                            0, 100000),
       pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                                  .c_str(),
@@ -88,7 +89,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .orEffBu2Dst0h_D0gamma()
                                           .getVal(),
-                              -1000000, 1000000),
+                              // -1000000, 1000000),
+                              0, 100000),
       pidEff_Bu2Dst0h_D0gamma_(("pidEff_Bu2Dst0h_D0gamma_" +
                                 ComposeName(uniqueId, Neutral::pi0,
                                             Bachelor::pi))

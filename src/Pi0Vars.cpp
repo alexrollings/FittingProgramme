@@ -97,7 +97,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 1),
       fracBu2Dst0h_D0pi0_(),
-      initYieldFAVBu2Dst0h_D0pi0_(15000),
+      initYieldFAVBu2Dst0h_D0pi0_(Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(),
       Bu2Dst0h_D0gamma_sigmaDelta_(),
@@ -173,7 +173,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                    "", 1),
       fracBu2Dst0h_D0gamma_(0.207),
       initYieldFAVBu2Dst0h_D0gamma_(
-          initYieldFAVBu2Dst0h_D0pi0_* fracBu2Dst0h_D0gamma_) {
+          Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
                   boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
                   deltaCutEffBu2Dst0h_D0pi0_);

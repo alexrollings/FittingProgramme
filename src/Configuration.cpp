@@ -26,6 +26,7 @@ Configuration::Configuration()
       deltaHigh_(170),
       buDeltaLow_(5240),
       buDeltaHigh_(5330),
+      initYieldFAVSignal_(5.1958e+04),
       gammaCutString_(
           "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05"),

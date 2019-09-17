@@ -76,6 +76,10 @@ class Configuration {
   void SetBuDeltaLow(int val) { buDeltaLow() = val; }
   void SetBuDeltaHigh(int val) { buDeltaHigh() = val; }
 
+  // Have to declare this in Config as gamma depends on pi0 and pi0 depends on
+  // gamma in different neutral cases: always need to delcare signal yield first
+  double &initYieldFAVSignal() { return initYieldFAVSignal_; }
+
   std::string ReturnBoxString();
 
   std::string &gammaCutString() { return gammaCutString_; }
@@ -119,6 +123,7 @@ class Configuration {
   int deltaHigh_;
   int buDeltaLow_;
   int buDeltaHigh_;
+  double initYieldFAVSignal_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;
