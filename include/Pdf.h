@@ -66,7 +66,7 @@ class PdfBase {
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
   virtual RooFormulaVar &N_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
-  virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsReal &N_tot_MisRec() const = 0;
@@ -182,7 +182,7 @@ class Pdf : public PdfBase {
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0pi0();
   }
-  virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0() const {
+  virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_D0pi0();
   }

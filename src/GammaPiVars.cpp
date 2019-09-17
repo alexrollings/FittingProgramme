@@ -132,20 +132,21 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", 1),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      Bu2Dst0h_D0pi0_sigmaBu_(
-          ("Bu2Dst0h_D0pi0_sigmaBu_" +
+      Bu2Dst0h_D0pi0_sigma1Bu_(
+          ("Bu2Dst0h_D0pi0_sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", 4.6911e+01),
-      pdfBu_Bu2Dst0h_D0pi0_(
+      Bu2Dst0h_D0pi0_sigma2Bu_(),
+      pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
           ("pdfBu_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
-          Bu2Dst0h_D0pi0_sigmaBu_,
+          Bu2Dst0h_D0pi0_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_nBu()),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_nBu())),
       N_tot_Bu2Dst0h_D0pi0_(
           ("N_tot_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
