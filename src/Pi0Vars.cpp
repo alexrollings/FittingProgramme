@@ -64,6 +64,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
                              "", 5.2719e+03),
+      relativeBuWidth1_Bu2Dst0h_D0pi0_(("relativeBuWidth1_Bu2Dst0h_D0pi0Bu_" +
+                                         ComposeName(uniqueId, Neutral::pi0))
+                                            .c_str(),
+                                        "", 0.95),
+      relativeBuWidth2_Bu2Dst0h_D0pi0_(("relativeBuWidth2_Bu2Dst0h_D0pi0Bu_" +
+                                         ComposeName(uniqueId, Neutral::pi0))
+                                            .c_str(),
+                                        "", 0.95),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -90,4 +98,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 1),
       fracBu2Dst0h_D0pi0_(),
-      initYieldFAVBu2Dst0h_D0pi0_(15000) {}
+      initYieldFAVBu2Dst0h_D0pi0_(15000) {
+  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
+                  boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
+                  deltaCutEffBu2Dst0h_D0pi0_);
+}
