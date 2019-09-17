@@ -351,10 +351,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   double deltaCutEffMisRecVal = 0.0;
 
   for (auto &m : misRecModesMap) {
-    RooRealVar orEffTemp("orEffTemp", "", 1);
-    RooRealVar boxEffTemp("boxEffTemp", "", 1);
-    RooRealVar buDeltaCutEffTemp("buDeltaCutEffTemp", "", 1);
-    RooRealVar deltaCutEffTemp("deltaCutEffTemp", "", 1);
+    RooRealVar orEffTemp(
+        ("orEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "", 1);
+    RooRealVar boxEffTemp(
+        ("boxEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "", 1);
+    RooRealVar buDeltaCutEffTemp(
+        ("buDeltaCutEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+        "", 1);
+    RooRealVar deltaCutEffTemp(
+        ("deltaCutEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+        1);
 
     SetEfficiencies(m.first, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
                     deltaCutEffTemp);

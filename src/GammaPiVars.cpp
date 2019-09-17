@@ -249,7 +249,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
                     MisRec_sigmaBu_,
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aBu(),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_a1Bu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()),
       N_tot_MisRec_(
           ("N_tot_MisRec_" +

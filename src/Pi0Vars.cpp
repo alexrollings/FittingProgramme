@@ -172,8 +172,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        .c_str(),
                                    "", 1),
       fracBu2Dst0h_D0gamma_(0.207),
-      initYieldFAVBu2Dst0h_D0gamma_(
-          Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_),
+      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() *
+                                    fracBu2Dst0h_D0gamma_),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
@@ -237,14 +237,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                  .c_str(),
                              "", 1.3362e+02),
       Bu2D0h_aDelta_(
-          ("Bu2D0h_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", -6.1787e-01),
+          ("Bu2D0h_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+          -6.1787e-01),
       Bu2D0h_bDelta_(
-          ("Bu2D0h_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", 9.9982e-01),
+          ("Bu2D0h_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+          9.9982e-01),
       Bu2D0h_cDelta_(
-          ("Bu2D0h_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", 3.3662e+00),
+          ("Bu2D0h_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+          3.3662e+00),
       pdfDelta_Bu2D0h_(
           ("pdfDelta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), Bu2D0h_thresholdDelta_,
@@ -256,8 +256,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              Bu2D0h_thresholdDelta_, Bu2D0h_cDelta_,
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
-          ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", 5.5263e+03),
+          ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+          5.5263e+03),
       relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
@@ -278,20 +278,85 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
                            "", 1),
-      deltaCutEffBu2D0h_(("deltaCutEffBu2D0h_" +
-                          ComposeName(uniqueId, Neutral::pi0))
-                             .c_str(),
-                         "", 1),
+      deltaCutEffBu2D0h_(
+          ("deltaCutEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", 1),
       fracBu2D0h_(1.37),
       initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
                           fracBu2D0h_) {
-  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
-                  boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
-                  deltaCutEffBu2Dst0h_D0pi0_);
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
                   boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
                   deltaCutEffBu2Dst0h_D0gamma_);
-  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0h_,
-                  boxEffBu2D0h_, buDeltaCutEffBu2D0h_,
-                  deltaCutEffBu2D0h_);
+  // std::cout << "\t orEffBu2Dst0h_D0gamma = "
+  //           << orEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0h_D0gamma = "
+  //           << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
+  //           << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0gamma = "
+  //           << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
+
+  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
+                  boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
+                  deltaCutEffBu2Dst0h_D0pi0_);
+  // std::cout << "\t orEffBu2Dst0h_D0pi0 = "
+  //           << orEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t boxEffBu2Dst0h_D0pi0 = "
+  //           << boxEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
+  //           << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0pi0 = "
+  //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
+  //
+  std::map<Mode, double> misRecModesMap = {
+      {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
+      {Mode::Bu2Dst0pi_D0gamma_WN,
+       fracMisRec_Bu2Dst0h_D0gamma_WN_ / fracMisRec_},
+      {Mode::Bu2D0rho, fracMisRec_Bu2D0hst_ / fracMisRec_},
+      {Mode::Bd2Dstpi, fracMisRec_Bd2Dsth_ / fracMisRec_}};
+
+  double orEffMisRecVal = 0.0;
+  double boxEffMisRecVal = 0.0;
+  double buDeltaCutEffMisRecVal = 0.0;
+  double deltaCutEffMisRecVal = 0.0;
+
+  for (auto &m : misRecModesMap) {
+    RooRealVar orEffTemp(
+        ("orEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "", 1);
+    RooRealVar boxEffTemp(
+        ("boxEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "", 1);
+    RooRealVar buDeltaCutEffTemp(
+        ("buDeltaCutEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+        1);
+    RooRealVar deltaCutEffTemp(
+        ("deltaCutEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
+        1);
+
+    SetEfficiencies(m.first, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
+                    deltaCutEffTemp);
+
+    orEffMisRecVal += orEffTemp.getVal() * m.second;
+    boxEffMisRecVal += boxEffTemp.getVal() * m.second;
+    buDeltaCutEffMisRecVal += buDeltaCutEffTemp.getVal() * m.second;
+    deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
+  }
+  orEffMisRec_.setVal(orEffMisRecVal);
+  boxEffMisRec_.setVal(boxEffMisRecVal);
+  buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
+  deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
+  // std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
+  //           << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
+  //           << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() <<
+  //           "\n";
+
+  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0h_, boxEffBu2D0h_,
+                  buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_);
+  // std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
+  //           << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
+  //           << "\n";
 }
