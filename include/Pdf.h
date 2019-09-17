@@ -59,7 +59,7 @@ class PdfBase {
   // std::unique_ptr<RooAddPdf> addPdf_;
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const = 0;
@@ -156,7 +156,7 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .N_tot_Bu2Dst0h_D0gamma();
   }
-  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
+  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0gamma();
   }
   virtual RooAddPdf &pdfBu_Bu2Dst0h_D0gamma() const {
