@@ -336,15 +336,17 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
       dirString = modeString;
     }
 
-    std::string path;
+    std::string path, ttree;
     switch (neutral) {
       case Neutral::gamma:
         path =
             "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
             "cross_feed_removed/";
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
         break;
       case Neutral::pi0:
         path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+        ttree = "BtoDstar0h3_h1h2pi0RTuple";
         break;
     }
 
@@ -372,7 +374,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
                             dirString + "_2016_MagDown/" + path + modeString +
                             "_2016_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string ttree("BtoDstar0h3_h1h2gammaTuple");
 
     TChain chain(ttree.c_str());
 
