@@ -174,6 +174,62 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracBu2Dst0h_D0gamma_(0.207),
       initYieldFAVBu2Dst0h_D0gamma_(
           Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_),
+      // -------------------- MIS-REC -------------------- //
+      MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
+                              ComposeName(uniqueId, Neutral::gamma))
+                                 .c_str(),
+                             "", 1.3549e+02),
+      MisRec_aDelta_(
+          ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", -1.9133e+00),
+      MisRec_bDelta_(
+          ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 2.2134e-01),
+      MisRec_cDelta_(
+          ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 2.0917e+00),
+      pdfDelta_MisRec_(
+          ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
+          MisRec_cDelta_, MisRec_aDelta_, MisRec_bDelta_),
+      pdfDelta_misId_MisRec_(("pdfDelta_misId_MisRec_" +
+                              ComposeName(uniqueId, Neutral::gamma))
+                                 .c_str(),
+                             "", Configuration::Get().deltaMass(),
+                             MisRec_thresholdDelta_, MisRec_cDelta_,
+                             MisRec_aDelta_, MisRec_bDelta_),
+      MisRec_meanBu_(
+          ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.2991e+03, 5290, 5310),
+      MisRec_aBu_(
+          ("MisRec_aBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          2.6265e+00),
+      MisRec_nBu_(
+          ("MisRec_nBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          9.9921e-01),
+      orEffMisRec_(
+          ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      boxEffMisRec_(
+          ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
+                            ComposeName(uniqueId, Neutral::gamma))
+                               .c_str(),
+                           "", 1),
+      deltaCutEffMisRec_(("deltaCutEffMisRec_" +
+                          ComposeName(uniqueId, Neutral::gamma))
+                             .c_str(),
+                         "", 1),
+      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.461),
+      fracMisRec_Bu2Dst0h_D0pi0_WN_(2.71),
+      fracMisRec_Bu2D0hst_(0.944),
+      fracMisRec_Bd2Dsth_(0.486),
+      fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
+                  fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
+                  fracMisRec_Bd2Dsth_),
+      initYieldFAVMisRec_(Configuration::Get().initYieldFAVSignal() *
+                          fracMisRec_),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_thresholdDelta_(("Bu2D0h_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::pi0))
