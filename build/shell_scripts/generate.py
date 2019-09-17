@@ -32,6 +32,12 @@ def make_shell_script(templatePath, scriptPath, substitutions):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        '-n',
+        '--neutral',
+        type=str,
+        help='Neutral = pi0/gamma',
+        required=True)
+    parser.add_argument(
         '-o',
         '--output_dir',
         type=str,
@@ -83,6 +89,7 @@ if __name__ == "__main__":
         required=False)
     args = parser.parse_args()
 
+    neutral = args.neutral
     output_dir = args.output_dir
     n_toys = args.n_toys
     n_jobs = args.n_jobs
@@ -92,6 +99,9 @@ if __name__ == "__main__":
     delta_high = args.delta_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+
+    if neutral != "pi0" and neutral != "gamma":
+        sys.exit("Specify neutral: -n=pi0/gamma")
 
     if dim == None:
         print("Set dim="": performing D1D toys")
@@ -122,7 +132,7 @@ if __name__ == "__main__":
         if input_dir == None:
             print("Generating toys from MC PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_mc.sh.tmpl"
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_" + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
                 i) + ".sh"
             substitutions = {
                 "nJob":
@@ -133,6 +143,8 @@ if __name__ == "__main__":
                 "/home/rollings/Software/install/lib64:/home/rollings/Software/install/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib:/home/rollings/Software/install/lib:64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib::/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/",
                 "PATH":
                 output_dir,
+                "NEUTRAL":
+                neutral,
                 "NTOYS":
                 n_toys,
                 "DL":
@@ -151,7 +163,7 @@ if __name__ == "__main__":
         else:
             print("Generating toys from data PDF")
             templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/shell_scripts/generate_from_data.sh.tmpl"
-            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_"+ delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+            scriptPath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_" + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
@@ -161,6 +173,8 @@ if __name__ == "__main__":
                 "/home/rollings/Software/install/lib64:/home/rollings/Software/install/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib:/home/rollings/Software/install/lib:64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib::/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/",
                 "PATH":
                 output_dir,
+                "NEUTRAL":
+                neutral,
                 "NTOYS":
                 n_toys,
                 "INPUT":

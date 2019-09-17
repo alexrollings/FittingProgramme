@@ -37,6 +37,12 @@ if __name__ == "__main__":
         help='Neutral',
         required=True)
     parser.add_argument(
+        '-t',
+        '--toy_init',
+        type=str,
+        help='Toy initiated from mc or data values',
+        required=True)
+    parser.add_argument(
         '-dl',
         '--delta_low',
         type=str,
@@ -65,6 +71,7 @@ if __name__ == "__main__":
     input_dir = args.input_dir
     output_dir = args.output_dir
     neutral = args.neutral
+    toy_init = args.toy_init
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
@@ -79,6 +86,16 @@ if __name__ == "__main__":
         print("Analysing results from 1D toys")
     else:
         sys.exit("Set -d=1 or nothing")
+
+    if toy_init == "data":
+        print("Initial param values taken from final data fit")
+    elif toy_init == "mc":
+        print("Initial param values taken from mc")
+    else:
+      sys.exit("Initial toy parameters taken from mc/data fit: -t=mc/data")
+
+    if neutral != "pi0" and neutral != "gamma":
+        sys.exit("Specify neutral: -n=pi0/gamma")
 
     if not os.path.isdir(input_dir):
         sys.exit(input_dir + ' is not a directory')
@@ -102,12 +119,12 @@ if __name__ == "__main__":
         if dim == "1":
             subprocess.call([
                 "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-1D"
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-1D", "-toyInit=" + toy_init
             ])
         else:
             subprocess.call([
                 "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-toyInit=" + toy_init
             ])
     else:
         sys.exit("File list empty")

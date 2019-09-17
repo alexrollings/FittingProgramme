@@ -43,11 +43,24 @@ std::string to_string_with_precision(double value) {
   return out.str();
 }
 
+RooArgList ReturnInitPars(bool dataToy,
+                          std::vector<RooFitResult> &dataResultVec,
+                          std::vector<RooFitResult> &resultVec, double it) {
+  if (dataToy == true) {
+    RooArgList initialPars = dataResultVec[it].floatParsFinal();
+    return initialPars;
+  } else {
+    RooArgList initialPars = resultVec[it].floatParsInit();
+    return initialPars;
+  }
+}
+
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
   Neutral neutral;
   std::string outputDir;
   std::vector<std::string> resultFiles;
+  bool dataToy;
 
   {
     ParseArguments args(argc, argv);
@@ -68,6 +81,21 @@ int main(int argc, char *argv[]) {
     if (!args("outputDir", outputDir)) {
       std::cerr << "Specify output directory (-outputDir=<path>).\n";
       return 1;
+    }
+
+    std::string toyInitArg;
+    if (!args("toyInit", toyInitArg)) {
+      std::cerr << "Specify toy starting values (-initToy=<mc/data>).\n";
+      return 1;
+    } else {
+      if (toyInitArg == "mc") {
+        dataToy = false;
+      } else if (toyInitArg == "data") {
+        dataToy = true;
+      } else {
+        std::cerr << "-initToy=<mc/data>\n";
+        return 1;
+      }
     }
 
     if (args("1D")) {
@@ -127,14 +155,17 @@ int main(int argc, char *argv[]) {
       resultVec.emplace_back(*result.get());
       // std::cout << "Extracted Result from " << filename << "\n";
     }
-    auto dataResult = std::unique_ptr<RooFitResult>(
-        dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
-    if (dataResult == nullptr) {
-      throw std::runtime_error("Could not extract DataFitResult from " +
-                               filename);
-    } else {
-      dataResultVec.emplace_back(*dataResult.get());
-      // std::cout << "Extracted Result from " << filename << "\n";
+    std::unique_ptr<RooFitResult> dataResult;
+    if (dataToy == true) {
+      dataResult = std::unique_ptr<RooFitResult>(
+          dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
+      if (dataResult == nullptr) {
+        throw std::runtime_error("Could not extract DataFitResult from " +
+                                 filename);
+      } else {
+        dataResultVec.emplace_back(*dataResult.get());
+        // std::cout << "Extracted Result from " << filename << "\n";
+      }
     }
   }
 
@@ -189,9 +220,10 @@ int main(int argc, char *argv[]) {
     } else if (fitStatus != 0) {
       nMINOS++;
     } else {
-      // Initial pars are final pars of data fit (PDF toy was generated from)
-      RooArgList initialPars = dataResultVec[j].floatParsFinal();
+      RooArgList initialPars = ReturnInitPars(dataToy, dataResultVec, resultVec, j);
+      initialPars.Print();
       RooArgList finalPars = resultVec[j].floatParsFinal();
+      finalPars.Print();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
         initialAbsArg = initialPars.find(initialPars.at(i)->GetName());
