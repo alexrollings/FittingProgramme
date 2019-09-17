@@ -270,12 +270,12 @@ Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
-  // PdfBase::functionsBu_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBu_Bu2Dst0h_D0gamma());
-  // PdfBase::yieldsBu_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .N_Bu_Bu2Dst0h_D0gamma());
+  PdfBase::functionsBu_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdfBu_Bu2Dst0h_D0gamma());
+  PdfBase::yieldsBu_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .N_Bu_Bu2Dst0h_D0gamma());
   // PdfBase::functionsBu_.add(
   //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
   //         .pdfBu_misId_Bu2Dst0h_D0gamma());
@@ -325,11 +325,11 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
-  // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-  //                                  .pdfDelta_Bu2Dst0h_D0gamma());
-  // PdfBase::yieldsDelta_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .N_Delta_Bu2Dst0h_D0gamma());
+  PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                   .pdfDelta_Bu2Dst0h_D0gamma());
+  PdfBase::yieldsDelta_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .N_Delta_Bu2Dst0h_D0gamma());
   // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
   //                                  .pdfDelta_misId_Bu2Dst0h_D0gamma());
   // PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2Dst0h_D0gamma_);

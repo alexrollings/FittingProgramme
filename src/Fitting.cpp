@@ -98,15 +98,15 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
   if (mass == Mass::buDelta) {
     std::cout << "Plotting " << pdf.addPdfBu().GetName() << "\n";
-    // simPdf.plotOn(frame.get(),
-    //               RooFit::Slice(categories.fitting,
-    //                             ComposeFittingName(mass, neutral, bachelor,
-    //                                                daughters, charge)
-    //                                 .c_str()),
-    //               RooFit::ProjWData(categories.fitting, fullDataSet),
-    //               RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
-    //               RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-    //               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
@@ -178,15 +178,15 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     // }
   } else {
     std::cout << "Plotting " << pdf.addPdfDelta().GetName() << "\n";
-    // simPdf.plotOn(frame.get(),
-    //               RooFit::Slice(categories.fitting,
-    //                             ComposeFittingName(mass, neutral, bachelor,
-    //                                                daughters, charge)
-    //                                 .c_str()),
-    //               RooFit::ProjWData(categories.fitting, fullDataSet),
-    //               RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
-    //               RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-    //               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
+    simPdf.plotOn(frame.get(),
+                  RooFit::Slice(categories.fitting,
+                                ComposeFittingName(mass, neutral, bachelor,
+                                                   daughters, charge)
+                                    .c_str()),
+                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
+                  RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
+                  RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
     // simPdf.plotOn(
     //     frame.get(),
     //     RooFit::Slice(
