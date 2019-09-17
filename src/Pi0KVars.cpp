@@ -132,7 +132,60 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                   .buDeltaCutEffBu2Dst0h_D0gamma(),
               NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
               N_Bu2Dst0h_D0gamma_)),
-      N_Bu_Bu2Dst0h_D0gamma_(nullptr) {
+      N_Bu_Bu2Dst0h_D0gamma_(nullptr),
+      // -------------------- Bu2D0h -------------------- //
+      Bu2D0h_sigmaLBu_(new RooFormulaVar(
+          ("Bu2D0h_sigmaLBu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+                  .Bu2D0h_sigmaLBu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .relativeBuWidth_Bu2D0h()))),
+      Bu2D0h_sigmaRBu_(new RooFormulaVar(
+          ("Bu2D0h_sigmaRBu_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+                  .Bu2D0h_sigmaRBu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId)
+                  .relativeBuWidth_Bu2D0h()))),
+      pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
+                     ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                        .c_str(),
+                    "", Configuration::Get().buDeltaMass(),
+                    NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_meanBu(),
+                    *Bu2D0h_sigmaLBu_, *Bu2D0h_sigmaRBu_,
+                    NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aLBu(),
+                    NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aRBu()),
+      // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
+      // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
+      N_tot_Bu2D0h_(
+          ("N_tot_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "",
+          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVBu2D0h() *
+              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h().getVal() *
+              0.07768,
+          // -1000000, 1000000),
+          0, 100000),
+      pidEff_Bu2D0h_(),
+      N_Bu2D0h_(("N_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                    .c_str(),
+                "@0", RooArgList(N_tot_Bu2D0h_)),
+      N_Delta_Bu2D0h_(
+          ("N_Delta_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*@2",
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId).buDeltaCutEffBu2D0h(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h(),
+              N_Bu2D0h_)),
+      N_Bu_Bu2D0h_(nullptr) {
   if (Configuration::Get().fit1D() == false) {
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
@@ -154,6 +207,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                 .deltaCutEffBu2Dst0h_D0gamma(),
             NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
             N_Bu2Dst0h_D0gamma_)));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffBu2D0h(),
+                   NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h(),
+                   N_Bu2D0h_)));
   } else {
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
@@ -166,5 +226,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
             .c_str(),
         "@0*@1",
         RooArgList(N_tot_Bu2Dst0h_D0gamma_, pidEff_Bu2Dst0h_D0gamma_)));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+            .c_str(),
+        "@0", RooArgList(N_tot_Bu2D0h_)));
   }
 }
