@@ -170,7 +170,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
           Bu2Dst0h_D0pi0_sigmaBu_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_aBu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_nBu()),
       N_tot_Bu2Dst0h_D0pi0_(("N_tot_Bu2Dst0h_D0pi0_" +
                              ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

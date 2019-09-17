@@ -164,10 +164,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_D0pi0_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 5.3431e+03),
-      Bu2Dst0h_D0pi0_aBu_(
-          ("Bu2Dst0h_D0pi0_aBu_" + ComposeName(uniqueId, Neutral::gamma))
+      Bu2Dst0h_D0pi0_a1Bu_(
+          ("Bu2Dst0h_D0pi0_a1Bu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 9.8213e-01),
+      Bu2Dst0h_D0pi0_a2Bu_(),
       Bu2Dst0h_D0pi0_nBu_(
           ("Bu2Dst0h_D0pi0_nBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
