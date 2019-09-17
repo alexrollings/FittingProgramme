@@ -9,23 +9,24 @@ template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
-    : Bu2Dst0h_D0gamma_sigmaBu_(new RooFormulaVar(
-          ("Bu2Dst0h_D0gamma_sigmaBu_" +
+    : Bu2Dst0h_D0gamma_sigma1Bu_(new RooFormulaVar(
+          ("Bu2Dst0h_D0gamma_sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", "@0*@1",
           RooArgList(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .Bu2Dst0h_D0gamma_sigmaBu(),
+                  .Bu2Dst0h_D0gamma_sigma1Bu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
                   .relativeBuWidth1_Bu2Dst0h_D0gamma()))),
+      Bu2Dst0h_D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_meanBu(),
-          *Bu2Dst0h_D0gamma_sigmaBu_,
+          *Bu2Dst0h_D0gamma_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_n1Bu()),
       pdf2Bu_Bu2Dst0h_D0gamma_(
@@ -34,16 +35,16 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_meanBu(),
-          *Bu2Dst0h_D0gamma_sigmaBu_,
+          *Bu2Dst0h_D0gamma_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_a2Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0gamma_n2Bu()),
-      pdfBu_Bu2Dst0h_D0gamma_(
+      pdfBu_Bu2Dst0h_D0gamma_(new RooAddPdf(
           ("pdfBu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0gamma_, pdf2Bu_Bu2Dst0h_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0h_D0gamma_frac1PdfBu()),
+              .Bu2Dst0h_D0gamma_frac1PdfBu())),
       N_tot_Bu2Dst0h_D0gamma_(
           ("N_tot_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
