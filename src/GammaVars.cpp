@@ -50,6 +50,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),
                                       "", 2.6638e-01),
+      Bu2Dst0h_D0gamma_thresholdDelta_(),
+      Bu2Dst0h_D0gamma_aDelta_(),
+      Bu2Dst0h_D0gamma_bDelta_(),
+      Bu2Dst0h_D0gamma_cDelta_(),
       pdfDelta_Bu2Dst0h_D0gamma_(new RooAddPdf(
           ("pdfDelta_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
