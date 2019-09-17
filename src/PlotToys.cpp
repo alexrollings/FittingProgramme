@@ -221,9 +221,7 @@ int main(int argc, char *argv[]) {
       nMINOS++;
     } else {
       RooArgList initialPars = ReturnInitPars(dataToy, dataResultVec, resultVec, j);
-      initialPars.Print();
       RooArgList finalPars = resultVec[j].floatParsFinal();
-      finalPars.Print();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
         initialAbsArg = initialPars.find(initialPars.at(i)->GetName());
