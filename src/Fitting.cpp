@@ -1063,7 +1063,8 @@ int main(int argc, char **argv) {
 
   // Raise lower mass boundary in delta mass for pi0 plots
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
-    config.deltaMass().setMin(134);
+    config.deltaMass().setMin(136);
+    config.deltaMass().setBins(54);
   }
 
   // Declare simPDF and result before any if statements so that it can be passed
