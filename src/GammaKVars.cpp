@@ -164,7 +164,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 4.6911e+01)),
-      Bu2Dst0h_D0pi0_sigma2Bu_(nullptr),
+      Bu2Dst0h_D0pi0_sigma2Bu_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
           ("pdfBu_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
