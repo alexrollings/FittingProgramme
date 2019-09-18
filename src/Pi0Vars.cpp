@@ -181,13 +181,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              "", 1.3549e+02),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -1.9133e+00),
+          "", -3.0172e+00), //-1.9133e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 2.2134e-01),
+          "", 1.3412e-01), //2.2134e-01),
       MisRec_cDelta_(
           ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 2.0917e+00),
+          "", 2.0952e+00), //2.0917e+00),
       pdfDelta_MisRec_(
           ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
@@ -200,13 +200,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.2706e+03),
+          "", 5.2686e+03), //5.2706e+03),
       MisRec_a1Bu_(
           ("MisRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          1.7996e-02),
+          2.1482e-07), //1.7996e-02),
       MisRec_a2Bu_(
           ("MisRec_a2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          7.1729e-02),
+          1.2035e-07), //7.1729e-02),
       MisRec_nBu_(),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
@@ -257,17 +257,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.5263e+03),
+          5.4893e+03), //5.5263e+03),
       relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
                               "", 0.95),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          3.1698e-02),
+          1.3673e-01), //3.1698e-02),
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          8.2540e-04),
+          5.0076e-08), //8.2540e-04),
       orEffBu2D0h_(
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),

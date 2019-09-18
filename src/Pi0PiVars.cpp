@@ -116,11 +116,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       MisRec_sigma1Bu_(("MisRec_sigma1Bu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
-                       "", 7.8797e+01),
+                       "", 5.3452e+01), //7.8797e+01),
       MisRec_sigma2Bu_(("MisRec_sigma2Bu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
-                       "", 6.4032e+01),
+                       "", 4.8696e+01), //6.4032e+01),
       pdfBu_MisRec_(new RooCruijff(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
@@ -175,12 +175,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 7.0790e+01)),
+                                      "", 3.3137e+01)), //7.0790e+01)),
       Bu2D0h_sigmaRBu_(new RooRealVar(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 7.9369e+01)),
+                                      "", 4.0080e+01)), // 7.9369e+01)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),
