@@ -188,8 +188,8 @@ class NeutralBachelorVars {
   RooRealVar &misId_MisRec_frac1PdfBu() {
     return misId_MisRec_frac1PdfBu_;
   }
-  RooAddPdf &pdfBu_misId_MisRec() {
-    return pdfBu_misId_MisRec_;
+  RooAbsPdf &pdfBu_misId_MisRec() {
+    return *pdfBu_misId_MisRec_;
   }
   RooRealVar &orEffMisId_MisRec() { return orEffMisId_MisRec_; }
   RooRealVar &boxEffMisId_MisRec() { return boxEffMisId_MisRec_; }
@@ -300,7 +300,7 @@ class NeutralBachelorVars {
   RooCBShape pdf1Bu_misId_MisRec_;
   RooCBShape pdf2Bu_misId_MisRec_;
   RooRealVar misId_MisRec_frac1PdfBu_;
-  RooAddPdf pdfBu_misId_MisRec_;
+  std::unique_ptr<RooAbsPdf> pdfBu_misId_MisRec_;
   RooRealVar orEffMisId_MisRec_;
   RooRealVar boxEffMisId_MisRec_;
   RooRealVar buDeltaCutEffMisId_MisRec_;
@@ -357,7 +357,7 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
       dirString = modeString;
     }
 
-    std::string path;
+    std::string path, ttree;
     switch (neutral) {
       case Neutral::gamma:
         switch (bachelor) {
@@ -372,16 +372,18 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
                 "cross_feed_removed/";
             break;
         }
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
         break;
       case Neutral::pi0:
         switch (bachelor) {
           case Bachelor::pi:
-            path = "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+            path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
             break;
           case Bachelor::k:
-            path = "gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+            path = "pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
             break;
         }
+        ttree = "BtoDstar0h3_h1h2pi0RTuple";
         break;
     }
 
@@ -409,7 +411,6 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
     std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
                             dirString + "_2016_MagDown/" + path + modeString +
                             "_2016_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string ttree("BtoDstar0h3_h1h2gammaTuple");
 
     TChain chain(ttree.c_str());
 

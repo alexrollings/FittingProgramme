@@ -32,7 +32,7 @@ Configuration::Configuration()
           "05&&BDT2>0.05"),
       pi0CutString_(
           "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
-          "05&&BDT2>0.05&&Pi0_M<185&&Pi0_M>110"),
+          "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125"),
       fit1D_(false) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";

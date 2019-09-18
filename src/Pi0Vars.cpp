@@ -66,7 +66,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracSigmaBu_(("Bu2Dst0h_D0pi0_fracSigmaBu_" +
                                    ComposeName(uniqueId, Neutral::pi0))
                                       .c_str(),
-                                  "", 1.9042),
+                                  "", 1.1649),
       relativeBuWidth_Bu2Dst0h_D0pi0_(("relativeBuWidth_Bu2Dst0h_D0pi0Bu_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),

@@ -73,7 +73,7 @@ class PdfBase {
   virtual RooDstD0BG &pdfDelta_MisRec() const = 0;
   virtual RooAbsPdf &pdfBu_MisRec() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_MisRec() const = 0;
-  virtual RooAddPdf &pdfBu_misId_MisRec() const = 0;
+  virtual RooAbsPdf &pdfBu_misId_MisRec() const = 0;
   virtual RooAbsReal &N_tot_Bu2D0h() const = 0;
   virtual RooDstD0BG &pdfDelta_Bu2D0h() const = 0;
   virtual RooCruijff &pdfBu_Bu2D0h() const = 0;
@@ -208,7 +208,7 @@ class Pdf : public PdfBase {
   virtual RooDstD0BG &pdfDelta_misId_MisRec() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_misId_MisRec();
   }
-  virtual RooAddPdf &pdfBu_misId_MisRec() const {
+  virtual RooAbsPdf &pdfBu_misId_MisRec() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_misId_MisRec();
   }
