@@ -239,24 +239,25 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigmaBu_(("MisRec_sigmaBu_" +
+      MisRec_sigma1Bu_(("MisRec_sigma1Bu_" +
                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                           .c_str(),
                       "", 9.4812e+01),
-      pdfBu_MisRec_(("pdfBu_MisRec_" +
+      MisRec_sigma2Bu_(),
+      pdfBu_MisRec_(new RooCBShape(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                         .c_str(),
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
-                    MisRec_sigmaBu_,
+                    MisRec_sigma1Bu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_a1Bu(),
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu()),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu())),
       N_tot_MisRec_(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "",
-          NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVBu2D0h() *
+          NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
               NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal(),
           -1000000, 1000000),
       pidEff_Bu2Dst0h_D0gamma_WN_(0.997528),
