@@ -357,7 +357,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     std::cout << "total\n";
   }
 
-  TLegend legend(0.71, 0.53, 0.85, 0.85);
+  TLegend legend(0.71, 0.53, 0.85, 0.80);
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0gammaHist" +
