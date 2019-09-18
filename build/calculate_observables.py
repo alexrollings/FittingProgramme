@@ -17,6 +17,11 @@ if __name__ == "__main__":
         type=str,
         help='Directory where results are stored and PDFs will be saved',
         required=True)
+    parser.add_argument('-n',
+                        '--neutral',
+                        type=str,
+                        help='Neutral = pi0/gamma',
+                        required=True)
     parser.add_argument('-f',
                         '--fit',
                         type=str,
@@ -46,10 +51,14 @@ if __name__ == "__main__":
 
     path = args.path
     fit = args.fit
+    neutral = args.neutral
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+
+    if neutral != "gamma" and neutral != "pi0":
+        sys.exit("Neutral = pi0/gamma only")
 
     if fit == "d1d":
         if bu_low == None or bu_high == None:
@@ -64,7 +73,7 @@ if __name__ == "__main__":
         #Floating fit parameters
         pars = result.floatParsFinal()
 
-        branch_names = ['orEffSignal_gamma', 'boxEffSignal_gamma']
+        branch_names = ['orEffSignal_' + neutral, 'boxEffSignal_' + neutral]
         n_mc_events = 14508
         eff_tree = r_np.root2array(filename, "tree", branch_names)
         #Efficiencies stoted in uncertainties array with binomial error
@@ -80,8 +89,8 @@ if __name__ == "__main__":
         #List of params we want, with their value and error
         #Use these to calculate all the other yields
         variables = [
-            "N_tot_Bu2Dst0h_D0gamma_gamma_pi_0",
-            "N_tot_Bu2Dst0h_D0gamma_gamma_k_0"
+            "N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0",
+            "N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"
         ]
         #Dict to add the values and errors of the observables into
         obs = {}
@@ -95,25 +104,27 @@ if __name__ == "__main__":
                 # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
                 obs[p_name] = [p.getVal(), p.getError()]
 
-        yield_tot_pi = ufloat(obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"][0],
-                              obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"][1])
+        yield_tot_pi = ufloat(
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"][0],
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"][1])
         yield_box_pi = np.divide(np.multiply(yield_tot_pi, box_eff), or_eff)
-        obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"][1] = (
+        obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"][1] = (
             (unumpy.nominal_values(yield_box_pi) /
              unumpy.nominal_values(yield_tot_pi) * math.sqrt(2)) +
             (1 - unumpy.nominal_values(yield_tot_pi) /
              unumpy.nominal_values(yield_box_pi))
         ) * unumpy.std_devs(yield_tot_pi)
 
-        yield_tot_k = ufloat(obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"][0],
-                             obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"][1])
+        yield_tot_k = ufloat(
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"][0],
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"][1])
         yield_box_k = np.divide(np.multiply(yield_tot_k, box_eff), or_eff)
-        obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"][1] = (
-            (unumpy.nominal_values(yield_box_k) /
-             unumpy.nominal_values(yield_tot_k) * math.sqrt(2)) +
-            (1 - unumpy.nominal_values(yield_tot_k) /
-             unumpy.nominal_values(yield_box_k))
-        ) * unumpy.std_devs(yield_tot_k)
+        obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+            "_k_0"][1] = ((unumpy.nominal_values(yield_box_k) /
+                           unumpy.nominal_values(yield_tot_k) * math.sqrt(2)) +
+                          (1 - unumpy.nominal_values(yield_tot_k) /
+                           unumpy.nominal_values(yield_box_k))
+                          ) * unumpy.std_devs(yield_tot_k)
 
         # Convert dict values from lists to tuples to make them immutable (easier to debug)
         obs = {key: tuple(lst) for key, lst in obs.items()}
@@ -124,23 +135,26 @@ if __name__ == "__main__":
                 corr[a, b] = result.correlation(variables[a], variables[b])
 
         # Returns numbers with the correct uncertainties and correlations, given the covariance matric
-        (obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"],
-         obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]
-         ) = u.correlated_values_norm([
-             obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"],
-             obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"]
-         ], corr)
+        (obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0_corr"],
+         obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+             "_k_0_corr"]) = u.correlated_values_norm([
+                 obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"],
+                 obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"]
+             ], corr)
 
         #Ratio D*K/D*π
-        obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs[
-            "N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs[
-                "N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
-        print("N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr = " +
-              str(obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]))
-        print("N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr = " +
-              str(obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]))
-        print("ratioKpi_Bu2Dst0h_D0gamma_gamma = " +
-              str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]))
+        obs["ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral +
+            ""] = obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_k_0_corr"] / obs["N_tot_Bu2Dst0h_D0" + neutral + "_" +
+                                         neutral + "_pi_0_corr"]
+        print("N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0_corr = " +
+              str(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_pi_0_corr"]))
+        print("N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0_corr = " +
+              str(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_k_0_corr"]))
+        print("ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral + " = " +
+              str(obs["ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral + ""]))
 
         # file = open("../results/Yields_%s.tex" % years, "w")
         # file.write("\\begin{table}[t]\n")
@@ -170,8 +184,8 @@ if __name__ == "__main__":
         #List of params we want, with their value and error
         #Use these to calculate all the other yields
         variables = [
-            "N_tot_Bu2Dst0h_D0gamma_gamma_pi_0",
-            "N_tot_Bu2Dst0h_D0gamma_gamma_k_0"
+            "N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0",
+            "N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"
         ]
         #Dict to add the values and errors of the observables into
         obs = {}
@@ -185,11 +199,13 @@ if __name__ == "__main__":
                 # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
                 obs[p_name] = [p.getVal(), p.getError()]
 
-        yield_tot_pi = ufloat(obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"][0],
-                              obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"][1])
+        yield_tot_pi = ufloat(
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"][0],
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"][1])
 
-        yield_tot_k = ufloat(obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"][0],
-                             obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"][1])
+        yield_tot_k = ufloat(
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"][0],
+            obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"][1])
 
         # Convert dict values from lists to tuples to make them immutable (easier to debug)
         obs = {key: tuple(lst) for key, lst in obs.items()}
@@ -200,41 +216,46 @@ if __name__ == "__main__":
                 corr[a, b] = result.correlation(variables[a], variables[b])
 
         # Returns numbers with the correct uncertainties and correlations, given the covariance matric
-        (obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"],
-         obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]
-         ) = u.correlated_values_norm([
-             obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0"],
-             obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0"]
-         ], corr)
+        (obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0_corr"],
+         obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+             "_k_0_corr"]) = u.correlated_values_norm([
+                 obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0"],
+                 obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0"]
+             ], corr)
 
         #Ratio D*K/D*π
-        obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"] = obs[
-            "N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"] / obs[
-                "N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]
-        print("N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr = " +
-              str(obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]) +
-              "\t % error = " + str(
-                  np.divide(
-                      unumpy.std_devs(
-                          obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]),
-                      unumpy.nominal_values(
-                          obs["N_tot_Bu2Dst0h_D0gamma_gamma_pi_0_corr"]) *
-                      100)))
-        print("N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr = " +
-              str(obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) +
-              "\t % error = " + str(
-                  np.divide(
-                      unumpy.std_devs(
-                          obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]),
-                      unumpy.nominal_values(
-                          obs["N_tot_Bu2Dst0h_D0gamma_gamma_k_0_corr"]) *
-                      100)))
-        print("ratioKpi_Bu2Dst0h_D0gamma_gamma = " +
-              str(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]) + "\t % error = " +
+        obs["ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral +
+            ""] = obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_k_0_corr"] / obs["N_tot_Bu2Dst0h_D0" + neutral + "_" +
+                                         neutral + "_pi_0_corr"]
+        print("N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi_0_corr = " +
+              str(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_pi_0_corr"]) + "\t % error = " +
               str(
                   np.divide(
-                      unumpy.std_devs(obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]),
-                      unumpy.nominal_values(
-                          obs["ratioKpi_Bu2Dst0h_D0gamma_gamma"]) * 100)))
+                      unumpy.std_devs(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" +
+                                          neutral + "_pi_0_corr"]),
+                      unumpy.nominal_values(obs["N_tot_Bu2Dst0h_D0" + neutral +
+                                                "_" + neutral +
+                                                "_pi_0_corr"]) * 100)))
+        print("N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral + "_k_0_corr = " +
+              str(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" + neutral +
+                      "_k_0_corr"]) + "\t % error = " +
+              str(
+                  np.divide(
+                      unumpy.std_devs(obs["N_tot_Bu2Dst0h_D0" + neutral + "_" +
+                                          neutral + "_k_0_corr"]),
+                      unumpy.nominal_values(obs["N_tot_Bu2Dst0h_D0" + neutral +
+                                                "_" + neutral + "_k_0_corr"]) *
+                      100)))
+        print("ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral + " = " +
+              str(obs["ratioKpi_Bu2Dst0h_D0" + neutral + "_" + neutral + ""]) +
+              "\t % error = " + str(
+                  np.divide(
+                      unumpy.std_devs(obs["ratioKpi_Bu2Dst0h_D0" + neutral +
+                                          "_" + neutral + ""]),
+                      unumpy.nominal_values(obs["ratioKpi_Bu2Dst0h_D0" +
+                                                neutral + "_" + neutral +
+                                                ""]) * 100)))
     else:
         sys.exit("-f/--fit = 1d/d1d")
