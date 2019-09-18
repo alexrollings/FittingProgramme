@@ -177,12 +177,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2D0h_sigmaLBu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         "", 3.3137e+01, 10, 50)),  // 7.0790e+01)),
+                         "", 3.3137e+01)),//, 20, 70)),  // 7.0790e+01)),
       Bu2D0h_sigmaRBu_(
           new RooRealVar(("Bu2D0h_sigmaRBu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         "", 4.0080e+01, 10, 50)),  // 7.9369e+01)),
+                         "", 4.0080e+01, 20, 60)),  // 7.9369e+01)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),
