@@ -62,13 +62,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "",
           RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
           Bu2Dst0h_D0gamma_frac1PdfDelta_)),
-      pdfDelta_misId_Bu2Dst0h_D0gamma_(("pdfDelta_misId_Bu2Dst0h_D0gamma_" +
+      pdfDelta_misId_Bu2Dst0h_D0gamma_(new RooAddPdf(("pdfDelta_misId_Bu2Dst0h_D0gamma_" +
                                         ComposeName(uniqueId, Neutral::gamma))
                                            .c_str(),
                                        "",
                                        RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_,
                                                   pdf2Delta_Bu2Dst0h_D0gamma_),
-                                       Bu2Dst0h_D0gamma_frac1PdfDelta_),
+                                       Bu2Dst0h_D0gamma_frac1PdfDelta_)),
       Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
