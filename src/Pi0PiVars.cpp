@@ -316,7 +316,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2D0h_sigmaRBu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         "", 4.0080e+01, 20, 60)),  // 7.9369e+01)),
+                             // FIXED TO WHAT DATA FIT FOUND
+                         "", 5.0637e+01)),//4.0080e+01, 20, 60)),  // 7.9369e+01)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),
