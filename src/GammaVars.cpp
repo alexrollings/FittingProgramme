@@ -120,27 +120,27 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 8.6075e+01, 80, 90),
+                                "", 8.6503e+01),
       Bu2Dst0h_D0pi0_sigmaDelta_(("Bu2Dst0h_D0pi0_sigmaDelta_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
-                                 "", 9.2845e+00, 2, 15),
+                                 "", 9.3347e+00),
       Bu2Dst0h_D0pi0_a1Delta_(("Bu2Dst0h_D0pi0_a1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 4.2812e-01),
+                              "", 4.4112e-01),
       Bu2Dst0h_D0pi0_a2Delta_(("Bu2Dst0h_D0pi0_a2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", -7.3982e-01),
+                              "", -7.3381e-01),
       Bu2Dst0h_D0pi0_n1Delta_(("Bu2Dst0h_D0pi0_n1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 9.9912e+01),
+                              "", 9.9988e+01),
       Bu2Dst0h_D0pi0_n2Delta_(("Bu2Dst0h_D0pi0_n2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 7.0288e+00),
+                              "", 7.1853e+00),
       pdf1Delta_Bu2Dst0h_D0pi0_(
           ("pdf1Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -156,7 +156,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_frac1PdfDelta_(("Bu2Dst0h_D0pi0_frac1PdfDelta_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    "", 2.9911e-01),
+                                    "", 3.0618e-01),
       pdfDelta_Bu2Dst0h_D0pi0_(
           ("pdfDelta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
