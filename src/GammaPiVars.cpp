@@ -317,12 +317,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                        ComposeName(uniqueId, Neutral::gamma,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 8.8227e+01)),
+                                      "", 8.8989e+01)),
       Bu2D0h_sigmaRBu_(new RooRealVar(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::gamma,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 7.6224e+01, 70, 100)),
+                                      "", 7.5978e+01)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                         .c_str(),
@@ -342,7 +342,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       pidEff_Bu2D0h_(("pidEff_Bu2D0h_" +
                       ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                          .c_str(),
-                     "", 0.996637),
+                     "", 0.996641),
       N_Bu2D0h_(("N_Bu2D0h_" +
                  ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                     .c_str(),

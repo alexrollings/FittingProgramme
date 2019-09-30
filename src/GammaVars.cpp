@@ -284,17 +284,17 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.5263e+03),
+          "", 5.5269e+03),
       relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
                               "", 0.95),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          6.7243e-09),
+          5.4892e-09),
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          2.1226e-11),
+          5.3835e-12),
       orEffBu2D0h_(
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
@@ -309,7 +309,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
                          "", 1),
-      fracBu2D0h_(1.54),
+      fracBu2D0h_(1.936),
       initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
                           fracBu2D0h_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
