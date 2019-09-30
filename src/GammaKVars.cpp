@@ -60,7 +60,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                 ComposeName(uniqueId, Neutral::gamma,
                                             Bachelor::k))
                                    .c_str(),
-                               "", 0.703381),
+                               "", 0.749723),
       N_Bu2Dst0h_D0gamma_(("N_Bu2Dst0h_D0gamma_" +
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                               .c_str(),
