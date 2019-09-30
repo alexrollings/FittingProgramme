@@ -54,7 +54,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                 ComposeName(uniqueId, Neutral::gamma,
                                             Bachelor::pi))
                                    .c_str(),
-                               "", 0.997198),
+                               "", 0.997005),
       N_Bu2Dst0h_D0gamma_(("N_Bu2Dst0h_D0gamma_" +
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                               .c_str(),
@@ -75,27 +75,27 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                       ComposeName(uniqueId, Neutral::gamma,
                                                   Bachelor::pi))
                                          .c_str(),
-                                     "", 5.2313e+03),
+                                     "", 5.2359e+03),
       misId_Bu2Dst0h_D0gamma_sigma1Bu_(("misId_Bu2Dst0h_D0gamma_sigma1Bu_" +
                                         ComposeName(uniqueId, Neutral::gamma,
                                                     Bachelor::pi))
                                            .c_str(),
-                                       "", 3.4880e+01),
+                                       "", 3.1411e+01),
       misId_Bu2Dst0h_D0gamma_sigma2Bu_(("misId_Bu2Dst0h_D0gamma_sigma2Bu_" +
                                         ComposeName(uniqueId, Neutral::gamma,
                                                     Bachelor::pi))
                                            .c_str(),
-                                       "", 1.9927e+01),
+                                       "", 2.1604e+01),
       misId_Bu2Dst0h_D0gamma_a1Bu_(("misId_Bu2Dst0h_D0gamma_a1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::pi))
                                        .c_str(),
-                                   "", 1.0462e-01),
+                                   "", 1.5167e-01),
       misId_Bu2Dst0h_D0gamma_a2Bu_(("misId_Bu2Dst0h_D0gamma_a2Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::pi))
                                        .c_str(),
-                                   "", 7.0839e-02),
+                                   "", 5.7501e-02),
       misId_Bu2Dst0h_D0gamma_n1Bu_(),
       misId_Bu2Dst0h_D0gamma_n2Bu_(),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
