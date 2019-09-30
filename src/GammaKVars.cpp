@@ -184,7 +184,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                               ComposeName(uniqueId, Neutral::gamma,
                                           Bachelor::k))
                                  .c_str(),
-                             "", 0.703381),
+                             "", 0.758972),
       N_Bu2Dst0h_D0pi0_(("N_Bu2Dst0h_D0pi0_" +
                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                             .c_str(),
@@ -211,7 +211,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                       ComposeName(uniqueId, Neutral::gamma,
                                                   Bachelor::k))
                                          .c_str(),
-                                     "", 7.8398e+01),
+                                     "", 1.8004e-01),
       misId_Bu2Dst0h_D0pi0_sigma2Bu_(),
       misId_Bu2Dst0h_D0pi0_a1Bu_(("misId_Bu2Dst0h_D0pi0_a1Bu_" +
                                   ComposeName(uniqueId, Neutral::gamma,
