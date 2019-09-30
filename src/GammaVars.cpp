@@ -206,16 +206,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 5.7223e+01),
+                             "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1.2396e+00),
+          "", 1.1287e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -1.7973e+00, -2, 2),
+          "", -1.5111e+00),
       MisRec_cDelta_(
           ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 3.1867e+01),
+          "", 3.5419e+01),
       pdfDelta_MisRec_(
           ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
