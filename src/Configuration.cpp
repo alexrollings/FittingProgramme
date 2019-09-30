@@ -29,10 +29,10 @@ Configuration::Configuration()
       initYieldFAVSignal_(5.1958e+04),
       gammaCutString_(
           "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
-          "05&&BDT2>0.05"),
+          "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
       pi0CutString_(
           "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
-          "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125"),
+          "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2"),
       fit1D_(false) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
@@ -42,22 +42,25 @@ Configuration::Configuration()
   buMass_.SetName("Bu_M_DTF");
   buMass_.SetTitle("m[Bu]");
   buMass_.setMax(5800);
-  buMass_.setMin(5050);
+  buMass_.setMin(4900);
   buMass_.setBins(75);
   buMass_.setUnit(kMassUnit);
 
   buDeltaMass_.SetName("Bu_Delta_M");
   buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
   buDeltaMass_.setMax(5800);
-  buDeltaMass_.setMin(5050);
-  buDeltaMass_.setBins(75);
+  buDeltaMass_.setMin(4900);
+  buDeltaMass_.setBins(70);
   buDeltaMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
   deltaMass_.SetTitle("m[D^{*0}] - m[D^{0}]");
-  deltaMass_.setMax(190);
-  deltaMass_.setMin(70);
-  deltaMass_.setBins(60);
+  // deltaMass_.setMax(190);
+  // deltaMass_.setMin(60);
+  // deltaMass_.setBins(65);
+  deltaMass_.setMax(250);
+  deltaMass_.setMin(0);
+  deltaMass_.setBins(125);
   deltaMass_.setUnit(kMassUnit);
 
   pi0Mass_.SetName("Pi0_M");

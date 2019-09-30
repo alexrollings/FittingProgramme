@@ -62,11 +62,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             "", 5.2717e+03),  //, 5265, 5275),
+                             "", 5.2717e+03, 5268, 5276),
       Bu2Dst0h_D0pi0_fracSigmaBu_(("Bu2Dst0h_D0pi0_fracSigmaBu_" +
                                    ComposeName(uniqueId, Neutral::pi0))
                                       .c_str(),
-                                  "", 1.1649),
+                                  "", 1.1649),//, 0.5, 2),
       relativeBuWidth_Bu2Dst0h_D0pi0_(("relativeBuWidth_Bu2Dst0h_D0pi0Bu_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
@@ -207,10 +207,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.2752e+03),  //, 5250, 5280), //5.2706e+03),
+          "", 5.2752e+03, 5250, 5280), //5.2706e+03),
       MisRec_a1Bu_(
           ("MisRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          2.7833e-12),  // 1.7996e-02),
+          2.7833e-12, 0, 5),  // 1.7996e-02),
       MisRec_a2Bu_(
           ("MisRec_a2Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           9.9877e-03),  // 7.1729e-02),

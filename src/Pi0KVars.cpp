@@ -279,7 +279,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       MisRec_sigma2Bu_(("MisRec_sigma2Bu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       "", 4.9189e+01),//, 30, 80),  // 6.4032e+01),
+                       "", 4.9189e+01, 30, 80),  // 6.4032e+01),
       pdfBu_MisRec_(new RooCruijff(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
