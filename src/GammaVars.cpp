@@ -262,7 +262,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_thresholdDelta_(("Bu2D0h_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 6.7773e+01),
+                             "", 6.7754e+01),
       Bu2D0h_aDelta_(
           ("Bu2D0h_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 5.8996e-01),
