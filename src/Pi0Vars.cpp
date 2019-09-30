@@ -146,11 +146,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", 0.95),
-      relativeBuWidth2_Bu2Dst0h_D0gamma_(
-          ("relativeBuWidth2_Bu2Dst0h_D0gammaBu_" +
-           ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          "", 0.95),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
