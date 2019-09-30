@@ -232,22 +232,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                              .c_str(),
                                          "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigma1Bu_(("MisRec_sigma1Bu_" +
+      MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
                        "", 5.4195e+01, 40, 90),  // 7.8797e+01),
-      MisRec_sigma2Bu_(("MisRec_sigma2Bu_" +
+      MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
                        "", 4.9189e+01, 30, 80),  // 6.4032e+01),
-      pdfBu_MisRec_(new RooCruijff(
+      pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_meanBu(),
-          MisRec_sigma1Bu_, MisRec_sigma2Bu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_a2Bu())),
+          MisRec_sigmaLBu_, MisRec_sigmaRBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aLBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aRBu()),
       N_tot_MisRec_(
           ("N_tot_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),

@@ -235,20 +235,23 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                            .c_str(),
                                        "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigma1Bu_(("MisRec_sigma1Bu_" +
+      MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
-                       "", 9.4812e+01),
-      MisRec_sigma2Bu_(),
-      pdfBu_MisRec_(new RooCBShape(
+                       "", 1.0404e+02),
+      MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+                           .c_str(),
+                       "", 9.6206e+01),
+      pdfBu_MisRec_(
           ("pdfBu_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
-          MisRec_sigma1Bu_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_a1Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu())),
+          MisRec_sigmaLBu_, MisRec_sigmaRBu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
       N_tot_MisRec_(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -257,10 +260,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
               NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal(),
           -1000000, 1000000),
-      pidEff_Bu2Dst0h_D0gamma_WN_(0.997528),
-      pidEff_Bu2Dst0h_D0pi0_WN_(0.99603),
-      pidEff_Bu2D0hst_(0.993939),
-      pidEff_Bd2Dsth_(0.997512),
+      pidEff_Bu2Dst0h_D0gamma_WN_(0.997077),
+      pidEff_Bu2Dst0h_D0pi0_WN_(0.996043),
+      pidEff_Bu2D0hst_(0.994002),
+      pidEff_Bd2Dsth_(0.997538),
       pidEff_MisRec_(
           ("pidEff_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

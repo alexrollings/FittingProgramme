@@ -228,14 +228,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.2991e+03, 5290, 5310),
-      MisRec_a1Bu_(
-          ("MisRec_a1Bu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          2.6265e+00),
-      MisRec_a2Bu_(),
-      MisRec_nBu_(
-          ("MisRec_nBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          9.9921e-01),
+          "", 5.2952e+03),
+      MisRec_aLBu_(
+          ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          6.1974e-10),
+      MisRec_aRBu_(
+          ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          5.0687e-12),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),

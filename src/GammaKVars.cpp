@@ -211,7 +211,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                       ComposeName(uniqueId, Neutral::gamma,
                                                   Bachelor::k))
                                          .c_str(),
-                                     "", 1.8004e-01),
+                                     "", 7.8398e+01),
       misId_Bu2Dst0h_D0pi0_sigma2Bu_(),
       misId_Bu2Dst0h_D0pi0_a1Bu_(("misId_Bu2Dst0h_D0pi0_a1Bu_" +
                                   ComposeName(uniqueId, Neutral::gamma,
@@ -280,19 +280,23 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                            .c_str(),
                                        "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigma1Bu_(("MisRec_sigma1Bu_" +
+      MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                            .c_str(),
-                       "", 9.4812e+01),
-      MisRec_sigma2Bu_(),
-      pdfBu_MisRec_(new RooCBShape(
-          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                       "", 1.0404e+02),
+      MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", 9.6206e+01),
+      pdfBu_MisRec_(
+          ("pdfBu_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
-          MisRec_sigma1Bu_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_a1Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_nBu())),
+          MisRec_sigmaLBu_, MisRec_sigmaRBu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
       N_tot_MisRec_(
           ("N_tot_MisRec_" + ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
