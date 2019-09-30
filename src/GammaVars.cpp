@@ -199,7 +199,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
                                  "", 1),
-      fracBu2Dst0h_D0pi0_(0.916),
+      fracBu2Dst0h_D0pi0_(0.871),
       initYieldFAVBu2Dst0h_D0pi0_(Configuration::Get().initYieldFAVSignal() *
                                   fracBu2Dst0h_D0pi0_),
       // -------------------- MIS-REC -------------------- //
@@ -249,10 +249,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
                          "", 1),
-      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.473),
-      fracMisRec_Bu2Dst0h_D0pi0_WN_(0.809),
-      fracMisRec_Bu2D0hst_(0.809),
-      fracMisRec_Bd2Dsth_(0.643),
+      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.628),
+      fracMisRec_Bu2Dst0h_D0pi0_WN_(1.137),
+      fracMisRec_Bu2D0hst_(1.481),
+      fracMisRec_Bd2Dsth_(0.814),
       fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
                   fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
                   fracMisRec_Bd2Dsth_),
