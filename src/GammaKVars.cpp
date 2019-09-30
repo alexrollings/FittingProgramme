@@ -86,28 +86,28 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                         ComposeName(uniqueId, Neutral::gamma,
                                                     Bachelor::k))
                                            .c_str(),
-                                       "", 2.7876e+01),
+                                       "", 2.7896e+01),
       misId_Bu2Dst0h_D0gamma_sigma2Bu_(),
       misId_Bu2Dst0h_D0gamma_a1Bu_(("misId_Bu2Dst0h_D0gamma_a1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::k))
                                        .c_str(),
-                                   "", 9.4648e-01),
+                                   "", 7.7160e-01),
       misId_Bu2Dst0h_D0gamma_a2Bu_(("misId_Bu2Dst0h_D0gamma_a2Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::k))
                                        .c_str(),
-                                   "", -4.6334e-01),
+                                   "", -4.6919e-01),
       misId_Bu2Dst0h_D0gamma_n1Bu_(("misId_Bu2Dst0h_D0gamma_n1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::k))
                                        .c_str(),
-                                   "", 2.2870e+00),
+                                   "", 1.8491e+00),
       misId_Bu2Dst0h_D0gamma_n2Bu_(("misId_Bu2Dst0h_D0gamma_n2Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
                                                 Bachelor::k))
                                        .c_str(),
-                                   "", 6.3609e+00),
+                                   "", 6.2054e+00),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -126,7 +126,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                           ComposeName(uniqueId, Neutral::gamma,
                                                       Bachelor::k))
                                              .c_str(),
-                                         "", 5.7615e-02),
+                                         "", 5.3533e-02),
       pdfBu_misId_Bu2Dst0h_D0gamma_(
           new RooAddPdf(("pdfBu_misId_Bu2Dst0h_D0gamma_" +
                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
