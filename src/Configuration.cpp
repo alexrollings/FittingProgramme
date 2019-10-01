@@ -73,7 +73,7 @@ Configuration::Configuration()
   d0hMass_.SetTitle("m[D^{0}h]");
   d0hMass_.setMax(6000);
   d0hMass_.setMin(4000);
-  deltaMass_.setBins(400);
+  d0hMass_.setBins(400);
   d0hMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Bu_ID");
