@@ -16,22 +16,16 @@ Configuration::Configuration()
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
       d0FdSig_("", "", 0, 0, ""),
-      buFitMin_(4900),
-      buFitMax_(5800),
-      buFitBins_(180),
-      deltaFitMin_(0),
-      deltaFitMax_(250),
-      deltaFitBins_(125),
       deltaLow_(125),
       deltaHigh_(170),
       buDeltaLow_(5240),
       buDeltaHigh_(5330),
       initYieldFAVSignal_(6.7315e+04),
       gammaCutString_(
-          "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
+          "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
       pi0CutString_(
-          "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
+          "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2"),
       fit1D_(false) {
   // constexpr means they're known at compile time and immutable (unchangable)
@@ -44,13 +38,19 @@ Configuration::Configuration()
   buMass_.setMax(5800);
   buMass_.setMin(4900);
   buMass_.setBins(75);
+  // buMass_.setMax(6000);
+  // buMass_.setMin(4000);
+  // buMass_.setBins(400);
   buMass_.setUnit(kMassUnit);
 
   buDeltaMass_.SetName("Bu_Delta_M");
   buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
   buDeltaMass_.setMax(5800);
   buDeltaMass_.setMin(4900);
-  buDeltaMass_.setBins(70);
+  buDeltaMass_.setBins(75);
+  // buDeltaMass_.setMax(6000);
+  // buDeltaMass_.setMin(4000);
+  // buDeltaMass_.setBins(400);
   buDeltaMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
@@ -71,8 +71,9 @@ Configuration::Configuration()
 
   d0hMass_.SetName("D0h_M");
   d0hMass_.SetTitle("m[D^{0}h]");
-  d0hMass_.setMax(9000);
-  d0hMass_.setMin(3500);
+  d0hMass_.setMax(6000);
+  d0hMass_.setMin(4000);
+  deltaMass_.setBins(400);
   d0hMass_.setUnit(kMassUnit);
 
   buPdgId_.SetName("Bu_ID");
