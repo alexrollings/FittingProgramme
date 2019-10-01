@@ -118,15 +118,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_thresholdDelta_(("Bu2Dst0h_D0gamma_thresholdDelta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
-                                       "", 1.5593e+02),
+                                       "", 1.5483e+02),
       Bu2Dst0h_D0gamma_aDelta_(("Bu2Dst0h_D0gamma_aDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 8.9498e-02),
+                               "", 1.8432e-01),
       Bu2Dst0h_D0gamma_bDelta_(("Bu2Dst0h_D0gamma_bDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", -4.7042e-01),
+                               "", -9.9920e-01),
       Bu2Dst0h_D0gamma_cDelta_(("Bu2Dst0h_D0gamma_cDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
