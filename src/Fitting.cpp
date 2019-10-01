@@ -1209,9 +1209,7 @@ int main(int argc, char **argv) {
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
-    config.buDeltaMass().setMax(5700);
-    config.buDeltaMass().setBins(60);
-    config.initYieldFAVSignal() = 15000;
+    config.initYieldFAVSignal() = 15600;
   }
 
   // Declare simPDF and result before any if statements so that it can be passed

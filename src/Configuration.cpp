@@ -16,9 +16,9 @@ Configuration::Configuration()
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
       d0FdSig_("", "", 0, 0, ""),
-      buFitMin_(5000),
+      buFitMin_(4900),
       buFitMax_(5800),
-      buFitBins_(160),
+      buFitBins_(180),
       deltaFitMin_(0),
       deltaFitMax_(250),
       deltaFitBins_(125),
@@ -26,7 +26,7 @@ Configuration::Configuration()
       deltaHigh_(170),
       buDeltaLow_(5240),
       buDeltaHigh_(5330),
-      initYieldFAVSignal_(5.1958e+04),
+      initYieldFAVSignal_(6.7315e+04),
       gammaCutString_(
           "Bu_Delta_M>5050&&Bu_Delta_M<5800&&Delta_M>70&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
