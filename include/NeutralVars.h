@@ -195,6 +195,38 @@ class NeutralVars {
   RooRealVar &deltaCutEffBu2D0h() { return deltaCutEffBu2D0h_; }
   double &fracBu2D0h() { return fracBu2D0h_; }
   double &initYieldFAVBu2D0h() { return initYieldFAVBu2D0h_; }
+  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+  RooRealVar &Bu2Dst0hst_D0gamma_thresholdDelta() { return Bu2Dst0hst_D0gamma_thresholdDelta_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_aDelta() { return Bu2Dst0hst_D0gamma_aDelta_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_bDelta() { return Bu2Dst0hst_D0gamma_bDelta_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_cDelta() { return Bu2Dst0hst_D0gamma_cDelta_; }
+  RooDstD0BG &pdfDelta_Bu2Dst0hst_D0gamma() { return pdfDelta_Bu2Dst0hst_D0gamma_; }
+  RooDstD0BG &pdfDelta_misId_Bu2Dst0hst_D0gamma() { return pdfDelta_misId_Bu2Dst0hst_D0gamma_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_meanBu() { return Bu2Dst0hst_D0gamma_meanBu_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_aLBu() { return Bu2Dst0hst_D0gamma_aLBu_; }
+  RooRealVar &Bu2Dst0hst_D0gamma_aRBu() { return Bu2Dst0hst_D0gamma_aRBu_; }
+  RooRealVar &orEffBu2Dst0hst_D0gamma() { return orEffBu2Dst0hst_D0gamma_; }
+  RooRealVar &boxEffBu2Dst0hst_D0gamma() { return boxEffBu2Dst0hst_D0gamma_; }
+  RooRealVar &buDeltaCutEffBu2Dst0hst_D0gamma() { return buDeltaCutEffBu2Dst0hst_D0gamma_; }
+  RooRealVar &deltaCutEffBu2Dst0hst_D0gamma() { return deltaCutEffBu2Dst0hst_D0gamma_; }
+  double &fracBu2Dst0hst_D0gamma() { return fracBu2Dst0hst_D0gamma_; }
+  double &initYieldFAVBu2Dst0hst_D0gamma() { return initYieldFAVBu2Dst0hst_D0gamma_; }
+  // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+  RooRealVar &Bu2Dst0hst_D0pi0_thresholdDelta() { return Bu2Dst0hst_D0pi0_thresholdDelta_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_aDelta() { return Bu2Dst0hst_D0pi0_aDelta_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_bDelta() { return Bu2Dst0hst_D0pi0_bDelta_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_cDelta() { return Bu2Dst0hst_D0pi0_cDelta_; }
+  RooDstD0BG &pdfDelta_Bu2Dst0hst_D0pi0() { return pdfDelta_Bu2Dst0hst_D0pi0_; }
+  RooDstD0BG &pdfDelta_misId_Bu2Dst0hst_D0pi0() { return pdfDelta_misId_Bu2Dst0hst_D0pi0_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_meanBu() { return Bu2Dst0hst_D0pi0_meanBu_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_aLBu() { return Bu2Dst0hst_D0pi0_aLBu_; }
+  RooRealVar &Bu2Dst0hst_D0pi0_aRBu() { return Bu2Dst0hst_D0pi0_aRBu_; }
+  RooRealVar &orEffBu2Dst0hst_D0pi0() { return orEffBu2Dst0hst_D0pi0_; }
+  RooRealVar &boxEffBu2Dst0hst_D0pi0() { return boxEffBu2Dst0hst_D0pi0_; }
+  RooRealVar &buDeltaCutEffBu2Dst0hst_D0pi0() { return buDeltaCutEffBu2Dst0hst_D0pi0_; }
+  RooRealVar &deltaCutEffBu2Dst0hst_D0pi0() { return deltaCutEffBu2Dst0hst_D0pi0_; }
+  double &fracBu2Dst0hst_D0pi0() { return fracBu2Dst0hst_D0pi0_; }
+  double &initYieldFAVBu2Dst0hst_D0pi0() { return initYieldFAVBu2Dst0hst_D0pi0_; }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
@@ -294,6 +326,38 @@ class NeutralVars {
   RooRealVar deltaCutEffBu2D0h_;
   double fracBu2D0h_;
   double initYieldFAVBu2D0h_;
+  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+  RooRealVar Bu2Dst0hst_D0gamma_thresholdDelta_;
+  RooRealVar Bu2Dst0hst_D0gamma_aDelta_;
+  RooRealVar Bu2Dst0hst_D0gamma_bDelta_;
+  RooRealVar Bu2Dst0hst_D0gamma_cDelta_;
+  RooDstD0BG pdfDelta_Bu2Dst0hst_D0gamma_;
+  RooDstD0BG pdfDelta_misId_Bu2Dst0hst_D0gamma_;
+  RooRealVar Bu2Dst0hst_D0gamma_meanBu_;
+  RooRealVar Bu2Dst0hst_D0gamma_aLBu_;
+  RooRealVar Bu2Dst0hst_D0gamma_aRBu_;
+  RooRealVar orEffBu2Dst0hst_D0gamma_;
+  RooRealVar boxEffBu2Dst0hst_D0gamma_;
+  RooRealVar buDeltaCutEffBu2Dst0hst_D0gamma_;
+  RooRealVar deltaCutEffBu2Dst0hst_D0gamma_;
+  double fracBu2Dst0hst_D0gamma_;
+  double initYieldFAVBu2Dst0hst_D0gamma_;
+  // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+  RooRealVar Bu2Dst0hst_D0pi0_thresholdDelta_;
+  RooRealVar Bu2Dst0hst_D0pi0_aDelta_;
+  RooRealVar Bu2Dst0hst_D0pi0_bDelta_;
+  RooRealVar Bu2Dst0hst_D0pi0_cDelta_;
+  RooDstD0BG pdfDelta_Bu2Dst0hst_D0pi0_;
+  RooDstD0BG pdfDelta_misId_Bu2Dst0hst_D0pi0_;
+  RooRealVar Bu2Dst0hst_D0pi0_meanBu_;
+  RooRealVar Bu2Dst0hst_D0pi0_aLBu_;
+  RooRealVar Bu2Dst0hst_D0pi0_aRBu_;
+  RooRealVar orEffBu2Dst0hst_D0pi0_;
+  RooRealVar boxEffBu2Dst0hst_D0pi0_;
+  RooRealVar buDeltaCutEffBu2Dst0hst_D0pi0_;
+  RooRealVar deltaCutEffBu2Dst0hst_D0pi0_;
+  double fracBu2Dst0hst_D0pi0_;
+  double initYieldFAVBu2Dst0hst_D0pi0_;
 };
 
 // inline allows a function to be defined multiple times. Templated functions
