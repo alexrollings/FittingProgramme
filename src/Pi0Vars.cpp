@@ -147,7 +147,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 5.2871e+03),
+                               "", 5.2857e+03),
       relativeBuWidth1_Bu2Dst0h_D0gamma_(
           ("relativeBuWidth1_Bu2Dst0h_D0gammaBu_" +
            ComposeName(uniqueId, Neutral::pi0))
@@ -156,11 +156,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             "", 5.5196e-02),
+                             "", 1.0099e-01),
       Bu2Dst0h_D0gamma_a2Bu_(("Bu2Dst0h_D0gamma_a2Bu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             "", 6.7200e-03),
+                             "", 1.5557e-02),
       Bu2Dst0h_D0gamma_n1Bu_(),
       Bu2Dst0h_D0gamma_n2Bu_(),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(),

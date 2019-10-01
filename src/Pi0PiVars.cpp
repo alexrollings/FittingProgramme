@@ -132,12 +132,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         "", 4.3516e+01)),
+                         "", 3.9828e+01)),
       Bu2Dst0h_D0gamma_sigma2Bu_(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma2Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         "", 4.5327e+01)),
+                         "", 4.5331e+01)),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(new RooCruijff(
