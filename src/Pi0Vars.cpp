@@ -296,19 +296,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0hst_D0gamma_thresholdDelta_(("Bu2Dst0hst_D0gamma_thresholdDelta_" +
                                           ComposeName(uniqueId, Neutral::pi0))
                                              .c_str(),
-                                         "", 1.3362e+02),
+                                         "", 1.3011e+02),
       Bu2Dst0hst_D0gamma_aDelta_(("Bu2Dst0hst_D0gamma_aDelta_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
-                                 "", -6.1787e-01),
+                                 "", 4.5761e-01),
       Bu2Dst0hst_D0gamma_bDelta_(("Bu2Dst0hst_D0gamma_bDelta_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
-                                 "", 9.9982e-01),
+                                 "", -9.9777e-01),
       Bu2Dst0hst_D0gamma_cDelta_(("Bu2Dst0hst_D0gamma_cDelta_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
-                                 "", 3.3662e+00),
+                                 "", 9.9999e+01),
       pdfDelta_Bu2Dst0hst_D0gamma_(
           ("pdfDelta_Bu2Dst0hst_D0gamma_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -326,15 +326,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0hst_D0gamma_meanBu_(("Bu2Dst0hst_D0gamma_meanBu_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
-                                 "", 5.4893e+03),
+                                 "", 5.1088e+03),
       Bu2Dst0hst_D0gamma_aLBu_(("Bu2Dst0hst_D0gamma_aLBu_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 1.3673e-01),
+                               "", 1.3056e-06),
       Bu2Dst0hst_D0gamma_aRBu_(("Bu2Dst0hst_D0gamma_aRBu_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 5.0076e-08),
+                               "", 8.6126e-02),
       orEffBu2Dst0hst_D0gamma_(("orEffBu2Dst0hst_D0gamma_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
@@ -351,26 +351,26 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                       ComposeName(uniqueId, Neutral::pi0))
                                          .c_str(),
                                      "", 1),
-      fracBu2Dst0hst_D0gamma_(1.363),
+      fracBu2Dst0hst_D0gamma_(0.0953),
       initYieldFAVBu2Dst0hst_D0gamma_(
           Configuration::Get().initYieldFAVSignal() * fracBu2Dst0hst_D0gamma_),
       // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
       Bu2Dst0hst_D0pi0_thresholdDelta_(("Bu2Dst0hst_D0pi0_thresholdDelta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
-                                       "", 1.3362e+02),
+                                       "", 1.3596e+02),
       Bu2Dst0hst_D0pi0_aDelta_(("Bu2Dst0hst_D0pi0_aDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", -6.1787e-01),
+                               "", -4.1649e-01),
       Bu2Dst0hst_D0pi0_bDelta_(("Bu2Dst0hst_D0pi0_bDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 9.9982e-01),
+                               "", -9.9944e-01),
       Bu2Dst0hst_D0pi0_cDelta_(("Bu2Dst0hst_D0pi0_cDelta_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 3.3662e+00),
+                               "", 2.1081e+00),
       pdfDelta_Bu2Dst0hst_D0pi0_(
           ("pdfDelta_Bu2Dst0hst_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -388,15 +388,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0hst_D0pi0_meanBu_(("Bu2Dst0hst_D0pi0_meanBu_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 5.4893e+03),
+                               "", 5.1162e+03),
       Bu2Dst0hst_D0pi0_aLBu_(("Bu2Dst0hst_D0pi0_aLBu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             "", 1.3673e-01),
+                             "", 4.7967e-07),
       Bu2Dst0hst_D0pi0_aRBu_(("Bu2Dst0hst_D0pi0_aRBu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             "", 5.0076e-08),
+                             "", 1.7013e-07),
       orEffBu2Dst0hst_D0pi0_(("orEffBu2Dst0hst_D0pi0_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
@@ -413,7 +413,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::pi0))
                                        .c_str(),
                                    "", 1),
-      fracBu2Dst0hst_D0pi0_(1.363),
+      fracBu2Dst0hst_D0pi0_(0.290),
       initYieldFAVBu2Dst0hst_D0pi0_(Configuration::Get().initYieldFAVSignal() *
                                     fracBu2Dst0hst_D0pi0_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
