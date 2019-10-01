@@ -327,24 +327,24 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_MisRec_mean1Bu_(("misId_MisRec_mean1Bu_" +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                 .c_str(),
-                            "", 5.3344e+03),
+                            "", 5.3332e+03),
       misId_MisRec_mean2Bu_(),
       misId_MisRec_sigma1Bu_(("misId_MisRec_sigma1Bu_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                  .c_str(),
-                             "", 2.7114e+01),
+                             "", 2.6031e+01),
       misId_MisRec_sigma2Bu_(("misId_MisRec_sigma2Bu_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                  .c_str(),
-                             "", 5.9851e+01),
+                             "", 6.2339e+01),
       misId_MisRec_a1Bu_(("misId_MisRec_a1Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),
-                         "", 1.8247e-01),
+                         "", 2.5422e-01),
       misId_MisRec_a2Bu_(("misId_MisRec_a2Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),
-                         "", 2.5360e-01),
+                         "", 2.4586e-01),
       misId_MisRec_n1Bu_(),
       misId_MisRec_n2Bu_(),
       pdf1Bu_misId_MisRec_(),
