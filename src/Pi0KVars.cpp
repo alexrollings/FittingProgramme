@@ -80,37 +80,37 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                     ComposeName(uniqueId, Neutral::pi0,
                                                 Bachelor::k))
                                        .c_str(),
-                                   "", 5.3423e+03),
+                                   "", 5.3492e+03),
       misId_Bu2Dst0h_D0pi0_sigma1Bu_(("misId_Bu2Dst0h_D0pi0_sigma1Bu_" +
                                       ComposeName(uniqueId, Neutral::pi0,
                                                   Bachelor::k))
                                          .c_str(),
-                                     "", 4.6005e+01),
+                                     "", 2.7908e+01),
       misId_Bu2Dst0h_D0pi0_sigma2Bu_(("misId_Bu2Dst0h_D0pi0_sigma2Bu_" +
                                       ComposeName(uniqueId, Neutral::pi0,
                                                   Bachelor::k))
                                          .c_str(),
-                                     "", 2.9797e+01),
+                                     "", 4.1672e+01),
       misId_Bu2Dst0h_D0pi0_a1Bu_(("misId_Bu2Dst0h_D0pi0_a1Bu_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
                                      .c_str(),
-                                 "", 1.2465e+00),
+                                 "", 9.1443e+00),
       misId_Bu2Dst0h_D0pi0_a2Bu_(("misId_Bu2Dst0h_D0pi0_a2Bu_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
                                      .c_str(),
-                                 "", -4.1933e-01),
+                                 "", -5.1399e-01),
       misId_Bu2Dst0h_D0pi0_n1Bu_(("misId_Bu2Dst0h_D0pi0_n1Bu_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
                                      .c_str(),
-                                 "", 9.9896e+00),
+                                 "", 6.0954e+00),
       misId_Bu2Dst0h_D0pi0_n2Bu_(("misId_Bu2Dst0h_D0pi0_n2Bu_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
                                      .c_str(),
-                                 "", 7.3806e+00),
+                                 "", 9.9998e+00),
       pdf1Bu_misId_Bu2Dst0h_D0pi0_(
           ("pdf1Bu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -129,7 +129,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                         ComposeName(uniqueId, Neutral::pi0,
                                                     Bachelor::k))
                                            .c_str(),
-                                       "", 1.0449e-01),
+                                       "", 1.6258e-01),
       pdfBu_misId_Bu2Dst0h_D0pi0_(
           new RooAddPdf(("pdfBu_misId_Bu2Dst0h_D0pi0_" +
                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
