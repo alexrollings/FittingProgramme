@@ -244,11 +244,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
-                       "", 5.4195e+01, 40, 90),  // 7.8797e+01),
+                       "", 6.5198e+01), 
       MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
-                       "", 4.9189e+01, 30, 80),  // 6.4032e+01),
+                       "", 4.7849e+01), 
       pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
