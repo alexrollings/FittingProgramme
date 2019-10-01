@@ -265,17 +265,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.4893e+03),  // 5.5263e+03),
+          5.4893e+03),
       relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
                               "", 0.95),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          1.3673e-01),  // 3.1698e-02),
+          1.3673e-01),
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.0076e-08),  // 8.2540e-04),
+          5.0076e-08), 
       orEffBu2D0h_(
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
@@ -289,7 +289,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       deltaCutEffBu2D0h_(
           ("deltaCutEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 1),
-      fracBu2D0h_(1.37),
+      fracBu2D0h_(1.363),
       initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
                           fracBu2D0h_) {
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
