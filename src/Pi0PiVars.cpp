@@ -265,10 +265,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec().getVal(),
           // -1000000, 1000000),
           0, 100000),
-      pidEff_Bu2Dst0h_D0gamma_WN_(0.99615),
-      pidEff_Bu2Dst0h_D0pi0_WN_(0.996652),
-      pidEff_Bu2D0hst_(0.996877),
-      pidEff_Bd2Dsth_(0.997507),
+      pidEff_Bu2Dst0h_D0gamma_WN_(0.995592),
+      pidEff_Bu2Dst0h_D0pi0_WN_(0.99615),
+      pidEff_Bu2D0hst_(0.997507),
+      pidEff_Bd2Dsth_(0.995592),
       pidEff_MisRec_(
           ("pidEff_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
