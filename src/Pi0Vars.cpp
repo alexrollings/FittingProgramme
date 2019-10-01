@@ -190,13 +190,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              "", 1.3549e+02),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -3.0172e+00),  //-1.9133e+00),
+          "", -2.2769e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1.3412e-01),  // 2.2134e-01),
+          "", 1.1267e-01),
       MisRec_cDelta_(
           ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 2.0952e+00),  // 2.0917e+00),
+          "", 2.3107e+00),
       pdfDelta_MisRec_(
           ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
