@@ -751,6 +751,15 @@ std::string HstLabel(Bachelor bachelor) {
   }
 }
 
+std::string MisIdHstLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "K^{*}";
+    case Bachelor::k:
+      return "#rho";
+  }
+}
+
 std::string CrossFeedLabel(Neutral neutral) {
   switch (neutral) {
     case Neutral::pi0:

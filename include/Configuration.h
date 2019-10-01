@@ -149,6 +149,7 @@ std::string EnumToLabel(Neutral);
 std::string MisIdLabel(Bachelor);
 std::string CrossFeedLabel(Neutral);
 std::string HstLabel(Bachelor);
+std::string MisIdHstLabel(Bachelor);
 
 std::string ComposeFilename(Year year, Polarity polarity,
                             Bachelor bachelor, Neutral neutral,
