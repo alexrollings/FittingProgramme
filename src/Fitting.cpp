@@ -43,7 +43,7 @@ void SetStyle() {
   gStyle->SetTitleSize(0.03, "XY");
   gStyle->SetLabelSize(0.024, "XY");
   gStyle->SetLegendFont(132);
-  gStyle->SetLegendTextSize(0.025);
+  gStyle->SetLegendTextSize(0.03);
   gStyle->SetTitleOffset(0.9, "X");
   gStyle->SetTitleOffset(1.1, "Y");
   gStyle->SetTitleOffset(0.9, "Z");
@@ -421,7 +421,50 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     std::cout << "total\n";
   }
 
-  TLegend legend(0.71, 0.53, 0.85, 0.80);
+  auto blankHist = std::make_unique<TH1D>(
+      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "blankHist", 1, 0, 1);
+  blankHist->SetLineColor(kWhite);
+  blankHist->SetLineWidth(2);
+
+  TLegend lumiLegend(0.66, 0.75, 0.87, 0.8);
+  lumiLegend.SetTextSize(0.03);
+  lumiLegend.SetLineColor(kWhite);
+  lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
+  // Blank entry to make space for integration symbol
+  lumiLegend.AddEntry(blankHist.get(), " ", "l");
+  if (labelString == "TOY") {
+    lumiLegend.SetTextSize(0.07);
+  }
+  TLegend legend(0.66, 0.48, 0.87, 0.75);
+
+  if (neutral == Neutral::pi0) {
+    if (bachelor == Bachelor::k) {
+      legend.SetY1(0.375);
+    }
+    if (labelString == "TOY") {
+      lumiLegend.SetX1(0.66);
+    }
+  }
+  if (neutral == Neutral::gamma) {
+    legend.SetX1(0.14);
+    legend.SetX2(0.35);
+    legend.SetY1(0.59);
+    legend.SetY2(0.89);
+    if (bachelor == Bachelor::k) {
+      legend.SetY1(0.515);
+    }
+    if (labelString == "TOY") {
+      lumiLegend.SetX1(0.83);
+      lumiLegend.SetX2(0.9);
+    } else {
+      lumiLegend.SetX1(0.75);
+      lumiLegend.SetX2(0.85);
+      lumiLegend.SetY1(0.82);
+      lumiLegend.SetY2(0.87);
+    }
+  }
   // ------------- Draw Legends -------------- //
   auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0gammaHist" +
@@ -529,13 +572,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   misId_Bu2Dst0hst_D0pi0Hist->SetLineStyle(kDashed);
   misId_Bu2Dst0hst_D0pi0Hist->SetLineWidth(2);
 
-  auto blankHist = std::make_unique<TH1D>(
-      ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "blankHist", 1, 0, 1);
-  blankHist->SetLineColor(kWhite);
-  blankHist->SetLineWidth(2);
-
   std::stringstream Bu2Dst0h_D0gammaLegend;
   Bu2Dst0h_D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
@@ -639,30 +675,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                     misId_Bu2Dst0hst_D0pi0Legend.str().c_str(), "l");
   }
 
-  TLegend lumiLegend(0.68, 0.80, 0.85, 0.87);
-  lumiLegend.SetTextSize(0.03);
-  lumiLegend.SetLineColor(kWhite);
-  lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
-  // Blank entry to make space for integration symbol
-  lumiLegend.AddEntry(blankHist.get(), " ", "l");
-
-  if (labelString == "TOY") {
-    lumiLegend.SetTextSize(0.07);
-    legend.SetY1(0.55);
-    legend.SetY2(0.7);
-    lumiLegend.SetY1(0.7);
-    lumiLegend.SetY2(0.8);
-    if (neutral == Neutral::gamma) {
-      legend.SetY2(0.75);
-      lumiLegend.SetY1(0.75);
-      // legend.SetY1(0.6);
-      // legend.SetY2(0.87);
-      // lumiLegend.SetX1(0.15);
-      // lumiLegend.SetX2(0.25);
-      // lumiLegend.SetY1(0.65);
-      // lumiLegend.SetY2(0.8);
-    }
-  }
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 categories, legend, lumiLegend, outputDir, fitBool, config);
