@@ -539,6 +539,26 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
         RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId).deltaCutEffBu2D0h(),
                    NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h(),
                    N_Bu2D0h_)));
+    N_Bu_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0hst_D0gamma_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(
+            NeutralVars<Neutral::pi0>::Get(uniqueId)
+                .deltaCutEffBu2Dst0hst_D0gamma(),
+            NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0hst_D0gamma(),
+            N_Bu2Dst0hst_D0gamma_)));
+    N_Bu_Bu2Dst0hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0hst_D0pi0_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(
+            NeutralVars<Neutral::pi0>::Get(uniqueId)
+                .deltaCutEffBu2Dst0hst_D0pi0(),
+            NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2Dst0hst_D0pi0(),
+            N_Bu2Dst0hst_D0pi0_)));
   } else {
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
@@ -559,5 +579,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
         ("N_Bu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
             .c_str(),
         "@0*@1", RooArgList(N_tot_Bu2D0h_, pidEff_Bu2D0h_)));
+    N_Bu_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0hst_D0gamma_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "@0*@1",
+        RooArgList(N_tot_Bu2Dst0hst_D0gamma_, pidEff_Bu2Dst0hst_D0gamma_)));
+    N_Bu_Bu2Dst0hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0hst_D0pi0_" +
+         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+            .c_str(),
+        "@0*@1",
+        RooArgList(N_tot_Bu2Dst0hst_D0pi0_, pidEff_Bu2Dst0hst_D0pi0_)));
   }
 }
