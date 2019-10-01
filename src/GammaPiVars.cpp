@@ -39,7 +39,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0gamma_, pdf2Bu_Bu2Dst0h_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
-              .Bu2Dst0h_D0gamma_frac1PdfBu())),
+              .Bu2Dst0h_D0gamma_fracPdf1Bu())),
       N_tot_Bu2Dst0h_D0gamma_(("N_tot_Bu2Dst0h_D0gamma_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::pi))
@@ -100,7 +100,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_n2Bu_(),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
-      misId_Bu2Dst0h_D0gamma_frac1PdfBu_(),
+      misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(),
       pdfBu_misId_Bu2Dst0h_D0gamma_(new RooCruijff(
           ("pdfBu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -135,7 +135,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
                          "", 4.3979e+01)),
-      Bu2Dst0h_D0pi0_sigma2Bu_(),
+      pdf1Bu_Bu2Dst0h_D0pi0_(),
+      pdf2Bu_Bu2Dst0h_D0pi0_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
           ("pdfBu_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -144,7 +145,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
           *Bu2Dst0h_D0pi0_sigma1Bu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_nBu())),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu())),
       N_tot_Bu2Dst0h_D0pi0_(("N_tot_Bu2Dst0h_D0pi0_" +
                              ComposeName(uniqueId, Neutral::gamma,
                                          Bachelor::pi))
@@ -206,7 +207,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0pi0_n2Bu_(),
       pdf1Bu_misId_Bu2Dst0h_D0pi0_(),
       pdf2Bu_misId_Bu2Dst0h_D0pi0_(),
-      misId_Bu2Dst0h_D0pi0_frac1PdfBu_(),
+      misId_Bu2Dst0h_D0pi0_fracPdf1Bu_(),
       pdfBu_misId_Bu2Dst0h_D0pi0_(new RooCruijff(
           ("pdfBu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -306,7 +307,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_MisRec_n1Bu_(),
       pdf1Bu_misId_MisRec_(),
       pdf2Bu_misId_MisRec_(),
-      misId_MisRec_frac1PdfBu_(),
+      misId_MisRec_fracPdf1Bu_(),
       pdfBu_misId_MisRec_(nullptr),
       orEffMisId_MisRec_(),
       boxEffMisId_MisRec_(),

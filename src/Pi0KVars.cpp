@@ -19,22 +19,31 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                   .Bu2Dst0h_D0pi0_sigma1Bu(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
                   .relativeBuWidth_Bu2Dst0h_D0pi0()))),
-      Bu2Dst0h_D0pi0_sigma2Bu_(
-          ("Bu2Dst0h_D0pi0_sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", "@0*@1", RooArgList(*Bu2Dst0h_D0pi0_sigma1Bu_,
-                                  NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                      .Bu2Dst0h_D0pi0_fracSigmaBu())),
-      pdfBu_Bu2Dst0h_D0pi0_(new RooCruijff(
-          ("pdfBu_Bu2Dst0h_D0pi0_" +
+      pdf1Bu_Bu2Dst0h_D0pi0_(
+          ("pdf1Bu_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
-          *Bu2Dst0h_D0pi0_sigma1Bu_, Bu2Dst0h_D0pi0_sigma2Bu_,
+          *Bu2Dst0h_D0pi0_sigma1Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a2Bu())),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu()),
+      pdf2Bu_Bu2Dst0h_D0pi0_(
+          ("pdf2Bu_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
+          *Bu2Dst0h_D0pi0_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n2Bu()),
+      pdfBu_Bu2Dst0h_D0pi0_(new RooAddPdf(
+          ("pdfBu_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", RooArgSet(pdf1Bu_Bu2Dst0h_D0pi0_, pdf2Bu_Bu2Dst0h_D0pi0_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId)
+              .Bu2Dst0h_D0pi0_fracPdf1Bu())),
       N_tot_Bu2Dst0h_D0pi0_(("N_tot_Bu2Dst0h_D0pi0_" +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                 .c_str(),
@@ -116,7 +125,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(), misId_Bu2Dst0h_D0pi0_meanBu_,
           misId_Bu2Dst0h_D0pi0_sigma2Bu_, misId_Bu2Dst0h_D0pi0_a2Bu_,
           misId_Bu2Dst0h_D0pi0_n2Bu_),
-      misId_Bu2Dst0h_D0pi0_frac1PdfBu_(("misId_Bu2Dst0h_D0pi0_frac1PdfBu_" +
+      misId_Bu2Dst0h_D0pi0_fracPdf1Bu_(("misId_Bu2Dst0h_D0pi0_fracPdf1Bu_" +
                                         ComposeName(uniqueId, Neutral::pi0,
                                                     Bachelor::k))
                                            .c_str(),
@@ -127,7 +136,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                             .c_str(),
                         "", RooArgList(pdf1Bu_misId_Bu2Dst0h_D0pi0_,
                                        pdf2Bu_misId_Bu2Dst0h_D0pi0_),
-                        misId_Bu2Dst0h_D0pi0_frac1PdfBu_)),
+                        misId_Bu2Dst0h_D0pi0_fracPdf1Bu_)),
       orEffMisId_Bu2Dst0h_D0pi0_(("orEffMisId_Bu2Dst0h_D0pi0_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
@@ -242,7 +251,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_n2Bu_(),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
-      misId_Bu2Dst0h_D0gamma_frac1PdfBu_(),
+      misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(),
       pdfBu_misId_Bu2Dst0h_D0gamma_(new RooCruijff(
           ("pdfBu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -340,7 +349,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_MisRec_n2Bu_(),
       pdf1Bu_misId_MisRec_(),
       pdf2Bu_misId_MisRec_(),
-      misId_MisRec_frac1PdfBu_(),
+      misId_MisRec_fracPdf1Bu_(),
       pdfBu_misId_MisRec_(new RooCruijff(
           ("pdfBu_misId_MisRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
