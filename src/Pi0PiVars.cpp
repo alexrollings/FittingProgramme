@@ -273,7 +273,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ("pidEff_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "",
-          (pidEff_Bu2Dst0h_D0gamma_WN_ *
+          (pidEff_Bu2Dst0h_D0gamma_.getVal() *
+               NeutralVars<Neutral::pi0>::Get(uniqueId)
+                   .fracMisRec_Bu2Dst0h_D0gamma() +
+           pidEff_Bu2Dst0h_D0gamma_WN_ *
                NeutralVars<Neutral::pi0>::Get(uniqueId)
                    .fracMisRec_Bu2Dst0h_D0gamma_WN() +
            pidEff_Bu2Dst0h_D0pi0_WN_ *

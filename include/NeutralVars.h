@@ -168,6 +168,9 @@ class NeutralVars {
   RooRealVar &boxEffMisRec() { return boxEffMisRec_; }
   RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
   RooRealVar &deltaCutEffMisRec() { return deltaCutEffMisRec_; }
+  double &fracMisRec_Bu2Dst0h_D0gamma() {
+    return fracMisRec_Bu2Dst0h_D0gamma_;
+  }
   double &fracMisRec_Bu2Dst0h_D0gamma_WN() {
     return fracMisRec_Bu2Dst0h_D0gamma_WN_;
   }
@@ -303,6 +306,7 @@ class NeutralVars {
   RooRealVar boxEffMisRec_;
   RooRealVar buDeltaCutEffMisRec_;
   RooRealVar deltaCutEffMisRec_;
+  double fracMisRec_Bu2Dst0h_D0gamma_;
   double fracMisRec_Bu2Dst0h_D0gamma_WN_;
   double fracMisRec_Bu2Dst0h_D0pi0_WN_;
   double fracMisRec_Bu2D0hst_;

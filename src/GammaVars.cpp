@@ -250,6 +250,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
                          "", 1),
+      fracMisRec_Bu2Dst0h_D0gamma_(),
       fracMisRec_Bu2Dst0h_D0gamma_WN_(0.628),
       fracMisRec_Bu2Dst0h_D0pi0_WN_(1.137),
       fracMisRec_Bu2D0hst_(1.481),

@@ -694,6 +694,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
        NeutralVars<Neutral::pi0>::Get(uniqueId)
                .fracMisRec_Bu2Dst0h_D0pi0_WN() /
            NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()},
+      {Mode::Bu2Dst0pi_D0gamma,
+       NeutralVars<Neutral::pi0>::Get(uniqueId)
+               .fracMisRec_Bu2Dst0h_D0gamma() /
+           NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()},
       {Mode::Bu2Dst0pi_D0gamma_WN,
        NeutralVars<Neutral::pi0>::Get(uniqueId)
                .fracMisRec_Bu2Dst0h_D0gamma_WN() /
