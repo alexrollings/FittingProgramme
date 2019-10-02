@@ -508,9 +508,13 @@ int main(int argc, char *argv[]) {
 
   std::cout << "\nQuality of fits:\n"
             << "Unconverged: " << nUnConv / resultVec.size() * 100 << " %\n"
+            << "# Unconverged: " << nUnConv << "\n"
             << "Forced positive definite: " << nFPD / resultVec.size() * 100
             << " %\n"
-            << "MINOS problems: " << nMINOS / resultVec.size() * 100 << " %\n";
+            << "# Forced positive definite: " << nFPD 
+            << "\n"
+            << "MINOS problems: " << nMINOS / resultVec.size() * 100 << " %\n"
+            << "# MINOS problems: " << nMINOS << "\n";
 
   return 1;
 }
