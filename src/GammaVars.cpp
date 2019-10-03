@@ -352,7 +352,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       partRec_D0pi0_aLBu_(("partRec_D0pi0_aLBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
-                               "", 8.6604e-02),
+                               "", 8.6604e-02),//, 0, 5),
       partRec_D0pi0_aRBu_(("partRec_D0pi0_aRBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
