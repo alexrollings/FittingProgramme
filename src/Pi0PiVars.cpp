@@ -394,10 +394,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_meanBu(),
-          PartRec_sigmaLBu_, PartRec_sigmaRBu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_aLBu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_aRBu())),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_meanBu(),
+          partRec_D0pi0_sigmaLBu_, partRec_D0pi0_sigmaRBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aLBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aRBu())),
       N_tot_PartRec_(("N_tot_PartRec_" +
                                  ComposeName(uniqueId, Neutral::pi0,
                                              Bachelor::pi))

@@ -231,7 +231,7 @@ class NeutralBachelorVars {
     return partRec_D0gamma_sigmaRBu_;
   }
   RooCruijff &pdfBu_PartRec_D0gamma() { return pdfBu_PartRec_D0gamma_; }
-  RooAddPdf &pdfBu_PartRec() { return *pdfBu_PartRec_; }
+  RooAbsPdf &pdfBu_PartRec() { return *pdfBu_PartRec_; }
   RooRealVar &N_tot_PartRec() { return N_tot_PartRec_; }
   double &pidEff_Bu2Dst0hst_D0pi0() {
     return pidEff_Bu2Dst0hst_D0pi0_;
@@ -396,7 +396,7 @@ class NeutralBachelorVars {
   RooRealVar partRec_D0gamma_sigmaLBu_;
   RooRealVar partRec_D0gamma_sigmaRBu_;
   RooCruijff pdfBu_PartRec_D0gamma_;
-  std::unique_ptr<RooAddPdf> pdfBu_PartRec_;
+  std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
   RooRealVar N_tot_PartRec_;
   double pidEff_Bu2Dst0hst_D0pi0_;
   double pidEff_Bu2Dst0hst_D0gamma_;

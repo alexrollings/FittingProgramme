@@ -1,4 +1,5 @@
 #include "NeutralVars.h"
+#include "NeutralBachelorVars.h"
 #include "RooAbsPdf.h"
 #include "RooAbsReal.h"
 #include "RooAddPdf.h"
@@ -75,7 +76,7 @@ class PdfBase {
   virtual RooCruijff &pdfBu_misId_Bu2D0h() const = 0;
   virtual RooAbsReal &N_tot_PartRec() const = 0;
   virtual RooDstD0BG &pdfDelta_PartRec() const = 0;
-  virtual RooCruijff &pdfBu_PartRec() const = 0;
+  virtual RooAbsPdf &pdfBu_PartRec() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_PartRec() const = 0;
   virtual RooCruijff &pdfBu_misId_PartRec() const = 0;
 
@@ -239,7 +240,7 @@ class Pdf : public PdfBase {
   virtual RooDstD0BG &pdfDelta_PartRec() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_PartRec();
   }
-  virtual RooCruijff &pdfBu_PartRec() const {
+  virtual RooAbsPdf &pdfBu_PartRec() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_PartRec();
   }

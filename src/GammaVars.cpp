@@ -331,13 +331,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
                                  "", 9.9996e+01),
-      pdfDelta_partRec_(
-          ("pdfDelta_partRec_" + ComposeName(uniqueId, Neutral::gamma))
+      pdfDelta_PartRec_(
+          ("pdfDelta_PartRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", Configuration::Get().deltaMass(),
           partRec_thresholdDelta_, partRec_cDelta_,
           partRec_aDelta_, partRec_bDelta_),
-      pdfDelta_misId_partRec_(("pdfDelta_misId_partRec_" +
+      pdfDelta_misId_PartRec_(("pdfDelta_misId_PartRec_" +
                                           ComposeName(uniqueId, Neutral::gamma))
                                              .c_str(),
                                          "", Configuration::Get().deltaMass(),

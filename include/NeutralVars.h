@@ -203,8 +203,8 @@ class NeutralVars {
   RooRealVar &partRec_aDelta() { return partRec_aDelta_; }
   RooRealVar &partRec_bDelta() { return partRec_bDelta_; }
   RooRealVar &partRec_cDelta() { return partRec_cDelta_; }
-  RooDstD0BG &pdfDelta_partRec() { return pdfDelta_partRec_; }
-  RooDstD0BG &pdfDelta_misId_partRec() { return pdfDelta_misId_partRec_; }
+  RooDstD0BG &pdfDelta_PartRec() { return pdfDelta_PartRec_; }
+  RooDstD0BG &pdfDelta_misId_PartRec() { return pdfDelta_misId_PartRec_; }
   RooRealVar &partRec_D0pi0_meanBu() { return partRec_D0pi0_meanBu_; }
   RooRealVar &partRec_D0pi0_aLBu() { return partRec_D0pi0_aLBu_; }
   RooRealVar &partRec_D0pi0_aRBu() { return partRec_D0pi0_aRBu_; }
@@ -325,8 +325,8 @@ class NeutralVars {
   RooRealVar partRec_aDelta_;
   RooRealVar partRec_bDelta_;
   RooRealVar partRec_cDelta_;
-  RooDstD0BG pdfDelta_partRec_;
-  RooDstD0BG pdfDelta_misId_partRec_;
+  RooDstD0BG pdfDelta_PartRec_;
+  RooDstD0BG pdfDelta_misId_PartRec_;
   RooRealVar partRec_D0pi0_meanBu_;
   RooRealVar partRec_D0pi0_aLBu_;
   RooRealVar partRec_D0pi0_aRBu_;

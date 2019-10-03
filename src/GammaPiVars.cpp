@@ -420,17 +420,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                              Bachelor::pi))
                                     .c_str(),
                                 "", NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                            .initYieldFAVpartRec() *
+                                            .initYieldFAVPartRec() *
                                         NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                            .orEffpartRec()
+                                            .orEffPartRec()
                                             .getVal(),
                                 // -1000000, 1000000),
                                 0, 100000),
-      pidEff_PartRec_(("pidEff_PartRec_" +
-                                  ComposeName(uniqueId, Neutral::gamma,
-                                              Bachelor::pi))
-                                     .c_str(),
-                                 "", 0.998193),
       pidEff_Bu2Dst0hst_D0pi0_(0.999413),
       pidEff_Bu2Dst0hst_D0gamma_(0.998193),
       pidEff_PartRec_(
@@ -453,9 +448,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "(@0/@1)*@2", RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .buDeltaCutEffpartRec(),
+                                       .buDeltaCutEffPartRec(),
                                    NeutralVars<Neutral::gamma>::Get(uniqueId)
-                                       .orEffpartRec(),
+                                       .orEffPartRec(),
                                    N_PartRec_)),
       N_Bu_PartRec_(nullptr),
       // -------------------- Mis-ID ------------------- //

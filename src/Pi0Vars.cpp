@@ -310,13 +310,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
                                "", 2.1081e+00),
-      pdfDelta_partRec_(
-          ("pdfDelta_partRec_" + ComposeName(uniqueId, Neutral::pi0))
+      pdfDelta_PartRec_(
+          ("pdfDelta_PartRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", Configuration::Get().deltaMass(),
           partRec_thresholdDelta_, partRec_cDelta_,
           partRec_aDelta_, partRec_bDelta_),
-      pdfDelta_misId_partRec_(("pdfDelta_misId_partRec_" +
+      pdfDelta_misId_PartRec_(("pdfDelta_misId_PartRec_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),
                                        "", Configuration::Get().deltaMass(),
