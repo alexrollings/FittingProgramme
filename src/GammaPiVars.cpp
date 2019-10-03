@@ -54,7 +54,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                 ComposeName(uniqueId, Neutral::gamma,
                                             Bachelor::pi))
                                    .c_str(),
-                               "", 0.997005),
+                               "", 0.997043),
       N_Bu2Dst0h_D0gamma_(("N_Bu2Dst0h_D0gamma_" +
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                               .c_str(),
@@ -160,7 +160,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                               ComposeName(uniqueId, Neutral::gamma,
                                           Bachelor::pi))
                                  .c_str(),
-                             "", 0.996885),
+                             "", 0.996942),
       N_Bu2Dst0h_D0pi0_(("N_Bu2Dst0h_D0pi0_" +
                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                             .c_str(),
@@ -261,10 +261,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
               NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal(),
           -1000000, 1000000),
-      pidEff_Bu2Dst0h_D0gamma_WN_(0.997077),
-      pidEff_Bu2Dst0h_D0pi0_WN_(0.996043),
-      pidEff_Bu2D0hst_(0.994002),
-      pidEff_Bd2Dsth_(0.997538),
+      pidEff_Bu2Dst0h_D0gamma_WN_(0.997109),
+      pidEff_Bu2Dst0h_D0pi0_WN_(0.996147),
+      pidEff_Bu2D0hst_(0.996808),
+      pidEff_Bd2Dsth_(0.9974),
       pidEff_MisRec_(
           ("pidEff_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -343,7 +343,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       pidEff_Bu2D0h_(("pidEff_Bu2D0h_" +
                       ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                          .c_str(),
-                     "", 0.996641),
+                     "", 0.996587),
       N_Bu2D0h_(("N_Bu2D0h_" +
                  ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                     .c_str(),
@@ -404,7 +404,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                   ComposeName(uniqueId, Neutral::gamma,
                                               Bachelor::pi))
                                      .c_str(),
-                                 "", 0.997103),
+                                 "", 0.998193),
       N_Bu2Dst0hst_D0gamma_(("N_Bu2Dst0hst_D0gamma_" +
                              ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                                 .c_str(),
@@ -466,7 +466,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                   ComposeName(uniqueId, Neutral::gamma,
                                               Bachelor::pi))
                                      .c_str(),
-                                 "", 0.99869),
+                                 "", 0.999413),
       N_Bu2Dst0hst_D0pi0_(("N_Bu2Dst0hst_D0pi0_" +
                              ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                                 .c_str(),
