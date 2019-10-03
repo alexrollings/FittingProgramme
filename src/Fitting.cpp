@@ -66,44 +66,6 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   Charge charge = pdf.charge();
   int id = 0;
 
-  auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0h_D0gammaHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0h_D0gammaHist", 1, 0, 1);
-  Bu2Dst0h_D0gammaHist->SetLineColor(kBlue);
-  Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0h_D0gammaHist->SetLineWidth(2);
-  auto misId_Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
-      ("misId_Bu2Dst0h_D0gammaHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "misId_Bu2Dst0h_D0gammaHist", 1, 0, 1);
-  misId_Bu2Dst0h_D0gammaHist->SetLineColor(kMagenta);
-  misId_Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
-  misId_Bu2Dst0h_D0gammaHist->SetLineWidth(2);
-  std::stringstream Bu2Dst0h_D0gammaLegend;
-  Bu2Dst0h_D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream misId_Bu2Dst0h_D0gammaLegend;
-  misId_Bu2Dst0h_D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-
-  if (neutral == Neutral::gamma) {
-    legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
-                    Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
-    legend.AddEntry(misId_Bu2Dst0h_D0gammaHist.get(),
-                    misId_Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
-  }
-
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
 
@@ -471,6 +433,24 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
   // ------------- Draw Legends -------------- //
 
+  auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0h_D0gammaHist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "Bu2Dst0h_D0gammaHist", 1, 0, 1);
+  Bu2Dst0h_D0gammaHist->SetLineColor(kBlue);
+  Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0h_D0gammaHist->SetLineWidth(2);
+
+  auto misId_Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
+      ("misId_Bu2Dst0h_D0gammaHist" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "misId_Bu2Dst0h_D0gammaHist", 1, 0, 1);
+  misId_Bu2Dst0h_D0gammaHist->SetLineColor(kMagenta);
+  misId_Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
+  misId_Bu2Dst0h_D0gammaHist->SetLineWidth(2);
+
   auto Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
       ("Bu2Dst0h_D0pi0Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -541,6 +521,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   misId_PartRecHist->SetLineStyle(kDashed);
   misId_PartRecHist->SetLineWidth(2);
 
+  std::stringstream Bu2Dst0h_D0gammaLegend;
+  Bu2Dst0h_D0gammaLegend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+  std::stringstream misId_Bu2Dst0h_D0gammaLegend;
+  misId_Bu2Dst0h_D0gammaLegend
+      << "B^{" + EnumToLabel(charge) +
+             "}#rightarrow#font[132]{[}#font[132]{[}" +
+             EnumToLabel(daughters, charge) +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
+             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
   std::stringstream Bu2Dst0h_D0pi0Legend;
   Bu2Dst0h_D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
@@ -585,6 +579,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              MisIdHstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
 
   legend.SetLineColor(kWhite);
+  if (neutral == Neutral::gamma) {
+    legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
+                    Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
+    legend.AddEntry(misId_Bu2Dst0h_D0gammaHist.get(),
+                    misId_Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
+  }
   legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(), Bu2Dst0h_D0pi0Legend.str().c_str(),
                   "l");
   legend.AddEntry(misId_Bu2Dst0h_D0pi0Hist.get(),
@@ -605,7 +605,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     legend.AddEntry(misId_PartRecHist.get(),
                     misId_PartRecLegend.str().c_str(), "l");
   }
-
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 categories, legend, lumiLegend, outputDir, fitBool, config);

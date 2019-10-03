@@ -360,6 +360,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_(0.290),
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
                                     fracPartRec_) {
+
   SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
                   boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
                   deltaCutEffBu2Dst0h_D0pi0_);

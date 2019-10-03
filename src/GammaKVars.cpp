@@ -761,14 +761,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   } else {
     orEffMisId_PartRec_.setVal(deltaCutEffMisId_PartRecVal);
   }
-  std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal() <<
-  "\n"
-            << "\t boxEffMisId_PartRec = " << boxEffMisId_PartRec_.getVal()
-            << "\n"
-            << "\t buDeltaCutEffMisId_PartRec = "
-            << buDeltaCutEffMisId_PartRec_.getVal() << "\n"
-            << "\t deltaCutEffMisId_PartRec = "
-            << deltaCutEffMisId_PartRec_.getVal() << "\n";
+  // std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal() <<
+  // "\n"
+  //           << "\t boxEffMisId_PartRec = " << boxEffMisId_PartRec_.getVal()
+  //           << "\n"
+  //           << "\t buDeltaCutEffMisId_PartRec = "
+  //           << buDeltaCutEffMisId_PartRec_.getVal() << "\n"
+  //           << "\t deltaCutEffMisId_PartRec = "
+  //           << deltaCutEffMisId_PartRec_.getVal() << "\n";
 
 
   if (Configuration::Get().fit1D() == false) {

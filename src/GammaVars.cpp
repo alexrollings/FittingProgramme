@@ -394,6 +394,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ + fracPartRec_Bu2Dst0hst_D0pi0_),
       initYieldFAVPartRec_(
           Configuration::Get().initYieldFAVSignal() * fracPartRec_) {
+
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
                   boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
                   deltaCutEffBu2Dst0h_D0gamma_);
@@ -507,4 +508,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   boxEffPartRec_.setVal(boxEffPartRecVal);
   buDeltaCutEffPartRec_.setVal(buDeltaCutEffPartRecVal);
   deltaCutEffPartRec_.setVal(deltaCutEffPartRecVal);
+  // std::cout << "\t orEffPartRec = " << orEffPartRec_.getVal() <<
+  // "\n"
+  //           << "\t boxEffPartRec = " << boxEffPartRec_.getVal()
+  //           << "\n"
+  //           << "\t buDeltaCutEffPartRec = "
+  //           << buDeltaCutEffPartRec_.getVal() << "\n"
+  //           << "\t deltaCutEffPartRec = "
+  //           << deltaCutEffPartRec_.getVal() << "\n";
 }

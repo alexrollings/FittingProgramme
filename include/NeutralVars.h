@@ -216,8 +216,8 @@ class NeutralVars {
   RooRealVar &boxEffPartRec() { return boxEffPartRec_; }
   RooRealVar &buDeltaCutEffPartRec() { return buDeltaCutEffPartRec_; }
   RooRealVar &deltaCutEffPartRec() { return deltaCutEffPartRec_; }
-  double &fracPartRec_Bu2Dst0hst_D0pi0() { return fracPartRec_; }
-  double &fracPartRec_Bu2Dst0hst_D0gamma() { return fracPartRec_; }
+  double &fracPartRec_Bu2Dst0hst_D0pi0() { return fracPartRec_Bu2Dst0hst_D0pi0_; }
+  double &fracPartRec_Bu2Dst0hst_D0gamma() { return fracPartRec_Bu2Dst0hst_D0gamma_; }
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
@@ -383,9 +383,11 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   // exists, if not, calculate eff and save in txt file
   if (!file_exists(txtFileName)) {
     std::string dirString;
-    // std::cout << txtFileName
-    //           << " doesn't exist:\n\tCalculating and setting efficiencies for"
-    //           << modeString << "...\n";
+    // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
+    //   std::cout << txtFileName
+    //             << " doesn't exist:\n\tCalculating and setting efficiencies for"
+    //             << modeString << "...\n";
+    // }
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
       // To remove _WN for directory
@@ -519,9 +521,11 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
       orEff.setVal(deltaCutEffVal);
     }
   } else {
-    // If exists, read in from txt file
-    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-    //           << modeString << "...\n";
+    // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
+    //   // If exists, read in from txt file
+    //   std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //             << modeString << "...\n";
+    // }
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
     std::unordered_map<std::string, double> effMap;
@@ -544,10 +548,12 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
       orEff.setVal(effMap.at("deltaCutEff"));
     }
   }
-  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
-  //           << "\t boxEff = " << boxEff.getVal() << "\n"
-  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+  // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
+  //   std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //             << "\t boxEff = " << boxEff.getVal() << "\n"
+  //             << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //             << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
+  // }
 }
 
 // When we DO need to specialize certain cases, we can still do that (see
