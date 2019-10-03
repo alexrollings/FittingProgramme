@@ -58,7 +58,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                  .c_str(),
-                             "", 0.759199),
+                             "", 6.8493e-01),
       N_Bu2Dst0h_D0pi0_(("N_Bu2Dst0h_D0pi0_" +
                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                             .c_str(),
@@ -284,11 +284,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       "", 6.5198e+01),
+                       "", 6.5198e+01),//, 20, 100),
       MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       "", 4.7849e+01),
+                       "", 4.7849e+01),//, 20, 100),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                         .c_str(),

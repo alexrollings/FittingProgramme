@@ -11,11 +11,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     : Bu2Dst0h_D0gamma_meanDelta_(("Bu2Dst0h_D0gamma_meanDelta_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),
-                                  "", 1.4278e+02),
+                                  "", 1.4278e+02, 140, 145),
       Bu2Dst0h_D0gamma_sigmaDelta_(("Bu2Dst0h_D0gamma_sigmaDelta_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
-                                   "", 8.4695e+00),
+                                   "", 8.4695e+00, 5, 10),
       Bu2Dst0h_D0gamma_a1Delta_(("Bu2Dst0h_D0gamma_a1Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -23,7 +23,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_a2Delta_(("Bu2Dst0h_D0gamma_a2Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", -7.4455e-01),
+                                "", -7.4455e-01),//, -5, -0.00001),
       Bu2Dst0h_D0gamma_n1Delta_(("Bu2Dst0h_D0gamma_n1Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -31,7 +31,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n2Delta_(("Bu2Dst0h_D0gamma_n2Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 4.3851e+00),
+                                "", 7.3576e+00),//4.3851e+00, 0, 10),
       pdf1Delta_Bu2Dst0h_D0gamma_(("pdf1Delta_Bu2Dst0h_D0gamma_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),
@@ -85,7 +85,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_a2Bu_(("Bu2Dst0h_D0gamma_a2Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", -1.6623e+00),
+                             "", -1.6623e+00, -5, -0.0001),
       Bu2Dst0h_D0gamma_n1Bu_(("Bu2Dst0h_D0gamma_n1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -93,7 +93,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n2Bu_(("Bu2Dst0h_D0gamma_n2Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 5.2563e+00),
+                             "", 10),//5.2563e+00, 0, 100),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(("Bu2Dst0h_D0gamma_fracPdf1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
@@ -120,19 +120,19 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 8.6503e+01),
+                                "", 8.6503e+01, 83, 89),
       Bu2Dst0h_D0pi0_sigmaDelta_(("Bu2Dst0h_D0pi0_sigmaDelta_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
-                                 "", 9.3347e+00),
+                                 "", 9.3347e+00, 5, 15),
       Bu2Dst0h_D0pi0_a1Delta_(("Bu2Dst0h_D0pi0_a1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 4.4112e-01),
+                              "", 4.4112e-01),//, 0, 5),
       Bu2Dst0h_D0pi0_a2Delta_(("Bu2Dst0h_D0pi0_a2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", -7.3381e-01),
+                              "", -7.3381e-01),//, -5, -0.0001),
       Bu2Dst0h_D0pi0_n1Delta_(("Bu2Dst0h_D0pi0_n1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
@@ -140,7 +140,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n2Delta_(("Bu2Dst0h_D0pi0_n2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 7.1853e+00),
+                              "", 4.4063e+00),//7.1853e+00, 0, 10),
       pdf1Delta_Bu2Dst0h_D0pi0_(
           ("pdf1Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -286,11 +286,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.5269e+03),
+          "", 5.5269e+03, 5450, 5600),
       relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 0.95),
+                              "", 0.95, 0.9, 1.5),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.4892e-09),
@@ -348,7 +348,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       partRec_D0pi0_meanBu_(("partRec_D0pi0_meanBu_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
-                                 "", 5.1039e+03),
+                                 "", 5.1039e+03, 5050, 5200),
       partRec_D0pi0_aLBu_(("partRec_D0pi0_aLBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
