@@ -18,7 +18,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .Bu2Dst0h_D0gamma_sigma1Bu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeBuWidth1_Bu2Dst0h_D0gamma()))),
+                  .Bu2Dst0h_D0gamma_KpiSigmaBu()))),
       Bu2Dst0h_D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
@@ -412,7 +412,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .Bu2D0h_sigmaLBu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeBuWidth_Bu2D0h()))),
+                  .Bu2D0h_KpiSigmaBu()))),
       Bu2D0h_sigmaRBu_(new RooFormulaVar(
           ("Bu2D0h_sigmaRBu_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -422,7 +422,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
                   .Bu2D0h_sigmaRBu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .relativeBuWidth_Bu2D0h()))),
+                  .Bu2D0h_KpiSigmaBu()))),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                         .c_str(),

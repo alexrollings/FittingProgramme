@@ -63,10 +63,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
                              "", 5.2735e+03, 5270, 5275),
-      relativeBuWidth_Bu2Dst0h_D0pi0_(("relativeBuWidth_Bu2Dst0h_D0pi0Bu_" +
+      Bu2Dst0h_D0pi0_KpiSigmaBu_(("Bu2Dst0h_D0pi0_KpiSigmaBu_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
-                                      "", 0.95),//, 0.9, 1),
+                                      "", 0.95, 0.9, 1),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -148,8 +148,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
                                "", 5.2857e+03),
-      relativeBuWidth1_Bu2Dst0h_D0gamma_(
-          ("relativeBuWidth1_Bu2Dst0h_D0gammaBu_" +
+      Bu2Dst0h_D0gamma_KpiSigmaBu_(
+          ("Bu2Dst0h_D0gamma_KpiSigmaBu_" +
            ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", 0.95),
@@ -267,7 +267,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           5.4893e+03, 5450, 5500),
-      relativeBuWidth_Bu2D0h_(("relativeBuWidth_Bu2D0hBu_" +
+      Bu2D0h_KpiSigmaBu_(("Bu2D0h_KpiSigmaBu_" +
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
                               "", 0.95),
