@@ -216,101 +216,67 @@ class NeutralBachelorVars {
   RooRealVar &boxEffMisId_Bu2D0h() { return boxEffMisId_Bu2D0h_; }
   RooRealVar &buDeltaCutEffMisId_Bu2D0h() { return buDeltaCutEffMisId_Bu2D0h_; }
   RooRealVar &deltaCutEffMisId_Bu2D0h() { return deltaCutEffMisId_Bu2D0h_; }
-  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
-  RooRealVar &Bu2Dst0hst_D0gamma_sigmaLBu() {
-    return Bu2Dst0hst_D0gamma_sigmaLBu_;
+  // -------------------- PART REC -------------------- //
+  RooRealVar &partRec_D0pi0_sigmaLBu() {
+    return partRec_D0pi0_sigmaLBu_;
   }
-  RooRealVar &Bu2Dst0hst_D0gamma_sigmaRBu() {
-    return Bu2Dst0hst_D0gamma_sigmaRBu_;
+  RooRealVar &partRec_D0pi0_sigmaRBu() {
+    return partRec_D0pi0_sigmaRBu_;
   }
-  RooCruijff &pdfBu_Bu2Dst0hst_D0gamma() { return pdfBu_Bu2Dst0hst_D0gamma_; }
-  RooRealVar &N_tot_Bu2Dst0hst_D0gamma() { return N_tot_Bu2Dst0hst_D0gamma_; }
-  RooConstVar &pidEff_Bu2Dst0hst_D0gamma() {
-    return pidEff_Bu2Dst0hst_D0gamma_;
+  RooCruijff &pdfBu_PartRec_D0pi0() { return pdfBu_PartRec_D0pi0_; }
+  RooRealVar &partRec_D0gamma_sigmaLBu() {
+    return partRec_D0gamma_sigmaLBu_;
   }
-  RooFormulaVar &N_Bu2Dst0hst_D0gamma() { return N_Bu2Dst0hst_D0gamma_; }
-  RooFormulaVar &N_Delta_Bu2Dst0hst_D0gamma() {
-    return N_Delta_Bu2Dst0hst_D0gamma_;
+  RooRealVar &partRec_D0gamma_sigmaRBu() {
+    return partRec_D0gamma_sigmaRBu_;
   }
-  RooAbsReal &N_Bu_Bu2Dst0hst_D0gamma() { return *N_Bu_Bu2Dst0hst_D0gamma_; }
-  // -------------------- Mis-ID ------------------- //
-  RooRealVar &misId_Bu2Dst0hst_D0gamma_meanBu() {
-    return misId_Bu2Dst0hst_D0gamma_meanBu_;
-  }
-  RooRealVar &misId_Bu2Dst0hst_D0gamma_sigmaLBu() {
-    return misId_Bu2Dst0hst_D0gamma_sigmaLBu_;
-  }
-  RooRealVar &misId_Bu2Dst0hst_D0gamma_sigmaRBu() {
-    return misId_Bu2Dst0hst_D0gamma_sigmaRBu_;
-  }
-  RooRealVar &misId_Bu2Dst0hst_D0gamma_aLBu() {
-    return misId_Bu2Dst0hst_D0gamma_aLBu_;
-  }
-  RooRealVar &misId_Bu2Dst0hst_D0gamma_aRBu() {
-    return misId_Bu2Dst0hst_D0gamma_aRBu_;
-  }
-  RooCruijff &pdfBu_misId_Bu2Dst0hst_D0gamma() {
-    return pdfBu_misId_Bu2Dst0hst_D0gamma_;
-  }
-  RooRealVar &orEffMisId_Bu2Dst0hst_D0gamma() {
-    return orEffMisId_Bu2Dst0hst_D0gamma_;
-  }
-  RooRealVar &boxEffMisId_Bu2Dst0hst_D0gamma() {
-    return boxEffMisId_Bu2Dst0hst_D0gamma_;
-  }
-  RooRealVar &buDeltaCutEffMisId_Bu2Dst0hst_D0gamma() {
-    return buDeltaCutEffMisId_Bu2Dst0hst_D0gamma_;
-  }
-  RooRealVar &deltaCutEffMisId_Bu2Dst0hst_D0gamma() {
-    return deltaCutEffMisId_Bu2Dst0hst_D0gamma_;
-  }
-  // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
-  RooRealVar &Bu2Dst0hst_D0pi0_sigmaLBu() {
-    return Bu2Dst0hst_D0pi0_sigmaLBu_;
-  }
-  RooRealVar &Bu2Dst0hst_D0pi0_sigmaRBu() {
-    return Bu2Dst0hst_D0pi0_sigmaRBu_;
-  }
-  RooCruijff &pdfBu_Bu2Dst0hst_D0pi0() { return pdfBu_Bu2Dst0hst_D0pi0_; }
-  RooRealVar &N_tot_Bu2Dst0hst_D0pi0() { return N_tot_Bu2Dst0hst_D0pi0_; }
-  RooConstVar &pidEff_Bu2Dst0hst_D0pi0() {
+  RooCruijff &pdfBu_PartRec_D0gamma() { return pdfBu_PartRec_D0gamma_; }
+  RooAddPdf &pdfBu_PartRec() { return *pdfBu_PartRec_; }
+  RooRealVar &N_tot_PartRec() { return N_tot_PartRec_; }
+  double &pidEff_Bu2Dst0hst_D0pi0() {
     return pidEff_Bu2Dst0hst_D0pi0_;
   }
-  RooFormulaVar &N_Bu2Dst0hst_D0pi0() { return N_Bu2Dst0hst_D0pi0_; }
-  RooFormulaVar &N_Delta_Bu2Dst0hst_D0pi0() {
-    return N_Delta_Bu2Dst0hst_D0pi0_;
+  double &pidEff_Bu2Dst0hst_D0gamma() {
+    return pidEff_Bu2Dst0hst_D0gamma_;
   }
-  RooAbsReal &N_Bu_Bu2Dst0hst_D0pi0() { return *N_Bu_Bu2Dst0hst_D0pi0_; }
+  RooConstVar &pidEff_PartRec() {
+    return pidEff_PartRec_;
+  }
+  RooFormulaVar &N_PartRec() { return N_PartRec_; }
+  RooFormulaVar &N_Delta_PartRec() {
+    return N_Delta_PartRec_;
+  }
+  RooAbsReal &N_Bu_PartRec() { return *N_Bu_PartRec_; }
   // -------------------- Mis-ID ------------------- //
-  RooRealVar &misId_Bu2Dst0hst_D0pi0_meanBu() {
-    return misId_Bu2Dst0hst_D0pi0_meanBu_;
+  RooRealVar &misId_PartRec_meanBu() {
+    return misId_PartRec_meanBu_;
   }
-  RooRealVar &misId_Bu2Dst0hst_D0pi0_sigmaLBu() {
-    return misId_Bu2Dst0hst_D0pi0_sigmaLBu_;
+  RooRealVar &misId_PartRec_sigmaLBu() {
+    return misId_PartRec_sigmaLBu_;
   }
-  RooRealVar &misId_Bu2Dst0hst_D0pi0_sigmaRBu() {
-    return misId_Bu2Dst0hst_D0pi0_sigmaRBu_;
+  RooRealVar &misId_PartRec_sigmaRBu() {
+    return misId_PartRec_sigmaRBu_;
   }
-  RooRealVar &misId_Bu2Dst0hst_D0pi0_aLBu() {
-    return misId_Bu2Dst0hst_D0pi0_aLBu_;
+  RooRealVar &misId_PartRec_aLBu() {
+    return misId_PartRec_aLBu_;
   }
-  RooRealVar &misId_Bu2Dst0hst_D0pi0_aRBu() {
-    return misId_Bu2Dst0hst_D0pi0_aRBu_;
+  RooRealVar &misId_PartRec_aRBu() {
+    return misId_PartRec_aRBu_;
   }
-  RooCruijff &pdfBu_misId_Bu2Dst0hst_D0pi0() {
-    return pdfBu_misId_Bu2Dst0hst_D0pi0_;
+  RooCruijff &pdfBu_misId_PartRec() {
+    return pdfBu_misId_PartRec_;
   }
-  RooRealVar &orEffMisId_Bu2Dst0hst_D0pi0() {
-    return orEffMisId_Bu2Dst0hst_D0pi0_;
+  RooRealVar &orEffMisId_PartRec() {
+    return orEffMisId_PartRec_;
   }
-  RooRealVar &boxEffMisId_Bu2Dst0hst_D0pi0() {
-    return boxEffMisId_Bu2Dst0hst_D0pi0_;
+  RooRealVar &boxEffMisId_PartRec() {
+    return boxEffMisId_PartRec_;
   }
-  RooRealVar &buDeltaCutEffMisId_Bu2Dst0hst_D0pi0() {
-    return buDeltaCutEffMisId_Bu2Dst0hst_D0pi0_;
+  RooRealVar &buDeltaCutEffMisId_PartRec() {
+    return buDeltaCutEffMisId_PartRec_;
   }
-  RooRealVar &deltaCutEffMisId_Bu2Dst0hst_D0pi0() {
-    return deltaCutEffMisId_Bu2Dst0hst_D0pi0_;
+  RooRealVar &deltaCutEffMisId_PartRec() {
+    return deltaCutEffMisId_PartRec_;
   }
 
   void SetMisIdEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
@@ -423,46 +389,32 @@ class NeutralBachelorVars {
   RooRealVar boxEffMisId_Bu2D0h_;
   RooRealVar buDeltaCutEffMisId_Bu2D0h_;
   RooRealVar deltaCutEffMisId_Bu2D0h_;
-  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
-  RooRealVar Bu2Dst0hst_D0gamma_sigmaLBu_;
-  RooRealVar Bu2Dst0hst_D0gamma_sigmaRBu_;
-  RooCruijff pdfBu_Bu2Dst0hst_D0gamma_;
-  RooRealVar N_tot_Bu2Dst0hst_D0gamma_;
-  RooConstVar pidEff_Bu2Dst0hst_D0gamma_;
-  RooFormulaVar N_Bu2Dst0hst_D0gamma_;
-  RooFormulaVar N_Delta_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooAbsReal> N_Bu_Bu2Dst0hst_D0gamma_;
+  // -------------------- PART REC -------------------- //
+  RooRealVar partRec_D0pi0_sigmaLBu_;
+  RooRealVar partRec_D0pi0_sigmaRBu_;
+  RooCruijff pdfBu_PartRec_D0pi0_;
+  RooRealVar partRec_D0gamma_sigmaLBu_;
+  RooRealVar partRec_D0gamma_sigmaRBu_;
+  RooCruijff pdfBu_PartRec_D0gamma_;
+  std::unique_ptr<RooAddPdf> pdfBu_PartRec_;
+  RooRealVar N_tot_PartRec_;
+  double pidEff_Bu2Dst0hst_D0pi0_;
+  double pidEff_Bu2Dst0hst_D0gamma_;
+  RooConstVar pidEff_PartRec_;
+  RooFormulaVar N_PartRec_;
+  RooFormulaVar N_Delta_PartRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_PartRec_;
   // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_Bu2Dst0hst_D0gamma_meanBu_;
-  RooRealVar misId_Bu2Dst0hst_D0gamma_sigmaLBu_;
-  RooRealVar misId_Bu2Dst0hst_D0gamma_sigmaRBu_;
-  RooRealVar misId_Bu2Dst0hst_D0gamma_aLBu_;
-  RooRealVar misId_Bu2Dst0hst_D0gamma_aRBu_;
-  RooCruijff pdfBu_misId_Bu2Dst0hst_D0gamma_;
-  RooRealVar orEffMisId_Bu2Dst0hst_D0gamma_;
-  RooRealVar boxEffMisId_Bu2Dst0hst_D0gamma_;
-  RooRealVar buDeltaCutEffMisId_Bu2Dst0hst_D0gamma_;
-  RooRealVar deltaCutEffMisId_Bu2Dst0hst_D0gamma_;
-  // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
-  RooRealVar Bu2Dst0hst_D0pi0_sigmaLBu_;
-  RooRealVar Bu2Dst0hst_D0pi0_sigmaRBu_;
-  RooCruijff pdfBu_Bu2Dst0hst_D0pi0_;
-  RooRealVar N_tot_Bu2Dst0hst_D0pi0_;
-  RooConstVar pidEff_Bu2Dst0hst_D0pi0_;
-  RooFormulaVar N_Bu2Dst0hst_D0pi0_;
-  RooFormulaVar N_Delta_Bu2Dst0hst_D0pi0_;
-  std::unique_ptr<RooAbsReal> N_Bu_Bu2Dst0hst_D0pi0_;
-  // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_Bu2Dst0hst_D0pi0_meanBu_;
-  RooRealVar misId_Bu2Dst0hst_D0pi0_sigmaLBu_;
-  RooRealVar misId_Bu2Dst0hst_D0pi0_sigmaRBu_;
-  RooRealVar misId_Bu2Dst0hst_D0pi0_aLBu_;
-  RooRealVar misId_Bu2Dst0hst_D0pi0_aRBu_;
-  RooCruijff pdfBu_misId_Bu2Dst0hst_D0pi0_;
-  RooRealVar orEffMisId_Bu2Dst0hst_D0pi0_;
-  RooRealVar boxEffMisId_Bu2Dst0hst_D0pi0_;
-  RooRealVar buDeltaCutEffMisId_Bu2Dst0hst_D0pi0_;
-  RooRealVar deltaCutEffMisId_Bu2Dst0hst_D0pi0_;
+  RooRealVar misId_PartRec_meanBu_;
+  RooRealVar misId_PartRec_sigmaLBu_;
+  RooRealVar misId_PartRec_sigmaRBu_;
+  RooRealVar misId_PartRec_aLBu_;
+  RooRealVar misId_PartRec_aRBu_;
+  RooCruijff pdfBu_misId_PartRec_;
+  RooRealVar orEffMisId_PartRec_;
+  RooRealVar boxEffMisId_PartRec_;
+  RooRealVar buDeltaCutEffMisId_PartRec_;
+  RooRealVar deltaCutEffMisId_PartRec_;
 };
 
 template <Neutral neutral, Bachelor bachelor>
