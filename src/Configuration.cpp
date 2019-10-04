@@ -734,38 +734,3 @@ std::string EnumToLabel(Neutral neutral) {
   }
 }
 
-std::string MisIdLabel(Bachelor bachelor) {
-  switch (bachelor) {
-    case Bachelor::pi:
-      return "K";
-    case Bachelor::k:
-      return "#pi";
-  }
-}
-
-std::string HstLabel(Bachelor bachelor) {
-  switch (bachelor) {
-    case Bachelor::pi:
-      return "#rho";
-    case Bachelor::k:
-      return "K^{*}";
-  }
-}
-
-std::string MisIdHstLabel(Bachelor bachelor) {
-  switch (bachelor) {
-    case Bachelor::pi:
-      return "K^{*}";
-    case Bachelor::k:
-      return "#rho";
-  }
-}
-
-std::string CrossFeedLabel(Neutral neutral) {
-  switch (neutral) {
-    case Neutral::pi0:
-      return "#gamma";
-    case Neutral::gamma:
-      return "#pi^{0}";
-  }
-}

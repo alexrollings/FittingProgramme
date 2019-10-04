@@ -59,7 +59,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
-                   bool fitBool, Configuration &config) {
+                   bool fitBool, Configuration &config,
+                   std::map<std::string, Color_t> histMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -403,7 +404,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   if (labelString == "TOY") {
     lumiLegend.SetTextSize(0.07);
   }
+
   TLegend legend(0.66, 0.48, 0.87, 0.75);
+  legend.SetLineColor(kWhite);
 
   if (neutral == Neutral::pi0) {
     if (bachelor == Bachelor::k) {
@@ -432,185 +435,198 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
   }
   // ------------- Draw Legends -------------- //
+  std::map<std::string, Color_t> histMap;
 
-  auto Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0h_D0gammaHist" +
+  auto Bu2Dst0pi_D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0pi_D0gammaHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "Bu2Dst0h_D0gammaHist", 1, 0, 1);
-  Bu2Dst0h_D0gammaHist->SetLineColor(kBlue);
-  Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0h_D0gammaHist->SetLineWidth(2);
+      "Bu2Dst0pi_D0gammaHist", 1, 0, 1);
+  Bu2Dst0pi_D0gammaHist->SetLineColor(kBlue);
+  Bu2Dst0pi_D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0pi_D0gammaHist->SetLineWidth(2);
+  histMap["Bu2Dst0pi_D0gamma"] = Bu2Dst0pi_D0gammaHist->GetLineColor();
 
-  auto misId_Bu2Dst0h_D0gammaHist = std::make_unique<TH1D>(
-      ("misId_Bu2Dst0h_D0gammaHist" +
+  auto Bu2Dst0K_D0gammaHist = std::make_unique<TH1D>(
+      ("Bu2Dst0K_D0gammaHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "misId_Bu2Dst0h_D0gammaHist", 1, 0, 1);
-  misId_Bu2Dst0h_D0gammaHist->SetLineColor(kMagenta);
-  misId_Bu2Dst0h_D0gammaHist->SetLineStyle(kDashed);
-  misId_Bu2Dst0h_D0gammaHist->SetLineWidth(2);
+      "Bu2Dst0K_D0gammaHist", 1, 0, 1);
+  Bu2Dst0K_D0gammaHist->SetLineColor(kMagenta);
+  Bu2Dst0K_D0gammaHist->SetLineStyle(kDashed);
+  Bu2Dst0K_D0gammaHist->SetLineWidth(2);
+  histMap["Bu2Dst0K_D0gamma"] = Bu2Dst0K_D0gammaHist->GetLineColor();
 
-  auto Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
-      ("Bu2Dst0h_D0pi0Hist" +
+  auto Bu2Dst0pi_D0pi0Hist = std::make_unique<TH1D>(
+      ("Bu2Dst0pi_D0pi0Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "Bu2Dst0h_D0pi0Hist", 1, 0, 1);
-  Bu2Dst0h_D0pi0Hist->SetLineColor(kOrange);
-  Bu2Dst0h_D0pi0Hist->SetLineStyle(kDashed);
-  Bu2Dst0h_D0pi0Hist->SetLineWidth(2);
+      "Bu2Dst0pi_D0pi0Hist", 1, 0, 1);
+  Bu2Dst0pi_D0pi0Hist->SetLineColor(kOrange);
+  Bu2Dst0pi_D0pi0Hist->SetLineStyle(kDashed);
+  Bu2Dst0pi_D0pi0Hist->SetLineWidth(2);
+  histMap["Bu2Dst0pi_D0pi0"] = Bu2Dst0pi_D0pi0Hist->GetLineColor();
 
-  auto misId_Bu2Dst0h_D0pi0Hist = std::make_unique<TH1D>(
-      ("misId_Bu2Dst0h_D0pi0Hist" +
+  auto Bu2Dst0K_D0pi0Hist = std::make_unique<TH1D>(
+      ("Bu2Dst0K_D0pi0Hist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "misId_Bu2Dst0h_D0pi0Hist", 1, 0, 1);
-  misId_Bu2Dst0h_D0pi0Hist->SetLineColor(kCyan);
-  misId_Bu2Dst0h_D0pi0Hist->SetLineStyle(kDashed);
-  misId_Bu2Dst0h_D0pi0Hist->SetLineWidth(2);
+      "Bu2Dst0K_D0pi0Hist", 1, 0, 1);
+  Bu2Dst0K_D0pi0Hist->SetLineColor(kCyan);
+  Bu2Dst0K_D0pi0Hist->SetLineStyle(kDashed);
+  Bu2Dst0K_D0pi0Hist->SetLineWidth(2);
+  histMap["Bu2Dst0K_D0pi0"] = Bu2Dst0K_D0pi0Hist->GetLineColor();
 
-  auto MisRecHist = std::make_unique<TH1D>(
-      ("MisRecHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto MisRecPiHist = std::make_unique<TH1D>(
+      ("MisRecPiHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "MisRecHist", 1, 0, 1);
-  MisRecHist->SetLineColor(kRed);
-  MisRecHist->SetLineStyle(kDashed);
-  MisRecHist->SetLineWidth(2);
+      "MisRecPiHist", 1, 0, 1);
+  MisRecPiHist->SetLineColor(kRed);
+  MisRecPiHist->SetLineStyle(kDashed);
+  MisRecPiHist->SetLineWidth(2);
+  histMap["MisRecPi"] = MisRecPiHist->GetLineColor();
 
-  auto misId_MisRecHist = std::make_unique<TH1D>(
-      ("misId_MisRecHist" +
+  auto MisRecKHist = std::make_unique<TH1D>(
+      ("MisRecKHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "misId_MisRecHist", 1, 0, 1);
-  misId_MisRecHist->SetLineColor(kGreen + 4);
-  misId_MisRecHist->SetLineStyle(kDashed);
-  misId_MisRecHist->SetLineWidth(2);
+      "MisRecKHist", 1, 0, 1);
+  MisRecKHist->SetLineColor(kGreen + 4);
+  MisRecKHist->SetLineStyle(kDashed);
+  MisRecKHist->SetLineWidth(2);
+  histMap["MisRecK"] = MisRecKHist->GetLineColor();
 
-  auto Bu2D0hHist = std::make_unique<TH1D>(
-      ("Bu2D0hHist" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto Bu2D0piHist = std::make_unique<TH1D>(
+      ("Bu2D0piHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "Bu2D0hHist", 1, 0, 1);
-  Bu2D0hHist->SetLineColor(kGreen);
-  Bu2D0hHist->SetLineStyle(kDashed);
-  Bu2D0hHist->SetLineWidth(2);
+      "Bu2D0piHist", 1, 0, 1);
+  Bu2D0piHist->SetLineColor(kGreen);
+  Bu2D0piHist->SetLineStyle(kDashed);
+  Bu2D0piHist->SetLineWidth(2);
+  histMap["Bu2D0pi"] = Bu2D0piHist->GetLineColor();
 
-  auto misId_Bu2D0hHist = std::make_unique<TH1D>(
-      ("misId_Bu2D0hHist" +
+  auto Bu2D0KHist = std::make_unique<TH1D>(
+      ("Bu2D0KHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "misId_Bu2D0hHist", 1, 0, 1);
-  misId_Bu2D0hHist->SetLineColor(kBlue + 4);
-  misId_Bu2D0hHist->SetLineStyle(kDashed);
-  misId_Bu2D0hHist->SetLineWidth(2);
+      "Bu2D0KHist", 1, 0, 1);
+  Bu2D0KHist->SetLineColor(kBlue + 4);
+  Bu2D0KHist->SetLineStyle(kDashed);
+  Bu2D0KHist->SetLineWidth(2);
+  histMap["Bu2D0K"] = Bu2D0KHist->GetLineColor();
 
-  auto PartRecHist = std::make_unique<TH1D>(
-      ("PartRecHist" +
+  auto PartRecRhoHist = std::make_unique<TH1D>(
+      ("PartRecRhoHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "PartRecHist", 1, 0, 1);
-  PartRecHist->SetLineColor(kGreen + 3);
-  PartRecHist->SetLineStyle(kDashed);
-  PartRecHist->SetLineWidth(2);
+      "PartRecRhoHist", 1, 0, 1);
+  PartRecRhoHist->SetLineColor(kGreen + 3);
+  PartRecRhoHist->SetLineStyle(kDashed);
+  PartRecRhoHist->SetLineWidth(2);
+  histMap["PartRecRho"] = PartRecRhoHist->GetLineColor();
 
-  auto misId_PartRecHist = std::make_unique<TH1D>(
-      ("misId_PartRecHist" +
+  auto PartRecKstHist = std::make_unique<TH1D>(
+      ("PartRecKstHist" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "misId_PartRecHist", 1, 0, 1);
-  misId_PartRecHist->SetLineColor(kMagenta - 2);
-  misId_PartRecHist->SetLineStyle(kDashed);
-  misId_PartRecHist->SetLineWidth(2);
+      "PartRecKstHist", 1, 0, 1);
+  PartRecKstHist->SetLineColor(kMagenta - 2);
+  PartRecKstHist->SetLineStyle(kDashed);
+  PartRecKstHist->SetLineWidth(2);
+  histMap["PartRecKst"] = PartRecKstHist->GetLineColor();
 
-  std::stringstream Bu2Dst0h_D0gammaLegend;
-  Bu2Dst0h_D0gammaLegend
+  std::stringstream Bu2Dst0pi_D0gammaLegend;
+  Bu2Dst0pi_D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream misId_Bu2Dst0h_D0gammaLegend;
-  misId_Bu2Dst0h_D0gammaLegend
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}#pi^{" +
+             EnumToLabel(charge) + "}";
+  std::stringstream Bu2Dst0K_D0gammaLegend;
+  Bu2Dst0K_D0gammaLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}" +
-             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream Bu2Dst0h_D0pi0Legend;
-  Bu2Dst0h_D0pi0Legend
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}K^{" +
+             EnumToLabel(charge) + "}";
+  std::stringstream Bu2Dst0pi_D0pi0Legend;
+  Bu2Dst0pi_D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream misId_Bu2Dst0h_D0pi0Legend;
-  misId_Bu2Dst0h_D0pi0Legend
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}#pi^{" +
+             EnumToLabel(charge) + "}";
+  std::stringstream Bu2Dst0K_D0pi0Legend;
+  Bu2Dst0K_D0pi0Legend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}" +
-             MisIdLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream MisRecLegend;
-  MisRecLegend << "Mis-Reconstructed Bkg";
-  std::stringstream misId_MisRecLegend;
-  misId_MisRecLegend << "Mis-Reconstructed Bkg Mis-ID";
-  std::stringstream Bu2D0hLegend;
-  Bu2D0hLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream misId_Bu2D0hLegend;
-  misId_Bu2D0hLegend << "B^{" + EnumToLabel(charge) +
-                            "}#rightarrow#font[132]{[}" +
-                            EnumToLabel(daughters, charge) +
-                            "#font[132]{]}_{D^{0}}" + MisIdLabel(bachelor) +
-                            "^{" + EnumToLabel(charge) + "}";
-  std::stringstream PartRecLegend;
-  PartRecLegend
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}K^{" +
+             EnumToLabel(charge) + "}";
+  std::stringstream MisRecPiLegend;
+  MisRecPiLegend << "Mis-Rec $D^{*}#pi^{" + EnumToLabel(charge) + "}$";
+  std::stringstream MisRecKLegend;
+  MisRecKLegend << "Mis-Rec $D^{*}K^{" + EnumToLabel(charge) + "}$";
+  std::stringstream Bu2D0piLegend;
+  Bu2D0piLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" + EnumToLabel(charge) + "}";
+  std::stringstream Bu2D0KLegend;
+  Bu2D0KLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+                      EnumToLabel(daughters, charge) +
+                      "#font[132]{]}_{D^{0}}K^{" + EnumToLabel(charge) + "}";
+  std::stringstream PartRecRhoLegend;
+  PartRecRhoLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
-             HstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
-  std::stringstream misId_PartRecLegend;
-  misId_PartRecLegend
+             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}#rho^{" +
+             EnumToLabel(charge) + "}";
+  std::stringstream PartRecKstLegend;
+  PartRecKstLegend
       << "B^{" + EnumToLabel(charge) +
              "}#rightarrow#font[132]{[}#font[132]{[}" +
              EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}" +
-             MisIdHstLabel(bachelor) + "^{" + EnumToLabel(charge) + "}";
+             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}^{*" +
+             EnumToLabel(charge) + "}";
 
-  legend.SetLineColor(kWhite);
-  if (neutral == Neutral::gamma) {
-    legend.AddEntry(Bu2Dst0h_D0gammaHist.get(),
-                    Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
-    legend.AddEntry(misId_Bu2Dst0h_D0gammaHist.get(),
-                    misId_Bu2Dst0h_D0gammaLegend.str().c_str(), "l");
-  }
-  legend.AddEntry(Bu2Dst0h_D0pi0Hist.get(), Bu2Dst0h_D0pi0Legend.str().c_str(),
-                  "l");
-  legend.AddEntry(misId_Bu2Dst0h_D0pi0Hist.get(),
-                  misId_Bu2Dst0h_D0pi0Legend.str().c_str(), "l");
-  legend.AddEntry(MisRecHist.get(), MisRecLegend.str().c_str(), "l");
-  if (bachelor == Bachelor::k) {
-    legend.AddEntry(misId_MisRecHist.get(), misId_MisRecLegend.str().c_str(),
-                    "l");
-  }
-  legend.AddEntry(Bu2D0hHist.get(), Bu2D0hLegend.str().c_str(), "l");
-  if (bachelor == Bachelor::k) {
-    legend.AddEntry(misId_Bu2D0hHist.get(), misId_Bu2D0hLegend.str().c_str(),
-                    "l");
-  }
-  legend.AddEntry(PartRecHist.get(),
-                  PartRecLegend.str().c_str(), "l");
-  if (bachelor == Bachelor::k) {
-    legend.AddEntry(misId_PartRecHist.get(),
-                    misId_PartRecLegend.str().c_str(), "l");
+  if (bachelor == Bachelor::pi) {
+    if (neutral == Neutral::gamma) {
+      legend.AddEntry(Bu2Dst0pi_D0gammaHist.get(),
+                      Bu2Dst0pi_D0gammaLegend.str().c_str(), "l");
+      legend.AddEntry(Bu2Dst0K_D0gammaHist.get(),
+                      Bu2Dst0K_D0gammaLegend.str().c_str(), "l");
+    }
+    legend.AddEntry(Bu2Dst0pi_D0pi0Hist.get(),
+                    Bu2Dst0pi_D0pi0Legend.str().c_str(), "l");
+    legend.AddEntry(Bu2Dst0K_D0pi0Hist.get(),
+                    Bu2Dst0K_D0pi0Legend.str().c_str(), "l");
+    legend.AddEntry(MisRecPiHist.get(), MisRecPiLegend.str().c_str(), "l");
+    legend.AddEntry(Bu2D0piHist.get(), Bu2D0piLegend.str().c_str(), "l");
+    legend.AddEntry(PartRecRhoHist.get(), PartRecRhoLegend.str().c_str(), "l");
+  } else {
+    if (neutral == Neutral::gamma) {
+      legend.AddEntry(Bu2Dst0K_D0gammaHist.get(),
+                      Bu2Dst0K_D0gammaLegend.str().c_str(), "l");
+      legend.AddEntry(Bu2Dst0pi_D0gammaHist.get(),
+                      Bu2Dst0pi_D0gammaLegend.str().c_str(), "l");
+    }
+    legend.AddEntry(Bu2Dst0K_D0pi0Hist.get(),
+                    Bu2Dst0K_D0pi0Legend.str().c_str(), "l");
+    legend.AddEntry(Bu2Dst0pi_D0pi0Hist.get(),
+                    Bu2Dst0pi_D0pi0Legend.str().c_str(), "l");
+    legend.AddEntry(MisRecKHist.get(), MisRecKLegend.str().c_str(), "l");
+    legend.AddEntry(MisRecPiHist.get(), MisRecPiLegend.str().c_str(), "l");
+    legend.AddEntry(Bu2D0KHist.get(), Bu2D0KLegend.str().c_str(), "l");
+    legend.AddEntry(Bu2D0piHist.get(), Bu2D0piLegend.str().c_str(), "l");
+    legend.AddEntry(PartRecKstHist.get(), PartRecKstLegend.str().c_str(), "l");
+    legend.AddEntry(PartRecRhoHist.get(), PartRecRhoLegend.str().c_str(), "l");
   }
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, lumiLegend, outputDir, fitBool, config);
+                categories, legend, lumiLegend, outputDir, fitBool, config, histMap);
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  categories, legend, lumiLegend, outputDir, fitBool, config);
+                  categories, legend, lumiLegend, outputDir, fitBool, config, histMap);
   }
 }
 
