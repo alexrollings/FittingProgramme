@@ -579,7 +579,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  TLegend lumiLegend(0.66, 0.75, 0.87, 0.8);
+  TLegend lumiLegend(0.7, 0.75, 0.9, 0.8);
   lumiLegend.SetTextSize(0.03);
   lumiLegend.SetLineColor(kWhite);
   lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
@@ -589,7 +589,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     lumiLegend.SetTextSize(0.07);
   }
 
-  TLegend legend(0.66, 0.48, 0.87, 0.75);
+  TLegend legend(0.7, 0.48, 0.9, 0.75);
   legend.SetLineColor(kWhite);
 
   if (neutral == Neutral::pi0) {
@@ -626,7 +626,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0pi_D0gammaHist", 1, 0, 1);
-  Bu2Dst0pi_D0gammaHist->SetLineColor(kBlue);
+  Bu2Dst0pi_D0gammaHist->SetLineColor(kGreen+2);
   Bu2Dst0pi_D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0pi_D0gammaHist->SetLineWidth(2);
   colorMap["Bu2Dst0pi_D0gamma"] = Bu2Dst0pi_D0gammaHist->GetLineColor();
@@ -636,7 +636,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0K_D0gammaHist", 1, 0, 1);
-  Bu2Dst0K_D0gammaHist->SetLineColor(kMagenta);
+  Bu2Dst0K_D0gammaHist->SetLineColor(kRed);
   Bu2Dst0K_D0gammaHist->SetLineStyle(kDashed);
   Bu2Dst0K_D0gammaHist->SetLineWidth(2);
   colorMap["Bu2Dst0K_D0gamma"] = Bu2Dst0K_D0gammaHist->GetLineColor();
@@ -646,7 +646,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0pi_D0pi0Hist", 1, 0, 1);
-  Bu2Dst0pi_D0pi0Hist->SetLineColor(kOrange);
+  Bu2Dst0pi_D0pi0Hist->SetLineColor(kBlue-7);
   Bu2Dst0pi_D0pi0Hist->SetLineStyle(kDashed);
   Bu2Dst0pi_D0pi0Hist->SetLineWidth(2);
   colorMap["Bu2Dst0pi_D0pi0"] = Bu2Dst0pi_D0pi0Hist->GetLineColor();
@@ -656,7 +656,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2Dst0K_D0pi0Hist", 1, 0, 1);
-  Bu2Dst0K_D0pi0Hist->SetLineColor(kCyan);
+  Bu2Dst0K_D0pi0Hist->SetLineColor(kViolet-6);
   Bu2Dst0K_D0pi0Hist->SetLineStyle(kDashed);
   Bu2Dst0K_D0pi0Hist->SetLineWidth(2);
   colorMap["Bu2Dst0K_D0pi0"] = Bu2Dst0K_D0pi0Hist->GetLineColor();
@@ -665,7 +665,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("MisRecPiHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "MisRecPiHist", 1, 0, 1);
-  MisRecPiHist->SetLineColor(kRed);
+  MisRecPiHist->SetLineColor(kOrange);
   MisRecPiHist->SetLineStyle(kDashed);
   MisRecPiHist->SetLineWidth(2);
   colorMap["MisRecPi"] = MisRecPiHist->GetLineColor();
@@ -674,7 +674,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("MisRecKHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "MisRecKHist", 1, 0, 1);
-  MisRecKHist->SetLineColor(kGreen + 4);
+  MisRecKHist->SetLineColor(kAzure - 1);
   MisRecKHist->SetLineStyle(kDashed);
   MisRecKHist->SetLineWidth(2);
   colorMap["MisRecK"] = MisRecKHist->GetLineColor();
@@ -683,7 +683,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("Bu2D0piHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2D0piHist", 1, 0, 1);
-  Bu2D0piHist->SetLineColor(kGreen);
+  Bu2D0piHist->SetLineColor(kMagenta);
   Bu2D0piHist->SetLineStyle(kDashed);
   Bu2D0piHist->SetLineWidth(2);
   colorMap["Bu2D0pi"] = Bu2D0piHist->GetLineColor();
@@ -692,7 +692,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("Bu2D0KHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "Bu2D0KHist", 1, 0, 1);
-  Bu2D0KHist->SetLineColor(kBlue + 4);
+  Bu2D0KHist->SetLineColor(kCyan + 1);
   Bu2D0KHist->SetLineStyle(kDashed);
   Bu2D0KHist->SetLineWidth(2);
   colorMap["Bu2D0K"] = Bu2D0KHist->GetLineColor();
@@ -701,7 +701,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("PartRecRhoHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "PartRecRhoHist", 1, 0, 1);
-  PartRecRhoHist->SetLineColor(kGreen + 3);
+  PartRecRhoHist->SetLineColor(kBlue + 3);
   PartRecRhoHist->SetLineStyle(kDashed);
   PartRecRhoHist->SetLineWidth(2);
   colorMap["PartRecRho"] = PartRecRhoHist->GetLineColor();
@@ -710,7 +710,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("PartRecKstHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "PartRecKstHist", 1, 0, 1);
-  PartRecKstHist->SetLineColor(kMagenta - 2);
+  PartRecKstHist->SetLineColor(kSpring - 1);
   PartRecKstHist->SetLineStyle(kDashed);
   PartRecKstHist->SetLineWidth(2);
   colorMap["PartRecKst"] = PartRecKstHist->GetLineColor();
@@ -744,9 +744,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
              "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}K^{" +
              EnumToLabel(charge) + "}";
   std::stringstream MisRecPiLegend;
-  MisRecPiLegend << "Mis-Rec $D^{*}#pi^{" + EnumToLabel(charge) + "}$";
+  MisRecPiLegend << "Mis-Rec D^{*}#pi^{" + EnumToLabel(charge) + "}";
   std::stringstream MisRecKLegend;
-  MisRecKLegend << "Mis-Rec $D^{*}K^{" + EnumToLabel(charge) + "}$";
+  MisRecKLegend << "Mis-Rec D^{*}K^{" + EnumToLabel(charge) + "}";
   std::stringstream Bu2D0piLegend;
   Bu2D0piLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
                        EnumToLabel(daughters, charge) +
