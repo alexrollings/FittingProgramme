@@ -1121,9 +1121,92 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
-// Function we use to do the toy study - run many toys and extract pulls for
-// each mass of interest
-void Run2DToys(RooAbsData const &fullDataHist) {
+void Plotting2D(RooDataSet &fullDataSet, int const id, PdfBase &pdf,
+               Configuration &config, std::string const &outputDir) {
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(0.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.5, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+  Charge charge = pdf.charge();
+
+  auto buDeltaAbsData = fullDataSet.reduce(
+      ("fitting==fitting::" +
+       ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
+          .c_str());
+  auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
+  if (buDeltaDataSet == nullptr) {
+    throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
+  }
+
+  auto deltaAbsData = fullDataSet.reduce(
+      ("fitting==fitting::" +
+       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+          .c_str());
+  auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
+  if (deltaDataSet == nullptr) {
+    throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
+  }
+  deltaDataSet->append(*buDeltaDataSet);
+
+  auto dataHist = std::unique_ptr<RooDataHist>(
+      deltaDataSet->binnedClone("dataHist", "dataHist"));
+  if (dataHist == nullptr) {
+    throw std::runtime_error("Could not extact binned dataset.");
+  }
+
+  auto dataHist1d = dataHist->createHistogram(
+      ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
+  if (dataHist1d == nullptr) {
+    throw std::runtime_error("\n1D hist of data returns nullptr\n");
+  }
+  auto dataHist2d =
+      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(dataHist1d /* .get() */));
+  if (dataHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of data returns nullptr\n");
+  }
+  dataHist2d->SetTitle("");
+
+  // 2D data plot
+  TCanvas canvasData(
+      ("canvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  dataHist2d->SetStats(0);
+  if (neutral == Neutral::pi0) {
+    dataHist2d->GetYaxis()->SetTitle(
+        "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+  }
+  dataHist2d->SetTitle(
+      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+       "^{" + EnumToLabel(charge) + "}")
+          .c_str());
+  dataHist2d->Draw("colz");
+  canvasData.Update();
+  canvasData.SaveAs((outputDir + "/2d_plots/" +
+                     ComposeName(id, neutral, bachelor, daughters, charge) +
+                     "_2dData.pdf")
+                        .c_str());
+}
+
+void Run2DToys(RooDataSet &fullDataSet,
+               Configuration &config, std::vector<PdfBase *> &pdfs,
+               std::string const &outputDir) {
+  for (auto &p : pdfs) {
+    int id = 0;
+    Plotting2D(fullDataSet, id, *p, config, outputDir);
+  }
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -1644,9 +1727,10 @@ int main(int argc, char **argv) {
       } else {
         result->Print("v");
       }
-      // RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+      // RunD1DToys(simPdf, result, config, categories, neutralVec,
+      // daughtersVec,
       //         chargeVec, outputDir, nToys, fitBool);
-      Run2DToys(fullDataHist);
+      Run2DToys(fullDataSet, config, pdfs, outputDir);
     }
   } else {
     RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
