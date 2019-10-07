@@ -1028,7 +1028,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
 
 // Function we use to do the toy study - run many toys and extract pulls for
 // each mass of interest
-void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
+void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
              std::unique_ptr<RooFitResult> &dataFitResult,
              Configuration &config, Configuration::Categories &categories,
              std::vector<Neutral> const &neutralVec,
@@ -1119,6 +1119,11 @@ void RunToys(std::unique_ptr<RooSimultaneous> &simPdf,
       std::cout << "Results saved to file " << outputFile.GetName() << "\n";
     }
   }
+}
+
+// Function we use to do the toy study - run many toys and extract pulls for
+// each mass of interest
+void Run2DToys(RooAbsData const &fullDataHist) {
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
@@ -1354,7 +1359,7 @@ int main(int argc, char **argv) {
   }
 
   // Declare simPDF and result before any if statements so that it can be passed
-  // to RunToys no matter what
+  // to RunD1DToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
   std::unique_ptr<RooFitResult> result;
 
@@ -1639,11 +1644,12 @@ int main(int argc, char **argv) {
       } else {
         result->Print("v");
       }
-      RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-              chargeVec, outputDir, nToys, fitBool);
+      // RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+      //         chargeVec, outputDir, nToys, fitBool);
+      Run2DToys(fullDataHist);
     }
   } else {
-    RunToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+    RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
             chargeVec, outputDir, nToys, fitBool);
   }
 
