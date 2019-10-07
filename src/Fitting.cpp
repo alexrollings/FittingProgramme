@@ -1200,9 +1200,16 @@ void Plotting2D(RooDataSet &fullDataSet, int const id, PdfBase &pdf,
                         .c_str());
 }
 
-void Run2DToys(RooDataSet &fullDataSet,
-               Configuration &config, std::vector<PdfBase *> &pdfs,
+void Run2DToys(RooDataSet &fullDataSet, Configuration &config,
+               Configuration::Categories &categories,
+               std::vector<Neutral> const &neutralVec,
+               std::vector<Daughters> const &daughtersVec,
+               std::vector<Charge> const &chargeVec,
                std::string const &outputDir) {
+  int tmpId = 0;
+  auto p = MakeSimultaneousPdf(tmpId, config, categories, neutralVec,
+                               daughtersVec, chargeVec);
+  auto pdfs = p.second;
   for (auto &p : pdfs) {
     int id = 0;
     Plotting2D(fullDataSet, id, *p, config, outputDir);
@@ -1626,112 +1633,114 @@ int main(int argc, char **argv) {
     std::cout << "\n\n\n";
     fullDataSet.Print();
     std::cout << "\n\n\n";
-    auto fullDataHist = std::unique_ptr<RooDataHist>(
-        fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
-    if (fullDataHist == nullptr) {
-      throw std::runtime_error("Could not extact binned dataset.");
-    }
-    auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
-    if (fullAbsData == nullptr) {
-      throw std::runtime_error("Could not cast to RooAbsData.");
-    }
 
-    auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                 daughtersVec, chargeVec);
-    simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-    auto pdfs = p.second;
-
-    if (fitBool == true) {
-      result = std::unique_ptr<RooFitResult>(
-          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-    }
-
-    if (nToys == 0) {
-      // String for lumi label on 1D projection plots
-      std::ostringstream lumiStream, lumiErrStream;
-      lumiStream << std::setprecision(2) << lumi;
-      lumiErrStream << std::setprecision(2) << lumiErr;
-      std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
-                               lumiErrStream.str() + " fb^{-1}";
-      // Loop over daughters again to plot correct PDFs
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
-                   fitBool, lumiString, result.get());
-      }
-
-      if (fitBool == true) {
-        result->Print("v");
-        PlotCorrelations(result.get(), outputDir, config);
-        // Save RFR of data and efficiencies to calculate observables with
-        // corrected errors
-        TFile outputFile((outputDir + "/results/DataResult_" +
-                          config.ReturnBoxString() + ".root")
-                             .c_str(),
-                         "recreate");
-        result->Write();
-        TTree tree("tree", "");
-        for (auto &n : neutralVec) {
-          double boxEffSignal, orEffSignal, buDeltaCutEffSignal,
-              deltaCutEffSignal;
-          int id = 0;
-          RooRealVar orEffSignalRRV(
-              ("orEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
-          RooRealVar boxEffSignalRRV(
-              ("boxEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
-          RooRealVar buDeltaCutEffSignalRRV(
-              ("buDeltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
-          RooRealVar deltaCutEffSignalRRV(
-              ("deltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
-          switch (n) {
-            case Neutral::gamma: {
-              NeutralVars<Neutral::gamma> gVars(id);
-              gVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
-                                    boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                    deltaCutEffSignalRRV);
-            } break;
-            case Neutral::pi0: {
-              NeutralVars<Neutral::pi0> pVars(id);
-              pVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
-                                    boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                    deltaCutEffSignalRRV);
-            } break;
-          }
-          orEffSignal = orEffSignalRRV.getVal();
-          boxEffSignal = boxEffSignalRRV.getVal();
-          buDeltaCutEffSignal = buDeltaCutEffSignalRRV.getVal();
-          deltaCutEffSignal = deltaCutEffSignalRRV.getVal();
-          tree.Branch(("orEffSignal_" + EnumToString(n)).c_str(), &orEffSignal,
-                      ("orEffSignal_" + EnumToString(n) + "/D").c_str());
-          tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(),
-                      &boxEffSignal,
-                      ("boxEffSignal_" + EnumToString(n) + "/D").c_str());
-          tree.Branch(
-              ("buDeltaCutEffSignal_" + EnumToString(n)).c_str(),
-              &buDeltaCutEffSignal,
-              ("buDeltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
-          tree.Branch(("deltaCutEffSignal_" + EnumToString(n)).c_str(),
-                      &deltaCutEffSignal,
-                      ("deltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
-          tree.Fill();
-        }
-        tree.Write();
-        outputFile.Write();
-        outputFile.Close();
-      }
-    } else {
-      if (simPdf == nullptr) {
-        std::cerr << "SimPdf not defined: using MC shapes."
-                  << "\n";
-      } else {
-        result->Print("v");
-      }
-      // RunD1DToys(simPdf, result, config, categories, neutralVec,
-      // daughtersVec,
-      //         chargeVec, outputDir, nToys, fitBool);
-      Run2DToys(fullDataSet, config, pdfs, outputDir);
-    }
+    Run2DToys(fullDataSet, config, categories, neutralVec, daughtersVec,
+              chargeVec, outputDir);
+    // auto fullDataHist = std::unique_ptr<RooDataHist>(
+    //     fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
+    // if (fullDataHist == nullptr) {
+    //   throw std::runtime_error("Could not extact binned dataset.");
+    // }
+    // auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
+    // if (fullAbsData == nullptr) {
+    //   throw std::runtime_error("Could not cast to RooAbsData.");
+    // }
+    //
+    // auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+    //                              daughtersVec, chargeVec);
+    // simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+    // auto pdfs = p.second;
+    //
+    // if (fitBool == true) {
+    //   result = std::unique_ptr<RooFitResult>(
+    //       simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+    //                     RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+    //                     RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+    // }
+    //
+    // if (nToys == 0) {
+    //   // String for lumi label on 1D projection plots
+    //   std::ostringstream lumiStream, lumiErrStream;
+    //   lumiStream << std::setprecision(2) << lumi;
+    //   lumiErrStream << std::setprecision(2) << lumiErr;
+    //   std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
+    //                            lumiErrStream.str() + " fb^{-1}";
+    //   // Loop over daughters again to plot correct PDFs
+    //   for (auto &p : pdfs) {
+    //     Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
+    //                fitBool, lumiString, result.get());
+    //   }
+    //
+    //   if (fitBool == true) {
+    //     result->Print("v");
+    //     PlotCorrelations(result.get(), outputDir, config);
+    //     // Save RFR of data and efficiencies to calculate observables with
+    //     // corrected errors
+    //     TFile outputFile((outputDir + "/results/DataResult_" +
+    //                       config.ReturnBoxString() + ".root")
+    //                          .c_str(),
+    //                      "recreate");
+    //     result->Write();
+    //     TTree tree("tree", "");
+    //     for (auto &n : neutralVec) {
+    //       double boxEffSignal, orEffSignal, buDeltaCutEffSignal,
+    //           deltaCutEffSignal;
+    //       int id = 0;
+    //       RooRealVar orEffSignalRRV(
+    //           ("orEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+    //       RooRealVar boxEffSignalRRV(
+    //           ("boxEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+    //       RooRealVar buDeltaCutEffSignalRRV(
+    //           ("buDeltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+    //       RooRealVar deltaCutEffSignalRRV(
+    //           ("deltaCutEffSignalRRV_" + EnumToString(n)).c_str(), "", 1);
+    //       switch (n) {
+    //         case Neutral::gamma: {
+    //           NeutralVars<Neutral::gamma> gVars(id);
+    //           gVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
+    //                                 boxEffSignalRRV, buDeltaCutEffSignalRRV,
+    //                                 deltaCutEffSignalRRV);
+    //         } break;
+    //         case Neutral::pi0: {
+    //           NeutralVars<Neutral::pi0> pVars(id);
+    //           pVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
+    //                                 boxEffSignalRRV, buDeltaCutEffSignalRRV,
+    //                                 deltaCutEffSignalRRV);
+    //         } break;
+    //       }
+    //       orEffSignal = orEffSignalRRV.getVal();
+    //       boxEffSignal = boxEffSignalRRV.getVal();
+    //       buDeltaCutEffSignal = buDeltaCutEffSignalRRV.getVal();
+    //       deltaCutEffSignal = deltaCutEffSignalRRV.getVal();
+    //       tree.Branch(("orEffSignal_" + EnumToString(n)).c_str(), &orEffSignal,
+    //                   ("orEffSignal_" + EnumToString(n) + "/D").c_str());
+    //       tree.Branch(("boxEffSignal_" + EnumToString(n)).c_str(),
+    //                   &boxEffSignal,
+    //                   ("boxEffSignal_" + EnumToString(n) + "/D").c_str());
+    //       tree.Branch(
+    //           ("buDeltaCutEffSignal_" + EnumToString(n)).c_str(),
+    //           &buDeltaCutEffSignal,
+    //           ("buDeltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
+    //       tree.Branch(("deltaCutEffSignal_" + EnumToString(n)).c_str(),
+    //                   &deltaCutEffSignal,
+    //                   ("deltaCutEffSignal_" + EnumToString(n) + "/D").c_str());
+    //       tree.Fill();
+    //     }
+    //     tree.Write();
+    //     outputFile.Write();
+    //     outputFile.Close();
+    //   }
+    // } else {
+    //   if (simPdf == nullptr) {
+    //     std::cerr << "SimPdf not defined: using MC shapes."
+    //               << "\n";
+    //   } else {
+    //     result->Print("v");
+    //   }
+    //   RunD1DToys(simPdf, result, config, categories, neutralVec,
+    //   daughtersVec,
+    //           chargeVec, outputDir, nToys, fitBool);
+    // }
   } else {
     RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
             chargeVec, outputDir, nToys, fitBool);
