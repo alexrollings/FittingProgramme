@@ -1154,12 +1154,10 @@ void Generate2D(RooDataSet &fullDataSet, int const id, PdfBase &pdf,
     throw std::runtime_error("Could not extact binned dataset.");
   }
 
-  std::cout << "1\n";
   RooHistPdf histPdf(
       ("histPdf_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", config.fittingArgSet(), *dataHist.get(), 2);
-  std::cout << "2\n";
 
   // Make two-dimensional plot of sampled PDF in x vs y
   TH2F *histModel = (TH2F *)histPdf.createHistogram(
@@ -1187,6 +1185,39 @@ void Generate2D(RooDataSet &fullDataSet, int const id, PdfBase &pdf,
   canvas2DPdf.SaveAs((outputDir + "/2d_plots/" +
                       ComposeName(id, neutral, bachelor, daughters, charge) +
                       "_2dHistPdf.pdf")
+                         .c_str());
+
+  RooRandom::randomGenerator()->SetSeed(0);
+  TRandom3 random(0);
+
+  auto toyData = std::unique_ptr<RooDataSet>(
+      histPdf.generate(config.fittingArgSet(), deltaDataSet->numEntries()));
+
+  TH2F *histToy = (TH2F *)toyData->createHistogram(
+      "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+      config.deltaMass().getBins());
+  histToy->SetName(
+      ("histToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str());
+  histToy->SetTitle("");
+
+  TCanvas canvas2DToy(
+      ("canvas2DToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  histToy->SetStats(0);
+  histToy->Draw("colz");
+  histToy->SetTitle(("B^{" + EnumToLabel(charge) +
+                     "}#rightarrow#font[132]{[}#font[132]{[}" +
+                     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+                     EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+                     EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+                        .c_str());
+  histToy->Draw("colz");
+  canvas2DToy.Update();
+  canvas2DToy.SaveAs((outputDir + "/2d_plots/" +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      "_2dToy.pdf")
                          .c_str());
 }
 
