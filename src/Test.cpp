@@ -79,7 +79,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
   fullDataSet.plotOn(frame.get(),
                      RooFit::Cut(("fitting==fitting::" +
-                                  ComposeFittingName(neutral, bachelor,
+                                  ComposeFittingName(mass, neutral, bachelor,
                                                      daughters, charge))
                                      .c_str()));
   simPdf.plotOn(frame.get(),
@@ -1036,17 +1036,28 @@ void Plotting2D(RooDataSet &fullDataSet, int const id, Neutral neutral,
   gStyle->SetTitleOffset(1.5, "Z");
   gStyle->SetPadRightMargin(0.15);
 
-  auto absData = fullDataSet.reduce(
-      ("fitting==fitting::" +
-       ComposeFittingName(neutral, bachelor, Daughters::kpi, Charge::total))
-          .c_str());
-  auto dataSet = dynamic_cast<RooDataSet *>(absData);
-  if (dataSet == nullptr) {
+  auto buDeltaAbsData =
+      fullDataSet.reduce(("fitting==fitting::" +
+                          ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                             Daughters::kpi, Charge::total))
+                             .c_str());
+  auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
+  if (buDeltaDataSet == nullptr) {
     throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
   }
 
+  auto deltaAbsData = fullDataSet.reduce(
+      ("fitting==fitting::" + ComposeFittingName(Mass::delta, neutral, bachelor,
+                                                 Daughters::kpi, Charge::total))
+          .c_str());
+  auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
+  if (deltaDataSet == nullptr) {
+    throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
+  }
+  deltaDataSet->append(*buDeltaDataSet);
+
   auto dataHist = std::unique_ptr<RooDataHist>(
-      dataSet->binnedClone("dataHist", "dataHist"));
+      deltaDataSet->binnedClone("dataHist", "dataHist"));
   if (dataHist == nullptr) {
     throw std::runtime_error("Could not extact binned dataset.");
   }
@@ -1439,21 +1450,68 @@ int main(int argc, char **argv) {
                           "Could not reduce input dataset w/ daughter cuts.");
                     }
                     // ALSO APPLY BOX CUTS HERE
+                    RooDataSet *buDeltaInputDataSet = nullptr;
+                    buDeltaInputDataSet = dynamic_cast<RooDataSet *>(
+                        reducedInputDataSet_d->reduce(
+                            ("Delta_M>" + std::to_string(config.deltaLow()) +
+                             "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                                .c_str()));
+                    if (buDeltaInputDataSet == nullptr) {
+                      throw std::runtime_error(
+                          "Could not reduce dataset down to buDeltaMass.");
+                    }
                     // Need to append each year, polarity to dataset at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
-                    if (mapCategoryDataset.find(ComposeFittingName(
-                            n, b, d, c)) == mapCategoryDataset.end()) {
-                      mapCategoryDataset.insert(
-                          std::make_pair(ComposeFittingName(n, b, d, c),
-                                         reducedInputDataSet_d));
-                      std::cout << "Created key-value pair for category " +
-                                       ComposeFittingName(n, b, d, c) +
-                                       " and corresponding dataset\n";
+                    if (mapCategoryDataset.find(
+                            ComposeFittingName(Mass::buDelta, n, b, d, c)) ==
+                        mapCategoryDataset.end()) {
+                      mapCategoryDataset.insert(std::make_pair(
+                          ComposeFittingName(Mass::buDelta, n, b, d, c),
+                          buDeltaInputDataSet));
+                      std::cout
+                          << "Created key-value pair for category " +
+                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
+                                 " and corresponding dataset\n";
                     } else {
-                      mapCategoryDataset[ComposeFittingName(n, b, d, c)]
-                          ->append(*reducedInputDataSet_d);
-                      std::cout << "Appended dataset to category " +
-                                       ComposeFittingName(n, b, d, c) + "\n";
+                      mapCategoryDataset[ComposeFittingName(Mass::buDelta, n, b,
+                                                            d, c)]
+                          ->append(*buDeltaInputDataSet);
+                      std::cout
+                          << "Appended dataset to category " +
+                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
+                                 "\n";
+                    }
+                    if (config.fit1D() == false) {
+                      RooDataSet *deltaInputDataSet = nullptr;
+                      deltaInputDataSet = dynamic_cast<RooDataSet *>(
+                          reducedInputDataSet_d->reduce(("Bu_Delta_M>" +
+                               std::to_string(config.buDeltaLow()) +
+                               "&&Bu_Delta_M<" +
+                               std::to_string(config.buDeltaHigh()))
+                                  .c_str()));
+                      if (deltaInputDataSet == nullptr) {
+                        throw std::runtime_error(
+                            "Could not reduce dataset down to deltaMass.");
+                      }
+                      if (mapCategoryDataset.find(
+                              ComposeFittingName(Mass::delta, n, b, d, c)) ==
+                          mapCategoryDataset.end()) {
+                        mapCategoryDataset.insert(std::make_pair(
+                            ComposeFittingName(Mass::delta, n, b, d, c),
+                            deltaInputDataSet));
+                        std::cout
+                            << "Created key-value pair for category " +
+                                   ComposeFittingName(Mass::delta, n, b, d, c) +
+                                   " and corresponding dataset\n";
+                      } else {
+                        mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
+                                                              d, c)]
+                            ->append(*deltaInputDataSet);
+                        std::cout
+                            << "Appended dataset to category " +
+                                   ComposeFittingName(Mass::delta, n, b, d, c) +
+                                   "\n";
+                      }
                     }
                   }
                 }
