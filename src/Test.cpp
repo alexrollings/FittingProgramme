@@ -1049,8 +1049,28 @@ void Generate2D(RooDataSet &fullDataSet,
           .c_str(),
       "", config.fittingArgSet(), *dataHistBu.get(), 2);
 
-  auto toyDataBu = std::unique_ptr<RooDataSet>(
-      histPdfBu.generate(config.fittingArgSet(), buDeltaDataSet->numEntries()));
+  auto toyDataBu =
+      histPdfBu.generate(config.fittingArgSet(), buDeltaDataSet->numEntries());
+
+  if (mapCategoryToy.find(ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                             daughters, charge)) ==
+      mapCategoryToy.end()) {
+    mapCategoryToy.insert(std::make_pair(
+        ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge),
+        toyDataBu));
+    std::cout << "Created key-value pair for category " +
+                     ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                        daughters, charge) +
+                     " and corresponding toy\n";
+  } else {
+    mapCategoryToy[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                      daughters, charge)]
+        ->append(*toyDataBu);
+    std::cout << "Appended toy to category " +
+                     ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                        daughters, charge) +
+                     "\n";
+  }
 
   // 2D data plot
   auto dataHist1dBu = dataHistBu->createHistogram(
@@ -1154,135 +1174,160 @@ void Generate2D(RooDataSet &fullDataSet,
        "_2dToy.pdf")
           .c_str());
 
-  auto deltaAbsData = fullDataSet.reduce(
-      config.fittingArgSet(),
-      ("fitting==fitting::" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str());
-  auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
-  if (deltaDataSet == nullptr) {
-    throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
+  if (config.fit1D() == false) {
+    auto deltaAbsData = fullDataSet.reduce(
+        config.fittingArgSet(),
+        ("fitting==fitting::" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str());
+    auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
+    if (deltaDataSet == nullptr) {
+      throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
+    }
+
+    auto dataHistDelta = std::unique_ptr<RooDataHist>(deltaDataSet->binnedClone(
+        ("dataHist_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "dataHist"));
+    if (dataHistDelta == nullptr) {
+      throw std::runtime_error("Could not extact binned dataset.");
+    }
+
+    RooHistPdf histPdfDelta(
+        ("histPdf_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", config.fittingArgSet(), *dataHistDelta.get(), 2);
+
+    auto toyDataDelta = histPdfDelta.generate(config.fittingArgSet(),
+                                              deltaDataSet->numEntries());
+
+    if (mapCategoryToy.find(ComposeFittingName(Mass::delta, neutral, bachelor,
+                                               daughters, charge)) ==
+        mapCategoryToy.end()) {
+      mapCategoryToy.insert(std::make_pair(
+          ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge),
+          toyDataDelta));
+      std::cout << "Created key-value pair for category " +
+                       ComposeFittingName(Mass::delta, neutral, bachelor,
+                                          daughters, charge) +
+                       " and corresponding toy\n";
+    } else {
+      mapCategoryToy[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                        daughters, charge)]
+          ->append(*toyDataDelta);
+      std::cout << "Appended toy to category " +
+                       ComposeFittingName(Mass::delta, neutral, bachelor,
+                                          daughters, charge) +
+                       "\n";
+    }
+
+    // 2D data plot
+    auto dataHist1dDelta = dataHistDelta->createHistogram(
+        ("dataHist1d_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+        RooFit::YVar(config.deltaMass(),
+                     RooFit::Binning(config.deltaMass().getBins())));
+    if (dataHist1dDelta == nullptr) {
+      throw std::runtime_error("\n1D hist of data returns nullptr\n");
+    }
+    auto dataHist2dDelta = std::unique_ptr<TH2>(
+        dynamic_cast<TH2F *>(dataHist1dDelta /* .get() */));
+    if (dataHist2dDelta == nullptr) {
+      throw std::runtime_error("\n2D hist of data returns nullptr\n");
+    }
+    dataHist2dDelta->SetTitle("");
+    TCanvas canvasDataDelta(
+        ("canvasDataDelta_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    dataHist2dDelta->SetStats(0);
+    if (neutral == Neutral::pi0) {
+      dataHist2dDelta->GetYaxis()->SetTitle(
+          "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
+    dataHist2dDelta->SetTitle(
+        ("B^{" + EnumToLabel(charge) +
+         "}#rightarrow#font[132]{[}#font[132]{[}" +
+         EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+         EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+         EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+            .c_str());
+    dataHist2dDelta->Draw("colz");
+    canvasDataDelta.Update();
+    canvasDataDelta.SaveAs(
+        (outputDir + "/2d_plots/" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
+         "_2dData.pdf")
+            .c_str());
+
+    // Make two-dimensional plot of sampled PDF in x vs y
+    TH2F *histModelDelta = (TH2F *)histPdfDelta.createHistogram(
+        ("histModelDelta_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+        RooFit::YVar(config.deltaMass(),
+                     RooFit::Binning(config.deltaMass().getBins())));
+    histModelDelta->SetTitle("");
+
+    TCanvas canvas2dPdfDelta(
+        ("canvas2dPdfDelta_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    histModelDelta->SetStats(0);
+    histModelDelta->Draw("colz");
+    histModelDelta->SetTitle(("B^{" + EnumToLabel(charge) +
+                              "}#rightarrow#font[132]{[}#font[132]{[}" +
+                              EnumToLabel(daughters, charge) +
+                              "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                              "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                              "^{" + EnumToLabel(charge) + "}")
+                                 .c_str());
+    histModelDelta->Draw("colz");
+    canvas2dPdfDelta.Update();
+    canvas2dPdfDelta.SaveAs(
+        (outputDir + "/2d_plots/" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
+         "_2dHistPdf.pdf")
+            .c_str());
+
+    TH2F *histToyDelta = (TH2F *)toyDataDelta->createHistogram(
+        "Bu_Delta_M,Delta_M", config.deltaMass().getBins(),
+        config.deltaMass().getBins());
+    histToyDelta->SetName(
+        ("histToyDelta_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str());
+    histToyDelta->SetTitle("");
+
+    TCanvas canvas2dToyDelta(
+        ("canvas2dToyDelta_" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    histToyDelta->SetStats(0);
+    histToyDelta->Draw("colz");
+    histToyDelta->SetTitle(("B^{" + EnumToLabel(charge) +
+                            "}#rightarrow#font[132]{[}#font[132]{[}" +
+                            EnumToLabel(daughters, charge) +
+                            "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                            "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                            "^{" + EnumToLabel(charge) + "}")
+                               .c_str());
+    histToyDelta->Draw("colz");
+    canvas2dToyDelta.Update();
+    canvas2dToyDelta.SaveAs(
+        (outputDir + "/2d_plots/" +
+         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
+         "_2dToy.pdf")
+            .c_str());
   }
-
-  auto dataHistDelta = std::unique_ptr<RooDataHist>(deltaDataSet->binnedClone(
-      ("dataHist_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "dataHist"));
-  if (dataHistDelta == nullptr) {
-    throw std::runtime_error("Could not extact binned dataset.");
-  }
-
-  RooHistPdf histPdfDelta(
-      ("histPdf_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", config.fittingArgSet(), *dataHistDelta.get(), 2);
-
-  auto toyDataDelta = std::unique_ptr<RooDataSet>(histPdfDelta.generate(
-      config.fittingArgSet(), deltaDataSet->numEntries()));
-
-  // 2D data plot
-  auto dataHist1dDelta = dataHistDelta->createHistogram(
-      ("dataHist1d_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-      RooFit::YVar(config.deltaMass(),
-                   RooFit::Binning(config.deltaMass().getBins())));
-  if (dataHist1dDelta == nullptr) {
-    throw std::runtime_error("\n1D hist of data returns nullptr\n");
-  }
-  auto dataHist2dDelta =
-      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(dataHist1dDelta /* .get() */));
-  if (dataHist2dDelta == nullptr) {
-    throw std::runtime_error("\n2D hist of data returns nullptr\n");
-  }
-  dataHist2dDelta->SetTitle("");
-  TCanvas canvasDataDelta(
-      ("canvasDataDelta_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  dataHist2dDelta->SetStats(0);
-  if (neutral == Neutral::pi0) {
-    dataHist2dDelta->GetYaxis()->SetTitle(
-        "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-  }
-  dataHist2dDelta->SetTitle(
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str());
-  dataHist2dDelta->Draw("colz");
-  canvasDataDelta.Update();
-  canvasDataDelta.SaveAs(
-      (outputDir + "/2d_plots/" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
-       "_2dData.pdf")
-          .c_str());
-
-  // Make two-dimensional plot of sampled PDF in x vs y
-  TH2F *histModelDelta = (TH2F *)histPdfDelta.createHistogram(
-      ("histModelDelta_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-      RooFit::YVar(config.deltaMass(),
-                   RooFit::Binning(config.deltaMass().getBins())));
-  histModelDelta->SetTitle("");
-
-  TCanvas canvas2dPdfDelta(
-      ("canvas2dPdfDelta_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  histModelDelta->SetStats(0);
-  histModelDelta->Draw("colz");
-  histModelDelta->SetTitle(
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str());
-  histModelDelta->Draw("colz");
-  canvas2dPdfDelta.Update();
-  canvas2dPdfDelta.SaveAs(
-      (outputDir + "/2d_plots/" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
-       "_2dHistPdf.pdf")
-          .c_str());
-
-  TH2F *histToyDelta = (TH2F *)toyDataDelta->createHistogram(
-      "Bu_Delta_M,Delta_M", config.deltaMass().getBins(),
-      config.deltaMass().getBins());
-  histToyDelta->SetName(
-      ("histToyDelta_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str());
-  histToyDelta->SetTitle("");
-
-  TCanvas canvas2dToyDelta(
-      ("canvas2dToyDelta_" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", 1000, 800);
-  histToyDelta->SetStats(0);
-  histToyDelta->Draw("colz");
-  histToyDelta->SetTitle(
-      ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
-       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-       EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-       "^{" + EnumToLabel(charge) + "}")
-          .c_str());
-  histToyDelta->Draw("colz");
-  canvas2dToyDelta.Update();
-  canvas2dToyDelta.SaveAs(
-      (outputDir + "/2d_plots/" +
-       ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge) +
-       "_2dToy.pdf")
-          .c_str());
 }
 
 void Run2DToys(RooDataSet &fullDataSet, Configuration &config,
@@ -1300,6 +1345,11 @@ void Run2DToys(RooDataSet &fullDataSet, Configuration &config,
   for (auto &p : pdfs) {
     Generate2D(fullDataSet, mapCategoryToy, id, *p, config, outputDir);
   }
+
+  RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
+                         RooFit::Index(categories.fitting),
+                         RooFit::Import(mapCategoryToy));
+  toyDataSet.Print();
 }
 
 // ExtractEnumList() allows user to parse multiple options separated by
