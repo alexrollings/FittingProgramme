@@ -1279,6 +1279,9 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
         PlotCorrelations(result.get(), outputDir, config);
       }
     }
+    if (config.noFit() == false) {
+      result->Print();
+    }
   }
 }
 
