@@ -1947,6 +1947,9 @@ int main(int argc, char **argv) {
         outputFile.Close();
       }
     } else {
+      if (config.noFit() == false) {
+        result->Print("v");
+      }
       Run2DToys(mapCategoryDataset, result, fullDataSet, config, categories,
                 neutralVec, daughtersVec, chargeVec, outputDir, nToys);
     }

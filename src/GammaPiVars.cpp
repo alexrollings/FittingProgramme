@@ -13,6 +13,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
+                         // "", 2.0271e+01)),
                          "", 2.0271e+01, 15, 25)),
       Bu2Dst0h_D0gamma_sigma2Bu_(),
       pdf1Bu_Bu2Dst0h_D0gamma_(
@@ -322,6 +323,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                        ComposeName(uniqueId, Neutral::gamma,
                                                    Bachelor::pi))
                                           .c_str(),
+                                      // "", 7.5978e+01)),
                                       "", 7.5978e+01, 50, 150)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -373,6 +375,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::pi))
                                   .c_str(),
+                              // "", 1.0957e+02),
                               "", 1.0957e+02, 10, 150),
       partRec_D0pi0_sigmaRBu_(("partRec_D0pi0_sigmaRBu_" +
                                ComposeName(uniqueId, Neutral::gamma,
