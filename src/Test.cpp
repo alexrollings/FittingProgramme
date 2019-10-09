@@ -1206,6 +1206,40 @@ void Generate2D(RooDataSet &fullDataSet,
   }
 }
 
+void ApplyBoxCuts(std::map<std::string, RooDataSet *> &mapCategoryDataset,
+                  PdfBase &pdf, Configuration &config) {
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+  Charge charge = pdf.charge();
+  RooDataSet *deltaTmpData = nullptr;
+  deltaTmpData = dynamic_cast<RooDataSet *>(
+      mapCategoryDataset[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                            daughters, charge)]
+          ->reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                    "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
+                       .c_str()));
+  if (deltaTmpData == nullptr) {
+    throw std::runtime_error("Could not reduce delta data with box cuts.");
+  } else {
+    mapCategoryDataset[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                          daughters, charge)] = deltaTmpData;
+  }
+  RooDataSet *buDeltaTmpData = nullptr;
+  buDeltaTmpData = dynamic_cast<RooDataSet *>(
+      mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                            daughters, charge)]
+          ->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
+                    "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                       .c_str()));
+  if (buDeltaTmpData == nullptr) {
+    throw std::runtime_error("Could not reduce buDelta data with box cuts.");
+  } else {
+    mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                          daughters, charge)] = buDeltaTmpData;
+  }
+}
+
 void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                Configuration &config, Configuration::Categories &categories,
                std::vector<Neutral> const &neutralVec,
@@ -1217,54 +1251,9 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                                chargeVec);
   auto pdfs = p.second;
 
-  mapCategoryData[ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total)]->Print();
   for (auto &p : pdfs) {
-    Bachelor bachelor = p->bachelor();
-    Daughters daughters = p->daughters();
-    Neutral neutral = p->neutral();
-    Charge charge = p->charge();
-    RooDataSet *deltaTmpData = nullptr;
-    deltaTmpData = dynamic_cast<RooDataSet *>(
-        mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                           daughters, charge)]
-            ->reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
-                      "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
-                         .c_str()));
-    if (deltaTmpData == nullptr) {
-      throw std::runtime_error("Could not reduce delta data with box cuts.");
-    } else {
-      mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                         daughters, charge)] = deltaTmpData;
-    }
-    RooDataSet *buDeltaTmpData = nullptr;
-    buDeltaTmpData = dynamic_cast<RooDataSet *>(
-        mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                           daughters, charge)]
-            ->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
-                      "&&Delta_M<" + std::to_string(config.deltaHigh()))
-                         .c_str()));
-    if (buDeltaTmpData == nullptr) {
-      throw std::runtime_error("Could not reduce buDelta data with box cuts.");
-    } else {
-      mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                         daughters, charge)] = buDeltaTmpData;
-    }
+    ApplyBoxCuts(mapCategoryData, *p, config);
   }
-  mapCategoryData[ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                     Daughters::kpi, Charge::total)]->Print();
-  mapCategoryData[ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                     Daughters::kpi, Charge::total)]->Print();
 
   RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
                          RooFit::Index(categories.fitting),
@@ -1696,9 +1685,14 @@ int main(int argc, char **argv) {
       }
     }
 
-    int id = 0;
-
     if (nToys == 0) {
+      int id = 0;
+
+      auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
+                                   daughtersVec, chargeVec);
+      simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+      auto pdfs = p.second;
+
       RooDataSet fullDataSet("fullDataSet", "fullDataSet",
                              config.fittingArgSet(),
                              RooFit::Index(categories.fitting),
@@ -1717,11 +1711,6 @@ int main(int argc, char **argv) {
       if (fullAbsData == nullptr) {
         throw std::runtime_error("Could not cast to RooAbsData.");
       }
-
-      auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
-                                   daughtersVec, chargeVec);
-      simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-      auto pdfs = p.second;
 
       if (fitBool == true) {
         result = std::unique_ptr<RooFitResult>(
