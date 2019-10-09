@@ -1251,10 +1251,6 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                                chargeVec);
   auto pdfs = p.second;
 
-  for (auto &p : pdfs) {
-    ApplyBoxCuts(mapCategoryData, *p, config);
-  }
-
   RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
                          RooFit::Index(categories.fitting),
                          RooFit::Import(mapCategoryData));
@@ -1265,6 +1261,7 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
   for (auto &p : pdfs) {
     Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
     Generate2D(fullDataSet, mapCategoryToy, id, *p, config, outputDir);
+    ApplyBoxCuts(mapCategoryToy, *p, config);
   }
 
   RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
@@ -1692,6 +1689,10 @@ int main(int argc, char **argv) {
                                    daughtersVec, chargeVec);
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
       auto pdfs = p.second;
+
+      for (auto &p : pdfs) {
+        ApplyBoxCuts(mapCategoryDataset, *p, config);
+      }
 
       RooDataSet fullDataSet("fullDataSet", "fullDataSet",
                              config.fittingArgSet(),
