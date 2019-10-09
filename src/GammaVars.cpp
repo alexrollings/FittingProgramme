@@ -77,7 +77,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_D0gamma_KpiSigmaBuBu_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", 0.95, 0.9, 1.1),
+          "", 0.95),//, 0.9, 1.1),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
