@@ -486,7 +486,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                          .c_str());
   }
 
-  if (config.noFit() == true) {
+  if (config.noFit() == false) {
     pullFrame->addPlotable(pullHist /* .get() */, "P");
     pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
                                                    daughters, charge))
@@ -517,7 +517,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  if (config.noFit() == true) {
+  if (config.noFit() == false) {
     // Zero line on error plot.
     // .get() gets the raw pointer from underneath the smart pointer
     // FIX THIS
@@ -539,7 +539,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   pad1.cd();
   frame->Draw();
   lumiLegend.Draw("same");
-  // if (config.noFit() == true) {
+  // if (config.noFit() == false) {
   legend.Draw("same");
   // }
   // dataHist->Draw("same");
@@ -1082,7 +1082,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> result;
-    if (config.noFit() == true) {
+    if (config.noFit() == false) {
       result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
@@ -1095,12 +1095,12 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
                    outputDir, lumiString, result.get());
       }
-      if (config.noFit() == true) {
+      if (config.noFit() == false) {
         PlotCorrelations(result.get(), outputDir, config);
       }
     }
 
-    if (config.noFit() == true) {
+    if (config.noFit() == false) {
       result->Print("v");
       TFile outputFile(
           (outputDir + "/results/Result_" + config.ReturnBoxString() + "_" +
@@ -1372,6 +1372,10 @@ int main(int argc, char **argv) {
       if (args("1D")) {
         std::cout << "Running 1D fit.\n";
         config.fit1D() = true;
+      }
+      if (args("noFit")) {
+        std::cout << "Will not fit PDF to data, just plot both.\n";
+        config.noFit() = true;
       }
       // Year
       // args matches "year" to string given in command line and assigns
@@ -1650,7 +1654,7 @@ int main(int argc, char **argv) {
     // simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     // auto pdfs = p.second;
     //
-    // if (config.noFit() == true) {
+    // if (config.noFit() == false) {
     //   result = std::unique_ptr<RooFitResult>(
     //       simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
     //                     RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
@@ -1670,7 +1674,7 @@ int main(int argc, char **argv) {
     //                noFit, lumiString, result.get());
     //   }
     //
-    //   if (config.noFit() == true) {
+    //   if (config.noFit() == false) {
     //     result->Print("v");
     //     PlotCorrelations(result.get(), outputDir, config);
     //     // Save RFR of data and efficiencies to calculate observables with
