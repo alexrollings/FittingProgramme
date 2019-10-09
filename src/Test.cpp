@@ -1206,12 +1206,16 @@ void Generate2D(RooDataSet &fullDataSet,
   }
 }
 
-void Run2DToys(RooDataSet &fullDataSet, Configuration &config,
-               Configuration::Categories &categories,
+void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
+               Configuration &config, Configuration::Categories &categories,
                std::vector<Neutral> const &neutralVec,
                std::vector<Daughters> const &daughtersVec,
                std::vector<Charge> const &chargeVec,
                std::string const &outputDir) {
+  RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
+                         RooFit::Index(categories.fitting),
+                         RooFit::Import(mapCategoryData));
+
   int id = 0;
   auto p = MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec,
                                chargeVec);
@@ -1645,15 +1649,16 @@ int main(int argc, char **argv) {
 
     int id = 0;
 
-    RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
-                           RooFit::Index(categories.fitting),
-                           RooFit::Import(mapCategoryDataset));
-
-    std::cout << "\n\n\n";
-    fullDataSet.Print();
-    std::cout << "\n\n\n";
-
     if (nToys == 0) {
+      RooDataSet fullDataSet("fullDataSet", "fullDataSet",
+                             config.fittingArgSet(),
+                             RooFit::Index(categories.fitting),
+                             RooFit::Import(mapCategoryDataset));
+
+      std::cout << "\n\n\n";
+      fullDataSet.Print();
+      std::cout << "\n\n\n";
+
       auto fullDataHist = std::unique_ptr<RooDataHist>(
           fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
       if (fullDataHist == nullptr) {
@@ -1748,7 +1753,7 @@ int main(int argc, char **argv) {
         outputFile.Close();
       }
     } else {
-      Run2DToys(fullDataSet, config, categories, neutralVec, daughtersVec,
+      Run2DToys(mapCategoryDataset, config, categories, neutralVec, daughtersVec,
                 chargeVec, outputDir);
     }
   }
