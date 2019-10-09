@@ -103,14 +103,9 @@ if __name__ == "__main__":
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
 
-    if dim == None:
-        print("Set dim="": performing D1D toys")
-        dim = ""
-    elif dim == "1":
+    if dim == "1":
         print("Performing 1D toys to BuDelta mass")
         dim = "-1D"
-    else:
-        sys.exit("Set -d=1 or nothing")
 
     if n_jobs > 10:
         sys.exit("Can't use more than 10 cores.")
