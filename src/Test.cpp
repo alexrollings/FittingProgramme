@@ -1089,7 +1089,6 @@ void Plotting2D(RooDataSet &dataset, int const id, PdfBase &pdf,
 }
 
 void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
-                // RooDataSet &fullDataSet,
                 std::map<std::string, RooDataSet *> &mapCategoryToy,
                 int const id, PdfBase &pdf, Configuration &config,
                 std::string const &outputDir) {
@@ -1108,19 +1107,9 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   RooRandom::randomGenerator()->SetSeed(0);
   TRandom3 random(0);
 
-  // auto buDeltaAbsData = fullDataSet.reduce(
-  //     config.fittingArgSet(),
-  //     ("fitting==fitting::" +
-  //      ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
-  //         .c_str());
-  // auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
-  // if (buDeltaDataSet == nullptr) {
-  //   throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
-  // }
-
   auto dataHistBu = std::unique_ptr<RooDataHist>(
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                            daughters, charge)]
+                                         daughters, charge)]
           ->binnedClone(
               ("dataHist_" + ComposeFittingName(Mass::buDelta, neutral,
                                                 bachelor, daughters, charge))
@@ -1139,15 +1128,23 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   auto toyDataBu = histPdfBu.generate(
       config.fittingArgSet(),
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                            daughters, charge)]
+                                         daughters, charge)]
           ->numEntries());
+  RooDataSet *toyDataBuBox = nullptr;
+  toyDataBuBox = dynamic_cast<RooDataSet *>(
+      toyDataBu->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
+                         "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                            .c_str()));
+  if (toyDataBuBox == nullptr) {
+    throw std::runtime_error("Could not reduce buDelta data with box cuts.");
+  }
 
   if (mapCategoryToy.find(ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                              daughters, charge)) ==
       mapCategoryToy.end()) {
     mapCategoryToy.insert(std::make_pair(
         ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge),
-        toyDataBu));
+        toyDataBuBox));
     std::cout << "Created key-value pair for category " +
                      ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                         daughters, charge) +
@@ -1155,7 +1152,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   } else {
     mapCategoryToy[ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                       daughters, charge)]
-        ->append(*toyDataBu);
+        ->append(*toyDataBuBox);
     std::cout << "Appended toy to category " +
                      ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                         daughters, charge) +
@@ -1163,16 +1160,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   }
 
   if (config.fit1D() == false) {
-    // auto deltaAbsData = fullDataSet.reduce(
-    //     config.fittingArgSet(),
-    //     ("fitting==fitting::" +
-    //      ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-    //         .c_str());
-    // auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
-    // if (deltaDataSet == nullptr) {
-    //   throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
-    // }
-
     auto dataHistDelta = std::unique_ptr<RooDataHist>(
         mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
                                               daughters, charge)]->binnedClone(
@@ -1191,15 +1178,25 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
         "", config.fittingArgSet(), *dataHistDelta.get(), 2);
 
     auto toyDataDelta = histPdfDelta.generate(
-        config.fittingArgSet(), mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                              daughters, charge)]->numEntries());
+        config.fittingArgSet(),
+        mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                           daughters, charge)]
+            ->numEntries());
+    RooDataSet *toyDataDeltaBox = nullptr;
+    toyDataDeltaBox = dynamic_cast<RooDataSet *>(toyDataDelta->reduce(
+        ("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
+         std::to_string(config.buDeltaHigh()))
+            .c_str()));
+    if (toyDataDeltaBox == nullptr) {
+      throw std::runtime_error("Could not reduce delta data with box cuts.");
+    }
 
     if (mapCategoryToy.find(ComposeFittingName(Mass::delta, neutral, bachelor,
                                                daughters, charge)) ==
         mapCategoryToy.end()) {
       mapCategoryToy.insert(std::make_pair(
           ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge),
-          toyDataDelta));
+          toyDataDeltaBox));
       std::cout << "Created key-value pair for category " +
                        ComposeFittingName(Mass::delta, neutral, bachelor,
                                           daughters, charge) +
@@ -1207,7 +1204,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
     } else {
       mapCategoryToy[ComposeFittingName(Mass::delta, neutral, bachelor,
                                         daughters, charge)]
-          ->append(*toyDataDelta);
+          ->append(*toyDataDeltaBox);
       std::cout << "Appended toy to category " +
                        ComposeFittingName(Mass::delta, neutral, bachelor,
                                           daughters, charge) +
@@ -1216,61 +1213,26 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   }
 }
 
-void ApplyBoxCuts(std::map<std::string, RooDataSet *> &mapCategoryDataset,
-                  PdfBase &pdf, Configuration &config) {
-  Bachelor bachelor = pdf.bachelor();
-  Daughters daughters = pdf.daughters();
-  Neutral neutral = pdf.neutral();
-  Charge charge = pdf.charge();
-  RooDataSet *deltaTmpData = nullptr;
-  deltaTmpData = dynamic_cast<RooDataSet *>(
-      mapCategoryDataset[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                            daughters, charge)]
-          ->reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
-                    "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
-                       .c_str()));
-  if (deltaTmpData == nullptr) {
-    throw std::runtime_error("Could not reduce delta data with box cuts.");
-  } else {
-    mapCategoryDataset[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                          daughters, charge)] = deltaTmpData;
-  }
-  RooDataSet *buDeltaTmpData = nullptr;
-  buDeltaTmpData = dynamic_cast<RooDataSet *>(
-      mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                            daughters, charge)]
-          ->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
-                    "&&Delta_M<" + std::to_string(config.deltaHigh()))
-                       .c_str()));
-  if (buDeltaTmpData == nullptr) {
-    throw std::runtime_error("Could not reduce buDelta data with box cuts.");
-  } else {
-    mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                          daughters, charge)] = buDeltaTmpData;
-  }
-}
-
 void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                Configuration &config, Configuration::Categories &categories,
                std::vector<Neutral> const &neutralVec,
                std::vector<Daughters> const &daughtersVec,
                std::vector<Charge> const &chargeVec,
-               std::string const &outputDir) {
+               std::string const &outputDir, int nToys) {
   int id = 0;
   auto p = MakeSimultaneousPdf(id, config, categories, neutralVec, daughtersVec,
                                chargeVec);
   auto pdfs = p.second;
 
-  RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
-                         RooFit::Index(categories.fitting),
-                         RooFit::Import(mapCategoryData));
+  // RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
+  //                        RooFit::Index(categories.fitting),
+  //                        RooFit::Import(mapCategoryData));
 
   std::map<std::string, RooDataSet *> mapCategoryToy;
   for (auto &p : pdfs) {
     std::string dataLabel = "data";
-    Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
+    // Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
     Generate2D(mapCategoryData, mapCategoryToy, id, *p, config, outputDir);
-    ApplyBoxCuts(mapCategoryToy, *p, config);
   }
 
   RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
@@ -1691,7 +1653,6 @@ int main(int argc, char **argv) {
         }
       }
     }
-
     if (nToys == 0) {
       int id = 0;
 
@@ -1700,8 +1661,43 @@ int main(int argc, char **argv) {
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
       auto pdfs = p.second;
 
+      // Apply box cuts
       for (auto &p : pdfs) {
-        ApplyBoxCuts(mapCategoryDataset, *p, config);
+        Bachelor bachelor = p->bachelor();
+        Daughters daughters = p->daughters();
+        Neutral neutral = p->neutral();
+        Charge charge = p->charge();
+        RooDataSet *deltaTmpData = nullptr;
+        deltaTmpData = dynamic_cast<RooDataSet *>(
+            mapCategoryDataset[ComposeFittingName(Mass::delta, neutral,
+                                                  bachelor, daughters, charge)]
+                ->reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                          "&&Bu_Delta_M<" +
+                          std::to_string(config.buDeltaHigh()))
+                             .c_str()));
+        if (deltaTmpData == nullptr) {
+          throw std::runtime_error(
+              "Could not reduce delta data with box cuts.");
+        } else {
+          mapCategoryDataset[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                                daughters, charge)] =
+              deltaTmpData;
+        }
+        RooDataSet *buDeltaTmpData = nullptr;
+        buDeltaTmpData = dynamic_cast<RooDataSet *>(
+            mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral,
+                                                  bachelor, daughters, charge)]
+                ->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
+                          "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                             .c_str()));
+        if (buDeltaTmpData == nullptr) {
+          throw std::runtime_error(
+              "Could not reduce buDelta data with box cuts.");
+        } else {
+          mapCategoryDataset[ComposeFittingName(Mass::buDelta, neutral,
+                                                bachelor, daughters, charge)] =
+              buDeltaTmpData;
+        }
       }
 
       RooDataSet fullDataSet("fullDataSet", "fullDataSet",
@@ -1803,7 +1799,7 @@ int main(int argc, char **argv) {
       }
     } else {
       Run2DToys(mapCategoryDataset, config, categories, neutralVec, daughtersVec,
-                chargeVec, outputDir);
+                chargeVec, outputDir, nToys);
     }
   }
   return 0;
