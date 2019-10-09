@@ -1224,14 +1224,14 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                                chargeVec);
   auto pdfs = p.second;
 
-  // RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
-  //                        RooFit::Index(categories.fitting),
-  //                        RooFit::Import(mapCategoryData));
+  RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
+                         RooFit::Index(categories.fitting),
+                         RooFit::Import(mapCategoryData));
 
   std::map<std::string, RooDataSet *> mapCategoryToy;
   for (auto &p : pdfs) {
     std::string dataLabel = "data";
-    // Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
+    Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
     Generate2D(mapCategoryData, mapCategoryToy, id, *p, config, outputDir);
   }
 
