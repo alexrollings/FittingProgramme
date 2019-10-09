@@ -59,7 +59,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    Configuration::Categories &categories, TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
-                   bool fitBool, Configuration &config,
+                   Configuration &config,
                    std::map<std::string, Color_t> colorMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -486,7 +486,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                          .c_str());
   }
 
-  if (fitBool == true) {
+  if (config.noFit() == true) {
     pullFrame->addPlotable(pullHist /* .get() */, "P");
     pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
                                                    daughters, charge))
@@ -517,7 +517,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  if (fitBool == true) {
+  if (config.noFit() == true) {
     // Zero line on error plot.
     // .get() gets the raw pointer from underneath the smart pointer
     // FIX THIS
@@ -539,7 +539,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   pad1.cd();
   frame->Draw();
   lumiLegend.Draw("same");
-  // if (fitBool == true) {
+  // if (config.noFit() == true) {
   legend.Draw("same");
   // }
   // dataHist->Draw("same");
@@ -555,7 +555,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir, bool fitBool,
+                std::string const &outputDir,
                 std::string &labelString, RooFitResult *result) {
   SetStyle();
 
@@ -804,11 +804,11 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, lumiLegend, outputDir, fitBool, config,
+                categories, legend, lumiLegend, outputDir, config,
                 colorMap);
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  categories, legend, lumiLegend, outputDir, fitBool, config,
+                  categories, legend, lumiLegend, outputDir, config,
                   colorMap);
   }
 }
@@ -1034,7 +1034,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
              std::vector<Neutral> const &neutralVec,
              std::vector<Daughters> const &daughtersVec,
              std::vector<Charge> const &chargeVec, std::string const &outputDir,
-             int nToys, bool fitBool) {
+             int nToys) {
   // Start from 1 as id = 0 is data fit params
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
@@ -1082,7 +1082,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> result;
-    if (fitBool == true) {
+    if (config.noFit() == true) {
       result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
@@ -1093,14 +1093,14 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
       auto pdfs = p.second;
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
-                   outputDir, fitBool, lumiString, result.get());
+                   outputDir, lumiString, result.get());
       }
-      if (fitBool == true) {
+      if (config.noFit() == true) {
         PlotCorrelations(result.get(), outputDir, config);
       }
     }
 
-    if (fitBool == true) {
+    if (config.noFit() == true) {
       result->Print("v");
       TFile outputFile(
           (outputDir + "/results/Result_" + config.ReturnBoxString() + "_" +
@@ -1252,7 +1252,6 @@ int main(int argc, char **argv) {
   // Still want to load both charges:plus and minus, we just fit with
   // them differently
 
-  bool fitBool = true;
   int nToys = 0;
   Configuration &config = Configuration::Get();
 
@@ -1651,7 +1650,7 @@ int main(int argc, char **argv) {
     // simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     // auto pdfs = p.second;
     //
-    // if (fitBool == true) {
+    // if (config.noFit() == true) {
     //   result = std::unique_ptr<RooFitResult>(
     //       simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
     //                     RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
@@ -1668,10 +1667,10 @@ int main(int argc, char **argv) {
     //   // Loop over daughters again to plot correct PDFs
     //   for (auto &p : pdfs) {
     //     Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
-    //                fitBool, lumiString, result.get());
+    //                noFit, lumiString, result.get());
     //   }
     //
-    //   if (fitBool == true) {
+    //   if (config.noFit() == true) {
     //     result->Print("v");
     //     PlotCorrelations(result.get(), outputDir, config);
     //     // Save RFR of data and efficiencies to calculate observables with
@@ -1739,11 +1738,11 @@ int main(int argc, char **argv) {
     //   }
     //   RunD1DToys(simPdf, result, config, categories, neutralVec,
     //   daughtersVec,
-    //           chargeVec, outputDir, nToys, fitBool);
+    //           chargeVec, outputDir, nToys);
     // }
   } else {
     RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
-            chargeVec, outputDir, nToys, fitBool);
+            chargeVec, outputDir, nToys);
   }
 
   return 0;

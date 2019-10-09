@@ -88,6 +88,7 @@ class Configuration {
   std::string &pi0CutString() { return pi0CutString_; }
 
   bool &fit1D() { return fit1D_; }
+  bool &noFit() { return noFit_; }
 
  private:
   Configuration();
@@ -129,6 +130,7 @@ class Configuration {
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;
+  bool noFit_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
