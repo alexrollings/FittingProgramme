@@ -1088,7 +1088,8 @@ void Plotting2D(RooDataSet &dataset, int const id, PdfBase &pdf,
                         .c_str());
 }
 
-void Generate2D(RooDataSet &fullDataSet,
+void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
+                // RooDataSet &fullDataSet,
                 std::map<std::string, RooDataSet *> &mapCategoryToy,
                 int const id, PdfBase &pdf, Configuration &config,
                 std::string const &outputDir) {
@@ -1107,21 +1108,24 @@ void Generate2D(RooDataSet &fullDataSet,
   RooRandom::randomGenerator()->SetSeed(0);
   TRandom3 random(0);
 
-  auto buDeltaAbsData = fullDataSet.reduce(
-      config.fittingArgSet(),
-      ("fitting==fitting::" +
-       ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
-          .c_str());
-  auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
-  if (buDeltaDataSet == nullptr) {
-    throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
-  }
+  // auto buDeltaAbsData = fullDataSet.reduce(
+  //     config.fittingArgSet(),
+  //     ("fitting==fitting::" +
+  //      ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
+  //         .c_str());
+  // auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
+  // if (buDeltaDataSet == nullptr) {
+  //   throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
+  // }
 
-  auto dataHistBu = std::unique_ptr<RooDataHist>(buDeltaDataSet->binnedClone(
-      ("dataHist_" +
-       ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "dataHist"));
+  auto dataHistBu = std::unique_ptr<RooDataHist>(
+      mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                            daughters, charge)]
+          ->binnedClone(
+              ("dataHist_" + ComposeFittingName(Mass::buDelta, neutral,
+                                                bachelor, daughters, charge))
+                  .c_str(),
+              "dataHist"));
   if (dataHistBu == nullptr) {
     throw std::runtime_error("Could not extact binned dataset.");
   }
@@ -1132,8 +1136,11 @@ void Generate2D(RooDataSet &fullDataSet,
           .c_str(),
       "", config.fittingArgSet(), *dataHistBu.get(), 2);
 
-  auto toyDataBu =
-      histPdfBu.generate(config.fittingArgSet(), buDeltaDataSet->numEntries());
+  auto toyDataBu = histPdfBu.generate(
+      config.fittingArgSet(),
+      mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                            daughters, charge)]
+          ->numEntries());
 
   if (mapCategoryToy.find(ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                              daughters, charge)) ==
@@ -1156,21 +1163,23 @@ void Generate2D(RooDataSet &fullDataSet,
   }
 
   if (config.fit1D() == false) {
-    auto deltaAbsData = fullDataSet.reduce(
-        config.fittingArgSet(),
-        ("fitting==fitting::" +
-         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-            .c_str());
-    auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
-    if (deltaDataSet == nullptr) {
-      throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
-    }
+    // auto deltaAbsData = fullDataSet.reduce(
+    //     config.fittingArgSet(),
+    //     ("fitting==fitting::" +
+    //      ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
+    //         .c_str());
+    // auto deltaDataSet = dynamic_cast<RooDataSet *>(deltaAbsData);
+    // if (deltaDataSet == nullptr) {
+    //   throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
+    // }
 
-    auto dataHistDelta = std::unique_ptr<RooDataHist>(deltaDataSet->binnedClone(
-        ("dataHist_" +
-         ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "dataHist"));
+    auto dataHistDelta = std::unique_ptr<RooDataHist>(
+        mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                              daughters, charge)]->binnedClone(
+                ("dataHist_" + ComposeFittingName(Mass::delta, neutral,
+                                                  bachelor, daughters, charge))
+                    .c_str(),
+                "dataHist"));
     if (dataHistDelta == nullptr) {
       throw std::runtime_error("Could not extact binned dataset.");
     }
@@ -1181,8 +1190,9 @@ void Generate2D(RooDataSet &fullDataSet,
             .c_str(),
         "", config.fittingArgSet(), *dataHistDelta.get(), 2);
 
-    auto toyDataDelta = histPdfDelta.generate(config.fittingArgSet(),
-                                              deltaDataSet->numEntries());
+    auto toyDataDelta = histPdfDelta.generate(
+        config.fittingArgSet(), mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                              daughters, charge)]->numEntries());
 
     if (mapCategoryToy.find(ComposeFittingName(Mass::delta, neutral, bachelor,
                                                daughters, charge)) ==
@@ -1255,12 +1265,11 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                          RooFit::Index(categories.fitting),
                          RooFit::Import(mapCategoryData));
 
-  std::string dataLabel = "data";
-  std::string toyLabel = "toy";
   std::map<std::string, RooDataSet *> mapCategoryToy;
   for (auto &p : pdfs) {
+    std::string dataLabel = "data";
     Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
-    Generate2D(fullDataSet, mapCategoryToy, id, *p, config, outputDir);
+    Generate2D(mapCategoryData, mapCategoryToy, id, *p, config, outputDir);
     ApplyBoxCuts(mapCategoryToy, *p, config);
   }
 
@@ -1270,6 +1279,7 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
   toyDataSet.Print();
 
   for (auto &p : pdfs) {
+    std::string toyLabel = "toy";
     Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
   }
 }
