@@ -1950,6 +1950,7 @@ int main(int argc, char **argv) {
       Run2DToys(mapCategoryDataset, result, fullDataSet, config, categories,
                 neutralVec, daughtersVec, chargeVec, outputDir, nToys);
     }
+  } else {
     std::cout << "Fitting using D1D method\n";
     RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
                chargeVec, outputDir, nToys);
