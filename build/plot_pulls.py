@@ -1,12 +1,12 @@
 import os, re, subprocess, sys, argparse
 #re = regular expressions
 
-def pass_filename(filename, file_list, delta_low, delta_high, bu_low=None, bu_high=None):
+def pass_filename(filename, file_list, dim, delta_low, delta_high, bu_low=None, bu_high=None):
     if bu_low != None and bu_high != None:
-        m = re.search("Result_" + delta_low + '_' + delta_high + '_' +
+        m = re.search("Result" + dim + "_" + delta_low + '_' + delta_high + '_' +
                       bu_low + '_' + bu_high + "_0\.[0-9]+\.root", filename)
     else:
-        m = re.search("Result_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
+        m = re.search("Result" + dim + "_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
     if m:
         file_list.append(filename)
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         '--dim',
         type=str,
         help='Dimension',
-        required=False)
+        required=True)
     parser.add_argument(
         '-n',
         '--neutral',
@@ -78,14 +78,18 @@ if __name__ == "__main__":
     bu_high = args.bu_high
     dim = args.dim
 
-    if dim == None:
+    if dim == "D1D":
         print("Analysing results from D1D toys")
         if bu_low == None or bu_high == None:
             sys.exit("Specify -bl= and -bh=")
-    elif dim == "1":
+    elif dim == "2D":
+        print("Analysing results from 2D toys")
+        if bu_low == None or bu_high == None:
+            sys.exit("Specify -bl= and -bh=")
+    elif dim == "1D":
         print("Analysing results from 1D toys")
     else:
-        sys.exit("Set -d=1 or nothing")
+        sys.exit("Set -d=1D/D1D/2D")
 
     if toy_init == "data":
         print("Initial param values taken from final data fit")
@@ -101,10 +105,10 @@ if __name__ == "__main__":
         sys.exit(input_dir + ' is not a directory')
     file_list = []
     for filename in os.listdir(input_dir):
-        if dim == "1":
-            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high)
+        if dim == "1D":
+            pass_filename(input_dir + "/" + filename, dim, file_list, delta_low, delta_high)
         else:
-            pass_filename(input_dir + "/" + filename, file_list, delta_low, delta_high, bu_low, bu_high)
+            pass_filename(input_dir + "/" + filename, dim, file_list, delta_low, delta_high, bu_low, bu_high)
         # pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
@@ -116,7 +120,7 @@ if __name__ == "__main__":
         os.mkdir(plots_dir)
     # print("./PlotToys " + ",".join(file_list))
     if len(file_list) != 0:
-        if dim == "1":
+        if dim == "1D":
             subprocess.call([
                 "./PlotToys", "-neutral=" + neutral,
                 "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-1D", "-toyInit=" + toy_init

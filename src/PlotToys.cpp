@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
       }
     }
     auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
-        file->FindObjectAny(("Result_" + rndm).c_str())));
+        file->FindObjectAny("ToyResult")));
     if (result == nullptr) {
       throw std::runtime_error("Could not extract Result from " + filename);
     } else {

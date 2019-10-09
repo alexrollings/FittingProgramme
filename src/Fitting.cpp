@@ -1286,7 +1286,7 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
           "recreate");
 
       outputFile.cd();
-      result->SetName("2DToyResult");
+      result->SetName("ToyResult");
       result->Write();
       if (dataFitResult != nullptr) {
         dataFitResult->SetName("DataFitResult");
@@ -1372,14 +1372,18 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
 
     if (config.noFit() == false) {
       result->Print("v");
+      std::string dimString = "D1D";
+      if (config.fit1D() == true) {
+        dimString = "1D";
+      }
       TFile outputFile(
-          (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() + "_" +
-           std::to_string(randomTag) + ".root")
+          (outputDir + "/results/Result" + dimString + "_" +
+           config.ReturnBoxString() + "_" + std::to_string(randomTag) + ".root")
               .c_str(),
           "recreate");
 
       outputFile.cd();
-      result->SetName("D1DToyResult");
+      result->SetName("ToyResult");
       result->Write();
       if (dataFitResult != nullptr) {
         dataFitResult->SetName("DataFitResult");
