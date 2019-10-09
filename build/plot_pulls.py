@@ -3,10 +3,10 @@ import os, re, subprocess, sys, argparse
 
 def pass_filename(filename, file_list, dim, delta_low, delta_high, bu_low=None, bu_high=None):
     if bu_low != None and bu_high != None:
-        m = re.search("Result" + dim + "_" + delta_low + '_' + delta_high + '_' +
-                      bu_low + '_' + bu_high + "_0\.[0-9]+\.root", filename)
+        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high + '_' +
+                      bu_low + '_' + bu_high + '_0\.[0-9]+\.root', filename)
     else:
-        m = re.search("Result" + dim + "_" + delta_low + '_' + delta_high + "_0\.[0-9]+\.root", filename)
+        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root', filename)
     if m:
         file_list.append(filename)
 
@@ -106,9 +106,9 @@ if __name__ == "__main__":
     file_list = []
     for filename in os.listdir(input_dir):
         if dim == "1D":
-            pass_filename(input_dir + "/" + filename, dim, file_list, delta_low, delta_high)
+            pass_filename(input_dir + "/" + filename, file_list, dim, delta_low, delta_high)
         else:
-            pass_filename(input_dir + "/" + filename, dim, file_list, delta_low, delta_high, bu_low, bu_high)
+            pass_filename(input_dir + "/" + filename, file_list, dim, delta_low, delta_high, bu_low, bu_high)
         # pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
