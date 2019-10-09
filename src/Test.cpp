@@ -1104,9 +1104,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  RooRandom::randomGenerator()->SetSeed(0);
-  TRandom3 random(0);
-
   auto dataHistBu = std::unique_ptr<RooDataHist>(
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                          daughters, charge)]
@@ -1231,14 +1228,15 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
     auto pdfs = p.second;
 
     std::map<std::string, RooDataSet *> mapCategoryToy;
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double randomTag = random.Rndm();
+
     for (auto &p : pdfs) {
       Generate2D(mapCategoryData, mapCategoryToy, id, *p, config, outputDir);
     }
 
-    auto simPdf = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-        ("simPdf_" + std::to_string(id)).c_str(),
-        ("simPdf_" + std::to_string(id)).c_str(), categories.fitting));
-    simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+    auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
 
     RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
                           RooFit::Index(categories.fitting),
@@ -1280,7 +1278,22 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
       }
     }
     if (config.noFit() == false) {
-      result->Print();
+      result->Print("v");
+      TFile outputFile(
+          (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
+           std::to_string(randomTag) + ".root")
+              .c_str(),
+          "recreate");
+
+      outputFile.cd();
+      result->SetName("2DToyResult");
+      result->Write();
+      if (dataFitResult != nullptr) {
+        dataFitResult->SetName("DataFitResult");
+        dataFitResult->Write();
+      }
+      outputFile.Close();
+      std::cout << "Results saved to file " << outputFile.GetName() << "\n";
     }
   }
 }

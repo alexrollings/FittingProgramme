@@ -66,7 +66,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_KpiSigmaBu_(("Bu2Dst0h_D0pi0_KpiSigmaBu_" +
                                        ComposeName(uniqueId, Neutral::pi0))
                                           .c_str(),
-                                      "", 0.95, 0.9, 1),
+                                      "", 0.95, 0.9, 1.1),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
