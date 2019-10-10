@@ -1818,22 +1818,24 @@ int main(int argc, char **argv) {
       }
     }
 
+    std::vector<TFile*> toyResultFileVec;
     if (nToys != 0) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
         double randomTag = random.Rndm();
-        TFile toyResultsFile(
+        TFile *toyResultsFile = new TFile(
             (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
         // Pass random??
-        Run2DToys(toyResultsFile, mapCategoryDataset, 
+        Run2DToys(*toyResultsFile, mapCategoryDataset, 
                   config, categories, neutralVec, daughtersVec, chargeVec,
                   outputDir, id);
-        toyResultsFile.Close();
+        toyResultFileVec.emplace_back(toyResultsFile);
+        toyResultsFile->Close();
       }
     }
     // id = 0 for data fit
