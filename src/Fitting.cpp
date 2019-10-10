@@ -123,7 +123,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
             RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0K_D0gamma"]),
-            RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+            RooFit::LineStyle(kDashed),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
       }
       simPdf.plotOn(frame.get(),
@@ -196,7 +196,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
             RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0pi_D0gamma"]),
-            RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+            RooFit::LineStyle(kDashed),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
       }
       simPdf.plotOn(frame.get(),
@@ -299,7 +299,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
             RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0K_D0gamma"]),
-            RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+            RooFit::LineStyle(kDashed),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
       }
       simPdf.plotOn(frame.get(),
@@ -372,7 +372,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
             RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0pi_D0gamma"]),
-            RooFit::LineStyle(kDashed), RooFit::LineColor(kMagenta),
+            RooFit::LineStyle(kDashed),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
       }
       simPdf.plotOn(frame.get(),
