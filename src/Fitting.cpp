@@ -1246,7 +1246,8 @@ void Run2DToys(TFile &outputFile,
         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                       RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-    toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+    // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+    toyFitResult->SetName("ToyResult");
   }
 
   RooDataSet dataSet("dataSet", "dataSet", config.fittingArgSet(),
@@ -1339,7 +1340,8 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-      toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+      toyFitResult->SetName("ToyResult");
+      // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
     }
     if (id == 1) {
       std::string lumiString = "TOY";
