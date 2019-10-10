@@ -543,14 +543,6 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  if (charge == Charge::plus) {
-    std::cout << "plus\n";
-  } else if (charge == Charge::minus) {
-    std::cout << "minus\n";
-  } else {
-    std::cout << "total\n";
-  }
-
   auto blankHist = std::make_unique<TH1D>(
       ("blankHist" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -1104,12 +1096,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  std::cout << ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters,
-                                  charge)
-            << ":\n";
-  mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                     daughters, charge)]
-      ->Print();
 
   auto dataHistBu = std::unique_ptr<RooDataHist>(
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
@@ -1134,7 +1120,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                          daughters, charge)]
           ->numEntries());
-  toyDataBu->Print();
   RooDataSet *toyDataBuBox = nullptr;
   toyDataBuBox = dynamic_cast<RooDataSet *>(
       toyDataBu->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
@@ -1164,18 +1149,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
                      "\n";
   }
 
-  mapCategoryToy[ComposeFittingName(Mass::buDelta, neutral, bachelor,
-                                     daughters, charge)]
-      ->Print();
-
   if (config.fit1D() == false) {
-    std::cout << ComposeFittingName(Mass::delta, neutral, bachelor, daughters,
-                                    charge)
-              << ":\n";
-    mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
-                                       daughters, charge)]
-        ->Print();
-
     auto dataHistDelta = std::unique_ptr<RooDataHist>(
         mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
                                               daughters, charge)]->binnedClone(
@@ -1198,7 +1172,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
         mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
                                            daughters, charge)]
             ->numEntries());
-    toyDataDelta->Print();
     RooDataSet *toyDataDeltaBox = nullptr;
     toyDataDeltaBox = dynamic_cast<RooDataSet *>(toyDataDelta->reduce(
         ("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
@@ -1227,9 +1200,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
                                           daughters, charge) +
                        "\n";
     }
-    mapCategoryToy[ComposeFittingName(Mass::delta, neutral, bachelor, daughters,
-                                      charge)]
-        ->Print();
   }
 }
 
@@ -1983,12 +1953,11 @@ int main(int argc, char **argv) {
         dataFitResult->Print("v");
         for (int id = 1; id < nToys + 1; ++id) {
           if (dataFitResult != nullptr) {
-          //   toyFileNames[id-1]->ReOpen("update");
-          //   toyFileNames[id-1]->cd();
-          //   dataFitResult->Write();
-          //   toyFileNames[id-1]->Close();
-            std::cout << "DataFitResult saved to file ";
-                      // << toyFileNames[id-1].GetName() << "\n";
+            TFile toyResultFile(toyFileNames[id-1].c_str(), "update");
+            dataFitResult->Write();
+            toyResultFile.Close();
+            std::cout << "DataFitResult saved to file " << toyFileNames[id - 1]
+                      << "\n";
           } else {
             throw std::runtime_error("DataFitResult empty.");
           }
