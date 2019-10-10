@@ -1234,9 +1234,8 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
 }
 
 void Run2DToys(TFile &outputFile,
-               std::shared_ptr<RooFitResult> &toyFitResult,
                std::map<std::string, RooDataSet *> &mapCategoryData,
-               RooDataSet &fullDataSet, Configuration &config,
+               Configuration &config,
                Configuration::Categories &categories,
                std::vector<Neutral> const &neutralVec,
                std::vector<Daughters> const &daughtersVec,
@@ -1271,18 +1270,24 @@ void Run2DToys(TFile &outputFile,
     throw std::runtime_error("Could not cast to RooAbsData.");
   }
 
+  std::shared_ptr<RooFitResult> toyFitResult;
   if (config.noFit() == false) {
     toyFitResult = std::shared_ptr<RooFitResult>(
         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                       RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+    toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
+
+  RooDataSet dataSet("dataSet", "dataSet", config.fittingArgSet(),
+                        RooFit::Index(categories.fitting),
+                        RooFit::Import(mapCategoryData));
 
   if (id == 1) {
     for (auto &p : pdfs) {
       std::string toyLabel = "toy";
       std::string dataLabel = "data";
-      Plotting2D(fullDataSet, id, *p, config, outputDir, dataLabel);
+      Plotting2D(dataSet, id, *p, config, outputDir, dataLabel);
       Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
     }
     std::string lumiString = "TOY";
@@ -1293,6 +1298,15 @@ void Run2DToys(TFile &outputFile,
     if (config.noFit() == false) {
       PlotCorrelations(toyFitResult.get(), outputDir, config);
     }
+  }
+  if (config.noFit() == false) {
+    // to make a unique result each time
+    toyFitResult->Print("v");
+    outputFile.cd();
+    toyFitResult->Write();
+    outputFile.Close();
+    std::cout << toyFitResult->GetName() << " has been saved to file "
+              << outputFile.GetName() << "\n";
   }
 }
 
@@ -1355,6 +1369,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+      toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
     }
     if (id == 1) {
       std::string lumiString = "TOY";
@@ -1381,10 +1396,8 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
           "recreate");
 
       outputFile.cd();
-      toyFitResult->SetName("ToyResult");
       toyFitResult->Write();
       if (dataFitResult != nullptr) {
-        dataFitResult->SetName("DataFitResult");
         dataFitResult->Write();
       }
       outputFile.Close();
@@ -1804,13 +1817,31 @@ int main(int argc, char **argv) {
         }
       }
     }
-    int id = 0;
 
+    if (nToys != 0) {
+      // start at id = 1 to reserve 0 for data fit
+      for (int id = 1; id < nToys + 1; ++id) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        double randomTag = random.Rndm();
+        TFile toyResultsFile(
+            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
+             std::to_string(randomTag) + ".root")
+                .c_str(),
+            "recreate");
+        // Pass random??
+        Run2DToys(toyResultsFile, mapCategoryDataset, 
+                  config, categories, neutralVec, daughtersVec, chargeVec,
+                  outputDir, id);
+        toyResultsFile.Close();
+      }
+    }
+    // id = 0 for data fit
+    int id = 0;
     auto p = MakeSimultaneousPdf(id, config, categories, neutralVec,
                                  daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
-
     // Apply box cuts
     for (auto &p : pdfs) {
       Bachelor bachelor = p->bachelor();
@@ -1870,6 +1901,7 @@ int main(int argc, char **argv) {
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+      dataFitResult->SetName("DataFitResult");
     }
 
     if (nToys == 0) {
@@ -1948,39 +1980,16 @@ int main(int argc, char **argv) {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
       }
-      for (int id = 1; id < nToys + 1; ++id) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        double randomTag = random.Rndm();
-        TFile toyResultsFile(
-            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(randomTag) + ".root")
-                .c_str(),
-            "recreate");
-        // Pass random??
-        std::shared_ptr<RooFitResult> toyFitResult;
-        Run2DToys(toyResultsFile, toyFitResult, mapCategoryDataset, fullDataSet,
-                  config, categories, neutralVec, daughtersVec, chargeVec,
-                  outputDir, id);
-        if (config.noFit() == false) {
-          toyFitResult->SetName("ToyResult");
-          toyFitResult->Print("v");
-          toyResultsFile.cd();
-          toyFitResult->Write();
-          if (dataFitResult != nullptr) {
-            dataFitResult->SetName("DataFitResult");
-            dataFitResult->Write();
-          }
-          toyResultsFile.Close();
-          std::cout << "Results saved to file " << toyResultsFile.GetName()
-                    << "\n";
-        }
-      }
+      // for (int id = 1; id < nToys + 1; ++id)
+      //     if (dataFitResult != nullptr)
+      //       dataFitResult->Write();
+      //     std::cout << "Results saved to file " << toyResultsFile.GetName()
+      //               << "\n";
     }
   } else {
     std::cout << "Fitting using D1D method\n";
-    RunD1DToys(simPdf, dataFitResult, config, categories, neutralVec, daughtersVec,
-               chargeVec, outputDir, nToys);
+    RunD1DToys(simPdf, dataFitResult, config, categories, neutralVec,
+               daughtersVec, chargeVec, outputDir, nToys);
   }
   return 0;
 }
