@@ -1104,6 +1104,13 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
+  std::cout << ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters,
+                                  charge)
+            << ":\n";
+  mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                     daughters, charge)]
+      ->Print();
+
   auto dataHistBu = std::unique_ptr<RooDataHist>(
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                          daughters, charge)]
@@ -1127,6 +1134,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
       mapCategoryData[ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                          daughters, charge)]
           ->numEntries());
+  toyDataBu->Print();
   RooDataSet *toyDataBuBox = nullptr;
   toyDataBuBox = dynamic_cast<RooDataSet *>(
       toyDataBu->reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
@@ -1156,7 +1164,18 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
                      "\n";
   }
 
+  mapCategoryToy[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                     daughters, charge)]
+      ->Print();
+
   if (config.fit1D() == false) {
+    std::cout << ComposeFittingName(Mass::delta, neutral, bachelor, daughters,
+                                    charge)
+              << ":\n";
+    mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                       daughters, charge)]
+        ->Print();
+
     auto dataHistDelta = std::unique_ptr<RooDataHist>(
         mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
                                               daughters, charge)]->binnedClone(
@@ -1179,6 +1198,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
         mapCategoryData[ComposeFittingName(Mass::delta, neutral, bachelor,
                                            daughters, charge)]
             ->numEntries());
+    toyDataDelta->Print();
     RooDataSet *toyDataDeltaBox = nullptr;
     toyDataDeltaBox = dynamic_cast<RooDataSet *>(toyDataDelta->reduce(
         ("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
@@ -1207,18 +1227,21 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
                                           daughters, charge) +
                        "\n";
     }
+    mapCategoryToy[ComposeFittingName(Mass::delta, neutral, bachelor, daughters,
+                                      charge)]
+        ->Print();
   }
 }
 
-void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
+void Run2DToys(std::shared_ptr<RooFitResult> &toyFitResult,
+               std::map<std::string, RooDataSet *> &mapCategoryData,
                std::unique_ptr<RooFitResult> &dataFitResult,
-               RooDataSet &fullDataSet,
-               Configuration &config, Configuration::Categories &categories,
+               RooDataSet &fullDataSet, Configuration &config,
+               Configuration::Categories &categories,
                std::vector<Neutral> const &neutralVec,
                std::vector<Daughters> const &daughtersVec,
                std::vector<Charge> const &chargeVec,
                std::string const &outputDir, int nToys) {
-
   // Start from 1 as id = 0 is data fit params
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
@@ -1253,9 +1276,8 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
       throw std::runtime_error("Could not cast to RooAbsData.");
     }
 
-    std::shared_ptr<RooFitResult> result;
     if (config.noFit() == false) {
-      result = std::shared_ptr<RooFitResult>(
+      toyFitResult = std::shared_ptr<RooFitResult>(
           simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
@@ -1271,14 +1293,14 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
       std::string lumiString = "TOY";
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
-                   lumiString, result.get());
+                   lumiString, toyFitResult.get());
       }
       if (config.noFit() == false) {
-        PlotCorrelations(result.get(), outputDir, config);
+        PlotCorrelations(toyFitResult.get(), outputDir, config);
       }
     }
     if (config.noFit() == false) {
-      result->Print("v");
+      toyFitResult->Print("v");
       TFile outputFile(
           (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
            std::to_string(randomTag) + ".root")
@@ -1286,8 +1308,8 @@ void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
           "recreate");
 
       outputFile.cd();
-      result->SetName("ToyResult");
-      result->Write();
+      toyFitResult->SetName("ToyResult");
+      toyFitResult->Write();
       if (dataFitResult != nullptr) {
         dataFitResult->SetName("DataFitResult");
         dataFitResult->Write();
@@ -1351,9 +1373,9 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
                                  daughtersVec, chargeVec);
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
-    std::shared_ptr<RooFitResult> result;
+    std::shared_ptr<RooFitResult> toyFitResult;
     if (config.noFit() == false) {
-      result = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+      toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
@@ -1363,15 +1385,15 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
       auto pdfs = p.second;
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
-                   outputDir, lumiString, result.get());
+                   outputDir, lumiString, toyFitResult.get());
       }
       if (config.noFit() == false) {
-        PlotCorrelations(result.get(), outputDir, config);
+        PlotCorrelations(toyFitResult.get(), outputDir, config);
       }
     }
 
     if (config.noFit() == false) {
-      result->Print("v");
+      toyFitResult->Print("v");
       std::string dimString = "D1D";
       if (config.fit1D() == true) {
         dimString = "1D";
@@ -1383,8 +1405,8 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
           "recreate");
 
       outputFile.cd();
-      result->SetName("ToyResult");
-      result->Write();
+      toyFitResult->SetName("ToyResult");
+      toyFitResult->Write();
       if (dataFitResult != nullptr) {
         dataFitResult->SetName("DataFitResult");
         dataFitResult->Write();
@@ -1634,7 +1656,7 @@ int main(int argc, char **argv) {
   // Declare simPDF and result before any if statements so that it can be passed
   // to RunD1DToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
-  std::unique_ptr<RooFitResult> result;
+  std::unique_ptr<RooFitResult> dataFitResult;
 
   if (inputDir != "") {
     std::map<std::string, RooDataSet *> mapCategoryDataset;
@@ -1868,7 +1890,7 @@ int main(int argc, char **argv) {
     }
 
     if (config.noFit() == false) {
-      result = std::unique_ptr<RooFitResult>(
+      dataFitResult = std::unique_ptr<RooFitResult>(
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
@@ -1884,19 +1906,19 @@ int main(int argc, char **argv) {
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
-                   lumiString, result.get());
+                   lumiString, dataFitResult.get());
       }
 
       if (config.noFit() == false) {
-        result->Print("v");
-        PlotCorrelations(result.get(), outputDir, config);
+        dataFitResult->Print("v");
+        PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
         TFile outputFile((outputDir + "/results/DataResult_" +
                           config.ReturnBoxString() + ".root")
                              .c_str(),
                          "recreate");
-        result->Write();
+        dataFitResult->Write();
         TTree tree("tree", "");
         for (auto &n : neutralVec) {
           double boxEffSignal, orEffSignal, buDeltaCutEffSignal,
@@ -1948,14 +1970,15 @@ int main(int argc, char **argv) {
       }
     } else {
       if (config.noFit() == false) {
-        result->Print("v");
+        dataFitResult->Print("v");
       }
-      Run2DToys(mapCategoryDataset, result, fullDataSet, config, categories,
+      std::shared_ptr<RooFitResult> toyFitResult2d;
+      Run2DToys(toyFitResult2d, mapCategoryDataset, dataFitResult, fullDataSet, config, categories,
                 neutralVec, daughtersVec, chargeVec, outputDir, nToys);
     }
   } else {
     std::cout << "Fitting using D1D method\n";
-    RunD1DToys(simPdf, result, config, categories, neutralVec, daughtersVec,
+    RunD1DToys(simPdf, dataFitResult, config, categories, neutralVec, daughtersVec,
                chargeVec, outputDir, nToys);
   }
   return 0;
