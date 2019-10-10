@@ -1233,8 +1233,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapCategoryData,
   }
 }
 
-void Run2DToys(std::shared_ptr<RooFitResult> &toyFitResult,
-               std::map<std::string, RooDataSet *> &mapCategoryData,
+void Run2DToys(std::map<std::string, RooDataSet *> &mapCategoryData,
                std::unique_ptr<RooFitResult> &dataFitResult,
                RooDataSet &fullDataSet, Configuration &config,
                Configuration::Categories &categories,
@@ -1972,8 +1971,7 @@ int main(int argc, char **argv) {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
       }
-      std::shared_ptr<RooFitResult> toyFitResult2d;
-      Run2DToys(toyFitResult2d, mapCategoryDataset, dataFitResult, fullDataSet, config, categories,
+      Run2DToys(mapCategoryDataset, dataFitResult, fullDataSet, config, categories,
                 neutralVec, daughtersVec, chargeVec, outputDir, nToys);
     }
   } else {
