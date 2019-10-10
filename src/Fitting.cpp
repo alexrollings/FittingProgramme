@@ -1818,24 +1818,24 @@ int main(int argc, char **argv) {
       }
     }
 
-    std::vector<TFile*> toyResultFileVec;
+    std::vector<std::string> toyFileNames(nToys);
     if (nToys != 0) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
         double randomTag = random.Rndm();
-        TFile *toyResultsFile = new TFile(
+        TFile toyResultFile(
             (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
         // Pass random??
-        Run2DToys(*toyResultsFile, mapCategoryDataset, 
+        Run2DToys(toyResultFile, mapCategoryDataset, 
                   config, categories, neutralVec, daughtersVec, chargeVec,
                   outputDir, id);
-        toyResultFileVec.emplace_back(toyResultsFile);
-        toyResultsFile->Close();
+        toyFileNames[id-1] = toyResultFile.GetName();
+        toyResultFile.Close();
       }
     }
     // id = 0 for data fit
@@ -1981,12 +1981,19 @@ int main(int argc, char **argv) {
     } else {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
+        for (int id = 1; id < nToys + 1; ++id) {
+          if (dataFitResult != nullptr) {
+          //   toyFileNames[id-1]->ReOpen("update");
+          //   toyFileNames[id-1]->cd();
+          //   dataFitResult->Write();
+          //   toyFileNames[id-1]->Close();
+            std::cout << "DataFitResult saved to file ";
+                      // << toyFileNames[id-1].GetName() << "\n";
+          } else {
+            throw std::runtime_error("DataFitResult empty.");
+          }
+        }
       }
-      // for (int id = 1; id < nToys + 1; ++id)
-      //     if (dataFitResult != nullptr)
-      //       dataFitResult->Write();
-      //     std::cout << "Results saved to file " << toyResultsFile.GetName()
-      //               << "\n";
     }
   } else {
     std::cout << "Fitting using D1D method\n";
