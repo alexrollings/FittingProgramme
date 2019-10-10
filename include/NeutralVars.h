@@ -189,7 +189,6 @@ class NeutralVars {
   RooDstD0BG &pdfDelta_Bu2D0h() { return pdfDelta_Bu2D0h_; }
   RooDstD0BG &pdfDelta_misId_Bu2D0h() { return pdfDelta_misId_Bu2D0h_; }
   RooRealVar &Bu2D0h_meanBu() { return Bu2D0h_meanBu_; }
-  RooRealVar &Bu2D0h_KpiSigmaBu() { return Bu2D0h_KpiSigmaBu_; }
   RooRealVar &Bu2D0h_aLBu() { return Bu2D0h_aLBu_; }
   RooRealVar &Bu2D0h_aRBu() { return Bu2D0h_aRBu_; }
   RooRealVar &orEffBu2D0h() { return orEffBu2D0h_; }
@@ -311,7 +310,6 @@ class NeutralVars {
   RooDstD0BG pdfDelta_Bu2D0h_;
   RooDstD0BG pdfDelta_misId_Bu2D0h_;
   RooRealVar Bu2D0h_meanBu_;
-  RooRealVar Bu2D0h_KpiSigmaBu_;
   RooRealVar Bu2D0h_aLBu_;
   RooRealVar Bu2D0h_aRBu_;
   RooRealVar orEffBu2D0h_;

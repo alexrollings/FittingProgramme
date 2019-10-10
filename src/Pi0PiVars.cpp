@@ -320,23 +320,23 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       buDeltaCutEffMisId_MisRec_(),
       deltaCutEffMisId_MisRec_(),
       // -------------------- Bu2D0h -------------------- //
-      Bu2D0h_sigmaLBu_(new RooRealVar(("Bu2D0h_sigmaLBu_" +
+      Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 3.3137e+01)),
-      Bu2D0h_sigmaRBu_(new RooRealVar(("Bu2D0h_sigmaRBu_" +
+                                      "", 3.3137e+01),
+      Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 4.0080e+01)),
+                                      "", 4.0080e+01),
                                       // "", 4.0080e+01, 10, 80)),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_meanBu(),
-                    *Bu2D0h_sigmaLBu_, *Bu2D0h_sigmaRBu_,
+                    Bu2D0h_sigmaLBu_, Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aRBu()),
       N_tot_Bu2D0h_(

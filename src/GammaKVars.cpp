@@ -403,32 +403,23 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                    .c_str(),
                                "", 1),
       // -------------------- Bu2D0h -------------------- //
-      Bu2D0h_sigmaLBu_(new RooFormulaVar(
-          ("Bu2D0h_sigmaLBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .Bu2D0h_sigmaLBu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .Bu2D0h_KpiSigmaBu()))),
-      Bu2D0h_sigmaRBu_(new RooFormulaVar(
-          ("Bu2D0h_sigmaRBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .Bu2D0h_sigmaRBu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId)
-                  .Bu2D0h_KpiSigmaBu()))),
+      Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
+                                       ComposeName(uniqueId, Neutral::gamma,
+                                                   Bachelor::k))
+                                          .c_str(),
+                                      "", 8.8989e+01),//, 50, 150)),
+      Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
+                                       ComposeName(uniqueId, Neutral::gamma,
+                                                   Bachelor::k))
+                                          .c_str(),
+                                      "", 7.5978e+01),
+                                      // "", 7.5978e+01, 50, 150),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                         .c_str(),
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_meanBu(),
-                    *Bu2D0h_sigmaLBu_, *Bu2D0h_sigmaRBu_,
+                    Bu2D0h_sigmaLBu_, Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBu()),
       // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,

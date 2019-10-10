@@ -272,12 +272,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.4893e+03),
-          // 5.4893e+03, 5450, 5500),
-      Bu2D0h_KpiSigmaBu_(("Bu2D0h_KpiSigmaBu_" +
-                               ComposeName(uniqueId, Neutral::pi0))
-                                  .c_str(),
-                              "", 0.95),
+          // 5.4893e+03),
+          5.4893e+03, 5450, 5500),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1.3673e-01),
