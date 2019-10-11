@@ -1245,7 +1245,6 @@ void Run2DToys(TFile &outputFile,
   RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
                         RooFit::Index(categories.fitting),
                         RooFit::Import(mapFittingToy));
-  toyDataSet.Print();
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
@@ -1270,6 +1269,11 @@ void Run2DToys(TFile &outputFile,
   RooDataSet dataSet("dataSet", "dataSet", config.fittingArgSet(),
                      RooFit::Index(categories.fitting),
                      RooFit::Import(mapFittingDataSet));
+
+  std::cout << "\n\n\n";
+  toyDataSet.Print();
+  dataSet.Print();
+  std::cout << "\n\n\n";
 
   if (id == 1) {
     for (auto &p : pdfs) {

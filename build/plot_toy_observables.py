@@ -214,7 +214,7 @@ if __name__ == "__main__":
         ratio.append(obs[dim + "_ratioKpi_Bu2Dst0h_D0gamma_gamma_new"])
         ratio_old.append(obs[dim + "_ratioKpi_Bu2Dst0h_D0gamma_gamma"])
 
-    # Stat error function = sqrt( N_T / (N_BOX/N_T) +1 ): 2 when N_BOX = N_T, 1 when N_BOX = 0
+    # Stat error function = sqrt( N_T / (N_BOX/N_T + 1) ): 2 when N_BOX = N_T, 1 when N_BOX = 0
     yields_pi_stat_err = unumpy.sqrt(
         np.divide(yields_pi, (frac_yields_pi + np.ones(len(box_dims)))))
     yields_pi_stat_perc_err = np.divide(yields_pi_stat_err, yields_pi) * 100
@@ -247,7 +247,7 @@ if __name__ == "__main__":
                  unumpy.nominal_values(yields_pi_stat_perc_err),
                  xerr=unumpy.std_devs(frac_yields_pi),
                  yerr=unumpy.std_devs(yields_pi_stat_perc_err),
-                 label='Stat Error')
+                 label='Poisson Error')
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
@@ -270,7 +270,7 @@ if __name__ == "__main__":
                  unumpy.nominal_values(yields_k_stat_perc_err),
                  xerr=unumpy.std_devs(frac_yields_k),
                  yerr=unumpy.std_devs(yields_k_stat_perc_err),
-                 label='Stat Error')
+                 label='Poisson Error')
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
@@ -292,7 +292,7 @@ if __name__ == "__main__":
                  np.divide(unumpy.std_devs(ratio_stat),
                  unumpy.nominal_values(ratio))*100,
                  xerr=unumpy.std_devs(frac_yields_pi),
-                 label='Stat Error')
+                 label='Poisson Error')
     plt.legend(loc='best')
     plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylabel('$\%$ Error')
