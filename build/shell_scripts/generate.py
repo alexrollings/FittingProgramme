@@ -13,9 +13,9 @@ def submit_to_batch(command):
 def run_process(script):
     p = sp.Popen(["sh", script], stdout=sp.PIPE, stderr=sp.PIPE)
     stdout, stderr = p.communicate()
-    with open(os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
+    with open('/data/lhcb/users/rollings/roofit_results/2d_toys/output/' + os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
         out_file.write(stdout)
-    with open(os.path.splitext(os.path.basename(script))[0] + '.err', 'w') as err_file:
+    with open('/data/lhcb/users/rollings/roofit_results/2d_toys/output/' + os.path.splitext(os.path.basename(script))[0] + '.err', 'w') as err_file:
         err_file.write(stderr)
     return p.returncode
 
