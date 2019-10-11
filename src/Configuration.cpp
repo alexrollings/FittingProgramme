@@ -160,7 +160,8 @@ Configuration::Configuration()
 }
 // Categories is a class within a class !!!
 Configuration::Categories::Categories()
-    : fitting("fitting", "fitting") {
+    : fitting("fitting", "fitting"),
+      dataLabel("dataLabel", "dataLabel") {
 
   fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
                                         Daughters::kpi, Charge::total)
@@ -450,6 +451,151 @@ Configuration::Categories::Categories()
   fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
                                         Daughters::pik, Charge::minus)
                          .c_str());
+
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kpi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kpi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kk, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kk, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pipi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pipi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pik, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pik, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kpi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kpi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kk, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kk, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pipi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pipi, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pik, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pik, Charge::total)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kpi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kpi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kk, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kk, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pipi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pipi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pik, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pik, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kpi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kpi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kk, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kk, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pipi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pipi, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pik, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pik, Charge::plus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kpi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kpi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::kk, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::kk, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pipi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pipi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                            Daughters::pik, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                            Daughters::pik, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kpi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kpi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::kk, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::kk, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pipi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pipi, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                            Daughters::pik, Charge::minus)
+                           .c_str());
+  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                            Daughters::pik, Charge::minus)
+                           .c_str());
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
@@ -674,8 +820,15 @@ std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
 }
 
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor,
-                        Daughters daughters, Charge charge) {
-  return EnumToString(mass) + "_" + EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+                               Daughters daughters, Charge charge) {
+  return EnumToString(mass) + "_" + EnumToString(neutral) + "_" +
+         EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
+         EnumToString(charge);
+}
+
+std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor,
+                                 Daughters daughters, Charge charge) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
          EnumToString(daughters) + "_" + EnumToString(charge);
 }
 

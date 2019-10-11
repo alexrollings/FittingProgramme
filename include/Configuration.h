@@ -36,6 +36,7 @@ class Configuration {
   
   struct Categories {
     RooCategory fitting;
+    RooCategory dataLabel;
     Categories();
     Categories(Categories const &) = delete;
     Categories(Categories &&) = delete;
@@ -154,3 +155,4 @@ std::string ComposeFilename(Year year, Polarity polarity,
                             Daughters daughters, Charge charge);
 
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
