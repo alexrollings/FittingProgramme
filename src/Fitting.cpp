@@ -1697,89 +1697,38 @@ int main(int argc, char **argv) {
                     RooDataSet *reducedInputDataSet_d = nullptr;
                     if (d == Daughters::kpi || d == Daughters::pik) {
                       reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_b->reduce(
+                          reducedInputDataSet_b->reduce(config.fittingArgSet(),
                               "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
                               "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
                               "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
                     } else if (d == Daughters::kk) {
                       reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_b->reduce(
+                          reducedInputDataSet_b->reduce(config.fittingArgSet(),
                               "h1_D_PIDK>2&&h2_D_PIDK>2"));
                     } else {
                       reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_b->reduce(
+                          reducedInputDataSet_b->reduce(config.fittingArgSet(),
                               "h1_D_PIDK<-2&&h2_D_PIDK<-2"));
                     }
                     if (reducedInputDataSet_d == nullptr) {
                       throw std::runtime_error(
                           "Could not reduce input dataset w/ daughter cuts.");
                     }
-                    // ALSO APPLY BOX CUTS HERE
-                    RooDataSet *buDeltaInputDataSet = nullptr;
-                    buDeltaInputDataSet = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_d->reduce(
-                            config.fittingArgSet()));
-                            // ("Delta_M>" + std::to_string(config.deltaLow()) +
-                            //  "&&Delta_M<" + std::to_string(config.deltaHigh()))
-                            //     .c_str()));
-                    if (buDeltaInputDataSet == nullptr) {
-                      throw std::runtime_error(
-                          "Could not reduce dataset down to buDeltaMass.");
-                    }
                     // Need to append each year, polarity to dataset at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
-                    if (mapCategoryDataset.find(
-                            ComposeFittingName(Mass::buDelta, n, b, d, c)) ==
-                        mapCategoryDataset.end()) {
-                      mapCategoryDataset.insert(std::make_pair(
-                          ComposeFittingName(Mass::buDelta, n, b, d, c),
-                          buDeltaInputDataSet));
-                      std::cout
-                          << "Created key-value pair for category " +
-                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
-                                 " and corresponding dataset\n";
+                    if (mapCategoryDataset.find(ComposeDataLabelName(
+                            n, b, d, c)) == mapCategoryDataset.end()) {
+                      mapCategoryDataset.insert(
+                          std::make_pair(ComposeDataLabelName(n, b, d, c),
+                                         reducedInputDataSet_d));
+                      std::cout << "Created key-value pair for category " +
+                                       ComposeDataLabelName(n, b, d, c) +
+                                       " and corresponding dataset\n";
                     } else {
-                      mapCategoryDataset[ComposeFittingName(Mass::buDelta, n, b,
-                                                            d, c)]
-                          ->append(*buDeltaInputDataSet);
-                      std::cout
-                          << "Appended dataset to category " +
-                                 ComposeFittingName(Mass::buDelta, n, b, d, c) +
-                                 "\n";
-                    }
-                    if (config.fit1D() == false) {
-                      RooDataSet *deltaInputDataSet = nullptr;
-                      deltaInputDataSet = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_d->reduce(
-                              config.fittingArgSet()));
-                              // ("Bu_Delta_M>" +
-                              //  std::to_string(config.buDeltaLow()) +
-                              //  "&&Bu_Delta_M<" +
-                              //  std::to_string(config.buDeltaHigh()))
-                              //     .c_str()));
-                      if (deltaInputDataSet == nullptr) {
-                        throw std::runtime_error(
-                            "Could not reduce dataset down to deltaMass.");
-                      }
-                      if (mapCategoryDataset.find(
-                              ComposeFittingName(Mass::delta, n, b, d, c)) ==
-                          mapCategoryDataset.end()) {
-                        mapCategoryDataset.insert(std::make_pair(
-                            ComposeFittingName(Mass::delta, n, b, d, c),
-                            deltaInputDataSet));
-                        std::cout
-                            << "Created key-value pair for category " +
-                                   ComposeFittingName(Mass::delta, n, b, d, c) +
-                                   " and corresponding dataset\n";
-                      } else {
-                        mapCategoryDataset[ComposeFittingName(Mass::delta, n, b,
-                                                              d, c)]
-                            ->append(*deltaInputDataSet);
-                        std::cout
-                            << "Appended dataset to category " +
-                                   ComposeFittingName(Mass::delta, n, b, d, c) +
-                                   "\n";
-                      }
+                      mapCategoryDataset[ComposeDataLabelName(n, b, d, c)]
+                          ->append(*reducedInputDataSet_d);
+                      std::cout << "Appended dataset to category " +
+                                       ComposeDataLabelName(n, b, d, c) + "\n";
                     }
                   }
                 }
