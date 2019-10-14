@@ -324,13 +324,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 3.3137e+01),
+                                      // "", 3.3137e+01),
+                                      "", 5.2446e+01),
                                       // "", 3.3137e+01, 10, 100),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
-                                      "", 4.0080e+01),
+                                      // "", 4.0080e+01),
+                                      "", 7.4012e+01),
                                       // "", 4.0080e+01, 10, 80),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -382,7 +384,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                     ComposeName(uniqueId, Neutral::pi0,
                                                 Bachelor::pi))
                                        .c_str(),
-                                   "", 3.4464e+01),
+                                   // "", 3.4464e+01),
+                                   "", 4.9847e+01),
                                    // "", 3.4464e+01, 10, 50),
       partRec_D0pi0_sigmaRBu_(("partRec_D0pi0_sigmaRBu_" +
                                     ComposeName(uniqueId, Neutral::pi0,

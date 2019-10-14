@@ -196,7 +196,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              "", 1.3549e+02),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -1.5314e+00),
+          "", -1.5314e+00, -10, 10),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 4.3675e-03),
@@ -272,7 +272,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              Bu2D0h_aDelta_, Bu2D0h_bDelta_),
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.4893e+03),
+          // 5.4893e+03),
+          5.4633e+03),
           // 5.4893e+03, 5450, 5500),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
@@ -330,7 +331,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       partRec_D0pi0_meanBu_(("partRec_D0pi0_meanBu_" +
                                 ComposeName(uniqueId, Neutral::pi0))
                                    .c_str(),
-                               "", 5.1162e+03),
+                               // "", 5.1162e+03),
+                               "", 5.1300e+03),
                                // "", 5.1162e+03, 5090, 5130),
       partRec_D0pi0_aLBu_(("partRec_D0pi0_aLBu_" +
                               ComposeName(uniqueId, Neutral::pi0))
