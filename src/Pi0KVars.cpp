@@ -44,17 +44,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0pi0_, pdf2Bu_Bu2Dst0h_D0pi0_),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_D0pi0_fracPdf1Bu())),
+      N_tot_initVal_Bu2Dst0h_D0pi0_(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .initYieldFAVBu2Dst0h_D0pi0() *
+                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .orEffBu2Dst0h_D0pi0()
+                                          .getVal() * 0.07930),
       N_tot_Bu2Dst0h_D0pi0_(("N_tot_Bu2Dst0h_D0pi0_" +
-                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                .c_str(),
-                            "", NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .initYieldFAVBu2Dst0h_D0pi0() *
-                                    NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .orEffBu2Dst0h_D0pi0()
-                                        .getVal() *
-                                    0.07930,
-                            // -1000000, 1000000),
-                            0, 100000),
+                               ComposeName(uniqueId, Neutral::pi0,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", N_tot_initVal_Bu2Dst0h_D0pi0_,
+                              0, 1000000),
       pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                  .c_str(),
@@ -189,17 +189,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           *Bu2Dst0h_D0gamma_sigma1Bu_, *Bu2Dst0h_D0gamma_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a2Bu())),
-      N_tot_Bu2Dst0h_D0gamma_(("N_tot_Bu2Dst0h_D0gamma_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                  .c_str(),
-                              "", NeutralVars<Neutral::pi0>::Get(uniqueId)
+      N_tot_initVal_Bu2Dst0h_D0gamma_(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .initYieldFAVBu2Dst0h_D0gamma() *
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .orEffBu2Dst0h_D0gamma()
-                                          .getVal() *
-                                      0.07930,
-                              0, 100000),
-      // -1000000, 1000000),
+                                          .getVal() * 0.07930),
+      N_tot_Bu2Dst0h_D0gamma_(("N_tot_Bu2Dst0h_D0gamma_" +
+                               ComposeName(uniqueId, Neutral::pi0,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", N_tot_initVal_Bu2Dst0h_D0gamma_,
+                              0, 1000000),
       pidEff_Bu2Dst0h_D0gamma_(("pidEff_Bu2Dst0h_D0gamma_" +
                                 ComposeName(uniqueId, Neutral::pi0,
                                             Bachelor::k))
@@ -297,15 +297,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                     MisRec_sigmaLBu_, MisRec_sigmaRBu_,
                     NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aLBu(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aRBu()),
-      N_tot_MisRec_(
-          ("N_tot_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "",
-          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
-              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec().getVal() *
-              0.06,
-          0, 100000),
-      // -1000000, 1000000),
+      N_tot_initVal_MisRec_(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .initYieldFAVMisRec() *
+                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .orEffMisRec()
+                                          .getVal() * 0.06),
+      N_tot_MisRec_(("N_tot_MisRec_" +
+                               ComposeName(uniqueId, Neutral::pi0,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", N_tot_initVal_MisRec_,
+                              0, 1000000),
       pidEff_Bu2Dst0h_D0gamma_WN_(),
       pidEff_Bu2Dst0h_D0pi0_WN_(),
       pidEff_Bu2D0hst_(),
@@ -400,15 +402,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aRBu()),
       // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
       // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
-      N_tot_Bu2D0h_(
-          ("N_tot_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "",
-          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVBu2D0h() *
-              NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h().getVal() *
-              0.07768,
-          // -1000000, 1000000),
-          0, 100000),
+      N_tot_initVal_Bu2D0h_(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .initYieldFAVBu2D0h() *
+                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .orEffBu2D0h()
+                                          .getVal() * 0.07768),
+      N_tot_Bu2D0h_(("N_tot_Bu2D0h_" +
+                               ComposeName(uniqueId, Neutral::pi0,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", N_tot_initVal_Bu2D0h_,
+                              0, 1000000),
       pidEff_Bu2D0h_(),
       N_Bu2D0h_(("N_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                     .c_str(),
@@ -493,18 +497,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           partRec_D0pi0_sigmaLBu_, partRec_D0pi0_sigmaRBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aRBu())),
+      N_tot_initVal_PartRec_(NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .initYieldFAVPartRec() *
+                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .orEffPartRec()
+                                          .getVal() * 0.02),
       N_tot_PartRec_(("N_tot_PartRec_" +
-                                 ComposeName(uniqueId, Neutral::pi0,
-                                             Bachelor::k))
-                                    .c_str(),
-                                "", NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                            .initYieldFAVPartRec() *
-                                        NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                            .orEffPartRec()
-                                            .getVal() *
-                                        0.02,
-                                // -1000000, 1000000),
-                                0, 100000),
+                               ComposeName(uniqueId, Neutral::pi0,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", N_tot_initVal_PartRec_,
+                              0, 1000000),
       pidEff_Bu2Dst0hst_D0pi0_(),
       pidEff_Bu2Dst0hst_D0gamma_(),
       pidEff_PartRec_(),
