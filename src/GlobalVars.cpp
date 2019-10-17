@@ -32,7 +32,7 @@ std::string ComposeName(int uniqueId, Neutral neutral,
 std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
                         Charge charge) {
   return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
-         std::to_string(charge) + "_" + std::to_string(uniqueId);
+         EnumToString(charge) + "_" + std::to_string(uniqueId);
 }
 
 std::string ComposeName(int uniqueId, Neutral neutral,

@@ -44,6 +44,9 @@ class NeutralBachelorVars {
   RooCBShape &pdf2Bu_Bu2Dst0h_D0gamma() { return pdf2Bu_Bu2Dst0h_D0gamma_; }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() { return *pdfBu_Bu2Dst0h_D0gamma_; }
   RooConstVar &pidEff_Bu2Dst0h_D0gamma() { return pidEff_Bu2Dst0h_D0gamma_; }
+  double &N_tot_initVal_Bu2Dst0h_D0gamma() {
+    return N_tot_initVal_Bu2Dst0h_D0gamma_;
+  }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_Bu2Dst0h_D0gamma_meanBu() {
     return misId_Bu2Dst0h_D0gamma_meanBu_;
@@ -96,6 +99,9 @@ class NeutralBachelorVars {
   RooCBShape &pdf2Bu_Bu2Dst0h_D0pi0() { return pdf2Bu_Bu2Dst0h_D0pi0_; }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() { return *pdfBu_Bu2Dst0h_D0pi0_; }
   RooConstVar &pidEff_Bu2Dst0h_D0pi0() { return pidEff_Bu2Dst0h_D0pi0_; }
+  double &N_tot_initVal_Bu2Dst0h_D0pi0() {
+    return N_tot_initVal_Bu2Dst0h_D0pi0_;
+  }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_Bu2Dst0h_D0pi0_meanBu() {
     return misId_Bu2Dst0h_D0pi0_meanBu_;
@@ -141,6 +147,9 @@ class NeutralBachelorVars {
   double &pidEff_Bu2D0hst() { return pidEff_Bu2D0hst_; }
   double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
   RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
+  double &N_tot_initVal_MisRec() {
+    return N_tot_initVal_MisRec_;
+  }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_MisRec_mean1Bu() {
     return misId_MisRec_mean1Bu_;
@@ -187,6 +196,9 @@ class NeutralBachelorVars {
   RooRealVar &Bu2D0h_sigmaRBu() { return Bu2D0h_sigmaRBu_; }
   RooCruijff &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
   RooConstVar &pidEff_Bu2D0h() { return pidEff_Bu2D0h_; }
+  double &N_tot_initVal_Bu2D0h() {
+    return N_tot_initVal_Bu2D0h_;
+  }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_Bu2D0h_meanBu() { return misId_Bu2D0h_meanBu_; }
   RooRealVar &misId_Bu2D0h_sigmaLBu() { return misId_Bu2D0h_sigmaLBu_; }
@@ -222,6 +234,9 @@ class NeutralBachelorVars {
   }
   RooConstVar &pidEff_PartRec() {
     return pidEff_PartRec_;
+  }
+  double &N_tot_initVal_PartRec() {
+    return N_tot_initVal_PartRec_;
   }
   // -------------------- Mis-ID ------------------- //
   RooRealVar &misId_PartRec_meanBu() {
@@ -267,6 +282,7 @@ class NeutralBachelorVars {
   RooCBShape pdf2Bu_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_;
   RooConstVar pidEff_Bu2Dst0h_D0gamma_;
+  double N_tot_initVal_Bu2Dst0h_D0gamma_;
   // -------------------- Mis-ID ------------------- //
   // 1 = L, 2 = R for RooCruijff
   RooRealVar misId_Bu2Dst0h_D0gamma_meanBu_;
@@ -290,6 +306,7 @@ class NeutralBachelorVars {
   RooCBShape pdf2Bu_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0pi0_;
   RooConstVar pidEff_Bu2Dst0h_D0pi0_;
+  double N_tot_initVal_Bu2Dst0h_D0pi0_;
   // -------------------- Mis-ID ------------------- //
   // 1 = L, 2 = R for RooCruijff
   RooRealVar misId_Bu2Dst0h_D0pi0_meanBu_;
@@ -316,6 +333,7 @@ class NeutralBachelorVars {
   double pidEff_Bu2D0hst_;
   double pidEff_Bd2Dsth_;
   RooConstVar pidEff_MisRec_;
+  double N_tot_initVal_MisRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_MisRec_mean1Bu_;
   RooRealVar misId_MisRec_mean2Bu_;
@@ -338,6 +356,7 @@ class NeutralBachelorVars {
   RooRealVar Bu2D0h_sigmaRBu_;
   RooCruijff pdfBu_Bu2D0h_;
   RooConstVar pidEff_Bu2D0h_;
+  double N_tot_initVal_Bu2D0h_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_Bu2D0h_meanBu_;
   RooRealVar misId_Bu2D0h_sigmaLBu_;
@@ -359,6 +378,8 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
   double pidEff_Bu2Dst0hst_D0pi0_;
   double pidEff_Bu2Dst0hst_D0gamma_;
+  RooConstVar pidEff_PartRec_;
+  double N_tot_initVal_PartRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_PartRec_meanBu_;
   RooRealVar misId_PartRec_sigmaLBu_;

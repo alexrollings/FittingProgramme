@@ -29,10 +29,9 @@
 
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "NeutralBachelorVars.h"
-#include "NeutralVars.h"
 #include "ParseArguments.h"
 #include "Pdf.h"
+#include "NeutralVars.h"
 
 // Function to set the style for all THists
 void SetStyle() {
