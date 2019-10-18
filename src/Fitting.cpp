@@ -1702,6 +1702,8 @@ int main(int argc, char **argv) {
                       throw std::runtime_error(
                           "Could not reduce input w/ neutral cuts dataSet.");
                     }
+                    std::cout << "\n\nReduced w/ neutral cut string: \n\n";
+                    reducedInputDataSet_n->Print();
                     RooDataSet *reducedInputDataSet_b = nullptr;
                     if (b == Bachelor::pi) {
                       reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
@@ -1714,14 +1716,20 @@ int main(int argc, char **argv) {
                       throw std::runtime_error(
                           "Could not reduce input dataSet w/ bachelor cuts.");
                     }
+                    std::cout << "\n\nReduced w/ bachelor cut string: \n\n";
+                    reducedInputDataSet_b->Print();
                     RooDataSet *reducedInputDataSet_d = nullptr;
                     if (d == Daughters::kpi || d == Daughters::pik) {
-                      reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_b->reduce(
-                              config.fittingArgSet(),
-                              "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
-                              "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
-                              "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
+                      reducedInputDataSet_d = dynamic_cast<
+                          RooDataSet *>(reducedInputDataSet_b->reduce(
+                          config.fittingArgSet(),
+                          // "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
+                          // "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+                          // "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
+                          "((abs(h1_D_ID)==211&&h1_D_PIDK<-2)&&(abs(h2_D_ID)=="
+                          "321&&h2_D_PIDK>2))||((abs(h1_D_ID)"
+                          "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+                          "PIDK<-2))"));
                     } else if (d == Daughters::kk) {
                       reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
                           reducedInputDataSet_b->reduce(
@@ -1737,6 +1745,9 @@ int main(int argc, char **argv) {
                       throw std::runtime_error(
                           "Could not reduce input dataSet w/ daughter cuts.");
                     }
+                    std::cout << "\n\nReduced w/ daughters cut string: \n\n";
+                    reducedInputDataSet_d->Print();
+                    std::cout << "\n\n";
                     // Need to append each year, polarity to dataSet at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
                     if (mapDataLabelDataSet.find(ComposeDataLabelName(
