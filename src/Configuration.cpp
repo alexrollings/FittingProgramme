@@ -20,7 +20,7 @@ Configuration::Configuration()
       deltaHigh_(170),
       buDeltaLow_(5240),
       buDeltaHigh_(5330),
-      initYieldFAVSignal_(6.7315e+04),
+      initYieldFAVSignal_(5.6781e+04),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
@@ -28,6 +28,7 @@ Configuration::Configuration()
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2"),
       fit1D_(false),
+      splitByCharge_(false),
       noFit_(false) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";

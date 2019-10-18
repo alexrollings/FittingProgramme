@@ -89,6 +89,7 @@ class Configuration {
   std::string &pi0CutString() { return pi0CutString_; }
 
   bool &fit1D() { return fit1D_; }
+  bool &splitByCharge() { return splitByCharge_; }
   bool &noFit() { return noFit_; }
 
  private:
@@ -131,6 +132,7 @@ class Configuration {
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;
+  bool splitByCharge_;
   bool noFit_;
 };
 
