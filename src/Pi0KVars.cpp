@@ -381,15 +381,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                                    Bachelor::k))
                                           .c_str(),
                                       // "", 3.3137e+01),
-                                      "", 4.8630e+01),
-                                      // "", 3.3137e+01, 10, 100),
+                                      // "", 4.8630e+01),
+                                      "", 3.3137e+01, 10, 100),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::k))
                                           .c_str(),
                                       // "", 4.0080e+01),
-                                      "", 6.6626e+01),
-                                      // "", 4.0080e+01, 10, 80),
+                                      // "", 6.6626e+01),
+                                      "", 4.0080e+01, 10, 100),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                         .c_str(),
