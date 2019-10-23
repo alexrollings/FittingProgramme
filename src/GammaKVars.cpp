@@ -407,13 +407,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                        ComposeName(uniqueId, Neutral::gamma,
                                                    Bachelor::k))
                                           .c_str(),
-                                      "", 8.8989e+01),//, 50, 150)),
+                                      "", 8.8989e+01, 50, 150),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::gamma,
                                                    Bachelor::k))
                                           .c_str(),
-                                      "", 7.5978e+01),
-                                      // "", 7.5978e+01, 50, 150),
+                                      // "", 7.5978e+01),
+                                      "", 7.5978e+01, 10, 150),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                         .c_str(),
