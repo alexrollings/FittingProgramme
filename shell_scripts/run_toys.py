@@ -113,16 +113,16 @@ if __name__ == "__main__":
 
     home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
     for i in range(0, n_jobs):
-        j_dir = '/data/lhcb/users/rollings/fitting_scripts/job_' + str(i) + '/'
-        os.mkdir(j_dir)
-        copyfile(home_path + 'CMakeMacroParseArguments.cmake', j_dir + 'CMakeMacroParseArguments.cmake')
-        copyfile(home_path + 'FindROOT.cmake', j_dir + 'FindROOT.cmake')
-        copyfile(home_path + 'CMakeLists.txt', j_dir + 'CMakeLists.txt')
-        os.mkdir(j_dir + 'src/')
-        copy_tree(home_path + 'src/', j_dir + 'src/')
-        os.mkdir(j_dir + 'include/')
-        copy_tree(home_path + 'include/', j_dir + 'include/')
-        os.mkdir(j_dir + 'build/')
+        # j_dir = '/data/lhcb/users/rollings/fitting_scripts/job_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '_'  + str(i) + '/'
+        # os.mkdir(j_dir)
+        # copyfile(home_path + 'CMakeMacroParseArguments.cmake', j_dir + 'CMakeMacroParseArguments.cmake')
+        # copyfile(home_path + 'FindROOT.cmake', j_dir + 'FindROOT.cmake')
+        # copyfile(home_path + 'CMakeLists.txt', j_dir + 'CMakeLists.txt')
+        # os.mkdir(j_dir + 'src/')
+        # copy_tree(home_path + 'src/', j_dir + 'src/')
+        # os.mkdir(j_dir + 'include/')
+        # copy_tree(home_path + 'include/', j_dir + 'include/')
+        # os.mkdir(j_dir + 'build/')
 
         templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
         scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
@@ -153,5 +153,5 @@ if __name__ == "__main__":
             dim
         }
         make_shell_script(templatePath, scriptPath, substitutions)
-        run_process(["sh", scriptPath])
-        # run_process(["qsub", scriptPath])
+        # run_process(["sh", scriptPath])
+        run_process(["qsub", scriptPath])
