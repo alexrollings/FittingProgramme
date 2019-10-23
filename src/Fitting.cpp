@@ -29,10 +29,9 @@
 
 #include "Configuration.h"
 #include "GlobalVars.h"
-#include "NeutralBachelorVars.h"
-#include "NeutralVars.h"
 #include "ParseArguments.h"
 #include "Pdf.h"
+#include "NeutralVars.h"
 
 // Function to set the style for all THists
 void SetStyle() {
@@ -1626,13 +1625,17 @@ int main(int argc, char **argv) {
     }
   }
 
+  if (chargeVec.size() > 1) {
+    config.splitByCharge() = true;
+  }
+
   Configuration::Categories &categories = Configuration::Get().categories();
 
   // Raise lower mass boundary in delta mass for pi0 plots
   if (neutralVec.size() == 1 && neutralVec[0] == Neutral::pi0) {
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
-    config.initYieldFAVSignal() = 15600;
+    config.initYieldFAVSignal() = 1.3346e+04;
   }
 
   // Declare simPDF and result before any if statements so that it can be passed
@@ -1717,12 +1720,16 @@ int main(int argc, char **argv) {
                     }
                     RooDataSet *reducedInputDataSet_d = nullptr;
                     if (d == Daughters::kpi || d == Daughters::pik) {
-                      reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                          reducedInputDataSet_b->reduce(
-                              config.fittingArgSet(),
-                              "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
-                              "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
-                              "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
+                      reducedInputDataSet_d = dynamic_cast<
+                          RooDataSet *>(reducedInputDataSet_b->reduce(
+                          config.fittingArgSet(),
+                          // "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
+                          // "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+                          // "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
+                          "((abs(h1_D_ID)==211&&h1_D_PIDK<-2)&&(abs(h2_D_ID)=="
+                          "321&&h2_D_PIDK>2))||((abs(h1_D_ID)"
+                          "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
+                          "PIDK<-2))"));
                     } else if (d == Daughters::kk) {
                       reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
                           reducedInputDataSet_b->reduce(
@@ -1738,6 +1745,7 @@ int main(int argc, char **argv) {
                       throw std::runtime_error(
                           "Could not reduce input dataSet w/ daughter cuts.");
                     }
+                    std::cout << "\n\n";
                     // Need to append each year, polarity to dataSet at each key
                     // in map, as key labelled by n, b, d, c and must be unique.
                     if (mapDataLabelDataSet.find(ComposeDataLabelName(

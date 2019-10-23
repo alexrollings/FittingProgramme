@@ -120,7 +120,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                        .c_str(),
                                    "", 1),
       fracBu2Dst0h_D0gamma_(),
-      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal()),
+      initYieldFAVBu2Dst0h_D0gamma_(),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
@@ -212,8 +212,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 1),
       fracBu2Dst0h_D0pi0_(0.871),
-      initYieldFAVBu2Dst0h_D0pi0_(Configuration::Get().initYieldFAVSignal() *
-                                  fracBu2Dst0h_D0pi0_),
+      initYieldFAVBu2Dst0h_D0pi0_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
@@ -270,8 +269,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
                   fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
                   fracMisRec_Bd2Dsth_),
-      initYieldFAVMisRec_(Configuration::Get().initYieldFAVSignal() *
-                          fracMisRec_),
+      initYieldFAVMisRec_(),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_thresholdDelta_(("Bu2D0h_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
@@ -321,8 +319,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              .c_str(),
                          "", 1),
       fracBu2D0h_(1.936),
-      initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
-                          fracBu2D0h_),
+      initYieldFAVBu2D0h_(),
       // -------------------- PART-REC -------------------- //
       partRec_thresholdDelta_(("partRec_thresholdDelta_" +
                                           ComposeName(uniqueId, Neutral::gamma))
@@ -402,8 +399,28 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracPartRec_Bu2Dst0hst_D0gamma_(0.141),
       fracPartRec_Bu2Dst0hst_D0pi0_(0.162),
       fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ + fracPartRec_Bu2Dst0hst_D0pi0_),
-      initYieldFAVPartRec_(
-          Configuration::Get().initYieldFAVSignal() * fracPartRec_) {
+      initYieldFAVPartRec_() {
+  if (Configuration::Get().splitByCharge() == true) {
+    initYieldFAVBu2Dst0h_D0gamma_ = Configuration::Get().initYieldFAVSignal() / 2;
+    initYieldFAVBu2Dst0h_D0pi0_ =
+        (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_) / 2;
+    initYieldFAVMisRec_ =
+        (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 2;
+    initYieldFAVBu2D0h_ =
+        (Configuration::Get().initYieldFAVSignal() * fracBu2D0h_) / 2;
+    initYieldFAVPartRec_ =
+        (Configuration::Get().initYieldFAVSignal() * fracPartRec_) / 2;
+  } else {
+    initYieldFAVBu2Dst0h_D0gamma_ = Configuration::Get().initYieldFAVSignal();
+    initYieldFAVBu2Dst0h_D0pi0_ =
+        Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_;
+    initYieldFAVMisRec_ =
+        Configuration::Get().initYieldFAVSignal() * fracMisRec_;
+    initYieldFAVBu2D0h_ =
+        Configuration::Get().initYieldFAVSignal() * fracBu2D0h_;
+    initYieldFAVPartRec_ =
+        Configuration::Get().initYieldFAVSignal() * fracPartRec_;
+  }
 
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
                   boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
