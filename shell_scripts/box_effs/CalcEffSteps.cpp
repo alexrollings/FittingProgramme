@@ -8,6 +8,7 @@
 #include "TFile.h"
 
 enum class Neutral { pi0, gamma };
+enum class Variable { buDelta, delta };
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
@@ -15,6 +16,19 @@ std::string EnumToString(Neutral neutral) {
       return "pi0";
     case Neutral::gamma:
       return "gamma";
+    default:
+      return " ";
+  }
+}
+
+std::string EnumToString(Variable variable) {
+  switch (variable) {
+    case Variable::buDelta:
+      return "buDelta";
+    case Variable::delta:
+      return "delta";
+    default:
+      return " ";
   }
 }
 
@@ -24,12 +38,18 @@ std::string to_string_with_precision(double value) {
   return out.str();
 }
 
-void GetEntries(Neutral neutral) {
+void GetBoxEffs(Neutral neutral, Variable variable) {
   std::string ttree, cutString;
   std::vector<std::string> input;
   std::vector<std::string> years = {"2011", "2012", "2015", "2016"};
   std::vector<std::string> polarities = {"Up", "Down"};
   std::string path = "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/";
+
+  std::vector<std::string> buLow = {"5180"};
+  std::vector<std::string> deltaLow;
+  std::vector<std::string> buHigh;
+  std::vector<std::string> deltaHigh;
+
   if (neutral == Neutral::pi0) {
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
     cutString =
@@ -43,6 +63,7 @@ void GetEntries(Neutral neutral) {
                            y + "_Mag" + p + "_BDT1_BDT2_PID_TM.root");
       }
     }
+    deltaLow.emplace_back("136");
   } else {
     ttree = "BtoDstar0h3_h1h2gammaTuple";
     cutString =
@@ -57,6 +78,7 @@ void GetEntries(Neutral neutral) {
             y + "_Mag" + p + "_BDT1_BDT2_PID_TM.root");
       }
     }
+    deltaLow.emplace_back("105");
   }
 
   TChain chain(ttree.c_str());
@@ -64,37 +86,69 @@ void GetEntries(Neutral neutral) {
     chain.Add(i.c_str());
   }
 
-  std::vector<std::string> buLow = {"5180"};
-  std::vector<std::string> deltaLow = {"136"};
-  std::vector<std::string> buHigh = {"5380"};
-  std::vector<std::string> deltaHigh;
-  for (double i = 160; i > 136; i = i - 0.1) {
-    deltaHigh.emplace_back(to_string_with_precision(i));
-  }
-
   double initEntries = chain.GetEntries(cutString.c_str());
 
-  std::string filename = "box_efficiencies/" + EnumToString(neutral) + "_effs.txt";
+  std::string filename = EnumToString(neutral) + "_" +
+                         EnumToString(variable) + "_effs.txt";
   std::ofstream txtFile(filename);
-  for (auto &dH : deltaHigh) {
-    std::string bL = buLow[0];
-    std::string bH = buHigh[0];
-    std::string dL = deltaLow[0];
-    txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                   std::to_string(
-                       chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                         "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                         dL + "&&Delta_M<" +
-                                         dH).c_str()) /
-                       initEntries) +
-                   "\n";
+
+  if (variable == Variable::delta) {
+    buHigh.emplace_back("5380");
+    double high, low, step;
+    if (neutral == Neutral::pi0) {
+      high = 160;
+      low = 136;
+      step = 0.1;
+    } else {
+      high = 190;
+      low = 105;
+      step = 0.5;
+    }
+    for (double i = high; i > low; i = i - step) {
+      deltaHigh.emplace_back(to_string_with_precision(i));
+    }
+    for (auto &dH : deltaHigh) {
+      std::string bL = buLow[0];
+      std::string bH = buHigh[0];
+      std::string dL = deltaLow[0];
+      txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                     std::to_string(
+                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                           "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                           dL + "&&Delta_M<" +
+                                           dH).c_str()) /
+                         initEntries) +
+                     "\n";
+    }
+  } else {
+    for (double i = 5380; i > 5180; --i) {
+      buHigh.emplace_back(to_string_with_precision(i));
+    }
+    if (neutral == Neutral::pi0) {
+      deltaHigh.emplace_back("160");
+    } else {
+      deltaHigh.emplace_back("190");
+    }
+    for (auto &bH : buHigh) {
+      std::string bL = buLow[0];
+      std::string dL = deltaLow[0];
+      std::string dH = deltaHigh[0];
+      txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                     std::to_string(
+                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                           "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                           dL + "&&Delta_M<" +
+                                           dH).c_str()) /
+                         initEntries) +
+                     "\n";
+    }
   }
   txtFile.close();
 }
 
 int main(int argc, char **argv) {
-  if (argc < 2) {
-    std::cerr << "Please enter: <neutral>" << std::endl;
+  if (argc < 3) {
+    std::cerr << "Please enter: <neutral=pi0/gamma> <variable=buDelta/delta>" << std::endl;
     return 1;
   }
 
@@ -109,8 +163,20 @@ int main(int argc, char **argv) {
     std::cerr << "Please enter neutral: pi0/gamma.\n";
     return 1;
   }
+  
+  std::string variableString = argv[2];
+  Variable variable;
 
-  GetEntries(neutral);
+  if (variableString == "buDelta") {
+    variable = Variable::buDelta;
+  } else if (variableString == "delta") {
+    variable = Variable::delta;
+  } else {
+    std::cerr << "Please enter variable: buDelta/delta.\n";
+    return 1;
+  }
+
+  GetBoxEffs(neutral, variable);
 
   return 0;
 }

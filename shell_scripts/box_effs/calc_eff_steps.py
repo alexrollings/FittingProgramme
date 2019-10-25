@@ -9,10 +9,16 @@ if __name__ == "__main__":
                         type=str,
                         help='Neutral=pi0/gamma',
                         required=True)
+    parser.add_argument('-v',
+                        '--var',
+                        type=str,
+                        help='Variable=buDelta/delta',
+                        required=True)
     args = parser.parse_args()
     neutral = args.neutral
+    var = args.var
 
-    lines = [l.rstrip('\n') for l in open(neutral + '_effs.txt')]
+    lines = [l.rstrip('\n') for l in open(neutral + '_' + var + '_effs.txt')]
     lines = [l.split(':') for l in lines]
 
     eff_box_dict = {}
@@ -20,12 +26,13 @@ if __name__ == "__main__":
     it = 0
     for box_limits, eff in lines:
         effs[it] = float(eff)
-        eff_box_dict[eff] = box_limits
+        if eff not in eff_box_dict.keys():
+            eff_box_dict[eff] = box_limits
         it = it + 1
 
     steps = np.linspace(start = 1, stop = 0, num = 20)
 
-    tex_filename = neutral + '_box_limits.txt'
+    tex_filename = neutral + '_' + var + '_box_limits.txt'
     if os.path.exists(tex_filename):
         os.remove(tex_filename)
     outfile = open(tex_filename, 'w+')
