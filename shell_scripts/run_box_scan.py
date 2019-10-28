@@ -93,17 +93,6 @@ if __name__ == "__main__":
         delta_high = box[3]
 
         for i in range(0, n_jobs):
-            # j_dir = '/data/lhcb/users/rollings/fitting_scripts/job_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '_'  + str(i) + '/'
-            # os.mkdir(j_dir)
-            # copyfile(home_path + 'CMakeMacroParseArguments.cmake', j_dir + 'CMakeMacroParseArguments.cmake')
-            # copyfile(home_path + 'FindROOT.cmake', j_dir + 'FindROOT.cmake')
-            # copyfile(home_path + 'CMakeLists.txt', j_dir + 'CMakeLists.txt')
-            # os.mkdir(j_dir + 'src/')
-            # copy_tree(home_path + 'src/', j_dir + 'src/')
-            # os.mkdir(j_dir + 'include/')
-            # copy_tree(home_path + 'include/', j_dir + 'include/')
-            # os.mkdir(j_dir + 'build/')
-
             scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_box_scan_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":

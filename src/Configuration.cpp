@@ -1,4 +1,6 @@
 #include "Configuration.h"
+#include <iomanip> 
+#include <sstream>
 
 Configuration::Configuration()
     : buMass_("", "", 0, 0, ""),
@@ -602,10 +604,14 @@ Configuration::Categories::Categories()
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
 std::string Configuration::ReturnBoxString() {
   if (fit1D_ == true) {
-    return std::to_string(deltaLow_) + "_" + std::to_string(deltaHigh_);
+    std::ostringstream out;
+    out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
+    return out.str();
   } else {
-    return std::to_string(deltaLow_) + "_" + std::to_string(deltaHigh_) + "_" +
-           std::to_string(buDeltaLow_) + "_" + std::to_string(buDeltaHigh_);
+    std::ostringstream out;
+    out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
+        << buDeltaLow_ << "_" << buDeltaHigh_;
+    return out.str();
   }
 }
 
@@ -888,4 +894,3 @@ std::string EnumToLabel(Neutral neutral) {
       return "#gamma";
   }
 }
-
