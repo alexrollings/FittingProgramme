@@ -13,8 +13,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0pi0_sigma1Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                              .c_str(),
-                         // "", 2.2704e+01)),
-                         "", 2.2704e+01, 15, 35)),
+                         "", 2.2704e+01)),
+                         // "", 2.2704e+01, 20, 25)),
       pdf1Bu_Bu2Dst0h_D0pi0_(
           ("pdf1Bu_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
@@ -65,7 +65,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                                   Bachelor::pi))
                                          .c_str(),
                                      "", 2.5289e+01),
-      misId_Bu2Dst0h_D0pi0_a1Bu_(("mi5.2665e+03sId_Bu2Dst0h_D0pi0_a1Bu_" +
+      misId_Bu2Dst0h_D0pi0_a1Bu_(("misId_Bu2Dst0h_D0pi0_a1Bu_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::pi))
                                      .c_str(),
@@ -265,15 +265,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                                    Bachelor::pi))
                                           .c_str(),
                                       // "", 3.3137e+01),
-                                      // "", 5.2446e+01),
-                                      "", 3.3137e+01, 10, 100),
+                                      "", 5.2446e+01),
+                                      // "", 3.3137e+01, 10, 100),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                                        ComposeName(uniqueId, Neutral::pi0,
                                                    Bachelor::pi))
                                           .c_str(),
                                       // "", 4.0080e+01),
-                                      // "", 7.4012e+01),
-                                      "", 4.0080e+01, 10, 100),
+                                      "", 7.4012e+01),
+                                      // "", 4.0080e+01, 10, 80),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),

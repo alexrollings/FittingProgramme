@@ -69,15 +69,15 @@ class Configuration {
   double &deltaFitMin() { return deltaFitMin_; }
   double &deltaFitMax() { return deltaFitMax_; }
 
-  int &deltaLow() { return deltaLow_; }
-  int &deltaHigh() { return deltaHigh_; }
-  int &buDeltaLow() { return buDeltaLow_; }
-  int &buDeltaHigh() { return buDeltaHigh_; }
+  float &deltaLow() { return deltaLow_; }
+  float &deltaHigh() { return deltaHigh_; }
+  float &buDeltaLow() { return buDeltaLow_; }
+  float &buDeltaHigh() { return buDeltaHigh_; }
 
-  void SetDeltaLow(int val) { deltaLow() = val; }
-  void SetDeltaHigh(int val) { deltaHigh() = val; }
-  void SetBuDeltaLow(int val) { buDeltaLow() = val; }
-  void SetBuDeltaHigh(int val) { buDeltaHigh() = val; }
+  void SetDeltaLow(float val) { deltaLow() = val; }
+  void SetDeltaHigh(float val) { deltaHigh() = val; }
+  void SetBuDeltaLow(float val) { buDeltaLow() = val; }
+  void SetBuDeltaHigh(float val) { buDeltaHigh() = val; }
 
   // Have to declare this in Config as gamma depends on pi0 and pi0 depends on
   // gamma in different neutral cases: always need to delcare signal yield first
@@ -124,10 +124,10 @@ class Configuration {
   double deltaFitMin_;
   double deltaFitMax_;
   double deltaFitBins_;
-  int deltaLow_;
-  int deltaHigh_;
-  int buDeltaLow_;
-  int buDeltaHigh_;
+  float deltaLow_;
+  float deltaHigh_;
+  float buDeltaLow_;
+  float buDeltaHigh_;
   double initYieldFAVSignal_;
   std::string gammaCutString_;
   std::string pi0CutString_;

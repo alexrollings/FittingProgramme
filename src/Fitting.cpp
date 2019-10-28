@@ -1452,10 +1452,10 @@ int main(int argc, char **argv) {
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
     int toysArg = 0;
-    int deltaLowArg = 0;
-    int deltaHighArg = 0;
-    int buDeltaLowArg = 0;
-    int buDeltaHighArg = 0;
+    float deltaLowArg = 0.0;
+    float deltaHighArg = 0.0;
+    float buDeltaLowArg = 0.0;
+    float buDeltaHighArg = 0.0;
 
     // We always want to simultaneously fir the pi AND k bachelor modes
     // together

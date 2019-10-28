@@ -16,10 +16,10 @@ Configuration::Configuration()
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
       d0FdSig_("", "", 0, 0, ""),
-      deltaLow_(125),
-      deltaHigh_(170),
-      buDeltaLow_(5240),
-      buDeltaHigh_(5330),
+      deltaLow_(125.0),
+      deltaHigh_(170.0),
+      buDeltaLow_(5240.0),
+      buDeltaHigh_(5330.0),
       initYieldFAVSignal_(5.6781e+04),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
