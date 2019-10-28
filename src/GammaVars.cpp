@@ -17,7 +17,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    // "", 8.4695e+00),
-                                   "", 8.4695e+00, 5, 10),
+                                   "", 8.4695e+00, 2, 15),
       Bu2Dst0h_D0gamma_a1Delta_(("Bu2Dst0h_D0gamma_a1Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -216,7 +216,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1.1287e+00, -10, 10),
+          "", 1.1287e+00, -2, 2),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
