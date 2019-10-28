@@ -121,9 +121,9 @@ if __name__ == "__main__":
         # result_signal_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi")
         # result_signal_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi")
         result_signal_yield = tf.Get("Result_Val_N_tot_Bu2Dst0h_D0" + neutral +
-                                     "_" + neutral + "_pi")
+                                     "_" + neutral + "_pi_total")
         result_signal_yield_err = tf.Get("Result_Err_N_tot_Bu2Dst0h_D0" +
-                                         neutral + "_" + neutral + "_pi")
+                                         neutral + "_" + neutral + "_pi_total")
         # Final values of fit to pulls
         par_pull_widths = result_par_pull_widths.floatParsFinal()
         par_val = result_par_val.floatParsFinal()
@@ -174,16 +174,18 @@ if __name__ == "__main__":
         square(np.divide((signal_yield_arr -
                           shared_yield), signal_yield_arr))) * initial_width
 
+    perc_err_arr = np.divide(par_err_arr, par_val_arr)*100
+
     # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(file_list))*initial_width)
     fig = plt.figure()
-    plt.errorbar(
-        unumpy.nominal_values(frac_shared_yield),
-        unumpy.nominal_values(quadratic_err_fn),
-        xerr=unumpy.std_devs(frac_shared_yield),
-        yerr=unumpy.std_devs(quadratic_err_fn),
-        label=
-        '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$'
-    )
+    # plt.errorbar(
+    #     unumpy.nominal_values(frac_shared_yield),
+    #     unumpy.nominal_values(quadratic_err_fn),
+    #     xerr=unumpy.std_devs(frac_shared_yield),
+    #     yerr=unumpy.std_devs(quadratic_err_fn),
+    #     label=
+    #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$'
+    # )
     plt.errorbar(
         unumpy.nominal_values(frac_shared_yield),
         unumpy.nominal_values(linear_err_fn),
@@ -199,6 +201,7 @@ if __name__ == "__main__":
                  label='Pseudo-experiments')
     plt.legend(loc='upper left')
     plt.xlabel('$N_{Box}/N_{T}$')
+    plt.ylim(0, 2)
     plt.ylabel('Pull Width')
     plt.title(param)
     fig.savefig("box_yield_vs_" + param + "_pull_width_" + neutral + "_" +
@@ -206,12 +209,12 @@ if __name__ == "__main__":
     # print(frac_shared_yield)
     fig = plt.figure()
     plt.errorbar(unumpy.nominal_values(frac_shared_yield),
-                 unumpy.nominal_values(par_err_arr),
+                 unumpy.nominal_values(perc_err_arr),
                  xerr=unumpy.std_devs(frac_shared_yield),
-                 yerr=unumpy.std_devs(par_err_arr),
+                 yerr=unumpy.std_devs(perc_err_arr),
                  label='Pseudo-experiments')
     plt.xlabel('$N_{Box}/N_{T}$')
-    plt.ylabel('Error')
+    plt.ylabel('% Error')
     plt.title(param)
     fig.savefig("box_yield_vs_" + param + "_err_" + neutral + "_" +
                 box_string + ".pdf")
