@@ -14,8 +14,8 @@
 #include "RooExponential.h"
 #include "RooFitResult.h"
 #include "RooGaussian.h"
-#include "RooPlot.h"
 #include "RooHist.h"
+#include "RooPlot.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
 #include "RooRandom.h"
@@ -64,11 +64,11 @@ std::string EnumToString(Variable variable) {
 }
 
 void GetDataMapAndBoxEff(
-    Mode mode, std::string const &deltaBoxLow, std::string const &deltaBoxHigh,
-    std::string const &buBoxLow, std::string const &buBoxHigh,
-    RooRealVar &buMass, RooRealVar &deltaMass,
-    std::map<std::string, RooDataSet *> &mapCategoryDataSet, RooRealVar &boxEff,
-    RooRealVar &deltaBoxEff, RooRealVar &buBoxEff, RooRealVar &orEff) {
+    Mode mode, RooRealVar &buMass, RooRealVar &deltaMass,
+    std::map<std::string, RooDataSet *> &mapCategoryDataSet,
+    RooRealVar &deltaBoxEff, RooRealVar &buBoxEff_asGamma,
+    RooRealVar &orEff_asGamma, RooRealVar &buBoxEff_asPartial,
+    RooRealVar &orEff_asPartial) {
   std::string inputfile_1(
       "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
       "_2011_MagUp/"
@@ -160,9 +160,17 @@ void GetDataMapAndBoxEff(
   RooDataSet dataset("dataset", "dataset", newTree,
                      RooArgSet(buMass, deltaMass));
 
+  std::string buBoxLow = "5240";
+  std::string buBoxHigh = "5320";
+  std::string deltaBoxLow_asGamma = "125";
+  std::string deltaBoxHigh_asGamma = "170";
+  std::string deltaBoxLow_asPartial = "60";
+  std::string deltaBoxHigh_asPartial = "105";
+
   RooDataSet *buDataSet = nullptr;
   buDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(
-      ("Delta_M>" + deltaBoxLow + "&&Delta_M<" + deltaBoxHigh).c_str()));
+      ("Delta_M>" + deltaBoxLow_asGamma + "&&Delta_M<" + deltaBoxHigh_asGamma)
+          .c_str()));
   if (buDataSet == nullptr) {
     throw std::runtime_error("Could not reduce bu data with box cuts.");
   }
@@ -207,30 +215,40 @@ void GetDataMapAndBoxEff(
   }
 
   double nInitial = newTree->GetEntries();
-  double nDeltaWindow = newTree->GetEntries(
-      ("Delta_M>" + deltaBoxLow + "&&Delta_M<" + deltaBoxHigh).c_str());
   double nBuWindow = newTree->GetEntries(
       ("Bu_Delta_M>" + buBoxLow + "&&Bu_Delta_M<" + buBoxHigh).c_str());
-  double nBox = newTree->GetEntries(("Delta_M>" + deltaBoxLow + "&&Delta_M<" +
-                                     deltaBoxHigh + "&&Bu_Delta_M>" + buBoxLow +
-                                     "&&Bu_Delta_M<" + buBoxHigh)
-                                        .c_str());
-  double nOr = newTree->GetEntries(
-      ("(Delta_M>" + deltaBoxLow + "&&Delta_M<" + deltaBoxHigh +
+  double nDeltaWindow_asGamma = newTree->GetEntries(
+      ("Delta_M>" + deltaBoxLow_asGamma + "&&Delta_M<" + deltaBoxHigh_asGamma)
+          .c_str());
+  double nOr_asGamma = newTree->GetEntries(
+      ("(Delta_M>" + deltaBoxLow_asGamma + "&&Delta_M<" + deltaBoxHigh_asGamma +
        ")||(Bu_Delta_M>" + buBoxLow + "&&Bu_Delta_M<" + buBoxHigh + ")")
           .c_str());
+  double nDeltaWindow_asPartial =
+      newTree->GetEntries(("Delta_M>" + deltaBoxLow_asPartial + "&&Delta_M<" +
+                           deltaBoxHigh_asPartial)
+                              .c_str());
+  double nOr_asPartial =
+      newTree->GetEntries(("(Delta_M>" + deltaBoxLow_asPartial + "&&Delta_M<" +
+                           deltaBoxHigh_asPartial + ")||(Bu_Delta_M>" +
+                           buBoxLow + "&&Bu_Delta_M<" + buBoxHigh + ")")
+                              .c_str());
 
   deltaBoxEff.setVal(nBuWindow / nInitial);
-  buBoxEff.setVal(nDeltaWindow / nInitial);
-  boxEff.setVal(nBox / nInitial);
-  orEff.setVal(nOr / nInitial);
+  buBoxEff_asGamma.setVal(nDeltaWindow_asGamma / nInitial);
+  orEff_asGamma.setVal(nOr_asGamma / nInitial);
+  buBoxEff_asPartial.setVal(nDeltaWindow_asPartial / nInitial);
+  orEff_asPartial.setVal(nOr_asPartial / nInitial);
 
-  std::cout << "Set efficiencies for " << EnumToString(mode) << " :\n"
-            << "\tDelta Window =\t" << nDeltaWindow / nInitial
-            << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
-            << nBox / nInitial << "\n"
-            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n"
-            << "\t# events initially =\t" << nInitial << "\n";
+  std::cout << "# events initially =\t" << nInitial << "\n"
+            << "Set efficiencies for " << EnumToString(mode) << " :\n"
+            << "\tBu Window =\t" << nBuWindow / nInitial << "\n"
+            << "\tDelta Window as gamma =\t" << nDeltaWindow_asGamma / nInitial
+            << "\tDelta OR Bu as gamma =\t" << nOr_asGamma / nInitial << "\n"
+            << "\tDelta Window as partial =\t"
+            << nDeltaWindow_asPartial / nInitial
+            << "\tDelta OR Bu as partial =\t" << nOr_asPartial / nInitial
+            << "\n";
 }
 
 void PlotComponent(Variable variable, RooRealVar &var, RooDataHist dataHist,
@@ -295,11 +313,10 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist dataHist,
     pullFrame->SetTitle("");
   }
 
-  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200,
-                 1000);
+  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200, 1000);
 
-  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "", 0.0, 0.14, 1.0,
-            1.0, kWhite);
+  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "", 0.0, 0.14, 1.0, 1.0,
+            kWhite);
   pad1.Draw();
 
   TPad pad2(("pad2_" + EnumToString(variable)).c_str(), "", 0.0, 0.05, 1.0,
@@ -353,31 +370,37 @@ void SimToy() {
   fitting.defineType(EnumToString(Variable::bu).c_str());
   fitting.defineType(EnumToString(Variable::delta).c_str());
 
-  std::string buBoxLow = "5240";
-  std::string buBoxHigh = "5320";
-  std::string deltaBoxLow = "125";
-  std::string deltaBoxHigh = "170";
-
   std::map<std::string, RooDataSet *> mapCategoryDataSet;
 
-  RooRealVar boxEff_D0gamma_asGamma("boxEff_D0gamma_asGamma", "boxEff_D0gamma_asGamma", 1);
-  RooRealVar deltaBoxEff_D0gamma_asGamma("deltaBoxEff_D0gamma_asGamma", "deltaBoxEff_D0gamma_asGamma", 1);
-  RooRealVar buBoxEff_D0gamma_asGamma("buBoxEff_D0gamma_asGamma", "buBoxEff_D0gamma_asGamma", 1);
-  RooRealVar orEff_D0gamma_asGamma("orEff_D0gamma_asGamma", "orEff_D0gamma_asGamma", 1);
+  RooRealVar deltaBoxEff_D0gamma("deltaBoxEff_D0gamma", "deltaBoxEff_D0gamma",
+                                 1);
+  RooRealVar buBoxEff_D0gamma_asGamma("buBoxEff_D0gamma_asGamma",
+                                      "buBoxEff_D0gamma_asGamma", 1);
+  RooRealVar orEff_D0gamma_asGamma("orEff_D0gamma_asGamma",
+                                   "orEff_D0gamma_asGamma", 1);
+  RooRealVar buBoxEff_D0gamma_asPartial("buBoxEff_D0gamma_asPartial",
+                                        "buBoxEff_D0gamma_asPartial", 1);
+  RooRealVar orEff_D0gamma_asPartial("orEff_D0gamma_asPartial",
+                                     "orEff_D0gamma_asPartial", 1);
 
-  GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0gamma, deltaBoxLow, deltaBoxHigh,
-                      buBoxLow, buBoxHigh, buMass, deltaMass,
-                      mapCategoryDataSet, boxEff_D0gamma_asGamma, deltaBoxEff_D0gamma_asGamma,
-                      buBoxEff_D0gamma_asGamma, orEff_D0gamma_asGamma);
+  GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0gamma, buMass, deltaMass,
+                      mapCategoryDataSet, deltaBoxEff_D0gamma,
+                      buBoxEff_D0gamma_asGamma, orEff_D0gamma_asGamma,
+                      buBoxEff_D0gamma_asPartial, orEff_D0gamma_asPartial);
 
-  RooRealVar boxEff_D0pi0_asGamma("boxEff_D0pi0_asGamma", "boxEff_D0pi0_asGamma", 1);
-  RooRealVar deltaBoxEff_D0pi0_asGamma("deltaBoxEff_D0pi0_asGamma", "deltaBoxEff_D0pi0_asGamma", 1);
-  RooRealVar buBoxEff_D0pi0_asGamma("buBoxEff_D0pi0_asGamma", "buBoxEff_D0pi0_asGamma", 1);
-  RooRealVar orEff_D0pi0_asGamma("orEff_D0pi0_asGamma", "orEff_D0pi0_asGamma", 1);
+  RooRealVar deltaBoxEff_D0pi0("deltaBoxEff_D0pi0", "deltaBoxEff_D0pi0", 1);
+  RooRealVar buBoxEff_D0pi0_asGamma("buBoxEff_D0pi0_asGamma",
+                                    "buBoxEff_D0pi0_asGamma", 1);
+  RooRealVar orEff_D0pi0_asGamma("orEff_D0pi0_asGamma", "orEff_D0pi0_asGamma",
+                                 1);
+  RooRealVar buBoxEff_D0pi0_asPartial("buBoxEff_D0pi0_asPartial",
+                                      "buBoxEff_D0pi0_asPartial", 1);
+  RooRealVar orEff_D0pi0_asPartial("orEff_D0pi0_asPartial",
+                                   "orEff_D0pi0_asPartial", 1);
 
-  GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0pi0, deltaBoxLow, deltaBoxHigh,
-                      buBoxLow, buBoxHigh, buMass, deltaMass,
-                      mapCategoryDataSet, boxEff_D0pi0_asGamma, deltaBoxEff_D0pi0_asGamma,
+  GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0pi0, buMass, deltaMass,
+                      mapCategoryDataSet, deltaBoxEff_D0pi0,
+                      buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma,
                       buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma);
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
@@ -396,86 +419,117 @@ void SimToy() {
     throw std::runtime_error("Could not cast to RooAbsData.");
   }
 
-  RooRealVar meanDelta_D0gamma_asGamma("meanDelta_D0gamma_asGamma", "", 1.4278e+02, 130, 150);
-  RooRealVar sigmaDelta_D0gamma_asGamma("sigmaDelta_D0gamma_asGamma", "", 8.4695e+00, 2, 15);
+  RooRealVar meanDelta_D0gamma_asGamma("meanDelta_D0gamma_asGamma", "",
+                                       1.4278e+02, 130, 150);
+  RooRealVar sigmaDelta_D0gamma_asGamma("sigmaDelta_D0gamma_asGamma", "",
+                                        8.4695e+00, 2, 15);
   RooRealVar a1Delta_D0gamma_asGamma("a1Delta_D0gamma_asGamma", "", 1.7506e+00);
   RooRealVar n1Delta_D0gamma_asGamma("n1Delta_D0gamma_asGamma", "", 1.1606e+00);
-  RooRealVar a2Delta_D0gamma_asGamma("a2Delta_D0gamma_asGamma", "", -7.8889e-01);
+  RooRealVar a2Delta_D0gamma_asGamma("a2Delta_D0gamma_asGamma", "",
+                                     -7.8889e-01);
   RooRealVar n2Delta_D0gamma_asGamma("n2Delta_D0gamma_asGamma", "", 4.1928e+00);
-  RooCBShape pdf1Delta_D0gamma_asGamma("pdf1Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
-                            sigmaDelta_D0gamma_asGamma, a1Delta_D0gamma_asGamma, n1Delta_D0gamma_asGamma);
-  RooCBShape pdf2Delta_D0gamma_asGamma("pdf2Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
-                            sigmaDelta_D0gamma_asGamma, a2Delta_D0gamma_asGamma, n2Delta_D0gamma_asGamma);
-  RooRealVar fracPdf1Delta_D0gamma_asGamma("fracPdf1Delta_D0gamma_asGamma",
-                            "Fraction of component 1 in delta PDF", 1.5408e-01);
-  RooAddPdf pdfDelta_D0gamma_asGamma("pdfDelta_D0gamma_asGamma", "",
-                          RooArgSet(pdf1Delta_D0gamma_asGamma, pdf2Delta_D0gamma_asGamma),
-                          fracPdf1Delta_D0gamma_asGamma);
+  RooCBShape pdf1Delta_D0gamma_asGamma(
+      "pdf1Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
+      sigmaDelta_D0gamma_asGamma, a1Delta_D0gamma_asGamma,
+      n1Delta_D0gamma_asGamma);
+  RooCBShape pdf2Delta_D0gamma_asGamma(
+      "pdf2Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
+      sigmaDelta_D0gamma_asGamma, a2Delta_D0gamma_asGamma,
+      n2Delta_D0gamma_asGamma);
+  RooRealVar fracPdf1Delta_D0gamma_asGamma(
+      "fracPdf1Delta_D0gamma_asGamma", "Fraction of component 1 in delta PDF",
+      1.5408e-01);
+  RooAddPdf pdfDelta_D0gamma_asGamma(
+      "pdfDelta_D0gamma_asGamma", "",
+      RooArgSet(pdf1Delta_D0gamma_asGamma, pdf2Delta_D0gamma_asGamma),
+      fracPdf1Delta_D0gamma_asGamma);
 
-  RooRealVar meanDelta_D0pi0_asGamma("meanDelta_D0pi0_asGamma", "", 8.6503e+01, 70, 100);
-  RooRealVar sigmaDelta_D0pi0_asGamma("sigmaDelta_D0pi0_asGamma", "", 9.3347e+00, 5, 15);
+  RooRealVar meanDelta_D0pi0_asGamma("meanDelta_D0pi0_asGamma", "", 8.6503e+01,
+                                     70, 100);
+  RooRealVar sigmaDelta_D0pi0_asGamma("sigmaDelta_D0pi0_asGamma", "",
+                                      9.3347e+00, 5, 15);
   RooRealVar a1Delta_D0pi0_asGamma("a1Delta_D0pi0_asGamma", "", 5.7073e-01);
   RooRealVar n1Delta_D0pi0_asGamma("n1Delta_D0pi0_asGamma", "", 9.9988e+01);
   RooRealVar a2Delta_D0pi0_asGamma("a2Delta_D0pi0_asGamma", "", -8.3282e-01);
   RooRealVar n2Delta_D0pi0_asGamma("n2Delta_D0pi0_asGamma", "", 3.7808e+00);
-  RooCBShape pdf1Delta_D0pi0_asGamma("pdf1Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
-                          sigmaDelta_D0pi0_asGamma, a1Delta_D0pi0_asGamma, n1Delta_D0pi0_asGamma);
-  RooCBShape pdf2Delta_D0pi0_asGamma("pdf2Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
-                          sigmaDelta_D0pi0_asGamma, a2Delta_D0pi0_asGamma, n2Delta_D0pi0_asGamma);
+  RooCBShape pdf1Delta_D0pi0_asGamma(
+      "pdf1Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
+      sigmaDelta_D0pi0_asGamma, a1Delta_D0pi0_asGamma, n1Delta_D0pi0_asGamma);
+  RooCBShape pdf2Delta_D0pi0_asGamma(
+      "pdf2Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
+      sigmaDelta_D0pi0_asGamma, a2Delta_D0pi0_asGamma, n2Delta_D0pi0_asGamma);
   RooRealVar fracPdf1Delta_D0pi0_asGamma("fracPdf1Delta_D0pi0_asGamma",
-                          "Fraction of component 1 in delta PDF", 3.0618e-01);
-  RooAddPdf pdfDelta_D0pi0_asGamma("pdfDelta_D0pi0_asGamma", "",
-                        RooArgSet(pdf1Delta_D0pi0_asGamma, pdf2Delta_D0pi0_asGamma), fracPdf1Delta_D0pi0_asGamma);
+                                         "Fraction of component 1 in delta PDF",
+                                         3.0618e-01);
+  RooAddPdf pdfDelta_D0pi0_asGamma(
+      "pdfDelta_D0pi0_asGamma", "",
+      RooArgSet(pdf1Delta_D0pi0_asGamma, pdf2Delta_D0pi0_asGamma),
+      fracPdf1Delta_D0pi0_asGamma);
 
-  RooRealVar meanBu_D0gamma_asGamma("meanBu_D0gamma_asGamma", "", 5.2814e+03);//, 5275, 5285);
-  RooRealVar sigmaBu_D0gamma_asGamma("sigmaBu_D0gamma_asGamma", "", 2.0271e+01);//, 15, 30);
+  RooRealVar meanBu_D0gamma_asGamma("meanBu_D0gamma_asGamma", "",
+                                    5.2814e+03);  //, 5275, 5285);
+  RooRealVar sigmaBu_D0gamma_asGamma("sigmaBu_D0gamma_asGamma", "",
+                                     2.0271e+01);  //, 15, 30);
   RooRealVar a1Bu_D0gamma_asGamma("a1Bu_D0gamma_asGamma", "", 1.6184e+00);
   RooRealVar n1Bu_D0gamma_asGamma("n1Bu_D0gamma_asGamma", "", 8.6469e+00);
   RooRealVar a2Bu_D0gamma_asGamma("a2Bu_D0gamma_asGamma", "", -1.6623e+00);
   RooRealVar n2Bu_D0gamma_asGamma("n2Bu_D0gamma_asGamma", "", 10);
-  RooCBShape pdf1Bu_D0gamma_asGamma("pdf1Bu_D0gamma_asGamma", "", buMass, meanBu_D0gamma_asGamma, sigmaBu_D0gamma_asGamma,
-                         a1Bu_D0gamma_asGamma, n1Bu_D0gamma_asGamma);
-  RooCBShape pdf2Bu_D0gamma_asGamma("pdf2Bu_D0gamma_asGamma", "", buMass, meanBu_D0gamma_asGamma, sigmaBu_D0gamma_asGamma,
-                         a2Bu_D0gamma_asGamma, n2Bu_D0gamma_asGamma);
-  RooRealVar fracPdf1Bu_D0gamma_asGamma("fracPdf1Bu_D0gamma_asGamma", "Fraction of component 1 in bu PDF",
-                         6.8457e-01);
-  RooAddPdf pdfBu_D0gamma_asGamma("pdfBu_D0gamma_asGamma", "", RooArgSet(pdf1Bu_D0gamma_asGamma, pdf2Bu_D0gamma_asGamma),
-                       fracPdf1Bu_D0gamma_asGamma);
+  RooCBShape pdf1Bu_D0gamma_asGamma(
+      "pdf1Bu_D0gamma_asGamma", "", buMass, meanBu_D0gamma_asGamma,
+      sigmaBu_D0gamma_asGamma, a1Bu_D0gamma_asGamma, n1Bu_D0gamma_asGamma);
+  RooCBShape pdf2Bu_D0gamma_asGamma(
+      "pdf2Bu_D0gamma_asGamma", "", buMass, meanBu_D0gamma_asGamma,
+      sigmaBu_D0gamma_asGamma, a2Bu_D0gamma_asGamma, n2Bu_D0gamma_asGamma);
+  RooRealVar fracPdf1Bu_D0gamma_asGamma("fracPdf1Bu_D0gamma_asGamma",
+                                        "Fraction of component 1 in bu PDF",
+                                        6.8457e-01);
+  RooAddPdf pdfBu_D0gamma_asGamma(
+      "pdfBu_D0gamma_asGamma", "",
+      RooArgSet(pdf1Bu_D0gamma_asGamma, pdf2Bu_D0gamma_asGamma),
+      fracPdf1Bu_D0gamma_asGamma);
 
   RooRealVar meanBu_D0pi0_asGamma("meanBu_D0pi0_asGamma", "", 5.3454e+03);
   RooRealVar sigmaBu_D0pi0_asGamma("sigmaBu_D0pi0_asGamma", "", 4.3979e+01);
   RooRealVar aBu_D0pi0_asGamma("aBu_D0pi0_asGamma", "", 8.2093e-01);
   RooRealVar nBu_D0pi0_asGamma("nBu_D0pi0_asGamma", "", 10);
-  RooCBShape pdfBu_D0pi0_asGamma("pdfBu_D0pi0_asGamma", "", buMass, meanBu_D0pi0_asGamma, sigmaBu_D0pi0_asGamma, aBu_D0pi0_asGamma,
-                      nBu_D0pi0_asGamma);
+  RooCBShape pdfBu_D0pi0_asGamma("pdfBu_D0pi0_asGamma", "", buMass,
+                                 meanBu_D0pi0_asGamma, sigmaBu_D0pi0_asGamma,
+                                 aBu_D0pi0_asGamma, nBu_D0pi0_asGamma);
 
-  RooRealVar N__D0gamma_asGamma("N__D0gamma_asGamma", "", 1.2279e+04);//, 0, 20000);
-  RooFormulaVar N_Bu__D0gamma_asGamma("N_Bu__D0gamma_asGamma", "(@0/@1)*@2",
-                           RooArgList(buBoxEff_D0gamma_asGamma, orEff_D0gamma_asGamma, N__D0gamma_asGamma));
-  RooFormulaVar N_Delta__D0gamma_asGamma(
-      "N_Delta__D0gamma_asGamma", "(@0/@1)*@2",
-      RooArgList(deltaBoxEff_D0gamma_asGamma, orEff_D0gamma_asGamma, N__D0gamma_asGamma));
+  RooRealVar N_D0gamma_asGamma("N_D0gamma_asGamma", "",
+                               1.2279e+04);  //, 0, 20000);
+  RooFormulaVar N_Bu_D0gamma_asGamma(
+      "N_Bu_D0gamma_asGamma", "(@0/@1)*@2",
+      RooArgList(buBoxEff_D0gamma_asGamma, orEff_D0gamma_asGamma,
+                 N_D0gamma_asGamma));
+  RooFormulaVar N_Delta_D0gamma_asGamma(
+      "N_Delta_D0gamma_asGamma", "(@0/@1)*@2",
+      RooArgList(deltaBoxEff_D0gamma, orEff_D0gamma_asGamma,
+                 N_D0gamma_asGamma));
 
-  RooRealVar N__D0pi0_asGamma("N__D0pi0_asGamma", "", 6.3884e+03);//, 0, 15000);
-  RooFormulaVar N_Bu__D0pi0_asGamma("N_Bu__D0pi0_asGamma", "(@0/@1)*@2",
-                         RooArgList(buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma, N__D0pi0_asGamma));
-  RooFormulaVar N_Delta__D0pi0_asGamma("N_Delta__D0pi0_asGamma", "(@0/@1)*@2",
-                            RooArgList(deltaBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma, N__D0pi0_asGamma));
+  RooRealVar N_D0pi0_asGamma("N_D0pi0_asGamma", "", 6.3884e+03);  //, 0, 15000);
+  RooFormulaVar N_Bu_D0pi0_asGamma(
+      "N_Bu_D0pi0_asGamma", "(@0/@1)*@2",
+      RooArgList(buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma, N_D0pi0_asGamma));
+  RooFormulaVar N_Delta_D0pi0_asGamma(
+      "N_Delta_D0pi0_asGamma", "(@0/@1)*@2",
+      RooArgList(deltaBoxEff_D0pi0, orEff_D0pi0_asGamma,
+                 N_D0pi0_asGamma));
 
   RooArgSet functionsBu;
   functionsBu.add(pdfBu_D0gamma_asGamma);
   functionsBu.add(pdfBu_D0pi0_asGamma);
   RooArgSet yieldsBu;
-  yieldsBu.add(N_Bu__D0gamma_asGamma);
-  yieldsBu.add(N_Bu__D0pi0_asGamma);
+  yieldsBu.add(N_Bu_D0gamma_asGamma);
+  yieldsBu.add(N_Bu_D0pi0_asGamma);
   RooAddPdf pdfBu("pdfBu", "", functionsBu, yieldsBu);
 
   RooArgSet functionsDelta;
   functionsDelta.add(pdfDelta_D0gamma_asGamma);
   functionsDelta.add(pdfDelta_D0pi0_asGamma);
   RooArgSet yieldsDelta;
-  yieldsDelta.add(N_Delta__D0gamma_asGamma);
-  yieldsDelta.add(N_Delta__D0pi0_asGamma);
+  yieldsDelta.add(N_Delta_D0gamma_asGamma);
+  yieldsDelta.add(N_Delta_D0pi0_asGamma);
   RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yieldsDelta);
 
   RooSimultaneous simPdf("simPdf", "", fitting);
@@ -487,8 +541,8 @@ void SimToy() {
                    RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                    RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  PlotComponent(Variable::bu, buMass, *dataHist.get(), simPdf, fitting, pdfBu_D0gamma_asGamma,
-                pdfBu_D0pi0_asGamma);
+  PlotComponent(Variable::bu, buMass, *dataHist.get(), simPdf, fitting,
+                pdfBu_D0gamma_asGamma, pdfBu_D0pi0_asGamma);
   PlotComponent(Variable::delta, deltaMass, *dataHist.get(), simPdf, fitting,
                 pdfDelta_D0gamma_asGamma, pdfDelta_D0pi0_asGamma);
 
