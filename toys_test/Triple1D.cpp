@@ -68,7 +68,7 @@ void GetDataMapAndBoxEff(
     std::string const &buBoxLow, std::string const &buBoxHigh,
     RooRealVar &buMass, RooRealVar &deltaMass,
     std::map<std::string, RooDataSet *> &mapCategoryDataSet, RooRealVar &boxEff,
-    RooRealVar &deltaCutEff, RooRealVar &buCutEff, RooRealVar &orEff) {
+    RooRealVar &deltaBoxEff, RooRealVar &buBoxEff, RooRealVar &orEff) {
   std::string inputfile_1(
       "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
       "_2011_MagUp/"
@@ -220,8 +220,8 @@ void GetDataMapAndBoxEff(
        ")||(Bu_Delta_M>" + buBoxLow + "&&Bu_Delta_M<" + buBoxHigh + ")")
           .c_str());
 
-  deltaCutEff.setVal(nDeltaWindow / nInitial);
-  buCutEff.setVal(nBuWindow / nInitial);
+  deltaBoxEff.setVal(nBuWindow / nInitial);
+  buBoxEff.setVal(nDeltaWindow / nInitial);
   boxEff.setVal(nBox / nInitial);
   orEff.setVal(nOr / nInitial);
 
@@ -361,24 +361,24 @@ void SimToy() {
   std::map<std::string, RooDataSet *> mapCategoryDataSet;
 
   RooRealVar boxEffGamma("boxEffGamma", "boxEffGamma", 1);
-  RooRealVar deltaCutEffGamma("deltaCutEffGamma", "deltaCutEffGamma", 1);
-  RooRealVar buCutEffGamma("buCutEffGamma", "buCutEffGamma", 1);
+  RooRealVar deltaBoxEffGamma("deltaBoxEffGamma", "deltaBoxEffGamma", 1);
+  RooRealVar buBoxEffGamma("buBoxEffGamma", "buBoxEffGamma", 1);
   RooRealVar orEffGamma("orEffGamma", "orEffGamma", 1);
 
   GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0gamma, deltaBoxLow, deltaBoxHigh,
                       buBoxLow, buBoxHigh, buMass, deltaMass,
-                      mapCategoryDataSet, boxEffGamma, deltaCutEffGamma,
-                      buCutEffGamma, orEffGamma);
+                      mapCategoryDataSet, boxEffGamma, deltaBoxEffGamma,
+                      buBoxEffGamma, orEffGamma);
 
   RooRealVar boxEffPi0("boxEffPi0", "boxEffPi0", 1);
-  RooRealVar deltaCutEffPi0("deltaCutEffPi0", "deltaCutEffPi0", 1);
-  RooRealVar buCutEffPi0("buCutEffPi0", "buCutEffPi0", 1);
+  RooRealVar deltaBoxEffPi0("deltaBoxEffPi0", "deltaBoxEffPi0", 1);
+  RooRealVar buBoxEffPi0("buBoxEffPi0", "buBoxEffPi0", 1);
   RooRealVar orEffPi0("orEffPi0", "orEffPi0", 1);
 
   GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0pi0, deltaBoxLow, deltaBoxHigh,
                       buBoxLow, buBoxHigh, buMass, deltaMass,
-                      mapCategoryDataSet, boxEffPi0, deltaCutEffPi0,
-                      buCutEffPi0, orEffPi0);
+                      mapCategoryDataSet, boxEffPi0, deltaBoxEffPi0,
+                      buBoxEffPi0, orEffPi0);
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
                       RooFit::Index(fitting),
@@ -397,11 +397,11 @@ void SimToy() {
   }
 
   RooRealVar deltaGammaMean("deltaGammaMean", "", 1.4278e+02, 130, 150);
-  RooRealVar deltaGammaSigma("deltaGammaSigma", "", 8.4695e+00);//, 2, 15);
-  RooRealVar deltaGammaA1("deltaGammaA1", "", 1.6945e+00);
-  RooRealVar deltaGammaN1("deltaGammaN1", "", 1.9181e+00);
-  RooRealVar deltaGammaA2("deltaGammaA2", "", -7.4455e-01);
-  RooRealVar deltaGammaN2("deltaGammaN2", "", 7.3576e+00);
+  RooRealVar deltaGammaSigma("deltaGammaSigma", "", 8.4695e+00, 2, 15);
+  RooRealVar deltaGammaA1("deltaGammaA1", "", 1.7506e+00);
+  RooRealVar deltaGammaN1("deltaGammaN1", "", 1.1606e+00);
+  RooRealVar deltaGammaA2("deltaGammaA2", "", -7.8889e-01);
+  RooRealVar deltaGammaN2("deltaGammaN2", "", 4.1928e+00);
   RooCBShape deltaGammaPdf1("deltaGammaPdf1", "", deltaMass, deltaGammaMean,
                             deltaGammaSigma, deltaGammaA1, deltaGammaN1);
   RooCBShape deltaGammaPdf2("deltaGammaPdf2", "", deltaMass, deltaGammaMean,
@@ -412,12 +412,12 @@ void SimToy() {
                           RooArgSet(deltaGammaPdf1, deltaGammaPdf2),
                           deltaGammaFrac);
 
-  RooRealVar deltaPi0Mean("deltaPi0Mean", "", 8.6503e+01);//, 70, 100);
-  RooRealVar deltaPi0Sigma("deltaPi0Sigma", "", 9.3347e+00);//, 5, 15);
-  RooRealVar deltaPi0A1("deltaPi0A1", "", 4.4112e-01);
+  RooRealVar deltaPi0Mean("deltaPi0Mean", "", 8.6503e+01, 70, 100);
+  RooRealVar deltaPi0Sigma("deltaPi0Sigma", "", 9.3347e+00, 5, 15);
+  RooRealVar deltaPi0A1("deltaPi0A1", "", 5.7073e-01);
   RooRealVar deltaPi0N1("deltaPi0N1", "", 9.9988e+01);
-  RooRealVar deltaPi0A2("deltaPi0A2", "", -7.3381e-01);
-  RooRealVar deltaPi0N2("deltaPi0N2", "", 4.4063e+00);
+  RooRealVar deltaPi0A2("deltaPi0A2", "", -8.3282e-01);
+  RooRealVar deltaPi0N2("deltaPi0N2", "", 3.7808e+00);
   RooCBShape deltaPi0Pdf1("deltaPi0Pdf1", "", deltaMass, deltaPi0Mean,
                           deltaPi0Sigma, deltaPi0A1, deltaPi0N1);
   RooCBShape deltaPi0Pdf2("deltaPi0Pdf2", "", deltaMass, deltaPi0Mean,
@@ -451,16 +451,16 @@ void SimToy() {
 
   RooRealVar N_Gamma("N_Gamma", "", 1.2279e+04);//, 0, 20000);
   RooFormulaVar N_Bu_Gamma("N_Bu_Gamma", "(@0/@1)*@2",
-                           RooArgList(buCutEffGamma, orEffGamma, N_Gamma));
+                           RooArgList(buBoxEffGamma, orEffGamma, N_Gamma));
   RooFormulaVar N_Delta_Gamma(
       "N_Delta_Gamma", "(@0/@1)*@2",
-      RooArgList(deltaCutEffGamma, orEffGamma, N_Gamma));
+      RooArgList(deltaBoxEffGamma, orEffGamma, N_Gamma));
 
   RooRealVar N_Pi0("N_Pi0", "", 6.3884e+03);//, 0, 15000);
   RooFormulaVar N_Bu_Pi0("N_Bu_Pi0", "(@0/@1)*@2",
-                         RooArgList(buCutEffPi0, orEffPi0, N_Pi0));
+                         RooArgList(buBoxEffPi0, orEffPi0, N_Pi0));
   RooFormulaVar N_Delta_Pi0("N_Delta_Pi0", "(@0/@1)*@2",
-                            RooArgList(deltaCutEffPi0, orEffPi0, N_Pi0));
+                            RooArgList(deltaBoxEffPi0, orEffPi0, N_Pi0));
 
   RooArgSet functionsBu;
   functionsBu.add(buGammaPdf);
