@@ -187,15 +187,17 @@ void GetDataMapAndBoxEff(
                      " and corresponding dataset for MC of " +
                      EnumToString(mode) + "\n";
   } else {
-    mapCategoryDataSet[EnumToString(Variable::buGamma)]->append(*buGammaDataSet);
+    mapCategoryDataSet[EnumToString(Variable::buGamma)]->append(
+        *buGammaDataSet);
     std::cout << "Appended dataset for MC of " + EnumToString(mode) +
                      " to category " + EnumToString(Variable::buGamma) + "\n";
   }
 
   RooDataSet *buPartialDataSet = nullptr;
-  buPartialDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(
-      ("Delta_M>" + deltaBoxLow_asPartial + "&&Delta_M<" + deltaBoxHigh_asPartial)
-          .c_str()));
+  buPartialDataSet = dynamic_cast<RooDataSet *>(
+      dataset.reduce(("Delta_M>" + deltaBoxLow_asPartial + "&&Delta_M<" +
+                      deltaBoxHigh_asPartial)
+                         .c_str()));
   if (buPartialDataSet == nullptr) {
     throw std::runtime_error("Could not reduce bu data with box cuts.");
   }
@@ -209,7 +211,8 @@ void GetDataMapAndBoxEff(
                      " and corresponding dataset for MC of " +
                      EnumToString(mode) + "\n";
   } else {
-    mapCategoryDataSet[EnumToString(Variable::buPartial)]->append(*buPartialDataSet);
+    mapCategoryDataSet[EnumToString(Variable::buPartial)]->append(
+        *buPartialDataSet);
     std::cout << "Appended dataset for MC of " + EnumToString(mode) +
                      " to category " + EnumToString(Variable::buPartial) + "\n";
   }
@@ -446,52 +449,41 @@ void SimToy() {
     throw std::runtime_error("Could not cast to RooAbsData.");
   }
 
-  RooRealVar meanDelta_D0gamma_asGamma("meanDelta_D0gamma_asGamma", "",
-                                       1.4278e+02, 130, 150);
-  RooRealVar sigmaDelta_D0gamma_asGamma("sigmaDelta_D0gamma_asGamma", "",
-                                        8.4695e+00, 2, 15);
-  RooRealVar a1Delta_D0gamma_asGamma("a1Delta_D0gamma_asGamma", "", 1.7506e+00);
-  RooRealVar n1Delta_D0gamma_asGamma("n1Delta_D0gamma_asGamma", "", 1.1606e+00);
-  RooRealVar a2Delta_D0gamma_asGamma("a2Delta_D0gamma_asGamma", "",
-                                     -7.8889e-01);
-  RooRealVar n2Delta_D0gamma_asGamma("n2Delta_D0gamma_asGamma", "", 4.1928e+00);
-  RooCBShape pdf1Delta_D0gamma_asGamma(
-      "pdf1Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
-      sigmaDelta_D0gamma_asGamma, a1Delta_D0gamma_asGamma,
-      n1Delta_D0gamma_asGamma);
-  RooCBShape pdf2Delta_D0gamma_asGamma(
-      "pdf2Delta_D0gamma_asGamma", "", deltaMass, meanDelta_D0gamma_asGamma,
-      sigmaDelta_D0gamma_asGamma, a2Delta_D0gamma_asGamma,
-      n2Delta_D0gamma_asGamma);
-  RooRealVar fracPdf1Delta_D0gamma_asGamma(
-      "fracPdf1Delta_D0gamma_asGamma", "Fraction of component 1 in delta PDF",
-      1.5408e-01);
-  RooAddPdf pdfDelta_D0gamma_asGamma(
-      "pdfDelta_D0gamma_asGamma", "",
-      RooArgSet(pdf1Delta_D0gamma_asGamma, pdf2Delta_D0gamma_asGamma),
-      fracPdf1Delta_D0gamma_asGamma);
+  RooRealVar meanDelta_D0gamma("meanDelta_D0gamma", "", 1.4278e+02, 130, 150);
+  RooRealVar sigmaDelta_D0gamma("sigmaDelta_D0gamma", "", 8.4695e+00, 2, 15);
+  RooRealVar a1Delta_D0gamma("a1Delta_D0gamma", "", 1.7506e+00);
+  RooRealVar n1Delta_D0gamma("n1Delta_D0gamma", "", 1.1606e+00);
+  RooRealVar a2Delta_D0gamma("a2Delta_D0gamma", "", -7.8889e-01);
+  RooRealVar n2Delta_D0gamma("n2Delta_D0gamma", "", 4.1928e+00);
+  RooCBShape pdf1Delta_D0gamma("pdf1Delta_D0gamma", "", deltaMass,
+                               meanDelta_D0gamma, sigmaDelta_D0gamma,
+                               a1Delta_D0gamma, n1Delta_D0gamma);
+  RooCBShape pdf2Delta_D0gamma("pdf2Delta_D0gamma", "", deltaMass,
+                               meanDelta_D0gamma, sigmaDelta_D0gamma,
+                               a2Delta_D0gamma, n2Delta_D0gamma);
+  RooRealVar fracPdf1Delta_D0gamma("fracPdf1Delta_D0gamma",
+                                   "Fraction of component 1 in delta PDF",
+                                   1.5408e-01);
+  RooAddPdf pdfDelta_D0gamma("pdfDelta_D0gamma", "",
+                             RooArgSet(pdf1Delta_D0gamma, pdf2Delta_D0gamma),
+                             fracPdf1Delta_D0gamma);
 
-  RooRealVar meanDelta_D0pi0_asGamma("meanDelta_D0pi0_asGamma", "", 8.6503e+01,
-                                     70, 100);
-  RooRealVar sigmaDelta_D0pi0_asGamma("sigmaDelta_D0pi0_asGamma", "",
-                                      9.3347e+00, 5, 15);
-  RooRealVar a1Delta_D0pi0_asGamma("a1Delta_D0pi0_asGamma", "", 5.7073e-01);
-  RooRealVar n1Delta_D0pi0_asGamma("n1Delta_D0pi0_asGamma", "", 9.9988e+01);
-  RooRealVar a2Delta_D0pi0_asGamma("a2Delta_D0pi0_asGamma", "", -8.3282e-01);
-  RooRealVar n2Delta_D0pi0_asGamma("n2Delta_D0pi0_asGamma", "", 3.7808e+00);
-  RooCBShape pdf1Delta_D0pi0_asGamma(
-      "pdf1Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
-      sigmaDelta_D0pi0_asGamma, a1Delta_D0pi0_asGamma, n1Delta_D0pi0_asGamma);
-  RooCBShape pdf2Delta_D0pi0_asGamma(
-      "pdf2Delta_D0pi0_asGamma", "", deltaMass, meanDelta_D0pi0_asGamma,
-      sigmaDelta_D0pi0_asGamma, a2Delta_D0pi0_asGamma, n2Delta_D0pi0_asGamma);
-  RooRealVar fracPdf1Delta_D0pi0_asGamma("fracPdf1Delta_D0pi0_asGamma",
-                                         "Fraction of component 1 in delta PDF",
-                                         3.0618e-01);
-  RooAddPdf pdfDelta_D0pi0_asGamma(
-      "pdfDelta_D0pi0_asGamma", "",
-      RooArgSet(pdf1Delta_D0pi0_asGamma, pdf2Delta_D0pi0_asGamma),
-      fracPdf1Delta_D0pi0_asGamma);
+  RooRealVar meanDelta_D0pi0("meanDelta_D0pi0", "", 8.6503e+01, 70, 100);
+  RooRealVar sigmaDelta_D0pi0("sigmaDelta_D0pi0", "", 9.3347e+00, 5, 15);
+  RooRealVar a1Delta_D0pi0("a1Delta_D0pi0", "", 5.7073e-01);
+  RooRealVar n1Delta_D0pi0("n1Delta_D0pi0", "", 9.9988e+01);
+  RooRealVar a2Delta_D0pi0("a2Delta_D0pi0", "", -8.3282e-01);
+  RooRealVar n2Delta_D0pi0("n2Delta_D0pi0", "", 3.7808e+00);
+  RooCBShape pdf1Delta_D0pi0("pdf1Delta_D0pi0", "", deltaMass, meanDelta_D0pi0,
+                             sigmaDelta_D0pi0, a1Delta_D0pi0, n1Delta_D0pi0);
+  RooCBShape pdf2Delta_D0pi0("pdf2Delta_D0pi0", "", deltaMass, meanDelta_D0pi0,
+                             sigmaDelta_D0pi0, a2Delta_D0pi0, n2Delta_D0pi0);
+  RooRealVar fracPdf1Delta_D0pi0("fracPdf1Delta_D0pi0",
+                                 "Fraction of component 1 in delta PDF",
+                                 3.0618e-01);
+  RooAddPdf pdfDelta_D0pi0("pdfDelta_D0pi0", "",
+                           RooArgSet(pdf1Delta_D0pi0, pdf2Delta_D0pi0),
+                           fracPdf1Delta_D0pi0);
 
   RooRealVar meanBu_D0gamma_asGamma("meanBu_D0gamma_asGamma", "",
                                     5.2814e+03);  //, 5275, 5285);
@@ -523,20 +515,22 @@ void SimToy() {
                                  meanBu_D0pi0_asGamma, sigmaBu_D0pi0_asGamma,
                                  aBu_D0pi0_asGamma, nBu_D0pi0_asGamma);
 
-  RooRealVar meanBu_D0gamma_asPartial("meanBu_D0gamma_asPartial", "", 5.2600e+03);
-  RooRealVar sigmaBu_D0gamma_asPartial("sigmaBu_D0gamma_asPartial", "", 3.0651e+01);
+  RooRealVar meanBu_D0gamma_asPartial("meanBu_D0gamma_asPartial", "",
+                                      5.2600e+03);
+  RooRealVar sigmaBu_D0gamma_asPartial("sigmaBu_D0gamma_asPartial", "",
+                                       3.0651e+01);
   RooRealVar aBu_D0gamma_asPartial("aBu_D0gamma_asPartial", "", 2.5357e+00);
   RooRealVar nBu_D0gamma_asPartial("nBu_D0gamma_asPartial", "", 6.4103e-08);
-  RooCBShape pdfBu_D0gamma_asPartial("pdfBu_D0gamma_asPartial", "", buMass,
-                                 meanBu_D0gamma_asPartial, sigmaBu_D0gamma_asPartial,
-                                 aBu_D0gamma_asPartial, nBu_D0gamma_asPartial);
+  RooCBShape pdfBu_D0gamma_asPartial(
+      "pdfBu_D0gamma_asPartial", "", buMass, meanBu_D0gamma_asPartial,
+      sigmaBu_D0gamma_asPartial, aBu_D0gamma_asPartial, nBu_D0gamma_asPartial);
 
   RooRealVar meanBu_D0pi0_asPartial("meanBu_D0pi0_asPartial", "",
                                     5.2910e+03);  //, 5275, 5285);
   RooRealVar sigma1Bu_D0pi0_asPartial("sigma1Bu_D0pi0_asPartial", "",
-                                     2.8223e+01);  //, 15, 30);
+                                      2.8223e+01);  //, 15, 30);
   RooRealVar sigma2Bu_D0pi0_asPartial("sigma2Bu_D0pi0_asPartial", "",
-                                     4.7212e+01);  //, 15, 30);
+                                      4.7212e+01);  //, 15, 30);
   RooRealVar a1Bu_D0pi0_asPartial("a1Bu_D0pi0_asPartial", "", 1.2671e+00);
   RooRealVar n1Bu_D0pi0_asPartial("n1Bu_D0pi0_asPartial", "", 10);
   RooRealVar a2Bu_D0pi0_asPartial("a2Bu_D0pi0_asPartial", "", -4.6116e+00);
@@ -572,27 +566,26 @@ void SimToy() {
       RooArgList(buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma, N_D0pi0_asGamma));
   RooFormulaVar N_Delta_D0pi0_asGamma(
       "N_Delta_D0pi0_asGamma", "(@0/@1)*@2",
-      RooArgList(deltaBoxEff_D0pi0, orEff_D0pi0_asGamma,
-                 N_D0pi0_asGamma));
+      RooArgList(deltaBoxEff_D0pi0, orEff_D0pi0_asGamma, N_D0pi0_asGamma));
 
-  RooArgSet functionsBu;
-  functionsBu.add(pdfBu_D0gamma_asGamma);
-  functionsBu.add(pdfBu_D0pi0_asGamma);
-  RooArgSet yieldsBu;
-  yieldsBu.add(N_Bu_D0gamma_asGamma);
-  yieldsBu.add(N_Bu_D0pi0_asGamma);
-  RooAddPdf pdfBu("pdfBu", "", functionsBu, yieldsBu);
+  RooArgSet functionsBuGamma;
+  functionsBuGamma.add(pdfBu_D0gamma_asGamma);
+  functionsBuGamma.add(pdfBu_D0pi0_asGamma);
+  RooArgSet yieldsBuGamma;
+  yieldsBuGamma.add(N_Bu_D0gamma_asGamma);
+  yieldsBuGamma.add(N_Bu_D0pi0_asGamma);
+  RooAddPdf pdfBuGamma("pdfBuGamma", "", functionsBuGamma, yieldsBuGamma);
 
   RooArgSet functionsDelta;
-  functionsDelta.add(pdfDelta_D0gamma_asGamma);
-  functionsDelta.add(pdfDelta_D0pi0_asGamma);
+  functionsDelta.add(pdfDelta_D0gamma);
+  functionsDelta.add(pdfDelta_D0pi0);
   RooArgSet yieldsDelta;
   yieldsDelta.add(N_Delta_D0gamma_asGamma);
   yieldsDelta.add(N_Delta_D0pi0_asGamma);
   RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yieldsDelta);
 
   RooSimultaneous simPdf("simPdf", "", fitting);
-  simPdf.addPdf(pdfBu, EnumToString(Variable::buGamma).c_str());
+  simPdf.addPdf(pdfBuGamma, EnumToString(Variable::buGamma).c_str());
   simPdf.addPdf(pdfDelta, EnumToString(Variable::delta).c_str());
 
   std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
@@ -603,7 +596,7 @@ void SimToy() {
   PlotComponent(Variable::buGamma, buMass, *dataHist.get(), simPdf, fitting,
                 pdfBu_D0gamma_asGamma, pdfBu_D0pi0_asGamma);
   PlotComponent(Variable::delta, deltaMass, *dataHist.get(), simPdf, fitting,
-                pdfDelta_D0gamma_asGamma, pdfDelta_D0pi0_asGamma);
+                pdfDelta_D0gamma, pdfDelta_D0pi0);
 
   result->Print("v");
   // app.Run(true);
