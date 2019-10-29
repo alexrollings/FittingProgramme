@@ -34,7 +34,7 @@
 #include "TTreeReader.h"
 
 enum class Mode { Bu2Dst0pi_D0gamma, Bu2Dst0pi_D0pi0 };
-enum class Variable { bu, delta };
+enum class Variable { buGamma, buPartial, delta };
 
 std::string EnumToString(Mode mode) {
   switch (mode) {
@@ -52,8 +52,11 @@ std::string EnumToString(Mode mode) {
 
 std::string EnumToString(Variable variable) {
   switch (variable) {
-    case Variable::bu:
-      return "bu";
+    case Variable::buGamma:
+      return "buGamma";
+      break;
+    case Variable::buPartial:
+      return "buPartial";
       break;
     case Variable::delta:
       return "delta";
@@ -167,28 +170,48 @@ void GetDataMapAndBoxEff(
   std::string deltaBoxLow_asPartial = "60";
   std::string deltaBoxHigh_asPartial = "105";
 
-  RooDataSet *buDataSet = nullptr;
-  buDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(
+  RooDataSet *buGammaDataSet = nullptr;
+  buGammaDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(
       ("Delta_M>" + deltaBoxLow_asGamma + "&&Delta_M<" + deltaBoxHigh_asGamma)
           .c_str()));
-  if (buDataSet == nullptr) {
+  if (buGammaDataSet == nullptr) {
     throw std::runtime_error("Could not reduce bu data with box cuts.");
   }
 
-  if (mapCategoryDataSet.find(EnumToString(Variable::bu)) ==
+  if (mapCategoryDataSet.find(EnumToString(Variable::buGamma)) ==
       mapCategoryDataSet.end()) {
     mapCategoryDataSet.insert(
-        std::make_pair(EnumToString(Variable::bu), buDataSet));
+        std::make_pair(EnumToString(Variable::buGamma), buGammaDataSet));
     std::cout << "Created key-value pair for category " +
-                     EnumToString(Variable::bu) +
+                     EnumToString(Variable::buGamma) +
                      " and corresponding dataset for MC of " +
                      EnumToString(mode) + "\n";
-    ;
-
   } else {
-    mapCategoryDataSet[EnumToString(Variable::bu)]->append(*buDataSet);
+    mapCategoryDataSet[EnumToString(Variable::buGamma)]->append(*buGammaDataSet);
     std::cout << "Appended dataset for MC of " + EnumToString(mode) +
-                     " to category " + EnumToString(Variable::bu) + "\n";
+                     " to category " + EnumToString(Variable::buGamma) + "\n";
+  }
+
+  RooDataSet *buPartialDataSet = nullptr;
+  buPartialDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(
+      ("Delta_M>" + deltaBoxLow_asPartial + "&&Delta_M<" + deltaBoxHigh_asPartial)
+          .c_str()));
+  if (buPartialDataSet == nullptr) {
+    throw std::runtime_error("Could not reduce bu data with box cuts.");
+  }
+
+  if (mapCategoryDataSet.find(EnumToString(Variable::buPartial)) ==
+      mapCategoryDataSet.end()) {
+    mapCategoryDataSet.insert(
+        std::make_pair(EnumToString(Variable::buPartial), buPartialDataSet));
+    std::cout << "Created key-value pair for category " +
+                     EnumToString(Variable::buPartial) +
+                     " and corresponding dataset for MC of " +
+                     EnumToString(mode) + "\n";
+  } else {
+    mapCategoryDataSet[EnumToString(Variable::buPartial)]->append(*buPartialDataSet);
+    std::cout << "Appended dataset for MC of " + EnumToString(mode) +
+                     " to category " + EnumToString(Variable::buPartial) + "\n";
   }
 
   RooDataSet *deltaDataSet = nullptr;
@@ -271,7 +294,10 @@ void PlotComponent(Variable variable, RooRealVar &var, RooDataHist dataHist,
 
   std::string title;
   switch (variable) {
-    case Variable::bu:
+    case Variable::buGamma:
+      title = "m[D^{*0}#pi] - m[D^{*0}] + m[D^{*0}]_{PDG}";
+      break;
+    case Variable::buPartial:
       title = "m[D^{*0}#pi] - m[D^{*0}] + m[D^{*0}]_{PDG}";
       break;
     case Variable::delta:
@@ -367,7 +393,8 @@ void SimToy() {
 
   // DEFINE INDEX CATEGORIES
   RooCategory fitting("fitting", "fitting");
-  fitting.defineType(EnumToString(Variable::bu).c_str());
+  fitting.defineType(EnumToString(Variable::buPartial).c_str());
+  fitting.defineType(EnumToString(Variable::buGamma).c_str());
   fitting.defineType(EnumToString(Variable::delta).c_str());
 
   std::map<std::string, RooDataSet *> mapCategoryDataSet;
@@ -533,7 +560,7 @@ void SimToy() {
   RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yieldsDelta);
 
   RooSimultaneous simPdf("simPdf", "", fitting);
-  simPdf.addPdf(pdfBu, EnumToString(Variable::bu).c_str());
+  simPdf.addPdf(pdfBu, EnumToString(Variable::buGamma).c_str());
   simPdf.addPdf(pdfDelta, EnumToString(Variable::delta).c_str());
 
   std::unique_ptr<RooFitResult> result = std::unique_ptr<RooFitResult>(
@@ -541,7 +568,7 @@ void SimToy() {
                    RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                    RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  PlotComponent(Variable::bu, buMass, *dataHist.get(), simPdf, fitting,
+  PlotComponent(Variable::buGamma, buMass, *dataHist.get(), simPdf, fitting,
                 pdfBu_D0gamma_asGamma, pdfBu_D0pi0_asGamma);
   PlotComponent(Variable::delta, deltaMass, *dataHist.get(), simPdf, fitting,
                 pdfDelta_D0gamma_asGamma, pdfDelta_D0pi0_asGamma);
