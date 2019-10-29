@@ -15,6 +15,7 @@
 #include "RooFitResult.h"
 #include "RooGaussian.h"
 #include "RooPlot.h"
+#include "RooHist.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
 #include "RooRandom.h"
@@ -26,7 +27,7 @@
 #include "TCanvas.h"
 #include "TChain.h"
 #include "TFile.h"
-#include "TH2.h"
+#include "TLine.h"
 #include "TPad.h"
 #include "TRandom3.h"
 #include "TStyle.h"
@@ -232,6 +233,101 @@ void GetDataMapAndBoxEff(
             << "\t# events initially =\t" << nInitial << "\n";
 }
 
+void PlotComponent(Variable variable, RooRealVar &var, RooDataHist dataHist,
+                   RooSimultaneous &simPdf, RooCategory &fitting,
+                   RooAbsPdf &pdfGamma, RooAbsPdf &pdfPi0) {
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.02);
+  gStyle->SetTitleSize(0.08, "Z");
+  gStyle->SetTitleSize(0.035, "XY");
+  gStyle->SetLabelSize(0.03, "XY");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.5, "Y");
+  gStyle->SetTitleOffset(0.95, "Z");
+  gStyle->SetPadTopMargin(0.1);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.1);
+  gStyle->SetPadLeftMargin(0.12);
+
+  std::string title;
+  switch (variable) {
+    case Variable::bu:
+      title = "m[D^{*0}#pi] - m[D^{*0}] + m[D^{*0}]_{PDG}";
+      break;
+    case Variable::delta:
+      title = "m[D^{*0}] - m[D^{0}]";
+      break;
+  }
+
+  auto frame =
+      std::unique_ptr<RooPlot>(var.frame(RooFit::Title(title.c_str())));
+
+  RooHist *pullHist = nullptr;
+  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+  dataHist.plotOn(
+      frame.get(),
+      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
+  simPdf.plotOn(frame.get(),
+                RooFit::Slice(fitting, EnumToString(variable).c_str()),
+                RooFit::ProjWData(fitting, dataHist),
+                RooFit::Components(pdfGamma.GetName()),
+                RooFit::LineColor(kBlue), RooFit::LineStyle(kDashed));
+  simPdf.plotOn(frame.get(),
+                RooFit::Slice(fitting, EnumToString(variable).c_str()),
+                RooFit::ProjWData(fitting, dataHist),
+                RooFit::Components(pdfPi0.GetName()),
+                RooFit::LineColor(kOrange), RooFit::LineStyle(kDashed));
+  simPdf.plotOn(frame.get(),
+                RooFit::Slice(fitting, EnumToString(variable).c_str()),
+                RooFit::ProjWData(fitting, dataHist), RooFit::LineColor(kBlue));
+  pullHist = frame->RooPlot::pullHist();
+
+  dataHist.plotOn(
+      frame.get(),
+      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
+
+  if (pullHist != 0) {
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + EnumToString(variable)).c_str());
+    pullFrame->SetTitle("");
+  }
+
+  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200,
+                 1000);
+
+  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "", 0.0, 0.14, 1.0,
+            1.0, kWhite);
+  pad1.Draw();
+
+  TPad pad2(("pad2_" + EnumToString(variable)).c_str(), "", 0.0, 0.05, 1.0,
+            0.15, kWhite);
+  pad2.Draw();
+
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
+  canvas.cd();
+  pad2.cd();
+  pullFrame->SetYTitle(" ");
+  pullFrame->SetXTitle(" ");
+  pullFrame->SetLabelSize(0.2, "Y");
+  pullFrame->SetLabelFont(132, "XY");
+  pullFrame->SetLabelOffset(100, "X");
+  pullFrame->SetTitleOffset(100, "X");
+  pullFrame->Draw();
+  zeroLine.Draw("same");
+
+  canvas.cd();
+  pad1.cd();
+  frame->Draw();
+  canvas.Update();
+  canvas.SaveAs(("TripleToy_" + EnumToString(variable) + "Mass.pdf").c_str());
+}
+
 void SimToy() {
   // TApplication app("app", 0, 0);
   int buLow = 4900;
@@ -290,8 +386,8 @@ void SimToy() {
 
   combData.Print();
 
-  auto dataHist =
-      std::unique_ptr<RooDataHist>(combData.binnedClone("dataHist", "dataHist"));
+  auto dataHist = std::unique_ptr<RooDataHist>(
+      combData.binnedClone("dataHist", "dataHist"));
   if (dataHist == nullptr) {
     throw std::runtime_error("Could not extact binned dataSet.");
   }
@@ -301,7 +397,7 @@ void SimToy() {
   }
 
   RooRealVar deltaGammaMean("deltaGammaMean", "", 1.4278e+02, 130, 150);
-  RooRealVar deltaGammaSigma("deltaGammaSigma", "", 8.4695e+00, 2, 15);
+  RooRealVar deltaGammaSigma("deltaGammaSigma", "", 8.4695e+00);//, 2, 15);
   RooRealVar deltaGammaA1("deltaGammaA1", "", 1.6945e+00);
   RooRealVar deltaGammaN1("deltaGammaN1", "", 1.9181e+00);
   RooRealVar deltaGammaA2("deltaGammaA2", "", -7.4455e-01);
@@ -316,8 +412,8 @@ void SimToy() {
                           RooArgSet(deltaGammaPdf1, deltaGammaPdf2),
                           deltaGammaFrac);
 
-  RooRealVar deltaPi0Mean("deltaPi0Mean", "", 8.6503e+01, 70, 100);
-  RooRealVar deltaPi0Sigma("deltaPi0Sigma", "", 9.3347e+00, 5, 15);
+  RooRealVar deltaPi0Mean("deltaPi0Mean", "", 8.6503e+01);//, 70, 100);
+  RooRealVar deltaPi0Sigma("deltaPi0Sigma", "", 9.3347e+00);//, 5, 15);
   RooRealVar deltaPi0A1("deltaPi0A1", "", 4.4112e-01);
   RooRealVar deltaPi0N1("deltaPi0N1", "", 9.9988e+01);
   RooRealVar deltaPi0A2("deltaPi0A2", "", -7.3381e-01);
@@ -331,8 +427,8 @@ void SimToy() {
   RooAddPdf deltaPi0Pdf("deltaPi0Pdf", "",
                         RooArgSet(deltaPi0Pdf1, deltaPi0Pdf2), deltaPi0Frac);
 
-  RooRealVar buGammaMean("buGammaMean", "", 5.2814e+03, 5275, 5285);
-  RooRealVar buGammaSigma("buGammaSigma", "", 2.0271e+01, 15, 30);
+  RooRealVar buGammaMean("buGammaMean", "", 5.2814e+03);//, 5275, 5285);
+  RooRealVar buGammaSigma("buGammaSigma", "", 2.0271e+01);//, 15, 30);
   RooRealVar buGammaA1("buGammaA1", "", 1.6184e+00);
   RooRealVar buGammaN1("buGammaN1", "", 8.6469e+00);
   RooRealVar buGammaA2("buGammaA2", "", -1.6623e+00);
@@ -353,35 +449,33 @@ void SimToy() {
   RooCBShape buPi0Pdf("buPi0Pdf", "", buMass, buPi0Mean, buPi0Sigma, buPi0A,
                       buPi0N);
 
-  RooRealVar N_Gamma("N_Gamma", "", 12500, 0, 20000);
+  RooRealVar N_Gamma("N_Gamma", "", 1.2279e+04);//, 0, 20000);
   RooFormulaVar N_Bu_Gamma("N_Bu_Gamma", "(@0/@1)*@2",
                            RooArgList(buCutEffGamma, orEffGamma, N_Gamma));
   RooFormulaVar N_Delta_Gamma(
       "N_Delta_Gamma", "(@0/@1)*@2",
       RooArgList(deltaCutEffGamma, orEffGamma, N_Gamma));
 
-  RooRealVar N_Pi0("N_Pi0", "", 6500, 0, 15000);
+  RooRealVar N_Pi0("N_Pi0", "", 6.3884e+03);//, 0, 15000);
   RooFormulaVar N_Bu_Pi0("N_Bu_Pi0", "(@0/@1)*@2",
                          RooArgList(buCutEffPi0, orEffPi0, N_Pi0));
   RooFormulaVar N_Delta_Pi0("N_Delta_Pi0", "(@0/@1)*@2",
                             RooArgList(deltaCutEffPi0, orEffPi0, N_Pi0));
 
-  RooArgSet yieldsBu;
-  yieldsBu.add(N_Bu_Gamma);
-  yieldsBu.add(N_Bu_Pi0);
-
   RooArgSet functionsBu;
   functionsBu.add(buGammaPdf);
   functionsBu.add(buPi0Pdf);
+  RooArgSet yieldsBu;
+  yieldsBu.add(N_Bu_Gamma);
+  yieldsBu.add(N_Bu_Pi0);
   RooAddPdf pdfBu("pdfBu", "", functionsBu, yieldsBu);
-
-  RooArgSet yieldsDelta;
-  yieldsDelta.add(N_Delta_Gamma);
-  yieldsDelta.add(N_Delta_Pi0);
 
   RooArgSet functionsDelta;
   functionsDelta.add(deltaGammaPdf);
   functionsDelta.add(deltaPi0Pdf);
+  RooArgSet yieldsDelta;
+  yieldsDelta.add(N_Delta_Gamma);
+  yieldsDelta.add(N_Delta_Pi0);
   RooAddPdf pdfDelta("pdfDelta", "", functionsDelta, yieldsDelta);
 
   RooSimultaneous simPdf("simPdf", "", fitting);
@@ -393,59 +487,10 @@ void SimToy() {
                    RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                    RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  std::unique_ptr<RooPlot> frameBu(buMass.frame(
-      RooFit::Title("m[D^{*0}#pi^{#pm}] - m[D^{*0}] + m[D^{*0}]_{PDG}")));
-
-  combData.plotOn(frameBu.get(), RooFit::Cut("fitting==fitting::bu"));
-  simPdf.plotOn(frameBu.get(),
-                RooFit::Slice(fitting, EnumToString(Variable::bu).c_str()),
-                RooFit::ProjWData(fitting, combData));
-  simPdf.plotOn(
-      frameBu.get(), RooFit::Slice(fitting, EnumToString(Variable::bu).c_str()),
-      RooFit::ProjWData(fitting, combData),
-      RooFit::Components(buGammaPdf.GetName()), RooFit::LineStyle(kDashed),
-      RooFit::LineColor(kBlue), RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-  simPdf.plotOn(frameBu.get(),
-                RooFit::Slice(fitting, EnumToString(Variable::bu).c_str()),
-                RooFit::ProjWData(fitting, combData),
-                RooFit::Components(buPi0Pdf.GetName()),
-                RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-                RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-
-  std::unique_ptr<RooPlot> frameDelta(
-      deltaMass.frame(RooFit::Title("m[D^{*0}] - m[D^{0}]")));
-
-  combData.plotOn(frameDelta.get(), RooFit::Cut("fitting==fitting::delta"));
-  simPdf.plotOn(frameDelta.get(),
-                RooFit::Slice(fitting, EnumToString(Variable::delta).c_str()),
-                RooFit::ProjWData(fitting, combData));
-  simPdf.plotOn(frameDelta.get(),
-                RooFit::Slice(fitting, EnumToString(Variable::delta).c_str()),
-                RooFit::ProjWData(fitting, combData),
-                RooFit::Components(deltaGammaPdf.GetName()),
-                RooFit::LineStyle(kDashed), RooFit::LineColor(kBlue),
-                RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-  simPdf.plotOn(frameDelta.get(),
-                RooFit::Slice(fitting, EnumToString(Variable::delta).c_str()),
-                RooFit::ProjWData(fitting, combData),
-                RooFit::Components(deltaPi0Pdf.GetName()),
-                RooFit::LineStyle(kDashed), RooFit::LineColor(kOrange),
-                RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-
-  TCanvas canvas("canvas", "canvas", 1000, 400);
-  canvas.SetTitle(" ");
-  canvas.Divide(2);
-  canvas.cd(1);
-  canvas.SetLogy();
-  gPad->SetLeftMargin(0.15);
-  frameBu->GetYaxis()->SetTitleOffset(1.4);
-  frameBu->Draw();
-  canvas.cd(2);
-  gPad->SetLeftMargin(0.15);
-  frameDelta->GetYaxis()->SetTitleOffset(1.4);
-  frameDelta->Draw();
-
-  canvas.SaveAs("SimpleToy.pdf");
+  PlotComponent(Variable::bu, buMass, *dataHist.get(), simPdf, fitting, buGammaPdf,
+                buPi0Pdf);
+  PlotComponent(Variable::delta, deltaMass, *dataHist.get(), simPdf, fitting,
+                deltaGammaPdf, deltaPi0Pdf);
 
   result->Print("v");
   // app.Run(true);
