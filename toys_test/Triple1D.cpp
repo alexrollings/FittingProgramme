@@ -401,7 +401,7 @@ void SimToy() {
   GetDataMapAndBoxEff(Mode::Bu2Dst0pi_D0pi0, buMass, deltaMass,
                       mapCategoryDataSet, deltaBoxEff_D0pi0,
                       buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma,
-                      buBoxEff_D0pi0_asGamma, orEff_D0pi0_asGamma);
+                      buBoxEff_D0pi0_asPartial, orEff_D0pi0_asPartial);
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
                       RooFit::Index(fitting),
