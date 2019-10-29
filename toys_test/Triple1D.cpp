@@ -523,6 +523,38 @@ void SimToy() {
                                  meanBu_D0pi0_asGamma, sigmaBu_D0pi0_asGamma,
                                  aBu_D0pi0_asGamma, nBu_D0pi0_asGamma);
 
+  RooRealVar meanBu_D0gamma_asPartial("meanBu_D0gamma_asPartial", "", 5.2600e+03);
+  RooRealVar sigmaBu_D0gamma_asPartial("sigmaBu_D0gamma_asPartial", "", 3.0651e+01);
+  RooRealVar aBu_D0gamma_asPartial("aBu_D0gamma_asPartial", "", 2.5357e+00);
+  RooRealVar nBu_D0gamma_asPartial("nBu_D0gamma_asPartial", "", 6.4103e-08);
+  RooCBShape pdfBu_D0gamma_asPartial("pdfBu_D0gamma_asPartial", "", buMass,
+                                 meanBu_D0gamma_asPartial, sigmaBu_D0gamma_asPartial,
+                                 aBu_D0gamma_asPartial, nBu_D0gamma_asPartial);
+
+  RooRealVar meanBu_D0pi0_asPartial("meanBu_D0pi0_asPartial", "",
+                                    5.2910e+03);  //, 5275, 5285);
+  RooRealVar sigma1Bu_D0pi0_asPartial("sigma1Bu_D0pi0_asPartial", "",
+                                     2.8223e+01);  //, 15, 30);
+  RooRealVar sigma2Bu_D0pi0_asPartial("sigma2Bu_D0pi0_asPartial", "",
+                                     4.7212e+01);  //, 15, 30);
+  RooRealVar a1Bu_D0pi0_asPartial("a1Bu_D0pi0_asPartial", "", 1.2671e+00);
+  RooRealVar n1Bu_D0pi0_asPartial("n1Bu_D0pi0_asPartial", "", 10);
+  RooRealVar a2Bu_D0pi0_asPartial("a2Bu_D0pi0_asPartial", "", -4.6116e+00);
+  RooRealVar n2Bu_D0pi0_asPartial("n2Bu_D0pi0_asPartial", "", 3.1306e+00);
+  RooCBShape pdf1Bu_D0pi0_asPartial(
+      "pdf1Bu_D0pi0_asPartial", "", buMass, meanBu_D0pi0_asPartial,
+      sigma1Bu_D0pi0_asPartial, a1Bu_D0pi0_asPartial, n1Bu_D0pi0_asPartial);
+  RooCBShape pdf2Bu_D0pi0_asPartial(
+      "pdf2Bu_D0pi0_asPartial", "", buMass, meanBu_D0pi0_asPartial,
+      sigma2Bu_D0pi0_asPartial, a2Bu_D0pi0_asPartial, n2Bu_D0pi0_asPartial);
+  RooRealVar fracPdf1Bu_D0pi0_asPartial("fracPdf1Bu_D0pi0_asPartial",
+                                        "Fraction of component 1 in bu PDF",
+                                        6.6392e-01);
+  RooAddPdf pdfBu_D0pi0_asPartial(
+      "pdfBu_D0pi0_asPartial", "",
+      RooArgSet(pdf1Bu_D0pi0_asPartial, pdf2Bu_D0pi0_asPartial),
+      fracPdf1Bu_D0pi0_asPartial);
+
   RooRealVar N_D0gamma_asGamma("N_D0gamma_asGamma", "",
                                1.2279e+04);  //, 0, 20000);
   RooFormulaVar N_Bu_D0gamma_asGamma(
