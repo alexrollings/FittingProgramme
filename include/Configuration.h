@@ -45,7 +45,7 @@ class Configuration {
   };
   
   Neutral &neutral() { return neutral_; }
-  void SetNeutral(std::string const &neutralString);
+  void SetNeutral(Neutral neut) { neutral() = neut; }
 
   Categories &categories() { return categories_; }
   RooRealVar &buMass() { return buMass_; }

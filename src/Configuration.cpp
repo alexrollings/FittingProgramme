@@ -3,7 +3,7 @@
 #include <sstream>
 
 Configuration::Configuration()
-    : neutral_(Neutral::gamma),
+    : neutral_(),
       buMass_("", "", 0, 0, ""),
       buDeltaMass_("", "", 0, 0, ""),
       deltaMass_("", "", 0, 0, ""),
@@ -676,19 +676,10 @@ Configuration::Categories::Categories()
                            .c_str());
 }
 
-void SetNeutral(std::string const &neutralString) {
-  if (neutralString == "gamma") {
-    std::cout << "Global neutral set to Neutral::gamma\n";
-  } else if (neutralString == "pi0") {
-    neutral() = Neutral::pi0;
-    std::cout << "Global neutral set to Neutral::pi0\n";
-  }
-}
-
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
-std::string Configuration::ReturnBoxString(Neutral neutral) {
+std::string Configuration::ReturnBoxString() {
   std::ostringstream out;
-  switch (neutral) {
+  switch (neutral()) {
     case Neutral::pi0:
       if (fit1D_ == true) {
         out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
@@ -702,7 +693,7 @@ std::string Configuration::ReturnBoxString(Neutral neutral) {
             << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
       } else {
         out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << deltaLow_ << "_" << deltaHigh_ << "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
             << buDeltaLow_ << "_" << buDeltaHigh_;
       }
   }
