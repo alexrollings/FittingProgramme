@@ -806,6 +806,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 categories, legend, lumiLegend, outputDir, config, colorMap);
+  if (config.neutral() == Neutral::gamma) {
+    PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet, simPdf,
+                  categories, legend, lumiLegend, outputDir, config, colorMap);
+  }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
                   categories, legend, lumiLegend, outputDir, config, colorMap);
@@ -1037,15 +1041,6 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
   Neutral neutral = pdf.neutral();
   Charge charge = pdf.charge();
 
-  auto buDeltaAbsData = dataSet.reduce(
-      ("fitting==fitting::" +
-       ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
-          .c_str());
-  auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
-  if (buDeltaDataSet == nullptr) {
-    throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
-  }
-
   auto deltaAbsData = dataSet.reduce(
       ("fitting==fitting::" +
        ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge))
@@ -1054,7 +1049,31 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
   if (deltaDataSet == nullptr) {
     throw std::runtime_error("Could not cast deltaAbsData to RooDataSet.");
   }
+
+  auto buDeltaAbsData = dataSet.reduce(
+      ("fitting==fitting::" +
+       ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge))
+          .c_str());
+  auto buDeltaDataSet = dynamic_cast<RooDataSet *>(buDeltaAbsData);
+  if (buDeltaDataSet == nullptr) {
+    throw std::runtime_error("Could not cast buDeltaAbsData to RooDataSet.");
+  }
   deltaDataSet->append(*buDeltaDataSet);
+
+  if (config.neutral() == Neutral::gamma) {
+    auto buDeltaPartialAbsData =
+        dataSet.reduce(("fitting==fitting::" +
+                        ComposeFittingName(Mass::buDeltaPartial, neutral,
+                                           bachelor, daughters, charge))
+                           .c_str());
+    auto buDeltaPartialDataSet =
+        dynamic_cast<RooDataSet *>(buDeltaPartialAbsData);
+    if (buDeltaPartialDataSet == nullptr) {
+      throw std::runtime_error(
+          "Could not cast buDeltaPartialAbsData to RooDataSet.");
+    }
+    deltaDataSet->append(*buDeltaPartialDataSet);
+  }
 
   auto dataHist = std::unique_ptr<RooDataHist>(deltaDataSet->binnedClone(
       (label + "Hist2d_" +
