@@ -11,7 +11,7 @@ enum class Bachelor { pi, k };
 enum class Year { y2011, y2012, y2015, y2016, y2017, y2018 };
 enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus, total };
-enum class Mass { buDelta, delta };
+enum class Mass { buDelta, delta, buDeltaPartial };
 enum class Mode {
   Bd2Dstpi,
   Bu2D0pi,
@@ -69,15 +69,19 @@ class Configuration {
   double &deltaFitMin() { return deltaFitMin_; }
   double &deltaFitMax() { return deltaFitMax_; }
 
-  float &deltaLow() { return deltaLow_; }
-  float &deltaHigh() { return deltaHigh_; }
   float &buDeltaLow() { return buDeltaLow_; }
   float &buDeltaHigh() { return buDeltaHigh_; }
+  float &deltaLow() { return deltaLow_; }
+  float &deltaHigh() { return deltaHigh_; }
+  float &deltaPartialLow() { return deltaPartialLow_; }
+  float &deltaPartialHigh() { return deltaPartialHigh_; }
 
-  void SetDeltaLow(float val) { deltaLow() = val; }
-  void SetDeltaHigh(float val) { deltaHigh() = val; }
   void SetBuDeltaLow(float val) { buDeltaLow() = val; }
   void SetBuDeltaHigh(float val) { buDeltaHigh() = val; }
+  void SetDeltaLow(float val) { deltaLow() = val; }
+  void SetDeltaHigh(float val) { deltaHigh() = val; }
+  void SetDeltaPartialLow(float val) { deltaLow() = val; }
+  void SetDeltaPartialHigh(float val) { deltaHigh() = val; }
 
   // Have to declare this in Config as gamma depends on pi0 and pi0 depends on
   // gamma in different neutral cases: always need to delcare signal yield first
@@ -124,10 +128,12 @@ class Configuration {
   double deltaFitMin_;
   double deltaFitMax_;
   double deltaFitBins_;
-  float deltaLow_;
-  float deltaHigh_;
   float buDeltaLow_;
   float buDeltaHigh_;
+  float deltaLow_;
+  float deltaHigh_;
+  float deltaLow_;
+  float deltaHigh_;
   double initYieldFAVSignal_;
   std::string gammaCutString_;
   std::string pi0CutString_;
