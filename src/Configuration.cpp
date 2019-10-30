@@ -3,7 +3,8 @@
 #include <sstream>
 
 Configuration::Configuration()
-    : buMass_("", "", 0, 0, ""),
+    : neutral_(Neutral::gamma),
+      buMass_("", "", 0, 0, ""),
       buDeltaMass_("", "", 0, 0, ""),
       deltaMass_("", "", 0, 0, ""),
       pi0Mass_("", "", 0, 0, ""),
@@ -673,6 +674,15 @@ Configuration::Categories::Categories()
   dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
                                             Daughters::pik, Charge::minus)
                            .c_str());
+}
+
+void SetNeutral(std::string const &neutralString) {
+  if (neutralString == "gamma") {
+    std::cout << "Global neutral set to Neutral::gamma\n";
+  } else if (neutralString == "pi0") {
+    neutral() = Neutral::pi0;
+    std::cout << "Global neutral set to Neutral::pi0\n";
+  }
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit

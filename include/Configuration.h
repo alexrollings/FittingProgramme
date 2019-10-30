@@ -44,6 +44,9 @@ class Configuration {
     Categories &operator=(Categories &&) = delete;
   };
   
+  Neutral &neutral() { return neutral_; }
+  void SetNeutral(std::string const &neutralString);
+
   Categories &categories() { return categories_; }
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buDeltaMass() { return buDeltaMass_; }
@@ -103,6 +106,8 @@ class Configuration {
   Configuration &operator=(Configuration const &) = delete;
   Configuration &operator=(Configuration &&) = delete;
 
+  Neutral neutral_;
+
   Categories categories_;
   RooRealVar buMass_;
   RooRealVar buDeltaMass_;
@@ -132,8 +137,8 @@ class Configuration {
   float buDeltaHigh_;
   float deltaLow_;
   float deltaHigh_;
-  float deltaLow_;
-  float deltaHigh_;
+  float deltaPartialLow_;
+  float deltaPartialHigh_;
   double initYieldFAVSignal_;
   std::string gammaCutString_;
   std::string pi0CutString_;
