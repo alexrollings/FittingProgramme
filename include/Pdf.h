@@ -295,10 +295,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
     PdfBase::yieldsBu_.add(
         NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
             .N_Bu_Bu2Dst0h_D0gamma());
-    PdfBase::functionsBu_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBu_misId_Bu2Dst0h_D0gamma());
-    PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0gamma_);
+    // PdfBase::functionsBu_.add(
+    //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+    //         .pdfBu_misId_Bu2Dst0h_D0gamma());
+    // PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0gamma_);
   }
   PdfBase::functionsBu_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -306,42 +306,42 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
   PdfBase::yieldsBu_.add(
       NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
           .N_Bu_Bu2Dst0h_D0pi0());
-  PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-          .pdfBu_misId_Bu2Dst0h_D0pi0());
-  PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0pi0_);
-  PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-          .pdfBu_MisRec());
-  PdfBase::yieldsBu_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Bu_MisRec());
-  PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-          .pdfBu_Bu2D0h());
-  PdfBase::yieldsBu_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Bu_Bu2D0h());
-  PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-          .pdfBu_PartRec());
-  PdfBase::yieldsBu_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Bu_PartRec());
-  if (_bachelor == Bachelor::k) {
-    PdfBase::functionsBu_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBu_misId_MisRec());
-    PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_MisRec_);
-    PdfBase::functionsBu_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBu_misId_Bu2D0h());
-    PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2D0h_);
-    PdfBase::functionsBu_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBu_misId_PartRec());
-    PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_PartRec_);
-  }
+  // PdfBase::functionsBu_.add(
+  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //         .pdfBu_misId_Bu2Dst0h_D0pi0());
+  // PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0pi0_);
+  // PdfBase::functionsBu_.add(
+  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //         .pdfBu_MisRec());
+  // PdfBase::yieldsBu_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Bu_MisRec());
+  // PdfBase::functionsBu_.add(
+  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //         .pdfBu_Bu2D0h());
+  // PdfBase::yieldsBu_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Bu_Bu2D0h());
+  // PdfBase::functionsBu_.add(
+  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //         .pdfBu_PartRec());
+  // PdfBase::yieldsBu_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Bu_PartRec());
+  // if (_bachelor == Bachelor::k) {
+  //   PdfBase::functionsBu_.add(
+  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //           .pdfBu_misId_MisRec());
+  //   PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_MisRec_);
+  //   PdfBase::functionsBu_.add(
+  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //           .pdfBu_misId_Bu2D0h());
+  //   PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2D0h_);
+  //   PdfBase::functionsBu_.add(
+  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+  //           .pdfBu_misId_PartRec());
+  //   PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_PartRec_);
+  // }
 
   PdfBase::addPdfBu_ = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("addPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral,
@@ -359,44 +359,44 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
     PdfBase::yieldsDelta_.add(
         NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
             .N_Delta_Bu2Dst0h_D0gamma());
-    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                     .pdfDelta_misId_Bu2Dst0h_D0gamma());
-    PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2Dst0h_D0gamma_);
+    // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+    //                                  .pdfDelta_misId_Bu2Dst0h_D0gamma());
+    // PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2Dst0h_D0gamma_);
   }
   PdfBase::functionsDelta_.add(
       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_Bu2Dst0h_D0pi0());
   PdfBase::yieldsDelta_.add(
       NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
           .N_Delta_Bu2Dst0h_D0pi0());
-  PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                   .pdfDelta_misId_Bu2Dst0h_D0pi0());
-  PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2Dst0h_D0pi0_);
-  PdfBase::functionsDelta_.add(
-      NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_MisRec());
-  PdfBase::yieldsDelta_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Delta_MisRec());
-  PdfBase::functionsDelta_.add(
-      NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_Bu2D0h());
-  PdfBase::yieldsDelta_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Delta_Bu2D0h());
-  PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                   .pdfDelta_PartRec());
-  PdfBase::yieldsDelta_.add(
-      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-          .N_Delta_PartRec());
-  if (_bachelor == Bachelor::k) {
-    PdfBase::functionsDelta_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_MisRec());
-    PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_MisRec_);
-    PdfBase::functionsDelta_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_Bu2D0h());
-    PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2D0h_);
-    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                     .pdfDelta_misId_PartRec());
-    PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_PartRec_);
-  }
+  // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                                  .pdfDelta_misId_Bu2Dst0h_D0pi0());
+  // PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2Dst0h_D0pi0_);
+  // PdfBase::functionsDelta_.add(
+  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_MisRec());
+  // PdfBase::yieldsDelta_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Delta_MisRec());
+  // PdfBase::functionsDelta_.add(
+  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_Bu2D0h());
+  // PdfBase::yieldsDelta_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Delta_Bu2D0h());
+  // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                                  .pdfDelta_PartRec());
+  // PdfBase::yieldsDelta_.add(
+  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+  //         .N_Delta_PartRec());
+  // if (_bachelor == Bachelor::k) {
+  //   PdfBase::functionsDelta_.add(
+  //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_MisRec());
+  //   PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_MisRec_);
+  //   PdfBase::functionsDelta_.add(
+  //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_Bu2D0h());
+  //   PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_Bu2D0h_);
+  //   PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                                    .pdfDelta_misId_PartRec());
+  //   PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_PartRec_);
+  // }
 
   PdfBase::addPdfDelta_ = std::unique_ptr<RooAddPdf>(new RooAddPdf(
       ("addPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
