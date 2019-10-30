@@ -168,542 +168,568 @@ Configuration::Configuration()
 Configuration::Categories::Categories()
     : fitting("fitting", "fitting"),
       dataLabel("dataLabel", "dataLabel") {
+    // case Neutral::gamma:
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
 
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::pi,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0, Bachelor::k,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::delta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::total)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::plus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kpi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::kk, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pipi, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::pi,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::gamma, Bachelor::k,
-                                        Daughters::pik, Charge::minus)
-                         .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kpi, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kpi, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kk, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kk, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pipi, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pipi, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pik, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pik, Charge::total)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kpi, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kpi, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kk, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kk, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pipi, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pipi, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pik, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pik, Charge::plus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kpi, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kpi, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::kk, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::kk, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pipi, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pipi, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::pi,
-  //                                       Daughters::pik, Charge::minus)
-  //                        .c_str());
-  // fitting.defineType(ComposeFittingName(Mass::buDeltaPartial, Neutral::gamma, Bachelor::k,
-  //                                       Daughters::pik, Charge::minus)
-  //                        .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kpi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kpi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kk, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kk, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pipi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pipi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pik, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pik, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kpi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kpi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kk, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kk, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pipi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pipi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pik, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pik, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kpi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kpi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::kk, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::kk, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pipi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pipi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
+                                                Daughters::pik, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
+                                                Daughters::pik, Charge::minus)
+                               .c_str());
+  //     break;
+  // }
+  // switch (neutral()) {
+  //   case Neutral::pi0:
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::total)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::plus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kpi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::kk,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pipi,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::pi, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
+      fitting.defineType(ComposeFittingName(Mass::delta, Neutral::pi0,
+                                            Bachelor::k, Daughters::pik,
+                                            Charge::minus)
+                             .c_str());
 
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kpi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kpi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kk, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kk, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pipi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pipi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pik, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pik, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kpi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kpi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kk, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kk, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pipi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pipi, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pik, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pik, Charge::total)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kpi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kpi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kk, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kk, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pipi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pipi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pik, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pik, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kpi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kpi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kk, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kk, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pipi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pipi, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pik, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pik, Charge::plus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kpi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kpi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::kk, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::kk, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pipi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pipi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::pi,
-                                            Daughters::pik, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::gamma, Bachelor::k,
-                                            Daughters::pik, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kpi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kpi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::kk, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::kk, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pipi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pipi, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
-                                            Daughters::pik, Charge::minus)
-                           .c_str());
-  dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
-                                            Daughters::pik, Charge::minus)
-                           .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kpi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kpi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kk, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kk, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pipi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pipi, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pik, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pik, Charge::total)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kpi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kpi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kk, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kk, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pipi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pipi, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pik, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pik, Charge::plus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kpi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kpi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::kk, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::kk, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pipi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pipi, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::pi,
+                                                Daughters::pik, Charge::minus)
+                               .c_str());
+      dataLabel.defineType(ComposeDataLabelName(Neutral::pi0, Bachelor::k,
+                                                Daughters::pik, Charge::minus)
+                               .c_str());
+    //   break;
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
 std::string Configuration::ReturnBoxString() {
   std::ostringstream out;
-  if (fit1D_ == true) {
-    out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
-  } else {
-    out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
-        << buDeltaLow_ << "_" << buDeltaHigh_;
+  switch (neutral()) {
+    case Neutral::pi0:
+      if (fit1D_ == true) {
+        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
+      } else {
+        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
+            << buDeltaLow_ << "_" << buDeltaHigh_;
+      }
+      break;
+    case Neutral::gamma:
+      if (fit1D_ == true) {
+        out << std::setprecision(4) << deltaPartialLow_ << "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
+      } else {
+        out << std::setprecision(4) << deltaPartialLow_ << "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ <<
+            "_"
+            << buDeltaLow_ << "_" << buDeltaHigh_;
+      }
+      break;
   }
-  // switch (neutral()) {
-  //   case Neutral::pi0:
-  //     if (fit1D_ == true) {
-  //       out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
-  //     } else {
-  //       out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
-  //           << buDeltaLow_ << "_" << buDeltaHigh_;
-  //     }
-  //   case Neutral::gamma:
-  //     if (fit1D_ == true) {
-  //       out << std::setprecision(4) << deltaPartialLow_ << "_"
-  //           << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
-  //     } else {
-  //       out << std::setprecision(4) << deltaPartialLow_ << "_"
-  //           << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ <<
-  //           "_"
-  //           << buDeltaLow_ << "_" << buDeltaHigh_;
-  //     }
-  // }
   return out.str();
 }
 
