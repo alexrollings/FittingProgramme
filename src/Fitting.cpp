@@ -1193,6 +1193,33 @@ void MakeMapFittingDataSet(
     std::cout << "Appended dataSet to category " +
                      ComposeFittingName(Mass::buDelta, n, b, d, c) + "\n";
   }
+  if (n == Neutral::gamma) {
+    RooDataSet *buDeltaPartialDataSet = nullptr;
+    buDeltaPartialDataSet = dynamic_cast<RooDataSet *>(
+        mapDataLabelDataSet[ComposeDataLabelName(n, b, d, c)]->reduce(
+            ("Delta_M>" + std::to_string(config.deltaPartialLow()) +
+             "&&Delta_M<" + std::to_string(config.deltaPartialHigh()))
+                .c_str()));
+    if (buDeltaPartialDataSet == nullptr) {
+      throw std::runtime_error(
+          "Could not reduce buDeltaPartial data with box cuts.");
+    }
+    if (mapFittingDataSet.find(ComposeFittingName(
+            Mass::buDeltaPartial, n, b, d, c)) == mapFittingDataSet.end()) {
+      mapFittingDataSet.insert(
+          std::make_pair(ComposeFittingName(Mass::buDeltaPartial, n, b, d, c),
+                         buDeltaPartialDataSet));
+      std::cout << "Created key-value pair for category " +
+                       ComposeFittingName(Mass::buDeltaPartial, n, b, d, c) +
+                       " and corresponding dataSet\n";
+    } else {
+      mapFittingDataSet[ComposeFittingName(Mass::buDeltaPartial, n, b, d, c)]
+          ->append(*buDeltaPartialDataSet);
+      std::cout << "Appended dataSet to category " +
+                       ComposeFittingName(Mass::buDeltaPartial, n, b, d, c) +
+                       "\n";
+    }
+  }
   if (config.fit1D() == false) {
     RooDataSet *deltaDataSet = nullptr;
     deltaDataSet = dynamic_cast<RooDataSet *>(
@@ -1723,9 +1750,6 @@ int main(int argc, char **argv) {
                     reducedInputDataSet_d = dynamic_cast<
                         RooDataSet *>(reducedInputDataSet_b->reduce(
                         config.fittingArgSet(),
-                        // "(abs(h1_D_ID)==211&&h1_D_PIDK<-2)||(abs(h1_D_ID)"
-                        // "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
-                        // "PIDK<-2)||(abs(h2_D_ID)==321&&h2_D_PIDK>2)"));
                         "((abs(h1_D_ID)==211&&h1_D_PIDK<-2)&&(abs(h2_D_ID)=="
                         "321&&h2_D_PIDK>2))||((abs(h1_D_ID)"
                         "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
