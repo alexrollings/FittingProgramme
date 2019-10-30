@@ -34,20 +34,13 @@ class Configuration {
     return singleton;
   }
   
-  struct Categories {
-    RooCategory fitting;
-    RooCategory dataLabel;
-    Categories();
-    Categories(Categories const &) = delete;
-    Categories(Categories &&) = delete;
-    Categories &operator=(Categories const &) = delete;
-    Categories &operator=(Categories &&) = delete;
-  };
-  
+  RooCategory fitting;
+  RooCategory dataLabel;
+  void DefineCategories(void);
+
   Neutral &neutral() { return neutral_; }
   void SetNeutral(Neutral neut) { neutral() = neut; }
 
-  Categories &categories() { return categories_; }
   RooRealVar &buMass() { return buMass_; }
   RooRealVar &buDeltaMass() { return buDeltaMass_; }
   RooRealVar &deltaMass() { return deltaMass_; }
@@ -108,7 +101,6 @@ class Configuration {
 
   Neutral neutral_;
 
-  Categories categories_;
   RooRealVar buMass_;
   RooRealVar buDeltaMass_;
   RooRealVar deltaMass_;

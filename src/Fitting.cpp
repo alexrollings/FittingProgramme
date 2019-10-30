@@ -57,7 +57,7 @@ void SetStyle() {
 // and delta mass
 void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                   Configuration::Categories &categories, TLegend &legend,
+                   TLegend &legend,
                    TLegend &lumiLegend, std::string const &outputDir,
                    Configuration &config,
                    std::map<std::string, Color_t> colorMap) {
@@ -84,11 +84,11 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                      .c_str()));
   if (config.noFit() == false) {
     simPdf.plotOn(frame.get(),
-                  RooFit::Slice(categories.fitting,
+                  RooFit::Slice(config.fitting,
                                 ComposeFittingName(mass, neutral, bachelor,
                                                    daughters, charge)
                                     .c_str()),
-                  RooFit::ProjWData(categories.fitting, fullDataSet),
+                  RooFit::ProjWData(config.fitting, fullDataSet),
                   RooFit::LineColor(kBlue));
   }
 
@@ -107,10 +107,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0pi_D0gamma"]),
@@ -118,10 +118,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0K_D0gamma"]),
@@ -129,11 +129,11 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::NumCPU(8, 2));
         }
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["Bu2Dst0pi_D0pi0"]),
@@ -141,10 +141,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0K_D0pi0"]),
@@ -152,29 +152,29 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0pi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfBu_PartRec().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["PartRecRho"]),
@@ -184,10 +184,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0K_D0gamma"]),
@@ -195,10 +195,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0pi_D0gamma"]),
@@ -206,11 +206,11 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::NumCPU(8, 2));
         }
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["Bu2Dst0K_D0pi0"]),
@@ -218,10 +218,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0pi_D0pi0"]),
@@ -229,59 +229,59 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecK"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_misId_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0K"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfBu_misId_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0pi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfBu_PartRec().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["PartRecKst"]),
                       RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfBu_misId_PartRec().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["PartRecRho"]),
@@ -294,10 +294,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0pi_D0gamma"]),
@@ -305,10 +305,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(
                   pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
@@ -319,10 +319,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0pi_D0pi0"]),
@@ -330,10 +330,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0K_D0pi0"]),
@@ -341,29 +341,29 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0pi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfDelta_PartRec().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["PartRecRho"]),
@@ -373,10 +373,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
               RooFit::LineColor(colorMap["Bu2Dst0K_D0gamma"]),
@@ -384,10 +384,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
-                  categories.fitting,
+                  config.fitting,
                   ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                       .c_str()),
-              RooFit::ProjWData(categories.fitting, fullDataSet),
+              RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(
                   pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName()),
               RooFit::LineStyle(kDashed),
@@ -398,10 +398,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0K_D0pi0"]),
@@ -409,10 +409,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["Bu2Dst0pi_D0pi0"]),
@@ -420,49 +420,49 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecK"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_misId_MisRec().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["MisRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0K"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_misId_Bu2D0h().GetName()),
             RooFit::LineStyle(kDashed), RooFit::LineColor(colorMap["Bu2D0pi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         simPdf.plotOn(frame.get(),
-                      RooFit::Slice(categories.fitting,
+                      RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
                                                        daughters, charge)
                                         .c_str()),
-                      RooFit::ProjWData(categories.fitting, fullDataSet),
+                      RooFit::ProjWData(config.fitting, fullDataSet),
                       RooFit::Components(pdf.pdfDelta_PartRec().GetName()),
                       RooFit::LineStyle(kDashed),
                       RooFit::LineColor(colorMap["PartRecKst"]),
@@ -470,10 +470,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
-                categories.fitting,
+                config.fitting,
                 ComposeFittingName(mass, neutral, bachelor, daughters, charge)
                     .c_str()),
-            RooFit::ProjWData(categories.fitting, fullDataSet),
+            RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(pdf.pdfDelta_misId_PartRec().GetName()),
             RooFit::LineStyle(kDashed),
             RooFit::LineColor(colorMap["PartRecRho"]), RooFit::Precision(1e-3),
@@ -562,7 +562,6 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
-                Configuration::Categories &categories,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                 std::string const &outputDir, std::string &labelString,
                 RooFitResult *result) {
@@ -805,14 +804,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                categories, legend, lumiLegend, outputDir, config, colorMap);
+                legend, lumiLegend, outputDir, config, colorMap);
   if (config.neutral() == Neutral::gamma) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                  categories, legend, lumiLegend, outputDir, config, colorMap);
+                  legend, lumiLegend, outputDir, config, colorMap);
   }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  categories, legend, lumiLegend, outputDir, config, colorMap);
+                  legend, lumiLegend, outputDir, config, colorMap);
   }
 }
 
@@ -839,12 +838,12 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
 // Function that returns the simultaneous PDF, the class which collects all the
 // individual components. It is that that we do all our fitting with
 std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
-    int const id, Configuration &config, Configuration::Categories &categories,
+    int const id, Configuration &config,
     std::vector<Daughters> const &daughtersVec,
     std::vector<Charge> const &chargeVec) {
   RooSimultaneous *simPdf = new RooSimultaneous(
       ("simPdf_" + std::to_string(id)).c_str(),
-      ("simPdf_" + std::to_string(id)).c_str(), categories.fitting);
+      ("simPdf_" + std::to_string(id)).c_str(), config.fitting);
 
   std::vector<PdfBase *> pdfs;
   // d is a reference to an element od the vector
@@ -1267,13 +1266,13 @@ void MakeMapFittingDataSet(
 
 void Run2DToys(TFile &outputFile,
                std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
-               Configuration &config, Configuration::Categories &categories,
+               Configuration &config,
                std::vector<Daughters> const &daughtersVec,
                std::vector<Charge> const &chargeVec,
                std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running toy #" << id
             << " -------------------------- \n\n";
-  auto p = MakeSimultaneousPdf(id, config, categories, daughtersVec, chargeVec);
+  auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
   auto pdfs = p.second;
 
   std::map<std::string, RooDataSet *> mapDataLabelToy;
@@ -1292,7 +1291,7 @@ void Run2DToys(TFile &outputFile,
   }
 
   RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
-                        RooFit::Index(categories.fitting),
+                        RooFit::Index(config.fitting),
                         RooFit::Import(mapFittingToy));
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -1316,7 +1315,7 @@ void Run2DToys(TFile &outputFile,
   }
 
   RooDataSet dataSet("dataSet", "dataSet", config.fittingArgSet(),
-                     RooFit::Index(categories.fitting),
+                     RooFit::Index(config.fitting),
                      RooFit::Import(mapFittingDataSet));
 
   std::cout << "\n\n\n";
@@ -1333,7 +1332,7 @@ void Run2DToys(TFile &outputFile,
     }
     std::string lumiString = "TOY";
     for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, categories, *toyAbsData, *simPdf, outputDir,
+      Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
                  lumiString, toyFitResult.get());
     }
     if (config.noFit() == false) {
@@ -1353,7 +1352,7 @@ void Run2DToys(TFile &outputFile,
 
 void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
                 std::unique_ptr<RooFitResult> &dataFitResult,
-                Configuration &config, Configuration::Categories &categories,
+                Configuration &config,
                 std::vector<Daughters> const &daughtersVec,
                 std::vector<Charge> const &chargeVec,
                 std::string const &outputDir, int nToys) {
@@ -1369,7 +1368,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
     if (simPdf == nullptr) {
       // id=0, equivalent to what would be the data fit
       int tmpId = 0;
-      auto p = MakeSimultaneousPdf(tmpId, config, categories, daughtersVec,
+      auto p = MakeSimultaneousPdf(tmpId, config, daughtersVec,
                                    chargeVec);
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
@@ -1378,16 +1377,16 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
     TRandom3 random(0);
     double randomTag = random.Rndm();
 
-    double nEvtsPerToy = simPdf->expectedEvents(categories.fitting);
+    double nEvtsPerToy = simPdf->expectedEvents(config.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
     if (config.fit1D() == false) {
       toyDataSet = std::unique_ptr<RooDataSet>(
           simPdf->generate(RooArgSet(config.buDeltaMass(), config.deltaMass(),
-                                     categories.fitting),
+                                     config.fitting),
                            nEvtsPerToy));
     } else {
       toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
-          RooArgSet(config.buDeltaMass(), categories.fitting), nEvtsPerToy));
+          RooArgSet(config.buDeltaMass(), config.fitting), nEvtsPerToy));
     }
     toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
     auto toyDataHist = std::unique_ptr<RooDataHist>(
@@ -1397,10 +1396,10 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
 
     auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdfFit_" + std::to_string(id)).c_str(),
-        ("simPdfFit_" + std::to_string(id)).c_str(), categories.fitting));
+        ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
 
     auto p =
-        MakeSimultaneousPdf(id, config, categories, daughtersVec, chargeVec);
+        MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
     simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
 
     std::shared_ptr<RooFitResult> toyFitResult;
@@ -1416,7 +1415,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
       std::string lumiString = "TOY";
       auto pdfs = p.second;
       for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, categories, *toyAbsData, *simPdfToFit,
+        Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit,
                    outputDir, lumiString, toyFitResult.get());
       }
       if (config.noFit() == false) {
@@ -1677,8 +1676,6 @@ int main(int argc, char **argv) {
     config.splitByCharge() = true;
   }
 
-  Configuration::Categories &categories = Configuration::Get().categories();
-
   // Raise lower mass boundary in delta mass for pi0 plots
   if (config.neutral() == Neutral::pi0) {
     config.deltaMass().setMin(136);
@@ -1832,7 +1829,7 @@ int main(int argc, char **argv) {
                 .c_str(),
             "recreate");
         // Pass random??
-        Run2DToys(toyResultFile, mapDataLabelDataSet, config, categories,
+        Run2DToys(toyResultFile, mapDataLabelDataSet, config,
                   daughtersVec, chargeVec, outputDir, id);
         toyFileNames[id - 1] = toyResultFile.GetName();
         toyResultFile.Close();
@@ -1841,7 +1838,7 @@ int main(int argc, char **argv) {
     // id = 0 for data fit
     int id = 0;
     auto p =
-        MakeSimultaneousPdf(id, config, categories, daughtersVec, chargeVec);
+        MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
     // Apply box cuts and split PDF into mass categories too
@@ -1851,7 +1848,7 @@ int main(int argc, char **argv) {
     }
 
     RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
-                           RooFit::Index(categories.fitting),
+                           RooFit::Index(config.fitting),
                            RooFit::Import(mapFittingDataSet));
 
     std::cout << "\n\n\n";
@@ -1885,7 +1882,7 @@ int main(int argc, char **argv) {
                                lumiErrStream.str() + " fb^{-1}";
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, categories, fullDataSet, *simPdf, outputDir,
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
                    lumiString, dataFitResult.get());
       }
 
@@ -1975,7 +1972,7 @@ int main(int argc, char **argv) {
     }
   } else {
     std::cout << "Fitting using D1D method\n";
-    RunD1DToys(simPdf, dataFitResult, config, categories, daughtersVec,
+    RunD1DToys(simPdf, dataFitResult, config, daughtersVec,
                chargeVec, outputDir, nToys);
   }
   return 0;
