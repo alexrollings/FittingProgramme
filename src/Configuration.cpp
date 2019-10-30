@@ -167,6 +167,315 @@ Configuration::Configuration()
   fittingArgSet_.add(deltaMass_);
 }
 
+// Function returns delta mass string if 1D fit, full box dimns if D1D fit
+std::string Configuration::ReturnBoxString() {
+  std::ostringstream out;
+  switch (neutral()) {
+    case Neutral::pi0:
+      if (fit1D_ == true) {
+        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
+      } else {
+        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
+            << buDeltaLow_ << "_" << buDeltaHigh_;
+      }
+      break;
+    case Neutral::gamma:
+      if (fit1D_ == true) {
+        out << std::setprecision(4) << deltaPartialLow_ << "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
+      } else {
+        out << std::setprecision(4) << deltaPartialLow_ << "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ <<
+            "_"
+            << buDeltaLow_ << "_" << buDeltaHigh_;
+      }
+      break;
+  }
+  return out.str();
+}
+
+// Need a template for this as each enum option is a different 'type'
+template <>
+Polarity StringToEnum<Polarity>(std::string const &polarity) {
+  if (polarity == "up") {
+    return Polarity::up;
+  } else if (polarity == "down") {
+    return Polarity::down;
+    // } else if (polarity == "both") {
+    //   return Polarity::both;
+  }
+  throw std::invalid_argument("Polarity must take a value in [up/down]");
+}
+
+std::string EnumToString(Polarity polarity) {
+  switch (polarity) {
+    case Polarity::up:
+      return "up";
+    case Polarity::down:
+      return "down";
+      // case Polarity::both:
+      // default:
+      //   return "both";
+  }
+}
+
+template <>
+Daughters StringToEnum<Daughters>(std::string const &daughters) {
+  if (daughters == "kpi") {
+    return Daughters::kpi;
+  } else if (daughters == "kk") {
+    return Daughters::kk;
+  } else if (daughters == "pipi") {
+    return Daughters::pipi;
+  } else if (daughters == "pik") {
+    return Daughters::pik;
+  }
+  throw std::invalid_argument(
+      "Daughters must take a value in [kpi/kk/pipi/pik]");
+}
+
+std::string EnumToString(Daughters daughters) {
+  switch (daughters) {
+    case Daughters::kpi:
+      return "kpi";
+    case Daughters::kk:
+      return "kk";
+    case Daughters::pipi:
+      return "pipi";
+    case Daughters::pik:
+      // default:
+      return "pik";
+  }
+}
+
+template <>
+Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
+  if (bachelor == "pi") {
+    return Bachelor::pi;
+  } else if (bachelor == "k") {
+    return Bachelor::k;
+  }
+  throw std::invalid_argument("Bachelor must take a value in [pi/k]");
+}
+
+std::string EnumToString(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "pi";
+    case Bachelor::k:
+      // default:
+      return "k";
+  }
+}
+
+template <>
+Year StringToEnum<Year>(std::string const &year) {
+  if (year == "2011") {
+    return Year::y2011;
+  } else if (year == "2012") {
+    return Year::y2012;
+  } else if (year == "2015") {
+    return Year::y2015;
+  } else if (year == "2016") {
+    return Year::y2016;
+  } else if (year == "2017") {
+    return Year::y2017;
+  } else if (year == "2018") {
+    return Year::y2018;
+  }
+  throw std::invalid_argument(
+      "Year must take a value in [2011/2012/2015/2016/2017/2018]");
+}
+
+std::string EnumToString(Year year) {
+  switch (year) {
+    case Year::y2011:
+      return "2011";
+    case Year::y2012:
+      return "2012";
+    case Year::y2015:
+      return "2015";
+    case Year::y2016:
+      return "2016";
+    case Year::y2017:
+      return "2017";
+    case Year::y2018:
+      return "2018";
+  }
+}
+
+template <>
+Neutral StringToEnum<Neutral>(std::string const &neutral) {
+  if (neutral == "pi0") {
+    return Neutral::pi0;
+  } else if (neutral == "gamma") {
+    return Neutral::gamma;
+  }
+  throw std::invalid_argument("Neutral must take a value in [pi0/gamma]");
+}
+
+std::string EnumToString(Neutral neutral) {
+  switch (neutral) {
+    case Neutral::pi0:
+      return "pi0";
+    case Neutral::gamma:
+      // default:
+      return "gamma";
+  }
+}
+
+template <>
+Charge StringToEnum<Charge>(std::string const &charge) {
+  if (charge == "plus") {
+    return Charge::plus;
+  } else if (charge == "minus") {
+    return Charge::minus;
+  } else if (charge == "total") {
+    return Charge::total;
+  } else {
+    throw std::invalid_argument("Charge must take a value in [plus/minus]");
+  }
+}
+
+std::string EnumToString(Charge charge) {
+  switch (charge) {
+    case Charge::plus:
+      return "plus";
+    case Charge::minus:
+      return "minus";
+    case Charge::total:
+      return "total";
+  }
+
+}
+
+std::string EnumToString(Mass mass) {
+  switch (mass) {
+    case Mass::buDelta:
+      return "buDelta";
+    case Mass::buDeltaPartial:
+      return "buDeltaPartial";
+    case Mass::delta:
+      return "delta";
+  }
+}
+
+std::string EnumToString(Mode mode) {
+  switch (mode) {
+    case Mode::Bd2Dstpi:
+      return "Bd2Dstpi";
+      break;
+    case Mode::Bu2D0pi:
+      return "Bu2D0pi";
+      break;
+    case Mode::Bu2D0rho:
+      return "Bu2D0rho";
+      break;
+    case Mode::Bu2Dst0rho_D0gamma:
+      return "Bu2Dst0rho_D0gamma";
+      break;
+    case Mode::Bu2Dst0rho_D0pi0:
+      return "Bu2Dst0rho_D0pi0";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma:
+      return "Bu2Dst0pi_D0gamma";
+      break;
+    case Mode::Bu2Dst0K_D0gamma:
+      return "Bu2Dst0K_D0gamma";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma_WN:
+      return "Bu2Dst0pi_D0gamma_WN";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0:
+      return "Bu2Dst0pi_D0pi0";
+      break;
+    case Mode::Bu2Dst0K_D0pi0:
+      return "Bu2Dst0K_D0pi0";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0_WN:
+      return "Bu2Dst0pi_D0pi0_WN";
+      break;
+  }
+}
+
+std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
+                            Neutral neutral, Daughters daughters,
+                            Charge charge) {
+  return EnumToString(year) + "_" + EnumToString(polarity) + "_" +
+         EnumToString(bachelor) + "_" + EnumToString(neutral) + "_" +
+         EnumToString(daughters) + "_" + EnumToString(charge);
+}
+
+std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor,
+                               Daughters daughters, Charge charge) {
+  return EnumToString(mass) + "_" + EnumToString(neutral) + "_" +
+         EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
+         EnumToString(charge);
+}
+
+std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor,
+                                 Daughters daughters, Charge charge) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters) + "_" + EnumToString(charge);
+}
+
+std::string EnumToLabel(Charge charge) {
+  switch (charge) {
+    case Charge::minus:
+      return "-";
+    case Charge::plus:
+      return "+";
+    case Charge::total:
+      return "#pm";
+  }
+}
+
+std::string EnumToLabel(Daughters daughters, Charge charge) {
+  switch (daughters) {
+    case Daughters::kpi:
+      switch (charge) {
+        case Charge::minus:
+          return "K^{-}#pi^{+}";
+        case Charge::plus:
+          return "K^{+}#pi^{-}";
+        case Charge::total:
+          return "K^{#pm}#pi^{#mp}";
+      }
+    case Daughters::kk:
+      return "K^{+}K^{-}";
+    case Daughters::pipi:
+      return "#pi^{+}#pi^{-}";
+    case Daughters::pik:
+      switch (charge) {
+        case Charge::minus:
+          return "#pi^{-}K^{+}";
+        case Charge::plus:
+          return "#pi^{+}K^{-}";
+        case Charge::total:
+          return "#pi^{#pm}K^{#mp}";
+      }
+  }
+}
+
+std::string EnumToLabel(Bachelor bachelor) {
+  switch (bachelor) {
+    case Bachelor::pi:
+      return "#pi";
+    case Bachelor::k:
+      return "K";
+  }
+}
+
+std::string EnumToLabel(Neutral neutral) {
+  switch (neutral) {
+    case Neutral::pi0:
+      return "#pi^{0}";
+    case Neutral::gamma:
+      return "#gamma";
+  }
+}
+
+
 void Configuration::DefineCategories() {
   switch (neutral()) {
     case Neutral::pi0:
@@ -815,313 +1124,5 @@ void Configuration::DefineCategories() {
                                  .c_str());
       }
       break;
-  }
-}
-
-// Function returns delta mass string if 1D fit, full box dimns if D1D fit
-std::string Configuration::ReturnBoxString() {
-  std::ostringstream out;
-  switch (neutral()) {
-    case Neutral::pi0:
-      if (fit1D_ == true) {
-        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
-      } else {
-        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
-            << buDeltaLow_ << "_" << buDeltaHigh_;
-      }
-      break;
-    case Neutral::gamma:
-      if (fit1D_ == true) {
-        out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
-      } else {
-        out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ <<
-            "_"
-            << buDeltaLow_ << "_" << buDeltaHigh_;
-      }
-      break;
-  }
-  return out.str();
-}
-
-// Need a template for this as each enum option is a different 'type'
-template <>
-Polarity StringToEnum<Polarity>(std::string const &polarity) {
-  if (polarity == "up") {
-    return Polarity::up;
-  } else if (polarity == "down") {
-    return Polarity::down;
-    // } else if (polarity == "both") {
-    //   return Polarity::both;
-  }
-  throw std::invalid_argument("Polarity must take a value in [up/down]");
-}
-
-std::string EnumToString(Polarity polarity) {
-  switch (polarity) {
-    case Polarity::up:
-      return "up";
-    case Polarity::down:
-      return "down";
-      // case Polarity::both:
-      // default:
-      //   return "both";
-  }
-}
-
-template <>
-Daughters StringToEnum<Daughters>(std::string const &daughters) {
-  if (daughters == "kpi") {
-    return Daughters::kpi;
-  } else if (daughters == "kk") {
-    return Daughters::kk;
-  } else if (daughters == "pipi") {
-    return Daughters::pipi;
-  } else if (daughters == "pik") {
-    return Daughters::pik;
-  }
-  throw std::invalid_argument(
-      "Daughters must take a value in [kpi/kk/pipi/pik]");
-}
-
-std::string EnumToString(Daughters daughters) {
-  switch (daughters) {
-    case Daughters::kpi:
-      return "kpi";
-    case Daughters::kk:
-      return "kk";
-    case Daughters::pipi:
-      return "pipi";
-    case Daughters::pik:
-      // default:
-      return "pik";
-  }
-}
-
-template <>
-Bachelor StringToEnum<Bachelor>(std::string const &bachelor) {
-  if (bachelor == "pi") {
-    return Bachelor::pi;
-  } else if (bachelor == "k") {
-    return Bachelor::k;
-  }
-  throw std::invalid_argument("Bachelor must take a value in [pi/k]");
-}
-
-std::string EnumToString(Bachelor bachelor) {
-  switch (bachelor) {
-    case Bachelor::pi:
-      return "pi";
-    case Bachelor::k:
-      // default:
-      return "k";
-  }
-}
-
-template <>
-Year StringToEnum<Year>(std::string const &year) {
-  if (year == "2011") {
-    return Year::y2011;
-  } else if (year == "2012") {
-    return Year::y2012;
-  } else if (year == "2015") {
-    return Year::y2015;
-  } else if (year == "2016") {
-    return Year::y2016;
-  } else if (year == "2017") {
-    return Year::y2017;
-  } else if (year == "2018") {
-    return Year::y2018;
-  }
-  throw std::invalid_argument(
-      "Year must take a value in [2011/2012/2015/2016/2017/2018]");
-}
-
-std::string EnumToString(Year year) {
-  switch (year) {
-    case Year::y2011:
-      return "2011";
-    case Year::y2012:
-      return "2012";
-    case Year::y2015:
-      return "2015";
-    case Year::y2016:
-      return "2016";
-    case Year::y2017:
-      return "2017";
-    case Year::y2018:
-      return "2018";
-  }
-}
-
-template <>
-Neutral StringToEnum<Neutral>(std::string const &neutral) {
-  if (neutral == "pi0") {
-    return Neutral::pi0;
-  } else if (neutral == "gamma") {
-    return Neutral::gamma;
-  }
-  throw std::invalid_argument("Neutral must take a value in [pi0/gamma]");
-}
-
-std::string EnumToString(Neutral neutral) {
-  switch (neutral) {
-    case Neutral::pi0:
-      return "pi0";
-    case Neutral::gamma:
-      // default:
-      return "gamma";
-  }
-}
-
-template <>
-Charge StringToEnum<Charge>(std::string const &charge) {
-  if (charge == "plus") {
-    return Charge::plus;
-  } else if (charge == "minus") {
-    return Charge::minus;
-  } else if (charge == "total") {
-    return Charge::total;
-  } else {
-    throw std::invalid_argument("Charge must take a value in [plus/minus]");
-  }
-}
-
-std::string EnumToString(Charge charge) {
-  switch (charge) {
-    case Charge::plus:
-      return "plus";
-    case Charge::minus:
-      return "minus";
-    case Charge::total:
-      return "total";
-  }
-
-}
-
-std::string EnumToString(Mass mass) {
-  switch (mass) {
-    case Mass::buDelta:
-      return "buDelta";
-    case Mass::buDeltaPartial:
-      return "buDeltaPartial";
-    case Mass::delta:
-      return "delta";
-  }
-}
-
-std::string EnumToString(Mode mode) {
-  switch (mode) {
-    case Mode::Bd2Dstpi:
-      return "Bd2Dstpi";
-      break;
-    case Mode::Bu2D0pi:
-      return "Bu2D0pi";
-      break;
-    case Mode::Bu2D0rho:
-      return "Bu2D0rho";
-      break;
-    case Mode::Bu2Dst0rho_D0gamma:
-      return "Bu2Dst0rho_D0gamma";
-      break;
-    case Mode::Bu2Dst0rho_D0pi0:
-      return "Bu2Dst0rho_D0pi0";
-      break;
-    case Mode::Bu2Dst0pi_D0gamma:
-      return "Bu2Dst0pi_D0gamma";
-      break;
-    case Mode::Bu2Dst0K_D0gamma:
-      return "Bu2Dst0K_D0gamma";
-      break;
-    case Mode::Bu2Dst0pi_D0gamma_WN:
-      return "Bu2Dst0pi_D0gamma_WN";
-      break;
-    case Mode::Bu2Dst0pi_D0pi0:
-      return "Bu2Dst0pi_D0pi0";
-      break;
-    case Mode::Bu2Dst0K_D0pi0:
-      return "Bu2Dst0K_D0pi0";
-      break;
-    case Mode::Bu2Dst0pi_D0pi0_WN:
-      return "Bu2Dst0pi_D0pi0_WN";
-      break;
-  }
-}
-
-std::string ComposeFilename(Year year, Polarity polarity, Bachelor bachelor,
-                            Neutral neutral, Daughters daughters,
-                            Charge charge) {
-  return EnumToString(year) + "_" + EnumToString(polarity) + "_" +
-         EnumToString(bachelor) + "_" + EnumToString(neutral) + "_" +
-         EnumToString(daughters) + "_" + EnumToString(charge);
-}
-
-std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor,
-                               Daughters daughters, Charge charge) {
-  return EnumToString(mass) + "_" + EnumToString(neutral) + "_" +
-         EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
-         EnumToString(charge);
-}
-
-std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor,
-                                 Daughters daughters, Charge charge) {
-  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
-         EnumToString(daughters) + "_" + EnumToString(charge);
-}
-
-std::string EnumToLabel(Charge charge) {
-  switch (charge) {
-    case Charge::minus:
-      return "-";
-    case Charge::plus:
-      return "+";
-    case Charge::total:
-      return "#pm";
-  }
-}
-
-std::string EnumToLabel(Daughters daughters, Charge charge) {
-  switch (daughters) {
-    case Daughters::kpi:
-      switch (charge) {
-        case Charge::minus:
-          return "K^{-}#pi^{+}";
-        case Charge::plus:
-          return "K^{+}#pi^{-}";
-        case Charge::total:
-          return "K^{#pm}#pi^{#mp}";
-      }
-    case Daughters::kk:
-      return "K^{+}K^{-}";
-    case Daughters::pipi:
-      return "#pi^{+}#pi^{-}";
-    case Daughters::pik:
-      switch (charge) {
-        case Charge::minus:
-          return "#pi^{-}K^{+}";
-        case Charge::plus:
-          return "#pi^{+}K^{-}";
-        case Charge::total:
-          return "#pi^{#pm}K^{#mp}";
-      }
-  }
-}
-
-std::string EnumToLabel(Bachelor bachelor) {
-  switch (bachelor) {
-    case Bachelor::pi:
-      return "#pi";
-    case Bachelor::k:
-      return "K";
-  }
-}
-
-std::string EnumToLabel(Neutral neutral) {
-  switch (neutral) {
-    case Neutral::pi0:
-      return "#pi^{0}";
-    case Neutral::gamma:
-      return "#gamma";
   }
 }
