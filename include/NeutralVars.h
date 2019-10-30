@@ -287,6 +287,13 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_D0pi0_n1Bu_;
   RooRealVar Bu2Dst0h_D0pi0_n2Bu_;
   RooRealVar Bu2Dst0h_D0pi0_fracPdf1Bu_;
+  RooRealVar Bu2Dst0h_D0pi0_meanBuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_KpiSigmaBuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_a1BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_a2BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_n1BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_n2BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
   RooRealVar orEffBu2Dst0h_D0pi0_;
   RooRealVar boxEffBu2Dst0h_D0pi0_;
   RooRealVar buDeltaCutEffBu2Dst0h_D0pi0_;

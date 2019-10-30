@@ -93,9 +93,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_D0pi0_fracPdf1Bu_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", 2.0967e-01),
-      Bu2Dst0h_D0gamma_meanBuPartial_(),
-      Bu2Dst0h_D0gamma_aBuPartial_(),
-      Bu2Dst0h_D0gamma_nBuPartial_(),
+      Bu2Dst0h_D0pi0_meanBuPartial_(),
+      Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(),
+      Bu2Dst0h_D0pi0_a1BuPartial_(),
+      Bu2Dst0h_D0pi0_a2BuPartial_(),
+      Bu2Dst0h_D0pi0_n1BuPartial_(),
+      Bu2Dst0h_D0pi0_n2BuPartial_(),
+      Bu2Dst0h_D0pi0_fracPdf1BuPartial_(),
       orEffBu2Dst0h_D0pi0_(
           ("orEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
@@ -172,6 +176,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n1Bu_(),
       Bu2Dst0h_D0gamma_n2Bu_(),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(),
+      Bu2Dst0h_D0gamma_meanBuPartial_(),
+      Bu2Dst0h_D0gamma_aBuPartial_(),
+      Bu2Dst0h_D0gamma_nBuPartial_(),
       orEffBu2Dst0h_D0gamma_(
           ("orEffBu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
