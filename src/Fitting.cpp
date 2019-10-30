@@ -1683,6 +1683,9 @@ int main(int argc, char **argv) {
     config.initYieldFAVSignal() = 1.3346e+04;
   }
 
+  // Define categories AFTER neutral and SplitByCharge have been set in Configuration
+  config.DefineCategories();
+
   // Declare simPDF and result before any if statements so that it can be passed
   // to RunD1DToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
