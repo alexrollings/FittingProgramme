@@ -67,11 +67,10 @@ int main(int argc, char *argv[]) {
 
     std::string neutralArg;
     if (!args("neutral", neutralArg)) {
-      std::cerr << "Specity value -neutral=[pi0/gamma]\n";
-      return 1;
+      std::cerr << "Using default value -neutral=[" << neutralArg << "]\n";
     }
     try {
-      neutral = StringToEnum<Neutral>(neutralArg);
+      config.SetNeutral(StringToEnum<Neutral>(neutralArg));
     } catch (std::invalid_argument) {
       std::cerr << "neutral assignment failed, please specify: "
                    "-neutral=[pi0/gamma].\n";
@@ -85,15 +84,15 @@ int main(int argc, char *argv[]) {
 
     std::string toyInitArg;
     if (!args("toyInit", toyInitArg)) {
-      std::cerr << "Specify toy starting values (-initToy=<mc/data>).\n";
+      std::cerr << "Specify toy starting values (-initToy=<model/data>).\n";
       return 1;
     } else {
-      if (toyInitArg == "mc") {
+      if (toyInitArg == "model") {
         dataToy = false;
       } else if (toyInitArg == "data") {
         dataToy = true;
       } else {
-        std::cerr << "-initToy=<mc/data>\n";
+        std::cerr << "-initToy=<model/data>\n";
         return 1;
       }
     }
@@ -122,18 +121,36 @@ int main(int argc, char *argv[]) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp1D(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
     if (config.fit1D() == false) {
-      std::regex fileRexp(
-          ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
-      std::smatch fileMatch;
-      if (std::regex_search(filename, fileMatch, fileRexp)) {
-        config.SetDeltaLow(std::stod(fileMatch[1]));
-        config.SetDeltaHigh(std::stod(fileMatch[2]));
-        config.SetBuDeltaLow(std::stod(fileMatch[3]));
-        config.SetBuDeltaHigh(std::stod(fileMatch[4]));
-        rndm = fileMatch[5];
+      if (config.neutral() == Neutral::pi0) {
+        std::regex fileRexp(
+            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+        std::smatch fileMatch;
+        if (std::regex_search(filename, fileMatch, fileRexp)) {
+          config.SetDeltaLow(std::stod(fileMatch[1]));
+          config.SetDeltaHigh(std::stod(fileMatch[2]));
+          config.SetBuDeltaLow(std::stod(fileMatch[3]));
+          config.SetBuDeltaHigh(std::stod(fileMatch[4]));
+          rndm = fileMatch[5];
+        } else {
+          throw std::runtime_error(
+              "Could not find pi0 filename with correct regex pattern");
+        }
       } else {
-        throw std::runtime_error(
-            "Could not find filename with correct regex pattern");
+        std::regex fileRexp(
+            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+        std::smatch fileMatch;
+        if (std::regex_search(filename, fileMatch, fileRexp)) {
+          config.SetDeltaPartialLow(std::stod(fileMatch[1]));
+          config.SetDeltaPartialHigh(std::stod(fileMatch[2]));
+          config.SetDeltaLow(std::stod(fileMatch[3]));
+          config.SetDeltaHigh(std::stod(fileMatch[4]));
+          config.SetBuDeltaLow(std::stod(fileMatch[5]));
+          config.SetBuDeltaHigh(std::stod(fileMatch[6]));
+          rndm = fileMatch[7];
+        } else {
+          throw std::runtime_error(
+              "Could not find gamma filename with correct regex pattern");
+        }
       }
     } else {
       std::regex fileRexp(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
@@ -147,8 +164,8 @@ int main(int argc, char *argv[]) {
             "Could not find filename with correct regex pattern");
       }
     }
-    auto result = std::unique_ptr<RooFitResult>(dynamic_cast<RooFitResult *>(
-        file->FindObjectAny("ToyResult")));
+    auto result = std::unique_ptr<RooFitResult>(
+        dynamic_cast<RooFitResult *>(file->FindObjectAny("ToyResult")));
     if (result == nullptr) {
       throw std::runtime_error("Could not extract Result from " + filename);
     } else {
@@ -220,7 +237,8 @@ int main(int argc, char *argv[]) {
     } else if (fitStatus != 0) {
       nMINOS++;
     } else {
-      RooArgList initialPars = ReturnInitPars(dataToy, dataResultVec, resultVec, j);
+      RooArgList initialPars =
+          ReturnInitPars(dataToy, dataResultVec, resultVec, j);
       RooArgList finalPars = resultVec[j].floatParsFinal();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
@@ -284,6 +302,8 @@ int main(int argc, char *argv[]) {
     RooRealVar boxEffSignalRRV("boxEffSignalRRV", "", 1);
     RooRealVar buDeltaCutEffSignalRRV("buDeltaCutEffSignalRRV", "", 1);
     RooRealVar deltaCutEffSignalRRV("deltaCutEffSignalRRV", "", 1);
+    RooRealVar deltaPartialCutEffSignalRRV("deltaPartialCutEffSignalRRV", "",
+                                           1);
 
     // Create temporary NVars object in order to set efficiencies
     int id = 0;
@@ -291,12 +311,14 @@ int main(int argc, char *argv[]) {
       NeutralVars<Neutral::gamma> neutralVars(id);
       neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
                                   boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV);
+                                  deltaCutEffSignalRRV,
+                                  deltaPartialCutEffSignalRRV);
     } else {
       NeutralVars<Neutral::pi0> neutralVars(id);
       neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
                                   boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV);
+                                  deltaCutEffSignalRRV,
+                                  deltaPartialCutEffSignalRRV);
     }
 
     orEffSignal = orEffSignalRRV.getVal();
@@ -511,8 +533,7 @@ int main(int argc, char *argv[]) {
             << "# Unconverged: " << nUnConv << "\n"
             << "Forced positive definite: " << nFPD / resultVec.size() * 100
             << " %\n"
-            << "# Forced positive definite: " << nFPD 
-            << "\n"
+            << "# Forced positive definite: " << nFPD << "\n"
             << "MINOS problems: " << nMINOS / resultVec.size() * 100 << " %\n"
             << "# MINOS problems: " << nMINOS << "\n";
 

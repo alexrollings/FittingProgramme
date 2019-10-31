@@ -185,8 +185,7 @@ std::string Configuration::ReturnBoxString() {
             << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
       } else {
         out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ <<
-            "_"
+            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
             << buDeltaLow_ << "_" << buDeltaHigh_;
       }
       break;
