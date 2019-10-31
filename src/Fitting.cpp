@@ -1519,6 +1519,8 @@ int main(int argc, char **argv) {
     int toysArg = 0;
     float deltaLowArg = 0.0;
     float deltaHighArg = 0.0;
+    float deltaPartialLowArg = 0.0;
+    float deltaPartialHighArg = 0.0;
     float buDeltaLowArg = 0.0;
     float buDeltaHighArg = 0.0;
 
@@ -1533,8 +1535,9 @@ int main(int argc, char **argv) {
                 << "-inputDir=<RooDataSets directory name> if fitting to data "
                    "or toy generated from data \n"
                 << "-outputDir=<output directory> \n";
-      std::cout << "Give box dimensions:\n"
-                << "    -dl=#, -dh=#, -bl=#, -bh=#\n";
+      std::cout
+          << "Give box dimensions:\n"
+          << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma mode)\n";
       std::cout << "Followed by the possible options:\n";
       std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -noFit, default is to fit PDF to data\n";
@@ -1597,6 +1600,24 @@ int main(int argc, char **argv) {
         config.SetDeltaHigh(deltaHighArg);
         std::cout << "Set value for upper delta mass box threshold: " +
                          std::to_string(config.deltaHigh()) + "\n";
+      }
+      if (!args("dpl", deltaPartialLowArg)) {
+        std::cout << "Using default value for lower deltaPartial mass box "
+                     "threshold: " +
+                         std::to_string(config.deltaPartialLow()) + "\n";
+      } else {
+        config.SetDeltaPartialLow(deltaPartialLowArg);
+        std::cout << "Set value for lower deltaPartial mass box threshold: " +
+                         std::to_string(config.deltaPartialLow()) + "\n";
+      }
+      if (!args("dph", deltaPartialHighArg)) {
+        std::cout << "Using default value for upper deltaPartial mass box "
+                     "threshold: " +
+                         std::to_string(config.deltaPartialHigh()) + "\n";
+      } else {
+        config.SetDeltaPartialHigh(deltaPartialHighArg);
+        std::cout << "Set value for upper deltaPartial mass box threshold: " +
+                         std::to_string(config.deltaPartialHigh()) + "\n";
       }
 
       if (!args("toys", toysArg)) {

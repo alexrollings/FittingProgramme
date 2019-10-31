@@ -76,8 +76,8 @@ class Configuration {
   void SetBuDeltaHigh(float val) { buDeltaHigh() = val; }
   void SetDeltaLow(float val) { deltaLow() = val; }
   void SetDeltaHigh(float val) { deltaHigh() = val; }
-  void SetDeltaPartialLow(float val) { deltaLow() = val; }
-  void SetDeltaPartialHigh(float val) { deltaHigh() = val; }
+  void SetDeltaPartialLow(float val) { deltaPartialLow() = val; }
+  void SetDeltaPartialHigh(float val) { deltaPartialHigh() = val; }
 
   // Have to declare this in Config as gamma depends on pi0 and pi0 depends on
   // gamma in different neutral cases: always need to delcare signal yield first
