@@ -442,6 +442,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
                           "", 3.0263e-01),
+      partRec_meanBuPartial_(("partRec_meanBuPartial_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 5.1659e+03),
+      partRec_aLBuPartial_(("partRec_aLBuPartial_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 4.5521e-02),
+      partRec_aRBuPartial_(("partRec_aRBuPartial_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 1.4654e-01),
       orEffPartRec_(
           ("orEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),

@@ -352,6 +352,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       partRec_D0gamma_meanBu_(),
       partRec_D0gamma_aLBu_(),
       partRec_D0gamma_aRBu_(),
+      partRec_meanBuPartial_(),
+      partRec_aLBuPartial_(),
+      partRec_aRBuPartial_(),
       orEffPartRec_(
           ("orEffPartRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),

@@ -253,6 +253,9 @@ class NeutralVars {
   RooRealVar &partRec_D0gamma_aLBu() { return partRec_D0gamma_aLBu_; }
   RooRealVar &partRec_D0gamma_aRBu() { return partRec_D0gamma_aRBu_; }
   RooRealVar &partRec_frac_D0pi0() { return partRec_frac_D0pi0_; }
+  RooRealVar &partRec_meanBuPartial() { return partRec_meanBuPartial_; }
+  RooRealVar &partRec_aLBuPartial() { return partRec_aLBuPartial_; }
+  RooRealVar &partRec_aRBuPartial() { return partRec_aRBuPartial_; }
   RooRealVar &orEffPartRec() { return orEffPartRec_; }
   RooRealVar &boxEffPartRec() { return boxEffPartRec_; }
   RooRealVar &buDeltaCutEffPartRec() { return buDeltaCutEffPartRec_; }
@@ -400,6 +403,9 @@ class NeutralVars {
   RooRealVar partRec_D0gamma_aLBu_;
   RooRealVar partRec_D0gamma_aRBu_;
   RooRealVar partRec_frac_D0pi0_;
+  RooRealVar partRec_meanBuPartial_;
+  RooRealVar partRec_aLBuPartial_;
+  RooRealVar partRec_aRBuPartial_;
   RooRealVar orEffPartRec_;
   RooRealVar boxEffPartRec_;
   RooRealVar buDeltaCutEffPartRec_;
