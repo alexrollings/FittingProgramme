@@ -326,6 +326,25 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     MisRec_sigmaLBu_, MisRec_sigmaRBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
+      MisRec_sigmaLBuPartial_(("MisRec_sigmaLBuPartial_" +
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", 8.6958e+01),  //, 50, 150),
+      MisRec_sigmaRBuPartial_(("MisRec_sigmaRBuPartial_" +
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", 6.1290e+01),  //, 50, 150),
+      pdfBuPartial_MisRec_(
+          ("pdfBuPartial_MisRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBuPartial(),
+          MisRec_sigmaLBuPartial_, MisRec_sigmaRBuPartial_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBuPartial(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBuPartial()),
       N_tot_initVal_MisRec_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal() *

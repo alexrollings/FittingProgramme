@@ -222,6 +222,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                     MisRec_sigmaLBu_, MisRec_sigmaRBu_,
                     NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aLBu(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aRBu()),
+      MisRec_sigmaLBuPartial_(),
+      MisRec_sigmaRBuPartial_(),
+      pdfBuPartial_MisRec_(),
       N_tot_initVal_MisRec_(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .initYieldFAVMisRec() *
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)

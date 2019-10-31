@@ -159,6 +159,9 @@ class NeutralBachelorVars {
   RooRealVar &MisRec_sigmaLBu() { return MisRec_sigmaLBu_; }
   RooRealVar &MisRec_sigmaRBu() { return MisRec_sigmaRBu_; }
   RooCruijff &pdfBu_MisRec() { return pdfBu_MisRec_; }
+  RooRealVar &MisRec_sigmaLBuPartial() { return MisRec_sigmaLBuPartial_; }
+  RooRealVar &MisRec_sigmaRBuPartial() { return MisRec_sigmaRBuPartial_; }
+  RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
   double &pidEff_Bu2Dst0h_D0gamma_WN() { return pidEff_Bu2Dst0h_D0gamma_WN_; }
   double &pidEff_Bu2Dst0h_D0pi0_WN() { return pidEff_Bu2Dst0h_D0pi0_WN_; }
   double &pidEff_Bu2D0hst() { return pidEff_Bu2D0hst_; }
@@ -352,6 +355,9 @@ class NeutralBachelorVars {
   RooRealVar MisRec_sigmaLBu_;
   RooRealVar MisRec_sigmaRBu_;
   RooCruijff pdfBu_MisRec_;
+  RooRealVar MisRec_sigmaLBuPartial_;
+  RooRealVar MisRec_sigmaRBuPartial_;
+  RooCruijff pdfBuPartial_MisRec_;
   double pidEff_Bu2Dst0h_D0gamma_WN_;
   double pidEff_Bu2Dst0h_D0pi0_WN_;
   double pidEff_Bu2D0hst_;
