@@ -430,6 +430,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           partRec_D0pi0_sigmaLBu_, partRec_D0pi0_sigmaRBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aRBu())),
+      partRec_sigmaLBuPartial_(),
+      partRec_sigmaRBuPartial_(),
+      pdfBuPartial_PartRec_(),
       N_tot_initVal_PartRec_(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .initYieldFAVPartRec() *
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)

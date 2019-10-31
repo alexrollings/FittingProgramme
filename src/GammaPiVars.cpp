@@ -432,6 +432,25 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_PartRec_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVPartRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffPartRec().getVal()),
+      partRec_sigmaLBuPartial_(("partRec_sigmaLBuPartial_" +
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::pi))
+                                  .c_str(),
+                              "", 5.0477e+01),
+      partRec_sigmaRBuPartial_(("partRec_sigmaRBuPartial_" +
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::pi))
+                                  .c_str(),
+                              "", 3.3665e+01),
+      pdfBuPartial_PartRec_(
+          ("pdfBuPartial_PartRec_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_meanBuPartial(),
+          partRec_sigmaLBuPartial_, partRec_sigmaRBuPartial_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_aLBuPartial(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_aRBuPartial()),
       pidEff_Bu2Dst0hst_D0pi0_(0.999413),
       pidEff_Bu2Dst0hst_D0gamma_(0.998193),
       pidEff_PartRec_(
