@@ -869,6 +869,12 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                 Charge::total>::Get(id)
                 .CreateBuAddPdf();
+            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                Charge::total>::Get(id)
+                .CreateBuPartialAddPdf();
+            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                Charge::total>::Get(id)
+                .CreateBuPartialAddPdf();
             if (Configuration::Get().fit1D() == false) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::total>::Get(id)
@@ -895,6 +901,12 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(
                 id)
                 .CreateBuAddPdf();
+            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                Charge::plus>::Get(id)
+                .CreateBuPartialAddPdf();
+            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(
+                id)
+                .CreateBuPartialAddPdf();
             if (Configuration::Get().fit1D() == false) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::plus>::Get(id)
@@ -921,6 +933,12 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                 Charge::minus>::Get(id)
                 .CreateBuAddPdf();
+            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                Charge::minus>::Get(id)
+                .CreateBuPartialAddPdf();
+            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                Charge::minus>::Get(id)
+                .CreateBuPartialAddPdf();
             if (Configuration::Get().fit1D() == false) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::minus>::Get(id)
