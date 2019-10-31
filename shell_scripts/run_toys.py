@@ -48,6 +48,12 @@ if __name__ == "__main__":
         help='Number of jobs to run on batch',
         required=True)
     parser.add_argument(
+        '-g',
+        '--gen',
+        type=str,
+        help='--gen=model/data: Toy dataset generated from D1D model or 2D dataset',
+        required=True)
+    parser.add_argument(
         '-i',
         '--input_dir',
         type=str,
@@ -72,6 +78,18 @@ if __name__ == "__main__":
         help='Upper delta mass range',
         required=False)
     parser.add_argument(
+        '-dpl',
+        '--delta_partial_low',
+        type=str,
+        help='Lower delta_partial mass range',
+        required=False)
+    parser.add_argument(
+        '-dph',
+        '--delta_partial_high',
+        type=str,
+        help='Upper delta_partial mass range',
+        required=False)
+    parser.add_argument(
         '-bl', '--bu_low', type=str, help='Lower bu mass range', required=False)
     parser.add_argument(
         '-bh',
@@ -85,12 +103,24 @@ if __name__ == "__main__":
     output_dir = args.output_dir
     n_toys = args.n_toys
     n_jobs = args.n_jobs
+    gen = args.gen
     input_dir = args.input_dir
     dim = args.dim
     delta_low = args.delta_low
     delta_high = args.delta_high
+    delta_partial_low = args.delta_partial_low
+    delta_partial_high = args.delta_partial_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+
+    if gen == "data":
+        if input_dir == None:
+            sys.exit("If generating toys from 2D datasets, specify --input_dir=<path>")
+        print("Generating toys from 2D datasets")
+    elif gen == "model":
+        print("Generating toys from D1D model")
+    else:
+        sys.exit("-gen=model/data")
 
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
@@ -110,6 +140,10 @@ if __name__ == "__main__":
         bu_low = "5240"
     if bu_high == None:
         bu_high = "5330"
+    if delta_partial_low == None:
+        delta_partial_low = "60"
+    if delta_partial_high == None:
+        delta_partial_high = "105"
 
     home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
     for i in range(0, n_jobs):
@@ -124,8 +158,8 @@ if __name__ == "__main__":
         # copy_tree(home_path + 'include/', j_dir + 'include/')
         # os.mkdir(j_dir + 'build/')
 
-        templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
-        scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+        templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
+        scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
         substitutions = {
             "nJob":
             i,
@@ -139,12 +173,14 @@ if __name__ == "__main__":
             neutral,
             "NTOYS":
             n_toys,
-            "INPUT":
-            input_dir,
             "DL":
             delta_low,
             "DH":
             delta_high,
+            "DPL":
+            delta_partial_low,
+            "DPH":
+            delta_partial_high,
             "BL":
             bu_low,
             "BH":
@@ -152,6 +188,8 @@ if __name__ == "__main__":
             "DIM":
             dim
         }
+        if gen == 'model':
+            substitutions["INPUT"] = input_dir
         make_shell_script(templatePath, scriptPath, substitutions)
         # run_process(["sh", scriptPath])
-        run_process(["qsub", scriptPath])
+        # run_process(["qsub", scriptPath])
