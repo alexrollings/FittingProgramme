@@ -432,22 +432,13 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
   std::string dlPartialString;
   std::string dhPartialString;
-  std::string txtFileName;
+  std::string txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
+                            EnumToString(mode) + "_" +
+                            Configuration::Get().ReturnBoxString() + ".txt";
 
-  switch (neutral) {
-    case Neutral::gamma:
-      dlPartialString = std::to_string(Configuration::Get().deltaPartialLow());
-      dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
-      txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
-                    EnumToString(mode) + "_" + dlString + "_" + dhString + "_" +
-                    dlPartialString + "_" + dhPartialString + "_" + blString +
-                    "_" + bhString + ".txt";
-      break;
-    case Neutral::pi0:
-      txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
-                    EnumToString(mode) + "_" + dlString + "_" + dhString + "_" +
-                    blString + "_" + bhString + ".txt";
-      break;
+  if (neutral == Neutral::gamma) {
+    dlPartialString = std::to_string(Configuration::Get().deltaPartialLow());
+    dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
   }
 
   std::string modeString = EnumToString(mode);
@@ -559,10 +550,23 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                     "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
                                     blString + "&&Bu_Delta_M<" + bhString)
                                        .c_str());
-    double nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                                   "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                                   blString + "&&Bu_Delta_M<" + bhString + "))")
-                                      .c_str());
+    double nOr;
+    switch (neutral) {
+      case Neutral::gamma:
+        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                                blString + "&&Bu_Delta_M<" + bhString +
+                                ")||(Delta_M>" + dlPartialString +
+                                "&&Delta_M<" + dhPartialString + "))")
+                                   .c_str());
+        break;
+      case Neutral::pi0:
+        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                                blString + "&&Bu_Delta_M<" + bhString + "))")
+                                   .c_str());
+        break;
+    }
     double nBuCut = chain.GetEntries(
         (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
             .c_str());
@@ -587,7 +591,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     deltaCutEff.setVal(deltaCutEffVal);
 
     if (neutral == Neutral::gamma) {
-      double nDeltaPartialCut = nDeltaPartialCut =
+      double nDeltaPartialCut =
           chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
                             "&&Delta_M<" + dhPartialString)
                                .c_str());

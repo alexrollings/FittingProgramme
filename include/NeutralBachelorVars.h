@@ -427,8 +427,8 @@ void NeutralBachelorVars<neutral, bachelor>::SetMisIdEfficiencies(
   std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
   std::string txtFileName = "txt_efficiencies/" + EnumToString(neutral) +
                             "_misId_" + EnumToString(mode) + "_as_" +
-                            EnumToString(bachelor) + "_" + dlString + "_" +
-                            dhString + "_" + blString + "_" + bhString + ".txt";
+                            EnumToString(bachelor) + "_" +
+                            Configuration::Get().ReturnBoxString() + ".txt";
   std::string modeString = EnumToString(mode);
 
   // Check if txt file containing efficiencies for particular mode and box dimns
