@@ -294,6 +294,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           5.0076e-08),
+      Bu2D0h_meanBuPartial_(),
+      Bu2D0h_aLBuPartial_(),
+      Bu2D0h_aRBuPartial_(),
       orEffBu2D0h_(
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),

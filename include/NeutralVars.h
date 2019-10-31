@@ -229,6 +229,9 @@ class NeutralVars {
   RooRealVar &Bu2D0h_meanBu() { return Bu2D0h_meanBu_; }
   RooRealVar &Bu2D0h_aLBu() { return Bu2D0h_aLBu_; }
   RooRealVar &Bu2D0h_aRBu() { return Bu2D0h_aRBu_; }
+  RooRealVar &Bu2D0h_meanBuPartial() { return Bu2D0h_meanBuPartial_; }
+  RooRealVar &Bu2D0h_aLBuPartial() { return Bu2D0h_aLBuPartial_; }
+  RooRealVar &Bu2D0h_aRBuPartial() { return Bu2D0h_aRBuPartial_; }
   RooRealVar &orEffBu2D0h() { return orEffBu2D0h_; }
   RooRealVar &boxEffBu2D0h() { return boxEffBu2D0h_; }
   RooRealVar &buDeltaCutEffBu2D0h() { return buDeltaCutEffBu2D0h_; }
@@ -373,6 +376,9 @@ class NeutralVars {
   RooRealVar Bu2D0h_meanBu_;
   RooRealVar Bu2D0h_aLBu_;
   RooRealVar Bu2D0h_aRBu_;
+  RooRealVar Bu2D0h_meanBuPartial_;
+  RooRealVar Bu2D0h_aLBuPartial_;
+  RooRealVar Bu2D0h_aRBuPartial_;
   RooRealVar orEffBu2D0h_;
   RooRealVar boxEffBu2D0h_;
   RooRealVar buDeltaCutEffBu2D0h_;

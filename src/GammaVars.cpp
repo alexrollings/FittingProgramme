@@ -360,6 +360,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.3835e-12),
+      Bu2D0h_meanBuPartial_(
+          ("Bu2D0h_meanBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.5319e+03),
+      Bu2D0h_aLBuPartial_(
+          ("Bu2D0h_aLBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1.0264e-01),
+      Bu2D0h_aRBuPartial_(
+          ("Bu2D0h_aRBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          2.6929e-02),
       orEffBu2D0h_(
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
