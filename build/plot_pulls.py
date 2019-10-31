@@ -1,14 +1,50 @@
 import os, re, subprocess, sys, argparse
+
 #re = regular expressions
 
-def pass_filename(filename, file_list, dim, delta_low, delta_high, bu_low=None, bu_high=None):
+
+def pass_filename_pi0(filename,
+                      file_list,
+                      dim,
+                      delta_low,
+                      delta_high,
+                      bu_low=None,
+                      bu_high=None):
     if bu_low != None and bu_high != None:
-        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high + '_' +
-                      bu_low + '_' + bu_high + '_0\.[0-9]+\.root', filename)
+        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high +
+                      '_' + bu_low + '_' + bu_high + '_0\.[0-9]+\.root',
+                      filename)
     else:
-        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root', filename)
+        m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high +
+                      '_0\.[0-9]+\.root', filename)
     if m:
         file_list.append(filename)
+
+
+def pass_filename_gamma(filename,
+                        file_list,
+                        dim,
+                        delta_low,
+                        delta_high,
+                        delta_partial_low,
+                        delta_partial_high,
+                        bu_low=None,
+                        bu_high=None):
+    if bu_low != None and bu_high != None:
+        m = re.search('Result' + dim + '_' + delta_partial_low + '_' +
+                      delta_partial_high + '_' + delta_low + '_' + delta_high +
+                      '_' + bu_low + '_' + bu_high + '_0\.[0-9]+\.root',
+                      filename)
+    else:
+        m = re.search(
+            'Result' + dim + '_' + delta_partial_low + '_' + delta_partial_high
+            + '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root',
+            filename)
+    if m:
+        file_list.append(filename)
+    else:
+        print(filename)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -25,22 +61,14 @@ if __name__ == "__main__":
         help='Directory where folder for PDFs and results should be created',
         required=True)
     parser.add_argument(
-        '-d',
-        '--dim',
-        type=str,
-        help='Dimension',
-        required=True)
+        '-d', '--dim', type=str, help='Dimension', required=True)
     parser.add_argument(
-        '-n',
-        '--neutral',
-        type=str,
-        help='Neutral',
-        required=True)
+        '-n', '--neutral', type=str, help='Neutral', required=True)
     parser.add_argument(
         '-t',
         '--toy_init',
         type=str,
-        help='Toy initiated from mc or data values',
+        help='Toy initiated from model or data values',
         required=True)
     parser.add_argument(
         '-dl',
@@ -53,6 +81,18 @@ if __name__ == "__main__":
         '--delta_high',
         type=str,
         help='Upper delta mass range',
+        required=True)
+    parser.add_argument(
+        '-dpl',
+        '--delta_partial_low',
+        type=str,
+        help='Lower delta_partial mass range',
+        required=True)
+    parser.add_argument(
+        '-dph',
+        '--delta_partial_high',
+        type=str,
+        help='Upper delta_partial mass range',
         required=True)
     parser.add_argument(
         '-bl',
@@ -74,6 +114,8 @@ if __name__ == "__main__":
     toy_init = args.toy_init
     delta_low = args.delta_low
     delta_high = args.delta_high
+    delta_partial_low = args.delta_partial_low
+    delta_partial_high = args.delta_partial_high
     bu_low = args.bu_low
     bu_high = args.bu_high
     dim = args.dim
@@ -93,10 +135,11 @@ if __name__ == "__main__":
 
     if toy_init == "data":
         print("Initial param values taken from final data fit")
-    elif toy_init == "mc":
-        print("Initial param values taken from mc")
+    elif toy_init == "model":
+        print("Initial param values taken from model")
     else:
-      sys.exit("Initial toy parameters taken from mc/data fit: -t=mc/data")
+        sys.exit(
+            "Initial toy parameters taken from model/data fit: -t=model/data")
 
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
@@ -106,9 +149,21 @@ if __name__ == "__main__":
     file_list = []
     for filename in os.listdir(input_dir):
         if dim == "1D":
-            pass_filename(input_dir + "/" + filename, file_list, dim, delta_low, delta_high)
+            if neutral == "pi0":
+                pass_filename_pi0(input_dir + "/" + filename, file_list, dim,
+                                  delta_low, delta_high)
+            else:
+                pass_filename_gamma(input_dir + "/" + filename, file_list, dim,
+                                    delta_low, delta_high, delta_partial_low,
+                                    delta_partial_high)
         else:
-            pass_filename(input_dir + "/" + filename, file_list, dim, delta_low, delta_high, bu_low, bu_high)
+            if neutral == "pi0":
+                pass_filename_pi0(input_dir + "/" + filename, file_list, dim,
+                                  delta_low, delta_high, bu_low, bu_high)
+            else:
+                pass_filename_gamma(input_dir + "/" + filename, file_list, dim,
+                                    delta_low, delta_high, delta_partial_low,
+                                    delta_partial_high, bu_low, bu_high)
         # pass_filename(input_dir + "/" + filename, file_list)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
@@ -123,12 +178,14 @@ if __name__ == "__main__":
         if dim == "1D":
             subprocess.call([
                 "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-1D", "-toyInit=" + toy_init
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                "-1D", "-toyInit=" + toy_init
             ])
         else:
             subprocess.call([
                 "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir, "-toyInit=" + toy_init
+                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                "-toyInit=" + toy_init
             ])
     else:
         sys.exit("File list empty")
