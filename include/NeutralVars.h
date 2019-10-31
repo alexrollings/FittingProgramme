@@ -126,6 +126,9 @@ class NeutralVars {
   RooRealVar &deltaCutEffBu2Dst0h_D0gamma() {
     return deltaCutEffBu2Dst0h_D0gamma_;
   }
+  RooRealVar &deltaPartialCutEffBu2Dst0h_D0gamma() {
+    return deltaPartialCutEffBu2Dst0h_D0gamma_;
+  }
   double &fracBu2Dst0h_D0gamma() { return fracBu2Dst0h_D0gamma_; }
   double &initYieldFAVBu2Dst0h_D0gamma() {
     return initYieldFAVBu2Dst0h_D0gamma_;
@@ -182,6 +185,7 @@ class NeutralVars {
     return buDeltaCutEffBu2Dst0h_D0pi0_;
   }
   RooRealVar &deltaCutEffBu2Dst0h_D0pi0() { return deltaCutEffBu2Dst0h_D0pi0_; }
+  RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0() { return deltaPartialCutEffBu2Dst0h_D0pi0_; }
   double &fracBu2Dst0h_D0pi0() { return fracBu2Dst0h_D0pi0_; }
   double &initYieldFAVBu2Dst0h_D0pi0() { return initYieldFAVBu2Dst0h_D0pi0_; }
   // -------------------- MIS-REC -------------------- //
@@ -287,6 +291,7 @@ class NeutralVars {
   RooRealVar boxEffBu2Dst0h_D0gamma_;
   RooRealVar buDeltaCutEffBu2Dst0h_D0gamma_;
   RooRealVar deltaCutEffBu2Dst0h_D0gamma_;
+  RooRealVar deltaPartialCutEffBu2Dst0h_D0gamma_;
   double fracBu2Dst0h_D0gamma_;
   double initYieldFAVBu2Dst0h_D0gamma_;
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
@@ -319,6 +324,7 @@ class NeutralVars {
   RooRealVar boxEffBu2Dst0h_D0pi0_;
   RooRealVar buDeltaCutEffBu2Dst0h_D0pi0_;
   RooRealVar deltaCutEffBu2Dst0h_D0pi0_;
+  RooRealVar deltaPartialCutEffBu2Dst0h_D0pi0_;
   double fracBu2Dst0h_D0pi0_;
   double initYieldFAVBu2Dst0h_D0pi0_;
   // -------------------- MIS-REC -------------------- //

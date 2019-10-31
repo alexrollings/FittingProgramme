@@ -116,6 +116,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("deltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", 1),
+      deltaPartialCutEffBu2Dst0h_D0pi0_(),
       fracBu2Dst0h_D0pi0_(),
       initYieldFAVBu2Dst0h_D0pi0_(),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
@@ -195,6 +196,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("deltaCutEffBu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
           "", 1),
+      deltaPartialCutEffBu2Dst0h_D0gamma_(),
       fracBu2Dst0h_D0gamma_(0.213),
       initYieldFAVBu2Dst0h_D0gamma_(),
       // -------------------- MIS-REC -------------------- //

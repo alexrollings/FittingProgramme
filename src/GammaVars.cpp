@@ -131,6 +131,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 1),
+      deltaPartialCutEffBu2Dst0h_D0gamma_(("deltaPartialCutEffBu2Dst0h_D0gamma_" +
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 1),
       fracBu2Dst0h_D0gamma_(),
       initYieldFAVBu2Dst0h_D0gamma_(),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
@@ -245,6 +249,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                        .c_str(),
                                    "", 1),
       deltaCutEffBu2Dst0h_D0pi0_(("deltaCutEffBu2Dst0h_D0pi0_" +
+                                  ComposeName(uniqueId, Neutral::gamma))
+                                     .c_str(),
+                                 "", 1),
+      deltaPartialCutEffBu2Dst0h_D0pi0_(("deltaPartialCutEffBu2Dst0h_D0pi0_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
                                  "", 1),
