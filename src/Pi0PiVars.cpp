@@ -292,6 +292,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                     Bu2D0h_sigmaLBu_, Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aRBu()),
+      Bu2D0h_sigmaLBuPartial_(),
+      Bu2D0h_sigmaRBuPartial_(),
+      pdfBuPartial_Bu2D0h_(),
       N_tot_initVal_Bu2D0h_(NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .initYieldFAVBu2D0h() *
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)

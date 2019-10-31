@@ -348,6 +348,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                     Bu2D0h_sigmaLBu_, Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2D0h_aRBu()),
+      Bu2D0h_sigmaLBuPartial_(),
+      Bu2D0h_sigmaRBuPartial_(),
+      pdfBuPartial_Bu2D0h_(),
       // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
       // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
       N_tot_initVal_Bu2D0h_(NeutralVars<Neutral::pi0>::Get(uniqueId)

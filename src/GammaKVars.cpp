@@ -448,6 +448,22 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     Bu2D0h_sigmaLBu_, Bu2D0h_sigmaRBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBu()),
+      Bu2D0h_sigmaLBuPartial_(("Bu2D0h_sigmaLBuPartial_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", 4.8679e+01),
+      Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", 3.5437e+01),
+      pdfBuPartial_Bu2D0h_(("pdfBuPartial_Bu2D0h_" +
+                     ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                        .c_str(),
+                    "", Configuration::Get().buDeltaMass(),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_meanBuPartial(),
+                    Bu2D0h_sigmaLBuPartial_, Bu2D0h_sigmaRBuPartial_,
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBuPartial(),
+                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBuPartial()),
       // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
       // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
       N_tot_initVal_Bu2D0h_(
