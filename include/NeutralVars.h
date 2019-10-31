@@ -200,6 +200,9 @@ class NeutralVars {
   RooRealVar &MisRec_meanBu() { return MisRec_meanBu_; }
   RooRealVar &MisRec_aLBu() { return MisRec_aLBu_; }
   RooRealVar &MisRec_aRBu() { return MisRec_aRBu_; }
+  RooRealVar &MisRec_meanBuPartial() { return MisRec_meanBuPartial_; }
+  RooRealVar &MisRec_aLBuPartial() { return MisRec_aLBuPartial_; }
+  RooRealVar &MisRec_aRBuPartial() { return MisRec_aRBuPartial_; }
   RooRealVar &orEffMisRec() { return orEffMisRec_; }
   RooRealVar &boxEffMisRec() { return boxEffMisRec_; }
   RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
@@ -345,6 +348,9 @@ class NeutralVars {
   RooRealVar MisRec_meanBu_;
   RooRealVar MisRec_aLBu_;
   RooRealVar MisRec_aRBu_;
+  RooRealVar MisRec_meanBuPartial_;
+  RooRealVar MisRec_aLBuPartial_;
+  RooRealVar MisRec_aRBuPartial_;
   RooRealVar orEffMisRec_;
   RooRealVar boxEffMisRec_;
   RooRealVar buDeltaCutEffMisRec_;

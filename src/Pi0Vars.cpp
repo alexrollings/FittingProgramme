@@ -232,6 +232,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_aRBu_(
           ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.6521e-02),
+      MisRec_meanBuPartial_(),
+      MisRec_aLBuPartial_(),
+      MisRec_aRBuPartial_(),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),

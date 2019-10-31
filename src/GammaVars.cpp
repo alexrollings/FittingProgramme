@@ -290,6 +290,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       MisRec_aRBu_(
           ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.0687e-12),
+      MisRec_meanBuPartial_(
+          ("MisRec_meanBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.3077e+03),
+      MisRec_aLBuPartial_(
+          ("MisRec_aLBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          2.5509e-08),
+      MisRec_aRBuPartial_(
+          ("MisRec_aRBuPartial_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          2.0406e-02),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
