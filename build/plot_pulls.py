@@ -87,13 +87,13 @@ if __name__ == "__main__":
         '--delta_partial_low',
         type=str,
         help='Lower delta_partial mass range',
-        required=True)
+        required=False)
     parser.add_argument(
         '-dph',
         '--delta_partial_high',
         type=str,
         help='Upper delta_partial mass range',
-        required=True)
+        required=False)
     parser.add_argument(
         '-bl',
         '--bu_low',
@@ -143,6 +143,9 @@ if __name__ == "__main__":
 
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
+
+    if neutral == "gamma" and (delta_partial_low == None or delta_partial_high == None):
+        sys.exit("For gamma fit, must specify delta_partial box limits")
 
     if not os.path.isdir(input_dir):
         sys.exit(input_dir + ' is not a directory')
