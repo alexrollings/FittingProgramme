@@ -47,7 +47,7 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral,
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(*addPdfBu_, CategoryName(Mass::buDelta).c_str());
   if (neutral() == Neutral::gamma) {
-    simPdf.addPdf(*addPdfBuPartial_, CategoryName(Mass::buDelta).c_str());
+    simPdf.addPdf(*addPdfBuPartial_, CategoryName(Mass::buDeltaPartial).c_str());
   }
   if (Configuration::Get().fit1D() == false) {
     simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
