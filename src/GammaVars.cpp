@@ -25,7 +25,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_a2Delta_(("Bu2Dst0h_D0gamma_a2Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", -7.4455e-01),//, -5, -0.00001),
+                                "", -7.4455e-01),  //, -5, -0.00001),
       Bu2Dst0h_D0gamma_n1Delta_(("Bu2Dst0h_D0gamma_n1Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -33,7 +33,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n2Delta_(("Bu2Dst0h_D0gamma_n2Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 7.3576e+00),//4.3851e+00, 0, 10),
+                                "", 7.3576e+00),  // 4.3851e+00, 0, 10),
       pdf1Delta_Bu2Dst0h_D0gamma_(("pdf1Delta_Bu2Dst0h_D0gamma_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),
@@ -64,24 +64,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "",
           RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
           Bu2Dst0h_D0gamma_fracPdf1Delta_)),
-      pdfDelta_misId_Bu2Dst0h_D0gamma_(new RooAddPdf(("pdfDelta_misId_Bu2Dst0h_D0gamma_" +
-                                        ComposeName(uniqueId, Neutral::gamma))
-                                           .c_str(),
-                                       "",
-                                       RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_,
-                                                  pdf2Delta_Bu2Dst0h_D0gamma_),
-                                       Bu2Dst0h_D0gamma_fracPdf1Delta_)),
+      pdfDelta_misId_Bu2Dst0h_D0gamma_(new RooAddPdf(
+          ("pdfDelta_misId_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
+          Bu2Dst0h_D0gamma_fracPdf1Delta_)),
       Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
                                "", 5.2814e+03),
-                               // "", 5.2814e+03, 5278, 5285),
-      Bu2Dst0h_D0gamma_KpiSigmaBu_(
-          ("Bu2Dst0h_D0gamma_KpiSigmaBuBu_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 0.95),
-          // "", 0.95, 0.5, 1.5),
+      // "", 5.2814e+03, 5278, 5285),
+      Bu2Dst0h_D0gamma_KpiSigmaBu_(("Bu2Dst0h_D0gamma_KpiSigmaBuBu_" +
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 0.95),
+      // "", 0.95, 0.5, 1.5),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -90,7 +89,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
                              "", -1.6623e+00),
-                             // "", -1.6623e+00, -5, -0.0001),
+      // "", -1.6623e+00, -5, -0.0001),
       Bu2Dst0h_D0gamma_n1Bu_(("Bu2Dst0h_D0gamma_n1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -98,23 +97,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n2Bu_(("Bu2Dst0h_D0gamma_n2Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 10),//5.2563e+00, 0, 100),
+                             "", 10),  // 5.2563e+00, 0, 100),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(("Bu2Dst0h_D0gamma_fracPdf1Bu_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 6.8457e-01),
       Bu2Dst0h_D0gamma_meanBuPartial_(("Bu2Dst0h_D0gamma_meanBuPartial_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 5.2600e+03),
+                                       ComposeName(uniqueId, Neutral::gamma))
+                                          .c_str(),
+                                      "", 5.2600e+03),
       Bu2Dst0h_D0gamma_aBuPartial_(("Bu2Dst0h_D0gamma_aBuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", 2.5357e+00),
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 2.5357e+00),
       Bu2Dst0h_D0gamma_nBuPartial_(("Bu2Dst0h_D0gamma_nBuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", 6.4103e-08),
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 6.4103e-08),
       orEffBu2Dst0h_D0gamma_(("orEffBu2Dst0h_D0gamma_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -131,10 +130,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 1),
-      deltaPartialCutEffBu2Dst0h_D0gamma_(("deltaPartialCutEffBu2Dst0h_D0gamma_" +
-                                    ComposeName(uniqueId, Neutral::gamma))
-                                       .c_str(),
-                                   "", 1),
+      deltaPartialCutEffBu2Dst0h_D0gamma_(
+          ("deltaPartialCutEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "", 1),
       fracBu2Dst0h_D0gamma_(),
       initYieldFAVBu2Dst0h_D0gamma_(),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
@@ -151,11 +151,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_a1Delta_(("Bu2Dst0h_D0pi0_a1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 4.4112e-01),//, 0, 5),
+                              "", 4.4112e-01),  //, 0, 5),
       Bu2Dst0h_D0pi0_a2Delta_(("Bu2Dst0h_D0pi0_a2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", -7.3381e-01),//, -5, -0.0001),
+                              "", -7.3381e-01),  //, -5, -0.0001),
       Bu2Dst0h_D0pi0_n1Delta_(("Bu2Dst0h_D0pi0_n1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
@@ -163,7 +163,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n2Delta_(("Bu2Dst0h_D0pi0_n2Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
-                              "", 4.4063e+00),//7.1853e+00, 0, 10),
+                              "", 4.4063e+00),  // 7.1853e+00, 0, 10),
       pdf1Delta_Bu2Dst0h_D0pi0_(
           ("pdf1Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
@@ -202,40 +202,39 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                            "", 8.2093e-01),
       Bu2Dst0h_D0pi0_a2Bu_(),
       Bu2Dst0h_D0pi0_n1Bu_(("Bu2Dst0h_D0pi0_n1Bu_" +
-                           ComposeName(uniqueId, Neutral::gamma))
-                              .c_str(),
-                          "", 1.0000e+01),
+                            ComposeName(uniqueId, Neutral::gamma))
+                               .c_str(),
+                           "", 1.0000e+01),
       Bu2Dst0h_D0pi0_n2Bu_(),
       Bu2Dst0h_D0pi0_fracPdf1Bu_(),
       Bu2Dst0h_D0pi0_meanBuPartial_(("Bu2Dst0h_D0pi0_meanBuPartial_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 5.2910e+03),
-      Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(
-          ("Bu2Dst0h_D0pi0_KpiSigmaBuBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 0.95),
+                                     ComposeName(uniqueId, Neutral::gamma))
+                                        .c_str(),
+                                    "", 5.2910e+03),
+      Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(("Bu2Dst0h_D0pi0_KpiSigmaBuBuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma))
+                                            .c_str(),
+                                        "", 0.95),
       Bu2Dst0h_D0pi0_a1BuPartial_(("Bu2Dst0h_D0pi0_a1BuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", 1.2671e+00),
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  "", 1.2671e+00),
       Bu2Dst0h_D0pi0_a2BuPartial_(("Bu2Dst0h_D0pi0_a2BuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", -4.6116e+00),
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  "", -4.6116e+00),
       Bu2Dst0h_D0pi0_n1BuPartial_(("Bu2Dst0h_D0pi0_n1BuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", 1.0000e+01),
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  "", 1.0000e+01),
       Bu2Dst0h_D0pi0_n2BuPartial_(("Bu2Dst0h_D0pi0_n2BuPartial_" +
-                              ComposeName(uniqueId, Neutral::gamma))
-                                 .c_str(),
-                             "", 3.1306e+00),
+                                   ComposeName(uniqueId, Neutral::gamma))
+                                      .c_str(),
+                                  "", 3.1306e+00),
       Bu2Dst0h_D0pi0_fracPdf1BuPartial_(("Bu2Dst0h_D0pi0_fracPdf1BuPartial_" +
-                                    ComposeName(uniqueId, Neutral::gamma))
-                                       .c_str(),
-                                   "", 6.6392e-01),
+                                         ComposeName(uniqueId, Neutral::gamma))
+                                            .c_str(),
+                                        "", 6.6392e-01),
       orEffBu2Dst0h_D0pi0_(("orEffBu2Dst0h_D0pi0_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
@@ -253,9 +252,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 1),
       deltaPartialCutEffBu2Dst0h_D0pi0_(("deltaPartialCutEffBu2Dst0h_D0pi0_" +
-                                  ComposeName(uniqueId, Neutral::gamma))
-                                     .c_str(),
-                                 "", 1),
+                                         ComposeName(uniqueId, Neutral::gamma))
+                                            .c_str(),
+                                        "", 1),
       fracBu2Dst0h_D0pi0_(0.871),
       initYieldFAVBu2Dst0h_D0pi0_(),
       // -------------------- MIS-REC -------------------- //
@@ -305,6 +304,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
                          "", 1),
+      deltaPartialCutEffMisRec_(("deltaPartialCutEffMisRec_" +
+                                 ComposeName(uniqueId, Neutral::gamma))
+                                    .c_str(),
+                                "", 1),
       fracMisRec_Bu2Dst0h_D0gamma_(),
       fracMisRec_Bu2Dst0h_D0gamma_WN_(0.628),
       fracMisRec_Bu2Dst0h_D0pi0_WN_(1.137),
@@ -341,7 +344,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 5.5269e+03),
-          // "", 5.5269e+03, 5450, 5600),
+      // "", 5.5269e+03, 5450, 5600),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.4892e-09),
@@ -362,90 +365,91 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
                          "", 1),
+      deltaPartialCutEffBu2D0h_(("deltaPartialCutEffBu2D0h_" +
+                                 ComposeName(uniqueId, Neutral::gamma))
+                                    .c_str(),
+                                "", 1),
       fracBu2D0h_(1.936),
       initYieldFAVBu2D0h_(),
       // -------------------- PART-REC -------------------- //
       partRec_thresholdDelta_(("partRec_thresholdDelta_" +
-                                          ComposeName(uniqueId, Neutral::gamma))
-                                             .c_str(),
-                                         "", 5.7781e+01),
-      partRec_aDelta_(("partRec_aDelta_" +
-                                  ComposeName(uniqueId, Neutral::gamma))
-                                     .c_str(),
-                                 "", 5.2820e-01),
-      partRec_bDelta_(("partRec_bDelta_" +
-                                  ComposeName(uniqueId, Neutral::gamma))
-                                     .c_str(),
-                                 "", -5.7835e-01),
-      partRec_cDelta_(("partRec_cDelta_" +
-                                  ComposeName(uniqueId, Neutral::gamma))
-                                     .c_str(),
-                                 "", 9.9996e+01),
+                               ComposeName(uniqueId, Neutral::gamma))
+                                  .c_str(),
+                              "", 5.7781e+01),
+      partRec_aDelta_(
+          ("partRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 5.2820e-01),
+      partRec_bDelta_(
+          ("partRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", -5.7835e-01),
+      partRec_cDelta_(
+          ("partRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 9.9996e+01),
       pdfDelta_PartRec_(
-          ("pdfDelta_PartRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          partRec_thresholdDelta_, partRec_cDelta_,
-          partRec_aDelta_, partRec_bDelta_),
+          ("pdfDelta_PartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", Configuration::Get().deltaMass(), partRec_thresholdDelta_,
+          partRec_cDelta_, partRec_aDelta_, partRec_bDelta_),
       pdfDelta_misId_PartRec_(("pdfDelta_misId_PartRec_" +
-                                          ComposeName(uniqueId, Neutral::gamma))
-                                             .c_str(),
-                                         "", Configuration::Get().deltaMass(),
-                                         partRec_thresholdDelta_,
-                                         partRec_cDelta_,
-                                         partRec_aDelta_,
-                                         partRec_bDelta_),
+                               ComposeName(uniqueId, Neutral::gamma))
+                                  .c_str(),
+                              "", Configuration::Get().deltaMass(),
+                              partRec_thresholdDelta_, partRec_cDelta_,
+                              partRec_aDelta_, partRec_bDelta_),
       partRec_D0pi0_meanBu_(("partRec_D0pi0_meanBu_" +
-                                  ComposeName(uniqueId, Neutral::gamma))
-                                     .c_str(),
-                                 "", 5.1039e+03),
-                                 // "", 5.1039e+03, 5050, 5200),
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 5.1039e+03),
+      // "", 5.1039e+03, 5050, 5200),
       partRec_D0pi0_aLBu_(("partRec_D0pi0_aLBu_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 8.6604e-02),//, 0, 5),
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 8.6604e-02),  //, 0, 5),
       partRec_D0pi0_aRBu_(("partRec_D0pi0_aRBu_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 1.9894e-01),
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 1.9894e-01),
       partRec_D0gamma_meanBu_(("partRec_D0gamma_meanBu_" +
+                               ComposeName(uniqueId, Neutral::gamma))
+                                  .c_str(),
+                              "", 5.1039e+03),
+      partRec_D0gamma_aLBu_(("partRec_D0gamma_aLBu_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 8.6604e-02),
+      partRec_D0gamma_aRBu_(("partRec_D0gamma_aRBu_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 1.9894e-01),
+      partRec_frac_D0pi0_(("partRec_frac_D0pi0_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 3.0263e-01),
+      orEffPartRec_(
+          ("orEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      boxEffPartRec_(
+          ("boxEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 1),
+      buDeltaCutEffPartRec_(("buDeltaCutEffPartRec_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 1),
+      deltaCutEffPartRec_(("deltaCutEffPartRec_" +
+                           ComposeName(uniqueId, Neutral::gamma))
+                              .c_str(),
+                          "", 1),
+      deltaPartialCutEffPartRec_(("deltaPartialCutEffPartRec_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
-                                 "", 5.1039e+03),
-      partRec_D0gamma_aLBu_(("partRec_D0gamma_aLBu_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 8.6604e-02),
-      partRec_D0gamma_aRBu_(("partRec_D0gamma_aRBu_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 1.9894e-01),
-      partRec_frac_D0pi0_(("partRec_frac_D0pi0_" +
-                                       ComposeName(uniqueId, Neutral::gamma))
-                                          .c_str(),
-                                      "", 3.0263e-01),
-      orEffPartRec_(("orEffPartRec_" +
-                                ComposeName(uniqueId, Neutral::gamma))
-                                   .c_str(),
-                               "", 1),
-      boxEffPartRec_(("boxEffPartRec_" +
-                                 ComposeName(uniqueId, Neutral::gamma))
-                                    .c_str(),
-                                "", 1),
-      buDeltaCutEffPartRec_(("buDeltaCutEffPartRec_" +
-                                        ComposeName(uniqueId, Neutral::gamma))
-                                           .c_str(),
-                                       "", 1),
-      deltaCutEffPartRec_(("deltaCutEffPartRec_" +
-                                      ComposeName(uniqueId, Neutral::gamma))
-                                         .c_str(),
-                                     "", 1),
+                                 "", 1),
       fracPartRec_Bu2Dst0hst_D0gamma_(0.141),
       fracPartRec_Bu2Dst0hst_D0pi0_(0.162),
-      fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ + fracPartRec_Bu2Dst0hst_D0pi0_),
+      fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ +
+                   fracPartRec_Bu2Dst0hst_D0pi0_),
       initYieldFAVPartRec_() {
   if (Configuration::Get().splitByCharge() == true) {
-    initYieldFAVBu2Dst0h_D0gamma_ = Configuration::Get().initYieldFAVSignal() / 2;
+    initYieldFAVBu2Dst0h_D0gamma_ =
+        Configuration::Get().initYieldFAVSignal() / 2;
     initYieldFAVBu2Dst0h_D0pi0_ =
         (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_) / 2;
     initYieldFAVMisRec_ =
@@ -468,28 +472,33 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
 
   SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffBu2Dst0h_D0gamma_,
                   boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
-                  deltaCutEffBu2Dst0h_D0gamma_);
-  // std::cout << "\t orEffBu2Dst0h_D0gamma = "
-  //           << orEffBu2Dst0h_D0gamma_.getVal() << "\n"
-  //           << "\t boxEffBu2Dst0h_D0gamma = "
-  //           << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
-  //           << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
-  //           << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
-  //           << "\t deltaCutEffBu2Dst0h_D0gamma = "
-  //           << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
+                  deltaCutEffBu2Dst0h_D0gamma_,
+                  deltaPartialCutEffBu2Dst0h_D0gamma_);
+  std::cout << "\t orEffBu2Dst0h_D0gamma = " << orEffBu2Dst0h_D0gamma_.getVal()
+            << "\n"
+            << "\t boxEffBu2Dst0h_D0gamma = "
+            << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
+            << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
+            << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+            << "\t deltaCutEffBu2Dst0h_D0gamma = "
+            << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+            << "\t deltaPartialCutEffBu2Dst0h_D0gamma = "
+            << deltaPartialCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
 
   SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
                   boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
-                  deltaCutEffBu2Dst0h_D0pi0_);
-  // std::cout << "\t orEffBu2Dst0h_D0pi0 = "
-  //           << orEffBu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t boxEffBu2Dst0h_D0pi0 = "
-  //           << boxEffBu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
-  //           << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffBu2Dst0h_D0pi0 = "
-  //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
-  //
+                  deltaCutEffBu2Dst0h_D0pi0_, deltaCutEffBu2Dst0h_D0pi0_);
+  std::cout << "\t orEffBu2Dst0h_D0pi0 = " << orEffBu2Dst0h_D0pi0_.getVal()
+            << "\n"
+            << "\t boxEffBu2Dst0h_D0pi0 = " << boxEffBu2Dst0h_D0pi0_.getVal()
+            << "\n"
+            << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
+            << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t deltaCutEffBu2Dst0h_D0pi0 = "
+            << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t deltaPartialCutEffBu2Dst0h_D0pi0 = "
+            << deltaPartialCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
+
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
       {Mode::Bu2Dst0pi_D0gamma_WN,
@@ -501,6 +510,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   double boxEffMisRecVal = 0.0;
   double buDeltaCutEffMisRecVal = 0.0;
   double deltaCutEffMisRecVal = 0.0;
+  double deltaPartialCutEffMisRecVal = 0.0;
 
   for (auto &m : misRecModesMap) {
     RooRealVar orEffTemp(
@@ -513,19 +523,25 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     RooRealVar deltaCutEffTemp(
         ("deltaCutEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
         1);
+    RooRealVar deltaPartialCutEffTemp(
+        ("deltaPartialCutEffTemp" + ComposeName(uniqueId, Neutral::gamma))
+            .c_str(),
+        "", 1);
 
     SetEfficiencies(m.first, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-                    deltaCutEffTemp);
+                    deltaCutEffTemp, deltaPartialCutEffTemp);
 
     orEffMisRecVal += orEffTemp.getVal() * m.second;
     boxEffMisRecVal += boxEffTemp.getVal() * m.second;
     buDeltaCutEffMisRecVal += buDeltaCutEffTemp.getVal() * m.second;
     deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
+    deltaPartialCutEffMisRecVal += deltaPartialCutEffTemp.getVal() * m.second;
   }
   orEffMisRec_.setVal(orEffMisRecVal);
   boxEffMisRec_.setVal(boxEffMisRecVal);
   buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
   deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
+  deltaPartialCutEffMisRec_.setVal(deltaPartialCutEffMisRecVal);
   // std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
   //           << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
   //           << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
@@ -534,7 +550,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   //           "\n";
 
   SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0h_, boxEffBu2D0h_,
-                  buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_);
+                  buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_,
+                  deltaPartialCutEffBu2D0h_);
   // std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
   //           << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
   //           << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
@@ -550,6 +567,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   double boxEffPartRecVal = 0.0;
   double buDeltaCutEffPartRecVal = 0.0;
   double deltaCutEffPartRecVal = 0.0;
+  double deltaPartialCutEffPartRecVal = 0.0;
 
   for (auto &m : partRecModesMap) {
     RooRealVar orEffPartRecTemp(
@@ -566,19 +584,28 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         ("deltaCutEffPartRecTemp" + ComposeName(uniqueId, Neutral::gamma))
             .c_str(),
         "", 1);
+    RooRealVar deltaPartialCutEffPartRecTemp(
+        ("deltaPartialCutEffPartRecTemp" +
+         ComposeName(uniqueId, Neutral::gamma))
+            .c_str(),
+        "", 1);
 
     SetEfficiencies(m.first, orEffPartRecTemp, boxEffPartRecTemp,
-                    buDeltaCutEffPartRecTemp, deltaCutEffPartRecTemp);
+                    buDeltaCutEffPartRecTemp, deltaCutEffPartRecTemp,
+                    deltaPartialCutEffPartRecTemp);
 
     orEffPartRecVal += orEffPartRecTemp.getVal() * m.second;
     boxEffPartRecVal += boxEffPartRecTemp.getVal() * m.second;
     buDeltaCutEffPartRecVal += buDeltaCutEffPartRecTemp.getVal() * m.second;
     deltaCutEffPartRecVal += deltaCutEffPartRecTemp.getVal() * m.second;
+    deltaPartialCutEffPartRecVal +=
+        deltaPartialCutEffPartRecTemp.getVal() * m.second;
   }
   orEffPartRec_.setVal(orEffPartRecVal);
   boxEffPartRec_.setVal(boxEffPartRecVal);
   buDeltaCutEffPartRec_.setVal(buDeltaCutEffPartRecVal);
   deltaCutEffPartRec_.setVal(deltaCutEffPartRecVal);
+  deltaPartialCutEffPartRec_.setVal(deltaPartialCutEffPartRecVal);
   // std::cout << "\t orEffPartRec = " << orEffPartRec_.getVal() <<
   // "\n"
   //           << "\t boxEffPartRec = " << boxEffPartRec_.getVal()

@@ -90,7 +90,9 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0gamma_fracPdf1Delta() {
     return Bu2Dst0h_D0gamma_fracPdf1Delta_;
   }
-  RooRealVar &Bu2Dst0h_D0gamma_thresholdDelta() { return Bu2Dst0h_D0gamma_thresholdDelta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_thresholdDelta() {
+    return Bu2Dst0h_D0gamma_thresholdDelta_;
+  }
   RooRealVar &Bu2Dst0h_D0gamma_aDelta() { return Bu2Dst0h_D0gamma_aDelta_; }
   RooRealVar &Bu2Dst0h_D0gamma_bDelta() { return Bu2Dst0h_D0gamma_bDelta_; }
   RooRealVar &Bu2Dst0h_D0gamma_cDelta() { return Bu2Dst0h_D0gamma_cDelta_; }
@@ -150,9 +152,7 @@ class NeutralVars {
     return pdfDelta_misId_Bu2Dst0h_D0pi0_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_meanBu() { return Bu2Dst0h_D0pi0_meanBu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_KpiSigmaBu() {
-    return Bu2Dst0h_D0pi0_KpiSigmaBu_;
-  }
+  RooRealVar &Bu2Dst0h_D0pi0_KpiSigmaBu() { return Bu2Dst0h_D0pi0_KpiSigmaBu_; }
   RooRealVar &Bu2Dst0h_D0pi0_a1Bu() { return Bu2Dst0h_D0pi0_a1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_a2Bu() { return Bu2Dst0h_D0pi0_a2Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_n1Bu() { return Bu2Dst0h_D0pi0_n1Bu_; }
@@ -185,7 +185,9 @@ class NeutralVars {
     return buDeltaCutEffBu2Dst0h_D0pi0_;
   }
   RooRealVar &deltaCutEffBu2Dst0h_D0pi0() { return deltaCutEffBu2Dst0h_D0pi0_; }
-  RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0() { return deltaPartialCutEffBu2Dst0h_D0pi0_; }
+  RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0() {
+    return deltaPartialCutEffBu2Dst0h_D0pi0_;
+  }
   double &fracBu2Dst0h_D0pi0() { return fracBu2Dst0h_D0pi0_; }
   double &initYieldFAVBu2Dst0h_D0pi0() { return initYieldFAVBu2Dst0h_D0pi0_; }
   // -------------------- MIS-REC -------------------- //
@@ -202,9 +204,8 @@ class NeutralVars {
   RooRealVar &boxEffMisRec() { return boxEffMisRec_; }
   RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
   RooRealVar &deltaCutEffMisRec() { return deltaCutEffMisRec_; }
-  double &fracMisRec_Bu2Dst0h_D0gamma() {
-    return fracMisRec_Bu2Dst0h_D0gamma_;
-  }
+  RooRealVar &deltaPartialCutEffMisRec() { return deltaPartialCutEffMisRec_; }
+  double &fracMisRec_Bu2Dst0h_D0gamma() { return fracMisRec_Bu2Dst0h_D0gamma_; }
   double &fracMisRec_Bu2Dst0h_D0gamma_WN() {
     return fracMisRec_Bu2Dst0h_D0gamma_WN_;
   }
@@ -229,6 +230,7 @@ class NeutralVars {
   RooRealVar &boxEffBu2D0h() { return boxEffBu2D0h_; }
   RooRealVar &buDeltaCutEffBu2D0h() { return buDeltaCutEffBu2D0h_; }
   RooRealVar &deltaCutEffBu2D0h() { return deltaCutEffBu2D0h_; }
+  RooRealVar &deltaPartialCutEffBu2D0h() { return deltaPartialCutEffBu2D0h_; }
   double &fracBu2D0h() { return fracBu2D0h_; }
   double &initYieldFAVBu2D0h() { return initYieldFAVBu2D0h_; }
   // -------------------- PART REC -------------------- //
@@ -249,13 +251,19 @@ class NeutralVars {
   RooRealVar &boxEffPartRec() { return boxEffPartRec_; }
   RooRealVar &buDeltaCutEffPartRec() { return buDeltaCutEffPartRec_; }
   RooRealVar &deltaCutEffPartRec() { return deltaCutEffPartRec_; }
-  double &fracPartRec_Bu2Dst0hst_D0pi0() { return fracPartRec_Bu2Dst0hst_D0pi0_; }
-  double &fracPartRec_Bu2Dst0hst_D0gamma() { return fracPartRec_Bu2Dst0hst_D0gamma_; }
+  RooRealVar &deltaPartialCutEffPartRec() { return deltaPartialCutEffPartRec_; }
+  double &fracPartRec_Bu2Dst0hst_D0pi0() {
+    return fracPartRec_Bu2Dst0hst_D0pi0_;
+  }
+  double &fracPartRec_Bu2Dst0hst_D0gamma() {
+    return fracPartRec_Bu2Dst0hst_D0gamma_;
+  }
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
-                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
+                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
+                       RooRealVar &deltaPartialCutEff);
 
  private:
   // Indicate if only used by one neutral
@@ -341,6 +349,7 @@ class NeutralVars {
   RooRealVar boxEffMisRec_;
   RooRealVar buDeltaCutEffMisRec_;
   RooRealVar deltaCutEffMisRec_;
+  RooRealVar deltaPartialCutEffMisRec_;
   double fracMisRec_Bu2Dst0h_D0gamma_;
   double fracMisRec_Bu2Dst0h_D0gamma_WN_;
   double fracMisRec_Bu2Dst0h_D0pi0_WN_;
@@ -362,6 +371,7 @@ class NeutralVars {
   RooRealVar boxEffBu2D0h_;
   RooRealVar buDeltaCutEffBu2D0h_;
   RooRealVar deltaCutEffBu2D0h_;
+  RooRealVar deltaPartialCutEffBu2D0h_;
   double fracBu2D0h_;
   double initYieldFAVBu2D0h_;
   // -------------------- PART REC -------------------- //
@@ -382,6 +392,7 @@ class NeutralVars {
   RooRealVar boxEffPartRec_;
   RooRealVar buDeltaCutEffPartRec_;
   RooRealVar deltaCutEffPartRec_;
+  RooRealVar deltaPartialCutEffPartRec_;
   double fracPartRec_Bu2Dst0hst_D0pi0_;
   double fracPartRec_Bu2Dst0hst_D0gamma_;
   double fracPartRec_;
@@ -413,25 +424,42 @@ template <Neutral neutral>
 void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                            RooRealVar &boxEff,
                                            RooRealVar &buDeltaCutEff,
-                                           RooRealVar &deltaCutEff) {
+                                           RooRealVar &deltaCutEff,
+                                           RooRealVar &deltaPartialCutEff) {
   std::string dlString = std::to_string(Configuration::Get().deltaLow());
   std::string dhString = std::to_string(Configuration::Get().deltaHigh());
   std::string blString = std::to_string(Configuration::Get().buDeltaLow());
   std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
-  std::string txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
-                            EnumToString(mode) + "_" + dlString + "_" +
-                            dhString + "_" + blString + "_" + bhString + ".txt";
+  std::string dlPartialString;
+  std::string dhPartialString;
+  std::string txtFileName;
+
+  switch (neutral) {
+    case Neutral::gamma:
+      dlPartialString = std::to_string(Configuration::Get().deltaPartialLow());
+      dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
+      txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
+                    EnumToString(mode) + "_" + dlString + "_" + dhString + "_" +
+                    dlPartialString + "_" + dhPartialString + "_" + blString +
+                    "_" + bhString + ".txt";
+      break;
+    case Neutral::pi0:
+      txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
+                    EnumToString(mode) + "_" + dlString + "_" + dhString + "_" +
+                    blString + "_" + bhString + ".txt";
+      break;
+  }
+
   std::string modeString = EnumToString(mode);
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
   if (!file_exists(txtFileName)) {
     std::string dirString;
-    // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
-    //   std::cout << txtFileName
-    //             << " doesn't exist:\n\tCalculating and setting efficiencies for"
-    //             << modeString << "...\n";
-    // }
+    // std::cout << txtFileName
+    //           << " doesn't exist:\n\tCalculating and setting efficiencies
+    //           for"
+    //           << modeString << "...\n";
     if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
         mode == Mode::Bu2Dst0pi_D0pi0_WN) {
       // To remove _WN for directory
@@ -527,12 +555,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
 
     double nInitial =
         chain.GetEntries(Configuration::Get().gammaCutString().c_str());
-    double nDeltaCut = chain.GetEntries(
-        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
-            .c_str());
-    double nBuCut = chain.GetEntries(
-        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
-            .c_str());
     double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
                                     "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
                                     blString + "&&Bu_Delta_M<" + bhString)
@@ -541,35 +563,50 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                    "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
                                    blString + "&&Bu_Delta_M<" + bhString + "))")
                                       .c_str());
+    double nBuCut = chain.GetEntries(
+        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+            .c_str());
+    double nDeltaCut = chain.GetEntries(
+        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+            .c_str());
 
     double orEffVal = nOr / nInitial;
     double boxEffVal = nBox / nInitial;
-    double deltaCutEffVal = nDeltaCut / nInitial;
     double buDeltaCutEffVal = nBuCut / nInitial;
+    double deltaCutEffVal = nDeltaCut / nInitial;
 
     std::ofstream outFile;
     outFile.open(txtFileName);
     outFile << "orEff " + std::to_string(orEffVal) + "\n";
     outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
-    outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
+
+    boxEff.setVal(boxEffVal);
+    buDeltaCutEff.setVal(buDeltaCutEffVal);
+    deltaCutEff.setVal(deltaCutEffVal);
+
+    if (neutral == Neutral::gamma) {
+      double nDeltaPartialCut = nDeltaPartialCut =
+          chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
+                            "&&Delta_M<" + dhPartialString)
+                               .c_str());
+      double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
+      outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEffVal) +
+                     "\n";
+      deltaPartialCutEff.setVal(deltaPartialCutEffVal);
+    }
     outFile.close();
 
-    // for 1D fit, orEff = deltaCutEff 
-    boxEff.setVal(boxEffVal);
-    deltaCutEff.setVal(deltaCutEffVal);
-    buDeltaCutEff.setVal(buDeltaCutEffVal);
     if (Configuration::Get().fit1D() == false) {
       orEff.setVal(orEffVal);
     } else {
       orEff.setVal(deltaCutEffVal);
     }
   } else {
-    // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
     //   // If exists, read in from txt file
-    //   std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-    //             << modeString << "...\n";
-    // }
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << modeString << "...\n";
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
     std::unordered_map<std::string, double> effMap;
@@ -584,20 +621,23 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     }
     // Use map key to set correct efficiency values
     boxEff.setVal(effMap.at("boxEff"));
-    deltaCutEff.setVal(effMap.at("deltaCutEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    deltaCutEff.setVal(effMap.at("deltaCutEff"));
+    if (neutral == Neutral::gamma) {
+      deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
+    }
     if (Configuration::Get().fit1D() == false) {
       orEff.setVal(effMap.at("orEff"));
     } else {
       orEff.setVal(effMap.at("deltaCutEff"));
     }
   }
-  // if (mode == Mode::Bu2Dst0rho_D0pi0 || mode == Mode::Bu2Dst0rho_D0gamma) {
-  //   std::cout << "\t orEff = " << orEff.getVal() << "\n"
-  //             << "\t boxEff = " << boxEff.getVal() << "\n"
-  //             << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-  //             << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
-  // }
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
+  //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
+  //           "\n";
 }
 
 // When we DO need to specialize certain cases, we can still do that (see
