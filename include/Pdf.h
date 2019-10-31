@@ -84,6 +84,7 @@ class PdfBase {
   virtual RooAbsReal &N_tot_PartRec() const = 0;
   virtual RooDstD0BG &pdfDelta_PartRec() const = 0;
   virtual RooAbsPdf &pdfBu_PartRec() const = 0;
+  virtual RooCruijff &pdfBuPartial_PartRec() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_PartRec() const = 0;
   virtual RooCruijff &pdfBu_misId_PartRec() const = 0;
 
@@ -267,6 +268,10 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_PartRec();
   }
+  virtual RooCruijff &pdfBuPartial_PartRec() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdfBuPartial_PartRec();
+  }
   virtual RooDstD0BG &pdfDelta_misId_PartRec() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_misId_PartRec();
@@ -349,12 +354,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
   PdfBase::yieldsBu_.add(
       NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
           .N_Bu_Bu2D0h());
-  // PdfBase::functionsBu_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBu_PartRec());
-  // PdfBase::yieldsBu_.add(
-  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-  //         .N_Bu_PartRec());
+  PdfBase::functionsBu_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdfBu_PartRec());
+  PdfBase::yieldsBu_.add(
+      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+          .N_Bu_PartRec());
   // if (_bachelor == Bachelor::k) {
   //   PdfBase::functionsBu_.add(
   //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -419,13 +424,13 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
       NeutralBachelorChargeVars<_neutral, _bachelor,
       _charge>::Get(PdfBase::uniqueId_)
           .N_BuPartial_Bu2D0h());
-  // PdfBase::functionsBuPartial_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBuPartial_PartRec());
-  // PdfBase::yieldsBuPartial_.add(
-  //     NeutralBachelorChargeVars<_neutral, _bachelor,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_BuPartial_PartRec());
+  PdfBase::functionsBuPartial_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdfBuPartial_PartRec());
+  PdfBase::yieldsBuPartial_.add(
+      NeutralBachelorChargeVars<_neutral, _bachelor,
+      _charge>::Get(PdfBase::uniqueId_)
+          .N_BuPartial_PartRec());
   // if (_bachelor == Bachelor::k) {
   //   PdfBase::functionsBuPartial_.add(
   //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
@@ -479,11 +484,11 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   PdfBase::yieldsDelta_.add(
       NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
           .N_Delta_Bu2D0h());
-  // PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-  //                                  .pdfDelta_PartRec());
-  // PdfBase::yieldsDelta_.add(
-  //     NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
-  //         .N_Delta_PartRec());
+  PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                   .pdfDelta_PartRec());
+  PdfBase::yieldsDelta_.add(
+      NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(PdfBase::uniqueId_)
+          .N_Delta_PartRec());
   // if (_bachelor == Bachelor::k) {
   //   PdfBase::functionsDelta_.add(
   //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_MisRec());
