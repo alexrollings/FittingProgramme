@@ -1755,60 +1755,6 @@ int main(int argc, char **argv) {
 
       return 1;
     } else {
-      if (!args("bl", buDeltaLowArg)) {
-        std::cout
-            << "Using default value for lower buDelta mass box threshold: " +
-                   std::to_string(config.buDeltaLow()) + "\n";
-      } else {
-        config.SetBuDeltaLow(buDeltaLowArg);
-        std::cout << "Set value for lower buDelta mass box threshold: " +
-                         std::to_string(config.buDeltaLow()) + "\n";
-      }
-      if (!args("bh", buDeltaHighArg)) {
-        std::cout
-            << "Using default value for upper buDelta mass box threshold: " +
-                   std::to_string(config.buDeltaHigh()) + "\n";
-      } else {
-        config.SetBuDeltaHigh(buDeltaHighArg);
-        std::cout << "Set value for upper buDelta mass box threshold: " +
-                         std::to_string(config.buDeltaHigh()) + "\n";
-      }
-      if (!args("dl", deltaLowArg)) {
-        std::cout
-            << "Using default value for lower delta mass box threshold: " +
-                   std::to_string(config.deltaLow()) + "\n";
-      } else {
-        config.SetDeltaLow(deltaLowArg);
-        std::cout << "Set value for lower delta mass box threshold: " +
-                         std::to_string(config.deltaLow()) + "\n";
-      }
-      if (!args("dh", deltaHighArg)) {
-        std::cout
-            << "Using default value for upper delta mass box threshold: " +
-                   std::to_string(config.deltaHigh()) + "\n";
-      } else {
-        config.SetDeltaHigh(deltaHighArg);
-        std::cout << "Set value for upper delta mass box threshold: " +
-                         std::to_string(config.deltaHigh()) + "\n";
-      }
-      if (!args("dpl", deltaPartialLowArg)) {
-        std::cout << "Using default value for lower deltaPartial mass box "
-                     "threshold: " +
-                         std::to_string(config.deltaPartialLow()) + "\n";
-      } else {
-        config.SetDeltaPartialLow(deltaPartialLowArg);
-        std::cout << "Set value for lower deltaPartial mass box threshold: " +
-                         std::to_string(config.deltaPartialLow()) + "\n";
-      }
-      if (!args("dph", deltaPartialHighArg)) {
-        std::cout << "Using default value for upper deltaPartial mass box "
-                     "threshold: " +
-                         std::to_string(config.deltaPartialHigh()) + "\n";
-      } else {
-        config.SetDeltaPartialHigh(deltaPartialHighArg);
-        std::cout << "Set value for upper deltaPartial mass box threshold: " +
-                         std::to_string(config.deltaPartialHigh()) + "\n";
-      }
 
       if (!args("toys", toysArg)) {
         std::cout << "Running data fit.\n";
@@ -1897,6 +1843,61 @@ int main(int argc, char **argv) {
         std::cerr << "charge assignment failed, please specify: "
                      "-charge=[plus,minus] or -charge=[total].\n";
         return 1;
+      }
+
+      if (!args("bl", buDeltaLowArg)) {
+        std::cout
+            << "Using default value for lower buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaLow()) + "\n";
+      } else {
+        config.SetBuDeltaLow(buDeltaLowArg);
+        std::cout << "Set value for lower buDelta mass box threshold: " +
+                         std::to_string(config.buDeltaLow()) + "\n";
+      }
+      if (!args("bh", buDeltaHighArg)) {
+        std::cout
+            << "Using default value for upper buDelta mass box threshold: " +
+                   std::to_string(config.buDeltaHigh()) + "\n";
+      } else {
+        config.SetBuDeltaHigh(buDeltaHighArg);
+        std::cout << "Set value for upper buDelta mass box threshold: " +
+                         std::to_string(config.buDeltaHigh()) + "\n";
+      }
+      if (!args("dl", deltaLowArg)) {
+        std::cout
+            << "Using default value for lower delta mass box threshold: " +
+                   std::to_string(config.deltaLow()) + "\n";
+      } else {
+        config.SetDeltaLow(deltaLowArg);
+        std::cout << "Set value for lower delta mass box threshold: " +
+                         std::to_string(config.deltaLow()) + "\n";
+      }
+      if (!args("dh", deltaHighArg)) {
+        std::cout
+            << "Using default value for upper delta mass box threshold: " +
+                   std::to_string(config.deltaHigh()) + "\n";
+      } else {
+        config.SetDeltaHigh(deltaHighArg);
+        std::cout << "Set value for upper delta mass box threshold: " +
+                         std::to_string(config.deltaHigh()) + "\n";
+      }
+      if (config.neutral() == Neutral::gamma) {
+        if (!args("dpl", deltaPartialLowArg)) {
+          std::cout << "Only fitting Bu mass for gamma delta mass window.\n";
+        } else {
+          config.SetDeltaPartialLow(deltaPartialLowArg);
+          config.fitBuPartial() = true;
+          std::cout << "Set value for lower deltaPartial mass box threshold: " +
+                           std::to_string(config.deltaPartialLow()) + "\n";
+        }
+        if (!args("dph", deltaPartialHighArg)) {
+          std::cout << "Only fitting Bu mass for gamma delta mass window.\n";
+        } else {
+          config.SetDeltaPartialHigh(deltaPartialHighArg);
+          config.fitBuPartial() = true;
+          std::cout << "Set value for upper deltaPartial mass box threshold: " +
+                           std::to_string(config.deltaPartialHigh()) + "\n";
+        }
       }
     }
   }

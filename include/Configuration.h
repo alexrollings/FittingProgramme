@@ -91,6 +91,7 @@ class Configuration {
   bool &fit1D() { return fit1D_; }
   bool &splitByCharge() { return splitByCharge_; }
   bool &noFit() { return noFit_; }
+  bool &fitBuPartial() { return fitBuPartial_; }
 
  private:
   Configuration();
@@ -137,6 +138,7 @@ class Configuration {
   bool fit1D_;
   bool splitByCharge_;
   bool noFit_;
+  bool fitBuPartial_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
