@@ -454,7 +454,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                             EnumToString(mode) + "_" +
                             Configuration::Get().ReturnBoxString() + ".txt";
 
-  if (neutral == Neutral::gamma) {
+  if (Configuration::Get().fitBuPartial() == true) {
     dlPartialString = std::to_string(Configuration::Get().deltaPartialLow());
     dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
   }
@@ -569,21 +569,18 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                     blString + "&&Bu_Delta_M<" + bhString)
                                        .c_str());
     double nOr;
-    switch (neutral) {
-      case Neutral::gamma:
-        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                                blString + "&&Bu_Delta_M<" + bhString +
-                                ")||(Delta_M>" + dlPartialString +
-                                "&&Delta_M<" + dhPartialString + "))")
-                                   .c_str());
-        break;
-      case Neutral::pi0:
-        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                                blString + "&&Bu_Delta_M<" + bhString + "))")
-                                   .c_str());
-        break;
+    if (Configuration::Get().fitBuPartial() == true) {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                              blString + "&&Bu_Delta_M<" + bhString +
+                              ")||(Delta_M>" + dlPartialString + "&&Delta_M<" +
+                              dhPartialString + "))")
+                                 .c_str());
+    } else {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                              blString + "&&Bu_Delta_M<" + bhString + "))")
+                                 .c_str());
     }
     double nBuCut = chain.GetEntries(
         (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
@@ -608,7 +605,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     buDeltaCutEff.setVal(buDeltaCutEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
 
-    if (neutral == Neutral::gamma) {
+    if (Configuration::Get().fitBuPartial() == true) {
       double nDeltaPartialCut =
           chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
                             "&&Delta_M<" + dhPartialString)
@@ -645,7 +642,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     boxEff.setVal(effMap.at("boxEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
-    if (neutral == Neutral::gamma) {
+    if (Configuration::Get().fitBuPartial() == true) {
       deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
     }
     if (Configuration::Get().fit1D() == false) {
