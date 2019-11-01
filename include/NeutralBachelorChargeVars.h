@@ -349,7 +349,7 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
         RooArgList(NeutralVars<_neutral>::Get(uniqueId).deltaCutEffPartRec(),
                    NeutralVars<_neutral>::Get(uniqueId).orEffPartRec(),
                    *N_PartRec_)));
-    if (_neutral == Neutral::gamma) {
+    if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_BuPartial_Bu2Dst0h_D0gamma_" +
@@ -608,7 +608,7 @@ NeutralBachelorChargeVarsImpl<
         RooArgList(NeutralVars<_neutral>::Get(uniqueId).deltaCutEffPartRec(),
                    NeutralVars<_neutral>::Get(uniqueId).orEffPartRec(),
                    *N_PartRec_)));
-    if (_neutral == Neutral::gamma) {
+    if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_BuPartial_Bu2Dst0h_D0gamma_" +
