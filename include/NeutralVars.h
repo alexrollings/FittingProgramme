@@ -570,17 +570,31 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                        .c_str());
     double nOr;
     if (Configuration::Get().fitBuPartial() == true) {
-      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                              blString + "&&Bu_Delta_M<" + bhString +
-                              ")||(Delta_M>" + dlPartialString + "&&Delta_M<" +
-                              dhPartialString + "))")
-                                 .c_str());
+      if (Configuration::Get().fit1D() == false) {
+        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                                blString + "&&Bu_Delta_M<" + bhString +
+                                ")||(Delta_M>" + dlPartialString +
+                                "&&Delta_M<" + dhPartialString + "))")
+                                   .c_str());
+      } else {
+        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                "&&Delta_M<" + dhString + ")||(Delta_M>" +
+                                dlPartialString + "&&Delta_M<" +
+                                dhPartialString + "))")
+                                   .c_str());
+      }
     } else {
-      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                              blString + "&&Bu_Delta_M<" + bhString + "))")
-                                 .c_str());
+      if (Configuration::Get().fit1D() == false) {
+        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                                blString + "&&Bu_Delta_M<" + bhString + "))")
+                                   .c_str());
+      } else {
+        nOr = chain.GetEntries(
+            (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+                .c_str());
+      }
     }
     double nBuCut = chain.GetEntries(
         (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
