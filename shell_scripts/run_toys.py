@@ -159,7 +159,10 @@ if __name__ == "__main__":
         # os.mkdir(j_dir + 'build/')
 
         templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
-        scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+        if neutral == "pi0":
+            scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+        else:
+            scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
         substitutions = {
             "nJob":
             i,

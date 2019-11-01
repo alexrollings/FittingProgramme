@@ -2233,24 +2233,34 @@ int main(int argc, char **argv) {
 
         for (auto &p : pdfs) {
           if (p->bachelor() == Bachelor::pi) {
-          std::cout << "Bu2Dst0h_D0gamma"
-                    << ":\n";
-          std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
-                    << "\n";
-          std::cout << "\tN_BuPartial: "
-                    << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0gamma().getVal()
-                    << "\n";
-          std::cout << "\nBu2Dst0h_D0pi0"
-                    << ":\n";
-          std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal()
-                    << "\n";
-          std::cout << "\tN_BuPartial: "
-                    << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
-                    << "\n";
+            if (config.neutral() == Neutral::gamma) {
+              std::cout << "Bu2Dst0h_D0gamma"
+                        << ":\n";
+              std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
+              std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
+                        << "\n";
+              if (config.fitBuPartial() == true) {
+                std::cout << "\tN_BuPartial: "
+                          << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
+              }
+              if (config.fit1D() == false) {
+                std::cout << "\tN_Delta: "
+                          << p->N_Delta_Bu2Dst0h_D0gamma().getVal() << "\n";
+              }
+            }
+            std::cout << "\nBu2Dst0h_D0pi0"
+                      << ":\n";
+            std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
+            std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal()
+                      << "\n";
+            if (config.fitBuPartial() == true) {
+              std::cout << "\tN_BuPartial: "
+                        << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
+            }
+            if (config.fit1D() == false) {
+              std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
+                        << "\n";
+            }
           }
         }
       }

@@ -618,6 +618,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     boxEff.setVal(boxEffVal);
     buDeltaCutEff.setVal(buDeltaCutEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
+    orEff.setVal(orEffVal);
 
     if (Configuration::Get().fitBuPartial() == true) {
       double nDeltaPartialCut =
@@ -630,12 +631,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
       deltaPartialCutEff.setVal(deltaPartialCutEffVal);
     }
     outFile.close();
-
-    if (Configuration::Get().fit1D() == false) {
-      orEff.setVal(orEffVal);
-    } else {
-      orEff.setVal(deltaCutEffVal);
-    }
   } else {
     //   // If exists, read in from txt file
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
@@ -656,13 +651,9 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     boxEff.setVal(effMap.at("boxEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
+    orEff.setVal(effMap.at("orEff"));
     if (Configuration::Get().fitBuPartial() == true) {
       deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
-    }
-    if (Configuration::Get().fit1D() == false) {
-      orEff.setVal(effMap.at("orEff"));
-    } else {
-      orEff.setVal(effMap.at("deltaCutEff"));
     }
   }
   // std::cout << "\t orEff = " << orEff.getVal() << "\n"
