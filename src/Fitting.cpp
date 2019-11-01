@@ -991,7 +991,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 legend, lumiLegend, outputDir, config, colorMap);
-  if (config.neutral() == Neutral::gamma) {
+  if (config.fitBuPartial() == true) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet,
                   simPdf, legend, lumiLegend, outputDir, config, colorMap);
   }
@@ -1270,7 +1270,7 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
   }
   deltaDataSet->append(*buDeltaDataSet);
 
-  if (config.neutral() == Neutral::gamma) {
+  if (config.fitBuPartial() == true) {
     auto buDeltaPartialAbsData =
         dataSet.reduce(("fitting==fitting::" +
                         ComposeFittingName(Mass::buDeltaPartial, neutral,
@@ -1422,7 +1422,7 @@ void MakeMapFittingDataSet(
     std::cout << "Appended dataSet to category " +
                      ComposeFittingName(Mass::buDelta, n, b, d, c) + "\n";
   }
-  if (n == Neutral::gamma) {
+  if (config.fitBuPartial() == true) {
     RooDataSet *buDeltaPartialDataSet = nullptr;
     buDeltaPartialDataSet = dynamic_cast<RooDataSet *>(
         mapDataLabelDataSet[ComposeDataLabelName(n, b, d, c)]->reduce(
@@ -1844,6 +1844,9 @@ int main(int argc, char **argv) {
                      "-charge=[plus,minus] or -charge=[total].\n";
         return 1;
       }
+      if (chargeVec.size() > 1) {
+        config.splitByCharge() = true;
+      }
 
       if (!args("bl", buDeltaLowArg)) {
         std::cout
@@ -1900,10 +1903,6 @@ int main(int argc, char **argv) {
         }
       }
     }
-  }
-
-  if (chargeVec.size() > 1) {
-    config.splitByCharge() = true;
   }
 
   // Raise lower mass boundary in delta mass for pi0 plots
