@@ -1898,14 +1898,15 @@ int main(int argc, char **argv) {
           config.fitBuPartial() = true;
           std::cout << "Set value for lower deltaPartial mass box threshold: " +
                            std::to_string(config.deltaPartialLow()) + "\n";
-        }
-        if (!args("dph", deltaPartialHighArg)) {
-          std::cout << "Only fitting Bu mass for gamma delta mass window.\n";
-        } else {
-          config.SetDeltaPartialHigh(deltaPartialHighArg);
-          config.fitBuPartial() = true;
-          std::cout << "Set value for upper deltaPartial mass box threshold: " +
-                           std::to_string(config.deltaPartialHigh()) + "\n";
+          if (!args("dph", deltaPartialHighArg)) {
+            std::cout << "Only fitting Bu mass for gamma delta mass window.\n";
+          } else {
+            config.SetDeltaPartialHigh(deltaPartialHighArg);
+            config.fitBuPartial() = true;
+            std::cout
+                << "Set value for upper deltaPartial mass box threshold: " +
+                       std::to_string(config.deltaPartialHigh()) + "\n";
+          }
         }
       }
     }
@@ -2176,6 +2177,7 @@ int main(int argc, char **argv) {
         buDeltaCutEffSignal = buDeltaCutEffSignalRRV.getVal();
         deltaCutEffSignal = deltaCutEffSignalRRV.getVal();
         deltaPartialCutEffSignal = deltaPartialCutEffSignalRRV.getVal();
+
         tree.Branch(
             ("orEffSignal_" + EnumToString(config.neutral())).c_str(),
             &orEffSignal,
@@ -2206,6 +2208,51 @@ int main(int argc, char **argv) {
         tree.Write();
         outputFile.Write();
         outputFile.Close();
+
+        NeutralVars<Neutral::gamma> gVars(id);
+        NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi, Charge::total>
+            nbcVars(id);
+
+        std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0gamma().getVal()
+                  << "\n"
+                  << "buDeltaCutEff = "
+                  << gVars.buDeltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
+                  << "deltaCutEff = "
+                  << gVars.deltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
+                  << "deltaPartialCutEff = "
+                  << gVars.deltaPartialCutEffBu2Dst0h_D0gamma().getVal()
+                  << "\n";
+
+        std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0pi0().getVal() << "\n"
+                  << "buDeltaCutEff = "
+                  << gVars.buDeltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
+                  << "deltaCutEff = "
+                  << gVars.deltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
+                  << "deltaPartialCutEff = "
+                  << gVars.deltaPartialCutEffBu2Dst0h_D0pi0().getVal() << "\n";
+
+        for (auto &p : pdfs) {
+          if (p->bachelor() == Bachelor::pi) {
+          std::cout << "Bu2Dst0h_D0gamma"
+                    << ":\n";
+          std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
+                    << "\n";
+          std::cout << "\tN_BuPartial: "
+                    << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0gamma().getVal()
+                    << "\n";
+          std::cout << "\nBu2Dst0h_D0pi0"
+                    << ":\n";
+          std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal()
+                    << "\n";
+          std::cout << "\tN_BuPartial: "
+                    << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
+                    << "\n";
+          }
+        }
       }
     } else {
       if (config.noFit() == false) {

@@ -58,12 +58,20 @@ class PdfBase {
   // std::unique_ptr<RooAddPdf> addPdf_;
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_Delta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooCBShape &pdfBuPartial_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsReal &N_Bu_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsReal &N_Delta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAddPdf &pdfBuPartial_Bu2Dst0h_D0pi0() const = 0;
@@ -171,6 +179,22 @@ class Pdf : public PdfBase {
     return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
         .N_tot_Bu2Dst0h_D0gamma();
   }
+  virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Bu_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_BuPartial_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsReal &N_Delta_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Delta_Bu2Dst0h_D0gamma();
+  }
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0gamma();
   }
@@ -193,6 +217,22 @@ class Pdf : public PdfBase {
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const {
     return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
         .N_tot_Bu2Dst0h_D0pi0();
+  }
+  virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Bu2Dst0h_D0pi0();
+  }
+  virtual RooAbsReal &N_Bu_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Bu_Bu2Dst0h_D0pi0();
+  }
+  virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_BuPartial_Bu2Dst0h_D0pi0();
+  }
+  virtual RooAbsReal &N_Delta_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(uniqueId_)
+        .N_Delta_Bu2Dst0h_D0pi0();
   }
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0pi0();
