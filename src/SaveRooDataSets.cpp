@@ -46,7 +46,6 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
 
   // Initialise RooRealVars now neutral has been specified
   Configuration &config = Configuration::Get();
-  Configuration::Categories &categories = Configuration::Get().categories();
   config.buMass().setMax(6000);
   config.buMass().setMin(4000);
   config.buMass().setBins(400);
