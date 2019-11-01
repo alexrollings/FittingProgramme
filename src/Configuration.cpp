@@ -171,25 +171,22 @@ Configuration::Configuration()
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
 std::string Configuration::ReturnBoxString() {
   std::ostringstream out;
-  switch (neutral()) {
-    case Neutral::pi0:
-      if (fit1D_ == true) {
-        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
-      } else {
-        out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
-            << buDeltaLow_ << "_" << buDeltaHigh_;
-      }
-      break;
-    case Neutral::gamma:
-      if (fit1D_ == true) {
-        out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
-      } else {
-        out << std::setprecision(4) << deltaPartialLow_ << "_"
-            << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
-            << buDeltaLow_ << "_" << buDeltaHigh_;
-      }
-      break;
+  if (fitBuPartial_ == true) {
+    if (fit1D_ == true) {
+      out << std::setprecision(4) << deltaPartialLow_ << "_"
+          << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
+    } else {
+      out << std::setprecision(4) << deltaPartialLow_ << "_"
+          << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
+          << buDeltaLow_ << "_" << buDeltaHigh_;
+    }
+  } else {
+    if (fit1D_ == true) {
+      out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
+    } else {
+      out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
+          << buDeltaLow_ << "_" << buDeltaHigh_;
+    }
   }
   return out.str();
 }
