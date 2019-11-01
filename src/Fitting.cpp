@@ -1055,7 +1055,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                 Charge::total>::Get(id)
                 .CreateBuAddPdf();
-            if (config.fitBuPartial() == false) {
+            if (config.fitBuPartial() == true) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::total>::Get(id)
                   .CreateBuPartialAddPdf();
@@ -1090,7 +1090,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(
                 id)
                 .CreateBuAddPdf();
-            if (config.fitBuPartial() == false) {
+            if (config.fitBuPartial() == true) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::plus>::Get(id)
                   .CreateBuPartialAddPdf();
@@ -1124,7 +1124,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                 Charge::minus>::Get(id)
                 .CreateBuAddPdf();
-            if (config.fitBuPartial() == false) {
+            if (config.fitBuPartial() == true) {
               Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                   Charge::minus>::Get(id)
                   .CreateBuPartialAddPdf();
