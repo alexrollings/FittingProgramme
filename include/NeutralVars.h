@@ -270,6 +270,7 @@ class NeutralVars {
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
+  void ExtractChain(Mode mode, TChain &chain);
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
                        RooRealVar &deltaPartialCutEff);
@@ -435,6 +436,92 @@ inline std::vector<std::string> SplitLine(std::string const &str) {
   }
   return stringVector;
 }
+
+template <Neutral neutral>
+void NeutralVars<neutral>::ExtractChain(Mode mode, TChain &chain) {
+  std::string modeString = EnumToString(mode);
+  std::string dirString;
+  // std::cout << txtFileName
+  //           << " doesn't exist:\n\tCalculating and setting efficiencies
+  //           for"
+  //           << modeString << "...\n";
+  if (mode == Mode::Bu2Dst0pi_D0gamma_WN || mode == Mode::Bu2Dst0pi_D0pi0_WN) {
+    // To remove _WN for directory
+    dirString = modeString.substr(0, modeString.size() - 3);
+  } else {
+    dirString = modeString;
+  }
+
+  std::string path;
+  switch (neutral) {
+    case Neutral::gamma:
+      path =
+          "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+          "cross_feed_removed/";
+      break;
+    case Neutral::pi0:
+      path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+      break;
+  }
+
+  std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagUp/" + path + modeString +
+                          "_2011_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagDown/" + path + modeString +
+                          "_2011_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagUp/" + path + modeString +
+                          "_2012_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagDown/" + path + modeString +
+                          "_2012_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagUp/" + path + modeString +
+                          "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagDown/" + path + modeString +
+                          "_2015_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagUp/" + path + modeString +
+                          "_2016_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagDown/" + path + modeString +
+                          "_2016_MagDown_BDT1_BDT2_PID_TM.root");
+
+  chain.Add(inputfile_1.c_str());
+  chain.Add(inputfile_2.c_str());
+  chain.Add(inputfile_3.c_str());
+  chain.Add(inputfile_4.c_str());
+  chain.Add(inputfile_5.c_str());
+  chain.Add(inputfile_6.c_str());
+  chain.Add(inputfile_7.c_str());
+  chain.Add(inputfile_8.c_str());
+
+  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
+      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
+    std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                            dirString + "_2015_MagUp/" + path + modeString +
+                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2015_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagUp/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
+    chain.Add(inputfile_9.c_str());
+    chain.Add(inputfile_10.c_str());
+    chain.Add(inputfile_11.c_str());
+    chain.Add(inputfile_12.c_str());
+  }
+}
+
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
@@ -459,108 +546,24 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
   }
 
-  std::string modeString = EnumToString(mode);
-
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
   if (!file_exists(txtFileName)) {
-    std::string dirString;
-    // std::cout << txtFileName
-    //           << " doesn't exist:\n\tCalculating and setting efficiencies
-    //           for"
-    //           << modeString << "...\n";
-    if (mode == Mode::Bu2Dst0pi_D0gamma_WN ||
-        mode == Mode::Bu2Dst0pi_D0pi0_WN) {
-      // To remove _WN for directory
-      dirString = modeString.substr(0, modeString.size() - 3);
-    } else {
-      dirString = modeString;
-    }
-
-    std::string path, ttree;
-    switch (neutral) {
-      case Neutral::gamma:
-        path =
-            "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-            "cross_feed_removed/";
-        ttree = "BtoDstar0h3_h1h2gammaTuple";
-        break;
-      case Neutral::pi0:
-        path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
-        ttree = "BtoDstar0h3_h1h2pi0RTuple";
-        break;
-    }
-
-    std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2011_MagUp/" + path + modeString +
-                            "_2011_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2011_MagDown/" + path + modeString +
-                            "_2011_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2012_MagUp/" + path + modeString +
-                            "_2012_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2012_MagDown/" + path + modeString +
-                            "_2012_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2015_MagUp/" + path + modeString +
-                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2015_MagDown/" + path + modeString +
-                            "_2015_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2016_MagUp/" + path + modeString +
-                            "_2016_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2016_MagDown/" + path + modeString +
-                            "_2016_MagDown_BDT1_BDT2_PID_TM.root");
-
-    TChain chain(ttree.c_str());
-
-    chain.Add(inputfile_1.c_str());
-    chain.Add(inputfile_2.c_str());
-    chain.Add(inputfile_3.c_str());
-    chain.Add(inputfile_4.c_str());
-    chain.Add(inputfile_5.c_str());
-    chain.Add(inputfile_6.c_str());
-    chain.Add(inputfile_7.c_str());
-    chain.Add(inputfile_8.c_str());
-
-    if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
-        mode != Mode::Bu2Dst0pi_D0pi0_WN &&
-        mode != Mode::Bu2Dst0pi_D0gamma_WN) {
-      std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                              dirString + "_2015_MagUp/" + path + modeString +
-                              "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-      std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                               dirString + "_ReDecay_2015_MagDown/" + path +
-                               modeString +
-                               "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
-      std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                               dirString + "_ReDecay_2016_MagUp/" + path +
-                               modeString +
-                               "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
-      std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                               dirString + "_ReDecay_2016_MagDown/" + path +
-                               modeString +
-                               "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
-      chain.Add(inputfile_9.c_str());
-      chain.Add(inputfile_10.c_str());
-      chain.Add(inputfile_11.c_str());
-      chain.Add(inputfile_12.c_str());
-    }
-
-    std::string cutString;
+    std::string cutString, ttree;
 
     switch (neutral) {
       case Neutral::gamma:
         cutString = Configuration::Get().gammaCutString();
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
         break;
       case Neutral::pi0:
         cutString = Configuration::Get().pi0CutString();
+        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
         break;
     }
+
+    TChain chain(ttree.c_str());
+    ExtractChain(mode, chain);
 
     double nInitial =
         chain.GetEntries(Configuration::Get().gammaCutString().c_str());
@@ -634,7 +637,7 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
   } else {
     //   // If exists, read in from txt file
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-    //           << modeString << "...\n";
+    //           << EnumToString(mode) << "...\n";
     std::ifstream inFile(txtFileName);
     // Create map to store efficiency string (label) and eff value
     std::unordered_map<std::string, double> effMap;
