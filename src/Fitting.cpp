@@ -2209,60 +2209,60 @@ int main(int argc, char **argv) {
         outputFile.Write();
         outputFile.Close();
 
-        NeutralVars<Neutral::gamma> gVars(id);
-        NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi, Charge::total>
-            nbcVars(id);
-
-        std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0gamma().getVal()
-                  << "\n"
-                  << "buDeltaCutEff = "
-                  << gVars.buDeltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
-                  << "deltaCutEff = "
-                  << gVars.deltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
-                  << "deltaPartialCutEff = "
-                  << gVars.deltaPartialCutEffBu2Dst0h_D0gamma().getVal()
-                  << "\n";
-
-        std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0pi0().getVal() << "\n"
-                  << "buDeltaCutEff = "
-                  << gVars.buDeltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
-                  << "deltaCutEff = "
-                  << gVars.deltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
-                  << "deltaPartialCutEff = "
-                  << gVars.deltaPartialCutEffBu2Dst0h_D0pi0().getVal() << "\n";
-
-        for (auto &p : pdfs) {
-          if (p->bachelor() == Bachelor::pi) {
-            if (config.neutral() == Neutral::gamma) {
-              std::cout << "Bu2Dst0h_D0gamma"
-                        << ":\n";
-              std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
-              std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
-                        << "\n";
-              if (config.fitBuPartial() == true) {
-                std::cout << "\tN_BuPartial: "
-                          << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
-              }
-              if (config.fit1D() == false) {
-                std::cout << "\tN_Delta: "
-                          << p->N_Delta_Bu2Dst0h_D0gamma().getVal() << "\n";
-              }
-            }
-            std::cout << "\nBu2Dst0h_D0pi0"
-                      << ":\n";
-            std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
-            std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal()
-                      << "\n";
-            if (config.fitBuPartial() == true) {
-              std::cout << "\tN_BuPartial: "
-                        << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
-            }
-            if (config.fit1D() == false) {
-              std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
-                        << "\n";
-            }
-          }
-        }
+        // NeutralVars<Neutral::gamma> gVars(id);
+        // NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi, Charge::total>
+        //     nbcVars(id);
+        //
+        // std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0gamma().getVal()
+        //           << "\n"
+        //           << "buDeltaCutEff = "
+        //           << gVars.buDeltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
+        //           << "deltaCutEff = "
+        //           << gVars.deltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
+        //           << "deltaPartialCutEff = "
+        //           << gVars.deltaPartialCutEffBu2Dst0h_D0gamma().getVal()
+        //           << "\n";
+        //
+        // std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0pi0().getVal() << "\n"
+        //           << "buDeltaCutEff = "
+        //           << gVars.buDeltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
+        //           << "deltaCutEff = "
+        //           << gVars.deltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
+        //           << "deltaPartialCutEff = "
+        //           << gVars.deltaPartialCutEffBu2Dst0h_D0pi0().getVal() << "\n";
+        //
+        // for (auto &p : pdfs) {
+        //   if (p->bachelor() == Bachelor::pi) {
+        //     if (config.neutral() == Neutral::gamma) {
+        //       std::cout << "Bu2Dst0h_D0gamma"
+        //                 << ":\n";
+        //       std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //       std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
+        //                 << "\n";
+        //       if (config.fitBuPartial() == true) {
+        //         std::cout << "\tN_BuPartial: "
+        //                   << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //       }
+        //       if (config.fit1D() == false) {
+        //         std::cout << "\tN_Delta: "
+        //                   << p->N_Delta_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //       }
+        //     }
+        //     std::cout << "\nBu2Dst0h_D0pi0"
+        //               << ":\n";
+        //     std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //     std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal()
+        //               << "\n";
+        //     if (config.fitBuPartial() == true) {
+        //       std::cout << "\tN_BuPartial: "
+        //                 << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //     }
+        //     if (config.fit1D() == false) {
+        //       std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
+        //                 << "\n";
+        //     }
+        //   }
+        // }
       }
     } else {
       if (config.noFit() == false) {
