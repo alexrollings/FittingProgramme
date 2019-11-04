@@ -396,9 +396,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   }
 
   // Pass empty RRV for deltaPartialCutEff in π0 mode
-  SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffBu2Dst0h_D0pi0_,
-                  boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
-                  deltaCutEffBu2Dst0h_D0pi0_);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEffBu2Dst0h_D0pi0_,
+      boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
+      deltaCutEffBu2Dst0h_D0pi0_, false);
   // std::cout << "\t orEffBu2Dst0h_D0pi0 = "
   //           << orEffBu2Dst0h_D0pi0_.getVal() << "\n"
   //           << "\t boxEffBu2Dst0h_D0pi0 = "
@@ -433,8 +434,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
         ("deltaCutEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
         1);
 
-    SetEfficiencies(m.first, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-                    deltaCutEffTemp);
+    Configuration::Get().SetEfficiencies(m.first, Bachelor::pi, orEffTemp,
+                                         boxEffTemp, buDeltaCutEffTemp,
+                                         deltaCutEffTemp, false);
 
     orEffMisRecVal += orEffTemp.getVal() * m.second;
     boxEffMisRecVal += boxEffTemp.getVal() * m.second;
@@ -452,16 +454,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() <<
   //           "\n";
 
-  SetEfficiencies(Mode::Bu2D0pi, orEffBu2D0h_, boxEffBu2D0h_,
-                  buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2D0pi, Bachelor::pi, orEffBu2D0h_, boxEffBu2D0h_,
+      buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_, false);
   // std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
   //           << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
   //           << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
   //           << "\n"
   //           << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
   //           << "\n";
-  SetEfficiencies(Mode::Bu2Dst0rho_D0pi0, orEffPartRec_, boxEffPartRec_,
-                  buDeltaCutEffPartRec_, deltaCutEffPartRec_);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2Dst0rho_D0pi0, Bachelor::pi, orEffPartRec_, boxEffPartRec_,
+      buDeltaCutEffPartRec_, deltaCutEffPartRec_, false);
   // std::cout << "\t orEffPartRec = "
   //           << orEffPartRec_.getVal() << "\n"
   //           << "\t boxEffPartRec = "
