@@ -507,23 +507,21 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", 1) {
-  SetMisIdEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffMisId_Bu2Dst0h_D0gamma_,
-                       boxEffMisId_Bu2Dst0h_D0gamma_,
-                       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                       deltaCutEffMisId_Bu2Dst0h_D0gamma_);
-  SetMisIdEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffMisId_Bu2Dst0h_D0pi0_,
-                       boxEffMisId_Bu2Dst0h_D0pi0_,
-                       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-                       deltaCutEffMisId_Bu2Dst0h_D0pi0_);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2Dst0pi_D0gamma, Bachelor::k, orEffMisId_Bu2Dst0h_D0gamma_,
+      boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
+      deltaCutEffMisId_Bu2Dst0h_D0gamma_, true);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2Dst0pi_D0pi0, Bachelor::k, orEffMisId_Bu2Dst0h_D0pi0_,
+      boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+      deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
-       NeutralVars<Neutral::pi0>::Get(uniqueId)
-               .fracMisRec_Bu2Dst0h_D0pi0_WN() /
+       NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec_Bu2Dst0h_D0pi0_WN() /
            NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()},
       {Mode::Bu2Dst0pi_D0gamma,
-       NeutralVars<Neutral::pi0>::Get(uniqueId)
-               .fracMisRec_Bu2Dst0h_D0gamma() /
+       NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec_Bu2Dst0h_D0gamma() /
            NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()},
       {Mode::Bu2Dst0pi_D0gamma_WN,
        NeutralVars<Neutral::pi0>::Get(uniqueId)
@@ -556,8 +554,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
         ("deltaCutEffMisIdTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
         "", 1);
 
-    SetMisIdEfficiencies(m.first, orEffMisIdTemp, boxEffMisIdTemp,
-                         buDeltaCutEffMisIdTemp, deltaCutEffMisIdTemp);
+    Configuration::Get().SetEfficiencies(
+        m.first, Bachelor::k, orEffMisIdTemp, boxEffMisIdTemp,
+        buDeltaCutEffMisIdTemp, deltaCutEffMisIdTemp, true);
 
     orEffMisId_MisRecVal += orEffMisIdTemp.getVal() * m.second;
     boxEffMisId_MisRecVal += boxEffMisIdTemp.getVal() * m.second;
@@ -581,10 +580,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
   //           << "\t deltaCutEffMisId_MisRec = "
   //           << deltaCutEffMisId_MisRec_.getVal() << "\n";
 
-  SetMisIdEfficiencies(Mode::Bu2D0pi, orEffMisId_Bu2D0h_, boxEffMisId_Bu2D0h_,
-                       buDeltaCutEffMisId_Bu2D0h_, deltaCutEffMisId_Bu2D0h_);
-  SetMisIdEfficiencies(Mode::Bu2Dst0rho_D0pi0, orEffMisId_PartRec_,
-                       boxEffMisId_PartRec_,
-                       buDeltaCutEffMisId_PartRec_,
-                       deltaCutEffMisId_PartRec_);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2D0pi, Bachelor::k, orEffMisId_Bu2D0h_, boxEffMisId_Bu2D0h_,
+      buDeltaCutEffMisId_Bu2D0h_, deltaCutEffMisId_Bu2D0h_, true);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bu2Dst0rho_D0pi0, Bachelor::k, orEffMisId_PartRec_,
+      boxEffMisId_PartRec_, buDeltaCutEffMisId_PartRec_,
+      deltaCutEffMisId_PartRec_, true);
 }

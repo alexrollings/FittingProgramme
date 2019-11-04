@@ -2152,17 +2152,16 @@ int main(int argc, char **argv) {
             "", 1);
         switch (config.neutral()) {
           case Neutral::gamma: {
-            NeutralVars<Neutral::gamma> gVars(id);
-            double deltaPartialCutEffSignal; 
+            double deltaPartialCutEffSignal;
             RooRealVar deltaPartialCutEffSignalRRV(
                 ("deltaPartialCutEffSignalRRV_" +
                  EnumToString(config.neutral()))
                     .c_str(),
                 "", 1);
-            gVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
-                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV,
-                                  deltaPartialCutEffSignalRRV);
+            config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma,
+                                   Bachelor::pi, orEffSignalRRV, boxEffSignalRRV,
+                                   buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
+                                   deltaPartialCutEffSignalRRV, false);
             deltaPartialCutEffSignal = deltaPartialCutEffSignalRRV.getVal();
             tree.Branch(
                 ("deltaPartialCutEffSignal_" + EnumToString(config.neutral()))
@@ -2174,10 +2173,10 @@ int main(int argc, char **argv) {
             tree.Fill();
           } break;
           case Neutral::pi0: {
-            NeutralVars<Neutral::pi0> pVars(id);
-            pVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
-                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV);
+            config.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0,
+                                   Bachelor::pi, orEffSignalRRV, boxEffSignalRRV,
+                                   buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
+                                   false);
           } break;
         }
         orEffSignal = orEffSignalRRV.getVal();
