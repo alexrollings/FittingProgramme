@@ -3,7 +3,13 @@
 #include "RooRealVar.h"
 #include "RooConstVar.h"
 #include "RooArgSet.h"
+#include "TChain.h" 
 #include <string>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <unordered_map>
 
 enum class Polarity { up, down };
 enum class Daughters { kpi, kk, pipi, pik };
@@ -92,6 +98,15 @@ class Configuration {
   bool &splitByCharge() { return splitByCharge_; }
   bool &noFit() { return noFit_; }
   bool &fitBuPartial() { return fitBuPartial_; }
+
+  void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
+  void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &orEff,
+                       RooRealVar &boxEff, RooRealVar &buDeltaCutEff,
+                       RooRealVar &deltaCutEff, bool misId);
+  void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &orEff,
+                       RooRealVar &boxEff, RooRealVar &buDeltaCutEff,
+                       RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff,
+                       bool misId);
 
  private:
   Configuration();

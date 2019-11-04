@@ -1130,3 +1130,364 @@ void Configuration::DefineCategories() {
       break;
   }
 }
+
+// inline allows a function to be defined multiple times. Templated functions
+// are implicitly inline
+inline bool file_exists(const std::string &name) {
+  std::ifstream infile(name);
+  return infile.good();
+}
+
+inline std::vector<std::string> SplitLine(std::string const &str) {
+  std::stringstream ss;
+  ss.str(str);
+  std::string tempString;
+  std::vector<std::string> stringVector;
+  // '' = char
+  while (std::getline(ss, tempString, ' ')) {
+    stringVector.emplace_back(tempString);
+  }
+  return stringVector;
+}
+
+
+void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
+  std::string modeString = EnumToString(mode);
+  std::string dirString;
+  // std::cout << txtFileName
+  //           << " doesn't exist:\n\tCalculating and setting efficiencies
+  //           for"
+  //           << modeString << "...\n";
+  if (mode == Mode::Bu2Dst0pi_D0gamma_WN || mode == Mode::Bu2Dst0pi_D0pi0_WN) {
+    // To remove _WN for directory
+    dirString = modeString.substr(0, modeString.size() - 3);
+  } else {
+    dirString = modeString;
+  }
+
+  std::string path, ttree;
+  switch (neutral()) {
+    case Neutral::gamma:
+      switch (bachelor) {
+        case Bachelor::pi:
+          path =
+              "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+              "cross_feed_removed/";
+          break;
+        case Bachelor::k:
+          path =
+              "gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
+              "cross_feed_removed/";
+          break;
+      }
+      ttree = "BtoDstar0h3_h1h2gammaTuple";
+      break;
+    case Neutral::pi0:
+      switch (bachelor) {
+        case Bachelor::pi:
+          path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          break;
+        case Bachelor::k:
+          path = "pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          break;
+      }
+      ttree = "BtoDstar0h3_h1h2pi0RTuple";
+      break;
+  }
+
+  std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagUp/" + path + modeString +
+                          "_2011_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2011_MagDown/" + path + modeString +
+                          "_2011_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagUp/" + path + modeString +
+                          "_2012_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2012_MagDown/" + path + modeString +
+                          "_2012_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagUp/" + path + modeString +
+                          "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2015_MagDown/" + path + modeString +
+                          "_2015_MagDown_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagUp/" + path + modeString +
+                          "_2016_MagUp_BDT1_BDT2_PID_TM.root");
+  std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                          dirString + "_2016_MagDown/" + path + modeString +
+                          "_2016_MagDown_BDT1_BDT2_PID_TM.root");
+
+  chain.Add(inputfile_1.c_str());
+  chain.Add(inputfile_2.c_str());
+  chain.Add(inputfile_3.c_str());
+  chain.Add(inputfile_4.c_str());
+  chain.Add(inputfile_5.c_str());
+  chain.Add(inputfile_6.c_str());
+  chain.Add(inputfile_7.c_str());
+  chain.Add(inputfile_8.c_str());
+
+  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
+      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
+    std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                            dirString + "_2015_MagUp/" + path + modeString +
+                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2015_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagUp/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+                             dirString + "_ReDecay_2016_MagDown/" + path +
+                             modeString +
+                             "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
+    chain.Add(inputfile_9.c_str());
+    chain.Add(inputfile_10.c_str());
+    chain.Add(inputfile_11.c_str());
+    chain.Add(inputfile_12.c_str());
+  }
+}
+
+// Function to be called in constructor of NVars, in order to construct
+// efficiency RCVars
+// Anything defined outside the class definition needs the scope :: operator
+void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
+                                    RooRealVar &orEff, RooRealVar &boxEff,
+                                    RooRealVar &buDeltaCutEff,
+                                    RooRealVar &deltaCutEff, bool misId) {
+  std::string dlString = std::to_string(deltaLow_);
+  std::string dhString = std::to_string(deltaHigh_);
+  std::string blString = std::to_string(buDeltaLow_);
+  std::string bhString = std::to_string(buDeltaHigh_);
+  std::string txtFileName;
+  if (misId == true) {
+    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
+                  EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
+                  ReturnBoxString() + ".txt";
+  } else {
+    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_" +
+                  EnumToString(mode) + "_" +
+                  ReturnBoxString() + ".txt";
+  }
+
+  // Check if txt file containing efficiencies for particular mode and box dimns
+  // exists, if not, calculate eff and save in txt file
+  if (!file_exists(txtFileName)) {
+    std::string cutString, ttree;
+
+    switch (neutral()) {
+      case Neutral::gamma:
+        cutString = gammaCutString_;
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
+        break;
+      case Neutral::pi0:
+        cutString = pi0CutString_;
+        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
+        break;
+    }
+
+    TChain chain(ttree.c_str());
+    ExtractChain(mode, bachelor, chain);
+
+    double nInitial =
+        chain.GetEntries(gammaCutString_.c_str());
+    double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+                                    "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+                                    blString + "&&Bu_Delta_M<" + bhString)
+                                       .c_str());
+    double nOr;
+    if (fit1D_ == false) {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                              blString + "&&Bu_Delta_M<" + bhString + "))")
+                                 .c_str());
+    } else {
+      nOr = chain.GetEntries(
+          (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+              .c_str());
+    }
+    double nBuCut = chain.GetEntries(
+        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+            .c_str());
+    double nDeltaCut = chain.GetEntries(
+        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+            .c_str());
+
+    double orEffVal = nOr / nInitial;
+    double boxEffVal = nBox / nInitial;
+    double buDeltaCutEffVal = nBuCut / nInitial;
+    double deltaCutEffVal = nDeltaCut / nInitial;
+
+    std::ofstream outFile;
+    outFile.open(txtFileName);
+    outFile << "orEff " + std::to_string(orEffVal) + "\n";
+    outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
+    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
+
+    boxEff.setVal(boxEffVal);
+    buDeltaCutEff.setVal(buDeltaCutEffVal);
+    deltaCutEff.setVal(deltaCutEffVal);
+    orEff.setVal(orEffVal);
+
+    outFile.close();
+  } else {
+    //   // If exists, read in from txt file
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << EnumToString(mode) << "...\n";
+    std::ifstream inFile(txtFileName);
+    // Create map to store efficiency string (label) and eff value
+    std::unordered_map<std::string, double> effMap;
+    std::string line;
+    // Loop over lines in txt file
+    while (std::getline(inFile, line)) {
+      // Separate label and value (white space)
+      std::vector<std::string> lineVec = SplitLine(line);
+      // Add to map
+      effMap.insert(
+          std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+    }
+    // Use map key to set correct efficiency values
+    boxEff.setVal(effMap.at("boxEff"));
+    buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    deltaCutEff.setVal(effMap.at("deltaCutEff"));
+    orEff.setVal(effMap.at("orEff"));
+  }
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
+  //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
+  //           "\n";
+}
+
+void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
+                                    RooRealVar &orEff, RooRealVar &boxEff,
+                                    RooRealVar &buDeltaCutEff,
+                                    RooRealVar &deltaCutEff,
+                                    RooRealVar &deltaPartialCutEff,
+                                    bool misId) {
+  std::string dlString = std::to_string(deltaLow_);
+  std::string dhString = std::to_string(deltaHigh_);
+  std::string blString = std::to_string(buDeltaLow_);
+  std::string bhString = std::to_string(buDeltaHigh_);
+  std::string dlPartialString = std::to_string(deltaPartialLow_);
+  std::string dhPartialString = std::to_string(deltaPartialHigh_);
+  std::string txtFileName;
+  if (misId == true) {
+    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
+                  EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
+                  ReturnBoxString() + ".txt";
+  } else {
+    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_" +
+                  EnumToString(mode) + "_" +
+                  ReturnBoxString() + ".txt";
+  }
+
+  // Check if txt file containing efficiencies for particular mode and box dimns
+  // exists, if not, calculate eff and save in txt file
+  if (!file_exists(txtFileName)) {
+    std::string cutString, ttree;
+
+    switch (neutral()) {
+      case Neutral::gamma:
+        cutString = gammaCutString_;
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
+        break;
+      case Neutral::pi0:
+        cutString = pi0CutString_;
+        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
+        break;
+    }
+
+    TChain chain(ttree.c_str());
+    ExtractChain(mode, bachelor, chain);
+
+    double nInitial =
+        chain.GetEntries(gammaCutString_.c_str());
+    double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+                                    "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+                                    blString + "&&Bu_Delta_M<" + bhString)
+                                       .c_str());
+    double nOr;
+    if (fit1D_ == false) {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                              blString + "&&Bu_Delta_M<" + bhString +
+                              ")||(Delta_M>" + dlPartialString + "&&Delta_M<" +
+                              dhPartialString + "))")
+                                 .c_str());
+    } else {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Delta_M>" +
+                              dlPartialString + "&&Delta_M<" + dhPartialString +
+                              "))")
+                                 .c_str());
+    }
+    double nBuCut = chain.GetEntries(
+        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+            .c_str());
+    double nDeltaCut = chain.GetEntries(
+        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+            .c_str());
+    double nDeltaPartialCut =
+        chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
+                          "&&Delta_M<" + dhPartialString)
+                             .c_str());
+
+    double orEffVal = nOr / nInitial;
+    double boxEffVal = nBox / nInitial;
+    double buDeltaCutEffVal = nBuCut / nInitial;
+    double deltaCutEffVal = nDeltaCut / nInitial;
+    double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
+
+    std::ofstream outFile;
+    outFile.open(txtFileName);
+    outFile << "orEff " + std::to_string(orEffVal) + "\n";
+    outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
+    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
+    outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEffVal) +
+                   "\n";
+
+    boxEff.setVal(boxEffVal);
+    orEff.setVal(orEffVal);
+    buDeltaCutEff.setVal(buDeltaCutEffVal);
+    deltaCutEff.setVal(deltaCutEffVal);
+    deltaPartialCutEff.setVal(deltaPartialCutEffVal);
+    outFile.close();
+  } else {
+    //   // If exists, read in from txt file
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << EnumToString(mode) << "...\n";
+    std::ifstream inFile(txtFileName);
+    // Create map to store efficiency string (label) and eff value
+    std::unordered_map<std::string, double> effMap;
+    std::string line;
+    // Loop over lines in txt file
+    while (std::getline(inFile, line)) {
+      // Separate label and value (white space)
+      std::vector<std::string> lineVec = SplitLine(line);
+      // Add to map
+      effMap.insert(
+          std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+    }
+    // Use map key to set correct efficiency values
+    boxEff.setVal(effMap.at("boxEff"));
+    buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    deltaCutEff.setVal(effMap.at("deltaCutEff"));
+    orEff.setVal(effMap.at("orEff"));
+    deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
+  }
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
+  //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
+  //           "\n";
+}
