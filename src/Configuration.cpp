@@ -1230,7 +1230,8 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
   chain.Add(inputfile_8.c_str());
 
   if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
-      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN) {
+      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN &&
+      mode != Mode::Bu2Dst0K_D0pi0 && mode != Mode::Bu2Dst0K_D0gamma) {
     std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
                             dirString + "_2015_MagUp/" + path + modeString +
                             "_2015_MagUp_BDT1_BDT2_PID_TM.root");
