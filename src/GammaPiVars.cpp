@@ -522,4 +522,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       orEffMisId_PartRec_(),
       boxEffMisId_PartRec_(),
       buDeltaCutEffMisId_PartRec_(),
-      deltaCutEffMisId_PartRec_() {}
+      deltaCutEffMisId_PartRec_() {
+  SetMisIdEfficiencies(Mode::Bu2Dst0K_D0gamma, orEffMisId_Bu2Dst0h_D0gamma_,
+                       boxEffMisId_Bu2Dst0h_D0gamma_,
+                       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
+                       deltaCutEffMisId_Bu2Dst0h_D0gamma_);
+  SetMisIdEfficiencies(Mode::Bu2Dst0K_D0pi0, orEffMisId_Bu2Dst0h_D0pi0_,
+                       boxEffMisId_Bu2Dst0h_D0pi0_,
+                       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+                       deltaCutEffMisId_Bu2Dst0h_D0pi0_);
+}
