@@ -120,6 +120,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                         "", RooArgList(pdf1Bu_misId_Bu2Dst0h_D0pi0_,
                                        pdf2Bu_misId_Bu2Dst0h_D0pi0_),
                         misId_Bu2Dst0h_D0pi0_fracPdf1Bu_)),
+      misId_Bu2Dst0h_D0pi0_meanBuPartial_(),
+      misId_Bu2Dst0h_D0pi0_sigma1BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_sigma2BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_a2BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_a1BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_n2BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_n1BuPartial_(),
+      pdf1BuPartial_misId_Bu2Dst0h_D0pi0_(),
+      pdf2BuPartial_misId_Bu2Dst0h_D0pi0_(),
+      misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_(),
+      pdfBuPartial_misId_Bu2Dst0h_D0pi0_(nullptr),
       orEffMisId_Bu2Dst0h_D0pi0_(("orEffMisId_Bu2Dst0h_D0pi0_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))

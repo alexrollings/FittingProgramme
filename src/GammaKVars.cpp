@@ -289,6 +289,65 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         "", RooArgList(pdf1Bu_misId_Bu2Dst0h_D0pi0_,
                                        pdf2Bu_misId_Bu2Dst0h_D0pi0_),
                         misId_Bu2Dst0h_D0pi0_fracPdf1Bu_)),
+      misId_Bu2Dst0h_D0pi0_meanBuPartial_(
+          ("misId_Bu2Dst0h_D0pi0_meanBuPartial_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 5.3620e+03),
+      misId_Bu2Dst0h_D0pi0_sigma1BuPartial_(
+          ("misId_Bu2Dst0h_D0pi0_sigma1BuPartial_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 4.5215e+01),
+      misId_Bu2Dst0h_D0pi0_sigma2BuPartial_(),
+      misId_Bu2Dst0h_D0pi0_a1BuPartial_(("misId_Bu2Dst0h_D0pi0_a1BuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma,
+                                                     Bachelor::k))
+                                            .c_str(),
+                                        "", 8.8800e-01),
+      misId_Bu2Dst0h_D0pi0_a2BuPartial_(("misId_Bu2Dst0h_D0pi0_a2BuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma,
+                                                     Bachelor::k))
+                                            .c_str(),
+                                        "", -5.8384e-01),
+      misId_Bu2Dst0h_D0pi0_n1BuPartial_(("misId_Bu2Dst0h_D0pi0_n1BuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma,
+                                                     Bachelor::k))
+                                            .c_str(),
+                                        "", 8.0992e+00),
+      misId_Bu2Dst0h_D0pi0_n2BuPartial_(("misId_Bu2Dst0h_D0pi0_n2BuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma,
+                                                     Bachelor::k))
+                                            .c_str(),
+                                        "", 1.0000e+01),
+      pdf1BuPartial_misId_Bu2Dst0h_D0pi0_(
+          ("pdf1BuPartial_misId_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          misId_Bu2Dst0h_D0pi0_meanBuPartial_,
+          misId_Bu2Dst0h_D0pi0_sigma1BuPartial_,
+          misId_Bu2Dst0h_D0pi0_a1BuPartial_, misId_Bu2Dst0h_D0pi0_n1BuPartial_),
+      pdf2BuPartial_misId_Bu2Dst0h_D0pi0_(
+          ("pdf2BuPartial_misId_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          misId_Bu2Dst0h_D0pi0_meanBuPartial_,
+          misId_Bu2Dst0h_D0pi0_sigma1BuPartial_,
+          misId_Bu2Dst0h_D0pi0_a2BuPartial_, misId_Bu2Dst0h_D0pi0_n2BuPartial_),
+      misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_(
+          ("misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 1.2836e-01),
+      pdfBuPartial_misId_Bu2Dst0h_D0pi0_(
+          new RooAddPdf(("pdfBuPartial_misId_Bu2Dst0h_D0pi0_" +
+                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                            .c_str(),
+                        "", RooArgList(pdf1BuPartial_misId_Bu2Dst0h_D0pi0_,
+                                       pdf2BuPartial_misId_Bu2Dst0h_D0pi0_),
+                        misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_)),
       orEffMisId_Bu2Dst0h_D0pi0_(("orEffMisId_Bu2Dst0h_D0pi0_" +
                                   ComposeName(uniqueId, Neutral::gamma,
                                               Bachelor::k))
@@ -449,21 +508,24 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBu()),
       Bu2D0h_sigmaLBuPartial_(("Bu2D0h_sigmaLBuPartial_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                           .c_str(),
-                       "", 4.8679e+01),
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", 4.8679e+01),
       Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                           .c_str(),
-                       "", 3.5437e+01),
-      pdfBuPartial_Bu2D0h_(("pdfBuPartial_Bu2D0h_" +
-                     ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                        .c_str(),
-                    "", Configuration::Get().buDeltaMass(),
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_meanBuPartial(),
-                    Bu2D0h_sigmaLBuPartial_, Bu2D0h_sigmaRBuPartial_,
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBuPartial(),
-                    NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBuPartial()),
+                               ComposeName(uniqueId, Neutral::gamma,
+                                           Bachelor::k))
+                                  .c_str(),
+                              "", 3.5437e+01),
+      pdfBuPartial_Bu2D0h_(
+          ("pdfBuPartial_Bu2D0h_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_meanBuPartial(),
+          Bu2D0h_sigmaLBuPartial_, Bu2D0h_sigmaRBuPartial_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBuPartial(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBuPartial()),
       // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
       // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
       N_tot_initVal_Bu2D0h_(
@@ -565,15 +627,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", RooArgSet(pdfBu_PartRec_D0pi0_, pdfBu_PartRec_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_frac_D0pi0())),
       partRec_sigmaLBuPartial_(("partRec_sigmaLBuPartial_" +
-                               ComposeName(uniqueId, Neutral::gamma,
-                                           Bachelor::k))
-                                  .c_str(),
-                              "", 5.0477e+01),
+                                ComposeName(uniqueId, Neutral::gamma,
+                                            Bachelor::k))
+                                   .c_str(),
+                               "", 5.0477e+01),
       partRec_sigmaRBuPartial_(("partRec_sigmaRBuPartial_" +
-                               ComposeName(uniqueId, Neutral::gamma,
-                                           Bachelor::k))
-                                  .c_str(),
-                              "", 3.3665e+01),
+                                ComposeName(uniqueId, Neutral::gamma,
+                                            Bachelor::k))
+                                   .c_str(),
+                               "", 3.3665e+01),
       pdfBuPartial_PartRec_(
           ("pdfBuPartial_PartRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

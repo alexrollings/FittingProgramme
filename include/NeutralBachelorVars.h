@@ -145,6 +145,39 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0pi0() {
     return *pdfBu_misId_Bu2Dst0h_D0pi0_;
   }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_meanBuPartial() {
+    return misId_Bu2Dst0h_D0pi0_meanBuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_sigma1BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_sigma1BuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_sigma2BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_sigma2BuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_a1BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_a1BuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_a2BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_a2BuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_n1BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_n1BuPartial_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_n2BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_n2BuPartial_;
+  }
+  RooCBShape &pdf1BuPartial_misId_Bu2Dst0h_D0pi0() {
+    return pdf1BuPartial_misId_Bu2Dst0h_D0pi0_;
+  }
+  RooCBShape &pdf2BuPartial_misId_Bu2Dst0h_D0pi0() {
+    return pdf2BuPartial_misId_Bu2Dst0h_D0pi0_;
+  }
+  RooRealVar &misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial() {
+    return misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
+  }
+  RooAbsPdf &pdfBuPartial_misId_Bu2Dst0h_D0pi0() {
+    return *pdfBuPartial_misId_Bu2Dst0h_D0pi0_;
+  }
   RooRealVar &orEffMisId_Bu2Dst0h_D0pi0() { return orEffMisId_Bu2Dst0h_D0pi0_; }
   RooRealVar &boxEffMisId_Bu2Dst0h_D0pi0() {
     return boxEffMisId_Bu2Dst0h_D0pi0_;
@@ -357,6 +390,17 @@ class NeutralBachelorVars {
   RooCBShape pdf2Bu_misId_Bu2Dst0h_D0pi0_;
   RooRealVar misId_Bu2Dst0h_D0pi0_fracPdf1Bu_;
   std::unique_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_D0pi0_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_meanBuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_sigma1BuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_sigma2BuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_a2BuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_a1BuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_n2BuPartial_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_n1BuPartial_;
+  RooCBShape pdf1BuPartial_misId_Bu2Dst0h_D0pi0_;
+  RooCBShape pdf2BuPartial_misId_Bu2Dst0h_D0pi0_;
+  RooRealVar misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
+  std::unique_ptr<RooAbsPdf> pdfBuPartial_misId_Bu2Dst0h_D0pi0_;
   RooRealVar orEffMisId_Bu2Dst0h_D0pi0_;
   RooRealVar boxEffMisId_Bu2Dst0h_D0pi0_;
   RooRealVar buDeltaCutEffMisId_Bu2Dst0h_D0pi0_;
