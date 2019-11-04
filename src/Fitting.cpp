@@ -1961,8 +1961,7 @@ int main(int argc, char **argv) {
               std::string dsFile =
                   inputDir + "/" +
                   ComposeFilename(y, p, b, config.neutral(), d, c) + ".root";
-              std::cout << "Extracting RooDataSet from file ... " << dsFile
-                        << "\n";
+              std::cout << "Extracting RooDataSet from file: \n";
 
               if (!fexists(dsFile)) {
                 std::cerr << dsFile << " does not exist.\n";
@@ -1973,9 +1972,9 @@ int main(int argc, char **argv) {
                 RooDataSet *inputDataSet;
                 gDirectory->GetObject("inputDataSet", inputDataSet);
                 if (inputDataSet == nullptr) {
-                  throw std::runtime_error("Data set does not exist.");
+                  throw std::runtime_error("Data set does not exist.\n");
                 } else {
-                  std::cout << "inputDataSet extracted... \n";
+                  std::cout << "inputDataSet extracted: \n";
                   inputDataSet->Print();
                   RooDataSet *reducedInputDataSet_n = nullptr;
                   if (config.neutral() == Neutral::pi0) {
@@ -1987,7 +1986,7 @@ int main(int argc, char **argv) {
                   }
                   if (reducedInputDataSet_n == nullptr) {
                     throw std::runtime_error(
-                        "Could not reduce input w/ neutral cuts dataSet.");
+                        "Could not reduce input w/ neutral cuts dataSet.\n");
                   }
                   RooDataSet *reducedInputDataSet_b = nullptr;
                   if (b == Bachelor::pi) {
@@ -1999,7 +1998,7 @@ int main(int argc, char **argv) {
                   }
                   if (reducedInputDataSet_b == nullptr) {
                     throw std::runtime_error(
-                        "Could not reduce input dataSet w/ bachelor cuts.");
+                        "Could not reduce input dataSet w/ bachelor cuts.\n");
                   }
                   RooDataSet *reducedInputDataSet_d = nullptr;
                   if (d == Daughters::kpi || d == Daughters::pik) {
@@ -2023,9 +2022,8 @@ int main(int argc, char **argv) {
                   }
                   if (reducedInputDataSet_d == nullptr) {
                     throw std::runtime_error(
-                        "Could not reduce input dataSet w/ daughter cuts.");
+                        "Could not reduce input dataSet w/ daughter cuts.\n");
                   }
-                  std::cout << "\n\n";
                   // Need to append each year, polarity to dataSet at each key
                   // in map, as key labelled by config.neutral(), b, d, c and
                   // must be unique.
