@@ -272,6 +272,8 @@ class NeutralVars {
 
   void ExtractChain(Mode mode, TChain &chain);
   void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
+                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff);
+  void SetEfficiencies(Mode mode, RooRealVar &orEff, RooRealVar &boxEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
                        RooRealVar &deltaPartialCutEff);
 
@@ -529,22 +531,14 @@ template <Neutral neutral>
 void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                            RooRealVar &boxEff,
                                            RooRealVar &buDeltaCutEff,
-                                           RooRealVar &deltaCutEff,
-                                           RooRealVar &deltaPartialCutEff) {
+                                           RooRealVar &deltaCutEff) {
   std::string dlString = std::to_string(Configuration::Get().deltaLow());
   std::string dhString = std::to_string(Configuration::Get().deltaHigh());
   std::string blString = std::to_string(Configuration::Get().buDeltaLow());
   std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
-  std::string dlPartialString;
-  std::string dhPartialString;
   std::string txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
                             EnumToString(mode) + "_" +
                             Configuration::Get().ReturnBoxString() + ".txt";
-
-  if (Configuration::Get().fitBuPartial() == true) {
-    dlPartialString = std::to_string(Configuration::Get().deltaPartialLow());
-    dhPartialString = std::to_string(Configuration::Get().deltaPartialHigh());
-  }
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
@@ -572,22 +566,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
                                     blString + "&&Bu_Delta_M<" + bhString)
                                        .c_str());
     double nOr;
-    if (Configuration::Get().fitBuPartial() == true) {
-      if (Configuration::Get().fit1D() == false) {
-        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                                "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                                blString + "&&Bu_Delta_M<" + bhString +
-                                ")||(Delta_M>" + dlPartialString +
-                                "&&Delta_M<" + dhPartialString + "))")
-                                   .c_str());
-      } else {
-        nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                                "&&Delta_M<" + dhString + ")||(Delta_M>" +
-                                dlPartialString + "&&Delta_M<" +
-                                dhPartialString + "))")
-                                   .c_str());
-      }
-    } else {
       if (Configuration::Get().fit1D() == false) {
         nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
                                 "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
@@ -598,7 +576,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
             (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
                 .c_str());
       }
-    }
     double nBuCut = chain.GetEntries(
         (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
             .c_str());
@@ -623,16 +600,6 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     deltaCutEff.setVal(deltaCutEffVal);
     orEff.setVal(orEffVal);
 
-    if (Configuration::Get().fitBuPartial() == true) {
-      double nDeltaPartialCut =
-          chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
-                            "&&Delta_M<" + dhPartialString)
-                               .c_str());
-      double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
-      outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEffVal) +
-                     "\n";
-      deltaPartialCutEff.setVal(deltaPartialCutEffVal);
-    }
     outFile.close();
   } else {
     //   // If exists, read in from txt file
@@ -655,9 +622,127 @@ void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
     orEff.setVal(effMap.at("orEff"));
-    if (Configuration::Get().fitBuPartial() == true) {
-      deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
+  }
+  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
+  //           << "\t boxEff = " << boxEff.getVal() << "\n"
+  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
+  //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
+  //           "\n";
+}
+
+template <Neutral neutral>
+void NeutralVars<neutral>::SetEfficiencies(Mode mode, RooRealVar &orEff,
+                                           RooRealVar &boxEff,
+                                           RooRealVar &buDeltaCutEff,
+                                           RooRealVar &deltaCutEff,
+                                           RooRealVar &deltaPartialCutEff) {
+  std::string dlString = std::to_string(Configuration::Get().deltaLow());
+  std::string dhString = std::to_string(Configuration::Get().deltaHigh());
+  std::string blString = std::to_string(Configuration::Get().buDeltaLow());
+  std::string bhString = std::to_string(Configuration::Get().buDeltaHigh());
+  std::string dlPartialString =
+      std::to_string(Configuration::Get().deltaPartialLow());
+  std::string dhPartialString =
+      std::to_string(Configuration::Get().deltaPartialHigh());
+  std::string txtFileName = "txt_efficiencies/" + EnumToString(neutral) + "_" +
+                            EnumToString(mode) + "_" +
+                            Configuration::Get().ReturnBoxString() + ".txt";
+
+  // Check if txt file containing efficiencies for particular mode and box dimns
+  // exists, if not, calculate eff and save in txt file
+  if (!file_exists(txtFileName)) {
+    std::string cutString, ttree;
+
+    switch (neutral) {
+      case Neutral::gamma:
+        cutString = Configuration::Get().gammaCutString();
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
+        break;
+      case Neutral::pi0:
+        cutString = Configuration::Get().pi0CutString();
+        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
+        break;
     }
+
+    TChain chain(ttree.c_str());
+    ExtractChain(mode, chain);
+
+    double nInitial =
+        chain.GetEntries(Configuration::Get().gammaCutString().c_str());
+    double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+                                    "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+                                    blString + "&&Bu_Delta_M<" + bhString)
+                                       .c_str());
+    double nOr;
+    if (Configuration::Get().fit1D() == false) {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
+                              blString + "&&Bu_Delta_M<" + bhString +
+                              ")||(Delta_M>" + dlPartialString + "&&Delta_M<" +
+                              dhPartialString + "))")
+                                 .c_str());
+    } else {
+      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
+                              "&&Delta_M<" + dhString + ")||(Delta_M>" +
+                              dlPartialString + "&&Delta_M<" + dhPartialString +
+                              "))")
+                                 .c_str());
+    }
+    double nBuCut = chain.GetEntries(
+        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+            .c_str());
+    double nDeltaCut = chain.GetEntries(
+        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
+            .c_str());
+    double nDeltaPartialCut =
+        chain.GetEntries((cutString + "&&Delta_M>" + dlPartialString +
+                          "&&Delta_M<" + dhPartialString)
+                             .c_str());
+
+    double orEffVal = nOr / nInitial;
+    double boxEffVal = nBox / nInitial;
+    double buDeltaCutEffVal = nBuCut / nInitial;
+    double deltaCutEffVal = nDeltaCut / nInitial;
+    double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
+
+    std::ofstream outFile;
+    outFile.open(txtFileName);
+    outFile << "orEff " + std::to_string(orEffVal) + "\n";
+    outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
+    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
+    outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEffVal) +
+                   "\n";
+
+    boxEff.setVal(boxEffVal);
+    orEff.setVal(orEffVal);
+    buDeltaCutEff.setVal(buDeltaCutEffVal);
+    deltaCutEff.setVal(deltaCutEffVal);
+    deltaPartialCutEff.setVal(deltaPartialCutEffVal);
+    outFile.close();
+  } else {
+    //   // If exists, read in from txt file
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << EnumToString(mode) << "...\n";
+    std::ifstream inFile(txtFileName);
+    // Create map to store efficiency string (label) and eff value
+    std::unordered_map<std::string, double> effMap;
+    std::string line;
+    // Loop over lines in txt file
+    while (std::getline(inFile, line)) {
+      // Separate label and value (white space)
+      std::vector<std::string> lineVec = SplitLine(line);
+      // Add to map
+      effMap.insert(
+          std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+    }
+    // Use map key to set correct efficiency values
+    boxEff.setVal(effMap.at("boxEff"));
+    buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
+    deltaCutEff.setVal(effMap.at("deltaCutEff"));
+    orEff.setVal(effMap.at("orEff"));
+    deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
   }
   // std::cout << "\t orEff = " << orEff.getVal() << "\n"
   //           << "\t boxEff = " << boxEff.getVal() << "\n"
