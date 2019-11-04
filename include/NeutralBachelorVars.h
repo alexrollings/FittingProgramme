@@ -188,6 +188,9 @@ class NeutralBachelorVars {
   RooRealVar &deltaCutEffMisId_Bu2Dst0h_D0pi0() {
     return deltaCutEffMisId_Bu2Dst0h_D0pi0_;
   }
+  RooRealVar &deltaPartialCutEffMisId_Bu2Dst0h_D0pi0() {
+    return deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooRealVar &MisRec_sigmaLBu() { return MisRec_sigmaLBu_; }
   RooRealVar &MisRec_sigmaRBu() { return MisRec_sigmaRBu_; }
@@ -405,6 +408,7 @@ class NeutralBachelorVars {
   RooRealVar boxEffMisId_Bu2Dst0h_D0pi0_;
   RooRealVar buDeltaCutEffMisId_Bu2Dst0h_D0pi0_;
   RooRealVar deltaCutEffMisId_Bu2Dst0h_D0pi0_;
+  RooRealVar deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_;
   // -------------------- MIS-REC -------------------- //
   RooRealVar MisRec_sigmaLBu_;
   RooRealVar MisRec_sigmaRBu_;

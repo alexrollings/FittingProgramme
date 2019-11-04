@@ -368,6 +368,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                                     Bachelor::k))
                                            .c_str(),
                                        "", 1),
+      deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_(
+          ("deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 1),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

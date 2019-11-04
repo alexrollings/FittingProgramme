@@ -123,6 +123,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                                     Bachelor::pi))
                                            .c_str(),
                                        "", 1),
+      deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_(),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_sigma1Bu_(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
