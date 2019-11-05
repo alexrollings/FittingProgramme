@@ -594,9 +594,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
         deltaCutEffBu2Dst0h_D0pi0_, false);
     for (auto &m : misRecModesMap) {
-      Configuration::Get().SetEfficiencies(m.first, Bachelor::pi, orEffTemp,
-                                           boxEffTemp, buDeltaCutEffTemp,
-                                           deltaCutEffTemp, false);
+      Configuration::Get().SetEfficiencies(
+          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
+          deltaCutEffTemp, false);
 
       orEffMisRecVal += orEffTemp.getVal() * m.second;
       boxEffMisRecVal += boxEffTemp.getVal() * m.second;
@@ -607,9 +607,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         Mode::Bu2D0pi, Bachelor::pi, orEffBu2D0h_, boxEffBu2D0h_,
         buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_, false);
     for (auto &m : partRecModesMap) {
-      Configuration::Get().SetEfficiencies(m.first, Bachelor::pi, orEffTemp,
-                                           boxEffTemp, buDeltaCutEffTemp,
-                                           deltaCutEffTemp, false);
+      Configuration::Get().SetEfficiencies(
+          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
+          deltaCutEffTemp, false);
 
       orEffPartRecVal += orEffTemp.getVal() * m.second;
       boxEffPartRecVal += boxEffTemp.getVal() * m.second;
@@ -625,49 +625,50 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   boxEffPartRec_.setVal(boxEffPartRecVal);
   buDeltaCutEffPartRec_.setVal(buDeltaCutEffPartRecVal);
   deltaCutEffPartRec_.setVal(deltaCutEffPartRecVal);
-  std::cout << "\t orEffBu2Dst0h_D0gamma = " <<
-  orEffBu2Dst0h_D0gamma_.getVal()
-            << "\n"
-            << "\t boxEffBu2Dst0h_D0gamma = "
-            << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
-            << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
-            << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
-            << "\t deltaCutEffBu2Dst0h_D0gamma = "
-            << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
-            << "\t deltaPartialCutEffBu2Dst0h_D0gamma = "
-            << deltaPartialCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
 
-  std::cout << "\t orEffBu2Dst0h_D0pi0 = " << orEffBu2Dst0h_D0pi0_.getVal()
-            << "\n"
-            << "\t boxEffBu2Dst0h_D0pi0 = " << boxEffBu2Dst0h_D0pi0_.getVal()
-            << "\n"
-            << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
-            << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
-            << "\t deltaCutEffBu2Dst0h_D0pi0 = "
-            << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
-            << "\t deltaPartialCutEffBu2Dst0h_D0pi0 = "
-            << deltaPartialCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
-
-  std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
-            << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
-            << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
-            << "\n"
-            << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() <<
-            "\n";
-
-  std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
-            << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
-            << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
-            << "\n"
-            << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
-            << "\n";
-
-  std::cout << "\t orEffPartRec = " << orEffPartRec_.getVal() <<
-  "\n"
-            << "\t boxEffPartRec = " << boxEffPartRec_.getVal()
-            << "\n"
-            << "\t buDeltaCutEffPartRec = "
-            << buDeltaCutEffPartRec_.getVal() << "\n"
-            << "\t deltaCutEffPartRec = "
-            << deltaCutEffPartRec_.getVal() << "\n";
+  // std::cout << "\t orEffBu2Dst0h_D0gamma = " <<
+  // orEffBu2Dst0h_D0gamma_.getVal()
+  //           << "\n"
+  //           << "\t boxEffBu2Dst0h_D0gamma = "
+  //           << boxEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0gamma = "
+  //           << buDeltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0gamma = "
+  //           << deltaCutEffBu2Dst0h_D0gamma_.getVal() << "\n"
+  //           << "\t deltaPartialCutEffBu2Dst0h_D0gamma = "
+  //           << deltaPartialCutEffBu2Dst0h_D0gamma_.getVal() << "\n";
+  //
+  // std::cout << "\t orEffBu2Dst0h_D0pi0 = " << orEffBu2Dst0h_D0pi0_.getVal()
+  //           << "\n"
+  //           << "\t boxEffBu2Dst0h_D0pi0 = " << boxEffBu2Dst0h_D0pi0_.getVal()
+  //           << "\n"
+  //           << "\t buDeltaCutEffBu2Dst0h_D0pi0 = "
+  //           << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffBu2Dst0h_D0pi0 = "
+  //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaPartialCutEffBu2Dst0h_D0pi0 = "
+  //           << deltaPartialCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
+  //
+  // std::cout << "\t orEffMisRec = " << orEffMisRec_.getVal() << "\n"
+  //           << "\t boxEffMisRec = " << boxEffMisRec_.getVal() << "\n"
+  //           << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() <<
+  //           "\n";
+  //
+  // std::cout << "\t orEffBu2D0h = " << orEffBu2D0h_.getVal() << "\n"
+  //           << "\t boxEffBu2D0h = " << boxEffBu2D0h_.getVal() << "\n"
+  //           << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
+  //           << "\n"
+  //           << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
+  //           << "\n";
+  //
+  // std::cout << "\t orEffPartRec = " << orEffPartRec_.getVal() <<
+  // "\n"
+  //           << "\t boxEffPartRec = " << boxEffPartRec_.getVal()
+  //           << "\n"
+  //           << "\t buDeltaCutEffPartRec = "
+  //           << buDeltaCutEffPartRec_.getVal() << "\n"
+  //           << "\t deltaCutEffPartRec = "
+  //           << deltaCutEffPartRec_.getVal() << "\n";
 }

@@ -1288,7 +1288,7 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
         break;
       case Neutral::pi0:
         cutString = pi0CutString_;
-        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
+        ttree = "BtoDstar0h3_h1h2pi0RTuple";
         break;
     }
 
@@ -1373,6 +1373,9 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
                                     RooRealVar &deltaCutEff,
                                     RooRealVar &deltaPartialCutEff,
                                     bool misId) {
+  if (neutral() != Neutral::gamma) {
+    throw std::runtime_error("Cannot set partial efficiencies for π0 mode");
+  }
   std::string dlString = std::to_string(deltaLow_);
   std::string dhString = std::to_string(deltaHigh_);
   std::string blString = std::to_string(buDeltaLow_);
@@ -1395,22 +1398,13 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   if (!file_exists(txtFileName)) {
     std::string cutString, ttree;
 
-    switch (neutral()) {
-      case Neutral::gamma:
-        cutString = gammaCutString_;
-        ttree = "BtoDstar0h3_h1h2gammaTuple";
-        break;
-      case Neutral::pi0:
-        cutString = pi0CutString_;
-        ttree = "BtoDstar0h3_h1h2Pi0RTuple";
-        break;
-    }
+    cutString = gammaCutString_;
+    ttree = "BtoDstar0h3_h1h2gammaTuple";
 
     TChain chain(ttree.c_str());
     ExtractChain(mode, bachelor, chain);
 
-    double nInitial =
-        chain.GetEntries(gammaCutString_.c_str());
+    double nInitial = chain.GetEntries(gammaCutString_.c_str());
     double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
                                     "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
                                     blString + "&&Bu_Delta_M<" + bhString)
