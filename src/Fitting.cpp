@@ -1043,12 +1043,12 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                    Charge::total>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                                    Charge::total>::Get(id));
-            // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-            //     Charge::total>::Get(id)
-            //     .AssignMisIdYields();
-            // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-            //     Charge::total>::Get(id)
-            //     .AssignMisIdYields();
+            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                Charge::total>::Get(id)
+                .AssignMisIdYields();
+            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                Charge::total>::Get(id)
+                .AssignMisIdYields();
             Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                 Charge::total>::Get(id)
                 .CreateBuAddPdf();
@@ -1150,14 +1150,14 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                    Charge::total>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                                    Charge::total>::Get(id));
-            // Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-            // Charge::total>::Get(
-            //     id)
-            //     .AssignMisIdYields();
-            // Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-            // Charge::total>::Get(
-            //     id)
-            //     .AssignMisIdYields();
+            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+            Charge::total>::Get(
+                id)
+                .AssignMisIdYields();
+            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+            Charge::total>::Get(
+                id)
+                .AssignMisIdYields();
             Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(
                 id)
                 .CreateBuAddPdf();
