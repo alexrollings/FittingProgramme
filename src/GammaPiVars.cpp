@@ -527,8 +527,26 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Mode::Bu2Dst0K_D0gamma, Bachelor::pi, orEffMisId_Bu2Dst0h_D0gamma_,
       boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
       deltaCutEffMisId_Bu2Dst0h_D0gamma_, true);
-  Configuration::Get().SetEfficiencies(
-      Mode::Bu2Dst0K_D0pi0, Bachelor::pi, orEffMisId_Bu2Dst0h_D0pi0_,
-      boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-      deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  if (Configuration::Get().fitBuPartial() == true) {
+    Configuration::Get().SetEfficiencies(
+        Mode::Bu2Dst0K_D0pi0, Bachelor::pi, orEffMisId_Bu2Dst0h_D0pi0_,
+        boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  } else {
+    Configuration::Get().SetEfficiencies(
+        Mode::Bu2Dst0K_D0pi0, Bachelor::pi, orEffMisId_Bu2Dst0h_D0pi0_,
+        boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  }
+  // std::cout << "\t orEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << orEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t boxEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << boxEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
 }

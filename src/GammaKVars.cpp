@@ -709,10 +709,28 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       Mode::Bu2Dst0pi_D0gamma, Bachelor::k, orEffMisId_Bu2Dst0h_D0gamma_,
       boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
       deltaCutEffMisId_Bu2Dst0h_D0gamma_, true);
-  Configuration::Get().SetEfficiencies(
-      Mode::Bu2Dst0pi_D0pi0, Bachelor::k, orEffMisId_Bu2Dst0h_D0pi0_,
-      boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-      deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  if (Configuration::Get().fitBuPartial() == true) {
+    Configuration::Get().SetEfficiencies(
+        Mode::Bu2Dst0pi_D0pi0, Bachelor::k, orEffMisId_Bu2Dst0h_D0pi0_,
+        boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  } else {
+    Configuration::Get().SetEfficiencies(
+        Mode::Bu2Dst0pi_D0pi0, Bachelor::k, orEffMisId_Bu2Dst0h_D0pi0_,
+        boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  }
+  // std::cout << "\t orEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << orEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t boxEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << boxEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+  //           << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
+  //           << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
@@ -834,7 +852,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   } else {
     orEffMisId_PartRec_.setVal(deltaCutEffMisId_PartRecVal);
   }
-  // std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal() <<
+  // std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal()
+  // <<
   // "\n"
   //           << "\t boxEffMisId_PartRec = " << boxEffMisId_PartRec_.getVal()
   //           << "\n"
