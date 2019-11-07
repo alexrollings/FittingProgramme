@@ -302,23 +302,20 @@ int main(int argc, char *argv[]) {
     RooRealVar boxEffSignalRRV("boxEffSignalRRV", "", 1);
     RooRealVar buDeltaCutEffSignalRRV("buDeltaCutEffSignalRRV", "", 1);
     RooRealVar deltaCutEffSignalRRV("deltaCutEffSignalRRV", "", 1);
-    RooRealVar deltaPartialCutEffSignalRRV("deltaPartialCutEffSignalRRV", "",
-                                           1);
 
     // Create temporary NVars object in order to set efficiencies
     int id = 0;
     if (neutral == Neutral::gamma) {
-      NeutralVars<Neutral::gamma> neutralVars(id);
-      neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, orEffSignalRRV,
-                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV,
-                                  deltaPartialCutEffSignalRRV);
+      RooRealVar deltaPartialCutEffSignalRRV("deltaPartialCutEffSignalRRV", "",
+                                             1);
+      config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+                             orEffSignalRRV, boxEffSignalRRV,
+                             buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
+                             deltaPartialCutEffSignalRRV, false);
     } else {
-      NeutralVars<Neutral::pi0> neutralVars(id);
-      neutralVars.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, orEffSignalRRV,
-                                  boxEffSignalRRV, buDeltaCutEffSignalRRV,
-                                  deltaCutEffSignalRRV,
-                                  deltaPartialCutEffSignalRRV);
+      config.SetEfficiencies(
+          Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEffSignalRRV, boxEffSignalRRV,
+          buDeltaCutEffSignalRRV, deltaCutEffSignalRRV, false);
     }
 
     orEffSignal = orEffSignalRRV.getVal();
