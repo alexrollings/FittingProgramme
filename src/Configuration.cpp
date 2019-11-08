@@ -1195,63 +1195,63 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
       break;
   }
 
-  std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2011_MagUp/" + path + modeString +
-                          "_2011_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2011_MagDown/" + path + modeString +
-                          "_2011_MagDown_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2012_MagUp/" + path + modeString +
-                          "_2012_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2012_MagDown/" + path + modeString +
-                          "_2012_MagDown_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2015_MagUp/" + path + modeString +
-                          "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2015_MagDown/" + path + modeString +
-                          "_2015_MagDown_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2011_MagUp/" + path + modeString +
+  //                         "_2011_MagUp_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2011_MagDown/" + path + modeString +
+  //                         "_2011_MagDown_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2012_MagUp/" + path + modeString +
+  //                         "_2012_MagUp_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2012_MagDown/" + path + modeString +
+  //                         "_2012_MagDown_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2015_MagUp/" + path + modeString +
+  //                         "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2015_MagDown/" + path + modeString +
+  //                         "_2015_MagDown_BDT1_BDT2_PID_TM.root");
   std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
                           dirString + "_2016_MagUp/" + path + modeString +
                           "_2016_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2016_MagDown/" + path + modeString +
-                          "_2016_MagDown_BDT1_BDT2_PID_TM.root");
+  // std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                         dirString + "_2016_MagDown/" + path + modeString +
+  //                         "_2016_MagDown_BDT1_BDT2_PID_TM.root");
 
-  chain.Add(inputfile_1.c_str());
-  chain.Add(inputfile_2.c_str());
-  chain.Add(inputfile_3.c_str());
-  chain.Add(inputfile_4.c_str());
-  chain.Add(inputfile_5.c_str());
-  chain.Add(inputfile_6.c_str());
+  // chain.Add(inputfile_1.c_str());
+  // chain.Add(inputfile_2.c_str());
+  // chain.Add(inputfile_3.c_str());
+  // chain.Add(inputfile_4.c_str());
+  // chain.Add(inputfile_5.c_str());
+  // chain.Add(inputfile_6.c_str());
   chain.Add(inputfile_7.c_str());
-  chain.Add(inputfile_8.c_str());
+  // chain.Add(inputfile_8.c_str());
 
-  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
-      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN &&
-      mode != Mode::Bu2Dst0K_D0pi0 && mode != Mode::Bu2Dst0K_D0gamma) {
-    std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2015_MagUp/" + path + modeString +
-                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2015_MagDown/" + path +
-                             modeString +
-                             "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2016_MagUp/" + path +
-                             modeString +
-                             "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2016_MagDown/" + path +
-                             modeString +
-                             "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
-    chain.Add(inputfile_9.c_str());
-    chain.Add(inputfile_10.c_str());
-    chain.Add(inputfile_11.c_str());
-    chain.Add(inputfile_12.c_str());
-  }
+  // if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
+  //     mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN &&
+  //     mode != Mode::Bu2Dst0K_D0pi0 && mode != Mode::Bu2Dst0K_D0gamma) {
+  //   std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                           dirString + "_2015_MagUp/" + path + modeString +
+  //                           "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+  //   std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                            dirString + "_ReDecay_2015_MagDown/" + path +
+  //                            modeString +
+  //                            "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
+  //   std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                            dirString + "_ReDecay_2016_MagUp/" + path +
+  //                            modeString +
+  //                            "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
+  //   std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
+  //                            dirString + "_ReDecay_2016_MagDown/" + path +
+  //                            modeString +
+  //                            "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
+  //   chain.Add(inputfile_9.c_str());
+  //   chain.Add(inputfile_10.c_str());
+  //   chain.Add(inputfile_11.c_str());
+  //   chain.Add(inputfile_12.c_str());
+  // }
 }
 
 // Function to be called in constructor of NVars, in order to construct
@@ -1319,10 +1319,28 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
         (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
             .c_str());
 
+    if (misId == true &&
+        (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
+         mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
+      std::cout << EnumToString(mode) << ":\n"
+                << "\tnInitial = " << nInitial << "\n"
+                << "\tnOr = " << nOr << "\n"
+                << "\tnBuCut = " << nBuCut << "\n"
+                << "\tnDeltaCut = " << nDeltaCut << "\n";
+    }
+
     double orEffVal = nOr / nInitial;
     double boxEffVal = nBox / nInitial;
     double buDeltaCutEffVal = nBuCut / nInitial;
     double deltaCutEffVal = nDeltaCut / nInitial;
+
+    if (misId == true &&
+        (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
+         mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
+      std::cout << "\tOrEff = " << orEffVal << "\n"
+                << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
+                << "\tDeltaCutEff = " << deltaCutEffVal << "\n";
+    }
 
     std::ofstream outFile;
     outFile.open(txtFileName);
@@ -1435,11 +1453,31 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
                           "&&Delta_M<" + dhPartialString)
                              .c_str());
 
+    if (misId == true &&
+        (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
+         mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
+      std::cout << EnumToString(mode) << ":\n"
+                << "\tnInitial = " << nInitial << "\n"
+                << "\tnOr = " << nOr << "\n"
+                << "\tnBuCut = " << nBuCut << "\n"
+                << "\tnDeltaCut = " << nDeltaCut << "\n"
+                << "\tnDeltaPartialCut = " << nDeltaPartialCut << "\n";
+    }
+
     double orEffVal = nOr / nInitial;
     double boxEffVal = nBox / nInitial;
     double buDeltaCutEffVal = nBuCut / nInitial;
     double deltaCutEffVal = nDeltaCut / nInitial;
     double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
+
+    if (misId == true &&
+        (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
+         mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
+      std::cout << "\tOrEff = " << orEffVal << "\n"
+                << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
+                << "\tDeltaCutEff = " << deltaCutEffVal << "\n"
+                << "\tDeltaPartialCutEff = " << deltaPartialCutEffVal << "\n";
+    }
 
     std::ofstream outFile;
     outFile.open(txtFileName);
