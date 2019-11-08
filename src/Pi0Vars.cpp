@@ -108,6 +108,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),
                             "", 1),
+      boxPartialEffBu2Dst0h_D0pi0_(),
       buDeltaCutEffBu2Dst0h_D0pi0_(("buDeltaCutEffBu2Dst0h_D0pi0_" +
                                     ComposeName(uniqueId, Neutral::pi0))
                                        .c_str(),
@@ -188,6 +189,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                ComposeName(uniqueId, Neutral::pi0))
                                   .c_str(),
                               "", 1),
+      boxPartialEffBu2Dst0h_D0gamma_(),
       buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
                                       ComposeName(uniqueId, Neutral::pi0))
                                          .c_str(),
@@ -241,6 +243,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       boxEffMisRec_(
           ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
+      boxPartialEffMisRec_(),
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
@@ -303,6 +306,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       boxEffBu2D0h_(
           ("boxEffBu2D0h_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
+      boxPartialEffBu2D0h_(),
       buDeltaCutEffBu2D0h_(("buDeltaCutEffBu2D0h_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -361,6 +365,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       boxEffPartRec_(
           ("boxEffPartRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
+      boxPartialEffPartRec_(),
       buDeltaCutEffPartRec_(("buDeltaCutEffPartRec_" +
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),

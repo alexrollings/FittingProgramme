@@ -122,6 +122,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
                               "", 1),
+      boxPartialEffBu2Dst0h_D0gamma_(("boxPartialEffBu2Dst0h_D0gamma_" +
+                               ComposeName(uniqueId, Neutral::gamma))
+                                  .c_str(),
+                              "", 1),
       buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),
@@ -243,6 +247,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
                             "", 1),
+      boxPartialEffBu2Dst0h_D0pi0_(("boxPartialEffBu2Dst0h_D0pi0_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 1),
       buDeltaCutEffBu2Dst0h_D0pi0_(("buDeltaCutEffBu2Dst0h_D0pi0_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
@@ -307,6 +315,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           1),
       boxEffMisRec_(
           ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      boxPartialEffMisRec_(
+          ("boxPartialEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
                             ComposeName(uniqueId, Neutral::gamma))
@@ -379,6 +390,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("orEffBu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
       boxEffBu2D0h_(
+          ("boxEffBu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          1),
+      boxPartialEffBu2D0h_(
           ("boxEffBu2D0h_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
       buDeltaCutEffBu2D0h_(("buDeltaCutEffBu2D0h_" +
@@ -465,6 +479,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           1),
       boxEffPartRec_(
           ("boxEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          "", 1),
+      boxPartialEffPartRec_(
+          ("boxPartialEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 1),
       buDeltaCutEffPartRec_(("buDeltaCutEffPartRec_" +
                              ComposeName(uniqueId, Neutral::gamma))
