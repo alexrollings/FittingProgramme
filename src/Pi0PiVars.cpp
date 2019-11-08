@@ -330,10 +330,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2D0h_aLBu_(),
       misId_Bu2D0h_aRBu_(),
       pdfBu_misId_Bu2D0h_(),
+      misId_Bu2D0h_meanBuPartial_(),
+      misId_Bu2D0h_sigmaLBuPartial_(),
+      misId_Bu2D0h_sigmaRBuPartial_(),
+      misId_Bu2D0h_aLBuPartial_(),
+      misId_Bu2D0h_aRBuPartial_(),
+      pdfBuPartial_misId_Bu2D0h_(),
       orEffMisId_Bu2D0h_(),
       boxEffMisId_Bu2D0h_(),
       buDeltaCutEffMisId_Bu2D0h_(),
       deltaCutEffMisId_Bu2D0h_(),
+      deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
       partRec_D0pi0_sigmaLBu_(("partRec_D0pi0_sigmaLBu_" +
                                     ComposeName(uniqueId, Neutral::pi0,

@@ -406,6 +406,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                           misId_Bu2D0h_meanBu_, misId_Bu2D0h_sigmaLBu_,
                           misId_Bu2D0h_sigmaRBu_, misId_Bu2D0h_aLBu_,
                           misId_Bu2D0h_aRBu_),
+      misId_Bu2D0h_meanBuPartial_(),
+      misId_Bu2D0h_sigmaLBuPartial_(),
+      misId_Bu2D0h_sigmaRBuPartial_(),
+      misId_Bu2D0h_aLBuPartial_(),
+      misId_Bu2D0h_aRBuPartial_(),
+      pdfBuPartial_misId_Bu2D0h_(),
       orEffMisId_Bu2D0h_(("orEffMisId_Bu2D0h_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),
@@ -424,6 +430,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                             Bachelor::k))
                                    .c_str(),
                                "", 1),
+      deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
       partRec_D0pi0_sigmaLBu_(("partRec_D0pi0_sigmaLBu_" +
                                     ComposeName(uniqueId, Neutral::pi0,

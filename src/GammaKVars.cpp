@@ -602,6 +602,35 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                           misId_Bu2D0h_meanBu_, misId_Bu2D0h_sigmaLBu_,
                           misId_Bu2D0h_sigmaRBu_, misId_Bu2D0h_aLBu_,
                           misId_Bu2D0h_aRBu_),
+      misId_Bu2D0h_meanBuPartial_(("misId_Bu2D0h_meanBuPartial_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", 5.5945e+03),
+      misId_Bu2D0h_sigmaLBuPartial_(("misId_Bu2D0h_sigmaLBuPartial_" +
+                              ComposeName(uniqueId, Neutral::gamma,
+                                          Bachelor::k))
+                                 .c_str(),
+                             "", 5.4608e+01),
+      misId_Bu2D0h_sigmaRBuPartial_(("misId_Bu2D0h_sigmaRBuPartial_" +
+                              ComposeName(uniqueId, Neutral::gamma,
+                                          Bachelor::k))
+                                 .c_str(),
+                             "", 4.5399e+01),
+      misId_Bu2D0h_aLBuPartial_(("misId_Bu2D0h_aLBuPartial_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 1.1435e-01),
+      misId_Bu2D0h_aRBuPartial_(("misId_Bu2D0h_aRBuPartial_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 2.6725e-01),
+      pdfBuPartial_misId_Bu2D0h_(("pdfBuPartial_misId_Bu2D0h_" +
+                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                              .c_str(),
+                          "", Configuration::Get().buDeltaMass(),
+                          misId_Bu2D0h_meanBuPartial_, misId_Bu2D0h_sigmaLBuPartial_,
+                          misId_Bu2D0h_sigmaRBuPartial_, misId_Bu2D0h_aLBuPartial_,
+                          misId_Bu2D0h_aRBuPartial_),
       orEffMisId_Bu2D0h_(("orEffMisId_Bu2D0h_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                              .c_str(),
@@ -616,6 +645,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                      .c_str(),
                                  "", 1),
       deltaCutEffMisId_Bu2D0h_(("deltaCutEffMisId_Bu2D0h_" +
+                                ComposeName(uniqueId, Neutral::gamma,
+                                            Bachelor::k))
+                                   .c_str(),
+                               "", 1),
+      deltaPartialCutEffMisId_Bu2D0h_(("deltaPartialCutEffMisId_Bu2D0h_" +
                                 ComposeName(uniqueId, Neutral::gamma,
                                             Bachelor::k))
                                    .c_str(),
