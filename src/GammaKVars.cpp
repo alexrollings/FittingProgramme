@@ -965,32 +965,50 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   buDeltaCutEffMisId_PartRec_.setVal(buDeltaCutEffMisId_PartRecVal);
   deltaCutEffMisId_PartRec_.setVal(deltaCutEffMisId_PartRecVal);
 
-  // std::cout << "\t orEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << orEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t boxEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << boxEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
+  std::cout << "\t orEffMisId_Bu2Dst0h_D0pi0 = "
+            << orEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t boxEffMisId_Bu2Dst0h_D0pi0 = "
+            << boxEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+            << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
+            << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
+            << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
+            << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
 
-  // std::cout << "\t orEffMisId_MisRec = " << orEffMisId_MisRec_.getVal() <<
-  // "\n"
-  //           << "\t boxEffMisId_MisRec = " << boxEffMisId_MisRec_.getVal()
-  //           << "\n"
-  //           << "\t buDeltaCutEffMisId_MisRec = "
-  //           << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_MisRec = "
-  //           << deltaCutEffMisId_MisRec_.getVal() << "\n";
-  // std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal()
-  // <<
-  // "\n"
-  //           << "\t boxEffMisId_PartRec = " << boxEffMisId_PartRec_.getVal()
-  //           << "\n"
-  //           << "\t buDeltaCutEffMisId_PartRec = "
-  //           << buDeltaCutEffMisId_PartRec_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_PartRec = "
-  //           << deltaCutEffMisId_PartRec_.getVal() << "\n";
+  std::cout << "\t orEffMisId_PartRec = " << orEffMisId_PartRec_.getVal()
+  <<
+  "\n"
+            << "\t boxEffMisId_PartRec = " << boxEffMisId_PartRec_.getVal()
+            << "\n"
+            << "\t buDeltaCutEffMisId_PartRec = "
+            << buDeltaCutEffMisId_PartRec_.getVal() << "\n"
+            << "\t deltaCutEffMisId_PartRec = "
+            << deltaCutEffMisId_PartRec_.getVal() << "\n"
+            << "\t deltaPartialCutEffMisId_PartRec = "
+            << deltaPartialCutEffMisId_PartRec_.getVal() << "\n";
+
+  std::cout << "\t orEffMisId_MisRec = " << orEffMisId_MisRec_.getVal() <<
+  "\n"
+            << "\t boxEffMisId_MisRec = " << boxEffMisId_MisRec_.getVal()
+            << "\n"
+            << "\t buDeltaCutEffMisId_MisRec = "
+            << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
+            << "\t deltaCutEffMisId_MisRec = "
+            << deltaCutEffMisId_MisRec_.getVal() << "\n"
+            << "\t deltaPartialCutEffMisId_MisRec = "
+            << deltaPartialCutEffMisId_MisRec_.getVal() << "\n";
+
+  std::cout << "\t orEffMisId_Bu2D0h = " << orEffMisId_Bu2D0h_.getVal()
+  <<
+  "\n"
+            << "\t boxEffMisId_Bu2D0h = " << boxEffMisId_Bu2D0h_.getVal()
+            << "\n"
+            << "\t buDeltaCutEffMisId_Bu2D0h = "
+            << buDeltaCutEffMisId_Bu2D0h_.getVal() << "\n"
+            << "\t deltaCutEffMisId_Bu2D0h = "
+            << deltaCutEffMisId_Bu2D0h_.getVal() << "\n"
+            << "\t deltaPartialCutEffMisId_Bu2D0h = "
+            << deltaPartialCutEffMisId_Bu2D0h_.getVal() << "\n";
+
 }
