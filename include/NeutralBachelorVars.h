@@ -280,10 +280,25 @@ class NeutralBachelorVars {
   RooRealVar &misId_Bu2D0h_aLBu() { return misId_Bu2D0h_aLBu_; }
   RooRealVar &misId_Bu2D0h_aRBu() { return misId_Bu2D0h_aRBu_; }
   RooCruijff &pdfBu_misId_Bu2D0h() { return pdfBu_misId_Bu2D0h_; }
+  RooRealVar &misId_Bu2D0h_meanBuPartial() {
+    return misId_Bu2D0h_meanBuPartial_;
+  }
+  RooRealVar &misId_Bu2D0h_sigmaLBuPartial() {
+    return misId_Bu2D0h_sigmaLBuPartial_;
+  }
+  RooRealVar &misId_Bu2D0h_sigmaRBuPartial() {
+    return misId_Bu2D0h_sigmaRBuPartial_;
+  }
+  RooRealVar &misId_Bu2D0h_aLBuPartial() { return misId_Bu2D0h_aLBuPartial_; }
+  RooRealVar &misId_Bu2D0h_aRBuPartial() { return misId_Bu2D0h_aRBuPartial_; }
+  RooCruijff &pdfBuPartial_misId_Bu2D0h() { return pdfBuPartial_misId_Bu2D0h_; }
   RooRealVar &orEffMisId_Bu2D0h() { return orEffMisId_Bu2D0h_; }
   RooRealVar &boxEffMisId_Bu2D0h() { return boxEffMisId_Bu2D0h_; }
   RooRealVar &buDeltaCutEffMisId_Bu2D0h() { return buDeltaCutEffMisId_Bu2D0h_; }
   RooRealVar &deltaCutEffMisId_Bu2D0h() { return deltaCutEffMisId_Bu2D0h_; }
+  RooRealVar &deltaPartialCutEffMisId_Bu2D0h() {
+    return deltaPartialCutEffMisId_Bu2D0h_;
+  }
   // -------------------- PART REC -------------------- //
   RooRealVar &partRec_D0pi0_sigmaLBu() {
     return partRec_D0pi0_sigmaLBu_;
@@ -474,10 +489,17 @@ class NeutralBachelorVars {
   RooRealVar misId_Bu2D0h_aLBu_;
   RooRealVar misId_Bu2D0h_aRBu_;
   RooCruijff pdfBu_misId_Bu2D0h_;
+  RooRealVar misId_Bu2D0h_meanBuPartial_;
+  RooRealVar misId_Bu2D0h_sigmaLBuPartial_;
+  RooRealVar misId_Bu2D0h_sigmaRBuPartial_;
+  RooRealVar misId_Bu2D0h_aLBuPartial_;
+  RooRealVar misId_Bu2D0h_aRBuPartial_;
+  RooCruijff pdfBuPartial_misId_Bu2D0h_;
   RooRealVar orEffMisId_Bu2D0h_;
   RooRealVar boxEffMisId_Bu2D0h_;
   RooRealVar buDeltaCutEffMisId_Bu2D0h_;
   RooRealVar deltaCutEffMisId_Bu2D0h_;
+  RooRealVar deltaPartialCutEffMisId_Bu2D0h_;
   // -------------------- PART REC -------------------- //
   RooRealVar partRec_D0pi0_sigmaLBu_;
   RooRealVar partRec_D0pi0_sigmaRBu_;
