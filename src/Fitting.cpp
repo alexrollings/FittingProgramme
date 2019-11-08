@@ -1720,6 +1720,53 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
+void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
+                   Mode mode) {
+  double boxEff, orEff, buDeltaCutEff, deltaCutEff;
+  {
+    RooRealVar orEffRRV("orEffRRV", "", 1);
+    RooRealVar boxEffRRV("boxEffRRV", "", 1);
+    RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
+    RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
+
+    if (config.fitBuPartial() == true) {
+      RooRealVar boxPartialEffRRV("boxPartialEffRRV", "", 1);
+      RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             boxPartialEffRRV, buDeltaCutEffRRV, deltaCutEffRRV,
+                             deltaPartialCutEffRRV, false);
+      double boxPartialEff = boxPartialEffRRV.getVal();
+      double deltaPartialCutEff = deltaPartialCutEffRRV.getVal();
+      tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
+                  &boxPartialEff,
+                  ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
+      tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
+                  &deltaPartialCutEff,
+                  ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
+      tree.Fill();
+    } else {
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             buDeltaCutEffRRV, deltaCutEffRRV, false);
+    }
+
+    orEff = orEffRRV.getVal();
+    boxEff = boxEffRRV.getVal();
+    buDeltaCutEff = buDeltaCutEffRRV.getVal();
+    deltaCutEff = deltaCutEffRRV.getVal();
+  }
+
+  outputFile.cd();
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &buDeltaCutEff,
+              ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &deltaCutEff,
+              ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Fill();
+}
+
 // ExtractEnumList() allows user to parse multiple options separated by
 // commas.
 // Takes full options string as input and outputs a vector containing each
@@ -2193,99 +2240,14 @@ int main(int argc, char **argv) {
                          "recreate");
         dataFitResult->Write();
         TTree tree("tree", "");
-        double boxEffSignal, orEffSignal, buDeltaCutEffSignal,
-            deltaCutEffSignal;
-        int id = 0;
-        RooRealVar orEffSignalRRV(
-            ("orEffSignalRRV_" + EnumToString(config.neutral())).c_str(), "",
-            1);
-        RooRealVar boxEffSignalRRV(
-            ("boxEffSignalRRV_" + EnumToString(config.neutral())).c_str(), "",
-            1);
-        RooRealVar buDeltaCutEffSignalRRV(
-            ("buDeltaCutEffSignalRRV_" + EnumToString(config.neutral()))
-                .c_str(),
-            "", 1);
-        RooRealVar deltaCutEffSignalRRV(
-            ("deltaCutEffSignalRRV_" + EnumToString(config.neutral())).c_str(),
-            "", 1);
-        switch (config.neutral()) {
-          case Neutral::gamma: {
-            if (config.fitBuPartial() == true) {
-              double boxPartialEffSignal;
-              double deltaPartialCutEffSignal;
-              RooRealVar boxPartialEffSignalRRV(
-                  ("boxPartialEffSignalRRV_" +
-                   EnumToString(config.neutral()))
-                      .c_str(),
-                  "", 1);
-              RooRealVar deltaPartialCutEffSignalRRV(
-                  ("deltaPartialCutEffSignalRRV_" +
-                   EnumToString(config.neutral()))
-                      .c_str(),
-                  "", 1);
-              config.SetEfficiencies(
-                  Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEffSignalRRV,
-                  boxEffSignalRRV, boxPartialEffSignalRRV, buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
-                  deltaPartialCutEffSignalRRV, false);
-              boxPartialEffSignal = boxPartialEffSignalRRV.getVal();
-              deltaPartialCutEffSignal = deltaPartialCutEffSignalRRV.getVal();
-              tree.Branch(
-                  ("deltaPartialCutEffSignal_" + EnumToString(config.neutral()))
-                      .c_str(),
-                  &deltaPartialCutEffSignal,
-                  ("deltaPartialCutEffSignal_" +
-                   EnumToString(config.neutral()) + "/D")
-                      .c_str());
-              tree.Branch(
-                  ("boxPartialEffSignal_" + EnumToString(config.neutral()))
-                      .c_str(),
-                  &boxPartialEffSignal,
-                  ("boxPartialEffSignal_" +
-                   EnumToString(config.neutral()) + "/D")
-                      .c_str());
-              tree.Fill();
-            } else {
-              config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
-                                     orEffSignalRRV, boxEffSignalRRV,
-                                     buDeltaCutEffSignalRRV,
-                                     deltaCutEffSignalRRV, false);
-            }
-          } break;
-          case Neutral::pi0: {
-            config.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
-                                   orEffSignalRRV, boxEffSignalRRV,
-                                   buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
-                                   false);
-          } break;
+        if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
         }
-        orEffSignal = orEffSignalRRV.getVal();
-        boxEffSignal = boxEffSignalRRV.getVal();
-        buDeltaCutEffSignal = buDeltaCutEffSignalRRV.getVal();
-        deltaCutEffSignal = deltaCutEffSignalRRV.getVal();
-
-        tree.Branch(
-            ("orEffSignal_" + EnumToString(config.neutral())).c_str(),
-            &orEffSignal,
-            ("orEffSignal_" + EnumToString(config.neutral()) + "/D").c_str());
-        tree.Branch(
-            ("boxEffSignal_" + EnumToString(config.neutral())).c_str(),
-            &boxEffSignal,
-            ("boxEffSignal_" + EnumToString(config.neutral()) + "/D").c_str());
-        tree.Branch(
-            ("buDeltaCutEffSignal_" + EnumToString(config.neutral())).c_str(),
-            &buDeltaCutEffSignal,
-            ("buDeltaCutEffSignal_" + EnumToString(config.neutral()) + "/D")
-                .c_str());
-        tree.Branch(
-            ("deltaCutEffSignal_" + EnumToString(config.neutral())).c_str(),
-            &deltaCutEffSignal,
-            ("deltaCutEffSignal_" + EnumToString(config.neutral()) + "/D")
-                .c_str());
-        tree.Fill();
+        if (config.neutral() == Neutral::gamma) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+        }
+        outputFile.cd();
         tree.Write();
-        outputFile.Write();
-        outputFile.Close();
 
         // NeutralVars<Neutral::gamma> gVars(id);
         // NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
