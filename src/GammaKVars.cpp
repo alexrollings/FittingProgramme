@@ -358,6 +358,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                                Bachelor::k))
                                       .c_str(),
                                   "", 1),
+      boxPartialEffMisId_Bu2Dst0h_D0pi0_(("boxPartialEffMisId_Bu2Dst0h_D0pi0_" +
+                                   ComposeName(uniqueId, Neutral::gamma,
+                                               Bachelor::k))
+                                      .c_str(),
+                                  "", 1),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(("buDeltaCutEffMisId_Bu2Dst0h_D0pi0_" +
                                           ComposeName(uniqueId, Neutral::gamma,
                                                       Bachelor::k))
@@ -516,6 +521,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                               .c_str(),
                           "", 1),
+      boxPartialEffMisId_MisRec_(("boxPartialEffMisId_MisRec_" +
+                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                              .c_str(),
+                          "", 1),
       buDeltaCutEffMisId_MisRec_(("buDeltaCutEffMisId_MisRec_" +
                                   ComposeName(uniqueId, Neutral::gamma,
                                               Bachelor::k))
@@ -642,6 +651,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                              .c_str(),
                          "", 1),
       boxEffMisId_Bu2D0h_(("boxEffMisId_Bu2D0h_" +
+                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                              .c_str(),
+                          "", 1),
+      boxPartialEffMisId_Bu2D0h_(("boxPartialEffMisId_Bu2D0h_" +
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                               .c_str(),
                           "", 1),
@@ -798,6 +811,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                               .c_str(),
                           "", 1),
       boxEffMisId_PartRec_(("boxEffMisId_PartRec_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", 1),
+      boxPartialEffMisId_PartRec_(("boxPartialEffMisId_PartRec_" +
                             ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                                .c_str(),
                            "", 1),

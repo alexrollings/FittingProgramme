@@ -141,6 +141,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                                Bachelor::k))
                                       .c_str(),
                                   "", 1),
+      boxPartialEffMisId_Bu2Dst0h_D0pi0_(),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(("buDeltaCutEffMisId_Bu2Dst0h_D0pi0_" +
                                           ComposeName(uniqueId, Neutral::pi0,
                                                       Bachelor::k))
@@ -333,6 +334,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                               .c_str(),
                           "", 1),
+      boxPartialEffMisId_MisRec_(),
       buDeltaCutEffMisId_MisRec_(("buDeltaCutEffMisId_MisRec_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
@@ -420,6 +422,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                               .c_str(),
                           "", 1),
+      boxPartialEffMisId_Bu2D0h_(),
       buDeltaCutEffMisId_Bu2D0h_(("buDeltaCutEffMisId_Bu2D0h_" +
                                   ComposeName(uniqueId, Neutral::pi0,
                                               Bachelor::k))
@@ -517,6 +520,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                                    Bachelor::k))
                                           .c_str(),
                                       "", 1),
+      boxPartialEffMisId_PartRec_(),
       buDeltaCutEffMisId_PartRec_(
           ("buDeltaCutEffMisId_PartRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
