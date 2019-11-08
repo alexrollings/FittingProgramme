@@ -104,9 +104,9 @@ class Configuration {
                        RooRealVar &boxEff, RooRealVar &buDeltaCutEff,
                        RooRealVar &deltaCutEff, bool misId);
   void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &orEff,
-                       RooRealVar &boxEff, RooRealVar &buDeltaCutEff,
-                       RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff,
-                       bool misId);
+                       RooRealVar &boxEff, RooRealVar &boxPartialEff,
+                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
+                       RooRealVar &deltaPartialCutEff, bool misId);
 
  private:
   Configuration();

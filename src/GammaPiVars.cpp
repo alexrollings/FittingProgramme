@@ -559,8 +559,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
   if (Configuration::Get().fitBuPartial() == true) {
     Configuration::Get().SetEfficiencies(
         Mode::Bu2Dst0K_D0pi0, Bachelor::pi, orEffMisId_Bu2Dst0h_D0pi0_,
-        boxEffMisId_Bu2Dst0h_D0pi0_, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-        deltaCutEffMisId_Bu2Dst0h_D0pi0_,
+        boxEffMisId_Bu2Dst0h_D0pi0_, boxPartialEffMisId_Bu2Dst0h_D0pi0_,
+        buDeltaCutEffMisId_Bu2Dst0h_D0pi0_, deltaCutEffMisId_Bu2Dst0h_D0pi0_,
         deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
   } else {
     Configuration::Get().SetEfficiencies(

@@ -123,9 +123,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                   .c_str(),
                               "", 1),
       boxPartialEffBu2Dst0h_D0gamma_(("boxPartialEffBu2Dst0h_D0gamma_" +
-                               ComposeName(uniqueId, Neutral::gamma))
-                                  .c_str(),
-                              "", 1),
+                                      ComposeName(uniqueId, Neutral::gamma))
+                                         .c_str(),
+                                     "", 1),
       buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),
@@ -248,9 +248,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                 .c_str(),
                             "", 1),
       boxPartialEffBu2Dst0h_D0pi0_(("boxPartialEffBu2Dst0h_D0pi0_" +
-                             ComposeName(uniqueId, Neutral::gamma))
-                                .c_str(),
-                            "", 1),
+                                    ComposeName(uniqueId, Neutral::gamma))
+                                       .c_str(),
+                                   "", 1),
       buDeltaCutEffBu2Dst0h_D0pi0_(("buDeltaCutEffBu2Dst0h_D0pi0_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
@@ -316,9 +316,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       boxEffMisRec_(
           ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
-      boxPartialEffMisRec_(
-          ("boxPartialEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          1),
+      boxPartialEffMisRec_(("boxPartialEffMisRec_" +
+                            ComposeName(uniqueId, Neutral::gamma))
+                               .c_str(),
+                           "", 1),
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
@@ -480,9 +481,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       boxEffPartRec_(
           ("boxEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 1),
-      boxPartialEffPartRec_(
-          ("boxPartialEffPartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1),
+      boxPartialEffPartRec_(("boxPartialEffPartRec_" +
+                             ComposeName(uniqueId, Neutral::gamma))
+                                .c_str(),
+                            "", 1),
       buDeltaCutEffPartRec_(("buDeltaCutEffPartRec_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
@@ -559,47 +561,57 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   if (Configuration::Get().fitBuPartial() == true) {
     Configuration::Get().SetEfficiencies(
         Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEffBu2Dst0h_D0gamma_,
-        boxEffBu2Dst0h_D0gamma_, buDeltaCutEffBu2Dst0h_D0gamma_,
-        deltaCutEffBu2Dst0h_D0gamma_, deltaPartialCutEffBu2Dst0h_D0gamma_,
-        false);
+        boxEffBu2Dst0h_D0gamma_, boxPartialEffBu2Dst0h_D0gamma_,
+        buDeltaCutEffBu2Dst0h_D0gamma_, deltaCutEffBu2Dst0h_D0gamma_,
+        deltaPartialCutEffBu2Dst0h_D0gamma_, false);
     Configuration::Get().SetEfficiencies(
         Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEffBu2Dst0h_D0pi0_,
-        boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
-        deltaCutEffBu2Dst0h_D0pi0_, deltaPartialCutEffBu2Dst0h_D0pi0_, false);
+        boxEffBu2Dst0h_D0pi0_, boxPartialEffBu2Dst0h_D0pi0_,
+        buDeltaCutEffBu2Dst0h_D0pi0_, deltaCutEffBu2Dst0h_D0pi0_,
+        deltaPartialCutEffBu2Dst0h_D0pi0_, false);
+    double boxPartialEffMisRecVal = 0.0;
     double deltaPartialCutEffMisRecVal = 0.0;
+    RooRealVar boxPartialEffTemp(
+        ("boxPartialEffTemp" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+        "", 1);
     RooRealVar deltaPartialCutEffTemp(
         ("deltaPartialCutEffTemp" + ComposeName(uniqueId, Neutral::gamma))
             .c_str(),
         "", 1);
     for (auto &m : misRecModesMap) {
       Configuration::Get().SetEfficiencies(
-          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-          deltaCutEffTemp, deltaPartialCutEffTemp, false);
+          m.first, Bachelor::pi, orEffTemp, boxEffTemp, boxPartialEffTemp,
+          buDeltaCutEffTemp, deltaCutEffTemp, deltaPartialCutEffTemp, false);
 
       orEffMisRecVal += orEffTemp.getVal() * m.second;
       boxEffMisRecVal += boxEffTemp.getVal() * m.second;
+      boxPartialEffMisRecVal += boxPartialEffTemp.getVal() * m.second;
       buDeltaCutEffMisRecVal += buDeltaCutEffTemp.getVal() * m.second;
       deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
       deltaPartialCutEffMisRecVal += deltaPartialCutEffTemp.getVal() * m.second;
     }
+    boxPartialEffMisRec_.setVal(boxPartialEffMisRecVal);
     deltaPartialCutEffMisRec_.setVal(deltaPartialCutEffMisRecVal);
     Configuration::Get().SetEfficiencies(
         Mode::Bu2D0pi, Bachelor::pi, orEffBu2D0h_, boxEffBu2D0h_,
-        buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_, deltaPartialCutEffBu2D0h_,
-        false);
+        boxPartialEffBu2D0h_, buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_,
+        deltaPartialCutEffBu2D0h_, false);
+    double boxPartialEffPartRecVal = 0.0;
     double deltaPartialCutEffPartRecVal = 0.0;
     for (auto &m : partRecModesMap) {
       Configuration::Get().SetEfficiencies(
-          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-          deltaCutEffTemp, deltaPartialCutEffTemp, false);
+          m.first, Bachelor::pi, orEffTemp, boxEffTemp, boxPartialEffTemp,
+          buDeltaCutEffTemp, deltaCutEffTemp, deltaPartialCutEffTemp, false);
 
       orEffPartRecVal += orEffTemp.getVal() * m.second;
       boxEffPartRecVal += boxEffTemp.getVal() * m.second;
+      boxPartialEffPartRecVal += boxPartialEffTemp.getVal() * m.second;
       buDeltaCutEffPartRecVal += buDeltaCutEffTemp.getVal() * m.second;
       deltaCutEffPartRecVal += deltaCutEffTemp.getVal() * m.second;
       deltaPartialCutEffPartRecVal +=
           deltaPartialCutEffTemp.getVal() * m.second;
     }
+    boxPartialEffPartRec_.setVal(boxPartialEffPartRecVal);
     deltaPartialCutEffPartRec_.setVal(deltaPartialCutEffPartRecVal);
   } else {
     Configuration::Get().SetEfficiencies(
@@ -611,9 +623,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         boxEffBu2Dst0h_D0pi0_, buDeltaCutEffBu2Dst0h_D0pi0_,
         deltaCutEffBu2Dst0h_D0pi0_, false);
     for (auto &m : misRecModesMap) {
-      Configuration::Get().SetEfficiencies(
-          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-          deltaCutEffTemp, false);
+      Configuration::Get().SetEfficiencies(m.first, Bachelor::pi, orEffTemp,
+                                           boxEffTemp, buDeltaCutEffTemp,
+                                           deltaCutEffTemp, false);
 
       orEffMisRecVal += orEffTemp.getVal() * m.second;
       boxEffMisRecVal += boxEffTemp.getVal() * m.second;
@@ -624,9 +636,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         Mode::Bu2D0pi, Bachelor::pi, orEffBu2D0h_, boxEffBu2D0h_,
         buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_, false);
     for (auto &m : partRecModesMap) {
-      Configuration::Get().SetEfficiencies(
-          m.first, Bachelor::pi, orEffTemp, boxEffTemp, buDeltaCutEffTemp,
-          deltaCutEffTemp, false);
+      Configuration::Get().SetEfficiencies(m.first, Bachelor::pi, orEffTemp,
+                                           boxEffTemp, buDeltaCutEffTemp,
+                                           deltaCutEffTemp, false);
 
       orEffPartRecVal += orEffTemp.getVal() * m.second;
       boxEffPartRecVal += boxEffTemp.getVal() * m.second;

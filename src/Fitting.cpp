@@ -2212,7 +2212,13 @@ int main(int argc, char **argv) {
         switch (config.neutral()) {
           case Neutral::gamma: {
             if (config.fitBuPartial() == true) {
+              double boxPartialEffSignal;
               double deltaPartialCutEffSignal;
+              RooRealVar boxPartialEffSignalRRV(
+                  ("boxPartialEffSignalRRV_" +
+                   EnumToString(config.neutral()))
+                      .c_str(),
+                  "", 1);
               RooRealVar deltaPartialCutEffSignalRRV(
                   ("deltaPartialCutEffSignalRRV_" +
                    EnumToString(config.neutral()))
@@ -2220,14 +2226,22 @@ int main(int argc, char **argv) {
                   "", 1);
               config.SetEfficiencies(
                   Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEffSignalRRV,
-                  boxEffSignalRRV, buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
+                  boxEffSignalRRV, boxPartialEffSignalRRV, buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
                   deltaPartialCutEffSignalRRV, false);
+              boxPartialEffSignal = boxPartialEffSignalRRV.getVal();
               deltaPartialCutEffSignal = deltaPartialCutEffSignalRRV.getVal();
               tree.Branch(
                   ("deltaPartialCutEffSignal_" + EnumToString(config.neutral()))
                       .c_str(),
                   &deltaPartialCutEffSignal,
                   ("deltaPartialCutEffSignal_" +
+                   EnumToString(config.neutral()) + "/D")
+                      .c_str());
+              tree.Branch(
+                  ("boxPartialEffSignal_" + EnumToString(config.neutral()))
+                      .c_str(),
+                  &boxPartialEffSignal,
+                  ("boxPartialEffSignal_" +
                    EnumToString(config.neutral()) + "/D")
                       .c_str());
               tree.Fill();
