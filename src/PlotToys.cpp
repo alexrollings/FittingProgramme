@@ -55,9 +55,45 @@ RooArgList ReturnInitPars(bool dataToy,
   }
 }
 
+void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
+                   Mode mode) {
+  double boxEff, orEff;
+  {
+    RooRealVar orEffRRV("orEffRRV", "", 1);
+    RooRealVar boxEffRRV("boxEffRRV", "", 1);
+    RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
+    RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
+
+    if (config.fitBuPartial() == true) {
+      RooRealVar boxPartialEffRRV("boxPartialEffRRV", "", 1);
+      RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             boxPartialEffRRV, buDeltaCutEffRRV, deltaCutEffRRV,
+                             deltaPartialCutEffRRV, false);
+      double boxPartialEff = boxPartialEffRRV.getVal();
+      tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
+                  &boxPartialEff,
+                  ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
+      tree.Fill();
+    } else {
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             buDeltaCutEffRRV, deltaCutEffRRV, false);
+    }
+
+    orEff = orEffRRV.getVal();
+    boxEff = boxEffRRV.getVal();
+  }
+
+  outputFile.cd();
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Fill();
+}
+
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
-  Neutral neutral;
   std::string outputDir;
   std::vector<std::string> resultFiles;
   bool dataToy;
@@ -75,6 +111,12 @@ int main(int argc, char *argv[]) {
       std::cerr << "neutral assignment failed, please specify: "
                    "-neutral=[pi0/gamma].\n";
       return 1;
+    }
+
+    if (config.neutral() == Neutral::gamma) {
+      if (args("buPartial")) {
+        config.fitBuPartial() = true;
+      }
     }
 
     if (!args("outputDir", outputDir)) {
@@ -121,7 +163,7 @@ int main(int argc, char *argv[]) {
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
     std::regex fileRexp1D(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
     if (config.fit1D() == false) {
-      if (config.neutral() == Neutral::pi0) {
+      if (config.fitBuPartial() == false) {
         std::regex fileRexp(
             ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
@@ -133,11 +175,12 @@ int main(int argc, char *argv[]) {
           rndm = fileMatch[5];
         } else {
           throw std::runtime_error(
-              "Could not find pi0 filename with correct regex pattern");
+              "Could not find filename opt 1 with correct regex pattern");
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].["
+            "0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
@@ -149,19 +192,35 @@ int main(int argc, char *argv[]) {
           rndm = fileMatch[7];
         } else {
           throw std::runtime_error(
-              "Could not find gamma filename with correct regex pattern");
+              "Could not find filename opt 2 with correct regex pattern");
         }
       }
     } else {
-      std::regex fileRexp(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
-      std::smatch fileMatch;
-      if (std::regex_search(filename, fileMatch, fileRexp)) {
-        config.SetDeltaLow(std::stod(fileMatch[1]));
-        config.SetDeltaHigh(std::stod(fileMatch[2]));
-        rndm = fileMatch[3];
+      if (config.fitBuPartial() == false) {
+        std::regex fileRexp(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+        std::smatch fileMatch;
+        if (std::regex_search(filename, fileMatch, fileRexp)) {
+          config.SetDeltaLow(std::stod(fileMatch[1]));
+          config.SetDeltaHigh(std::stod(fileMatch[2]));
+          rndm = fileMatch[3];
+        } else {
+          throw std::runtime_error(
+              "Could not find filename opt 3 with correct regex pattern");
+        }
       } else {
-        throw std::runtime_error(
-            "Could not find filename with correct regex pattern");
+        std::regex fileRexp(
+            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+        std::smatch fileMatch;
+        if (std::regex_search(filename, fileMatch, fileRexp)) {
+          config.SetDeltaPartialLow(std::stod(fileMatch[1]));
+          config.SetDeltaPartialHigh(std::stod(fileMatch[2]));
+          config.SetDeltaLow(std::stod(fileMatch[3]));
+          config.SetDeltaHigh(std::stod(fileMatch[4]));
+          rndm = fileMatch[5];
+        } else {
+          throw std::runtime_error(
+              "Could not find filename opt 4 with correct regex pattern");
+        }
       }
     }
     auto result = std::unique_ptr<RooFitResult>(
@@ -296,42 +355,19 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  double boxEffSignal, orEffSignal;
-  {
-    RooRealVar orEffSignalRRV("orEffSignalRRV", "", 1);
-    RooRealVar boxEffSignalRRV("boxEffSignalRRV", "", 1);
-    RooRealVar buDeltaCutEffSignalRRV("buDeltaCutEffSignalRRV", "", 1);
-    RooRealVar deltaCutEffSignalRRV("deltaCutEffSignalRRV", "", 1);
-
-    // Create temporary NVars object in order to set efficiencies
-    int id = 0;
-    if (neutral == Neutral::gamma) {
-      RooRealVar deltaPartialCutEffSignalRRV("deltaPartialCutEffSignalRRV", "",
-                                             1);
-      config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
-                             orEffSignalRRV, boxEffSignalRRV,
-                             buDeltaCutEffSignalRRV, deltaCutEffSignalRRV,
-                             deltaPartialCutEffSignalRRV, false);
-    } else {
-      config.SetEfficiencies(
-          Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEffSignalRRV, boxEffSignalRRV,
-          buDeltaCutEffSignalRRV, deltaCutEffSignalRRV, false);
-    }
-
-    orEffSignal = orEffSignalRRV.getVal();
-    boxEffSignal = boxEffSignalRRV.getVal();
-  }
-
   // File to save results
   TFile outputFile(
       (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
-  outputFile.cd();
   TTree tree("tree", "");
-  tree.Branch("orEffSignal", &orEffSignal, "orEffSignal/D");
-  tree.Branch("boxEffSignal", &boxEffSignal, "boxEffSignal/D");
-  tree.Fill();
+  if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+  }
+  if (config.neutral() == Neutral::gamma) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+  }
+  outputFile.cd();
   tree.Write();
 
   // Loop over params, create histogram for each and fill with values from
