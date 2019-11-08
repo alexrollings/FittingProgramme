@@ -755,23 +755,57 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                            misId_PartRec_meanBu_, misId_PartRec_sigmaLBu_,
                            misId_PartRec_sigmaRBu_, misId_PartRec_aLBu_,
                            misId_PartRec_aRBu_),
+      misId_PartRec_meanBuPartial_(("misId_PartRec_meanBuPartial_" +
+                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                               .c_str(),
+                           "", 5.1786e+03),
+      misId_PartRec_sigmaLBuPartial_(("misId_PartRec_sigmaLBuPartial_" +
+                              ComposeName(uniqueId, Neutral::gamma,
+                                          Bachelor::k))
+                                 .c_str(),
+                             "", 4.6971e+01),
+      misId_PartRec_sigmaRBuPartial_(("misId_PartRec_sigmaRBuPartial_" +
+                              ComposeName(uniqueId, Neutral::gamma,
+                                          Bachelor::k))
+                                 .c_str(),
+                             "", 8.1870e+01),
+      misId_PartRec_aLBuPartial_(("misId_PartRec_aLBuPartial_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 2.1515e-02),
+      misId_PartRec_aRBuPartial_(("misId_PartRec_aRBuPartial_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 1.7988e-01),
+      pdfBuPartial_misId_PartRec_(("pdfBuPartial_misId_PartRec_" +
+                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                              .c_str(),
+                          "", Configuration::Get().buDeltaMass(),
+                          misId_PartRec_meanBuPartial_, misId_PartRec_sigmaLBuPartial_,
+                          misId_PartRec_sigmaRBuPartial_, misId_PartRec_aLBuPartial_,
+                          misId_PartRec_aRBuPartial_),
       orEffMisId_PartRec_(("orEffMisId_PartRec_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", 1),
+      boxEffMisId_PartRec_(("boxEffMisId_PartRec_" +
                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                               .c_str(),
                           "", 1),
-      boxEffMisId_PartRec_(("boxEffMisId_PartRec_" +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                               .c_str(),
-                           "", 1),
       buDeltaCutEffMisId_PartRec_(("buDeltaCutEffMisId_PartRec_" +
-                                   ComposeName(uniqueId, Neutral::gamma,
-                                               Bachelor::k))
-                                      .c_str(),
-                                  "", 1),
+                                  ComposeName(uniqueId, Neutral::gamma,
+                                              Bachelor::k))
+                                     .c_str(),
+                                 "", 1),
       deltaCutEffMisId_PartRec_(("deltaCutEffMisId_PartRec_" +
-                                 ComposeName(uniqueId, Neutral::gamma,
-                                             Bachelor::k))
-                                    .c_str(),
+                                ComposeName(uniqueId, Neutral::gamma,
+                                            Bachelor::k))
+                                   .c_str(),
+                               "", 1),
+      deltaPartialCutEffMisId_PartRec_(("deltaPartialCutEffMisId_PartRec_" +
+                                ComposeName(uniqueId, Neutral::gamma,
+                                            Bachelor::k))
+                                   .c_str(),
                                 "", 1) {
   Configuration::Get().SetEfficiencies(
       Mode::Bu2Dst0pi_D0gamma, Bachelor::k, orEffMisId_Bu2Dst0h_D0gamma_,

@@ -501,6 +501,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           misId_PartRec_meanBu_, misId_PartRec_sigmaLBu_,
           misId_PartRec_sigmaRBu_, misId_PartRec_aLBu_,
           misId_PartRec_aRBu_),
+      misId_PartRec_meanBuPartial_(),
+      misId_PartRec_sigmaLBuPartial_(),
+      misId_PartRec_sigmaRBuPartial_(),
+      misId_PartRec_aLBuPartial_(),
+      misId_PartRec_aRBuPartial_(),
+      pdfBuPartial_misId_PartRec_(),
       orEffMisId_PartRec_(("orEffMisId_PartRec_" +
                                       ComposeName(uniqueId, Neutral::pi0,
                                                   Bachelor::k))
@@ -520,7 +526,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("deltaCutEffMisId_PartRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", 1) {
+          "", 1),
+      deltaPartialCutEffMisId_PartRec_() {
   Configuration::Get().SetEfficiencies(
       Mode::Bu2Dst0pi_D0gamma, Bachelor::k, orEffMisId_Bu2Dst0h_D0gamma_,
       boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
