@@ -42,8 +42,6 @@ def pass_filename_bu_partial(filename,
             filename)
     if m:
         file_list.append(filename)
-    else:
-        print(filename)
 
 
 if __name__ == "__main__":
@@ -144,6 +142,7 @@ if __name__ == "__main__":
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
 
+    fit_bu_partial = False;
     if neutral == "gamma" and delta_partial_low != None and delta_partial_high != None:
         fit_bu_partial = True;
 
