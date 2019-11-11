@@ -11,13 +11,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     : Bu2Dst0h_D0gamma_meanDelta_(("Bu2Dst0h_D0gamma_meanDelta_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),
-                                  // "", 1.4278e+02),
                                   "", 1.4278e+02, 130, 150),
+                                  // Fixed from data
+                                  // "", 1.4199e+02),
       Bu2Dst0h_D0gamma_sigmaDelta_(("Bu2Dst0h_D0gamma_sigmaDelta_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
-                                   // "", 8.4695e+00),
                                    "", 8.4695e+00, 2, 15),
+                                   // Fixed from data
+                                   // "", 8.2647e+00),
       Bu2Dst0h_D0gamma_a1Delta_(("Bu2Dst0h_D0gamma_a1Delta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -75,12 +77,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
                                "", 5.2814e+03),
-      // "", 5.2814e+03, 5278, 5285),
       Bu2Dst0h_D0gamma_KpiSigmaBu_(("Bu2Dst0h_D0gamma_KpiSigmaBuBu_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
                                    "", 0.95),
-      // "", 0.95, 0.5, 1.5),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -89,7 +89,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
                              "", -1.6623e+00),
-      // "", -1.6623e+00, -5, -0.0001),
       Bu2Dst0h_D0gamma_n1Bu_(("Bu2Dst0h_D0gamma_n1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -145,13 +144,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                // "", 8.6503e+01),
                                 "", 8.6503e+01, 70, 100),
+                                // Fixed from data
+                                // "", 8.5749e+01),
       Bu2Dst0h_D0pi0_sigmaDelta_(("Bu2Dst0h_D0pi0_sigmaDelta_" +
                                   ComposeName(uniqueId, Neutral::gamma))
                                      .c_str(),
-                                 // "", 9.3347e+00),
                                  "", 9.3347e+00, 5, 15),
+                                 // Fixed from data
+                                 // "", 9.3347e+00),
       Bu2Dst0h_D0pi0_a1Delta_(("Bu2Dst0h_D0pi0_a1Delta_" +
                                ComposeName(uniqueId, Neutral::gamma))
                                   .c_str(),
@@ -214,7 +215,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBuPartial_(("Bu2Dst0h_D0pi0_meanBuPartial_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    "", 5.2910e+03, 5285, 5295),
+                                    // "", 5.2910e+03, 5285, 5295),
+                                    // Fixed from data
+                                    "", 5.2912e+03),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(("Bu2Dst0h_D0pi0_KpiSigmaBuBuPartial_" +
                                          ComposeName(uniqueId, Neutral::gamma))
                                             .c_str(),
@@ -272,7 +275,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1.1287e+00, -2, 2),
+          // "", 1.1287e+00, -2, 2),
+          // Fixed from data
+          "", 1.1293e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
