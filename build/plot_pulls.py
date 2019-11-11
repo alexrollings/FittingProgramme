@@ -3,7 +3,7 @@ import os, re, subprocess, sys, argparse
 #re = regular expressions
 
 
-def pass_filename_pi0(filename,
+def pass_filename(filename,
                       file_list,
                       dim,
                       delta_low,
@@ -21,7 +21,7 @@ def pass_filename_pi0(filename,
         file_list.append(filename)
 
 
-def pass_filename_gamma(filename,
+def pass_filename_bu_partial(filename,
                         file_list,
                         dim,
                         delta_low,
@@ -144,27 +144,27 @@ if __name__ == "__main__":
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
 
-    if neutral == "gamma" and (delta_partial_low == None or delta_partial_high == None):
-        sys.exit("For gamma fit, must specify delta_partial box limits")
+    if neutral == "gamma" and delta_partial_low != None and delta_partial_high != None:
+        fit_bu_partial = True;
 
     if not os.path.isdir(input_dir):
         sys.exit(input_dir + ' is not a directory')
     file_list = []
     for filename in os.listdir(input_dir):
         if dim == "1D":
-            if neutral == "pi0":
-                pass_filename_pi0(input_dir + "/" + filename, file_list, dim,
+            if fit_bu_partial == False:
+                pass_filename(input_dir + "/" + filename, file_list, dim,
                                   delta_low, delta_high)
             else:
-                pass_filename_gamma(input_dir + "/" + filename, file_list, dim,
+                pass_filename_bu_partial(input_dir + "/" + filename, file_list, dim,
                                     delta_low, delta_high, delta_partial_low,
                                     delta_partial_high)
         else:
-            if neutral == "pi0":
-                pass_filename_pi0(input_dir + "/" + filename, file_list, dim,
+            if fit_bu_partial == False:
+                pass_filename(input_dir + "/" + filename, file_list, dim,
                                   delta_low, delta_high, bu_low, bu_high)
             else:
-                pass_filename_gamma(input_dir + "/" + filename, file_list, dim,
+                pass_filename_bu_partial(input_dir + "/" + filename, file_list, dim,
                                     delta_low, delta_high, delta_partial_low,
                                     delta_partial_high, bu_low, bu_high)
         # pass_filename(input_dir + "/" + filename, file_list)
@@ -179,16 +179,30 @@ if __name__ == "__main__":
     # print("./PlotToys " + ",".join(file_list))
     if len(file_list) != 0:
         if dim == "1D":
-            subprocess.call([
-                "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
-                "-1D", "-toyInit=" + toy_init
-            ])
+            if fit_bu_partial == False:
+                subprocess.call([
+                    "./PlotToys", "-neutral=" + neutral,
+                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-1D", "-toyInit=" + toy_init
+                ])
+            else:
+                subprocess.call([
+                    "./PlotToys", "-neutral=" + neutral,
+                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-1D", "-toyInit=" + toy_init, "-buPartial"
+                ])
         else:
-            subprocess.call([
-                "./PlotToys", "-neutral=" + neutral,
-                "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
-                "-toyInit=" + toy_init
-            ])
+            if fit_bu_partial == False:
+                subprocess.call([
+                    "./PlotToys", "-neutral=" + neutral,
+                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-toyInit=" + toy_init
+                ])
+            else:
+                subprocess.call([
+                    "./PlotToys", "-neutral=" + neutral,
+                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-toyInit=" + toy_init, "-buPartial"
+                ])
     else:
         sys.exit("File list empty")
