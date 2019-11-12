@@ -56,7 +56,7 @@ Configuration::Configuration()
   buDeltaMass_.SetName("Bu_Delta_M");
   buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
   buDeltaMass_.setMax(5800);
-  buDeltaMass_.setMin(4900);
+  buDeltaMass_.setMin(5100);
   buDeltaMass_.setBins(75);
   // buDeltaMass_.setMax(6000);
   // buDeltaMass_.setMin(4000);

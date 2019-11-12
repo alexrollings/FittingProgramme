@@ -76,11 +76,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
-                               "", 5.2814e+03),
-      Bu2Dst0h_D0gamma_KpiSigmaBu_(("Bu2Dst0h_D0gamma_KpiSigmaBuBu_" +
+                               // "", 5.2814e+03),
+                               "", 5.2814e+03, 5275, 5285),
+      Bu2Dst0h_D0gamma_KpiSigmaBu_(("Bu2Dst0h_D0gamma_KpiSigmaBu_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
-                                   "", 0.95),
+                                   // "", 0.95),
+                                   "", 0.95, 0.5, 1.5),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -215,13 +217,19 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBuPartial_(("Bu2Dst0h_D0pi0_meanBuPartial_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    // "", 5.2910e+03, 5285, 5295),
+                                    "", 5.2910e+03, 5285, 5295),
                                     // Fixed from data
-                                    "", 5.2912e+03),
-      Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(("Bu2Dst0h_D0pi0_KpiSigmaBuBuPartial_" +
+                                    // "", 5.2912e+03),
+      Bu2Dst0h_D0pi0_21SigmaBuPartial_(("Bu2Dst0h_D0pi0_21SigmaBuPartial_" +
                                          ComposeName(uniqueId, Neutral::gamma))
                                             .c_str(),
-                                        "", 0.95),
+                                        // "", 1.6728),
+                                        "", 1.3663),
+      Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(("Bu2Dst0h_D0pi0_KpiSigmaBuPartial_" +
+                                         ComposeName(uniqueId, Neutral::gamma))
+                                            .c_str(),
+                                        // "", 0.95),
+                                        "", 0.95, 0.5, 1.5),
       Bu2Dst0h_D0pi0_a1BuPartial_(("Bu2Dst0h_D0pi0_a1BuPartial_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),

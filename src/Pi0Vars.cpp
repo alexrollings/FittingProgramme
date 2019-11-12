@@ -64,19 +64,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
                               ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
-                             // "", 5.2735e+03),
                              "", 5.2735e+03, 5270, 5275),
+      // Fixed from data
+      // "", 5.2708e+03),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(("Bu2Dst0h_D0pi0_KpiSigmaBu_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
-                                 "", 0.95),
-      // "", 0.95, 0.5, 1.5),
+                                 // "", 0.95),
+                                 "", 0.95, 0.5, 1.5),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
-                           "", 7.9192e-01),
-      // "", 1.5497e+00),
-      // "", 1.5497e+00, 0, 5),
+                           "", 1.5497e+00),
       Bu2Dst0h_D0pi0_a2Bu_(("Bu2Dst0h_D0pi0_a2Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -84,7 +83,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n1Bu_(("Bu2Dst0h_D0pi0_n1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
-                           "", 10),  // 2.8327e+00, 0, 10),
+                           "", 2.8327e+00),//, 0, 10),
       Bu2Dst0h_D0pi0_n2Bu_(("Bu2Dst0h_D0pi0_n2Bu_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
@@ -94,6 +93,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                      .c_str(),
                                  "", 2.0967e-01),
       Bu2Dst0h_D0pi0_meanBuPartial_(),
+      Bu2Dst0h_D0pi0_21SigmaBuPartial_(),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(),
       Bu2Dst0h_D0pi0_a1BuPartial_(),
       Bu2Dst0h_D0pi0_a2BuPartial_(),
@@ -208,7 +208,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              "", 1.3549e+02),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -1.5314e+00),  //, -10, 10),
+          "", -1.5314e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", 4.3675e-03),
@@ -227,7 +227,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.2811e+03),  //, 5220, 5320),
+          // "", 5.2811e+03, 5220, 5320),
+          // Fixed from data
+          "", 5.2788e+03),
       MisRec_aLBu_(
           ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           4.4348e-02),
@@ -290,13 +292,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           // 5.4893e+03, 5450, 5500),
           // Fixed from data
-          5.4654e+03),
+          5.4754e+03),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1.3673e-01),
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          5.0076e-08),
+          // 5.0076e-08, 0, 5),
+          // Fixed from data
+          1.2325e-01),
       Bu2D0h_meanBuPartial_(),
       Bu2D0h_aLBuPartial_(),
       Bu2D0h_aRBuPartial_(),
@@ -344,9 +348,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       partRec_D0pi0_meanBu_(("partRec_D0pi0_meanBu_" +
                              ComposeName(uniqueId, Neutral::pi0))
                                 .c_str(),
-                            // "", 5.1162e+03),
-                            "", 5.1300e+03),
-      // "", 5.1162e+03, 5090, 5130),
+                            // "", 5.1162e+03, 5090, 5140),
+                            // Fixed from data at 4900
+                            "", 5.1323e+03),
       partRec_D0pi0_aLBu_(
           ("partRec_D0pi0_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 4.7967e-07),

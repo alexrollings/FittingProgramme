@@ -262,11 +262,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       "", 6.5198e+01),  //, 20, 100),
+                       // "", 6.5198e+01, 20, 100),
+                       // Fixed from data
+                       "", 5.9863e+01),
       MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       "", 4.7849e+01),  //, 20, 100),
+                       // "", 4.7849e+01, 20, 100),
+                       // Fixed from data
+                       "", 4.9259e+01),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                         .c_str(),
@@ -351,15 +355,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       // "", 3.3137e+01),
-                       // "", 4.8630e+01),
-                       "", 3.3137e+01, 10, 100),
+                       // "", 3.3137e+01, 10, 100),
+                       // Fixed from data
+                       "", 2.5654e+01),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
-                       // "", 4.0080e+01),
-                       // "", 6.6626e+01),
-                       "", 4.0080e+01, 10, 80),
+                       // "", 4.0080e+01, 10, 80),
+                       // Fixed from data
+                       "", 3.9920e+01),
       pdfBu_Bu2D0h_(
           ("pdfBu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
@@ -440,8 +444,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       partRec_D0pi0_sigmaLBu_(("partRec_D0pi0_sigmaLBu_" +
                                ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                   .c_str(),
-                              "", 4.9999e+01),
-      // "", 3.4464e+01),
+                              "", 4.8731e+01),
       partRec_D0pi0_sigmaRBu_(("partRec_D0pi0_sigmaRBu_" +
                                ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                   .c_str(),

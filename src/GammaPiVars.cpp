@@ -13,8 +13,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         "", 2.0271e+01)),
-      // "", 2.0271e+01, 15, 25)),
+                         // "", 2.0271e+01)),
+                         "", 2.0271e+01, 15, 25)),
       Bu2Dst0h_D0gamma_sigma2Bu_(),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
@@ -148,14 +148,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0pi0_sigma1BuPartial_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         "", 2.8223e+01)),
-      Bu2Dst0h_D0pi0_sigma2BuPartial_(
-          new RooRealVar(("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         // "", 4.7212e+01, 30, 60)),
-                         // Fixed from data
-                         "", 3.8561e+01)),
+                         // "", 2.8223e+01)),
+                         "", 2.8223e+01, 20, 25)),
+      Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
+          ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "@0*@1", RooArgSet(*Bu2Dst0h_D0pi0_sigma1BuPartial_,
+                              NeutralVars<Neutral::gamma>::Get(uniqueId)
+                                  .Bu2Dst0h_D0pi0_21SigmaBuPartial()))),
       pdf1BuPartial_Bu2Dst0h_D0pi0_(("pdf1BuPartial_Bu2Dst0h_D0pi0_" +
                                      ComposeName(uniqueId, Neutral::gamma,
                                                  Bachelor::pi))
@@ -287,10 +288,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                       .c_str(),
                                   "", 1),
       boxPartialEffMisId_Bu2Dst0h_D0pi0_(("boxPartialEffMisId_Bu2Dst0h_D0pi0_" +
-                                   ComposeName(uniqueId, Neutral::gamma,
-                                               Bachelor::pi))
-                                      .c_str(),
-                                  "", 1),
+                                          ComposeName(uniqueId, Neutral::gamma,
+                                                      Bachelor::pi))
+                                             .c_str(),
+                                         "", 1),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(("buDeltaCutEffMisId_Bu2Dst0h_D0pi0_" +
                                           ComposeName(uniqueId, Neutral::gamma,
                                                       Bachelor::pi))
