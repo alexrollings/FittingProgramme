@@ -191,8 +191,8 @@ if __name__ == "__main__":
             "DIM":
             dim
         }
-        if gen == 'model':
+        if gen == 'data':
             substitutions["INPUT"] = input_dir
         make_shell_script(templatePath, scriptPath, substitutions)
         # run_process(["sh", scriptPath])
-        # run_process(["qsub", scriptPath])
+        run_process(["qsub", scriptPath])
