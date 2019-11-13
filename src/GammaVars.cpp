@@ -384,7 +384,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_meanBu_(
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           // "", 5.5269e+03, 5450, 5600),
-          "", 5.5269e+03),
+          // Fixed from data
+          "", 5.5310e+03),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           5.4892e-09),
@@ -396,7 +397,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                 .c_str(),
                             // "", 5.5319e+03, 5450, 5580),
                             // Fixed from data
-                            "", 5.5413e+03),
+                            "", 5.5429e+03),
       Bu2D0h_aLBuPartial_(("Bu2D0h_aLBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
