@@ -228,8 +228,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           // "", 5.2811e+03, 5220, 5320),
-          // "", 5.2788e+03),
           // Fixed from data
+          // "", 5.2788e+03),
           "", 5.2455e+03),
       MisRec_aLBu_(
           ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
