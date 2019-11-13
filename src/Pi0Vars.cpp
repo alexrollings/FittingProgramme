@@ -228,14 +228,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           // "", 5.2811e+03, 5220, 5320),
+          // "", 5.2788e+03),
           // Fixed from data
-          "", 5.2788e+03),
+          "", 5.2455e+03),
       MisRec_aLBu_(
           ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          4.4348e-02),
+          // 4.4348e-02, 0, 5),
+          // Fixed from data
+          2.8278e-08),
       MisRec_aRBu_(
           ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          5.6521e-02),
+          // 5.6521e-02, 0, 5),
+          // Fixed from data
+          5.2696e-11),
       MisRec_meanBuPartial_(),
       MisRec_aLBuPartial_(),
       MisRec_aRBuPartial_(),
