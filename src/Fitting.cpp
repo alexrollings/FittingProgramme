@@ -58,7 +58,7 @@ void SetStyle() {
 void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    TLegend &legend,
-                   TLegend &lumiLegend, std::string const &outputDir,
+                   std::string const &outputDir,
                    Configuration &config,
                    std::map<std::string, Color_t> colorMap) {
   Bachelor bachelor = pdf.bachelor();
@@ -689,10 +689,6 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   zeroLine.SetLineStyle(kDashed);
 
   if (config.noFit() == false) {
-    // Zero line on error plot.
-    // .get() gets the raw pointer from underneath the smart pointer
-    // FIX THIS
-    // TLegend legend = MakeLegend(id, canvas, pad1, pad2, pdf);
 
     canvas.cd();
     pad2.cd();
@@ -709,11 +705,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   canvas.cd();
   pad1.cd();
   frame->Draw();
-  lumiLegend.Draw("same");
-  // if (config.noFit() == false) {
   legend.Draw("same");
-  // }
-  // dataHist->Draw("same");
 
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
@@ -725,7 +717,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir, std::string &labelString,
+                std::string const &outputDir,
                 RooFitResult *result) {
   SetStyle();
 
@@ -741,239 +733,39 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  TLegend lumiLegend(0.7, 0.75, 0.9, 0.8);
-  lumiLegend.SetTextSize(0.03);
-  lumiLegend.SetLineColor(kWhite);
-  lumiLegend.AddEntry(blankHist.get(), labelString.c_str(), "l");
-  // Blank entry to make space for integration symbol
-  lumiLegend.AddEntry(blankHist.get(), " ", "l");
-  if (labelString == "TOY") {
-    lumiLegend.SetTextSize(0.07);
+  TLegend legend(0.7, 0.75, 0.9, 0.8);
+  std::string legendString = "LHCb Preliminary";
+  if (config.runToy() == true) {
+    legend.SetTextSize(0.07);
+    legendString = "TOY";
   }
-
-  TLegend legend(0.7, 0.48, 0.9, 0.75);
+  legend.SetTextSize(0.03);
   legend.SetLineColor(kWhite);
+  legend.AddEntry(blankHist.get(), legendString.c_str(), "l");
 
-  if (neutral == Neutral::pi0) {
-    if (bachelor == Bachelor::k) {
-      legend.SetY1(0.375);
-    }
-    if (labelString == "TOY") {
-      lumiLegend.SetX1(0.66);
-    }
-  }
-  if (neutral == Neutral::gamma) {
-    legend.SetX1(0.14);
-    legend.SetX2(0.35);
-    legend.SetY1(0.59);
-    legend.SetY2(0.89);
-    if (bachelor == Bachelor::k) {
-      legend.SetY1(0.515);
-    }
-    if (labelString == "TOY") {
-      lumiLegend.SetX1(0.83);
-      lumiLegend.SetX2(0.9);
-    } else {
-      lumiLegend.SetX1(0.75);
-      lumiLegend.SetX2(0.85);
-      lumiLegend.SetY1(0.82);
-      lumiLegend.SetY2(0.87);
-    }
-  }
   // ------------- Draw Legends -------------- //
   std::map<std::string, Color_t> colorMap;
 
-  auto Bu2Dst0pi_D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0pi_D0gammaHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0pi_D0gammaHist", 1, 0, 1);
-  Bu2Dst0pi_D0gammaHist->SetLineColor(kGreen + 2);
-  Bu2Dst0pi_D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0pi_D0gammaHist->SetLineWidth(2);
-  colorMap["Bu2Dst0pi_D0gamma"] = Bu2Dst0pi_D0gammaHist->GetLineColor();
-
-  auto Bu2Dst0K_D0gammaHist = std::make_unique<TH1D>(
-      ("Bu2Dst0K_D0gammaHist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0K_D0gammaHist", 1, 0, 1);
-  Bu2Dst0K_D0gammaHist->SetLineColor(kRed);
-  Bu2Dst0K_D0gammaHist->SetLineStyle(kDashed);
-  Bu2Dst0K_D0gammaHist->SetLineWidth(2);
-  colorMap["Bu2Dst0K_D0gamma"] = Bu2Dst0K_D0gammaHist->GetLineColor();
-
-  auto Bu2Dst0pi_D0pi0Hist = std::make_unique<TH1D>(
-      ("Bu2Dst0pi_D0pi0Hist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0pi_D0pi0Hist", 1, 0, 1);
-  Bu2Dst0pi_D0pi0Hist->SetLineColor(kBlue - 7);
-  Bu2Dst0pi_D0pi0Hist->SetLineStyle(kDashed);
-  Bu2Dst0pi_D0pi0Hist->SetLineWidth(2);
-  colorMap["Bu2Dst0pi_D0pi0"] = Bu2Dst0pi_D0pi0Hist->GetLineColor();
-
-  auto Bu2Dst0K_D0pi0Hist = std::make_unique<TH1D>(
-      ("Bu2Dst0K_D0pi0Hist" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2Dst0K_D0pi0Hist", 1, 0, 1);
-  Bu2Dst0K_D0pi0Hist->SetLineColor(kViolet - 6);
-  Bu2Dst0K_D0pi0Hist->SetLineStyle(kDashed);
-  Bu2Dst0K_D0pi0Hist->SetLineWidth(2);
-  colorMap["Bu2Dst0K_D0pi0"] = Bu2Dst0K_D0pi0Hist->GetLineColor();
-
-  auto MisRecPiHist = std::make_unique<TH1D>(
-      ("MisRecPiHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "MisRecPiHist", 1, 0, 1);
-  MisRecPiHist->SetLineColor(kOrange);
-  MisRecPiHist->SetLineStyle(kDashed);
-  MisRecPiHist->SetLineWidth(2);
-  colorMap["MisRecPi"] = MisRecPiHist->GetLineColor();
-
-  auto MisRecKHist = std::make_unique<TH1D>(
-      ("MisRecKHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "MisRecKHist", 1, 0, 1);
-  MisRecKHist->SetLineColor(kAzure - 1);
-  MisRecKHist->SetLineStyle(kDashed);
-  MisRecKHist->SetLineWidth(2);
-  colorMap["MisRecK"] = MisRecKHist->GetLineColor();
-
-  auto Bu2D0piHist = std::make_unique<TH1D>(
-      ("Bu2D0piHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2D0piHist", 1, 0, 1);
-  Bu2D0piHist->SetLineColor(kMagenta);
-  Bu2D0piHist->SetLineStyle(kDashed);
-  Bu2D0piHist->SetLineWidth(2);
-  colorMap["Bu2D0pi"] = Bu2D0piHist->GetLineColor();
-
-  auto Bu2D0KHist = std::make_unique<TH1D>(
-      ("Bu2D0KHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "Bu2D0KHist", 1, 0, 1);
-  Bu2D0KHist->SetLineColor(kCyan + 1);
-  Bu2D0KHist->SetLineStyle(kDashed);
-  Bu2D0KHist->SetLineWidth(2);
-  colorMap["Bu2D0K"] = Bu2D0KHist->GetLineColor();
-
-  auto PartRecRhoHist = std::make_unique<TH1D>(
-      ("PartRecRhoHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "PartRecRhoHist", 1, 0, 1);
-  PartRecRhoHist->SetLineColor(kBlue + 3);
-  PartRecRhoHist->SetLineStyle(kDashed);
-  PartRecRhoHist->SetLineWidth(2);
-  colorMap["PartRecRho"] = PartRecRhoHist->GetLineColor();
-
-  auto PartRecKstHist = std::make_unique<TH1D>(
-      ("PartRecKstHist" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "PartRecKstHist", 1, 0, 1);
-  PartRecKstHist->SetLineColor(kSpring - 1);
-  PartRecKstHist->SetLineStyle(kDashed);
-  PartRecKstHist->SetLineWidth(2);
-  colorMap["PartRecKst"] = PartRecKstHist->GetLineColor();
-
-  std::stringstream Bu2Dst0pi_D0gammaLegend;
-  Bu2Dst0pi_D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}#pi^{" +
-             EnumToLabel(charge) + "}";
-  std::stringstream Bu2Dst0K_D0gammaLegend;
-  Bu2Dst0K_D0gammaLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{0}*}K^{" +
-             EnumToLabel(charge) + "}";
-  std::stringstream Bu2Dst0pi_D0pi0Legend;
-  Bu2Dst0pi_D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}#pi^{" +
-             EnumToLabel(charge) + "}";
-  std::stringstream Bu2Dst0K_D0pi0Legend;
-  Bu2Dst0K_D0pi0Legend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{0}*}K^{" +
-             EnumToLabel(charge) + "}";
-  std::stringstream MisRecPiLegend;
-  MisRecPiLegend << "Mis-Rec D^{*}#pi^{" + EnumToLabel(charge) + "}";
-  std::stringstream MisRecKLegend;
-  MisRecKLegend << "Mis-Rec D^{*}K^{" + EnumToLabel(charge) + "}";
-  std::stringstream Bu2D0piLegend;
-  Bu2D0piLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-                       EnumToLabel(daughters, charge) +
-                       "#font[132]{]}_{D^{0}}#pi^{" + EnumToLabel(charge) + "}";
-  std::stringstream Bu2D0KLegend;
-  Bu2D0KLegend << "B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-                      EnumToLabel(daughters, charge) +
-                      "#font[132]{]}_{D^{0}}K^{" + EnumToLabel(charge) + "}";
-  std::stringstream PartRecRhoLegend;
-  PartRecRhoLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}#rho^{" +
-             EnumToLabel(charge) + "}";
-  std::stringstream PartRecKstLegend;
-  PartRecKstLegend
-      << "B^{" + EnumToLabel(charge) +
-             "}#rightarrow#font[132]{[}#font[132]{[}" +
-             EnumToLabel(daughters, charge) +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{0}*}^{*" +
-             EnumToLabel(charge) + "}";
-
-  if (bachelor == Bachelor::pi) {
-    if (neutral == Neutral::gamma) {
-      legend.AddEntry(Bu2Dst0pi_D0gammaHist.get(),
-                      Bu2Dst0pi_D0gammaLegend.str().c_str(), "l");
-      legend.AddEntry(Bu2Dst0K_D0gammaHist.get(),
-                      Bu2Dst0K_D0gammaLegend.str().c_str(), "l");
-    }
-    legend.AddEntry(Bu2Dst0pi_D0pi0Hist.get(),
-                    Bu2Dst0pi_D0pi0Legend.str().c_str(), "l");
-    legend.AddEntry(Bu2Dst0K_D0pi0Hist.get(),
-                    Bu2Dst0K_D0pi0Legend.str().c_str(), "l");
-    legend.AddEntry(MisRecPiHist.get(), MisRecPiLegend.str().c_str(), "l");
-    legend.AddEntry(Bu2D0piHist.get(), Bu2D0piLegend.str().c_str(), "l");
-    legend.AddEntry(PartRecRhoHist.get(), PartRecRhoLegend.str().c_str(), "l");
-  } else {
-    if (neutral == Neutral::gamma) {
-      legend.AddEntry(Bu2Dst0K_D0gammaHist.get(),
-                      Bu2Dst0K_D0gammaLegend.str().c_str(), "l");
-      legend.AddEntry(Bu2Dst0pi_D0gammaHist.get(),
-                      Bu2Dst0pi_D0gammaLegend.str().c_str(), "l");
-    }
-    legend.AddEntry(Bu2Dst0K_D0pi0Hist.get(),
-                    Bu2Dst0K_D0pi0Legend.str().c_str(), "l");
-    legend.AddEntry(Bu2Dst0pi_D0pi0Hist.get(),
-                    Bu2Dst0pi_D0pi0Legend.str().c_str(), "l");
-    legend.AddEntry(MisRecKHist.get(), MisRecKLegend.str().c_str(), "l");
-    legend.AddEntry(MisRecPiHist.get(), MisRecPiLegend.str().c_str(), "l");
-    legend.AddEntry(Bu2D0KHist.get(), Bu2D0KLegend.str().c_str(), "l");
-    legend.AddEntry(Bu2D0piHist.get(), Bu2D0piLegend.str().c_str(), "l");
-    legend.AddEntry(PartRecKstHist.get(), PartRecKstLegend.str().c_str(), "l");
-    legend.AddEntry(PartRecRhoHist.get(), PartRecRhoLegend.str().c_str(), "l");
-  }
+  colorMap["Bu2Dst0pi_D0gamma"] = kGreen+2;
+  colorMap["Bu2Dst0K_D0gamma"] = kRed;
+  colorMap["Bu2Dst0pi_D0pi0"] = kBlue-7;
+  colorMap["Bu2Dst0K_D0pi0"] = kViolet-6;
+  colorMap["MisRecPi"] = kOrange;
+  colorMap["MisRecK"] = kAzure-1;
+  colorMap["Bu2D0pi"] = kMagenta;
+  colorMap["Bu2D0K"] = kCyan+1;
+  colorMap["PartRecRho"] = kBlue+3;
+  colorMap["PartRecKst"] = kSpring-1;
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                legend, lumiLegend, outputDir, config, colorMap);
+                legend, outputDir, config, colorMap);
   if (config.fitBuPartial() == true) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet,
-                  simPdf, legend, lumiLegend, outputDir, config, colorMap);
+                  simPdf, legend, outputDir, config, colorMap);
   }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  legend, lumiLegend, outputDir, config, colorMap);
+                  legend, outputDir, config, colorMap);
   }
 }
 
@@ -1523,9 +1315,8 @@ void Run2DToys(TFile &outputFile,
       Plotting2D(dataSet, id, *p, config, outputDir, dataLabel);
       Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
     }
-    std::string lumiString = "TOY";
     for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir, lumiString,
+      Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
                  toyFitResult.get());
     }
     if (config.noFit() == false) {
@@ -1602,11 +1393,10 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
       // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
     }
     if (id == 1) {
-      std::string lumiString = "TOY";
       auto pdfs = p.second;
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-                   lumiString, toyFitResult.get());
+                   toyFitResult.get());
       }
       if (config.noFit() == false) {
         PlotCorrelations(toyFitResult.get(), outputDir, config);
@@ -1872,6 +1662,7 @@ int main(int argc, char **argv) {
         std::cout << "Running data fit.\n";
       } else {
         nToys = toysArg;
+        config.runToy() = true;
         std::cout << "Running " << nToys << " toys\n";
       }
 
@@ -2038,28 +1829,28 @@ int main(int argc, char **argv) {
     std::map<std::string, RooDataSet *> mapDataLabelDataSet;
 
     // Add up lumi in order to convert into string to go on plots
-    double lumi = 0;
-    double lumiErr = 0;
+    // double lumi = 0;
+    // double lumiErr = 0;
 
     // Loop over all options in
     // order to extract correct roodataSets.
     for (auto &y : yearVec) {
-      if (y == Year::y2011) {
-        lumi += 0.98;
-        lumiErr += 0.02;
-      } else if (y == Year::y2012) {
-        lumi += 1.99;
-        lumiErr += 0.02;
-      } else if (y == Year::y2015) {
-        lumi += 0.28;
-        lumiErr += 0.01;
-      } else if (y == Year::y2016) {
-        lumi += 1.65;
-      } else if (y == Year::y2017) {
-        lumi += 1.7;
-      } else if (y == Year::y2018) {
-        lumi += 2.19;
-      }
+      // if (y == Year::y2011) {
+      //   lumi += 0.98;
+      //   lumiErr += 0.02;
+      // } else if (y == Year::y2012) {
+      //   lumi += 1.99;
+      //   lumiErr += 0.02;
+      // } else if (y == Year::y2015) {
+      //   lumi += 0.28;
+      //   lumiErr += 0.01;
+      // } else if (y == Year::y2016) {
+      //   lumi += 1.65;
+      // } else if (y == Year::y2017) {
+      //   lumi += 1.7;
+      // } else if (y == Year::y2018) {
+      //   lumi += 2.19;
+      // }
       for (auto &p : polarityVec) {
         for (auto &b : bachelorVec) {
           for (auto &d : daughtersVec) {
@@ -2161,7 +1952,7 @@ int main(int argc, char **argv) {
     }
 
     std::vector<std::string> toyFileNames(nToys);
-    if (nToys != 0) {
+    if (config.runToy() == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -2216,16 +2007,10 @@ int main(int argc, char **argv) {
       dataFitResult->SetName("DataFitResult");
     }
 
-    if (nToys == 0) {
-      // String for lumi label on 1D projection plots
-      std::ostringstream lumiStream, lumiErrStream;
-      lumiStream << std::setprecision(2) << lumi;
-      lumiErrStream << std::setprecision(2) << lumiErr;
-      std::string lumiString = "#int L dt = " + lumiStream.str() + " #pm " +
-                               lumiErrStream.str() + " fb^{-1}";
+    if (config.runToy() == false) {
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir, lumiString,
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
                    dataFitResult.get());
       }
 
@@ -2248,121 +2033,6 @@ int main(int argc, char **argv) {
         }
         outputFile.cd();
         tree.Write();
-
-        // NeutralVars<Neutral::gamma> gVars(id);
-        // NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
-        // Charge::total>
-        //     nbcVars(id);
-        //
-        // std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0gamma().getVal()
-        //           << "\n"
-        //           << "buDeltaCutEff = "
-        //           << gVars.buDeltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
-        //           << "deltaCutEff = "
-        //           << gVars.deltaCutEffBu2Dst0h_D0gamma().getVal() << "\n"
-        //           << "deltaPartialCutEff = "
-        //           << gVars.deltaPartialCutEffBu2Dst0h_D0gamma().getVal()
-        //           << "\n";
-        //
-        // std::cout << "orEff = " << gVars.orEffBu2Dst0h_D0pi0().getVal() <<
-        // "\n"
-        //           << "buDeltaCutEff = "
-        //           << gVars.buDeltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "deltaCutEff = "
-        //           << gVars.deltaCutEffBu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "deltaPartialCutEff = "
-        //           << gVars.deltaPartialCutEffBu2Dst0h_D0pi0().getVal() <<
-        //           "\n";
-        //
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::pi> gpVars(id);
-        // std::cout << "Gamma, pi:\n"
-        //           << "\tBu2Dst0h_D0gamma:\n";
-        // std::cout << "\torEff = "
-        //           << gpVars.orEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n"
-        //           << "\tbuDeltaCutEff = "
-        //           << gpVars.buDeltaCutEffMisId_Bu2Dst0h_D0gamma().getVal()
-        //           << "\n"
-        //           << "\tdeltaCutEff = "
-        //           << gpVars.deltaCutEffMisId_Bu2Dst0h_D0gamma().getVal()
-        //           << "\n";
-        // std::cout << "\n\tBu2Dst0h_D0pi0:\n";
-        // std::cout << "\torEff = " << gpVars.orEffMisId_Bu2Dst0h_D0pi0().getVal()
-        //           << "\n"
-        //           << "\tbuDeltaCutEff = "
-        //           << gpVars.buDeltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "\tdeltaCutEff = "
-        //           << gpVars.deltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "\tdeltaPartialCutEff = "
-        //           << gpVars.deltaPartialCutEffMisId_Bu2Dst0h_D0pi0().getVal()
-        //           << "\n";
-        //
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::k> gkVars(id);
-        // std::cout << "\nGamma, K:\n"
-        //           << "\tBu2Dst0h_D0gamma:\n";
-        // std::cout << "\torEff = "
-        //           << gkVars.orEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n"
-        //           << "\tbuDeltaCutEff = "
-        //           << gkVars.buDeltaCutEffMisId_Bu2Dst0h_D0gamma().getVal()
-        //           << "\n"
-        //           << "\tdeltaCutEff = "
-        //           << gkVars.deltaCutEffMisId_Bu2Dst0h_D0gamma().getVal()
-        //           << "\n";
-        // std::cout << "\n\tBu2Dst0h_D0pi0:\n";
-        // std::cout << "\torEff = " << gkVars.orEffMisId_Bu2Dst0h_D0pi0().getVal()
-        //           << "\n"
-        //           << "\tbuDeltaCutEff = "
-        //           << gkVars.buDeltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "\tdeltaCutEff = "
-        //           << gkVars.deltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-        //           << "\tdeltaPartialCutEff = "
-        //           << gkVars.deltaPartialCutEffMisId_Bu2Dst0h_D0pi0().getVal()
-        //           << "\n";
-        //
-        // for (auto &p : pdfs) {
-        //   std::cout << "\nBachelor = " << EnumToString(p->bachelor()) << "\n";
-        //   if (config.neutral() == Neutral::gamma) {
-        //     std::cout << "\nBu2Dst0h_D0gamma"
-        //               << ":\n";
-        //     std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //     std::cout << "\tN_misId: " << p->N_misId_Bu2Dst0h_D0gamma().getVal()
-        //               << "\n";
-        //     std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
-        //               << "\n";
-        //
-        //     std::cout << "\tN_misId_Bu: "
-        //               << p->N_Bu_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //     if (config.fitBuPartial() == true) {
-        //       std::cout << "\tN_BuPartial: "
-        //                 << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //     }
-        //     if (config.fit1D() == false) {
-        //       std::cout << "\tN_Delta: "
-        //                 << p->N_Delta_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //       std::cout << "\tN_misId_Delta: "
-        //                 << p->N_Delta_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //     }
-        //   }
-        //   std::cout << "\nBu2Dst0h_D0pi0"
-        //             << ":\n";
-        //   std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   std::cout << "\tN_misId: " << p->N_misId_Bu2Dst0h_D0pi0().getVal()
-        //             << "\n";
-        //   std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   std::cout << "\tN_misId_Bu: "
-        //             << p->N_Bu_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   if (config.fitBuPartial() == true) {
-        //     std::cout << "\tN_BuPartial: "
-        //               << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //     std::cout << "\tN_misId_BuPartial: "
-        //               << p->N_BuPartial_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   }
-        //   if (config.fit1D() == false) {
-        //     std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
-        //               << "\n";
-        //     std::cout << "\tN_misId_Delta: "
-        //               << p->N_Delta_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   }
-        // }
       }
     } else {
       if (config.noFit() == false) {
@@ -2381,6 +2051,10 @@ int main(int argc, char **argv) {
       }
     }
   } else {
+    if (config.runToy() == false) {
+      throw std::runtime_error("Must specify input directory to run data fit.");
+      return 1;
+    }
     std::cout << "Fitting using D1D method\n";
     RunD1DToys(simPdf, dataFitResult, config, daughtersVec, chargeVec,
                outputDir, nToys);
