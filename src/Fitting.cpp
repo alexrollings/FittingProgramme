@@ -15,6 +15,7 @@
 // #include "TMathText.h"
 #include "TH2F.h"
 #include "TLegend.h"
+#include "TLegendEntry.h"
 #include "TLine.h"
 #include "TRandom3.h"
 #include "TStyle.h"
@@ -1329,13 +1330,14 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
   if (mass == Mass::delta) {
     if (neutral == Neutral::gamma) {
-      frame->SetXTitle("m[D*^{0}] - m[D^{0}] (MeV/c^{2})");
+      frame->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
     } else {
       frame->SetXTitle(
           "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
     }
   } else {
-    frame->SetXTitle(("m[D*^{0}" + EnumToLabel(bachelor) +
+    frame->SetXTitle(("m[D^{*0}" + EnumToLabel(bachelor) + "^{" +
+                      EnumToLabel(charge) + "}" +
                       "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})")
                          .c_str());
   }
@@ -1388,17 +1390,6 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   frame->Draw();
   legend.Draw("same");
 
-  // std::string decayString = "B^{" + EnumToLabel(charge) +
-  // "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
-  //      EnumToLabel(bachelor) +
-  //      "^{" + EnumToLabel(charge) + "}";
-  // TMathText *decayText = new TMathText();
-  // // decayText->SetTextSize(0.02);
-  // decayText->SetTextFont(42);
-  // decayText->DrawMathText(0.7, 0.5, decayString.c_str());
-
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
                  ComposeName(id, mass, neutral, bachelor, daughters, charge) +
@@ -1424,21 +1415,40 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  TLegend legend(0.72, 0.75, 0.9, 0.8);
+  TLegend legend(0.72, 0.75, 0.9, 0.85);
+
   std::string legendString_1 = "#font[22]{LHCb}";
   std::string legendString_2 = "#font[12]{preliminary}";
-  std::string blankString_1 = " ";
-  std::string blankString_2 = " ";
   if (config.runToy() == true) {
-    gStyle->SetLegendTextSize(0.07);
+    legend.SetY2(0.83);
+    gStyle->SetLegendTextSize(0.06);
     legendString_1 = "#font[132]{TOY}";
     legendString_2 = " ";
   }
-  legend.SetLineColor(kWhite);
+  legend.SetBorderSize(0);
+  legend.SetMargin(0);
+  legend.SetFillStyle(0);
   legend.AddEntry(blankHist.get(), legendString_1.c_str(), "l");
-  legend.AddEntry(blankHist.get(), blankString_1.c_str(), "l");
-  legend.AddEntry(blankHist.get(), blankString_2.c_str(), "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
   legend.AddEntry(blankHist.get(), legendString_2.c_str(), "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+  legend.AddEntry(blankHist.get(), " ", "l");
+
+  std::string decayString = "#font[12]{B^{" + EnumToLabel(charge) +
+                            "}#rightarrow#font[132]{[}#font[132]{[}" +
+                            EnumToLabel(daughters, charge) +
+                            "#font[132]{]}_{D}" + EnumToLabel(neutral) +
+                            "#font[132]{]}_{D*}" + EnumToLabel(bachelor) +
+                            "^{" + EnumToLabel(charge) + "}}";
+  legend.AddEntry(blankHist.get(), decayString.c_str(), "l");
+  TLegendEntry *entry1 = (TLegendEntry *)legend.GetListOfPrimitives()->At(3);
+  entry1->SetTextSize(0.035);
+  TLegendEntry *entry2 = (TLegendEntry *)legend.GetListOfPrimitives()->At(9);
+  entry2->SetTextSize(0.045);
 
   // ------------- Draw Legends -------------- //
   std::map<std::string, Color_t> colorMap;
@@ -1788,7 +1798,7 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
   dataHist2d->SetStats(0);
   if (neutral == Neutral::pi0) {
     dataHist2d->GetYaxis()->SetTitle(
-        "m[D^{*0} - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+        "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
   }
   dataHist2d->SetTitle(
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
