@@ -28,6 +28,8 @@ Configuration::Configuration()
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
       initYieldFAVSignal_(5.6781e+04),
+      pidEffK_("pidEffK", "", 6.8493e-01),
+      pidEffPi_("pidEffPi", "", 0.996),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
