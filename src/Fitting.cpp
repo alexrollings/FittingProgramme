@@ -1443,16 +1443,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // ------------- Draw Legends -------------- //
   std::map<std::string, Color_t> colorMap;
 
-  colorMap["Bu2Dst0pi_D0gamma"] = kGreen + 2;
-  colorMap["Bu2Dst0K_D0gamma"] = kRed;
-  colorMap["Bu2Dst0pi_D0pi0"] = kBlue - 7;
-  colorMap["Bu2Dst0K_D0pi0"] = kViolet - 6;
-  colorMap["MisRecPi"] = kOrange;
-  colorMap["MisRecK"] = kAzure - 1;
-  colorMap["Bu2D0pi"] = kMagenta;
-  colorMap["Bu2D0K"] = kCyan + 1;
-  colorMap["PartRecRho"] = kBlue + 3;
-  colorMap["PartRecKst"] = kSpring - 1;
+  colorMap["Bu2Dst0pi_D0gamma"] = kAzure-4;
+  colorMap["Bu2Dst0K_D0gamma"] = kRed+1;
+  colorMap["Bu2Dst0pi_D0pi0"] = kAzure+3;
+  colorMap["Bu2Dst0K_D0pi0"] = kMagenta-1;
+  colorMap["MisRecPi"] = kBlue-6;
+  colorMap["MisRecK"] = kMagenta-10;
+  colorMap["Bu2D0pi"] = kBlue+4;
+  colorMap["Bu2D0K"] = kMagenta-7;
+  colorMap["PartRecRho"] = kGreen+3;
+  colorMap["PartRecKst"] = kRed+4;
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
                 legend, outputDir, config, colorMap);
