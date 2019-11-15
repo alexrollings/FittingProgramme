@@ -30,6 +30,12 @@ if __name__ == "__main__":
         help='Neutral = pi0/gamma',
         required=True)
     parser.add_argument(
+        '-c',
+        '--charge',
+        type=str,
+        help='charge = total/plus,minus',
+        required=True)
+    parser.add_argument(
         '-o',
         '--output_dir',
         type=str,
@@ -100,6 +106,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     neutral = args.neutral
+    charge = args.charge
     output_dir = args.output_dir
     n_toys = args.n_toys
     n_jobs = args.n_jobs
@@ -112,6 +119,13 @@ if __name__ == "__main__":
     delta_partial_high = args.delta_partial_high
     bu_low = args.bu_low
     bu_high = args.bu_high
+
+    if charge == "total":
+      print("Running toys summed over charge")
+    elif charge == "plus,minus":
+      print("Running toys split by charge")
+    else:
+      sys.exit("--charge=total/plus,minus")
 
     if gen == "data":
         if input_dir == None:
@@ -174,6 +188,8 @@ if __name__ == "__main__":
             output_dir,
             "NEUTRAL":
             neutral,
+            "CHARGE":
+            charge,
             "NTOYS":
             n_toys,
             "DL":

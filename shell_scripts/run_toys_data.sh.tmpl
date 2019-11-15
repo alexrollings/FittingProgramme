@@ -27,7 +27,7 @@ mkdir build
 cd build
 cmake ../
 make
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} ${DIM}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} ${DIM} -charge=${CHARGE}
 
 cd /data/lhcb/users/rollings/fitting_scripts/
 rm -rf job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
