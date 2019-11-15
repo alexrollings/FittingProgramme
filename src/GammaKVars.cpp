@@ -559,14 +559,18 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                   .c_str(),
                               // "", 4.8679e+01, 10, 80),
                               // Fixed from data
-                              "", 7.2622e+01),
+                              // "", 7.2622e+01),
+                              // Fixed for partial box scan
+                              "", 7.6435e+01),
       Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::k))
                                   .c_str(),
                               // "", 3.5437e+01, 10, 60),
                               // Fixed from data
-                              "", 3.0620e+01),
+                              // "", 3.0620e+01),
+                              // Fixed for partial box scan
+                              "", 3.8231e+01),
       pdfBuPartial_Bu2D0h_(
           ("pdfBuPartial_Bu2D0h_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
