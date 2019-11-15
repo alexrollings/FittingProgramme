@@ -7,7 +7,7 @@ if __name__ == "__main__":
     parser.add_argument('-n',
                         '--neutral',
                         type=str,
-                        help='Neutral=pi0/gamma',
+                        help='Neutral=pi0/gamma/partial',
                         required=True)
     parser.add_argument('-v',
                         '--var',
@@ -35,10 +35,16 @@ if __name__ == "__main__":
     tex_filename = neutral + '_' + var + '_box_limits.txt'
     if os.path.exists(tex_filename):
         os.remove(tex_filename)
-    outfile = open(tex_filename, 'w+')
 
+    step_list = []
     for s in steps:
       idx = (np.abs(effs - s)).argmin()
       eff_6sf = str.format('{0:.6f}', effs[idx])
-      outfile.write(eff_6sf + ":" + eff_box_dict[eff_6sf] + "\n")
+      step_list.append(eff_6sf + ":" + eff_box_dict[eff_6sf] + "\n")
+
+    # In case of duplicate boxes (don't want to run the same thing more than once)
+    unique_steps = sorted(set(step_list))
+    outfile = open(tex_filename, 'w+')
+    for l in unique_steps:
+      outfile.write(l)
 
