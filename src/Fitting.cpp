@@ -1445,10 +1445,36 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                             "#font[132]{]}_{D*}" + EnumToLabel(bachelor) +
                             "^{" + EnumToLabel(charge) + "}}";
   legend.AddEntry(blankHist.get(), decayString.c_str(), "l");
-  TLegendEntry *entry1 = (TLegendEntry *)legend.GetListOfPrimitives()->At(3);
-  entry1->SetTextSize(0.035);
-  TLegendEntry *entry2 = (TLegendEntry *)legend.GetListOfPrimitives()->At(9);
-  entry2->SetTextSize(0.045);
+
+  TList *list = legend.GetListOfPrimitives();
+  if (list != nullptr) {
+    TObject *entryObj1 = list->At(3);
+    if (entryObj1 != nullptr) {
+      auto entry1 = dynamic_cast<TLegendEntry *>(entryObj1);
+      if (entry1 != nullptr) {
+        entry1->SetTextSize(0.035);
+      } else {
+        throw std::runtime_error(
+            "Could not cast entry1 from TObject to TLegendEntry.");
+      }
+    } else {
+      throw std::runtime_error(
+          "Could not extract entryObj1 from list in TLegend.");
+    }
+    TObject *entryObj2 = list->At(9);
+    if (entryObj2 != nullptr) {
+      auto entry2 = dynamic_cast<TLegendEntry *>(entryObj2);
+      if (entry2 != nullptr) {
+        entry2->SetTextSize(0.045);
+      } else {
+        throw std::runtime_error(
+            "Could not cast entry2 from TObject to TLegendEntry.");
+      }
+    } else {
+      throw std::runtime_error(
+          "Could not extract entryObj2 from list in TLegend.");
+    }
+  }
 
   // ------------- Draw Legends -------------- //
   std::map<std::string, Color_t> colorMap;
