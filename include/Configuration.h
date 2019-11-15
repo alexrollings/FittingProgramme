@@ -89,8 +89,13 @@ class Configuration {
   // gamma in different neutral cases: always need to delcare signal yield first
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
 
-  RooRealVar &pidEffK() { return pidEffK_; }
-  RooRealVar &pidEffPi() { return pidEffPi_; }
+  RooRealVar &GetPidEff(Bachelor bachelor) {
+    if (bachelor == Bachelor::pi) {
+      return pidEffPi_;
+    } else {
+      return pidEffK_;
+    }
+  }
 
   std::string ReturnBoxString();
 
@@ -152,8 +157,8 @@ class Configuration {
   float deltaPartialLow_;
   float deltaPartialHigh_;
   double initYieldFAVSignal_;
-  RooRealVar pidEffK;
-  RooRealVar pidEffPi;
+  RooRealVar pidEffK_;
+  RooRealVar pidEffPi_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;

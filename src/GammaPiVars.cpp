@@ -62,11 +62,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                       NeutralVars<Neutral::gamma>::Get(uniqueId)
                                           .orEffBu2Dst0h_D0gamma()
                                           .getVal()),
-      pidEff_Bu2Dst0h_D0gamma_(("pidEff_Bu2Dst0h_D0gamma_" +
-                                ComposeName(uniqueId, Neutral::gamma,
-                                            Bachelor::pi))
-                                   .c_str(),
-                               "", 0.997043),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(("misId_Bu2Dst0h_D0gamma_meanBu_" +
                                       ComposeName(uniqueId, Neutral::gamma,
@@ -194,11 +189,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                     NeutralVars<Neutral::gamma>::Get(uniqueId)
                                         .orEffBu2Dst0h_D0pi0()
                                         .getVal()),
-      pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
-                              ComposeName(uniqueId, Neutral::gamma,
-                                          Bachelor::pi))
-                                 .c_str(),
-                             "", 0.996942),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(("misId_Bu2Dst0h_D0pi0_meanBu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
@@ -354,27 +344,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_MisRec_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal()),
-      pidEff_Bu2Dst0h_D0gamma_WN_(0.997109),
-      pidEff_Bu2Dst0h_D0pi0_WN_(0.996147),
-      pidEff_Bu2D0hst_(0.996808),
-      pidEff_Bd2Dsth_(0.9974),
-      pidEff_MisRec_(
-          ("pidEff_MisRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", (pidEff_Bu2Dst0h_D0gamma_WN_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracMisRec_Bu2Dst0h_D0gamma_WN() +
-               pidEff_Bu2Dst0h_D0pi0_WN_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracMisRec_Bu2Dst0h_D0pi0_WN() +
-               pidEff_Bu2D0hst_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracMisRec_Bu2D0hst() +
-               pidEff_Bd2Dsth_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracMisRec_Bd2Dsth()) /
-                  NeutralVars<Neutral::gamma>::Get(uniqueId).fracMisRec()),
       // -------------------- Mis-ID ------------------- //
       misId_MisRec_mean1Bu_(),
       misId_MisRec_mean2Bu_(),
@@ -449,10 +418,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_Bu2D0h_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVBu2D0h() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffBu2D0h().getVal()),
-      pidEff_Bu2D0h_(("pidEff_Bu2D0h_" +
-                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                         .c_str(),
-                     "", 0.996587),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2D0h_meanBu_(),
       misId_Bu2D0h_sigmaLBu_(),
@@ -539,19 +504,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           partRec_sigmaLBuPartial_, partRec_sigmaRBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_aRBuPartial()),
-      pidEff_Bu2Dst0hst_D0pi0_(0.999413),
-      pidEff_Bu2Dst0hst_D0gamma_(0.998193),
-      pidEff_PartRec_(
-          ("pidEff_PartRec_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", (pidEff_Bu2Dst0hst_D0gamma_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracPartRec_Bu2Dst0hst_D0gamma() +
-               pidEff_Bu2Dst0hst_D0pi0_ *
-                   NeutralVars<Neutral::gamma>::Get(uniqueId)
-                       .fracPartRec_Bu2Dst0hst_D0pi0()) /
-                  NeutralVars<Neutral::gamma>::Get(uniqueId).fracPartRec()),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(),
       misId_PartRec_sigmaLBu_(),

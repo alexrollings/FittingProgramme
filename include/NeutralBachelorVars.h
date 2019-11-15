@@ -45,7 +45,6 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() { return *pdfBu_Bu2Dst0h_D0gamma_; }
   RooRealVar &Bu2Dst0h_D0gamma_sigmaBuPartial() { return Bu2Dst0h_D0gamma_sigmaBuPartial_; }
   RooCBShape &pdfBuPartial_Bu2Dst0h_D0gamma() { return pdfBuPartial_Bu2Dst0h_D0gamma_; }
-  RooConstVar &pidEff_Bu2Dst0h_D0gamma() { return pidEff_Bu2Dst0h_D0gamma_; }
   double &N_tot_initVal_Bu2Dst0h_D0gamma() {
     return N_tot_initVal_Bu2Dst0h_D0gamma_;
   }
@@ -115,7 +114,6 @@ class NeutralBachelorVars {
   RooAddPdf &pdfBuPartial_Bu2Dst0h_D0pi0() {
     return pdfBuPartial_Bu2Dst0h_D0pi0_;
   }
-  RooConstVar &pidEff_Bu2Dst0h_D0pi0() { return pidEff_Bu2Dst0h_D0pi0_; }
   double &N_tot_initVal_Bu2Dst0h_D0pi0() {
     return N_tot_initVal_Bu2Dst0h_D0pi0_;
   }
@@ -201,11 +199,6 @@ class NeutralBachelorVars {
   RooRealVar &MisRec_sigmaLBuPartial() { return MisRec_sigmaLBuPartial_; }
   RooRealVar &MisRec_sigmaRBuPartial() { return MisRec_sigmaRBuPartial_; }
   RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
-  double &pidEff_Bu2Dst0h_D0gamma_WN() { return pidEff_Bu2Dst0h_D0gamma_WN_; }
-  double &pidEff_Bu2Dst0h_D0pi0_WN() { return pidEff_Bu2Dst0h_D0pi0_WN_; }
-  double &pidEff_Bu2D0hst() { return pidEff_Bu2D0hst_; }
-  double &pidEff_Bd2Dsth() { return pidEff_Bd2Dsth_; }
-  RooConstVar &pidEff_MisRec() { return pidEff_MisRec_; }
   double &N_tot_initVal_MisRec() {
     return N_tot_initVal_MisRec_;
   }
@@ -273,7 +266,6 @@ class NeutralBachelorVars {
   RooRealVar &Bu2D0h_sigmaLBuPartial() { return Bu2D0h_sigmaLBuPartial_; }
   RooRealVar &Bu2D0h_sigmaRBuPartial() { return Bu2D0h_sigmaRBuPartial_; }
   RooCruijff &pdfBuPartial_Bu2D0h() { return pdfBuPartial_Bu2D0h_; }
-  RooConstVar &pidEff_Bu2D0h() { return pidEff_Bu2D0h_; }
   double &N_tot_initVal_Bu2D0h() {
     return N_tot_initVal_Bu2D0h_;
   }
@@ -327,15 +319,6 @@ class NeutralBachelorVars {
     return partRec_sigmaRBuPartial_;
   }
   RooCruijff &pdfBuPartial_PartRec() { return pdfBuPartial_PartRec_; }
-  double &pidEff_Bu2Dst0hst_D0pi0() {
-    return pidEff_Bu2Dst0hst_D0pi0_;
-  }
-  double &pidEff_Bu2Dst0hst_D0gamma() {
-    return pidEff_Bu2Dst0hst_D0gamma_;
-  }
-  RooConstVar &pidEff_PartRec() {
-    return pidEff_PartRec_;
-  }
   double &N_tot_initVal_PartRec() {
     return N_tot_initVal_PartRec_;
   }
@@ -389,7 +372,6 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_;
   RooRealVar Bu2Dst0h_D0gamma_sigmaBuPartial_;
   RooCBShape pdfBuPartial_Bu2Dst0h_D0gamma_;
-  RooConstVar pidEff_Bu2Dst0h_D0gamma_;
   double N_tot_initVal_Bu2Dst0h_D0gamma_;
   // -------------------- Mis-ID ------------------- //
   // 1 = L, 2 = R for RooCruijff
@@ -418,7 +400,6 @@ class NeutralBachelorVars {
   RooCBShape pdf1BuPartial_Bu2Dst0h_D0pi0_;
   RooCBShape pdf2BuPartial_Bu2Dst0h_D0pi0_;
   RooAddPdf pdfBuPartial_Bu2Dst0h_D0pi0_;
-  RooConstVar pidEff_Bu2Dst0h_D0pi0_;
   double N_tot_initVal_Bu2Dst0h_D0pi0_;
   // -------------------- Mis-ID ------------------- //
   // 1 = L, 2 = R for RooCruijff
@@ -457,11 +438,6 @@ class NeutralBachelorVars {
   RooRealVar MisRec_sigmaLBuPartial_;
   RooRealVar MisRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_MisRec_;
-  double pidEff_Bu2Dst0h_D0gamma_WN_;
-  double pidEff_Bu2Dst0h_D0pi0_WN_;
-  double pidEff_Bu2D0hst_;
-  double pidEff_Bd2Dsth_;
-  RooConstVar pidEff_MisRec_;
   double N_tot_initVal_MisRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_MisRec_mean1Bu_;
@@ -495,7 +471,6 @@ class NeutralBachelorVars {
   RooRealVar Bu2D0h_sigmaLBuPartial_;
   RooRealVar Bu2D0h_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_Bu2D0h_;
-  RooConstVar pidEff_Bu2D0h_;
   double N_tot_initVal_Bu2D0h_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_Bu2D0h_meanBu_;
@@ -527,9 +502,6 @@ class NeutralBachelorVars {
   RooRealVar partRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_PartRec_;
   std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
-  double pidEff_Bu2Dst0hst_D0pi0_;
-  double pidEff_Bu2Dst0hst_D0gamma_;
-  RooConstVar pidEff_PartRec_;
   double N_tot_initVal_PartRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_PartRec_meanBu_;

@@ -180,28 +180,24 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
           ("N_tot_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_Bu2Dst0h_D0gamma(),
+          "", NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .N_tot_initVal_Bu2Dst0h_D0gamma(),
           0, 1000000)),
       N_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .pidEff_Bu2Dst0h_D0gamma()))),
+          "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
+                              Configuration::Get().GetPidEff(Bachelor::pi)))),
       N_Delta_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<_neutral>::Get(uniqueId)
-                  .buDeltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<_neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-              *N_Bu2Dst0h_D0gamma_))),
+          "(@0/@1)*@2", RooArgList(NeutralVars<_neutral>::Get(uniqueId)
+                                       .buDeltaCutEffBu2Dst0h_D0gamma(),
+                                   NeutralVars<_neutral>::Get(uniqueId)
+                                       .orEffBu2Dst0h_D0gamma(),
+                                   *N_Bu2Dst0h_D0gamma_))),
       N_Bu_Bu2Dst0h_D0gamma_(nullptr),
       N_BuPartial_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
@@ -209,18 +205,15 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
           ("N_tot_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_Bu2Dst0h_D0pi0(),
+          "", NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .N_tot_initVal_Bu2Dst0h_D0pi0(),
           0, 1000000)),
       N_Bu2Dst0h_D0pi0_(new RooFormulaVar(
           ("N_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .pidEff_Bu2Dst0h_D0pi0()))),
+          "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
+                              Configuration::Get().GetPidEff(Bachelor::pi)))),
       N_Delta_Bu2Dst0h_D0pi0_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
@@ -237,17 +230,14 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_MisRec(),
+          "", NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .N_tot_initVal_MisRec(),
           0, 1000000)),
       N_MisRec_(new RooFormulaVar(
           ("N_MisRec_" + ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_MisRec_,
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .pidEff_MisRec()))),
+          "@0*@1", RooArgList(*N_tot_MisRec_,
+                              Configuration::Get().GetPidEff(Bachelor::pi)))),
       N_Delta_MisRec_(new RooFormulaVar(
           ("N_Delta_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
@@ -263,17 +253,14 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_Bu2D0h(),
+          "", NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .N_tot_initVal_Bu2D0h(),
           0, 1000000)),
       N_Bu2D0h_(new RooFormulaVar(
           ("N_Bu2D0h_" + ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_Bu2D0h_,
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .pidEff_Bu2D0h()))),
+          "@0*@1", RooArgList(*N_tot_Bu2D0h_,
+                              Configuration::Get().GetPidEff(Bachelor::pi)))),
       N_Delta_Bu2D0h_(new RooFormulaVar(
           ("N_Delta_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
@@ -289,18 +276,15 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_PartRec(),
+          "", NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .N_tot_initVal_PartRec(),
           0, 1000000)),
       N_PartRec_(new RooFormulaVar(
           ("N_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_PartRec_,
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .pidEff_PartRec()))),
+          "@0*@1", RooArgList(*N_tot_PartRec_,
+                              Configuration::Get().GetPidEff(Bachelor::pi)))),
       N_Delta_PartRec_(new RooFormulaVar(
           ("N_Delta_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
@@ -412,42 +396,32 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
         ("N_Bu_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
-                   NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                       .pidEff_Bu2Dst0h_D0gamma())));
+        "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
+                            Configuration::Get().GetPidEff(Bachelor::pi))));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
-                   NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                       .pidEff_Bu2Dst0h_D0pi0())));
+        "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
+                            Configuration::Get().GetPidEff(Bachelor::pi))));
     N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_MisRec_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_MisRec_,
-                   NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                       .pidEff_MisRec())));
+        "@0*@1", RooArgList(*N_tot_MisRec_,
+                            Configuration::Get().GetPidEff(Bachelor::pi))));
     N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2D0h_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_Bu2D0h_,
-                   NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                       .pidEff_Bu2D0h())));
+        "@0*@1", RooArgList(*N_tot_Bu2D0h_,
+                            Configuration::Get().GetPidEff(Bachelor::pi))));
     N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_PartRec_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_PartRec_,
-                   NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                       .pidEff_PartRec())));
+        "@0*@1", RooArgList(*N_tot_PartRec_,
+                            Configuration::Get().GetPidEff(Bachelor::pi))));
   }
 }
 
@@ -459,127 +433,112 @@ NeutralBachelorChargeVarsImpl<
           ("N_tot_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .N_tot_initVal_Bu2Dst0h_D0gamma(),
+          "", NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                  .N_tot_initVal_Bu2Dst0h_D0gamma(),
           0, 1000000)),
       N_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
-                     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                         .pidEff_Bu2Dst0h_D0gamma()))),
+          "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
+                              Configuration::Get().GetPidEff(Bachelor::k)))),
       N_Delta_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
               .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<_neutral>::Get(uniqueId)
-                  .buDeltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<_neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-              *N_Bu2Dst0h_D0gamma_))),
+          "(@0/@1)*@2", RooArgList(NeutralVars<_neutral>::Get(uniqueId)
+                                       .buDeltaCutEffBu2Dst0h_D0gamma(),
+                                   NeutralVars<_neutral>::Get(uniqueId)
+                                       .orEffBu2Dst0h_D0gamma(),
+                                   *N_Bu2Dst0h_D0gamma_))),
       N_Bu_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       N_tot_Bu2Dst0h_D0pi0_(new RooRealVar(
           ("N_tot_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
               .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .N_tot_initVal_Bu2Dst0h_D0pi0(),
+          "", NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                  .N_tot_initVal_Bu2Dst0h_D0pi0(),
           0, 1000000)),
       N_Bu2Dst0h_D0pi0_(new RooFormulaVar(
           ("N_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
               .c_str(),
-          "@0*@1",
-          RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
-                     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                         .pidEff_Bu2Dst0h_D0pi0()))),
-      N_Delta_Bu2Dst0h_D0pi0_(new RooFormulaVar(
-          ("N_Delta_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(NeutralVars<_neutral>::Get(uniqueId)
-                         .buDeltaCutEffBu2Dst0h_D0pi0(),
-                     NeutralVars<_neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-                     *N_Bu2Dst0h_D0pi0_))),
-      N_Bu_Bu2Dst0h_D0pi0_(nullptr),
-      // -------------------- MisRec -------------------- //
-      N_tot_MisRec_(new RooRealVar(
-          ("N_tot_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .N_tot_initVal_MisRec(),
-          0, 1000000)),
-      N_MisRec_(new RooFormulaVar(
-          ("N_MisRec_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "@0", RooArgList(*N_tot_MisRec_))),
-      N_Delta_MisRec_(new RooFormulaVar(
-          ("N_Delta_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffMisRec(),
-                     NeutralVars<_neutral>::Get(uniqueId).orEffMisRec(),
-                     *N_MisRec_))),
-      N_Bu_MisRec_(nullptr),
-      N_BuPartial_MisRec_(nullptr),
-      // -------------------- Bu2D0h -------------------- //
-      N_tot_Bu2D0h_(new RooRealVar(
-          ("N_tot_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .N_tot_initVal_Bu2D0h(),
-          0, 1000000)),
-      N_Bu2D0h_(new RooFormulaVar(
-          ("N_Bu2D0h_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "@0", RooArgList(*N_tot_Bu2D0h_))),
-      N_Delta_Bu2D0h_(new RooFormulaVar(
-          ("N_Delta_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
-                     NeutralVars<_neutral>::Get(uniqueId).orEffBu2D0h(),
-                     *N_Bu2D0h_))),
-      N_Bu_Bu2D0h_(nullptr),
-      N_BuPartial_Bu2D0h_(nullptr),
-      // -------------------- PartRec -------------------- //
-      N_tot_PartRec_(new RooRealVar(
-          ("N_tot_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "",
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .N_tot_initVal_PartRec(),
-          0, 1000000)),
-      N_PartRec_(new RooFormulaVar(
-          ("N_PartRec_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "@0",
-          RooArgList(*N_tot_PartRec_))),
-      N_Delta_PartRec_(new RooFormulaVar(
-          ("N_Delta_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
-              .c_str(),
-          "(@0/@1)*@2",
-          RooArgList(
-              NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffPartRec(),
-              NeutralVars<_neutral>::Get(uniqueId).orEffPartRec(),
-              *N_PartRec_))),
-      N_Bu_PartRec_(nullptr),
-      N_BuPartial_PartRec_(nullptr) {
+          "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
+                              Configuration::Get().GetPidEff(Bachelor::k)))),
+N_Delta_Bu2Dst0h_D0pi0_(new RooFormulaVar(
+    ("N_Delta_Bu2Dst0h_D0pi0_" +
+     ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+        .c_str(),
+    "(@0/@1)*@2",
+    RooArgList(
+        NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
+        NeutralVars<_neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
+        *N_Bu2Dst0h_D0pi0_))),
+    N_Bu_Bu2Dst0h_D0pi0_(nullptr),
+    // -------------------- MisRec -------------------- //
+    N_tot_MisRec_(new RooRealVar(
+        ("N_tot_MisRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "", NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .N_tot_initVal_MisRec(),
+        0, 1000000)),
+    N_MisRec_(new RooFormulaVar(
+        ("N_MisRec_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "@0", RooArgList(*N_tot_MisRec_))),
+    N_Delta_MisRec_(new RooFormulaVar(
+        ("N_Delta_MisRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffMisRec(),
+                   NeutralVars<_neutral>::Get(uniqueId).orEffMisRec(),
+                   *N_MisRec_))),
+    N_Bu_MisRec_(nullptr), N_BuPartial_MisRec_(nullptr),
+    // -------------------- Bu2D0h -------------------- //
+    N_tot_Bu2D0h_(new RooRealVar(
+        ("N_tot_Bu2D0h_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "", NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .N_tot_initVal_Bu2D0h(),
+        0, 1000000)),
+    N_Bu2D0h_(new RooFormulaVar(
+        ("N_Bu2D0h_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "@0", RooArgList(*N_tot_Bu2D0h_))),
+    N_Delta_Bu2D0h_(new RooFormulaVar(
+        ("N_Delta_Bu2D0h_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
+                   NeutralVars<_neutral>::Get(uniqueId).orEffBu2D0h(),
+                   *N_Bu2D0h_))),
+    N_Bu_Bu2D0h_(nullptr), N_BuPartial_Bu2D0h_(nullptr),
+    // -------------------- PartRec -------------------- //
+    N_tot_PartRec_(new RooRealVar(
+        ("N_tot_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "", NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .N_tot_initVal_PartRec(),
+        0, 1000000)),
+    N_PartRec_(new RooFormulaVar(
+        ("N_PartRec_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "@0", RooArgList(*N_tot_PartRec_))),
+    N_Delta_PartRec_(new RooFormulaVar(
+        ("N_Delta_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
+            .c_str(),
+        "(@0/@1)*@2",
+        RooArgList(NeutralVars<_neutral>::Get(uniqueId).buDeltaCutEffPartRec(),
+                   NeutralVars<_neutral>::Get(uniqueId).orEffPartRec(),
+                   *N_PartRec_))),
+    N_Bu_PartRec_(nullptr), N_BuPartial_PartRec_(nullptr) {
   if (Configuration::Get().fit1D() == false ||
       Configuration::Get().fitBuPartial() == true) {
     N_Bu_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -676,33 +635,26 @@ NeutralBachelorChargeVarsImpl<
         ("N_Bu_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
-                   NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                       .pidEff_Bu2Dst0h_D0gamma())));
+        "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0gamma_,
+                            Configuration::Get().GetPidEff(Bachelor::k))));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "@0*@1",
-        RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
-                   NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                       .pidEff_Bu2Dst0h_D0pi0())));
+        "@0*@1", RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
+                            Configuration::Get().GetPidEff(Bachelor::k))));
     N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "@0",
-        RooArgList(*N_tot_MisRec_)));
+        "@0", RooArgList(*N_tot_MisRec_)));
     N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2D0h_" + ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "@0",
-        RooArgList(*N_tot_Bu2D0h_)));
+        "@0", RooArgList(*N_tot_Bu2D0h_)));
     N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_PartRec_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "@0",
-        RooArgList(*N_tot_PartRec_)));
+        "@0", RooArgList(*N_tot_PartRec_)));
   }
 }

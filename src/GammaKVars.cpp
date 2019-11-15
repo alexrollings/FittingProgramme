@@ -68,11 +68,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                           .orEffBu2Dst0h_D0gamma()
                                           .getVal() *
                                       0.07930),
-      pidEff_Bu2Dst0h_D0gamma_(("pidEff_Bu2Dst0h_D0gamma_" +
-                                ComposeName(uniqueId, Neutral::gamma,
-                                            Bachelor::k))
-                                   .c_str(),
-                               "", 6.8493e-01),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(("misId_Bu2Dst0h_D0gamma_meanBu_" +
                                       ComposeName(uniqueId, Neutral::gamma,
@@ -226,11 +221,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                         .orEffBu2Dst0h_D0pi0()
                                         .getVal() *
                                     0.07930),
-      pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
-                              ComposeName(uniqueId, Neutral::gamma,
-                                          Bachelor::k))
-                                 .c_str(),
-                             "", 0.745534),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(("misId_Bu2Dst0h_D0pi0_meanBu_" +
                                     ComposeName(uniqueId, Neutral::gamma,
@@ -426,11 +416,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal() *
           0.06),
-      pidEff_Bu2Dst0h_D0gamma_WN_(),
-      pidEff_Bu2Dst0h_D0pi0_WN_(),
-      pidEff_Bu2D0hst_(),
-      pidEff_Bd2Dsth_(),
-      pidEff_MisRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_MisRec_mean1Bu_(("misId_MisRec_mean1Bu_" +
                              ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -591,13 +576,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           Bu2D0h_sigmaLBuPartial_, Bu2D0h_sigmaRBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBuPartial()),
-      // No MC samples for Bu2D0K: no PID efficiency. OK as don't need R values,
-      // just need to include fit components. N_K = N_tot. N_π = eff * N_tot
       N_tot_initVal_Bu2D0h_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVBu2D0h() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffBu2D0h().getVal() *
           0.07768),
-      pidEff_Bu2D0h_(),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2D0h_meanBu_(("misId_Bu2D0h_meanBu_" +
                             ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -756,9 +738,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVPartRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffPartRec().getVal() *
           0.02),
-      pidEff_Bu2Dst0hst_D0pi0_(),
-      pidEff_Bu2Dst0hst_D0gamma_(),
-      pidEff_PartRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(("misId_PartRec_meanBu_" +
                              ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

@@ -51,10 +51,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                     NeutralVars<Neutral::pi0>::Get(uniqueId)
                                         .orEffBu2Dst0h_D0pi0()
                                         .getVal()),
-      pidEff_Bu2Dst0h_D0pi0_(("pidEff_Bu2Dst0h_D0pi0_" +
-                              ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                                 .c_str(),
-                             "", 0.996436),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(("misId_Bu2Dst0h_D0pi0_meanBu_" +
                                     ComposeName(uniqueId, Neutral::pi0,
@@ -155,11 +151,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                                       NeutralVars<Neutral::pi0>::Get(uniqueId)
                                           .orEffBu2Dst0h_D0gamma()
                                           .getVal()),
-      pidEff_Bu2Dst0h_D0gamma_(("pidEff_Bu2Dst0h_D0gamma_" +
-                                ComposeName(uniqueId, Neutral::pi0,
-                                            Bachelor::pi))
-                                   .c_str(),
-                               "", 0.993136),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(("misId_Bu2Dst0h_D0gamma_meanBu_" +
                                       ComposeName(uniqueId, Neutral::pi0,
@@ -248,28 +239,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_MisRec_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec().getVal()),
-      pidEff_Bu2Dst0h_D0gamma_WN_(0.995902),
-      pidEff_Bu2Dst0h_D0pi0_WN_(0.996474),
-      pidEff_Bu2D0hst_(0.995474),
-      pidEff_Bd2Dsth_(0.994767),
-      pidEff_MisRec_(
-          ("pidEff_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "",
-          (pidEff_Bu2Dst0h_D0gamma_.getVal() *
-               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                   .fracMisRec_Bu2Dst0h_D0gamma() +
-           pidEff_Bu2Dst0h_D0gamma_WN_ *
-               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                   .fracMisRec_Bu2Dst0h_D0gamma_WN() +
-           pidEff_Bu2Dst0h_D0pi0_WN_ *
-               NeutralVars<Neutral::pi0>::Get(uniqueId)
-                   .fracMisRec_Bu2Dst0h_D0pi0_WN() +
-           pidEff_Bu2D0hst_ *
-               NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec_Bu2D0hst() +
-           pidEff_Bd2Dsth_ *
-               NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec_Bd2Dsth()) /
-              NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()),
       // -------------------- Mis-ID ------------------- //
       misId_MisRec_mean1Bu_(),
       misId_MisRec_mean2Bu_(),
@@ -322,10 +291,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_Bu2D0h_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVBu2D0h() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h().getVal()),
-      pidEff_Bu2D0h_(("pidEff_Bu2D0h_" +
-                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                         .c_str(),
-                     "", 0.995567),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2D0h_meanBu_(),
       misId_Bu2D0h_sigmaLBu_(),
@@ -377,12 +342,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       N_tot_initVal_PartRec_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVPartRec() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffPartRec().getVal()),
-      pidEff_Bu2Dst0hst_D0pi0_(),
-      pidEff_Bu2Dst0hst_D0gamma_(),
-      pidEff_PartRec_(("pidEff_PartRec_" +
-                       ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                          .c_str(),
-                      "", 0.995881),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(),
       misId_PartRec_sigmaLBu_(),
