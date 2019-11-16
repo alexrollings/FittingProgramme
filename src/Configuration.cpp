@@ -1269,11 +1269,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string bhString = std::to_string(buDeltaHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_" +
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 
@@ -1400,11 +1400,11 @@ void Configuration::SetEfficiencies(
   std::string dphString = std::to_string(deltaPartialHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "txt_efficiencies/" + EnumToString(neutral()) + "_" +
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 

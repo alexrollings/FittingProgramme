@@ -84,19 +84,19 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBu_(("Bu2Dst0h_D0gamma_meanBu_" +
                                 ComposeName(uniqueId, Neutral::gamma))
                                    .c_str(),
-                               // "", 5.2814e+03, 5275, 5285),
+                               "", 5.2814e+03, 5275, 5285),
                                // Fixed from data
                                // "", 5.2806e+03),
                                // Fixed for partial box scan
-                               "", 5.2805e+03),
+                               // "", 5.2805e+03),
       Bu2Dst0h_D0gamma_KpiSigmaBu_(("Bu2Dst0h_D0gamma_KpiSigmaBu_" +
                                     ComposeName(uniqueId, Neutral::gamma))
                                        .c_str(),
-                                   // "", 0.95, 0.5, 1.5),
+                                   "", 0.95, 0.5, 1.5),
                                    // Fixed from data
                                    // "", 9.7938e-01),
                                    // Fixed for partial box scan
-                                   "", 9.8591e-01),
+                                   // "", 9.8591e-01),
       Bu2Dst0h_D0gamma_a1Bu_(("Bu2Dst0h_D0gamma_a1Bu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
@@ -239,27 +239,27 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBuPartial_(("Bu2Dst0h_D0pi0_meanBuPartial_" +
                                      ComposeName(uniqueId, Neutral::gamma))
                                         .c_str(),
-                                    // "", 5.2910e+03, 5285, 5295),
+                                    "", 5.2910e+03, 5285, 5295),
                                     // Fixed from data
                                     // "", 5.2913e+03),
                                     // Fixed for partial box scan
-                                    "", 5.2948e+03),
+                                    // "", 5.2948e+03),
       Bu2Dst0h_D0pi0_21SigmaBuPartial_(("Bu2Dst0h_D0pi0_21SigmaBuPartial_" +
                                         ComposeName(uniqueId, Neutral::gamma))
                                            .c_str(),
-                                       // "", 1.6728, 1, 5),
+                                       "", 1.6728, 1, 5),
                                        // Fixed from data
                                        // "", 1.2627e+00),
                                        // Fixed for partial box scan
-                                       "", 2.7157e+00),
+                                       // "", 2.7157e+00),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(("Bu2Dst0h_D0pi0_KpiSigmaBuPartial_" +
                                          ComposeName(uniqueId, Neutral::gamma))
                                             .c_str(),
-                                        // "", 0.95, 0.5, 1.5),
+                                        "", 0.95, 0.5, 1.5),
                                         // Fixed from data
                                         // "", 9.8758e-01),
                                         // Fixed for partial box scan
-                                        "", 8.9208e-01),
+                                        // "", 8.9208e-01),
       Bu2Dst0h_D0pi0_a1BuPartial_(("Bu2Dst0h_D0pi0_a1BuPartial_" +
                                    ComposeName(uniqueId, Neutral::gamma))
                                       .c_str(),
@@ -317,9 +317,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 1.1287e+00, -2, 2),
+          // "", 1.1287e+00, -2, 2),
       // Fixed from data
-      // "", 1.1293e+00),
+      "", 1.1293e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
@@ -434,9 +434,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0h_meanBuPartial_(("Bu2D0h_meanBuPartial_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
-                            "", 5.5319e+03, 5450, 5580),
+                            // "", 5.5319e+03, 5450, 5580),
                             // Fixed from data
-                            // "", 5.5429e+03),
+                            "", 5.5429e+03),
                               // Fixed for partial box scan
                               // "", 5.5429e+03),
       Bu2D0h_aLBuPartial_(("Bu2D0h_aLBuPartial_" +

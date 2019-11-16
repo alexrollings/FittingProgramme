@@ -13,11 +13,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                              .c_str(),
-                         // "", 2.0271e+01, 15, 25)),
+                         "", 2.0271e+01, 15, 25)),
                          // Fixed from data
                          // "", 1.9360e+01)),
                          // Fixed for partial box scan
-                         "", 1.9913e+01)),
+                         // "", 1.9913e+01)),
       Bu2Dst0h_D0gamma_sigma2Bu_(),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
@@ -400,18 +400,18 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                   .c_str(),
                               // "", 4.8679e+01, 10, 90),
                               // Fixed from data
-                              // "", 6.3058e+01),
+                              "", 6.3058e+01),
                               // Fixed for partial box scan
-                              "", 7.0000e+01),
+                              // "", 7.0000e+01),
       Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::pi))
                                   .c_str(),
                               // "", 3.5437e+01, 10, 60),
                               // Fixed from data
-                              // "", 3.3991e+01),
+                              "", 3.3991e+01),
                               // Fixed for partial box scan
-                              "", 4.3741e+01),
+                              // "", 4.3741e+01),
       pdfBuPartial_Bu2D0h_(
           ("pdfBuPartial_Bu2D0h_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
