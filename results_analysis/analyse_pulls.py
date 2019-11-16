@@ -11,6 +11,7 @@ from uncertainties.umath import *
 import argparse
 
 if __name__ == "__main__":
+    # May need to comment out bu delta_partial stuff (for older box scans)
     parser = argparse.ArgumentParser()
     parser.add_argument('-i',
                         '--input_dir',
@@ -29,12 +30,12 @@ if __name__ == "__main__":
                         type=str,
                         help='Neutral',
                         required=True)
-    parser.add_argument('-dl',
+    parser.add_argument('-dpl',
                         '--delta_partial_low',
                         type=str,
                         help='Lower delta mass range for partial π0',
-                        required=True)
-    parser.add_argument('-dh',
+                        required=False)
+    parser.add_argument('-dph',
                         '--delta_partial_high',
                         type=str,
                         help='Upper delta mass range for partial π0',
@@ -81,19 +82,24 @@ if __name__ == "__main__":
     if os.path.isdir(input_dir):
         for filename in os.listdir(input_dir):
             if bu_high == None:
-                box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low
-                m = re.search("Result_" + delta_partial_low + "_" +
-                              delta_partial_high + "_" + delta_low + "_" +
-                              delta_high + "_" + bu_low + "_([0-9]+).root",
+                if delta_partial_low != None and delta_partial_high != None:
+                    delta_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high
+                else:
+                    delta_string = delta_low + "_" + delta_high
+                box_string = delta_string + "_" + bu_low
+                m = re.search("Result_" + delta_string + "_" + bu_low + "_([0-9]+).root",
                               filename)
                 if m:
                     # Save upper bu dimn for each result
                     high_limit.append(m.group(1))
                     file_list.append(filename)
             elif delta_high == None:
-                box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + bu_low + "_" + bu_high
-                m = re.search("Result_" + delta_partial_low + "_" +
-                              delta_partial_high + "_" + delta_low +
+                if delta_partial_low != None and delta_partial_high != None:
+                    delta_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low
+                else:
+                    delta_string = delta_low
+                box_string = delta_string + "_" + bu_low + "_" + bu_high
+                m = re.search("Result_" + delta_string +
                               "_([0-9]+)_" + bu_low + "_" + bu_high + ".root",
                               filename)
                 if m:
@@ -127,18 +133,33 @@ if __name__ == "__main__":
     # Array to store mean total signal yield and error
     signal_yield_arr = []
 
+    if neutral == "pi0":
+        mode = "Bu2Dst0pi_D0pi0"
+        sig_decay = "Bu2Dst0h_D0pi0_pi0_pi"
+    elif neutral == "partial":
+        mode = "Bu2Dst0pi_D0pi0"
+        sig_decay = "Bu2Dst0h_D0pi0_gamma_pi"
+    else:
+        mode = "Bu2Dst0pi_D0gamma"
+        sig_decay = "Bu2Dst0h_D0gamma_gamma_pi"
+
     # Name of branches in tree (box and or effs)
-    branch_names = ['orEffSignal', 'boxEffSignal']
+    if delta_partial_low == None and delta_partial_high == None:
+        branch_names = ['orEffSignal', 'boxEffSignal']
+    else:
+        if neutral == "partial":
+            branch_names = ['orEff_' + mode, 'boxPartialEff_' + mode]
+        else:
+            branch_names = ['orEff_' + mode, 'boxEff_' + mode]
+    # branch_names = ['orEffSignal', 'boxEffSignal']
     # Array to store efficiencies in
     box_eff = []
     or_eff = []
     # n_mc needed to calculate error on efficiencies (for gamma mode)
-    n_mc_events = 14508
-
-    if neutral == "pi0" or neutral == "gamma":
-        sig_decay = "Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi"
+    if neutral == "pi0":
+        n_mc_events = 3650
     else:
-        sig_decay = "Bu2Dst0h_D0pi0_gamma_pi"
+        n_mc_events = 14508
 
     # Loop over files and extract result of interest
     for i in range(0, len(file_list)):
@@ -150,8 +171,8 @@ if __name__ == "__main__":
         # result_signal_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi")
         # result_signal_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi")
         result_signal_yield = tf.Get("Result_Val_N_tot_" + sig_decay + "_total")
-        result_signal_yield_err = tf.Get("Result_Err_N_tot_Bu2Dst0h_D0" +
-                                         sig_decay + + "_pi_total")
+        result_signal_yield_err = tf.Get("Result_Err_N_tot_" +
+                                         sig_decay + "_total")
         # Final values of fit to pulls
         par_pull_widths = result_par_pull_widths.floatParsFinal()
         par_val = result_par_val.floatParsFinal()
