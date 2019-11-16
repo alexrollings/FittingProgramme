@@ -30,6 +30,16 @@ if __name__ == "__main__":
                         help='Neutral',
                         required=True)
     parser.add_argument('-dl',
+                        '--delta_partial_low',
+                        type=str,
+                        help='Lower delta mass range for partial π0',
+                        required=True)
+    parser.add_argument('-dh',
+                        '--delta_partial_high',
+                        type=str,
+                        help='Upper delta mass range for partial π0',
+                        required=False)
+    parser.add_argument('-dl',
                         '--delta_low',
                         type=str,
                         help='Lower delta mass range',
@@ -54,6 +64,8 @@ if __name__ == "__main__":
     input_dir = args.input_dir
     param = args.param
     neutral = args.neutral
+    delta_partial_low = args.delta_partial_low
+    delta_partial_high = args.delta_partial_high
     delta_low = args.delta_low
     delta_high = args.delta_high
     bu_low = args.bu_low
@@ -69,19 +81,31 @@ if __name__ == "__main__":
     if os.path.isdir(input_dir):
         for filename in os.listdir(input_dir):
             if bu_high == None:
-                box_string = delta_low + "_" + delta_high + "_" + bu_low
-                m = re.search(
-                    "Result_" + delta_low + "_" + delta_high + "_" + bu_low +
-                    "_([0-9]+).root", filename)
+                box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low
+                m = re.search("Result_" + delta_partial_low + "_" +
+                              delta_partial_high + "_" + delta_low + "_" +
+                              delta_high + "_" + bu_low + "_([0-9]+).root",
+                              filename)
                 if m:
                     # Save upper bu dimn for each result
                     high_limit.append(m.group(1))
                     file_list.append(filename)
             elif delta_high == None:
-                box_string = delta_low + "_" + bu_low + "_" + bu_high
+                box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + bu_low + "_" + bu_high
+                m = re.search("Result_" + delta_partial_low + "_" +
+                              delta_partial_high + "_" + delta_low +
+                              "_([0-9]+)_" + bu_low + "_" + bu_high + ".root",
+                              filename)
+                if m:
+                    # Save upper bu dimn for each result
+                    high_limit.append(m.group(1))
+                    file_list.append(filename)
+            elif delta_partial_high == None:
+                box_string = delta_partial_low + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
                 m = re.search(
-                    "Result_" + delta_low + "_([0-9]+)_" + bu_low + "_" +
-                    bu_high + ".root", filename)
+                    "Result_" + delta_partial_low + "_([0-9]+)_" + delta_low +
+                    "_" + delta_high + "_" + bu_low + "_" + bu_high + ".root",
+                    filename)
                 if m:
                     # Save upper bu dimn for each result
                     high_limit.append(m.group(1))
