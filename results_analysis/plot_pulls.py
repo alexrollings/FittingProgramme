@@ -180,26 +180,26 @@ if __name__ == "__main__":
         if dim == "1D":
             if fit_bu_partial == False:
                 subprocess.call([
-                    "./PlotToys", "-neutral=" + neutral,
+                    "./../build/PlotToys", "-neutral=" + neutral,
                     "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
-                    "./PlotToys", "-neutral=" + neutral,
+                    "./../build/PlotToys", "-neutral=" + neutral,
                     "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init, "-buPartial"
                 ])
         else:
             if fit_bu_partial == False:
                 subprocess.call([
-                    "./PlotToys", "-neutral=" + neutral,
+                    "./../build/PlotToys", "-neutral=" + neutral,
                     "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
-                    "./PlotToys", "-neutral=" + neutral,
+                    "./../build/PlotToys", "-neutral=" + neutral,
                     "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init, "-buPartial"
                 ])

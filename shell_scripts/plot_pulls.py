@@ -48,21 +48,10 @@ if __name__ == "__main__":
                         required=True)
     args = parser.parse_args()
 
-    neutral = args.neutral
+    neutrals = args.neutral.split(",")
     output_dir = args.output_dir
     input_dir = args.input_dir
     var = args.var
-
-    neutrals = []
-    if neutral == None:
-        print('Running both neutral modes')
-        neutrals.append('pi0')
-        neutrals.append('gamma')
-    else:
-        if neutral != "pi0" and neutral != "gamma":
-            sys.exit("Specify neutral: -n=pi0/gamma")
-        else:
-            neutrals.append(neutral)
 
     if var != "delta" and var != "buDelta":
         sys.exit("Specify var: -n=delta/buDelta")
@@ -73,7 +62,14 @@ if __name__ == "__main__":
     templatePath = home_path + 'shell_scripts/plot_pulls.sh.tmpl'
 
     for neutral in neutrals:
-        lines = [l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' + neutral + '_' + var + '_box_limits.txt')]
+        if neutral != "pi0" and neutral != "gamma" and neutral != "partial":
+            sys.exit("Specify neutral: -n=pi0,gamma,partial")
+        else:
+            lines = [
+                l.rstrip('\n')
+                for l in open(home_path + 'shell_scripts/box_effs/' + neutral +
+                              '_' + var + '_box_limits.txt')
+            ]
         lines = [l.split(':') for l in lines]
         box_limits = []
         for _, box in lines:
@@ -82,10 +78,22 @@ if __name__ == "__main__":
         for box in split:
             bu_low = box[0]
             bu_high = box[1]
-            delta_low = box[2]
-            delta_high = box[3]
+            if neutral == "partial":
+                delta_partial_low = box[2]
+                delta_partial_high = box[3]
+                delta_low = '125'
+                delta_high = '170'
+            else:
+                delta_low = box[2]
+                delta_high = box[3]
+                delta_partial_low = '60'
+                delta_partial_high = '105'
 
-            scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/shell_scripts/tmp/plot_pulls_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
+            scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/shell_scripts/tmp/plot_pulls_' + neutral + "_" + delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
+            if neutral == "partial":
+                n = "gamma"
+            else:
+                n = neutral
             substitutions = {
                 "GCCROOT":
                 "/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6",
@@ -97,10 +105,16 @@ if __name__ == "__main__":
                 output_dir + '/' + neutral + '/' + var,
                 "NEUTRAL":
                 neutral,
+                "N":
+                n,
                 "DL":
                 delta_low,
                 "DH":
                 delta_high,
+                "DPL":
+                delta_partial_low,
+                "DPH":
+                delta_partial_high,
                 "BL":
                 bu_low,
                 "BH":

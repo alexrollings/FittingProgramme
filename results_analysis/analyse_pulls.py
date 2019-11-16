@@ -22,7 +22,7 @@ if __name__ == "__main__":
         '--param',
         type=str,
         help=
-        'Parameter to analyse pulls from (sig = N_tot_Bu2Dst0h_D0pi0_pi0_pi/N_tot_Bu2Dst0h_D0gamma_gamma_pi)',
+        'Parameter to analyse pulls from (sig = N_tot_Bu2Dst0h_D0pi0_pi0_pi/N_tot_Bu2Dst0h_D0gamma_gamma_pi/N_tot_Bu2Dst0h_D0pi0_gamma_pi)',
         required=True)
     parser.add_argument('-n',
                         '--neutral',
@@ -111,6 +111,11 @@ if __name__ == "__main__":
     # n_mc needed to calculate error on efficiencies (for gamma mode)
     n_mc_events = 14508
 
+    if neutral == "pi0" or neutral == "gamma":
+        sig_decay = "Bu2Dst0h_D0" + neutral + "_" + neutral + "_pi"
+    else:
+        sig_decay = "Bu2Dst0h_D0pi0_gamma_pi"
+
     # Loop over files and extract result of interest
     for i in range(0, len(file_list)):
         tf = TFile(file_list[i])
@@ -120,10 +125,9 @@ if __name__ == "__main__":
         result_par_err = tf.Get("Result_Err_" + param)
         # result_signal_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi")
         # result_signal_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi")
-        result_signal_yield = tf.Get("Result_Val_N_tot_Bu2Dst0h_D0" + neutral +
-                                     "_" + neutral + "_pi_total")
+        result_signal_yield = tf.Get("Result_Val_N_tot_" + sig_decay + "_total")
         result_signal_yield_err = tf.Get("Result_Err_N_tot_Bu2Dst0h_D0" +
-                                         neutral + "_" + neutral + "_pi_total")
+                                         sig_decay + + "_pi_total")
         # Final values of fit to pulls
         par_pull_widths = result_par_pull_widths.floatParsFinal()
         par_val = result_par_val.floatParsFinal()
