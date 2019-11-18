@@ -145,7 +145,11 @@ if __name__ == "__main__":
         # if isinstance(v, tuple):
         #     print(k, " = ", v[0], " ± ", v[1])
         if isinstance(v, u.UFloat):
-            print(k, " = ", v.nominal_value, " ± ", v.std_dev)
+            print(k, ":")
+            print(v.nominal_value, " ± ", v.std_dev)
+            print(v.nominal_value, " ± ", (v.std_dev/v.nominal_value)*100, " %")
+            print(" ")
+
         # else:
         #     print("Do not recognise type of object in obs for key ", k)
 
