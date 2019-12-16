@@ -216,15 +216,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                            .c_str(),
                        // "", 6.5198e+01, 20, 100),
                        // Fixed from data
-                       // "", 6.7932e+01),
-                       "", 4.0811e+01),
+                       "", 4.1177e+01),
       MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                            .c_str(),
                        // "", 4.7849e+01, 20, 100),
                        // Fixed from data
-                       // "", 4.9591e+01),
-                       "", 7.0175e+01),
+                       "", 7.0288e+01),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
                         .c_str(),

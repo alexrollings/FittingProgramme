@@ -203,60 +203,59 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       initYieldFAVBu2Dst0h_D0gamma_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
-                              ComposeName(uniqueId, Neutral::gamma))
+                              ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
                              "", 1.3549e+02),
       MisRec_aDelta_(
-          ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", -1.5314e+00),
       MisRec_bDelta_(
-          ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 4.3675e-03),
       MisRec_cDelta_(
-          ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("MisRec_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 2.1071e+00),
       pdfDelta_MisRec_(
-          ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("pdfDelta_MisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), MisRec_thresholdDelta_,
           MisRec_cDelta_, MisRec_aDelta_, MisRec_bDelta_),
       pdfDelta_misId_MisRec_(("pdfDelta_misId_MisRec_" +
-                              ComposeName(uniqueId, Neutral::gamma))
+                              ComposeName(uniqueId, Neutral::pi0))
                                  .c_str(),
                              "", Configuration::Get().deltaMass(),
                              MisRec_thresholdDelta_, MisRec_cDelta_,
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
-          ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
+          ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           // "", 5.2811e+03, 5220, 5320),
           // Fixed from data
-          // "", 5.2788e+03),
-          "", 5.2455e+03),
+          "", 5.2464e+03),
       MisRec_aLBu_(
-          ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           // 4.4348e-02, 0, 5),
           // Fixed from data
-          2.8278e-08),
+          3.5083e-13),
       MisRec_aRBu_(
-          ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           // 5.6521e-02, 0, 5),
           // Fixed from data
-          5.2696e-11),
+          1.8584e-10),
       MisRec_meanBuPartial_(),
       MisRec_aLBuPartial_(),
       MisRec_aRBuPartial_(),
       orEffMisRec_(
-          ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          ("orEffMisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
       boxEffMisRec_(
-          ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
+          ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
       boxPartialEffMisRec_(),
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
-                            ComposeName(uniqueId, Neutral::gamma))
+                            ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
                            "", 1),
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
-                          ComposeName(uniqueId, Neutral::gamma))
+                          ComposeName(uniqueId, Neutral::pi0))
                              .c_str(),
                          "", 1),
       deltaPartialCutEffMisRec_(),
