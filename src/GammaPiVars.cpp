@@ -377,15 +377,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
-                       // Cannot allow this to float and find value from data as
-                       // tail spreads to too low mass (not separated as in π0)
-                       "", 8.8989e+01),
+                       // "", 8.8989e+01, 10, 150),
+                       // Fixed from data
+                       "", 1.1076e+02),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                            .c_str(),
                        // "", 7.5978e+01, 10, 150),
                        // Fixed from data
-                       "", 7.7489e+01),
+                       "", 7.2807e+01),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                         .c_str(),
@@ -400,18 +400,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                   .c_str(),
                               // "", 4.8679e+01, 10, 90),
                               // Fixed from data
-                              "", 6.3058e+01),
-                              // Fixed for partial box scan
-                              // "", 7.0000e+01),
+                              "", 5.8546e+01),
       Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::pi))
                                   .c_str(),
                               // "", 3.5437e+01, 10, 60),
                               // Fixed from data
-                              "", 3.3991e+01),
-                              // Fixed for partial box scan
-                              // "", 4.3741e+01),
+                              "", 3.2674e+01),
       pdfBuPartial_Bu2D0h_(
           ("pdfBuPartial_Bu2D0h_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

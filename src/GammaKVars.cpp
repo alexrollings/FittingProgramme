@@ -538,13 +538,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                            .c_str(),
-                       "", 8.8989e+01),  //, 10, 150),
+                       // "", 8.8989e+01, 10, 150),
+                       // Fixed from data
+                       "", 1.1025e+02),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                            .c_str(),
                        // "", 7.5978e+01, 10, 150),
                        // Fixed from data
-                       "", 7.9686e+01),
+                       "", 7.2797e+01),
       pdfBu_Bu2D0h_(("pdfBu_Bu2D0h_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                         .c_str(),
@@ -557,20 +559,16 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::k))
                                   .c_str(),
-                              // "", 4.8679e+01, 10, 80),
+                              // "", 4.8679e+01, 10, 100),
                               // Fixed from data
-                              "", 7.2622e+01),
-                              // Fixed for partial box scan
-                              // "", 7.6435e+01),
+                              "", 5.8654e+01),
       Bu2D0h_sigmaRBuPartial_(("Bu2D0h_sigmaRBuPartial_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::k))
                                   .c_str(),
                               // "", 3.5437e+01, 10, 60),
                               // Fixed from data
-                              "", 3.0620e+01),
-                              // Fixed for partial box scan
-                              // "", 3.8231e+01),
+                              "", 2.8177e+01),
       pdfBuPartial_Bu2D0h_(
           ("pdfBuPartial_Bu2D0h_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

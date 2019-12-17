@@ -386,7 +386,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
-                         "", 1),
+                         "", 1, -1, 1),
       deltaPartialCutEffMisRec_(("deltaPartialCutEffMisRec_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
@@ -428,21 +428,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           // "", 5.5269e+03, 5450, 5600),
           // Fixed from data
-          "", 5.5310e+03),
+          "", 5.5403e+03),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          5.4892e-09),
+          // 5.4892e-09, 0, 5),
+          // Fixed from data
+          5.0307e-07),
       Bu2D0h_aRBu_(
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          5.3835e-12),
+          // 5.3835e-12, 0, 5),
+          // Fixed from data
+          3.1175e-09),
       Bu2D0h_meanBuPartial_(("Bu2D0h_meanBuPartial_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
                             // "", 5.5319e+03, 5450, 5580),
                             // Fixed from data
                             "", 5.5429e+03),
-                              // Fixed for partial box scan
-                              // "", 5.5429e+03),
       Bu2D0h_aLBuPartial_(("Bu2D0h_aLBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
@@ -471,7 +473,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       deltaPartialCutEffBu2D0h_(("deltaPartialCutEffBu2D0h_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 1),
+                                "", 1, -1, 1),
       fracBu2D0h_(1.936),
       initYieldFAVBu2D0h_(),
       // -------------------- PART-REC -------------------- //
