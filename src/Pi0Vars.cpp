@@ -245,7 +245,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_aRBuPartial_(),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          1),
+          0.5),//, -1, 1),
       boxEffMisRec_(
           ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1),
@@ -253,7 +253,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
-                           "", 1),
+                           "", 1),//, -1, 1),
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
                           ComposeName(uniqueId, Neutral::pi0))
                              .c_str(),
@@ -391,7 +391,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     initYieldFAVBu2Dst0h_D0gamma_ =
         (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_) / 2;
     initYieldFAVMisRec_ =
-        (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 2;
+        (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
     initYieldFAVBu2D0h_ =
         (Configuration::Get().initYieldFAVSignal() * fracBu2D0h_) / 2;
     initYieldFAVPartRec_ =
@@ -401,7 +401,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     initYieldFAVBu2Dst0h_D0gamma_ =
         Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_;
     initYieldFAVMisRec_ =
-        Configuration::Get().initYieldFAVSignal() * fracMisRec_;
+        Configuration::Get().initYieldFAVSignal() * fracMisRec_ / 2;
     initYieldFAVBu2D0h_ =
         Configuration::Get().initYieldFAVSignal() * fracBu2D0h_;
     initYieldFAVPartRec_ =

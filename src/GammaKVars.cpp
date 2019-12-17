@@ -374,13 +374,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                            .c_str(),
                        // "", 1.0404e+02, 50, 150),
                        // Fixed from data
-                       "", 1.1058e+02),
+                       "", 1.2698e+02),
       MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                            .c_str(),
                        // "", 9.6206e+01, 50, 150),
                        // Fixed from data
-                       "", 1.1372e+02),
+                       "", 7.9770e+01),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                         .c_str(),
@@ -395,14 +395,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                   .c_str(),
                               // "", 8.6958e+01, 50, 150),
                               // Fixed from data
-                              "", 8.7274e+01),
+                              "", 1.0297e+02),
       MisRec_sigmaRBuPartial_(("MisRec_sigmaRBuPartial_" +
                                ComposeName(uniqueId, Neutral::gamma,
                                            Bachelor::k))
                                   .c_str(),
                               // "", 6.1290e+01, 50, 150),
                               // Fixed from data
-                              "", 5.7108e+01),
+                              "", 5.4901e+01),
       pdfBuPartial_MisRec_(
           ("pdfBuPartial_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

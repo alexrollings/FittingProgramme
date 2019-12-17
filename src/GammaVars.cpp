@@ -338,36 +338,40 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              MisRec_aDelta_, MisRec_bDelta_),
       MisRec_meanBu_(
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          // "", 5.2952e+03, 5200, 5350),
+          // "", 5.2952e+03, 5150, 5350),
           // Fixed from data
-          "", 5.3033e+03),
+          "", 5.3176e+03),
       MisRec_aLBu_(
           ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           // 6.1974e-10, 0, 5),
           // Fixed from data
-          9.1323e-09),
+          5.2963e-07),
       MisRec_aRBu_(
           ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           // 5.0687e-12, 0, 5),
           // Fixed from data
-          3.6955e-02),
+          9.5432e-11),
       MisRec_meanBuPartial_(("MisRec_meanBuPartial_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
                             // "", 5.3077e+03, 5200, 5350),
       // Fixed from data
-      "", 5.3114e+03),
+      "", 5.3221e+03),
       MisRec_aLBuPartial_(("MisRec_aLBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
-                          "", 2.5509e-08),
+                          // "", 2.5509e-08, 0, 5),
+                          // Fixed from data
+                          "", 1.5504e-12),
       MisRec_aRBuPartial_(("MisRec_aRBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
-                          "", 2.0406e-02),
+                          // "", 2.0406e-02, 0, 5),
+                          // Fixed from data
+                          "", 1.8549e-09),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
-          1),
+          1),//, -1, 1),
       boxEffMisRec_(
           ("boxEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),
@@ -378,7 +382,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       buDeltaCutEffMisRec_(("buDeltaCutEffMisRec_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
-                           "", 1),
+                           "", 1),//, -1, 1),
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
@@ -567,7 +571,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     initYieldFAVBu2Dst0h_D0pi0_ =
         (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_) / 2;
     initYieldFAVMisRec_ =
-        (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 2;
+        (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
     initYieldFAVBu2D0h_ =
         (Configuration::Get().initYieldFAVSignal() * fracBu2D0h_) / 2;
     initYieldFAVPartRec_ =
@@ -577,7 +581,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     initYieldFAVBu2Dst0h_D0pi0_ =
         Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_;
     initYieldFAVMisRec_ =
-        Configuration::Get().initYieldFAVSignal() * fracMisRec_;
+        Configuration::Get().initYieldFAVSignal() * fracMisRec_ / 2;
     initYieldFAVBu2D0h_ =
         Configuration::Get().initYieldFAVSignal() * fracBu2D0h_;
     initYieldFAVPartRec_ =
