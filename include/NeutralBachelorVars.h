@@ -199,7 +199,7 @@ class NeutralBachelorVars {
   RooRealVar &MisRec_sigmaLBuPartial() { return MisRec_sigmaLBuPartial_; }
   RooRealVar &MisRec_sigmaRBuPartial() { return MisRec_sigmaRBuPartial_; }
   RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
-  double &N_tot_initVal_MisRec() {
+  const double &N_tot_initVal_MisRec() {
     return N_tot_initVal_MisRec_;
   }
   // -------------------- Mis-ID ------------------- //
@@ -438,7 +438,7 @@ class NeutralBachelorVars {
   RooRealVar MisRec_sigmaLBuPartial_;
   RooRealVar MisRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_MisRec_;
-  double N_tot_initVal_MisRec_;
+  const double N_tot_initVal_MisRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_MisRec_mean1Bu_;
   RooRealVar misId_MisRec_mean2Bu_;

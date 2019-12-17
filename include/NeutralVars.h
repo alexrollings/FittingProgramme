@@ -218,7 +218,7 @@ class NeutralVars {
   }
   double &fracMisRec_Bu2D0hst() { return fracMisRec_Bu2D0hst_; }
   double &fracMisRec_Bd2Dsth() { return fracMisRec_Bd2Dsth_; }
-  double &fracMisRec() { return fracMisRec_; }
+  const double &fracMisRec() { return fracMisRec_; }
   double &initYieldFAVMisRec() { return initYieldFAVMisRec_; }
   // -------------------- Bu2D0h -------------------- //
   RooRealVar &Bu2D0h_thresholdDelta() { return Bu2D0h_thresholdDelta_; }
@@ -370,7 +370,7 @@ class NeutralVars {
   double fracMisRec_Bu2Dst0h_D0pi0_WN_;
   double fracMisRec_Bu2D0hst_;
   double fracMisRec_Bd2Dsth_;
-  double fracMisRec_;
+  const double fracMisRec_;
   double initYieldFAVMisRec_;
   // -------------------- Bu2D0h -------------------- //
   RooRealVar Bu2D0h_thresholdDelta_;
