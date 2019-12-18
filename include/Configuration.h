@@ -107,6 +107,7 @@ class Configuration {
   bool &splitByCharge() { return splitByCharge_; }
   bool &noFit() { return noFit_; }
   bool &fitBuPartial() { return fitBuPartial_; }
+  bool &blindFit() { return blindFit_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
   void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &orEff,
@@ -166,6 +167,7 @@ class Configuration {
   bool splitByCharge_;
   bool noFit_;
   bool fitBuPartial_;
+  bool blindFit_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
