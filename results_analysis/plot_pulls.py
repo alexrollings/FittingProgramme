@@ -3,8 +3,8 @@ import os, re, subprocess, sys, argparse
 #re = regular expressions
 
 
-def pass_filename(filename,
-                      file_list,
+def pass_filename(root_file,
+                      list_file,
                       dim,
                       delta_low,
                       delta_high,
@@ -13,16 +13,16 @@ def pass_filename(filename,
     if bu_low != None and bu_high != None:
         m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high +
                       '_' + bu_low + '_' + bu_high + '_0\.[0-9]+\.root',
-                      filename)
+                      root_file)
     else:
         m = re.search('Result' + dim + '_' + delta_low + '_' + delta_high +
-                      '_0\.[0-9]+\.root', filename)
+                      '_0\.[0-9]+\.root', root_file)
     if m:
-        file_list.append(filename)
+        list_file.write(root_file + '\n')
 
 
-def pass_filename_bu_partial(filename,
-                        file_list,
+def pass_filename_bu_partial(root_file,
+                        list_file,
                         dim,
                         delta_low,
                         delta_high,
@@ -34,14 +34,14 @@ def pass_filename_bu_partial(filename,
         m = re.search('Result' + dim + '_' + delta_partial_low + '_' +
                       delta_partial_high + '_' + delta_low + '_' + delta_high +
                       '_' + bu_low + '_' + bu_high + '_0\.[0-9]+\.root',
-                      filename)
+                      root_file)
     else:
         m = re.search(
             'Result' + dim + '_' + delta_partial_low + '_' + delta_partial_high
             + '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root',
-            filename)
+            root_file)
     if m:
-        file_list.append(filename)
+        list_file.write(root_file + '\n')
 
 
 if __name__ == "__main__":
@@ -148,25 +148,29 @@ if __name__ == "__main__":
 
     if not os.path.isdir(input_dir):
         sys.exit(input_dir + ' is not a directory')
-    file_list = []
-    for filename in os.listdir(input_dir):
-        if dim == "1D":
-            if fit_bu_partial == False:
-                pass_filename(input_dir + "/" + filename, file_list, dim,
-                                  delta_low, delta_high)
+    filename = 'list_file.txt'
+    list_file = open(filename, 'w+')
+    count = 0
+    for root_file in os.listdir(input_dir):
+        if count < 190:
+            if dim == "1D":
+                if fit_bu_partial == False:
+                    pass_filename(input_dir + "/" + root_file, list_file, dim,
+                                      delta_low, delta_high)
+                else:
+                    pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+                                        delta_low, delta_high, delta_partial_low,
+                                        delta_partial_high)
             else:
-                pass_filename_bu_partial(input_dir + "/" + filename, file_list, dim,
-                                    delta_low, delta_high, delta_partial_low,
-                                    delta_partial_high)
-        else:
-            if fit_bu_partial == False:
-                pass_filename(input_dir + "/" + filename, file_list, dim,
-                                  delta_low, delta_high, bu_low, bu_high)
-            else:
-                pass_filename_bu_partial(input_dir + "/" + filename, file_list, dim,
-                                    delta_low, delta_high, delta_partial_low,
-                                    delta_partial_high, bu_low, bu_high)
-        # pass_filename(input_dir + "/" + filename, file_list)
+                if fit_bu_partial == False:
+                    pass_filename(input_dir + "/" + root_file, list_file, dim,
+                                      delta_low, delta_high, bu_low, bu_high)
+                else:
+                    pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+                                        delta_low, delta_high, delta_partial_low,
+                                        delta_partial_high, bu_low, bu_high)
+            # pass_filename(input_dir + "/" + root_file, list_file)
+        count = count + 1
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
     # results_dir = output_dir + '/results'
@@ -175,33 +179,38 @@ if __name__ == "__main__":
     plots_dir = output_dir + '/plots'
     if not os.path.exists(plots_dir):
         os.mkdir(plots_dir)
-    # print("./PlotToys " + ",".join(file_list))
-    if len(file_list) != 0:
+    # print("./PlotToys " + ",".join(list_file))
+    if list_file.read(1) != None:
         if dim == "1D":
             if fit_bu_partial == False:
                 subprocess.call([
                     "./../build/PlotToys", "-neutral=" + neutral,
-                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
                     "./../build/PlotToys", "-neutral=" + neutral,
-                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init, "-buPartial"
                 ])
         else:
             if fit_bu_partial == False:
                 subprocess.call([
                     "./../build/PlotToys", "-neutral=" + neutral,
-                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
                     "./../build/PlotToys", "-neutral=" + neutral,
-                    "-files=" + (",".join(file_list)), "-outputDir=" + output_dir,
+                    "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init, "-buPartial"
                 ])
+                # print(
+                #     "./../build/PlotToys" + " " + "-neutral=" + neutral + " " +
+                #     "-inputFile=" + filename + " " + "-outputDir=" + output_dir + " " +
+                #     "-toyInit=" + toy_init + " " + "-buPartial")
     else:
         sys.exit("File list empty")
+    os.remove(filename)

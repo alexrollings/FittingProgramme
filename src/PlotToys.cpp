@@ -143,14 +143,18 @@ int main(int argc, char *argv[]) {
       config.fit1D() = true;
     }
 
-    std::string files;
-    if (!args("files", files)) {
+    std::string inputFile;
+    if (!args("inputFile", inputFile)) {
       std::cerr
-          << "Pass comma reparated list of files containing RooFitResults "
-             "(-files=<list>).\n";
+          << "Pass name of file containing comma separated list of root files.\n";
       return 1;
     }
-    resultFiles = SplitByComma(files);
+    std::ifstream inStream(inputFile);
+    std::string tmp;
+    while (std::getline(inStream, tmp)) {
+      resultFiles.emplace_back(tmp);
+    }
+    inStream.close();
   }
 
   // Loop over filenames, open the files, then extract the RooFitResults and
