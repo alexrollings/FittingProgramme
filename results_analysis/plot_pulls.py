@@ -150,27 +150,24 @@ if __name__ == "__main__":
         sys.exit(input_dir + ' is not a directory')
     filename = 'list_file.txt'
     list_file = open(filename, 'w+')
-    count = 0
     for root_file in os.listdir(input_dir):
-        if count < 190:
-            if dim == "1D":
-                if fit_bu_partial == False:
-                    pass_filename(input_dir + "/" + root_file, list_file, dim,
-                                      delta_low, delta_high)
-                else:
-                    pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
-                                        delta_low, delta_high, delta_partial_low,
-                                        delta_partial_high)
+        if dim == "1D":
+            if fit_bu_partial == False:
+                pass_filename(input_dir + "/" + root_file, list_file, dim,
+                                  delta_low, delta_high)
             else:
-                if fit_bu_partial == False:
-                    pass_filename(input_dir + "/" + root_file, list_file, dim,
-                                      delta_low, delta_high, bu_low, bu_high)
-                else:
-                    pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
-                                        delta_low, delta_high, delta_partial_low,
-                                        delta_partial_high, bu_low, bu_high)
-            # pass_filename(input_dir + "/" + root_file, list_file)
-        count = count + 1
+                pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+                                    delta_low, delta_high, delta_partial_low,
+                                    delta_partial_high)
+        else:
+            if fit_bu_partial == False:
+                pass_filename(input_dir + "/" + root_file, list_file, dim,
+                                  delta_low, delta_high, bu_low, bu_high)
+            else:
+                pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+                                    delta_low, delta_high, delta_partial_low,
+                                    delta_partial_high, bu_low, bu_high)
+        # pass_filename(input_dir + "/" + root_file, list_file)
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
     # results_dir = output_dir + '/results'
