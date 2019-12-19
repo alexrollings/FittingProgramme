@@ -328,7 +328,7 @@ NeutralBachelorChargeVarsImpl<_neutral, Bachelor::pi, _charge>::
         ("N_tot_Bu2D0h_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, _charge))
             .c_str(),
-        "Blind", "Blind", 1000, *N_tot_Bu2D0h_Blind_));
+        "Blind", "Blind", 150, *N_tot_Bu2D0h_Blind_));
   } else {
     N_tot_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2D0h_" +
@@ -627,7 +627,7 @@ NeutralBachelorChargeVarsImpl<
         ("N_tot_Bu2D0h_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, _charge))
             .c_str(),
-        "Blind", "Blind", 1000, *N_tot_Bu2D0h_Blind_));
+        "Blind", "Blind", 12, *N_tot_Bu2D0h_Blind_));
   } else {
     N_tot_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2D0h_" +
