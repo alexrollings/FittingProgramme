@@ -223,12 +223,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 5.3454e+03),
+                             "", 5.3423e+03),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
-                           "", 8.2093e-01),
+                           "", 8.5179e-01),
       Bu2Dst0h_D0pi0_a2Bu_(),
       Bu2Dst0h_D0pi0_n1Bu_(("Bu2Dst0h_D0pi0_n1Bu_" +
                             ComposeName(uniqueId, Neutral::gamma))
