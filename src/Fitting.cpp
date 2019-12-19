@@ -21,6 +21,7 @@
 #include "TStyle.h"
 #include "TTree.h"
 #include "TTreeReader.h"
+#include "TPaveLabel.h"
 
 #include <fstream>
 #include <iostream>
@@ -76,6 +77,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                   ComposeFittingName(mass, neutral, bachelor,
                                                      daughters, charge))
                                      .c_str()));
+
   if (config.noFit() == false) {
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(config.fitting,
@@ -1387,11 +1389,35 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
   canvas.cd();
   pad1.cd();
-  if (daughters != Daughters::kpi) {
+  if ((bachelor == Bachelor::k && daughters != Daughters::kpi) || daughters == Daughters::pik) {
     frame->SetLabelOffset(50, "Y");
   }
   frame->Draw();
+
+  double blindMin, blindMax;
+  if (mass == Mass::delta) {
+    blindMin = var.getMin()+0.1;
+    if (neutral == Neutral::gamma) {
+      blindMax = 160;
+    } else {
+      blindMax = 155;
+    }
+  } else {
+    blindMin = 5200;
+    blindMax = 5350;
+  }
+
+  TPaveLabel blindBox(blindMin, 0.1, blindMax, frame->GetMaximum()-0.1, "#font[12]{Blind}", "");
+  blindBox.SetBorderSize(0);
+  blindBox.SetTextSize(0.07);
+  // blindBox.SetTextAngle(30);
+  blindBox.SetTextColor(kRed+1);
+  blindBox.SetFillColor(10);
+  if (daughters == Daughters::pik) {
+    blindBox.Draw("same");
+  }
   legend.Draw("same");
+
 
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
