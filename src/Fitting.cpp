@@ -1387,6 +1387,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 
   canvas.cd();
   pad1.cd();
+  if (daughters != Daughters::kpi) {
+    frame->SetLabelOffset(50, "Y");
+  }
   frame->Draw();
   legend.Draw("same");
 
@@ -1540,37 +1543,153 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
       case Neutral::gamma:
         switch (c) {
           case Charge::total:
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                                   Charge::total>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                                   Charge::total>::Get(id));
-            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                Charge::total>::Get(id)
-                .AssignMisIdYields();
-            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                Charge::total>::Get(id)
-                .AssignMisIdYields();
-            Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                Charge::total>::Get(id)
-                .CreateBuAddPdf();
-            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                Charge::total>::Get(id)
-                .CreateBuAddPdf();
-            if (config.fitBuPartial() == true) {
-              Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateBuPartialAddPdf();
-              Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateBuPartialAddPdf();
-            }
-            if (config.fit1D() == false) {
-              Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateDeltaAddPdf();
-              Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateDeltaAddPdf();
+            for (auto &d : daughtersVec) {
+              switch (d) {
+                case Daughters::kpi:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fitBuPartial() == true) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                  }
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::kk:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fitBuPartial() == true) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                  }
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::pipi:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fitBuPartial() == true) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                  }
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::pik:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fitBuPartial() == true) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateBuPartialAddPdf();
+                  }
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+              }
             }
             break;
           case Charge::plus:
@@ -1581,8 +1700,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
                 Charge::plus>::Get(id)
                 .AssignMisIdYields();
-            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
-            Charge::plus>::Get(
+            Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(
                 id)
                 .AssignMisIdYields();
             Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi,
@@ -1647,29 +1765,120 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
       case Neutral::pi0:
         switch (c) {
           case Charge::total:
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                                   Charge::total>::Get(id));
-            pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                                   Charge::total>::Get(id));
-            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(
-                id)
-                .AssignMisIdYields();
-            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(
-                id)
-                .AssignMisIdYields();
-            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(
-                id)
-                .CreateBuAddPdf();
-            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(
-                id)
-                .CreateBuAddPdf();
-            if (config.fit1D() == false) {
-              Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateDeltaAddPdf();
-              Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-                  Charge::total>::Get(id)
-                  .CreateDeltaAddPdf();
+            for (auto &d : daughtersVec) {
+              switch (d) {
+                case Daughters::kpi:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::kk:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::pi0, Bachelor::k, Daughters::kk,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::pipi:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+                  break;
+                case Daughters::pik:
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                           Charge::total>::Get(id));
+                  pdfs.emplace_back(
+                      &Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
+                           Charge::total>::Get(id));
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .AssignMisIdYields();
+                  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
+                      Charge::total>::Get(id)
+                      .CreateBuAddPdf();
+                  if (config.fit1D() == false) {
+                    Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                    Pdf<Neutral::pi0, Bachelor::k, Daughters::pik,
+                        Charge::total>::Get(id)
+                        .CreateDeltaAddPdf();
+                  }
+              }
             }
             break;
           case Charge::plus:
@@ -1677,12 +1886,10 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                    Charge::plus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                                    Charge::plus>::Get(id));
-            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-            Charge::plus>::Get(
+            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(
                 id)
                 .AssignMisIdYields();
-            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-            Charge::plus>::Get(
+            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::plus>::Get(
                 id)
                 .AssignMisIdYields();
             Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(
@@ -1705,12 +1912,10 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
                                    Charge::minus>::Get(id));
             pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
                                    Charge::minus>::Get(id));
-            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
-            Charge::minus>::Get(
+            Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::minus>::Get(
                 id)
                 .AssignMisIdYields();
-            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi,
-            Charge::minus>::Get(
+            Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::minus>::Get(
                 id)
                 .AssignMisIdYields();
             Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::minus>::Get(
@@ -1731,14 +1936,14 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
         }
         break;
     }
-  }
+    }
 
-  for (auto &p : pdfs) {
-    p->AddToSimultaneousPdf(*simPdf);
-  }
+    for (auto &p : pdfs) {
+      p->AddToSimultaneousPdf(*simPdf);
+    }
 
-  auto p = std::make_pair(simPdf, pdfs);
-  return p;
+    auto p = std::make_pair(simPdf, pdfs);
+    return p;
 }
 
 void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
