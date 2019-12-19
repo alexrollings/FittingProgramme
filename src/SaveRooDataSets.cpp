@@ -14,7 +14,7 @@
 
 #include "Configuration.h"
 
-std::string dsPath("/data/lhcb/users/rollings/roodatasets/d1d_fit/");
+std::string dsPath("/data/lhcb/users/rollings/roodatasets/d1d_fit_new/");
 
 void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
                     Bachelor bachelor, Neutral neutral, Daughters daughters) {

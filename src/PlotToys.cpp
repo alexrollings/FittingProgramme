@@ -151,6 +151,7 @@ int main(int argc, char *argv[]) {
     }
     std::ifstream inStream(inputFile);
     std::string tmp;
+    int i = 0;
     while (std::getline(inStream, tmp)) {
       resultFiles.emplace_back(tmp);
     }

@@ -317,9 +317,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          // "", 1.1287e+00, -2, 2),
+          "", 1.1287e+00, -5, 5),
       // Fixed from data
-      "", 1.1293e+00),
+      // "", 1.1293e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
@@ -386,7 +386,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
-                         "", 1, -1, 1),
+                         "", 1),// -1, 1),
       deltaPartialCutEffMisRec_(("deltaPartialCutEffMisRec_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
