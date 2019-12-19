@@ -208,7 +208,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              "", 1.3549e+02),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          "", -1.5314e+00),
+          "", -1.5314e+00, -5, 5),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 4.3675e-03),

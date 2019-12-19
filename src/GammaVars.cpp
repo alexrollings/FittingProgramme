@@ -223,12 +223,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
                               ComposeName(uniqueId, Neutral::gamma))
                                  .c_str(),
-                             "", 5.3454e+03),
+                             "", 5.3423e+03),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(),
       Bu2Dst0h_D0pi0_a1Bu_(("Bu2Dst0h_D0pi0_a1Bu_" +
                             ComposeName(uniqueId, Neutral::gamma))
                                .c_str(),
-                           "", 8.2093e-01),
+                           "", 8.5179e-01),
       Bu2Dst0h_D0pi0_a2Bu_(),
       Bu2Dst0h_D0pi0_n1Bu_(("Bu2Dst0h_D0pi0_n1Bu_" +
                             ComposeName(uniqueId, Neutral::gamma))
@@ -317,9 +317,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                              "", 5.3513e+01),
       MisRec_aDelta_(
           ("MisRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          // "", 1.1287e+00, -2, 2),
+          "", 1.1287e+00, -5, 5),
       // Fixed from data
-      "", 1.1293e+00),
+      // "", 1.1293e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
@@ -386,7 +386,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       deltaCutEffMisRec_(("deltaCutEffMisRec_" +
                           ComposeName(uniqueId, Neutral::gamma))
                              .c_str(),
-                         "", 1, -1, 1),
+                         "", 1),// -1, 1),
       deltaPartialCutEffMisRec_(("deltaPartialCutEffMisRec_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
