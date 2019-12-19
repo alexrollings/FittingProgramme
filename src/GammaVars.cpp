@@ -320,6 +320,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", 1.1287e+00, -5, 5),
       // Fixed from data
       // "", 1.1293e+00),
+      // Fixed from data
+      // "", 1.1339e+00),
       MisRec_bDelta_(
           ("MisRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           "", -1.5111e+00),
@@ -340,35 +342,47 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
           // "", 5.2952e+03, 5150, 5350),
           // Fixed from data
-          "", 5.3176e+03),
+          // "", 5.3176e+03),
+          // Fixed from data
+          "", 5.3130e+03),
       MisRec_aLBu_(
           ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           // 6.1974e-10, 0, 5),
           // Fixed from data
-          5.2963e-07),
+          // 5.2963e-07),
+          // Fixed from data
+          3.1241e-07),
       MisRec_aRBu_(
           ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           // 5.0687e-12, 0, 5),
           // Fixed from data
-          9.5432e-11),
+          // 9.5432e-11),
+          // Fixed from data
+          6.8556e-13),
       MisRec_meanBuPartial_(("MisRec_meanBuPartial_" +
                              ComposeName(uniqueId, Neutral::gamma))
                                 .c_str(),
                             // "", 5.3077e+03, 5200, 5350),
       // Fixed from data
-      "", 5.3221e+03),
+      // "", 5.3221e+03),
+      // Fixed from data
+      "", 5.3317e+03),
       MisRec_aLBuPartial_(("MisRec_aLBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
                           // "", 2.5509e-08, 0, 5),
                           // Fixed from data
-                          "", 1.5504e-12),
+                          // "", 1.5504e-12),
+                          // Fixed from data
+                          "", 9.4175e-13),
       MisRec_aRBuPartial_(("MisRec_aRBuPartial_" +
                            ComposeName(uniqueId, Neutral::gamma))
                               .c_str(),
                           // "", 2.0406e-02, 0, 5),
                           // Fixed from data
-                          "", 1.8549e-09),
+                          // "", 1.8549e-09),
+                          // Fixed from data
+                          "", 2.7561e-13),
       orEffMisRec_(
           ("orEffMisRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(), "",
           1),//, -1, 1),
@@ -390,7 +404,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       deltaPartialCutEffMisRec_(("deltaPartialCutEffMisRec_" +
                                  ComposeName(uniqueId, Neutral::gamma))
                                     .c_str(),
-                                "", 1),
+                                "", 1),//, -1, 1),
       fracMisRec_Bu2Dst0h_D0gamma_(),
       fracMisRec_Bu2Dst0h_D0gamma_WN_(0.628),
       fracMisRec_Bu2Dst0h_D0pi0_WN_(1.137),
