@@ -302,7 +302,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2D0h_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           // 5.4893e+03, 5450, 5500),
           // Fixed from data
-          5.4875e+03),
+          // 5.4875e+03),
+          // Fixed from data
+          5500),
       Bu2D0h_aLBu_(
           ("Bu2D0h_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           1.3673e-01),
@@ -310,7 +312,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bu2D0h_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           // 5.0076e-08, 0, 5),
           // Fixed from data
-          1.3901e-01),
+          // 1.3901e-01),
+          // Fixed from data
+          1.5969e-01),
       Bu2D0h_meanBuPartial_(),
       Bu2D0h_aLBuPartial_(),
       Bu2D0h_aRBuPartial_(),

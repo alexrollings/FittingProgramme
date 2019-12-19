@@ -347,13 +347,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                            .c_str(),
                        // "", 3.3137e+01, 10, 100),
                        // Fixed from data
-                       "", 4.1529e+01),
+                       // "", 4.1529e+01),
+                       // Fixed from data
+                       "", 4.8647e+01),
       Bu2D0h_sigmaRBu_(("Bu2D0h_sigmaRBu_" +
                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                            .c_str(),
                        // "", 4.0080e+01, 10, 80),
                        // Fixed from data
-                       "", 3.4501e+01),
+                       // "", 3.4501e+01),
+                       // Fixed from data
+                       "", 3.2605e+01),
       pdfBu_Bu2D0h_(
           ("pdfBu_Bu2D0h_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
