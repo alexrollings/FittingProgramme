@@ -1402,12 +1402,15 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     } else {
       blindMax = 155;
     }
-  } else {
+  } else if (mass == Mass::buDelta) {
     blindMin = 5200;
     blindMax = 5350;
+  } else {
+    blindMin = 5150;
+    blindMax = 5400;
   }
 
-  TPaveLabel blindBox(blindMin, 0.1, blindMax, frame->GetMaximum()-0.1, "#font[12]{Blind}", "");
+  TPaveLabel blindBox(blindMin, -0.11, blindMax, frame->GetMaximum()-0.1, "#font[12]{Blind}", "");
   blindBox.SetBorderSize(0);
   blindBox.SetTextSize(0.07);
   // blindBox.SetTextAngle(30);
