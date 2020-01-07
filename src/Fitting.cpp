@@ -2981,6 +2981,39 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
+        for (auto &p : pdfs) {
+          config.deltaMass().setRange("total", 136, 190);
+          RooAbsReal *sigDeltaInt = p->pdfDelta_Bu2Dst0h_D0pi0().createIntegral(
+              config.deltaMass(), RooFit::NormSet(config.deltaMass()),
+              RooFit::Range("total"));
+          if (sigDeltaInt == nullptr) {
+            throw std::runtime_error("Signal could not be integrated.");
+          } else {
+            double sigYieldVal =
+                sigDeltaInt->getVal() * p->N_Delta_Bu2Dst0h_D0pi0().getVal();
+            double sigYieldErr =
+                sigDeltaInt->getVal() *
+                p->N_Delta_Bu2Dst0h_D0pi0().getPropagatedError(*dataFitResult);
+            std::cout << "For deltaMass, pi0 signal yield = " << sigYieldVal
+                      << " ± " << sigYieldErr << "\n";
+          }
+
+          config.buDeltaMass().setRange("total", 5050, 5500);
+          RooAbsReal *sigBuDeltaInt = p->pdfBu_Bu2Dst0h_D0pi0().createIntegral(
+              config.buDeltaMass(), RooFit::NormSet(config.buDeltaMass()),
+              RooFit::Range("total"));
+          if (sigBuDeltaInt == nullptr) {
+            throw std::runtime_error("Signal could not be integrated.");
+          } else {
+            double sigYieldVal =
+                sigBuDeltaInt->getVal() * p->N_Bu_Bu2Dst0h_D0pi0().getVal();
+            double sigYieldErr =
+                sigBuDeltaInt->getVal() *
+                p->N_Bu_Bu2Dst0h_D0pi0().getPropagatedError(*dataFitResult);
+            std::cout << "For buDeltaMass, pi0 signal yield = " << sigYieldVal
+                      << " ± " << sigYieldErr << "\n";
+          }
+        }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
