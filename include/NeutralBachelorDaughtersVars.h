@@ -99,7 +99,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
               .c_str(),
           "",
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .N_tot_initVal_Bu2Dst0h_D0gamma(),
           0, 1000000)),
       N_Bu2Dst0h_D0pi0_(new RooRealVar(
@@ -107,7 +107,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
               .c_str(),
           "",
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .N_tot_initVal_Bu2Dst0h_D0pi0(),
           0, 1000000)) {}
 
