@@ -190,7 +190,7 @@ class Pdf : public PdfBase {
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
   virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const {
-    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
                uniqueId_)
         .N_Bu2Dst0h_D0gamma();
   }
@@ -229,7 +229,7 @@ class Pdf : public PdfBase {
         .pdfBu_misId_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const {
-    return NeutralBachelorChargeVars<_neutral, _bachelor, _charge>::Get(
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
                uniqueId_)
         .N_Bu2Dst0h_D0pi0();
   }
