@@ -133,4 +133,4 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, _daughters>::
                                                   _daughters>::Get(uniqueId)
                          .N_Bu2Dst0h_D0pi0(),
                      NeutralDaughtersVars<_neutral, _daughters>::Get(uniqueId)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()))) {}
+                         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {}
