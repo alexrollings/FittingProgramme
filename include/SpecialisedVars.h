@@ -147,7 +147,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
               NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-              N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor)))),
+              *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       // -------------------- MisRec -------------------- //
