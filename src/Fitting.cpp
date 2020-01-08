@@ -2981,24 +2981,24 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        double pi_pi0, k_pi0, pi_gamma, k_gamma;
-        for (auto &p : pdfs) {
-          if (p->bachelor() == Bachelor::pi) {
-            if (config.neutral() == Neutral::gamma) {
-              pi_gamma = p->N_Bu2Dst0h_D0gamma().getVal();
-            }
-            pi_pi0 = p->N_Bu2Dst0h_D0pi0().getVal();
-          } else {
-            if (config.neutral() == Neutral::gamma) {
-              k_gamma = p->N_Bu2Dst0h_D0gamma().getVal();
-            }
-            k_pi0 = p->N_Bu2Dst0h_D0pi0().getVal();
-          }
-        }
-        if (config.neutral() == Neutral::gamma) {
-          std::cout << "R gamma = " << k_gamma / pi_gamma << "\n";
-        }
-        std::cout << "R pi0 = " << k_pi0 / pi_pi0 << "\n";
+        // double pi_pi0, k_pi0, pi_gamma, k_gamma;
+        // for (auto &p : pdfs) {
+        //   if (p->bachelor() == Bachelor::pi) {
+        //     if (config.neutral() == Neutral::gamma) {
+        //       pi_gamma = p->N_tot_Bu2Dst0h_D0gamma().getVal();
+        //     }
+        //     pi_pi0 = p->N_tot_Bu2Dst0h_D0pi0().getVal();
+        //   } else {
+        //     if (config.neutral() == N_toteutral::gamma) {
+        //       k_gamma = p->N_tot_Bu2Dst0h_D0gamma().getVal();
+        //     }
+        //     k_pi0 = p->N_tot_Bu2Dst0h_D0pi0().getVal();
+        //   }
+        // }
+        // if (config.neutral() == Neutral::gamma) {
+        //   std::cout << "R gamma = " << k_gamma / pi_gamma << "\n";
+        // }
+        // std::cout << "R pi0 = " << k_pi0 / pi_pi0 << "\n";
         // config.deltaMass().setRange("total", 136, 190);
         // RooAbsReal *sigDeltaInt =
         // p->pdfDelta_Bu2Dst0h_D0pi0().createIntegral(
