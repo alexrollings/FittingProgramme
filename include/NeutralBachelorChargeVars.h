@@ -1,15 +1,9 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
-#include "RooAbsPdf.h"
-#include "RooAddPdf.h"
-#include "RooCBShape.h"
-#include "RooConstVar.h"
-#include "RooCruijff.h"
-#include "RooFormulaVar.h"
-#include "RooProdPdf.h"
 #include "RooUnblindUniform.h"
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
@@ -38,7 +32,6 @@ class NeutralBachelorChargeVars {
 
   int uniqueId() { return uniqueId_; }
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
-  RooRealVar &N_Bu2Dst0h_D0gamma() { return *N_Bu2Dst0h_D0gamma_; }
   RooFormulaVar &N_Delta_Bu2Dst0h_D0gamma() {
     return *N_Delta_Bu2Dst0h_D0gamma_;
   }
@@ -48,7 +41,6 @@ class NeutralBachelorChargeVars {
   }
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-  RooRealVar &N_Bu2Dst0h_D0pi0() { return *N_Bu2Dst0h_D0pi0_; }
   RooFormulaVar &N_Delta_Bu2Dst0h_D0pi0() { return *N_Delta_Bu2Dst0h_D0pi0_; }
   RooAbsReal &N_Bu_Bu2Dst0h_D0pi0() { return *N_Bu_Bu2Dst0h_D0pi0_; }
   RooAbsReal &N_BuPartial_Bu2Dst0h_D0pi0() {
@@ -77,13 +69,11 @@ class NeutralBachelorChargeVars {
  private:
   int uniqueId_;
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
-  std::unique_ptr<RooRealVar> N_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_Bu_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0gamma_;
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-  std::unique_ptr<RooRealVar> N_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_Bu_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0pi0_;
@@ -112,15 +102,7 @@ template <Neutral neutral, Bachelor bachelor, Charge charge>
 NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
     int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
-    : N_Bu2Dst0h_D0gamma_(
-          new RooRealVar(("N_Bu2Dst0h_D0gamma_" +
-                          ComposeName(uniqueId, neutral, bachelor, charge))
-                             .c_str(),
-                         "",
-                         NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                             .N_tot_initVal_Bu2Dst0h_D0gamma(),
-                         0, 1000000)),
-      N_Delta_Bu2Dst0h_D0gamma_(new RooFormulaVar(
+    : N_Delta_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, neutral, bachelor, charge))
               .c_str(),
@@ -129,18 +111,13 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
               NeutralVars<neutral>::Get(uniqueId)
                   .buDeltaCutEffBu2Dst0h_D0gamma(),
               NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-              *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor)))),
+              NeutralBachelorDaughtersVars<neutral, bachelor,
+                                           Daughters::kpi>::Get(uniqueId)
+                  .N_Bu2Dst0h_D0gamma(),
+              Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_Bu2Dst0h_D0gamma_(nullptr),
       N_BuPartial_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      N_Bu2Dst0h_D0pi0_(
-          new RooRealVar(("N_Bu2Dst0h_D0pi0_" +
-                          ComposeName(uniqueId, neutral, bachelor, charge))
-                             .c_str(),
-                         "",
-                         NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                             .N_tot_initVal_Bu2Dst0h_D0pi0(),
-                         0, 1000000)),
       N_Delta_Bu2Dst0h_D0pi0_(new RooFormulaVar(
           ("N_Delta_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, neutral, bachelor, charge))
@@ -149,7 +126,10 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
               NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-              *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor)))),
+              NeutralBachelorDaughtersVars<neutral, bachelor,
+                                           Daughters::kpi>::Get(uniqueId)
+                  .N_Bu2Dst0h_D0pi0(),
+              Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       // -------------------- MisRec -------------------- //
@@ -254,7 +234,10 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0gamma(),
             NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-            *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor))));
+            NeutralBachelorDaughtersVars<neutral, bachelor,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_Bu2Dst0h_D0gamma(),
+            Configuration::Get().GetPidEff(bachelor))));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, charge))
@@ -263,7 +246,10 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
             NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-            *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
+            NeutralBachelorDaughtersVars<neutral, bachelor,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_Bu2Dst0h_D0pi0(),
+            Configuration::Get().GetPidEff(bachelor))));
     N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, neutral, bachelor, charge))
             .c_str(),
@@ -296,7 +282,9 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0gamma(),
                   NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-                  *N_Bu2Dst0h_D0gamma_,
+                  NeutralBachelorDaughtersVars<neutral, bachelor,
+                                               Daughters::kpi>::Get(uniqueId)
+                      .N_Bu2Dst0h_D0gamma(),
                   Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2Dst0h_D0pi0_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -308,7 +296,9 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0pi0(),
                   NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-                  *N_Bu2Dst0h_D0pi0_,
+                  NeutralBachelorDaughtersVars<neutral, bachelor,
+                                               Daughters::kpi>::Get(uniqueId)
+                      .N_Bu2Dst0h_D0pi0(),
                   Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_MisRec_" +
@@ -344,14 +334,18 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
          ComposeName(uniqueId, neutral, bachelor, charge))
             .c_str(),
         "@0*@1",
-        RooArgList(*N_Bu2Dst0h_D0gamma_,
+        RooArgList(NeutralBachelorDaughtersVars<neutral, bachelor,
+                                                Daughters::kpi>::Get(uniqueId)
+                       .N_Bu2Dst0h_D0gamma(),
                    Configuration::Get().GetPidEff(bachelor))));
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, charge))
             .c_str(),
         "@0*@1",
-        RooArgList(*N_Bu2Dst0h_D0pi0_,
+        RooArgList(NeutralBachelorDaughtersVars<neutral, bachelor,
+                                                Daughters::kpi>::Get(uniqueId)
+                       .N_Bu2Dst0h_D0pi0(),
                    Configuration::Get().GetPidEff(bachelor))));
     N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_MisRec_" + ComposeName(uniqueId, neutral, bachelor, charge))
