@@ -30,10 +30,14 @@ class NeutralDaughtersVars {
   RooRealVar &R_Dst0KDst0pi_Bu2Dst0h_D0gamma() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   }
+  RooRealVar &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
+    return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  }
 
  private:
   int uniqueId_;
   RooRealVar R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
+  RooRealVar R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
 };
 
 template <Neutral neutral, Daughters daughters>
@@ -43,8 +47,8 @@ NeutralDaughtersVars<neutral, daughters>::NeutralDaughtersVars(int uniqueId)
            ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           "", 0.07930, -1, 1),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
-          ("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
+      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
+          ("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, neutral, daughters))
               .c_str(),
           "", 0.07930, -1, 1) {}
