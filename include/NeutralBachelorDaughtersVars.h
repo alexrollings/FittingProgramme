@@ -25,6 +25,8 @@ struct NeutralBachelorDaughtersVarsImpl;
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
+  std::unique_ptr<RooRealVar> A_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooRealVar> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooRealVar> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooRealVar> N_tot_Bu2Dst0h_D0pi0_;
 };
@@ -32,6 +34,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, daughters> {
 template <Neutral neutral, Daughters daughters>
 struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, daughters> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
+  std::unique_ptr<RooRealVar> A_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooRealVar> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_;
 };
@@ -72,6 +76,12 @@ class NeutralBachelorDaughtersVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
+  RooRealVar &A_Bu2Dst0h_D0gamma() {
+    return *impl_.A_Bu2Dst0h_D0gamma_;
+  }
+  RooRealVar &A_Bu2Dst0h_D0pi0() {
+    return *impl_.A_Bu2Dst0h_D0pi0_;
+  }
   RooAbsReal &N_tot_Bu2Dst0h_D0gamma() {
     return *impl_.N_tot_Bu2Dst0h_D0gamma_;
   }
@@ -94,7 +104,17 @@ class NeutralBachelorDaughtersVars {
 template <Neutral _neutral, Daughters _daughters>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
-    : N_tot_Bu2Dst0h_D0gamma_(new RooRealVar(
+    : A_Bu2Dst0h_D0gamma_(new RooRealVar(
+          ("A_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
+              .c_str(),
+          "", 0.1, -1, 1)),
+     A_Bu2Dst0h_D0pi0_(new RooRealVar(
+          ("A_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
+              .c_str(),
+          "", 0.1, -1, 1)),
+     N_tot_Bu2Dst0h_D0gamma_(new RooRealVar(
           ("N_tot_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
               .c_str(),
@@ -114,7 +134,17 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
 template <Neutral _neutral, Daughters _daughters>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, _daughters>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
-    : N_tot_Bu2Dst0h_D0gamma_(new RooFormulaVar(
+    : A_Bu2Dst0h_D0gamma_(new RooRealVar(
+          ("A_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
+              .c_str(),
+          "", 0.1, -1, 1)),
+     A_Bu2Dst0h_D0pi0_(new RooRealVar(
+          ("A_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
+              .c_str(),
+          "", 0.1, -1, 1)),
+     N_tot_Bu2Dst0h_D0gamma_(new RooFormulaVar(
           ("N_tot_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
               .c_str(),
