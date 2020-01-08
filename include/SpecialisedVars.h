@@ -124,7 +124,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
               .c_str(),
           "",
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-              .N_tot_initVal_MisRec(),
+              .N_initVal_MisRec(),
           0, 1000000)),
       N_Delta_MisRec_(new RooFormulaVar(
           ("N_Delta_MisRec_" +
@@ -142,7 +142,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
       //      ComposeName(uniqueId, neutral, bachelor, daughters, charge))
       //         .c_str(),
       //     "", NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-      //             .N_tot_initVal_Bu2D0h(),
+      //             .N_initVal_Bu2D0h(),
       //     0, 1000000)),
       // N_Delta_Bu2D0h_(new RooFormulaVar(
       //     ("N_Delta_Bu2D0h_" +
@@ -165,7 +165,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
               .c_str(),
           "",
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-              .N_tot_initVal_PartRec(),
+              .N_initVal_PartRec(),
           0, 1000000)),
       N_Delta_PartRec_(new RooFormulaVar(
           ("N_Delta_PartRec_" +
@@ -272,7 +272,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
             .c_str(),
         "",
         NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-            .N_tot_initVal_Bu2D0h(),
+            .N_initVal_Bu2D0h(),
         0, 1000000));
     // Scale = scale of offset, ~5% expected value
     int blindScale = 150;
@@ -291,7 +291,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
             .c_str(),
         "",
         NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-            .N_tot_initVal_Bu2D0h(),
+            .N_initVal_Bu2D0h(),
         0, 1000000));
   }
   N_Delta_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(

@@ -238,7 +238,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       MisRec_sigmaLBuPartial_(),
       MisRec_sigmaRBuPartial_(),
       pdfBuPartial_MisRec_(),
-      N_tot_initVal_MisRec_(
+      N_initVal_MisRec_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec().getVal()),
       // -------------------- Mis-ID ------------------- //
@@ -294,7 +294,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       Bu2D0h_sigmaLBuPartial_(),
       Bu2D0h_sigmaRBuPartial_(),
       pdfBuPartial_Bu2D0h_(),
-      N_tot_initVal_Bu2D0h_(
+      N_initVal_Bu2D0h_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVBu2D0h() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h().getVal()),
       // -------------------- Mis-ID ------------------- //
@@ -345,7 +345,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       partRec_sigmaLBuPartial_(),
       partRec_sigmaRBuPartial_(),
       pdfBuPartial_PartRec_(),
-      N_tot_initVal_PartRec_(
+      N_initVal_PartRec_(
           NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVPartRec() *
           NeutralVars<Neutral::pi0>::Get(uniqueId).orEffPartRec().getVal()),
       // -------------------- Mis-ID ------------------- //

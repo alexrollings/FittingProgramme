@@ -119,7 +119,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                  "", 1),
       deltaPartialCutEffBu2Dst0h_D0pi0_(),
       fracBu2Dst0h_D0pi0_(),
-      initYieldFAVBu2Dst0h_D0pi0_(),
+      initYieldFAVBu2Dst0h_D0pi0_(initYieldFAVBu2Dst0h_D0pi0_ = Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(),
       Bu2Dst0h_D0gamma_sigmaDelta_(),
@@ -200,7 +200,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                    "", 1),
       deltaPartialCutEffBu2Dst0h_D0gamma_(),
       fracBu2Dst0h_D0gamma_(0.213),
-      initYieldFAVBu2Dst0h_D0gamma_(),
+      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::pi0))
@@ -397,9 +397,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_(0.290),
       initYieldFAVPartRec_() {
   if (Configuration::Get().splitByCharge() == true) {
-    initYieldFAVBu2Dst0h_D0pi0_ = Configuration::Get().initYieldFAVSignal() / 2;
-    initYieldFAVBu2Dst0h_D0gamma_ =
-        (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_) / 2;
     initYieldFAVMisRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
     initYieldFAVBu2D0h_ =
@@ -407,9 +404,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     initYieldFAVPartRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracPartRec_) / 2;
   } else {
-    initYieldFAVBu2Dst0h_D0pi0_ = Configuration::Get().initYieldFAVSignal();
-    initYieldFAVBu2Dst0h_D0gamma_ =
-        Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0gamma_;
     initYieldFAVMisRec_ =
         Configuration::Get().initYieldFAVSignal() * fracMisRec_ / 2;
     initYieldFAVBu2D0h_ =

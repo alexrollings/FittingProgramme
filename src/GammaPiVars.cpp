@@ -353,7 +353,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           MisRec_sigmaLBuPartial_, MisRec_sigmaRBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBuPartial()),
-      N_tot_initVal_MisRec_(
+      N_initVal_MisRec_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVMisRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffMisRec().getVal()),
       // -------------------- Mis-ID ------------------- //
@@ -425,7 +425,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Bu2D0h_sigmaLBuPartial_, Bu2D0h_sigmaRBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0h_aRBuPartial()),
-      N_tot_initVal_Bu2D0h_(
+      N_initVal_Bu2D0h_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVBu2D0h() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffBu2D0h().getVal()),
       // -------------------- Mis-ID ------------------- //
@@ -492,7 +492,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", RooArgSet(pdfBu_PartRec_D0pi0_, pdfBu_PartRec_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId).partRec_frac_D0pi0())),
-      N_tot_initVal_PartRec_(
+      N_initVal_PartRec_(
           NeutralVars<Neutral::gamma>::Get(uniqueId).initYieldFAVPartRec() *
           NeutralVars<Neutral::gamma>::Get(uniqueId).orEffPartRec().getVal()),
       partRec_sigmaLBuPartial_(("partRec_sigmaLBuPartial_" +

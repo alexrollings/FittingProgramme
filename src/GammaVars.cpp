@@ -157,7 +157,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", 1),
       fracBu2Dst0h_D0gamma_(),
-      initYieldFAVBu2Dst0h_D0gamma_(),
+      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
                                  ComposeName(uniqueId, Neutral::gamma))
@@ -309,7 +309,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                             .c_str(),
                                         "", 1),
       fracBu2Dst0h_D0pi0_(0.871),
-      initYieldFAVBu2Dst0h_D0pi0_(),
+      initYieldFAVBu2Dst0h_D0pi0_(Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(("MisRec_thresholdDelta_" +
                               ComposeName(uniqueId, Neutral::gamma))
@@ -582,10 +582,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                    fracPartRec_Bu2Dst0hst_D0pi0_),
       initYieldFAVPartRec_() {
   if (Configuration::Get().splitByCharge() == true) {
-    initYieldFAVBu2Dst0h_D0gamma_ =
-        Configuration::Get().initYieldFAVSignal() / 2;
-    initYieldFAVBu2Dst0h_D0pi0_ =
-        (Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_) / 2;
     initYieldFAVMisRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
     initYieldFAVBu2D0h_ =
@@ -593,9 +589,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     initYieldFAVPartRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracPartRec_) / 2;
   } else {
-    initYieldFAVBu2Dst0h_D0gamma_ = Configuration::Get().initYieldFAVSignal();
-    initYieldFAVBu2Dst0h_D0pi0_ =
-        Configuration::Get().initYieldFAVSignal() * fracBu2Dst0h_D0pi0_;
     initYieldFAVMisRec_ =
         Configuration::Get().initYieldFAVSignal() * fracMisRec_ / 2;
     initYieldFAVBu2D0h_ =
