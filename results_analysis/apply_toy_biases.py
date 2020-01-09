@@ -102,15 +102,16 @@ if __name__ == "__main__":
     # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
     pull_result = tf_pull.Get("Result_Pull_" + p_name[:-2])
     if pull_result == None:
-      sys.exit("Could not extract Result_Pull_" + p_name[:-2] + " from " +
+      print("Could not extract Result_Pull_" + p_name[:-2] + " from " +
                pull_file)
-    pull_pars = pull_result.floatParsFinal()
-    pull_mean = pull_pars[0].getVal()
-    pull_width = pull_pars[1].getVal()
-    obs[p_name] = [
-        p.getVal() - pull_mean * p.getError(),
-        p.getError() * pull_width
-    ]
+    else:
+      pull_pars = pull_result.floatParsFinal()
+      pull_mean = pull_pars[0].getVal()
+      pull_width = pull_pars[1].getVal()
+      obs[p_name] = [
+          p.getVal() - pull_mean * p.getError(),
+          p.getError() * pull_width
+      ]
 
   for k, v in obs.items():
     print(k, ":")
