@@ -177,35 +177,36 @@ if __name__ == "__main__":
     if not os.path.exists(plots_dir):
         os.mkdir(plots_dir)
     # print("./PlotToys " + ",".join(list_file))
+    os.chdir('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/')
     if list_file.read(1) != None:
         if dim == "1D":
             if fit_bu_partial == False:
                 subprocess.call([
-                    "./../build/PlotToys", "-neutral=" + neutral,
+                    "./PlotToys", "-neutral=" + neutral,
                     "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
-                    "./../build/PlotToys", "-neutral=" + neutral,
+                    "./PlotToys", "-neutral=" + neutral,
                     "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-1D", "-toyInit=" + toy_init, "-buPartial"
                 ])
         else:
             if fit_bu_partial == False:
                 subprocess.call([
-                    "./../build/PlotToys", "-neutral=" + neutral,
+                    "./PlotToys", "-neutral=" + neutral,
                     "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init
                 ])
             else:
                 subprocess.call([
-                    "./../build/PlotToys", "-neutral=" + neutral,
+                    "./PlotToys", "-neutral=" + neutral,
                     "-inputFile=" + filename, "-outputDir=" + output_dir,
                     "-toyInit=" + toy_init, "-buPartial"
                 ])
                 # print(
-                #     "./../build/PlotToys" + " " + "-neutral=" + neutral + " " +
+                #     "./PlotToys" + " " + "-neutral=" + neutral + " " +
                 #     "-inputFile=" + filename + " " + "-outputDir=" + output_dir + " " +
                 #     "-toyInit=" + toy_init + " " + "-buPartial")
     else:
