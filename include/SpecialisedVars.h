@@ -4,7 +4,6 @@
 #include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
-#include "RooUnblindUniform.h"
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
@@ -57,8 +56,7 @@ class SpecialisedVars {
   RooAbsReal &N_BuPartial_MisRec() { return *N_BuPartial_MisRec_; }
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2D0h -------------------- //
-  RooAbsReal &N_Bu2D0h() { return *N_Bu2D0h_; }
-  RooAbsReal &N_Bu2D0h_Blind() { return *N_Bu2D0h_Blind_; }
+  RooRealVar &N_Bu2D0h() { return *N_Bu2D0h_; }
   RooFormulaVar &N_Delta_Bu2D0h() { return *N_Delta_Bu2D0h_; }
   RooAbsReal &N_Bu_Bu2D0h() { return *N_Bu_Bu2D0h_; }
   RooAbsReal &N_BuPartial_Bu2D0h() { return *N_BuPartial_Bu2D0h_; }
@@ -90,8 +88,7 @@ class SpecialisedVars {
   std::unique_ptr<RooAbsReal> N_BuPartial_MisRec_;
   // -------------------- Mis-ID ------------------- //
   // -------------------- Bu2D0h -------------------- //
-  std::unique_ptr<RooAbsReal> N_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> N_Bu2D0h_Blind_;
+  std::unique_ptr<RooRealVar> N_Bu2D0h_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2D0h_;
@@ -137,25 +134,22 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
       N_Bu_MisRec_(nullptr),
       N_BuPartial_MisRec_(nullptr),
       // -------------------- Bu2D0h -------------------- //
-      // N_Bu2D0h_(new RooRealVar(
-      //     ("N_Bu2D0h_" +
-      //      ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-      //         .c_str(),
-      //     "", NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-      //             .N_initVal_Bu2D0h(),
-      //     0, 1000000)),
-      // N_Delta_Bu2D0h_(new RooFormulaVar(
-      //     ("N_Delta_Bu2D0h_" +
-      //      ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-      //         .c_str(),
-      //     "(@0/@1)*@2*@3",
-      //     RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
-      //                NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(),
-      //                *N_Bu2D0h_,
-      //                Configuration::Get().GetPidEff(bachelor)))),
-      N_Bu2D0h_(nullptr),
-      N_Bu2D0h_Blind_(nullptr),
-      N_Delta_Bu2D0h_(nullptr),
+      N_Bu2D0h_(new RooRealVar(
+          ("N_Bu2D0h_" +
+           ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .N_initVal_Bu2D0h(),
+          0, 1000000)),
+      N_Delta_Bu2D0h_(new RooFormulaVar(
+          ("N_Delta_Bu2D0h_" +
+           ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "(@0/@1)*@2*@3",
+          RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
+                     NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(),
+                     *N_Bu2D0h_,
+                     Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_Bu2D0h_(nullptr),
       N_BuPartial_Bu2D0h_(nullptr),
       // -------------------- PartRec -------------------- //
@@ -265,43 +259,6 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
           NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
           *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
-  if (Configuration::Get().blindFit() == true) {
-    N_Bu2D0h_Blind_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("N_Bu2D0h_Blind_" +
-         ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "",
-        NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-            .N_initVal_Bu2D0h(),
-        0, 1000000));
-    // Scale = scale of offset, ~5% expected value
-    int blindScale = 150;
-    if (bachelor == Bachelor::k) {
-      int blindScale = 12;
-    }
-    N_Bu2D0h_ = std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
-        ("N_Bu2D0h_" +
-         ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "Blind", "Blind", blindScale, *N_Bu2D0h_Blind_));
-  } else {
-    N_Bu2D0h_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-        ("N_Bu2D0h_" +
-         ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "",
-        NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-            .N_initVal_Bu2D0h(),
-        0, 1000000));
-  }
-  N_Delta_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("N_Delta_Bu2D0h_" +
-       ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "(@0/@1)*@2*@3",
-      RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
-                 NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(), *N_Bu2D0h_,
-                 Configuration::Get().GetPidEff(bachelor))));
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
   // Bu and BuPartial as a fn of N_
   if (Configuration::Get().fit1D() == false ||
