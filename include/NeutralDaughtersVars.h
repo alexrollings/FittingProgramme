@@ -27,28 +27,42 @@ class NeutralDaughtersVars {
   }
 
   int uniqueId() { return uniqueId_; }
-  RooRealVar &R_Dst0KDst0pi_Bu2Dst0h_D0gamma() {
-    return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0gamma() {
+    return *R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   }
-  RooRealVar &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
-    return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
+    return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  }
+  RooRealVar &R_CP_Bu2Dst0h_D0gamma() {
+    return R_CP_Bu2Dst0h_D0gamma_;
+  }
+  RooRealVar &R_CP_Bu2Dst0h_D0pi0() {
+    return R_CP_Bu2Dst0h_D0pi0_;
   }
 
  private:
   int uniqueId_;
-  RooRealVar R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
-  RooRealVar R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  RooRealVar R_CP_Bu2Dst0h_D0gamma_;
+  RooRealVar R_CP_Bu2Dst0h_D0pi0_;
 };
 
-template <Neutral neutral, Daughters daughters>
-NeutralDaughtersVars<neutral, daughters>::NeutralDaughtersVars(int uniqueId)
-    : R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
-          ("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, neutral, daughters))
-              .c_str(),
-          "", 0.07930, -1, 1),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
-          ("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, neutral, daughters))
-              .c_str(),
-          "", 0.07930, -1, 1) {}
+template <>
+NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
+    int uniqueId);
