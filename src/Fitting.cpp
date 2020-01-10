@@ -2774,6 +2774,11 @@ int main(int argc, char **argv) {
     }
   }
 
+  if (daughtersVec.size() > 1 && config.blindFit() == false && config.noFit() == false) {
+    std::cerr << "\n\n !!!!!! Cannot run unblinded fit for signal modes !!!!!! \n\n";
+    return 1;
+  }
+
   // Raise lower mass boundary in delta mass for pi0 plots
   if (config.neutral() == Neutral::pi0) {
     config.deltaMass().setMin(136);
