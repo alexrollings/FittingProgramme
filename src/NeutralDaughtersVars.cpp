@@ -43,7 +43,11 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
             ("R_CP_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, Daughters::kk))
                 .c_str(),
-            "Blind", "Blind", 0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+            "Blind",
+            ("R_CP_Bu2Dst0h_D0pi0_" +
+             ComposeName(uniqueId, Neutral::pi0, Bachelor::pi, Daughters::kk))
+                .c_str(),
+            0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
     R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_" +
@@ -134,7 +138,11 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
             ("R_CP_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::kk))
                 .c_str(),
-            "Blind", "Blind", 0.5, *R_CP_Bu2Dst0h_D0gamma_Blind_));
+            "Blind",
+            ("R_CP_Bu2Dst0h_D0gamma_" +
+             ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::kk))
+                .c_str(),
+            0.5, *R_CP_Bu2Dst0h_D0gamma_Blind_));
     R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_Blind_" +
                         ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
@@ -145,7 +153,11 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
             ("R_CP_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::kk))
                 .c_str(),
-            "Blind", "Blind", 0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+            "Blind",
+            ("R_CP_Bu2Dst0h_D0pi0_" +
+             ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::kk))
+                .c_str(),
+            0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
         new RooRealVar(("R_CP_Bu2Dst0h_D0gamma_" +

@@ -1,10 +1,10 @@
 #pragma once
 #include "Configuration.h"
+#include "DaughtersVars.h"
 #include "GlobalVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
-#include "DaughtersVars.h"
 #include "RooUnblindUniform.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -148,13 +148,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
             ("A_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
                 .c_str(),
-            "Blind", "Blind", 0.01, *A_Bu2Dst0h_D0gamma_Blind_));
+            "Blind",
+            ("A_Bu2Dst0h_D0gamma_" +
+             ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
+                .c_str(),
+            0.01, *A_Bu2Dst0h_D0gamma_Blind_));
     A_Bu2Dst0h_D0pi0_ =
         std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
                 .c_str(),
-            "Blind", "Blind", 0.01, *A_Bu2Dst0h_D0pi0_Blind_));
+            "Blind",
+            ("A_Bu2Dst0h_D0pi0_" +
+             ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
+                .c_str(),
+            0.01, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
     A_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0gamma_" +
@@ -215,13 +223,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, _daughters>::
             ("A_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
                 .c_str(),
-            "Blind", "Blind", 0.01, *A_Bu2Dst0h_D0gamma_Blind_));
+            "Blind",
+            ("A_Bu2Dst0h_D0gamma_" +
+             ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
+                .c_str(),
+            0.01, *A_Bu2Dst0h_D0gamma_Blind_));
     A_Bu2Dst0h_D0pi0_ =
         std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
                 .c_str(),
-            "Blind", "Blind", 0.01, *A_Bu2Dst0h_D0pi0_Blind_));
+            "Blind",
+            ("A_Bu2Dst0h_D0pi0_" +
+             ComposeName(uniqueId, _neutral, Bachelor::k, _daughters))
+                .c_str(),
+            0.01, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
     A_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0gamma_" +
