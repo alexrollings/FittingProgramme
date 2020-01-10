@@ -8,8 +8,10 @@
 template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
+    // -------------------- A CP initial value -------------------- //
+    : A_CP_init_(-0.151),
     // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-    : Bu2Dst0h_D0pi0_sigma1Bu_(new RooFormulaVar(
+      Bu2Dst0h_D0pi0_sigma1Bu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma1Bu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
