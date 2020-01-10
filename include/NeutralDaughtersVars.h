@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "RooFormulaVar.h"
 
 template <Neutral neutral, Daughters daughters>
 class NeutralDaughtersVars {
@@ -18,8 +19,8 @@ class NeutralDaughtersVars {
     // i->second to get the value
     auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
     if (it == singletons.end()) {
-      // If it doesn't, create it as a new unique_ptr by calling emplace, which
-      // will forward the pointer to the constructor of std::unique_ptr
+      // If it doesn't, create it as a new shared_ptr by calling emplace, which
+      // will forward the pointer to the constructor of std::shared_ptr
       it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
                .first;
     }
@@ -33,27 +34,38 @@ class NeutralDaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
-  RooAbsReal &R_CP_Bu2Dst0h_D0gamma() {
-    return *R_CP_Bu2Dst0h_D0gamma_;
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() { return *R_CP_Bu2Dst0h_D0gamma_Blind_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() { return *R_CP_Bu2Dst0h_D0pi0_Blind_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
+
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   }
-  RooAbsReal &R_CP_Bu2Dst0h_D0pi0() {
-    return *R_CP_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
-  RooRealVar &R_CP_Bu2Dst0h_D0gamma_Blind() {
-    return *R_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::shared_ptr<RooAbsReal> &R_CP_Bu2Dst0h_D0gamma_GetPointer() {
+    return R_CP_Bu2Dst0h_D0gamma_;
   }
-  RooRealVar &R_CP_Bu2Dst0h_D0pi0_Blind() {
-    return *R_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooAbsReal> &R_CP_Bu2Dst0h_D0pi0_GetPointer() {
+    return R_CP_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &R_CP_Bu2Dst0h_D0gamma_Blind_GetPointer() {
+    return R_CP_Bu2Dst0h_D0gamma_Blind_;
+  }
+  std::shared_ptr<RooRealVar> &R_CP_Bu2Dst0h_D0pi0_Blind_GetPointer() {
+    return R_CP_Bu2Dst0h_D0pi0_Blind_;
   }
 
  private:
   int uniqueId_;
-  std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
-  std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
-  std::unique_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
-  std::unique_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
-  std::unique_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
 };
 
 template <>
