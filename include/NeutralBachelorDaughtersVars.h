@@ -156,6 +156,19 @@ class NeutralBachelorDaughtersVars {
   }
   RooAbsReal &N_tot_Bu2Dst0h_D0pi0() { return *impl_.N_tot_Bu2Dst0h_D0pi0_; }
 
+  std::shared_ptr<RooAbsReal> &A_Bu2Dst0h_D0gamma_Blind_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0gamma_Blind_;
+  }
+  std::shared_ptr<RooAbsReal> &A_Bu2Dst0h_D0gamma_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooAbsReal> &A_Bu2Dst0h_D0pi0_Blind_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0pi0_Blind_;
+  }
+  std::shared_ptr<RooAbsReal> &A_Bu2Dst0h_D0pi0_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0pi0_;
+  }
+
  private:
   // When we DO need to specialize certain cases, we can still do that (see
   // below)...
