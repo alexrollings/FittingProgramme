@@ -33,19 +33,27 @@ class NeutralDaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
-  RooRealVar &R_CP_Bu2Dst0h_D0gamma() {
-    return R_CP_Bu2Dst0h_D0gamma_;
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma() {
+    return *R_CP_Bu2Dst0h_D0gamma_;
   }
-  RooRealVar &R_CP_Bu2Dst0h_D0pi0() {
-    return R_CP_Bu2Dst0h_D0pi0_;
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0() {
+    return *R_CP_Bu2Dst0h_D0pi0_;
+  }
+  RooRealVar &R_CP_Bu2Dst0h_D0gamma_Blind() {
+    return *R_CP_Bu2Dst0h_D0gamma_Blind_;
+  }
+  RooRealVar &R_CP_Bu2Dst0h_D0pi0_Blind() {
+    return *R_CP_Bu2Dst0h_D0pi0_Blind_;
   }
 
  private:
   int uniqueId_;
   std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
-  RooRealVar R_CP_Bu2Dst0h_D0gamma_;
-  RooRealVar R_CP_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::unique_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::unique_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
 };
 
 template <>
@@ -58,6 +66,9 @@ template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
     int uniqueId);
 template <>
+NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
     int uniqueId);
 template <>
@@ -65,4 +76,7 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
     int uniqueId);
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
+    int uniqueId);
+template <>
+NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersVars(
     int uniqueId);
