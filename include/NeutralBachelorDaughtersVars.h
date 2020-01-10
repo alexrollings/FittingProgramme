@@ -47,7 +47,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
 };
 
 template <Neutral neutral>
-struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pipi> {
+struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
+                                        Daughters::pipi> {
   NeutralBachelorDaughtersVarsImpl(int uniqueId);
   std::shared_ptr<RooRealVar> A_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0gamma_;
@@ -216,12 +217,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         ("A_Bu2Dst0h_D0gamma_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "", 0.001, -1, 1));
     A_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "", 0.001, -1, 1));
     A_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0gamma_" +
@@ -231,7 +232,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             ("A_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0gamma_Blind_));
+            0.001, *A_Bu2Dst0h_D0gamma_Blind_));
     A_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0pi0_" +
@@ -241,18 +242,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             ("A_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0pi0_Blind_));
+            0.001, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "", 0.001, -1, 1));
     A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "", 0.001, -1, 1));
   }
 }
 
@@ -289,12 +290,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
         ("A_Bu2Dst0h_D0gamma_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0gamma_" +
@@ -304,7 +311,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             ("A_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0gamma_Blind_));
+            0.03, *A_Bu2Dst0h_D0gamma_Blind_));
     A_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0pi0_" +
@@ -314,18 +321,24 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             ("A_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0pi0_Blind_));
+            0.03, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
   }
 }
 
@@ -401,11 +414,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
           "", "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                  Daughters::kpi>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0pi0(),
-                     NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
+          RooArgList(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                           Daughters::kpi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0pi0(),
+              NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -423,12 +437,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
         ("A_Bu2Dst0h_D0gamma_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_Blind_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0gamma_" +
@@ -438,7 +458,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             ("A_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0gamma_Blind_));
+            0.3, *A_Bu2Dst0h_D0gamma_Blind_));
     A_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("A_Bu2Dst0h_D0pi0_" +
@@ -448,18 +468,24 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             ("A_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
                 .c_str(),
-            0.01, *A_Bu2Dst0h_D0pi0_Blind_));
+            0.3, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
     A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
-        "", 0.01, -1, 1));
+        "",
+        NeutralBachelorVars<Neutral::pi0, Bachelor::k>::Get(uniqueId)
+            .A_CP_init(),
+        -1, 1));
   }
 }
 
@@ -476,11 +502,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "", "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                  Daughters::kk>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0pi0(),
-                     NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
+          RooArgList(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                           Daughters::kk>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0pi0(),
+              NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -551,40 +578,42 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           "", "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                  Daughters::pipi>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0pi0(),
-                     NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
+          RooArgList(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                           Daughters::pipi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0pi0(),
+              NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
             .c_str(),
         "", "@0*@1",
-        RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                Daughters::pipi>::Get(uniqueId)
-                       .N_tot_Bu2Dst0h_D0gamma(),
-                   NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
-                       .R_Dst0KDst0pi_Bu2Dst0h_D0gamma())));
+        RooArgList(
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::pipi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0gamma(),
+            NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
+                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma())));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                     Daughters::kk>::Get(uniqueId)
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+            uniqueId)
             .A_Bu2Dst0h_D0gamma_Blind_GetPointer();
     A_Bu2Dst0h_D0pi0_Blind_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                     Daughters::kk>::Get(uniqueId)
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+            uniqueId)
             .A_Bu2Dst0h_D0pi0_Blind_GetPointer();
   } else {
     A_Bu2Dst0h_D0gamma_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                     Daughters::kk>::Get(uniqueId)
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+            uniqueId)
             .A_Bu2Dst0h_D0gamma_GetPointer();
     A_Bu2Dst0h_D0pi0_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                     Daughters::kk>::Get(uniqueId)
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+            uniqueId)
             .A_Bu2Dst0h_D0pi0_GetPointer();
   }
 }

@@ -38,7 +38,7 @@ class NeutralBachelorVars {
 
   int uniqueId() { return uniqueId_; }
   // -------------------- A CP initial value -------------------- //
-  double &A_CP_init() {
+  const double &A_CP_init() {
     return A_CP_init_;
   }
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
@@ -369,7 +369,7 @@ class NeutralBachelorVars {
  private:
   int uniqueId_;
   // -------------------- A CP initial value -------------------- //
-  double A_CP_init_;
+  const double A_CP_init_;
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma1Bu_;
   std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma2Bu_;
