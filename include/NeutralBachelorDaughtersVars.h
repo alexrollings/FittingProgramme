@@ -4,6 +4,7 @@
 #include "NeutralBachelorVars.h"
 #include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
+#include "DaughtersVars.h"
 #include "RooUnblindUniform.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -111,15 +112,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_(nullptr) {
-  N_tot_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(
-      new RooRealVar(("N_tot_Bu2Dst0h_D0pi0_" +
-                      ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
-                         .c_str(),
-                     "",
-                     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                         .N_tot_initVal_Bu2Dst0h_D0pi0(),
-                     0, 1000000));
+      N_tot_Bu2Dst0h_D0pi0_(new RooRealVar(
+          ("N_tot_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, _daughters))
+              .c_str(),
+          "",
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .N_tot_initVal_Bu2Dst0h_D0pi0(),
+          0, 1000000)) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
