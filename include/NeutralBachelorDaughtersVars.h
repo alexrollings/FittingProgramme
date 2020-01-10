@@ -118,7 +118,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
               .c_str(),
           "",
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .N_tot_initVal_Bu2Dst0h_D0pi0(),
+                  .N_tot_initVal_Bu2Dst0h_D0pi0() *
+              DaughtersVars<_daughters>::Get(uniqueId).daughtersSF(),
           0, 1000000)) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
@@ -127,7 +128,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, _daughters>::
             .c_str(),
         "",
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-            .N_tot_initVal_Bu2Dst0h_D0gamma(),
+                .N_tot_initVal_Bu2Dst0h_D0gamma() *
+            DaughtersVars<_daughters>::Get(uniqueId).daughtersSF(),
         0, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
