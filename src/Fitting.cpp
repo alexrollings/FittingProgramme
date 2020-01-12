@@ -2685,21 +2685,21 @@ void Run2DToys(TFile &outputFile,
   dataSet.Print();
   std::cout << "\n\n\n";
 
-  if (id == 1) {
-    for (auto &p : pdfs) {
-      std::string toyLabel = "toy";
-      std::string dataLabel = "data";
-      Plotting2D(dataSet, id, *p, config, outputDir, dataLabel);
-      Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
-    }
-    for (auto &p : pdfs) {
-      Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
-                 toyFitResult.get());
-    }
-    if (config.noFit() == false) {
-      PlotCorrelations(toyFitResult.get(), outputDir, config);
-    }
-  }
+  // if (id == 1) {
+  //   for (auto &p : pdfs) {
+  //     std::string toyLabel = "toy";
+  //     std::string dataLabel = "data";
+  //     Plotting2D(dataSet, id, *p, config, outputDir, dataLabel);
+  //     Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
+  //   }
+  //   for (auto &p : pdfs) {
+  //     Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
+  //                toyFitResult.get());
+  //   }
+  //   if (config.noFit() == false) {
+  //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+  //   }
+  // }
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
