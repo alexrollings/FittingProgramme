@@ -379,16 +379,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kk>::Get(uniqueId)
             .A_Bu2Dst0h_D0pi0_Blind_GetPointer();
-  } else {
-    A_Bu2Dst0h_D0gamma_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                     Daughters::kk>::Get(uniqueId)
-            .A_Bu2Dst0h_D0gamma_GetPointer();
-    A_Bu2Dst0h_D0pi0_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                     Daughters::kk>::Get(uniqueId)
-            .A_Bu2Dst0h_D0pi0_GetPointer();
   }
+  A_Bu2Dst0h_D0gamma_ =
+      NeutralBachelorDaughtersVars<_neutral, Bachelor::pi, Daughters::kk>::Get(
+          uniqueId)
+          .A_Bu2Dst0h_D0gamma_GetPointer();
+  A_Bu2Dst0h_D0pi0_ =
+      NeutralBachelorDaughtersVars<_neutral, Bachelor::pi, Daughters::kk>::Get(
+          uniqueId)
+          .A_Bu2Dst0h_D0pi0_GetPointer();
 }
 
 template <Neutral _neutral>
@@ -606,16 +605,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
             uniqueId)
             .A_Bu2Dst0h_D0pi0_Blind_GetPointer();
-  } else {
-    A_Bu2Dst0h_D0gamma_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
-            uniqueId)
-            .A_Bu2Dst0h_D0gamma_GetPointer();
-    A_Bu2Dst0h_D0pi0_ =
-        NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
-            uniqueId)
-            .A_Bu2Dst0h_D0pi0_GetPointer();
   }
+  A_Bu2Dst0h_D0gamma_ =
+      NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+          uniqueId)
+          .A_Bu2Dst0h_D0gamma_GetPointer();
+  A_Bu2Dst0h_D0pi0_ =
+      NeutralBachelorDaughtersVars<_neutral, Bachelor::k, Daughters::kk>::Get(
+          uniqueId)
+          .A_Bu2Dst0h_D0pi0_GetPointer();
 }
 
 template <Neutral _neutral>
