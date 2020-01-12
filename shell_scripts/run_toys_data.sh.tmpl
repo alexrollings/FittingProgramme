@@ -1,16 +1,16 @@
 #!/bin/zsh
 #PBS -l cput=01:59:59 
-#PBS -N RUNTOYS_data_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
+#PBS -N RUNTOYS_data_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
 source /home/rollings/.zshrc
 source_root
 
-mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
-cd /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
+mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
+cd /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/CMakeLists.txt 
 
 mkdir src
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/* src/
@@ -21,7 +21,7 @@ mkdir build
 cd build
 cmake ../
 make
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} ${DIM} -charge=${CHARGE}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -charge=${CHARGE} -daughters=${DAUGHTERS}
 
 cd /data/lhcb/users/rollings/fitting_scripts/
-rm -rf job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
+rm -rf job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
