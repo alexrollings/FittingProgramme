@@ -13,9 +13,9 @@ def submit_to_batch(command):
 def run_process(script):
     p = sp.Popen(["sh", script], stdout=sp.PIPE, stderr=sp.PIPE)
     stdout, stderr = p.communicate()
-    with open('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/' + os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
+    with open('/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/' + os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
         out_file.write(stdout)
-    with open('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/' + os.path.splitext(os.path.basename(script))[0] + '.err', 'w') as err_file:
+    with open('/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/' + os.path.splitext(os.path.basename(script))[0] + '.err', 'w') as err_file:
         err_file.write(stderr)
     return p.returncode
 
@@ -144,11 +144,11 @@ if __name__ == "__main__":
     for i in range(0, n_jobs):
         if input_dir == None:
             print("Generating toys from MC PDF")
-            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/multip_scripts/generate_from_mc.sh.tmpl"
+            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_mc.sh.tmpl"
             if neutral == "pi0":
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             else:
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
@@ -181,11 +181,11 @@ if __name__ == "__main__":
             scriptList.append(scriptPath)
         else:
             print("Generating toys from data PDF")
-            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/multip_scripts/generate_from_data.sh.tmpl"
+            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_data.sh.tmpl"
             if neutral == "pi0":
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             else:
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
