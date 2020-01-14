@@ -94,7 +94,7 @@ if __name__ == "__main__":
   obs = {}
   #Floating fit parameters
   pars = fit_result.floatParsFinal()
-  fit_result.Print()
+  fit_result.Print('v')
   for i in range(0, len(pars)):
     p = pars[i]
     p_name = p.GetName()
