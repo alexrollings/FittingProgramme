@@ -1,3 +1,5 @@
+#pragma once
+
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
