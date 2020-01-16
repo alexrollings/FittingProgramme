@@ -38,6 +38,18 @@ if __name__ == "__main__":
         help='Neutral = pi0/gamma',
         required=True)
     parser.add_argument(
+        '-d',
+        '--daughters',
+        type=str,
+        help='Daughters = kpi/kpi,kk/kpi,kk,pipi',
+        required=False)
+    parser.add_argument(
+        '-c',
+        '--charge',
+        type=str,
+        help='Charge = total/plus,minus',
+        required=True)
+    parser.add_argument(
         '-o',
         '--output_dir',
         type=str,
@@ -61,12 +73,12 @@ if __name__ == "__main__":
         type=str,
         help='Path to RDS of data: required to generate toys from data PDF',
         required=False)
-    parser.add_argument(
-        '-d',
-        '--dim',
-        type=str,
-        help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
-        required=False)
+    # parser.add_argument(
+    #     '-d',
+    #     '--dim',
+    #     type=str,
+    #     help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
+    #     required=False)
     parser.add_argument(
         '-dl',
         '--delta_low',
@@ -102,11 +114,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     neutral = args.neutral
+    daughters = args.daughters
+    charge = args.charge
     output_dir = args.output_dir
     n_toys = args.n_toys
     n_jobs = args.n_jobs
     input_dir = args.input_dir
-    dim = args.dim
+    # dim = args.dim
     delta_low = args.delta_low
     delta_high = args.delta_high
     delta_partial_low = args.delta_partial_low
@@ -116,6 +130,18 @@ if __name__ == "__main__":
 
     if neutral != "pi0" and neutral != "gamma":
         sys.exit("Specify neutral: -n=pi0/gamma")
+
+    if charge == "total":
+      print("Running toys summed over charge")
+    elif charge == "plus,minus":
+      print("Running toys split by charge")
+    else:
+      charge = "total"
+      print("Running toys summed over charge")
+
+    if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi":
+      daughters = kpi
+      print("Running toys for daughters=kpi")
 
     if dim == "1":
         print("Performing 1D toys to BuDelta mass")
@@ -140,28 +166,31 @@ if __name__ == "__main__":
     if bu_high == None:
         bu_high = "5330"
 
+    if input_dir == None:
+        sys.exit("Must specify data dir")
+
     scriptList = []
     for i in range(0, n_jobs):
-        if input_dir == None:
-            print("Generating toys from MC PDF")
-            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_mc.sh.tmpl"
+            templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_model.sh.tmpl"
             if neutral == "pi0":
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             else:
-                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_mc_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
+                scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_"  + str(i) + ".sh"
             substitutions = {
                 "nJob":
                 i,
-                "GCCROOT":
-                "/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6",
-                "LD_LIBRARY_PATH":
-                "/home/rollings/Software/install/lib64:/home/rollings/Software/install/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib:/home/rollings/Software/install/lib:64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib::/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/",
+                "INPUT":
+                input_dir,
                 "PATH":
                 output_dir,
                 "NEUTRAL":
                 neutral,
+                "DAUGHTERS":
+                daughters,
+                "CHARGE":
                 "NTOYS":
                 n_toys,
+                charge,
                 "DL":
                 delta_low,
                 "DH":
@@ -173,9 +202,7 @@ if __name__ == "__main__":
                 "BL":
                 bu_low,
                 "BH":
-                bu_high,
-                "DIM":
-                dim
+                bu_high
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
@@ -189,14 +216,13 @@ if __name__ == "__main__":
             substitutions = {
                 "nJob":
                 i,
-                "GCCROOT":
-                "/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6",
-                "LD_LIBRARY_PATH":
-                "/home/rollings/Software/install/lib64:/home/rollings/Software/install/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib:/home/rollings/Software/install/lib:64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/gcc/4.9.3/x86_64-slc6/lib::/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6/lib64:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/",
                 "PATH":
                 output_dir,
                 "NEUTRAL":
                 neutral,
+                "DAUGHTERS":
+                daughters,
+                "CHARGE":
                 "NTOYS":
                 n_toys,
                 "INPUT":
@@ -212,9 +238,7 @@ if __name__ == "__main__":
                 "BL":
                 bu_low,
                 "BH":
-                bu_high,
-                "DIM":
-                dim
+                bu_high
             }
             make_shell_script(templatePath, scriptPath, substitutions)
             scriptList.append(scriptPath)
