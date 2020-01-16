@@ -11,7 +11,7 @@ def submit_to_batch(command):
     return p.returncode
 
 def run_process(script):
-    p = sp.Popen(["sh", script], stdout=sp.PIPE, stderr=sp.PIPE)
+    p = sp.Popen(["zsh", script], stdout=sp.PIPE, stderr=sp.PIPE)
     stdout, stderr = p.communicate()
     with open('/home/rollings/Bu2Dst0h_2d/FittingProgramme/tmp/' + os.path.splitext(os.path.basename(script))[0] + '.out', 'w') as out_file:
         out_file.write(stdout)
