@@ -1935,7 +1935,7 @@ void Run2DToys(TFile &outputFile,
   }
 }
 
-void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
+void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
                 std::unique_ptr<RooFitResult> &dataFitResult,
                 Configuration &config,
                 std::vector<Daughters> const &daughtersVec,
@@ -2027,6 +2027,71 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
+void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
+                Configuration &config,
+                std::vector<Daughters> const &daughtersVec,
+                std::vector<Charge> const &chargeVec,
+                std::string const &outputDir, int id) {
+  std::cout << "\n\n -------------------------- Running toy #" << id
+            << " -------------------------- \n\n";
+  // Setting the random seed to 0 is a special case which generates a
+  // different seed every time you run. Setting the seed to an integer
+  // generates toys in a replicable way, in case you need to debug
+  // something.
+
+  double nEvtsPerToy = simPdf->expectedEvents(config.fitting);
+  std::unique_ptr<RooDataSet> toyDataSet;
+  if (config.fit1D() == false) {
+    toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
+        RooArgSet(config.buDeltaMass(), config.deltaMass(), config.fitting),
+        nEvtsPerToy));
+  } else {
+    toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
+        RooArgSet(config.buDeltaMass(), config.fitting), nEvtsPerToy));
+  }
+  toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
+                              ("toyDataHist" + std::to_string(id)).c_str()));
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+
+  auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+      ("simPdfFit_" + std::to_string(id)).c_str(),
+      ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
+
+  auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+  simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
+
+  std::shared_ptr<RooFitResult> toyFitResult;
+  if (config.noFit() == false) {
+    toyFitResult = std::shared_ptr<RooFitResult>(
+        simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+    toyFitResult->SetName("ToyResult");
+    // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+  }
+  // if (id == 1) {
+  //   auto pdfs = p.second;
+  //   for (auto &p : pdfs) {
+  //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+  //                toyFitResult.get());
+  //   }
+  //   if (config.noFit() == false) {
+  //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+  //   }
+  // }
+  if (config.noFit() == false) {
+    // to make a unique result each time
+    toyFitResult->Print("v");
+    outputFile.cd();
+    toyFitResult->Write();
+    outputFile.Close();
+    std::cout << toyFitResult->GetName() << " has been saved to file "
+              << outputFile.GetName() << "\n";
+  }
+}
+
 void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
                    Mode mode) {
   double boxEff, orEff, buDeltaCutEff, deltaCutEff;
@@ -2110,6 +2175,7 @@ int main(int argc, char **argv) {
   // them differently
 
   int nToys = 0;
+  bool d1dToys = false;
   Configuration &config = Configuration::Get();
 
   // By letting the ParseArguments object go out of scope it will print a
@@ -2166,6 +2232,9 @@ int main(int argc, char **argv) {
                 << chargeArg << ">\n";
       std::cout << "    -toys=<# toys>"
                 << "\n";
+      std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
+                   "to data. Default is 2D toys, generated from RooHistPdf of "
+                   "data.\n";
       std::cout << "    Optional: if you want to run toys. If # toys = 1, toys "
                    "will also be plotted.\n";
       std::cout << " ----------------------------------------------------------"
@@ -2180,14 +2249,18 @@ int main(int argc, char **argv) {
         nToys = toysArg;
         config.runToy() = true;
         std::cout << "Running " << nToys << " toys\n";
+        if (args("D1D")) {
+          d1dToys = true;
+          std::cout << "Toys generated from D1D PDF.\n";
+        } else {
+          std::cout << "Toys generated from 2D data.\n";
+        }
       }
 
       if (!args("inputDir", inputDir) && nToys == 0) {
         std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
         return 1;
-      } else {
-        std::cout << "Generating toy from PDF MC shapes.\n";
-      }
+      } 
 
       if (!args("outputDir", outputDir)) {
         std::cerr << "Specify output directory (-outputDir=<path>).\n";
@@ -2475,7 +2548,7 @@ int main(int argc, char **argv) {
     }
 
     std::vector<std::string> toyFileNames(nToys);
-    if (config.runToy() == true) {
+    if (config.runToy() == true && d1dToys == false) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -2530,6 +2603,24 @@ int main(int argc, char **argv) {
       dataFitResult->SetName("DataFitResult");
     }
 
+    if (config.runToy() == true && d1dToys == true) {
+      // start at id = 1 to reserve 0 for data fit
+      for (int id = 1; id < nToys + 1; ++id) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        double randomTag = random.Rndm();
+        TFile toyResultFile(
+            (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() + "_" +
+             std::to_string(randomTag) + ".root")
+                .c_str(),
+            "recreate");
+        RunD1DToys(simPdf, toyResultFile, config, daughtersVec, chargeVec,
+                   outputDir, id);
+        toyFileNames[id - 1] = toyResultFile.GetName();
+        toyResultFile.Close();
+      }
+    }
+
     if (config.runToy() == false) {
       // Loop over daughters again to plot correct PDFs
       for (auto &p : pdfs) {
@@ -2539,57 +2630,6 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        // double pi_pi0, k_pi0, pi_gamma, k_gamma;
-        // for (auto &p : pdfs) {
-        //   if (p->bachelor() == Bachelor::pi) {
-        //     if (config.neutral() == Neutral::gamma) {
-        //       pi_gamma = p->N_tot_Bu2Dst0h_D0gamma().getVal();
-        //     }
-        //     pi_pi0 = p->N_tot_Bu2Dst0h_D0pi0().getVal();
-        //   } else {
-        //     if (config.neutral() == N_toteutral::gamma) {
-        //       k_gamma = p->N_tot_Bu2Dst0h_D0gamma().getVal();
-        //     }
-        //     k_pi0 = p->N_tot_Bu2Dst0h_D0pi0().getVal();
-        //   }
-        // }
-        // if (config.neutral() == Neutral::gamma) {
-        //   std::cout << "R gamma = " << k_gamma / pi_gamma << "\n";
-        // }
-        // std::cout << "R pi0 = " << k_pi0 / pi_pi0 << "\n";
-        // config.deltaMass().setRange("total", 136, 190);
-        // RooAbsReal *sigDeltaInt =
-        // p->pdfDelta_Bu2Dst0h_D0pi0().createIntegral(
-        //     config.deltaMass(), RooFit::NormSet(config.deltaMass()),
-        //     RooFit::Range("total"));
-        // if (sigDeltaInt == nullptr) {
-        //   throw std::runtime_error("Signal could not be integrated.");
-        // } else {
-        //   double sigYieldVal =
-        //       sigDeltaInt->getVal() * p->N_Delta_Bu2Dst0h_D0pi0().getVal();
-        //   double sigYieldErr =
-        //       sigDeltaInt->getVal() *
-        //       p->N_Delta_Bu2Dst0h_D0pi0().getPropagatedError(*dataFitResult);
-        //   std::cout << "For deltaMass, pi0 signal yield = " << sigYieldVal
-        //             << " ± " << sigYieldErr << "\n";
-        // }
-        //
-        // config.buDeltaMass().setRange("total", 5050, 5500);
-        // RooAbsReal *sigBuDeltaInt = p->pdfBu_Bu2Dst0h_D0pi0().createIntegral(
-        //     config.buDeltaMass(), RooFit::NormSet(config.buDeltaMass()),
-        //     RooFit::Range("total"));
-        // if (sigBuDeltaInt == nullptr) {
-        //   throw std::runtime_error("Signal could not be integrated.");
-        // } else {
-        //   double sigYieldVal =
-        //       sigBuDeltaInt->getVal() * p->N_Bu_Bu2Dst0h_D0pi0().getVal();
-        //   double sigYieldErr =
-        //       sigBuDeltaInt->getVal() *
-        //       p->N_Bu_Bu2Dst0h_D0pi0().getPropagatedError(*dataFitResult);
-        //   std::cout << "For buDeltaMass, pi0 signal yield = " << sigYieldVal
-        //             << " ± " << sigYieldErr << "\n";
-        // }
-        // }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
@@ -2629,8 +2669,8 @@ int main(int argc, char **argv) {
       throw std::runtime_error("Must specify input directory to run data fit.");
       return 1;
     }
-    std::cout << "Fitting using D1D method\n";
-    RunD1DToys(simPdf, dataFitResult, config, daughtersVec, chargeVec,
+    std::cout << "Fitting using D1D method, starting from model PDF\n";
+    ToyTestD1D(simPdf, dataFitResult, config, daughtersVec, chargeVec,
                outputDir, nToys);
   }
   return 0;
