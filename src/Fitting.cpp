@@ -1993,100 +1993,16 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf,
       toyFitResult->SetName("ToyResult");
       // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
     }
-    if (id == 1) {
-      auto pdfs = p.second;
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-                   toyFitResult.get());
-      }
-      if (config.noFit() == false) {
-        PlotCorrelations(toyFitResult.get(), outputDir, config);
-      }
-      NeutralBachelorVars<Neutral::gamma, Bachelor::pi> npVars(id);
-      std::cout << "Gamma, pi:\n"
-                << "\tBu2Dst0h_D0gamma:\n";
-      std::cout << "\torEff = " << npVars.orEffMisId_Bu2Dst0h_D0gamma().getVal()
-                << "\n"
-                << "\tbuDeltaCutEff = "
-                << npVars.buDeltaCutEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n"
-                << "\tdeltaCutEff = "
-                << npVars.deltaCutEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n";
-      std::cout << "\n\tBu2Dst0h_D0pi0:\n";
-      std::cout << "\torEff = " << npVars.orEffMisId_Bu2Dst0h_D0pi0().getVal()
-                << "\n"
-                << "\tbuDeltaCutEff = "
-                << npVars.buDeltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-                << "\tdeltaCutEff = "
-                << npVars.deltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-                << "\tdeltaPartialCutEff = "
-                << npVars.deltaPartialCutEffMisId_Bu2Dst0h_D0pi0().getVal()
-                << "\n";
-
-      NeutralBachelorVars<Neutral::gamma, Bachelor::k> nkVars(id);
-      std::cout << "\nGamma, K:\n"
-                << "\tBu2Dst0h_D0gamma:\n";
-      std::cout << "\torEff = " << nkVars.orEffMisId_Bu2Dst0h_D0gamma().getVal()
-                << "\n"
-                << "\tbuDeltaCutEff = "
-                << nkVars.buDeltaCutEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n"
-                << "\tdeltaCutEff = "
-                << nkVars.deltaCutEffMisId_Bu2Dst0h_D0gamma().getVal() << "\n";
-      std::cout << "\n\tBu2Dst0h_D0pi0:\n";
-      std::cout << "\torEff = " << nkVars.orEffMisId_Bu2Dst0h_D0pi0().getVal()
-                << "\n"
-                << "\tbuDeltaCutEff = "
-                << nkVars.buDeltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-                << "\tdeltaCutEff = "
-                << nkVars.deltaCutEffMisId_Bu2Dst0h_D0pi0().getVal() << "\n"
-                << "\tdeltaPartialCutEff = "
-                << nkVars.deltaPartialCutEffMisId_Bu2Dst0h_D0pi0().getVal()
-                << "\n";
-
-      for (auto &p : pdfs) {
-        std::cout << "\nBachelor = " << EnumToString(p->bachelor()) << "\n";
-        if (config.neutral() == Neutral::gamma) {
-          std::cout << "\nBu2Dst0h_D0gamma"
-                    << ":\n";
-          // std::cout << "\tN: " << p->N_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << "\tN_misId: " << p->N_misId_Bu2Dst0h_D0gamma().getVal()
-                    << "\n";
-          std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0gamma().getVal()
-                    << "\n";
-          std::cout << "\tN_misId_Bu: "
-                    << p->N_Bu_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          // if (config.fitBuPartial() == true) {
-          //   std::cout << "\tN_BuPartial: "
-          //             << p->N_BuPartial_Bu2Dst0h_D0gamma().getVal() << "\n";
-          // }
-          if (config.fit1D() == false) {
-            std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0gamma().getVal()
-                      << "\n";
-            std::cout << "\tN_misId_Delta: "
-                      << p->N_Delta_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          }
-        }
-        std::cout << "\nBu2Dst0h_D0pi0"
-                  << ":\n";
-        // std::cout << "\tN: " << p->N_Bu2Dst0h_D0pi0().getVal() << "\n";
-        std::cout << "\tN_misId: " << p->N_misId_Bu2Dst0h_D0pi0().getVal()
-                  << "\n";
-        std::cout << "\tN_Bu: " << p->N_Bu_Bu2Dst0h_D0pi0().getVal() << "\n";
-        std::cout << "\tN_misId_Bu: " << p->N_Bu_misId_Bu2Dst0h_D0pi0().getVal()
-                  << "\n";
-        if (config.fitBuPartial() == true) {
-          std::cout << "\tN_BuPartial: "
-                    << p->N_BuPartial_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "\tN_misId_BuPartial: "
-                    << p->N_BuPartial_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        }
-        if (config.fit1D() == false) {
-          std::cout << "\tN_Delta: " << p->N_Delta_Bu2Dst0h_D0pi0().getVal()
-                    << "\n";
-          std::cout << "\tN_misId_Delta: "
-                    << p->N_Delta_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        }
-      }
-    }
+    // if (id == 1) {
+    //   auto pdfs = p.second;
+    //   for (auto &p : pdfs) {
+    //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+    //                toyFitResult.get());
+    //   }
+    //   if (config.noFit() == false) {
+    //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+    //   }
+    // }
 
     if (config.noFit() == false) {
       toyFitResult->Print("v");
@@ -2232,7 +2148,7 @@ int main(int argc, char **argv) {
       std::cout
           << "Give box dimensions:\n"
           << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma mode)\n";
-      std::cout << "Followed by the possible options:\n";
+      std::cout << "Followed by the possible options (to specify multiple options, separate them by commas):\n";
       std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -noFit, default is to fit PDF to data\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
@@ -2248,7 +2164,6 @@ int main(int argc, char **argv) {
                 << daughtersArg << ">\n";
       std::cout << "    -charge=<choice {plus/minus/total} default: "
                 << chargeArg << ">\n";
-      std::cout << "To specify multiple options, separate them by commas.\n";
       std::cout << "    -toys=<# toys>"
                 << "\n";
       std::cout << "    Optional: if you want to run toys. If # toys = 1, toys "

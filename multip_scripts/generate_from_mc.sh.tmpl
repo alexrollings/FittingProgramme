@@ -1,15 +1,7 @@
-#!/bin/bash
-#PBS -l cput=01:59:59 
-#PBS -N GENERATE_FROM_MC_${NEUTRAL}_${BL}_${BH}_${DL}_${DH}_${nJob}
+#!/bin/zsh
 
-export GCCROOT=/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/
-export CXX=$GCCROOT/bin/gcc
-
-source /home/rollings/.zshrc.local
-source /data/lhcb/sw/scripts/lbsetup-cvmfs.sh
-
-source /cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/ROOT/6.08.06/x86_64-slc6-gcc49-opt/bin/thisroot.sh
+source /home/rollings/.zshrc
+source_root
 
 cd /home/rollings/Bu2Dst0h_2d/FittingProgramme/build/
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} ${DIM}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}

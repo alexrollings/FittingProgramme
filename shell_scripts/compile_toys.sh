@@ -22,5 +22,5 @@ cd build
 cmake ../
 make -j
 
-# cd /data/lhcb/users/rollings/fitting_scripts/
-# rm -rf /data/lhcb/users/rollings/fitting_scripts/compile
+cd /data/lhcb/users/rollings/fitting_scripts/
+rm -rf /data/lhcb/users/rollings/fitting_scripts/compile
