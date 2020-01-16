@@ -131,9 +131,6 @@ if __name__ == "__main__":
     sys.exit("--charge=total/plus,minus")
 
   if gen == "data":
-    if input_dir == None:
-      sys.exit(
-          "If generating toys from 2D datasets, specify --input_dir=<path>")
     print("Generating toys from 2D datasets")
   elif gen == "model":
     print("Generating toys from D1D model")
