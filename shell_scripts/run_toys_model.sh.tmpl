@@ -1,25 +1,19 @@
 #!/bin/bash
 #PBS -l cput=01:59:59 
-#PBS -N RUNTOYS_model_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
+#PBS -N RUNTOYS_model_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
-export GCCROOT=/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/gcc/4.9.3/x86_64-slc6
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/GSL/2.1/x86_64-slc6-gcc49-opt/lib/
-export CXX=$GCCROOT/bin/gcc
+source /home/rollings/.zshrc
+source_root
 
-source /home/rollings/.zshrc.local
-source /data/lhcb/sw/scripts/lbsetup-cvmfs.sh
+mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
+cd /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
-source /cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/ROOT/6.08.06/x86_64-slc6-gcc49-opt/bin/thisroot.sh
-
-mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
-cd /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
-
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}/CMakeLists.txt 
 
 mkdir src
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/* src/
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
 mkdir include
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/* include/
 
@@ -27,8 +21,8 @@ mkdir build
 cd build
 cmake ../
 make
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${NEUTRAL} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} ${DIM} -charge=${CHARGE}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=${DAUGHTERS} -neutral=${NEUTRAL} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -charge=${CHARGE}
 
 
 cd /data/lhcb/users/rollings/fitting_scripts/
-rm -rf job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${nJob}
+rm -rf job_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
