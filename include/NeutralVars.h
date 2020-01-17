@@ -154,8 +154,14 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_n1Bu() { return Bu2Dst0h_D0pi0_n1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_n2Bu() { return Bu2Dst0h_D0pi0_n2Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Bu() { return Bu2Dst0h_D0pi0_fracPdf1Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_meanBuPartial() {
-    return Bu2Dst0h_D0pi0_meanBuPartial_;
+  RooRealVar &Bu2Dst0h_D0pi0_meanCbBuPartial() {
+    return Bu2Dst0h_D0pi0_meanCbBuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_meanOffsetGausBuPartial() {
+    return Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_;
+  }
+  RooFormulaVar &Bu2Dst0h_D0pi0_meanGausBuPartial() {
+    return Bu2Dst0h_D0pi0_meanGausBuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_21SigmaBuPartial() {
     return Bu2Dst0h_D0pi0_21SigmaBuPartial_;
@@ -175,8 +181,11 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_n2BuPartial() {
     return Bu2Dst0h_D0pi0_n2BuPartial_;
   }
-  RooRealVar &Bu2Dst0h_D0pi0_fracPdf1BuPartial() {
-    return Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
+  RooRealVar &Bu2Dst0h_D0pi0_fracPdfCb1BuPartial() {
+    return Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_fracPdfCb2BuPartial() {
+    return Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
   }
   RooRealVar &orEffBu2Dst0h_D0pi0() { return orEffBu2Dst0h_D0pi0_; }
   RooRealVar &boxEffBu2Dst0h_D0pi0() { return boxEffBu2Dst0h_D0pi0_; }
@@ -330,14 +339,17 @@ class NeutralVars {
   RooRealVar Bu2Dst0h_D0pi0_n1Bu_;
   RooRealVar Bu2Dst0h_D0pi0_n2Bu_;
   RooRealVar Bu2Dst0h_D0pi0_fracPdf1Bu_;
-  RooRealVar Bu2Dst0h_D0pi0_meanBuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_meanCbBuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_;
+  RooFormulaVar Bu2Dst0h_D0pi0_meanGausBuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_21SigmaBuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_KpiSigmaBuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_a1BuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_a2BuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_n1BuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_n2BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
+  RooRealVar Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
   RooRealVar orEffBu2Dst0h_D0pi0_;
   RooRealVar boxEffBu2Dst0h_D0pi0_;
   RooRealVar boxPartialEffBu2Dst0h_D0pi0_;

@@ -92,14 +92,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
                                  "", 2.0967e-01),
-      Bu2Dst0h_D0pi0_meanBuPartial_(),
+      Bu2Dst0h_D0pi0_meanCbBuPartial_(),
+      Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_(),
+      Bu2Dst0h_D0pi0_meanGausBuPartial_(),
       Bu2Dst0h_D0pi0_21SigmaBuPartial_(),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(),
       Bu2Dst0h_D0pi0_a1BuPartial_(),
       Bu2Dst0h_D0pi0_a2BuPartial_(),
       Bu2Dst0h_D0pi0_n1BuPartial_(),
       Bu2Dst0h_D0pi0_n2BuPartial_(),
-      Bu2Dst0h_D0pi0_fracPdf1BuPartial_(),
+      Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(),
+      Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(),
       orEffBu2Dst0h_D0pi0_(("orEffBu2Dst0h_D0pi0_" +
                             ComposeName(uniqueId, Neutral::pi0))
                                .c_str(),
