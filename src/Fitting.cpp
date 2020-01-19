@@ -1715,7 +1715,7 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
                 int const id, PdfBase &pdf, Configuration &config,
                 std::string const &outputDir) {
   gStyle->SetTitleSize(0.03, "XYZ");
-  gStyle->SetLabelSize(0.025, "XYZ");
+  gStyle->SetLabelSize(1.025, "XYZ");
   gStyle->SetTitleOffset(1, "X");
   gStyle->SetTitleOffset(1.2, "Y");
   gStyle->SetTitleOffset(1.5, "Z");
@@ -1737,10 +1737,105 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
     throw std::runtime_error("Could not extact binned dataSet.");
   }
 
-  RooHistPdf histPdf(
-      ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
-          .c_str(),
-      "", config.fittingArgSet(), *dataHist.get(), 2);
+  // RooHistPdf histPdf(
+  //     ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "", config.fittingArgSet(), *dataHist.get(), 2);
+  //
+  // RooPlot *frame1 = config.buDeltaMass().frame(RooFit::Title(
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      "^{" + EnumToLabel(charge) + "}")
+  //         .c_str()));
+  // dataHist->plotOn(frame1);
+  // histPdf.plotOn(frame1, RooFit::LineColor(kBlue));
+  //
+  // RooPlot *frame2 = config.deltaMass().frame(RooFit::Title(
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      "^{" + EnumToLabel(charge) + "}")
+  //         .c_str()));
+  // dataHist->plotOn(frame2);
+  // histPdf.plotOn(frame2, RooFit::LineColor(kBlue));
+  //
+  // TCanvas canvas_1d(("canvas_1d_" + ComposeDataLabelName(neutral, bachelor, daughters, charge)).c_str(), "canvas", 1800, 900);
+  // canvas_1d.Divide(2, 1);
+  //
+  // canvas_1d.cd(1);
+  // frame1->Draw();
+  //
+  // canvas_1d.cd(2);
+  // frame2->Draw();
+  //
+  // canvas_1d.Update();
+  // canvas_1d.SaveAs(
+  //     (outputDir + "/plots/1DProjections_" + ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+  //         .c_str());
+  //
+  // // Make two-dimensional plot of sampled PDF in x vs y
+  // TH2F *histModel = (TH2F *)histPdf.createHistogram(
+  //     ("histModel_" +
+  //      ComposeDataLabelName(neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+  //     RooFit::YVar(config.deltaMass(),
+  //                  RooFit::Binning(config.deltaMass().getBins())));
+  // histModel->SetTitle("");
+  //
+  // // Make 2D plot of data
+  // TH2F *histData = (TH2F *)dataHist->createHistogram(
+  //     "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+  //     config.deltaMass().getBins());
+  // histData->SetName(
+  //     ("histData_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
+  //         .c_str());
+  // histData->SetTitle("");
+  //
+  // // Scale model plot to total number of data events
+  // histModel->Scale(histData->Integral());
+  //
+  // // 2D PDF plot
+  // TCanvas canvas2DPdf(("canvas2DPdf" + ComposeDataLabelName(neutral, bachelor,
+  //                                                           daughters, charge))
+  //                         .c_str(),
+  //                     "", 1000, 800);
+  // histModel->SetStats(0);
+  // histModel->Draw("colz");
+  // histModel->SetTitle(
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      "^{" + EnumToLabel(charge) + "}")
+  //         .c_str());
+  // histModel->Draw("colz");
+  // canvas2DPdf.Update();
+  // canvas2DPdf.SaveAs(
+  //     (outputDir + "/plots/2DHistPdf_" +
+  //      ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+  //         .c_str());
+  //
+  // // 2D data plot
+  // TCanvas canvas2DData(
+  //     ("canvas2DData" +
+  //      ComposeDataLabelName(neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "", 1000, 800);
+  // histData->SetStats(0);
+  // histData->Draw("colz");
+  // histData->SetTitle(("B^{" + EnumToLabel(charge) +
+  //                     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //                     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+  //                     EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+  //                     EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+  //                        .c_str());
+  // histData->Draw("colz");
+  // canvas2DData.Update();
+  // canvas2DData.SaveAs(
+  //     (outputDir + "/plots/2DData_" +
+  //      ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+  //         .c_str());
 
   auto toyData = histPdf.generate(
       config.fittingArgSet(),
