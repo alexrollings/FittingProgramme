@@ -217,21 +217,21 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
     }
   }
   // if (bachelor == Bachelor::pi) {
-  //   N_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
-  //       ("N_MisRec_" +
-  //        ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-  //           .c_str(),
-  //       "",
-  //       NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-  //               .N_initVal_MisRec() *
-  //           DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-  //       -1000000, 1000000));
-  // } else {
-    N_MisRec_ = std::unique_ptr<RooConstVar>(new RooConstVar(
+    N_MisRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_MisRec_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "", misRecYield));
+        "",
+        NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .N_initVal_MisRec() *
+            DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
+        -1000000, 1000000));
+  // } else {
+    // N_MisRec_ = std::unique_ptr<RooConstVar>(new RooConstVar(
+    //     ("N_MisRec_" +
+    //      ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+    //         .c_str(),
+    //     "", misRecYield));
   // }
   N_Delta_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("N_Delta_MisRec_" +
