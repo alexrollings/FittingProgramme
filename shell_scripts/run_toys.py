@@ -26,6 +26,11 @@ def make_shell_script(templatePath, scriptPath, substitutions):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
+  parser.add_argument('-q',
+                      '--queue',
+                      type=str,
+                      help='queue = batch/condor',
+                      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -107,6 +112,7 @@ if __name__ == "__main__":
                       required=False)
   args = parser.parse_args()
 
+  queue = args.queue
   neutral = args.neutral
   daughters = args.daughters
   charge = args.charge
@@ -122,6 +128,13 @@ if __name__ == "__main__":
   delta_partial_high = args.delta_partial_high
   bu_low = args.bu_low
   bu_high = args.bu_high
+
+  if queue == "batch":
+    print("Running toys on batch")
+  elif queue == "condor":
+    print("Running toys on condor")
+  else:
+    sys.exit("--queue=batch/condor")
 
   if charge == "total":
     print("Running toys summed over charge")
@@ -165,17 +178,6 @@ if __name__ == "__main__":
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
-    # j_dir = '/data/lhcb/users/rollings/fitting_scripts/job_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '_'  + str(i) + '/'
-    # os.mkdir(j_dir)
-    # copyfile(home_path + 'CMakeMacroParseArguments.cmake', j_dir + 'CMakeMacroParseArguments.cmake')
-    # copyfile(home_path + 'FindROOT.cmake', j_dir + 'FindROOT.cmake')
-    # copyfile(home_path + 'CMakeLists.txt', j_dir + 'CMakeLists.txt')
-    # os.mkdir(j_dir + 'src/')
-    # copy_tree(home_path + 'src/', j_dir + 'src/')
-    # os.mkdir(j_dir + 'include/')
-    # copy_tree(home_path + 'include/', j_dir + 'include/')
-    # os.mkdir(j_dir + 'build/')
-
     templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
     if neutral == "pi0":
       scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
@@ -214,5 +216,47 @@ if __name__ == "__main__":
         #     dim
     }
     make_shell_script(templatePath, scriptPath, substitutions)
-    # run_process(["sh", scriptPath])
-    run_process(["qsub", scriptPath])
+    if queue == 'batch':
+      # run_process(["sh", scriptPath])
+      run_process(["qsub", scriptPath])
+    else:
+      run_process(["chmod", "+x", scriptPath])
+      submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
+      if neutral == "pi0":
+        submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+            i) + ".submit"
+      else:
+        scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+            i) + ".submit"
+      submitSubs = {
+          "nJob":
+              i,
+          "GEN":
+              gen,
+          "NEUTRAL":
+              neutral,
+          "DAUGHTERS":
+              daughters,
+          "CHARGE":
+              charge,
+          "NTOYS":
+              n_toys,
+          "DL":
+              delta_low,
+          "DH":
+              delta_high,
+          "DPL":
+              delta_partial_low,
+          "DPH":
+              delta_partial_high,
+          "BL":
+              bu_low,
+          "BH":
+              bu_high,
+          "CLUSTERID":
+             '$(ClusterId)'
+          # "DIM":
+          #     dim
+      }
+      make_shell_script(submitTemplate, submitScript, submitSubs)
+      run_process(["condor_submit", submitScript])
