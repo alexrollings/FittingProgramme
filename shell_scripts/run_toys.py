@@ -84,12 +84,12 @@ if __name__ == "__main__":
                       '--delta_low',
                       type=str,
                       help='Lower delta mass range',
-                      required=False)
+                      required=True)
   parser.add_argument('-dh',
                       '--delta_high',
                       type=str,
                       help='Upper delta mass range',
-                      required=False)
+                      required=True)
   parser.add_argument('-dpl',
                       '--delta_partial_low',
                       type=str,
@@ -172,19 +172,21 @@ if __name__ == "__main__":
   if bu_high == None:
     bu_high = "5330"
   if delta_partial_low == None:
-    delta_partial_low = "60"
+    if neutral == "gamma":
+      delta_partial_low = "60"
+    else:
+      delta_partial_low = "0"
   if delta_partial_high == None:
-    delta_partial_high = "105"
+    if neutral == "gamma":
+      delta_partial_high = "105"
+    else:
+      delta_partial_high = "0"
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
     templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
-    if neutral == "pi0":
-      scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
-          i) + ".sh"
-    else:
-      scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
-          i) + ".sh"
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+        i) + ".sh"
     substitutions = {
         "nJob":
             i,
@@ -222,12 +224,8 @@ if __name__ == "__main__":
     else:
       run_process(["chmod", "+x", scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      if neutral == "pi0":
-        submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
-            i) + ".submit"
-      else:
-        scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
-            i) + ".submit"
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+          i) + ".submit"
       submitSubs = {
           "nJob":
               i,
