@@ -33,10 +33,16 @@ if __name__ == "__main__":
                       type=str,
                       help='Daughters',
                       required=True)
+  parser.add_argument('-w',
+                      '--rel_kwidth',
+                      type=float,
+                      help='Daughters',
+                      required=True)
   args = parser.parse_args()
   neutral = args.neutral
   bachelor = args.bachelor
   daughters = args.daughters
+  rel_kwidth = args.rel_kwidth
 
   if neutral != 'pi0' and neutral != 'gamma':
     sys.exit('-n=pi0/gamma')
@@ -63,10 +69,11 @@ if __name__ == "__main__":
   for y in years:
     for p in polarities:
       if neutral == 'pi0':
-        tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y + '_Mag' +
-                 p + '/' + neutral + '/tmva_stage1/tmva_stage2_loose/to_fit/' +
-                 y + '_Mag' + p + '_Bu2Dst0' + bachelor + '_Dst02D0' + neutral +
-                 '_D02' + daughters + '_BDT1_BDT2_MERemoved.root')
+        tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y +
+                 '_Mag' + p + '/' + neutral +
+                 '/tmva_stage1/tmva_stage2_loose/to_fit/' + y + '_Mag' + p +
+                 '_Bu2Dst0' + bachelor + '_Dst02D0' + neutral + '_D02' +
+                 daughters + '_BDT1_BDT2_MERemoved.root')
       else:
         tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y +
                  '_Mag' + p + '/' + neutral +
@@ -83,7 +90,7 @@ if __name__ == "__main__":
   bu_high = 5550.
   bu_nbins = 45.0
   # Kernel width ~ twice bin width
-  bu_kwidth = 2. * float((bu_high - bu_low) / bu_nbins)
+  bu_kwidth = rel_kwidth * float((bu_high - bu_low) / bu_nbins)
   if neutral == 'pi0':
     delta_low = 136.
     delta_nbins = 54.0
@@ -92,7 +99,7 @@ if __name__ == "__main__":
     delta_nbins = 65.0
   delta_high = 190.
   delta_kwidth = 0.5
-  delta_kwidth = 2. * float((delta_high - delta_low) / delta_nbins)
+  delta_kwidth = rel_kwidth * float((delta_high - delta_low) / delta_nbins)
 
   data_hist = TH2F("data", "Histogram storing data", int(bu_nbins), bu_low,
                    bu_high, int(delta_nbins), delta_low, delta_high)
@@ -121,7 +128,8 @@ if __name__ == "__main__":
       continue
     if neutral == 'pi0' and (m_pi0 > 165 or m_pi0 < 125):
       continue
-    if (bachelor == 'pi' and bach_pid > 12) or (bachelor =='K' and bach_pid < 12):
+    if (bachelor == 'pi' and bach_pid > 12) or (bachelor == 'K'
+                                                and bach_pid < 12):
       continue
     if daughters == 'kpi':
       if ((abs(h1_id) == 211 and h1_pid < -2) and
@@ -247,8 +255,12 @@ if __name__ == "__main__":
       plt.xlim(limits_dict[mass]['min'], limits_dict[mass]['max'])
       plt.ylim(bottom=0.0)
       plt.xlabel(label_dict[mass])
-      plt.savefig('kde_plots/' + neutral + '_' + bachelor + '_' + daughters +
-                  '_' + mass + '_' + pdf + '.png')
+      if pdf == 'kernel':
+        plt.savefig('kde_plots/' + neutral + '_' + bachelor + '_' + daughters +
+                    '_' + mass + '_' + pdf + '_' + str(int(rel_kwidth)) + '.png')
+      else:
+        plt.savefig('kde_plots/' + neutral + '_' + bachelor + '_' + daughters +
+                    '_' + mass + '_' + pdf + '.png')
       plt.clf()
     fig = plt.plot()
     plt.errorbar(xaxis_dict[mass],
@@ -266,7 +278,7 @@ if __name__ == "__main__":
     plt.xlabel(label_dict[mass])
     plt.legend(loc='upper right')
     plt.savefig('kde_plots/' + neutral + '_' + bachelor + '_' + daughters +
-                '_' + mass + '_comb.png')
+                '_' + mass + '_comb' + '_' + str(int(rel_kwidth)) + '.png')
     plt.clf()
 
   gStyle.SetOptStat(0)
@@ -282,5 +294,5 @@ if __name__ == "__main__":
   data_hist.SetXTitle(label_dict['bu'])
   data_hist.SetYTitle(label_dict['delta'])
   data_hist.Draw("zcol")
-  canvas.Print('kde_plots/' + neutral + '_' + bachelor + '_' + daughters + '_' +
-               '2DPlots.png')
+  canvas.Print('kde_plots/' + neutral + '_' + bachelor + '_' + daughters +
+               '_' + str(int(rel_kwidth)) + '_' + '2DPlots.png')
