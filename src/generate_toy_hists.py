@@ -53,15 +53,26 @@ if __name__ == "__main__":
   bu_mass = 'Bu_Delta_M'
   delta_mass = 'Delta_M'
 
-  tree = TChain("BtoDstar0h3_h1h2pi0RTuple")
+  if neutral == 'pi0':
+    tree_string = 'BtoDstar0h3_h1h2pi0RTuple'
+  else:
+    tree_string = 'BtoDstar0h3_h1h2gammaTuple'
+  tree = TChain(tree_string)
   years = ['2011', '2012', '2015', '2016', '2017', '2018']
   polarities = ['Up', 'Down']
   for y in years:
     for p in polarities:
-      tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y + '_Mag' +
-               p + '/' + neutral + '/tmva_stage1/tmva_stage2_loose/to_fit/' +
-               y + '_Mag' + p + '_Bu2Dst0' + bachelor + '_Dst02D0' + neutral +
-               '_D02' + daughters + '_BDT1_BDT2_MERemoved.root')
+      if neutral == 'pi0':
+        tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y + '_Mag' +
+                 p + '/' + neutral + '/tmva_stage1/tmva_stage2_loose/to_fit/' +
+                 y + '_Mag' + p + '_Bu2Dst0' + bachelor + '_Dst02D0' + neutral +
+                 '_D02' + daughters + '_BDT1_BDT2_MERemoved.root')
+      else:
+        tree.Add('/data/lhcb/users/rollings/Bu2Dst0h_data_new_2/' + y +
+                 '_Mag' + p + '/' + neutral +
+                 '/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/' +
+                 y + '_Mag' + p + '_Bu2Dst0' + bachelor + '_Dst02D0' +
+                 neutral + '_D02' + daughters + '_BDT1_BDT2_MERemoved.root')
 
   tree.SetBranchStatus("*", 0)
 
@@ -72,12 +83,16 @@ if __name__ == "__main__":
   bu_high = 5550.
   bu_nbins = 45.0
   # Kernel width ~ twice bin width
-  bu_kwidth = 1. * float((bu_high - bu_low) / bu_nbins)
-  delta_low = 136.
+  bu_kwidth = 2. * float((bu_high - bu_low) / bu_nbins)
+  if neutral == 'pi0':
+    delta_low = 136.
+    delta_nbins = 54.0
+  else:
+    delta_low = 60.
+    delta_nbins = 65.0
   delta_high = 190.
-  delta_nbins = 54.0
   delta_kwidth = 0.5
-  delta_kwidth = 1. * float((delta_high - delta_low) / delta_nbins)
+  delta_kwidth = 2. * float((delta_high - delta_low) / delta_nbins)
 
   data_hist = TH2F("data", "Histogram storing data", int(bu_nbins), bu_low,
                    bu_high, int(delta_nbins), delta_low, delta_high)
@@ -254,18 +269,18 @@ if __name__ == "__main__":
                 '_' + mass + '_comb.png')
     plt.clf()
 
-gStyle.SetOptStat(0)
-canvas = TCanvas("canvas", "canvas", 1200, 500)
-canvas.Divide(2, 1)
-canvas.cd(1)
-kernel_hist.SetTitle(" ")
-kernel_hist.SetXTitle(label_dict['bu'])
-kernel_hist.SetYTitle(label_dict['delta'])
-kernel_hist.Draw("zcol")
-canvas.cd(2)
-data_hist.SetTitle(" ")
-data_hist.SetXTitle(label_dict['bu'])
-data_hist.SetYTitle(label_dict['delta'])
-data_hist.Draw("zcol")
-canvas.Print('kde_plots/' + neutral + '_' + bachelor + '_' + daughters + '_' +
-             '2DPlots.png')
+  gStyle.SetOptStat(0)
+  canvas = TCanvas("canvas", "canvas", 1200, 500)
+  canvas.Divide(2, 1)
+  canvas.cd(1)
+  kernel_hist.SetTitle(" ")
+  kernel_hist.SetXTitle(label_dict['bu'])
+  kernel_hist.SetYTitle(label_dict['delta'])
+  kernel_hist.Draw("zcol")
+  canvas.cd(2)
+  data_hist.SetTitle(" ")
+  data_hist.SetXTitle(label_dict['bu'])
+  data_hist.SetYTitle(label_dict['delta'])
+  data_hist.Draw("zcol")
+  canvas.Print('kde_plots/' + neutral + '_' + bachelor + '_' + daughters + '_' +
+               '2DPlots.png')
