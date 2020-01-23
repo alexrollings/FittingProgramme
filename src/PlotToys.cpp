@@ -402,10 +402,10 @@ int main(int argc, char *argv[]) {
     TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
                  errMin[i] - errRange / 5, errMax[i] + errRange / 5);
     double pullRange = pullMax[i] - pullMin[i];
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
-                  // round(resultVec.size()/10),
-                  pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
-    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
+    //               // round(resultVec.size()/10),
+    //               pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       initValHist.Fill(initValVec[j][i]);
       valHist.Fill(valVec[j][i]);
