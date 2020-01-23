@@ -137,6 +137,8 @@ limits_dict = {
     }
 }
 
+color_dict = {'kernel': 'C1', 'data': 'C0'}
+
 for mass, d in u_dict.items():
   for pdf, u in d.items():
     for b in range(0, limits_dict[mass]['bins']):
@@ -149,7 +151,8 @@ for mass, d in u_dict.items():
     fig = plt.plot()
     plt.errorbar(xaxis_dict[mass],
                  unumpy.nominal_values(u),
-                 yerr=unumpy.std_devs(u))
+                 yerr=unumpy.std_devs(u),
+                 color=color_dict[pdf])
     plt.xlim(limits_dict[mass]['min'], limits_dict[mass]['max'])
     plt.ylim(bottom=0.0)
     plt.xlabel(label_dict[mass])
@@ -159,10 +162,12 @@ for mass, d in u_dict.items():
   plt.errorbar(xaxis_dict[mass],
                unumpy.nominal_values(norm_dict[mass]['kernel']),
                yerr=unumpy.std_devs(norm_dict[mass]['kernel']),
+               color=color_dict['kernel'],
                label='KDE')
   plt.errorbar(xaxis_dict[mass],
                unumpy.nominal_values(norm_dict[mass]['data']),
                yerr=unumpy.std_devs(norm_dict[mass]['data']),
+               color=color_dict['data'],
                label='Data')
   plt.xlim(limits_dict[mass]['min'], limits_dict[mass]['max'])
   plt.ylim(bottom=0.0)
@@ -171,17 +176,17 @@ for mass, d in u_dict.items():
   plt.savefig('kde_plots/' + mass + '_comb.png')
   plt.clf()
 
-gStyle.SetOptStat(0)
-canvas = TCanvas("canvas", "canvas", 1000, 500)
-canvas.Divide(2,1)
-canvas.cd(1)
-kernel_hist.SetTitle(" ")
-kernel_hist.SetXTitle(label_dict['bu'])
-kernel_hist.SetYTitle(label_dict['delta'])
-kernel_hist.Draw("zcol")
-canvas.cd(2)
-data_hist.SetTitle(" ")
-data_hist.SetXTitle(label_dict['bu'])
-data_hist.SetYTitle(label_dict['delta'])
-data_hist.Draw("zcol")
-canvas.Print("kde_plots/2DPlots.png")
+# gStyle.SetOptStat(0)
+# canvas = TCanvas("canvas", "canvas", 1200, 500)
+# canvas.Divide(2,1)
+# canvas.cd(1)
+# kernel_hist.SetTitle(" ")
+# kernel_hist.SetXTitle(label_dict['bu'])
+# kernel_hist.SetYTitle(label_dict['delta'])
+# kernel_hist.Draw("zcol")
+# canvas.cd(2)
+# data_hist.SetTitle(" ")
+# data_hist.SetXTitle(label_dict['bu'])
+# data_hist.SetYTitle(label_dict['delta'])
+# data_hist.Draw("zcol")
+# canvas.Print("kde_plots/2DPlots.png")
