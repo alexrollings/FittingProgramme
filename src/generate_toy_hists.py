@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
   variables = [
       'Bu_Delta_M', 'Delta_M', 'BDT1', 'BDT2', 'D0h_M', 'D0_FD_ZSIG', 'Pi0_M',
-      'bach_PIDK', 'h1_D_PIDK', 'h2_D_PIDK'
+      'bach_PIDK', 'h1_D_PIDK', 'h2_D_PIDK', 'h1_D_ID', 'h2_D_ID'
   ]
 
   bu_mass = 'Bu_Delta_M'
@@ -95,14 +95,34 @@ if __name__ == "__main__":
     fd_zsig = getattr(tree, 'D0_FD_ZSIG')
     m_dh = getattr(tree, 'D0h_M')
     m_pi0 = getattr(tree, 'Pi0_M')
-    if m_bu > bu_low and m_bu < bu_high and m_delta > delta_low and m_delta < bu_high:
-      if bdt1 > 0.05 and bdt2 > 0.05 and m_dh > 4900 and m_dh < 5200 and fd_zsig > 2:
-        if neutral == 'gamma':
-          data_hist.Fill(m_bu, m_delta)
-          new_tree.Fill()
-        elif m_pi0 < 165 and m_pi0 > 125:
-          data_hist.Fill(m_bu, m_delta)
-          new_tree.Fill()
+    bach_pid = getattr(tree, 'bach_PIDK')
+    h1_pid = getattr(tree, 'h1_D_PIDK')
+    h2_pid = getattr(tree, 'h2_D_PIDK')
+    h1_id = getattr(tree, 'h1_D_ID')
+    h2_id = getattr(tree, 'h2_D_ID')
+    if m_bu < bu_low or m_bu > bu_high or m_delta < delta_low or m_delta > bu_high:
+      continue
+    if bdt1 < 0.05 or bdt2 < 0.05 or m_dh < 4900 or m_dh > 5200 or fd_zsig < 2:
+      continue
+    if neutral == 'pi0' and (m_pi0 > 165 or m_pi0 < 125):
+      continue
+    if (bachelor == 'pi' and bach_pid > 12) or (bachelor =='K' and bach_pid < 12):
+      continue
+    if daughters == 'kpi':
+      if ((abs(h1_id) == 211 and h1_pid < -2) and
+          (abs(h2_id) == 321 and h2_pid > 2)) or (
+              (abs(h2_id) == 211 and h2_pid < -2) and
+              (abs(h1_id) == 321 and h1_pid > 2)):
+        data_hist.Fill(m_bu, m_delta)
+        new_tree.Fill()
+    elif daughters == 'kk':
+      if h1_pid > 2 and h2_pid > 2:
+        data_hist.Fill(m_bu, m_delta)
+        new_tree.Fill()
+    else:
+      if h1_pid < -2 and h2_pid < -2:
+        data_hist.Fill(m_bu, m_delta)
+        new_tree.Fill()
 
 # Define 1D phase spaces for each of the two variables
   phsp_bu = OneDimPhaseSpace("phsp_bu", bu_low, bu_high)
