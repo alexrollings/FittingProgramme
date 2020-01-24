@@ -125,7 +125,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
       //     NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
       //             .N_initVal_MisRec() *
       //         DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-      //      -1000000, 1000000)),
+      //      0, 1000000)),
       // N_Delta_MisRec_(new RooFormulaVar(
       //     ("N_Delta_MisRec_" +
       //      ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -147,7 +147,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                   .N_initVal_Bu2D0h() *
               DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_Delta_Bu2D0h_(new RooFormulaVar(
           ("N_Delta_Bu2D0h_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -167,7 +167,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                   .N_initVal_PartRec() *
               DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_Delta_PartRec_(new RooFormulaVar(
           ("N_Delta_PartRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -225,7 +225,7 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
         NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                 .N_initVal_MisRec() *
             DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-        -1000000, 1000000));
+        0, 1000000));
   // } else {
     // N_MisRec_ = std::unique_ptr<RooConstVar>(new RooConstVar(
     //     ("N_MisRec_" +

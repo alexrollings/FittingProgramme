@@ -200,7 +200,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                   .N_tot_initVal_Bu2Dst0h_D0pi0() *
               DaughtersVars<Daughters::kpi>::Get(uniqueId).daughtersSF(),
-           -1000000, 1000000)) {
+           0, 1000000)) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -210,7 +210,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .N_tot_initVal_Bu2Dst0h_D0gamma() *
             DaughtersVars<Daughters::kpi>::Get(uniqueId).daughtersSF(),
-         -1000000, 1000000));
+         0, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
@@ -273,7 +273,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                   .N_tot_initVal_Bu2Dst0h_D0pi0() *
               DaughtersVars<Daughters::kk>::Get(uniqueId).daughtersSF(),
-           -1000000, 1000000)) {
+           0, 1000000)) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -283,7 +283,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .N_tot_initVal_Bu2Dst0h_D0gamma() *
             DaughtersVars<Daughters::kk>::Get(uniqueId).daughtersSF(),
-         -1000000, 1000000));
+         0, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
@@ -358,7 +358,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                   .N_tot_initVal_Bu2Dst0h_D0pi0() *
               DaughtersVars<Daughters::pipi>::Get(uniqueId).daughtersSF(),
-           -1000000, 1000000)) {
+           0, 1000000)) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -368,7 +368,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .N_tot_initVal_Bu2Dst0h_D0gamma() *
             DaughtersVars<Daughters::pipi>::Get(uniqueId).daughtersSF(),
-         -1000000, 1000000));
+         0, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ =

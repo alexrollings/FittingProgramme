@@ -6,7 +6,7 @@
 //   return new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
 //                          ComposeName(uniqueId, neutral, daughters))
 //                             .c_str(),
-//                         "", 0.07930, -1, 1);
+//                         "", 0.07930, 0, 1);
 // }
 
 template <>
@@ -21,7 +21,7 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
                           ComposeName(uniqueId, Neutral::pi0, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, -1, 1)) {}
+                         "", 0.07930, 0, 1)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
@@ -37,7 +37,7 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_Blind_" +
                         ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
                            .c_str(),
-                       "", 1.138, -2, 2));
+                       "", 1.138, 0, 2));
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_CP_Bu2Dst0h_D0pi0_" +
@@ -53,7 +53,7 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_" +
                         ComposeName(uniqueId, Neutral::pi0, Daughters::kk))
                            .c_str(),
-                       "", 1.138, -2, 2));
+                       "", 1.138, 0, 2));
   }
   R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
       std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -111,12 +111,12 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
                           ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, -1, 1)),
+                         "", 0.07930, 0, 1)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
                           ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, -1, 1)) {}
+                         "", 0.07930, 0, 1)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
@@ -132,7 +132,7 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
         new RooRealVar(("R_CP_Bu2Dst0h_D0gamma_Blind_" +
                         ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
                            .c_str(),
-                       "", 0.902, -2, 2));
+                       "", 0.902, 0, 2));
     R_CP_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_CP_Bu2Dst0h_D0gamma_" +
@@ -147,7 +147,7 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_Blind_" +
                         ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
                            .c_str(),
-                       "", 1.138, -2, 2));
+                       "", 1.138, 0, 2));
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_CP_Bu2Dst0h_D0pi0_" +
@@ -163,12 +163,12 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
         new RooRealVar(("R_CP_Bu2Dst0h_D0gamma_" +
                         ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
                            .c_str(),
-                       "", 0.902, -2, 2));
+                       "", 0.902, 0, 2));
     R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_" +
                         ComposeName(uniqueId, Neutral::gamma, Daughters::kk))
                            .c_str(),
-                       "", 1.138, -2, 2));
+                       "", 1.138, 0, 2));
   }
   R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
       std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
