@@ -1737,10 +1737,10 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
     throw std::runtime_error("Could not extact binned dataSet.");
   }
 
-  // RooHistPdf histPdf(
-  //     ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "", config.fittingArgSet(), *dataHist.get(), 2);
+  RooHistPdf histPdf(
+      ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", config.fittingArgSet(), *dataHist.get(), 2);
   //
   // RooPlot *frame1 = config.buDeltaMass().frame(RooFit::Title(
   //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +

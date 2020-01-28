@@ -123,7 +123,8 @@ if __name__ == "__main__":
         pull_pars = pull_result.floatParsFinal()
         pull_mean = pull_pars[0].getVal()
         pull_width = pull_pars[1].getVal()
-        obs[p_name] = [p.getVal() - pull_mean*p.getError(), p.getError()*pull_width]
+        # obs[p_name] = [p.getVal() - pull_mean*p.getError(), p.getError()*pull_width]
+        obs[p_name] = [p.getVal(), p.getError()*pull_width]
 
 
     # Convert dict values from lists to tuples to make them immutable (easier to debug)

@@ -6,7 +6,7 @@
 //   return new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
 //                          ComposeName(uniqueId, neutral, daughters))
 //                             .c_str(),
-//                         "", 0.07930, 0, 1);
+//                         "", 0.07930, -1, 1);
 // }
 
 template <>
@@ -21,7 +21,7 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
                           ComposeName(uniqueId, Neutral::pi0, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, 0, 1)) {}
+                         "", 0.07930, -1, 1)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
@@ -111,12 +111,12 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
                           ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, 0, 1)),
+                         "", 0.07930, -1, 1)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
                           ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
                              .c_str(),
-                         "", 0.07930, 0, 1)) {}
+                         "", 0.07930, -1, 1)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
