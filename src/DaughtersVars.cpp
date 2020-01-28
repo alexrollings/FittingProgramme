@@ -18,4 +18,4 @@ DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
 
 template <>
 DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
-    : daughtersSF_(0.01) {}
+    : daughtersSF_(0.0036) {}
