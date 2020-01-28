@@ -16,6 +16,8 @@ template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
     : daughtersSF_(0.04) {}
 
+// May have to edit this as bkgs could CP voilate, then rate SF k mode is
+// ~0.001, more than π x 0.08
 template <>
 DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
     : daughtersSF_(0.0036) {}
