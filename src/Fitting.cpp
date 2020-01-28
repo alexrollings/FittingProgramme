@@ -1393,12 +1393,13 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   if ((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
       daughters == Daughters::pik) {
     frame->SetLabelOffset(50, "Y");
+    frame->GetYaxis()->SetTickLength(0.);
   }
   frame->Draw();
 
   double blindMin, blindMax;
   if (mass == Mass::delta) {
-    blindMin = var.getMin() + 0.1;
+    blindMin = var.getMin();
     if (neutral == Neutral::gamma) {
       blindMax = 160;
     } else {
@@ -1412,7 +1413,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     blindMax = 5400;
   }
 
-  TPaveLabel blindBox(blindMin, -0.11, blindMax, frame->GetMaximum() - 0.1,
+  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.1,
                       "#font[12]{Blind}", "");
   blindBox.SetBorderSize(0);
   blindBox.SetTextSize(0.07);
@@ -1421,6 +1422,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   blindBox.SetFillColor(10);
   if (daughters == Daughters::pik) {
     blindBox.Draw("same");
+    frame->SetMinimum(0.001);
   }
   legend.Draw("same");
 
