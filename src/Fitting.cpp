@@ -57,11 +57,12 @@ void SetStyle() {
 
 // Function to plot 1D projections - written so that it can be used for both bu
 // and delta mass
-void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
-                   RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                   TLegend &legend, std::string const &outputDir,
-                   Configuration &config,
-                   std::map<std::string, Color_t> colorMap) {
+void PlotComponent(
+    Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
+    RooSimultaneous const &simPdf, TLegend &legend,
+    std::string const &outputDir, Configuration &config,
+    std::map<std::string, Color_t> colorMap,
+    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -1368,7 +1369,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  if (config.noFit() == false) {
+  if (config.noFit() == false && daughters != Daughters::pik) {
     canvas.cd();
     pad2.cd();
     pullFrame->addPlotable(pullHist /* .get() */, "P");
@@ -1413,7 +1414,15 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     blindMax = 5400;
   }
 
-  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.1,
+  if (daughters == Daughters::pik) {
+    frame->SetMinimum(0.001);
+    if (bachelor == Bachelor::pi) {
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
+    } else {
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
+    }
+  }
+  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
                       "#font[12]{Blind}", "");
   blindBox.SetBorderSize(0);
   blindBox.SetTextSize(0.07);
@@ -1422,9 +1431,12 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   blindBox.SetFillColor(10);
   if (daughters == Daughters::pik) {
     blindBox.Draw("same");
-    frame->SetMinimum(0.001);
   }
   legend.Draw("same");
+  // Stores max values for kpi, to set in pik
+  if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
+    yMaxMap[neutral][mass] = frame->GetMaximum();
+  }
 
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" +
@@ -1436,7 +1448,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::string const &outputDir, RooFitResult *result) {
+                std::string const &outputDir, RooFitResult *result,
+                std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   SetStyle();
 
   Bachelor bachelor = pdf.bachelor();
@@ -1527,14 +1540,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap["PartRecKst"] = kRed + 4;
 
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                legend, outputDir, config, colorMap);
+                legend, outputDir, config, colorMap, yMaxMap);
   if (config.fitBuPartial() == true) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet,
-                  simPdf, legend, outputDir, config, colorMap);
+                  simPdf, legend, outputDir, config, colorMap, yMaxMap);
   }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  legend, outputDir, config, colorMap);
+                  legend, outputDir, config, colorMap, yMaxMap);
   }
 }
 
@@ -2013,9 +2026,10 @@ void Run2DToys(TFile &outputFile,
   //     Plotting2D(dataSet, id, *p, config, outputDir, dataLabel);
   //     Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
   //   }
+  //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
   //   for (auto &p : pdfs) {
   //     Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
-  //                toyFitResult.get());
+  //                toyFitResult.get(), yMaxMap);
   //   }
   //   if (config.noFit() == false) {
   //     PlotCorrelations(toyFitResult.get(), outputDir, config);
@@ -2092,9 +2106,10 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
     }
     // if (id == 1) {
     //   auto pdfs = p.second;
+    //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
     //   for (auto &p : pdfs) {
     //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-    //                toyFitResult.get());
+    //                toyFitResult.get(), yMaxMap);
     //   }
     //   if (config.noFit() == false) {
     //     PlotCorrelations(toyFitResult.get(), outputDir, config);
@@ -2170,9 +2185,10 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
   }
   // if (id == 1) {
   //   auto pdfs = p.second;
+  //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
   //   for (auto &p : pdfs) {
   //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-  //                toyFitResult.get());
+  //                toyFitResult.get(), yMaxMap);
   //   }
   //   if (config.noFit() == false) {
   //     PlotCorrelations(toyFitResult.get(), outputDir, config);
@@ -2720,9 +2736,13 @@ int main(int argc, char **argv) {
 
     if (config.runToy() == false) {
       // Loop over daughters again to plot correct PDFs
+
+      // Whilst blinding is in place, we need to store y-axis max for FAV mode,
+      // to set y-axis max in ADS mode
+      std::map<Neutral, std::map<Mass, double> > yMaxMap;
       for (auto &p : pdfs) {
         Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get());
+                   dataFitResult.get(), yMaxMap);
       }
 
       if (config.noFit() == false) {
