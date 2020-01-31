@@ -385,6 +385,12 @@ class NeutralBachelorVars {
   RooAddPdf &pdfPeakDelta_Bs2Dst0Kpi() { return pdfPeakDelta_Bs2Dst0Kpi_; }
   RooRealVar &Bs2Dst0Kpi_fracPeakDelta() { return Bs2Dst0Kpi_fracPeakDelta_; }
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
+  RooRealVar &Bs2Dst0Kpi_meanBu() { return Bs2Dst0Kpi_meanBu_; }
+  RooRealVar &Bs2Dst0Kpi_sigmaLBu() { return Bs2Dst0Kpi_sigmaLBu_; }
+  RooRealVar &Bs2Dst0Kpi_sigmaRBu() { return Bs2Dst0Kpi_sigmaRBu_; }
+  RooRealVar &Bs2Dst0Kpi_aLBu() { return Bs2Dst0Kpi_aLBu_; }
+  RooRealVar &Bs2Dst0Kpi_aRBu() { return Bs2Dst0Kpi_aRBu_; }
+  RooCruijff &pdfBu_Bs2Dst0Kpi() { return pdfBu_Bs2Dst0Kpi_; }
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
   RooRealVar &Bs2D0Kpi_meanBu() { return Bs2D0Kpi_meanBu_; }
@@ -568,6 +574,12 @@ class NeutralBachelorVars {
   RooAddPdf pdfPeakDelta_Bs2Dst0Kpi_;
   RooRealVar Bs2Dst0Kpi_fracPeakDelta_;
   RooAddPdf pdfDelta_Bs2Dst0Kpi_;
+  RooRealVar Bs2Dst0Kpi_meanBu_;
+  RooRealVar Bs2Dst0Kpi_sigmaLBu_;
+  RooRealVar Bs2Dst0Kpi_sigmaRBu_;
+  RooRealVar Bs2Dst0Kpi_aLBu_;
+  RooRealVar Bs2Dst0Kpi_aRBu_;
+  RooCruijff pdfBu_Bs2Dst0Kpi_;
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG pdfDelta_Bs2D0Kpi_;
   RooRealVar Bs2D0Kpi_meanBu_;
