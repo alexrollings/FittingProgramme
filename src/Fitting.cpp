@@ -2102,19 +2102,18 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(true), RooFit::NumCPU(8, 2)));
       toyFitResult->SetName("ToyResult");
-      // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
     }
-    // if (id == 1) {
-    //   auto pdfs = p.second;
-    //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
-    //   for (auto &p : pdfs) {
-    //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-    //                toyFitResult.get(), yMaxMap);
-    //   }
-    //   if (config.noFit() == false) {
-    //     PlotCorrelations(toyFitResult.get(), outputDir, config);
-    //   }
-    // }
+    if (id == 1) {
+      auto pdfs = p.second;
+      std::map<Neutral, std::map<Mass, double> > yMaxMap;
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+                   toyFitResult.get(), yMaxMap);
+      }
+      if (config.noFit() == false) {
+        PlotCorrelations(toyFitResult.get(), outputDir, config);
+      }
+    }
 
     if (config.noFit() == false) {
       toyFitResult->Print("v");
