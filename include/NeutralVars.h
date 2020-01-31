@@ -296,6 +296,7 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
+  RooRealVar &Bs2D0Kpi_meanBu() { return Bs2D0Kpi_meanBu_; }
 
  private:
   // Indicate if only used by one neutral
@@ -462,6 +463,7 @@ class NeutralVars {
   RooAddPdf pdfDelta_Bs2Dst0Kpi_;
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG pdfDelta_Bs2D0Kpi_;
+  RooRealVar Bs2D0Kpi_meanBu_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

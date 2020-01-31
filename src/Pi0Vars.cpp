@@ -455,7 +455,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdfDelta_Bs2D0Kpi_(
           ("pdfDelta_Bs2D0Kpi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_thresholdDelta_,
-          Bs2Dst0Kpi_cDelta_, Bs2Dst0Kpi_aDelta_, Bs2Dst0Kpi_bDelta_) {
+          Bs2Dst0Kpi_cDelta_, Bs2Dst0Kpi_aDelta_, Bs2Dst0Kpi_bDelta_),
+      Bs2D0Kpi_meanBu_(("Bs2D0Kpi_meanBu_" +
+                                 ComposeName(uniqueId, Neutral::pi0))
+                                    .c_str(),
+                                "", 5.3384e+03) { 
   if (Configuration::Get().splitByCharge() == true) {
     initYieldFAVMisRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
