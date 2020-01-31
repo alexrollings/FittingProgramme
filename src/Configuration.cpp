@@ -362,6 +362,12 @@ std::string EnumToString(Mass mass) {
 
 std::string EnumToString(Mode mode) {
   switch (mode) {
+    case Mode::Bs2D0Kpi:
+      return "Bs2D0Kpi";
+      break;
+    case Mode::Bs2Dst0Kpi:
+      return "Bs2Dst0Kpi";
+      break;
     case Mode::Bd2Dstpi:
       return "Bd2Dstpi";
       break;
