@@ -413,6 +413,44 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2Dst0Kpi_cDelta_(
           ("Bs2Dst0Kpi_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
           "", 1.5459e+01),
+      pdfFlatDelta_Bs2Dst0Kpi_(
+          ("pdfFlatDelta_Bs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_thresholdDelta_,
+          Bs2Dst0Kpi_cDelta_, Bs2Dst0Kpi_aDelta_, Bs2Dst0Kpi_bDelta_),
+      Bs2Dst0Kpi_meanDelta_(("Bs2Dst0Kpi_meanDelta_" +
+                                 ComposeName(uniqueId, Neutral::pi0))
+                                    .c_str(),
+                                "", 1.4249e+02), 
+      Bs2Dst0Kpi_sigmaDelta_(("Bs2Dst0Kpi_sigmaDelta_" +
+                                  ComposeName(uniqueId, Neutral::pi0))
+                                     .c_str(),
+                                 "", 1.9311e+00),
+      pdfPeak1Delta_Bs2Dst0Kpi_(
+          ("pdfPeak1Delta_Bs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDelta_,
+          Bs2Dst0Kpi_sigmaDelta_, Bu2Dst0h_D0pi0_a1Delta_,
+          Bu2Dst0h_D0pi0_n1Delta_),
+      pdfPeak2Delta_Bs2Dst0Kpi_(
+          ("pdfPeak2Delta_Bs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDelta_,
+          Bs2Dst0Kpi_sigmaDelta_, Bu2Dst0h_D0pi0_a2Delta_,
+          Bu2Dst0h_D0pi0_n2Delta_),
+      pdfPeakDelta_Bs2Dst0Kpi_(
+          ("pdfPeakDelta_Bs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", RooArgList(pdfPeak1Delta_Bs2Dst0Kpi_, pdfPeak2Delta_Bs2Dst0Kpi_),
+          Bu2Dst0h_D0pi0_fracPdf1Delta_),
+      Bs2Dst0Kpi_fracPeakDelta_(("Bs2Dst0Kpi_fracPeakDelta_" +
+                                     ComposeName(uniqueId, Neutral::pi0))
+                                        .c_str(),
+                                    "", 6.4451e-01),
+      pdfDelta_Bs2Dst0Kpi_(
+          ("pdfDelta_Bs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", RooArgList(pdfPeakDelta_Bs2Dst0Kpi_, pdfFlatDelta_Bs2Dst0Kpi_),
+          Bs2Dst0Kpi_fracPeakDelta_),
       // -------------------- Bs2D0Kpi -------------------- //
       pdfDelta_Bs2D0Kpi_(
           ("pdfDelta_Bs2D0Kpi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
