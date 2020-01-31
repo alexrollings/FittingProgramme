@@ -281,22 +281,6 @@ class NeutralVars {
   }
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
-  // -------------------- Bs2Dst0Kpi -------------------- //
-  RooRealVar &Bs2Dst0Kpi_thresholdDelta() { return Bs2Dst0Kpi_thresholdDelta_; }
-  RooRealVar &Bs2Dst0Kpi_aDelta() { return Bs2Dst0Kpi_aDelta_; }
-  RooRealVar &Bs2Dst0Kpi_bDelta() { return Bs2Dst0Kpi_bDelta_; }
-  RooRealVar &Bs2Dst0Kpi_cDelta() { return Bs2Dst0Kpi_cDelta_; }
-  RooDstD0BG &pdfFlatDelta_Bs2Dst0Kpi() { return pdfFlatDelta_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_meanDelta() { return Bs2Dst0Kpi_meanDelta_; }
-  RooRealVar &Bs2Dst0Kpi_sigmaDelta() { return Bs2Dst0Kpi_sigmaDelta_; }
-  RooCBShape &pdfPeak1Delta_Bs2Dst0Kpi() { return pdfPeak1Delta_Bs2Dst0Kpi_; }
-  RooCBShape &pdfPeak2Delta_Bs2Dst0Kpi() { return pdfPeak2Delta_Bs2Dst0Kpi_; }
-  RooAddPdf &pdfPeakDelta_Bs2Dst0Kpi() { return pdfPeakDelta_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_fracPeakDelta() { return Bs2Dst0Kpi_fracPeakDelta_; }
-  RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
-  // -------------------- Bs2D0Kpi -------------------- //
-  RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
-  RooRealVar &Bs2D0Kpi_meanBu() { return Bs2D0Kpi_meanBu_; }
 
  private:
   // Indicate if only used by one neutral
@@ -448,22 +432,6 @@ class NeutralVars {
   double fracPartRec_Bu2Dst0hst_D0gamma_;
   double fracPartRec_;
   double initYieldFAVPartRec_;
-  // -------------------- Bs2Dst0Kpi -------------------- //
-  RooRealVar Bs2Dst0Kpi_thresholdDelta_;
-  RooRealVar Bs2Dst0Kpi_aDelta_;
-  RooRealVar Bs2Dst0Kpi_bDelta_;
-  RooRealVar Bs2Dst0Kpi_cDelta_;
-  RooDstD0BG pdfFlatDelta_Bs2Dst0Kpi_;
-  RooRealVar Bs2Dst0Kpi_meanDelta_;
-  RooRealVar Bs2Dst0Kpi_sigmaDelta_;
-  RooCBShape pdfPeak1Delta_Bs2Dst0Kpi_;
-  RooCBShape pdfPeak2Delta_Bs2Dst0Kpi_;
-  RooAddPdf pdfPeakDelta_Bs2Dst0Kpi_;
-  RooRealVar Bs2Dst0Kpi_fracPeakDelta_;
-  RooAddPdf pdfDelta_Bs2Dst0Kpi_;
-  // -------------------- Bs2D0Kpi -------------------- //
-  RooDstD0BG pdfDelta_Bs2D0Kpi_;
-  RooRealVar Bs2D0Kpi_meanBu_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
