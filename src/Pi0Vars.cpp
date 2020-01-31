@@ -398,7 +398,26 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_Bu2Dst0hst_D0pi0_(),
       fracPartRec_Bu2Dst0hst_D0gamma_(),
       fracPartRec_(0.290),
-      initYieldFAVPartRec_() {
+      initYieldFAVPartRec_(),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      Bs2Dst0Kpi_thresholdDelta_(("Bs2Dst0Kpi_thresholdDelta_" +
+                              ComposeName(uniqueId, Neutral::pi0))
+                                 .c_str(),
+                             "", 1.3627e+02),
+      Bs2Dst0Kpi_aDelta_(
+          ("Bs2Dst0Kpi_aDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", -7.8318e+00),
+      Bs2Dst0Kpi_bDelta_(
+          ("Bs2Dst0Kpi_bDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", 7.3621e-02),
+      Bs2Dst0Kpi_cDelta_(
+          ("Bs2Dst0Kpi_cDelta_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", 1.5459e+01),
+      // -------------------- Bs2D0Kpi -------------------- //
+      pdfDelta_Bs2D0Kpi_(
+          ("pdfDelta_Bs2D0Kpi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_thresholdDelta_,
+          Bs2Dst0Kpi_cDelta_, Bs2Dst0Kpi_aDelta_, Bs2Dst0Kpi_bDelta_) {
   if (Configuration::Get().splitByCharge() == true) {
     initYieldFAVMisRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
