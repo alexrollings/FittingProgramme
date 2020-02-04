@@ -391,11 +391,35 @@ class NeutralBachelorVars {
   RooRealVar &Bs2Dst0Kpi_aLBu() { return Bs2Dst0Kpi_aLBu_; }
   RooRealVar &Bs2Dst0Kpi_aRBu() { return Bs2Dst0Kpi_aRBu_; }
   RooCruijff &pdfBu_Bs2Dst0Kpi() { return pdfBu_Bs2Dst0Kpi_; }
+  RooRealVar &orEffBs2Dst0Kpi() { return orEffBs2Dst0Kpi_; }
+  RooRealVar &boxEffBs2Dst0Kpi() { return boxEffBs2Dst0Kpi_; }
+  RooRealVar &boxPartialEffBs2Dst0Kpi() { return boxPartialEffBs2Dst0Kpi_; }
+  RooRealVar &buDeltaCutEffBs2Dst0Kpi() {
+    return buDeltaCutEffBs2Dst0Kpi_;
+  }
+  RooRealVar &deltaCutEffBs2Dst0Kpi() {
+    return deltaCutEffBs2Dst0Kpi_;
+  }
+  RooRealVar &deltaPartialCutEffBs2Dst0Kpi() {
+    return deltaPartialCutEffBs2Dst0Kpi_;
+  }
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
   RooRealVar &Bs2D0Kpi_meanBu() { return Bs2D0Kpi_meanBu_; }
   RooRealVar &Bs2D0Kpi_sigmaBu() { return Bs2D0Kpi_sigmaBu_; }
   RooGaussian &pdfBu_Bs2D0Kpi() { return pdfBu_Bs2D0Kpi_; }
+  RooRealVar &orEffBs2D0Kpi() { return orEffBs2D0Kpi_; }
+  RooRealVar &boxEffBs2D0Kpi() { return boxEffBs2D0Kpi_; }
+  RooRealVar &boxPartialEffBs2D0Kpi() { return boxPartialEffBs2D0Kpi_; }
+  RooRealVar &buDeltaCutEffBs2D0Kpi() {
+    return buDeltaCutEffBs2D0Kpi_;
+  }
+  RooRealVar &deltaCutEffBs2D0Kpi() {
+    return deltaCutEffBs2D0Kpi_;
+  }
+  RooRealVar &deltaPartialCutEffBs2D0Kpi() {
+    return deltaPartialCutEffBs2D0Kpi_;
+  }
 
  private:
   int uniqueId_;
@@ -580,11 +604,23 @@ class NeutralBachelorVars {
   RooRealVar Bs2Dst0Kpi_aLBu_;
   RooRealVar Bs2Dst0Kpi_aRBu_;
   RooCruijff pdfBu_Bs2Dst0Kpi_;
+  RooRealVar orEffBs2Dst0Kpi_;
+  RooRealVar boxEffBs2Dst0Kpi_;
+  RooRealVar boxPartialEffBs2Dst0Kpi_;
+  RooRealVar buDeltaCutEffBs2Dst0Kpi_;
+  RooRealVar deltaCutEffBs2Dst0Kpi_;
+  RooRealVar deltaPartialCutEffBs2Dst0Kpi_;
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG pdfDelta_Bs2D0Kpi_;
   RooRealVar Bs2D0Kpi_meanBu_;
   RooRealVar Bs2D0Kpi_sigmaBu_;
   RooGaussian pdfBu_Bs2D0Kpi_;
+  RooRealVar orEffBs2D0Kpi_;
+  RooRealVar boxEffBs2D0Kpi_;
+  RooRealVar boxPartialEffBs2D0Kpi_;
+  RooRealVar buDeltaCutEffBs2D0Kpi_;
+  RooRealVar deltaCutEffBs2D0Kpi_;
+  RooRealVar deltaPartialCutEffBs2D0Kpi_;
 };
 
 

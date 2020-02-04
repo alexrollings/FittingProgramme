@@ -19,6 +19,8 @@ enum class Neutral { pi0, gamma };
 enum class Charge { plus, minus, total };
 enum class Mass { buDelta, delta, buDeltaPartial };
 enum class Mode {
+  Bs2Dst0Kpi,
+  Bs2D0Kpi,
   Bd2Dstpi,
   Bu2D0pi,
   Bu2D0rho,
