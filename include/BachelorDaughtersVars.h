@@ -63,7 +63,8 @@ private:
   // Indicate if only used by one daughters
 
   int uniqueId_;
-  // BR for decay relative to FAV mode (Kπ, π)
+  // BR for decay relative to FAV mode (π, Kπ)
+  // Can add for different bkgs if necessary 
   const double kBR_;
 };
 
