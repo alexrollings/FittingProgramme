@@ -54,7 +54,7 @@ class BachelorDaughtersVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  const double &daughtersSF() { return daughtersSF_; }
+  const double &kBR() { return kBR_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see

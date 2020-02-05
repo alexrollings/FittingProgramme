@@ -19,7 +19,7 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit MathMore Minuit Foam TreePl
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/GlobalVars.cpp src/Pi0Vars.cpp src/GammaVars.cpp src/Pi0PiVars.cpp src/Pi0KVars.cpp src/GammaPiVars.cpp src/GammaKVars.cpp src/NeutralDaughtersVars.cpp src/DaughtersVars.cpp src/Pdf.cpp src/RooCruijff.cpp src/Pdfs_GammaTotal.cpp src/Pdfs_GammaPlus.cpp src/Pdfs_GammaMinus.cpp src/Pdfs_Pi0Total.cpp src/Pdfs_Pi0Plus.cpp src/Pdfs_Pi0Minus.cpp)
+set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/GlobalVars.cpp src/Pi0Vars.cpp src/GammaVars.cpp src/Pi0PiVars.cpp src/Pi0KVars.cpp src/GammaPiVars.cpp src/GammaKVars.cpp src/NeutralDaughtersVars.cpp src/BachelorDaughtersVars.cpp src/Pdf.cpp src/RooCruijff.cpp src/Pdfs_GammaTotal.cpp src/Pdfs_GammaPlus.cpp src/Pdfs_GammaMinus.cpp src/Pdfs_Pi0Total.cpp src/Pdfs_Pi0Plus.cpp src/Pdfs_Pi0Minus.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
