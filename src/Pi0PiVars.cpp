@@ -50,11 +50,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdf2BuPartial_Bu2Dst0h_D0pi0_(),
       pdf3BuPartial_Bu2Dst0h_D0pi0_(),
       pdfBuPartial_Bu2Dst0h_D0pi0_(),
-      N_tot_initVal_Bu2Dst0h_D0pi0_(NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .initYieldFAVBu2Dst0h_D0pi0() *
-                                    NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                        .orEffBu2Dst0h_D0pi0()
-                                        .getVal()),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(("misId_Bu2Dst0h_D0pi0_meanBu_" +
                                     ComposeName(uniqueId, Neutral::pi0,
@@ -150,11 +145,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a2Bu())),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
-      N_tot_initVal_Bu2Dst0h_D0gamma_(NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                          .initYieldFAVBu2Dst0h_D0gamma() *
-                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
-                                          .orEffBu2Dst0h_D0gamma()
-                                          .getVal()),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(("misId_Bu2Dst0h_D0gamma_meanBu_" +
                                       ComposeName(uniqueId, Neutral::pi0,
@@ -242,9 +232,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       MisRec_sigmaLBuPartial_(),
       MisRec_sigmaRBuPartial_(),
       pdfBuPartial_MisRec_(),
-      N_initVal_MisRec_(
-          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVMisRec() *
-          NeutralVars<Neutral::pi0>::Get(uniqueId).orEffMisRec().getVal()),
       // -------------------- Mis-ID ------------------- //
       misId_MisRec_mean1Bu_(),
       misId_MisRec_mean2Bu_(),
@@ -298,9 +285,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       Bu2D0h_sigmaLBuPartial_(),
       Bu2D0h_sigmaRBuPartial_(),
       pdfBuPartial_Bu2D0h_(),
-      N_initVal_Bu2D0h_(
-          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVBu2D0h() *
-          NeutralVars<Neutral::pi0>::Get(uniqueId).orEffBu2D0h().getVal()),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2D0h_meanBu_(),
       misId_Bu2D0h_sigmaLBu_(),
@@ -349,9 +333,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       partRec_sigmaLBuPartial_(),
       partRec_sigmaRBuPartial_(),
       pdfBuPartial_PartRec_(),
-      N_initVal_PartRec_(
-          NeutralVars<Neutral::pi0>::Get(uniqueId).initYieldFAVPartRec() *
-          NeutralVars<Neutral::pi0>::Get(uniqueId).orEffPartRec().getVal()),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(),
       misId_PartRec_sigmaLBu_(),
