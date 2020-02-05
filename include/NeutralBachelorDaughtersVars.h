@@ -723,6 +723,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
             .c_str(),
         "", N_tot_Bu2Dst0h_D0pi0_Blind_->getVal(), 0, 1000));
+    N_tot_Bs2D0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_tot_Bs2D0Kpi_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+            .c_str(),
+        "", N_tot_Bu2Dst0h_D0pi0_Blind_->getVal(), 0, 1000));
   }
 }
 
@@ -751,11 +756,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "", 0)),
+      // kk yield for Bs background = πk yield * BR (D->kk/D->kπ)
       N_tot_Bs2Dst0Kpi_(new RooFormulaVar(
           ("N_tot_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
-          "", "@0*@1", RooArgSet(*N_tot_Bu2Dst0h_D0pi0_, *A_Bs2Dst0Kpi_))),
+          "", "@0*(@1/@2)",
+          RooArgSet(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::pik>::Get(uniqueId)
+                  .N_tot_Bs2Dst0Kpi(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
+                  .kBR(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
+                  .kBR()))),
       A_Bs2D0Kpi_(new RooConstVar(
           ("A_Bs2D0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -765,7 +779,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           ("N_tot_Bs2D0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
-          "", "@0*@1", RooArgSet(*N_tot_Bu2Dst0h_D0pi0_, *A_Bs2D0Kpi_))) {
+          "", "@0*(@1/@2)",
+          RooArgSet(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::pik>::Get(uniqueId)
+                  .N_tot_Bs2D0Kpi(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
+                  .kBR(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
+                  .kBR()))) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
@@ -849,11 +871,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           "", 0)),
+      // ππ yield for Bs background = πk yield * BR (D->ππ/D->kπ)
       N_tot_Bs2Dst0Kpi_(new RooFormulaVar(
           ("N_tot_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
-          "", "@0*@1", RooArgSet(*N_tot_Bu2Dst0h_D0pi0_, *A_Bs2Dst0Kpi_))),
+          "", "@0*(@1/@2)",
+          RooArgSet(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::pik>::Get(uniqueId)
+                  .N_tot_Bs2Dst0Kpi(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+                  .kBR(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
+                  .kBR()))),
       A_Bs2D0Kpi_(new RooConstVar(
           ("A_Bs2D0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -863,7 +894,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           ("N_tot_Bs2D0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
-          "", "@0*@1", RooArgSet(*N_tot_Bu2Dst0h_D0pi0_, *A_Bs2D0Kpi_))) {
+          "", "@0*(@1/@2)",
+          RooArgSet(
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::pik>::Get(uniqueId)
+                  .N_tot_Bs2D0Kpi(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+                  .kBR(),
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
+                  .kBR()))) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
