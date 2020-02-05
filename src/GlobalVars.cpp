@@ -1,4 +1,4 @@
-#include "GlobalVars.h"
+ #include "GlobalVars.h"
 
 GlobalVars::GlobalVars(int uniqueId) {}
 
@@ -45,7 +45,7 @@ std::string ComposeName(int uniqueId, Neutral neutral) {
   return EnumToString(neutral) + "_" + std::to_string(uniqueId);
 }
 
-std::string ComposeName(int uniqueId, Daughters daughters) {
-  return EnumToString(daughters) + "_" +
+std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters) {
+  return EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
          std::to_string(uniqueId);
 }

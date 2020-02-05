@@ -124,7 +124,9 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
               NeutralVars<neutral>::Get(uniqueId).orEffMisRec().getVal() *
-              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
           0, 1000000)),
       N_Delta_MisRec_(new RooFormulaVar(
           ("N_Delta_MisRec_" +
@@ -144,7 +146,9 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h().getVal() *
-              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
           0, 1000000)),
       N_Delta_Bu2D0h_(new RooFormulaVar(
           ("N_Delta_Bu2D0h_" +
@@ -164,7 +168,9 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
               NeutralVars<neutral>::Get(uniqueId).orEffPartRec().getVal() *
-              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
           0, 1000000)),
       N_Delta_PartRec_(new RooFormulaVar(
           ("N_Delta_PartRec_" +

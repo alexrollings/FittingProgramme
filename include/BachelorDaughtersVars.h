@@ -54,7 +54,7 @@ class BachelorDaughtersVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
-  const double &kBR() { return kBR_; }
+  RooConstVar &kBR() { return kBR_; }
 
 private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -65,7 +65,7 @@ private:
   int uniqueId_;
   // BR for decay relative to FAV mode (π, Kπ)
   // Can add for different bkgs if necessary 
-  const double kBR_;
+  RooConstVar kBR_;
 };
 
 // Now we just need to define the constructors separately so the values are

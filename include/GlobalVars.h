@@ -54,4 +54,4 @@ std::string ComposeName(int uniqueId, Neutral neutral,
 std::string ComposeName(int uniqueId, Neutral neutral,
                         Daughters daughters);
 std::string ComposeName(int uniqueId, Neutral neutral);
-std::string ComposeName(int uniqueId, Daughters daughters);
+std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
