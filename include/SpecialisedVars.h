@@ -122,10 +122,10 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                  .N_initVal_MisRec() *
-              DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
-           0, 1000000)),
+          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              NeutralVars<neutral>::Get(uniqueId).orEffMisRec().getVal() *
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
+          0, 1000000)),
       N_Delta_MisRec_(new RooFormulaVar(
           ("N_Delta_MisRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -142,9 +142,9 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                  .N_initVal_Bu2D0h() *
-              DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
+          NeutralVars<neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
+              NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h().getVal() *
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
           0, 1000000)),
       N_Delta_Bu2D0h_(new RooFormulaVar(
           ("N_Delta_Bu2D0h_" +
@@ -162,9 +162,9 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                  .N_initVal_PartRec() *
-              DaughtersVars<daughters>::Get(uniqueId).daughtersSF(),
+          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+              NeutralVars<neutral>::Get(uniqueId).orEffPartRec().getVal() *
+              BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId).kBR(),
           0, 1000000)),
       N_Delta_PartRec_(new RooFormulaVar(
           ("N_Delta_PartRec_" +
