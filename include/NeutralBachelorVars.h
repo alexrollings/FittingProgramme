@@ -360,6 +360,7 @@ class NeutralBachelorVars {
   // -------------------- Bs2Dst0Kpi -------------------- //
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
   RooAbsPdf &pdfBu_Bs2Dst0Kpi() { return *pdfBu_Bs2Dst0Kpi_; }
+  RooCruijff &pdfBuPartial_Bs2Dst0Kpi() { return pdfBuPartial_Bs2Dst0Kpi_; }
   RooRealVar &orEffBs2Dst0Kpi() { return orEffBs2Dst0Kpi_; }
   RooRealVar &boxEffBs2Dst0Kpi() { return boxEffBs2Dst0Kpi_; }
   RooRealVar &boxPartialEffBs2Dst0Kpi() { return boxPartialEffBs2Dst0Kpi_; }
@@ -375,6 +376,7 @@ class NeutralBachelorVars {
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
   RooAbsPdf &pdfBu_Bs2D0Kpi() { return *pdfBu_Bs2D0Kpi_; }
+  RooCruijff &pdfBuPartial_Bs2D0Kpi() { return pdfBuPartial_Bs2D0Kpi_; }
   RooRealVar &orEffBs2D0Kpi() { return orEffBs2D0Kpi_; }
   RooRealVar &boxEffBs2D0Kpi() { return boxEffBs2D0Kpi_; }
   RooRealVar &boxPartialEffBs2D0Kpi() { return boxPartialEffBs2D0Kpi_; }
@@ -578,6 +580,12 @@ class NeutralBachelorVars {
   RooGaussian pdf2Bu_Bs2Dst0Kpi_;
   RooRealVar Bs2Dst0Kpi_fracPdf1Bu_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bs2Dst0Kpi_;
+  RooRealVar Bs2Dst0Kpi_meanBuPartial_;
+  RooRealVar Bs2Dst0Kpi_sigmaLBuPartial_;
+  RooRealVar Bs2Dst0Kpi_sigmaRBuPartial_;
+  RooRealVar Bs2Dst0Kpi_aLBuPartial_;
+  RooRealVar Bs2Dst0Kpi_aRBuPartial_;
+  RooCruijff pdfBuPartial_Bs2Dst0Kpi_;
   RooRealVar orEffBs2Dst0Kpi_;
   RooRealVar boxEffBs2Dst0Kpi_;
   RooRealVar boxPartialEffBs2Dst0Kpi_;
@@ -600,6 +608,12 @@ class NeutralBachelorVars {
   RooGaussian pdf2Bu_Bs2D0Kpi_;
   RooRealVar Bs2D0Kpi_fracPdf1Bu_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bs2D0Kpi_;
+  RooRealVar Bs2D0Kpi_meanBuPartial_;
+  RooRealVar Bs2D0Kpi_sigmaLBuPartial_;
+  RooRealVar Bs2D0Kpi_sigmaRBuPartial_;
+  RooRealVar Bs2D0Kpi_aLBuPartial_;
+  RooRealVar Bs2D0Kpi_aRBuPartial_;
+  RooCruijff pdfBuPartial_Bs2D0Kpi_;
   RooRealVar orEffBs2D0Kpi_;
   RooRealVar boxEffBs2D0Kpi_;
   RooRealVar boxPartialEffBs2D0Kpi_;
