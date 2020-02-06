@@ -518,39 +518,39 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_thresholdDelta_,
           Bs2Dst0Kpi_cDelta_, Bs2Dst0Kpi_aDelta_, Bs2Dst0Kpi_bDelta_),
-      Bs2Dst0Kpi_meanDelta_(("Bs2Dst0Kpi_meanDelta_" +
+      Bs2Dst0Kpi_meanDeltaPi0_(("Bs2Dst0Kpi_meanDeltaPi0_" +
                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                 .c_str(),
                             "", 1.4249e+02),
-      Bs2Dst0Kpi_sigmaDelta_(("Bs2Dst0Kpi_sigmaDelta_" +
+      Bs2Dst0Kpi_sigmaDeltaPi0_(("Bs2Dst0Kpi_sigmaDeltaPi0_" +
                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                  .c_str(),
                              "", 1.9311e+00),
-      pdfPeak1Delta_Bs2Dst0Kpi_(
-          ("pdfPeak1Delta_Bs2Dst0Kpi_" +
+      pdfPeak1DeltaPi0_Bs2Dst0Kpi_(
+          ("pdfPeak1DeltaPi0_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDelta_,
-          Bs2Dst0Kpi_sigmaDelta_,
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDeltaPi0_,
+          Bs2Dst0Kpi_sigmaDeltaPi0_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Delta(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Delta()),
-      pdfPeak2Delta_Bs2Dst0Kpi_(
-          ("pdfPeak2Delta_Bs2Dst0Kpi_" +
+      pdfPeak2DeltaPi0_Bs2Dst0Kpi_(
+          ("pdfPeak2DeltaPi0_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDelta_,
-          Bs2Dst0Kpi_sigmaDelta_,
+          "", Configuration::Get().deltaMass(), Bs2Dst0Kpi_meanDeltaPi0_,
+          Bs2Dst0Kpi_sigmaDeltaPi0_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a2Delta(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n2Delta()),
-      pdfPeakDelta_Bs2Dst0Kpi_(
-          ("pdfPeakDelta_Bs2Dst0Kpi_" +
+      pdfPeakDeltaPi0_Bs2Dst0Kpi_(
+          ("pdfPeakDeltaPi0_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", RooArgList(pdfPeak1Delta_Bs2Dst0Kpi_, pdfPeak2Delta_Bs2Dst0Kpi_),
+          "", RooArgList(pdfPeak1DeltaPi0_Bs2Dst0Kpi_, pdfPeak2DeltaPi0_Bs2Dst0Kpi_),
           NeutralVars<Neutral::pi0>::Get(uniqueId)
               .Bu2Dst0h_D0pi0_fracPdf1Delta()),
-      Bs2Dst0Kpi_fracPeakDelta_(
-          ("Bs2Dst0Kpi_fracPeakDelta_" +
+      Bs2Dst0Kpi_fracPeakDeltaPi0_(
+          ("Bs2Dst0Kpi_fracPeakDeltaPi0_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", 6.4451e-01),
@@ -558,8 +558,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("pdfDelta_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", RooArgList(pdfPeakDelta_Bs2Dst0Kpi_, pdfFlatDelta_Bs2Dst0Kpi_),
-          Bs2Dst0Kpi_fracPeakDelta_),
+          "", RooArgList(pdfPeakDeltaPi0_Bs2Dst0Kpi_, pdfFlatDelta_Bs2Dst0Kpi_),
+          Bs2Dst0Kpi_fracPeakDeltaPi0_),
+      Bs2Dst0Kpi_meanDeltaGamma_(),
+      Bs2Dst0Kpi_sigmaDeltaGamma_(),
+      pdfPeak1DeltaGamma_Bs2Dst0Kpi_(),
+      pdfPeak2DeltaGamma_Bs2Dst0Kpi_(),
+      pdfPeakDeltaGamma_Bs2Dst0Kpi_(),
+      Bs2Dst0Kpi_fracPeakDeltaGamma_(),
       Bs2Dst0Kpi_meanBu_(("Bs2Dst0Kpi_meanBu_" +
                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                .c_str(),
