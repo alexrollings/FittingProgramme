@@ -108,12 +108,8 @@ class PdfBase {
   virtual RooDstD0BG &pdfDelta_misId_PartRec() const = 0;
   virtual RooCruijff &pdfBu_misId_PartRec() const = 0;
   virtual RooCruijff &pdfBuPartial_misId_PartRec() const = 0;
-  virtual RooAbsReal &N_Bu_Bs2Dst0Kpi() const = 0;
-  virtual RooAbsReal &N_Delta_Bs2Dst0Kpi() const = 0;
   virtual RooAbsPdf &pdfDelta_Bs2Dst0Kpi() const = 0;
   virtual RooAbsPdf &pdfBu_Bs2Dst0Kpi() const = 0;
-  virtual RooAbsReal &N_Bu_Bs2D0Kpi() const = 0;
-  virtual RooAbsReal &N_Delta_Bs2D0Kpi() const = 0;
   virtual RooAbsPdf &pdfDelta_Bs2D0Kpi() const = 0;
   virtual RooAbsPdf &pdfBu_Bs2D0Kpi() const = 0;
 

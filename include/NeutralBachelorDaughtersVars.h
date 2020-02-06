@@ -228,7 +228,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_Blind_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(new RooRealVar(
           ("N_tot_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))

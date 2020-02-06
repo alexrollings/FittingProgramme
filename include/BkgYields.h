@@ -7,12 +7,12 @@
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-class SpecialisedVars {
+class BkgYields {
  public:
-  SpecialisedVars(int uniqueId_);
-  ~SpecialisedVars() {}
+  BkgYields(int uniqueId_);
+  ~BkgYields() {}
 
-  using This_t = SpecialisedVars<neutral, bachelor, daughters, charge>;
+  using This_t = BkgYields<neutral, bachelor, daughters, charge>;
 
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
@@ -88,7 +88,7 @@ class SpecialisedVars {
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
+BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
     int uniqueId)
     // -------------------- MisRec -------------------- //
     : N_MisRec_(new RooRealVar(
@@ -195,30 +195,6 @@ SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
                    NeutralVars<neutral>::Get(uniqueId).orEffPartRec(),
                    *N_PartRec_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fitBuPartial() == true) {
-      N_BuPartial_Bu2Dst0h_D0gamma_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("N_BuPartial_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-                  .c_str(),
-              "(@0/@1)*@2*@3",
-              RooArgList(
-                  NeutralVars<neutral>::Get(uniqueId)
-                      .deltaPartialCutEffBu2Dst0h_D0gamma(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
-                  *N_Bu2Dst0h_D0gamma_,
-                  Configuration::Get().GetPidEff(bachelor))));
-      N_BuPartial_Bu2Dst0h_D0pi0_ =
-          std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-              ("N_BuPartial_Bu2Dst0h_D0pi0_" +
-               ComposeName(uniqueId, neutral, bachelor, daughters, charge))
-                  .c_str(),
-              "(@0/@1)*@2*@3",
-              RooArgList(
-                  NeutralVars<neutral>::Get(uniqueId)
-                      .deltaPartialCutEffBu2Dst0h_D0pi0(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-                  *N_Bu2Dst0h_D0pi0_,
-                  Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_MisRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))

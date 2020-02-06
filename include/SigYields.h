@@ -7,12 +7,12 @@
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-class SpecialisedVars {
+class SigYields {
  public:
-  SpecialisedVars(int uniqueId_);
-  ~SpecialisedVars() {}
+  SigYields(int uniqueId_);
+  ~SigYields() {}
 
-  using This_t = SpecialisedVars<neutral, bachelor, daughters, charge>;
+  using This_t = SigYields<neutral, bachelor, daughters, charge>;
 
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
@@ -64,7 +64,7 @@ class SpecialisedVars {
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-SpecialisedVars<neutral, bachelor, daughters, charge>::SpecialisedVars(
+SigYields<neutral, bachelor, daughters, charge>::SigYields(
     int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : N_Bu2Dst0h_D0gamma_(nullptr),
