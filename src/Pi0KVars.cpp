@@ -566,15 +566,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdfPeak2DeltaGamma_Bs2Dst0Kpi_(),
       pdfPeakDeltaGamma_Bs2Dst0Kpi_(),
       Bs2Dst0Kpi_fracPeakDeltaGamma_(),
-      Bs2Dst0Kpi_meanBu_(("Bs2Dst0Kpi_meanBu_" +
+      Bs2Dst0Kpi_mean1Bu_(("Bs2Dst0Kpi_mean1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                .c_str(),
                            "", 5.2065e+03),
-      Bs2Dst0Kpi_sigmaLBu_(("Bs2Dst0Kpi_sigmaLBu_" +
+      Bs2Dst0Kpi_sigma1Bu_(("Bs2Dst0Kpi_sigma1Bu_" +
                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                .c_str(),
                            "", 3.1366e+01),
-      Bs2Dst0Kpi_sigmaRBu_(("Bs2Dst0Kpi_sigmaRBu_" +
+      Bs2Dst0Kpi_sigma2Bu_(("Bs2Dst0Kpi_sigma2Bu_" +
                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                .c_str(),
                            "", 2.3145e+01),
@@ -586,13 +586,19 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                .c_str(),
                            "", 7.1721e-02),
-      pdfBu_Bs2Dst0Kpi_(("pdfBu_Bs2Dst0Kpi_" +
+      pdfBu_Bs2Dst0Kpi_(new RooCruijff(("pdfBu_Bs2Dst0Kpi_" +
                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                             .c_str(),
                         "", Configuration::Get().buDeltaMass(),
-                        Bs2Dst0Kpi_meanBu_, Bs2Dst0Kpi_sigmaLBu_,
-                        Bs2Dst0Kpi_sigmaRBu_, Bs2Dst0Kpi_aLBu_,
-                        Bs2Dst0Kpi_aRBu_),
+                        Bs2Dst0Kpi_mean1Bu_, Bs2Dst0Kpi_sigma1Bu_,
+                        Bs2Dst0Kpi_sigma2Bu_, Bs2Dst0Kpi_aLBu_,
+                        Bs2Dst0Kpi_aRBu_)),
+      Bs2Dst0Kpi_mean2Bu_(),
+      Bs2Dst0Kpi_a1Bu_(),
+      Bs2Dst0Kpi_n1Bu_(),
+      pdf1Bu_Bs2Dst0Kpi_(),
+      pdf2Bu_Bs2Dst0Kpi_(),
+      Bs2Dst0Kpi_fracPdf1Bu_(),
       orEffBs2Dst0Kpi_(
           ("orEffBs2Dst0Kpi_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
           0.5),//, -1, 1),

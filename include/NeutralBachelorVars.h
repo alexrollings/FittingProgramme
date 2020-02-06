@@ -358,30 +358,8 @@ class NeutralBachelorVars {
     return deltaPartialCutEffMisId_PartRec_;
   }
   // -------------------- Bs2Dst0Kpi -------------------- //
-  RooRealVar &Bs2Dst0Kpi_thresholdDelta() { return Bs2Dst0Kpi_thresholdDelta_; }
-  RooRealVar &Bs2Dst0Kpi_aDelta() { return Bs2Dst0Kpi_aDelta_; }
-  RooRealVar &Bs2Dst0Kpi_bDelta() { return Bs2Dst0Kpi_bDelta_; }
-  RooRealVar &Bs2Dst0Kpi_cDelta() { return Bs2Dst0Kpi_cDelta_; }
-  RooDstD0BG &pdfFlatDelta_Bs2Dst0Kpi() { return pdfFlatDelta_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_meanDeltaGamma() { return Bs2Dst0Kpi_meanDeltaGamma_; }
-  RooRealVar &Bs2Dst0Kpi_sigmaDeltaGamma() { return Bs2Dst0Kpi_sigmaDeltaGamma_; }
-  RooCBShape &pdfPeak1DeltaGamma_Bs2Dst0Kpi() { return pdfPeak1DeltaGamma_Bs2Dst0Kpi_; }
-  RooCBShape &pdfPeak2DeltaGamma_Bs2Dst0Kpi() { return pdfPeak2DeltaGamma_Bs2Dst0Kpi_; }
-  RooAddPdf &pdfPeakDeltaGamma_Bs2Dst0Kpi() { return pdfPeakDeltaGamma_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_fracPeakDeltaGamma() { return Bs2Dst0Kpi_fracPeakDeltaGamma_; }
-  RooRealVar &Bs2Dst0Kpi_meanDeltaPi0() { return Bs2Dst0Kpi_meanDeltaPi0_; }
-  RooRealVar &Bs2Dst0Kpi_sigmaDeltaPi0() { return Bs2Dst0Kpi_sigmaDeltaPi0_; }
-  RooCBShape &pdfPeak1DeltaPi0_Bs2Dst0Kpi() { return pdfPeak1DeltaPi0_Bs2Dst0Kpi_; }
-  RooCBShape &pdfPeak2DeltaPi0_Bs2Dst0Kpi() { return pdfPeak2DeltaPi0_Bs2Dst0Kpi_; }
-  RooAddPdf &pdfPeakDeltaPi0_Bs2Dst0Kpi() { return pdfPeakDeltaPi0_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_fracPeakDeltaPi0() { return Bs2Dst0Kpi_fracPeakDeltaPi0_; }
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
-  RooRealVar &Bs2Dst0Kpi_meanBu() { return Bs2Dst0Kpi_meanBu_; }
-  RooRealVar &Bs2Dst0Kpi_sigmaLBu() { return Bs2Dst0Kpi_sigmaLBu_; }
-  RooRealVar &Bs2Dst0Kpi_sigmaRBu() { return Bs2Dst0Kpi_sigmaRBu_; }
-  RooRealVar &Bs2Dst0Kpi_aLBu() { return Bs2Dst0Kpi_aLBu_; }
-  RooRealVar &Bs2Dst0Kpi_aRBu() { return Bs2Dst0Kpi_aRBu_; }
-  RooCruijff &pdfBu_Bs2Dst0Kpi() { return pdfBu_Bs2Dst0Kpi_; }
+  RooAbsPdf &pdfBu_Bs2Dst0Kpi() { return *pdfBu_Bs2Dst0Kpi_; }
   RooRealVar &orEffBs2Dst0Kpi() { return orEffBs2Dst0Kpi_; }
   RooRealVar &boxEffBs2Dst0Kpi() { return boxEffBs2Dst0Kpi_; }
   RooRealVar &boxPartialEffBs2Dst0Kpi() { return boxPartialEffBs2Dst0Kpi_; }
@@ -396,8 +374,6 @@ class NeutralBachelorVars {
   }
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
-  RooRealVar &Bs2D0Kpi_meanBu() { return Bs2D0Kpi_meanBu_; }
-  RooRealVar &Bs2D0Kpi_sigmaBu() { return Bs2D0Kpi_sigmaBu_; }
   RooGaussian &pdfBu_Bs2D0Kpi() { return pdfBu_Bs2D0Kpi_; }
   RooRealVar &orEffBs2D0Kpi() { return orEffBs2D0Kpi_; }
   RooRealVar &boxEffBs2D0Kpi() { return boxEffBs2D0Kpi_; }
@@ -590,12 +566,18 @@ class NeutralBachelorVars {
   RooAddPdf pdfPeakDeltaPi0_Bs2Dst0Kpi_;
   RooRealVar Bs2Dst0Kpi_fracPeakDeltaPi0_;
   RooAddPdf pdfDelta_Bs2Dst0Kpi_;
-  RooRealVar Bs2Dst0Kpi_meanBu_;
-  RooRealVar Bs2Dst0Kpi_sigmaLBu_;
-  RooRealVar Bs2Dst0Kpi_sigmaRBu_;
+  RooRealVar Bs2Dst0Kpi_mean1Bu_;
+  RooRealVar Bs2Dst0Kpi_mean2Bu_;
+  RooRealVar Bs2Dst0Kpi_sigma1Bu_;
+  RooRealVar Bs2Dst0Kpi_sigma2Bu_;
   RooRealVar Bs2Dst0Kpi_aLBu_;
   RooRealVar Bs2Dst0Kpi_aRBu_;
-  RooCruijff pdfBu_Bs2Dst0Kpi_;
+  RooRealVar Bs2Dst0Kpi_a1Bu_;
+  RooRealVar Bs2Dst0Kpi_n1Bu_;
+  RooCBShape pdf1Bu_Bs2Dst0Kpi_;
+  RooGaussian pdf2Bu_Bs2Dst0Kpi_;
+  RooRealVar Bs2Dst0Kpi_fracPdf1Bu_;
+  std::unique_ptr<RooAbsPdf> pdfBu_Bs2Dst0Kpi_;
   RooRealVar orEffBs2Dst0Kpi_;
   RooRealVar boxEffBs2Dst0Kpi_;
   RooRealVar boxPartialEffBs2Dst0Kpi_;
