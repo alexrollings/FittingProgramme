@@ -610,6 +610,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                          "", 1),
       deltaPartialCutEffBs2Dst0Kpi_(),
       // -------------------- Bs2D0Kpi -------------------- //
+      Bs2D0Kpi_thresholdDelta_(),
+      Bs2D0Kpi_aDelta_(),
+      Bs2D0Kpi_bDelta_(),
+      Bs2D0Kpi_cDelta_(),
       pdfDelta_Bs2D0Kpi_(("pdfDelta_Bs2D0Kpi_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),

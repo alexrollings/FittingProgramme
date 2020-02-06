@@ -603,6 +603,10 @@ class NeutralBachelorVars {
   RooRealVar deltaCutEffBs2Dst0Kpi_;
   RooRealVar deltaPartialCutEffBs2Dst0Kpi_;
   // -------------------- Bs2D0Kpi -------------------- //
+  RooRealVar Bs2D0Kpi_thresholdDelta_;
+  RooRealVar Bs2D0Kpi_aDelta_;
+  RooRealVar Bs2D0Kpi_bDelta_;
+  RooRealVar Bs2D0Kpi_cDelta_;
   RooDstD0BG pdfDelta_Bs2D0Kpi_;
   RooRealVar Bs2D0Kpi_meanBu_;
   RooRealVar Bs2D0Kpi_sigmaBu_;

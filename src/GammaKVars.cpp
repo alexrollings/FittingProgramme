@@ -955,7 +955,31 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooArgList(pdfPeakDeltaGamma_Bs2Dst0Kpi_, pdfPeakDeltaPi0_Bs2Dst0Kpi_,
                      pdfFlatDelta_Bs2Dst0Kpi_),
           RooArgList(Bs2Dst0Kpi_fracPeakDeltaGamma_,
-                     Bs2Dst0Kpi_fracPeakDeltaPi0_)) {
+                     Bs2Dst0Kpi_fracPeakDeltaPi0_)),
+      // -------------------- Bs2D0Kpi -------------------- //
+      Bs2D0Kpi_thresholdDelta_(
+          ("Bs2D0Kpi_thresholdDelta_" +
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", 6.1137e+01),
+      Bs2D0Kpi_aDelta_(("Bs2D0Kpi_aDelta_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", 3.5461e-01),
+      Bs2D0Kpi_bDelta_(("Bs2D0Kpi_bDelta_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", -3.6036e-01),
+      Bs2D0Kpi_cDelta_(("Bs2D0Kpi_cDelta_" +
+                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                           .c_str(),
+                       "", 4.7687e+01),
+      pdfDelta_Bs2D0Kpi_(("pdfDelta_Bs2D0Kpi_" +
+                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", Configuration::Get().deltaMass(),
+                         Bs2D0Kpi_thresholdDelta_, Bs2D0Kpi_cDelta_,
+                         Bs2D0Kpi_aDelta_, Bs2D0Kpi_bDelta_) {
   Configuration::Get().SetEfficiencies(
       Mode::Bu2Dst0pi_D0gamma, Bachelor::k, orEffMisId_Bu2Dst0h_D0gamma_,
       boxEffMisId_Bu2Dst0h_D0gamma_, buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
