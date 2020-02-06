@@ -1498,7 +1498,7 @@ void PlotComponent(
   blindBox.SetTextColor(kRed + 1);
   blindBox.SetFillColor(10);
   if (daughters == Daughters::pik) {
-    blindBox.Draw("same");
+    // blindBox.Draw("same");
   }
   legend.Draw("same");
   // Stores max values for kpi, to set in pik
