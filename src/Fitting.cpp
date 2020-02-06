@@ -461,7 +461,7 @@ void PlotComponent(
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         } else {
           std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
+          if (neutral == Neutral::gamma || daughters == Daughters::kpi) {
             compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfBu_MisRec().GetName() << ","
                        << pdf.pdfBu_Bu2D0h().GetName() << ","
@@ -492,7 +492,7 @@ void PlotComponent(
               RooFit::DrawOption("F"),
               RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-          if (daughters != Daughters::kpi) {
+          if (neutral != Neutral::gamma && daughters != Daughters::kpi) {
             compStream.str(std::string());
             compStream << pdf.pdfBu_Bs2Dst0Kpi().GetName() << ","
                        << pdf.pdfBu_MisRec().GetName() << ","
@@ -1222,7 +1222,7 @@ void PlotComponent(
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         } else {
           std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
+          if (neutral == Neutral::gamma || daughters == Daughters::kpi) {
             compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_MisRec().GetName() << ","
                        << pdf.pdfDelta_Bu2D0h().GetName() << ","
@@ -1253,7 +1253,7 @@ void PlotComponent(
               RooFit::DrawOption("F"),
               RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
-          if (daughters != Daughters::kpi) {
+          if (neutral != Neutral::gamma && daughters != Daughters::kpi) {
             compStream.str(std::string());
             compStream << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
                        << pdf.pdfDelta_MisRec().GetName() << ","
