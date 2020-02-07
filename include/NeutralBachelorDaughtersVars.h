@@ -577,7 +577,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             .c_str(),
         "",
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0gamma() *
-            NeutralVars<_neutral>::Get(uniqueId)
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .orEffBs2Dst0Kpi()
                 .getVal() *
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
@@ -590,7 +590,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             .c_str(),
         "",
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0gamma() *
-            NeutralVars<_neutral>::Get(uniqueId)
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .orEffBs2D0Kpi()
                 .getVal() *
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
@@ -604,7 +604,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             .c_str(),
         "",
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0pi0() *
-            NeutralVars<_neutral>::Get(uniqueId)
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .orEffBs2Dst0Kpi()
                 .getVal() *
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
@@ -617,7 +617,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             .c_str(),
         "",
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0pi0() *
-            NeutralVars<_neutral>::Get(uniqueId)
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .orEffBs2D0Kpi()
                 .getVal() *
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
