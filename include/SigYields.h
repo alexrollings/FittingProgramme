@@ -336,6 +336,43 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_Blind_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+  N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+      ("N_Bu2Dst0h_D0pi0_" +
+       ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
+          .c_str(),
+      "@0*@1",
+      RooArgList(
+          SigYields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
+              .N_Bu2Dst0h_D0pi0(),
+          *R_ADS_Bu2Dst0h_D0pi0_)));
+  N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+      ("N_Delta_Bu2Dst0h_D0pi0_" +
+       ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
+          .c_str(),
+      "(@0/@1)*@2*@3",
+      RooArgList(
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
+          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
+          *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
+  if (Configuration::Get().fit1D() == false) {
+    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0h_D0pi0_" +
+         ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
+            .c_str(),
+        "(@0/@1)*@2*@3",
+        RooArgList(
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
+            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
+            *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
+  } else {
+    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("N_Bu_Bu2Dst0h_D0pi0_" +
+         ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
+            .c_str(),
+        "@0*@1",
+        RooArgList(*N_Bu2Dst0h_D0pi0_,
+                   Configuration::Get().GetPidEff(bachelor))));
+  }
   if (neutral == Neutral::gamma) {
     if (Configuration::Get().blindFit() == true) {
       R_ADS_Bu2Dst0h_D0gamma_Blind_ =
@@ -475,43 +512,6 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
             .kBR()
             .getVal(),
         0, 0.1));
-  }
-  N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("N_Bu2Dst0h_D0pi0_" +
-       ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
-          .c_str(),
-      "@0*@1",
-      RooArgList(
-          SigYields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
-              .N_Bu2Dst0h_D0pi0(),
-          *R_ADS_Bu2Dst0h_D0pi0_)));
-  N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-      ("N_Delta_Bu2Dst0h_D0pi0_" +
-       ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
-          .c_str(),
-      "(@0/@1)*@2*@3",
-      RooArgList(
-          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
-          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-          *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
-  if (Configuration::Get().fit1D() == false) {
-    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("N_Bu_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
-            .c_str(),
-        "(@0/@1)*@2*@3",
-        RooArgList(
-            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
-            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
-            *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
-  } else {
-    N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("N_Bu_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
-            .c_str(),
-        "@0*@1",
-        RooArgList(*N_Bu2Dst0h_D0pi0_,
-                   Configuration::Get().GetPidEff(bachelor))));
   }
 }
 

@@ -47,9 +47,9 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral,
       functionsDelta_(("functionsDelta_" + ComposeName(uniqueId, neutral,
                                              bachelor, daughters, charge))
                      .c_str()) {
-  std::cout << "Constructing PDF " << EnumToString(neutral_) << " "
-            << EnumToString(bachelor_) << " " << EnumToString(daughters_)
-            << std::endl;
+  // std::cout << "Constructing PDF " << EnumToString(neutral_) << " "
+  //           << EnumToString(bachelor_) << " " << EnumToString(daughters_)
+  //           << std::endl;
       }
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
