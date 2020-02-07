@@ -1270,6 +1270,7 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
                                     RooRealVar &orEff, RooRealVar &boxEff,
                                     RooRealVar &buDeltaCutEff,
                                     RooRealVar &deltaCutEff, bool misId) {
+  // std::cout << EnumToString(mode) << std::endl;
   std::string dlString = std::to_string(deltaLow_);
   std::string dhString = std::to_string(deltaHigh_);
   std::string blString = std::to_string(buDeltaLow_);
@@ -1387,15 +1388,14 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   // std::cout << "\t orEff = " << orEff.getVal() << "\n"
   //           << "\t boxEff = " << boxEff.getVal() << "\n"
   //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
-  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
-  //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
-  //           "\n";
+  //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
 }
 
 void Configuration::SetEfficiencies(
     Mode mode, Bachelor bachelor, RooRealVar &orEff, RooRealVar &boxEff,
     RooRealVar &boxPartialEff, RooRealVar &buDeltaCutEff,
     RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff, bool misId) {
+  // std::cout << EnumToString(mode) << std::endl;
   if (neutral() != Neutral::gamma) {
     throw std::runtime_error("Cannot set partial efficiencies for π0 mode");
   }
@@ -1537,4 +1537,32 @@ void Configuration::SetEfficiencies(
   //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
   //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
   //           "\n";
+}
+
+// Place function to return ACP in config s.t. don't have to instantiate all
+// gamma templates when running π0 fit and vice versa
+double Configuration::ReturnACPInit(Neutral neutral, Bachelor bachelor) {
+  double ACPInit = 0;
+  switch (neutral) {
+    case Neutral::gamma:
+      switch (bachelor) {
+        case Bachelor::pi:
+          ACPInit = -0.003;
+          break;
+        case Bachelor::k:
+          ACPInit = 0.276;
+          break;
+      }
+      break;
+    case Neutral::pi0:
+      switch (bachelor) {
+        case Bachelor::pi:
+          ACPInit = 0.025;
+          break;
+        case Bachelor::k:
+          ACPInit = -0.151;
+          break;
+      }
+      break;
+  }
 }

@@ -119,6 +119,7 @@ class Configuration {
                        RooRealVar &boxEff, RooRealVar &boxPartialEff,
                        RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
                        RooRealVar &deltaPartialCutEff, bool misId);
+  double ReturnACPInit(Neutral neutral, Bachelor bachelor); 
 
  private:
   Configuration();
