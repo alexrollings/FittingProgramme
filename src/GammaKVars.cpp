@@ -1004,30 +1004,30 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         Bs2Dst0Kpi_fracPdf1Bu_)),
       Bs2Dst0Kpi_meanBuPartial_(
           ("Bs2Dst0Kpi_meanBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 5.2177e+03),
       Bs2Dst0Kpi_sigmaLBuPartial_(
           ("Bs2Dst0Kpi_sigmaLBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 3.2619e+01),
       Bs2Dst0Kpi_sigmaRBuPartial_(
           ("Bs2Dst0Kpi_sigmaRBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 3.5797e+01),
       Bs2Dst0Kpi_aLBuPartial_(("Bs2Dst0Kpi_aLBuPartial_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                               ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                                   .c_str(),
                               "", 1.3275e-01),
       Bs2Dst0Kpi_aRBuPartial_(("Bs2Dst0Kpi_aRBuPartial_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                               ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                                   .c_str(),
                               "", 6.5298e-02),
       pdfBuPartial_Bs2Dst0Kpi_(
           ("pdfBuPartial_Bs2Dst0Kpi_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(), Bs2Dst0Kpi_meanBuPartial_,
           Bs2Dst0Kpi_sigmaLBuPartial_, Bs2Dst0Kpi_sigmaRBuPartial_,
@@ -1103,30 +1103,30 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         Bs2D0Kpi_fracPdf1Bu_)),
       Bs2D0Kpi_meanBuPartial_(
           ("Bs2D0Kpi_meanBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 5.3230e+03),
       Bs2D0Kpi_sigmaLBuPartial_(
           ("Bs2D0Kpi_sigmaLBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 8.3476e+01),
       Bs2D0Kpi_sigmaRBuPartial_(
           ("Bs2D0Kpi_sigmaRBuPartial_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 1.0900e+02),
       Bs2D0Kpi_aLBuPartial_(("Bs2D0Kpi_aLBuPartial_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                               ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                                   .c_str(),
                               "", 4.3590e-08),
       Bs2D0Kpi_aRBuPartial_(("Bs2D0Kpi_aRBuPartial_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+                               ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                                   .c_str(),
                               "", 2.6176e-10),
       pdfBuPartial_Bs2D0Kpi_(
           ("pdfBuPartial_Bs2D0Kpi_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(), Bs2D0Kpi_meanBuPartial_,
           Bs2D0Kpi_sigmaLBuPartial_, Bs2D0Kpi_sigmaRBuPartial_,
