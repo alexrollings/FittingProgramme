@@ -1631,7 +1631,7 @@ void PlotComponent(
   zeroLine.SetLineColor(kRed);
   zeroLine.SetLineStyle(kDashed);
 
-  if (config.noFit() == false && daughters != Daughters::pik) {
+  if (config.noFit() == false) {
     canvas.cd();
     pad2.cd();
     pullFrame->addPlotable(pullHist /* .get() */, "P");
@@ -1679,11 +1679,11 @@ void PlotComponent(
   if (daughters == Daughters::pik && config.blindFit() == true) {
     frame->SetMinimum(0.001);
     if (bachelor == Bachelor::pi) {
-      frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
-      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
     } else {
-      frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
-      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
     }
   }
   TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
