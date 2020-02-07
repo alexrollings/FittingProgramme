@@ -1653,8 +1653,8 @@ void PlotComponent(
 
   canvas.cd();
   pad1.cd();
-  if ((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
-      daughters == Daughters::pik) {
+  if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
+      daughters == Daughters::pik) && config.blindFit() == true) {
     frame->SetLabelOffset(50, "Y");
     frame->GetYaxis()->SetTickLength(0.);
   }
@@ -1676,24 +1676,26 @@ void PlotComponent(
     blindMax = 5400;
   }
 
-  if (daughters == Daughters::pik) {
+  if (daughters == Daughters::pik && config.blindFit() == true) {
     frame->SetMinimum(0.001);
     if (bachelor == Bachelor::pi) {
       frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
     } else {
       frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
     }
   }
-  // TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
-  //                     "#font[12]{Blind}", "");
-  // blindBox.SetBorderSize(0);
-  // blindBox.SetTextSize(0.07);
-  // // blindBox.SetTextAngle(30);
-  // blindBox.SetTextColor(kRed + 1);
-  // blindBox.SetFillColor(10);
-  // if (daughters == Daughters::pik) {
-  //   // blindBox.Draw("same");
-  // }
+  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
+                      "#font[12]{Blind}", "");
+  blindBox.SetBorderSize(0);
+  blindBox.SetTextSize(0.07);
+  // blindBox.SetTextAngle(30);
+  blindBox.SetTextColor(kRed + 1);
+  blindBox.SetFillColor(10);
+  if (daughters == Daughters::pik && config.blindFit() == true) {
+    blindBox.Draw("same");
+  }
   legend.Draw("same");
   // Stores max values for kpi, to set in pik
   if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
@@ -2774,12 +2776,12 @@ int main(int argc, char **argv) {
     }
   }
 
-  // if (daughtersVec.size() > 1 && config.blindFit() == false &&
-  //     config.noFit() == false) {
-  //   std::cerr
-  //       << "\n\n !!!!!! Cannot run unblinded fit for signal modes !!!!!! \n\n";
-  //   return 1;
-  // }
+  if (inputDir != "" && (daughtersVec.size() > 1 && config.blindFit() == false &&
+      config.noFit() == false)) {
+    std::cerr
+        << "\n\n !!!!!! Cannot run unblinded fit for signal modes !!!!!! \n\n";
+    return 1;
+  }
 
   // Raise lower mass boundary in delta mass for pi0 plots
   if (config.neutral() == Neutral::pi0) {
