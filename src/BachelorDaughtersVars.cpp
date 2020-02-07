@@ -56,4 +56,4 @@ BachelorDaughtersVars<Bachelor::k, Daughters::pik>::BachelorDaughtersVars(
     int uniqueId)
     : kBR_(
           ("kBR_" + ComposeName(uniqueId, Bachelor::k, Daughters::pik)).c_str(),
-          "", 0.001) {}
+          "", 0.0015) {}
