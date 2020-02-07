@@ -8,10 +8,8 @@
 template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
-    // -------------------- A CP initial value -------------------- //
-    : A_CP_init_(0.276),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
-      Bu2Dst0h_D0gamma_sigma1Bu_(new RooFormulaVar(
+    : Bu2Dst0h_D0gamma_sigma1Bu_(new RooFormulaVar(
           ("Bu2Dst0h_D0gamma_sigma1Bu_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -1397,4 +1395,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   //           << deltaCutEffMisId_Bu2D0h_.getVal() << "\n"
   //           << "\t deltaPartialCutEffMisId_Bu2D0h = "
   //           << deltaPartialCutEffMisId_Bu2D0h_.getVal() << "\n";
+  
+  Configuration::Get().SetEfficiencies(
+      Mode::Bs2Dst0Kpi, Bachelor::k, orEffBs2Dst0Kpi_,
+      boxEffBs2Dst0Kpi_, boxPartialEffBs2Dst0Kpi_,
+      buDeltaCutEffBs2Dst0Kpi_, deltaCutEffBs2Dst0Kpi_,
+      deltaPartialCutEffBs2Dst0Kpi_, false);
+  Configuration::Get().SetEfficiencies(
+      Mode::Bs2D0Kpi, Bachelor::k, orEffBs2D0Kpi_,
+      boxEffBs2D0Kpi_, boxPartialEffBs2D0Kpi_,
+      buDeltaCutEffBs2D0Kpi_, deltaCutEffBs2D0Kpi_,
+      deltaPartialCutEffBs2D0Kpi_, false);
 }
