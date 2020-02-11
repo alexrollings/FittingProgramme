@@ -1,5 +1,4 @@
 #pragma once
-
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
@@ -491,15 +490,13 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
           BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
               PdfBase::uniqueId_)
               .N_Bu_Bs2Dst0Kpi());
-      if (_neutral == Neutral::gamma) {
-        PdfBase::functionsBu_.add(
-            NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-                .pdfBu_Bs2D0Kpi());
-        PdfBase::yieldsBu_.add(
-            BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
-                PdfBase::uniqueId_)
-                .N_Bu_Bs2D0Kpi());
-      }
+      PdfBase::functionsBu_.add(
+          NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+              .pdfBu_Bs2D0Kpi());
+      PdfBase::yieldsBu_.add(
+          BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
+              PdfBase::uniqueId_)
+              .N_Bu_Bs2D0Kpi());
     }
   }
 
@@ -652,15 +649,13 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
           BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
               PdfBase::uniqueId_)
               .N_Delta_Bs2Dst0Kpi());
-      if (_neutral == Neutral::gamma) {
-        PdfBase::functionsDelta_.add(
-            NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-                .pdfDelta_Bs2D0Kpi());
-        PdfBase::yieldsDelta_.add(
-            BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
-                PdfBase::uniqueId_)
-                .N_Delta_Bs2D0Kpi());
-      }
+      PdfBase::functionsDelta_.add(
+          NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+              .pdfDelta_Bs2D0Kpi());
+      PdfBase::yieldsDelta_.add(
+          BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
+              PdfBase::uniqueId_)
+              .N_Delta_Bs2D0Kpi());
     }
   }
 
