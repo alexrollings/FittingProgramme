@@ -153,8 +153,8 @@ if __name__ == "__main__":
   if neutral != "pi0" and neutral != "gamma":
     sys.exit("Specify neutral: -n=pi0/gamma")
 
-  if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi":
-    sys.exit("Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi")
+  if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi" and daughters != "kpi,kk,pipi,pik":
+    sys.exit("Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik")
 
   # if dim == "1":
   #   print("Performing 1D toys to BuDelta mass")
