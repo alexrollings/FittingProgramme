@@ -47,7 +47,7 @@ if __name__ == "__main__":
   parser.add_argument('-d',
                       '--daughters',
                       type=str,
-                      help='Daughters = kpi/kpi,kk/kpi,kk,pipi',
+                      help='Daughters = kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik',
                       required=False)
   parser.add_argument('-c',
                       '--charge',
@@ -154,7 +154,7 @@ if __name__ == "__main__":
     charge = "total"
     print("Running toys summed over charge")
 
-  if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi":
+  if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi" and daughters != "kpi,kk,pipi,pik":
     daughters = "kpi"
     print("Running toys for daughters=kpi")
 
