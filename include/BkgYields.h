@@ -101,7 +101,7 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
               BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          0, 1000000)),
+          -1000000, 1000000)),
       N_Delta_MisRec_(new RooFormulaVar(
           ("N_Delta_MisRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
