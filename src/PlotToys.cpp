@@ -230,21 +230,23 @@ int main(int argc, char *argv[]) {
     }
     auto result = std::unique_ptr<RooFitResult>(
         dynamic_cast<RooFitResult *>(file->FindObjectAny("ToyResult")));
-    if (result == nullptr) {
-      throw std::runtime_error("Could not extract Result from " + filename);
-    } else {
-      resultVec.emplace_back(*result.get());
-      // std::cout << "Extracted Result from " << filename << "\n";
-    }
     std::unique_ptr<RooFitResult> dataResult;
-    if (dataToy == true) {
-      dataResult = std::unique_ptr<RooFitResult>(
-          dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
-      if (dataResult == nullptr) {
-        throw std::runtime_error("Could not extract DataFitResult from " +
-                                 filename);
-      } else {
-        dataResultVec.emplace_back(*dataResult.get());
+    if (result == nullptr) {
+      // throw std::runtime_error("Could not extract Result from " + filename);
+      continue;
+    } else {
+      if (dataToy == true) {
+        dataResult = std::unique_ptr<RooFitResult>(
+            dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
+        if (dataResult == nullptr) {
+          // throw std::runtime_error("Could not extract DataFitResult from " +
+          //                          filename);
+          continue;
+        } else {
+          resultVec.emplace_back(*result.get());
+          dataResultVec.emplace_back(*dataResult.get());
+          // std::cout << "Extracted Result from " << filename << "\n";
+        }
         // std::cout << "Extracted Result from " << filename << "\n";
       }
     }
