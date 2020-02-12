@@ -583,7 +583,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000));
+        -1000, 1000));
     N_tot_Bs2D0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2D0Kpi_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -596,7 +596,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000));
+        -1000, 1000));
   } else {
     N_tot_Bs2Dst0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2Dst0Kpi_" +
@@ -610,7 +610,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000));
+        -1000, 1000));
     N_tot_Bs2D0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2D0Kpi_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -623,7 +623,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000));
+        -1000, 1000));
   }
 }
 
