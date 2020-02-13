@@ -345,7 +345,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
         BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId)
             .kBR()
             .getVal(),
-        0, 0.1));
+        -1, 1));
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_ADS_Bu2Dst0h_D0pi0_" +
@@ -368,7 +368,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
         BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId)
             .kBR()
             .getVal(),
-        0, 0.1));
+        -1, 1));
   }
   N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("N_Bu2Dst0h_D0pi0_" +
