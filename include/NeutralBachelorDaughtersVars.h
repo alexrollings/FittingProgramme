@@ -240,7 +240,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
               BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          0, 1000000)),
+          -1000000, 1000000)),
       A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -258,7 +258,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000000));
+        -1000000, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
@@ -339,7 +339,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          0, 1000000)),
+          -1000000, 1000000)),
       A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -357,7 +357,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000000));
+        -1000000, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
@@ -429,7 +429,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                   uniqueId)
                   .kBR()
                   .getVal(),
-          0, 1000000)),
+          -1000000, 1000000)),
       A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -447,7 +447,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
             BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000000));
+        -1000000, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ =
