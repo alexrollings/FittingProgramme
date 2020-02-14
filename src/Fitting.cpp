@@ -59,7 +59,7 @@ void SetStyle() {
 // and delta mass
 void PlotComponent(
     Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
-    RooSimultaneous const &simPdf, TLegend &legend,
+    RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
     std::string const &outputDir, Configuration &config,
     std::map<std::string, Color_t> colorMap,
     std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
@@ -183,7 +183,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecRho"]),
+              RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -271,7 +271,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecRho"]),
+              RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName();
@@ -447,7 +447,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecKst"]),
+              RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -648,7 +648,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecKst"]),
+              RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
@@ -783,7 +783,7 @@ void PlotComponent(
                     .c_str()),
             RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecRho"]),
+            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         compStream.str(std::string());
         compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
@@ -944,7 +944,7 @@ void PlotComponent(
                     .c_str()),
             RooFit::ProjWData(config.fitting, fullDataSet),
             RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecKst"]),
+            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
         compStream.str(std::string());
         compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1086,7 +1086,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecRho"]),
+              RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -1174,7 +1174,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecRho"]),
+              RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName();
@@ -1362,7 +1362,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecKst"]),
+              RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -1563,7 +1563,7 @@ void PlotComponent(
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecKst"]),
+              RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1745,6 +1745,10 @@ void PlotComponent(
     blindBox.Draw("same");
   }
   legend.Draw("same");
+
+  if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+    labels.Draw("same");
+  }
   // Stores max values for kpi, to set in pik
   if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
     yMaxMap[neutral][mass] = frame->GetMaximum();
@@ -1848,20 +1852,187 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap["MisRecK"] = kMagenta - 10;
   colorMap["Bu2D0pi"] = kBlue + 4;
   colorMap["Bu2D0K"] = kMagenta - 7;
-  colorMap["PartRecRho"] = kGreen + 3;
-  colorMap["PartRecKst"] = kRed + 4;
+  colorMap["PartRecPi"] = kGreen + 3;
+  colorMap["PartRecK"] = kRed + 4;
   colorMap["Bs2Dst0Kpi"] = kOrange - 3;
   colorMap["Bs2D0Kpi"] = kOrange + 4;
 
+  TLegend labels(0.14, 0.25, 0.28, 0.9);
+  labels.SetLineColor(kWhite);
+
+  std::string oppCharge;
+  if (charge == Charge::plus) {
+    oppCharge = "-";
+  } else if (charge == Charge::minus) {
+    oppCharge = "+";
+  } else {
+    oppCharge = "#mp";
+  }
+
+  auto hist_Bu2Dst0pi_D0gamma = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0pi_D0gamma" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0pi_D0gamma", 1, 0, 1);
+  hist_Bu2Dst0pi_D0gamma->SetLineColor(colorMap["Bu2Dst0pi_D0gamma"]);
+  hist_Bu2Dst0pi_D0gamma->SetLineWidth(3);
+  std::string str_Bu2Dst0pi_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_Bu2Dst0pi_D0pi0 = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0pi_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0pi_D0pi0", 1, 0, 1);
+  hist_Bu2Dst0pi_D0pi0->SetLineColor(colorMap["Bu2Dst0pi_D0pi0"]);
+  hist_Bu2Dst0pi_D0pi0->SetLineWidth(3);
+  std::string str_Bu2Dst0pi_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_MisRecPi = std::make_unique<TH1D>(
+      ("hist_MisRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_MisRecPi", 1, 0, 1);
+  hist_MisRecPi->SetLineColor(colorMap["MisRecPi"]);
+  hist_MisRecPi->SetLineWidth(3);
+  std::string str_Bu2D0rho =
+      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
+  std::string str_Bd2Dstpi =
+      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_PartRecPi = std::make_unique<TH1D>(
+      ("hist_PartRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_PartRecPi", 1, 0, 1);
+  hist_PartRecPi->SetLineColor(colorMap["PartRecPi"]);
+  hist_PartRecPi->SetLineWidth(3);
+  std::string str_PartRecPi_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
+  std::string str_PartRecPi_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_Bu2Dst0K_D0gamma = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0K_D0gamma" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0K_D0gamma", 1, 0, 1);
+  hist_Bu2Dst0K_D0gamma->SetLineColor(colorMap["Bu2Dst0K_D0gamma"]);
+  hist_Bu2Dst0K_D0gamma->SetLineWidth(3);
+  std::string str_Bu2Dst0K_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_Bu2Dst0K_D0pi0 = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0K_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0K_D0pi0", 1, 0, 1);
+  hist_Bu2Dst0K_D0pi0->SetLineColor(colorMap["Bu2Dst0K_D0pi0"]);
+  hist_Bu2Dst0K_D0pi0->SetLineWidth(3);
+  std::string str_Bu2Dst0K_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_MisRecK = std::make_unique<TH1D>(
+      ("hist_MisRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_MisRecK", 1, 0, 1);
+  hist_MisRecK->SetLineColor(colorMap["MisRecK"]);
+  hist_MisRecK->SetLineWidth(3);
+  std::string str_Bu2D0Kst =
+      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+  std::string str_Bd2DstK =
+      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{" + oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
+      EnumToLabel(charge) + "}}";
+  auto hist_PartRecK = std::make_unique<TH1D>(
+      ("hist_PartRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_PartRecK", 1, 0, 1);
+  hist_PartRecK->SetLineColor(colorMap["PartRecK"]);
+  hist_PartRecK->SetLineWidth(3);
+  std::string str_PartRecK_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+  std::string str_PartRecK_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+
+  labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
+  labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
+  labels.AddEntry(blankHist.get(), str_Bd2Dstpi.c_str(), "l");
+  labels.AddEntry(hist_PartRecPi.get(), str_PartRecPi_D0pi0.c_str(), "l");
+  labels.AddEntry(blankHist.get(), str_PartRecPi_D0gamma.c_str(), "l");
+  labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+  labels.AddEntry(hist_MisRecK.get(), str_Bu2D0Kst.c_str(), "l");
+  labels.AddEntry(blankHist.get(), str_Bd2DstK.c_str(), "l");
+  labels.AddEntry(hist_PartRecK.get(), str_PartRecK_D0pi0.c_str(), "l");
+  labels.AddEntry(blankHist.get(), str_PartRecK_D0gamma.c_str(), "l");
+
+  // Loop over entries in legend and set size
+  TList *labelList = labels.GetListOfPrimitives();
+  if (labelList != nullptr) {
+    int nLabels = labelList->GetSize();
+    for (int i = 0; i < nLabels; ++i) {
+      TObject *entryObj = labelList->At(i);
+      if (entryObj != nullptr) {
+        auto entry = dynamic_cast<TLegendEntry *>(entryObj);
+        if (entry != nullptr) {
+          entry->SetTextSize(0.04);
+        } else {
+          throw std::runtime_error(
+              "Could not cast entry from TObject to TLegendEntry.");
+        }
+      } else {
+        throw std::runtime_error(
+            "Could not extract iter from labelList in TLegend.");
+      }
+    }
+  }
+
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                legend, outputDir, config, colorMap, yMaxMap);
+                legend, labels, outputDir, config, colorMap, yMaxMap);
   if (config.fitBuPartial() == true) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet,
-                  simPdf, legend, outputDir, config, colorMap, yMaxMap);
+                  simPdf, legend, labels, outputDir, config, colorMap, yMaxMap);
   }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  legend, outputDir, config, colorMap, yMaxMap);
+                  legend, labels, outputDir, config, colorMap, yMaxMap);
   }
 }
 
