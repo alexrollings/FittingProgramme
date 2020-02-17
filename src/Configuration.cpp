@@ -1267,7 +1267,7 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
 void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
-                                    RooRealVar &orEff, RooRealVar &boxEff,
+                                    // RooRealVar &orEff, RooRealVar &boxEff,
                                     RooRealVar &buDeltaCutEff,
                                     RooRealVar &deltaCutEff, bool misId) {
   // std::cout << EnumToString(mode) << std::endl;
@@ -1277,11 +1277,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string bhString = std::to_string(buDeltaHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_" +
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 
@@ -1304,28 +1304,28 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     TChain chain(ttree.c_str());
     ExtractChain(mode, bachelor, chain);
 
-    double nInitial = chain.GetEntries(cutString.c_str());
-    double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
-                                    "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
-                                    blString + "&&Bu_Delta_M<" + bhString)
-                                       .c_str());
-    double nOr;
+    // double nInitial = chain.GetEntries(cutString.c_str());
+    // double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+    //                                 "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+    //                                 blString + "&&Bu_Delta_M<" + bhString)
+    //                                    .c_str());
+    std::string orString;
     if (fit1D_ == false) {
-      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                              blString + "&&Bu_Delta_M<" + bhString + "))")
-                                 .c_str());
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 "))";
     } else {
-      nOr = chain.GetEntries(
-          (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
-              .c_str());
+      orString = "(Delta_M>" + dlString + "&&Delta_M<" + dhString + ")";
     }
-    double nBuCut = chain.GetEntries(
-        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
-            .c_str());
-    double nDeltaCut = chain.GetEntries(
-        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
-            .c_str());
+    double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
+    double nBuCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
+                          blString + "&&Bu_Delta_M<" + bhString)
+                             .c_str());
+    double nDeltaCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                          dlString + "&&Delta_M<" + dhString)
+                             .c_str());
 
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
@@ -1337,10 +1337,8 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     //             << "\tnDeltaCut = " << nDeltaCut << "\n";
     // }
 
-    double orEffVal = nOr / nInitial;
-    double boxEffVal = nBox / nInitial;
-    double buDeltaCutEffVal = nBuCut / nInitial;
-    double deltaCutEffVal = nDeltaCut / nInitial;
+    double buDeltaCutEffVal = nBuCut / nOr;
+    double deltaCutEffVal = nDeltaCut / nOr;
 
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
@@ -1352,15 +1350,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
 
     std::ofstream outFile;
     outFile.open(txtFileName);
-    outFile << "orEff " + std::to_string(orEffVal) + "\n";
-    outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
     outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
 
-    boxEff.setVal(boxEffVal);
     buDeltaCutEff.setVal(buDeltaCutEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
-    orEff.setVal(orEffVal);
 
     outFile.close();
   } else {
@@ -1380,19 +1374,15 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
           std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
     }
     // Use map key to set correct efficiency values
-    boxEff.setVal(effMap.at("boxEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
-    orEff.setVal(effMap.at("orEff"));
   }
-  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
-  //           << "\t boxEff = " << boxEff.getVal() << "\n"
-  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  // std::cout << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
   //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
 }
 
 void Configuration::SetEfficiencies(
-    Mode mode, Bachelor bachelor, RooRealVar &orEff, RooRealVar &boxEff,
+    Mode mode, Bachelor bachelor, //RooRealVar &orEff, RooRealVar &boxEff,
     RooRealVar &boxPartialEff, RooRealVar &buDeltaCutEff,
     RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff, bool misId) {
   // std::cout << EnumToString(mode) << std::endl;
@@ -1407,11 +1397,11 @@ void Configuration::SetEfficiencies(
   std::string dphString = std::to_string(deltaPartialHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_" +
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 
@@ -1426,39 +1416,27 @@ void Configuration::SetEfficiencies(
     TChain chain(ttree.c_str());
     ExtractChain(mode, bachelor, chain);
 
-    double nInitial = chain.GetEntries(gammaCutString_.c_str());
-    double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
-                                    "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
-                                    blString + "&&Bu_Delta_M<" + bhString)
-                                       .c_str());
-    double nBoxPartial = chain.GetEntries(
-        (cutString + "&&Delta_M>" + dplString + "&&Delta_M<" + dphString +
-         "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
-            .c_str());
-    double nOr;
+    std::string orString;
     if (fit1D_ == false) {
-      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                              "&&Delta_M<" + dhString + ")||(Bu_Delta_M>" +
-                              blString + "&&Bu_Delta_M<" + bhString +
-                              ")||(Delta_M>" + dplString + "&&Delta_M<" +
-                              dphString + "))")
-                                 .c_str());
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
     } else {
-      nOr = chain.GetEntries((cutString + "&&((Delta_M>" + dlString +
-                              "&&Delta_M<" + dhString + ")||(Delta_M>" +
-                              dplString + "&&Delta_M<" + dphString +
-                              "))")
-                                 .c_str());
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
     }
-    double nBuCut = chain.GetEntries(
-        (cutString + "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
-            .c_str());
-    double nDeltaCut = chain.GetEntries(
-        (cutString + "&&Delta_M>" + dlString + "&&Delta_M<" + dhString)
-            .c_str());
+    double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
+    double nBuCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
+                          blString + "&&Bu_Delta_M<" + bhString)
+                             .c_str());
+    double nDeltaCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                          dlString + "&&Delta_M<" + dhString)
+                             .c_str());
     double nDeltaPartialCut =
-        chain.GetEntries((cutString + "&&Delta_M>" + dplString +
-                          "&&Delta_M<" + dphString)
+        chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                          dplString + "&&Delta_M<" + dphString)
                              .c_str());
 
     // if (misId == true &&
@@ -1472,12 +1450,9 @@ void Configuration::SetEfficiencies(
     //             << "\tnDeltaPartialCut = " << nDeltaPartialCut << "\n";
     // }
 
-    double orEffVal = nOr / nInitial;
-    double boxEffVal = nBox / nInitial;
-    double boxPartialEffVal = nBoxPartial / nInitial;
-    double buDeltaCutEffVal = nBuCut / nInitial;
-    double deltaCutEffVal = nDeltaCut / nInitial;
-    double deltaPartialCutEffVal = nDeltaPartialCut / nInitial;
+    double buDeltaCutEffVal = nBuCut / nOr;
+    double deltaCutEffVal = nDeltaCut / nOr;
+    double deltaPartialCutEffVal = nDeltaPartialCut / nOr;
 
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
@@ -1491,17 +1466,11 @@ void Configuration::SetEfficiencies(
 
     std::ofstream outFile;
     outFile.open(txtFileName);
-    outFile << "orEff " + std::to_string(orEffVal) + "\n";
-    outFile << "boxEff " + std::to_string(boxEffVal) + "\n";
-    outFile << "boxPartialEff " + std::to_string(boxPartialEffVal) + "\n";
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEffVal) + "\n";
     outFile << "deltaCutEff " + std::to_string(deltaCutEffVal) + "\n";
     outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEffVal) +
                    "\n";
 
-    boxEff.setVal(boxEffVal);
-    boxPartialEff.setVal(boxPartialEffVal);
-    orEff.setVal(orEffVal);
     buDeltaCutEff.setVal(buDeltaCutEffVal);
     deltaCutEff.setVal(deltaCutEffVal);
     deltaPartialCutEff.setVal(deltaPartialCutEffVal);
@@ -1523,17 +1492,11 @@ void Configuration::SetEfficiencies(
           std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
     }
     // Use map key to set correct efficiency values
-    boxEff.setVal(effMap.at("boxEff"));
-    boxPartialEff.setVal(effMap.at("boxPartialEff"));
     buDeltaCutEff.setVal(effMap.at("buDeltaCutEff"));
     deltaCutEff.setVal(effMap.at("deltaCutEff"));
-    orEff.setVal(effMap.at("orEff"));
     deltaPartialCutEff.setVal(effMap.at("deltaPartialCutEff"));
   }
-  // std::cout << "\t orEff = " << orEff.getVal() << "\n"
-  //           << "\t boxEff = " << boxEff.getVal() << "\n"
-  //           << "\t boxPartialEff = " << boxPartialEff.getVal() << "\n"
-  //           << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
+  // std::cout << "\t buDeltaCutEff = " << buDeltaCutEff.getVal() << "\n"
   //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n"
   //           << "\t deltaPartialCutEff = " << deltaPartialCutEff.getVal() <<
   //           "\n";
