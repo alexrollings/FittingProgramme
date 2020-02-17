@@ -1,4 +1,5 @@
 #pragma once
+#include "BkgYields.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
@@ -6,7 +7,6 @@
 #include "RooAddPdf.h"
 #include "RooArgList.h"
 #include "RooSimultaneous.h"
-#include "BkgYields.h"
 #include "SigYields.h"
 
 class PdfBase {
@@ -198,23 +198,19 @@ class Pdf : public PdfBase {
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
   virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Bu_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0gamma() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_BuPartial_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsReal &N_Delta_Bu2Dst0h_D0gamma() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Delta_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
@@ -237,23 +233,19 @@ class Pdf : public PdfBase {
         .pdfBu_misId_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Bu2Dst0h_D0pi0();
   }
   virtual RooAbsReal &N_Bu_Bu2Dst0h_D0pi0() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Bu_Bu2Dst0h_D0pi0();
   }
   virtual RooAbsReal &N_BuPartial_Bu2Dst0h_D0pi0() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_BuPartial_Bu2Dst0h_D0pi0();
   }
   virtual RooAbsReal &N_Delta_Bu2Dst0h_D0pi0() const {
-    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return SigYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Delta_Bu2Dst0h_D0pi0();
   }
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const {
@@ -280,8 +272,7 @@ class Pdf : public PdfBase {
         .pdfBuPartial_misId_Bu2Dst0h_D0pi0();
   }
   virtual RooAbsReal &N_MisRec() const {
-    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_MisRec();
   }
   virtual RooDstD0BG &pdfDelta_MisRec() const {
@@ -307,8 +298,7 @@ class Pdf : public PdfBase {
         .pdfBuPartial_misId_MisRec();
   }
   virtual RooAbsReal &N_Bu2D0h() const {
-    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_Bu2D0h();
   }
   virtual RooDstD0BG &pdfDelta_Bu2D0h() const {
@@ -334,8 +324,7 @@ class Pdf : public PdfBase {
         .pdfBuPartial_misId_Bu2D0h();
   }
   virtual RooAbsReal &N_PartRec() const {
-    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(
-               uniqueId_)
+    return BkgYields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_PartRec();
   }
   virtual RooDstD0BG &pdfDelta_PartRec() const {
@@ -746,13 +735,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                      ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                  _daughters, _charge))
                         .c_str(),
-                    "(@0/@1)*@2",
+                    "@0*@1",
                     RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                    PdfBase::uniqueId_)
                                    .deltaCutEffMisId_Bu2Dst0h_D0gamma(),
-                               NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                   PdfBase::uniqueId_)
-                                   .orEffMisId_Bu2Dst0h_D0gamma(),
                                *PdfBase::N_misId_Bu2Dst0h_D0gamma_)));
           }
         }
@@ -762,13 +748,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                  ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                              _daughters, _charge))
                     .c_str(),
-                "(@0/@1)*@2",
+                "@0*@1",
                 RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                PdfBase::uniqueId_)
                                .deltaCutEffMisId_Bu2Dst0h_D0pi0(),
-                           NeutralBachelorVars<_neutral, _bachelor>::Get(
-                               PdfBase::uniqueId_)
-                               .orEffMisId_Bu2Dst0h_D0pi0(),
                            *PdfBase::N_misId_Bu2Dst0h_D0pi0_)));
         if (Configuration::Get().fitBuPartial() == true) {
           PdfBase::N_BuPartial_misId_Bu2Dst0h_D0pi0_ =
@@ -777,13 +760,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                    ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                _daughters, _charge))
                       .c_str(),
-                  "(@0/@1)*@2",
+                  "@0*@1",
                   RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                  PdfBase::uniqueId_)
                                  .deltaPartialCutEffMisId_Bu2Dst0h_D0pi0(),
-                             NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                 PdfBase::uniqueId_)
-                                 .orEffMisId_Bu2Dst0h_D0pi0(),
                              *PdfBase::N_misId_Bu2Dst0h_D0pi0_)));
         }
       }
@@ -932,13 +912,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                      ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                  _daughters, _charge))
                         .c_str(),
-                    "(@0/@1)*@2",
+                    "@0*@1",
                     RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                    PdfBase::uniqueId_)
                                    .deltaCutEffMisId_Bu2Dst0h_D0gamma(),
-                               NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                   PdfBase::uniqueId_)
-                                   .orEffMisId_Bu2Dst0h_D0gamma(),
                                *PdfBase::N_misId_Bu2Dst0h_D0gamma_)));
           }
         }
@@ -948,13 +925,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                  ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                              _daughters, _charge))
                     .c_str(),
-                "(@0/@1)*@2",
+                "@0*@1",
                 RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                PdfBase::uniqueId_)
                                .deltaCutEffMisId_Bu2Dst0h_D0pi0(),
-                           NeutralBachelorVars<_neutral, _bachelor>::Get(
-                               PdfBase::uniqueId_)
-                               .orEffMisId_Bu2Dst0h_D0pi0(),
                            *PdfBase::N_misId_Bu2Dst0h_D0pi0_)));
         PdfBase::N_Bu_misId_MisRec_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -962,13 +936,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                     _neutral, _bachelor,
                                                     _daughters, _charge))
                     .c_str(),
-                "(@0/@1)*@2",
+                "@0*@1",
                 RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                PdfBase::uniqueId_)
                                .deltaCutEffMisId_MisRec(),
-                           NeutralBachelorVars<_neutral, _bachelor>::Get(
-                               PdfBase::uniqueId_)
-                               .orEffMisId_MisRec(),
                            *PdfBase::N_misId_MisRec_)));
         PdfBase::N_Bu_misId_Bu2D0h_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -976,13 +947,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                     _neutral, _bachelor,
                                                     _daughters, _charge))
                     .c_str(),
-                "(@0/@1)*@2",
+                "@0*@1",
                 RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                PdfBase::uniqueId_)
                                .deltaCutEffMisId_Bu2D0h(),
-                           NeutralBachelorVars<_neutral, _bachelor>::Get(
-                               PdfBase::uniqueId_)
-                               .orEffMisId_Bu2D0h(),
                            *PdfBase::N_misId_Bu2D0h_)));
         PdfBase::N_Bu_misId_PartRec_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -990,13 +958,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                      _neutral, _bachelor,
                                                      _daughters, _charge))
                     .c_str(),
-                "(@0/@1)*@2",
+                "@0*@1",
                 RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                PdfBase::uniqueId_)
                                .deltaCutEffMisId_PartRec(),
-                           NeutralBachelorVars<_neutral, _bachelor>::Get(
-                               PdfBase::uniqueId_)
-                               .orEffMisId_PartRec(),
                            *PdfBase::N_misId_PartRec_)));
         if (Configuration::Get().fitBuPartial() == true) {
           PdfBase::N_BuPartial_misId_Bu2Dst0h_D0pi0_ =
@@ -1005,13 +970,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                    ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                _daughters, _charge))
                       .c_str(),
-                  "(@0/@1)*@2",
+                  "@0*@1",
                   RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                  PdfBase::uniqueId_)
                                  .deltaPartialCutEffMisId_Bu2Dst0h_D0pi0(),
-                             NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                 PdfBase::uniqueId_)
-                                 .orEffMisId_Bu2Dst0h_D0pi0(),
                              *PdfBase::N_misId_Bu2Dst0h_D0pi0_)));
           PdfBase::N_BuPartial_misId_MisRec_ =
               std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -1019,13 +981,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                    ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                _daughters, _charge))
                       .c_str(),
-                  "(@0/@1)*@2",
+                  "@0*@1",
                   RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                  PdfBase::uniqueId_)
                                  .deltaPartialCutEffMisId_MisRec(),
-                             NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                 PdfBase::uniqueId_)
-                                 .orEffMisId_MisRec(),
                              *PdfBase::N_misId_MisRec_)));
           PdfBase::N_BuPartial_misId_Bu2D0h_ =
               std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -1033,13 +992,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                    ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                _daughters, _charge))
                       .c_str(),
-                  "(@0/@1)*@2",
+                  "@0*@1",
                   RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                  PdfBase::uniqueId_)
                                  .deltaPartialCutEffMisId_Bu2D0h(),
-                             NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                 PdfBase::uniqueId_)
-                                 .orEffMisId_Bu2D0h(),
                              *PdfBase::N_misId_Bu2D0h_)));
           PdfBase::N_BuPartial_misId_PartRec_ =
               std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -1047,13 +1003,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                    ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                _daughters, _charge))
                       .c_str(),
-                  "(@0/@1)*@2",
+                  "@0*@1",
                   RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                                  PdfBase::uniqueId_)
                                  .deltaPartialCutEffMisId_PartRec(),
-                             NeutralBachelorVars<_neutral, _bachelor>::Get(
-                                 PdfBase::uniqueId_)
-                                 .orEffMisId_PartRec(),
                              *PdfBase::N_misId_PartRec_)));
         }
       }
@@ -1063,13 +1016,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                      _neutral, _bachelor,
                                                      _daughters, _charge))
                   .c_str(),
-              "(@0/@1)*@2",
+              "@0*@1",
               RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                              PdfBase::uniqueId_)
                              .buDeltaCutEffMisId_MisRec(),
-                         NeutralBachelorVars<_neutral, _bachelor>::Get(
-                             PdfBase::uniqueId_)
-                             .orEffMisId_MisRec(),
                          *PdfBase::N_misId_MisRec_)));
       PdfBase::N_Delta_misId_Bu2D0h_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -1077,13 +1027,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                      _neutral, _bachelor,
                                                      _daughters, _charge))
                   .c_str(),
-              "(@0/@1)*@2",
+              "@0*@1",
               RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                              PdfBase::uniqueId_)
                              .buDeltaCutEffMisId_Bu2D0h(),
-                         NeutralBachelorVars<_neutral, _bachelor>::Get(
-                             PdfBase::uniqueId_)
-                             .orEffMisId_Bu2D0h(),
                          *PdfBase::N_misId_Bu2D0h_)));
       PdfBase::N_Delta_misId_PartRec_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -1091,13 +1038,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                       _neutral, _bachelor,
                                                       _daughters, _charge))
                   .c_str(),
-              "(@0/@1)*@2",
+              "@0*@1",
               RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                              PdfBase::uniqueId_)
                              .buDeltaCutEffMisId_PartRec(),
-                         NeutralBachelorVars<_neutral, _bachelor>::Get(
-                             PdfBase::uniqueId_)
-                             .orEffMisId_PartRec(),
                          *PdfBase::N_misId_PartRec_)));
       break;
   }
@@ -1108,13 +1052,10 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
              ComposeName(PdfBase::uniqueId_, _neutral, _bachelor, _daughters,
                          _charge))
                 .c_str(),
-            "(@0/@1)*@2",
+            "@0*@1",
             RooArgList(NeutralBachelorVars<_neutral, _bachelor>::Get(
                            PdfBase::uniqueId_)
                            .buDeltaCutEffMisId_Bu2Dst0h_D0gamma(),
-                       NeutralBachelorVars<_neutral, _bachelor>::Get(
-                           PdfBase::uniqueId_)
-                           .orEffMisId_Bu2Dst0h_D0gamma(),
                        *PdfBase::N_misId_Bu2Dst0h_D0gamma_)));
   }
   PdfBase::N_Delta_misId_Bu2Dst0h_D0pi0_ =
@@ -1123,11 +1064,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                          _neutral, _bachelor,
                                                          _daughters, _charge))
               .c_str(),
-          "(@0/@1)*@2",
+          "@0*@1",
           RooArgList(
               NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
                   .buDeltaCutEffMisId_Bu2Dst0h_D0pi0(),
-              NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-                  .orEffMisId_Bu2Dst0h_D0pi0(),
               *PdfBase::N_misId_Bu2Dst0h_D0pi0_)));
 }
