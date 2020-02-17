@@ -27,7 +27,7 @@ Configuration::Configuration()
       deltaHigh_(170.0),
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
-      initYieldFAVSignal_(5.6781e+04),
+      initYieldFAVSignal_(60000),
       pidEffK_("pidEffK", "", 0.98 * 6.8493e-01),
       pidEffPi_("pidEffPi", "", 0.996),
       gammaCutString_(

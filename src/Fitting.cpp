@@ -2992,7 +2992,7 @@ int main(int argc, char **argv) {
   if (config.neutral() == Neutral::pi0) {
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
-    config.initYieldFAVSignal() = 1.3346e+04;
+    config.initYieldFAVSignal() = 15000;
   }
 
   // Define categories AFTER neutral and SplitByCharge have been set in
