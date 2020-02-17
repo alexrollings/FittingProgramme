@@ -2691,44 +2691,30 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
 
 void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
                    Mode mode) {
-  double boxEff, orEff, buDeltaCutEff, deltaCutEff;
+  double buDeltaCutEff, deltaCutEff;
   {
-    RooRealVar orEffRRV("orEffRRV", "", 1);
-    RooRealVar boxEffRRV("boxEffRRV", "", 1);
     RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
     RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
 
     if (config.fitBuPartial() == true) {
-      RooRealVar boxPartialEffRRV("boxPartialEffRRV", "", 1);
       RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
-      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
-                             boxPartialEffRRV, buDeltaCutEffRRV, deltaCutEffRRV,
+      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV, deltaCutEffRRV,
                              deltaPartialCutEffRRV, false);
-      double boxPartialEff = boxPartialEffRRV.getVal();
       double deltaPartialCutEff = deltaPartialCutEffRRV.getVal();
-      tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
-                  &boxPartialEff,
-                  ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
       tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
                   &deltaPartialCutEff,
                   ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
       tree.Fill();
     } else {
-      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+      config.SetEfficiencies(mode, Bachelor::pi, 
                              buDeltaCutEffRRV, deltaCutEffRRV, false);
     }
 
-    orEff = orEffRRV.getVal();
-    boxEff = boxEffRRV.getVal();
     buDeltaCutEff = buDeltaCutEffRRV.getVal();
     deltaCutEff = deltaCutEffRRV.getVal();
   }
 
   outputFile.cd();
-  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
-              ("orEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
-              ("boxEff_" + EnumToString(mode) + "/D").c_str());
   tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &buDeltaCutEff,
               ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
   tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &deltaCutEff,
