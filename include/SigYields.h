@@ -231,11 +231,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
             ("N_Delta_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
                 .c_str(),
-            "(@0/@1)*@2*@3",
+            "@0*@1*@2",
             RooArgList(
                 NeutralVars<neutral>::Get(uniqueId)
                     .buDeltaCutEffBu2Dst0h_D0gamma(),
-                NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                 *N_Bu2Dst0h_D0gamma_,
                 Configuration::Get().GetPidEff(bachelor))));
   }
@@ -243,10 +242,9 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
       ("N_Delta_Bu2Dst0h_D0pi0_" +
        ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
           .c_str(),
-      "(@0/@1)*@2*@3",
+      "@0*@1*@2",
       RooArgList(
           NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
-          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
           *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
 
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
@@ -258,20 +256,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
           ("N_Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
               *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor))));
     }
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
-            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
             *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ =
@@ -279,11 +275,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0gamma_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0gamma(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                   *N_Bu2Dst0h_D0gamma_,
                   Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2Dst0h_D0pi0_ =
@@ -291,11 +286,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0pi0_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::kpi, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0pi0(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
                   *N_Bu2Dst0h_D0pi0_,
                   Configuration::Get().GetPidEff(bachelor))));
     }
@@ -383,20 +377,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
       ("N_Delta_Bu2Dst0h_D0pi0_" +
        ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
           .c_str(),
-      "(@0/@1)*@2*@3",
+      "@0*@1*@2",
       RooArgList(
           NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
-          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
           *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
   if (Configuration::Get().fit1D() == false) {
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
-            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
             *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
   } else {
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -457,11 +449,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
             ("N_Delta_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
                 .c_str(),
-            "(@0/@1)*@2*@3",
+            "@0*@1*@2",
             RooArgList(
                 NeutralVars<neutral>::Get(uniqueId)
                     .buDeltaCutEffBu2Dst0h_D0gamma(),
-                NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                 *N_Bu2Dst0h_D0gamma_,
                 Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fit1D() == false ||
@@ -470,10 +461,9 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
           ("N_Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
               *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor))));
       if (Configuration::Get().fitBuPartial() == true) {
         N_BuPartial_Bu2Dst0h_D0gamma_ =
@@ -482,11 +472,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
                  ComposeName(uniqueId, neutral, bachelor, Daughters::pik,
                              charge))
                     .c_str(),
-                "(@0/@1)*@2*@3",
+                "@0*@1*@2",
                 RooArgList(
                     NeutralVars<neutral>::Get(uniqueId)
                         .deltaPartialCutEffBu2Dst0h_D0gamma(),
-                    NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                     *N_Bu2Dst0h_D0gamma_,
                     Configuration::Get().GetPidEff(bachelor))));
         N_BuPartial_Bu2Dst0h_D0pi0_ =
@@ -495,11 +484,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
                  ComposeName(uniqueId, neutral, bachelor, Daughters::pik,
                              charge))
                     .c_str(),
-                "(@0/@1)*@2*@3",
+                "@0*@1*@2",
                 RooArgList(
                     NeutralVars<neutral>::Get(uniqueId)
                         .deltaPartialCutEffBu2Dst0h_D0pi0(),
-                    NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
                     *N_Bu2Dst0h_D0pi0_,
                     Configuration::Get().GetPidEff(bachelor))));
       }
@@ -608,11 +596,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
             ("N_Delta_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
                 .c_str(),
-            "(@0/@1)*@2*@3",
+            "@0*@1*@2",
             RooArgList(
                 NeutralVars<neutral>::Get(uniqueId)
                     .buDeltaCutEffBu2Dst0h_D0gamma(),
-                NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                 *N_Bu2Dst0h_D0gamma_,
                 Configuration::Get().GetPidEff(bachelor))));
   }
@@ -620,10 +607,9 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
       ("N_Delta_Bu2Dst0h_D0pi0_" +
        ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
           .c_str(),
-      "(@0/@1)*@2*@3",
+      "@0*@1*@2",
       RooArgList(
           NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
-          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
           *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
 
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
@@ -635,20 +621,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
           ("N_Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
               *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor))));
     }
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
-            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
             *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ =
@@ -656,11 +640,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0gamma_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0gamma(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                   *N_Bu2Dst0h_D0gamma_,
                   Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2Dst0h_D0pi0_ =
@@ -668,11 +651,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0pi0_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::kk, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0pi0(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
                   *N_Bu2Dst0h_D0pi0_,
                   Configuration::Get().GetPidEff(bachelor))));
     }
@@ -789,11 +771,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
             ("N_Delta_Bu2Dst0h_D0gamma_" +
              ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
                 .c_str(),
-            "(@0/@1)*@2*@3",
+            "@0*@1*@2",
             RooArgList(
                 NeutralVars<neutral>::Get(uniqueId)
                     .buDeltaCutEffBu2Dst0h_D0gamma(),
-                NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                 *N_Bu2Dst0h_D0gamma_,
                 Configuration::Get().GetPidEff(bachelor))));
   }
@@ -801,10 +782,9 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
       ("N_Delta_Bu2Dst0h_D0pi0_" +
        ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
           .c_str(),
-      "(@0/@1)*@2*@3",
+      "@0*@1*@2",
       RooArgList(
           NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0(),
-          NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
           *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
 
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
@@ -816,20 +796,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
           ("N_Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0gamma(),
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
               *N_Bu2Dst0h_D0gamma_, Configuration::Get().GetPidEff(bachelor))));
     }
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0(),
-            NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
             *N_Bu2Dst0h_D0pi0_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ =
@@ -837,11 +815,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0gamma_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0gamma(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0gamma(),
                   *N_Bu2Dst0h_D0gamma_,
                   Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2Dst0h_D0pi0_ =
@@ -849,11 +826,10 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
               ("N_BuPartial_Bu2Dst0h_D0pi0_" +
                ComposeName(uniqueId, neutral, bachelor, Daughters::pipi, charge))
                   .c_str(),
-              "(@0/@1)*@2*@3",
+              "@0*@1*@2",
               RooArgList(
                   NeutralVars<neutral>::Get(uniqueId)
                       .deltaPartialCutEffBu2Dst0h_D0pi0(),
-                  NeutralVars<neutral>::Get(uniqueId).orEffBu2Dst0h_D0pi0(),
                   *N_Bu2Dst0h_D0pi0_,
                   Configuration::Get().GetPidEff(bachelor))));
     }
