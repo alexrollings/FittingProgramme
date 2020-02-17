@@ -97,7 +97,6 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
               .c_str(),
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
-              NeutralVars<neutral>::Get(uniqueId).orEffMisRec().getVal() *
               BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -106,9 +105,8 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           ("N_Delta_MisRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffMisRec(),
-                     NeutralVars<neutral>::Get(uniqueId).orEffMisRec(),
                      *N_MisRec_, Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_MisRec_(nullptr),
       N_BuPartial_MisRec_(nullptr),
@@ -119,7 +117,6 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
               .c_str(),
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h().getVal() *
               BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -128,9 +125,8 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           ("N_Delta_Bu2D0h_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h(),
-                     NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(),
                      *N_Bu2D0h_, Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_Bu2D0h_(nullptr),
       N_BuPartial_Bu2D0h_(nullptr),
@@ -141,7 +137,6 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
               .c_str(),
           "",
           NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
-              NeutralVars<neutral>::Get(uniqueId).orEffPartRec().getVal() *
               BachelorDaughtersVars<bachelor, daughters>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -150,9 +145,8 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           ("N_Delta_PartRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffPartRec(),
-                     NeutralVars<neutral>::Get(uniqueId).orEffPartRec(),
                      *N_PartRec_, Configuration::Get().GetPidEff(bachelor)))),
       N_Bu_PartRec_(nullptr),
       N_BuPartial_PartRec_(nullptr),
@@ -174,53 +168,50 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
         ("N_Bu_MisRec_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(NeutralVars<neutral>::Get(uniqueId).deltaCutEffMisRec(),
-                   NeutralVars<neutral>::Get(uniqueId).orEffMisRec(),
                    *N_MisRec_, Configuration::Get().GetPidEff(bachelor))));
     N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_Bu2D0h_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2D0h(),
-                   NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(),
                    *N_Bu2D0h_, Configuration::Get().GetPidEff(bachelor))));
     N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu_PartRec_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(NeutralVars<neutral>::Get(uniqueId).deltaCutEffPartRec(),
-                   NeutralVars<neutral>::Get(uniqueId).orEffPartRec(),
                    *N_PartRec_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_MisRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec(),
-              NeutralVars<neutral>::Get(uniqueId).orEffMisRec(), *N_MisRec_,
+              *N_MisRec_,
               Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_Bu2D0h_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h(),
-              NeutralVars<neutral>::Get(uniqueId).orEffBu2D0h(), *N_Bu2D0h_,
+              *N_Bu2D0h_,
               Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_PartRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec(),
-              NeutralVars<neutral>::Get(uniqueId).orEffPartRec(), *N_PartRec_,
+              *N_PartRec_,
               Configuration::Get().GetPidEff(bachelor))));
     }
   } else {
@@ -319,21 +310,17 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
         ("N_Delta_Bs2Dst0Kpi_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                        .buDeltaCutEffBs2Dst0Kpi(),
-                   NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                       .orEffBs2Dst0Kpi(),
                    *N_Bs2Dst0Kpi_, Configuration::Get().GetPidEff(bachelor))));
     N_Delta_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Delta_Bs2D0Kpi_" +
          ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
-        "(@0/@1)*@2*@3",
+        "@0*@1*@2",
         RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                        .buDeltaCutEffBs2D0Kpi(),
-                   NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                       .orEffBs2D0Kpi(),
                    *N_Bs2D0Kpi_, Configuration::Get().GetPidEff(bachelor))));
     if (Configuration::Get().fit1D() == false ||
         Configuration::Get().fitBuPartial() == true) {
@@ -341,22 +328,18 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           ("N_Bu_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                          .deltaCutEffBs2Dst0Kpi(),
-                     NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                         .orEffBs2Dst0Kpi(),
                      *N_Bs2Dst0Kpi_,
                      Configuration::Get().GetPidEff(bachelor))));
       N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_Bu_Bs2D0Kpi_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0/@1)*@2*@3",
+          "@0*@1*@2",
           RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                          .deltaCutEffBs2D0Kpi(),
-                     NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                         .orEffBs2D0Kpi(),
                      *N_Bs2D0Kpi_, Configuration::Get().GetPidEff(bachelor))));
       if (Configuration::Get().fitBuPartial() == true) {
         N_BuPartial_Bs2Dst0Kpi_ =
@@ -364,11 +347,9 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
                 ("N_BuPartial_Bs2Dst0Kpi_" +
                  ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                     .c_str(),
-                "(@0/@1)*@2*@3",
+                "@0*@1*@2",
                 RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                                .deltaPartialCutEffBs2Dst0Kpi(),
-                           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                               .orEffBs2Dst0Kpi(),
                            *N_Bs2Dst0Kpi_,
                            Configuration::Get().GetPidEff(bachelor))));
         N_BuPartial_Bs2D0Kpi_ =
@@ -376,11 +357,9 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
                 ("N_BuPartial_Bs2D0Kpi_" +
                  ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                     .c_str(),
-                "(@0/@1)*@2*@3",
+                "@0*@1*@2",
                 RooArgList(NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
                                .deltaPartialCutEffBs2D0Kpi(),
-                           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
-                               .orEffBs2D0Kpi(),
                            *N_Bs2D0Kpi_,
                            Configuration::Get().GetPidEff(bachelor))));
       }
