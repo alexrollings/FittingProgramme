@@ -330,16 +330,6 @@ int main(int argc, char *argv[]) {
       (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
-  TTree tree("tree", "");
-  if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
-    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
-  }
-  if (config.neutral() == Neutral::gamma) {
-    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-  }
-  outputFile.cd();
-  tree.Write();
-
   // Loop over params, create histogram for each and fill with values from
   // result
   for (double i = 0; i < nParams; ++i) {
