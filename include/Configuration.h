@@ -112,13 +112,11 @@ class Configuration {
   bool &blindFit() { return blindFit_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
-  void SetEfficiencies(Mode mode, Bachelor bachelor, //RooRealVar &orEff,
-                       /* RooRealVar &boxEff, */ RooRealVar &buDeltaCutEff,
+  void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &buDeltaCutEff,
                        RooRealVar &deltaCutEff, bool misId);
-  void SetEfficiencies(Mode mode, Bachelor bachelor,// RooRealVar &orEff,
-                       // RooRealVar &boxEff, RooRealVar &boxPartialEff,
-                       RooRealVar &buDeltaCutEff, RooRealVar &deltaCutEff,
-                       RooRealVar &deltaPartialCutEff, bool misId);
+  void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &buDeltaCutEff,
+                       RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff,
+                       bool misId);
   double ReturnACPInit(Neutral neutral, Bachelor bachelor); 
 
  private:

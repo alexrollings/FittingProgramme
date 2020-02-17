@@ -28,14 +28,15 @@ Configuration::Configuration()
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
       initYieldFAVSignal_(5.6781e+04),
-      pidEffK_("pidEffK", "", 0.98*6.8493e-01),
+      pidEffK_("pidEffK", "", 0.98 * 6.8493e-01),
       pidEffPi_("pidEffPi", "", 0.996),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
       pi0CutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
-          "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
+          "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_"
+          "M<5200"),
       fit1D_(false),
       runToy_(false),
       splitByCharge_(false),
@@ -1267,7 +1268,6 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
 void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
-                                    // RooRealVar &orEff, RooRealVar &boxEff,
                                     RooRealVar &buDeltaCutEff,
                                     RooRealVar &deltaCutEff, bool misId) {
   // std::cout << EnumToString(mode) << std::endl;
@@ -1277,9 +1277,9 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string bhString = std::to_string(buDeltaHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_misId_" +
-                  EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
-                  ReturnBoxString() + ".txt";
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) +
+                  "_misId_" + EnumToString(mode) + "_as_" +
+                  EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
   } else {
     txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
@@ -1304,11 +1304,6 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     TChain chain(ttree.c_str());
     ExtractChain(mode, bachelor, chain);
 
-    // double nInitial = chain.GetEntries(cutString.c_str());
-    // double nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
-    //                                 "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
-    //                                 blString + "&&Bu_Delta_M<" + bhString)
-    //                                    .c_str());
     std::string orString;
     if (fit1D_ == false) {
       orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
@@ -1331,7 +1326,6 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
     //      mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
     //   std::cout << EnumToString(mode) << ":\n"
-    //             << "\tnInitial = " << nInitial << "\n"
     //             << "\tnOr = " << nOr << "\n"
     //             << "\tnBuCut = " << nBuCut << "\n"
     //             << "\tnDeltaCut = " << nDeltaCut << "\n";
@@ -1343,8 +1337,7 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
     //      mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
-    //   std::cout << "\tOrEff = " << orEffVal << "\n"
-    //             << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
+    //   std::cout << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
     //             << "\tDeltaCutEff = " << deltaCutEffVal << "\n";
     // }
 
@@ -1381,10 +1374,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   //           << "\t deltaCutEff = " << deltaCutEff.getVal() << "\n";
 }
 
-void Configuration::SetEfficiencies(
-    Mode mode, Bachelor bachelor, //RooRealVar &orEff, RooRealVar &boxEff,
-    RooRealVar &boxPartialEff, RooRealVar &buDeltaCutEff,
-    RooRealVar &deltaCutEff, RooRealVar &deltaPartialCutEff, bool misId) {
+void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
+                                    RooRealVar &buDeltaCutEff,
+                                    RooRealVar &deltaCutEff,
+                                    RooRealVar &deltaPartialCutEff,
+                                    bool misId) {
   // std::cout << EnumToString(mode) << std::endl;
   if (neutral() != Neutral::gamma) {
     throw std::runtime_error("Cannot set partial efficiencies for π0 mode");
@@ -1397,9 +1391,9 @@ void Configuration::SetEfficiencies(
   std::string dphString = std::to_string(deltaPartialHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_misId_" +
-                  EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
-                  ReturnBoxString() + ".txt";
+    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) +
+                  "_misId_" + EnumToString(mode) + "_as_" +
+                  EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
   } else {
     txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
@@ -1443,7 +1437,6 @@ void Configuration::SetEfficiencies(
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
     //      mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
     //   std::cout << EnumToString(mode) << ":\n"
-    //             << "\tnInitial = " << nInitial << "\n"
     //             << "\tnOr = " << nOr << "\n"
     //             << "\tnBuCut = " << nBuCut << "\n"
     //             << "\tnDeltaCut = " << nDeltaCut << "\n"
@@ -1457,8 +1450,7 @@ void Configuration::SetEfficiencies(
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
     //      mode == Mode::Bu2Dst0K_D0gamma || mode == Mode::Bu2Dst0K_D0pi0)) {
-    //   std::cout << "\tOrEff = " << orEffVal << "\n"
-    //             << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
+    //   std::cout << "\tBuDeltaCutEff = " << buDeltaCutEffVal << "\n"
     //             << "\tDeltaCutEff = " << deltaCutEffVal << "\n"
     //             << "\tDeltaPartialCutEff = " << deltaPartialCutEffVal <<
     //             "\n";
