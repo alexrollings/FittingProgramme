@@ -55,6 +55,43 @@ RooArgList ReturnInitPars(bool dataToy,
   }
 }
 
+void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
+                   Mode mode) {
+  double boxEff, orEff;
+  {
+    RooRealVar orEffRRV("orEffRRV", "", 1);
+    RooRealVar boxEffRRV("boxEffRRV", "", 1);
+    RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
+    RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
+
+    if (config.fitBuPartial() == true) {
+      RooRealVar boxPartialEffRRV("boxPartialEffRRV", "", 1);
+      RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             boxPartialEffRRV, buDeltaCutEffRRV, deltaCutEffRRV,
+                             deltaPartialCutEffRRV, false);
+      double boxPartialEff = boxPartialEffRRV.getVal();
+      tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
+                  &boxPartialEff,
+                  ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
+      tree.Fill();
+    } else {
+      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
+                             buDeltaCutEffRRV, deltaCutEffRRV, false);
+    }
+
+    orEff = orEffRRV.getVal();
+    boxEff = boxEffRRV.getVal();
+  }
+
+  outputFile.cd();
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Fill();
+}
+
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
   std::string outputDir;
@@ -330,6 +367,15 @@ int main(int argc, char *argv[]) {
       (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
+  TTree tree("tree", "");
+  if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+  }
+  if (config.neutral() == Neutral::gamma) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+  }
+  outputFile.cd();
+  tree.Write();
   // Loop over params, create histogram for each and fill with values from
   // result
   for (double i = 0; i < nParams; ++i) {
