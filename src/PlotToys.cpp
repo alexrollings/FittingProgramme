@@ -55,43 +55,6 @@ RooArgList ReturnInitPars(bool dataToy,
   }
 }
 
-void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
-                   Mode mode) {
-  double boxEff, orEff;
-  {
-    RooRealVar orEffRRV("orEffRRV", "", 1);
-    RooRealVar boxEffRRV("boxEffRRV", "", 1);
-    RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
-    RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
-
-    if (config.fitBuPartial() == true) {
-      RooRealVar boxPartialEffRRV("boxPartialEffRRV", "", 1);
-      RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
-      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
-                             boxPartialEffRRV, buDeltaCutEffRRV, deltaCutEffRRV,
-                             deltaPartialCutEffRRV, false);
-      double boxPartialEff = boxPartialEffRRV.getVal();
-      tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
-                  &boxPartialEff,
-                  ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
-      tree.Fill();
-    } else {
-      config.SetEfficiencies(mode, Bachelor::pi, orEffRRV, boxEffRRV,
-                             buDeltaCutEffRRV, deltaCutEffRRV, false);
-    }
-
-    orEff = orEffRRV.getVal();
-    boxEff = boxEffRRV.getVal();
-  }
-
-  outputFile.cd();
-  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
-              ("orEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
-              ("boxEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Fill();
-}
-
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
   std::string outputDir;
@@ -145,8 +108,8 @@ int main(int argc, char *argv[]) {
 
     std::string inputFile;
     if (!args("inputFile", inputFile)) {
-      std::cerr
-          << "Pass name of file containing comma separated list of root files.\n";
+      std::cerr << "Pass name of file containing comma separated list of root "
+                   "files.\n";
       return 1;
     }
     std::ifstream inStream(inputFile);
@@ -230,21 +193,23 @@ int main(int argc, char *argv[]) {
     }
     auto result = std::unique_ptr<RooFitResult>(
         dynamic_cast<RooFitResult *>(file->FindObjectAny("ToyResult")));
-    if (result == nullptr) {
-      throw std::runtime_error("Could not extract Result from " + filename);
-    } else {
-      resultVec.emplace_back(*result.get());
-      // std::cout << "Extracted Result from " << filename << "\n";
-    }
     std::unique_ptr<RooFitResult> dataResult;
-    if (dataToy == true) {
-      dataResult = std::unique_ptr<RooFitResult>(
-          dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
-      if (dataResult == nullptr) {
-        throw std::runtime_error("Could not extract DataFitResult from " +
-                                 filename);
-      } else {
-        dataResultVec.emplace_back(*dataResult.get());
+    if (result == nullptr) {
+      // throw std::runtime_error("Could not extract Result from " + filename);
+      continue;
+    } else {
+      if (dataToy == true) {
+        dataResult = std::unique_ptr<RooFitResult>(
+            dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
+        if (dataResult == nullptr) {
+          // throw std::runtime_error("Could not extract DataFitResult from " +
+          //                          filename);
+          continue;
+        } else {
+          resultVec.emplace_back(*result.get());
+          dataResultVec.emplace_back(*dataResult.get());
+          // std::cout << "Extracted Result from " << filename << "\n";
+        }
         // std::cout << "Extracted Result from " << filename << "\n";
       }
     }
@@ -365,16 +330,6 @@ int main(int argc, char *argv[]) {
       (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
-  TTree tree("tree", "");
-  if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
-    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
-  }
-  if (config.neutral() == Neutral::gamma) {
-    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-  }
-  outputFile.cd();
-  tree.Write();
-
   // Loop over params, create histogram for each and fill with values from
   // result
   for (double i = 0; i < nParams; ++i) {
@@ -402,10 +357,10 @@ int main(int argc, char *argv[]) {
     TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
                  errMin[i] - errRange / 5, errMax[i] + errRange / 5);
     double pullRange = pullMax[i] - pullMin[i];
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
-                  // round(resultVec.size()/10),
-                  pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
-    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -5, 5);
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
+    //               // round(resultVec.size()/10),
+    //               pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
     for (double j = 0; j < round(resultVec.size() / 5); ++j) {
       initValHist.Fill(initValVec[j][i]);
       valHist.Fill(valVec[j][i]);
@@ -413,99 +368,16 @@ int main(int argc, char *argv[]) {
       pullHist.Fill(pullVec[j][i]);
     }
 
-    TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1500, 500);
-    varCanvas.Divide(3, 1);
     // Create RRVs for each parameter's value, error and pull
     // Make into function and pass relevant histogram
-    RooRealVar val(("val_" + paramName).c_str(), "",
-                   valHist.GetXaxis()->GetXmin(),
-                   valHist.GetXaxis()->GetXmax());
-    RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
-                      RooFit::Import(valHist));
-    RooRealVar valMean(("valMean_" + paramName).c_str(), "",  // initialVec[i],
-                       val.getMin() - (val.getMax() - val.getMin()),
-                       val.getMax() + (val.getMax() - val.getMin()));
-    RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
-                        (val.getMax() - val.getMin()) / 5, 0,
-                        val.getMax() - val.getMin());
-    RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
-                        valSigma);
-    auto valResult =
-        std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
-    valResult->Print("v");
-    valResult->SetName(("Result_Val_" + paramName).c_str());
-    valResult->Write();
-    std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
-    valFrame->GetXaxis()->SetTitle(paramName.c_str());
-    valDH.plotOn(valFrame.get());
-    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed),
-                   RooFit::LineWidth(2));
-    valDH.plotOn(valFrame.get());
-    varCanvas.cd(1);
-    valFrame->Draw();
 
-    auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
-    blankHist->SetLineColor(kWhite);
-    TLegend valLegend(0.5, 0.78, 0.85, 0.88);
-    valLegend.SetTextSize(0.03);
-    valLegend.SetLineColor(kWhite);
-    std::stringstream valMeanString, valSigmaString;
-    valMeanString << "#mu = " << to_string_with_precision(valMean.getVal());
-    valMeanString << " #pm "
-                  << to_string_with_precision(
-                         valMean.getPropagatedError(*valResult.get()));
-    valSigmaString << "#sigma = "
-                   << to_string_with_precision(valSigma.getVal());
-    valSigmaString << " #pm "
-                   << to_string_with_precision(
-                          valSigma.getPropagatedError(*valResult.get()));
-    valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
-    valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
-    valLegend.Draw("same");
+    TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1200, 1000);
 
-    RooRealVar err(("err_" + paramName).c_str(), "",
-                   errHist.GetXaxis()->GetXmin(),
-                   errHist.GetXaxis()->GetXmax());
-    RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
-                      RooFit::Import(errHist));
-    RooRealVar errMean(("errMean_" + paramName).c_str(), "",
-                       err.getMin() + (err.getMax() - err.getMin()) / 2,
-                       err.getMin(), err.getMax());
-    RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
-                        (err.getMax() - err.getMin()) / 5, 0,
-                        err.getMax() - err.getMin());
-    RooGaussian errGaus(("errGauss_" + paramName).c_str(), "", err, errMean,
-                        errSigma);
-    auto errResult =
-        std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
-    errResult->Print("v");
-    errResult->SetName(("Result_Err_" + paramName).c_str());
-    errResult->Write();
-    std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
-    errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
-    errDH.plotOn(errFrame.get());
-    errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed),
-                   RooFit::LineWidth(2));
-    errDH.plotOn(errFrame.get());
-    varCanvas.cd(2);
-    errFrame->Draw();
-
-    TLegend errLegend(0.5, 0.78, 0.85, 0.88);
-    errLegend.SetTextSize(0.03);
-    errLegend.SetLineColor(kWhite);
-    std::stringstream errMeanString, errSigmaString;
-    errMeanString << "#mu = " << to_string_with_precision(errMean.getVal());
-    errMeanString << " #pm "
-                  << to_string_with_precision(
-                         errMean.getPropagatedError(*errResult.get()));
-    errSigmaString << "#sigma = "
-                   << to_string_with_precision(errSigma.getVal());
-    errSigmaString << " #pm "
-                   << to_string_with_precision(
-                          errSigma.getPropagatedError(*errResult.get()));
-    errLegend.AddEntry(blankHist.get(), errMeanString.str().c_str(), "l");
-    errLegend.AddEntry(blankHist.get(), errSigmaString.str().c_str(), "l");
-    errLegend.Draw("same");
+    if (config.blindFit() == false) {
+      varCanvas.SetCanvasSize(1500, 500);
+      varCanvas.Divide(3, 1);
+      varCanvas.cd(1);
+    }
 
     RooRealVar pull(("pull_" + paramName).c_str(), "",
                     pullHist.GetXaxis()->GetXmin(),
@@ -530,10 +402,15 @@ int main(int argc, char *argv[]) {
     pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed),
                     RooFit::LineWidth(2));
     pullDH.plotOn(pullFrame.get());
-    varCanvas.cd(3);
     pullFrame->Draw();
 
-    TLegend pullLegend(0.55, 0.78, 0.85, 0.88);
+    auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
+    blankHist->SetLineColor(kWhite);
+    TLegend pullLegend(0.6, 0.78, 0.88, 0.88);
+    if (config.blindFit() == false) {
+      pullLegend.SetX1(0.5);
+      pullLegend.SetX2(0.85);
+    }
     pullLegend.SetTextSize(0.03);
     pullLegend.SetLineColor(kWhite);
     std::stringstream pullMeanString, pullSigmaString;
@@ -550,11 +427,112 @@ int main(int argc, char *argv[]) {
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
 
-    varCanvas.SaveAs((outputDir + "/plots/" + config.ReturnBoxString() + "_" +
-                      paramName + "_ValErrPull.pdf")
+    // Initialise frame and legend outside of if satement so that pointer exists
+    // outside scope (or not plotted)
+    RooRealVar val(("val_" + paramName).c_str(), "",
+                   valHist.GetXaxis()->GetXmin(),
+                   valHist.GetXaxis()->GetXmax());
+    std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
+    TLegend valLegend(0.5, 0.78, 0.85, 0.88);
+
+    RooRealVar err(("err_" + paramName).c_str(), "",
+                   errHist.GetXaxis()->GetXmin(),
+                   errHist.GetXaxis()->GetXmax());
+    std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
+    TLegend errLegend(0.5, 0.78, 0.85, 0.88);
+
+    if (config.blindFit() == false) {
+      RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
+                        RooFit::Import(valHist));
+      RooRealVar valMean(("valMean_" + paramName).c_str(),
+                         "",  // initialVec[i],
+                         val.getMin() - (val.getMax() - val.getMin()),
+                         val.getMax() + (val.getMax() - val.getMin()));
+      RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
+                          (val.getMax() - val.getMin()) / 5, 0,
+                          val.getMax() - val.getMin());
+      RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
+                          valSigma);
+      auto valResult =
+          std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
+      valResult->Print("v");
+      valResult->SetName(("Result_Val_" + paramName).c_str());
+      valResult->Write();
+      valFrame->GetXaxis()->SetTitle(paramName.c_str());
+      valDH.plotOn(valFrame.get());
+      valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed),
+                     RooFit::LineWidth(2));
+      valDH.plotOn(valFrame.get());
+      varCanvas.cd(2);
+      valFrame->Draw();
+
+      valLegend.SetTextSize(0.03);
+      valLegend.SetLineColor(kWhite);
+      std::stringstream valMeanString, valSigmaString;
+      valMeanString << "#mu = " << to_string_with_precision(valMean.getVal());
+      valMeanString << " #pm "
+                    << to_string_with_precision(
+                           valMean.getPropagatedError(*valResult.get()));
+      valSigmaString << "#sigma = "
+                     << to_string_with_precision(valSigma.getVal());
+      valSigmaString << " #pm "
+                     << to_string_with_precision(
+                            valSigma.getPropagatedError(*valResult.get()));
+      valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
+      valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
+      valLegend.Draw("same");
+
+      RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
+                        RooFit::Import(errHist));
+      RooRealVar errMean(("errMean_" + paramName).c_str(), "",
+                         err.getMin() + (err.getMax() - err.getMin()) / 2,
+                         err.getMin(), err.getMax());
+      RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
+                          (err.getMax() - err.getMin()) / 5, 0,
+                          err.getMax() - err.getMin());
+      RooGaussian errGaus(("errGauss_" + paramName).c_str(), "", err, errMean,
+                          errSigma);
+      auto errResult =
+          std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
+      errResult->Print("v");
+      errResult->SetName(("Result_Err_" + paramName).c_str());
+      errResult->Write();
+      errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
+      errDH.plotOn(errFrame.get());
+      errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed),
+                     RooFit::LineWidth(2));
+      errDH.plotOn(errFrame.get());
+      varCanvas.cd(3);
+      errFrame->Draw();
+
+      errLegend.SetTextSize(0.03);
+      errLegend.SetLineColor(kWhite);
+      std::stringstream errMeanString, errSigmaString;
+      errMeanString << "#mu = " << to_string_with_precision(errMean.getVal());
+      errMeanString << " #pm "
+                    << to_string_with_precision(
+                           errMean.getPropagatedError(*errResult.get()));
+      errSigmaString << "#sigma = "
+                     << to_string_with_precision(errSigma.getVal());
+      errSigmaString << " #pm "
+                     << to_string_with_precision(
+                            errSigma.getPropagatedError(*errResult.get()));
+      errLegend.AddEntry(blankHist.get(), errMeanString.str().c_str(), "l");
+      errLegend.AddEntry(blankHist.get(), errSigmaString.str().c_str(), "l");
+      errLegend.Draw("same");
+    }
+
+    std::string fileEnd;
+    if (config.blindFit() == true) {
+      fileEnd = "Pull";
+    } else {
+      fileEnd = "PullValErr";
+    }
+    varCanvas.SaveAs((outputDir + "/plots/" + paramName  + "_" +
+                      config.ReturnBoxString() + "_" + fileEnd + ".pdf")
                          .c_str());
     // varCanvas.SaveAs((outputDir + "/plots/" + paramName +
-    //                   "_ValErrPull.pdf")
+    //                   "_PullValErr.pdf")
     //                      .c_str());
   }
 
