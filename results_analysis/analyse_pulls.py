@@ -23,7 +23,7 @@ if __name__ == "__main__":
         '--param',
         type=str,
         help=
-        'Parameter to analyse pulls from (sig = N_tot_Bu2Dst0h_D0pi0_pi0_pi/N_tot_Bu2Dst0h_D0gamma_gamma_pi/N_tot_Bu2Dst0h_D0pi0_gamma_pi)',
+        'Parameter to analyse pulls from (sig = N_Bu2Dst0h_D0pi0_pi0_pi_total/N_Bu2Dst0h_D0gamma_gamma_pi_total/N_Bu2Dst0h_D0pi0_gamma_pi_total)',
         required=True)
     parser.add_argument('-n',
                         '--neutral',
@@ -144,13 +144,10 @@ if __name__ == "__main__":
         sig_decay = "Bu2Dst0h_D0gamma_gamma_pi"
 
     # Name of branches in tree (box and or effs)
-    if delta_partial_low == None and delta_partial_high == None:
-        branch_names = ['orEffSignal', 'boxEffSignal']
+    if neutral == "partial":
+        branch_names = ['orEff_' + mode, 'boxPartialEff_' + mode]
     else:
-        if neutral == "partial":
-            branch_names = ['orEff_' + mode, 'boxPartialEff_' + mode]
-        else:
-            branch_names = ['orEff_' + mode, 'boxEff_' + mode]
+        branch_names = ['orEff_' + mode, 'boxEff_' + mode]
     # branch_names = ['orEffSignal', 'boxEffSignal']
     # Array to store efficiencies in
     box_eff = []
@@ -170,8 +167,8 @@ if __name__ == "__main__":
         result_par_err = tf.Get("Result_Err_" + param)
         # result_signal_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi")
         # result_signal_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi")
-        result_signal_yield = tf.Get("Result_Val_N_tot_" + sig_decay + "_total")
-        result_signal_yield_err = tf.Get("Result_Err_N_tot_" +
+        result_signal_yield = tf.Get("Result_Val_N_" + sig_decay + "_total")
+        result_signal_yield_err = tf.Get("Result_Err_N_" +
                                          sig_decay + "_total")
         # Final values of fit to pulls
         par_pull_widths = result_par_pull_widths.floatParsFinal()
