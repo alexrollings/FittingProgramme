@@ -30,7 +30,7 @@ if __name__ == "__main__":
             eff_box_dict[eff] = box_limits
         it = it + 1
 
-    steps = np.linspace(start = 1, stop = 0, num = 20)
+    steps = np.linspace(start = 1, stop = 0, num = 50)
 
     tex_filename = neutral + '_' + var + '_box_limits.txt'
     if os.path.exists(tex_filename):

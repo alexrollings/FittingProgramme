@@ -2631,11 +2631,13 @@ int main(int argc, char **argv) {
         std::cout << "Running " << nToys << " toys\n";
       }
 
-      if (!args("inputDir", inputDir) && nToys == 0) {
-        std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
-        return 1;
-      } else {
-        std::cout << "Generating toy from PDF MC shapes.\n";
+      if (!args("inputDir", inputDir)) {
+        if (nToys == 0) {
+          std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
+          return 1;
+        } else {
+          std::cout << "Generating toy from PDF MC shapes.\n";
+        }
       }
 
       if (!args("outputDir", outputDir)) {
