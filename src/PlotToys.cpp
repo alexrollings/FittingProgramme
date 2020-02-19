@@ -170,7 +170,7 @@ int main(int argc, char *argv[]) {
     if (config.fit1D() == false) {
       if (config.fitBuPartial() == false) {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaLow(std::stod(fileMatch[1]));
@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].["
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].["
             "0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
@@ -214,7 +214,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
