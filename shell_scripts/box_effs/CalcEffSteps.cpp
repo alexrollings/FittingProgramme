@@ -50,7 +50,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
   if (neutral == Neutral::pi0) {
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
     cutString =
-        "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>136&&Delta_M<190&&BDT1>0.05&"
+        "Bu_Delta_M>5050&&Bu_Delta_M<5500&&Delta_M>136&&Delta_M<190&&BDT1>0.05&"
         "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2";
     for (auto &y : years) {
       for (auto &p : polarities) {
@@ -63,7 +63,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
   } else {
     ttree = "BtoDstar0h3_h1h2gammaTuple";
     cutString =
-        "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0.05&"
+        "Bu_Delta_M>5050&&Bu_Delta_M<5500&&Delta_M>60&&Delta_M<190&&BDT1>0.05&"
         "&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2";
     for (auto &y : years) {
       for (auto &p : polarities) {
