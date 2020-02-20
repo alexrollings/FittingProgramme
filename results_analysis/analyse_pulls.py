@@ -25,6 +25,11 @@ if __name__ == "__main__":
       help=
       'Parameter to analyse pulls from (sig = N_Bu2Dst0h_D0pi0_pi0_pi_total/N_Bu2Dst0h_D0gamma_gamma_pi_total/N_Bu2Dst0h_D0pi0_gamma_pi_total)',
       required=True)
+  parser.add_argument('-v',
+                      '--var',
+                      type=str,
+                      help='Box scan variable: delta/buDelta',
+                      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -44,7 +49,7 @@ if __name__ == "__main__":
                       '--delta_low',
                       type=str,
                       help='Lower delta mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-dh',
                       '--delta_high',
                       type=str,
@@ -54,7 +59,7 @@ if __name__ == "__main__":
                       '--bu_low',
                       type=str,
                       help='Lower bu mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-bh',
                       '--bu_high',
                       type=str,
@@ -64,6 +69,7 @@ if __name__ == "__main__":
 
   input_dir = args.input_dir
   param = args.param
+  var = args.var
   neutral = args.neutral
   delta_partial_low = args.delta_partial_low
   delta_partial_high = args.delta_partial_high
@@ -75,52 +81,45 @@ if __name__ == "__main__":
   if delta_high == None and bu_high == None:
     sys.exit("")
 
-  high_limit = []
+  box_size = []
   file_dict = {}
 
   # Loop over files in directory and append to list those that match regex
   if os.path.isdir(input_dir):
     for filename in os.listdir(input_dir):
-      if bu_high == None:
+      if var == "buDelta":
         if delta_partial_low != None and delta_partial_high != None:
           delta_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high
         else:
           delta_string = delta_low + "_" + delta_high
-        box_string = delta_string + "_" + bu_low
-        m = re.search("Result_" + delta_string + "_" + bu_low + "_([0-9].+).root",
+        m = re.search("Result_" + delta_string + "_([0-9].+)_([0-9].+).root",
                       filename)
-        if m:
-          # Save upper bu dimn for each result
-          high_limit.append(m.group(1))
-          file_dict[m.group(1)] = filename
-      elif delta_high == None:
-        if delta_partial_low != None and delta_partial_high != None:
-          delta_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low
+      elif var == "delta":
+        if neutral != "partial":
+          if delta_partial_low != None and delta_partial_high != None:
+            m = re.search(
+                "Result_" + delta_partial_low + "_" + delta_partial_high +
+                "_([0-9].+)_([0-9].+)_" + bu_low + "_" + bu_high + ".root",
+                filename)
+          else:
+            m = re.search(
+                "Result_([0-9].+)_([0-9].+)_" + bu_low + "_" + bu_high +
+                ".root", filename)
         else:
-          delta_string = delta_low
-        box_string = delta_string + "_" + bu_low + "_" + bu_high
-        m = re.search("Result_" + delta_string +
-                      "_([0-9].+)_" + bu_low + "_" + bu_high + ".root",
-                      filename)
-        if m:
-          # Save upper bu dimn for each result
-          high_limit.append(m.group(1))
-          file_dict[m.group(1)] = filename
-      elif delta_partial_high == None:
-        box_string = delta_partial_low + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
-        m = re.search(
-            "Result_" + delta_partial_low + "_([0-9].+)_" + delta_low +
-            "_" + delta_high + "_" + bu_low + "_" + bu_high + ".root",
-            filename)
-        if m:
-          # Save upper bu dimn for each result
-          high_limit.append(m.group(1))
-          file_dict[m.group(1)] = filename
+          m = re.search(
+              "Result_([0-9].+)_([0-9].+)_" + delta_low + "_" + delta_high +
+              "_" + bu_low + "_" + bu_high + ".root", filename)
+      else:
+        sys.exit("var = buDelta/delta")
+      if m:
+        size = str.format('{0:.6f}', float(m.group(2)) - float(m.group(1)))
+        box_size.append(size)
+        file_dict[size] = filename
 
-  if len(high_limit) == 0:
+  if len(box_size) == 0:
     sys.exit("No files recognised")
-  # Want to plot in ascending order
-  high_limit.sort(key = lambda x: (float(x), len(x)))
+  # Want to plot in order of increasing box size
+  box_size.sort(key = float)
 
   cwd = os.getcwd()
   os.chdir(input_dir)
@@ -165,9 +164,9 @@ if __name__ == "__main__":
 
   i = 0
   # Loop over files and extract result of interest
-  for n in high_limit:
-    tf = TFile(file_dict[n])
-    # In result, params are stored in order mean [0], std dev [1]
+  for b in box_size:
+    tf = TFile(file_dict[b])
+    # Ib result, params are stored in order mean [0], std dev [1]
     result_par_pull_widths = tf.Get("Result_Pull_" + param)
     result_par_val = tf.Get("Result_Val_" + param)
     result_par_err = tf.Get("Result_Err_" + param)
@@ -194,7 +193,7 @@ if __name__ == "__main__":
         ufloat(signal_yield[0].getVal(), signal_yield_err[0].getVal()))
 
     # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
-    eff_tree = r_np.root2array(file_dict[n], "tree", branch_names)
+    eff_tree = r_np.root2array(file_dict[b], "tree", branch_names)
     # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
     or_eff.append(
         ufloat(
@@ -214,7 +213,7 @@ if __name__ == "__main__":
   frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
   linear_err_fn = (np.multiply(
-      np.divide(np.ones(len(high_limit)) * math.sqrt(2), signal_yield_arr),
+      np.divide(np.ones(len(box_size)) * math.sqrt(2), signal_yield_arr),
       shared_yield) + np.divide((signal_yield_arr - shared_yield),
                                 signal_yield_arr)) * initial_width
   # sqrt from unumpy as can handle uncertainty types
@@ -222,14 +221,14 @@ if __name__ == "__main__":
       np.square(
           np.multiply(
               np.divide(
-                  np.ones(len(high_limit)) *
+                  np.ones(len(box_size)) *
                   math.sqrt(2), signal_yield_arr), shared_yield)) + np.
       square(np.divide((signal_yield_arr -
                         shared_yield), signal_yield_arr))) * initial_width
 
   perc_err_arr = np.divide(par_err_arr, par_val_arr)*100
 
-  # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(high_limit))*initial_width)
+  # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(box_size))*initial_width)
   fig = plt.figure()
   # plt.errorbar(
   #     unumpy.nominal_values(frac_shared_yield),
@@ -258,7 +257,7 @@ if __name__ == "__main__":
   plt.ylabel('Pull Width')
   plt.title(param)
   fig.savefig("box_yield_vs_" + param + "_pull_width_" + neutral + "_" +
-              box_string + ".pdf")
+              var + ".pdf")
   # print(frac_shared_yield)
   fig = plt.figure()
   plt.errorbar(unumpy.nominal_values(frac_shared_yield),
@@ -270,5 +269,4 @@ if __name__ == "__main__":
   plt.ylabel('% Error')
   plt.title(param)
   fig.savefig("box_yield_vs_" + param + "_err_" + neutral + "_" +
-              box_string + ".pdf")
-
+              var + ".pdf")
