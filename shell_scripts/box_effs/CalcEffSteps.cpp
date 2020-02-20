@@ -9,6 +9,7 @@
 
 enum class Neutral { pi0, gamma, partial };
 enum class Variable { buDelta, delta };
+enum class Dir { up, down };
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
@@ -34,13 +35,24 @@ std::string EnumToString(Variable variable) {
   }
 }
 
+std::string EnumToString(Dir dir) {
+  switch (dir) {
+    case Dir::up:
+      return "up";
+    case Dir::down:
+      return "down";
+    default:
+      return " ";
+  }
+}
+
 std::string to_string_with_precision(double value) {
   std::ostringstream out;
   out << std::setprecision(4) << value;
   return out.str();
 }
 
-void GetBoxEffs(Neutral neutral, Variable variable) {
+void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
   std::string ttree, cutString;
   std::vector<std::string> input;
   std::vector<std::string> years = {"2011", "2012", "2015", "2016"};
@@ -162,7 +174,9 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
 
 int main(int argc, char **argv) {
   if (argc < 3) {
-    std::cerr << "Please enter: <neutral=pi0/gamma/partial> <variable=buDelta/delta>" << std::endl;
+    std::cerr << "Please enter: <neutral=pi0/gamma/partial> "
+                 "<variable=buDelta/delta> <step direction = up/down>"
+              << std::endl;
     return 1;
   }
 
@@ -192,7 +206,19 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  GetBoxEffs(neutral, variable);
+  std::string dirString = argv[3];
+  Dir dir;
+
+  if (dirString == "up") {
+    dir = Dir::up;
+  } else if (dirString == "down") {
+    dir = Dir::down;
+  } else {
+    std::cerr << "Please enter step direction: up/down.\n";
+    return 1;
+  }
+
+  GetBoxEffs(neutral, variable, dir);
 
   return 0;
 }
