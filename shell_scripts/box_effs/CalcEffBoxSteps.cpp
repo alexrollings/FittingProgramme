@@ -9,7 +9,7 @@
 
 enum class Neutral { pi0, gamma, partial };
 enum class Variable { buDelta, delta };
-enum class Dir { up, down };
+enum class Dir { top, bottom };
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
@@ -37,10 +37,10 @@ std::string EnumToString(Variable variable) {
 
 std::string EnumToString(Dir dir) {
   switch (dir) {
-    case Dir::up:
-      return "up";
-    case Dir::down:
-      return "down";
+    case Dir::top:
+      return "top";
+    case Dir::bottom:
+      return "bottom";
     default:
       return " ";
   }
@@ -133,7 +133,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
     } else {
       step = 0.5;
     }
-    if (dir == Dir::down) {
+    if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
       for (double i = deltaHigh; i > deltaLow; i = i - step) {
         stepVec.emplace_back(to_string_with_precision(i));
@@ -177,7 +177,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     }
   } else {
-    if (dir == Dir::down) {
+    if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
       for (double i = buHigh; i > buLow; --i) {
         stepVec.emplace_back(to_string_with_precision(i));
@@ -227,7 +227,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
 int main(int argc, char **argv) {
   if (argc < 3) {
     std::cerr << "Please enter: <neutral=pi0/gamma/partial> "
-                 "<variable=buDelta/delta> <step direction = up/down>"
+                 "<variable=buDelta/delta> <step direction = top/bottom>"
               << std::endl;
     return 1;
   }
@@ -261,12 +261,12 @@ int main(int argc, char **argv) {
   std::string dirString = argv[3];
   Dir dir;
 
-  if (dirString == "up") {
-    dir = Dir::up;
-  } else if (dirString == "down") {
-    dir = Dir::down;
+  if (dirString == "top") {
+    dir = Dir::top;
+  } else if (dirString == "bottom") {
+    dir = Dir::bottom;
   } else {
-    std::cerr << "Please enter step direction: up/down.\n";
+    std::cerr << "Please enter step direction: top/bottom.\n";
     return 1;
   }
 
