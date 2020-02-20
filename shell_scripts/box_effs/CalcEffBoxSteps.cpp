@@ -134,11 +134,11 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       step = 0.5;
     }
     if (dir == Dir::down) {
-      std::vector<std::string> deltaHighVec;
+      std::vector<std::string> stepVec;
       for (double i = deltaHigh; i > deltaLow; i = i - step) {
-        deltaHighVec.emplace_back(to_string_with_precision(i));
+        stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &dH : deltaHighVec) {
+      for (auto &dH : stepVec) {
         std::string bL = to_string_with_precision(buLow);
         std::string bH = to_string_with_precision(buHigh);
         std::string dL = to_string_with_precision(deltaLow);
@@ -148,48 +148,77 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                           .c_str()) /
                      initEntries;
         if (eff < 0.5) {
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(eff) +
-                       "\n";
+          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                         std::to_string(eff) + "\n";
         } else {
+          continue;
         }
       }
     } else {
-      std::vector<std::string> deltaHighVec;
-      for (double i = deltaLow; i > deltaLow; i = i - step) {
-        deltaHighVec.emplace_back(to_string_with_precision(i));
+      std::vector<std::string> stepVec;
+      for (double i = deltaLow; i < deltaHigh; i = i + step) {
+        stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &dH : deltaHighVec) {
+      for (auto &dL : stepVec) {
         std::string bL = to_string_with_precision(buLow);
         std::string bH = to_string_with_precision(buHigh);
-        std::string dL = to_string_with_precision(deltaLow);
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(chain.GetEntries(
-                                          (cutString + "&&Bu_Delta_M>" + bL +
-                                           "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                           dL + "&&Delta_M<" + dH)
-                                              .c_str()) /
-                                      initEntries) +
-                       "\n";
+        std::string dH = to_string_with_precision(deltaHigh);
+        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                       dL + "&&Delta_M<" + dH)
+                                          .c_str()) /
+                     initEntries;
+        if (eff < 0.5) {
+          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                         std::to_string(eff) + "\n";
+        } else {
+          continue;
+        }
       }
     }
   } else {
-    std::vector<std::string> buHighVec;
-    for (double i = buHigh; i > buLow; --i) {
-      buHighVec.emplace_back(to_string_with_precision(i));
-    }
-    for (auto &bH : buHighVec) {
-      std::string dL = to_string_with_precision(deltaLow);
-      std::string dH = to_string_with_precision(deltaHigh);
-      std::string bL = to_string_with_precision(buLow);
-      txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                     std::to_string(
-                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                           "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                           dL + "&&Delta_M<" +
-                                           dH).c_str()) /
-                         initEntries) +
-                     "\n";
+    if (dir == Dir::down) {
+      std::vector<std::string> stepVec;
+      for (double i = buHigh; i > buLow; --i) {
+        stepVec.emplace_back(to_string_with_precision(i));
+      }
+      for (auto &bH : stepVec) {
+        std::string dL = to_string_with_precision(deltaLow);
+        std::string dH = to_string_with_precision(deltaHigh);
+        std::string bL = to_string_with_precision(buLow);
+        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                       dL + "&&Delta_M<" + dH)
+                                          .c_str()) /
+                     initEntries;
+        if (eff < 0.5) {
+          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                         std::to_string(eff) + "\n";
+        } else {
+          continue;
+        }
+      }
+    } else {
+      std::vector<std::string> stepVec;
+      for (double i = buLow; i < buHigh; ++i) {
+        stepVec.emplace_back(to_string_with_precision(i));
+      }
+      for (auto &bL : stepVec) {
+        std::string dL = to_string_with_precision(deltaLow);
+        std::string dH = to_string_with_precision(deltaHigh);
+        std::string bH = to_string_with_precision(buHigh);
+        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                       dL + "&&Delta_M<" + dH)
+                                          .c_str()) /
+                     initEntries;
+        if (eff < 0.5) {
+          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                         std::to_string(eff) + "\n";
+        } else {
+          continue;
+        }
+      }
     }
   }
   txtFile.close();
@@ -216,7 +245,7 @@ int main(int argc, char **argv) {
     std::cerr << "Please enter neutral: pi0/gamma/partial.\n";
     return 1;
   }
-  
+
   std::string variableString = argv[2];
   Variable variable;
 
@@ -244,4 +273,4 @@ int main(int argc, char **argv) {
   GetBoxEffs(neutral, variable, dir);
 
   return 0;
-}
+    }
