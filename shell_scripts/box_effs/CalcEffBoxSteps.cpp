@@ -9,6 +9,7 @@
 
 enum class Neutral { pi0, gamma, partial };
 enum class Variable { buDelta, delta };
+enum class Dir { up, down };
 
 std::string EnumToString(Neutral neutral) {
   switch (neutral) {
@@ -34,13 +35,24 @@ std::string EnumToString(Variable variable) {
   }
 }
 
+std::string EnumToString(Dir dir) {
+  switch (dir) {
+    case Dir::up:
+      return "up";
+    case Dir::down:
+      return "down";
+    default:
+      return " ";
+  }
+}
+
 std::string to_string_with_precision(double value) {
   std::ostringstream out;
   out << std::setprecision(4) << value;
   return out.str();
 }
 
-void GetBoxEffs(Neutral neutral, Variable variable) {
+void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
   std::string ttree, cutString;
   std::vector<std::string> input;
   std::vector<std::string> years = {"2011", "2012", "2015", "2016"};
@@ -51,7 +63,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
     cutString =
         "Bu_Delta_M>5050&&Bu_Delta_M<5500&&Delta_M>136&&Delta_M<190&&BDT1>0.05&"
-        "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2";
+        "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0h_M<5200&&D0_FD_ZSIG>2";
     for (auto &y : years) {
       for (auto &p : polarities) {
         input.emplace_back(path + "Bu2Dst0pi_D0pi0_" + y + "_Mag" + p +
@@ -64,7 +76,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
     ttree = "BtoDstar0h3_h1h2gammaTuple";
     cutString =
         "Bu_Delta_M>5050&&Bu_Delta_M<5500&&Delta_M>60&&Delta_M<190&&BDT1>0.05&"
-        "&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2";
+        "&BDT2>0.05&&D0h_M>4900&&D0h_M<5200&&D0_FD_ZSIG>2";
     for (auto &y : years) {
       for (auto &p : polarities) {
         if (neutral == Neutral::gamma) {
@@ -92,7 +104,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
   double initEntries = chain.GetEntries(cutString.c_str());
 
   std::string filename =
-      EnumToString(neutral) + "_" + EnumToString(variable) + "_effs.txt";
+      EnumToString(neutral) + "_" + EnumToString(variable) + "_" + EnumToString(dir) + "_effs.txt";
   std::ofstream txtFile(filename);
 
   double deltaHigh, deltaLow, buHigh, buLow;
@@ -121,22 +133,45 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
     } else {
       step = 0.5;
     }
-    std::vector<std::string> deltaHighVec;
-    for (double i = deltaHigh; i > deltaLow; i = i - step) {
-      deltaHighVec.emplace_back(to_string_with_precision(i));
-    }
-    for (auto &dH : deltaHighVec) {
-      std::string bL = to_string_with_precision(buLow);
-      std::string bH = to_string_with_precision(buHigh);
-      std::string dL = to_string_with_precision(deltaLow);
-      txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                     std::to_string(
-                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+    if (dir == Dir::down) {
+      std::vector<std::string> deltaHighVec;
+      for (double i = deltaHigh; i > deltaLow; i = i - step) {
+        deltaHighVec.emplace_back(to_string_with_precision(i));
+      }
+      for (auto &dH : deltaHighVec) {
+        std::string bL = to_string_with_precision(buLow);
+        std::string bH = to_string_with_precision(buHigh);
+        std::string dL = to_string_with_precision(deltaLow);
+        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
+                                       dL + "&&Delta_M<" + dH)
+                                          .c_str()) /
+                     initEntries;
+        if (eff < 0.5) {
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(eff) +
+                       "\n";
+        } else {
+        }
+      }
+    } else {
+      std::vector<std::string> deltaHighVec;
+      for (double i = deltaLow; i > deltaLow; i = i - step) {
+        deltaHighVec.emplace_back(to_string_with_precision(i));
+      }
+      for (auto &dH : deltaHighVec) {
+        std::string bL = to_string_with_precision(buLow);
+        std::string bH = to_string_with_precision(buHigh);
+        std::string dL = to_string_with_precision(deltaLow);
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(chain.GetEntries(
+                                          (cutString + "&&Bu_Delta_M>" + bL +
                                            "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                           dL + "&&Delta_M<" +
-                                           dH).c_str()) /
-                         initEntries) +
-                     "\n";
+                                           dL + "&&Delta_M<" + dH)
+                                              .c_str()) /
+                                      initEntries) +
+                       "\n";
+      }
     }
   } else {
     std::vector<std::string> buHighVec;
@@ -162,7 +197,9 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
 
 int main(int argc, char **argv) {
   if (argc < 3) {
-    std::cerr << "Please enter: <neutral=pi0/gamma/partial> <variable=buDelta/delta>" << std::endl;
+    std::cerr << "Please enter: <neutral=pi0/gamma/partial> "
+                 "<variable=buDelta/delta> <step direction = up/down>"
+              << std::endl;
     return 1;
   }
 
@@ -192,7 +229,19 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  GetBoxEffs(neutral, variable);
+  std::string dirString = argv[3];
+  Dir dir;
+
+  if (dirString == "up") {
+    dir = Dir::up;
+  } else if (dirString == "down") {
+    dir = Dir::down;
+  } else {
+    std::cerr << "Please enter step direction: up/down.\n";
+    return 1;
+  }
+
+  GetBoxEffs(neutral, variable, dir);
 
   return 0;
 }
