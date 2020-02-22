@@ -48,7 +48,7 @@ std::string EnumToString(Dir dir) {
 
 std::string to_string_with_precision(double value) {
   std::ostringstream out;
-  out << std::setprecision(4) << value;
+  out << std::setprecision(5) << value;
   return out.str();
 }
 
@@ -108,34 +108,27 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
   std::ofstream txtFile(filename);
 
   double deltaHigh, deltaLow, buHigh, buLow;
-  if (neutral == Neutral::pi0) {
-    deltaHigh = 160;
-    deltaLow = 136;
-    buHigh = 5380;
-    buLow = 5180;
-  } else if (neutral == Neutral::gamma) {
-    deltaHigh = 190;
-    deltaLow = 105;
-    buHigh = 5380;
-    buLow = 5180;
-  } else {
-    // Don't go higher than 125 to avoid triple counting
-    deltaHigh = 125;
-    deltaLow = 60;
-    buHigh = 5440;
-    buLow = 5140;
-  }
-
   if (variable == Variable::delta) {
-    double step;
     if (neutral == Neutral::pi0) {
-      step = 0.1;
+      deltaHigh = 190;
+      deltaLow = 136;
+      buHigh = 5330;
+      buLow = 5220;
+    } else if (neutral == Neutral::gamma) {
+      deltaHigh = 190;
+      deltaLow = 105;
+      buHigh = 5320;
+      buLow = 5240;
     } else {
-      step = 0.5;
+      // Don't go higher than 125 to avoid triple counting
+      deltaHigh = 125;
+      deltaLow = 60;
+      buHigh = 5320;
+      buLow = 5240;
     }
-    if (dir == Dir::bottom) {
+    if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = deltaHigh; i > deltaLow; i = i - step) {
+      for (double i = deltaHigh; i > deltaLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dH : stepVec) {
@@ -147,7 +140,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
+        if (eff > 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -156,7 +149,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = deltaLow; i < deltaHigh; i = i + step) {
+      for (double i = deltaLow; i < deltaHigh; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dL : stepVec) {
@@ -168,7 +161,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
+        if (eff > 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -177,9 +170,26 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     }
   } else {
-    if (dir == Dir::bottom) {
+    if (neutral == Neutral::pi0) {
+      deltaHigh = 148;
+      deltaLow = 138;
+      buHigh = 5380;
+      buLow = 5180;
+    } else if (neutral == Neutral::gamma) {
+      deltaHigh = 170;
+      deltaLow = 125;
+      buHigh = 5380;
+      buLow = 5180;
+    } else {
+      // Don't go higher than 125 to avoid triple counting
+      deltaHigh = 105;
+      deltaLow = 60;
+      buHigh = 5380;
+      buLow = 5180;
+    }
+    if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = buHigh; i > buLow; --i) {
+      for (double i = buHigh; i > buLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bH : stepVec) {
@@ -191,7 +201,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
+        if (eff > 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -200,7 +210,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = buLow; i < buHigh; ++i) {
+      for (double i = buLow; i < buHigh; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bL : stepVec) {
@@ -212,7 +222,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
+        if (eff > 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
