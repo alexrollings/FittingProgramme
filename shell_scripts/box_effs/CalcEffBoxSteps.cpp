@@ -107,6 +107,8 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       EnumToString(neutral) + "_" + EnumToString(variable) + "_" + EnumToString(dir) + "_effs.txt";
   std::ofstream txtFile(filename);
 
+
+  // Calculates efficiency of events rejected BELOW or ABOVE box limits
   double deltaHigh, deltaLow, buHigh, buLow;
   if (variable == Variable::delta) {
     if (neutral == Neutral::pi0) {
@@ -126,7 +128,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       buHigh = 5320;
       buLow = 5240;
     }
-    if (dir == Dir::top) {
+    if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
       for (double i = deltaHigh; i > deltaLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
@@ -140,7 +142,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff > 0.5) {
+        if (eff < 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -161,7 +163,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff > 0.5) {
+        if (eff < 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -187,7 +189,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       buHigh = 5380;
       buLow = 5180;
     }
-    if (dir == Dir::top) {
+    if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
       for (double i = buHigh; i > buLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
@@ -201,7 +203,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff > 0.5) {
+        if (eff < 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {
@@ -222,7 +224,7 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff > 0.5) {
+        if (eff < 0.5) {
           txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                          std::to_string(eff) + "\n";
         } else {

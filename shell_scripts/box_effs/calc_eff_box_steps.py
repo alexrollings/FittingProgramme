@@ -18,10 +18,22 @@ if __name__ == "__main__":
                       type=int,
                       help='Number of steps',
                       required=True)
+  parser.add_argument('-i',
+                      '--init_eff',
+                      type=float,
+                      help='Initial efficiency of scan',
+                      required=True)
+  parser.add_argument('-f',
+                      '--final_eff',
+                      type=float,
+                      help='Final efficiency of scan',
+                      required=True)
   args = parser.parse_args()
   neutral = args.neutral
   var = args.var
   n_steps = args.n_steps
+  init_eff = args.init_eff
+  final_eff = args.final_eff
 
   # Dict for top and bottom eff scans to store key: eff, value: box dimns
   eff_box_dict = {'top': {}, 'bottom': {}}
@@ -39,7 +51,9 @@ if __name__ == "__main__":
     lines.clear()
 
   # Array of efficiency steps desired by user
-  steps = np.linspace(start = 1, stop = 0, num = n_steps)
+  # Eff .txt files store effiency of events rejected above and below box
+  # To get desired effs, need to find box limits for 1 - that
+  steps = np.linspace(start = 1 - init_eff, stop = 1 - final_eff, num = n_steps)
   # Divide desires eff by 2 (of 50% effhalf each side)
   steps = steps * 0.5
 
@@ -74,7 +88,7 @@ if __name__ == "__main__":
     # Desired eff (to 6 sf) is sum of top and bottom effs
     eff_label = str.format(
         '{0:.6f}',
-        float(chosen_effs_dict['top'][i]) + float(chosen_effs_dict['bottom'][i]))
+        1.0 - (float(chosen_effs_dict['top'][i]) + float(chosen_effs_dict['bottom'][i])))
     # save eff and corresponding box label using dict key
     step_list.append(eff_label + ":" + bl + " " + bh + " " + dl + " " + dh + "\n")
 
