@@ -130,15 +130,15 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       buHigh = 5320;
       buLow = 5240;
     }
-    if (dir == Dir::bottom) {
+    if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = deltaHigh; i > halfWay; i = i - 0.1) {
+      for (double i = halfWay; i < deltaHigh; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &dH : stepVec) {
+      for (auto &dL : stepVec) {
         std::string bL = to_string_with_precision(buLow);
         std::string bH = to_string_with_precision(buHigh);
-        std::string dL = to_string_with_precision(deltaLow);
+        std::string dH = to_string_with_precision(deltaHigh);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
                                        "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                        dL + "&&Delta_M<" + dH)
@@ -149,13 +149,13 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = deltaLow; i < halfWay; i = i + 0.1) {
+      for (double i = halfWay; i > deltaLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &dL : stepVec) {
+      for (auto &dH : stepVec) {
         std::string bL = to_string_with_precision(buLow);
         std::string bH = to_string_with_precision(buHigh);
-        std::string dH = to_string_with_precision(deltaHigh);
+        std::string dL = to_string_with_precision(deltaLow);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
                                        "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                        dL + "&&Delta_M<" + dH)
@@ -186,15 +186,15 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       buLow = 5180;
       halfWay = 5295.7;
     }
-    if (dir == Dir::bottom) {
+    if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = buHigh; i > halfWay; i = i - 0.1) {
+      for (double i = halfWay; i < buHigh; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &bH : stepVec) {
+      for (auto &bL : stepVec) {
         std::string dL = to_string_with_precision(deltaLow);
         std::string dH = to_string_with_precision(deltaHigh);
-        std::string bL = to_string_with_precision(buLow);
+        std::string bH = to_string_with_precision(buHigh);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
                                        "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                        dL + "&&Delta_M<" + dH)
@@ -205,13 +205,13 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = buLow; i < halfWay; i = i + 0.1) {
+      for (double i = halfWay; i > buLow; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
-      for (auto &bL : stepVec) {
+      for (auto &bH : stepVec) {
         std::string dL = to_string_with_precision(deltaLow);
         std::string dH = to_string_with_precision(deltaHigh);
-        std::string bH = to_string_with_precision(buHigh);
+        std::string bL = to_string_with_precision(buLow);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
                                        "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                        dL + "&&Delta_M<" + dH)
