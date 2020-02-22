@@ -108,117 +108,82 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                          "_" + EnumToString(dir) + "_effs.txt";
   std::ofstream txtFile(filename);
 
-  double deltaHigh, deltaLow, buHigh, buLow, halfWay;
+  double high, low;
   if (variable == Variable::delta) {
     if (neutral == Neutral::pi0) {
-      deltaHigh = 190;
-      deltaLow = 136;
-      halfWay = 142.8;
-      buHigh = 5330;
-      buLow = 5220;
+      high = 190;
+      low = 136;
     } else if (neutral == Neutral::gamma) {
-      deltaHigh = 190;
-      deltaLow = 105;
-      halfWay = 144.8;
-      buHigh = 5320;
-      buLow = 5240;
+      high = 190;
+      low = 105;
     } else {
       // Don't go higher than 125 to avoid triple counting
-      deltaHigh = 125;
-      deltaLow = 60;
-      halfWay = 88.4;
-      buHigh = 5320;
-      buLow = 5240;
+      high = 125;
+      low = 60;
     }
     if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = halfWay; i < deltaHigh; i = i + 0.1) {
+      for (double i = low; i < high; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dL : stepVec) {
-        std::string bL = to_string_with_precision(buLow);
-        std::string bH = to_string_with_precision(buHigh);
-        std::string dH = to_string_with_precision(deltaHigh);
-        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                       dL + "&&Delta_M<" + dH)
-                                          .c_str()) /
-                     initEntries;
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(eff) + "\n";
+        std::string dH = to_string_with_precision(high);
+        double eff =
+            chain.GetEntries(
+                (cutString + "&&Delta_M>" + dL + "&&Delta_M<" + dH).c_str()) /
+            initEntries;
+        if (eff < 0.5) {
+          txtFile << dL + " " + dH + ":" + std::to_string(eff) + "\n";
+        }
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = halfWay; i > deltaLow; i = i - 0.1) {
+      for (double i = high; i > low; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dH : stepVec) {
-        std::string bL = to_string_with_precision(buLow);
-        std::string bH = to_string_with_precision(buHigh);
-        std::string dL = to_string_with_precision(deltaLow);
-        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                       dL + "&&Delta_M<" + dH)
-                                          .c_str()) /
-                     initEntries;
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(eff) + "\n";
+        std::string dL = to_string_with_precision(low);
+        double eff =
+            chain.GetEntries(
+                (cutString + "&&Delta_M>" + dL + "&&Delta_M<" + dH).c_str()) /
+            initEntries;
+        if (eff < 0.5) {
+          txtFile << dL + " " + dH + ":" + std::to_string(eff) + "\n";
+        }
       }
     }
   } else {
-    if (neutral == Neutral::pi0) {
-      deltaHigh = 148;
-      deltaLow = 138;
-      buHigh = 5380;
-      buLow = 5180;
-      halfWay = 5273.6;
-    } else if (neutral == Neutral::gamma) {
-      deltaHigh = 170;
-      deltaLow = 125;
-      buHigh = 5380;
-      buLow = 5180;
-      halfWay = 5282.1;
-    } else {
-      // Don't go higher than 125 to avoid triple counting
-      deltaHigh = 105;
-      deltaLow = 60;
-      buHigh = 5380;
-      buLow = 5180;
-      halfWay = 5295.7;
-    }
+    high = 5380;
+    low = 5180;
     if (dir == Dir::top) {
       std::vector<std::string> stepVec;
-      for (double i = halfWay; i < buHigh; i = i + 0.1) {
+      for (double i = low; i < high; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bL : stepVec) {
-        std::string dL = to_string_with_precision(deltaLow);
-        std::string dH = to_string_with_precision(deltaHigh);
-        std::string bH = to_string_with_precision(buHigh);
+        std::string bH = to_string_with_precision(high);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                       dL + "&&Delta_M<" + dH)
+                                       "&&Bu_Delta_M<" + bH)
                                           .c_str()) /
                      initEntries;
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(eff) + "\n";
+        if (eff < 0.5) {
+          txtFile << bL + " " + bH + ":" + std::to_string(eff) + "\n";
+        }
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = halfWay; i > buLow; i = i - 0.1) {
+      for (double i = high; i > low; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bH : stepVec) {
-        std::string dL = to_string_with_precision(deltaLow);
-        std::string dH = to_string_with_precision(deltaHigh);
-        std::string bL = to_string_with_precision(buLow);
+        std::string bL = to_string_with_precision(low);
         double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
-                                       dL + "&&Delta_M<" + dH)
+                                       "&&Bu_Delta_M<" + bH)
                                           .c_str()) /
                      initEntries;
-        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                       std::to_string(eff) + "\n";
+        if (eff < 0.5) {
+          txtFile << bL + " " + bH + ":" + std::to_string(eff) + "\n";
+        }
       }
     }
   }
