@@ -1,9 +1,9 @@
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
-#include <iomanip> 
 #include "TChain.h"
 #include "TFile.h"
 
@@ -63,7 +63,8 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
     ttree = "BtoDstar0h3_h1h2pi0RTuple";
     cutString =
         "Bu_Delta_M>5050&&Bu_Delta_M<5500&&Delta_M>136&&Delta_M<190&&BDT1>0.05&"
-        "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0h_M<5200&&D0_FD_ZSIG>2";
+        "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0h_M<5200&&D0_FD_ZSIG>"
+        "2";
     for (auto &y : years) {
       for (auto &p : polarities) {
         input.emplace_back(path + "Bu2Dst0pi_D0pi0_" + y + "_Mag" + p +
@@ -103,34 +104,35 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
 
   double initEntries = chain.GetEntries(cutString.c_str());
 
-  std::string filename =
-      EnumToString(neutral) + "_" + EnumToString(variable) + "_" + EnumToString(dir) + "_effs.txt";
+  std::string filename = EnumToString(neutral) + "_" + EnumToString(variable) +
+                         "_" + EnumToString(dir) + "_effs.txt";
   std::ofstream txtFile(filename);
 
-
-  // Calculates efficiency of events rejected BELOW or ABOVE box limits
-  double deltaHigh, deltaLow, buHigh, buLow;
+  double deltaHigh, deltaLow, buHigh, buLow, halfWay;
   if (variable == Variable::delta) {
     if (neutral == Neutral::pi0) {
       deltaHigh = 190;
       deltaLow = 136;
+      halfWay = 142.8;
       buHigh = 5330;
       buLow = 5220;
     } else if (neutral == Neutral::gamma) {
       deltaHigh = 190;
       deltaLow = 105;
+      halfWay = 144.8;
       buHigh = 5320;
       buLow = 5240;
     } else {
       // Don't go higher than 125 to avoid triple counting
       deltaHigh = 125;
       deltaLow = 60;
+      halfWay = 88.4;
       buHigh = 5320;
       buLow = 5240;
     }
     if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
-      for (double i = deltaHigh; i > deltaLow; i = i - 0.1) {
+      for (double i = deltaHigh; i > halfWay; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dH : stepVec) {
@@ -142,16 +144,12 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
-          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                         std::to_string(eff) + "\n";
-        } else {
-          continue;
-        }
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(eff) + "\n";
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = deltaLow; i < deltaHigh; i = i + 0.1) {
+      for (double i = deltaLow; i < halfWay; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dL : stepVec) {
@@ -163,12 +161,8 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
-          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                         std::to_string(eff) + "\n";
-        } else {
-          continue;
-        }
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(eff) + "\n";
       }
     }
   } else {
@@ -177,21 +171,24 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
       deltaLow = 138;
       buHigh = 5380;
       buLow = 5180;
+      halfWay = 5273.6;
     } else if (neutral == Neutral::gamma) {
       deltaHigh = 170;
       deltaLow = 125;
       buHigh = 5380;
       buLow = 5180;
+      halfWay = 5282.1;
     } else {
       // Don't go higher than 125 to avoid triple counting
       deltaHigh = 105;
       deltaLow = 60;
       buHigh = 5380;
       buLow = 5180;
+      halfWay = 5295.7;
     }
     if (dir == Dir::bottom) {
       std::vector<std::string> stepVec;
-      for (double i = buHigh; i > buLow; i = i - 0.1) {
+      for (double i = buHigh; i > halfWay; i = i - 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bH : stepVec) {
@@ -203,16 +200,12 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
-          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                         std::to_string(eff) + "\n";
-        } else {
-          continue;
-        }
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(eff) + "\n";
       }
     } else {
       std::vector<std::string> stepVec;
-      for (double i = buLow; i < buHigh; i = i + 0.1) {
+      for (double i = buLow; i < halfWay; i = i + 0.1) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bL : stepVec) {
@@ -224,12 +217,8 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
                                        dL + "&&Delta_M<" + dH)
                                           .c_str()) /
                      initEntries;
-        if (eff < 0.5) {
-          txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
-                         std::to_string(eff) + "\n";
-        } else {
-          continue;
-        }
+        txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
+                       std::to_string(eff) + "\n";
       }
     }
   }
@@ -285,4 +274,4 @@ int main(int argc, char **argv) {
   GetBoxEffs(neutral, variable, dir);
 
   return 0;
-    }
+}
