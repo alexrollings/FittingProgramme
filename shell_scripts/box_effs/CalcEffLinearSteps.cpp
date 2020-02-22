@@ -36,7 +36,7 @@ std::string EnumToString(Variable variable) {
 
 std::string to_string_with_precision(double value) {
   std::ostringstream out;
-  out << std::setprecision(4) << value;
+  out << std::setprecision(5) << value;
   return out.str();
 }
 
@@ -115,14 +115,8 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
   }
 
   if (variable == Variable::delta) {
-    double step;
-    if (neutral == Neutral::pi0) {
-      step = 0.1;
-    } else {
-      step = 0.5;
-    }
     std::vector<std::string> deltaHighVec;
-    for (double i = deltaHigh; i > deltaLow; i = i - step) {
+    for (double i = deltaHigh; i > deltaLow; i = i - 0.1) {
       deltaHighVec.emplace_back(to_string_with_precision(i));
     }
     for (auto &dH : deltaHighVec) {
@@ -140,7 +134,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
     }
   } else {
     std::vector<std::string> buHighVec;
-    for (double i = buHigh; i > buLow; --i) {
+    for (double i = buHigh; i > buLow; i = i - 0.1) {
       buHighVec.emplace_back(to_string_with_precision(i));
     }
     for (auto &bH : buHighVec) {
