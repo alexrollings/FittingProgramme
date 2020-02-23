@@ -127,13 +127,10 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dL : stepVec) {
-        std::string dH = to_string_with_precision(high);
-        double eff =
-            chain.GetEntries(
-                (cutString + "&&Delta_M>" + dL + "&&Delta_M<" + dH).c_str()) /
-            initEntries;
+        double eff = chain.GetEntries((cutString + "&&Delta_M>" + dL).c_str()) /
+                     initEntries;
         if (eff < 0.5) {
-          txtFile << dL + " " + dH + ":" + std::to_string(eff) + "\n";
+          txtFile << dL + ":" + std::to_string(eff) + "\n";
         }
       }
     } else {
@@ -142,13 +139,10 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &dH : stepVec) {
-        std::string dL = to_string_with_precision(low);
-        double eff =
-            chain.GetEntries(
-                (cutString + "&&Delta_M>" + dL + "&&Delta_M<" + dH).c_str()) /
-            initEntries;
+        double eff = chain.GetEntries((cutString + "&&Delta_M<" + dH).c_str()) /
+                     initEntries;
         if (eff < 0.5) {
-          txtFile << dL + " " + dH + ":" + std::to_string(eff) + "\n";
+          txtFile << dH + ":" + std::to_string(eff) + "\n";
         }
       }
     }
@@ -161,13 +155,11 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bL : stepVec) {
-        std::string bH = to_string_with_precision(high);
-        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH)
-                                          .c_str()) /
-                     initEntries;
+        double eff =
+            chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL).c_str()) /
+            initEntries;
         if (eff < 0.5) {
-          txtFile << bL + " " + bH + ":" + std::to_string(eff) + "\n";
+          txtFile << bL + ":" + std::to_string(eff) + "\n";
         }
       }
     } else {
@@ -176,13 +168,11 @@ void GetBoxEffs(Neutral neutral, Variable variable, Dir dir) {
         stepVec.emplace_back(to_string_with_precision(i));
       }
       for (auto &bH : stepVec) {
-        std::string bL = to_string_with_precision(low);
-        double eff = chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
-                                       "&&Bu_Delta_M<" + bH)
-                                          .c_str()) /
-                     initEntries;
+        double eff =
+            chain.GetEntries((cutString + "&&Bu_Delta_M<" + bH).c_str()) /
+            initEntries;
         if (eff < 0.5) {
-          txtFile << bL + " " + bH + ":" + std::to_string(eff) + "\n";
+          txtFile << bH + ":" + std::to_string(eff) + "\n";
         }
       }
     }
