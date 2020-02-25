@@ -132,6 +132,7 @@ if __name__ == "__main__":
 
   # Array to store strings of 'eff: box limits'
   step_list = []
+  step_list.append(str.format('{0:.6f}', box_eff) + ":" + str(low) + " " + str(high) + "\n")
   for s in steps:
     # Index of value closest of eff in array closest to desired eff
     idx = (np.abs(effs - s)).argmin()
