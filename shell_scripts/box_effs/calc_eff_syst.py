@@ -18,22 +18,10 @@ if __name__ == "__main__":
                       type=int,
                       help='Number of steps',
                       required=True)
-  parser.add_argument('-dl',
-                      '--delta_low',
-                      type=int,
-                      required=True)
-  parser.add_argument('-dh',
-                      '--delta_high',
-                      type=int,
-                      required=True)
-  parser.add_argument('-bl',
-                      '--bu_low',
-                      type=int,
-                      required=True)
-  parser.add_argument('-bh',
-                      '--bu_high',
-                      type=int,
-                      required=True)
+  parser.add_argument('-dl', '--delta_low', type=int, required=True)
+  parser.add_argument('-dh', '--delta_high', type=int, required=True)
+  parser.add_argument('-bl', '--bu_low', type=int, required=True)
+  parser.add_argument('-bh', '--bu_high', type=int, required=True)
   args = parser.parse_args()
   neutral = args.neutral
   var = args.var
@@ -57,7 +45,10 @@ if __name__ == "__main__":
 
   for k, v in cut_eff_dict.items():
     # Create array, where every row is an array of box dimensions and efficiency strings
-    lines = [l.rstrip('\n') for l in open(neutral + '_' + var + '_' + k + '_effs.txt')]
+    lines = [
+        l.rstrip('\n')
+        for l in open(neutral + '_' + var + '_' + k + '_effs.txt')
+    ]
     lines = [l.split(':') for l in lines]
 
     for cut, eff in lines:
@@ -66,13 +57,29 @@ if __name__ == "__main__":
 
   # Split dict: get lower values below 138, upper values above 148
   large_cut_dict = {'top': {}, 'bottom': {}}
-  large_cut_dict['top'] = {key: value for key, value in cut_eff_dict['top'].items() if key > high}
-  large_cut_dict['bottom'] = {key: value for key, value in cut_eff_dict['bottom'].items() if key < low}
+  large_cut_dict['top'] = {
+      key: value
+      for key, value in cut_eff_dict['top'].items()
+      if key > high
+  }
+  large_cut_dict['bottom'] = {
+      key: value
+      for key, value in cut_eff_dict['bottom'].items()
+      if key < low
+  }
 
   # Split dict: get lower values above 138, upper values below 148
   small_cut_dict = {'top': {}, 'bottom': {}}
-  small_cut_dict['top'] = {key: value for key, value in cut_eff_dict['top'].items() if key < high}
-  small_cut_dict['bottom'] = {key: value for key, value in cut_eff_dict['bottom'].items() if key > low}
+  small_cut_dict['top'] = {
+      key: value
+      for key, value in cut_eff_dict['top'].items()
+      if key < high
+  }
+  small_cut_dict['bottom'] = {
+      key: value
+      for key, value in cut_eff_dict['bottom'].items()
+      if key > low
+  }
 
   box_dict = {}
 
@@ -128,17 +135,29 @@ if __name__ == "__main__":
         box_dict[str.format('{0:.6f}', tot_eff)] = str(k1) + ' ' + str(k2)
         effs.append(tot_eff)
 
-  steps = np.linspace(start = down_limit, stop = up_limit, num = n_steps)
+  steps = np.linspace(start=down_limit, stop=up_limit, num=n_steps)
 
   # Array to store strings of 'eff: box limits'
   step_list = []
-  step_list.append(str.format('{0:.6f}', box_eff) + ":" + str(low) + " " + str(high) + "\n")
+  if var == 'delta':
+    step_list.append(
+        str.format('{0:.6f}', box_eff) + ":" + str(fixed_low) + " " +
+        str(fixed_high) + " " + str(low) + " " + str(high) + "\n")
+  else:
+    step_list.append(
+        str.format('{0:.6f}', box_eff) + ":" + str(low) + " " + str(high) +
+        " " + str(fixed_low) + " " + str(fixed_high) + "\n")
   for s in steps:
     # Index of value closest of eff in array closest to desired eff
     idx = (np.abs(effs - s)).argmin()
     # desired eff (to 6 sf to match dict key)
     chosen_eff = str.format('{0:.6f}', effs[idx])
-    step_list.append(chosen_eff + ":" + box_dict[chosen_eff] + "\n")
+    if var == 'delta':
+      step_list.append(chosen_eff + ":" + str(fixed_low) + " " +
+                       str(fixed_high) + " " + box_dict[chosen_eff] + "\n")
+    else:
+      step_list.append(chosen_eff + ":" + box_dict[chosen_eff] + " " +
+                       str(fixed_low) + " " + str(fixed_high) + "\n")
 
   # In case of duplicate boxes (don't want to run the same thing more than once)
   unique_steps = sorted(set(step_list))
@@ -146,7 +165,7 @@ if __name__ == "__main__":
   # File to store box limits for desired effs
   tex_filename = neutral + '_' + var + '_box_limits.txt'
   if os.path.exists(tex_filename):
-      os.remove(tex_filename)
+    os.remove(tex_filename)
 
   # Write each entry of unique array to line of file
   outfile = open(tex_filename, 'w+')
