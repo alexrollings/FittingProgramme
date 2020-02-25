@@ -81,45 +81,52 @@ if __name__ == "__main__":
   if delta_high == None and bu_high == None:
     sys.exit("")
 
-  box_size = []
-  file_dict = {}
+  file_list = []
 
-  # Loop over files in directory and append to list those that match regex
-  if os.path.isdir(input_dir):
-    for filename in os.listdir(input_dir):
-      if var == "buDelta":
-        if delta_partial_low != None and delta_partial_high != None:
-          delta_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high
-        else:
-          delta_string = delta_low + "_" + delta_high
-        m = re.search("Result_" + delta_string + "_([0-9].+)_([0-9].+).root",
-                      filename)
-      elif var == "delta":
-        if neutral != "partial":
-          if delta_partial_low != None and delta_partial_high != None:
-            m = re.search(
-                "Result_" + delta_partial_low + "_" + delta_partial_high +
-                "_([0-9].+)_([0-9].+)_" + bu_low + "_" + bu_high + ".root",
-                filename)
-          else:
-            m = re.search(
-                "Result_([0-9].+)_([0-9].+)_" + bu_low + "_" + bu_high +
-                ".root", filename)
-        else:
-          m = re.search(
-              "Result_([0-9].+)_([0-9].+)_" + delta_low + "_" + delta_high +
-              "_" + bu_low + "_" + bu_high + ".root", filename)
+  home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
+  for neutral in neutrals:
+    if neutral != "pi0" and neutral != "gamma" and neutral != "partial":
+      sys.exit("Specify neutral: -n=pi0,gamma,partial")
+    else:
+      lines = [
+          l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
+                                       neutral + '_' + var + '_box_limits.txt')
+      ]
+    lines = [l.split(':') for l in lines]
+    box_limits = []
+    for _, box in lines:
+      box_limits.append(box)
+    split = [l.split(' ') for l in box_limits]
+    for box in split:
+      bu_low = box[0]
+      bu_high = box[1]
+      if neutral == "partial":
+        delta_partial_low = box[2]
+        delta_partial_high = box[3]
+        delta_low = '125'
+        delta_high = '170'
       else:
-        sys.exit("var = buDelta/delta")
-      if m:
-        size = str.format('{0:.6f}', float(m.group(2)) - float(m.group(1)))
-        box_size.append(size)
-        file_dict[size] = filename
+        delta_low = box[2]
+        delta_high = box[3]
+        delta_partial_low = '60'
+        delta_partial_high = '105'
+      if neutral == "pi0":
+        box_string = delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+      else:
+        box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
 
-  if len(box_size) == 0:
+      # Loop over files in directory and append to list those that match regex
+      if os.path.isdir(input_dir):
+        for filename in os.listdir(input_dir):
+          m = re.search(
+              "Result_" + box_string + ".root", filename)
+          if m:
+            file_list.append(filename)
+          else:
+            print("No files recognised for " + box_string)
+
+  if len(file_list) == 0:
     sys.exit("No files recognised")
-  # Want to plot in order of increasing box size
-  box_size.sort(key = float)
 
   cwd = os.getcwd()
   os.chdir(input_dir)
@@ -164,8 +171,8 @@ if __name__ == "__main__":
 
   i = 0
   # Loop over files and extract result of interest
-  for b in box_size:
-    tf = TFile(file_dict[b])
+  for f in file_list:
+    tf = TFile(f)
     # Ib result, params are stored in order mean [0], std dev [1]
     result_par_pull_widths = tf.Get("Result_Pull_" + param)
     result_par_val = tf.Get("Result_Val_" + param)
@@ -193,7 +200,7 @@ if __name__ == "__main__":
         ufloat(signal_yield[0].getVal(), signal_yield_err[0].getVal()))
 
     # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
-    eff_tree = r_np.root2array(file_dict[b], "tree", branch_names)
+    eff_tree = r_np.root2array(f, "tree", branch_names)
     # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
     or_eff.append(
         ufloat(
