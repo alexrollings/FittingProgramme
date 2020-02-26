@@ -226,9 +226,11 @@ if __name__ == "__main__":
   #     label=
   #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$'
   # )
-  plt.errorbar(unumpy.nominal_values(frac_shared_yield),
+  plt.errorbar(unumpy.nominal_values(box_eff),
+               # unumpy.nominal_values(frac_shared_yield),
                unumpy.nominal_values(par_pull_widths_arr),
-               xerr=unumpy.std_devs(frac_shared_yield),
+               xerr=unumpy.std_devs(box_eff),
+               # xerr=unumpy.std_devs(frac_shared_yield),
                yerr=unumpy.std_devs(par_pull_widths_arr),
                color='black', ecolor='lightgray',
                label='Pseudo-experiments')
