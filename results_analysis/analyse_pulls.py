@@ -71,59 +71,47 @@ if __name__ == "__main__":
   param = args.param
   var = args.var
   neutral = args.neutral
-  delta_partial_low = args.delta_partial_low
-  delta_partial_high = args.delta_partial_high
-  delta_low = args.delta_low
-  delta_high = args.delta_high
-  bu_low = args.bu_low
-  bu_high = args.bu_high
-
-  if delta_high == None and bu_high == None:
-    sys.exit("")
 
   file_list = []
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
-  for neutral in neutrals:
-    if neutral != "pi0" and neutral != "gamma" and neutral != "partial":
-      sys.exit("Specify neutral: -n=pi0,gamma,partial")
+  if neutral != "pi0" and neutral != "gamma" and neutral != "partial":
+    sys.exit("Specify neutral: -n=pi0,gamma,partial")
+  else:
+    lines = [
+        l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
+                                     neutral + '_' + var + '_box_limits_new.txt')
+    ]
+  lines = [l.split(':') for l in lines]
+  box_limits = []
+  for _, box in lines:
+    box_limits.append(box)
+  split = [l.split(' ') for l in box_limits]
+  for box in split:
+    bu_low = box[0]
+    bu_high = box[1]
+    if neutral == "partial":
+      delta_partial_low = box[2]
+      delta_partial_high = box[3]
+      delta_low = '125'
+      delta_high = '170'
     else:
-      lines = [
-          l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
-                                       neutral + '_' + var + '_box_limits.txt')
-      ]
-    lines = [l.split(':') for l in lines]
-    box_limits = []
-    for _, box in lines:
-      box_limits.append(box)
-    split = [l.split(' ') for l in box_limits]
-    for box in split:
-      bu_low = box[0]
-      bu_high = box[1]
-      if neutral == "partial":
-        delta_partial_low = box[2]
-        delta_partial_high = box[3]
-        delta_low = '125'
-        delta_high = '170'
-      else:
-        delta_low = box[2]
-        delta_high = box[3]
-        delta_partial_low = '60'
-        delta_partial_high = '105'
-      if neutral == "pi0":
-        box_string = delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
-      else:
-        box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+      delta_low = box[2]
+      delta_high = box[3]
+      delta_partial_low = '60'
+      delta_partial_high = '105'
+    if neutral == "pi0":
+      box_string = delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+    else:
+      box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
 
-      # Loop over files in directory and append to list those that match regex
-      if os.path.isdir(input_dir):
-        for filename in os.listdir(input_dir):
-          m = re.search(
-              "Result_" + box_string + ".root", filename)
-          if m:
-            file_list.append(filename)
-          else:
-            print("No files recognised for " + box_string)
+    # Loop over files in directory and append to list those that match regex
+    if os.path.isdir(input_dir):
+      for filename in os.listdir(input_dir):
+        m = re.search(
+            "Result_" + box_string + ".root", filename)
+        if m:
+          file_list.append(filename)
 
   if len(file_list) == 0:
     sys.exit("No files recognised")
@@ -220,7 +208,7 @@ if __name__ == "__main__":
   frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
   linear_err_fn = (np.multiply(
-      np.divide(np.ones(len(box_size)) * math.sqrt(2), signal_yield_arr),
+      np.divide(np.ones(len(file_list)) * math.sqrt(2), signal_yield_arr),
       shared_yield) + np.divide((signal_yield_arr - shared_yield),
                                 signal_yield_arr)) * initial_width
   # sqrt from unumpy as can handle uncertainty types
@@ -228,14 +216,14 @@ if __name__ == "__main__":
       np.square(
           np.multiply(
               np.divide(
-                  np.ones(len(box_size)) *
+                  np.ones(len(file_list)) *
                   math.sqrt(2), signal_yield_arr), shared_yield)) + np.
       square(np.divide((signal_yield_arr -
                         shared_yield), signal_yield_arr))) * initial_width
 
   perc_err_arr = np.divide(par_err_arr, par_val_arr)*100
 
-  # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(box_size))*initial_width)
+  # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(file_list))*initial_width)
   fig = plt.figure()
   # plt.errorbar(
   #     unumpy.nominal_values(frac_shared_yield),
