@@ -35,35 +35,10 @@ if __name__ == "__main__":
                       type=str,
                       help='Neutral',
                       required=True)
-  parser.add_argument('-dpl',
-                      '--delta_partial_low',
+  parser.add_argument('-b',
+                      '--box_fit',
                       type=str,
-                      help='Lower delta mass range for partial π0',
-                      required=False)
-  parser.add_argument('-dph',
-                      '--delta_partial_high',
-                      type=str,
-                      help='Upper delta mass range for partial π0',
-                      required=False)
-  parser.add_argument('-dl',
-                      '--delta_low',
-                      type=str,
-                      help='Lower delta mass range',
-                      required=False)
-  parser.add_argument('-dh',
-                      '--delta_high',
-                      type=str,
-                      help='Upper delta mass range',
-                      required=False)
-  parser.add_argument('-bl',
-                      '--bu_low',
-                      type=str,
-                      help='Lower bu mass range',
-                      required=False)
-  parser.add_argument('-bh',
-                      '--bu_high',
-                      type=str,
-                      help='Upper bu mass range',
+                      help='String of box dimensions used in fit',
                       required=False)
   args = parser.parse_args()
 
@@ -71,6 +46,7 @@ if __name__ == "__main__":
   param = args.param
   var = args.var
   neutral = args.neutral
+  box_fit = args.box_fit
 
   file_list = []
 
@@ -200,12 +176,21 @@ if __name__ == "__main__":
             eff_tree[0][1],
             math.sqrt(n_mc_events * eff_tree[0][1] *
                       (1 - eff_tree[0][1])) / n_mc_events))
+    if box_fit != None:
+      m = re.search(
+          "Result_" + box_fit + ".root", f)
+      if m:
+        fit_eff = eff_tree[0][1]
+
     i = i + 1
 
   shared_yield = np.array(np.divide(
       np.multiply(signal_yield_arr[0], box_eff), or_eff),
                           dtype=object)
   frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
+
+  # for i in range(0, len(file_list)):
+  #   print(file_list[i] + " " + str(box_eff[i]) + " " + str(or_eff[i]) + " " + str(frac_shared_yield[i]))
 
   linear_err_fn = (np.multiply(
       np.divide(np.ones(len(file_list)) * math.sqrt(2), signal_yield_arr),
@@ -233,21 +218,25 @@ if __name__ == "__main__":
   #     label=
   #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$'
   # )
-  plt.errorbar(
-      unumpy.nominal_values(frac_shared_yield),
-      unumpy.nominal_values(linear_err_fn),
-      xerr=unumpy.std_devs(frac_shared_yield),
-      yerr=unumpy.std_devs(linear_err_fn),
-      label=
-      '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$'
-  )
+  # plt.errorbar(
+  #     unumpy.nominal_values(frac_shared_yield),
+  #     unumpy.nominal_values(linear_err_fn),
+  #     xerr=unumpy.std_devs(frac_shared_yield),
+  #     yerr=unumpy.std_devs(linear_err_fn),
+  #     label=
+  #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$'
+  # )
   plt.errorbar(unumpy.nominal_values(frac_shared_yield),
                unumpy.nominal_values(par_pull_widths_arr),
                xerr=unumpy.std_devs(frac_shared_yield),
                yerr=unumpy.std_devs(par_pull_widths_arr),
+               color='black', ecolor='lightgray',
                label='Pseudo-experiments')
-  plt.legend(loc='upper left')
-  plt.xlabel('$N_{Box}/N_{T}$')
+  if box_fit != None:
+    plt.axvline(x=fit_eff, color='r', linestyle='dotted')
+  # plt.legend(loc='upper left')
+  plt.xlabel('$\epsilon_{Box}$')
+  # plt.xlabel('$N_{Box}/N_{T}$')
   plt.ylim(0, 2)
   plt.ylabel('Pull Width')
   plt.title(param)
@@ -255,12 +244,18 @@ if __name__ == "__main__":
               var + ".pdf")
   # print(frac_shared_yield)
   fig = plt.figure()
-  plt.errorbar(unumpy.nominal_values(frac_shared_yield),
+  plt.errorbar(unumpy.nominal_values(box_eff),
+               # unumpy.nominal_values(frac_shared_yield),
                unumpy.nominal_values(perc_err_arr),
-               xerr=unumpy.std_devs(frac_shared_yield),
+               xerr=unumpy.std_devs(box_eff),
+               # xerr=unumpy.std_devs(frac_shared_yield),
                yerr=unumpy.std_devs(perc_err_arr),
+               color='black', ecolor='lightgray',
                label='Pseudo-experiments')
-  plt.xlabel('$N_{Box}/N_{T}$')
+  # plt.xlabel('$N_{Box}/N_{T}$')
+  if box_fit != None:
+    plt.axvline(x=fit_eff, color='r', linestyle='dotted')
+  plt.xlabel('$\epsilon_{Box}$')
   plt.ylabel('% Error')
   plt.title(param)
   fig.savefig("box_yield_vs_" + param + "_err_" + neutral + "_" +
