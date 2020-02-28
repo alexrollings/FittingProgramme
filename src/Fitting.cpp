@@ -2112,6 +2112,100 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
                                                charge)]
           ->numEntries());
 
+  if (bachelor == Bachelor::pi && daughters == Daughters::kpi) {
+    // Make 2D plot of data
+    TH2F *hh_data = (TH2F *)dataHist->createHistogram(
+        "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+        config.deltaMass().getBins());
+    hh_data->SetTitle("");
+
+    // 2D data plot
+    TCanvas canvasData(
+        ("CanvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    hh_data->SetStats(0);
+    if (neutral == Neutral::pi0) {
+      hh_data->GetYaxis()->SetTitle(
+          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
+    hh_data->SetTitle(("B^{" + EnumToLabel(charge) +
+                       "}#rightarrow#font[132]{[}#font[132]{[}" +
+                       EnumToLabel(daughters, charge) +
+                       "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                       "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) + "^{" +
+                       EnumToLabel(charge) + "}")
+                          .c_str());
+    hh_data->Draw("colz");
+    canvasData.Update();
+    canvasData.SaveAs((outputDir + "/2d_plots/" +
+                       ComposeName(id, neutral, bachelor, daughters, charge) +
+                       +"2dData.pdf")
+                          .c_str());
+
+    TH2F *hh_model = (TH2F *)histPdf.createHistogram(
+        "hh_model", config.buDeltaMass(),
+        RooFit::Binning(config.buDeltaMass().getBins()),
+        RooFit::YVar(config.deltaMass(),
+                     RooFit::Binning(config.deltaMass().getBins())));
+    hh_model->SetTitle("");
+
+    // Scale model plot to total number of data events
+    // hh_model->Scale(hh_data->Integral());
+
+    // 2D data plot
+    TCanvas canvasModel(
+        ("CanvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    hh_model->SetStats(0);
+    if (neutral == Neutral::pi0) {
+      hh_model->GetYaxis()->SetTitle(
+          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
+    hh_model->SetTitle(("B^{" + EnumToLabel(charge) +
+                        "}#rightarrow#font[132]{[}#font[132]{[}" +
+                        EnumToLabel(daughters, charge) +
+                        "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                        "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                        "^{" + EnumToLabel(charge) + "}")
+                           .c_str());
+    hh_model->Draw("colz");
+    canvasModel.Update();
+    canvasModel.SaveAs((outputDir + "/2d_plots/" +
+                        ComposeName(id, neutral, bachelor, daughters, charge) +
+                        +"2dPdf.pdf")
+                           .c_str());
+    // Make 2D plot of toy
+    TH2F *hh_toy = (TH2F *)toyData->createHistogram(
+        "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+        config.deltaMass().getBins());
+    hh_toy->SetTitle("");
+
+    // 2D toy plot
+    TCanvas canvasToy(
+        ("CanvasToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    hh_toy->SetStats(0);
+    if (neutral == Neutral::pi0) {
+      hh_toy->GetYaxis()->SetTitle(
+          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
+    hh_toy->SetTitle(("B^{" + EnumToLabel(charge) +
+                      "}#rightarrow#font[132]{[}#font[132]{[}" +
+                      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
+                      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+                      EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+                         .c_str());
+    hh_toy->Draw("colz");
+    canvasToy.Update();
+    canvasToy.SaveAs((outputDir + "/2d_plots/" +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      +"2dToy.pdf")
+                         .c_str());
+  }
+
   if (mapDataLabelToy.find(ComposeDataLabelName(
           neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
     mapDataLabelToy.insert(std::make_pair(
@@ -2296,6 +2390,9 @@ void Run2DToys(TFile &outputFile,
     outputFile.Close();
     std::cout << toyFitResult->GetName() << " has been saved to file "
               << outputFile.GetName() << "\n";
+    std::cout << "\n\n\n"
+              << config.deltaLow() << " " << config.deltaHigh() << " "
+              << config.buDeltaLow() << " " << config.buDeltaHigh() << "\n\n\n";
   }
 }
 
