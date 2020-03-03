@@ -93,7 +93,7 @@ if __name__ == "__main__":
     else:
       lines = [
           l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
-                                       neutral + '_' + var + '_box_limits.txt')
+                                       neutral + '_' + var + '_box_limits_new.txt')
       ]
     lines = [l.split(':') for l in lines]
     box_limits = []

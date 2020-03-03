@@ -136,6 +136,7 @@ if __name__ == "__main__":
   i = 0
   # Loop over files and extract result of interest
   for f in file_list:
+    print(f)
     tf = TFile(f)
     # Ib result, params are stored in order mean [0], std dev [1]
     result_par_pull_widths = tf.Get("Result_Pull_" + param)
@@ -176,6 +177,7 @@ if __name__ == "__main__":
             eff_tree[0][1],
             math.sqrt(n_mc_events * eff_tree[0][1] *
                       (1 - eff_tree[0][1])) / n_mc_events))
+    print(eff_tree[0][1])
     if box_fit != None:
       m = re.search(
           "Result_" + box_fit + ".root", f)

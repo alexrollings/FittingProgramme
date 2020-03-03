@@ -177,18 +177,18 @@ std::string Configuration::ReturnBoxString() {
   std::ostringstream out;
   if (fitBuPartial_ == true) {
     if (fit1D_ == true) {
-      out << std::setprecision(4) << deltaPartialLow_ << "_"
+      out << deltaPartialLow_ << "_"
           << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
     } else {
-      out << std::setprecision(4) << deltaPartialLow_ << "_"
+      out << deltaPartialLow_ << "_"
           << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
           << buDeltaLow_ << "_" << buDeltaHigh_;
     }
   } else {
     if (fit1D_ == true) {
-      out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_;
+      out << deltaLow_ << "_" << deltaHigh_;
     } else {
-      out << std::setprecision(4) << deltaLow_ << "_" << deltaHigh_ << "_"
+      out << deltaLow_ << "_" << deltaHigh_ << "_"
           << buDeltaLow_ << "_" << buDeltaHigh_;
     }
   }
@@ -1270,11 +1270,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string bhString = std::to_string(buDeltaHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 
@@ -1401,11 +1401,11 @@ void Configuration::SetEfficiencies(
   std::string dphString = std::to_string(deltaPartialHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_misId_" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new/" + EnumToString(neutral()) + "_" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 

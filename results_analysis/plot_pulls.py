@@ -42,6 +42,11 @@ def pass_filename_bu_partial(root_file,
         '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root', root_file)
   if m:
     list_file.write(root_file + '\n')
+  # else:
+  #   print('Result' + dim + '_' + delta_partial_low + '_' + delta_partial_high +
+  #         '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high +
+  #         '_0\.[0-9]+\.root')
+  #   print(root_file)
 
 
 if __name__ == "__main__":
