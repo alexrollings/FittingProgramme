@@ -2,11 +2,14 @@
 #include <iostream>
 
 #include "Configuration.h"
+#include "NeutralVars.h"
+#include "NeutralBachelorVars.h"
 #include "ParseArguments.h"
 
 #include "TTreeReader.h"
 #include "TFile.h"
 #include "RooDataSet.h"
+#include "RooAbsPdf.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -191,6 +194,22 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return combData;
 }
 
+void MakePdf(int const id, Configuration &config) {
+  NeutralVars<Neutral::gamma> nVars(id);
+  NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
+  nVars.pdfDelta_Bu2Dst0h_D0gamma();
+
+  RooRealVar yieldBuDeltaSignal(("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "",
+                                14000, 0, 15000);
+  RooAddPdf pdfBuDelta("pdfBuDelta", "", nbVars.pdfBu_Bu2Dst0h_D0gamma(),
+                       yieldBuDeltaSignal);
+
+  RooRealVar yieldDeltaSignal(("yieldDeltaSignal" + std::to_string(id)).c_str(), "",
+                              14000, 0, 15000);
+  RooAddPdf pdfDelta("pdfDelta", "", nVars.pdfDelta_Bu2Dst0h_D0gamma(),
+                     yieldDeltaSignal);
+}
+
 int main(int argc, char **argv) {
   std::string inputDir = "";
   std::string outputDir;
@@ -303,6 +322,9 @@ int main(int argc, char **argv) {
   // ---------------------------- Make MC dataset 
   // ----------------------------
   RooDataSet combData = ExtractDataSetFromMC(config, inputDir, fittingMC);
-  
+
+  int const id = 0;
+  MakePdf(id, config);
+
   return 0;
 }
