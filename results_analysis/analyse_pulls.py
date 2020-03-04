@@ -167,22 +167,37 @@ if __name__ == "__main__":
     # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
     eff_tree = r_np.root2array(f, "tree", branch_names)
     # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
-    or_eff.append(
-        ufloat(
-            eff_tree[0][0],
-            math.sqrt(n_mc_events * eff_tree[0][0] *
-                      (1 - eff_tree[0][0])) / n_mc_events))
-    box_eff.append(
-        ufloat(
-            eff_tree[0][1],
-            math.sqrt(n_mc_events * eff_tree[0][1] *
-                      (1 - eff_tree[0][1])) / n_mc_events))
-    print(eff_tree[0][1])
+    if neutral == 'partial':
+      or_eff.append(
+          ufloat(
+              eff_tree[0][3],
+              math.sqrt(n_mc_events * eff_tree[0][3] *
+                        (1 - eff_tree[0][3])) / n_mc_events))
+      box_eff.append(
+          ufloat(
+              eff_tree[0][5],
+              math.sqrt(n_mc_events * eff_tree[0][5] *
+                        (2 - eff_tree[0][5])) / n_mc_events))
+    else:
+      or_eff.append(
+          ufloat(
+              eff_tree[0][0],
+              math.sqrt(n_mc_events * eff_tree[0][0] *
+                        (1 - eff_tree[0][0])) / n_mc_events))
+      box_eff.append(
+          ufloat(
+              eff_tree[0][1],
+              math.sqrt(n_mc_events * eff_tree[0][1] *
+                        (1 - eff_tree[0][1])) / n_mc_events))
+
     if box_fit != None:
       m = re.search(
           "Result_" + box_fit + ".root", f)
       if m:
-        fit_eff = eff_tree[0][1]
+        if neutral == 'partial':
+          fit_eff = eff_tree[0][5]
+        else:
+          fit_eff = eff_tree[0][1]
 
     i = i + 1
 
