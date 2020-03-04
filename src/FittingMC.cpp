@@ -9,7 +9,7 @@
 #include "TTreeReader.h"
 #include "TFile.h"
 #include "RooDataSet.h"
-#include "RooAbsPdf.h"
+#include "RooSimultaneous.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -194,7 +194,7 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return combData;
 }
 
-void MakePdf(int const id, Configuration &config) {
+RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fittingMC) {
   NeutralVars<Neutral::gamma> nVars(id);
   NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
 
@@ -221,6 +221,12 @@ void MakePdf(int const id, Configuration &config) {
       RooArgList(buDeltaCutEff, orEff, yieldSignal));
   RooAddPdf pdfDelta("pdfDelta", "", nVars.pdfDelta_Bu2Dst0h_D0gamma(),
                      yieldDeltaSignal);
+
+  RooSimultaneous* simPdf = new RooSimultaneous(("simPdf_" + std::to_string(id)).c_str(), "", fittingMC);
+  simPdf->addPdf(pdfBuDelta, EnumToString(Mass::buDelta).c_str());
+  simPdf->addPdf(pdfDelta, EnumToString(Mass::delta).c_str());
+
+  return simPdf;
 }
 
 int main(int argc, char **argv) {
@@ -337,7 +343,7 @@ int main(int argc, char **argv) {
   RooDataSet combData = ExtractDataSetFromMC(config, inputDir, fittingMC);
 
   int const id = 0;
-  MakePdf(id, config);
+  RooSimultaneous* simPdf = MakePdf(id, config, fittingMC);
 
   return 0;
 }
