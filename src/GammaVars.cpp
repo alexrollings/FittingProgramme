@@ -24,26 +24,30 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("Bu2Dst0h_D0gamma_a1Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // "", 1.6945e+00, 0, 5),
+          "", 1.6945e+00),
           // Fixed from data
-          "", 1.8330e+00),
+          // "", 1.8330e+00),
       Bu2Dst0h_D0gamma_a2Delta_(
           ("Bu2Dst0h_D0gamma_a2Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // "", -7.4455e-01, -5, -0.00001),
+          "", -7.4455e-01),
           // Fixed from data
-          "", -8.2296e-01),
+          // "", -8.2296e-01),
       Bu2Dst0h_D0gamma_n1Delta_(
           ("Bu2Dst0h_D0gamma_n1Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // "", 1.9181e+00, 0, 10),
+          "", 1.9181e+00),
           // Fixed from data
-          "", 7.0834e-01),
+          // "", 7.0834e-01),
       Bu2Dst0h_D0gamma_n2Delta_(
           ("Bu2Dst0h_D0gamma_n2Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           // "", 4.3851e+00, 0, 10),
+          "", 4.3851e+00),
           // Fixed from data
-          "", 7.6330e+00),
+          // "", 7.6330e+00),
       pdf1Delta_Bu2Dst0h_D0gamma_(
           ("pdf1Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))

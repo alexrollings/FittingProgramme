@@ -8,6 +8,13 @@
 
 #include "TTreeReader.h"
 #include "TFile.h"
+#include "TCanvas.h"
+#include "TPad.h"
+#include "TStyle.h"
+#include "TLine.h"
+#include "TAxis.h"
+#include "RooPlot.h"
+#include "RooHist.h"
 #include "RooDataSet.h"
 #include "RooSimultaneous.h"
 #include "RooFitResult.h"
@@ -16,6 +23,113 @@
 bool fexists(std::string const &filename) {
   std::ifstream infile(filename.c_str());
   return infile.is_open();
+}
+
+// Function to set the style for all THists
+void SetStyle() {
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.04);
+  gStyle->SetTitleSize(0.04, "XY");
+  gStyle->SetLabelSize(0.035, "XY");
+  gStyle->SetLegendFont(132);
+  gStyle->SetLegendTextSize(0.05);
+  gStyle->SetTitleOffset(1.0, "X");
+  gStyle->SetTitleOffset(1.3, "Y");
+  gStyle->SetPadTopMargin(0.03);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.1);
+  gStyle->SetPadLeftMargin(0.11);
+}
+
+// Function to plot 1D projections - written so that it can be used for both bu
+// and delta mass
+void PlotComponent(Mass mass, RooRealVar &var, 
+                   RooAbsData const &dataSet, RooSimultaneous const &simPdf,
+                   std::string const &outputDir,
+                   Configuration &config, RooCategory &fittingMC) {
+  int id = 0;
+  // Stops ROOT print INFO messages
+  gErrorIgnoreLevel = kWarning;
+
+  std::unique_ptr<RooPlot> frame(var.frame(RooFit::Title(" ")));
+
+  dataSet.plotOn(
+      frame.get(),
+      RooFit::Cut(("fittingMC==fittingMC::" + EnumToString(mass)).c_str()));
+
+  simPdf.plotOn(
+      frame.get(), RooFit::Slice(fittingMC, EnumToString(mass).c_str()),
+      RooFit::ProjWData(fittingMC, dataSet), RooFit::LineColor(kBlue));
+
+  // Everything to be plotted has to be declared outside of a loop, in the scope
+  // of the canvas
+  RooHist *pullHist = nullptr;
+  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+
+  pullHist = frame->RooPlot::pullHist();
+
+  dataSet.plotOn(
+      frame.get(),
+      RooFit::Cut(("fittingMC==fittingMC::" + EnumToString(mass)).c_str()));
+
+  if (mass == Mass::delta) {
+    if (config.neutral() == Neutral::gamma) {
+      frame->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
+    } else {
+      frame->SetXTitle(
+          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+    }
+  } else {
+    frame->SetXTitle(("m[D^{*0}" + EnumToLabel(Bachelor::pi) + "^{" +
+                      EnumToLabel(Charge::total) + "}" +
+                      "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})")
+                         .c_str());
+  }
+
+  // --------------- plot onto canvas ---------------------
+  TCanvas canvas(
+      ("canvas_" + EnumToString(mass)) 
+          .c_str(),
+      "canvas", 1200, 1000);
+
+  TPad pad1(("pad1_" + EnumToString(mass)).c_str(), "pad1", 0.0, 0.14, 1.0, 1.0,
+            kWhite);
+  pad1.Draw();
+
+  TPad pad2(("pad2_" + EnumToString(mass)).c_str(), "pad2", 0.0, 0.02, 1.0,
+            0.14, kWhite);
+  pad2.Draw();
+
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
+
+  canvas.cd();
+  pad2.cd();
+  pullFrame->addPlotable(pullHist /* .get() */, "P");
+  pullFrame->SetName(("pullFrame_" + EnumToString(mass)).c_str());
+  pullFrame->SetTitle("");
+  pullFrame->SetXTitle(" ");
+  pullFrame->GetYaxis()->SetTitle(" ");
+  // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
+  // pullFrame->SetTitleSize(0.2, "Y");
+  // pullFrame->SetTitleOffset(0.1, "Y");
+  pullFrame->SetLabelSize(0.15, "Y");
+  pullFrame->SetLabelOffset(0.02, "Y");
+  pullFrame->SetLabelFont(132, "Y");
+  pullFrame->Draw();
+  zeroLine.Draw("same");
+
+  canvas.cd();
+  pad1.cd();
+  frame->Draw();
+
+  canvas.Update();
+  canvas.SaveAs((outputDir + "/plots/" + EnumToString(config.neutral()) + "_" +
+                 EnumToString(mass) + "_" + config.ReturnBoxString() + ".pdf")
+                    .c_str());
 }
 
 RooDataSet ExtractDataSetFromMC(Configuration &config,
@@ -292,9 +406,16 @@ int main(int argc, char **argv) {
   }
 
   // Raise lower mass boundary in delta mass for pi0 plots
+  config.buDeltaMass().setMin(5150);
+  config.buDeltaMass().setMax(5400);
+  config.buDeltaMass().setBins(50);
   if (config.neutral() == Neutral::pi0) {
     config.deltaMass().setMin(136);
-    config.deltaMass().setBins(54);
+    config.deltaMass().setMax(164);
+    config.deltaMass().setBins(28);
+  } else {
+    config.deltaMass().setMin(110);
+    config.deltaMass().setBins(40);
   }
 
   std::cout << "Neutral = " << EnumToString(config.neutral()) << "\n";
@@ -377,7 +498,13 @@ int main(int argc, char **argv) {
           combData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+
+  PlotComponent(Mass::buDelta, config.buDeltaMass(), combData, simPdf,
+                outputDir, config, fittingMC);
+  PlotComponent(Mass::delta, config.deltaMass(), combData, simPdf,
+                outputDir, config, fittingMC);
   result->Print();
+
 
   return 0;
 }
