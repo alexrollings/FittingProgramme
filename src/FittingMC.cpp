@@ -195,54 +195,6 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return combData;
 }
 
-RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fittingMC, RooDataSet &combData) {
-
-  std::cout << "Making simPdf...\n";
-
-  NeutralVars<Neutral::gamma> nVars(id);
-  NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
-
-  RooRealVar boxEff(("boxEff_" + std::to_string(id)).c_str(),
-                    "", 1);
-  RooRealVar orEff(("orEff_" + std::to_string(id)).c_str(),
-                   "", 1);
-  RooRealVar buDeltaCutEff(
-      ("buDeltaCutEff_" + std::to_string(id)).c_str(), "", 1);
-  RooRealVar deltaCutEff(
-      ("deltaCutEff_" + std::to_string(id)).c_str(), "", 1);
-  config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEff, boxEff,
-                         buDeltaCutEff, deltaCutEff, false);
-
-  RooRealVar yieldSignal(("yieldSignal" + std::to_string(id)).c_str(), "",
-                                14000, 0, 15000);
-
-  RooFormulaVar yieldBuDeltaSignal(
-      ("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
-      RooArgList(deltaCutEff, orEff, yieldSignal));
-  RooAddPdf pdfBuDelta("pdfBuDelta", "", nbVars.pdfBu_Bu2Dst0h_D0gamma(),
-                       yieldBuDeltaSignal);
-
-  RooFormulaVar yieldDeltaSignal(
-      ("yieldDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
-      RooArgList(buDeltaCutEff, orEff, yieldSignal));
-  RooAddPdf pdfDelta("pdfDelta", "", nVars.pdfDelta_Bu2Dst0h_D0gamma(),
-                     yieldDeltaSignal);
-
-  RooSimultaneous* simPdf = new RooSimultaneous(("simPdf_" + std::to_string(id)).c_str(), "", fittingMC);
-  simPdf->addPdf(pdfBuDelta, EnumToString(Mass::buDelta).c_str());
-  simPdf->addPdf(pdfDelta, EnumToString(Mass::delta).c_str());
-
-  std::cout << "Fit simPdf to MC...\n";
-  std::unique_ptr<RooFitResult> result =
-      std::unique_ptr<RooFitResult>(simPdf->fitTo(
-          combData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-  result->Print();
-
-  return simPdf;
-}
-
 int main(int argc, char **argv) {
   std::string inputDir = "";
   std::string outputDir;
@@ -358,9 +310,74 @@ int main(int argc, char **argv) {
   std::cout << "Returned combined dataset\n";
 
   int const id = 0;
-  RooSimultaneous* simPdf = MakePdf(id, config, fittingMC, combData);
+
+  std::cout << "Defining yeilds...\n";
+
+  RooRealVar boxEff(("boxEff_" + std::to_string(id)).c_str(),
+                    "", 1);
+  RooRealVar orEff(("orEff_" + std::to_string(id)).c_str(),
+                   "", 1);
+  RooRealVar buDeltaCutEff(
+      ("buDeltaCutEff_" + std::to_string(id)).c_str(), "", 1);
+  RooRealVar deltaCutEff(
+      ("deltaCutEff_" + std::to_string(id)).c_str(), "", 1);
+  
+  int initSig;
+  if (config.neutral() == Neutral::gamma) {
+    config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEff, boxEff,
+                           buDeltaCutEff, deltaCutEff, false);
+    initSig = 13000;
+  } else {
+    config.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEff, boxEff,
+                           buDeltaCutEff, deltaCutEff, false);
+    initSig = 3500;
+  }
+
+  RooRealVar yieldSignal(("yieldSignal" + std::to_string(id)).c_str(), "",
+                                initSig, 0, 15000);
+  RooFormulaVar yieldBuDeltaSignal(
+      ("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
+      RooArgList(deltaCutEff, orEff, yieldSignal));
+  RooFormulaVar yieldDeltaSignal(
+      ("yieldDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
+      RooArgList(buDeltaCutEff, orEff, yieldSignal));
+
+  std::unique_ptr<RooAddPdf> pdfBuDelta;
+  std::unique_ptr<RooAddPdf> pdfDelta;
+  
+  NeutralVars<Neutral::gamma> gVars(id);
+  NeutralBachelorVars<Neutral::gamma, Bachelor::pi> gpVars(id);
+  NeutralVars<Neutral::pi0> pVars(id);
+  NeutralBachelorVars<Neutral::pi0, Bachelor::pi> ppVars(id);
+
+  if (config.neutral() == Neutral::gamma) {
+    pdfBuDelta = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("pdfBuDelta_" + std::to_string(id)).c_str(), "",
+                      gpVars.pdfBu_Bu2Dst0h_D0gamma(), yieldBuDeltaSignal));
+    pdfDelta = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("pdfDelta_" + std::to_string(id)).c_str(), "",
+                      gVars.pdfDelta_Bu2Dst0h_D0gamma(), yieldDeltaSignal));
+  } else {
+    pdfBuDelta = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("pdfBuDelta_" + std::to_string(id)).c_str(), "",
+                      ppVars.pdfBu_Bu2Dst0h_D0pi0(), yieldBuDeltaSignal));
+    pdfDelta = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("pdfDelta_" + std::to_string(id)).c_str(), "",
+                      pVars.pdfDelta_Bu2Dst0h_D0pi0(), yieldDeltaSignal));
+  }
+
+  RooSimultaneous simPdf(("simPdf_" + std::to_string(id)).c_str(), "", fittingMC);
+  simPdf.addPdf(*pdfBuDelta, EnumToString(Mass::buDelta).c_str());
+  simPdf.addPdf(*pdfDelta, EnumToString(Mass::delta).c_str());
   std::cout << "Returned simPdf\n";
 
+  std::cout << "Fit simPdf to MC...\n";
+  std::unique_ptr<RooFitResult> result =
+      std::unique_ptr<RooFitResult>(simPdf.fitTo(
+          combData, RooFit::Extended(kTRUE), RooFit::Save(),
+                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+  result->Print();
 
   return 0;
 }
