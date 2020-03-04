@@ -49,6 +49,7 @@ void PlotComponent(Mass mass, RooRealVar &var,
                    RooAbsData const &dataSet, RooSimultaneous const &simPdf,
                    std::string const &outputDir,
                    Configuration &config, RooCategory &fittingMC) {
+  SetStyle();
   int id = 0;
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
@@ -499,12 +500,13 @@ int main(int argc, char **argv) {
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
-  PlotComponent(Mass::buDelta, config.buDeltaMass(), combData, simPdf,
-                outputDir, config, fittingMC);
-  PlotComponent(Mass::delta, config.deltaMass(), combData, simPdf,
-                outputDir, config, fittingMC);
+  if (id == 0) {
+    PlotComponent(Mass::buDelta, config.buDeltaMass(), combData, simPdf,
+                  outputDir, config, fittingMC);
+    PlotComponent(Mass::delta, config.deltaMass(), combData, simPdf, outputDir,
+                  config, fittingMC);
+  }
   result->Print();
-
 
   return 0;
 }
