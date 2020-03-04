@@ -1,12 +1,194 @@
 #include <fstream>
 #include <iostream>
-#include "ParseArguments.h"
+
 #include "Configuration.h"
+#include "ParseArguments.h"
+
+#include "TTreeReader.h"
+#include "TFile.h"
+#include "RooDataSet.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
   std::ifstream infile(filename.c_str());
   return infile.is_open();
+}
+
+RooDataSet ExtractDataSetFromMC(Configuration &config,
+                                std::string const &inputDir,
+                                RooCategory &fittingMC) {
+  RooDataSet *inputDataSet = nullptr;
+  std::string input =
+      inputDir + "/" + EnumToString(config.neutral()) + "_dataset.root";
+
+  if (!fexists(input)) {
+    std::string extra = "";
+    std::string ttree("BtoDstar0h3_h1h2pi0RTuple");
+    if (config.neutral() == Neutral::gamma) {
+      extra = "cross_feed_removed/";
+      ttree = "BtoDstar0h3_h1h2gammaTuple";
+    }
+    std::string inputfile_1(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2011_MagUp/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2011_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_2(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2011_MagDown/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2011_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_3(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2012_MagUp/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2012_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_4(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2012_MagDown/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2012_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_5(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2015_MagUp/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2015_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_6(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2015_MagDown/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2015_MagDown_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_7(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2016_MagUp/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2016_MagUp_BDT1_BDT2_PID_TM.root");
+    std::string inputfile_8(
+        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/"
+        "Bu2Dst0pi_D0" +
+        EnumToString(config.neutral()) +
+        "_2016_MagDown/"
+        "" +
+        EnumToString(config.neutral()) +
+        "/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/" + extra +
+        "Bu2Dst0pi_D0" + EnumToString(config.neutral()) +
+        "_2016_MagDown_BDT1_BDT2_PID_TM.root");
+
+    TChain chain(ttree.c_str());
+
+    chain.Add(inputfile_1.c_str());
+    chain.Add(inputfile_2.c_str());
+    chain.Add(inputfile_3.c_str());
+    chain.Add(inputfile_4.c_str());
+    chain.Add(inputfile_5.c_str());
+    chain.Add(inputfile_6.c_str());
+    chain.Add(inputfile_7.c_str());
+    chain.Add(inputfile_8.c_str());
+
+    chain.GetEntry(0);
+
+    TTreeReader reader(&chain);
+
+    inputDataSet =
+        new RooDataSet("inputDataSet", "inputDataSet", &chain,
+                       RooArgSet(config.fullArgSet()));
+
+    TFile dataFile(input.c_str(), "RECREATE");
+    inputDataSet->Write("inputDataSet");
+    dataFile.Close();
+    std::cout << "MC roodataset saved in " << input << "\n";
+  } else {
+    std::cout << "Extracting roodataset from " << input << "\n";
+
+    TFile inData(input.c_str(), "READ");
+    gDirectory->GetObject("inputDataSet", inputDataSet);
+    inData.Close();
+
+    if (inputDataSet == nullptr) {
+      throw std::runtime_error("Data set does not exist.");
+    } else {
+      std::cout << "\n\n\n Dataset extracted. \n\n";
+    }
+  }
+
+
+  std::string cutString;
+  if (config.neutral() == Neutral::gamma) {
+    cutString = config.gammaCutString();
+  } else {
+    cutString = config.pi0CutString();
+  }
+
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          (cutString + "&&Delta_M>" + std::to_string(config.deltaLow()) +
+           "&&Delta_M<" + std::to_string(config.deltaHigh()))
+              .c_str())));
+  if (dataBu_tmp.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
+  }
+  auto dataBu = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+      dataBu_tmp->reduce(RooArgSet(config.buDeltaMass()))));
+  if (dataBu.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to BuDelta mass.");
+  }
+
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+          (cutString + "&&Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+           "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
+              .c_str())));
+  if (dataDelta_tmp.get() == nullptr) {
+    throw std::runtime_error(
+        "Could not reduce inputDataSet with buDelta mass.");
+  }
+  auto dataDelta = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+      dataDelta_tmp->reduce(RooArgSet(config.deltaMass()))));
+  if (dataDelta.get() == nullptr) {
+    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+  }
+
+  RooDataSet combData(
+      "combData", "", RooArgSet(config.fittingArgSet()),
+      RooFit::Index(fittingMC),
+      RooFit::Import(EnumToString(Mass::buDelta).c_str(), *dataBu.get()),
+      RooFit::Import(EnumToString(Mass::delta).c_str(), *dataDelta.get()));
+  return combData;
 }
 
 int main(int argc, char **argv) {
@@ -112,6 +294,15 @@ int main(int argc, char **argv) {
   }
 
   std::cout << "Neutral = " << EnumToString(config.neutral()) << "\n";
+
+  // ---------------------------- Categories ----------------------------
+  RooCategory fittingMC("fittingMC", "fittingMC");
+  fittingMC.defineType(EnumToString(Mass::buDelta).c_str());
+  fittingMC.defineType(EnumToString(Mass::delta).c_str());
+
+  // ---------------------------- Make MC dataset 
+  // ----------------------------
+  RooDataSet combData = ExtractDataSetFromMC(config, inputDir, fittingMC);
   
   return 0;
 }
