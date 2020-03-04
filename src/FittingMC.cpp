@@ -197,15 +197,28 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
 void MakePdf(int const id, Configuration &config) {
   NeutralVars<Neutral::gamma> nVars(id);
   NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
-  nVars.pdfDelta_Bu2Dst0h_D0gamma();
 
-  RooRealVar yieldBuDeltaSignal(("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "",
+  RooRealVar boxEff(("boxEff_" + std::to_string(id)).c_str(),
+                    "", 1);
+  RooRealVar orEff(("orEff_" + std::to_string(id)).c_str(),
+                   "", 1);
+  RooRealVar buDeltaCutEff(
+      ("buDeltaCutEff_" + std::to_string(id)).c_str(), "", 1);
+  RooRealVar deltaCutEff(
+      ("deltaCutEff_" + std::to_string(id)).c_str(), "", 1);
+  config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEff, boxEff,
+                         buDeltaCutEff, deltaCutEff, false);
+
+  RooRealVar yieldSignal(("yieldSignal" + std::to_string(id)).c_str(), "",
                                 14000, 0, 15000);
+  RooFormulaVar yieldBuDeltaSignal(
+      ("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
+      RooArgList(deltaCutEff, orEff, yieldSignal));
   RooAddPdf pdfBuDelta("pdfBuDelta", "", nbVars.pdfBu_Bu2Dst0h_D0gamma(),
                        yieldBuDeltaSignal);
-
-  RooRealVar yieldDeltaSignal(("yieldDeltaSignal" + std::to_string(id)).c_str(), "",
-                              14000, 0, 15000);
+  RooFormulaVar yieldDeltaSignal(
+      ("yieldDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
+      RooArgList(buDeltaCutEff, orEff, yieldSignal));
   RooAddPdf pdfDelta("pdfDelta", "", nVars.pdfDelta_Bu2Dst0h_D0gamma(),
                      yieldDeltaSignal);
 }
