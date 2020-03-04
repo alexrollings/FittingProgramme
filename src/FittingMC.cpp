@@ -195,8 +195,10 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return combData;
 }
 
-RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fittingMC) {
+RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fittingMC, RooDataSet &combData) {
+
   std::cout << "Making simPdf...\n";
+
   NeutralVars<Neutral::gamma> nVars(id);
   NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
 
@@ -213,11 +215,13 @@ RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fitti
 
   RooRealVar yieldSignal(("yieldSignal" + std::to_string(id)).c_str(), "",
                                 14000, 0, 15000);
+
   RooFormulaVar yieldBuDeltaSignal(
       ("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
       RooArgList(deltaCutEff, orEff, yieldSignal));
   RooAddPdf pdfBuDelta("pdfBuDelta", "", nbVars.pdfBu_Bu2Dst0h_D0gamma(),
                        yieldBuDeltaSignal);
+
   RooFormulaVar yieldDeltaSignal(
       ("yieldDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
       RooArgList(buDeltaCutEff, orEff, yieldSignal));
@@ -227,6 +231,14 @@ RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fitti
   RooSimultaneous* simPdf = new RooSimultaneous(("simPdf_" + std::to_string(id)).c_str(), "", fittingMC);
   simPdf->addPdf(pdfBuDelta, EnumToString(Mass::buDelta).c_str());
   simPdf->addPdf(pdfDelta, EnumToString(Mass::delta).c_str());
+
+  std::cout << "Fit simPdf to MC...\n";
+  std::unique_ptr<RooFitResult> result =
+      std::unique_ptr<RooFitResult>(simPdf->fitTo(
+          combData, RooFit::Extended(kTRUE), RooFit::Save(),
+                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+  result->Print();
 
   return simPdf;
 }
@@ -346,16 +358,9 @@ int main(int argc, char **argv) {
   std::cout << "Returned combined dataset\n";
 
   int const id = 0;
-  RooSimultaneous* simPdf = MakePdf(id, config, fittingMC);
+  RooSimultaneous* simPdf = MakePdf(id, config, fittingMC, combData);
   std::cout << "Returned simPdf\n";
 
-  std::cout << "Fit simPdf to MC...\n";
-  std::unique_ptr<RooFitResult> result =
-      std::unique_ptr<RooFitResult>(simPdf->fitTo(
-          combData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
-  result->Print();
 
   return 0;
 }
