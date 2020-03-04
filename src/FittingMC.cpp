@@ -10,6 +10,7 @@
 #include "TFile.h"
 #include "RooDataSet.h"
 #include "RooSimultaneous.h"
+#include "RooFitResult.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -145,7 +146,7 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
     if (inputDataSet == nullptr) {
       throw std::runtime_error("Data set does not exist.");
     } else {
-      std::cout << "\n\n\n Dataset extracted. \n\n";
+      std::cout << "Dataset extracted\n";
     }
   }
 
@@ -195,6 +196,7 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
 }
 
 RooSimultaneous* MakePdf(int const id, Configuration &config, RooCategory &fittingMC) {
+  std::cout << "Making simPdf...\n";
   NeutralVars<Neutral::gamma> nVars(id);
   NeutralBachelorVars<Neutral::gamma, Bachelor::pi> nbVars(id);
 
@@ -341,9 +343,19 @@ int main(int argc, char **argv) {
   // ---------------------------- Make MC dataset 
   // ----------------------------
   RooDataSet combData = ExtractDataSetFromMC(config, inputDir, fittingMC);
+  std::cout << "Returned combined dataset\n";
 
   int const id = 0;
   RooSimultaneous* simPdf = MakePdf(id, config, fittingMC);
+  std::cout << "Returned simPdf\n";
+
+  std::cout << "Fit simPdf to MC...\n";
+  std::unique_ptr<RooFitResult> result =
+      std::unique_ptr<RooFitResult>(simPdf->fitTo(
+          combData, RooFit::Extended(kTRUE), RooFit::Save(),
+                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+  result->Print();
 
   return 0;
 }
