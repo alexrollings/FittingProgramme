@@ -13,11 +13,14 @@
 #include "TStyle.h"
 #include "TLine.h"
 #include "TAxis.h"
+#include "TH2.h"
 #include "RooPlot.h"
 #include "RooHist.h"
 #include "RooDataSet.h"
 #include "RooSimultaneous.h"
 #include "RooFitResult.h"
+#include "RooHistPdf.h"
+#include "RooDataHist.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -310,6 +313,23 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return combData;
 }
 
+// RooDataSet GenerateToyData(std::unique_ptr<RooHistPdf> &histPdf,
+//                            RooCategory &fittingMC, Configuration &config,
+//                            int id, std::string &outputDir) {
+//   gStyle->SetTitleSize(0.03, "XYZ");
+//   gStyle->SetLabelSize(0.025, "XYZ");
+//   gStyle->SetTitleOffset(1, "X");
+//   gStyle->SetTitleOffset(1.2, "Y");
+//   gStyle->SetTitleOffset(1.5, "Z");
+//   gStyle->SetPadRightMargin(0.15);
+//
+//   auto toyData = histPdf.generate(
+//       config.fittingArgSet(),
+//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
+//                                                charge)]
+//           ->numEntries());
+// }
+
 int main(int argc, char **argv) {
   std::string inputDir = "";
   std::string outputDir;
@@ -494,11 +514,10 @@ int main(int argc, char **argv) {
   std::cout << "Returned simPdf\n";
 
   std::cout << "Fit simPdf to MC...\n";
-  std::unique_ptr<RooFitResult> result =
-      std::unique_ptr<RooFitResult>(simPdf.fitTo(
-          combData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+  std::unique_ptr<RooFitResult> mcResult = std::unique_ptr<RooFitResult>(
+      simPdf.fitTo(combData, RooFit::Extended(kTRUE), RooFit::Save(),
+                   RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                   RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
   if (id == 0) {
     PlotComponent(Mass::buDelta, config.buDeltaMass(), combData, simPdf,
@@ -506,7 +525,76 @@ int main(int argc, char **argv) {
     PlotComponent(Mass::delta, config.deltaMass(), combData, simPdf, outputDir,
                   config, fittingMC);
   }
-  result->Print();
+  mcResult->Print();
+  mcResult->SetName("MCResult");
+
+  auto dataHist = std::unique_ptr<RooDataHist>(
+      combData.binnedClone("dataHist", "dataHist"));
+  if (dataHist == nullptr) {
+    throw std::runtime_error("Could not extact binned dataSet.");
+  }
+  dataHist->Print();
+  RooHistPdf histPdf("histPdf", "", config.fittingArgSet(), *dataHist.get(), 2);
+
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(0.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.5, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  TH2F *hh_data = (TH2F *)dataHist->createHistogram(
+      "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+      config.deltaMass().getBins());
+  hh_data->SetTitle("");
+  TCanvas canvasData("CanvasData", "", 1000, 800);
+  hh_data->SetStats(0);
+  if (config.neutral() == Neutral::pi0) {
+    hh_data->GetYaxis()->SetTitle(
+        "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+  }
+  hh_data->Draw("colz");
+  canvasData.Update();
+  canvasData.SaveAs(
+      (outputDir + "/2d_plots/2dMC_" + EnumToString(config.neutral()) + ".pdf")
+          .c_str());
+
+  TH2F *hh_model = (TH2F *)histPdf.createHistogram(
+      "hh_model", config.buDeltaMass(),
+      RooFit::Binning(config.buDeltaMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
+  hh_model->SetTitle("");
+  TCanvas canvasModel("CanvasModel", "", 1000, 800);
+  hh_model->SetStats(0);
+  if (config.neutral() == Neutral::pi0) {
+    hh_model->GetYaxis()->SetTitle(
+        "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+  }
+  hh_model->Draw("colz");
+  canvasModel.Update();
+  canvasModel.SaveAs(
+      (outputDir + "/2d_plots/2dPdf_" + EnumToString(config.neutral()) + ".pdf")
+          .c_str());
+
+  // std::vector<std::string> toyFileNames(nToys);
+  // // start at id = 1 to reserve 0 for MC fit
+  // for (int id = 1; id < nToys + 1; ++id) {
+  //   RooRandom::randomGenerator()->SetSeed(0);
+  //   TRandom3 random(0);
+  //   double randomTag = random.Rndm();
+  //   TFile toyResultFile(
+  //       (outputDir + "/results/ResultMC_" + config.ReturnBoxString() + "_" +
+  //        std::to_string(randomTag) + ".root")
+  //           .c_str(),
+  //       "recreate");
+  //   RooDataSet toyData =
+  //       GenerateToyData(histPdf, fittingMC, config, id, outputDir);
+  //   RunToy(toyResultFile, mapDataLabelDataSet, config, daughtersVec,
+  //             chargeVec, outputDir, id);
+  //   toyFileNames[id - 1] = toyResultFile.GetName();
+  //   toyResultFile.Close();
+  // }
 
   return 0;
 }
