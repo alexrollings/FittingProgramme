@@ -5,6 +5,7 @@
 #include "NeutralVars.h"
 #include "NeutralBachelorVars.h"
 #include "ParseArguments.h"
+#include "PdfMC.h"
 
 #include "TTreeReader.h"
 #include "TFile.h"
@@ -459,65 +460,12 @@ int main(int argc, char **argv) {
 
   int const id = 0;
 
-  std::cout << "Defining yeilds...\n";
+  RooSimultaneous *simPdf = new RooSimultaneous(
+      ("simPdf_" + std::to_string(id)).c_str(),
+      ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
 
-  RooRealVar boxEff(("boxEff_" + std::to_string(id)).c_str(),
-                    "", 1);
-  RooRealVar orEff(("orEff_" + std::to_string(id)).c_str(),
-                   "", 1);
-  RooRealVar buDeltaCutEff(
-      ("buDeltaCutEff_" + std::to_string(id)).c_str(), "", 1);
-  RooRealVar deltaCutEff(
-      ("deltaCutEff_" + std::to_string(id)).c_str(), "", 1);
-
-  int initSig;
-  if (config.neutral() == Neutral::gamma) {
-    config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEff, boxEff,
-                           buDeltaCutEff, deltaCutEff, false);
-    initSig = 13000;
-  } else {
-    config.SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, orEff, boxEff,
-                           buDeltaCutEff, deltaCutEff, false);
-    initSig = 3500;
-  }
-
-  RooRealVar yieldSignal(("yieldSignal" + std::to_string(id)).c_str(), "",
-                                initSig, 0, 15000);
-  RooFormulaVar yieldBuDeltaSignal(
-      ("yieldBuDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
-      RooArgList(deltaCutEff, orEff, yieldSignal));
-  RooFormulaVar yieldDeltaSignal(
-      ("yieldDeltaSignal" + std::to_string(id)).c_str(), "", "(@0/@1)*@2",
-      RooArgList(buDeltaCutEff, orEff, yieldSignal));
-
-  std::unique_ptr<RooAddPdf> pdfBuDelta;
-  std::unique_ptr<RooAddPdf> pdfDelta;
-
-  NeutralVars<Neutral::gamma> gVars(id);
-  NeutralBachelorVars<Neutral::gamma, Bachelor::pi> gpVars(id);
-  NeutralVars<Neutral::pi0> pVars(id);
-  NeutralBachelorVars<Neutral::pi0, Bachelor::pi> ppVars(id);
-
-  if (config.neutral() == Neutral::gamma) {
-    pdfBuDelta = std::unique_ptr<RooAddPdf>(
-        new RooAddPdf(("pdfBuDelta_" + std::to_string(id)).c_str(), "",
-                      gpVars.pdfBu_Bu2Dst0h_D0gamma(), yieldBuDeltaSignal));
-    pdfDelta = std::unique_ptr<RooAddPdf>(
-        new RooAddPdf(("pdfDelta_" + std::to_string(id)).c_str(), "",
-                      gVars.pdfDelta_Bu2Dst0h_D0gamma(), yieldDeltaSignal));
-  } else {
-    pdfBuDelta = std::unique_ptr<RooAddPdf>(
-        new RooAddPdf(("pdfBuDelta_" + std::to_string(id)).c_str(), "",
-                      ppVars.pdfBu_Bu2Dst0h_D0pi0(), yieldBuDeltaSignal));
-    pdfDelta = std::unique_ptr<RooAddPdf>(
-        new RooAddPdf(("pdfDelta_" + std::to_string(id)).c_str(), "",
-                      pVars.pdfDelta_Bu2Dst0h_D0pi0(), yieldDeltaSignal));
-  }
-
-  RooSimultaneous simPdf(("simPdf_" + std::to_string(id)).c_str(), "", fittingMC);
-  simPdf.addPdf(*pdfBuDelta, EnumToString(Mass::buDelta).c_str());
-  simPdf.addPdf(*pdfDelta, EnumToString(Mass::delta).c_str());
-  std::cout << "Returned simPdf\n";
+  auto pdf = &PdfMC::Get(id);
+  pdf->AddToSimultaneousPdf(*simPdf);
 
   auto splicedHist = std::unique_ptr<RooDataHist>(
       splicedData.binnedClone("splicedHist", "splicedHist"));
@@ -531,15 +479,15 @@ int main(int argc, char **argv) {
 
   std::cout << "Fit simPdf to MC...\n";
   std::unique_ptr<RooFitResult> mcResult = std::unique_ptr<RooFitResult>(
-      simPdf.fitTo(*splicedAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+      simPdf->fitTo(*splicedAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                    RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                    RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
   if (id == 0) {
     std::string label = "data";
-    PlotComponent(Mass::buDelta, config.buDeltaMass(), splicedData, simPdf,
+    PlotComponent(Mass::buDelta, config.buDeltaMass(), splicedData, *simPdf,
                   outputDir, config, fittingMC, label);
-    PlotComponent(Mass::delta, config.deltaMass(), splicedData, simPdf, outputDir,
+    PlotComponent(Mass::delta, config.deltaMass(), splicedData, *simPdf, outputDir,
                   config, fittingMC, label);
   }
   mcResult->Print("v");
@@ -622,7 +570,7 @@ int main(int argc, char **argv) {
       toyAbsData->SetName(("toyAbsData_" + std::to_string(id)).c_str());
     }
     std::unique_ptr<RooFitResult> toyResult = std::unique_ptr<RooFitResult>(
-        simPdf.fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                      RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                      RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     toyResult->Print("v");
@@ -645,9 +593,9 @@ int main(int argc, char **argv) {
                         EnumToString(config.neutral()) + ".pdf")
                            .c_str());
       std::string label = "toy";
-      PlotComponent(Mass::buDelta, config.buDeltaMass(), toyData, simPdf,
+      PlotComponent(Mass::buDelta, config.buDeltaMass(), toyData, *simPdf,
                     outputDir, config, fittingMC, label);
-      PlotComponent(Mass::delta, config.deltaMass(), toyData, simPdf,
+      PlotComponent(Mass::delta, config.deltaMass(), toyData, *simPdf,
                     outputDir, config, fittingMC, label);
     }
   }
