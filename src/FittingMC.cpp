@@ -14,6 +14,7 @@
 #include "TLine.h"
 #include "TAxis.h"
 #include "TH2.h"
+#include "TRandom3.h"
 #include "RooPlot.h"
 #include "RooHist.h"
 #include "RooDataSet.h"
@@ -21,6 +22,7 @@
 #include "RooFitResult.h"
 #include "RooHistPdf.h"
 #include "RooDataHist.h"
+#include "RooRandom.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -137,8 +139,7 @@ void PlotComponent(Mass mass, RooRealVar &var,
 }
 
 RooDataSet ExtractDataSetFromMC(Configuration &config,
-                                std::string const &inputDir,
-                                RooCategory &fittingMC) {
+                                std::string const &inputDir) {
   RooDataSet *inputDataSet = nullptr;
   std::string input =
       inputDir + "/" + EnumToString(config.neutral()) + "_dataset.root";
@@ -268,7 +269,6 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
     }
   }
 
-
   std::string cutString;
   if (config.neutral() == Neutral::gamma) {
     cutString = config.gammaCutString();
@@ -276,33 +276,37 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
     cutString = config.pi0CutString();
   }
 
-  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          (cutString + "&&Delta_M>" + std::to_string(config.deltaLow()) +
-           "&&Delta_M<" + std::to_string(config.deltaHigh()))
-              .c_str())));
+  auto reducedData = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+      inputDataSet->reduce(config.fittingArgSet(), cutString.c_str())));
+  return *reducedData;
+}
+
+RooDataSet SpliceData(RooAbsData &totalData, Configuration &config,
+                      RooCategory &fittingMC) {
+  auto dataBu_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+      totalData.reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
+                         "&&Delta_M<" + std::to_string(config.deltaHigh()))
+                            .c_str())));
   if (dataBu_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
+    throw std::runtime_error("Could not reduce totalData with delta mass.");
   }
   auto dataBu = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
       dataBu_tmp->reduce(RooArgSet(config.buDeltaMass()))));
   if (dataBu.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to BuDelta mass.");
+    throw std::runtime_error("Could not reduce dataBu_tmp to BuDelta mass.");
   }
 
-  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          (cutString + "&&Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
-           "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
-              .c_str())));
+  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+      totalData.reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                         "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
+                            .c_str())));
   if (dataDelta_tmp.get() == nullptr) {
-    throw std::runtime_error(
-        "Could not reduce inputDataSet with buDelta mass.");
+    throw std::runtime_error("Could not reduce totalData with buDelta mass.");
   }
   auto dataDelta = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
       dataDelta_tmp->reduce(RooArgSet(config.deltaMass()))));
   if (dataDelta.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+    throw std::runtime_error("Could not reduce dataDelta_tmp to Delta mass.");
   }
 
   RooDataSet combData(
@@ -448,8 +452,10 @@ int main(int argc, char **argv) {
 
   // ---------------------------- Make MC dataset 
   // ----------------------------
-  RooDataSet combData = ExtractDataSetFromMC(config, inputDir, fittingMC);
-  std::cout << "Returned combined dataset\n";
+  RooDataSet totalData = ExtractDataSetFromMC(config, inputDir);
+  std::cout << "Extracted MC dataset\n";
+  RooDataSet combData = SpliceData(totalData, config, fittingMC);
+  std::cout << "Returned spliced dataset\n";
 
   int const id = 0;
 
@@ -463,7 +469,7 @@ int main(int argc, char **argv) {
       ("buDeltaCutEff_" + std::to_string(id)).c_str(), "", 1);
   RooRealVar deltaCutEff(
       ("deltaCutEff_" + std::to_string(id)).c_str(), "", 1);
-  
+
   int initSig;
   if (config.neutral() == Neutral::gamma) {
     config.SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, orEff, boxEff,
@@ -486,7 +492,7 @@ int main(int argc, char **argv) {
 
   std::unique_ptr<RooAddPdf> pdfBuDelta;
   std::unique_ptr<RooAddPdf> pdfDelta;
-  
+
   NeutralVars<Neutral::gamma> gVars(id);
   NeutralBachelorVars<Neutral::gamma, Bachelor::pi> gpVars(id);
   NeutralVars<Neutral::pi0> pVars(id);
@@ -529,11 +535,12 @@ int main(int argc, char **argv) {
   mcResult->SetName("MCResult");
 
   auto dataHist = std::unique_ptr<RooDataHist>(
-      combData.binnedClone("dataHist", "dataHist"));
+      totalData.binnedClone("dataHist", "dataHist"));
   if (dataHist == nullptr) {
     throw std::runtime_error("Could not extact binned dataSet.");
   }
   dataHist->Print();
+  config.fittingArgSet().Print();
   RooHistPdf histPdf("histPdf", "", config.fittingArgSet(), *dataHist.get(), 2);
 
   gStyle->SetTitleSize(0.03, "XYZ");
@@ -577,24 +584,42 @@ int main(int argc, char **argv) {
       (outputDir + "/2d_plots/2dPdf_" + EnumToString(config.neutral()) + ".pdf")
           .c_str());
 
-  // std::vector<std::string> toyFileNames(nToys);
-  // // start at id = 1 to reserve 0 for MC fit
-  // for (int id = 1; id < nToys + 1; ++id) {
-  //   RooRandom::randomGenerator()->SetSeed(0);
-  //   TRandom3 random(0);
-  //   double randomTag = random.Rndm();
-  //   TFile toyResultFile(
-  //       (outputDir + "/results/ResultMC_" + config.ReturnBoxString() + "_" +
-  //        std::to_string(randomTag) + ".root")
-  //           .c_str(),
-  //       "recreate");
-  //   RooDataSet toyData =
-  //       GenerateToyData(histPdf, fittingMC, config, id, outputDir);
-  //   RunToy(toyResultFile, mapDataLabelDataSet, config, daughtersVec,
-  //             chargeVec, outputDir, id);
-  //   toyFileNames[id - 1] = toyResultFile.GetName();
-  //   toyResultFile.Close();
-  // }
+  std::vector<std::string> toyFileNames(nToys);
+  // start at id = 1 to reserve 0 for MC fit
+  for (int id = 1; id < nToys + 1; ++id) {
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double randomTag = random.Rndm();
+    TFile toyResultFile(
+        (outputDir + "/results/ResultMC_" + config.ReturnBoxString() + "_" +
+         std::to_string(randomTag) + ".root")
+            .c_str(),
+        "recreate");
+    auto toy2D =
+        histPdf.generate(config.fittingArgSet(), totalData.numEntries());
+    RooDataSet combData = SpliceData(*toy2D, config, fittingMC);
+    // RunToy(toyResultFile, mapDataLabelDataSet, config, daughtersVec, chargeVec,
+    //        outputDir, id);
+    // toyFileNames[id - 1] = toyResultFile.GetName();
+    // toyResultFile.Close();
+    if (id == 1) {
+      TH2F *hh_toy = (TH2F *)toy2D->createHistogram(
+          "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+          config.deltaMass().getBins());
+      hh_toy->SetTitle("");
+      TCanvas canvasToy("CanvasToy", "", 1000, 800);
+      hh_toy->SetStats(0);
+      if (config.neutral() == Neutral::pi0) {
+        hh_toy->GetYaxis()->SetTitle(
+            "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
+      }
+      hh_toy->Draw("colz");
+      canvasToy.Update();
+      canvasToy.SaveAs((outputDir + "/2d_plots/2dToy_" +
+                        EnumToString(config.neutral()) + ".pdf")
+                           .c_str());
+    }
+  }
 
   return 0;
 }
