@@ -53,7 +53,7 @@ void SetStyle() {
 void PlotComponent(Mass mass, RooRealVar &var, 
                    RooAbsData const &dataSet, RooSimultaneous const &simPdf,
                    std::string const &outputDir,
-                   Configuration &config, RooCategory &fittingMC) {
+                   Configuration &config, RooCategory &fittingMC, std::string label) {
   SetStyle();
   int id = 0;
   // Stops ROOT print INFO messages
@@ -134,7 +134,7 @@ void PlotComponent(Mass mass, RooRealVar &var,
 
   canvas.Update();
   canvas.SaveAs((outputDir + "/plots/" + EnumToString(config.neutral()) + "_" +
-                 EnumToString(mass) + "_" + config.ReturnBoxString() + ".pdf")
+                 EnumToString(mass) + "_" + config.ReturnBoxString() + "_" + label + ".pdf")
                     .c_str());
 }
 
@@ -281,14 +281,14 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
   return *reducedData;
 }
 
-RooDataSet SpliceData(RooAbsData &totalData, Configuration &config,
+RooDataSet SpliceData(RooAbsData &data2D, Configuration &config,
                       RooCategory &fittingMC) {
   auto dataBu_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-      totalData.reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
+      data2D.reduce(("Delta_M>" + std::to_string(config.deltaLow()) +
                          "&&Delta_M<" + std::to_string(config.deltaHigh()))
                             .c_str())));
   if (dataBu_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce totalData with delta mass.");
+    throw std::runtime_error("Could not reduce data2D with delta mass.");
   }
   auto dataBu = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
       dataBu_tmp->reduce(RooArgSet(config.buDeltaMass()))));
@@ -297,11 +297,11 @@ RooDataSet SpliceData(RooAbsData &totalData, Configuration &config,
   }
 
   auto dataDelta_tmp = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-      totalData.reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+      data2D.reduce(("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
                          "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
                             .c_str())));
   if (dataDelta_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce totalData with buDelta mass.");
+    throw std::runtime_error("Could not reduce data2D with buDelta mass.");
   }
   auto dataDelta = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
       dataDelta_tmp->reduce(RooArgSet(config.deltaMass()))));
@@ -309,12 +309,12 @@ RooDataSet SpliceData(RooAbsData &totalData, Configuration &config,
     throw std::runtime_error("Could not reduce dataDelta_tmp to Delta mass.");
   }
 
-  RooDataSet combData(
-      "combData", "", RooArgSet(config.fittingArgSet()),
+  RooDataSet splicedData(
+      "splicedData", "", RooArgSet(config.fittingArgSet()),
       RooFit::Index(fittingMC),
       RooFit::Import(EnumToString(Mass::buDelta).c_str(), *dataBu.get()),
       RooFit::Import(EnumToString(Mass::delta).c_str(), *dataDelta.get()));
-  return combData;
+  return splicedData;
 }
 
 // RooDataSet GenerateToyData(std::unique_ptr<RooHistPdf> &histPdf,
@@ -452,9 +452,9 @@ int main(int argc, char **argv) {
 
   // ---------------------------- Make MC dataset 
   // ----------------------------
-  RooDataSet totalData = ExtractDataSetFromMC(config, inputDir);
+  RooDataSet data2D = ExtractDataSetFromMC(config, inputDir);
   std::cout << "Extracted MC dataset\n";
-  RooDataSet combData = SpliceData(totalData, config, fittingMC);
+  RooDataSet splicedData = SpliceData(data2D, config, fittingMC);
   std::cout << "Returned spliced dataset\n";
 
   int const id = 0;
@@ -519,29 +519,38 @@ int main(int argc, char **argv) {
   simPdf.addPdf(*pdfDelta, EnumToString(Mass::delta).c_str());
   std::cout << "Returned simPdf\n";
 
+  auto splicedHist = std::unique_ptr<RooDataHist>(
+      splicedData.binnedClone("splicedHist", "splicedHist"));
+  if (splicedHist == nullptr) {
+    throw std::runtime_error("Could not extact binned dataSet of data2D.");
+  }
+  auto splicedAbsData = dynamic_cast<RooAbsData *>(splicedHist.get());
+  if (splicedAbsData == nullptr) {
+    throw std::runtime_error("Could not cast splicedHist to RooAbsData.");
+  }
+
   std::cout << "Fit simPdf to MC...\n";
   std::unique_ptr<RooFitResult> mcResult = std::unique_ptr<RooFitResult>(
-      simPdf.fitTo(combData, RooFit::Extended(kTRUE), RooFit::Save(),
+      simPdf.fitTo(*splicedAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                    RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                    RooFit::Offset(true), RooFit::NumCPU(8, 2)));
 
   if (id == 0) {
-    PlotComponent(Mass::buDelta, config.buDeltaMass(), combData, simPdf,
-                  outputDir, config, fittingMC);
-    PlotComponent(Mass::delta, config.deltaMass(), combData, simPdf, outputDir,
-                  config, fittingMC);
+    std::string label = "data";
+    PlotComponent(Mass::buDelta, config.buDeltaMass(), splicedData, simPdf,
+                  outputDir, config, fittingMC, label);
+    PlotComponent(Mass::delta, config.deltaMass(), splicedData, simPdf, outputDir,
+                  config, fittingMC, label);
   }
-  mcResult->Print();
+  mcResult->Print("v");
   mcResult->SetName("MCResult");
 
-  auto dataHist = std::unique_ptr<RooDataHist>(
-      totalData.binnedClone("dataHist", "dataHist"));
-  if (dataHist == nullptr) {
+  auto dataHist2D = std::unique_ptr<RooDataHist>(
+      data2D.binnedClone("dataHist2D", "dataHist2D"));
+  if (dataHist2D == nullptr) {
     throw std::runtime_error("Could not extact binned dataSet.");
   }
-  dataHist->Print();
-  config.fittingArgSet().Print();
-  RooHistPdf histPdf("histPdf", "", config.fittingArgSet(), *dataHist.get(), 2);
+  RooHistPdf histPdf("histPdf", "", config.fittingArgSet(), *dataHist2D.get(), 2);
 
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(0.025, "XYZ");
@@ -550,7 +559,7 @@ int main(int argc, char **argv) {
   gStyle->SetTitleOffset(1.5, "Z");
   gStyle->SetPadRightMargin(0.15);
 
-  TH2F *hh_data = (TH2F *)dataHist->createHistogram(
+  TH2F *hh_data = (TH2F *)dataHist2D->createHistogram(
       "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
       config.deltaMass().getBins());
   hh_data->SetTitle("");
@@ -584,7 +593,6 @@ int main(int argc, char **argv) {
       (outputDir + "/2d_plots/2dPdf_" + EnumToString(config.neutral()) + ".pdf")
           .c_str());
 
-  std::vector<std::string> toyFileNames(nToys);
   // start at id = 1 to reserve 0 for MC fit
   for (int id = 1; id < nToys + 1; ++id) {
     RooRandom::randomGenerator()->SetSeed(0);
@@ -596,12 +604,30 @@ int main(int argc, char **argv) {
             .c_str(),
         "recreate");
     auto toy2D =
-        histPdf.generate(config.fittingArgSet(), totalData.numEntries());
-    RooDataSet combData = SpliceData(*toy2D, config, fittingMC);
-    // RunToy(toyResultFile, mapDataLabelDataSet, config, daughtersVec, chargeVec,
-    //        outputDir, id);
-    // toyFileNames[id - 1] = toyResultFile.GetName();
-    // toyResultFile.Close();
+        histPdf.generate(config.fittingArgSet(), data2D.numEntries());
+    toy2D->SetName(("toy2D_" + std::to_string(id)).c_str());
+    RooDataSet toyData = SpliceData(*toy2D, config, fittingMC);
+    toyData.SetName(("toyData_" + std::to_string(id)).c_str());
+    auto toyHist = std::unique_ptr<RooDataHist>(
+        toyData.binnedClone("toyHist", "toyHist"));
+    if (toyHist == nullptr) {
+      throw std::runtime_error("Could not extact binned dataSet of totalData.");
+    } else {
+      toyHist->SetName(("toyHist_" + std::to_string(id)).c_str());
+    }
+    auto toyAbsData = dynamic_cast<RooAbsData *>(toyHist.get());
+    if (toyAbsData == nullptr) {
+      throw std::runtime_error("Could not cast toyHist to RooAbsData.");
+    } else {
+      toyAbsData->SetName(("toyAbsData_" + std::to_string(id)).c_str());
+    }
+    std::unique_ptr<RooFitResult> toyResult = std::unique_ptr<RooFitResult>(
+        simPdf.fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                     RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                     RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+    toyResult->Print("v");
+    toyResult->SetName("ToyResult");
+
     if (id == 1) {
       TH2F *hh_toy = (TH2F *)toy2D->createHistogram(
           "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
@@ -618,6 +644,11 @@ int main(int argc, char **argv) {
       canvasToy.SaveAs((outputDir + "/2d_plots/2dToy_" +
                         EnumToString(config.neutral()) + ".pdf")
                            .c_str());
+      std::string label = "toy";
+      PlotComponent(Mass::buDelta, config.buDeltaMass(), toyData, simPdf,
+                    outputDir, config, fittingMC, label);
+      PlotComponent(Mass::delta, config.deltaMass(), toyData, simPdf,
+                    outputDir, config, fittingMC, label);
     }
   }
 
