@@ -1,4 +1,4 @@
-import os, re, argparse
+import os, argparse
 import numpy as np
 
 if __name__ == "__main__":
@@ -12,6 +12,16 @@ if __name__ == "__main__":
                       '--var',
                       type=str,
                       help='Variable=buDelta/delta',
+                      required=True)
+  parser.add_argument('-l',
+                      '--low',
+                      type=str,
+                      help='Fixed var lower box',
+                      required=True)
+  parser.add_argument('-u',
+                      '--up',
+                      type=str,
+                      help='Fixed var upper box',
                       required=True)
   parser.add_argument('-s',
                       '--n_steps',
@@ -31,6 +41,8 @@ if __name__ == "__main__":
   args = parser.parse_args()
   neutral = args.neutral
   var = args.var
+  low = args.low
+  up = args.up
   n_steps = args.n_steps
   init_eff = args.init_eff
   final_eff = args.final_eff
@@ -70,21 +82,16 @@ if __name__ == "__main__":
   # Array to store strings of 'eff: box limits'
   step_list = []
   for i in range(0, len(steps)):
-    # Extract correct box limits using regex
-    match_top = re.search("([0-9].+) ([0-9].+) ([0-9].+) ([0-9].+)",
-                  eff_box_dict['top'][chosen_effs_dict['top'][i]])
-    match_bottom = re.search("([0-9].+) ([0-9].+) ([0-9].+) ([0-9].+)",
-                  eff_box_dict['bottom'][chosen_effs_dict['bottom'][i]])
     if var == 'buDelta':
-      bl = match_bottom.group(2)
-      bh = match_top.group(1)
-      dl = match_top.group(3)
-      dh = match_top.group(4)
+      bl = eff_box_dict['bottom'][chosen_effs_dict['bottom'][i]]
+      bh = eff_box_dict['top'][chosen_effs_dict['top'][i]]
+      dl = low
+      dh = up
     else:
-      bl = match_top.group(1)
-      bh = match_top.group(2)
-      dl = match_bottom.group(4)
-      dh = match_top.group(3)
+      bl = low
+      bh = up
+      dl = eff_box_dict['bottom'][chosen_effs_dict['bottom'][i]]
+      dh = eff_box_dict['top'][chosen_effs_dict['top'][i]]
     # Desired eff (to 6 sf) is sum of top and bottom effs
     eff_label = str.format(
         '{0:.6f}',
@@ -96,7 +103,7 @@ if __name__ == "__main__":
   unique_steps = sorted(set(step_list))
 
   # File to store box limits for desired effs
-  tex_filename = neutral + '_' + var + '_box_limits.txt'
+  tex_filename = neutral + '_' + var + '_full_scan.txt'
   if os.path.exists(tex_filename):
       os.remove(tex_filename)
 
