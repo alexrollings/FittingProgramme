@@ -458,15 +458,6 @@ int main(int argc, char **argv) {
   RooDataSet splicedData = SpliceData(data2D, config, fittingMC);
   std::cout << "Returned spliced dataset\n";
 
-  int const id = 0;
-
-  RooSimultaneous *simPdf = new RooSimultaneous(
-      ("simPdf_" + std::to_string(id)).c_str(),
-      ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
-
-  auto pdf = &PdfMC::Get(id);
-  pdf->AddToSimultaneousPdf(*simPdf);
-
   auto splicedHist = std::unique_ptr<RooDataHist>(
       splicedData.binnedClone("splicedHist", "splicedHist"));
   if (splicedHist == nullptr) {
@@ -476,6 +467,15 @@ int main(int argc, char **argv) {
   if (splicedAbsData == nullptr) {
     throw std::runtime_error("Could not cast splicedHist to RooAbsData.");
   }
+
+  int const id = 0;
+
+  RooSimultaneous *simPdf = new RooSimultaneous(
+      ("simPdf_" + std::to_string(id)).c_str(),
+      ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
+
+  auto pdf = &PdfMC::Get(id);
+  pdf->AddToSimultaneousPdf(*simPdf);
 
   std::cout << "Fit simPdf to MC...\n";
   std::unique_ptr<RooFitResult> mcResult = std::unique_ptr<RooFitResult>(
@@ -569,10 +569,16 @@ int main(int argc, char **argv) {
     } else {
       toyAbsData->SetName(("toyAbsData_" + std::to_string(id)).c_str());
     }
+    RooSimultaneous *simPdf = new RooSimultaneous(
+        ("simPdf_" + std::to_string(id)).c_str(),
+        ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
+
+    auto pdf = &PdfMC::Get(id);
+    pdf->AddToSimultaneousPdf(*simPdf);
     std::unique_ptr<RooFitResult> toyResult = std::unique_ptr<RooFitResult>(
         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                     RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                     RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+                      RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                      RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     toyResult->Print("v");
     toyResult->SetName("ToyResult");
 
