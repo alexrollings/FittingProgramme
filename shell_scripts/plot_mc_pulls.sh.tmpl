@@ -1,0 +1,9 @@
+#!/bin/zsh
+#PBS -l cput=11:59:59 
+#PBS -N PLOTMCPULLS_${NEUTRAL}_${DL}_${DH}_${BL}_${BH}
+
+source /home/rollings/.zshrc
+source_root
+
+cd /home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/ 
+python plot_pulls.py -i=${INPUT} -o=${OUTPUT} -n=${NEUTRAL} -t=data -d=2D -dl=${DL} -dh=${DH} -bl=${BL} -bh=${BH}
