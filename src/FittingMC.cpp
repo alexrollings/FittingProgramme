@@ -318,22 +318,31 @@ RooDataSet SpliceData(RooAbsData &data2D, Configuration &config,
   return splicedData;
 }
 
-// RooDataSet GenerateToyData(std::unique_ptr<RooHistPdf> &histPdf,
-//                            RooCategory &fittingMC, Configuration &config,
-//                            int id, std::string &outputDir) {
-//   gStyle->SetTitleSize(0.03, "XYZ");
-//   gStyle->SetLabelSize(0.025, "XYZ");
-//   gStyle->SetTitleOffset(1, "X");
-//   gStyle->SetTitleOffset(1.2, "Y");
-//   gStyle->SetTitleOffset(1.5, "Z");
-//   gStyle->SetPadRightMargin(0.15);
-//
-//   auto toyData = histPdf.generate(
-//       config.fittingArgSet(),
-//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
-//                                                charge)]
-//           ->numEntries());
-// }
+void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
+                   PdfMC &pdf, const int id) {
+  double boxEff = pdf.boxEff().getVal();
+  double orEff = pdf.orEff().getVal();
+  double buDeltaCutEff = pdf.buDeltaCutEff().getVal();
+  double deltaCutEff = pdf.deltaCutEff().getVal();
+  
+  Mode mode;
+  if (Configuration::Get().neutral() == Neutral::gamma) {
+    mode = Mode::Bu2Dst0pi_D0gamma;
+  } else {
+    mode = Mode::Bu2Dst0pi_D0pi0;
+  }
+
+  outputFile.cd();
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &buDeltaCutEff,
+              ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &deltaCutEff,
+              ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Fill();
+}
 
 int main(int argc, char **argv) {
   std::string inputDir = "";
@@ -491,7 +500,8 @@ int main(int argc, char **argv) {
                   config, fittingMC, label);
   }
   mcResult->Print("v");
-  mcResult->SetName("MCResult");
+  // To match PlotToys.cpp
+  mcResult->SetName("DataFitResult");
 
   auto dataHist2D = std::unique_ptr<RooDataHist>(
       data2D.binnedClone("dataHist2D", "dataHist2D"));
@@ -546,11 +556,6 @@ int main(int argc, char **argv) {
     RooRandom::randomGenerator()->SetSeed(0);
     TRandom3 random(0);
     double randomTag = random.Rndm();
-    TFile toyResultFile(
-        (outputDir + "/results/ResultMC_" + config.ReturnBoxString() + "_" +
-         std::to_string(randomTag) + ".root")
-            .c_str(),
-        "recreate");
     auto toy2D =
         histPdf.generate(config.fittingArgSet(), data2D.numEntries());
     toy2D->SetName(("toy2D_" + std::to_string(id)).c_str());
@@ -581,7 +586,17 @@ int main(int argc, char **argv) {
                       RooFit::Offset(true), RooFit::NumCPU(8, 2)));
     toyResult->Print("v");
     toyResult->SetName("ToyResult");
-
+    TFile toyResultFile(
+        (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
+         std::to_string(randomTag) + ".root")
+            .c_str(),
+        "recreate");
+    toyResult->Write();
+    mcResult->Write();
+    TTree tree("tree", "");
+    SaveEffToTree(config, toyResultFile, tree, *pdf, id);
+    tree.Write();
+    toyResultFile.Close();
     if (id == 1) {
       TH2F *hh_toy = (TH2F *)toy2D->createHistogram(
           "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
