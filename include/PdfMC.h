@@ -33,7 +33,11 @@ class PdfMC {
   RooRealVar &buDeltaCutEff() { return buDeltaCutEff_; }
   RooRealVar &yieldSignal() { return *yieldSignal_; }
   RooFormulaVar &yieldBuDeltaSignal() { return *yieldBuDeltaSignal_; }
+  RooFormulaVar &yield1BuDeltaSignal() { return *yield1BuDeltaSignal_; }
+  RooFormulaVar &yield2BuDeltaSignal() { return *yield2BuDeltaSignal_; }
   RooFormulaVar &yieldDeltaSignal() { return *yieldDeltaSignal_; }
+  RooFormulaVar &yield1DeltaSignal() { return *yield1DeltaSignal_; }
+  RooFormulaVar &yield2DeltaSignal() { return *yield2DeltaSignal_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
@@ -47,7 +51,11 @@ private:
   RooRealVar buDeltaCutEff_;
   std::unique_ptr<RooRealVar> yieldSignal_;
   std::unique_ptr<RooFormulaVar> yieldBuDeltaSignal_;
+  std::unique_ptr<RooFormulaVar> yield1BuDeltaSignal_;
+  std::unique_ptr<RooFormulaVar> yield2BuDeltaSignal_;
   std::unique_ptr<RooFormulaVar> yieldDeltaSignal_;
+  std::unique_ptr<RooFormulaVar> yield1DeltaSignal_;
+  std::unique_ptr<RooFormulaVar> yield2DeltaSignal_;
   std::unique_ptr<RooAddPdf> pdfBuDelta_;
   std::unique_ptr<RooAddPdf> pdfDelta_;
 };
