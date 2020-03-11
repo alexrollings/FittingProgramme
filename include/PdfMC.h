@@ -7,6 +7,7 @@
 #include "RooFormulaVar.h"
 #include "RooAddPdf.h"
 #include "RooSimultaneous.h"
+#include "RooExponential.h"
 
 class PdfMC {
   
@@ -38,6 +39,12 @@ class PdfMC {
   RooFormulaVar &yieldDeltaSignal() { return *yieldDeltaSignal_; }
   RooFormulaVar &yield1DeltaSignal() { return *yield1DeltaSignal_; }
   RooFormulaVar &yield2DeltaSignal() { return *yield2DeltaSignal_; }
+  RooRealVar &lambdaBuDelta() { return lambdaBuDelta_; }
+  RooExponential &pdfBuDeltaExp() { return pdfBuDeltaExp_; }
+  RooRealVar &lambdaDelta() { return lambdaDelta_; }
+  RooExponential &pdfDeltaExp() { return pdfDeltaExp_; }
+  RooRealVar &yieldBuDeltaExp() { return yieldBuDeltaExp_; }
+  RooRealVar &yieldDeltaExp() { return yieldDeltaExp_; }
 
   void AddToSimultaneousPdf(RooSimultaneous &) const;
 
@@ -58,5 +65,11 @@ private:
   std::unique_ptr<RooFormulaVar> yield2DeltaSignal_;
   std::unique_ptr<RooAddPdf> pdfBuDelta_;
   std::unique_ptr<RooAddPdf> pdfDelta_;
+  RooRealVar lambdaBuDelta_;
+  RooExponential pdfBuDeltaExp_;
+  RooRealVar lambdaDelta_;
+  RooExponential pdfDeltaExp_;
+  RooRealVar yieldBuDeltaExp_;
+  RooRealVar yieldDeltaExp_;
 };
 

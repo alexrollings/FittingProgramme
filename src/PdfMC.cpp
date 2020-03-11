@@ -5,13 +5,29 @@ PdfMC::PdfMC(int uniqueId)
       boxEff_(("boxEff_" + std::to_string(uniqueId)).c_str(), "", 1),
       orEff_(("orEff_" + std::to_string(uniqueId)).c_str(), "", 1),
       buDeltaCutEff_(("buDeltaCutEff_" + std::to_string(uniqueId)).c_str(), "",
-                    1),
+                     1),
       deltaCutEff_(("deltaCutEff_" + std::to_string(uniqueId)).c_str(), "", 1),
+      lambdaBuDelta_(("lambdaBuDelta_" + std::to_string(uniqueId)).c_str(), "",
+                     -0.005),
+      pdfBuDeltaExp_(("pdfBuDeltaExp_" + std::to_string(uniqueId)).c_str(), "",
+                  Configuration::Get().buDeltaMass(), lambdaBuDelta_),
+      lambdaDelta_(("lambdaDelta_" + std::to_string(uniqueId)).c_str(), "",
+                   0.01),
+      pdfDeltaExp_(("pdfDeltaExp_" + std::to_string(uniqueId)).c_str(), "",
+                Configuration::Get().deltaMass(), lambdaDelta_),
       yieldSignal_(nullptr),
       yieldBuDeltaSignal_(nullptr),
+      yield1BuDeltaSignal_(nullptr),
+      yield2BuDeltaSignal_(nullptr),
       yieldDeltaSignal_(nullptr),
+      yield1DeltaSignal_(nullptr),
+      yield2DeltaSignal_(nullptr),
       pdfBuDelta_(nullptr),
-      pdfDelta_(nullptr) {
+      pdfDelta_(nullptr),
+      yieldBuDeltaExp_(("yieldBuDeltaExp_" + std::to_string(uniqueId)).c_str(),
+                       "", 1000, 0, 20000),
+      yieldDeltaExp_(("yieldDeltaExp_" + std::to_string(uniqueId)).c_str(), "",
+                     1000, 0, 20000) {
   if (Configuration::Get().neutral() == Neutral::gamma) {
     Configuration::Get().SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                                           orEff_, boxEff_, buDeltaCutEff_,
@@ -88,8 +104,8 @@ PdfMC::PdfMC(int uniqueId)
         RooArgSet(NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
                       .pdf1Bu_Bu2Dst0h_D0pi0(),
                   NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                      .pdf2Bu_Bu2Dst0h_D0pi0()),
-        RooArgSet(*yield1BuDeltaSignal_, *yield2BuDeltaSignal_)));
+                      .pdf2Bu_Bu2Dst0h_D0pi0(), pdfBuDeltaExp_),
+        RooArgSet(*yield1BuDeltaSignal_, *yield2BuDeltaSignal_, yieldBuDeltaExp_)));
     yield1DeltaSignal_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("yield1DeltaSignal_" + std::to_string(uniqueId)).c_str(), "", "@0*@1",
         RooArgList(*yieldDeltaSignal_, NeutralVars<Neutral::pi0>::Get(uniqueId)
@@ -104,8 +120,8 @@ PdfMC::PdfMC(int uniqueId)
         RooArgSet(
             NeutralVars<Neutral::pi0>::Get(uniqueId).pdf1Delta_Bu2Dst0h_D0pi0(),
             NeutralVars<Neutral::pi0>::Get(uniqueId)
-                .pdf2Delta_Bu2Dst0h_D0pi0()),
-        RooArgSet(*yield1DeltaSignal_, *yield2DeltaSignal_)));
+                .pdf2Delta_Bu2Dst0h_D0pi0(), pdfDeltaExp_),
+        RooArgSet(*yield1DeltaSignal_, *yield2DeltaSignal_, yieldDeltaExp_)));
   }
 }
 

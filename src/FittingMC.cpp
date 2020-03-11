@@ -24,6 +24,7 @@
 #include "RooHistPdf.h"
 #include "RooDataHist.h"
 #include "RooRandom.h"
+#include "RooProdPdf.h"
 
 // Check file exists
 bool fexists(std::string const &filename) {
@@ -140,10 +141,10 @@ void PlotComponent(Mass mass, RooRealVar &var,
 }
 
 RooDataSet ExtractDataSetFromMC(Configuration &config,
-                                std::string const &inputDir) {
+                                std::string const &inputDir, PdfMC &pdf) {
   RooDataSet *inputDataSet = nullptr;
   std::string input =
-      inputDir + "/" + EnumToString(config.neutral()) + "_dataset.root";
+      inputDir + "/" + EnumToString(config.neutral()) + "_exp_dataset.root";
 
   if (!fexists(input)) {
     std::string extra = "";
@@ -251,6 +252,24 @@ RooDataSet ExtractDataSetFromMC(Configuration &config,
     inputDataSet =
         new RooDataSet("inputDataSet", "inputDataSet", &chain,
                        RooArgSet(config.fullArgSet()));
+
+    RooProdPdf exp2D("exp2D", "",
+                     RooArgSet(pdf.pdfBuDeltaExp(), pdf.pdfDeltaExp()));
+
+    RooRandom::randomGenerator()->SetSeed(1);
+    TRandom3 random(1);
+
+    double nExp;
+    if (config.neutral() == Neutral::gamma) {
+      nExp = 10000;
+    } else {
+      nExp = 2000;
+    }
+
+    auto expToy =
+        exp2D.generate(config.fittingArgSet(), nExp);
+
+    inputDataSet->append(*expToy);
 
     TFile dataFile(input.c_str(), "RECREATE");
     inputDataSet->Write("inputDataSet");
@@ -460,9 +479,18 @@ int main(int argc, char **argv) {
   fittingMC.defineType(EnumToString(Mass::buDelta).c_str());
   fittingMC.defineType(EnumToString(Mass::delta).c_str());
 
+  // ---------------------------- Model ----------------------------
+  int const id = 0;
+  RooSimultaneous *simPdf = new RooSimultaneous(
+      ("simPdf_" + std::to_string(id)).c_str(),
+      ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
+  auto pdf = &PdfMC::Get(id);
+  pdf->AddToSimultaneousPdf(*simPdf);
+
+
   // ---------------------------- Make MC dataset 
   // ----------------------------
-  RooDataSet data2D = ExtractDataSetFromMC(config, inputDir);
+  RooDataSet data2D = ExtractDataSetFromMC(config, inputDir, *pdf);
   std::cout << "Extracted MC dataset\n";
   RooDataSet splicedData = SpliceData(data2D, config, fittingMC);
   std::cout << "Returned spliced dataset\n";
@@ -476,15 +504,6 @@ int main(int argc, char **argv) {
   if (splicedAbsData == nullptr) {
     throw std::runtime_error("Could not cast splicedHist to RooAbsData.");
   }
-
-  int const id = 0;
-
-  RooSimultaneous *simPdf = new RooSimultaneous(
-      ("simPdf_" + std::to_string(id)).c_str(),
-      ("simPdf_" + std::to_string(id)).c_str(), fittingMC);
-
-  auto pdf = &PdfMC::Get(id);
-  pdf->AddToSimultaneousPdf(*simPdf);
 
   std::cout << "Fit simPdf to MC...\n";
   std::unique_ptr<RooFitResult> mcResult = std::unique_ptr<RooFitResult>(
