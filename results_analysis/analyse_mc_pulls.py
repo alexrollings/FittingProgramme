@@ -216,7 +216,7 @@ if __name__ == "__main__":
   plt.xlabel('$\epsilon_{Box}$')
   # plt.xlabel('$N_{Box}/N_{T}$')
   # plt.ylim(1.0, 1.4)
-  plt.ylim(0, 2)
+  plt.ylim(0.5, 1.5)
   plt.ylabel('Pull Width')
   fig.savefig("box_yield_vs_" + param + "_pull_width_" + neutral + "_" +
               var + ".pdf")

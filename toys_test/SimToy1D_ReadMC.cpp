@@ -434,10 +434,10 @@ RooDataSet ExtractDataSetFromMC(std::string const &input, RooRealVar &buMass,
       chain.GetEntry(i);
       i++;
       if (*BDT2 > 0.05 && *BDT1 > 0.05 && abs(*D0_M - 1864) < 25 &&
-          *Bu_M_DTF_D0 < 5800 && *Bu_M_DTF_D0 > 5050 && *Bu_M_DTF_D0 < 5800 &&
-          *Bu_M_DTF_D0 > 5050 && *Delta_M > 50 && *Delta_M < 210 &&
+          *Bu_Delta_M < 5800 && *Bu_Delta_M > 5050 && 
+          *Delta_M > 60 && *Delta_M < 190 &&
           abs(*D0_M_DOUBLESW_KP - 1864) > 15 && *D0_FD_ZSIG > 2 &&
-          *D0h_M > 4950) {
+          *D0h_M > 4900 && *D0h_M < 5200) {
         newTree->Fill();
       }
     }
