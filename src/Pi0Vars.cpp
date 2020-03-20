@@ -9,11 +9,13 @@
 template <>
 NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-    : Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
-                                 ComposeName(uniqueId, Neutral::pi0))
-                                    .c_str(),
-                                // "", 1.4243e+02),
-                                "", 1.4243e+02, 138, 146),
+    : Bu2Dst0h_D0pi0_meanDelta_(
+          Params::Get().CreateFloating("Bu2Dst0h_D0pi0_meanDelta", uniqueId,
+                                       Neutral::pi0, 1.4243e+02, 138, 146)),
+    // : Bu2Dst0h_D0pi0_meanDelta_(("Bu2Dst0h_D0pi0_meanDelta_" +
+    //                              ComposeName(uniqueId, Neutral::pi0))
+    //                                 .c_str(),
+    //                             "", 1.4243e+02, 138, 146),
       Bu2Dst0h_D0pi0_sigmaDelta_(("Bu2Dst0h_D0pi0_sigmaDelta_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),

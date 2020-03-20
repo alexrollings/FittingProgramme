@@ -266,7 +266,7 @@ class NeutralVars {
   double fracBu2Dst0h_D0gamma_;
   double initYieldFAVBu2Dst0h_D0gamma_;
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-  RooRealVar Bu2Dst0h_D0pi0_meanDelta_;
+  RooRealVar &Bu2Dst0h_D0pi0_meanDelta_;
   RooRealVar Bu2Dst0h_D0pi0_sigmaDelta_;
   RooRealVar Bu2Dst0h_D0pi0_a2Delta_;
   RooRealVar Bu2Dst0h_D0pi0_a1Delta_;

@@ -8,6 +8,9 @@
 #include "Configuration.h"
 #include "GlobalVars.h"
 
+// Add dummy parameter: Params::Get().Empty();
+// RooRealVar var();
+
 enum class Systematic { pdfParameters, boxEfficiencies, pidEfficiency };
 
 class FixedParameter {

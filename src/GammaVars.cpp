@@ -1,5 +1,6 @@
 #include "GlobalVars.h"
 #include "NeutralVars.h"
+#include "Params.h"
 
 // Neutral specialisations
 // Constructor followed by : ... { is an initialisation list, can also but in
@@ -145,10 +146,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracBu2Dst0h_D0gamma_(),
       initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
+      // Bu2Dst0h_D0pi0_meanDelta_(
+      //     ("Bu2Dst0h_D0pi0_meanDelta_" + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     "", 8.6503e+01, 70, 100),
       Bu2Dst0h_D0pi0_meanDelta_(
-          ("Bu2Dst0h_D0pi0_meanDelta_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 8.6503e+01, 70, 100),
+          Params::Get().CreateFloating("Bu2Dst0h_D0pi0_meanDelta", uniqueId,
+                                       Neutral::gamma, 8.6503e+01, 70, 100)),
       // Fixed from data
       // "", 8.5749e+01),
       Bu2Dst0h_D0pi0_sigmaDelta_(
