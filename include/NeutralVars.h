@@ -269,7 +269,7 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_meanDelta_;
   RooRealVar Bu2Dst0h_D0pi0_sigmaDelta_;
   RooRealVar Bu2Dst0h_D0pi0_a2Delta_;
-  RooRealVar Bu2Dst0h_D0pi0_a1Delta_;
+  RooRealVar &Bu2Dst0h_D0pi0_a1Delta_;
   RooRealVar Bu2Dst0h_D0pi0_n2Delta_;
   RooRealVar Bu2Dst0h_D0pi0_n1Delta_;
   RooCBShape pdf1Delta_Bu2Dst0h_D0pi0_;

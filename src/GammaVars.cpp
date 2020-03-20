@@ -147,7 +147,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       // Bu2Dst0h_D0pi0_meanDelta_(
-      //     ("Bu2Dst0h_D0pi0_meanDelta_" + ComposeName(uniqueId, Neutral::gamma))
+      //     ("Bu2Dst0h_D0pi0_meanDelta_" + ComposeName(uniqueId,
+      //     Neutral::gamma))
       //         .c_str(),
       //     "", 8.6503e+01, 70, 100),
       Bu2Dst0h_D0pi0_meanDelta_(
@@ -161,12 +162,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", 9.3347e+00, 5, 15),
       // Fixed from data
       // "", 9.3347e+00),
-      Bu2Dst0h_D0pi0_a1Delta_(
-          ("Bu2Dst0h_D0pi0_a1Delta_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          // "", 4.4112e-01, 0, 5),
-          // Fixed from data
-          "", 2.8893e-01),
+      // Bu2Dst0h_D0pi0_a1Delta_(
+      //     ("Bu2Dst0h_D0pi0_a1Delta_" + ComposeName(uniqueId, Neutral::gamma))
+      //         .c_str(),
+      //     // "", 4.4112e-01, 0, 5),
+      //     // Fixed from data
+      //     "", 2.8893e-01),
+      Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_a1Delta", uniqueId, Neutral::gamma, 2.8893e-01, 2e-02,
+          Systematic::pdfParameters)),
       Bu2Dst0h_D0pi0_a2Delta_(
           ("Bu2Dst0h_D0pi0_a2Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
