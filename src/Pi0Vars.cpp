@@ -1,5 +1,6 @@
 #include "GlobalVars.h"
 #include "NeutralVars.h"
+#include "Params.h"
 
 // Neutral specialisations
 // Constructor followed by : ... { is an initialisation list, can also but in
