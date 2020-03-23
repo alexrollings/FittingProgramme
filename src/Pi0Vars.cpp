@@ -121,7 +121,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracBu2Dst0h_D0pi0_(),
       initYieldFAVBu2Dst0h_D0pi0_(initYieldFAVBu2Dst0h_D0pi0_ = Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
-      Bu2Dst0h_D0gamma_meanDelta_(),
+      Bu2Dst0h_D0gamma_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_sigmaDelta_(),
       Bu2Dst0h_D0gamma_a1Delta_(),
       Bu2Dst0h_D0gamma_a2Delta_(),

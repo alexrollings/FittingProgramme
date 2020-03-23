@@ -235,7 +235,7 @@ class NeutralVars {
 
   int uniqueId_;
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
-  RooRealVar Bu2Dst0h_D0gamma_meanDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_meanDelta_;
   RooRealVar Bu2Dst0h_D0gamma_sigmaDelta_;
   RooRealVar Bu2Dst0h_D0gamma_a2Delta_;
   RooRealVar Bu2Dst0h_D0gamma_a1Delta_;

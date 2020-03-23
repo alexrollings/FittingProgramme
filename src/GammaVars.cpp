@@ -9,10 +9,9 @@
 template <>
 NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
-    : Bu2Dst0h_D0gamma_meanDelta_(("Bu2Dst0h_D0gamma_meanDelta_" +
-                                   ComposeName(uniqueId, Neutral::gamma))
-                                      .c_str(),
-                                  "", 1.4278e+02, 130, 150),
+    : Bu2Dst0h_D0gamma_meanDelta_(
+          Params::Get().CreateFloating("Bu2Dst0h_D0gamma_meanDelta", uniqueId,
+                                       Neutral::gamma, 1.4278e+02, 130, 150)),
       // Fixed from data
       // "", 1.4199e+02),
       Bu2Dst0h_D0gamma_sigmaDelta_(("Bu2Dst0h_D0gamma_sigmaDelta_" +
@@ -49,14 +48,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("pdf1Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bu2Dst0h_D0gamma_meanDelta_,
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
           Bu2Dst0h_D0gamma_sigmaDelta_, Bu2Dst0h_D0gamma_a1Delta_,
           Bu2Dst0h_D0gamma_n1Delta_),
       pdf2Delta_Bu2Dst0h_D0gamma_(
           ("pdf2Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bu2Dst0h_D0gamma_meanDelta_,
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
           Bu2Dst0h_D0gamma_sigmaDelta_, Bu2Dst0h_D0gamma_a2Delta_,
           Bu2Dst0h_D0gamma_n2Delta_),
       Bu2Dst0h_D0gamma_fracPdf1Delta_(("Bu2Dst0h_D0gamma_fracPdf1Delta_" +
