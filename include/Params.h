@@ -21,7 +21,7 @@ class FixedParameter {
         mean_(mean),
         std_(std),
         systematic_(systematic),
-        roo_variable_(name.c_str(), "", mean) {}
+        roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
 
   FixedParameter(FixedParameter const &) = delete;
   FixedParameter(FixedParameter &&) = delete;
@@ -29,8 +29,8 @@ class FixedParameter {
   FixedParameter &operator=(FixedParameter &&) = delete;
 
   std::string const &name() const { return name_; }
-  RooRealVar &roo_variable() { return roo_variable_; }
-  double value() const { return roo_variable_.getVal(); }
+  std::shared_ptr<RooRealVar> roo_variable() { return roo_variable_; }
+  double value() const { return roo_variable_->getVal(); }
   double mean() const { return mean_; }
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
@@ -43,7 +43,7 @@ class FixedParameter {
   double mean_, std_;
   std::string const name_;
   Systematic systematic_;
-  RooRealVar roo_variable_;
+  std::shared_ptr<RooRealVar> roo_variable_;
 };
 
 class Params {
@@ -59,7 +59,7 @@ class Params {
     return params;
   }
 
-  RooRealVar &CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
                       double std, Systematic systematic) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
     auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral));
@@ -67,7 +67,7 @@ class Params {
     return ConstructFixedParameter(key, var_name, mean, std, systematic);
   }
 
-  RooRealVar &CreateFloating(std::string const &name, int uniqueId, Neutral neutral,
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name, int uniqueId, Neutral neutral,
                          double start, double min_value, double max_value) {
     auto key =
         std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral));
@@ -102,7 +102,7 @@ class Params {
   // }
 
  private:
-  RooRealVar &ConstructFixedParameter(Key const &key, std::string const &var_name,
+  std::shared_ptr<RooRealVar> ConstructFixedParameter(Key const &key, std::string const &var_name,
                                   double mean, double std,
                                   Systematic systematic) {
     return fixed_parameters_
@@ -114,17 +114,17 @@ class Params {
         .first->second.roo_variable();
   }
 
-  RooRealVar &ConstructFloatingParameter(Key const &key,
+  std::shared_ptr<RooRealVar> ConstructFloatingParameter(Key const &key,
                                          std::string const &var_name,
                                          double start, double min_value,
                                          double max_value) {
     std::string var_title = "";
     return floating_parameters_
-        .emplace(std::piecewise_construct, key,
+        .emplace(key,
                  // Calling RooRealVar constructor (takes all arguments and
                  // forwards them to the constructor). Necessary so as not to
                  // copy any RooFit objects !!!
-                 std::forward_as_tuple(var_name.c_str(), var_title.c_str(),
+                 std::make_shared<ValueFloating>(var_name.c_str(), var_title.c_str(),
                                        start, min_value, max_value))
         .first->second;
   }
@@ -132,7 +132,7 @@ class Params {
   Params() = default;
   ~Params() = default;
   std::map<Key, ValueFixed> fixed_parameters_;
-  std::map<Key, ValueFloating> floating_parameters_;
+  std::map<Key, std::shared_ptr<ValueFloating>> floating_parameters_;
 };
 //
 // int main(int argc, char **argv) {

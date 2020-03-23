@@ -190,13 +190,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       pdf1Delta_Bu2Dst0h_D0pi0_(
           ("pdf1Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bu2Dst0h_D0pi0_meanDelta_,
-          Bu2Dst0h_D0pi0_sigmaDelta_, Bu2Dst0h_D0pi0_a1Delta_,
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0pi0_meanDelta_,
+          Bu2Dst0h_D0pi0_sigmaDelta_, *Bu2Dst0h_D0pi0_a1Delta_,
           Bu2Dst0h_D0pi0_n1Delta_),
       pdf2Delta_Bu2Dst0h_D0pi0_(
           ("pdf2Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", Configuration::Get().deltaMass(), Bu2Dst0h_D0pi0_meanDelta_,
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0pi0_meanDelta_,
           Bu2Dst0h_D0pi0_sigmaDelta_, Bu2Dst0h_D0pi0_a2Delta_,
           Bu2Dst0h_D0pi0_n2Delta_),
       Bu2Dst0h_D0pi0_fracPdf1Delta_(("Bu2Dst0h_D0pi0_fracPdf1Delta_" +
