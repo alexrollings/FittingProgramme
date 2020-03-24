@@ -36,9 +36,7 @@ class FixedParameter {
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
 
-  void Randomise() {
-    RooRandom::randomGenerator()->SetSeed(0);
-    TRandom3 random(0);
+  void Randomise(TRandom3 &random) {
     double shifted_value_ = random.Gaus(mean_, std_);
     std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
               << "\n";
@@ -84,28 +82,30 @@ class Params {
 
   template <typename Iterator>
   void RandomiseParameters(Iterator const &systematic_begin,
-                           Iterator const &systematic_end) {
+                           Iterator const &systematic_end, TRandom3 &random) {
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
         if (t.second.systematic() == *i) {
-          t.second.Randomise();
+          t.second.Randomise(random);
           break;
         }
       }
     }
   }
-  //
-  // void WriteFixedParametersToFile(std::string const &path) {
-  //   std::ofstream of(path);
-  //   for (auto &t : fixed_parameters_) {
-  //     of << std::get<0>(t.first) << "," << std::get<1>(t.first) << ","
-  //        << std::get<2>(t.first) << "," << t.second.value() << "\n";
-  //   }
-  // }
-  //
-  // std::map<Key, ValueFixed> const &fixed_parameters() const {
-  //   return fixed_parameters_;
-  // }
+
+  void WriteFixedParametersToFile(std::string const &path) {
+    std::ofstream of(path);
+    for (auto &t : fixed_parameters_) {
+      of << std::get<0>(t.first) << "," << t.second.mean() << ","
+         << t.second.std() << "\n";
+      std::cout << t.second.name() << "," << t.second.mean() << ","
+                << t.second.std() << "\n";
+    }
+  }
+
+  std::map<Key, ValueFixed> const &fixed_parameters() const {
+    return fixed_parameters_;
+  }
 
  private:
   std::shared_ptr<RooRealVar> ConstructFixedParameter(Key const &key, std::string const &var_name,

@@ -3217,6 +3217,16 @@ int main(int argc, char **argv) {
 
     // Have to shift params after creating simPdf
     if (config.runSystematics() == true) {
+      std::string systString;
+      for (unsigned int i = 0; i < systematicVec.size(); ++i) {
+        systString += EnumToString(systematicVec[i]);
+        if (i < systematicVec.size() - 1) {
+          systString += "_";
+        }
+      }
+      std::string paramFile =
+          outputDir + "/results/ParameterInfo_" + systString + ".csv";
+      Params::Get().WriteFixedParametersToFile(paramFile);
       for (int s = 1; s < nSyst + 1; ++s) {
         std::cout << "Running systematic " << s << "...\n";
         auto systPair =
@@ -3226,7 +3236,7 @@ int main(int argc, char **argv) {
         TRandom3 random(0);
         double randomTag = random.Rndm();
         Params::Get().RandomiseParameters(systematicVec.begin(),
-                                          systematicVec.end());
+                                          systematicVec.end(), random);
         auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
         // auto pdfs = systPair.second;
         auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
@@ -3234,13 +3244,6 @@ int main(int argc, char **argv) {
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(8, 2)));
         systResult->SetName("SystResult");
-        std::string systString;
-        for (unsigned int i = 0; i < systematicVec.size(); ++i) {
-          systString += EnumToString(systematicVec[i]);
-          if (i < systematicVec.size() - 1) {
-            systString += "_";
-          }
-        }
         TFile systResultFile(
             (outputDir + "/results/SystResult_" +
              config.ReturnBoxString() + "_" + systString + "_" +
@@ -3248,8 +3251,6 @@ int main(int argc, char **argv) {
                 .c_str(),
             "recreate");
         systResult->Write();
-        // May not need to save this? Separate anyway
-        dataFitResult->Write();
         systResultFile.Close();
       }
     }
