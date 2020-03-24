@@ -42,7 +42,8 @@ Configuration::Configuration()
       splitByCharge_(false),
       noFit_(false),
       fitBuPartial_(false),
-      blindFit_(true) {
+      blindFit_(true),
+      runSystematics_(false) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";

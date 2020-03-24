@@ -111,6 +111,7 @@ class Configuration {
   bool &noFit() { return noFit_; }
   bool &fitBuPartial() { return fitBuPartial_; }
   bool &blindFit() { return blindFit_; }
+  bool &runSystematics() { return runSystematics_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
   void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &buDeltaCutEff,
@@ -170,6 +171,7 @@ class Configuration {
   bool noFit_;
   bool fitBuPartial_;
   bool blindFit_;
+  bool runSystematics_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);

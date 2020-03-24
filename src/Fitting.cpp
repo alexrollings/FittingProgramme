@@ -2928,6 +2928,7 @@ int main(int argc, char **argv) {
       if (!args("systematic", systematicArg)) {
         std::cout << "NOT running systematics.\n";
       } else {
+        config.runSystematics() = true;
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
