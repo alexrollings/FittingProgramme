@@ -3087,10 +3087,10 @@ int main(int argc, char **argv) {
                   RooDataSet *reducedInputDataSet_n = nullptr;
                   if (config.neutral() == Neutral::pi0) {
                     reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
-                        inputDataSet->reduce(config.gammaCutString().c_str()));
+                        inputDataSet->reduce(config.pi0CutString().c_str()));
                   } else {
                     reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
-                        inputDataSet->reduce(config.pi0CutString().c_str()));
+                        inputDataSet->reduce(config.gammaCutString().c_str()));
                   }
                   if (reducedInputDataSet_n == nullptr) {
                     throw std::runtime_error(
