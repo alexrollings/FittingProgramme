@@ -8,6 +8,9 @@
 #include "Configuration.h"
 #include "GlobalVars.h"
 
+#include "TRandom3.h"
+#include "RooRandom.h"
+
 // Add dummy parameter: Params::Get().Empty();
 // RooRealVar var();
 
@@ -35,9 +38,12 @@ class FixedParameter {
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
 
-  // void Randomise() {
-  //   roo_variable_.value = mean_ + std_;
-  // }  // Do actual random here
+  void Randomise() {
+    RooRandom::randomGenerator()->SetSeed(0);
+    TRandom3 random(0);
+    double shifted_value_ =  random.Gaus(mean_, std_); 
+    roo_variable_->setVal(shifted_value_);
+  } 
 
  private:
   double mean_, std_;
@@ -76,18 +82,18 @@ class Params {
                                       max_value);
   }
 
-  // template <typename Iterator>
-  // void RandomiseParameters(Iterator const &systematic_begin,
-  //                          Iterator const &systematic_end) {
-  //   for (auto &t : fixed_parameters_) {
-  //     for (auto i = systematic_begin; i != systematic_end; ++i) {
-  //       if (t.second.systematic() == *i) {
-  //         t.second.Randomise();
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
+  template <typename Iterator>
+  void RandomiseParameters(Iterator const &systematic_begin,
+                           Iterator const &systematic_end) {
+    for (auto &t : fixed_parameters_) {
+      for (auto i = systematic_begin; i != systematic_end; ++i) {
+        if (t.second.systematic() == *i) {
+          t.second.Randomise();
+          break;
+        }
+      }
+    }
+  }
   //
   // void WriteFixedParametersToFile(std::string const &path) {
   //   std::ofstream of(path);
