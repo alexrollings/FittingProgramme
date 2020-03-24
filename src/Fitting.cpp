@@ -3243,7 +3243,7 @@ int main(int argc, char **argv) {
         }
         TFile systResultFile(
             (outputDir + "/results/SystResult_" +
-             EnumToString(config.neutral()) + "_" + systString + "_" +
+             config.ReturnBoxString() + "_" + systString + "_" +
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
