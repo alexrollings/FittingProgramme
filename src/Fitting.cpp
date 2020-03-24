@@ -2764,6 +2764,7 @@ int main(int argc, char **argv) {
   // them differently
 
   int nToys = 0;
+  int nSyst = 1;
   bool d1dToys = false;
   Configuration &config = Configuration::Get();
 
@@ -2783,6 +2784,7 @@ int main(int argc, char **argv) {
     std::string chargeArg("total");
     std::string systematicArg("");
     int toysArg = 0;
+    int nSystArg = 0;
     float deltaLowArg = 0.0;
     float deltaHighArg = 0.0;
     float deltaPartialLowArg = 0.0;
@@ -2828,6 +2830,8 @@ int main(int argc, char **argv) {
                    "data.\n";
       std::cout << "    -systematic=<choice {pdfParams,boxEffs,pidEffs} "
                    "default: None>"
+                << "\n";
+      std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
@@ -2941,6 +2945,12 @@ int main(int argc, char **argv) {
           std::cerr << "systematic assignment failed, please specify: "
                        "-systematic=pdfParams,boxEffs,pidEffs\n";
           return 1;
+        }
+        if (!args("nSyst", nSystArg)) {
+          std::cout << "Running 1 systematic fit.\n";
+        } else {
+          nSyst = nSystArg;
+          std::cout << "Running " << nSyst << " systematic fits.\n";
         }
       }
 
