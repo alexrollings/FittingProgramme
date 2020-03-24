@@ -31,12 +31,12 @@
 #include <vector>
 
 #include "Configuration.h"
-#include "Params.h"
+#include "Fitting.h"
 #include "GlobalVars.h"
 #include "NeutralVars.h"
+#include "Params.h"
 #include "ParseArguments.h"
 #include "Pdf.h"
-#include "Fitting.h"
 
 // Function to set the style for all THists
 void SetStyle() {
@@ -58,12 +58,12 @@ void SetStyle() {
 
 // Function to plot 1D projections - written so that it can be used for both bu
 // and delta mass
-void PlotComponent(
-    Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
-    RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
-    std::string const &outputDir, Configuration &config,
-    std::map<std::string, Color_t> colorMap,
-    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
+void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
+                   RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+                   TLegend &legend, TLegend &labels,
+                   std::string const &outputDir, Configuration &config,
+                   std::map<std::string, Color_t> colorMap,
+                   std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -183,8 +183,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecPi"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -271,8 +270,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecPi"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName();
@@ -447,8 +445,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecK"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -648,8 +645,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecK"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1086,8 +1082,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecPi"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -1174,8 +1169,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecPi"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName();
@@ -1362,8 +1356,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecK"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
@@ -1563,8 +1556,7 @@ void PlotComponent(
                       .c_str()),
               RooFit::ProjWData(config.fitting, fullDataSet),
               RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["PartRecK"]),
+              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(8, 2));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1699,7 +1691,8 @@ void PlotComponent(
   canvas.cd();
   pad1.cd();
   if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
-      daughters == Daughters::pik) && config.blindFit() == true) {
+       daughters == Daughters::pik) &&
+      config.blindFit() == true) {
     frame->SetLabelOffset(50, "Y");
     frame->GetYaxis()->SetTickLength(0.);
   }
@@ -1967,8 +1960,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(charge) + "}}";
   std::string str_Bd2DstK =
       " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-      EnumToLabel(daughters, charge) +
-      "#font[132]{]}_{D^{0}}#pi^{" + oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
       EnumToLabel(charge) + "}}";
   auto hist_PartRecK = std::make_unique<TH1D>(
       ("hist_PartRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -2078,11 +2071,11 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
             // Template instantiations are computationally expensive, so we
             // seperate them into different cpp files s.t. they can be compiled
             // in parallel
-            AddPdfsGammaTotal(config, daughtersVec, id, pdfs); 
+            AddPdfsGammaTotal(config, daughtersVec, id, pdfs);
             break;
           case Charge::plus:
-             AddPdfsGammaPlus(config, daughtersVec, id, pdfs); 
-             break;
+            AddPdfsGammaPlus(config, daughtersVec, id, pdfs);
+            break;
           case Charge::minus:
             AddPdfsGammaMinus(config, daughtersVec, id, pdfs);
             break;
@@ -2091,13 +2084,13 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
       case Neutral::pi0:
         switch (c) {
           case Charge::total:
-            AddPdfsPi0Total(config, daughtersVec, id, pdfs); 
+            AddPdfsPi0Total(config, daughtersVec, id, pdfs);
             break;
           case Charge::plus:
-            AddPdfsPi0Plus(config, daughtersVec, id, pdfs); 
+            AddPdfsPi0Plus(config, daughtersVec, id, pdfs);
             break;
           case Charge::minus:
-            AddPdfsPi0Minus(config, daughtersVec, id, pdfs); 
+            AddPdfsPi0Minus(config, daughtersVec, id, pdfs);
             break;
         }
         break;
@@ -2244,25 +2237,29 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
       "", config.fittingArgSet(), *dataHist.get(), 2);
   //
   // RooPlot *frame1 = config.buDeltaMass().frame(RooFit::Title(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
+  //     +
   //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+  //      EnumToLabel(bachelor) +
   //      "^{" + EnumToLabel(charge) + "}")
   //         .c_str()));
   // dataHist->plotOn(frame1);
   // histPdf.plotOn(frame1, RooFit::LineColor(kBlue));
   //
   // RooPlot *frame2 = config.deltaMass().frame(RooFit::Title(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
+  //     +
   //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+  //      EnumToLabel(bachelor) +
   //      "^{" + EnumToLabel(charge) + "}")
   //         .c_str()));
   // dataHist->plotOn(frame2);
   // histPdf.plotOn(frame2, RooFit::LineColor(kBlue));
   //
-  // TCanvas canvas_1d(("canvas_1d_" + ComposeDataLabelName(neutral, bachelor, daughters, charge)).c_str(), "canvas", 1800, 900);
-  // canvas_1d.Divide(2, 1);
+  // TCanvas canvas_1d(("canvas_1d_" + ComposeDataLabelName(neutral, bachelor,
+  // daughters, charge)).c_str(), "canvas", 1800, 900); canvas_1d.Divide(2, 1);
   //
   // canvas_1d.cd(1);
   // frame1->Draw();
@@ -2272,7 +2269,8 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
   //
   // canvas_1d.Update();
   // canvas_1d.SaveAs(
-  //     (outputDir + "/plots/1DProjections_" + ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+  //     (outputDir + "/plots/1DProjections_" + ComposeDataLabelName(neutral,
+  //     bachelor, daughters, charge) + ".pdf")
   //         .c_str());
   //
   // // Make two-dimensional plot of sampled PDF in x vs y
@@ -2290,7 +2288,8 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
   //     "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
   //     config.deltaMass().getBins());
   // histData->SetName(
-  //     ("histData_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
+  //     ("histData_" + ComposeDataLabelName(neutral, bachelor, daughters,
+  //     charge))
   //         .c_str());
   // histData->SetTitle("");
   //
@@ -2298,16 +2297,20 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
   // histModel->Scale(histData->Integral());
   //
   // // 2D PDF plot
-  // TCanvas canvas2DPdf(("canvas2DPdf" + ComposeDataLabelName(neutral, bachelor,
-  //                                                           daughters, charge))
+  // TCanvas canvas2DPdf(("canvas2DPdf" + ComposeDataLabelName(neutral,
+  // bachelor,
+  //                                                           daughters,
+  //                                                           charge))
   //                         .c_str(),
   //                     "", 1000, 800);
   // histModel->SetStats(0);
   // histModel->Draw("colz");
   // histModel->SetTitle(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
+  //     +
   //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
+  //      EnumToLabel(bachelor) +
   //      "^{" + EnumToLabel(charge) + "}")
   //         .c_str());
   // histModel->Draw("colz");
@@ -2327,9 +2330,10 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
   // histData->Draw("colz");
   // histData->SetTitle(("B^{" + EnumToLabel(charge) +
   //                     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //                     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //                     EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
-  //                     EnumToLabel(bachelor) + "^{" + EnumToLabel(charge) + "}")
+  //                     EnumToLabel(daughters, charge) +
+  //                     "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+  //                     "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) + "^{"
+  //                     + EnumToLabel(charge) + "}")
   //                        .c_str());
   // histData->Draw("colz");
   // canvas2DData.Update();
@@ -2699,16 +2703,16 @@ void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
 
     if (config.fitBuPartial() == true) {
       RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
-      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV, deltaCutEffRRV,
-                             deltaPartialCutEffRRV, false);
+      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV,
+                             deltaCutEffRRV, deltaPartialCutEffRRV, false);
       double deltaPartialCutEff = deltaPartialCutEffRRV.getVal();
       tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
                   &deltaPartialCutEff,
                   ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
       tree.Fill();
     } else {
-      config.SetEfficiencies(mode, Bachelor::pi, 
-                             buDeltaCutEffRRV, deltaCutEffRRV, false);
+      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV,
+                             deltaCutEffRRV, false);
     }
 
     buDeltaCutEff = buDeltaCutEffRRV.getVal();
@@ -2800,7 +2804,8 @@ int main(int argc, char **argv) {
       std::cout
           << "Give box dimensions:\n"
           << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma mode)\n";
-      std::cout << "Followed by the possible options (to specify multiple options, separate them by commas):\n";
+      std::cout << "Followed by the possible options (to specify multiple "
+                   "options, separate them by commas):\n";
       std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -noFit, default is to fit PDF to data\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016,2017,2018} default: "
@@ -2821,7 +2826,8 @@ int main(int argc, char **argv) {
       std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
                    "to data. Default is 2D toys, generated from RooHistPdf of "
                    "data.\n";
-      std::cout << "    -systematic=<choice {pdfParams,boxEffs,pidEffs} default: None>"
+      std::cout << "    -systematic=<choice {pdfParams,boxEffs,pidEffs} "
+                   "default: None>"
                 << "\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
@@ -2846,7 +2852,7 @@ int main(int argc, char **argv) {
       if (!args("inputDir", inputDir) && nToys == 0) {
         std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
         return 1;
-      } 
+      }
 
       if (!args("outputDir", outputDir)) {
         std::cerr << "Specify output directory (-outputDir=<path>).\n";
@@ -2900,8 +2906,7 @@ int main(int argc, char **argv) {
       }
 
       if (!args("daughters", daughtersArg)) {
-        std::cout << "Using default value -daughters=" << daughtersArg
-                  << ".\n";
+        std::cout << "Using default value -daughters=" << daughtersArg << ".\n";
       }
       try {
         daughtersVec = ExtractEnumList<Daughters>(daughtersArg);
@@ -2928,6 +2933,7 @@ int main(int argc, char **argv) {
       if (!args("systematic", systematicArg)) {
         std::cout << "NOT running systematics.\n";
       } else {
+        std::cout << "Running systematics.\n";
         config.runSystematics() = true;
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
@@ -2996,8 +3002,9 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (inputDir != "" && (daughtersVec.size() > 1 && config.blindFit() == false &&
-      config.noFit() == false)) {
+  if (inputDir != "" &&
+      (daughtersVec.size() > 1 && config.blindFit() == false &&
+       config.noFit() == false)) {
     std::cerr
         << "\n\n !!!!!! Cannot run unblinded fit for signal modes !!!!!! \n\n";
     return 1;
@@ -3165,14 +3172,17 @@ int main(int argc, char **argv) {
       }
     }
 
-//   std::array<Systematic, 2> categories = {Systematic::pdfParams,
-//                                           Systematic::boxEffs};
-//   if (randomise) {
-//     Params::Get().RandomiseParameters(categories.begin(), categories.end());
-//   }
     // id = 0 for data fit
     int id = 0;
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+
+    // Have to shift params after creating simPdf
+    if (config.runSystematics() == true) {
+      std::cout << "\n\n\n RandomiseParameters:\n";
+      Params::Get().RandomiseParameters(systematicVec.begin(),
+                                        systematicVec.end());
+    }
+
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
     // Apply box cuts and split PDF into mass categories too
@@ -3214,8 +3224,8 @@ int main(int argc, char **argv) {
         TRandom3 random(0);
         double randomTag = random.Rndm();
         TFile toyResultFile(
-            (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() + "_" +
-             std::to_string(randomTag) + ".root")
+            (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() +
+             "_" + std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
         RunD1DToys(simPdf, toyResultFile, config, daughtersVec, chargeVec,

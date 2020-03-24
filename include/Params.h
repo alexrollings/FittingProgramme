@@ -39,7 +39,9 @@ class FixedParameter {
   void Randomise() {
     RooRandom::randomGenerator()->SetSeed(0);
     TRandom3 random(0);
-    double shifted_value_ =  random.Gaus(mean_, std_); 
+    double shifted_value_ = random.Gaus(mean_, std_);
+    std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
+              << "\n";
     roo_variable_->setVal(shifted_value_);
   } 
 
