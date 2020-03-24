@@ -3185,14 +3185,6 @@ int main(int argc, char **argv) {
     // id = 0 for data fit
     int id = 0;
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
-
-    // Have to shift params after creating simPdf
-    if (config.runSystematics() == true) {
-      std::cout << "\n\n\n RandomiseParameters:\n";
-      Params::Get().RandomiseParameters(systematicVec.begin(),
-                                        systematicVec.end());
-    }
-
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     auto pdfs = p.second;
     // Apply box cuts and split PDF into mass categories too
@@ -3204,10 +3196,6 @@ int main(int argc, char **argv) {
     RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
                            RooFit::Index(config.fitting),
                            RooFit::Import(mapFittingDataSet));
-
-    std::cout << "\n\n\n";
-    fullDataSet.Print();
-    std::cout << "\n\n\n";
 
     auto fullDataHist = std::unique_ptr<RooDataHist>(
         fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
@@ -3227,6 +3215,45 @@ int main(int argc, char **argv) {
       dataFitResult->SetName("DataFitResult");
     }
 
+    // Have to shift params after creating simPdf
+    if (config.runSystematics() == true) {
+      for (int s = 1; s < nSyst + 1; ++s) {
+        std::cout << "Running systematic " << s << "...\n";
+        auto systPair =
+            MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
+        std::cout << "RandomiseParameters:\n";
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        double randomTag = random.Rndm();
+        Params::Get().RandomiseParameters(systematicVec.begin(),
+                                          systematicVec.end());
+        auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
+        // auto pdfs = systPair.second;
+        auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
+            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+            RooFit::Offset(true), RooFit::NumCPU(8, 2)));
+        systResult->SetName("SystResult");
+        std::string systString;
+        for (unsigned int i = 0; i < systematicVec.size(); ++i) {
+          systString += EnumToString(systematicVec[i]);
+          if (i < systematicVec.size() - 1) {
+            systString += "_";
+          }
+        }
+        TFile systResultFile(
+            (outputDir + "/results/SystResult_" +
+             EnumToString(config.neutral()) + "_" + systString + "_" +
+             std::to_string(randomTag) + ".root")
+                .c_str(),
+            "recreate");
+        systResult->Write();
+        // May not need to save this? Separate anyway
+        dataFitResult->Write();
+        systResultFile.Close();
+      }
+    }
+
     if (config.runToy() == true && d1dToys == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
@@ -3243,55 +3270,56 @@ int main(int argc, char **argv) {
         toyFileNames[id - 1] = toyResultFile.GetName();
         toyResultFile.Close();
       }
-    }
-
-    if (config.runToy() == false) {
-      // Loop over daughters again to plot correct PDFs
-
-      // Whilst blinding is in place, we need to store y-axis max for FAV mode,
-      // to set y-axis max in ADS mode
-      std::map<Neutral, std::map<Mass, double> > yMaxMap;
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
       }
 
-      if (config.noFit() == false) {
-        dataFitResult->Print("v");
-        PlotCorrelations(dataFitResult.get(), outputDir, config);
-        // Save RFR of data and efficiencies to calculate observables with
-        // corrected errors
-        TFile outputFile((outputDir + "/results/DataResult_" +
-                          config.ReturnBoxString() + ".root")
-                             .c_str(),
-                         "recreate");
-        dataFitResult->Write();
-        TTree tree("tree", "");
-        if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+      if (config.runToy() == false) {
+        // Loop over daughters again to plot correct PDFs
+
+        // Whilst blinding is in place, we need to store y-axis max for FAV
+        // mode, to set y-axis max in ADS mode
+        std::map<Neutral, std::map<Mass, double> > yMaxMap;
+        for (auto &p : pdfs) {
+          Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+                     dataFitResult.get(), yMaxMap);
         }
-        if (config.neutral() == Neutral::gamma) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+
+        if (config.noFit() == false) {
+          dataFitResult->Print("v");
+          PlotCorrelations(dataFitResult.get(), outputDir, config);
+          // Save RFR of data and efficiencies to calculate observables with
+          // corrected errors
+          TFile outputFile((outputDir + "/results/DataResult_" +
+                            config.ReturnBoxString() + ".root")
+                               .c_str(),
+                           "recreate");
+          dataFitResult->Write();
+          TTree tree("tree", "");
+          if (config.neutral() == Neutral::pi0 ||
+              config.fitBuPartial() == true) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+          }
+          if (config.neutral() == Neutral::gamma) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+          }
+          outputFile.cd();
+          tree.Write();
         }
-        outputFile.cd();
-        tree.Write();
-      }
-    } else {
-      if (config.noFit() == false) {
-        dataFitResult->Print("v");
-        for (int id = 1; id < nToys + 1; ++id) {
-          if (dataFitResult != nullptr) {
-            TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
-            dataFitResult->Write();
-            toyResultFile.Close();
-            std::cout << "DataFitResult saved to file " << toyFileNames[id - 1]
-                      << "\n";
-          } else {
-            throw std::runtime_error("DataFitResult empty.");
+      } else {
+        if (config.noFit() == false) {
+          dataFitResult->Print("v");
+          for (int id = 1; id < nToys + 1; ++id) {
+            if (dataFitResult != nullptr) {
+              TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
+              dataFitResult->Write();
+              toyResultFile.Close();
+              std::cout << "DataFitResult saved to file "
+                        << toyFileNames[id - 1] << "\n";
+            } else {
+              throw std::runtime_error("DataFitResult empty.");
+            }
           }
         }
       }
-    }
   } else {
     if (config.runToy() == false) {
       throw std::runtime_error("Must specify input directory to run data fit.");

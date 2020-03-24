@@ -210,6 +210,17 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
   throw std::invalid_argument("Systematic must take a value in [pdfParams/boxEffs/pidEff]");
 }
 
+std::string EnumToString(Systematic systematic) {
+  switch (systematic) {
+    case Systematic::pdfParams:
+      return "pdfParams";
+    case Systematic::boxEffs:
+      return "boxEffs";
+    case Systematic::pidEff:
+      return "pidEff";
+  }
+}
+
 template <>
 Polarity StringToEnum<Polarity>(std::string const &polarity) {
   if (polarity == "up") {

@@ -176,6 +176,7 @@ class Configuration {
 
 template <typename Enum> Enum StringToEnum(std::string const &);
 
+std::string EnumToString(Systematic);
 std::string EnumToString(Polarity);
 std::string EnumToString(Daughters);
 std::string EnumToString(Bachelor);
