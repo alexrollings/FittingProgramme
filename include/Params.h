@@ -14,8 +14,6 @@
 // Add dummy parameter: Params::Get().Empty();
 // RooRealVar var();
 
-enum class Systematic { pdfParameters, boxEfficiencies, pidEfficiency };
-
 class FixedParameter {
  public:
   FixedParameter(std::string const &name, double mean, double std,
@@ -149,15 +147,15 @@ class Params {
 //     }
 //   }
 //   auto &a = Params::Get().CreateFixed("VariableA", Neutral::a, Bachelor::c, 1.0,
-//                                       1000, Systematic::pdfParameters);
+//                                       1000, Systematic::pdfParams);
 //   auto &b = Params::Get().CreateFixed("VariableB", Neutral::a, Bachelor::d, 2.0,
-//                                       1000, Systematic::pdfParameters);
+//                                       1000, Systematic::pdfParams);
 //   auto &c = Params::Get().CreateFixed("VariableC", Neutral::a, Bachelor::c, 3.0,
-//                                       1000, Systematic::boxEfficiencies);
+//                                       1000, Systematic::boxEffs);
 //   auto &d = Params::Get().CreateFixed("VariableD", Neutral::b, 4.0, 1000,
-//                                       Systematic::pidEfficiency);
-//   std::array<Systematic, 2> categories = {Systematic::pdfParameters,
-//                                           Systematic::boxEfficiencies};
+//                                       Systematic::pidEff);
+//   std::array<Systematic, 2> categories = {Systematic::pdfParams,
+//                                           Systematic::boxEffs};
 //   if (randomise) {
 //     Params::Get().RandomiseParameters(categories.begin(), categories.end());
 //   }

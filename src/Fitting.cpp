@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "Configuration.h"
+#include "Params.h"
 #include "GlobalVars.h"
 #include "NeutralVars.h"
 #include "ParseArguments.h"
@@ -2754,6 +2755,7 @@ int main(int argc, char **argv) {
   std::vector<Bachelor> bachelorVec;
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
+  std::vector<Systematic> systematicVec;
   // Still want to load both charges:plus and minus, we just fit with
   // them differently
 
@@ -2775,6 +2777,7 @@ int main(int argc, char **argv) {
     std::string neutralArg("gamma");
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
+    std::string systematicArg("");
     int toysArg = 0;
     float deltaLowArg = 0.0;
     float deltaHighArg = 0.0;
@@ -2800,7 +2803,7 @@ int main(int argc, char **argv) {
       std::cout << "Followed by the possible options (to specify multiple options, separate them by commas):\n";
       std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -noFit, default is to fit PDF to data\n";
-      std::cout << "    -year=<choice {2011,2012,2015,2016} default: "
+      std::cout << "    -year=<choice {2011,2012,2015,2016,2017,2018} default: "
                 << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
                 << ">\n";
@@ -2811,15 +2814,15 @@ int main(int argc, char **argv) {
                 << ">\n";
       std::cout << "    -daughters=<choice {kpi,kk,pipi,pik} default: "
                 << daughtersArg << ">\n";
-      std::cout << "    -charge=<choice {plus/minus/total} default: "
+      std::cout << "    -charge=<choice {plus,minus/total} default: "
                 << chargeArg << ">\n";
       std::cout << "    -toys=<# toys>"
                 << "\n";
       std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
                    "to data. Default is 2D toys, generated from RooHistPdf of "
                    "data.\n";
-      std::cout << "    Optional: if you want to run toys. If # toys = 1, toys "
-                   "will also be plotted.\n";
+      std::cout << "    -systematic=<choice {pdfParams,boxEffs,pidEffs} default: None>"
+                << "\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "\n";
@@ -2862,65 +2865,76 @@ int main(int argc, char **argv) {
       // option
       // parsed to year
       if (!args("year", yearArg)) {
-        std::cout << "Using default value -year=[" << yearArg << "].\n";
+        std::cout << "Using default value -year=" << yearArg << ".\n";
       }
       try {
         yearVec = ExtractEnumList<Year>(yearArg);
       } catch (std::invalid_argument) {
         std::cerr << "year assignment failed, please specify: "
-                     "-year=[2011,2012,2015,2016].\n";
+                     "-year=2011,2012,2015,2016.\n";
         return 1;
       }
 
       // Polarity
       if (!args("polarity", polarityArg)) {
-        std::cout << "Using default value -polarity=[" << polarityArg << "].\n";
+        std::cout << "Using default value -polarity=" << polarityArg << ".\n";
       }
       try {
         polarityVec = ExtractEnumList<Polarity>(polarityArg);
       } catch (std::invalid_argument) {
         std::cerr << "Polarity assignment failed, please specify: "
-                     "-polarity=[up,down].\n";
+                     "-polarity=up,down.\n";
         return 1;
       }
 
       // Neutral
       if (!args("neutral", neutralArg)) {
-        std::cerr << "Using default value -neutral=[" << neutralArg << "]\n";
+        std::cerr << "Using default value -neutral=" << neutralArg << "\n";
       }
       try {
         config.SetNeutral(StringToEnum<Neutral>(neutralArg));
       } catch (std::invalid_argument) {
         std::cerr << "neutral assignment failed, please specify: "
-                     "-neutral=[pi0/gamma].\n";
+                     "-neutral=pi0/gamma.\n";
         return 1;
       }
 
       if (!args("daughters", daughtersArg)) {
-        std::cout << "Using default value -daughters=[" << daughtersArg
-                  << "].\n";
+        std::cout << "Using default value -daughters=" << daughtersArg
+                  << ".\n";
       }
       try {
         daughtersVec = ExtractEnumList<Daughters>(daughtersArg);
       } catch (std::invalid_argument) {
         std::cerr << "daughters assignment failed, please specify: "
-                     "-daughters=[kpi,kk,pipi,pik].\n";
+                     "-daughters=kpi,kk,pipi,pik.\n";
         return 1;
       }
 
       if (!args("charge", chargeArg)) {
-        std::cout << "Using default value -charge=[" << chargeArg << "].\n";
+        std::cout << "Using default value -charge=" << chargeArg << ".\n";
       }
       try {
         chargeVec = ExtractEnumList<Charge>(chargeArg);
-        std::cout << "Using value -charge=[" << chargeArg << "].\n";
+        std::cout << "Using value -charge=" << chargeArg << ".\n";
       } catch (std::invalid_argument) {
         std::cerr << "charge assignment failed, please specify: "
-                     "-charge=[plus,minus] or -charge=[total].\n";
+                     "-charge=plus,minus or -charge=total.\n";
         return 1;
       }
       if (chargeVec.size() > 1) {
         config.splitByCharge() = true;
+      }
+      if (!args("systematic", systematicArg)) {
+        std::cout << "NOT running systematics.\n";
+      } else {
+        try {
+          systematicVec = ExtractEnumList<Systematic>(systematicArg);
+        } catch (std::invalid_argument) {
+          std::cerr << "systematic assignment failed, please specify: "
+                       "-systematic=pdfParams,boxEffs,pidEffs\n";
+          return 1;
+        }
       }
 
       if (!args("bl", buDeltaLowArg)) {
@@ -3149,6 +3163,12 @@ int main(int argc, char **argv) {
         toyResultFile.Close();
       }
     }
+
+//   std::array<Systematic, 2> categories = {Systematic::pdfParams,
+//                                           Systematic::boxEffs};
+//   if (randomise) {
+//     Params::Get().RandomiseParameters(categories.begin(), categories.end());
+//   }
     // id = 0 for data fit
     int id = 0;
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);

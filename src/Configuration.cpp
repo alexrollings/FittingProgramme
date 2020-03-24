@@ -198,6 +198,18 @@ std::string Configuration::ReturnBoxString() {
 
 // Need a template for this as each enum option is a different 'type'
 template <>
+Systematic StringToEnum<Systematic>(std::string const &systematic) {
+  if (systematic == "pdfParams") {
+    return Systematic::pdfParams;
+  } else if (systematic == "boxEffs") {
+    return Systematic::boxEffs;
+    } else if (systematic == "pidEff") {
+      return Systematic::pidEff;
+  }
+  throw std::invalid_argument("Systematic must take a value in [pdfParams/boxEffs/pidEff]");
+}
+
+template <>
 Polarity StringToEnum<Polarity>(std::string const &polarity) {
   if (polarity == "up") {
     return Polarity::up;

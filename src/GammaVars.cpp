@@ -169,7 +169,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //     "", 2.8893e-01),
       Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Delta", uniqueId, Neutral::gamma, 2.8893e-01, 2e-02,
-          Systematic::pdfParameters)),
+          Systematic::pdfParams)),
       Bu2Dst0h_D0pi0_a2Delta_(
           ("Bu2Dst0h_D0pi0_a2Delta_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
