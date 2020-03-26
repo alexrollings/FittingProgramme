@@ -53,10 +53,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                      "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_,
                                                     pdf2Delta_Bu2Dst0h_D0pi0_),
                                      *Bu2Dst0h_D0pi0_fracPdf1Delta_),
-      Bu2Dst0h_D0pi0_meanBu_(("Bu2Dst0h_D0pi0_meanBu_" +
-                              ComposeName(uniqueId, Neutral::pi0))
-                                 .c_str(),
-                             "", 5.2735e+03, 5270, 5275),
+      Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0pi0_meanBu", uniqueId, Neutral::pi0, 5.2735e+03, 5270, 5275)),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(("Bu2Dst0h_D0pi0_KpiSigmaBu_" +
                                   ComposeName(uniqueId, Neutral::pi0))
                                      .c_str(),
