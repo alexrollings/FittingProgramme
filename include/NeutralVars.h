@@ -144,22 +144,22 @@ class NeutralVars {
     return *Bu2Dst0h_D0pi0_KpiSigmaBuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_a1BuPartial() {
-    return Bu2Dst0h_D0pi0_a1BuPartial_;
+    return *Bu2Dst0h_D0pi0_a1BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_a2BuPartial() {
-    return Bu2Dst0h_D0pi0_a2BuPartial_;
+    return *Bu2Dst0h_D0pi0_a2BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_n1BuPartial() {
-    return Bu2Dst0h_D0pi0_n1BuPartial_;
+    return *Bu2Dst0h_D0pi0_n1BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_n2BuPartial() {
-    return Bu2Dst0h_D0pi0_n2BuPartial_;
+    return *Bu2Dst0h_D0pi0_n2BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_fracPdfCb1BuPartial() {
-    return Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
+    return *Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_fracPdfCb2BuPartial() {
-    return Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
+    return *Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
   }
   RooRealVar &buDeltaCutEffBu2Dst0h_D0pi0() {
     return buDeltaCutEffBu2Dst0h_D0pi0_;
@@ -289,12 +289,12 @@ class NeutralVars {
   RooFormulaVar Bu2Dst0h_D0pi0_meanGausBuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_21SigmaBuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_KpiSigmaBuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_a1BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_a2BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_n1BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_n2BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
-  RooRealVar Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a2BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n2BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
   RooRealVar buDeltaCutEffBu2Dst0h_D0pi0_;
   RooRealVar deltaCutEffBu2Dst0h_D0pi0_;
   RooRealVar deltaPartialCutEffBu2Dst0h_D0pi0_;

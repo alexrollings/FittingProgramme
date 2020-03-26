@@ -2828,7 +2828,9 @@ int main(int argc, char **argv) {
       std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
                    "to data. Default is 2D toys, generated from RooHistPdf of "
                    "data.\n";
-      std::cout << "    -systematic=<choice {pi0DeltaTails,pi0DeltaFrac,pi0BuTails,crossFeedBuPdf,boxEffs,pidEffs} "
+      std::cout << "    -systematic=<choice "
+                   "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,"
+                   "pi0BuSigma1,crossFeedBuPdf,boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2943,7 +2945,8 @@ int main(int argc, char **argv) {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
           std::cerr << "systematic assignment failed, please specify: "
-                       "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,crossFeedBuPdf,boxEffs,pidEffs\n";
+                       "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
+                       "pi0BuFrac,pi0BuSigma1,crossFeedBuPdf,boxEffs,pidEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {

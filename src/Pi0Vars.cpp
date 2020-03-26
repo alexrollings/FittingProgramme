@@ -78,12 +78,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanGausBuPartial_(),
       Bu2Dst0h_D0pi0_21SigmaBuPartial_(nullptr),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_a1BuPartial_(),
-      Bu2Dst0h_D0pi0_a2BuPartial_(),
-      Bu2Dst0h_D0pi0_n1BuPartial_(),
-      Bu2Dst0h_D0pi0_n2BuPartial_(),
-      Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(),
-      Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(),
+      Bu2Dst0h_D0pi0_a1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_a2BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_n1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_n2BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(nullptr),
       buDeltaCutEffBu2Dst0h_D0pi0_(
           ("buDeltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),
