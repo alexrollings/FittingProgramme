@@ -195,17 +195,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", 5.3423e+03),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(),
-      Bu2Dst0h_D0pi0_a1Bu_(
-          ("Bu2Dst0h_D0pi0_a1Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 8.5179e-01),
-      Bu2Dst0h_D0pi0_a2Bu_(),
-      Bu2Dst0h_D0pi0_n1Bu_(
-          ("Bu2Dst0h_D0pi0_n1Bu_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1.0000e+01),
-      Bu2Dst0h_D0pi0_n2Bu_(),
-      Bu2Dst0h_D0pi0_fracPdf1Bu_(),
+      Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_a1Bu", uniqueId, Neutral::gamma, 8.2132e-01, 2.77e-02,
+          Systematic::crossFeedBuPdf)),
+      Bu2Dst0h_D0pi0_a2Bu_(nullptr),
+      Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_n1Bu", uniqueId, Neutral::gamma, 1.0000e+01, 1e+00,
+          Systematic::NA)),
+      Bu2Dst0h_D0pi0_n2Bu_(nullptr),
+      Bu2Dst0h_D0pi0_fracPdf1Bu_(nullptr),
       Bu2Dst0h_D0pi0_meanCbBuPartial_(("Bu2Dst0h_D0pi0_meanCbBuPartial_" +
                                        ComposeName(uniqueId, Neutral::gamma))
                                           .c_str(),

@@ -33,7 +33,7 @@ enum class Mode {
   Bu2Dst0K_D0pi0,
   Bu2Dst0pi_D0pi0_WN
 };
-enum class Systematic { NA, pi0DeltaTails, pi0DeltaFrac, boxEffs, pidEff };
+enum class Systematic { NA, pi0DeltaTails, pi0DeltaFrac, pi0BuTails, crossFeedBuPdf, boxEffs, pidEff };
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
 class Configuration {

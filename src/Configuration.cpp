@@ -202,12 +202,18 @@ template <>
 Systematic StringToEnum<Systematic>(std::string const &systematic) {
   if (systematic == "pi0DeltaTails") {
     return Systematic::pi0DeltaTails;
+  } else if (systematic == "pi0DeltaFrac") {
+    return Systematic::pi0DeltaFrac;
+  } else if (systematic == "pi0BuTails") {
+    return Systematic::pi0BuTails;
+  } else if (systematic == "crossFeedBuPdf") {
+    return Systematic::crossFeedBuPdf;
   } else if (systematic == "boxEffs") {
     return Systematic::boxEffs;
     } else if (systematic == "pidEff") {
       return Systematic::pidEff;
   }
-  throw std::invalid_argument("Systematic must take a value in [pi0DeltaTails/pi0DeltaFrac/boxEffs/pidEff]");
+  throw std::invalid_argument("Systematic must take a value in [pi0DeltaTails/pi0DeltaFrac/pi0BuTails/crossFeedBuPdf/boxEffs/pidEff]");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -216,6 +222,10 @@ std::string EnumToString(Systematic systematic) {
       return "pi0DeltaTails";
     case Systematic::pi0DeltaFrac:
       return "pi0DeltaFrac";
+    case Systematic::pi0BuTails:
+      return "pi0BuTails";
+    case Systematic::crossFeedBuPdf:
+      return "crossFeedBuPdf";
     case Systematic::boxEffs:
       return "boxEffs";
     case Systematic::pidEff:

@@ -123,11 +123,11 @@ class NeutralVars {
   }
   RooRealVar &Bu2Dst0h_D0pi0_meanBu() { return Bu2Dst0h_D0pi0_meanBu_; }
   RooRealVar &Bu2Dst0h_D0pi0_KpiSigmaBu() { return Bu2Dst0h_D0pi0_KpiSigmaBu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_a1Bu() { return Bu2Dst0h_D0pi0_a1Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_a2Bu() { return Bu2Dst0h_D0pi0_a2Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_n1Bu() { return Bu2Dst0h_D0pi0_n1Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_n2Bu() { return Bu2Dst0h_D0pi0_n2Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Bu() { return Bu2Dst0h_D0pi0_fracPdf1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_a1Bu() { return *Bu2Dst0h_D0pi0_a1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_a2Bu() { return *Bu2Dst0h_D0pi0_a2Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n1Bu() { return *Bu2Dst0h_D0pi0_n1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n2Bu() { return *Bu2Dst0h_D0pi0_n2Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Bu() { return *Bu2Dst0h_D0pi0_fracPdf1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_meanCbBuPartial() {
     return Bu2Dst0h_D0pi0_meanCbBuPartial_;
   }
@@ -279,11 +279,11 @@ class NeutralVars {
   RooAddPdf pdfDelta_misId_Bu2Dst0h_D0pi0_;
   RooRealVar Bu2Dst0h_D0pi0_meanBu_;
   RooRealVar Bu2Dst0h_D0pi0_KpiSigmaBu_;
-  RooRealVar Bu2Dst0h_D0pi0_a1Bu_;
-  RooRealVar Bu2Dst0h_D0pi0_a2Bu_;
-  RooRealVar Bu2Dst0h_D0pi0_n1Bu_;
-  RooRealVar Bu2Dst0h_D0pi0_n2Bu_;
-  RooRealVar Bu2Dst0h_D0pi0_fracPdf1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a2Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n2Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf1Bu_;
   RooRealVar Bu2Dst0h_D0pi0_meanCbBuPartial_;
   RooRealVar Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_;
   RooFormulaVar Bu2Dst0h_D0pi0_meanGausBuPartial_;
