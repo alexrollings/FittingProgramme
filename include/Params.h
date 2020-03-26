@@ -52,7 +52,7 @@ class FixedParameter {
 
 class Params {
  private:
-  using Key = std::tuple<std::string, std::string, std::string>;
+  using Key = std::tuple<std::string, std::string, std::string, std::string>;
 
  public:
   using ValueFixed = FixedParameter;
@@ -66,16 +66,41 @@ class Params {
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
                       double std, Systematic systematic) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral));
+    auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     return ConstructFixedParameter(key, var_name, mean, std, systematic);
   }
 
-  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name, int uniqueId, Neutral neutral,
-                         double start, double min_value, double max_value) {
-    auto key =
-        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral));
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Neutral neutral,
+                                             double start, double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor,
+                                          double mean, double std,
+                                          Systematic systematic) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), EnumToString(bachelor));
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Neutral neutral,
+                                             Bachelor bachelor, double start,
+                                             double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), EnumToString(bachelor));
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
@@ -96,7 +121,8 @@ class Params {
   void WriteFixedParametersToFile(std::string const &path) {
     std::ofstream of(path);
     for (auto &t : fixed_parameters_) {
-      of << std::get<0>(t.first) << "," << t.second.mean() << ","
+      of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
+         << std::get<3>(t.first) << "," << t.second.mean() << ","
          << t.second.std() << "\n";
       std::cout << t.second.name() << "," << t.second.mean() << ","
                 << t.second.std() << "\n";
@@ -140,35 +166,3 @@ class Params {
   std::map<Key, ValueFixed> fixed_parameters_;
   std::map<Key, std::shared_ptr<ValueFloating>> floating_parameters_;
 };
-//
-// int main(int argc, char **argv) {
-//   bool randomise = false;
-//   if (argc > 1) {
-//     if (std::string(argv[1]) == "randomise") {
-//       randomise = true;
-//     }
-//   }
-//   auto &a = Params::Get().CreateFixed("VariableA", Neutral::a, Bachelor::c, 1.0,
-//                                       1000, Systematic::pdfParams);
-//   auto &b = Params::Get().CreateFixed("VariableB", Neutral::a, Bachelor::d, 2.0,
-//                                       1000, Systematic::pdfParams);
-//   auto &c = Params::Get().CreateFixed("VariableC", Neutral::a, Bachelor::c, 3.0,
-//                                       1000, Systematic::boxEffs);
-//   auto &d = Params::Get().CreateFixed("VariableD", Neutral::b, 4.0, 1000,
-//                                       Systematic::pidEff);
-//   std::array<Systematic, 2> categories = {Systematic::pdfParams,
-//                                           Systematic::boxEffs};
-//   if (randomise) {
-//     Params::Get().RandomiseParameters(categories.begin(), categories.end());
-//   }
-//   std::cout << a.name << ": " << a.value << "\n";
-//   std::cout << b.name << ": " << b.value << "\n";
-//   std::cout << c.name << ": " << c.value << "\n";
-//   std::cout << d.name << ": " << d.value << "\n";
-//   for (auto &t : Params::Get().fixed_parameters()) {
-//     std::cout << t.second.name() << ": " << t.second.mean() << " / "
-//               << t.second.std() << "\n";
-//   }
-//   Params::Get().WriteFixedParametersToFile("variables.csv");
-//   return 0;
-// }

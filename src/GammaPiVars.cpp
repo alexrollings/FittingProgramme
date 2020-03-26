@@ -1,4 +1,5 @@
 #include "NeutralBachelorVars.h"
+#include "Params.h"
 
 // Bachelor specializations
 
@@ -111,11 +112,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", 1),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      Bu2Dst0h_D0pi0_sigma1Bu_(
-          new RooRealVar(("Bu2Dst0h_D0pi0_sigma1Bu_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         "", 4.5702e+01)),
+      Bu2Dst0h_D0pi0_sigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_sigmaBu", uniqueId, Neutral::gamma, Bachelor::pi,
+          4.4834e+01, 7.73e-01, Systematic::crossFeedBuPdf)),
       pdf1Bu_Bu2Dst0h_D0pi0_(),
       pdf2Bu_Bu2Dst0h_D0pi0_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
@@ -124,7 +123,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
-          *Bu2Dst0h_D0pi0_sigma1Bu_,
+          *Bu2Dst0h_D0pi0_sigmaBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu())),
       Bu2Dst0h_D0pi0_sigma1BuPartial_(

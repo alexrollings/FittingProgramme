@@ -1,4 +1,5 @@
 #include "NeutralBachelorVars.h"
+#include "Params.h"
 
 // Bachelor specializations
 
@@ -9,14 +10,14 @@ template <>
 NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-    : Bu2Dst0h_D0pi0_sigma1Bu_(new RooFormulaVar(
-          ("Bu2Dst0h_D0pi0_sigma1Bu_" +
+    : Bu2Dst0h_D0pi0_sigmaBu_(new RooFormulaVar(
+          ("Bu2Dst0h_D0pi0_sigmaBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", "@0*@1",
           RooArgList(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                  .Bu2Dst0h_D0pi0_sigma1Bu(),
+                  .Bu2Dst0h_D0pi0_sigmaBu(),
               NeutralVars<Neutral::pi0>::Get(uniqueId)
                   .Bu2Dst0h_D0pi0_KpiSigmaBu()))),
       pdf1Bu_Bu2Dst0h_D0pi0_(
@@ -25,7 +26,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
-          *Bu2Dst0h_D0pi0_sigma1Bu_,
+          *Bu2Dst0h_D0pi0_sigmaBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu()),
       pdf2Bu_Bu2Dst0h_D0pi0_(
@@ -34,7 +35,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_meanBu(),
-          *Bu2Dst0h_D0pi0_sigma1Bu_,
+          *Bu2Dst0h_D0pi0_sigmaBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_a2Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0pi0_n2Bu()),
       pdfBu_Bu2Dst0h_D0pi0_(new RooAddPdf(
