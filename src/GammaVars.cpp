@@ -193,7 +193,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_meanBu", uniqueId, Neutral::gamma, 5.3423e+03, 1.03e+00,
           Systematic::crossFeedBuPdf)),
-      Bu2Dst0h_D0pi0_KpiSigmaBu_(),
+      Bu2Dst0h_D0pi0_KpiSigmaBu_(nullptr),
       Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Bu", uniqueId, Neutral::gamma, 8.2132e-01, 2.77e-02,
           Systematic::crossFeedBuPdf)),
