@@ -111,11 +111,11 @@ class NeutralVars {
   }
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
   RooRealVar &Bu2Dst0h_D0pi0_a1Delta() { return *Bu2Dst0h_D0pi0_a1Delta_; }
-  RooRealVar &Bu2Dst0h_D0pi0_a2Delta() { return Bu2Dst0h_D0pi0_a2Delta_; }
-  RooRealVar &Bu2Dst0h_D0pi0_n1Delta() { return Bu2Dst0h_D0pi0_n1Delta_; }
-  RooRealVar &Bu2Dst0h_D0pi0_n2Delta() { return Bu2Dst0h_D0pi0_n2Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_a2Delta() { return *Bu2Dst0h_D0pi0_a2Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n1Delta() { return *Bu2Dst0h_D0pi0_n1Delta_; }
+  RooRealVar &Bu2Dst0h_D0pi0_n2Delta() { return *Bu2Dst0h_D0pi0_n2Delta_; }
   RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Delta() {
-    return Bu2Dst0h_D0pi0_fracPdf1Delta_;
+    return *Bu2Dst0h_D0pi0_fracPdf1Delta_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() { return pdfDelta_Bu2Dst0h_D0pi0_; }
   RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() {
@@ -267,14 +267,14 @@ class NeutralVars {
   double initYieldFAVBu2Dst0h_D0gamma_;
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_meanDelta_;
-  RooRealVar Bu2Dst0h_D0pi0_sigmaDelta_;
-  RooRealVar Bu2Dst0h_D0pi0_a2Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_sigmaDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a1Delta_;
-  RooRealVar Bu2Dst0h_D0pi0_n2Delta_;
-  RooRealVar Bu2Dst0h_D0pi0_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_a2Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n2Delta_;
   RooCBShape pdf1Delta_Bu2Dst0h_D0pi0_;
   RooCBShape pdf2Delta_Bu2Dst0h_D0pi0_;
-  RooRealVar Bu2Dst0h_D0pi0_fracPdf1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf1Delta_;
   RooAddPdf pdfDelta_Bu2Dst0h_D0pi0_;
   RooAddPdf pdfDelta_misId_Bu2Dst0h_D0pi0_;
   RooRealVar Bu2Dst0h_D0pi0_meanBu_;

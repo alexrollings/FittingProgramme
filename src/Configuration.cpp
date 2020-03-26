@@ -200,20 +200,22 @@ std::string Configuration::ReturnBoxString() {
 // Need a template for this as each enum option is a different 'type'
 template <>
 Systematic StringToEnum<Systematic>(std::string const &systematic) {
-  if (systematic == "pdfParams") {
-    return Systematic::pdfParams;
+  if (systematic == "pi0DeltaTails") {
+    return Systematic::pi0DeltaTails;
   } else if (systematic == "boxEffs") {
     return Systematic::boxEffs;
     } else if (systematic == "pidEff") {
       return Systematic::pidEff;
   }
-  throw std::invalid_argument("Systematic must take a value in [pdfParams/boxEffs/pidEff]");
+  throw std::invalid_argument("Systematic must take a value in [pi0DeltaTails/pi0DeltaFrac/boxEffs/pidEff]");
 }
 
 std::string EnumToString(Systematic systematic) {
   switch (systematic) {
-    case Systematic::pdfParams:
-      return "pdfParams";
+    case Systematic::pi0DeltaTails:
+      return "pi0DeltaTails";
+    case Systematic::pi0DeltaFrac:
+      return "pi0DeltaFrac";
     case Systematic::boxEffs:
       return "boxEffs";
     case Systematic::pidEff:
