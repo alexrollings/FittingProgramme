@@ -214,6 +214,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pi0BuPartialSigma1;
   } else if (systematic == "crossFeedBuPdf") {
     return Systematic::crossFeedBuPdf;
+  } else if (systematic == "crossFeedBuPartialPdf") {
+    return Systematic::crossFeedBuPartialPdf;
   } else if (systematic == "crossFeedDeltaPdf") {
     return Systematic::crossFeedDeltaPdf;
   } else if (systematic == "gammaDeltaTails") {
@@ -233,7 +235,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "Systematic must take a value in "
       "[pi0DeltaTails/pi0DeltaFrac/pi0BuTails/pi0BuPartialTails/"
       "pi0BuPartialFrac/pi0BuPartialSigma1/"
-      "crossFeedBuPdf/crossFeedDeltaPdf/gammaDeltaTails/gammaDeltaFrac/gammaBuTails/gammaBuFrac/boxEffs/pidEff]");
+      "crossFeedBuPdf/crossFeedBuPartialPdf/crossFeedDeltaPdf/gammaDeltaTails/gammaDeltaFrac/gammaBuTails/gammaBuFrac/boxEffs/pidEff]");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -252,6 +254,8 @@ std::string EnumToString(Systematic systematic) {
       return "pi0BuPartialSigma1";
     case Systematic::crossFeedBuPdf:
       return "crossFeedBuPdf";
+    case Systematic::crossFeedBuPartialPdf:
+      return "crossFeedBuPartialPdf";
     case Systematic::crossFeedDeltaPdf:
       return "crossFeedDeltaPdf";
     case Systematic::gammaDeltaTails:

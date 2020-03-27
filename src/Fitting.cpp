@@ -2831,7 +2831,7 @@ int main(int argc, char **argv) {
       std::cout << "    -systematic=<choice "
                    "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuPartialTails,"
                    "pi0BuPartialFrac,"
-                   "pi0BuPartialSigma1,crossFeedBuPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs} "
+                   "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2948,7 +2948,7 @@ int main(int argc, char **argv) {
           std::cerr << "systematic assignment failed, please specify: "
                        "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
                        "pi0BuPartialTails,pi0BuPartialFrac,"
-                       "pi0BuPartialSigma1,crossFeedBuPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs\n";
+                       "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {

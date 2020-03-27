@@ -44,6 +44,7 @@ enum class Systematic {
   pi0BuPartialFrac,
   pi0BuPartialSigma1,
   crossFeedBuPdf,
+  crossFeedBuPartialPdf,
   crossFeedDeltaPdf,
   gammaDeltaTails,
   gammaDeltaFrac,

@@ -82,18 +82,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_fracPdf1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_fracPdf1Bu", uniqueId, Neutral::gamma, 6.2860e-01,
           8.13e-02, Systematic::gammaBuFrac)),
-      Bu2Dst0h_D0gamma_meanBuPartial_(("Bu2Dst0h_D0gamma_meanBuPartial_" +
-                                       ComposeName(uniqueId, Neutral::gamma))
-                                          .c_str(),
-                                      "", 5.2600e+03),
-      Bu2Dst0h_D0gamma_aBuPartial_(("Bu2Dst0h_D0gamma_aBuPartial_" +
-                                    ComposeName(uniqueId, Neutral::gamma))
-                                       .c_str(),
-                                   "", 2.5357e+00),
-      Bu2Dst0h_D0gamma_nBuPartial_(("Bu2Dst0h_D0gamma_nBuPartial_" +
-                                    ComposeName(uniqueId, Neutral::gamma))
-                                       .c_str(),
-                                   "", 6.4103e-08),
+      Bu2Dst0h_D0gamma_meanBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_meanBuPartial", uniqueId, Neutral::gamma, 5.2602e+03,
+          3.68e+00, Systematic::crossFeedBuPartialPdf)),
+      Bu2Dst0h_D0gamma_aBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_aBuPartial", uniqueId, Neutral::gamma, 2.5968e+00,
+          3.45e-01, Systematic::crossFeedBuPartialPdf)),
+      Bu2Dst0h_D0gamma_nBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_nBuPartial", uniqueId, Neutral::gamma, 1.8178e-06,
+          6.90e-02, Systematic::crossFeedBuPartialPdf)),
       buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
                                       ComposeName(uniqueId, Neutral::gamma))
                                          .c_str(),

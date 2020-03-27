@@ -46,11 +46,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0gamma_, pdf2Bu_Bu2Dst0h_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_D0gamma_fracPdf1Bu())),
-      Bu2Dst0h_D0gamma_sigmaBuPartial_(
-          ("Bu2Dst0h_D0gamma_sigmaBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 3.0651e+01),
+      Bu2Dst0h_D0gamma_sigmaBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_sigmaBuPartial", uniqueId, Neutral::gamma,
+          Bachelor::k, 2.9969e+01, 2.68e+00,
+          Systematic::crossFeedBuPartialPdf)),
       pdfBuPartial_Bu2Dst0h_D0gamma_(
           ("pdfBuPartial_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -58,7 +57,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_D0gamma_meanBuPartial(),
-          Bu2Dst0h_D0gamma_sigmaBuPartial_,
+          *Bu2Dst0h_D0gamma_sigmaBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_D0gamma_aBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)

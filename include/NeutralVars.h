@@ -89,13 +89,13 @@ class NeutralVars {
     return *Bu2Dst0h_D0gamma_fracPdf1Bu_;
   }
   RooRealVar &Bu2Dst0h_D0gamma_meanBuPartial() {
-    return Bu2Dst0h_D0gamma_meanBuPartial_;
+    return *Bu2Dst0h_D0gamma_meanBuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0gamma_aBuPartial() {
-    return Bu2Dst0h_D0gamma_aBuPartial_;
+    return *Bu2Dst0h_D0gamma_aBuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0gamma_nBuPartial() {
-    return Bu2Dst0h_D0gamma_nBuPartial_;
+    return *Bu2Dst0h_D0gamma_nBuPartial_;
   }
   RooRealVar &buDeltaCutEffBu2Dst0h_D0gamma() {
     return buDeltaCutEffBu2Dst0h_D0gamma_;
@@ -257,9 +257,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_n1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_n2Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_fracPdf1Bu_;
-  RooRealVar Bu2Dst0h_D0gamma_meanBuPartial_;
-  RooRealVar Bu2Dst0h_D0gamma_aBuPartial_;
-  RooRealVar Bu2Dst0h_D0gamma_nBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_aBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_nBuPartial_;
   RooRealVar buDeltaCutEffBu2Dst0h_D0gamma_;
   RooRealVar deltaCutEffBu2Dst0h_D0gamma_;
   RooRealVar deltaPartialCutEffBu2Dst0h_D0gamma_;
