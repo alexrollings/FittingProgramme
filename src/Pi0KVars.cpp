@@ -138,26 +138,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", 1),
       deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_(),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
-      Bu2Dst0h_D0gamma_sigma1Bu_(new RooFormulaVar(
-          ("Bu2Dst0h_D0gamma_sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                  .Bu2Dst0h_D0gamma_sigma1Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .Bu2Dst0h_D0gamma_KpiSigmaBu()))),
-      Bu2Dst0h_D0gamma_sigma2Bu_(new RooFormulaVar(
-          ("Bu2Dst0h_D0gamma_sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
-                  .Bu2Dst0h_D0gamma_sigma2Bu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId)
-                  .Bu2Dst0h_D0gamma_KpiSigmaBu()))),
+      Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf)),
+      Bu2Dst0h_D0gamma_sigma2Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf)),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(new RooCruijff(

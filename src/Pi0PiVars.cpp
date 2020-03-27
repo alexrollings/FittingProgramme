@@ -106,16 +106,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "", 1),
       deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_(),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
-      Bu2Dst0h_D0gamma_sigma1Bu_(
-          new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         "", 3.9828e+01)),
-      Bu2Dst0h_D0gamma_sigma2Bu_(
-          new RooRealVar(("Bu2Dst0h_D0gamma_sigma2Bu_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-                             .c_str(),
-                         "", 4.5331e+01)),
+      Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::pi,
+          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf)),
+      Bu2Dst0h_D0gamma_sigma2Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::pi,
+          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf)),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(new RooCruijff(

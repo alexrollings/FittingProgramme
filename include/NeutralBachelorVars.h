@@ -152,8 +152,8 @@ class NeutralBachelorVars {
  private:
   int uniqueId_;
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
-  std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma1Bu_;
-  std::unique_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma2Bu_;
+  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma1Bu_;
+  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_sigma2Bu_;
   RooCBShape pdf1Bu_Bu2Dst0h_D0gamma_;
   RooCBShape pdf2Bu_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_;

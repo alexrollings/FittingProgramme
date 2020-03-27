@@ -10,16 +10,10 @@ template <>
 NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
     int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
-    : Bu2Dst0h_D0gamma_sigma1Bu_(
-          new RooRealVar(("Bu2Dst0h_D0gamma_sigma1Bu_" +
-                          ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                             .c_str(),
-                         "", 2.0271e+01, 15, 25)),
-      // Fixed from data
-      // "", 1.9360e+01)),
-      // Fixed for partial box scan
-      // "", 1.9913e+01)),
-      Bu2Dst0h_D0gamma_sigma2Bu_(),
+    : Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+          2.0271e+01, 15, 25)),
+      Bu2Dst0h_D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
