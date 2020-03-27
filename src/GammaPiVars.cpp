@@ -128,7 +128,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu())),
       Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
-          2.5688e+01, 5.89e-01, Systematic::pi0BuSigma1)),
+          2.5688e+01, 5.89e-01, Systematic::pi0BuPartialSigma1)),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

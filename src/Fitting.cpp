@@ -2829,8 +2829,9 @@ int main(int argc, char **argv) {
                    "to data. Default is 2D toys, generated from RooHistPdf of "
                    "data.\n";
       std::cout << "    -systematic=<choice "
-                   "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,"
-                   "pi0BuSigma1,crossFeedBuPdf,boxEffs,pidEffs} "
+                   "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuPartialTails,"
+                   "pi0BuPartialFrac,"
+                   "pi0BuPartialSigma1,crossFeedBuPdf,gammaDeltaTails,gammaDeltaFrac,boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2946,7 +2947,8 @@ int main(int argc, char **argv) {
         } catch (std::invalid_argument) {
           std::cerr << "systematic assignment failed, please specify: "
                        "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
-                       "pi0BuFrac,pi0BuSigma1,crossFeedBuPdf,boxEffs,pidEffs\n";
+                       "pi0BuPartialTails,pi0BuPartialFrac,"
+                       "pi0BuPartialSigma1,crossFeedBuPdf,gammaDeltaTails,FracgammaDeltaFrac,boxEffs,pidEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {

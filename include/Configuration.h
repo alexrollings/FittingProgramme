@@ -33,15 +33,19 @@ enum class Mode {
   Bu2Dst0K_D0pi0,
   Bu2Dst0pi_D0pi0_WN
 };
-// Gamma only: pi0BuFrac, pi0BuSigma1
+// Gamma only: pi0BuPartial, crossFeed, gamma
+// Pi0 only: pi0Bu
 enum class Systematic {
   NA,
   pi0DeltaTails,
   pi0DeltaFrac,
   pi0BuTails,
-  pi0BuFrac,
-  pi0BuSigma1,
+  pi0BuPartialTails,
+  pi0BuPartialFrac,
+  pi0BuPartialSigma1,
   crossFeedBuPdf,
+  gammaDeltaTails,
+  gammaDeltaFrac,
   boxEffs,
   pidEff
 };

@@ -66,12 +66,12 @@ class NeutralVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
-  RooRealVar &Bu2Dst0h_D0gamma_a1Delta() { return Bu2Dst0h_D0gamma_a1Delta_; }
-  RooRealVar &Bu2Dst0h_D0gamma_a2Delta() { return Bu2Dst0h_D0gamma_a2Delta_; }
-  RooRealVar &Bu2Dst0h_D0gamma_n1Delta() { return Bu2Dst0h_D0gamma_n1Delta_; }
-  RooRealVar &Bu2Dst0h_D0gamma_n2Delta() { return Bu2Dst0h_D0gamma_n2Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_a1Delta() { return *Bu2Dst0h_D0gamma_a1Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_a2Delta() { return *Bu2Dst0h_D0gamma_a2Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n1Delta() { return *Bu2Dst0h_D0gamma_n1Delta_; }
+  RooRealVar &Bu2Dst0h_D0gamma_n2Delta() { return *Bu2Dst0h_D0gamma_n2Delta_; }
   RooRealVar &Bu2Dst0h_D0gamma_fracPdf1Delta() {
-    return Bu2Dst0h_D0gamma_fracPdf1Delta_;
+    return *Bu2Dst0h_D0gamma_fracPdf1Delta_;
   }
   RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() { return *pdfDelta_Bu2Dst0h_D0gamma_; }
   RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() {
@@ -236,14 +236,14 @@ class NeutralVars {
   int uniqueId_;
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_meanDelta_;
-  RooRealVar Bu2Dst0h_D0gamma_sigmaDelta_;
-  RooRealVar Bu2Dst0h_D0gamma_a2Delta_;
-  RooRealVar Bu2Dst0h_D0gamma_a1Delta_;
-  RooRealVar Bu2Dst0h_D0gamma_n2Delta_;
-  RooRealVar Bu2Dst0h_D0gamma_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_sigmaDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_a1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_a2Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_n2Delta_;
   RooCBShape pdf1Delta_Bu2Dst0h_D0gamma_;
   RooCBShape pdf2Delta_Bu2Dst0h_D0gamma_;
-  RooRealVar Bu2Dst0h_D0gamma_fracPdf1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_fracPdf1Delta_;
   RooRealVar Bu2Dst0h_D0gamma_thresholdDelta_;
   RooRealVar Bu2Dst0h_D0gamma_aDelta_;
   RooRealVar Bu2Dst0h_D0gamma_bDelta_;

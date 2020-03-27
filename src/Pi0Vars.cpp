@@ -99,14 +99,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(nullptr),
-      Bu2Dst0h_D0gamma_sigmaDelta_(),
-      Bu2Dst0h_D0gamma_a1Delta_(),
-      Bu2Dst0h_D0gamma_a2Delta_(),
-      Bu2Dst0h_D0gamma_n1Delta_(),
-      Bu2Dst0h_D0gamma_n2Delta_(),
+      Bu2Dst0h_D0gamma_sigmaDelta_(nullptr),
+      Bu2Dst0h_D0gamma_a1Delta_(nullptr),
+      Bu2Dst0h_D0gamma_a2Delta_(nullptr),
+      Bu2Dst0h_D0gamma_n1Delta_(nullptr),
+      Bu2Dst0h_D0gamma_n2Delta_(nullptr),
       pdf1Delta_Bu2Dst0h_D0gamma_(),
       pdf2Delta_Bu2Dst0h_D0gamma_(),
-      Bu2Dst0h_D0gamma_fracPdf1Delta_(),
+      Bu2Dst0h_D0gamma_fracPdf1Delta_(nullptr),
       Bu2Dst0h_D0gamma_thresholdDelta_(("Bu2Dst0h_D0gamma_thresholdDelta_" +
                                         ComposeName(uniqueId, Neutral::pi0))
                                            .c_str(),

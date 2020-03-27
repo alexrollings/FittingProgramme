@@ -206,21 +206,28 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pi0DeltaFrac;
   } else if (systematic == "pi0BuTails") {
     return Systematic::pi0BuTails;
-  } else if (systematic == "pi0BuFrac") {
-    return Systematic::pi0BuFrac;
-  } else if (systematic == "pi0BuSigma1") {
-    return Systematic::pi0BuSigma1;
+  } else if (systematic == "pi0BuPartialTails") {
+    return Systematic::pi0BuPartialTails;
+  } else if (systematic == "pi0BuPartialFrac") {
+    return Systematic::pi0BuPartialFrac;
+  } else if (systematic == "pi0BuPartialSigma1") {
+    return Systematic::pi0BuPartialSigma1;
   } else if (systematic == "crossFeedBuPdf") {
     return Systematic::crossFeedBuPdf;
+  } else if (systematic == "gammaDeltaTails") {
+    return Systematic::gammaDeltaTails;
+  } else if (systematic == "gammaDeltaFrac") {
+    return Systematic::gammaDeltaFrac;
   } else if (systematic == "boxEffs") {
     return Systematic::boxEffs;
-    } else if (systematic == "pidEff") {
-      return Systematic::pidEff;
-    }
-    throw std::invalid_argument(
-        "Systematic must take a value in "
-        "[pi0DeltaTails/pi0DeltaFrac/pi0BuTails/pi0BuFrac/pi0BuSigma1/"
-        "crossFeedBuPdf/boxEffs/pidEff]");
+  } else if (systematic == "pidEff") {
+    return Systematic::pidEff;
+  }
+  throw std::invalid_argument(
+      "Systematic must take a value in "
+      "[pi0DeltaTails/pi0DeltaFrac/pi0BuTails/pi0BuPartialTails/"
+      "pi0BuPartialFrac/pi0BuPartialSigma1/"
+      "crossFeedBuPdf/gammaDeltaTails/gammaDeltaFrac/boxEffs/pidEff]");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -231,12 +238,18 @@ std::string EnumToString(Systematic systematic) {
       return "pi0DeltaFrac";
     case Systematic::pi0BuTails:
       return "pi0BuTails";
-    case Systematic::pi0BuFrac:
-      return "pi0BuFrac";
-    case Systematic::pi0BuSigma1:
-      return "pi0BuSigma1";
+    case Systematic::pi0BuPartialTails:
+      return "pi0BuPartialTails";
+    case Systematic::pi0BuPartialFrac:
+      return "pi0BuPartialFrac";
+    case Systematic::pi0BuPartialSigma1:
+      return "pi0BuPartialSigma1";
     case Systematic::crossFeedBuPdf:
       return "crossFeedBuPdf";
+    case Systematic::gammaDeltaTails:
+      return "gammaDeltaTails";
+    case Systematic::gammaDeltaFrac:
+      return "gammaDeltaFrac";
     case Systematic::boxEffs:
       return "boxEffs";
     case Systematic::pidEff:

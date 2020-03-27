@@ -174,7 +174,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", "@0*@1",
           RooArgList(
               NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-                  .Bu2Dst0h_D0pi0_sigma3BuPartial(),
+                 .Bu2Dst0h_D0pi0_sigma3BuPartial(),
               NeutralVars<Neutral::gamma>::Get(uniqueId)
                   .Bu2Dst0h_D0pi0_KpiSigmaBuPartial()))),
       pdf1BuPartial_Bu2Dst0h_D0pi0_(
