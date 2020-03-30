@@ -1,0 +1,8 @@
+executable = run_systematics_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}.sh
+universe = vanilla
+output = output/run_systematics_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}.output.${CLUSTERID}
+error = error/run_systematics_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}.error.${CLUSTERID}
+log = log/run_systematics_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}.log.${CLUSTERID}
+notification = never
+getenv = true
+queue 1
