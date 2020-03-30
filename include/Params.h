@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "Configuration.h"
 #include "GlobalVars.h"
@@ -38,6 +39,17 @@ class FixedParameter {
 
   void Randomise(TRandom3 &random) {
     double shifted_value_ = random.Gaus(mean_, std_);
+    std::regex re("\\S+_a[A-Z]\\S+");
+    std::smatch match;
+    if (std::regex_search(name_, match, re)) {
+      std::cout << shifted_value_ << "\n";
+      while (shifted_value_ < 0) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        shifted_value_ = random.Gaus(mean_, std_);
+      }
+      std::cout << shifted_value_ << "\n";
+    }
     std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
               << "\n";
     roo_variable_->setVal(shifted_value_);
