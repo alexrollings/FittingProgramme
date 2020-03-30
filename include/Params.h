@@ -123,6 +123,9 @@ class Params {
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
         if (t.second.systematic() == *i) {
+          std::cout << " \n\n -------------------------------------------- \n\n"
+                    << EnumToString(*i) << ": " << t.second.name() 
+                    << " \n\n -------------------------------------------- \n\n";
           t.second.Randomise(random);
           break;
         }
@@ -130,14 +133,18 @@ class Params {
     }
   }
 
-  void WriteFixedParametersToFile(std::string const &path) {
+  void WriteFixedParametersToFile(std::string const &path, std::vector<Systematic> &systematicVec) {
     std::ofstream of(path);
     for (auto &t : fixed_parameters_) {
-      of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
-         << std::get<3>(t.first) << "," << t.second.mean() << ","
-         << t.second.std() << "\n";
-      std::cout << t.second.name() << "," << t.second.mean() << ","
-                << t.second.std() << "\n";
+      for (auto s : systematicVec) {
+        if (t.second.systematic() == s) {
+          of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
+             << std::get<3>(t.first) << "," << t.second.mean() << ","
+             << t.second.std() << "\n";
+          std::cout << t.second.name() << "," << t.second.mean() << ","
+                    << t.second.std() << "\n";
+        }
+      }
     }
   }
 

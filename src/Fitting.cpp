@@ -3239,7 +3239,7 @@ int main(int argc, char **argv) {
       }
       std::string paramFile =
           outputDir + "/results/ParameterInfo_" + systString + ".csv";
-      Params::Get().WriteFixedParametersToFile(paramFile);
+      Params::Get().WriteFixedParametersToFile(paramFile, systematicVec);
       for (int s = 1; s < nSyst + 1; ++s) {
         std::cout << "Running systematic " << s << "...\n";
         auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
