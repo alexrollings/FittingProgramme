@@ -21,9 +21,20 @@ if __name__ == '__main__':
         for line in open(input_dir + '/' + f, 'r'):
           name = line.strip().split(',')[0]
           d[name] = {
-              'Value': line.strip().split(',')[1],
-              'Range': line.strip().split(',')[2]
+              'Neutral': line.strip().split(',')[1],
+              'Bachelor': line.strip().split(',')[2],
+              'Value': line.strip().split(',')[3],
+              'Range': line.strip().split(',')[4]
           }
 
-  for par, val_range in d.items():
-    print('\t' + par + ':\t' + val_range['Value'] + '\t' + val_range['Range'])
+  for k, v in d.items():
+    if v['Neutral'] == 'pi0':
+      if v['Bachelor'] != "":
+        print('\t' + k + " " + v['Bachelor'] + ':\t' + v['Value'] + '\t' + v['Range'])
+      else:
+        print('\t' + k + ':\t\t' + v['Value'] + '\t' + v['Range'])
+    else:
+      if v['Bachelor'] != "":
+        print('\t' + k + " " + v['Bachelor'] + ':\t' + v['Value'] + '\t' + v['Range'])
+      else:
+        print('\t' + k + ':\t\t' + v['Value'] + '\t' + v['Range'])
