@@ -208,13 +208,13 @@ class NeutralVars {
   // -------------------- PART REC -------------------- //
   RooDstD0BG &pdfDelta_PartRec() { return pdfDelta_PartRec_; }
   RooDstD0BG &pdfDelta_misId_PartRec() { return pdfDelta_misId_PartRec_; }
-  RooRealVar &PartRec_D0pi0_meanBu() { return PartRec_D0pi0_meanBu_; }
-  RooRealVar &PartRec_D0pi0_aLBu() { return PartRec_D0pi0_aLBu_; }
-  RooRealVar &PartRec_D0pi0_aRBu() { return PartRec_D0pi0_aRBu_; }
-  RooRealVar &PartRec_D0gamma_meanBu() { return PartRec_D0gamma_meanBu_; }
-  RooRealVar &PartRec_D0gamma_aLBu() { return PartRec_D0gamma_aLBu_; }
-  RooRealVar &PartRec_D0gamma_aRBu() { return PartRec_D0gamma_aRBu_; }
-  RooRealVar &PartRec_frac_D0pi0() { return PartRec_frac_D0pi0_; }
+  RooRealVar &PartRec_D0pi0_meanBu() { return *PartRec_D0pi0_meanBu_; }
+  RooRealVar &PartRec_D0pi0_aLBu() { return *PartRec_D0pi0_aLBu_; }
+  RooRealVar &PartRec_D0pi0_aRBu() { return *PartRec_D0pi0_aRBu_; }
+  RooRealVar &PartRec_D0gamma_meanBu() { return *PartRec_D0gamma_meanBu_; }
+  RooRealVar &PartRec_D0gamma_aLBu() { return *PartRec_D0gamma_aLBu_; }
+  RooRealVar &PartRec_D0gamma_aRBu() { return *PartRec_D0gamma_aRBu_; }
+  RooRealVar &PartRec_frac_D0pi0() { return *PartRec_frac_D0pi0_; }
   RooRealVar &PartRec_meanBuPartial() { return PartRec_meanBuPartial_; }
   RooRealVar &PartRec_aLBuPartial() { return PartRec_aLBuPartial_; }
   RooRealVar &PartRec_aRBuPartial() { return PartRec_aRBuPartial_; }
@@ -348,13 +348,13 @@ class NeutralVars {
      std::shared_ptr<RooRealVar> PartRec_cDelta_;
   RooDstD0BG pdfDelta_PartRec_;
   RooDstD0BG pdfDelta_misId_PartRec_;
-  RooRealVar PartRec_D0pi0_meanBu_;
-  RooRealVar PartRec_D0pi0_aLBu_;
-  RooRealVar PartRec_D0pi0_aRBu_;
-  RooRealVar PartRec_D0gamma_meanBu_;
-  RooRealVar PartRec_D0gamma_aLBu_;
-  RooRealVar PartRec_D0gamma_aRBu_;
-  RooRealVar PartRec_frac_D0pi0_;
+  std::shared_ptr<RooRealVar> PartRec_D0pi0_meanBu_;
+  std::shared_ptr<RooRealVar> PartRec_D0pi0_aLBu_;
+  std::shared_ptr<RooRealVar> PartRec_D0pi0_aRBu_;
+  std::shared_ptr<RooRealVar> PartRec_D0gamma_meanBu_;
+  std::shared_ptr<RooRealVar> PartRec_D0gamma_aLBu_;
+  std::shared_ptr<RooRealVar> PartRec_D0gamma_aRBu_;
+  std::shared_ptr<RooRealVar> PartRec_frac_D0pi0_;
   RooRealVar PartRec_meanBuPartial_;
   RooRealVar PartRec_aLBuPartial_;
   RooRealVar PartRec_aRBuPartial_;

@@ -263,15 +263,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ("PartRec_D0pi0_sigmaLBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          // "", 3.4464e+01),
-          // Fixed from data at 4900
-          "", 4.8731e+01),
+          "", 3.4464e+01, 10, 100),
       PartRec_D0pi0_sigmaRBu_(
           ("PartRec_D0pi0_sigmaRBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          "", 4.4688e+01),
-      // "", 4.4688e+01, 10, 100),
+          "", 4.4688e+01), // 6.17e+00
       pdfBu_PartRec_D0pi0_(),
       PartRec_D0gamma_sigmaLBu_(),
       PartRec_D0gamma_sigmaRBu_(),

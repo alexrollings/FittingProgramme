@@ -214,7 +214,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "MisRec_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::k, 5.5962e+01,
           4.14e+00, Systematic::misRecBuPdf)),
       pdfBu_MisRec_(
-          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
+          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_meanBu(),
@@ -356,7 +356,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       PartRec_D0pi0_sigmaLBu_(("PartRec_D0pi0_sigmaLBu_" +
                                ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                   .c_str(),
-                              "", 4.8731e+01),
+                              "", 3.4464e+01, 10, 100),
+      // Get from pi?
       PartRec_D0pi0_sigmaRBu_(("PartRec_D0pi0_sigmaRBu_" +
                                ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                                   .c_str(),
