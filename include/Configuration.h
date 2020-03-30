@@ -50,6 +50,7 @@ enum class Systematic {
   gammaDeltaFrac,
   gammaBuTails,
   gammaBuFrac,
+  misRecDeltaPdf,
   boxEffs,
   pidEff
 };

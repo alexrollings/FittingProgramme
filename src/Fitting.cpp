@@ -2831,7 +2831,9 @@ int main(int argc, char **argv) {
       std::cout << "    -systematic=<choice "
                    "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuPartialTails,"
                    "pi0BuPartialFrac,"
-                   "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs} "
+                   "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
+                   "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
+                   "misRecDeltaPdf,boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2948,7 +2950,10 @@ int main(int argc, char **argv) {
           std::cerr << "systematic assignment failed, please specify: "
                        "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
                        "pi0BuPartialTails,pi0BuPartialFrac,"
-                       "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,boxEffs,pidEffs\n";
+                       "pi0BuPartialSigma1,crossFeedBuPdf,"
+                       "crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,"
+                       "gammaBuTails,gammaBuFrac,misRecDeltaPdf,boxEffs,"
+                       "pidEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
@@ -3234,8 +3239,7 @@ int main(int argc, char **argv) {
       Params::Get().WriteFixedParametersToFile(paramFile);
       for (int s = 1; s < nSyst + 1; ++s) {
         std::cout << "Running systematic " << s << "...\n";
-        auto systPair =
-            MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
+        auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
         std::cout << "RandomiseParameters:\n";
         RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
@@ -3250,9 +3254,8 @@ int main(int argc, char **argv) {
             RooFit::Offset(true), RooFit::NumCPU(8, 2)));
         systResult->SetName("SystResult");
         TFile systResultFile(
-            (outputDir + "/results/SystResult_" +
-             config.ReturnBoxString() + "_" + systString + "_" +
-             std::to_string(randomTag) + ".root")
+            (outputDir + "/results/SystResult_" + config.ReturnBoxString() +
+             "_" + systString + "_" + std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
         systResult->Write();
@@ -3276,56 +3279,55 @@ int main(int argc, char **argv) {
         toyFileNames[id - 1] = toyResultFile.GetName();
         toyResultFile.Close();
       }
+    }
+
+    if (config.runToy() == false) {
+      // Loop over daughters again to plot correct PDFs
+
+      // Whilst blinding is in place, we need to store y-axis max for FAV
+      // mode, to set y-axis max in ADS mode
+      std::map<Neutral, std::map<Mass, double> > yMaxMap;
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+                   dataFitResult.get(), yMaxMap);
       }
 
-      if (config.runToy() == false) {
-        // Loop over daughters again to plot correct PDFs
-
-        // Whilst blinding is in place, we need to store y-axis max for FAV
-        // mode, to set y-axis max in ADS mode
-        std::map<Neutral, std::map<Mass, double> > yMaxMap;
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                     dataFitResult.get(), yMaxMap);
+      if (config.noFit() == false) {
+        dataFitResult->Print("v");
+        PlotCorrelations(dataFitResult.get(), outputDir, config);
+        // Save RFR of data and efficiencies to calculate observables with
+        // corrected errors
+        TFile outputFile((outputDir + "/results/DataResult_" +
+                          config.ReturnBoxString() + ".root")
+                             .c_str(),
+                         "recreate");
+        dataFitResult->Write();
+        TTree tree("tree", "");
+        if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
         }
-
-        if (config.noFit() == false) {
-          dataFitResult->Print("v");
-          PlotCorrelations(dataFitResult.get(), outputDir, config);
-          // Save RFR of data and efficiencies to calculate observables with
-          // corrected errors
-          TFile outputFile((outputDir + "/results/DataResult_" +
-                            config.ReturnBoxString() + ".root")
-                               .c_str(),
-                           "recreate");
-          dataFitResult->Write();
-          TTree tree("tree", "");
-          if (config.neutral() == Neutral::pi0 ||
-              config.fitBuPartial() == true) {
-            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
-          }
-          if (config.neutral() == Neutral::gamma) {
-            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-          }
-          outputFile.cd();
-          tree.Write();
+        if (config.neutral() == Neutral::gamma) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
         }
-      } else {
-        if (config.noFit() == false) {
-          dataFitResult->Print("v");
-          for (int id = 1; id < nToys + 1; ++id) {
-            if (dataFitResult != nullptr) {
-              TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
-              dataFitResult->Write();
-              toyResultFile.Close();
-              std::cout << "DataFitResult saved to file "
-                        << toyFileNames[id - 1] << "\n";
-            } else {
-              throw std::runtime_error("DataFitResult empty.");
-            }
+        outputFile.cd();
+        tree.Write();
+      }
+    } else {
+      if (config.noFit() == false) {
+        dataFitResult->Print("v");
+        for (int id = 1; id < nToys + 1; ++id) {
+          if (dataFitResult != nullptr) {
+            TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
+            dataFitResult->Write();
+            toyResultFile.Close();
+            std::cout << "DataFitResult saved to file " << toyFileNames[id - 1]
+                      << "\n";
+          } else {
+            throw std::runtime_error("DataFitResult empty.");
           }
         }
       }
+    }
   } else {
     if (config.runToy() == false) {
       throw std::runtime_error("Must specify input directory to run data fit.");

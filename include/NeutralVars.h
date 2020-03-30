@@ -301,10 +301,10 @@ class NeutralVars {
   double fracBu2Dst0h_D0pi0_;
   double initYieldFAVBu2Dst0h_D0pi0_;
   // -------------------- MIS-REC -------------------- //
-  RooRealVar MisRec_thresholdDelta_;
-  RooRealVar MisRec_aDelta_;
-  RooRealVar MisRec_bDelta_;
-  RooRealVar MisRec_cDelta_;
+  std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
+  std::shared_ptr<RooRealVar> MisRec_aDelta_;
+  std::shared_ptr<RooRealVar> MisRec_bDelta_;
+  std::shared_ptr<RooRealVar> MisRec_cDelta_;
   RooDstD0BG pdfDelta_MisRec_;
   RooDstD0BG pdfDelta_misId_MisRec_;
   RooRealVar MisRec_meanBu_;
