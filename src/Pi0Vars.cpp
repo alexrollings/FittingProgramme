@@ -181,30 +181,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               .c_str(),
           "", Configuration::Get().deltaMass(), *MisRec_thresholdDelta_,
           *MisRec_cDelta_, *MisRec_aDelta_, *MisRec_bDelta_),
-      MisRec_meanBu_(
-          ("MisRec_meanBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-          // "", 5.2811e+03, 5220, 5320),
-          // Fixed from data
-          // "", 5.2464e+03),
-          // Fixed from data
-          "", 5.2754e+03),
-      MisRec_aLBu_(
-          ("MisRec_aLBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          // 4.4348e-02, 0, 5),
-          // Fixed from data
-          // 3.5083e-13),
-          // Fixed from data
-          7.8695e-11),
-      MisRec_aRBu_(
-          ("MisRec_aRBu_" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-          // 5.6521e-02, 0, 5),
-          // Fixed from data
-          // 1.8584e-10),
-          // Fixed from data
-          9.7708e-07),
-      MisRec_meanBuPartial_(),
-      MisRec_aLBuPartial_(),
-      MisRec_aRBuPartial_(),
+      MisRec_meanBu_(Params::Get().CreateFixed(
+          "MisRec_meanBu", uniqueId, Neutral::pi0, 5.2759e+03, 1.04e+00,
+          Systematic::misRecBuPdf)),
+      MisRec_aLBu_(Params::Get().CreateFixed(
+          "MisRec_aLBu", uniqueId, Neutral::pi0, 8.7522e-06, 2.86e-02,
+          Systematic::misRecBuPdf)),
+      MisRec_aRBu_(Params::Get().CreateFixed(
+          "MisRec_aRBu", uniqueId, Neutral::pi0, 1.6777e-07, 5.25e-03,
+          Systematic::misRecBuPdf)),
+      MisRec_meanBuPartial_(nullptr),
+      MisRec_aLBuPartial_(nullptr),
+      MisRec_aRBuPartial_(nullptr),
       buDeltaCutEffMisRec_(
           ("buDeltaCutEffMisRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),

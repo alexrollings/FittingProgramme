@@ -172,12 +172,12 @@ class NeutralVars {
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
-  RooRealVar &MisRec_meanBu() { return MisRec_meanBu_; }
-  RooRealVar &MisRec_aLBu() { return MisRec_aLBu_; }
-  RooRealVar &MisRec_aRBu() { return MisRec_aRBu_; }
-  RooRealVar &MisRec_meanBuPartial() { return MisRec_meanBuPartial_; }
-  RooRealVar &MisRec_aLBuPartial() { return MisRec_aLBuPartial_; }
-  RooRealVar &MisRec_aRBuPartial() { return MisRec_aRBuPartial_; }
+  RooRealVar &MisRec_meanBu() { return *MisRec_meanBu_; }
+  RooRealVar &MisRec_aLBu() { return *MisRec_aLBu_; }
+  RooRealVar &MisRec_aRBu() { return *MisRec_aRBu_; }
+  RooRealVar &MisRec_meanBuPartial() { return *MisRec_meanBuPartial_; }
+  RooRealVar &MisRec_aLBuPartial() { return *MisRec_aLBuPartial_; }
+  RooRealVar &MisRec_aRBuPartial() { return *MisRec_aRBuPartial_; }
   RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
   RooRealVar &deltaCutEffMisRec() { return deltaCutEffMisRec_; }
   RooRealVar &deltaPartialCutEffMisRec() { return deltaPartialCutEffMisRec_; }
@@ -307,12 +307,12 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> MisRec_cDelta_;
   RooDstD0BG pdfDelta_MisRec_;
   RooDstD0BG pdfDelta_misId_MisRec_;
-  RooRealVar MisRec_meanBu_;
-  RooRealVar MisRec_aLBu_;
-  RooRealVar MisRec_aRBu_;
-  RooRealVar MisRec_meanBuPartial_;
-  RooRealVar MisRec_aLBuPartial_;
-  RooRealVar MisRec_aRBuPartial_;
+  std::shared_ptr<RooRealVar> MisRec_meanBu_;
+  std::shared_ptr<RooRealVar> MisRec_aLBu_;
+  std::shared_ptr<RooRealVar> MisRec_aRBu_;
+  std::shared_ptr<RooRealVar> MisRec_meanBuPartial_;
+  std::shared_ptr<RooRealVar> MisRec_aLBuPartial_;
+  std::shared_ptr<RooRealVar> MisRec_aRBuPartial_;
   RooRealVar buDeltaCutEffMisRec_;
   RooRealVar deltaCutEffMisRec_;
   RooRealVar deltaPartialCutEffMisRec_;
