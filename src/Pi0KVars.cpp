@@ -356,8 +356,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       PartRec_D0pi0_sigmaLBu_(nullptr),
       PartRec_D0pi0_sigmaRBu_(nullptr),
       pdfBu_PartRec_D0pi0_(),
-      PartRec_D0gamma_sigmaLBu_(),
-      PartRec_D0gamma_sigmaRBu_(),
+      PartRec_D0gamma_sigmaLBu_(nullptr),
+      PartRec_D0gamma_sigmaRBu_(nullptr),
       pdfBu_PartRec_D0gamma_(),
       pdfBu_PartRec_(new RooCruijff(
           ("pdfBu_PartRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -370,8 +370,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .PartRec_D0pi0_sigmaRBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aRBu())),
-      PartRec_sigmaLBuPartial_(),
-      PartRec_sigmaRBuPartial_(),
+      PartRec_sigmaLBuPartial_(nullptr),
+      PartRec_sigmaRBuPartial_(nullptr),
       pdfBuPartial_PartRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(("misId_PartRec_meanBu_" +

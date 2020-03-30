@@ -215,9 +215,9 @@ class NeutralVars {
   RooRealVar &PartRec_D0gamma_aLBu() { return *PartRec_D0gamma_aLBu_; }
   RooRealVar &PartRec_D0gamma_aRBu() { return *PartRec_D0gamma_aRBu_; }
   RooRealVar &PartRec_frac_D0pi0() { return *PartRec_frac_D0pi0_; }
-  RooRealVar &PartRec_meanBuPartial() { return PartRec_meanBuPartial_; }
-  RooRealVar &PartRec_aLBuPartial() { return PartRec_aLBuPartial_; }
-  RooRealVar &PartRec_aRBuPartial() { return PartRec_aRBuPartial_; }
+  RooRealVar &PartRec_meanBuPartial() { return *PartRec_meanBuPartial_; }
+  RooRealVar &PartRec_aLBuPartial() { return *PartRec_aLBuPartial_; }
+  RooRealVar &PartRec_aRBuPartial() { return *PartRec_aRBuPartial_; }
   RooRealVar &buDeltaCutEffPartRec() { return buDeltaCutEffPartRec_; }
   RooRealVar &deltaCutEffPartRec() { return deltaCutEffPartRec_; }
   RooRealVar &deltaPartialCutEffPartRec() { return deltaPartialCutEffPartRec_; }
@@ -355,9 +355,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> PartRec_D0gamma_aLBu_;
   std::shared_ptr<RooRealVar> PartRec_D0gamma_aRBu_;
   std::shared_ptr<RooRealVar> PartRec_frac_D0pi0_;
-  RooRealVar PartRec_meanBuPartial_;
-  RooRealVar PartRec_aLBuPartial_;
-  RooRealVar PartRec_aRBuPartial_;
+  std::shared_ptr<RooRealVar> PartRec_meanBuPartial_;
+  std::shared_ptr<RooRealVar> PartRec_aLBuPartial_;
+  std::shared_ptr<RooRealVar> PartRec_aRBuPartial_;
   RooRealVar buDeltaCutEffPartRec_;
   RooRealVar deltaCutEffPartRec_;
   RooRealVar deltaPartialCutEffPartRec_;

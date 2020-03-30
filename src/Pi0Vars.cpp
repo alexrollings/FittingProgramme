@@ -297,9 +297,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       PartRec_D0gamma_meanBu_(nullptr),
       PartRec_D0gamma_aLBu_(nullptr),
       PartRec_D0gamma_aRBu_(nullptr),
-      PartRec_meanBuPartial_(),
-      PartRec_aLBuPartial_(),
-      PartRec_aRBuPartial_(),
+      PartRec_meanBuPartial_(nullptr),
+      PartRec_aLBuPartial_(nullptr),
+      PartRec_aRBuPartial_(nullptr),
       buDeltaCutEffPartRec_(
           ("buDeltaCutEffPartRec_" + ComposeName(uniqueId, Neutral::pi0))
               .c_str(),

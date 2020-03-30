@@ -115,6 +115,8 @@ class NeutralBachelorVars {
   RooRealVar &PartRec_D0gamma_sigmaLBu() { return *PartRec_D0gamma_sigmaLBu_; }
   RooRealVar &PartRec_D0gamma_sigmaRBu() { return *PartRec_D0gamma_sigmaRBu_; }
   RooAbsPdf &pdfBu_PartRec() { return *pdfBu_PartRec_; }
+  RooRealVar &PartRec_sigmaLBuPartial() { return *PartRec_sigmaLBuPartial_; }
+  RooRealVar &PartRec_sigmaRBuPartial() { return *PartRec_sigmaRBuPartial_; }
   RooCruijff &pdfBuPartial_PartRec() { return pdfBuPartial_PartRec_; }
   // -------------------- Mis-ID ------------------- //
   RooCruijff &pdfBu_misId_PartRec() {
@@ -276,8 +278,8 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> PartRec_D0gamma_sigmaLBu_;
   std::shared_ptr<RooRealVar> PartRec_D0gamma_sigmaRBu_;
   RooCruijff pdfBu_PartRec_D0gamma_;
-  RooRealVar PartRec_sigmaLBuPartial_;
-  RooRealVar PartRec_sigmaRBuPartial_;
+  std::shared_ptr<RooRealVar> PartRec_sigmaLBuPartial_;
+  std::shared_ptr<RooRealVar> PartRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_PartRec_;
   std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
   // -------------------- Mis-ID ------------------- //

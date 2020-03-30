@@ -277,8 +277,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           *PartRec_D0pi0_sigmaLBu_, *PartRec_D0pi0_sigmaRBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aRBu())),
-      PartRec_sigmaLBuPartial_(),
-      PartRec_sigmaRBuPartial_(),
+      PartRec_sigmaLBuPartial_(nullptr),
+      PartRec_sigmaRBuPartial_(nullptr),
       pdfBuPartial_PartRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(),

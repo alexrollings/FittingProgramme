@@ -386,18 +386,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       PartRec_frac_D0pi0_(Params::Get().CreateFixed(
           "PartRec_frac_D0pi0", uniqueId, Neutral::gamma, 3.8179e-01, 1.34e-02,
           Systematic::partRecBuPdf)),
-      PartRec_meanBuPartial_(
-          ("PartRec_meanBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 5.1659e+03),
-      PartRec_aLBuPartial_(
-          ("PartRec_aLBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 4.5521e-02),
-      PartRec_aRBuPartial_(
-          ("PartRec_aRBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1.4654e-01),
+      PartRec_meanBuPartial_(Params::Get().CreateFixed(
+          "PartRec_meanBuPartial", uniqueId, Neutral::gamma, 5.1640e+03,
+          2.20e+00, Systematic::partRecBuPartialPdf)),
+      PartRec_aLBuPartial_(Params::Get().CreateFixed(
+          "PartRec_aLBuPartial", uniqueId, Neutral::gamma, 4.6600e-02, 1.90e-02,
+          Systematic::partRecBuPartialPdf)),
+      PartRec_aRBuPartial_(Params::Get().CreateFixed(
+          "PartRec_aRBuPartial", uniqueId, Neutral::gamma, 1.3962e-01, 6.78e-03,
+          Systematic::partRecBuPartialPdf)),
       buDeltaCutEffPartRec_(
           ("buDeltaCutEffPartRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
