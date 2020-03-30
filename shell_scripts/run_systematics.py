@@ -140,7 +140,7 @@ if __name__ == "__main__":
       bu_low = "5220"
     if bu_high == None:
       bu_high = "5330"
-  elif neutral != "gamma":
+  elif neutral == "gamma":
     systematics = [
         'pi0DeltaTails', 'pi0DeltaFrac', 'pi0BuPartialTails',
         'pi0BuPartialFrac', 'pi0BuPartialSigma1', 'crossFeedBuPdf',
@@ -161,7 +161,6 @@ if __name__ == "__main__":
       delta_partial_low = "60"
     if delta_partial_high == None:
       delta_partial_high = "105"
-
   else:
     sys.exit("Specify neutral: -n=pi0/gamma")
 

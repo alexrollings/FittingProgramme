@@ -18,7 +18,8 @@ if __name__ == '__main__':
   observables = ['N_tot_Bu2Dst0h', 'R_ADS_Bu2Dst0h', 'R_CP_Bu2Dst0h', 'R_Dst0KDst0pi_Bu2Dst0h']
   value_errs = {}
   syst_fit_results = {}
-
+  # Dict needs key of par name + ; syst label (separate after) --> needs to be unique !!
+  # d = { obs_name : { syst_label : [] }
   if os.path.isdir(input_dir):
     os.chdir(input_dir)
     for f in os.listdir(input_dir):
@@ -26,7 +27,6 @@ if __name__ == '__main__':
       if m:
         data_file = TFile(f)
         data_result = data_file.Get('DataFitResult')
-        data_result.Print()
         for p in data_result.floatParsFinal():
           for obs in observables:
             par_name = p.GetName()
@@ -40,33 +40,56 @@ if __name__ == '__main__':
   if data_file == None:
     sys.exit('Data file does not exist.')
 
+
+  fits_status = {}
   if os.path.isdir(input_dir):
     for f in os.listdir(input_dir):
-      m = re.search('SystResult(?:_[0-9]+){4,6}((?:_[A-Za-z]+)+)_0.[0-9]+.root', f)
+      m = re.search('SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_0.[0-9]+.root', f)
       if m:
         syst_file = TFile(f)
         syst_result = syst_file.Get('SystResult')
         syst_label = m.group(1)[1:]
-        for p in syst_result.floatParsFinal():
-          for obs, v in syst_fit_results.items():
-            if obs == p.GetName()[:-2]:
-              if syst_label in v:
-                v[syst_label].append(p.getVal())
+        if syst_label not in fits_status:
+          fits_status[syst_label] = { 'Failed': 0, 'Converged': 0}
+        if syst_result.covQual() == 3 and syst_result.status() == 0:
+          fits_status[syst_label]['Converged'] += 1
+          for p in syst_result.floatParsFinal():
+            par_name = p.GetName()[:-2]
+            if par_name in syst_fit_results:
+              if syst_label in syst_fit_results[par_name]:
+                syst_fit_results[par_name][syst_label].append(p.getVal())
               else:
-                v[syst_label] = [p.getVal()]
+                syst_fit_results[par_name][syst_label] = [p.getVal()]
+        else:
+          fits_status[syst_label]['Failed'] += 1
 
-  syst_fit_results[obs][syst_label] = np.asarray(syst_fit_results[obs][syst_label], dtype=np.float32)
   syst_errs = {}
-  for obs, v in syst_fit_results.items():
+  for p, s_arr in syst_fit_results.items():
     tot_syst = 0
-    for syst, arr in v.items():
-      std = np.std(arr)
-      syst_errs[obs] = { syst : std }
+    syst_errs[p] = {}
+    for s, arr in s_arr.items():
+      np_arr = np.asarray(arr, dtype=np.float32)
+      std = np.std(np_arr)
+      syst_errs[p][s] = std
       tot_syst += std**2
-    tot_syst = tot_syst**0.5
-    value_errs[obs]['Systematic Error'] = tot_syst
+    value_errs[p]['Systematic Error'] = tot_syst**0.5
 
-  print(syst_errs)
   print()
-  print(value_errs)
+  for par, syst in syst_errs.items():
+    print(par + ":")
+    for label, err in syst.items():
+      print("\t" + label + ":\t" + str(err))
+  print()
 
+  print()
+  print()
+
+  for par, val_errs in value_errs.items():
+    print(par + " =\t" + str(val_errs['Value']) + " ± " +
+          str(val_errs['Statstical Error']) + " ± " + str(val_errs['Systematic Error']))
+
+  print()
+  print()
+
+  for s, f_c in fits_status.items():
+    print("For " + s + ":\n\t Converged fits:\t" + str(f_c['Converged']) + "\t Failed fits:\t" + str(f_c['Failed']))
