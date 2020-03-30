@@ -383,42 +383,34 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       deltaCutEffMisId_Bu2D0h_(),
       deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
-      PartRec_D0pi0_sigmaLBu_(
-          ("PartRec_D0pi0_sigmaLBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", 8.3682e+01), // 3.46e+00
-      PartRec_D0pi0_sigmaRBu_(
-          ("PartRec_D0pi0_sigmaRBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", 9.1998e+01), // 3.41e+00
+      PartRec_D0pi0_sigmaLBu_(Params::Get().CreateFixed(
+          "PartRec_D0pi0_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi,
+          8.3682e+01, 3.46e+00, Systematic::partRecBuPdf)),
+      PartRec_D0pi0_sigmaRBu_(Params::Get().CreateFixed(
+          "PartRec_D0pi0_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi,
+          9.1998e+01, 3.41e+00, Systematic::partRecBuPdf)),
       pdfBu_PartRec_D0pi0_(
           ("pdfBu_PartRec_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0pi0_meanBu(),
-          PartRec_D0pi0_sigmaLBu_, PartRec_D0pi0_sigmaRBu_,
+          *PartRec_D0pi0_sigmaLBu_, *PartRec_D0pi0_sigmaRBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0pi0_aLBu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0pi0_aRBu()),
-      PartRec_D0gamma_sigmaLBu_(
-          ("PartRec_D0gamma_sigmaLBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", 3.6387e+01), // 4.42e+00 
-      PartRec_D0gamma_sigmaRBu_(
-          ("PartRec_D0gamma_sigmaRBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          "", 4.4390e+01), // 4.55e+00
+      PartRec_D0gamma_sigmaLBu_(Params::Get().CreateFixed(
+          "PartRec_D0gamma_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi,
+          3.6387e+01, 4.42e+00, Systematic::partRecBuPdf)),
+      PartRec_D0gamma_sigmaRBu_(Params::Get().CreateFixed(
+          "PartRec_D0gamma_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi,
+          4.4390e+01, 4.55e+00, Systematic::partRecBuPdf)),
       pdfBu_PartRec_D0gamma_(
           ("pdfBu_PartRec_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0gamma_meanBu(),
-          PartRec_D0gamma_sigmaLBu_, PartRec_D0gamma_sigmaRBu_,
+          *PartRec_D0gamma_sigmaLBu_, *PartRec_D0gamma_sigmaRBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0gamma_aLBu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0gamma_aRBu()),
       pdfBu_PartRec_(new RooAddPdf(

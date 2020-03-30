@@ -353,15 +353,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", 1),
       deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
-      PartRec_D0pi0_sigmaLBu_(("PartRec_D0pi0_sigmaLBu_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                  .c_str(),
-                              "", 3.4464e+01, 10, 100),
-      // Get from pi?
-      PartRec_D0pi0_sigmaRBu_(("PartRec_D0pi0_sigmaRBu_" +
-                               ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                  .c_str(),
-                              "", 4.4688e+01),
+      PartRec_D0pi0_sigmaLBu_(nullptr),
+      PartRec_D0pi0_sigmaRBu_(nullptr),
       pdfBu_PartRec_D0pi0_(),
       PartRec_D0gamma_sigmaLBu_(),
       PartRec_D0gamma_sigmaRBu_(),
@@ -371,7 +364,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_meanBu(),
-          PartRec_D0pi0_sigmaLBu_, PartRec_D0pi0_sigmaRBu_,
+          NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+              .PartRec_D0pi0_sigmaLBu(),
+          NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId)
+              .PartRec_D0pi0_sigmaRBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aRBu())),
       PartRec_sigmaLBuPartial_(),

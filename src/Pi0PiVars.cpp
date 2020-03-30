@@ -259,26 +259,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       deltaCutEffMisId_Bu2D0h_(),
       deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
-      PartRec_D0pi0_sigmaLBu_(
-          ("PartRec_D0pi0_sigmaLBu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "", 3.4464e+01, 10, 100),
-      PartRec_D0pi0_sigmaRBu_(
-          ("PartRec_D0pi0_sigmaRBu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
-              .c_str(),
-          "", 4.4688e+01), // 6.17e+00
+      PartRec_D0pi0_sigmaLBu_(Params::Get().CreateFixed(
+          "PartRec_D0pi0_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::pi,
+          4.6660e+01, 1.94e+00, Systematic::partRecBuPdf)),
+      PartRec_D0pi0_sigmaRBu_(Params::Get().CreateFixed(
+          "PartRec_D0pi0_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::pi,
+          4.4688e+01, 6.17e+00, Systematic::partRecBuPdf)),
       pdfBu_PartRec_D0pi0_(),
-      PartRec_D0gamma_sigmaLBu_(),
-      PartRec_D0gamma_sigmaRBu_(),
+      PartRec_D0gamma_sigmaLBu_(nullptr),
+      PartRec_D0gamma_sigmaRBu_(nullptr),
       pdfBu_PartRec_D0gamma_(),
       pdfBu_PartRec_(new RooCruijff(
           ("pdfBu_PartRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_meanBu(),
-          PartRec_D0pi0_sigmaLBu_, PartRec_D0pi0_sigmaRBu_,
+          *PartRec_D0pi0_sigmaLBu_, *PartRec_D0pi0_sigmaRBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aRBu())),
       PartRec_sigmaLBuPartial_(),
