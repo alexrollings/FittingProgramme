@@ -207,32 +207,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
-                        ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                           .c_str(),
-                       // "", 6.5198e+01, 20, 100),
-                       // Fixed from data
-                       // "", 3.8571e+01),
-                       // Fixed from data
-                       "", 5.7467e+01),
-      MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
-                        ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                           .c_str(),
-                       // "", 4.7849e+01, 20, 100),
-                       // Fixed from data
-                       // "", 6.4669e+01),
-                       // Fixed from data
-                       "", 5.5418e+01),
+      MisRec_sigmaLBu_(Params::Get().CreateFixed(
+          "MisRec_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::k, 5.7157e+01,
+          6.09e+00, Systematic::misRecBuPdf)),
+      MisRec_sigmaRBu_(Params::Get().CreateFixed(
+          "MisRec_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::k, 5.5962e+01,
+          4.14e+00, Systematic::misRecBuPdf)),
       pdfBu_MisRec_(
-          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
+          ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_meanBu(),
-          MisRec_sigmaLBu_, MisRec_sigmaRBu_,
+          *MisRec_sigmaLBu_, *MisRec_sigmaRBu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aLBu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId).MisRec_aRBu()),
-      MisRec_sigmaLBuPartial_(),
-      MisRec_sigmaRBuPartial_(),
+      MisRec_sigmaLBuPartial_(nullptr),
+      MisRec_sigmaRBuPartial_(nullptr),
       pdfBuPartial_MisRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_MisRec_mean1Bu_(("misId_MisRec_mean1Bu_" +

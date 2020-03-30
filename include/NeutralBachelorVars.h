@@ -214,11 +214,11 @@ class NeutralBachelorVars {
   RooRealVar deltaCutEffMisId_Bu2Dst0h_D0pi0_;
   RooRealVar deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_;
   // -------------------- MIS-REC -------------------- //
-  RooRealVar MisRec_sigmaLBu_;
-  RooRealVar MisRec_sigmaRBu_;
+  std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
+  std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;
   RooCruijff pdfBu_MisRec_;
-  RooRealVar MisRec_sigmaLBuPartial_;
-  RooRealVar MisRec_sigmaRBuPartial_;
+  std::shared_ptr<RooRealVar> MisRec_sigmaLBuPartial_;
+     std::shared_ptr<RooRealVar> MisRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_MisRec_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_MisRec_mean1Bu_;

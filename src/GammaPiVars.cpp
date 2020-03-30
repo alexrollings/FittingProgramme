@@ -271,55 +271,33 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", 1),
       // -------------------- MIS-REC -------------------- //
-      MisRec_sigmaLBu_(("MisRec_sigmaLBu_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                           .c_str(),
-                       // "", 1.0404e+02, 50, 200),
-                       // Fixed from data
-                       // "", 1.3848e+02),
-                       // Fixed from data
-                       "", 1.3071e+02),
-      MisRec_sigmaRBu_(("MisRec_sigmaRBu_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-                           .c_str(),
-                       // "", 9.6206e+01, 50, 150),
-                       // Fixed from data
-                       // "", 8.3472e+01),
-                       // Fixed from data
-                       "", 8.4614e+01),
+      MisRec_sigmaLBu_(Params::Get().CreateFixed(
+          "MisRec_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi, 1.3446e+02,
+          1.27e+00, Systematic::misRecBuPdf)),
+      MisRec_sigmaRBu_(Params::Get().CreateFixed(
+          "MisRec_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi, 8.5469e+01,
+          5.55e-01, Systematic::misRecBuPdf)),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                         .c_str(),
                     "", Configuration::Get().buDeltaMass(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBu(),
-                    MisRec_sigmaLBu_, MisRec_sigmaRBu_,
+                    *MisRec_sigmaLBu_, *MisRec_sigmaRBu_,
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
-      MisRec_sigmaLBuPartial_(
-          ("MisRec_sigmaLBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          // "", 8.6958e+01, 50, 150),
-          // Fixed from data
-          // "", 1.0871e+02),
-          // Fixed from data
-          "", 1.1831e+02),
-      MisRec_sigmaRBuPartial_(
-          ("MisRec_sigmaRBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
-              .c_str(),
-          // "", 6.1290e+01, 10, 150),
-          // Fixed from data
-          // "", 5.1338e+01),
-          // Fixed from data
-          "", 4.6699e+01),
+      MisRec_sigmaLBuPartial_(Params::Get().CreateFixed(
+          "MisRec_sigmaLBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
+          1.1613e+02, 1.29e+00, Systematic::misRecBuPartialPdf)),
+      MisRec_sigmaRBuPartial_(Params::Get().CreateFixed(
+          "MisRec_sigmaRBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
+          4.5697e+01, 5.07e-01, Systematic::misRecBuPartialPdf)),
       pdfBuPartial_MisRec_(
           ("pdfBuPartial_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_meanBuPartial(),
-          MisRec_sigmaLBuPartial_, MisRec_sigmaRBuPartial_,
+          *MisRec_sigmaLBuPartial_, *MisRec_sigmaRBuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBuPartial()),
       // -------------------- Mis-ID ------------------- //
