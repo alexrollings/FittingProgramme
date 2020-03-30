@@ -266,14 +266,14 @@ class NeutralBachelorVars {
   RooRealVar deltaCutEffMisId_Bu2D0h_;
   RooRealVar deltaPartialCutEffMisId_Bu2D0h_;
   // -------------------- PART REC -------------------- //
-  RooRealVar partRec_D0pi0_sigmaLBu_;
-  RooRealVar partRec_D0pi0_sigmaRBu_;
+  RooRealVar PartRec_D0pi0_sigmaLBu_;
+  RooRealVar PartRec_D0pi0_sigmaRBu_;
   RooCruijff pdfBu_PartRec_D0pi0_;
-  RooRealVar partRec_D0gamma_sigmaLBu_;
-  RooRealVar partRec_D0gamma_sigmaRBu_;
+  RooRealVar PartRec_D0gamma_sigmaLBu_;
+  RooRealVar PartRec_D0gamma_sigmaRBu_;
   RooCruijff pdfBu_PartRec_D0gamma_;
-  RooRealVar partRec_sigmaLBuPartial_;
-  RooRealVar partRec_sigmaRBuPartial_;
+  RooRealVar PartRec_sigmaLBuPartial_;
+  RooRealVar PartRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_PartRec_;
   std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
   // -------------------- Mis-ID ------------------- //

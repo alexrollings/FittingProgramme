@@ -239,22 +239,22 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", Configuration::Get().deltaMass(), *MisRec_thresholdDelta_,
           *MisRec_cDelta_, *MisRec_aDelta_, *MisRec_bDelta_),
       MisRec_meanBu_(Params::Get().CreateFixed(
-          "MisRec_meanBu", uniqueId, Neutral::gamma, 5.3155e+03, 6.48e-01, 
+          "MisRec_meanBu", uniqueId, Neutral::gamma, 5.3155e+03, 6.48e-01,
           Systematic::misRecBuPdf)),
       MisRec_aLBu_(Params::Get().CreateFixed(
-          "MisRec_aLBu", uniqueId, Neutral::gamma, 1.5419e-02, 1.27e-02, 
+          "MisRec_aLBu", uniqueId, Neutral::gamma, 1.5419e-02, 1.27e-02,
           Systematic::misRecBuPdf)),
       MisRec_aRBu_(Params::Get().CreateFixed(
-          "MisRec_aRBu", uniqueId, Neutral::gamma, 3.1182e-02, 7.38e-03, 
+          "MisRec_aRBu", uniqueId, Neutral::gamma, 3.1182e-02, 7.38e-03,
           Systematic::misRecBuPdf)),
       MisRec_meanBuPartial_(Params::Get().CreateFixed(
-          "MisRec_meanBuPartial", uniqueId, Neutral::gamma, 5.3344e+03, 7.06e-01, 
-          Systematic::misRecBuPartialPdf)),
+          "MisRec_meanBuPartial", uniqueId, Neutral::gamma, 5.3344e+03,
+          7.06e-01, Systematic::misRecBuPartialPdf)),
       MisRec_aLBuPartial_(Params::Get().CreateFixed(
-          "MisRec_aLBuPartial", uniqueId, Neutral::gamma, 1.6586e-07, 1.10e-03, 
+          "MisRec_aLBuPartial", uniqueId, Neutral::gamma, 1.6586e-07, 1.10e-03,
           Systematic::misRecBuPartialPdf)),
       MisRec_aRBuPartial_(Params::Get().CreateFixed(
-          "MisRec_aRBuPartial", uniqueId, Neutral::gamma, 1.1570e-08, 2.81e-03, 
+          "MisRec_aRBuPartial", uniqueId, Neutral::gamma, 1.1570e-08, 2.81e-03,
           Systematic::misRecBuPartialPdf)),
       buDeltaCutEffMisRec_(
           ("buDeltaCutEffMisRec_" + ComposeName(uniqueId, Neutral::gamma))
@@ -344,66 +344,65 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracBu2D0h_(1.936),
       initYieldFAVBu2D0h_(),
       // -------------------- PART-REC -------------------- //
-      partRec_thresholdDelta_(
-          ("partRec_thresholdDelta_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 5.7781e+01),
-      partRec_aDelta_(
-          ("partRec_aDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 5.2820e-01),
-      partRec_bDelta_(
-          ("partRec_bDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", -5.7835e-01),
-      partRec_cDelta_(
-          ("partRec_cDelta_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", 9.9996e+01),
+      PartRec_thresholdDelta_(Params::Get().CreateFixed(
+          "PartRec_thresholdDelta", uniqueId, Neutral::gamma, 6.5000e+01,
+          1.42e+00, Systematic::partRecDeltaPdf)),
+      PartRec_aDelta_(Params::Get().CreateFixed(
+          "PartRec_aDelta", uniqueId, Neutral::gamma, 5.7789e-01, 6.95e-03,
+          Systematic::partRecDeltaPdf)),
+      PartRec_bDelta_(Params::Get().CreateFixed(
+          "PartRec_bDelta", uniqueId, Neutral::gamma, -6.7459e-01, 8.51e-03,
+          Systematic::partRecDeltaPdf)),
+      PartRec_cDelta_(Params::Get().CreateFixed(
+          "PartRec_cDelta", uniqueId, Neutral::gamma, 9.9939e+01, 5.48e+00,
+          Systematic::partRecDeltaPdf)),
       pdfDelta_PartRec_(
           ("pdfDelta_PartRec_" + ComposeName(uniqueId, Neutral::gamma)).c_str(),
-          "", Configuration::Get().deltaMass(), partRec_thresholdDelta_,
-          partRec_cDelta_, partRec_aDelta_, partRec_bDelta_),
+          "", Configuration::Get().deltaMass(), *PartRec_thresholdDelta_,
+          *PartRec_cDelta_, *PartRec_aDelta_, *PartRec_bDelta_),
       pdfDelta_misId_PartRec_(
           ("pdfDelta_misId_PartRec_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
-          "", Configuration::Get().deltaMass(), partRec_thresholdDelta_,
-          partRec_cDelta_, partRec_aDelta_, partRec_bDelta_),
-      partRec_D0pi0_meanBu_(
-          ("partRec_D0pi0_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
+          "", Configuration::Get().deltaMass(), *PartRec_thresholdDelta_,
+          *PartRec_cDelta_, *PartRec_aDelta_, *PartRec_bDelta_),
+      PartRec_D0pi0_meanBu_(
+          ("PartRec_D0pi0_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 5.2050e+03),
-      partRec_D0pi0_aLBu_(
-          ("partRec_D0pi0_aLBu_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_D0pi0_aLBu_(
+          ("PartRec_D0pi0_aLBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 4.0469e-08),
-      partRec_D0pi0_aRBu_(
-          ("partRec_D0pi0_aRBu_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_D0pi0_aRBu_(
+          ("PartRec_D0pi0_aRBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 7.4756e-09),
-      partRec_D0gamma_meanBu_(
-          ("partRec_D0gamma_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_D0gamma_meanBu_(
+          ("PartRec_D0gamma_meanBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 5.1039e+03),
-      partRec_D0gamma_aLBu_(
-          ("partRec_D0gamma_aLBu_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_D0gamma_aLBu_(
+          ("PartRec_D0gamma_aLBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 8.6604e-02),
-      partRec_D0gamma_aRBu_(
-          ("partRec_D0gamma_aRBu_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_D0gamma_aRBu_(
+          ("PartRec_D0gamma_aRBu_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 1.9894e-01),
-      partRec_frac_D0pi0_(
-          ("partRec_frac_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_frac_D0pi0_(
+          ("PartRec_frac_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 3.0263e-01),
-      partRec_meanBuPartial_(
-          ("partRec_meanBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_meanBuPartial_(
+          ("PartRec_meanBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 5.1659e+03),
-      partRec_aLBuPartial_(
-          ("partRec_aLBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_aLBuPartial_(
+          ("PartRec_aLBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 4.5521e-02),
-      partRec_aRBuPartial_(
-          ("partRec_aRBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
+      PartRec_aRBuPartial_(
+          ("PartRec_aRBuPartial_" + ComposeName(uniqueId, Neutral::gamma))
               .c_str(),
           "", 1.4654e-01),
       buDeltaCutEffPartRec_(

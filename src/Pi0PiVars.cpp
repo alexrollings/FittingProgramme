@@ -259,33 +259,33 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       deltaCutEffMisId_Bu2D0h_(),
       deltaPartialCutEffMisId_Bu2D0h_(),
       // -------------------- PART REC -------------------- //
-      partRec_D0pi0_sigmaLBu_(
-          ("partRec_D0pi0_sigmaLBu_" +
+      PartRec_D0pi0_sigmaLBu_(
+          ("PartRec_D0pi0_sigmaLBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           // "", 3.4464e+01),
           // Fixed from data at 4900
           "", 4.8731e+01),
-      partRec_D0pi0_sigmaRBu_(
-          ("partRec_D0pi0_sigmaRBu_" +
+      PartRec_D0pi0_sigmaRBu_(
+          ("PartRec_D0pi0_sigmaRBu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", 4.4688e+01),
       // "", 4.4688e+01, 10, 100),
       pdfBu_PartRec_D0pi0_(),
-      partRec_D0gamma_sigmaLBu_(),
-      partRec_D0gamma_sigmaRBu_(),
+      PartRec_D0gamma_sigmaLBu_(),
+      PartRec_D0gamma_sigmaRBu_(),
       pdfBu_PartRec_D0gamma_(),
       pdfBu_PartRec_(new RooCruijff(
           ("pdfBu_PartRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_meanBu(),
-          partRec_D0pi0_sigmaLBu_, partRec_D0pi0_sigmaRBu_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aLBu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).partRec_D0pi0_aRBu())),
-      partRec_sigmaLBuPartial_(),
-      partRec_sigmaRBuPartial_(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_meanBu(),
+          PartRec_D0pi0_sigmaLBu_, PartRec_D0pi0_sigmaRBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aLBu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).PartRec_D0pi0_aRBu())),
+      PartRec_sigmaLBuPartial_(),
+      PartRec_sigmaRBuPartial_(),
       pdfBuPartial_PartRec_(),
       // -------------------- Mis-ID ------------------- //
       misId_PartRec_meanBu_(),

@@ -232,6 +232,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misRecBuPdf;
   } else if (systematic == "misRecBuPartialPdf") {
     return Systematic::misRecBuPartialPdf;
+  } else if (systematic == "partRecDeltaPdf") {
+    return Systematic::partRecDeltaPdf;
+  } else if (systematic == "partRecBuPdf") {
+    return Systematic::partRecBuPdf;
+  } else if (systematic == "partRecBuPartialPdf") {
+    return Systematic::partRecBuPartialPdf;
   } else if (systematic == "boxEffs") {
     return Systematic::boxEffs;
   } else if (systematic == "pidEff") {
@@ -243,7 +249,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "pi0BuPartialFrac/pi0BuPartialSigma1/"
       "crossFeedBuPdf/crossFeedBuPartialPdf/crossFeedDeltaPdf/gammaDeltaTails/"
       "gammaDeltaFrac/gammaBuTails/gammaBuFrac/misRecDeltaPdf/misRecBuPdf/"
-      "misRecBuPartialPdf/boxEffs/pidEff]");
+      "misRecBuPartialPdf/partRecDeltaPdf/partRecBuPdf/"
+      "partRecBuPartialPdf/boxEffs/pidEff]");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -280,6 +287,12 @@ std::string EnumToString(Systematic systematic) {
       return "misRecBuPdf";
     case Systematic::misRecBuPartialPdf:
       return "misRecBuPartialPdf";
+    case Systematic::partRecDeltaPdf:
+      return "partRecDeltaPdf";
+    case Systematic::partRecBuPdf:
+      return "partRecBuPdf";
+    case Systematic::partRecBuPartialPdf:
+      return "partRecBuPartialPdf";
     case Systematic::boxEffs:
       return "boxEffs";
     case Systematic::pidEff:
