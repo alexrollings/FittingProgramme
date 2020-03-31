@@ -3,7 +3,7 @@ from ROOT import TFile, RooFitResult
 import root_numpy as r_np
 import numpy as np
 import argparse
-from useful_functions import return_label, neutral_label
+from useful_functions import return_label
 
 
 if __name__ == '__main__':

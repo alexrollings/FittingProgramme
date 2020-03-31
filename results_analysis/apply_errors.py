@@ -3,6 +3,7 @@ from ROOT import TFile, RooFitResult
 import root_numpy as r_np
 import numpy as np
 import argparse
+from useful_functions import return_label
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -19,9 +20,15 @@ if __name__ == '__main__':
       help=
       'Directory where results of pull distributions from 2D toys are stored',
       required=True)
+  parser.add_argument('-n',
+                      '--neutral',
+                      type=str,
+                      help='Neutral: pi0/gamma',
+                      required=True)
   args = parser.parse_args()
   input_dir = args.input_dir
   pull_dir = args.pull_dir
+  neutral = args.neutral
 
   # Observables we are interested have this stem (match with regex)
   observables = [
@@ -40,7 +47,7 @@ if __name__ == '__main__':
     for f in os.listdir(input_dir):
       m = re.search('DataResult((?:_[0-9]+){4,6}).root', f)
       if m:
-        box_string = group(1)
+        box_string = m.group(1)
         data_file = TFile(f)
         data_result = data_file.Get('DataFitResult')
         for p in data_result.floatParsFinal():
@@ -50,7 +57,7 @@ if __name__ == '__main__':
             if m0:
               value_errs[par_name[:-2]] = {
                   'Value': p.getVal(),
-                  'Statstical Error': p.getError()
+                  'Statistical Error': p.getError()
               }
               syst_fit_results[par_name[:-2]] = {}
   else:
@@ -60,7 +67,7 @@ if __name__ == '__main__':
     sys.exit('Data file does not exist.')
 
   # File where 2D pull results are stored
-  pull_file = pull_dir + "/Result_" + box_string + ".root"
+  pull_file = pull_dir + "/Result" + box_string + ".root"
   tf_pull = TFile(pull_file)
   # Extract pull result for vars stored in value_errs dict and correct stat error with pull width
   for k, v in value_errs.items():
@@ -73,7 +80,6 @@ if __name__ == '__main__':
       v['Statistical Error'] = v['Statistical Error'] * pull_width
 
   # Loop over file storing results of systematically varied fits, and save observable final values in those that converged
-  fits_status = {}
   if os.path.isdir(input_dir):
     for f in os.listdir(input_dir):
       m = re.search(
@@ -82,10 +88,7 @@ if __name__ == '__main__':
         syst_file = TFile(f)
         syst_result = syst_file.Get('SystResult')
         syst_label = m.group(1)[1:]
-        if syst_label not in fits_status:
-          fits_status[syst_label] = {'Failed': 0, 'Converged': 0}
         if syst_result.covQual() == 3 and syst_result.status() == 0:
-          fits_status[syst_label]['Converged'] += 1
           for p in syst_result.floatParsFinal():
             par_name = p.GetName()[:-2]
             if par_name in syst_fit_results:
@@ -93,12 +96,6 @@ if __name__ == '__main__':
                 syst_fit_results[par_name][syst_label].append(p.getVal())
               else:
                 syst_fit_results[par_name][syst_label] = [p.getVal()]
-        else:
-          fits_status[syst_label]['Failed'] += 1
-
-  for s, f_c in fits_status.items():
-    print("For " + s + ":\n\t Converged fits:\t" + str(f_c['Converged']) +
-          "\t Failed fits:\t" + str(f_c['Failed']))
 
   # Calculate individual systematic errors from std dev of arrays on syst_fit results
   # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
@@ -113,30 +110,33 @@ if __name__ == '__main__':
       tot_syst += std**2
     value_errs[p]['Systematic Error'] = tot_syst**0.5
 
-  print()
-  for par, syst in syst_errs.items():
-    print(par + ":")
-    for label, err in syst.items():
-      print("\t" + label + ":\t" + str(err))
-  print()
-  print()
+  # Print results in LaTeX table
+  row_arr = []
+  i = 0
   for par, val_errs in value_errs.items():
-    print(par + " =\t" + str(val_errs['Value']) + " ± " +
-          str(val_errs['Statstical Error']) + " ± " +
-          str(val_errs['Systematic Error']))
+    val = val_errs['Value']
+    stat = val_errs['Statistical Error']
+    syst = val_errs['Systematic Error']
+    results_str = f' & {val:.4f} & {stat:.4f} & {syst:.4f} \\\\\n'
+    row_arr.append(return_label(par) + results_str)
 
-  # file = open("../results/Yields_%s.tex" % years, "w")
-  # file.write("\\begin{table}[t]\n")
-  # file.write("\\centering\n")
-  # file.write("\\begin{tabular}{l l l}\n")
-  # file.write("\\hline\n")
-  # file.write("Mode & Yield (full Dalitz) & Yield ($K^*(892)^\\pm$ region) \\\\ \\hline\n")
-  # file.write("$N_{SS}^{D\\pipm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dpi_SS_N"],obs["n_dpi_SS_Y"]))
-  # file.write("$N_{OS}^{D\\pipm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dpi_OS_N"],obs["n_dpi_OS_Y"]))
-  # file.write("$N_{SS}^{D\\Kpm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dk_SS_N"],obs["n_dk_SS_Y"]))
-  # file.write("$N_{OS}^{D\\Kpm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dk_OS_N"],obs["n_dk_OS_Y"]))
-  # file.write("\\end{tabular}\n")
-  # file.write("\\caption{Total signal yields measured in the full Dalitz and restricted $K^*(892)^\\pm$ region invariant mass fits.}\n")
-  # file.write("\\label{tab:yields}\n")
-  # file.write("\\end{table}")
-  # file.close()
+  tex_file = open(
+      f"/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex/Results_{neutral}.tex",
+      "w")
+  tex_file.write("\\documentclass[12pt, portrait]{article}\n")
+  tex_file.write("\\usepackage[landscape, margin=0.1in]{geometry}\n")
+  tex_file.write("\\usepackage{float}\n")
+  tex_file.write("\\restylefloat{table}\n")
+  tex_file.write("\\begin{document}\n")
+  tex_file.write("\\begin{table}[t]\n")
+  tex_file.write("\\centering\n")
+  tex_file.write("\\begin{tabular}{l l l l}\n")
+  tex_file.write("\\hline\n")
+  tex_file.write(' & Value & Statistical Error & Systematic Error \\\\ \\hline\n')
+  for row in row_arr:
+    tex_file.write(row)
+  tex_file.write("\\end{tabular}\n")
+  tex_file.write("\\end{table}\n")
+  tex_file.write("\\end{document}")
+  tex_file.close()
+
