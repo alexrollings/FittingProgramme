@@ -20,8 +20,8 @@ cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
 mkdir build
 cd build
 cmake ../
-make
-./Fitting -inputDir=${INPUT} -outputDir=${PATH} -systematic=${SYST} -nSyst=${NFITS} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH}
+make -j
+./Fitting -inputDir=${INPUT} -outputDir=${PATH} -systematic=${SYST} -nSyst=${NFITS} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
 
 cd /data/lhcb/users/rollings/fitting_scripts/
 rm -rf job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}

@@ -1,10 +1,11 @@
 #!/bin/zsh
-#PBS -l cput=02:00:01 
+#PBS -l cput=01:59:59 
 #PBS -N RUNTOYS_data_${NEUTRAL}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
 source /home/rollings/.zshrc
 source_root
 
+rm -rf /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 cd /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${CHARGE}_${DAUGHTERS}_${nJob}
 
@@ -15,7 +16,7 @@ cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/r
 mkdir src
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
 mkdir include
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/* include/
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
 
 mkdir build
 cd build

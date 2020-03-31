@@ -185,7 +185,7 @@ if __name__ == "__main__":
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
     templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
-    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
         i) + ".sh"
     substitutions = {
         "nJob":
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     else:
       run_process(["chmod", "+x", scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
           i) + ".submit"
       submitSubs = {
           "nJob":
