@@ -139,10 +139,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_a1Bu", uniqueId, Neutral::pi0, 9.8865e-02, 5.73e-03,
           Systematic::crossFeedBuPdf)),
-      Bu2Dst0h_D0gamma_a2Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0gamma_a2Bu", uniqueId, Neutral::pi0, 3.2558e-02, 1.07e-02,
+      Bu2Dst0h_D0gamma_a2Bu_(nullptr),
+      Bu2Dst0h_D0gamma_n1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_n1Bu", uniqueId, Neutral::pi0, 3.2558e-02, 1.07e-02,
           Systematic::crossFeedBuPdf)),
-      Bu2Dst0h_D0gamma_n1Bu_(nullptr),
       Bu2Dst0h_D0gamma_n2Bu_(nullptr),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),

@@ -3290,9 +3290,11 @@ int main(int argc, char **argv) {
       // Whilst blinding is in place, we need to store y-axis max for FAV
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
+      if (config.runSystematics() == false) {
+        for (auto &p : pdfs) {
+          Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+                     dataFitResult.get(), yMaxMap);
+        }
       }
 
       if (config.noFit() == false) {

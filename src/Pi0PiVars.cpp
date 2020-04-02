@@ -122,7 +122,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_meanBu(),
           *Bu2Dst0h_D0gamma_sigma1Bu_, *Bu2Dst0h_D0gamma_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a2Bu())),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_n1Bu())),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
       // -------------------- Mis-ID ------------------- //

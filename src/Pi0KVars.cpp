@@ -178,12 +178,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", 8.9228e-02),
-      misId_Bu2Dst0h_D0gamma_a2Bu_(
-          ("misId_Bu2Dst0h_D0gamma_a2Bu_" +
+      misId_Bu2Dst0h_D0gamma_a2Bu_(),
+      misId_Bu2Dst0h_D0gamma_n1Bu_(
+          ("misId_Bu2Dst0h_D0gamma_n1Bu_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", 1.6831e-01),
-      misId_Bu2Dst0h_D0gamma_n1Bu_(),
       misId_Bu2Dst0h_D0gamma_n2Bu_(),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
@@ -195,7 +195,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           misId_Bu2Dst0h_D0gamma_meanBu_, misId_Bu2Dst0h_D0gamma_sigma1Bu_,
           misId_Bu2Dst0h_D0gamma_sigma2Bu_, misId_Bu2Dst0h_D0gamma_a1Bu_,
-          misId_Bu2Dst0h_D0gamma_a2Bu_)),
+          misId_Bu2Dst0h_D0gamma_n1Bu_)),
       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(
           ("buDeltaCutEffMisId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
@@ -242,11 +242,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),
                          "", 2.5422e-01),
-      misId_MisRec_a2Bu_(("misId_MisRec_a2Bu_" +
+      misId_MisRec_a2Bu_(),
+      misId_MisRec_n1Bu_(("misId_MisRec_n1Bu_" +
                           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
                              .c_str(),
                          "", 2.4586e-01),
-      misId_MisRec_n1Bu_(),
       misId_MisRec_n2Bu_(),
       pdf1Bu_misId_MisRec_(),
       pdf2Bu_misId_MisRec_(),
@@ -257,7 +257,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(), misId_MisRec_mean1Bu_,
           misId_MisRec_sigma1Bu_, misId_MisRec_sigma2Bu_, misId_MisRec_a1Bu_,
-          misId_MisRec_a2Bu_)),
+          misId_MisRec_n1Bu_)),
       misId_MisRec_meanBuPartial_(),
       misId_MisRec_sigmaLBuPartial_(),
       misId_MisRec_sigmaRBuPartial_(),
