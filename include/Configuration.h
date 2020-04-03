@@ -60,6 +60,8 @@ enum class Systematic {
   misIdPi0KPdfBu,
   misIdPi0PiPdfBuPartial,
   misIdPi0KPdfBuPartial,
+  misIdGammaPiPdfBu,
+  misIdGammaKPdfBu,
   boxEffs,
   pidEff
 };

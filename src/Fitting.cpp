@@ -2836,7 +2836,8 @@ int main(int argc, char **argv) {
                    "misRecDeltaPdf,misRecBuPdf,misRecBuPartialPdf,"
                    "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
                    "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
-                   "misIdPi0KPdfBuPartial,boxEffs,pidEffs} "
+                   "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
+                   "boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2958,7 +2959,8 @@ int main(int argc, char **argv) {
                        "gammaBuTails,gammaBuFrac,misRecDeltaPdf,misRecBuPdf,"
                        "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
                        "partRecBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
-                       "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,boxEffs,"
+                       "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
+                       "misIdGammaPiPdfBu,misIdGammaKPdfBu,boxEffs,"
                        "pidEffs\n";
           return 1;
         }
@@ -3252,11 +3254,8 @@ int main(int argc, char **argv) {
         double randomTag = random.Rndm();
         Params::Get().RandomiseParameters(systematicVec.begin(),
                                           systematicVec.end(), random);
-        std::cout << "Randome done\n";
         auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
-        std::cout << "Extracted simPdf\n";
         // auto pdfs = systPair.second;
-        std::cout << "To fit:\n";
         auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),

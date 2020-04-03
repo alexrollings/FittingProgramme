@@ -67,7 +67,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           8.5315e+00, 2.98e+00, Systematic::misIdPi0KPdfBu, Sign::positive)),
       misId_Bu2Dst0h_D0pi0_a2Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a2Bu", uniqueId, Neutral::pi0, Bachelor::k,
-          -5.1434e-01, 1.28e-02, Systematic::misIdPi0KPdfBu, Sign::positive)),
+          -5.1434e-01, 1.28e-02, Systematic::misIdPi0KPdfBu, Sign::negative)),
       misId_Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n1Bu", uniqueId, Neutral::pi0, Bachelor::k,
           3.6223e+00, 6.58e+00, Systematic::misIdPi0KPdfBu, Sign::positive)),
@@ -142,44 +142,33 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
       // -------------------- Mis-ID ------------------- //
-      misId_Bu2Dst0h_D0gamma_meanBu_(
-          ("misId_Bu2Dst0h_D0gamma_meanBu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 5.3584e+03),
-      misId_Bu2Dst0h_D0gamma_sigma1Bu_(
-          ("misId_Bu2Dst0h_D0gamma_sigma1Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 4.5510e+01),
-      misId_Bu2Dst0h_D0gamma_sigma2Bu_(
-          ("misId_Bu2Dst0h_D0gamma_sigma2Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 7.6705e+01),
-      misId_Bu2Dst0h_D0gamma_a1Bu_(
-          ("misId_Bu2Dst0h_D0gamma_a1Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 8.9228e-02),
-      misId_Bu2Dst0h_D0gamma_a2Bu_(),
-      misId_Bu2Dst0h_D0gamma_n1Bu_(
-          ("misId_Bu2Dst0h_D0gamma_n1Bu_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 1.6831e-01),
-      misId_Bu2Dst0h_D0gamma_n2Bu_(),
+      misId_Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId, Neutral::pi0, Bachelor::k,
+          5.3601e+03, 2.18e+00, Systematic::misIdGammaKPdfBu, Sign::positive)),
+      misId_Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          3.7321e+01, 1.90e+00, Systematic::misIdGammaKPdfBu, Sign::positive)),
+      misId_Bu2Dst0h_D0gamma_sigma2Bu_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0gamma_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          7.3708e+01, 2.55e+00, Systematic::misIdGammaKPdfBu, Sign::positive)),
+      misId_Bu2Dst0h_D0gamma_a1Bu_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0gamma_a1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          1.2785e-01, 1.46e-02, Systematic::misIdGammaKPdfBu, Sign::positive)),
+      misId_Bu2Dst0h_D0gamma_a2Bu_(nullptr),
+      misId_Bu2Dst0h_D0gamma_n1Bu_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0gamma_n1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          1.6726e-01, 9.78e-03, Systematic::misIdGammaKPdfBu, Sign::positive)),
+      misId_Bu2Dst0h_D0gamma_n2Bu_(nullptr),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
-      misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(),
+      misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       pdfBu_misId_Bu2Dst0h_D0gamma_(new RooCruijff(
           ("pdfBu_misId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(),
-          misId_Bu2Dst0h_D0gamma_meanBu_, misId_Bu2Dst0h_D0gamma_sigma1Bu_,
-          misId_Bu2Dst0h_D0gamma_sigma2Bu_, misId_Bu2Dst0h_D0gamma_a1Bu_,
-          misId_Bu2Dst0h_D0gamma_n1Bu_)),
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0gamma_meanBu_,
+          *misId_Bu2Dst0h_D0gamma_sigma1Bu_, *misId_Bu2Dst0h_D0gamma_sigma2Bu_,
+          *misId_Bu2Dst0h_D0gamma_a1Bu_, *misId_Bu2Dst0h_D0gamma_n1Bu_)),
       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(
           ("buDeltaCutEffMisId_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
