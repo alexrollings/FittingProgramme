@@ -2834,7 +2834,9 @@ int main(int argc, char **argv) {
                    "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
                    "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
                    "misRecDeltaPdf,misRecBuPdf,misRecBuPartialPdf,"
-                   "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,boxEffs,pidEffs} "
+                   "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
+                   "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
+                   "misIdPi0KPdfBuPartial,boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2955,7 +2957,8 @@ int main(int argc, char **argv) {
                        "crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,"
                        "gammaBuTails,gammaBuFrac,misRecDeltaPdf,misRecBuPdf,"
                        "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
-                       "partRecBuPartialPdf,boxEffs,"
+                       "partRecBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
+                       "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,boxEffs,"
                        "pidEffs\n";
           return 1;
         }

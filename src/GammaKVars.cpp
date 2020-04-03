@@ -265,58 +265,42 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         RooArgList(pdf1Bu_misId_Bu2Dst0h_D0pi0_,
                                    pdf2Bu_misId_Bu2Dst0h_D0pi0_),
                         *misId_Bu2Dst0h_D0pi0_fracPdf1Bu_)),
-      misId_Bu2Dst0h_D0pi0_meanBuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_meanBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 5.3620e+03),
-      misId_Bu2Dst0h_D0pi0_sigma1BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_sigma1BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 4.5215e+01),
-      misId_Bu2Dst0h_D0pi0_sigma2BuPartial_(),
-      misId_Bu2Dst0h_D0pi0_a1BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_a1BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 8.8800e-01),
-      misId_Bu2Dst0h_D0pi0_a2BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_a2BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", -5.8384e-01),
-      misId_Bu2Dst0h_D0pi0_n1BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_n1BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 8.0992e+00),
-      misId_Bu2Dst0h_D0pi0_n2BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_n2BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 1.0000e+01),
+      misId_Bu2Dst0h_D0pi0_meanBuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_meanBuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          5.3629e+03, 3.61e-01, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          4.6576e+01, 3.64e-01, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_sigma2BuPartial_(nullptr),
+      misId_Bu2Dst0h_D0pi0_a1BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_a1BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          7.9869e-01, 5.76e-02, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_a2BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_a2BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          -6.1441e-01, 9.71e-03, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_n1BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_n1BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          10, 1e+00, Systematic::NA, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_n2BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_n2BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          10, 1e00, Systematic::NA, Sign::positive)),
       pdf1BuPartial_misId_Bu2Dst0h_D0pi0_(
           ("pdf1BuPartial_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(),
-          misId_Bu2Dst0h_D0pi0_meanBuPartial_,
-          misId_Bu2Dst0h_D0pi0_sigma1BuPartial_,
-          misId_Bu2Dst0h_D0pi0_a1BuPartial_, misId_Bu2Dst0h_D0pi0_n1BuPartial_),
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_meanBuPartial_,
+          *misId_Bu2Dst0h_D0pi0_sigma1BuPartial_, *misId_Bu2Dst0h_D0pi0_a1BuPartial_,
+          *misId_Bu2Dst0h_D0pi0_n1BuPartial_),
       pdf2BuPartial_misId_Bu2Dst0h_D0pi0_(
           ("pdf2BuPartial_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(),
-          misId_Bu2Dst0h_D0pi0_meanBuPartial_,
-          misId_Bu2Dst0h_D0pi0_sigma1BuPartial_,
-          misId_Bu2Dst0h_D0pi0_a2BuPartial_, misId_Bu2Dst0h_D0pi0_n2BuPartial_),
-      misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_(
-          ("misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 1.2836e-01),
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_meanBuPartial_,
+          *misId_Bu2Dst0h_D0pi0_sigma1BuPartial_, *misId_Bu2Dst0h_D0pi0_a2BuPartial_,
+          *misId_Bu2Dst0h_D0pi0_n2BuPartial_),
+      misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
+          1.1361e-01, 1.46e-02, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
       pdfBuPartial_misId_Bu2Dst0h_D0pi0_(
           new RooAddPdf(("pdfBuPartial_misId_Bu2Dst0h_D0pi0_" +
                          ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -324,7 +308,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         "",
                         RooArgList(pdf1BuPartial_misId_Bu2Dst0h_D0pi0_,
                                    pdf2BuPartial_misId_Bu2Dst0h_D0pi0_),
-                        misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_)),
+                        *misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_)),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(
           ("buDeltaCutEffMisId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
