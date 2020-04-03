@@ -6,7 +6,6 @@
 #include <vector>
 #include <regex>
 
-#include "Configuration.h"
 #include "GlobalVars.h"
 
 #include "TRandom3.h"
@@ -62,10 +61,22 @@ class FixedParameter {
       }
       std::cout << shifted_value_ << "\n";
     }
+    std::smatch match;
+    static const std::regex pattern("\\S+Eff\\S+");
+    if (std::regex_match(name_, match, pattern)) {
+      std::cout << "0 < Efficiency < 1\n";
+      std::cout << shifted_value_ << "\n";
+      while (shifted_value_ > 1 || shifted_value_ < 0) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        shifted_value_ = random.Gaus(mean_, std_);
+      }
+      std::cout << shifted_value_ << "\n";
+    }
     std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
               << "\n";
     roo_variable_->setVal(shifted_value_);
-  } 
+  }
 
  private:
   double mean_, std_;
@@ -86,6 +97,14 @@ class Params {
   static Params &Get() {
     static Params params;
     return params;
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, double mean,
+                      double std, Systematic systematic, Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, "", "", "");
+    auto var_name = name;
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,

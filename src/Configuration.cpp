@@ -1,6 +1,7 @@
 #include "Configuration.h"
 #include <iomanip>
 #include <sstream>
+#include "Params.h"
 
 Configuration::Configuration()
     : neutral_(),
@@ -30,9 +31,8 @@ Configuration::Configuration()
       initYieldFAVSignal_(60000),
       pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
                                          Systematic::pidEffK, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFixed("pidEffPi", 0.98 * 0.996, 2e-02,
-                                          Systematic::pidEffPi,
-                                          Sign::positive)),
+      pidEffPi_(Params::Get().CreateFixed(
+          "pidEffPi", 0.996, 1e-02, Systematic::pidEffPi, Sign::positive)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
