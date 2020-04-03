@@ -225,17 +225,17 @@ class NeutralBachelorVars {
      std::shared_ptr<RooRealVar> MisRec_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_MisRec_;
   // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_MisRec_mean1Bu_;
-  RooRealVar misId_MisRec_mean2Bu_;
-  RooRealVar misId_MisRec_sigma1Bu_;
-  RooRealVar misId_MisRec_sigma2Bu_;
-  RooRealVar misId_MisRec_a2Bu_;
-  RooRealVar misId_MisRec_a1Bu_;
-  RooRealVar misId_MisRec_n2Bu_;
-  RooRealVar misId_MisRec_n1Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_mean1Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_mean2Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_sigma1Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_sigma2Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_a2Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_a1Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_n2Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_n1Bu_;
   RooCBShape pdf1Bu_misId_MisRec_;
   RooCBShape pdf2Bu_misId_MisRec_;
-  RooRealVar misId_MisRec_fracPdf1Bu_;
+  std::shared_ptr<RooRealVar> misId_MisRec_fracPdf1Bu_;
   std::unique_ptr<RooAbsPdf> pdfBu_misId_MisRec_;
   RooRealVar misId_MisRec_meanBuPartial_;
   RooRealVar misId_MisRec_sigmaLBuPartial_;

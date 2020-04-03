@@ -198,39 +198,34 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       MisRec_sigmaRBuPartial_(nullptr),
       pdfBuPartial_MisRec_(),
       // -------------------- Mis-ID ------------------- //
-      misId_MisRec_mean1Bu_(("misId_MisRec_mean1Bu_" +
-                             ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                .c_str(),
-                            "", 5.3332e+03),
-      misId_MisRec_mean2Bu_(),
-      misId_MisRec_sigma1Bu_(("misId_MisRec_sigma1Bu_" +
-                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                 .c_str(),
-                             "", 2.6031e+01),
-      misId_MisRec_sigma2Bu_(("misId_MisRec_sigma2Bu_" +
-                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                 .c_str(),
-                             "", 6.2339e+01),
-      misId_MisRec_a1Bu_(("misId_MisRec_a1Bu_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                             .c_str(),
-                         "", 2.5422e-01),
-      misId_MisRec_a2Bu_(),
-      misId_MisRec_n1Bu_(("misId_MisRec_n1Bu_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                             .c_str(),
-                         "", 2.4586e-01),
-      misId_MisRec_n2Bu_(),
+      misId_MisRec_mean1Bu_(Params::Get().CreateFixed(
+          "misId_MisRec_mean1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          5.3333e+03, 7.09e-01, Systematic::misIdMisRecKPdfBu, Sign::positive)),
+      misId_MisRec_mean2Bu_(nullptr),
+      misId_MisRec_sigma1Bu_(Params::Get().CreateFixed(
+          "misId_MisRec_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          2.6027e+01, 6.06e-01, Systematic::misIdMisRecKPdfBu, Sign::positive)),
+      misId_MisRec_sigma2Bu_(Params::Get().CreateFixed(
+          "misId_MisRec_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          6.2136e+01, 8.88e-01, Systematic::misIdMisRecKPdfBu, Sign::positive)),
+      misId_MisRec_a1Bu_(Params::Get().CreateFixed(
+          "misId_MisRec_a1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          2.5413e-01, 6.21e-03, Systematic::misIdMisRecKPdfBu, Sign::positive)),
+      misId_MisRec_a2Bu_(nullptr),
+      misId_MisRec_n1Bu_(Params::Get().CreateFixed(
+          "misId_MisRec_n1Bu", uniqueId, Neutral::pi0, Bachelor::k,
+          2.4686e-01, 5.18e-03, Systematic::misIdMisRecKPdfBu, Sign::positive)),
+      misId_MisRec_n2Bu_(nullptr),
       pdf1Bu_misId_MisRec_(),
       pdf2Bu_misId_MisRec_(),
-      misId_MisRec_fracPdf1Bu_(),
+      misId_MisRec_fracPdf1Bu_(nullptr),
       pdfBu_misId_MisRec_(new RooCruijff(
           ("pdfBu_misId_MisRec_" +
            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), misId_MisRec_mean1Bu_,
-          misId_MisRec_sigma1Bu_, misId_MisRec_sigma2Bu_, misId_MisRec_a1Bu_,
-          misId_MisRec_n1Bu_)),
+          "", Configuration::Get().buDeltaMass(), *misId_MisRec_mean1Bu_,
+          *misId_MisRec_sigma1Bu_, *misId_MisRec_sigma2Bu_,
+          *misId_MisRec_a1Bu_, *misId_MisRec_n1Bu_)),
       misId_MisRec_meanBuPartial_(),
       misId_MisRec_sigmaLBuPartial_(),
       misId_MisRec_sigmaRBuPartial_(),
