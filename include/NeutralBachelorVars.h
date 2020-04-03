@@ -287,11 +287,11 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> misId_PartRec_aLBu_;
   std::shared_ptr<RooRealVar> misId_PartRec_aRBu_;
   RooCruijff pdfBu_misId_PartRec_;
-  RooRealVar misId_PartRec_meanBuPartial_;
-  RooRealVar misId_PartRec_sigmaLBuPartial_;
-  RooRealVar misId_PartRec_sigmaRBuPartial_;
-  RooRealVar misId_PartRec_aLBuPartial_;
-  RooRealVar misId_PartRec_aRBuPartial_;
+  std::shared_ptr<RooRealVar> misId_PartRec_meanBuPartial_;
+  std::shared_ptr<RooRealVar> misId_PartRec_sigmaLBuPartial_;
+  std::shared_ptr<RooRealVar> misId_PartRec_sigmaRBuPartial_;
+  std::shared_ptr<RooRealVar> misId_PartRec_aLBuPartial_;
+  std::shared_ptr<RooRealVar> misId_PartRec_aRBuPartial_;
   RooCruijff pdfBuPartial_misId_PartRec_;
   RooRealVar buDeltaCutEffMisId_PartRec_;
   RooRealVar deltaCutEffMisId_PartRec_;
