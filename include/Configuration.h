@@ -67,7 +67,8 @@ enum class Systematic {
   misIdPartRecKPdfBu,
   misIdPartRecKPdfBuPartial,
   boxEffs,
-  pidEff
+  pidEffPi,
+  pidEffK
 };
 
 // There is only a single instance of categories therefore we do not have to
@@ -130,9 +131,9 @@ class Configuration {
 
   RooRealVar &GetPidEff(Bachelor bachelor) {
     if (bachelor == Bachelor::pi) {
-      return pidEffPi_;
+      return *pidEffPi_;
     } else {
-      return pidEffK_;
+      return *pidEffK_;
     }
   }
 
@@ -197,8 +198,8 @@ class Configuration {
   float deltaPartialLow_;
   float deltaPartialHigh_;
   double initYieldFAVSignal_;
-  RooRealVar pidEffK_;
-  RooRealVar pidEffPi_;
+  std::shared_ptr<RooRealVar> pidEffK_;
+  std::shared_ptr<RooRealVar> pidEffPi_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;

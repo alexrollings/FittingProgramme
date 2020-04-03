@@ -28,8 +28,11 @@ Configuration::Configuration()
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
       initYieldFAVSignal_(60000),
-      pidEffK_("pidEffK", "", 0.98 * 6.8493e-01),
-      pidEffPi_("pidEffPi", "", 0.996),
+      pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
+                                         Systematic::pidEffK, Sign::positive)),
+      pidEffPi_(Params::Get().CreateFixed("pidEffPi", 0.98 * 0.996, 2e-02,
+                                          Systematic::pidEffPi,
+                                          Sign::positive)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
@@ -260,8 +263,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdPartRecKPdfBuPartial;
   } else if (systematic == "boxEffs") {
     return Systematic::boxEffs;
-  } else if (systematic == "pidEff") {
-    return Systematic::pidEff;
+  } else if (systematic == "pidEffPi") {
+    return Systematic::pidEffPi;
+  } else if (systematic == "pidEffK") {
+    return Systematic::pidEffK;
   }
   throw std::invalid_argument(
       "Systematic must take a value in "
@@ -273,7 +278,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "partRecBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/"
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
-      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/boxEffs/pidEff]");
+      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/boxEffs/pidEffPi/pidEffK]");
 }
   
 
@@ -339,8 +344,10 @@ std::string EnumToString(Systematic systematic) {
       return "misIdPartRecKPdfBuPartial";
     case Systematic::boxEffs:
       return "boxEffs";
-    case Systematic::pidEff:
-      return "pidEff";
+    case Systematic::pidEffPi:
+      return "pidEffPi";
+    case Systematic::pidEffK:
+      return "pidEffK";
   }
 }
 
