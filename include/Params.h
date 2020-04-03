@@ -14,15 +14,18 @@
 
 // Add dummy parameter: Params::Get().Empty();
 // RooRealVar var();
+// Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in fit)
+enum class Sign { positive, negative, none };
 
 class FixedParameter {
  public:
   FixedParameter(std::string const &name, double mean, double std,
-                 Systematic systematic)
+                 Systematic systematic, Sign sign)
       : name_(name),
         mean_(mean),
         std_(std),
         systematic_(systematic),
+        sign_(sign),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
 
   FixedParameter(FixedParameter const &) = delete;
@@ -36,14 +39,21 @@ class FixedParameter {
   double mean() const { return mean_; }
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
+  Sign sign() const { return sign_; }
 
   void Randomise(TRandom3 &random) {
     double shifted_value_ = random.Gaus(mean_, std_);
-    std::regex re("\\S+_a[A-Z]\\S+");
-    std::smatch match;
-    if (std::regex_search(name_, match, re)) {
+    if (sign_ == Sign::positive) {
       std::cout << shifted_value_ << "\n";
       while (shifted_value_ < 0) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        shifted_value_ = random.Gaus(mean_, std_);
+      }
+      std::cout << shifted_value_ << "\n";
+    } else if (sign_ == Sign::negative) {
+      std::cout << shifted_value_ << "\n";
+      while (shifted_value_ > 0) {
         RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
         shifted_value_ = random.Gaus(mean_, std_);
@@ -59,6 +69,7 @@ class FixedParameter {
   double mean_, std_;
   std::string const name_;
   Systematic systematic_;
+  Sign sign_;
   std::shared_ptr<RooRealVar> roo_variable_;
 };
 
@@ -76,11 +87,11 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
-                      double std, Systematic systematic) {
+                      double std, Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
     auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
-    return ConstructFixedParameter(key, var_name, mean, std, systematic);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
@@ -97,12 +108,12 @@ class Params {
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Neutral neutral, Bachelor bachelor,
                                           double mean, double std,
-                                          Systematic systematic) {
+                                          Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
     auto key = std::make_tuple(name, std::to_string(uniqueId),
                                EnumToString(neutral), EnumToString(bachelor));
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
-    return ConstructFixedParameter(key, var_name, mean, std, systematic);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
@@ -155,13 +166,13 @@ class Params {
  private:
   std::shared_ptr<RooRealVar> ConstructFixedParameter(Key const &key, std::string const &var_name,
                                   double mean, double std,
-                                  Systematic systematic) {
+                                  Systematic systematic, Sign sign) {
     return fixed_parameters_
         .emplace(std::piecewise_construct, key,
                  // Calling FixedParam constructor (takes all arguments and
                  // forwards them to the constructor). Necessary so as not to
                  // copy any RooFit objects !!!
-                 std::forward_as_tuple(var_name, mean, std, systematic))
+                 std::forward_as_tuple(var_name, mean, std, systematic, sign))
         .first->second.roo_variable();
   }
 

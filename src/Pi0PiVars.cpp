@@ -108,10 +108,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::pi,
-          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf)),
+          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf, Sign::positive)),
       Bu2Dst0h_D0gamma_sigma2Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::pi,
-          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf)),
+          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf, Sign::positive)),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(new RooCruijff(
@@ -177,10 +177,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::pi, 5.6386e+01,
-          1.67e+00, Systematic::misRecBuPdf)),
+          1.67e+00, Systematic::misRecBuPdf, Sign::positive)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
           "MisRec_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::pi, 5.7104e+01,
-          7.42e-01, Systematic::misRecBuPdf)),
+          7.42e-01, Systematic::misRecBuPdf, Sign::positive)),
       pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::pi))
               .c_str(),
@@ -261,10 +261,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- PART REC -------------------- //
       PartRec_D0pi0_sigmaLBu_(Params::Get().CreateFixed(
           "PartRec_D0pi0_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::pi,
-          4.6660e+01, 1.94e+00, Systematic::partRecBuPdf)),
+          4.6660e+01, 1.94e+00, Systematic::partRecBuPdf, Sign::positive)),
       PartRec_D0pi0_sigmaRBu_(Params::Get().CreateFixed(
           "PartRec_D0pi0_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::pi,
-          4.4688e+01, 6.17e+00, Systematic::partRecBuPdf)),
+          4.4688e+01, 6.17e+00, Systematic::partRecBuPdf, Sign::positive)),
       pdfBu_PartRec_D0pi0_(),
       PartRec_D0gamma_sigmaLBu_(nullptr),
       PartRec_D0gamma_sigmaRBu_(nullptr),

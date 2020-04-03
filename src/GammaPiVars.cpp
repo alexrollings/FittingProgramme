@@ -42,7 +42,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0h_D0gamma_sigmaBuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigmaBuPartial", uniqueId, Neutral::gamma,
           Bachelor::pi, 2.9969e+01, 2.68e+00,
-          Systematic::crossFeedBuPartialPdf)),
+          Systematic::crossFeedBuPartialPdf, Sign::positive)),
       pdfBuPartial_Bu2Dst0h_D0gamma_(
           ("pdfBuPartial_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -107,7 +107,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_sigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigmaBu", uniqueId, Neutral::gamma, Bachelor::pi,
-          4.4834e+01, 7.73e-01, Systematic::crossFeedBuPdf)),
+          4.4834e+01, 7.73e-01, Systematic::crossFeedBuPdf, Sign::positive)),
       pdf1Bu_Bu2Dst0h_D0pi0_(),
       pdf2Bu_Bu2Dst0h_D0pi0_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
@@ -121,7 +121,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2Dst0h_D0pi0_n1Bu())),
       Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId, Neutral::gamma,
-          Bachelor::pi, 2.5688e+01, 5.89e-01, Systematic::pi0BuPartialSigma1)),
+          Bachelor::pi, 2.5688e+01, 5.89e-01, Systematic::pi0BuPartialSigma1, Sign::positive)),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -273,10 +273,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi, 1.3446e+02,
-          1.27e+00, Systematic::misRecBuPdf)),
+          1.27e+00, Systematic::misRecBuPdf, Sign::positive)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
           "MisRec_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi, 8.5469e+01,
-          5.55e-01, Systematic::misRecBuPdf)),
+          5.55e-01, Systematic::misRecBuPdf, Sign::positive)),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
                         .c_str(),
@@ -287,10 +287,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
       MisRec_sigmaLBuPartial_(Params::Get().CreateFixed(
           "MisRec_sigmaLBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
-          1.1613e+02, 1.29e+00, Systematic::misRecBuPartialPdf)),
+          1.1613e+02, 1.29e+00, Systematic::misRecBuPartialPdf, Sign::positive)),
       MisRec_sigmaRBuPartial_(Params::Get().CreateFixed(
           "MisRec_sigmaRBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
-          4.5697e+01, 5.07e-01, Systematic::misRecBuPartialPdf)),
+          4.5697e+01, 5.07e-01, Systematic::misRecBuPartialPdf, Sign::positive)),
       pdfBuPartial_MisRec_(
           ("pdfBuPartial_MisRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -385,10 +385,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- PART REC -------------------- //
       PartRec_D0pi0_sigmaLBu_(Params::Get().CreateFixed(
           "PartRec_D0pi0_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi,
-          8.3682e+01, 3.46e+00, Systematic::partRecBuPdf)),
+          8.3682e+01, 3.46e+00, Systematic::partRecBuPdf, Sign::positive)),
       PartRec_D0pi0_sigmaRBu_(Params::Get().CreateFixed(
           "PartRec_D0pi0_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi,
-          9.1998e+01, 3.41e+00, Systematic::partRecBuPdf)),
+          9.1998e+01, 3.41e+00, Systematic::partRecBuPdf, Sign::positive)),
       pdfBu_PartRec_D0pi0_(
           ("pdfBu_PartRec_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -400,10 +400,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_D0pi0_aRBu()),
       PartRec_D0gamma_sigmaLBu_(Params::Get().CreateFixed(
           "PartRec_D0gamma_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi,
-          3.6387e+01, 4.42e+00, Systematic::partRecBuPdf)),
+          3.6387e+01, 4.42e+00, Systematic::partRecBuPdf, Sign::positive)),
       PartRec_D0gamma_sigmaRBu_(Params::Get().CreateFixed(
           "PartRec_D0gamma_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi,
-          4.4390e+01, 4.55e+00, Systematic::partRecBuPdf)),
+          4.4390e+01, 4.55e+00, Systematic::partRecBuPdf, Sign::positive)),
       pdfBu_PartRec_D0gamma_(
           ("pdfBu_PartRec_D0gamma_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -421,10 +421,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_frac_D0pi0())),
       PartRec_sigmaLBuPartial_(Params::Get().CreateFixed(
           "PartRec_sigmaLBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
-          4.7853e+01, 2.41e+00, Systematic::partRecBuPartialPdf)),
+          4.7853e+01, 2.41e+00, Systematic::partRecBuPartialPdf, Sign::positive)),
       PartRec_sigmaRBuPartial_(Params::Get().CreateFixed(
           "PartRec_sigmaRBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
-          3.3489e+01, 1.46e+00, Systematic::partRecBuPartialPdf)),
+          3.3489e+01, 1.46e+00, Systematic::partRecBuPartialPdf, Sign::positive)),
       pdfBuPartial_PartRec_(
           ("pdfBuPartial_PartRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

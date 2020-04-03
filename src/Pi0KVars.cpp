@@ -140,10 +140,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::k,
-          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf)),
+          3.3594e+01, 9.76e-01, Systematic::crossFeedBuPdf, Sign::positive)),
       Bu2Dst0h_D0gamma_sigma2Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigma2Bu", uniqueId, Neutral::pi0, Bachelor::k,
-          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf)),
+          3.9267e+01, 1.22e+00, Systematic::crossFeedBuPdf, Sign::positive)),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(new RooCruijff(
@@ -154,7 +154,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_meanBu(),
           *Bu2Dst0h_D0gamma_sigma1Bu_, *Bu2Dst0h_D0gamma_sigma2Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_a2Bu())),
+          NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_n1Bu())),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
       // -------------------- Mis-ID ------------------- //
@@ -209,10 +209,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::k, 5.7157e+01,
-          6.09e+00, Systematic::misRecBuPdf)),
+          6.09e+00, Systematic::misRecBuPdf, Sign::positive)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
           "MisRec_sigmaRBu", uniqueId, Neutral::pi0, Bachelor::k, 5.5962e+01,
-          4.14e+00, Systematic::misRecBuPdf)),
+          4.14e+00, Systematic::misRecBuPdf, Sign::positive)),
       pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
