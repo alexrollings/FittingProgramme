@@ -56,8 +56,8 @@ enum class Systematic {
   partRecDeltaPdf,
   partRecBuPdf,
   partRecBuPartialPdf,
-  misIdPi0PiPdf,
-  misIdPi0KPdf,
+  misIdPi0PiPdfBu,
+  misIdPi0KPdfBu,
   boxEffs,
   pidEff
 };
