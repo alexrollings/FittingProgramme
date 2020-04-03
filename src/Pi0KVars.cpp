@@ -226,11 +226,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(), *misId_MisRec_mean1Bu_,
           *misId_MisRec_sigma1Bu_, *misId_MisRec_sigma2Bu_,
           *misId_MisRec_a1Bu_, *misId_MisRec_n1Bu_)),
-      misId_MisRec_meanBuPartial_(),
-      misId_MisRec_sigmaLBuPartial_(),
-      misId_MisRec_sigmaRBuPartial_(),
-      misId_MisRec_aLBuPartial_(),
-      misId_MisRec_aRBuPartial_(),
+      misId_MisRec_meanBuPartial_(nullptr),
+      misId_MisRec_sigmaLBuPartial_(nullptr),
+      misId_MisRec_sigmaRBuPartial_(nullptr),
+      misId_MisRec_aLBuPartial_(nullptr),
+      misId_MisRec_aRBuPartial_(nullptr),
       pdfBuPartial_misId_MisRec_(),
       buDeltaCutEffMisId_MisRec_(
           ("buDeltaCutEffMisId_MisRec_" +

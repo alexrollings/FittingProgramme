@@ -237,11 +237,11 @@ class NeutralBachelorVars {
   RooCBShape pdf2Bu_misId_MisRec_;
   std::shared_ptr<RooRealVar> misId_MisRec_fracPdf1Bu_;
   std::unique_ptr<RooAbsPdf> pdfBu_misId_MisRec_;
-  RooRealVar misId_MisRec_meanBuPartial_;
-  RooRealVar misId_MisRec_sigmaLBuPartial_;
-  RooRealVar misId_MisRec_sigmaRBuPartial_;
-  RooRealVar misId_MisRec_aLBuPartial_;
-  RooRealVar misId_MisRec_aRBuPartial_;
+  std::shared_ptr<RooRealVar> misId_MisRec_meanBuPartial_;
+  std::shared_ptr<RooRealVar> misId_MisRec_sigmaLBuPartial_;
+  std::shared_ptr<RooRealVar> misId_MisRec_sigmaRBuPartial_;
+  std::shared_ptr<RooRealVar> misId_MisRec_aLBuPartial_;
+  std::shared_ptr<RooRealVar> misId_MisRec_aRBuPartial_;
   RooCruijff pdfBuPartial_misId_MisRec_;
   RooRealVar buDeltaCutEffMisId_MisRec_;
   RooRealVar deltaCutEffMisId_MisRec_;
