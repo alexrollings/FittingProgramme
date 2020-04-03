@@ -2837,6 +2837,8 @@ int main(int argc, char **argv) {
                    "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
                    "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
                    "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
+                   "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
+                   "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
                    "boxEffs,pidEffs} "
                    "default: None>"
                 << "\n";
@@ -2960,8 +2962,9 @@ int main(int argc, char **argv) {
                        "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
                        "partRecBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
                        "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
-                       "misIdGammaPiPdfBu,misIdGammaKPdfBu,boxEffs,"
-                       "pidEffs\n";
+                       "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
+                       "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
+                       "misIdPartRecKPdfBuPartial,boxEffs,pidEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
