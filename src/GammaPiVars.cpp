@@ -254,7 +254,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          misId_Bu2Dst0h_D0pi0_sigma1BuPartial_,
                          misId_Bu2Dst0h_D0pi0_sigma2BuPartial_,
                          misId_Bu2Dst0h_D0pi0_a1BuPartial_,
-                         misId_Bu2Dst0h_D0pi0_a2BuPartial_)),
+                         misId_Bu2Dst0h_D0pi0_n1BuPartial_)),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(
           ("buDeltaCutEffMisId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))

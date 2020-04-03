@@ -356,10 +356,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", 1),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
-          "MisRec_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::pi, 1.2599e+02,
+          "MisRec_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::k, 1.2599e+02,
           4.68e+00, Systematic::misRecBuPdf, Sign::positive)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
-          "MisRec_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::pi, 8.0741e+01,
+          "MisRec_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::k, 8.0741e+01,
           2.82e+00, Systematic::misRecBuPdf, Sign::positive)),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
@@ -370,10 +370,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aLBu(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId).MisRec_aRBu()),
       MisRec_sigmaLBuPartial_(Params::Get().CreateFixed(
-          "MisRec_sigmaLBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
+          "MisRec_sigmaLBuPartial", uniqueId, Neutral::gamma, Bachelor::k,
           1.1875e+02, 5.43e+00, Systematic::misRecBuPartialPdf, Sign::positive)),
       MisRec_sigmaRBuPartial_(Params::Get().CreateFixed(
-          "MisRec_sigmaRBuPartial", uniqueId, Neutral::gamma, Bachelor::pi,
+          "MisRec_sigmaRBuPartial", uniqueId, Neutral::gamma, Bachelor::k,
           4.7343e+01, 2.81e+00, Systematic::misRecBuPartialPdf, Sign::positive)),
       pdfBuPartial_MisRec_(
           ("pdfBuPartial_MisRec_" +
