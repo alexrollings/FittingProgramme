@@ -598,35 +598,28 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_aLBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId).PartRec_aRBuPartial()),
       // -------------------- Mis-ID ------------------- //
-      misId_PartRec_meanBu_(("misId_PartRec_meanBu_" +
-                             ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                                .c_str(),
-                            "", 5.1775e+03),
-      misId_PartRec_sigmaLBu_(
-          ("misId_PartRec_sigmaLBu_" +
+      misId_PartRec_meanBu_(Params::Get().CreateFixed(
+          "misId_PartRec_meanBu", uniqueId, Neutral::gamma, Bachelor::k,
+          5.1777e+03, 1.60e+00, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+      misId_PartRec_sigmaLBu_(Params::Get().CreateFixed(
+          "misId_PartRec_sigmaLBu", uniqueId, Neutral::gamma, Bachelor::k,
+          7.5677e+01, 9.46e-01, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+      misId_PartRec_sigmaRBu_(Params::Get().CreateFixed(
+          "misId_PartRec_sigmaRBu", uniqueId, Neutral::gamma, Bachelor::k,
+          9.4379e+01, 1.81e+00, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+      misId_PartRec_aLBu_(Params::Get().CreateFixed(
+          "misId_PartRec_aLBu", uniqueId, Neutral::gamma, Bachelor::k,
+          1.4242e-07, 9.03e-04, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+      misId_PartRec_aRBu_(Params::Get().CreateFixed(
+          "misId_PartRec_aRBu", uniqueId, Neutral::gamma, Bachelor::k,
+          1.5130e-01, 6.63e-03, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+      pdfBu_misId_PartRec_(
+          ("pdfBu_misId_PartRec_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", 7.7049e+01),
-      misId_PartRec_sigmaRBu_(
-          ("misId_PartRec_sigmaRBu_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 9.7546e+01),
-      misId_PartRec_aLBu_(("misId_PartRec_aLBu_" +
-                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                              .c_str(),
-                          "", 9.2782e-08),
-      misId_PartRec_aRBu_(("misId_PartRec_aRBu_" +
-                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                              .c_str(),
-                          "", 1.4248e-01),
-      pdfBu_misId_PartRec_(("pdfBu_misId_PartRec_" +
-                            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                               .c_str(),
-                           "", Configuration::Get().buDeltaMass(),
-                           misId_PartRec_meanBu_, misId_PartRec_sigmaLBu_,
-                           misId_PartRec_sigmaRBu_, misId_PartRec_aLBu_,
-                           misId_PartRec_aRBu_),
+          "", Configuration::Get().buDeltaMass(), *misId_PartRec_meanBu_,
+          *misId_PartRec_sigmaLBu_, *misId_PartRec_sigmaRBu_,
+          *misId_PartRec_aLBu_, *misId_PartRec_aRBu_),
       misId_PartRec_meanBuPartial_(
           ("misId_PartRec_meanBuPartial_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))

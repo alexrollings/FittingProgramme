@@ -281,11 +281,11 @@ class NeutralBachelorVars {
   RooCruijff pdfBuPartial_PartRec_;
   std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
   // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_PartRec_meanBu_;
-  RooRealVar misId_PartRec_sigmaLBu_;
-  RooRealVar misId_PartRec_sigmaRBu_;
-  RooRealVar misId_PartRec_aLBu_;
-  RooRealVar misId_PartRec_aRBu_;
+  std::shared_ptr<RooRealVar> misId_PartRec_meanBu_;
+  std::shared_ptr<RooRealVar> misId_PartRec_sigmaLBu_;
+  std::shared_ptr<RooRealVar> misId_PartRec_sigmaRBu_;
+  std::shared_ptr<RooRealVar> misId_PartRec_aLBu_;
+  std::shared_ptr<RooRealVar> misId_PartRec_aRBu_;
   RooCruijff pdfBu_misId_PartRec_;
   RooRealVar misId_PartRec_meanBuPartial_;
   RooRealVar misId_PartRec_sigmaLBuPartial_;
