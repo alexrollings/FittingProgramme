@@ -44,6 +44,7 @@ class FixedParameter {
   void Randomise(TRandom3 &random) {
     double shifted_value_ = random.Gaus(mean_, std_);
     if (sign_ == Sign::positive) {
+      std::cout << "Positive\n";
       std::cout << shifted_value_ << "\n";
       while (shifted_value_ < 0) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -52,6 +53,7 @@ class FixedParameter {
       }
       std::cout << shifted_value_ << "\n";
     } else if (sign_ == Sign::negative) {
+      std::cout << "Negative\n";
       std::cout << shifted_value_ << "\n";
       while (shifted_value_ > 0) {
         RooRandom::randomGenerator()->SetSeed(0);

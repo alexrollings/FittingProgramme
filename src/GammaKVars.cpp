@@ -277,7 +277,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           7.9869e-01, 5.76e-02, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
       misId_Bu2Dst0h_D0pi0_a2BuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a2BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
-          -6.1441e-01, 9.71e-03, Systematic::misIdPi0KPdfBuPartial, Sign::positive)),
+          -6.1441e-01, 9.71e-03, Systematic::misIdPi0KPdfBuPartial, Sign::negative)),
       misId_Bu2Dst0h_D0pi0_n1BuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n1BuPartial", uniqueId, Neutral::gamma, Bachelor::k,
           10, 1e+00, Systematic::NA, Sign::positive)),

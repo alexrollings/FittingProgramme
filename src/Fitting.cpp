@@ -3252,8 +3252,11 @@ int main(int argc, char **argv) {
         double randomTag = random.Rndm();
         Params::Get().RandomiseParameters(systematicVec.begin(),
                                           systematicVec.end(), random);
+        std::cout << "Randome done\n";
         auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
+        std::cout << "Extracted simPdf\n";
         // auto pdfs = systPair.second;
+        std::cout << "To fit:\n";
         auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
