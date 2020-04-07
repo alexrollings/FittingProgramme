@@ -2696,34 +2696,18 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
 
 void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
                    Mode mode) {
-  double buDeltaCutEff, deltaCutEff;
-  {
-    RooRealVar buDeltaCutEffRRV("buDeltaCutEffRRV", "", 1);
-    RooRealVar deltaCutEffRRV("deltaCutEffRRV", "", 1);
-
-    if (config.fitBuPartial() == true) {
-      RooRealVar deltaPartialCutEffRRV("deltaPartialCutEffRRV", "", 1);
-      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV,
-                             deltaCutEffRRV, deltaPartialCutEffRRV, false);
-      double deltaPartialCutEff = deltaPartialCutEffRRV.getVal();
-      tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
-                  &deltaPartialCutEff,
-                  ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
-      tree.Fill();
-    } else {
-      config.SetEfficiencies(mode, Bachelor::pi, buDeltaCutEffRRV,
-                             deltaCutEffRRV, false);
-    }
-
-    buDeltaCutEff = buDeltaCutEffRRV.getVal();
-    deltaCutEff = deltaCutEffRRV.getVal();
-  }
-
+  std::map<std::string, double> effMap;
+  config.ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
   outputFile.cd();
-  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &buDeltaCutEff,
+  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &effMap["buDeltaCutEff"],
               ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &deltaCutEff,
+  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &effMap["deltaCutEff"],
               ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  if (config.fitBuPartial() == true) {
+    tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
+                &effMap["deltaPartialCutEff"],
+                ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
+  }
   tree.Fill();
 }
 
