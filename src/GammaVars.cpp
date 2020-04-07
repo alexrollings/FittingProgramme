@@ -441,13 +441,19 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
   deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
 
+  std::map<std::string, double> mapBu2D0h;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
+                                     false);
+  buDeltaCutEffBu2D0h_.setVal(mapBu2D0h["buDeltaCutEff"]);
+  deltaCutEffBu2D0h_.setVal(mapBu2D0h["deltaCutEff"]);
+
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
       {Mode::Bu2Dst0pi_D0gamma_WN,
        fracMisRec_Bu2Dst0h_D0gamma_WN_ / fracMisRec_},
       {Mode::Bu2D0rho, fracMisRec_Bu2D0hst_ / fracMisRec_},
       {Mode::Bd2Dstpi, fracMisRec_Bd2Dsth_ / fracMisRec_}};
-
+  
   std::map<std::string, double> mapMisRec;
   unsigned int it = 0;
   for (auto &m : misRecModesMap) {
@@ -510,8 +516,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   deltaCutEffPartRec_.setVal(mapPartRec["deltaCutEff"]);
 
   if (Configuration::Get().fitBuPartial() == true) {
-    deltaPartialCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaPartialCutEff"]);
     deltaPartialCutEffBu2Dst0h_D0gamma_.setVal(mapBu2Dst0h_D0gamma["deltaPartialCutEff"]);
+    deltaPartialCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaPartialCutEff"]);
+    deltaPartialCutEffBu2D0h_.setVal(mapBu2D0h["deltaPartialCutEff"]);
     deltaPartialCutEffMisRec_.setVal(mapMisRec["deltaPartialCutEff"]);
     deltaPartialCutEffPartRec_.setVal(mapPartRec["deltaPartialCutEff"]);
   }
