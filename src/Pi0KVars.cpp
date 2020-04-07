@@ -582,31 +582,25 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
        NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec_Bd2Dsth() /
            NeutralVars<Neutral::pi0>::Get(uniqueId).fracMisRec()}};
 
-  double buDeltaCutEffMisId_MisRecVal = 0.0;
-  double deltaCutEffMisId_MisRecVal = 0.0;
-
+  std::map<std::string, double> mapMisId_MisRec;
+  unsigned int it = 0;
   for (auto &m : misRecModesMap) {
-    RooRealVar buDeltaCutEffMisIdTemp(
-        ("buDeltaCutEffMisIdTemp" + ComposeName(uniqueId, Neutral::pi0))
-            .c_str(),
-        "", 1);
-    RooRealVar deltaCutEffMisIdTemp(
-        ("deltaCutEffMisIdTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(),
-        "", 1);
-
-    Configuration::Get().SetEfficiencies(m.first, Bachelor::k,
-                                         buDeltaCutEffMisIdTemp,
-                                         deltaCutEffMisIdTemp, true);
-
-    buDeltaCutEffMisId_MisRecVal += buDeltaCutEffMisIdTemp.getVal() * m.second;
-    deltaCutEffMisId_MisRecVal += deltaCutEffMisIdTemp.getVal() * m.second;
+    std::map<std::string, double> mapMisId_MisRecTmp;
+    Configuration::Get().ReturnBoxEffs(m.first, Bachelor::k, mapMisId_MisRecTmp,
+                                       false);
+    if (it == 0) {
+      mapMisId_MisRec.insert(std::pair<std::string, double>(
+          "buDeltaCutEff", mapMisId_MisRecTmp["buDeltaCutEff"] * m.second));
+      mapMisId_MisRec.insert(std::pair<std::string, double>(
+          "deltaCutEff", mapMisId_MisRecTmp["deltaCutEff"] * m.second));
+    } else {
+      mapMisId_MisRec["buDeltaCutEff"] += mapMisId_MisRecTmp["buDeltaCutEff"] * m.second;
+      mapMisId_MisRec["deltaCutEff"] += mapMisId_MisRecTmp["deltaCutEff"] * m.second;
+    }
+    ++it;
   }
-  buDeltaCutEffMisId_MisRec_.setVal(buDeltaCutEffMisId_MisRecVal);
-  deltaCutEffMisId_MisRec_.setVal(deltaCutEffMisId_MisRecVal);
-  // std::cout << "\t buDeltaCutEffMisId_MisRec = "
-  //           << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_MisRec = "
-  //           << deltaCutEffMisId_MisRec_.getVal() << "\n";
+  buDeltaCutEffMisId_MisRec_.setVal(mapMisId_MisRec["buDeltaCutEff"]);
+  deltaCutEffMisId_MisRec_.setVal(mapMisId_MisRec["deltaCutEff"]);
 
   Configuration::Get().SetEfficiencies(Mode::Bu2D0pi, Bachelor::k,
                                        buDeltaCutEffMisId_Bu2D0h_,
