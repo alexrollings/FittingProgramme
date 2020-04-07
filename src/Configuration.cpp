@@ -1429,6 +1429,11 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   std::string dhString = std::to_string(deltaHigh_);
   std::string blString = std::to_string(buDeltaLow_);
   std::string bhString = std::to_string(buDeltaHigh_);
+  std::string dplString, dphString;
+  if (fitBuPartial_ == true) {
+    dplString = std::to_string(deltaPartialLow_);
+    dphString = std::to_string(deltaPartialHigh_);
+  }
   std::string txtFileName;
   if (misId == true) {
     txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) +
@@ -1477,7 +1482,6 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                              .c_str());
     double buDeltaCutEff = nBuCut / nOr;
     double deltaCutEff = nDeltaCut / nOr;
-
     // Binomial expectation value: efficienciy = N_success (binomal: err =
     // sqrt(pq) / N (poisson: err = sqrt(N)) Error: pq / N = sqrt(eff*(1-eff) /
     // N) by propagation or errors
@@ -1488,14 +1492,33 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     std::ofstream outFile;
     outFile.open(txtFileName);
     outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
-    outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
     outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
     outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
 
     map.insert(std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
-    map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
     map.insert(std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
+    map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
     map.insert(std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
+
+    double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
+    if (fitBuPartial_ == true) {
+      double nDeltaPartialCut =
+          chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                            dplString + "&&Delta_M<" + dphString)
+                               .c_str());
+      deltaPartialCutEff = nDeltaPartialCut / nOr;
+      deltaPartialCutEffErr =
+          std::sqrt((deltaPartialCutEff * (2 - deltaPartialCutEff)) / nOr);
+      outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEff) +
+                     "\n";
+      outFile << "deltaPartialCutEffErr " +
+                     std::to_string(deltaPartialCutEffErr) + "\n";
+      map.insert(std::pair<std::string, double>("deltaPartialCutEff",
+                                                deltaPartialCutEff));
+      map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
+                                                deltaPartialCutEffErr));
+    }
 
     outFile.close();
   } else {

@@ -420,15 +420,24 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                                        buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
                                        deltaCutEffMisId_Bu2Dst0h_D0gamma_,
                                        true);
+  std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
+                                     mapMisId_Bu2Dst0h_D0pi0, true);
+  buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+      mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+      mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"]);
   if (Configuration::Get().fitBuPartial() == true) {
-    Configuration::Get().SetEfficiencies(
-        Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-        deltaCutEffMisId_Bu2Dst0h_D0pi0_,
-        deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
-  } else {
-    Configuration::Get().SetEfficiencies(
-        Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-        deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
+    deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+        mapMisId_Bu2Dst0h_D0pi0["deltaPartialCutEff"]);
+    // Configuration::Get().SetEfficiencies(
+    //     Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+    //     deltaCutEffMisId_Bu2Dst0h_D0pi0_,
+    //     deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
+  // } else {
+  //   Configuration::Get().SetEfficiencies(
+  //       Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
+  //       deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
   }
   // std::cout << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
   //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
