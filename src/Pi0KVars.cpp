@@ -602,17 +602,27 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
   buDeltaCutEffMisId_MisRec_.setVal(mapMisId_MisRec["buDeltaCutEff"]);
   deltaCutEffMisId_MisRec_.setVal(mapMisId_MisRec["deltaCutEff"]);
 
-  Configuration::Get().SetEfficiencies(Mode::Bu2D0pi, Bachelor::k,
-                                       buDeltaCutEffMisId_Bu2D0h_,
-                                       deltaCutEffMisId_Bu2D0h_, true);
-  Configuration::Get().SetEfficiencies(Mode::Bu2Dst0rho_D0pi0, Bachelor::k,
-                                       buDeltaCutEffMisId_PartRec_,
-                                       deltaCutEffMisId_PartRec_, true);
+  std::map<std::string, double> mapMisId_Bu2D0h;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::k,
+                                     mapMisId_Bu2D0h, true);
+  buDeltaCutEffMisId_Bu2D0h_.setVal(mapMisId_Bu2D0h["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2D0h_.setVal(mapMisId_Bu2D0h["deltaCutEff"]);
 
-  Configuration::Get().SetEfficiencies(Mode::Bs2Dst0Kpi, Bachelor::k,
-                                       buDeltaCutEffBs2Dst0Kpi_,
-                                       deltaCutEffBs2Dst0Kpi_, false);
-  Configuration::Get().SetEfficiencies(Mode::Bs2D0Kpi, Bachelor::k,
-                                       buDeltaCutEffBs2D0Kpi_,
-                                       deltaCutEffBs2D0Kpi_, false);
+  std::map<std::string, double> mapMisId_PartRec;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::k,
+                                     mapMisId_PartRec, true);
+  buDeltaCutEffMisId_PartRec_.setVal(mapMisId_PartRec["buDeltaCutEff"]);
+  deltaCutEffMisId_PartRec_.setVal(mapMisId_PartRec["deltaCutEff"]);
+
+  std::map<std::string, double> mapBs2Dst0Kpi;
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
+                                     mapBs2Dst0Kpi, false);
+  buDeltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["buDeltaCutEff"]);
+  deltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["deltaCutEff"]);
+
+  std::map<std::string, double> mapBs2D0Kpi;
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
+                                     false);
+  buDeltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["buDeltaCutEff"]);
+  deltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["deltaCutEff"]);
 }
