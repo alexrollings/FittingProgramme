@@ -416,10 +416,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       buDeltaCutEffMisId_PartRec_(),
       deltaCutEffMisId_PartRec_(),
       deltaPartialCutEffMisId_PartRec_() {
-  Configuration::Get().SetEfficiencies(Mode::Bu2Dst0K_D0gamma, Bachelor::pi,
-                                       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                                       deltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                                       true);
+  std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::pi,
+                                     mapMisId_Bu2Dst0h_D0gamma, true);
+  buDeltaCutEffMisId_Bu2Dst0h_D0gamma_.setVal(
+      mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2Dst0h_D0gamma_.setVal(
+      mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"]);
+
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0pi0, true);
@@ -427,22 +431,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEff"]);
   deltaCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
       mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"]);
+
   if (Configuration::Get().fitBuPartial() == true) {
     deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
         mapMisId_Bu2Dst0h_D0pi0["deltaPartialCutEff"]);
-    // Configuration::Get().SetEfficiencies(
-    //     Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-    //     deltaCutEffMisId_Bu2Dst0h_D0pi0_,
-    //     deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_, true);
-  // } else {
-  //   Configuration::Get().SetEfficiencies(
-  //       Mode::Bu2Dst0K_D0pi0, Bachelor::pi, buDeltaCutEffMisId_Bu2Dst0h_D0pi0_,
-  //       deltaCutEffMisId_Bu2Dst0h_D0pi0_, true);
   }
-  // std::cout << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
 }
