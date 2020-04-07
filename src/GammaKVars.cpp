@@ -978,10 +978,27 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
           "", 1) {
-  Configuration::Get().SetEfficiencies(Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
-                                       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                                       deltaCutEffMisId_Bu2Dst0h_D0gamma_,
-                                       true);
+  std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
+                                     mapMisId_Bu2Dst0h_D0gamma, true);
+  buDeltaCutEffMisId_Bu2Dst0h_D0gamma_.setVal(
+      mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2Dst0h_D0gamma_.setVal(
+      mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"]);
+
+  std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+                                     mapMisId_Bu2Dst0h_D0pi0, true);
+  buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+      mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+      mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"]);
+
+  std::map<std::string, double> mapMisId_Bu2D0h;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::k,
+                                     mapMisId_Bu2D0h, true);
+  buDeltaCutEffMisId_Bu2D0h_.setVal(mapMisId_Bu2D0h["buDeltaCutEff"]);
+  deltaCutEffMisId_Bu2D0h_.setVal(mapMisId_Bu2D0h["deltaCutEff"]);
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
@@ -1100,38 +1117,25 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   buDeltaCutEffMisId_PartRec_.setVal(buDeltaCutEffMisId_PartRecVal);
   deltaCutEffMisId_PartRec_.setVal(deltaCutEffMisId_PartRecVal);
 
-  // std::cout << "\t buDeltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << buDeltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_Bu2Dst0h_D0pi0 = "
-  //           << deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.getVal() << "\n";
-  //
-  // std::cout << "\t buDeltaCutEffMisId_PartRec = "
-  //           << buDeltaCutEffMisId_PartRec_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_PartRec = "
-  //           << deltaCutEffMisId_PartRec_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_PartRec = "
-  //           << deltaPartialCutEffMisId_PartRec_.getVal() << "\n";
-  //
-  // std::cout << "\t buDeltaCutEffMisId_MisRec = "
-  //           << buDeltaCutEffMisId_MisRec_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_MisRec = "
-  //           << deltaCutEffMisId_MisRec_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_MisRec = "
-  //           << deltaPartialCutEffMisId_MisRec_.getVal() << "\n";
-  //
-  // std::cout << "\t buDeltaCutEffMisId_Bu2D0h = "
-  //           << buDeltaCutEffMisId_Bu2D0h_.getVal() << "\n"
-  //           << "\t deltaCutEffMisId_Bu2D0h = "
-  //           << deltaCutEffMisId_Bu2D0h_.getVal() << "\n"
-  //           << "\t deltaPartialCutEffMisId_Bu2D0h = "
-  //           << deltaPartialCutEffMisId_Bu2D0h_.getVal() << "\n";
+  std::map<std::string, double> mapBs2Dst0Kpi;
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
+                                     mapBs2Dst0Kpi, false);
+  buDeltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["buDeltaCutEff"]);
+  deltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["deltaCutEff"]);
 
-  Configuration::Get().SetEfficiencies(
-      Mode::Bs2Dst0Kpi, Bachelor::k, buDeltaCutEffBs2Dst0Kpi_,
-      deltaCutEffBs2Dst0Kpi_, deltaPartialCutEffBs2Dst0Kpi_, false);
-  Configuration::Get().SetEfficiencies(
-      Mode::Bs2D0Kpi, Bachelor::k, buDeltaCutEffBs2D0Kpi_, deltaCutEffBs2D0Kpi_,
-      deltaPartialCutEffBs2D0Kpi_, false);
+  std::map<std::string, double> mapBs2D0Kpi;
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
+                                     false);
+  buDeltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["buDeltaCutEff"]);
+  deltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["deltaCutEff"]);
+
+  if (Configuration::Get().fitBuPartial() == true) {
+    deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_.setVal(
+        mapMisId_Bu2Dst0h_D0pi0["deltaPartialCutEff"]);
+    deltaPartialCutEffMisId_Bu2D0h_.setVal(
+        mapMisId_Bu2D0h["deltaPartialCutEff"]);
+    deltaPartialCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["deltaPartialCutEff"]);
+    deltaPartialCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["deltaPartialCutEff"]);
+  }
+
 }
