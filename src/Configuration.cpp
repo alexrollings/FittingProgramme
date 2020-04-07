@@ -1483,21 +1483,16 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       }
     }
     double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
-    std::cout << "nOr = " << nOr << "\n";
     double nBuCut =
         chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
                           blString + "&&Bu_Delta_M<" + bhString)
                              .c_str());
-    std::cout << "nBuCut = " << nBuCut << "\n";
     double nDeltaCut =
         chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
                           dlString + "&&Delta_M<" + dhString)
                              .c_str());
-    std::cout << "nDeltaCut = " << nDeltaCut << "\n";
     double buDeltaCutEff = nBuCut / nOr;
     double deltaCutEff = nDeltaCut / nOr;
-    std::cout << "buDeltaCutEff = " << buDeltaCutEff << "\n";
-    std::cout << "deltaCutEff = " << deltaCutEff << "\n";
     // Binomial expectation value: efficienciy = N_success (binomal: err =
     // sqrt(pq) / N (poisson: err = sqrt(N)) Error: pq / N = sqrt(eff*(1-eff) /
     // N) by propagation or errors
@@ -1523,9 +1518,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
           chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
                             dplString + "&&Delta_M<" + dphString)
                                .c_str());
-      std::cout << "nDeltaPartialCut = " << nDeltaPartialCut << "\n";
       deltaPartialCutEff = nDeltaPartialCut / nOr;
-      std::cout << "deltaPartialCutEff = " << deltaPartialCutEff << "\n";
       deltaPartialCutEffErr =
           std::sqrt((deltaPartialCutEff * (2 - deltaPartialCutEff)) / nOr);
       outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEff) +
@@ -1714,17 +1707,14 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
                  ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
     }
     double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
-    std::cout << "nOr = " << nOr << "\n";
     double nBuCut =
         chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
                           blString + "&&Bu_Delta_M<" + bhString)
                              .c_str());
-    std::cout << "nBuCut = " << nBuCut << "\n";
     double nDeltaCut =
         chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
                           dlString + "&&Delta_M<" + dhString)
                              .c_str());
-    std::cout << "nDeltaCut = " << nDeltaCut << "\n";
     double nDeltaPartialCut =
         chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
                           dplString + "&&Delta_M<" + dphString)
@@ -1743,11 +1733,6 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
     double buDeltaCutEffVal = nBuCut / nOr;
     double deltaCutEffVal = nDeltaCut / nOr;
     double deltaPartialCutEffVal = nDeltaPartialCut / nOr;
-    std::cout << "buDeltaCutEff = " << buDeltaCutEffVal << "\n";
-    std::cout << "deltaCutEff = " << deltaCutEffVal << "\n";
-
-    std::cout << "nDeltaPartialCut = " << nDeltaPartialCut << "\n";
-    std::cout << "deltaPartialCutEff = " << deltaPartialCutEffVal << "\n";
 
     // if (misId == true &&
     //     (mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0pi_D0pi0 ||
