@@ -344,7 +344,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       {Mode::Bd2Dstpi, fracMisRec_Bd2Dsth_ / fracMisRec_}};
 
   std::map<std::string, double> mapMisRec;
-
   unsigned int it = 0;
   for (auto &m : misRecModesMap) {
     std::map<std::string, double> mapMisRecTmp;
