@@ -1,6 +1,7 @@
-#include "Configuration.h"
 #include <iomanip>
 #include <sstream>
+#include <cmath>
+#include "Configuration.h"
 #include "Params.h"
 
 Configuration::Configuration()
@@ -1417,6 +1418,102 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
     chain.Add(inputfile_10.c_str());
     chain.Add(inputfile_11.c_str());
     chain.Add(inputfile_12.c_str());
+  }
+}
+
+void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
+                                  std::map<std::string, double> &map,
+                                  bool misId) {
+  // std::cout << EnumToString(mode) << std::endl;
+  std::string dlString = std::to_string(deltaLow_);
+  std::string dhString = std::to_string(deltaHigh_);
+  std::string blString = std::to_string(buDeltaLow_);
+  std::string bhString = std::to_string(buDeltaHigh_);
+  std::string txtFileName;
+  if (misId == true) {
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) +
+                  "_misId_" + EnumToString(mode) + "_as_" +
+                  EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
+  } else {
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_" +
+                  EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
+  }
+
+  // Check if txt file containing efficiencies for particular mode and box dimns
+  // exists, if not, calculate eff and save in txt file
+  if (!file_exists(txtFileName)) {
+    std::string cutString, ttree;
+
+    switch (neutral()) {
+      case Neutral::gamma:
+        cutString = gammaCutString_;
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
+        break;
+      case Neutral::pi0:
+        cutString = pi0CutString_;
+        ttree = "BtoDstar0h3_h1h2pi0RTuple";
+        break;
+    }
+
+    TChain chain(ttree.c_str());
+    ExtractChain(mode, bachelor, chain);
+
+    std::string orString;
+    if (fit1D_ == false) {
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 "))";
+    } else {
+      orString = "(Delta_M>" + dlString + "&&Delta_M<" + dhString + ")";
+    }
+    double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
+    double nBuCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
+                          blString + "&&Bu_Delta_M<" + bhString)
+                             .c_str());
+    double nDeltaCut =
+        chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                          dlString + "&&Delta_M<" + dhString)
+                             .c_str());
+    double buDeltaCutEff = nBuCut / nOr;
+    double deltaCutEff = nDeltaCut / nOr;
+
+    // Binomial expectation value: efficienciy = N_success (binomal: err =
+    // sqrt(pq) / N (poisson: err = sqrt(N)) Error: pq / N = sqrt(eff*(1-eff) /
+    // N) by propagation or errors
+    double buDeltaCutEffErr =
+        std::sqrt((buDeltaCutEff * (1 - buDeltaCutEff)) / nOr);
+    double deltaCutEffErr = std::sqrt((deltaCutEff * (2 - deltaCutEff)) / nOr);
+
+    std::ofstream outFile;
+    outFile.open(txtFileName);
+    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
+    outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
+    outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
+
+    map.insert(std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
+    map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
+    map.insert(std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
+    map.insert(std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
+
+    outFile.close();
+  } else {
+    //   // If exists, read in from txt file
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << EnumToString(mode) << "...\n";
+    std::ifstream inFile(txtFileName);
+    // Create map to store efficiency string (label) and eff value
+    std::unordered_map<std::string, double> effMap;
+    std::string line;
+    // Loop over lines in txt file
+    while (std::getline(inFile, line)) {
+      // Separate label and value (white space)
+      std::vector<std::string> lineVec = SplitLine(line);
+      // Add to map
+      map.insert(
+          std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+    }
   }
 }
 

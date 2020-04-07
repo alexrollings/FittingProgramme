@@ -151,6 +151,8 @@ class Configuration {
   bool &runSystematics() { return runSystematics_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
+  void ReturnBoxEffs(Mode mode, Bachelor bachelor,
+                     std::map<std::string, double> &map, bool misId);
   void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &buDeltaCutEff,
                        RooRealVar &deltaCutEff, bool misId);
   void SetEfficiencies(Mode mode, Bachelor bachelor, RooRealVar &buDeltaCutEff,
