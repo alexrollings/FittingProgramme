@@ -312,6 +312,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_Bu2Dst0hst_D0gamma_(),
       fracPartRec_(0.290),
       initYieldFAVPartRec_() {
+
   if (Configuration::Get().splitByCharge() == true) {
     initYieldFAVMisRec_ =
         (Configuration::Get().initYieldFAVSignal() * fracMisRec_) / 4;
@@ -328,14 +329,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
         Configuration::Get().initYieldFAVSignal() * fracPartRec_;
   }
 
-  // Pass empty RRV for deltaPartialCutEff in π0 mode
-  Configuration::Get().SetEfficiencies(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
-                                       buDeltaCutEffBu2Dst0h_D0pi0_,
-                                       deltaCutEffBu2Dst0h_D0pi0_, false);
-  // std::cout << buDeltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n"
-  //           << "\t deltaCutEffBu2Dst0h_D0pi0 = "
-  //           << deltaCutEffBu2Dst0h_D0pi0_.getVal() << "\n";
-  //
+  std::map<std::string, double> mapBu2Dst0h_D0pi0;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
+                                       mapBu2Dst0h_D0pi0, true);
+  buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
+  deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
+
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
       {Mode::Bu2Dst0pi_D0gamma, fracMisRec_Bu2Dst0h_D0gamma_ / fracMisRec_},
@@ -363,23 +362,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   }
   buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
   deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
-  // std::cout << "\t buDeltaCutEffMisRec = " << buDeltaCutEffMisRec_.getVal()
-  //           << "\n"
-  //           << "\t deltaCutEffMisRec = " << deltaCutEffMisRec_.getVal() <<
-  //           "\n";
 
   Configuration::Get().SetEfficiencies(Mode::Bu2D0pi, Bachelor::pi,
                                        buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_,
                                        false);
-  // std::cout << "\t buDeltaCutEffBu2D0h = " << buDeltaCutEffBu2D0h_.getVal()
-  //           << "\n"
-  //           << "\t deltaCutEffBu2D0h = " << deltaCutEffBu2D0h_.getVal()
-  //           << "\n";
   Configuration::Get().SetEfficiencies(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
                                        buDeltaCutEffPartRec_,
                                        deltaCutEffPartRec_, false);
-  // std::cout << "\t buDeltaCutEffPartRec = "
-  //           << buDeltaCutEffPartRec_.getVal() << "\n"
-  //           << "\t deltaCutEffPartRec = "
-  //           << deltaCutEffPartRec_.getVal() << "\n";
 }
