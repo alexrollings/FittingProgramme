@@ -331,7 +331,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
 
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
-                                       mapBu2Dst0h_D0pi0, true);
+                                       mapBu2Dst0h_D0pi0, false);
   buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
   deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
 
@@ -343,30 +343,36 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       {Mode::Bu2D0rho, fracMisRec_Bu2D0hst_ / fracMisRec_},
       {Mode::Bd2Dstpi, fracMisRec_Bd2Dsth_ / fracMisRec_}};
 
-  double buDeltaCutEffMisRecVal = 0.0;
-  double deltaCutEffMisRecVal = 0.0;
+  std::map<std::string, double> mapMisRec;
 
+  unsigned int it = 0;
   for (auto &m : misRecModesMap) {
-    RooRealVar buDeltaCutEffTemp(
-        ("buDeltaCutEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-        1);
-    RooRealVar deltaCutEffTemp(
-        ("deltaCutEffTemp" + ComposeName(uniqueId, Neutral::pi0)).c_str(), "",
-        1);
-
-    Configuration::Get().SetEfficiencies(
-        m.first, Bachelor::pi, buDeltaCutEffTemp, deltaCutEffTemp, false);
-
-    buDeltaCutEffMisRecVal += buDeltaCutEffTemp.getVal() * m.second;
-    deltaCutEffMisRecVal += deltaCutEffTemp.getVal() * m.second;
-  }
-  buDeltaCutEffMisRec_.setVal(buDeltaCutEffMisRecVal);
-  deltaCutEffMisRec_.setVal(deltaCutEffMisRecVal);
-
-  Configuration::Get().SetEfficiencies(Mode::Bu2D0pi, Bachelor::pi,
-                                       buDeltaCutEffBu2D0h_, deltaCutEffBu2D0h_,
+    std::map<std::string, double> mapMisRecTmp;
+    Configuration::Get().ReturnBoxEffs(m.first, Bachelor::pi, mapMisRecTmp,
                                        false);
-  Configuration::Get().SetEfficiencies(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
-                                       buDeltaCutEffPartRec_,
-                                       deltaCutEffPartRec_, false);
+    if (it == 0) {
+      mapMisRec.insert(std::pair<std::string, double>(
+          "buDeltaCutEff", mapMisRecTmp["buDeltaCutEff"] * m.second));
+      mapMisRec.insert(std::pair<std::string, double>(
+          "deltaCutEff", mapMisRecTmp["deltaCutEff"] * m.second));
+    } else {
+      mapMisRec["buDeltaCutEff"] += mapMisRecTmp["buDeltaCutEff"] * m.second;
+      mapMisRec["deltaCutEff"] += mapMisRecTmp["deltaCutEff"] * m.second;
+    }
+    ++it;
+  }
+  buDeltaCutEffMisRec_.setVal(mapMisRec["buDeltaCutEff"]);
+  deltaCutEffMisRec_.setVal(mapMisRec["deltaCutEff"]);
+
+  std::map<std::string, double> mapBu2D0h;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi,
+                                       mapBu2D0h, false);
+  buDeltaCutEffBu2D0h_.setVal(mapBu2D0h["buDeltaCutEff"]);
+  deltaCutEffBu2D0h_.setVal(mapBu2D0h["deltaCutEff"]);
+
+  std::map<std::string, double> mapPartRec;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
+                                     mapPartRec, false);
+  buDeltaCutEffPartRec_.setVal(mapPartRec["buDeltaCutEff"]);
+  deltaCutEffPartRec_.setVal(mapPartRec["deltaCutEff"]);
 }
