@@ -66,7 +66,9 @@ enum class Systematic {
   misIdMisRecKPdfBuPartial,
   misIdPartRecKPdfBu,
   misIdPartRecKPdfBuPartial,
-  boxEffs,
+  buDeltaCutEffs,
+  deltaCutEffs,
+  deltaPartialCutEffs,
   pidEffPi,
   pidEffK
 };

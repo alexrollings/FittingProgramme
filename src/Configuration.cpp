@@ -264,8 +264,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdPartRecKPdfBu;
   } else if (systematic == "misIdPartRecKPdfBuPartial") {
     return Systematic::misIdPartRecKPdfBuPartial;
-  } else if (systematic == "boxEffs") {
-    return Systematic::boxEffs;
+  } else if (systematic == "buDeltaCutEffs") {
+    return Systematic::buDeltaCutEffs;
+  } else if (systematic == "deltaCutEffs") {
+    return Systematic::deltaCutEffs;
+  } else if (systematic == "deltaPartialCutEffs") {
+    return Systematic::deltaPartialCutEffs;
   } else if (systematic == "pidEffPi") {
     return Systematic::pidEffPi;
   } else if (systematic == "pidEffK") {
@@ -281,9 +285,9 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "partRecBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/"
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
-      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/boxEffs/pidEffPi/pidEffK]");
+      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
+      "deltaCutEffs/deltaPartialCutEffs/pidEffPi/pidEffK]");
 }
-  
 
 std::string EnumToString(Systematic systematic) {
   switch (systematic) {
@@ -345,8 +349,12 @@ std::string EnumToString(Systematic systematic) {
       return "misIdPartRecKPdfBu";
     case Systematic::misIdPartRecKPdfBuPartial:
       return "misIdPartRecKPdfBuPartial";
-    case Systematic::boxEffs:
-      return "boxEffs";
+    case Systematic::buDeltaCutEffs:
+      return "buDeltaCutEffs";
+    case Systematic::deltaCutEffs:
+      return "deltaCutEffs";
+    case Systematic::deltaPartialCutEffs:
+      return "deltaPartialCutEffs";
     case Systematic::pidEffPi:
       return "pidEffPi";
     case Systematic::pidEffK:

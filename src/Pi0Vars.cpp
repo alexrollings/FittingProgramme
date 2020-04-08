@@ -148,15 +148,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_aBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_nBuPartial_(nullptr),
-      buDeltaCutEffBu2Dst0h_D0gamma_(("buDeltaCutEffBu2Dst0h_D0gamma_" +
-                                      ComposeName(uniqueId, Neutral::pi0))
-                                         .c_str(),
-                                     "", 1),
-      deltaCutEffBu2Dst0h_D0gamma_(
-          ("deltaCutEffBu2Dst0h_D0gamma_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          "", 1),
-      deltaPartialCutEffBu2Dst0h_D0gamma_(),
+      buDeltaCutEffBu2Dst0h_D0gamma_(nullptr),
+      deltaCutEffBu2Dst0h_D0gamma_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0gamma_(nullptr),
       fracBu2Dst0h_D0gamma_(0.213),
       initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() *
                                     fracBu2Dst0h_D0gamma_),
@@ -334,6 +328,22 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        mapBu2Dst0h_D0pi0, false);
   buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
   deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
+
+  std::map<std::string, double> mapBu2Dst0h_D0gamma;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+                                       mapBu2Dst0h_D0gamma, false);
+  buDeltaCutEffBu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBu2Dst0h_D0gamma", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0gamma["buDeltaCutEff"],
+          mapBu2Dst0h_D0gamma["buDeltaCutEffErr"], Systematic::buDeltaCutEffs,
+          Sign::positive));
+  deltaCutEffBu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBu2Dst0h_D0gamma", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0gamma["deltaCutEff"],
+          mapBu2Dst0h_D0gamma["deltaCutEffErr"], Systematic::deltaCutEffs,
+          Sign::positive));
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN, fracMisRec_Bu2Dst0h_D0pi0_WN_ / fracMisRec_},
