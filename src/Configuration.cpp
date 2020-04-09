@@ -243,6 +243,18 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::partRecBuPdf;
   } else if (systematic == "partRecBuPartialPdf") {
     return Systematic::partRecBuPartialPdf;
+  } else if (systematic == "Bs2Dst0KpiDeltaPdf") {
+    return Systematic::Bs2Dst0KpiDeltaPdf;
+  } else if (systematic == "Bs2Dst0KpiBuPdf") {
+    return Systematic::Bs2Dst0KpiBuPdf;
+  } else if (systematic == "Bs2Dst0KpiBuPartialPdf") {
+    return Systematic::Bs2Dst0KpiBuPartialPdf;
+  } else if (systematic == "Bs2D0KpiDeltaPdf") {
+    return Systematic::Bs2D0KpiDeltaPdf;
+  } else if (systematic == "Bs2D0KpiBuPdf") {
+    return Systematic::Bs2D0KpiBuPdf;
+  } else if (systematic == "Bs2D0KpiBuPartialPdf") {
+    return Systematic::Bs2Dst0KpiBuPartialPdf;
   } else if (systematic == "misIdPi0PiPdfBu") {
     return Systematic::misIdPi0PiPdfBu;
   } else if (systematic == "misIdPi0KPdfBu") {
@@ -287,13 +299,16 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "crossFeedBuPdf/crossFeedBuPartialPdf/crossFeedDeltaPdf/gammaDeltaTails/"
       "gammaDeltaFrac/gammaBuTails/gammaBuFrac/misRecDeltaPdf/misRecBuPdf/"
       "misRecBuPartialPdf/partRecDeltaPdf/partRecBuPdf/"
-      "partRecBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/"
+      "partRecBuPartialPdf/Bs2Dst0KpiDeltaPdf/Bs2Dst0KpiBuPdf/"
+      "Bs2Dst0KpiBuPartialPdf/Bs2D0KpiDeltaPdf/Bs2D0KpiBuPdf/"
+      "Bs2D0KpiBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/"
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
       "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
       "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK]");
 }
+
 
 std::string EnumToString(Systematic systematic) {
   switch (systematic) {
@@ -335,6 +350,18 @@ std::string EnumToString(Systematic systematic) {
       return "partRecBuPdf";
     case Systematic::partRecBuPartialPdf:
       return "partRecBuPartialPdf";
+    case Systematic::Bs2Dst0KpiDeltaPdf:
+      return "Bs2Dst0KpiDeltaPdf";
+    case Systematic::Bs2Dst0KpiBuPdf:
+      return "Bs2Dst0KpiBuPdf";
+    case Systematic::Bs2Dst0KpiBuPartialPdf:
+      return "Bs2Dst0KpiBuPartialPdf";
+    case Systematic::Bs2D0KpiDeltaPdf:
+      return "Bs2D0KpiDeltaPdf";
+    case Systematic::Bs2D0KpiBuPdf:
+      return "Bs2D0KpiBuPdf";
+    case Systematic::Bs2D0KpiBuPartialPdf:
+      return "Bs2D0KpiBuPartialPdf";
     case Systematic::misIdPi0PiPdfBu:
       return "misIdPi0PiPdfBu";
     case Systematic::misIdPi0KPdfBu:
