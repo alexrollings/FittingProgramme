@@ -866,36 +866,33 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                             .c_str(),
                         "", RooArgList(pdf1Bu_Bs2D0Kpi_, pdf2Bu_Bs2D0Kpi_),
                         Bs2D0Kpi_fracPdf1Bu_)),
-      Bs2D0Kpi_meanBuPartial_(
-          ("Bs2D0Kpi_meanBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 5.3230e+03),
-      Bs2D0Kpi_sigmaLBuPartial_(
-          ("Bs2D0Kpi_sigmaLBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 8.3476e+01),
-      Bs2D0Kpi_sigmaRBuPartial_(
-          ("Bs2D0Kpi_sigmaRBuPartial_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 1.0900e+02),
-      Bs2D0Kpi_aLBuPartial_(("Bs2D0Kpi_aLBuPartial_" +
-                             ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                                .c_str(),
-                            "", 4.3590e-08),
-      Bs2D0Kpi_aRBuPartial_(("Bs2D0Kpi_aRBuPartial_" +
-                             ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                                .c_str(),
-                            "", 2.6176e-10),
+      Bs2D0Kpi_meanBuPartial_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_meanBuPartial", uniqueId, Neutral::pi0, Bachelor::k,
+          5.3230e+03, 9.23e+00, Systematic::Bs2D0KpiBuPartialPdf,
+          Sign::positive)),
+      Bs2D0Kpi_sigmaLBuPartial_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_sigmaLBuPartial", uniqueId, Neutral::pi0, Bachelor::k,
+          8.3476e+01, 5.23e+00, Systematic::Bs2D0KpiBuPartialPdf,
+          Sign::positive)),
+      Bs2D0Kpi_sigmaRBuPartial_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_sigmaRBuPartial", uniqueId, Neutral::pi0, Bachelor::k,
+          1.0900e+02, 1.01e+01, Systematic::Bs2D0KpiBuPartialPdf,
+          Sign::positive)),
+      Bs2D0Kpi_aLBuPartial_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_aLBuPartial", uniqueId, Neutral::pi0, Bachelor::k,
+          4.3590e-08, 2.85e-02, Systematic::Bs2D0KpiBuPartialPdf,
+          Sign::positive)),
+      Bs2D0Kpi_aRBuPartial_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_aRBuPartial", uniqueId, Neutral::pi0, Bachelor::k,
+          2.6176e-10, 1.50e-01, Systematic::Bs2D0KpiBuPartialPdf,
+          Sign::positive)),
       pdfBuPartial_Bs2D0Kpi_(
           ("pdfBuPartial_Bs2D0Kpi_" +
            ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), Bs2D0Kpi_meanBuPartial_,
-          Bs2D0Kpi_sigmaLBuPartial_, Bs2D0Kpi_sigmaRBuPartial_,
-          Bs2D0Kpi_aLBuPartial_, Bs2D0Kpi_aRBuPartial_),
+          "", Configuration::Get().buDeltaMass(), *Bs2D0Kpi_meanBuPartial_,
+          *Bs2D0Kpi_sigmaLBuPartial_, *Bs2D0Kpi_sigmaRBuPartial_,
+          *Bs2D0Kpi_aLBuPartial_, *Bs2D0Kpi_aRBuPartial_),
       buDeltaCutEffBs2D0Kpi_(nullptr),
       deltaCutEffBs2D0Kpi_(nullptr),
       deltaPartialCutEffBs2D0Kpi_(nullptr) {
