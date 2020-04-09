@@ -162,11 +162,11 @@ class NeutralVars {
     return *Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
   }
   RooRealVar &buDeltaCutEffBu2Dst0h_D0pi0() {
-    return buDeltaCutEffBu2Dst0h_D0pi0_;
+    return *buDeltaCutEffBu2Dst0h_D0pi0_;
   }
-  RooRealVar &deltaCutEffBu2Dst0h_D0pi0() { return deltaCutEffBu2Dst0h_D0pi0_; }
+  RooRealVar &deltaCutEffBu2Dst0h_D0pi0() { return *deltaCutEffBu2Dst0h_D0pi0_; }
   RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0() {
-    return deltaPartialCutEffBu2Dst0h_D0pi0_;
+    return *deltaPartialCutEffBu2Dst0h_D0pi0_;
   }
   double &initYieldFAVBu2Dst0h_D0pi0() { return initYieldFAVBu2Dst0h_D0pi0_; }
   // -------------------- MIS-REC -------------------- //
@@ -295,9 +295,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_n2BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_;
-  RooRealVar buDeltaCutEffBu2Dst0h_D0pi0_;
-  RooRealVar deltaCutEffBu2Dst0h_D0pi0_;
-  RooRealVar deltaPartialCutEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> deltaCutEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0pi0_;
   double fracBu2Dst0h_D0pi0_;
   double initYieldFAVBu2Dst0h_D0pi0_;
   // -------------------- MIS-REC -------------------- //

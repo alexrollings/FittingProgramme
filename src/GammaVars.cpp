@@ -193,18 +193,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdfCb2BuPartial", uniqueId, Neutral::gamma,
           4.4431e-01, 1.56e-02, Systematic::pi0BuPartialFrac, Sign::positive)),
-      buDeltaCutEffBu2Dst0h_D0pi0_(("buDeltaCutEffBu2Dst0h_D0pi0_" +
-                                    ComposeName(uniqueId, Neutral::gamma))
-                                       .c_str(),
-                                   "", 1),
-      deltaCutEffBu2Dst0h_D0pi0_(
-          ("deltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1),
-      deltaPartialCutEffBu2Dst0h_D0pi0_(("deltaPartialCutEffBu2Dst0h_D0pi0_" +
-                                         ComposeName(uniqueId, Neutral::gamma))
-                                            .c_str(),
-                                        "", 1),
+      buDeltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0pi0_(nullptr),
       fracBu2Dst0h_D0pi0_(0.871),
       initYieldFAVBu2Dst0h_D0pi0_(Configuration::Get().initYieldFAVSignal() *
                                   fracBu2Dst0h_D0pi0_),
@@ -438,8 +429,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                                      mapBu2Dst0h_D0pi0, false);
-  buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
-  deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
+  buDeltaCutEffBu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::gamma,
+          mapBu2Dst0h_D0pi0["buDeltaCutEff"],
+          mapBu2Dst0h_D0pi0["buDeltaCutEffErr"], Systematic::buDeltaCutEffs,
+          Sign::positive));
+  deltaCutEffBu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::gamma,
+          mapBu2Dst0h_D0pi0["deltaCutEff"],
+          mapBu2Dst0h_D0pi0["deltaCutEffErr"], Systematic::deltaCutEffs,
+          Sign::positive));
 
   std::map<std::string, double> mapBu2D0h;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
@@ -524,8 +525,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
             mapBu2Dst0h_D0gamma["deltaPartialCutEff"],
             mapBu2Dst0h_D0gamma["deltaPartialCutEffErr"],
             Systematic::deltaPartialCutEffs, Sign::positive));
-    deltaPartialCutEffBu2Dst0h_D0pi0_.setVal(
-        mapBu2Dst0h_D0pi0["deltaPartialCutEff"]);
+    deltaPartialCutEffBu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "deltaPartialCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::gamma,
+            mapBu2Dst0h_D0pi0["deltaPartialCutEff"],
+            mapBu2Dst0h_D0pi0["deltaPartialCutEffErr"],
+            Systematic::deltaPartialCutEffs, Sign::positive));
     deltaPartialCutEffBu2D0h_.setVal(mapBu2D0h["deltaPartialCutEff"]);
     deltaPartialCutEffMisRec_.setVal(mapMisRec["deltaPartialCutEff"]);
     deltaPartialCutEffPartRec_.setVal(mapPartRec["deltaPartialCutEff"]);

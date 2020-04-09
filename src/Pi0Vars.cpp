@@ -84,15 +84,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(nullptr),
-      buDeltaCutEffBu2Dst0h_D0pi0_(
-          ("buDeltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          "", 1),
-      deltaCutEffBu2Dst0h_D0pi0_(
-          ("deltaCutEffBu2Dst0h_D0pi0_" + ComposeName(uniqueId, Neutral::pi0))
-              .c_str(),
-          "", 1),
-      deltaPartialCutEffBu2Dst0h_D0pi0_(),
+      buDeltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0pi0_(nullptr),
       fracBu2Dst0h_D0pi0_(),
       initYieldFAVBu2Dst0h_D0pi0_(
           initYieldFAVBu2Dst0h_D0pi0_ =
@@ -326,8 +320,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                                        mapBu2Dst0h_D0pi0, false);
-  buDeltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["buDeltaCutEff"]);
-  deltaCutEffBu2Dst0h_D0pi0_.setVal(mapBu2Dst0h_D0pi0["deltaCutEff"]);
+  buDeltaCutEffBu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0pi0["buDeltaCutEff"],
+          mapBu2Dst0h_D0pi0["buDeltaCutEffErr"], Systematic::buDeltaCutEffs,
+          Sign::positive));
+  deltaCutEffBu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0pi0["deltaCutEff"],
+          mapBu2Dst0h_D0pi0["deltaCutEffErr"], Systematic::deltaCutEffs,
+          Sign::positive));
 
   std::map<std::string, double> mapBu2Dst0h_D0gamma;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
