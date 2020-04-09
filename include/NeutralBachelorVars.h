@@ -93,10 +93,10 @@ class NeutralBachelorVars {
     return *pdfBu_misId_MisRec_;
   }
   RooCruijff &pdfBuPartial_misId_MisRec() { return pdfBuPartial_misId_MisRec_; }
-  RooRealVar &buDeltaCutEffMisId_MisRec() { return buDeltaCutEffMisId_MisRec_; }
-  RooRealVar &deltaCutEffMisId_MisRec() { return deltaCutEffMisId_MisRec_; }
+  RooRealVar &buDeltaCutEffMisId_MisRec() { return *buDeltaCutEffMisId_MisRec_; }
+  RooRealVar &deltaCutEffMisId_MisRec() { return *deltaCutEffMisId_MisRec_; }
   RooRealVar &deltaPartialCutEffMisId_MisRec() {
-    return deltaPartialCutEffMisId_MisRec_;
+    return *deltaPartialCutEffMisId_MisRec_;
   }
   // -------------------- Bu2D0h -------------------- //
   RooCruijff &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
@@ -123,10 +123,10 @@ class NeutralBachelorVars {
     return pdfBu_misId_PartRec_;
   }
   RooCruijff &pdfBuPartial_misId_PartRec() { return pdfBuPartial_misId_PartRec_; }
-  RooRealVar &buDeltaCutEffMisId_PartRec() { return buDeltaCutEffMisId_PartRec_; }
-  RooRealVar &deltaCutEffMisId_PartRec() { return deltaCutEffMisId_PartRec_; }
+  RooRealVar &buDeltaCutEffMisId_PartRec() { return *buDeltaCutEffMisId_PartRec_; }
+  RooRealVar &deltaCutEffMisId_PartRec() { return *deltaCutEffMisId_PartRec_; }
   RooRealVar &deltaPartialCutEffMisId_PartRec() {
-    return deltaPartialCutEffMisId_PartRec_;
+    return *deltaPartialCutEffMisId_PartRec_;
   }
   // -------------------- Bs2Dst0Kpi -------------------- //
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() { return pdfDelta_Bs2Dst0Kpi_; }
@@ -243,9 +243,9 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> misId_MisRec_aLBuPartial_;
   std::shared_ptr<RooRealVar> misId_MisRec_aRBuPartial_;
   RooCruijff pdfBuPartial_misId_MisRec_;
-  RooRealVar buDeltaCutEffMisId_MisRec_;
-  RooRealVar deltaCutEffMisId_MisRec_;
-  RooRealVar deltaPartialCutEffMisId_MisRec_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_MisRec_;
+  std::shared_ptr<RooRealVar> deltaCutEffMisId_MisRec_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_MisRec_;
   // -------------------- Bu2D0h -------------------- //
   RooRealVar Bu2D0h_sigmaLBu_;
   RooRealVar Bu2D0h_sigmaRBu_;
@@ -293,9 +293,9 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> misId_PartRec_aLBuPartial_;
   std::shared_ptr<RooRealVar> misId_PartRec_aRBuPartial_;
   RooCruijff pdfBuPartial_misId_PartRec_;
-  RooRealVar buDeltaCutEffMisId_PartRec_;
-  RooRealVar deltaCutEffMisId_PartRec_;
-  RooRealVar deltaPartialCutEffMisId_PartRec_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_PartRec_;
+  std::shared_ptr<RooRealVar> deltaCutEffMisId_PartRec_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_PartRec_;
   // -------------------- Bs2Dst0Kpi -------------------- //
   RooRealVar Bs2Dst0Kpi_thresholdDelta_;
   RooRealVar Bs2Dst0Kpi_aDelta_;

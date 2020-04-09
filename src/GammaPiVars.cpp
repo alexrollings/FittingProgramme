@@ -282,9 +282,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_MisRec_aLBuPartial_(nullptr),
       misId_MisRec_aRBuPartial_(nullptr),
       pdfBuPartial_misId_MisRec_(),
-      buDeltaCutEffMisId_MisRec_(),
-      deltaCutEffMisId_MisRec_(),
-      deltaPartialCutEffMisId_MisRec_(),
+      buDeltaCutEffMisId_MisRec_(nullptr),
+      deltaCutEffMisId_MisRec_(nullptr),
+      deltaPartialCutEffMisId_MisRec_(nullptr),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_sigmaLBu_(("Bu2D0h_sigmaLBu_" +
                         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi))
@@ -412,9 +412,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_PartRec_aLBuPartial_(nullptr),
       misId_PartRec_aRBuPartial_(nullptr),
       pdfBuPartial_misId_PartRec_(),
-      buDeltaCutEffMisId_PartRec_(),
-      deltaCutEffMisId_PartRec_(),
-      deltaPartialCutEffMisId_PartRec_() {
+      buDeltaCutEffMisId_PartRec_(nullptr),
+      deltaCutEffMisId_PartRec_(nullptr),
+      deltaPartialCutEffMisId_PartRec_(nullptr) {
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0gamma, true);
