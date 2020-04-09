@@ -178,9 +178,9 @@ class NeutralVars {
   RooRealVar &MisRec_meanBuPartial() { return *MisRec_meanBuPartial_; }
   RooRealVar &MisRec_aLBuPartial() { return *MisRec_aLBuPartial_; }
   RooRealVar &MisRec_aRBuPartial() { return *MisRec_aRBuPartial_; }
-  RooRealVar &buDeltaCutEffMisRec() { return buDeltaCutEffMisRec_; }
-  RooRealVar &deltaCutEffMisRec() { return deltaCutEffMisRec_; }
-  RooRealVar &deltaPartialCutEffMisRec() { return deltaPartialCutEffMisRec_; }
+  RooRealVar &buDeltaCutEffMisRec() { return *buDeltaCutEffMisRec_; }
+  RooRealVar &deltaCutEffMisRec() { return *deltaCutEffMisRec_; }
+  RooRealVar &deltaPartialCutEffMisRec() { return *deltaPartialCutEffMisRec_; }
   double &fracMisRec_Bu2Dst0h_D0gamma() { return fracMisRec_Bu2Dst0h_D0gamma_; }
   double &fracMisRec_Bu2Dst0h_D0gamma_WN() {
     return fracMisRec_Bu2Dst0h_D0gamma_WN_;
@@ -201,9 +201,9 @@ class NeutralVars {
   RooRealVar &Bu2D0h_meanBuPartial() { return Bu2D0h_meanBuPartial_; }
   RooRealVar &Bu2D0h_aLBuPartial() { return Bu2D0h_aLBuPartial_; }
   RooRealVar &Bu2D0h_aRBuPartial() { return Bu2D0h_aRBuPartial_; }
-  RooRealVar &buDeltaCutEffBu2D0h() { return buDeltaCutEffBu2D0h_; }
-  RooRealVar &deltaCutEffBu2D0h() { return deltaCutEffBu2D0h_; }
-  RooRealVar &deltaPartialCutEffBu2D0h() { return deltaPartialCutEffBu2D0h_; }
+  RooRealVar &buDeltaCutEffBu2D0h() { return *buDeltaCutEffBu2D0h_; }
+  RooRealVar &deltaCutEffBu2D0h() { return *deltaCutEffBu2D0h_; }
+  RooRealVar &deltaPartialCutEffBu2D0h() { return *deltaPartialCutEffBu2D0h_; }
   double &initYieldFAVBu2D0h() { return initYieldFAVBu2D0h_; }
   // -------------------- PART REC -------------------- //
   RooDstD0BG &pdfDelta_PartRec() { return pdfDelta_PartRec_; }
@@ -313,9 +313,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> MisRec_meanBuPartial_;
   std::shared_ptr<RooRealVar> MisRec_aLBuPartial_;
   std::shared_ptr<RooRealVar> MisRec_aRBuPartial_;
-  RooRealVar buDeltaCutEffMisRec_;
-  RooRealVar deltaCutEffMisRec_;
-  RooRealVar deltaPartialCutEffMisRec_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffMisRec_;
+  std::shared_ptr<RooRealVar> deltaCutEffMisRec_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffMisRec_;
   double fracMisRec_Bu2Dst0h_D0gamma_;
   double fracMisRec_Bu2Dst0h_D0gamma_WN_;
   double fracMisRec_Bu2Dst0h_D0pi0_WN_;
@@ -336,9 +336,9 @@ class NeutralVars {
   RooRealVar Bu2D0h_meanBuPartial_;
   RooRealVar Bu2D0h_aLBuPartial_;
   RooRealVar Bu2D0h_aRBuPartial_;
-  RooRealVar buDeltaCutEffBu2D0h_;
-  RooRealVar deltaCutEffBu2D0h_;
-  RooRealVar deltaPartialCutEffBu2D0h_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffBu2D0h_;
+  std::shared_ptr<RooRealVar> deltaCutEffBu2D0h_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2D0h_;
   double fracBu2D0h_;
   double initYieldFAVBu2D0h_;
   // -------------------- PART REC -------------------- //
