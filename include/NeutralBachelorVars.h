@@ -133,26 +133,26 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBu_Bs2Dst0Kpi() { return *pdfBu_Bs2Dst0Kpi_; }
   RooCruijff &pdfBuPartial_Bs2Dst0Kpi() { return pdfBuPartial_Bs2Dst0Kpi_; }
   RooRealVar &buDeltaCutEffBs2Dst0Kpi() {
-    return buDeltaCutEffBs2Dst0Kpi_;
+    return *buDeltaCutEffBs2Dst0Kpi_;
   }
   RooRealVar &deltaCutEffBs2Dst0Kpi() {
-    return deltaCutEffBs2Dst0Kpi_;
+    return *deltaCutEffBs2Dst0Kpi_;
   }
   RooRealVar &deltaPartialCutEffBs2Dst0Kpi() {
-    return deltaPartialCutEffBs2Dst0Kpi_;
+    return *deltaPartialCutEffBs2Dst0Kpi_;
   }
   // -------------------- Bs2D0Kpi -------------------- //
   RooDstD0BG &pdfDelta_Bs2D0Kpi() { return pdfDelta_Bs2D0Kpi_; }
   RooAbsPdf &pdfBu_Bs2D0Kpi() { return *pdfBu_Bs2D0Kpi_; }
   RooCruijff &pdfBuPartial_Bs2D0Kpi() { return pdfBuPartial_Bs2D0Kpi_; }
   RooRealVar &buDeltaCutEffBs2D0Kpi() {
-    return buDeltaCutEffBs2D0Kpi_;
+    return *buDeltaCutEffBs2D0Kpi_;
   }
   RooRealVar &deltaCutEffBs2D0Kpi() {
-    return deltaCutEffBs2D0Kpi_;
+    return *deltaCutEffBs2D0Kpi_;
   }
   RooRealVar &deltaPartialCutEffBs2D0Kpi() {
-    return deltaPartialCutEffBs2D0Kpi_;
+    return *deltaPartialCutEffBs2D0Kpi_;
   }
 
  private:
@@ -333,9 +333,9 @@ class NeutralBachelorVars {
   RooRealVar Bs2Dst0Kpi_aLBuPartial_;
   RooRealVar Bs2Dst0Kpi_aRBuPartial_;
   RooCruijff pdfBuPartial_Bs2Dst0Kpi_;
-  RooRealVar buDeltaCutEffBs2Dst0Kpi_;
-  RooRealVar deltaCutEffBs2Dst0Kpi_;
-  RooRealVar deltaPartialCutEffBs2Dst0Kpi_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffBs2Dst0Kpi_;
+  std::shared_ptr<RooRealVar> deltaCutEffBs2Dst0Kpi_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffBs2Dst0Kpi_;
   // -------------------- Bs2D0Kpi -------------------- //
   RooRealVar Bs2D0Kpi_thresholdDelta_;
   RooRealVar Bs2D0Kpi_aDelta_;
@@ -358,9 +358,9 @@ class NeutralBachelorVars {
   RooRealVar Bs2D0Kpi_aLBuPartial_;
   RooRealVar Bs2D0Kpi_aRBuPartial_;
   RooCruijff pdfBuPartial_Bs2D0Kpi_;
-  RooRealVar buDeltaCutEffBs2D0Kpi_;
-  RooRealVar deltaCutEffBs2D0Kpi_;
-  RooRealVar deltaPartialCutEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> deltaCutEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffBs2D0Kpi_;
 };
 
 

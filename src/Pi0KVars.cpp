@@ -463,16 +463,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bs2Dst0Kpi_aLBuPartial_(),
       Bs2Dst0Kpi_aRBuPartial_(),
       pdfBuPartial_Bs2Dst0Kpi_(),
-      buDeltaCutEffBs2Dst0Kpi_(
-          ("buDeltaCutEffBs2Dst0Kpi_" +
-           ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", 1),  //, -1, 1),
-      deltaCutEffBs2Dst0Kpi_(("deltaCutEffBs2Dst0Kpi_" +
-                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                 .c_str(),
-                             "", 1),
-      deltaPartialCutEffBs2Dst0Kpi_(),
+      buDeltaCutEffBs2Dst0Kpi_(nullptr),
+      deltaCutEffBs2Dst0Kpi_(nullptr),
+      deltaPartialCutEffBs2Dst0Kpi_(nullptr),
       // -------------------- Bs2D0Kpi -------------------- //
       Bs2D0Kpi_thresholdDelta_(),
       Bs2D0Kpi_aDelta_(),
@@ -510,15 +503,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bs2D0Kpi_aLBuPartial_(),
       Bs2D0Kpi_aRBuPartial_(),
       pdfBuPartial_Bs2D0Kpi_(),
-      buDeltaCutEffBs2D0Kpi_(("buDeltaCutEffBs2D0Kpi_" +
-                              ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                                 .c_str(),
-                             "", 1),  //, -1, 1),
-      deltaCutEffBs2D0Kpi_(("deltaCutEffBs2D0Kpi_" +
-                            ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                               .c_str(),
-                           "", 1),
-      deltaPartialCutEffBs2D0Kpi_() {
+      buDeltaCutEffBs2D0Kpi_(nullptr),
+      deltaCutEffBs2D0Kpi_(nullptr),
+      deltaPartialCutEffBs2D0Kpi_(nullptr) {
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
                                      mapMisId_Bu2Dst0h_D0pi0, true);
@@ -636,12 +623,28 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
   std::map<std::string, double> mapBs2Dst0Kpi;
   Configuration::Get().ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
                                      mapBs2Dst0Kpi, false);
-  buDeltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["buDeltaCutEff"]);
-  deltaCutEffBs2Dst0Kpi_.setVal(mapBs2Dst0Kpi["deltaCutEff"]);
+  buDeltaCutEffBs2Dst0Kpi_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBs2Dst0Kpi", uniqueId, Neutral::pi0, Bachelor::k,
+          mapBs2Dst0Kpi["buDeltaCutEff"], mapBs2Dst0Kpi["buDeltaCutEffErr"],
+          Systematic::buDeltaCutEffs, Sign::positive));
+  deltaCutEffBs2Dst0Kpi_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBs2Dst0Kpi", uniqueId, Neutral::pi0, Bachelor::k,
+          mapBs2Dst0Kpi["deltaCutEff"], mapBs2Dst0Kpi["deltaCutEffErr"],
+          Systematic::deltaCutEffs, Sign::positive));
 
   std::map<std::string, double> mapBs2D0Kpi;
   Configuration::Get().ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
                                      false);
-  buDeltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["buDeltaCutEff"]);
-  deltaCutEffBs2D0Kpi_.setVal(mapBs2D0Kpi["deltaCutEff"]);
+  buDeltaCutEffBs2D0Kpi_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBs2D0Kpi", uniqueId, Neutral::pi0, Bachelor::k,
+          mapBs2D0Kpi["buDeltaCutEff"], mapBs2D0Kpi["buDeltaCutEffErr"],
+          Systematic::buDeltaCutEffs, Sign::positive));
+  deltaCutEffBs2D0Kpi_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBs2D0Kpi", uniqueId, Neutral::pi0, Bachelor::k,
+          mapBs2D0Kpi["deltaCutEff"], mapBs2D0Kpi["deltaCutEffErr"],
+          Systematic::deltaCutEffs, Sign::positive));
 }
