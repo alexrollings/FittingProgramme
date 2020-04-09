@@ -104,10 +104,10 @@ class NeutralBachelorVars {
   // -------------------- Mis-ID ------------------- //
   RooCruijff &pdfBu_misId_Bu2D0h() { return pdfBu_misId_Bu2D0h_; }
   RooCruijff &pdfBuPartial_misId_Bu2D0h() { return pdfBuPartial_misId_Bu2D0h_; }
-  RooRealVar &buDeltaCutEffMisId_Bu2D0h() { return buDeltaCutEffMisId_Bu2D0h_; }
-  RooRealVar &deltaCutEffMisId_Bu2D0h() { return deltaCutEffMisId_Bu2D0h_; }
+  RooRealVar &buDeltaCutEffMisId_Bu2D0h() { return *buDeltaCutEffMisId_Bu2D0h_; }
+  RooRealVar &deltaCutEffMisId_Bu2D0h() { return *deltaCutEffMisId_Bu2D0h_; }
   RooRealVar &deltaPartialCutEffMisId_Bu2D0h() {
-    return deltaPartialCutEffMisId_Bu2D0h_;
+    return *deltaPartialCutEffMisId_Bu2D0h_;
   }
   // -------------------- PART REC -------------------- //
   RooRealVar &PartRec_D0pi0_sigmaLBu() { return *PartRec_D0pi0_sigmaLBu_; }
@@ -266,9 +266,9 @@ class NeutralBachelorVars {
   RooRealVar misId_Bu2D0h_aLBuPartial_;
   RooRealVar misId_Bu2D0h_aRBuPartial_;
   RooCruijff pdfBuPartial_misId_Bu2D0h_;
-  RooRealVar buDeltaCutEffMisId_Bu2D0h_;
-  RooRealVar deltaCutEffMisId_Bu2D0h_;
-  RooRealVar deltaPartialCutEffMisId_Bu2D0h_;
+  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2D0h_;
+  std::shared_ptr<RooRealVar> deltaCutEffMisId_Bu2D0h_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_Bu2D0h_;
   // -------------------- PART REC -------------------- //
   std::shared_ptr<RooRealVar> PartRec_D0pi0_sigmaLBu_;
   std::shared_ptr<RooRealVar> PartRec_D0pi0_sigmaRBu_;

@@ -221,9 +221,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2D0h_aLBuPartial_(),
       misId_Bu2D0h_aRBuPartial_(),
       pdfBuPartial_misId_Bu2D0h_(),
-      buDeltaCutEffMisId_Bu2D0h_(),
-      deltaCutEffMisId_Bu2D0h_(),
-      deltaPartialCutEffMisId_Bu2D0h_(),
+      buDeltaCutEffMisId_Bu2D0h_(nullptr),
+      deltaCutEffMisId_Bu2D0h_(nullptr),
+      deltaPartialCutEffMisId_Bu2D0h_(nullptr),
       // -------------------- PART REC -------------------- //
       PartRec_D0pi0_sigmaLBu_(Params::Get().CreateFixed(
           "PartRec_D0pi0_sigmaLBu", uniqueId, Neutral::pi0, Bachelor::pi,
