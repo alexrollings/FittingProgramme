@@ -1,7 +1,7 @@
+#include "Configuration.h"
+#include <cmath>
 #include <iomanip>
 #include <sstream>
-#include <cmath>
-#include "Configuration.h"
 #include "Params.h"
 
 Configuration::Configuration()
@@ -34,8 +34,7 @@ Configuration::Configuration()
                                          Systematic::pidEffK, Sign::positive)),
       // pidEffPi_(Params::Get().CreateFixed(
       //     "pidEffPi", 0.996, 1e-02, Systematic::pidEffPi, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFloating(
-          "pidEffPi", 0.996, 0.5, 1.5)),
+      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
@@ -270,6 +269,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::deltaCutEffs;
   } else if (systematic == "deltaPartialCutEffs") {
     return Systematic::deltaPartialCutEffs;
+  } else if (systematic == "buDeltaMisIdCutEffs") {
+    return Systematic::buDeltaMisIdCutEffs;
+  } else if (systematic == "deltaMisIdCutEffs") {
+    return Systematic::deltaMisIdCutEffs;
+  } else if (systematic == "deltaPartialMisIdCutEffs") {
+    return Systematic::deltaPartialMisIdCutEffs;
   } else if (systematic == "pidEffPi") {
     return Systematic::pidEffPi;
   } else if (systematic == "pidEffK") {
@@ -286,7 +291,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
       "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
-      "deltaCutEffs/deltaPartialCutEffs/pidEffPi/pidEffK]");
+      "deltaCutEffs/deltaPartialCutEffs/"
+      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK]");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -355,6 +361,12 @@ std::string EnumToString(Systematic systematic) {
       return "deltaCutEffs";
     case Systematic::deltaPartialCutEffs:
       return "deltaPartialCutEffs";
+    case Systematic::buDeltaMisIdCutEffs:
+      return "buDeltaMisIdCutEffs";
+    case Systematic::deltaMisIdCutEffs:
+      return "deltaMisIdCutEffs";
+    case Systematic::deltaPartialMisIdCutEffs:
+      return "deltaPartialMisIdCutEffs";
     case Systematic::pidEffPi:
       return "pidEffPi";
     case Systematic::pidEffK:
@@ -1447,9 +1459,9 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   }
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) +
-                  "_misId_" + EnumToString(mode) + "_as_" +
-                  EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
+    txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_misId_" +
+                  EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
+                  ReturnBoxString() + ".txt";
   } else {
     txtFileName = "../txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
@@ -1519,9 +1531,11 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
 
     map.insert(std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
-    map.insert(std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
+    map.insert(
+        std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
     map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
-    map.insert(std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
+    map.insert(
+        std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
 
     double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
     if (fitBuPartial_ == true) {

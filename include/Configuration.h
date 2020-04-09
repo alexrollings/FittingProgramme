@@ -69,6 +69,9 @@ enum class Systematic {
   buDeltaCutEffs,
   deltaCutEffs,
   deltaPartialCutEffs,
+  buDeltaMisIdCutEffs,
+  deltaMisIdCutEffs,
+  deltaPartialMisIdCutEffs,
   pidEffPi,
   pidEffK
 };

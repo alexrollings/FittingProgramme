@@ -2699,9 +2699,11 @@ void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
   std::map<std::string, double> effMap;
   config.ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
   outputFile.cd();
-  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(), &effMap["buDeltaCutEff"],
+  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(),
+              &effMap["buDeltaCutEff"],
               ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(), &effMap["deltaCutEff"],
+  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(),
+              &effMap["deltaCutEff"],
               ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
   if (config.fitBuPartial() == true) {
     tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
@@ -2823,7 +2825,9 @@ int main(int argc, char **argv) {
                    "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
                    "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
                    "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
-                   "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,pidEffPi,"
+                   "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
+                   "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
+                   "deltaPartialMisIdCutEffs,pidEffPi,"
                    "pidEffK} "
                    "default: None>"
                 << "\n";
@@ -2938,19 +2942,21 @@ int main(int argc, char **argv) {
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
-          std::cerr << "systematic assignment failed, please specify: "
-                       "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
-                       "pi0BuPartialTails,pi0BuPartialFrac,"
-                       "pi0BuPartialSigma1,crossFeedBuPdf,"
-                       "crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,"
-                       "gammaBuTails,gammaBuFrac,misRecDeltaPdf,misRecBuPdf,"
-                       "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
-                       "partRecBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
-                       "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
-                       "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
-                       "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
-                       "misIdPartRecKPdfBuPartial,buDeltaCutEffs,deltaCutEffs,"
-                       "deltaPartialCutEffs,pidEffPi,pidEffK\n";
+          std::cerr
+              << "systematic assignment failed, please specify: "
+                 "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,"
+                 "pi0BuPartialTails,pi0BuPartialFrac,"
+                 "pi0BuPartialSigma1,crossFeedBuPdf,"
+                 "crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,"
+                 "gammaBuTails,gammaBuFrac,misRecDeltaPdf,misRecBuPdf,"
+                 "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
+                 "partRecBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
+                 "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
+                 "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
+                 "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
+                 "misIdPartRecKPdfBuPartial,buDeltaCutEffs,deltaCutEffs,"
+                 "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
+                 "deltaPartialMisIdCutEffs,pidEffPi,pidEffK\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
