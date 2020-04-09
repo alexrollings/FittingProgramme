@@ -464,23 +464,21 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                          "", Configuration::Get().deltaMass(),
                          *Bs2Dst0Kpi_thresholdDelta_, *Bs2Dst0Kpi_cDelta_,
                          *Bs2Dst0Kpi_aDelta_, *Bs2Dst0Kpi_bDelta_),
-      Bs2D0Kpi_mean1Bu_(("Bs2D0Kpi_meanBu_" +
-                         ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                            .c_str(),
-                        "", 5.3384e+03),
-      Bs2D0Kpi_sigma1Bu_(("Bs2D0Kpi_sigmaBu_" +
-                          ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
-                             .c_str(),
-                         "", 8.2330e+01),
+      Bs2D0Kpi_mean1Bu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_mean1Bu", uniqueId, Neutral::pi0, Bachelor::k, 5.3384e+03,
+          2.11e+01, Systematic::Bs2D0KpiBuPdf, Sign::positive)),
+      Bs2D0Kpi_sigma1Bu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_sigma1Bu", uniqueId, Neutral::pi0, Bachelor::k, 8.2330e+01,
+          1.51e+01, Systematic::Bs2D0KpiBuPdf, Sign::positive)),
       pdfBu_Bs2D0Kpi_(new RooGaussian(
           ("pdfBu_Bs2D0Kpi_" + ComposeName(uniqueId, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), Bs2D0Kpi_mean1Bu_,
-          Bs2D0Kpi_sigma1Bu_)),
-      Bs2D0Kpi_mean2Bu_(),
-      Bs2D0Kpi_sigma2Bu_(),
-      Bs2D0Kpi_a1Bu_(),
-      Bs2D0Kpi_n1Bu_(),
+          "", Configuration::Get().buDeltaMass(), *Bs2D0Kpi_mean1Bu_,
+          *Bs2D0Kpi_sigma1Bu_)),
+      Bs2D0Kpi_mean2Bu_(nullptr),
+      Bs2D0Kpi_sigma2Bu_(nullptr),
+      Bs2D0Kpi_a1Bu_(nullptr),
+      Bs2D0Kpi_n1Bu_(nullptr),
       pdf1Bu_Bs2D0Kpi_(),
       pdf2Bu_Bs2D0Kpi_(),
       Bs2D0Kpi_fracPdf1Bu_(),
