@@ -359,18 +359,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       PartRec_aRBuPartial_(Params::Get().CreateFixed(
           "PartRec_aRBuPartial", uniqueId, Neutral::gamma, 1.3962e-01, 6.78e-03,
           Systematic::partRecBuPartialPdf, Sign::positive)),
-      buDeltaCutEffPartRec_(
-          ("buDeltaCutEffPartRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1),
-      deltaCutEffPartRec_(
-          ("deltaCutEffPartRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1),
-      deltaPartialCutEffPartRec_(
-          ("deltaPartialCutEffPartRec_" + ComposeName(uniqueId, Neutral::gamma))
-              .c_str(),
-          "", 1),
+      buDeltaCutEffPartRec_(nullptr),
+      deltaCutEffPartRec_(nullptr),
+      deltaPartialCutEffPartRec_(nullptr),
       fracPartRec_Bu2Dst0hst_D0gamma_(0.141),
       fracPartRec_Bu2Dst0hst_D0pi0_(0.162),
       fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ +
@@ -517,8 +508,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     }
     ++it;
   }
-  buDeltaCutEffPartRec_.setVal(mapPartRec["buDeltaCutEff"]);
-  deltaCutEffPartRec_.setVal(mapPartRec["deltaCutEff"]);
+  buDeltaCutEffPartRec_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffPartRec", uniqueId, Neutral::gamma,
+          mapPartRec["buDeltaCutEff"],
+          mapPartRec["buDeltaCutEffErr"], Systematic::buDeltaCutEffs,
+          Sign::positive));
+  deltaCutEffPartRec_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffPartRec", uniqueId, Neutral::gamma,
+          mapPartRec["deltaCutEff"],
+          mapPartRec["deltaCutEffErr"], Systematic::deltaCutEffs,
+          Sign::positive));
 
   if (Configuration::Get().fitBuPartial() == true) {
     deltaPartialCutEffBu2Dst0h_D0gamma_ =
@@ -545,6 +546,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
             mapMisRec["deltaPartialCutEff"],
             mapMisRec["deltaPartialCutEffErr"],
             Systematic::deltaPartialCutEffs, Sign::positive));
-    deltaPartialCutEffPartRec_.setVal(mapPartRec["deltaPartialCutEff"]);
+    deltaPartialCutEffPartRec_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "deltaPartialCutEffPartRec", uniqueId, Neutral::gamma,
+            mapPartRec["deltaPartialCutEff"],
+            mapPartRec["deltaPartialCutEffErr"],
+            Systematic::deltaPartialCutEffs, Sign::positive));
   }
 }
