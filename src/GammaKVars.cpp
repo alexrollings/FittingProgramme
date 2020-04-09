@@ -798,29 +798,24 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       deltaCutEffBs2Dst0Kpi_(nullptr),
       deltaPartialCutEffBs2Dst0Kpi_(nullptr),
       // -------------------- Bs2D0Kpi -------------------- //
-      Bs2D0Kpi_thresholdDelta_(
-          ("Bs2D0Kpi_thresholdDelta_" +
-           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", 6.1137e+01),
-      Bs2D0Kpi_aDelta_(("Bs2D0Kpi_aDelta_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                           .c_str(),
-                       "", 3.5461e-01),
-      Bs2D0Kpi_bDelta_(("Bs2D0Kpi_bDelta_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                           .c_str(),
-                       "", -3.6036e-01),
-      Bs2D0Kpi_cDelta_(("Bs2D0Kpi_cDelta_" +
-                        ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
-                           .c_str(),
-                       "", 4.7687e+01),
+      Bs2D0Kpi_thresholdDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_thresholdDelta", uniqueId, Neutral::gamma, Bachelor::k,
+          6.0000e+01, 2.39e-02, Systematic::Bs2D0KpiDeltaPdf, Sign::positive)),
+      Bs2D0Kpi_aDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_aDelta", uniqueId, Neutral::gamma, Bachelor::k,
+          5.4698e-01, 1.77e-01, Systematic::Bs2D0KpiDeltaPdf, Sign::none)),
+      Bs2D0Kpi_bDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_bDelta", uniqueId, Neutral::gamma, Bachelor::k,
+          -5.5240e-01, 2.29e-01, Systematic::Bs2D0KpiDeltaPdf, Sign::none)),
+      Bs2D0Kpi_cDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_cDelta", uniqueId, Neutral::gamma, Bachelor::k,
+          4.7687e+01, 1e00, Systematic::NA, Sign::positive)),
       pdfDelta_Bs2D0Kpi_(("pdfDelta_Bs2D0Kpi_" +
                           ComposeName(uniqueId, Neutral::gamma, Bachelor::k))
                              .c_str(),
                          "", Configuration::Get().deltaMass(),
-                         Bs2D0Kpi_thresholdDelta_, Bs2D0Kpi_cDelta_,
-                         Bs2D0Kpi_aDelta_, Bs2D0Kpi_bDelta_),
+                         *Bs2D0Kpi_thresholdDelta_, *Bs2D0Kpi_cDelta_,
+                         *Bs2D0Kpi_aDelta_, *Bs2D0Kpi_bDelta_),
       Bs2D0Kpi_mean1Bu_(Params::Get().CreateFixed(
           "Bs2D0Kpi_mean1Bu", uniqueId, Neutral::gamma, Bachelor::k, 5.2304e+03,
           3.81e+01, Systematic::Bs2D0KpiBuPdf, Sign::positive)),
