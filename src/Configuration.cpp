@@ -254,7 +254,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
   } else if (systematic == "Bs2D0KpiBuPdf") {
     return Systematic::Bs2D0KpiBuPdf;
   } else if (systematic == "Bs2D0KpiBuPartialPdf") {
-    return Systematic::Bs2Dst0KpiBuPartialPdf;
+    return Systematic::Bs2D0KpiBuPartialPdf;
   } else if (systematic == "misIdPi0PiPdfBu") {
     return Systematic::misIdPi0PiPdfBu;
   } else if (systematic == "misIdPi0KPdfBu") {
