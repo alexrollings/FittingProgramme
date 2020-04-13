@@ -286,11 +286,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "buDeltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId, Neutral::pi0,
           mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"],
           mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEffErr"],
-          Systematic::buDeltaMisIdCutEffs, Sign::positive));
+          Systematic::NA, Sign::positive));
   deltaCutEffMisId_Bu2Dst0h_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "deltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId, Neutral::pi0,
           mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"],
           mapMisId_Bu2Dst0h_D0gamma["deltaCutEffErr"],
-          Systematic::deltaMisIdCutEffs, Sign::positive));
+          Systematic::NA, Sign::positive));
 }
