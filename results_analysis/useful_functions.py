@@ -1,4 +1,25 @@
-import os
+import os, re
+
+def return_group(syst, neutral):
+  re_group_dict = {
+      'misId\S+PiPdf': 'MisId$K\\rightarrow \\pi$',
+      'misId\S+KPdf': 'MisId$\\pi\\rightarrow K$',
+      'partRec\S+': 'Part-reco PDFs',
+      'Bs2Dst0\S+': 'Part-reco PDFs',
+      'misRec\S+': 'Mis-reco PDFs',
+      'Bs2D0\S+': 'Mis-reco PDFs',
+      'crossFeed\S+': 'Mis-reco PDFs',
+      '\S+CutEffs': '$\epsilon_{BOX}$',
+      'pidEffK': '$\epsilon_{PIDK}$',
+  }
+  if neutral == 'pi0':
+    re_group_dict['pi0\S+'] = 'Signal PDFs'
+  else:
+    re_group_dict['gamma\S+'] = 'Signal PDFs'
+  for k, v in re_group_dict.items():
+    m = re.search(k, syst)
+    if m:
+      return v
 
 def neutral_label(n_str):
   if n_str == "gamma":
@@ -9,71 +30,71 @@ def neutral_label(n_str):
 def return_label(observable_string):
   labels = {
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi':
-          '$N_{(D^{0*}\\rightarrow \\left[K\\pi\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\gamma)\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk':
-          '$N_{(D^{0*}\\rightarrow \\left[KK\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[KK\\right]_{D}\\gamma)\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_pipi':
-          '$N_{(D^{0*}\\rightarrow \\left[\\pi\\pi\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[\\pi\\pi\\right]_{D}\\gamma)\\pi^{\\pm}}$',
       'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_gamma_kpi':
-          '$R^{D^{0*}K/D^{0*}\\pi}_{D\\gamma}$',
+          '$R^{D^{*}K/D^{*}\\pi}_{D\\gamma}$',
       'R_CP_Bu2Dst0h_D0gamma_Blind_gamma_kk':
           '$R^{CP}_{D\\gamma}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$R^{\\pm}_{(D\\gamma)\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)K}$',
+          '$R^{\\pm}_{(D\\gamma)K^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$R^{+}_{(D\\gamma)\\pi^{+}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)K}$',
+          '$R^{+}_{(D\\gamma)K^{+}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)\\pi}$',
+          '$R^{-}_{(D\\gamma)\\pi^{-}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\gamma)K}$',
+          '$R^{-}_{(D\\gamma)K^{-}}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi':
-          '$N_{(D^{0*}\\rightarrow \\left[K\\pi\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk':
-          '$N_{(D^{0*}\\rightarrow \\left[KK\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[KK\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_pipi':
-          '$N_{(D^{0*}\\rightarrow \\left[\\pi\\pi\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[\\pi\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_gamma_kpi':
-          '$R^{D^{0*}K/D^{0*}\\pi}_{D\\pi^{0}}$',
+          '$R^{D^{*}K/D^{*}\\pi}_{D\\pi^{0}}$',
       'R_CP_Bu2Dst0h_D0pi0_Blind_gamma_kk':
           '$R^{CP}_{D\\pi^{0}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$',
+          '$R^{\\pm}_{(D\\pi^{0})K^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{+}_{(D\\pi^{0})\\pi^{+}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$',
+          '$R^{+}_{(D\\pi^{0})K^{+}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{-}_{(D\\pi^{0})\\pi^{-}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$',
+          '$R^{-}_{(D\\pi^{0})K^{-}}$',
       'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi':
-          '$N_{(D^{0*}\\rightarrow \\left[K\\pi\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk':
-          '$N_{(D^{0*}\\rightarrow \\left[KK\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[KK\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi':
-          '$N_{(D^{0*}\\rightarrow \\left[\\pi\\pi\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$N_{(D^{*}\\rightarrow \\left[\\pi\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_pi0_kpi':
-          '$R^{D^{0*}K/D^{0*}\\pi}_{D\\pi^{0}}$',
+          '$R^{D^{*}K/D^{*}\\pi}_{D\\pi^{0}}$',
       'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk':
           '$R^{CP}_{D\\pi^{0}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total':
-          '$R^{\\pm}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$',
+          '$R^{\\pm}_{(D\\pi^{0})K^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{+}_{(D\\pi^{0})\\pi^{+}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_plus':
-          '$R^{+}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$',
+          '$R^{+}_{(D\\pi^{0})K^{+}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})\\pi}$',
+          '$R^{-}_{(D\\pi^{0})\\pi^{-}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus':
-          '$R^{-}_{(D^{0*}\\rightarrow \\left[\\pi K\\right]_{D^{0}}\\pi^{0})K}$'
+          '$R^{-}_{(D^{*}K^{-}}$'
   }
   if observable_string in labels:
     l = labels[observable_string]

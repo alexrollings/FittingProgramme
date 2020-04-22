@@ -44,9 +44,10 @@ if __name__ == '__main__':
   tex_file.write("\\restylefloat{table}\n")
   tex_file.write("\\begin{document}\n")
 
-  for syst in systematics:
+  for syst in sorted(systematics):
     row_arr = []
-    for k, v in d.items():
+    for k in sorted(d):
+      v = d[k]
       if syst == k.split(':')[1]:
         name = k.split(':')[2].replace('_', '\\_')
         bachelor = k.split(':')[3]

@@ -4,6 +4,7 @@ import root_numpy as r_np
 import numpy as np
 import argparse
 from useful_functions import return_label
+from useful_functions import return_group
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -39,6 +40,8 @@ if __name__ == '__main__':
   value_errs = {}
   # Dict to store values of observables from each systematic category
   syst_fit_results = {}
+  # Dict to store systematic errors for grouped categories
+  grouped_errs = {}
 
   # Extract data fit result (make not of box dimn for 2d toy pulls)
   # Extract value and fit error of each observable of interest
@@ -55,11 +58,16 @@ if __name__ == '__main__':
             par_name = p.GetName()
             m0 = re.search(obs + '(_[A-Za-z][0-9])+', par_name)
             if m0:
+              if obs == 'R_ADS_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h':
+                value = 0
+              else:
+                value = p.getVal()
               value_errs[par_name[:-2]] = {
-                  'Value': p.getVal(),
+                  'Value': value,
                   'Statistical Error': p.getError()
               }
               syst_fit_results[par_name[:-2]] = {}
+              grouped_errs[par_name[:-2]] = {}
   else:
     sys.exit(input_dir + ' does not exist.')
 
@@ -118,7 +126,15 @@ if __name__ == '__main__':
       std = np.std(np_arr)
       syst_errs[p][s] = std
       tot_syst += std**2
+      # Grouping errors
+      group = return_group(s, neutral)
+      if group in grouped_errs[p]:
+        grouped_errs[p][group] += std**2
+      else:
+        grouped_errs[p][group] = std**2
     value_errs[p]['Systematic Error'] = tot_syst**0.5
+    for k, v in grouped_errs[p].items():
+      grouped_errs[p][k] = v**0.5
 
   title_str = { 'N' : "", 'R' : "" }
   row_arr = { 'N' : [], 'R' : [] }
@@ -127,10 +143,11 @@ if __name__ == '__main__':
     key = par[0]
     title_str[key] = title_str[key] + ' & ' + return_label(par)
     j = { 'N': 0, 'R': 0}
-    for s_label, err in syst.items():
+    for s_label in sorted(syst):
       if i[key] == 0:
         row_arr[key].append(s_label)
-      err_str = f' & ${err:.4f}$'
+      err = syst[s_label]
+      err_str = f' & ${err:.4g}$'
       row_arr[key][j[key]] = row_arr[key][j[key]] + err_str
       if i[key] == (n_params[key] - 1):
         row_arr[key][j[key]] = row_arr[key][j[key]] + ' \\\\\n'
@@ -142,8 +159,8 @@ if __name__ == '__main__':
     syst_err = value_errs[par]['Systematic Error']
     stat_err = value_errs[par]['Statistical Error']
     frac = syst_err / stat_err
-    tot_str = f' & ${syst_err:.4f}$'
-    frac_str = f' & ${frac:.4f}$'
+    tot_str = f' & ${syst_err:.4g}$'
+    frac_str = f' & ${frac:.4g}$'
     row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + tot_str
     row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + frac_str
     if i[key] == (n_params[key] - 1):
@@ -162,15 +179,15 @@ if __name__ == '__main__':
   tex_file.write("\\usepackage{float}\n")
   tex_file.write("\\restylefloat{table}\n")
   tex_file.write("\\begin{document}\n")
-  tex_file.write("\\begin{table}[t]\n")
-  tex_file.write("\\centering\n")
-  tex_file.write("\\begin{tabular}{" + "l"*(n_params['N']+2) + "}\n")
-  tex_file.write("\\hline\\hline\n")
-  tex_file.write(title_str['N'])
-  for row in row_arr['N']:
-    tex_file.write(row)
-  tex_file.write("\\end{tabular}\n")
-  tex_file.write("\\end{table}\n")
+  # tex_file.write("\\begin{table}[t]\n")
+  # tex_file.write("\\centering\n")
+  # tex_file.write("\\begin{tabular}{" + "l"*(n_params['N']+2) + "}\n")
+  # tex_file.write("\\hline\\hline\n")
+  # tex_file.write(title_str['N'])
+  # for row in row_arr['N']:
+  #   tex_file.write(row)
+  # tex_file.write("\\end{tabular}\n")
+  # tex_file.write("\\end{table}\n")
   tex_file.write("\\begin{table}[t]\n")
   tex_file.write("\\centering\n")
   tex_file.write("\\begin{tabular}{" + "l"*(n_params['R']+2) + "}\n")
@@ -180,33 +197,72 @@ if __name__ == '__main__':
     tex_file.write(row)
   tex_file.write("\\end{tabular}\n")
   tex_file.write("\\end{table}\n")
-  tex_file.write("\\end{document}")
-  tex_file.close()
 
+  title_str = ''
   row_arr = []
   i = 0
+  for par, g_err in grouped_errs.items():
+    if par[0] == 'R':
+      title_str = title_str + ' & ' + return_label(par)
+      j = 0
+      for g, err in g_err.items():
+        if i == 0:
+          row_arr.append(g)
+        err_str = f' & ${err:.4g}$'
+        row_arr[j] = row_arr[j] + err_str
+        if i == (n_params['R'] - 1):
+          row_arr[j] = row_arr[j] + ' \\\\\n'
+        j += 1
+      if i == 0:
+        row_arr.append('\\hline\n')
+        row_arr.append('$\\sigma(Syst.)$')
+        row_arr.append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+      syst_err = value_errs[par]['Systematic Error']
+      stat_err = value_errs[par]['Statistical Error']
+      frac = syst_err / stat_err
+      tot_str = f' & ${syst_err:.4g}$'
+      frac_str = f' & ${frac:.4g}$'
+      row_arr[j+1] = row_arr[j+1] + tot_str
+      row_arr[j+2] = row_arr[j+2] + frac_str
+      if i == (n_params['R'] - 1):
+        row_arr[j+1] = row_arr[j+1] + ' \\\\ \\hline\n'
+        row_arr[j+2] = row_arr[j+2] + ' \\\\ \\hline\\hline\n'
+      i += 1
+
+  title_str = title_str + ' \\\\ \\hline\n'
+
+  tex_file.write("\\begin{table}[t]\n")
+  tex_file.write("\\centering\n")
+  tex_file.write("\\begin{tabular}{" + "l"*(n_params['R']+2) + "}\n")
+  tex_file.write("\\hline\\hline\n")
+  tex_file.write(title_str)
+  for row in row_arr:
+    tex_file.write(row)
+  tex_file.write("\\end{tabular}\n")
+  tex_file.write("\\end{table}\n")
+
+  row_arr = []
   for par, val_errs in value_errs.items():
     val = val_errs['Value']
     stat = val_errs['Statistical Error']
     syst = val_errs['Systematic Error']
-    results_str = f' & {val:.4f} & {stat:.4f} & {syst:.4f} \\\\\n'
+    if val == 0:
+      results_str = f' & X & {stat:.4g} & {syst:.4g} \\\\\n'
+    else:
+      if par[0] == 'N':
+        results_str = f' & {val:.4g} & {stat:.4g} & - \\\\\n'
+      else:
+        results_str = f' & {val:.4g} & {stat:.4g} & {syst:.4g} \\\\\n'
     row_arr.append(return_label(par) + results_str)
 
-  tex_file = open(
-      f"/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex/Results_{neutral}.tex",
-      "w")
-  tex_file.write("\\documentclass[12pt, portrait]{article}\n")
-  tex_file.write("\\usepackage[landscape, margin=0.1in]{geometry}\n")
-  tex_file.write("\\usepackage{float}\n")
-  tex_file.write("\\restylefloat{table}\n")
-  tex_file.write("\\begin{document}\n")
   tex_file.write("\\begin{table}[t]\n")
   tex_file.write("\\centering\n")
   tex_file.write("\\begin{tabular}{l l l l}\n")
-  tex_file.write("\\hline\n")
+  tex_file.write("\\hline\\hline\n")
   tex_file.write(' & Value & Statistical Error & Systematic Error \\\\ \\hline\n')
   for row in row_arr:
     tex_file.write(row)
+  tex_file.write("\\hline\\hline\n")
   tex_file.write("\\end{tabular}\n")
   tex_file.write("\\end{table}\n")
   tex_file.write("\\end{document}")
