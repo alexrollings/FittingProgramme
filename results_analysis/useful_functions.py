@@ -2,8 +2,8 @@ import os, re
 
 def return_group(syst, neutral):
   re_group_dict = {
-      'misId\S+PiPdf': 'MisId$K\\rightarrow \\pi$',
-      'misId\S+KPdf': 'MisId$\\pi\\rightarrow K$',
+      'misId\S+PiPdf': 'MisId$_{K\\rightarrow \\pi}$',
+      'misId\S+KPdf': 'MisId$_{\\pi\\rightarrow K}$',
       'partRec\S+': 'Part-reco PDFs',
       'Bs2Dst0\S+': 'Part-reco PDFs',
       'misRec\S+': 'Mis-reco PDFs',
@@ -16,10 +16,14 @@ def return_group(syst, neutral):
     re_group_dict['pi0\S+'] = 'Signal PDFs'
   else:
     re_group_dict['gamma\S+'] = 'Signal PDFs'
+  match = False
   for k, v in re_group_dict.items():
     m = re.search(k, syst)
     if m:
+      match = True
       return v
+  if match == False:
+    print('No regex match in return_group for ' + syst)
 
 def neutral_label(n_str):
   if n_str == "gamma":
