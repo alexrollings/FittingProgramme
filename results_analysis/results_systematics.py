@@ -127,7 +127,7 @@ if __name__ == '__main__':
       syst_errs[p][s] = std
       tot_syst += std**2
       # Grouping errors
-      group = return_group(s, neutral)
+      group = return_group(s)
       if group in grouped_errs[p]:
         grouped_errs[p][group] += std**2
       else:

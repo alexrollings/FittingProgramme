@@ -1,6 +1,6 @@
 import os, re
 
-def return_group(syst, neutral):
+def return_group(syst):
   re_group_dict = {
       'misId\S+PiPdf': 'MisId$_{K\\rightarrow \\pi}$',
       'misId\S+KPdf': 'MisId$_{\\pi\\rightarrow K}$',
@@ -11,11 +11,10 @@ def return_group(syst, neutral):
       'crossFeed\S+': 'Mis-reco PDFs',
       '\S+CutEffs': '$\epsilon_{BOX}$',
       'pidEffK': '$\epsilon_{PIDK}$',
+      'pidEffK': '$\epsilon_{PIDK}$',
+      'pi0\S+': 'Signal PDFs',
+      'gamma\S+': 'Signal PDFs',
   }
-  if neutral == 'pi0':
-    re_group_dict['pi0\S+'] = 'Signal PDFs'
-  else:
-    re_group_dict['gamma\S+'] = 'Signal PDFs'
   match = False
   for k, v in re_group_dict.items():
     m = re.search(k, syst)
