@@ -189,26 +189,28 @@ if __name__ == '__main__':
   #   tex_file.write(row)
   # tex_file.write("\\end{tabular}\n")
   # tex_file.write("\\end{table}\n")
-  tex_file.write("\\begin{table}[t]\n")
-  tex_file.write("\\centering\n")
-  tex_file.write("\\small\n")
-  tex_file.write("\\begin{tabular}{" + "l"*(n_params['R']+2) + "}\n")
-  tex_file.write("\\hline\\hline\n")
-  tex_file.write(title_str['R'])
-  for row in row_arr['R']:
-    tex_file.write(row)
-  tex_file.write("\\end{tabular}\n")
-  tex_file.write("\\end{table}\n")
-  tex_file.write("\\begin{table}[t]\n")
-  tex_file.write("\\centering\n")
-  tex_file.write("\\small\n")
-  tex_file.write("\\begin{tabular}{" + "l"*(n_params['A']+2) + "}\n")
-  tex_file.write("\\hline\\hline\n")
-  tex_file.write(title_str['A'])
-  for row in row_arr['A']:
-    tex_file.write(row)
-  tex_file.write("\\end{tabular}\n")
-  tex_file.write("\\end{table}\n")
+  if n_params['R'] > 0:
+    tex_file.write("\\begin{table}[t]\n")
+    tex_file.write("\\centering\n")
+    tex_file.write("\\small\n")
+    tex_file.write("\\begin{tabular}{" + "l"*(n_params['R']+2) + "}\n")
+    tex_file.write("\\hline\\hline\n")
+    tex_file.write(title_str['R'])
+    for row in row_arr['R']:
+      tex_file.write(row)
+    tex_file.write("\\end{tabular}\n")
+    tex_file.write("\\end{table}\n")
+  if n_params['A'] > 0:
+    tex_file.write("\\begin{table}[t]\n")
+    tex_file.write("\\centering\n")
+    tex_file.write("\\small\n")
+    tex_file.write("\\begin{tabular}{" + "l"*(n_params['A']+2) + "}\n")
+    tex_file.write("\\hline\\hline\n")
+    tex_file.write(title_str['A'])
+    for row in row_arr['A']:
+      tex_file.write(row)
+    tex_file.write("\\end{tabular}\n")
+    tex_file.write("\\end{table}\n")
 
   letter = ['R', 'A']
   for l in letter:
@@ -246,15 +248,16 @@ if __name__ == '__main__':
 
     title_str = title_str + ' \\\\ \\hline\n'
 
-    tex_file.write("\\begin{table}[t]\n")
-    tex_file.write("\\centering\n")
-    tex_file.write("\\begin{tabular}{" + "l"*(n_params[l]+2) + "}\n")
-    tex_file.write("\\hline\\hline\n")
-    tex_file.write(title_str)
-    for row in row_arr:
-      tex_file.write(row)
-    tex_file.write("\\end{tabular}\n")
-    tex_file.write("\\end{table}\n")
+    if n_params[l] > 0:
+      tex_file.write("\\begin{table}[t]\n")
+      tex_file.write("\\centering\n")
+      tex_file.write("\\begin{tabular}{" + "l"*(n_params[l]+2) + "}\n")
+      tex_file.write("\\hline\\hline\n")
+      tex_file.write(title_str)
+      for row in row_arr:
+        tex_file.write(row)
+      tex_file.write("\\end{tabular}\n")
+      tex_file.write("\\end{table}\n")
 
   row_arr = []
   for par, val_errs in value_errs.items():
