@@ -4,6 +4,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <map>
 #include <vector>
 #include "Configuration.h"
 #include "NeutralVars.h"
@@ -124,6 +125,7 @@ int main(int argc, char *argv[]) {
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
   std::vector<RooFitResult> resultVec;
+  std::vector<std::string> rndmVec;
   std::vector<RooFitResult> dataResultVec;
 
   for (auto &filename : resultFiles) {
@@ -208,6 +210,7 @@ int main(int argc, char *argv[]) {
         } else {
           resultVec.emplace_back(*result.get());
           dataResultVec.emplace_back(*dataResult.get());
+          rndmVec.emplace_back(rndm);
           // std::cout << "Extracted Result from " << filename << "\n";
         }
         // std::cout << "Extracted Result from " << filename << "\n";
@@ -225,27 +228,23 @@ int main(int argc, char *argv[]) {
   double nUnConv = 0;
   double nFPD = 0;
   double nMINOS = 0;
+  double nUnchanged = 0;
 
   // Save values into vectors and set max/min depending on
   // values: one max/min for each parameter (but all results)
-  std::vector<double> initValMin(nParams, 1000000);
-  std::vector<double> initValMax(nParams, -1000000);
-  std::vector<double> valMin(nParams, 1000000);
-  std::vector<double> valMax(nParams, -1000000);
-  std::vector<double> errMin(nParams, 1000000);
-  std::vector<double> errMax(nParams, -1000000);
-  std::vector<double> pullMin(nParams, 1000000);
-  std::vector<double> pullMax(nParams, -1000000);
+  std::map<std::string, double> initValMinMap;  //(nParams, 1000000);
+  std::map<std::string, double> initValMaxMap;  //(nParams, -1000000);
+  std::map<std::string, double> valMinMap;      //(nParams, 1000000);
+  std::map<std::string, double> valMaxMap;      //(nParams, -1000000);
+  std::map<std::string, double> errMinMap;      //(nParams, 1000000);
+  std::map<std::string, double> errMaxMap;      //(nParams, -1000000);
+  std::map<std::string, double> pullMinMap;     //(nParams, 1000000);
+  std::map<std::string, double> pullMaxMap;     //(nParams, -1000000);
   // Save initial values for starting point of mean
-  std::vector<double> initialVec(nParams);
-  std::vector<std::vector<double> > initValVec(resultVec.size(),
-                                               std::vector<double>(nParams));
-  std::vector<std::vector<double> > valVec(resultVec.size(),
-                                           std::vector<double>(nParams));
-  std::vector<std::vector<double> > errVec(resultVec.size(),
-                                           std::vector<double>(nParams));
-  std::vector<std::vector<double> > pullVec(resultVec.size(),
-                                            std::vector<double>(nParams));
+  std::map<std::string, std::vector<double> > initValMap;
+  std::map<std::string, std::vector<double> > valMap;
+  std::map<std::string, std::vector<double> > errMap;
+  std::map<std::string, std::vector<double> > pullMap;
 
   RooAbsArg *initialAbsArg = nullptr;
   RooRealVar *initialRealVar = nullptr;
@@ -255,71 +254,150 @@ int main(int argc, char *argv[]) {
   std::cout << "Number of results saved = " << resultVec.size() << "\n";
 
   for (double j = 0; j < resultVec.size(); ++j) {
+    // std::cout << "\nResult " << rndmVec[j] << "\n\n\n";
     // Check quality of result
     // double edm = resultVec[j].edm();
     double fitStatus = resultVec[j].status();
     double covQual = resultVec[j].covQual();
     if (covQual < 2) {
       nUnConv++;
-    } else if (covQual < 3) {
+      continue;
+    }
+    if (covQual < 3) {
       nFPD++;
-    } else if (fitStatus != 0) {
+      continue;
+    }
+    if (fitStatus != 0) {
       nMINOS++;
-    } else {
+      continue;
+    }
+    if (covQual >= 3 && fitStatus == 0) {
       RooArgList initialPars =
           ReturnInitPars(dataToy, dataResultVec, resultVec, j);
       RooArgList finalPars = resultVec[j].floatParsFinal();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
+        std::string fullName = initialPars.at(i)->GetName();
+        // std::cout << "Full parameter name = " << fullName << "\n";
+        std::regex rexp("([A-Za-z0-9_]+)_[0-9]+");
+        std::smatch match;
+        std::regex_search(fullName, match, rexp);
+        std::string paramName = match[1];
+
+        if (initValMap.find(paramName) == initValMap.end()) {
+          initValMap.emplace(std::piecewise_construct,
+                             std::make_tuple(paramName), std::make_tuple());
+        }
+        if (initValMaxMap.find(paramName) == initValMaxMap.end()) {
+          initValMaxMap.emplace(std::piecewise_construct,
+                                std::make_tuple(paramName),
+                                std::make_tuple(-1000000));
+        }
+        if (initValMinMap.find(paramName) == initValMinMap.end()) {
+          initValMinMap.emplace(std::piecewise_construct,
+                                std::make_tuple(paramName),
+                                std::make_tuple(10000000));
+        }
+        if (valMap.find(paramName) == valMap.end()) {
+          valMap.emplace(std::piecewise_construct, std::make_tuple(paramName),
+                         std::make_tuple());
+        }
+        if (valMaxMap.find(paramName) == valMaxMap.end()) {
+          valMaxMap.emplace(std::piecewise_construct,
+                            std::make_tuple(paramName),
+                            std::make_tuple(-10000000));
+        }
+        if (valMinMap.find(paramName) == valMinMap.end()) {
+          valMinMap.emplace(std::piecewise_construct,
+                            std::make_tuple(paramName),
+                            std::make_tuple(10000000));
+        }
+        if (errMap.find(paramName) == errMap.end()) {
+          errMap.emplace(std::piecewise_construct, std::make_tuple(paramName),
+                         std::make_tuple());
+        }
+        if (errMaxMap.find(paramName) == errMaxMap.end()) {
+          errMaxMap.emplace(std::piecewise_construct,
+                            std::make_tuple(paramName),
+                            std::make_tuple(-10000000));
+        }
+        if (errMinMap.find(paramName) == errMinMap.end()) {
+          errMinMap.emplace(std::piecewise_construct,
+                            std::make_tuple(paramName),
+                            std::make_tuple(10000000));
+        }
+        if (pullMap.find(paramName) == pullMap.end()) {
+          pullMap.emplace(std::piecewise_construct, std::make_tuple(paramName),
+                          std::make_tuple());
+        }
+        if (pullMaxMap.find(paramName) == pullMaxMap.end()) {
+          pullMaxMap.emplace(std::piecewise_construct,
+                             std::make_tuple(paramName),
+                             std::make_tuple(-10000000));
+        }
+        if (pullMinMap.find(paramName) == pullMinMap.end()) {
+          pullMinMap.emplace(std::piecewise_construct,
+                             std::make_tuple(paramName),
+                             std::make_tuple(10000000));
+        }
+
         initialAbsArg = initialPars.find(initialPars.at(i)->GetName());
         initialRealVar = dynamic_cast<RooRealVar *>(initialAbsArg);
         finalAbsArg = finalPars.find(finalPars.at(i)->GetName());
         finalRealVar = dynamic_cast<RooRealVar *>(finalAbsArg);
-        // auto initialRealVar =
-        //     std::unique_ptr<RooRealVar>(dynamic_cast<RooRealVar *>(
-        //         initialPars.find(initialPars.at(i)->GetName())));
-        // auto finalRealVar =
-        //     std::unique_ptr<RooRealVar>(dynamic_cast<RooRealVar *>(
-        //         finalPars.find(finalPars.at(i)->GetName())));
-        // Extract initial value, final value and error: calulate pull
+
         double initialVal = initialRealVar->getVal();
         double finalVal = finalRealVar->getVal();
         double finalErr = finalRealVar->getError();
         double pull = (finalVal - initialVal) / finalErr;
+        // if (i == 0) {
+        //   if (initialVal == finalVal) {
+        //     std::cout << "initVal == finalVal for result " << rndmVec[j]
+        //               << "\n";
+        //     break;
+        //   }
+        // } else {
+        //   std::cout << "initialVal = " << initialVal
+        //             << "\tfinalVal = " << finalVal
+        //             << "\tfinalErr = " << finalErr << "\tpull = " << pull
+        //             << "\n";
+        //   if (pull == 0.) {
+        //     std::cout << "Pull == 0 for result " << rndmVec[j] << "\n";
+        //   }
+        // }
         // Fill histograms
-        initialVec[i] = initialVal;
-        initValVec[j][i] = initialVal;
-        valVec[j][i] = finalVal;
-        errVec[j][i] = finalErr;
-        pullVec[j][i] = pull;
+        initValMap[paramName].emplace_back(initialVal);
+        valMap[paramName].emplace_back(finalVal);
+        errMap[paramName].emplace_back(finalErr);
+        pullMap[paramName].emplace_back(pull);
         // std::cout << initialPars.at(i)->GetName()
         //           << "\tInital Val = " << initialVal
         //           << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
         //           << "\tPull = " << pull << "\n";
 
-        if (initialVal > initValMax[i]) {
-          initValMax[i] = initialVal;
+        if (initialVal > initValMaxMap[paramName]) {
+          initValMaxMap[paramName] = initialVal;
         }
-        if (initialVal < initValMin[i]) {
-          initValMin[i] = initialVal;
+        if (initialVal < initValMinMap[paramName]) {
+          initValMinMap[paramName] = initialVal;
         }
-        if (finalVal > valMax[i]) {
-          valMax[i] = finalVal;
+        if (finalVal > valMaxMap[paramName]) {
+          valMaxMap[paramName] = finalVal;
         }
-        if (finalVal < valMin[i]) {
-          valMin[i] = finalVal;
+        if (finalVal < valMinMap[paramName]) {
+          valMinMap[paramName] = finalVal;
         }
-        if (finalErr > errMax[i]) {
-          errMax[i] = finalErr;
+        if (finalErr > errMaxMap[paramName]) {
+          errMaxMap[paramName] = finalErr;
         }
-        if (finalErr < errMin[i]) {
-          errMin[i] = finalErr;
+        if (finalErr < errMinMap[paramName]) {
+          errMinMap[paramName] = finalErr;
         }
-        if (pull > pullMax[i]) {
-          pullMax[i] = pull;
+        if (pull > pullMaxMap[paramName]) {
+          pullMaxMap[paramName] = pull;
         }
-        if (pull < pullMin[i]) {
-          pullMin[i] = pull;
+        if (pull < pullMinMap[paramName]) {
+          pullMinMap[paramName] = pull;
         }
       }
     }
@@ -342,31 +420,45 @@ int main(int argc, char *argv[]) {
     std::string paramName = match[1];
     // std::cout << "After regex, parameter name = " << paramName << "\n";
 
-    double initValRange = initValMax[i] - initValMin[i];
+    double initValRange = initValMaxMap[paramName] - initValMinMap[paramName];
     TH1D initValHist(("initValHist_" + paramName).c_str(), "", 50,
-                     initValMin[i] - initValRange / 5,
-                     initValMax[i] + initValRange / 5);
-    double valRange = valMax[i] - valMin[i];
+                     initValMinMap[paramName] - initValRange / 5,
+                     initValMaxMap[paramName] + initValRange / 5);
+    double valRange = valMaxMap[paramName] - valMinMap[paramName];
     // TH1D valHist(("valHist_" + paramName).c_str(), "",
     // round(resultVec.size()/20),
     TH1D valHist(("valHist_" + paramName).c_str(), "", 50,
-                 valMin[i] - valRange / 5, valMax[i] + valRange / 5);
-    double errRange = errMax[i] - errMin[i];
+                 valMinMap[paramName] - valRange / 5,
+                 valMaxMap[paramName] + valRange / 5);
+    double errRange = errMaxMap[paramName] - errMinMap[paramName];
     // TH1D errHist(("errHist_" + paramName).c_str(), "",
     // round(resultVec.size()/20),
     TH1D errHist(("errHist_" + paramName).c_str(), "", 50,
-                 errMin[i] - errRange / 5, errMax[i] + errRange / 5);
-    double pullRange = pullMax[i] - pullMin[i];
+                 errMinMap[paramName] - errRange / 5,
+                 errMaxMap[paramName] + errRange / 5);
+    double pullRange = pullMaxMap[paramName] - pullMinMap[paramName];
     // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50,
     //               // round(resultVec.size()/10),
-    //               pullMin[i] - pullRange / 5, pullMax[i] + pullRange / 5);
+    //               pullMinMap[paramName] - pullRange / 5, pullMaxMap[paramName] +
+    //               pullRange / 5);
     TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
-    for (double j = 0; j < round(resultVec.size() / 5); ++j) {
-      initValHist.Fill(initValVec[j][i]);
-      valHist.Fill(valVec[j][i]);
-      errHist.Fill(errVec[j][i]);
-      pullHist.Fill(pullVec[j][i]);
+    // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
+    std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
+
+    for (double j = 0; j < initValMap[paramName].size(); ++j) {
+      initValHist.Fill(initValMap[paramName][j]);
+      valHist.Fill(valMap[paramName][j]);
+      errHist.Fill(errMap[paramName][j]);
+      pullHist.Fill(pullMap[paramName][j]);
     }
+    int binMax = pullHist.GetMaximumBin();
+    int maxContent = pullHist.GetBinContent(pullHist.GetMaximumBin());
+    double maxPull = pullHist.GetXaxis()->GetBinCenter(binMax);
+    std::cout << "\n ----- \n";
+    std::cout << paramName << "\t";
+    std::cout << binMax << "\t" << maxContent << "\t" << maxPull << "\t"
+              << pullHist.Integral();
+    std::cout << "\n ----- \n";
 
     // Create RRVs for each parameter's value, error and pull
     // Make into function and pass relevant histogram
@@ -444,8 +536,7 @@ int main(int argc, char *argv[]) {
     if (config.blindFit() == false) {
       RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                         RooFit::Import(valHist));
-      RooRealVar valMean(("valMean_" + paramName).c_str(),
-                         "",  // initialVec[i],
+      RooRealVar valMean(("valMean_" + paramName).c_str(), "",
                          val.getMin() - (val.getMax() - val.getMin()),
                          val.getMax() + (val.getMax() - val.getMin()));
       RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
@@ -539,10 +630,6 @@ int main(int argc, char *argv[]) {
   outputFile.Write();
   outputFile.Close();
   std::cout << "Number of toys: " << resultVec.size() << "\n";
-  // << initValVec.size() << "\n"
-  // << valVec.size() << "\n"
-  // << errVec.size() << "\n"
-  // << pullVec.size();
 
   std::cout << "\nQuality of fits:\n"
             << "Unconverged: " << nUnConv / resultVec.size() * 100 << " %\n"
