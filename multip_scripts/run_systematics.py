@@ -5,13 +5,6 @@ from string import Template
 import subprocess as sp
 import multiprocessing as mp
 
-
-def submit_to_batch(command):
-  p = sp.Popen(command)
-  p.wait()
-  return p.returncode
-
-
 def run_process(script):
   p = sp.Popen(["zsh", script], stdout=sp.PIPE, stderr=sp.PIPE)
   stdout, stderr = p.communicate()
@@ -25,7 +18,6 @@ def run_process(script):
     err_file.write(stderr)
   return p.returncode
 
-
 def make_shell_script(templatePath, scriptPath, substitutions):
   with open(templatePath, "r") as templateFile:
     scriptTemplate = Template(templateFile.read())
@@ -36,9 +28,7 @@ def make_shell_script(templatePath, scriptPath, substitutions):
     with open(scriptPath, "w") as scriptFile:
       scriptFile.write(scriptString)
 
-
 if __name__ == "__main__":
-  # mp.process.current_process()._config['tempdir'] =  '/data/lhcb/users/rollings/multi_process/tmp/'
   parser = argparse.ArgumentParser()
   parser.add_argument('-n',
                       '--neutral',
@@ -48,47 +38,33 @@ if __name__ == "__main__":
   parser.add_argument('-d',
                       '--daughters',
                       type=str,
-                      help='Daughters = kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik',
-                      required=False)
+                      help='Daughters = kpi/kpi,kk/kpi,kk,pipi',
+                      required=True)
   parser.add_argument('-c',
                       '--charge',
                       type=str,
-                      help='Charge = total/plus,minus',
-                      required=False)
+                      help='charge = total/plus,minus',
+                      required=True)
   parser.add_argument('-o',
                       '--output_dir',
                       type=str,
                       help='Directory where results should be stored',
                       required=True)
-  parser.add_argument('-t',
-                      '--n_toys',
+  parser.add_argument('-f',
+                      '--n_fits',
                       type=int,
-                      help='Number of toy datasets to generate per job',
+                      help='Number of fits to run per job',
                       required=True)
   parser.add_argument('-j',
                       '--n_jobs',
                       type=int,
                       help='Number of jobs to run on batch',
                       required=True)
-  parser.add_argument(
-      '-i',
-      '--input_dir',
-      type=str,
-      help='Path to RDS of data: required to generate toys from data PDF',
-      required=False)
-  # parser.add_argument(
-  #     '-d',
-  #     '--dim',
-  #     type=str,
-  #     help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
-  #     required=False)
-  parser.add_argument(
-      '-g',
-      '--gen',
-      type=str,
-      help=
-      '--gen=model/data: Toy dataset generated from D1D model or 2D dataset',
-      required=True)
+  parser.add_argument('-i',
+                      '--input_dir',
+                      type=str,
+                      help='Path to RDS of data',
+                      required=True)
   parser.add_argument('-dl',
                       '--delta_low',
                       type=str,
@@ -125,11 +101,9 @@ if __name__ == "__main__":
   daughters = args.daughters
   charge = args.charge
   output_dir = args.output_dir
-  n_toys = args.n_toys
+  n_fits = args.n_fits
   n_jobs = args.n_jobs
   input_dir = args.input_dir
-  # dim = args.dim
-  gen = args.gen
   delta_low = args.delta_low
   delta_high = args.delta_high
   delta_partial_low = args.delta_partial_low
@@ -137,64 +111,79 @@ if __name__ == "__main__":
   bu_low = args.bu_low
   bu_high = args.bu_high
 
-  if gen == "data":
-    print("Generating toys from 2D datasets")
-  elif gen == "model":
-    print("Generating toys from D1D model")
+  if charge == "total":
+    print("Running fits summed over charge")
+  elif charge == "plus,minus":
+    print("Running fits split by charge")
   else:
-    sys.exit("-gen=model/data")
+    sys.exit("--charge=total/plus,minus")
 
-  if neutral != "pi0" and neutral != "gamma":
+  if neutral == "pi0":
+    systematics = [
+        'pi0DeltaTails', 'pi0DeltaFrac', 'pi0BuTails', 'misRecDeltaPdf',
+        'misRecBuPdf', 'partRecDeltaPdf', 'partRecBuPdf', 'Bs2Dst0KpiDeltaPdf',
+        'Bs2Dst0KpiBuPdf', 'Bs2D0KpiDeltaPdf', 'Bs2D0KpiBuPdf',
+        'misIdPi0PiPdfBu', 'misIdPi0KPdfBu', 'misIdGammaPiPdfBu',
+        'misIdGammaKPdfBu', 'misIdMisRecKPdfBu', 'misIdPartRecKPdfBu',
+        'buDeltaCutEffs', 'deltaCutEffs', 'buDeltaMisIdCutEffs',
+        'deltaMisIdCutEffs', 'pidEffK'
+    ]
+    if delta_low == None:
+      delta_low = "138"
+    if delta_high == None:
+      delta_high = "148"
+    if bu_low == None:
+      bu_low = "5220"
+    if bu_high == None:
+      bu_high = "5330"
+  elif neutral == "gamma":
+    systematics = [
+        'pi0DeltaTails', 'pi0DeltaFrac', 'pi0BuPartialTails',
+        'pi0BuPartialFrac', 'pi0BuPartialSigma1', 'crossFeedBuPdf',
+        'crossFeedBuPartialPdf', 'gammaDeltaTails', 'gammaDeltaFrac',
+        'gammaBuTails', 'gammaBuFrac', 'misRecDeltaPdf', 'misRecBuPdf',
+        'misRecBuPartialPdf', 'partRecDeltaPdf', 'partRecBuPdf',
+        'partRecBuPartialPdf', 'Bs2Dst0KpiDeltaPdf', 'Bs2Dst0KpiBuPdf',
+        'Bs2Dst0KpiBuPartialPdf', 'Bs2D0KpiDeltaPdf', 'Bs2D0KpiBuPdf',
+        'Bs2D0KpiBuPartialPdf', 'misIdPi0PiPdfBu', 'misIdPi0KPdfBu',
+        'misIdPi0PiPdfBuPartial', 'misIdPi0KPdfBuPartial', 'misIdGammaPiPdfBu',
+        'misIdGammaKPdfBu', 'misIdMisRecKPdfBu', 'misIdMisRecKPdfBuPartial',
+        'misIdPartRecKPdfBu', 'misIdPartRecKPdfBuPartial', 'buDeltaCutEffs',
+        'deltaCutEffs', 'deltaPartialCutEffs', 'buDeltaMisIdCutEffs',
+        'deltaMisIdCutEffs', 'deltaPartialMisIdCutEffs', 'pidEffK'
+    ]
+
+    if delta_low == None:
+      delta_low = "125"
+    if delta_high == None:
+      delta_high = "170"
+    if bu_low == None:
+      bu_low = "5240"
+    if bu_high == None:
+      bu_high = "5320"
+    if delta_partial_low == None:
+      delta_partial_low = "60"
+    if delta_partial_high == None:
+      delta_partial_high = "105"
+  else:
     sys.exit("Specify neutral: -n=pi0/gamma")
 
-  if charge == "total":
-    print("Running toys summed over charge")
-  elif charge == "plus,minus":
-    print("Running toys split by charge")
-  else:
-    charge = "total"
-    print("Running toys summed over charge")
-
   if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi" and daughters != "kpi,kk,pipi,pik":
-    daughters = "kpi"
-    print("Running toys for daughters=kpi")
-
-  # if dim == "1":
-  #   print("Performing 1D toys to BuDelta mass")
-  #   dim = "-1D"
-
-  if n_jobs > 10:
-    sys.exit("Can't use more than 10 cores.")
+    sys.exit("Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik")
 
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-  if delta_low == None:
-    delta_low = "125"
-  if delta_high == None:
-    delta_high = "170"
-  if delta_partial_low == None:
-    delta_partial_low = "60"
-  if delta_partial_high == None:
-    delta_partial_high = "105"
-  if bu_low == None:
-    bu_low = "5240"
-  if bu_high == None:
-    bu_high = "5330"
+  if n_jobs > 10:
+    sys.exit("Can't use more than 10 cores.")
 
-  if input_dir == None:
-    sys.exit("Must specify data dir")
-
+  home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   scriptList = []
-  for i in range(0, n_jobs):
-    if gen == "model":
-      templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_model.sh.tmpl"
-      if neutral == "pi0":
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      else:
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
+  for s in systematics:
+    for i in range(0, n_jobs):
+      templatePath = home_path + 'shell_scripts/run_systematics.sh.tmpl'
+      scriptPath = '/data/lhcb/users/rollings/multi_processing/tmp/run_systematics_' + neutral + "_" + daughters + "_" + charge + "_" + s + "_" + str(
+          i) + ".sh"
       substitutions = {
           "nJob": i,
           "INPUT": input_dir,
@@ -202,39 +191,14 @@ if __name__ == "__main__":
           "NEUTRAL": neutral,
           "DAUGHTERS": daughters,
           "CHARGE": charge,
-          "NTOYS": n_toys,
+          "SYST": s,
+          "NFITS": n_fits,
           "DL": delta_low,
           "DH": delta_high,
           "DPL": delta_partial_low,
           "DPH": delta_partial_high,
           "BL": bu_low,
-          "BH": bu_high
-      }
-      make_shell_script(templatePath, scriptPath, substitutions)
-      scriptList.append(scriptPath)
-    else:
-      print("Generating toys from data PDF")
-      templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_data.sh.tmpl"
-      if neutral == "pi0":
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      else:
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      substitutions = {
-          "nJob": i,
-          "PATH": output_dir,
-          "NEUTRAL": neutral,
-          "DAUGHTERS": daughters,
-          "CHARGE": charge,
-          "NTOYS": n_toys,
-          "INPUT": input_dir,
-          "DL": delta_low,
-          "DH": delta_high,
-          "DPL": delta_partial_low,
-          "DPH": delta_partial_high,
-          "BL": bu_low,
-          "BH": bu_high
+          "BH": bu_high,
       }
       make_shell_script(templatePath, scriptPath, substitutions)
       scriptList.append(scriptPath)

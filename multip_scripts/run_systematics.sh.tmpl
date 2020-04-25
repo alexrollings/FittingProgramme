@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+source /home/rollings/.zshrc
+source_root
+
+cd /data/lhcb/users/rollings/multi_scripts/build/
+./Fitting -inputDir=${INPUT} -outputDir=${PATH} -systematic=${SYST} -nSyst=${NFITS} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
