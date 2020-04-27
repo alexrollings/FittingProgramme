@@ -3034,7 +3034,7 @@ int main(int argc, char **argv) {
       }
     }
   }
-
+  
   if (inputDir != "" &&
       (daughtersVec.size() > 1 && config.blindFit() == false &&
        config.noFit() == false)) {

@@ -88,8 +88,7 @@ class BkgYields {
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
-    int uniqueId)
+BkgYields<neutral, bachelor, daughters, charge>::BkgYields(int uniqueId)
     // -------------------- MisRec -------------------- //
     : N_MisRec_(new RooRealVar(
           ("N_MisRec_" +
@@ -193,8 +192,7 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec(),
-              *N_MisRec_,
-              Configuration::Get().GetPidEff(bachelor))));
+              *N_MisRec_, Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_Bu2D0h_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -202,8 +200,7 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h(),
-              *N_Bu2D0h_,
-              Configuration::Get().GetPidEff(bachelor))));
+              *N_Bu2D0h_, Configuration::Get().GetPidEff(bachelor))));
       N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_BuPartial_PartRec_" +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
@@ -211,8 +208,7 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
           "@0*@1*@2",
           RooArgList(
               NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec(),
-              *N_PartRec_,
-              Configuration::Get().GetPidEff(bachelor))));
+              *N_PartRec_, Configuration::Get().GetPidEff(bachelor))));
     }
   } else {
     N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -235,7 +231,8 @@ BkgYields<neutral, bachelor, daughters, charge>::BkgYields(
         RooArgList(*N_PartRec_, Configuration::Get().GetPidEff(bachelor))));
   }
 
-  if (bachelor == Bachelor::k && daughters != Daughters::kpi) {
+  if (Configuration::Get().runADS() == true && bachelor == Bachelor::k &&
+      daughters != Daughters::kpi) {
     if (charge == Charge::plus) {
       N_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
           ("N_Bs2Dst0Kpi_" +
