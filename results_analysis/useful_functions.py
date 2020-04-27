@@ -55,13 +55,13 @@ def return_label(observable_string):
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_minus':
           '$R^{-}_{(D\\gamma)K^{-}}$',
       'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kpi':
-          '$A^{K\\pi}_{(D\\gamma)\\pi^{\\pm}}$'
+          '$A^{K\\pi}_{(D\\gamma)\\pi^{\\pm}}$',
       'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kk':
-          '$A^{CP}_{(D\\gamma)\\pi^{\\pm}}$'
+          '$A^{CP}_{(D\\gamma)\\pi^{\\pm}}$',
       'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kpi':
-          '$A^{K\\pi}_{(D\\gamma)K^{\\pm}}$'
+          '$A^{K\\pi}_{(D\\gamma)K^{\\pm}}$',
       'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kk':
-          '$A^{CP}_{(D\\gamma)K^{\\pm}}$'
+          '$A^{CP}_{(D\\gamma)K^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi':
           '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk':
@@ -84,6 +84,14 @@ def return_label(observable_string):
           '$R^{-}_{(D\\pi^{0})\\pi^{-}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_minus':
           '$R^{-}_{(D\\pi^{0})K^{-}}$',
+      'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi':
+          '$A^{K\\pi}_{(D\\pi^{0})\\pi^{\\pm}}$',
+      'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kk':
+          '$A^{CP}_{(D\\pi^{0})\\pi^{\\pm}}$',
+      'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi':
+          '$A^{K\\pi}_{(D\\pi^{0})K^{\\pm}}$',
+      'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kk':
+          '$A^{CP}_{(D\\pi^{0})K^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi':
           '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk':
@@ -107,11 +115,11 @@ def return_label(observable_string):
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus':
           '$R^{-}_{(D\\pi^{0})K^{-}}$',
       'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi':
-          '$A^{K\\pi}_{(D\\pi^{0})\\pi^{\\pm}}$'
+          '$A^{K\\pi}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kk':
-          '$A^{CP}_{(D\\pi^{0})\\pi^{\\pm}}$'
+          '$A^{CP}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi':
-          '$A^{K\\pi}_{(D\\pi^{0})K^{\\pm}}$'
+          '$A^{K\\pi}_{(D\\pi^{0})K^{\\pm}}$',
       'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kk':
           '$A^{CP}_{(D\\pi^{0})K^{\\pm}}$'
   }
