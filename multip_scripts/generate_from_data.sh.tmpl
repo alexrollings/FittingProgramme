@@ -3,5 +3,23 @@
 source /home/rollings/.zshrc
 source_root
 
-cd /data/lhcb/users/rollings/multi_scripts/build/ 
+mkdir /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}
+cd /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}
+
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeLists.txt 
+
+mkdir src
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
+mkdir include
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
+
+mkdir build
+cd build
+cmake ../
+make -j
 ./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
+
+cd /data/lhcb/users/rollings/multi_scripts/
+rm -rf job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}

@@ -180,7 +180,7 @@ if __name__ == "__main__":
   if bu_low == None:
     bu_low = "5240"
   if bu_high == None:
-    bu_high = "5330"
+    bu_high = "5320"
 
   if input_dir == None:
     sys.exit("Must specify data dir")
