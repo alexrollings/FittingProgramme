@@ -32,9 +32,9 @@ Configuration::Configuration()
       initYieldFAVSignal_(60000),
       pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
                                          Systematic::pidEffK, Sign::positive)),
-      // pidEffPi_(Params::Get().CreateFixed(
-      //     "pidEffPi", 0.996, 1e-02, Systematic::pidEffPi, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
+      pidEffPi_(Params::Get().CreateFixed(
+          "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
+      // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
@@ -48,7 +48,8 @@ Configuration::Configuration()
       noFit_(false),
       fitBuPartial_(false),
       blindFit_(true),
-      runSystematics_(false) {
+      runSystematics_(false),
+      nCPU_(4) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
