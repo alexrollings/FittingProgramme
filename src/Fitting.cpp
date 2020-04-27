@@ -2921,6 +2921,12 @@ int main(int argc, char **argv) {
                      "-daughters=kpi,kk,pipi,pik.\n";
         return 1;
       }
+      for (auto &d : daughtersVec) {
+        if (d == Daughters::pik) {
+          config.runADS() = true;
+          std::cout << "Running ADS mode fit\n";
+        }
+      }
 
       if (!args("charge", chargeArg)) {
         std::cout << "Using default value -charge=" << chargeArg << ".\n";

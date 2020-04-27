@@ -49,6 +49,7 @@ Configuration::Configuration()
       fitBuPartial_(false),
       blindFit_(true),
       runSystematics_(false),
+      runADS_(false),
       nCPU_(4) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";

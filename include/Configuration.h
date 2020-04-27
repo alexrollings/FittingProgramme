@@ -160,6 +160,7 @@ class Configuration {
   bool &fitBuPartial() { return fitBuPartial_; }
   bool &blindFit() { return blindFit_; }
   bool &runSystematics() { return runSystematics_; }
+  bool &runADS() { return runADS_; }
   int nCPU() { return nCPU_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
@@ -218,6 +219,7 @@ class Configuration {
   bool fitBuPartial_;
   bool blindFit_;
   bool runSystematics_;
+  bool runADS_;
   int nCPU_;
 };
 

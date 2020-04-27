@@ -471,7 +471,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_misId_PartRec());
     PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_PartRec_);
-    if (_daughters != Daughters::kpi) {
+    if (_daughters != Daughters::kpi && Configuration::Get().runADS() == true) {
+      std::cout << "ADS mode: include BS\n";
       PdfBase::functionsBu_.add(
           NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
               .pdfBu_Bs2Dst0Kpi());
@@ -554,7 +555,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBuPartial_misId_PartRec());
     PdfBase::yieldsBuPartial_.add(*PdfBase::N_BuPartial_misId_PartRec_);
-    if (_daughters != Daughters::kpi) {
+    if (_daughters != Daughters::kpi && Configuration::Get().runADS() == true) {
+      std::cout << "ADS mode: include BS\n";
       PdfBase::functionsBuPartial_.add(
           NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
               .pdfBuPartial_Bs2Dst0Kpi());
@@ -630,7 +632,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
     PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
                                      .pdfDelta_misId_PartRec());
     PdfBase::yieldsDelta_.add(*PdfBase::N_Delta_misId_PartRec_);
-    if (_daughters != Daughters::kpi) {
+    if (_daughters != Daughters::kpi && Configuration::Get().runADS() == true) {
+      std::cout << "ADS mode: include BS\n";
       PdfBase::functionsDelta_.add(
           NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
               .pdfDelta_Bs2Dst0Kpi());
