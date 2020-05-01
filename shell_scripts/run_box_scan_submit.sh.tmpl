@@ -1,0 +1,8 @@
+executable = run_box_scan_${NEUTRAL}_${DPL}_${DPH}_${DL}_${DH}_${BL}_${BH}_${nJob}.sh
+universe = vanilla
+output = output/run_box_scan_${NEUTRAL}_${DPL}_${DPH}_${DL}_${DH}_${BL}_${BH}_${nJob}.output.${CLUSTERID}
+error = error/run_box_scan_${NEUTRAL}_${DPL}_${DPH}_${DL}_${DH}_${BL}_${BH}_${nJob}.error.${CLUSTERID}
+log = log/run_box_scan_${NEUTRAL}_${DPL}_${DPH}_${DL}_${DH}_${BL}_${BH}_${nJob}.log.${CLUSTERID}
+notification = never
+request_memory = 10 GB
+queue 1
