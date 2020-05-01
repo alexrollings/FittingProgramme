@@ -84,12 +84,12 @@ if __name__ == "__main__":
                       '--delta_low',
                       type=str,
                       help='Lower delta mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-dh',
                       '--delta_high',
                       type=str,
                       help='Upper delta mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-dpl',
                       '--delta_partial_low',
                       type=str,
@@ -163,24 +163,32 @@ if __name__ == "__main__":
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-  if delta_low == None:
-    delta_low = "125"
-  if delta_high == None:
-    delta_high = "170"
-  if bu_low == None:
-    bu_low = "5240"
-  if bu_high == None:
-    bu_high = "5330"
-  if delta_partial_low == None:
-    if neutral == "gamma":
-      delta_partial_low = "60"
-    else:
+  if neutral == 'pi0':
+    if delta_low == None:
+      delta_low = "138"
+    if delta_high == None:
+      delta_high = "148"
+    if bu_low == None:
+      bu_low = "5220"
+    if bu_high == None:
+      bu_high = "5330"
+    if delta_partial_low == None:
       delta_partial_low = "0"
-  if delta_partial_high == None:
-    if neutral == "gamma":
-      delta_partial_high = "105"
-    else:
+    if delta_partial_high == None:
       delta_partial_high = "0"
+  elif neutral == "gamma":
+    if delta_low == None:
+      delta_low = "125"
+    if delta_high == None:
+      delta_high = "170"
+    if bu_low == None:
+      bu_low = "5240"
+    if bu_high == None:
+      bu_high = "5330"
+    if delta_partial_low == None:
+      delta_partial_low = "60"
+    if delta_partial_high == None:
+      delta_partial_high = "105"
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
@@ -188,32 +196,19 @@ if __name__ == "__main__":
     scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
         i) + ".sh"
     substitutions = {
-        "nJob":
-            i,
-        "INPUT":
-            input_dir,
-        "PATH":
-            output_dir,
-        "NEUTRAL":
-            neutral,
-        "DAUGHTERS":
-            daughters,
-        "CHARGE":
-            charge,
-        "NTOYS":
-            n_toys,
-        "DL":
-            delta_low,
-        "DH":
-            delta_high,
-        "DPL":
-            delta_partial_low,
-        "DPH":
-            delta_partial_high,
-        "BL":
-            bu_low,
-        "BH":
-            bu_high,
+        "nJob": i,
+        "INPUT": input_dir,
+        "PATH": output_dir,
+        "NEUTRAL": neutral,
+        "DAUGHTERS": daughters,
+        "CHARGE": charge,
+        "NTOYS": n_toys,
+        "DL": delta_low,
+        "DH": delta_high,
+        "DPL": delta_partial_low,
+        "DPH": delta_partial_high,
+        "BL": bu_low,
+        "BH": bu_high,
         # "DIM":
         #     dim
     }
@@ -227,32 +222,19 @@ if __name__ == "__main__":
       submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
           i) + ".submit"
       submitSubs = {
-          "nJob":
-              i,
-          "GEN":
-              gen,
-          "NEUTRAL":
-              neutral,
-          "DAUGHTERS":
-              daughters,
-          "CHARGE":
-              charge,
-          "NTOYS":
-              n_toys,
-          "DL":
-              delta_low,
-          "DH":
-              delta_high,
-          "DPL":
-              delta_partial_low,
-          "DPH":
-              delta_partial_high,
-          "BL":
-              bu_low,
-          "BH":
-              bu_high,
-          "CLUSTERID":
-             '$(ClusterId)'
+          "nJob": i,
+          "GEN": gen,
+          "NEUTRAL": neutral,
+          "DAUGHTERS": daughters,
+          "CHARGE": charge,
+          "NTOYS": n_toys,
+          "DL": delta_low,
+          "DH": delta_high,
+          "DPL": delta_partial_low,
+          "DPH": delta_partial_high,
+          "BL": bu_low,
+          "BH": bu_high,
+          "CLUSTERID": '$(ClusterId)'
           # "DIM":
           #     dim
       }

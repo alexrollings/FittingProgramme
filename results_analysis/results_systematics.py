@@ -58,7 +58,7 @@ if __name__ == '__main__':
             par_name = p.GetName()
             m0 = re.search(obs + '(_[A-Za-z][0-9])+', par_name)
             if m0:
-              if obs == 'R_ADS_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h':
+              if obs == 'R_ADS_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h' or obs == 'A_Bu2Dst0h':
                 value = 0
               else:
                 value = p.getVal()
@@ -137,7 +137,7 @@ if __name__ == '__main__':
       grouped_errs[p][k] = v**0.5
 
   title_str = { 'N' : "", 'R' : "" , 'A': ""}
-  row_arr = { 'N' : [], 'R' : [], 'A': ""}
+  row_arr = { 'N' : [], 'R' : [], 'A': []}
   i = { 'N': 0, 'R': 0, 'A': 0}
   for par, syst in syst_errs.items():
     key = par[0]

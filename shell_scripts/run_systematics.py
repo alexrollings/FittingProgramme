@@ -130,7 +130,12 @@ if __name__ == "__main__":
   if neutral == "pi0":
     systematics = [
         'pi0DeltaTails', 'pi0DeltaFrac', 'pi0BuTails', 'misRecDeltaPdf',
-        'misRecBuPdf', 'partRecDeltaPdf', 'partRecBuPdf'
+        'misRecBuPdf', 'partRecDeltaPdf', 'partRecBuPdf', 'Bs2Dst0KpiDeltaPdf',
+        'Bs2Dst0KpiBuPdf', 'Bs2D0KpiDeltaPdf', 'Bs2D0KpiBuPdf',
+        'misIdPi0PiPdfBu', 'misIdPi0KPdfBu', 'misIdGammaPiPdfBu',
+        'misIdGammaKPdfBu', 'misIdMisRecKPdfBu', 'misIdPartRecKPdfBu',
+        'buDeltaCutEffs', 'deltaCutEffs', 'buDeltaMisIdCutEffs',
+        'deltaMisIdCutEffs', 'pidEffK'
     ]
     if delta_low == None:
       delta_low = "138"
@@ -147,8 +152,16 @@ if __name__ == "__main__":
         'crossFeedBuPartialPdf', 'gammaDeltaTails', 'gammaDeltaFrac',
         'gammaBuTails', 'gammaBuFrac', 'misRecDeltaPdf', 'misRecBuPdf',
         'misRecBuPartialPdf', 'partRecDeltaPdf', 'partRecBuPdf',
-        'partRecBuPartialPdf'
+        'partRecBuPartialPdf', 'Bs2Dst0KpiDeltaPdf', 'Bs2Dst0KpiBuPdf',
+        'Bs2Dst0KpiBuPartialPdf', 'Bs2D0KpiDeltaPdf', 'Bs2D0KpiBuPdf',
+        'Bs2D0KpiBuPartialPdf', 'misIdPi0PiPdfBu', 'misIdPi0KPdfBu',
+        'misIdPi0PiPdfBuPartial', 'misIdPi0KPdfBuPartial', 'misIdGammaPiPdfBu',
+        'misIdGammaKPdfBu', 'misIdMisRecKPdfBu', 'misIdMisRecKPdfBuPartial',
+        'misIdPartRecKPdfBu', 'misIdPartRecKPdfBuPartial', 'buDeltaCutEffs',
+        'deltaCutEffs', 'deltaPartialCutEffs', 'buDeltaMisIdCutEffs',
+        'deltaMisIdCutEffs', 'deltaPartialMisIdCutEffs', 'pidEffK'
     ]
+
     if delta_low == None:
       delta_low = "125"
     if delta_high == None:

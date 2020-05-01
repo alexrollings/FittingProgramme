@@ -163,8 +163,8 @@ if __name__ == "__main__":
   #   print("Performing 1D toys to BuDelta mass")
   #   dim = "-1D"
 
-  if n_jobs > 10:
-    sys.exit("Can't use more than 10 cores.")
+  if n_jobs > 20:
+    sys.exit("Can't use more than 20 cores.")
 
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
