@@ -103,7 +103,7 @@ if __name__ == "__main__":
         delta_partial_low = '60'
         delta_partial_high = '105'
 
-      scriptPath = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/shell_scripts/tmp/plot_pulls_' + neutral + "_" + delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
+      scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/plot_pulls_' + neutral + "_" + delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".sh"
       if neutral == "partial":
         n = "gamma"
       else:
@@ -128,7 +128,7 @@ if __name__ == "__main__":
       else:
         run_process(["chmod", "+x", scriptPath])
         submitTemplate = home_path + 'shell_scripts/plot_pulls_submit.sh.tmpl'
-        submitScript = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/shell_scripts/tmp/plot_pulls_" + neutral + "_" + delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".submit"
+        submitScript = "/data/lhcb/users/rollings/fitting_scripts/tmp/plot_pulls_" + neutral + "_" + delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + ".submit"
         submitSubs = {
             "NEUTRAL": neutral,
             "DL": delta_low,
