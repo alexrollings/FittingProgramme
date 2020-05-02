@@ -20,6 +20,8 @@ def pass_filename(root_file,
         '_0\.[0-9]+\.root', root_file)
   if m:
     list_file.write(root_file + '\n')
+  else:
+    print(root_file)
 
 
 def pass_filename_bu_partial(root_file,
@@ -136,12 +138,13 @@ if __name__ == "__main__":
     sys.exit("Specify neutral: -n=pi0/gamma")
 
   fit_bu_partial = False
+  filename = 'list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
   if neutral == "gamma" and delta_partial_low != None and delta_partial_high != None:
     fit_bu_partial = True
+    filename = 'list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
 
   if not os.path.isdir(input_dir):
     sys.exit(input_dir + ' is not a directory')
-  filename = 'list_file.txt'
   list_file = open(filename, 'w+')
   # i = 0
   for root_file in os.listdir(input_dir):
@@ -174,7 +177,7 @@ if __name__ == "__main__":
   if not os.path.exists(plots_dir):
     os.mkdir(plots_dir)
   # print("./PlotToys " + ",".join(list_file))
-  os.chdir('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build_2/')
+  os.chdir('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/')
   if list_file.read(1) != None:
     if dim == "1D":
       if fit_bu_partial == False:
@@ -190,6 +193,8 @@ if __name__ == "__main__":
         ])
     else:
       if fit_bu_partial == False:
+        print(filename)
+        print(output_dir)
         subprocess.call([
             "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
             "-outputDir=" + output_dir, "-toyInit=" + toy_init
