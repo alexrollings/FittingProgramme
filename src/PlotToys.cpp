@@ -61,22 +61,28 @@ void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
   std::map<std::string, double> effMap;
   config.ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
   outputFile.cd();
-  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(),
-              &effMap["buDeltaCutEff"],
-              ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(),
-              &effMap["deltaCutEff"],
-              ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &effMap["orEff"],
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("orEffErr_" + EnumToString(mode)).c_str(), &effMap["orEffErr"],
+              ("orEffErr_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &effMap["boxEff"],
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEffErr_" + EnumToString(mode)).c_str(), &effMap["boxEffErr"],
+              ("boxEffErr_" + EnumToString(mode) + "/D").c_str());
   if (config.fitBuPartial() == true) {
-    tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
-                &effMap["deltaPartialCutEff"],
-                ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
+    tree.Branch(("boxPartalEff_" + EnumToString(mode)).c_str(),
+                &effMap["boxPartalEff"],
+                ("boxPartalEff_" + EnumToString(mode) + "/D").c_str());
+    tree.Branch(("boxPartalEffErr_" + EnumToString(mode)).c_str(),
+                &effMap["boxPartalEffErr"],
+                ("boxPartalEffErr_" + EnumToString(mode) + "/D").c_str());
   }
   tree.Fill();
 }
 
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
+  config.plotToys() = true;
   std::string outputDir;
   std::vector<std::string> resultFiles;
   bool dataToy;

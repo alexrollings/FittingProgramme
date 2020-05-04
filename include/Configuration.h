@@ -161,6 +161,7 @@ class Configuration {
   bool &blindFit() { return blindFit_; }
   bool &runSystematics() { return runSystematics_; }
   bool &runADS() { return runADS_; }
+  bool &plotToys() { return plotToys_; }
   int nCPU() { return nCPU_; }
 
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
@@ -220,6 +221,7 @@ class Configuration {
   bool blindFit_;
   bool runSystematics_;
   bool runADS_;
+  bool plotToys_;
   int nCPU_;
 };
 
@@ -246,3 +248,5 @@ std::string ComposeFilename(Year year, Polarity polarity,
 
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
+
+void CalcBinomialErr(double nInit, double nFinal, double err);

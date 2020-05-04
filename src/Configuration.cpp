@@ -50,6 +50,7 @@ Configuration::Configuration()
       blindFit_(true),
       runSystematics_(false),
       runADS_(false),
+      plotToys_(false),
       nCPU_(4) {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
@@ -1473,6 +1474,10 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
   }
 }
 
+void CalcBinomialErr(double nInit, double nFinal, double err) {
+  err = std::sqrt((nFinal * (1 - nFinal)) / nInit);
+};
+
 void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                                   std::map<std::string, double> &map,
                                   bool misId) {
@@ -1500,7 +1505,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
-  if (!file_exists(txtFileName)) {
+  if (plotToys_ == true || !file_exists(txtFileName)) {
     std::string cutString, ttree;
 
     switch (neutral()) {
@@ -1537,57 +1542,100 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       }
     }
     double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
-    double nBuCut =
-        chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
-                          blString + "&&Bu_Delta_M<" + bhString)
-                             .c_str());
-    double nDeltaCut =
-        chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
-                          dlString + "&&Delta_M<" + dhString)
-                             .c_str());
-    double buDeltaCutEff = nBuCut / nOr;
-    double deltaCutEff = nDeltaCut / nOr;
-    // Binomial expectation value: efficienciy = N_success (binomal: err =
-    // sqrt(pq) / N (poisson: err = sqrt(N)) Error: pq / N = sqrt(eff*(1-eff) /
-    // N) by propagation or errors
-    double buDeltaCutEffErr =
-        std::sqrt((buDeltaCutEff * (1 - buDeltaCutEff)) / nOr);
-    double deltaCutEffErr = std::sqrt((deltaCutEff * (2 - deltaCutEff)) / nOr);
-
-    std::ofstream outFile;
-    outFile.open(txtFileName);
-    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
-    outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
-    outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
-    outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
-
-    map.insert(std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
-    map.insert(
-        std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
-    map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
-    map.insert(
-        std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
-
-    double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
-    if (fitBuPartial_ == true) {
-      double nDeltaPartialCut =
-          chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
-                            dplString + "&&Delta_M<" + dphString)
+    if (plotToys_ == true) {
+      double nInitial = chain.GetEntries(cutString.c_str());
+      double nBox;
+      if (fit1D_ == false) {
+        nBox = chain.GetEntries((cutString + "&&Delta_M>" + dlString +
+                                 "&&Delta_M<" + dhString + "&&Bu_Delta_M>" +
+                                 blString + "&&Bu_Delta_M<" + bhString)
+                                    .c_str());
+      } else {
+        nBox = 0.;
+      }
+      double orEff = nOr / nInitial;
+      double orEffErr;
+      CalcBinomialErr(orEff, nInitial, orEffErr);
+      double boxEff = nBox / nInitial;
+      double boxEffErr;
+      CalcBinomialErr(boxEff, nInitial, boxEffErr);
+      map.insert(std::pair<std::string, double>("orEff", orEff));
+      map.insert(std::pair<std::string, double>("orEffErr", orEffErr));
+      map.insert(std::pair<std::string, double>("boxEff", boxEff));
+      map.insert(std::pair<std::string, double>("boxEffErr", boxEffErr));
+      if (fitBuPartial_ == true) {
+        double nBoxPartial;
+        if (fit1D_ == false) {
+          nBoxPartial = chain.GetEntries(
+              (cutString + "&&Delta_M>" + dplString + "&&Delta_M<" + dphString +
+               "&&Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString)
+                  .c_str());
+        } else {
+          nBoxPartial = 0.;
+        }
+        double boxPartialEff = nBox / nInitial;
+        double boxPartialEffErr;
+        CalcBinomialErr(boxPartialEff, nInitial, boxPartialEffErr);
+        map.insert(
+            std::pair<std::string, double>("boxPartialEff", boxPartialEff));
+        map.insert(std::pair<std::string, double>("boxPartialEffErr",
+                                                  boxPartialEffErr));
+      }
+    } else {
+      double nBuCut =
+          chain.GetEntries((cutString + "&&" + orString + "&&Bu_Delta_M>" +
+                            blString + "&&Bu_Delta_M<" + bhString)
                                .c_str());
-      deltaPartialCutEff = nDeltaPartialCut / nOr;
-      deltaPartialCutEffErr =
-          std::sqrt((deltaPartialCutEff * (2 - deltaPartialCutEff)) / nOr);
-      outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEff) +
-                     "\n";
-      outFile << "deltaPartialCutEffErr " +
-                     std::to_string(deltaPartialCutEffErr) + "\n";
-      map.insert(std::pair<std::string, double>("deltaPartialCutEff",
-                                                deltaPartialCutEff));
-      map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
-                                                deltaPartialCutEffErr));
-    }
+      double nDeltaCut =
+          chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                            dlString + "&&Delta_M<" + dhString)
+                               .c_str());
+      double buDeltaCutEff = nBuCut / nOr;
+      double deltaCutEff = nDeltaCut / nOr;
+      // Binomial expectation value: efficienciy = N_success (binomal: err =
+      // sqrt(pq) / N (poisson: err = sqrt(N)) Error: pq / N = sqrt(eff*(1-eff)
+      // / N) by propagation or errors
+      double buDeltaCutEffErr;
+      CalcBinomialErr(buDeltaCutEff, nOr, buDeltaCutEffErr);
+      double deltaCutEffErr;
+      CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
 
-    outFile.close();
+      std::ofstream outFile;
+      outFile.open(txtFileName);
+      outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
+      outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
+      outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
+      outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
+
+      map.insert(
+          std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
+      map.insert(
+          std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
+      map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
+      map.insert(
+          std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
+
+      double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
+      if (fitBuPartial_ == true) {
+        double nDeltaPartialCut =
+            chain.GetEntries((cutString + "&&" + orString + "&&Delta_M>" +
+                              dplString + "&&Delta_M<" + dphString)
+                                 .c_str());
+        deltaPartialCutEff = nDeltaPartialCut / nOr;
+        double deltaPartialCutEffErr;
+        CalcBinomialErr(deltaPartialCutEff, nOr, deltaPartialCutEffErr);
+        outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEff) +
+                       "\n";
+        outFile << "deltaPartialCutEffErr " +
+                       std::to_string(deltaPartialCutEffErr) + "\n";
+        map.insert(std::pair<std::string, double>("deltaPartialCutEff",
+                                                  deltaPartialCutEff));
+        map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
+                                                  deltaPartialCutEffErr));
+      }
+
+      outFile.close();
+    }
   } else {
     //   // If exists, read in from txt file
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
