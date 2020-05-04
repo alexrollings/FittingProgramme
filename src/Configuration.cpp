@@ -1474,8 +1474,13 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
   }
 }
 
-void CalcBinomialErr(double eff, double nInit, double err) {
+void CalcBinomialErr(double eff, double nInit, double &err) {
+  if (eff > 1) {
+    throw std::logic_error("Cannot have efficiency > 1");
+  }
+  std::cout << eff << "\t" << nInit << "\n";
   err = std::sqrt((eff * (1 - eff)) / nInit);
+  std::cout << err << "\n";
 };
 
 void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
@@ -1556,9 +1561,11 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       double orEff = nOr / nInitial;
       double orEffErr;
       CalcBinomialErr(orEff, nInitial, orEffErr);
+      std::cout << "\n\n\n orEff err = " << orEffErr << "\n\n\n";
       double boxEff = nBox / nInitial;
       double boxEffErr;
       CalcBinomialErr(boxEff, nInitial, boxEffErr);
+      std::cout << "\n\n\n boxEff err = " << boxEffErr << "\n\n\n";
       map.insert(std::pair<std::string, double>("orEff", orEff));
       map.insert(std::pair<std::string, double>("orEffErr", orEffErr));
       map.insert(std::pair<std::string, double>("boxEff", boxEff));

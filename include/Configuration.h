@@ -249,4 +249,4 @@ std::string ComposeFilename(Year year, Polarity polarity,
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
-void CalcBinomialErr(double nInit, double nFinal, double err);
+void CalcBinomialErr(double nInit, double nFinal, double &err);
