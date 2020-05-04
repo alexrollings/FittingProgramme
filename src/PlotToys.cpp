@@ -56,11 +56,31 @@ RooArgList ReturnInitPars(bool dataToy,
   }
 }
 
+void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
+                   Mode mode) {
+  std::map<std::string, double> effMap;
+  config.ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
+  outputFile.cd();
+  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(),
+              &effMap["buDeltaCutEff"],
+              ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(),
+              &effMap["deltaCutEff"],
+              ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
+  if (config.fitBuPartial() == true) {
+    tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
+                &effMap["deltaPartialCutEff"],
+                ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
+  }
+  tree.Fill();
+}
+
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
   std::string outputDir;
   std::vector<std::string> resultFiles;
   bool dataToy;
+  bool toys2D = false;
   std::cout << "1" << std::endl;
 
   {
@@ -106,6 +126,11 @@ int main(int argc, char *argv[]) {
 
     if (args("1D")) {
       config.fit1D() = true;
+    }
+
+    if (args("2D")) {
+      toys2D = true;
+      std::cout << "2D toys\n";
     }
 
     std::string inputFile;
@@ -410,6 +435,15 @@ int main(int argc, char *argv[]) {
       (outputDir + "/results/Result_" + config.ReturnBoxString() + ".root")
           .c_str(),
       "recreate");
+  TTree tree("tree", "");
+  if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+  }
+  if (config.neutral() == Neutral::gamma) {
+    SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+  }
+  outputFile.cd();
+  tree.Write();
   // Loop over params, create histogram for each and fill with values from
   // result
   for (double i = 0; i < nParams; ++i) {
@@ -535,7 +569,8 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
     TLegend errLegend(0.5, 0.78, 0.85, 0.88);
 
-    if (config.blindFit() == false) {
+    if (toys2D == true || config.blindFit() == false) {
+      std::cout << "VAL AND ERR TOO\n";
       RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
                         RooFit::Import(valHist));
       RooRealVar valMean(("valMean_" + paramName).c_str(), "",
