@@ -10,7 +10,7 @@ from uncertainties import unumpy, ufloat
 from uncertainties.umath import *
 import argparse
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   # May need to comment out bu delta_partial stuff (for older box scans)
   parser = argparse.ArgumentParser()
   parser.add_argument('-i',
@@ -51,8 +51,8 @@ if __name__ == "__main__":
   file_list = []
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
-  if neutral != "pi0" and neutral != "gamma" and neutral != "partial":
-    sys.exit("Specify neutral: -n=pi0,gamma,partial")
+  if neutral != 'pi0' and neutral != 'gamma' and neutral != 'partial':
+    sys.exit('Specify neutral: -n=pi0,gamma,partial')
   else:
     lines = [
         l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
@@ -66,7 +66,7 @@ if __name__ == "__main__":
   for box in split:
     bu_low = box[0]
     bu_high = box[1]
-    if neutral == "partial":
+    if neutral == 'partial':
       delta_partial_low = box[2]
       delta_partial_high = box[3]
       delta_low = '125'
@@ -76,23 +76,22 @@ if __name__ == "__main__":
       delta_high = box[3]
       delta_partial_low = '60'
       delta_partial_high = '105'
-    if neutral == "pi0":
-      box_string = delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+    if neutral == 'pi0':
+      box_string = delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high
     else:
-      box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+      box_string = delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high
 
     # Loop over files in directory and append to list those that match regex
     if os.path.isdir(input_dir):
       for filename in os.listdir(input_dir):
         m = re.search(
-            "Result_" + box_string + ".root", filename)
+            'Result_' + box_string + '.root', filename)
         if m:
           file_list.append(filename)
 
   if len(file_list) == 0:
-    sys.exit("No files recognised")
+    sys.exit('No files recognised')
 
-  cwd = os.getcwd()
   os.chdir(input_dir)
 
   # Array to store parameter pull widths and error on width
@@ -104,18 +103,18 @@ if __name__ == "__main__":
   # Array to store mean total signal yield and error
   signal_yield_arr = []
 
-  if neutral == "pi0":
-    # mode = "Bu2Dst0pi_D0pi0"
-    sig_decay = "Bu2Dst0h_D0pi0_pi0_pi"
-  elif neutral == "partial":
-    # mode = "Bu2Dst0pi_D0pi0"
-    sig_decay = "Bu2Dst0h_D0pi0_gamma_pi"
+  if neutral == 'pi0':
+    # mode = 'Bu2Dst0pi_D0pi0'
+    sig_decay = 'Bu2Dst0h_D0pi0_pi0_pi_kpi'
+  elif neutral == 'partial':
+    # mode = 'Bu2Dst0pi_D0pi0'
+    sig_decay = 'Bu2Dst0h_D0pi0_gamma_pi_kpi'
   else:
-    # mode = "Bu2Dst0pi_D0gamma"
-    sig_decay = "Bu2Dst0h_D0gamma_gamma_pi"
+    # mode = 'Bu2Dst0pi_D0gamma'
+    sig_decay = 'Bu2Dst0h_D0gamma_gamma_pi_kpi'
 
   # Name of branches in tree (box and or effs)
-  if neutral == "pi0":
+  if neutral == 'pi0':
     branch_names = ['orEff_Bu2Dst0pi_D0pi0', 'boxEff_Bu2Dst0pi_D0pi0']
   else:
     branch_names = [
@@ -127,11 +126,6 @@ if __name__ == "__main__":
   # Array to store efficiencies in
   box_eff = []
   or_eff = []
-  # n_mc needed to calculate error on efficiencies (for gamma mode)
-  if neutral == "pi0":
-    n_mc_events = 3650
-  else:
-    n_mc_events = 14508
 
   i = 0
   # Loop over files and extract result of interest
@@ -139,14 +133,14 @@ if __name__ == "__main__":
     print(f)
     tf = TFile(f)
     # Ib result, params are stored in order mean [0], std dev [1]
-    result_par_pull_widths = tf.Get("Result_Pull_" + param)
-    result_par_val = tf.Get("Result_Val_" + param)
-    result_par_err = tf.Get("Result_Err_" + param)
-    # result_signal_yield = tf.Get("Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi")
-    # result_signal_yield_err = tf.Get("Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi")
-    result_signal_yield = tf.Get("Result_Val_N_" + sig_decay + "_total")
-    result_signal_yield_err = tf.Get("Result_Err_N_" +
-                                     sig_decay + "_total")
+    result_par_pull_widths = tf.Get('Result_Pull_' + param)
+    result_par_val = tf.Get('Result_Val_' + param)
+    result_par_err = tf.Get('Result_Err_' + param)
+    # result_signal_yield = tf.Get('Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi')
+    # result_signal_yield_err = tf.Get('Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi')
+    result_signal_yield = tf.Get('Result_Val_N_tot_' + sig_decay)
+    result_signal_yield_err = tf.Get('Result_Err_N_tot_' +
+                                     sig_decay)
     # Final values of fit to pulls
     par_pull_widths = result_par_pull_widths.floatParsFinal()
     par_val = result_par_val.floatParsFinal()
@@ -165,34 +159,26 @@ if __name__ == "__main__":
         ufloat(signal_yield[0].getVal(), signal_yield_err[0].getVal()))
 
     # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
-    eff_tree = r_np.root2array(f, "tree", branch_names)
+    eff_tree = r_np.root2array(f, 'tree', branch_names)
     # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
     if neutral == 'partial':
       or_eff.append(
           ufloat(
-              eff_tree[0][3],
-              math.sqrt(n_mc_events * eff_tree[0][3] *
-                        (1 - eff_tree[0][3])) / n_mc_events))
+              eff_tree[0][0], eff_tree[0][1]))
       box_eff.append(
           ufloat(
-              eff_tree[0][5],
-              math.sqrt(n_mc_events * eff_tree[0][5] *
-                        (2 - eff_tree[0][5])) / n_mc_events))
+              eff_tree[0][4], eff_tree[0][5]))
     else:
       or_eff.append(
           ufloat(
-              eff_tree[0][0],
-              math.sqrt(n_mc_events * eff_tree[0][0] *
-                        (1 - eff_tree[0][0])) / n_mc_events))
+              eff_tree[0][0], eff_tree[0][1]))
       box_eff.append(
           ufloat(
-              eff_tree[0][1],
-              math.sqrt(n_mc_events * eff_tree[0][1] *
-                        (1 - eff_tree[0][1])) / n_mc_events))
+              eff_tree[0][2], eff_tree[0][3]))
 
     if box_fit != None:
       m = re.search(
-          "Result_" + box_fit + ".root", f)
+          'Result_' + box_fit + '.root', f)
       if m:
         if neutral == 'partial':
           fit_eff = eff_tree[0][5]
@@ -207,7 +193,7 @@ if __name__ == "__main__":
   frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
   # for i in range(0, len(file_list)):
-  #   print(file_list[i] + " " + str(box_eff[i]) + " " + str(or_eff[i]) + " " + str(frac_shared_yield[i]))
+  #   print(file_list[i] + ' ' + str(box_eff[i]) + ' ' + str(or_eff[i]) + ' ' + str(frac_shared_yield[i]))
 
   linear_err_fn = (np.multiply(
       np.divide(np.ones(len(file_list)) * math.sqrt(2), signal_yield_arr),
@@ -259,23 +245,27 @@ if __name__ == "__main__":
   plt.ylim(1.0, 1.4)
   plt.ylabel('Pull Width')
   plt.title(param)
-  fig.savefig("box_yield_vs_" + param + "_pull_width_" + neutral + "_" +
-              var + ".pdf")
+  fig.savefig(
+      '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
+      + param + '_pull_width_' + neutral + '_' + var + '.pdf')
   # print(frac_shared_yield)
   fig = plt.figure()
-  plt.errorbar(unumpy.nominal_values(box_eff),
-               # unumpy.nominal_values(frac_shared_yield),
-               unumpy.nominal_values(perc_err_arr),
-               xerr=unumpy.std_devs(box_eff),
-               # xerr=unumpy.std_devs(frac_shared_yield),
-               yerr=unumpy.std_devs(perc_err_arr),
-               color='black', ecolor='lightgray',
-               label='Pseudo-experiments')
+  plt.errorbar(
+      unumpy.nominal_values(box_eff),
+      # unumpy.nominal_values(frac_shared_yield),
+      unumpy.nominal_values(perc_err_arr),
+      xerr=unumpy.std_devs(box_eff),
+      # xerr=unumpy.std_devs(frac_shared_yield),
+      yerr=unumpy.std_devs(perc_err_arr),
+      color='black',
+      ecolor='lightgray',
+      label='Pseudo-experiments')
   # plt.xlabel('$N_{Box}/N_{T}$')
   if box_fit != None:
     plt.axvline(x=fit_eff, color='r', linestyle='dotted')
   plt.xlabel('$\epsilon_{Box}$')
   plt.ylabel('% Error')
   plt.title(param)
-  fig.savefig("box_yield_vs_" + param + "_err_" + neutral + "_" +
-              var + ".pdf")
+  fig.savefig(
+      '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
+      + param + '_err_' + neutral + '_' + var + '.pdf')
