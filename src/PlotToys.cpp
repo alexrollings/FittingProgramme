@@ -61,6 +61,7 @@ int main(int argc, char *argv[]) {
   std::string outputDir;
   std::vector<std::string> resultFiles;
   bool dataToy;
+  std::cout << "1" << std::endl;
 
   {
     ParseArguments args(argc, argv);
@@ -121,6 +122,7 @@ int main(int argc, char *argv[]) {
     }
     inStream.close();
   }
+  std::cout << "2" << std::endl;
 
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
@@ -135,7 +137,7 @@ int main(int argc, char *argv[]) {
     if (config.fit1D() == false) {
       if (config.fitBuPartial() == false) {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaLow(std::stod(fileMatch[1]));
@@ -149,7 +151,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].["
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].["
             "0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
@@ -167,7 +169,7 @@ int main(int argc, char *argv[]) {
       }
     } else {
       if (config.fitBuPartial() == false) {
-        std::regex fileRexp(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+        std::regex fileRexp(".+_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaLow(std::stod(fileMatch[1]));
@@ -179,7 +181,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9]+)_([0-9]+)_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
