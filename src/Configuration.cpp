@@ -1474,8 +1474,8 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
   }
 }
 
-void CalcBinomialErr(double nInit, double nFinal, double err) {
-  err = std::sqrt((nFinal * (1 - nFinal)) / nInit);
+void CalcBinomialErr(double eff, double nInit, double err) {
+  err = std::sqrt((eff * (1 - eff)) / nInit);
 };
 
 void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
@@ -1578,8 +1578,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
         CalcBinomialErr(boxPartialEff, nInitial, boxPartialEffErr);
         map.insert(
             std::pair<std::string, double>("boxPartialEff", boxPartialEff));
-        map.insert(std::pair<std::string, double>("boxPartialEffErr",
-                                                  boxPartialEffErr));
+        map.insert(
+            std::pair<std::string, double>("boxPartialEffErr", boxPartialEffErr));
       }
     } else {
       double nBuCut =
