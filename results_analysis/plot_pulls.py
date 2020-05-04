@@ -20,8 +20,11 @@ def pass_filename(root_file,
         '_0\.[0-9]+\.root', root_file)
   if m:
     list_file.write(root_file + '\n')
-  else:
-    print(root_file)
+    # print(root_file)
+  # else:
+    # print('Result' + dim + '_' + delta_low + '_' + delta_high + '_' + bu_low +
+    #     '_' + bu_high + '_0\.[0-9]+\.root')
+    # print(root_file)
 
 
 def pass_filename_bu_partial(root_file,
@@ -122,7 +125,6 @@ if __name__ == "__main__":
     print("Analysing results from 2D toys")
     if bu_low == None or bu_high == None:
       sys.exit("Specify -bl= and -bh=")
-  elif dim == "1D":
     print("Analysing results from 1D toys")
   else:
     sys.exit("Set -d=1D/D1D/2D")
@@ -137,11 +139,12 @@ if __name__ == "__main__":
   if neutral != "pi0" and neutral != "gamma":
     sys.exit("Specify neutral: -n=pi0/gamma")
 
+  current_dir = os.getcwd()
   fit_bu_partial = False
-  filename = 'list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
+  filename = current_dir + '/list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
   if neutral == "gamma" and delta_partial_low != None and delta_partial_high != None:
     fit_bu_partial = True
-    filename = 'list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
+    filename = current_dir + '/list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
 
   if not os.path.isdir(input_dir):
     sys.exit(input_dir + ' is not a directory')
@@ -193,8 +196,8 @@ if __name__ == "__main__":
         ])
     else:
       if fit_bu_partial == False:
-        print(filename)
-        print(output_dir)
+        # print(filename)
+        # print(output_dir)
         subprocess.call([
             "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
             "-outputDir=" + output_dir, "-toyInit=" + toy_init
@@ -210,4 +213,4 @@ if __name__ == "__main__":
         #     "-toyInit=" + toy_init + " " + "-buPartial")
   else:
     sys.exit("File list empty")
-  # os.remove(filename)
+  os.remove(filename)
