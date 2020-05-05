@@ -21,6 +21,13 @@ if __name__ == '__main__':
       help=
       'Directory where results of pull distributions from 2D toys are stored',
       required=True)
+  parser.add_argument(
+      '-e',
+      '--error_file',
+      type=str,
+      help=
+      'File where systematics from error correction are stored',
+      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -30,6 +37,7 @@ if __name__ == '__main__':
   input_dir = args.input_dir
   pull_dir = args.pull_dir
   neutral = args.neutral
+  error_file = args.error_file
 
   # Observables we are interested have this stem (match with regex)
   observables = [
@@ -111,16 +119,33 @@ if __name__ == '__main__':
         else:
           fits_status[syst_label]['Failed'] += 1
 
+  syst_errs = {}
+
+  # Syst error from error correction: read in from file
+  g_err_corr = 'Stat. Error Correction'
+  if os.path.exists(error_file):
+    with open(error_file) as f:
+      error_dict = dict(line.strip().split(',') for line in f)
+    # print(error_dict)
+    for p, v in grouped_errs.items():
+      syst_errs[p] = {}
+      if p in error_dict:
+        v[g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
+        syst_errs[p][g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
+      else:
+        v[g_err_corr] = 0.
+        syst_errs[p][g_err_corr] = 0.
+  else:
+    print('No error file: calculating systematics with error correction')
+
   # Calculate individual systematic errors from std dev of arrays on syst_fit results
   # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
-  syst_errs = {}
   n_params = {'N' : 0, 'R': 0, 'A': 0}
   for p, s_arr in syst_fit_results.items():
     key = p[0]
     n_params[key] += 1
     n_syst = len(s_arr)
     tot_syst = 0
-    syst_errs[p] = {}
     for s, arr in s_arr.items():
       np_arr = np.asarray(arr, dtype=np.float32)
       std = np.std(np_arr)
@@ -132,9 +157,11 @@ if __name__ == '__main__':
         grouped_errs[p][group] += std**2
       else:
         grouped_errs[p][group] = std**2
+    tot_syst += grouped_errs[p][g_err_corr]**2
     value_errs[p]['Systematic Error'] = tot_syst**0.5
     for k, v in grouped_errs[p].items():
-      grouped_errs[p][k] = v**0.5
+      if k != g_err_corr:
+        grouped_errs[p][k] = v**0.5
 
   title_str = { 'N' : "", 'R' : "" , 'A': ""}
   row_arr = { 'N' : [], 'R' : [], 'A': []}

@@ -49,7 +49,7 @@ def pass_filename_bu_partial(root_file,
     list_file.write(root_file + '\n')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-i',
                       '--input_dir',
@@ -117,32 +117,33 @@ if __name__ == "__main__":
   bu_high = args.bu_high
   dim = args.dim
 
-  if dim == "D1D":
-    print("Analysing results from D1D toys")
+  if dim == 'D1D':
+    print('Analysing results from D1D toys')
     if bu_low == None or bu_high == None:
-      sys.exit("Specify -bl= and -bh=")
-  elif dim == "2D":
-    print("Analysing results from 2D toys")
+      sys.exit('Specify -bl= and -bh=')
+  elif dim == '2D':
+    print('Analysing results from 2D toys')
     if bu_low == None or bu_high == None:
-      sys.exit("Specify -bl= and -bh=")
-    print("Analysing results from 1D toys")
+      sys.exit('Specify -bl= and -bh=')
+  elif dim == '1D':
+    print('Analysing results from 1D toys')
   else:
-    sys.exit("Set -d=1D/D1D/2D")
+    sys.exit('Set -d=1D/D1D/2D')
 
-  if toy_init == "data":
-    print("Initial param values taken from final data fit")
-  elif toy_init == "model":
-    print("Initial param values taken from model")
+  if toy_init == 'data':
+    print('Initial param values taken from final data fit')
+  elif toy_init == 'model':
+    print('Initial param values taken from model')
   else:
-    sys.exit("Initial toy parameters taken from model/data fit: -t=model/data")
+    sys.exit('Initial toy parameters taken from model/data fit: -t=model/data')
 
-  if neutral != "pi0" and neutral != "gamma":
-    sys.exit("Specify neutral: -n=pi0/gamma")
+  if neutral != 'pi0' and neutral != 'gamma':
+    sys.exit('Specify neutral: -n=pi0/gamma')
 
   current_dir = os.getcwd()
   fit_bu_partial = False
   filename = current_dir + '/list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
-  if neutral == "gamma" and delta_partial_low != None and delta_partial_high != None:
+  if neutral == 'gamma' and delta_partial_low != None and delta_partial_high != None:
     fit_bu_partial = True
     filename = current_dir + '/list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
 
@@ -153,24 +154,24 @@ if __name__ == "__main__":
   for root_file in os.listdir(input_dir):
     # if i > 1000:
     #   break;
-    if dim == "1D":
+    if dim == '1D':
       if fit_bu_partial == False:
-        pass_filename(input_dir + "/" + root_file, list_file, dim, delta_low,
+        pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
                       delta_high)
       else:
-        pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+        pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
                                  delta_low, delta_high, delta_partial_low,
                                  delta_partial_high)
     else:
       if fit_bu_partial == False:
-        pass_filename(input_dir + "/" + root_file, list_file, dim, delta_low,
+        pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
                       delta_high, bu_low, bu_high)
       else:
-        pass_filename_bu_partial(input_dir + "/" + root_file, list_file, dim,
+        pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
                                  delta_low, delta_high, delta_partial_low,
                                  delta_partial_high, bu_low, bu_high)
     # i = i + 1
-    # pass_filename(input_dir + "/" + root_file, list_file)
+    # pass_filename(input_dir + '/' + root_file, list_file)
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
   # results_dir = output_dir + '/results'
@@ -179,38 +180,42 @@ if __name__ == "__main__":
   plots_dir = output_dir + '/plots'
   if not os.path.exists(plots_dir):
     os.mkdir(plots_dir)
-  # print("./PlotToys " + ",".join(list_file))
+  # print('./PlotToys ' + ','.join(list_file))
   os.chdir('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/')
   if list_file.read(1) != None:
-    if dim == "1D":
+    if dim == '1D':
       if fit_bu_partial == False:
         subprocess.call([
-            "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
-            "-outputDir=" + output_dir, "-1D", "-toyInit=" + toy_init
+            './PlotToys', '-neutral=' + neutral, '-inputFile=' + filename,
+            '-outputDir=' + output_dir, '-1D', '-toyInit=' + toy_init
         ])
       else:
         subprocess.call([
-            "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
-            "-outputDir=" + output_dir, "-1D", "-toyInit=" + toy_init,
-            "-buPartial"
+            './PlotToys', '-neutral=' + neutral, '-inputFile=' + filename,
+            '-outputDir=' + output_dir, '-1D', '-toyInit=' + toy_init,
+            '-buPartial'
         ])
     else:
+      if dim == 'D1D':
+        dim = ''
+      elif dim == '2D':
+        dim = '-2D'
       if fit_bu_partial == False:
         # print(filename)
         # print(output_dir)
         subprocess.call([
-            "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
-            "-outputDir=" + output_dir, "-toyInit=" + toy_init
+            './PlotToys', '-neutral=' + neutral, '-inputFile=' + filename,
+            '-outputDir=' + output_dir, '-toyInit=' + toy_init, dim
         ])
       else:
         subprocess.call([
-            "./PlotToys", "-neutral=" + neutral, "-inputFile=" + filename,
-            "-outputDir=" + output_dir, "-toyInit=" + toy_init, "-buPartial"
+            './PlotToys', '-neutral=' + neutral, '-inputFile=' + filename,
+            '-outputDir=' + output_dir, '-toyInit=' + toy_init, '-buPartial', dim
         ])
         # print(
-        #     "./PlotToys" + " " + "-neutral=" + neutral + " " +
-        #     "-inputFile=" + filename + " " + "-outputDir=" + output_dir + " " +
-        #     "-toyInit=" + toy_init + " " + "-buPartial")
+        #     './PlotToys' + ' ' + '-neutral=' + neutral + ' ' +
+        #     '-inputFile=' + filename + ' ' + '-outputDir=' + output_dir + ' ' +
+        #     '-toyInit=' + toy_init + ' ' + '-buPartial')
   else:
-    sys.exit("File list empty")
+    sys.exit('File list empty')
   os.remove(filename)

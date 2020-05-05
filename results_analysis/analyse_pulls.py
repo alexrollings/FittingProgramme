@@ -70,9 +70,9 @@ if __name__ == '__main__':
 
   file_list = []
 
+  limits_fname = home_path + 'shell_scripts/box_effs/' + neutral + '_' + var + '_box_limits_new.txt'
   lines = [
-      l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
-                                   neutral + '_' + var + '_box_limits_new.txt')
+      l.rstrip('\n') for l in open(limits_fname)
   ]
   lines = [l.split(':') for l in lines]
   box_limits = []
@@ -294,7 +294,7 @@ if __name__ == '__main__':
       txt_file = open(txt_fname, 'a')
     else:
       txt_file = open(txt_fname, 'w')
-    txt_file.write(f'{obs} {r:.6g}\n')
+    txt_file.write(f'{obs},{r:.6g}\n')
 
     #Draw vertical line at 2% region on plots
     # np_box_eff_2perc = np.array(box_eff_2perc)
