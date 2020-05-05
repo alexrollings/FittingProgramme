@@ -70,12 +70,12 @@ void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
   tree.Branch(("boxEffErr_" + EnumToString(mode)).c_str(), &effMap["boxEffErr"],
               ("boxEffErr_" + EnumToString(mode) + "/D").c_str());
   if (config.fitBuPartial() == true) {
-    tree.Branch(("boxPartalEff_" + EnumToString(mode)).c_str(),
-                &effMap["boxPartalEff"],
-                ("boxPartalEff_" + EnumToString(mode) + "/D").c_str());
-    tree.Branch(("boxPartalEffErr_" + EnumToString(mode)).c_str(),
-                &effMap["boxPartalEffErr"],
-                ("boxPartalEffErr_" + EnumToString(mode) + "/D").c_str());
+    tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
+                &effMap["boxPartialEff"],
+                ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
+    tree.Branch(("boxPartialEffErr_" + EnumToString(mode)).c_str(),
+                &effMap["boxPartialEffErr"],
+                ("boxPartialEffErr_" + EnumToString(mode) + "/D").c_str());
   }
   tree.Fill();
 }

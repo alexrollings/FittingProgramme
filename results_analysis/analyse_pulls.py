@@ -41,6 +41,9 @@ if __name__ == '__main__':
                       type=str,
                       help='String of box dimensions used in fit',
                       required=False)
+  remake_parser = parser.add_mutually_exclusive_group(required=False)
+  remake_parser.add_argument('--remake', dest='remake', action='store_true')
+  remake_parser.add_argument('--no-remake', dest='remake', action='store_false')
   args = parser.parse_args()
 
   input_dir = args.input_dir
@@ -48,17 +51,29 @@ if __name__ == '__main__':
   var = args.var
   neutral = args.neutral
   box_fit = args.box_fit
+  if neutral == 'pi0' or neutral == 'gamma':
+    parser.set_defaults(remake=True)
+  elif neutral == 'partial':
+    parser.set_defaults(remake=False)
+  else:
+    sys.exit('Specify neutral: -n=pi0,gamma,partial')
+  remake = args.remake
+
+  home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
+  if neutral == 'pi0':
+    txt_fname = f'{home_path}results_analysis/box_scans/syst_pi0.txt'
+  else:
+    txt_fname = f'{home_path}results_analysis/box_scans/syst_gamma.txt'
+
+  if remake is True and os.path.exists(txt_fname):
+    os.remove(txt_fname)
 
   file_list = []
 
-  home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
-  if neutral != 'pi0' and neutral != 'gamma' and neutral != 'partial':
-    sys.exit('Specify neutral: -n=pi0,gamma,partial')
-  else:
-    lines = [
-        l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
-                                     neutral + '_' + var + '_box_limits_new.txt')
-    ]
+  lines = [
+      l.rstrip('\n') for l in open(home_path + 'shell_scripts/box_effs/' +
+                                   neutral + '_' + var + '_box_limits_new.txt')
+  ]
   lines = [l.split(':') for l in lines]
   box_limits = []
   for _, box in lines:
@@ -105,66 +120,79 @@ if __name__ == '__main__':
     # mode = 'Bu2Dst0pi_D0gamma'
     sig_decay = 'Bu2Dst0h_D0gamma_gamma_pi_kpi'
 
-  # Name of branches in tree (box and or effs)
+
   if neutral == 'pi0':
+    # Name of branches in tree (box and or effs)
     branch_names = [
         'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
         'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0'
     ]
-  else:
+    observables = [
+        'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi', 'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk',
+        'N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi', 'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk',
+        'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_pi0_kpi',
+        'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi',
+        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi', 'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kk',
+        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kk',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total'
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_minus',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_plus',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_plus'
+    ]
+  elif neutral == 'partial':
     branch_names = [
         'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
         'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
-        'boxPartialEff_Bu2Dst0pi_D0pi0', 'boxPartialEffErr_Bu2Dst0pi_D0pi0'
+        'boxPartialEff_Bu2Dst0pi_D0pi0', 'boxPartialEffErr_Bu2Dst0pi_D0pi0',
+        'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
+        'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
+        'boxPartialEff_Bu2Dst0pi_D0gamma', 'boxPartialEffErr_Bu2Dst0pi_D0gamma'
     ]
-
-  observables = [
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi',
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk',
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi',
-      'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk',
-      'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_pi0_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kk',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kk',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total'
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_minus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_plus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_plus',
-      'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi',
-      'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk',
-      'N_tot_Bu2Dst0h_D0pi0_gamma_pi_pipi',
-      'R_CP_Bu2Dst0h_D0pi0_Blind_gamma_kk',
-      'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_gamma_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kk',
-      'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kk',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_total',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_total',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_minus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_minus'
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_plus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_plus',
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi',
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk',
-      'N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi',
-      'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk',
-      'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_pi0_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kk',
-      'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kk',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_minus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_plus',
-      'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_plus'
-  ]
+    observables = [
+        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi',
+        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk',
+        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_pipi',
+        'R_CP_Bu2Dst0h_D0pi0_Blind_gamma_kk',
+        'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_gamma_kpi',
+        'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi',
+        'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi',
+        'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kk',
+        'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kk',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_total',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_total',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_minus',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_minus'
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_plus',
+        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_plus']
+  else:
+    #Bug in name of Partial (Partal)
+    branch_names = [
+        'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
+        'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
+        'boxPartalEff_Bu2Dst0pi_D0pi0', 'boxPartalEffErr_Bu2Dst0pi_D0pi0',
+        'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
+        'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
+        'boxPartalEff_Bu2Dst0pi_D0gamma', 'boxPartalEffErr_Bu2Dst0pi_D0gamma'
+    ]
+    observables = [
+        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi',
+        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk',
+        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_pipi',
+        'R_CP_Bu2Dst0h_D0gamma_Blind_gamma_kk',
+        'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_gamma_kpi',
+        'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kpi',
+        'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kpi',
+        'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kk',
+        'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kk',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_total',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_total',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_minus',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_minus',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_plus',
+        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_plus'
+    ]
   if param is not None:
     observables = [param]
 
@@ -183,18 +211,15 @@ if __name__ == '__main__':
     box_eff = []
     or_eff = []
 
-    i = 0
     # Loop over files and extract result of interest
     for f in file_list:
       # print(f)
       tf = TFile(f)
-      # Ib result, params are stored in order mean [0], std dev [1]
+      # In result, params are stored in order mean [0], std dev [1]
       result_par_pull_widths = tf.Get('Result_Pull_' + obs)
       if isinstance(result_par_pull_widths, RooFitResult):
         result_par_val = tf.Get('Result_Val_' + obs)
         result_par_err = tf.Get('Result_Err_' + obs)
-        # result_signal_yield = tf.Get('Result_Val_N_Bu2Dst0h_D0gamma_gamma_pi')
-        # result_signal_yield_err = tf.Get('Result_Err_N_Bu2Dst0h_D0gamma_gamma_pi')
         result_signal_yield = tf.Get('Result_Val_N_tot_' + sig_decay)
         result_signal_yield_err = tf.Get('Result_Err_N_tot_' +
                                          sig_decay)
@@ -205,9 +230,6 @@ if __name__ == '__main__':
         signal_yield = result_signal_yield.floatParsFinal()
         signal_yield_err = result_signal_yield_err.floatParsFinal()
         # Save value and error of width for each box dimn
-        if i == 0:
-          initial_width = ufloat(par_pull_widths[1].getVal(),
-                                 par_pull_widths[1].getError())
         par_pull_widths_arr.append(
             ufloat(par_pull_widths[1].getVal(), par_pull_widths[1].getError()))
         par_val_arr.append(ufloat(par_val[0].getVal(), par_err[0].getVal()))
@@ -217,113 +239,104 @@ if __name__ == '__main__':
 
         # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
         eff_tree = r_np.root2array(f, 'tree', branch_names)
-        # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
-        if neutral == 'partial':
-          or_eff.append(
-              ufloat(
-                  eff_tree[0][0], eff_tree[0][1]))
-          box_eff.append(
-              ufloat(
-                  eff_tree[0][4], eff_tree[0][5]))
-        else:
+        if neutral == 'pi0':
           or_eff.append(
               ufloat(
                   eff_tree[0][0], eff_tree[0][1]))
           box_eff.append(
               ufloat(
                   eff_tree[0][2], eff_tree[0][3]))
+        elif neutral == 'gamma':
+          or_eff.append(
+              ufloat(
+                  eff_tree[0][6], eff_tree[0][7]))
+          box_eff.append(
+              ufloat(
+                  eff_tree[0][8], eff_tree[0][9]))
+        else:
+          or_eff.append(
+              ufloat(
+                  eff_tree[0][0], eff_tree[0][1]))
+          box_eff.append(
+              ufloat(
+                  eff_tree[0][4], eff_tree[0][5]))
 
         if box_fit != None:
           m = re.search(
               'Result_' + box_fit + '.root', f)
           if m:
-            if neutral == 'partial':
-              fit_box_eff = eff_tree[0][4]
-            else:
+            if neutral == 'pi0':
               fit_box_eff = eff_tree[0][2]
+            elif neutral == 'gamma':
+              fit_box_eff = eff_tree[0][8]
+            else:
+              fit_box_eff = eff_tree[0][4]
 
-        i = i + 1
       else:
-        print(f'Skipping {obs} as not contained in {f}')
+        # print(f'Skipping {obs} as not contained in {f}')
         continue
 
     if len(par_pull_widths_arr) == 0:
-      sys.exit('No parameters found')
+      continue
+
+    #Calculate systematic as range of pull width for 2% around WP box efficiency
+    pulls_2perc = []
+    # box_eff_2perc = []
+    for i in range(0, len(box_eff)):
+      eff = box_eff[i].nominal_value
+      if abs(eff - fit_box_eff) <= 0.02:
+        pulls_2perc.append(par_pull_widths_arr[i].nominal_value)
+        # box_eff_2perc.append(eff)
+
+    np_pulls_2perc = np.array(pulls_2perc)
+    r = np.ptp(np_pulls_2perc, axis=0)
+    if os.path.exists(txt_fname):
+      txt_file = open(txt_fname, 'a')
+    else:
+      txt_file = open(txt_fname, 'w')
+    txt_file.write(f'{obs} {r:.6g}\n')
+
+    #Draw vertical line at 2% region on plots
+    # np_box_eff_2perc = np.array(box_eff_2perc)
+    # min_eff = np.amin(np_box_eff_2perc, axis=0)
+    # max_eff = np.amax(np_box_eff_2perc, axis=0)
+    min_eff = fit_box_eff - 0.02
+    max_eff = fit_box_eff + 0.02
 
     shared_yield = np.array(np.divide(
         np.multiply(signal_yield_arr[0], box_eff), or_eff),
                             dtype=object)
     frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
-    # for i in range(0, len(file_list)):
-    #   print(file_list[i] + ' ' + str(box_eff[i]) + ' ' + str(or_eff[i]) + ' ' + str(frac_shared_yield[i]))
-
-    linear_err_fn = (np.multiply(
-        np.divide(np.ones(len(file_list)) * math.sqrt(2), signal_yield_arr),
-        shared_yield) + np.divide((signal_yield_arr - shared_yield),
-                                  signal_yield_arr)) * initial_width
-    # sqrt from unumpy as can handle uncertainty types
-    quadratic_err_fn = unumpy.sqrt(
-        np.square(
-            np.multiply(
-                np.divide(
-                    np.ones(len(file_list)) *
-                    math.sqrt(2), signal_yield_arr), shared_yield)) + np.
-        square(np.divide((signal_yield_arr -
-                          shared_yield), signal_yield_arr))) * initial_width
-
     perc_err_arr = np.divide(par_err_arr, par_val_arr)*100
 
-    # par_pull_widths_arr = np.divide(par_pull_widths_arr, np.ones(len(file_list))*initial_width)
     fig = plt.figure()
-    # plt.errorbar(
-    #     unumpy.nominal_values(frac_shared_yield),
-    #     unumpy.nominal_values(quadratic_err_fn),
-    #     xerr=unumpy.std_devs(frac_shared_yield),
-    #     yerr=unumpy.std_devs(quadratic_err_fn),
-    #     label=
-    #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$'
-    # )
-    # plt.errorbar(
-    #     unumpy.nominal_values(frac_shared_yield),
-    #     unumpy.nominal_values(linear_err_fn),
-    #     xerr=unumpy.std_devs(frac_shared_yield),
-    #     yerr=unumpy.std_devs(linear_err_fn),
-    #     label=
-    #     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$'
-    # )
     plt.errorbar(unumpy.nominal_values(box_eff),
-                 # unumpy.nominal_values(frac_shared_yield),
                  unumpy.nominal_values(par_pull_widths_arr),
                  xerr=unumpy.std_devs(box_eff),
-                 # xerr=unumpy.std_devs(frac_shared_yield),
                  yerr=unumpy.std_devs(par_pull_widths_arr),
                  color='black', ecolor='lightgray',
                  label='Pseudo-experiments')
     if box_fit != None:
-      plt.axvline(x=fit_box_eff, color='r', linestyle='dotted')
-    # plt.legend(loc='upper left')
+      plt.axvline(x=fit_box_eff, color='tab:red', linestyle='dotted')
+      plt.axvline(x=min_eff, color='tab:purple', linestyle='dotted')
+      plt.axvline(x=max_eff, color='tab:purple', linestyle='dotted')
     plt.xlabel('$\epsilon_{Box}$')
-    # plt.xlabel('$N_{Box}/N_{T}$')
     plt.ylim(1.0, 1.4)
     plt.ylabel('Pull Width')
     plt.title(return_label(obs))
     fig.savefig(
         '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
         + obs + '_pull_width_' + neutral + '_' + var + '.pdf')
-    # print(frac_shared_yield)
-    fig = plt.figure()
+    plt.clf()
     plt.errorbar(
         unumpy.nominal_values(box_eff),
-        # unumpy.nominal_values(frac_shared_yield),
         unumpy.nominal_values(perc_err_arr),
         xerr=unumpy.std_devs(box_eff),
-        # xerr=unumpy.std_devs(frac_shared_yield),
         yerr=unumpy.std_devs(perc_err_arr),
         color='black',
         ecolor='lightgray',
         label='Pseudo-experiments')
-    # plt.xlabel('$N_{Box}/N_{T}$')
     if box_fit != None:
       plt.axvline(x=fit_box_eff, color='r', linestyle='dotted')
     plt.xlabel('$\epsilon_{Box}$')
@@ -332,3 +345,6 @@ if __name__ == '__main__':
     fig.savefig(
         '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
         + obs + '_err_' + neutral + '_' + var + '.pdf')
+    plt.close()
+
+  txt_file.close()
