@@ -302,6 +302,14 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pidEffPi;
   } else if (systematic == "pidEffK") {
     return Systematic::pidEffK;
+  } else if (systematic == "A_Prod") {
+    return Systematic::A_Prod;
+  } else if (systematic == "A_Kpi") {
+    return Systematic::A_Kpi;
+  } else if (systematic == "A_pi") {
+    return Systematic::A_pi;
+  } else if (systematic == "Delta_A_CP") {
+    return Systematic::Delta_A_CP;
   }
   throw std::invalid_argument(
       "Systematic must take a value in "
@@ -317,7 +325,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
       "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
-      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK]");
+      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/A_Prod/"
+      "A_Kpi/A_pi/Delta_A_CP]");
 }
 
 
@@ -409,6 +418,14 @@ std::string EnumToString(Systematic systematic) {
       return "pidEffPi";
     case Systematic::pidEffK:
       return "pidEffK";
+    case Systematic::A_Prod:
+      return "A_Prod";
+    case Systematic::A_Kpi:
+      return "A_Kpi";
+    case Systematic::A_pi:
+      return "A_pi";
+    case Systematic::Delta_A_CP:
+      return "Delta_A_CP";
   }
 }
 

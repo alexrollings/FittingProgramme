@@ -79,7 +79,11 @@ enum class Systematic {
   deltaMisIdCutEffs,
   deltaPartialMisIdCutEffs,
   pidEffPi,
-  pidEffK
+  pidEffK,
+  A_Prod,
+  A_Kpi,
+  A_pi,
+  Delta_A_CP
 };
 
 // There is only a single instance of categories therefore we do not have to
