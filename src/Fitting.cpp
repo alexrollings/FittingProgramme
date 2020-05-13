@@ -3069,6 +3069,12 @@ int main(int argc, char **argv) {
     // Loop over all options in
     // order to extract correct roodataSets.
     for (auto &y : yearVec) {
+      std::string dPidCut;
+      if (y == Year::y2011 or y == Year::y2012) {
+        dPidCut = "2";
+      } else {
+        dPidCut = "1";
+      }
       // if (y == Year::y2011) {
       //   lumi += 0.98;
       //   lumiErr += 0.02;
@@ -3133,23 +3139,32 @@ int main(int argc, char **argv) {
                   }
                   RooDataSet *reducedInputDataSet_d = nullptr;
                   if (d == Daughters::kpi || d == Daughters::pik) {
-                    reducedInputDataSet_d = dynamic_cast<
-                        RooDataSet *>(reducedInputDataSet_b->reduce(
-                        config.fittingArgSet(),
-                        "((abs(h1_D_ID)==211&&h1_D_PIDK<-2)&&(abs(h2_D_ID)=="
-                        "321&&h2_D_PIDK>2))||((abs(h1_D_ID)"
-                        "==321&&h1_D_PIDK>2)&&(abs(h2_D_ID)==211&&h2_D_"
-                        "PIDK<-2))"));
+                    reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                        reducedInputDataSet_b->reduce(
+                            config.fittingArgSet(),
+                            ("((abs(h1_D_ID)==211&&h1_D_PIDK<-" + dPidCut +
+                             ")&&(abs(h2_D_ID)=="
+                             "321&&h2_D_PIDK>" +
+                             dPidCut +
+                             "))||((abs(h1_D_ID)"
+                             "==321&&h1_D_PIDK>" +
+                             dPidCut +
+                             ")&&(abs(h2_D_ID)==211&&h2_D_"
+                             "PIDK<-" +
+                             dPidCut + "))")
+                                .c_str()));
                   } else if (d == Daughters::kk) {
                     reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
                         reducedInputDataSet_b->reduce(
                             config.fittingArgSet(),
-                            "h1_D_PIDK>2&&h2_D_PIDK>2"));
+                            ("h1_D_PIDK>" + dPidCut + "&&h2_D_PIDK>" + dPidCut)
+                                .c_str()));
                   } else {
                     reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
                         reducedInputDataSet_b->reduce(
-                            config.fittingArgSet(),
-                            "h1_D_PIDK<-2&&h2_D_PIDK<-2"));
+                            config.fittingArgSet(), ("h1_D_PIDK<-" + dPidCut +
+                                                     "&&h2_D_PIDK<-" + dPidCut)
+                                                        .c_str()));
                   }
                   if (reducedInputDataSet_d == nullptr) {
                     throw std::runtime_error(
