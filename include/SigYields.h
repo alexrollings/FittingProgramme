@@ -167,7 +167,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::kpi>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -179,7 +179,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::kpi>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else if (charge == Charge::minus) {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -192,7 +192,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::kpi>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -204,7 +204,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::kpi>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -532,7 +532,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::kk>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -544,7 +544,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::kk>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else if (charge == Charge::minus) {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -557,7 +557,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::kk>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -569,7 +569,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::kk>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -707,7 +707,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::pipi>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -719,7 +719,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::pipi>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else if (charge == Charge::minus) {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -732,7 +732,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
                          .N_tot_Bu2Dst0h_D0gamma(),
                      NeutralBachelorDaughtersVars<neutral, bachelor,
                                                   Daughters::pipi>::Get(uniqueId)
-                         .A_Bu2Dst0h_D0gamma())));
+                         .A_corr_Bu2Dst0h_D0gamma())));
     }
     N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
         ("N_Bu2Dst0h_D0pi0_" +
@@ -744,7 +744,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
                        .N_tot_Bu2Dst0h_D0pi0(),
                    NeutralBachelorDaughtersVars<neutral, bachelor,
                                                 Daughters::pipi>::Get(uniqueId)
-                       .A_Bu2Dst0h_D0pi0())));
+                       .A_corr_Bu2Dst0h_D0pi0())));
   } else {
     if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
