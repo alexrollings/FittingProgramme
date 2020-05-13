@@ -211,6 +211,10 @@ class Configuration {
   double initYieldFAVSignal_;
   std::shared_ptr<RooRealVar> pidEffK_;
   std::shared_ptr<RooRealVar> pidEffPi_;
+  std::shared_ptr<RooRealVar> A_Prod_;
+  std::shared_ptr<RooRealVar> A_Kpi_;
+  std::shared_ptr<RooRealVar> A_pi_;
+  std::shared_ptr<RooRealVar> Delta_A_CP_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;
