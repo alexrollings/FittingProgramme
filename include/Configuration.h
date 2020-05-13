@@ -152,6 +152,11 @@ class Configuration {
     }
   }
 
+  RooRealVar &A_Prod() { return *A_Prod_; }
+  RooRealVar &A_Kpi() { return *A_Kpi_; }
+  RooRealVar &A_pi() { return *A_pi_; }
+  RooRealVar &Delta_A_CP() { return *Delta_A_CP_; }
+
   std::string ReturnBoxString();
 
   std::string &gammaCutString() { return gammaCutString_; }
