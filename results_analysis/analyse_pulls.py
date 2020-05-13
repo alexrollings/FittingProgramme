@@ -265,6 +265,7 @@ if __name__ == '__main__':
           m = re.search(
               'Result_' + box_fit + '.root', f)
           if m:
+            fit_pull_width = par_pull_widths[1].getVal()
             if neutral == 'pi0':
               fit_box_eff = eff_tree[0][2]
             elif neutral == 'gamma':
@@ -279,27 +280,37 @@ if __name__ == '__main__':
     if len(par_pull_widths_arr) == 0:
       continue
 
-    #Calculate systematic as range of pull width for 2% around WP box efficiency
-    pulls_2perc = []
-    # box_eff_2perc = []
+    #Calculate systematic as RMS of pull width for 2% around WP box efficiency
+    #RMS = sqrt(sum((y0-y)**2)/n)
+    #Difference between with of pull at data point and fit
+    pull_diff = []
     for i in range(0, len(box_eff)):
       eff = box_eff[i].nominal_value
       if abs(eff - fit_box_eff) <= 0.02:
-        pulls_2perc.append(par_pull_widths_arr[i].nominal_value)
-        # box_eff_2perc.append(eff)
+        pull_diff.append(par_pull_widths_arr[i].nominal_value - fit_pull_width)
+        # pulls_2perc.append(par_pull_widths_arr[i].nominal_value)
 
-    np_pulls_2perc = np.array(pulls_2perc)
-    r = np.ptp(np_pulls_2perc, axis=0)
+    # range
+    # np_pulls_2perc = np.array(pulls_2perc)
+    # r = np.ptp(np_pulls_2perc, axis=0)
+
+    np_pull_diff = np.array(pull_diff)
+    #Square differences
+    np_pull_sqdiff = np.square(np_pull_diff)
+    # print(np_pull_diff)
+    # print(np_pull_sqdiff)
+    #Sum squares, average and square root
+    # print(np.sum(np_pull_sqdiff))
+    # print(np.sum(np_pull_sqdiff)/len(np_pull_diff))
+    rms = sqrt(np.sum(np_pull_sqdiff)/len(np_pull_diff))
+    # print(rms)
     if os.path.exists(txt_fname):
       txt_file = open(txt_fname, 'a')
     else:
       txt_file = open(txt_fname, 'w')
-    txt_file.write(f'{obs},{r:.6g}\n')
+    txt_file.write(f'{obs},{rms:.6g}\n')
 
     #Draw vertical line at 2% region on plots
-    # np_box_eff_2perc = np.array(box_eff_2perc)
-    # min_eff = np.amin(np_box_eff_2perc, axis=0)
-    # max_eff = np.amax(np_box_eff_2perc, axis=0)
     min_eff = fit_box_eff - 0.02
     max_eff = fit_box_eff + 0.02
 
