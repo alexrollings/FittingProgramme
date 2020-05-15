@@ -35,6 +35,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
@@ -54,6 +56,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
@@ -74,6 +78,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
@@ -93,6 +99,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
@@ -112,6 +120,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
@@ -131,6 +141,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
@@ -150,6 +162,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
@@ -169,6 +183,8 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
+  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
   std::unique_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
@@ -236,6 +252,9 @@ class NeutralBachelorDaughtersVars {
   RooAbsReal &A_MisRec() { return *impl_.A_MisRec_; }
   RooAbsReal &N_tot_MisRec() { return *impl_.N_tot_MisRec_; }
 
+  RooAbsReal &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
+  RooAbsReal &N_tot_Bu2D0h() { return *impl_.N_tot_Bu2D0h_; }
+
   RooAbsReal &A_PartRec() { return *impl_.A_PartRec_; }
   RooAbsReal &N_tot_PartRec() { return *impl_.N_tot_PartRec_; }
 
@@ -287,6 +306,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -391,6 +425,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
       A_PartRec_(new RooRealVar(
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -440,6 +489,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -558,6 +622,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
       A_PartRec_(new RooRealVar(
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -639,6 +718,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -739,6 +833,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -844,6 +953,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -995,6 +1119,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
+              BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
+                  .kBR()
+                  .getVal(),
+          -1000000, 1000000)),
+      A_Bu2D0h_(new RooRealVar(
+          ("A_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+              .c_str(),
+          "", 0.01, -1, 1)),
+      N_tot_Bu2D0h_(new RooRealVar(
+          ("N_tot_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+              .c_str(),
+          "",
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
