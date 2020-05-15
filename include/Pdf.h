@@ -1,4 +1,5 @@
 #pragma once
+#include "Yields.h"
 #include "BkgYields.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
@@ -7,7 +8,6 @@
 #include "RooAddPdf.h"
 #include "RooArgList.h"
 #include "RooSimultaneous.h"
-#include "SigYields.h"
 
 class PdfBase {
  public:

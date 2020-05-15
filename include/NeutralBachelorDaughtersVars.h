@@ -286,7 +286,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -301,7 +301,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -386,7 +386,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -401,7 +401,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -439,7 +439,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -454,7 +454,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -553,7 +553,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -568,7 +568,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -638,7 +638,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -653,7 +653,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -738,7 +738,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -753,7 +753,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -843,7 +843,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -858,7 +858,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -994,7 +994,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVMisRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
@@ -1009,7 +1009,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           "",
-          NeutralVars<neutral>::Get(uniqueId).initYieldFAVPartRec() *
+          NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
