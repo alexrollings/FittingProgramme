@@ -259,11 +259,11 @@ namespace {  // Anonymous namespace
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
-struct SigYieldsImpl;
+struct YieldsImpl;
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-struct SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge> {
-  SigYieldsImpl(int uniqueId);
+struct YieldsImpl<neutral, bachelor, Daughters::kpi, charge> {
+  YieldsImpl(int uniqueId);
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0gamma_;
@@ -278,11 +278,36 @@ struct SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge> {
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooRealVar> R_ADS_Bu2Dst0h_D0pi0_Blind_;
   std::unique_ptr<RooAbsReal> R_ADS_Bu2Dst0h_D0pi0_;
+  // -------------------- MIS-REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_MisRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_MisRec_;
+  // -------------------- Bu2D0h -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bu2D0h_;
+  // -------------------- PART REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_PartRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_PartRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_PartRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_PartRec_;
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2Dst0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2Dst0Kpi_;
+  // -------------------- Bs2D0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2D0Kpi_;
 };
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-struct SigYieldsImpl<neutral, bachelor, Daughters::kk, charge> {
-  SigYieldsImpl(int uniqueId);
+struct YieldsImpl<neutral, bachelor, Daughters::kk, charge> {
+  YieldsImpl(int uniqueId);
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0gamma_;
@@ -297,11 +322,36 @@ struct SigYieldsImpl<neutral, bachelor, Daughters::kk, charge> {
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooRealVar> R_ADS_Bu2Dst0h_D0pi0_Blind_;
   std::unique_ptr<RooAbsReal> R_ADS_Bu2Dst0h_D0pi0_;
+  // -------------------- MIS-REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_MisRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_MisRec_;
+  // -------------------- Bu2D0h -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bu2D0h_;
+  // -------------------- PART REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_PartRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_PartRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_PartRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_PartRec_;
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2Dst0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2Dst0Kpi_;
+  // -------------------- Bs2D0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2D0Kpi_;
 };
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-struct SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge> {
-  SigYieldsImpl(int uniqueId);
+struct YieldsImpl<neutral, bachelor, Daughters::pipi, charge> {
+  YieldsImpl(int uniqueId);
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0gamma_;
@@ -316,11 +366,36 @@ struct SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge> {
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooRealVar> R_ADS_Bu2Dst0h_D0pi0_Blind_;
   std::unique_ptr<RooAbsReal> R_ADS_Bu2Dst0h_D0pi0_;
+  // -------------------- MIS-REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_MisRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_MisRec_;
+  // -------------------- Bu2D0h -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bu2D0h_;
+  // -------------------- PART REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_PartRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_PartRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_PartRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_PartRec_;
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2Dst0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2Dst0Kpi_;
+  // -------------------- Bs2D0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2D0Kpi_;
 };
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-struct SigYieldsImpl<neutral, bachelor, Daughters::pik, charge> {
-  SigYieldsImpl(int uniqueId);
+struct YieldsImpl<neutral, bachelor, Daughters::pik, charge> {
+  YieldsImpl(int uniqueId);
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::unique_ptr<RooFormulaVar> N_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_Delta_Bu2Dst0h_D0gamma_;
@@ -335,6 +410,31 @@ struct SigYieldsImpl<neutral, bachelor, Daughters::pik, charge> {
   std::unique_ptr<RooAbsReal> N_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooRealVar> R_ADS_Bu2Dst0h_D0pi0_Blind_;
   std::unique_ptr<RooAbsReal> R_ADS_Bu2Dst0h_D0pi0_;
+  // -------------------- MIS-REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_MisRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_MisRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_MisRec_;
+  // -------------------- Bu2D0h -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bu2D0h_;
+  // -------------------- PART REC -------------------- //
+  std::unique_ptr<RooFormulaVar> N_PartRec_;
+  std::unique_ptr<RooFormulaVar> N_Delta_PartRec_;
+  std::unique_ptr<RooAbsReal> N_Bu_PartRec_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_PartRec_;
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2Dst0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2Dst0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2Dst0Kpi_;
+  // -------------------- Bs2D0Kpi -------------------- //
+  std::unique_ptr<RooFormulaVar> N_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_Delta_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_Bu_Bs2D0Kpi_;
+  std::unique_ptr<RooAbsReal> N_BuPartial_Bs2D0Kpi_;
 };
 
 }  // namespace
@@ -342,12 +442,12 @@ struct SigYieldsImpl<neutral, bachelor, Daughters::pik, charge> {
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
 
-class SigYields {
+class Yields {
  public:
-  SigYields(int uniqueId_) : impl_(uniqueId_) {}
-  ~SigYields() {}
+  Yields(int uniqueId_) : impl_(uniqueId_) {}
+  ~Yields() {}
 
-  using This_t = SigYields<neutral, bachelor, daughters, charge>;
+  using This_t = Yields<neutral, bachelor, daughters, charge>;
 
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
@@ -384,15 +484,41 @@ class SigYields {
   RooAbsReal &N_BuPartial_Bu2Dst0h_D0pi0() {
     return *impl_.N_BuPartial_Bu2Dst0h_D0pi0_;
   }
+  // -------------------- MIS-REC -------------------- //
+  RooFormulaVar &N_MisRec() { return *impl_.N_MisRec_; }
+  RooFormulaVar &N_Delta_MisRec() { return *impl_.N_Delta_MisRec_; }
+  RooAbsReal &N_Bu_MisRec() { return *impl_.N_Bu_MisRec_; }
+  RooAbsReal &N_BuPartial_MisRec() { return *impl_.N_BuPartial_MisRec_; }
+  // -------------------- Bu2D0h -------------------- //
+  RooFormulaVar &N_Bu2D0h() { return *impl_.N_Bu2D0h_; }
+  RooFormulaVar &N_Delta_Bu2D0h() { return *impl_.N_Delta_Bu2D0h_; }
+  RooAbsReal &N_Bu_Bu2D0h() { return *impl_.N_Bu_Bu2D0h_; }
+  RooAbsReal &N_BuPartial_Bu2D0h() { return *impl_.N_BuPartial_Bu2D0h_; }
+  // -------------------- PART REC -------------------- //
+  RooFormulaVar &N_PartRec() { return *impl_.N_PartRec_; }
+  RooFormulaVar &N_Delta_PartRec() { return *impl_.N_Delta_PartRec_; }
+  RooAbsReal &N_Bu_PartRec() { return *impl_.N_Bu_PartRec_; }
+  RooAbsReal &N_BuPartial_PartRec() { return *impl_.N_BuPartial_PartRec_; }
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  RooFormulaVar &N_Bs2Dst0Kpi() { return *impl_.N_Bs2Dst0Kpi_; }
+  RooFormulaVar &N_Delta_Bs2Dst0Kpi() { return *impl_.N_Delta_Bs2Dst0Kpi_; }
+  RooAbsReal &N_Bu_Bs2Dst0Kpi() { return *impl_.N_Bu_Bs2Dst0Kpi_; }
+  RooAbsReal &N_BuPartial_Bs2Dst0Kpi() {
+    return *impl_.N_BuPartial_Bs2Dst0Kpi_;
+  }
+  // -------------------- Bs2D0Kpi -------------------- //
+  RooFormulaVar &N_Bs2D0Kpi() { return *impl_.N_Bs2D0Kpi_; }
+  RooFormulaVar &N_Delta_Bs2D0Kpi() { return *impl_.N_Delta_Bs2D0Kpi_; }
+  RooAbsReal &N_Bu_Bs2D0Kpi() { return *impl_.N_Bu_Bs2D0Kpi_; }
+  RooAbsReal &N_BuPartial_Bs2D0Kpi() { return *impl_.N_BuPartial_Bs2D0Kpi_; }
 
  private:
   int uniqueId_;
-  SigYieldsImpl<neutral, bachelor, daughters, charge> impl_;
+  YieldsImpl<neutral, bachelor, daughters, charge> impl_;
 };
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
-    int uniqueId)
+YieldsImpl<neutral, bachelor, Daughters::kpi, charge>::YieldsImpl(int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : N_Bu2Dst0h_D0gamma_(nullptr),
       N_Delta_Bu2Dst0h_D0gamma_(nullptr),
@@ -401,12 +527,74 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
       R_ADS_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      N_Bu2Dst0h_D0pi0_(nullptr),
-      N_Delta_Bu2Dst0h_D0pi0_(nullptr),
+      N_Bu2Dst0h_D0pi0_(MakeYield<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_Bu2Dst0h_D0pi0_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .N_tot_Bu2Dst0h_D0pi0(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .A_Bu2Dst0h_D0pi0())),
+      N_Delta_Bu2Dst0h_D0pi0_(MakeYield1D<neutral, bachelor, Daughters::kpi,
+                                          charge>(
+          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0())),
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      // -------------------- MisRec -------------------- //
+      N_MisRec_(MakeYield<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_MisRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .N_tot_MisRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .A_MisRec())),
+      N_Delta_MisRec_(MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_Delta_MisRec_", *N_MisRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffMisRec())),
+      N_Bu_MisRec_(nullptr),
+      N_BuPartial_MisRec_(nullptr),
+      // -------------------- Bu2D0h -------------------- //
+      N_Bu2D0h_(MakeYield<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_Bu2D0h_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .N_tot_Bu2D0h(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .A_Bu2D0h())),
+      N_Delta_Bu2D0h_(MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_Delta_Bu2D0h_", *N_Bu2D0h_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h())),
+      N_Bu_Bu2D0h_(nullptr),
+      N_BuPartial_Bu2D0h_(nullptr),
+      // -------------------- PartRec -------------------- //
+      N_PartRec_(MakeYield<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_PartRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .N_tot_PartRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
+              uniqueId)
+              .A_PartRec())),
+      N_Delta_PartRec_(MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+          uniqueId, "N_Delta_PartRec_", *N_PartRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffPartRec())),
+      N_Bu_PartRec_(nullptr),
+      N_BuPartial_PartRec_(nullptr),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      N_Bs2Dst0Kpi_(nullptr),
+      N_Delta_Bs2Dst0Kpi_(nullptr),
+      N_Bu_Bs2Dst0Kpi_(nullptr),
+      N_BuPartial_Bs2Dst0Kpi_(nullptr),
+      // -------------------- Bs2D0Kpi -------------------- //
+      N_Bs2D0Kpi_(nullptr),
+      N_Delta_Bs2D0Kpi_(nullptr),
+      N_Bu_Bs2D0Kpi_(nullptr),
+      N_BuPartial_Bs2D0Kpi_(nullptr) {
   if (neutral == Neutral::gamma) {
     N_Bu2Dst0h_D0gamma_ = std::unique_ptr<
         RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::kpi, charge>(
@@ -417,27 +605,12 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
         NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
             uniqueId)
             .A_Bu2Dst0h_D0gamma()));
-  }
-  N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield<neutral, bachelor, Daughters::kpi, charge>(
-          uniqueId, "N_Bu2Dst0h_D0pi0_",
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
-              uniqueId)
-              .N_tot_Bu2Dst0h_D0pi0(),
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kpi>::Get(
-              uniqueId)
-              .A_Bu2Dst0h_D0pi0()));
-  if (neutral == Neutral::gamma) {
     N_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
             uniqueId, "N_Delta_Bu2Dst0h_D0gamma_", *N_Bu2Dst0h_D0gamma_,
             NeutralVars<neutral>::Get(uniqueId)
                 .buDeltaCutEffBu2Dst0h_D0gamma()));
   }
-  N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
-          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
-          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0()));
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
   // Bu and BuPartial as a fn of N_
   if (Configuration::Get().fit1D() == false ||
@@ -453,6 +626,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
         MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0()));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffMisRec()));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2D0h()));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffPartRec()));
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
           MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
@@ -464,6 +649,18 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
               uniqueId, "N_BuPartial_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
               NeutralVars<neutral>::Get(uniqueId)
                   .deltaPartialCutEffBu2Dst0h_D0pi0()));
+      N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+              uniqueId, "N_BuPartial_MisRec_", *N_MisRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec()));
+      N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+              uniqueId, "N_BuPartial_Bu2D0h_", *N_Bu2D0h_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h()));
+      N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+              uniqueId, "N_BuPartial_PartRec_", *N_PartRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec()));
     }
   } else {
     if (neutral == Neutral::gamma) {
@@ -474,12 +671,20 @@ SigYieldsImpl<neutral, bachelor, Daughters::kpi, charge>::SigYieldsImpl(
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kpi, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_));
   }
 }
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
-    int uniqueId)
+YieldsImpl<neutral, bachelor, Daughters::pik, charge>::YieldsImpl(int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : N_Bu2Dst0h_D0gamma_(nullptr),
       N_Delta_Bu2Dst0h_D0gamma_(nullptr),
@@ -493,7 +698,59 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      // -------------------- MisRec -------------------- //
+      N_MisRec_(MakeYield<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_MisRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .N_tot_MisRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .A_MisRec())),
+      N_Delta_MisRec_(MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_Delta_MisRec_", *N_MisRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffMisRec())),
+      N_Bu_MisRec_(nullptr),
+      N_BuPartial_MisRec_(nullptr),
+      // -------------------- Bu2D0h -------------------- //
+      N_Bu2D0h_(MakeYield<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_Bu2D0h_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .N_tot_Bu2D0h(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .A_Bu2D0h())),
+      N_Delta_Bu2D0h_(MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_Delta_Bu2D0h_", *N_Bu2D0h_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h())),
+      N_Bu_Bu2D0h_(nullptr),
+      N_BuPartial_Bu2D0h_(nullptr),
+      // -------------------- PartRec -------------------- //
+      N_PartRec_(MakeYield<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_PartRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .N_tot_PartRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+              uniqueId)
+              .A_PartRec())),
+      N_Delta_PartRec_(MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+          uniqueId, "N_Delta_PartRec_", *N_PartRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffPartRec())),
+      N_Bu_PartRec_(nullptr),
+      N_BuPartial_PartRec_(nullptr),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      N_Bs2Dst0Kpi_(nullptr),
+      N_Delta_Bs2Dst0Kpi_(nullptr),
+      N_Bu_Bs2Dst0Kpi_(nullptr),
+      N_BuPartial_Bs2Dst0Kpi_(nullptr),
+      // -------------------- Bs2D0Kpi -------------------- //
+      N_Bs2D0Kpi_(nullptr),
+      N_Delta_Bs2D0Kpi_(nullptr),
+      N_Bu_Bs2D0Kpi_(nullptr),
+      N_BuPartial_Bs2D0Kpi_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     R_ADS_Bu2Dst0h_D0pi0_Blind_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("R_ADS_Bu2Dst0h_D0pi0_Blind_" +
@@ -564,13 +821,44 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
           -1, 1));
     }
   }
+  if (bachelor == Bachelor::k) {
+    N_Bs2Dst0Kpi_ = std::unique_ptr<
+        RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::pik, charge>(
+        uniqueId, "N_Bs2Dst0Kpi_",
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+            uniqueId)
+            .N_tot_Bs2Dst0Kpi(),
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+            uniqueId)
+            .A_Bs2Dst0Kpi()));
+    N_Bs2D0Kpi_ = std::unique_ptr<
+        RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::pik, charge>(
+        uniqueId, "N_Bs2D0Kpi_",
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+            uniqueId)
+            .N_tot_Bs2D0Kpi(),
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pik>::Get(
+            uniqueId)
+            .A_Bs2D0Kpi()));
+    N_Delta_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Delta_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2Dst0Kpi()));
+    N_Delta_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Delta_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2D0Kpi()));
+  }
+
   N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
       ("N_Bu2Dst0h_D0pi0_" +
        ComposeName(uniqueId, neutral, bachelor, Daughters::pik, charge))
           .c_str(),
       "@0*@1",
       RooArgList(
-          SigYields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
+          Yields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
               .N_Bu2Dst0h_D0pi0(),
           *R_ADS_Bu2Dst0h_D0pi0_)));
   N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
@@ -584,7 +872,7 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
             .c_str(),
         "@0*@1",
         RooArgList(
-            SigYields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
+            Yields<neutral, bachelor, Daughters::kpi, charge>::Get(uniqueId)
                 .N_Bu2Dst0h_D0gamma(),
             *R_ADS_Bu2Dst0h_D0gamma_)));
     N_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
@@ -608,6 +896,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
         MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0()));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffMisRec()));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2D0h()));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffPartRec()));
+    if (bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2Dst0Kpi()));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2D0Kpi()));
+    }
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
           MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
@@ -619,6 +931,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
               uniqueId, "N_BuPartial_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
               NeutralVars<neutral>::Get(uniqueId)
                   .deltaPartialCutEffBu2Dst0h_D0pi0()));
+      N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_BuPartial_MisRec_", *N_MisRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec()));
+      N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_BuPartial_Bu2D0h_", *N_Bu2D0h_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h()));
+      N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_BuPartial_PartRec_", *N_PartRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec()));
+      if (bachelor == Bachelor::k) {
+        N_BuPartial_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+                uniqueId, "N_BuPartial_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2Dst0Kpi()));
+        N_BuPartial_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+                uniqueId, "N_BuPartial_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2D0Kpi()));
+      }
     }
   } else {
     if (neutral == Neutral::gamma) {
@@ -629,12 +965,28 @@ SigYieldsImpl<neutral, bachelor, Daughters::pik, charge>::SigYieldsImpl(
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_));
+    if (bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pik, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_));
+    }
   }
 }
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
-    int uniqueId)
+YieldsImpl<neutral, bachelor, Daughters::kk, charge>::YieldsImpl(int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : N_Bu2Dst0h_D0gamma_(nullptr),
       N_Delta_Bu2Dst0h_D0gamma_(nullptr),
@@ -643,12 +995,74 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
       R_ADS_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      N_Bu2Dst0h_D0pi0_(nullptr),
-      N_Delta_Bu2Dst0h_D0pi0_(nullptr),
+      N_Bu2Dst0h_D0pi0_(MakeYield<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_Bu2Dst0h_D0pi0_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .N_tot_Bu2Dst0h_D0pi0(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .A_Bu2Dst0h_D0pi0())),
+      N_Delta_Bu2Dst0h_D0pi0_(MakeYield1D<neutral, bachelor, Daughters::kk,
+                                          charge>(
+          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0())),
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      // -------------------- MisRec -------------------- //
+      N_MisRec_(MakeYield<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_MisRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .N_tot_MisRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .A_MisRec())),
+      N_Delta_MisRec_(MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_Delta_MisRec_", *N_MisRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffMisRec())),
+      N_Bu_MisRec_(nullptr),
+      N_BuPartial_MisRec_(nullptr),
+      // -------------------- Bu2D0h -------------------- //
+      N_Bu2D0h_(MakeYield<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_Bu2D0h_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .N_tot_Bu2D0h(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .A_Bu2D0h())),
+      N_Delta_Bu2D0h_(MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_Delta_Bu2D0h_", *N_Bu2D0h_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h())),
+      N_Bu_Bu2D0h_(nullptr),
+      N_BuPartial_Bu2D0h_(nullptr),
+      // -------------------- PartRec -------------------- //
+      N_PartRec_(MakeYield<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_PartRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .N_tot_PartRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+              uniqueId)
+              .A_PartRec())),
+      N_Delta_PartRec_(MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+          uniqueId, "N_Delta_PartRec_", *N_PartRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffPartRec())),
+      N_Bu_PartRec_(nullptr),
+      N_BuPartial_PartRec_(nullptr),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      N_Bs2Dst0Kpi_(nullptr),
+      N_Delta_Bs2Dst0Kpi_(nullptr),
+      N_Bu_Bs2Dst0Kpi_(nullptr),
+      N_BuPartial_Bs2Dst0Kpi_(nullptr),
+      // -------------------- Bs2D0Kpi -------------------- //
+      N_Bs2D0Kpi_(nullptr),
+      N_Delta_Bs2D0Kpi_(nullptr),
+      N_Bu_Bs2D0Kpi_(nullptr),
+      N_BuPartial_Bs2D0Kpi_(nullptr) {
   if (neutral == Neutral::gamma) {
     N_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         MakeYield<neutral, bachelor, Daughters::kk, charge>(
@@ -659,27 +1073,42 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
             NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
                 uniqueId)
                 .A_Bu2Dst0h_D0gamma()));
-  }
-  N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield<neutral, bachelor, Daughters::kk, charge>(
-          uniqueId, "N_Bu2Dst0h_D0pi0_",
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
-              uniqueId)
-              .N_tot_Bu2Dst0h_D0pi0(),
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
-              uniqueId)
-              .A_Bu2Dst0h_D0pi0()));
-  if (neutral == Neutral::gamma) {
     N_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
             uniqueId, "N_Delta_Bu2Dst0h_D0gamma_", *N_Bu2Dst0h_D0gamma_,
             NeutralVars<neutral>::Get(uniqueId)
                 .buDeltaCutEffBu2Dst0h_D0gamma()));
   }
-  N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
-          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
-          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0()));
+  if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+    N_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bs2Dst0Kpi_",
+            NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+                uniqueId)
+                .N_tot_Bs2Dst0Kpi(),
+            NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+                uniqueId)
+                .A_Bs2Dst0Kpi()));
+    N_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bs2D0Kpi_",
+            NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+                uniqueId)
+                .N_tot_Bs2D0Kpi(),
+            NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::kk>::Get(
+                uniqueId)
+                .A_Bs2D0Kpi()));
+    N_Delta_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Delta_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2Dst0Kpi()));
+    N_Delta_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Delta_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2D0Kpi()));
+  }
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
   // Bu and BuPartial as a fn of N_
   if (Configuration::Get().fit1D() == false ||
@@ -695,6 +1124,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
         MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0()));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffMisRec()));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2D0h()));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffPartRec()));
+    if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2Dst0Kpi()));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2D0Kpi()));
+    }
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
           MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
@@ -706,6 +1159,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
               uniqueId, "N_BuPartial_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
               NeutralVars<neutral>::Get(uniqueId)
                   .deltaPartialCutEffBu2Dst0h_D0pi0()));
+      N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_BuPartial_MisRec_", *N_MisRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec()));
+      N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_BuPartial_Bu2D0h_", *N_Bu2D0h_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h()));
+      N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_BuPartial_PartRec_", *N_PartRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec()));
+      if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+        N_BuPartial_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+                uniqueId, "N_BuPartial_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2Dst0Kpi()));
+        N_BuPartial_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+                uniqueId, "N_BuPartial_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2D0Kpi()));
+      }
     }
   } else {
     if (neutral == Neutral::gamma) {
@@ -716,12 +1193,28 @@ SigYieldsImpl<neutral, bachelor, Daughters::kk, charge>::SigYieldsImpl(
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_));
+    if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::kk, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_));
+    }
   }
 }
 
 template <Neutral neutral, Bachelor bachelor, Charge charge>
-SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
-    int uniqueId)
+YieldsImpl<neutral, bachelor, Daughters::pipi, charge>::YieldsImpl(int uniqueId)
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : N_Bu2Dst0h_D0gamma_(nullptr),
       N_Delta_Bu2Dst0h_D0gamma_(nullptr),
@@ -730,12 +1223,74 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
       R_ADS_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      N_Bu2Dst0h_D0pi0_(nullptr),
-      N_Delta_Bu2Dst0h_D0pi0_(nullptr),
+      N_Bu2Dst0h_D0pi0_(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_Bu2Dst0h_D0pi0_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .N_tot_Bu2Dst0h_D0pi0(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .A_Bu2Dst0h_D0pi0())),
+      N_Delta_Bu2Dst0h_D0pi0_(MakeYield1D<neutral, bachelor, Daughters::pipi,
+                                          charge>(
+          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0())),
       N_Bu_Bu2Dst0h_D0pi0_(nullptr),
       N_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      // -------------------- MisRec -------------------- //
+      N_MisRec_(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_MisRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .N_tot_MisRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .A_MisRec())),
+      N_Delta_MisRec_(MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_Delta_MisRec_", *N_MisRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffMisRec())),
+      N_Bu_MisRec_(nullptr),
+      N_BuPartial_MisRec_(nullptr),
+      // -------------------- Bu2D0h -------------------- //
+      N_Bu2D0h_(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_Bu2D0h_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .N_tot_Bu2D0h(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .A_Bu2D0h())),
+      N_Delta_Bu2D0h_(MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_Delta_Bu2D0h_", *N_Bu2D0h_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2D0h())),
+      N_Bu_Bu2D0h_(nullptr),
+      N_BuPartial_Bu2D0h_(nullptr),
+      // -------------------- PartRec -------------------- //
+      N_PartRec_(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_PartRec_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .N_tot_PartRec(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+              uniqueId)
+              .A_PartRec())),
+      N_Delta_PartRec_(MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+          uniqueId, "N_Delta_PartRec_", *N_PartRec_,
+          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffPartRec())),
+      N_Bu_PartRec_(nullptr),
+      N_BuPartial_PartRec_(nullptr),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      N_Bs2Dst0Kpi_(nullptr),
+      N_Delta_Bs2Dst0Kpi_(nullptr),
+      N_Bu_Bs2Dst0Kpi_(nullptr),
+      N_BuPartial_Bs2Dst0Kpi_(nullptr),
+      // -------------------- Bs2D0Kpi -------------------- //
+      N_Bs2D0Kpi_(nullptr),
+      N_Delta_Bs2D0Kpi_(nullptr),
+      N_Bu_Bs2D0Kpi_(nullptr),
+      N_BuPartial_Bs2D0Kpi_(nullptr) {
   if (neutral == Neutral::gamma) {
     N_Bu2Dst0h_D0gamma_ = std::unique_ptr<
         RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
@@ -746,27 +1301,42 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
         NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
             uniqueId)
             .A_Bu2Dst0h_D0gamma()));
-  }
-  N_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield<neutral, bachelor, Daughters::pipi, charge>(
-          uniqueId, "N_Bu2Dst0h_D0pi0_",
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
-              uniqueId)
-              .N_tot_Bu2Dst0h_D0pi0(),
-          NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
-              uniqueId)
-              .A_Bu2Dst0h_D0pi0()));
-  if (neutral == Neutral::gamma) {
     N_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
             uniqueId, "N_Delta_Bu2Dst0h_D0gamma_", *N_Bu2Dst0h_D0gamma_,
             NeutralVars<neutral>::Get(uniqueId)
                 .buDeltaCutEffBu2Dst0h_D0gamma()));
   }
-  N_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
-          uniqueId, "N_Delta_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
-          NeutralVars<neutral>::Get(uniqueId).buDeltaCutEffBu2Dst0h_D0pi0()));
+  if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+    N_Bs2Dst0Kpi_ = std::unique_ptr<
+        RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+        uniqueId, "N_Bs2Dst0Kpi_",
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+            uniqueId)
+            .N_tot_Bs2Dst0Kpi(),
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+            uniqueId)
+            .A_Bs2Dst0Kpi()));
+    N_Bs2D0Kpi_ = std::unique_ptr<
+        RooFormulaVar>(MakeYield<neutral, bachelor, Daughters::pipi, charge>(
+        uniqueId, "N_Bs2D0Kpi_",
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+            uniqueId)
+            .N_tot_Bs2D0Kpi(),
+        NeutralBachelorDaughtersVars<neutral, bachelor, Daughters::pipi>::Get(
+            uniqueId)
+            .A_Bs2D0Kpi()));
+    N_Delta_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Delta_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2Dst0Kpi()));
+    N_Delta_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Delta_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                .buDeltaCutEffBs2D0Kpi()));
+  }
   // If fit only in 1D but also fit in buPartial dimn, still need to calculare
   // Bu and BuPartial as a fn of N_
   if (Configuration::Get().fit1D() == false ||
@@ -782,6 +1352,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
         MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
             NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2Dst0h_D0pi0()));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffMisRec()));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffBu2D0h()));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_,
+            NeutralVars<neutral>::Get(uniqueId).deltaCutEffPartRec()));
+    if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2Dst0Kpi()));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                  .deltaCutEffBs2D0Kpi()));
+    }
     if (Configuration::Get().fitBuPartial() == true) {
       N_BuPartial_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
           MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
@@ -793,6 +1387,30 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
               uniqueId, "N_BuPartial_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_,
               NeutralVars<neutral>::Get(uniqueId)
                   .deltaPartialCutEffBu2Dst0h_D0pi0()));
+      N_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_BuPartial_MisRec_", *N_MisRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffMisRec()));
+      N_BuPartial_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_BuPartial_Bu2D0h_", *N_Bu2D0h_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffBu2D0h()));
+      N_BuPartial_PartRec_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_BuPartial_PartRec_", *N_PartRec_,
+              NeutralVars<neutral>::Get(uniqueId).deltaPartialCutEffPartRec()));
+      if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+        N_BuPartial_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+                uniqueId, "N_BuPartial_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2Dst0Kpi()));
+        N_BuPartial_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+                uniqueId, "N_BuPartial_Bs2D0Kpi_", *N_Bs2D0Kpi_,
+                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId)
+                    .deltaPartialCutEffBs2D0Kpi()));
+      }
     }
   } else {
     if (neutral == Neutral::gamma) {
@@ -803,5 +1421,22 @@ SigYieldsImpl<neutral, bachelor, Daughters::pipi, charge>::SigYieldsImpl(
     N_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
         MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
             uniqueId, "N_Bu_Bu2Dst0h_D0pi0_", *N_Bu2Dst0h_D0pi0_));
+    N_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_MisRec_", *N_MisRec_));
+    N_Bu_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_Bu2D0h_", *N_Bu2D0h_));
+    N_Bu_PartRec_ = std::unique_ptr<RooFormulaVar>(
+        MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+            uniqueId, "N_Bu_PartRec_", *N_PartRec_));
+    if (Configuration::Get().runADS() == true && bachelor == Bachelor::k) {
+      N_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_Bu_Bs2Dst0Kpi_", *N_Bs2Dst0Kpi_));
+      N_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+          MakeYield1D<neutral, bachelor, Daughters::pipi, charge>(
+              uniqueId, "N_Bu_Bs2D0Kpi_", *N_Bs2D0Kpi_));
+    }
   }
 }
