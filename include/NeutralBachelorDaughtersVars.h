@@ -299,7 +299,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -314,7 +314,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -329,7 +329,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -414,7 +414,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -429,7 +429,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -444,7 +444,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -482,7 +482,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -497,7 +497,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -512,7 +512,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -611,7 +611,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -626,7 +626,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -641,7 +641,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -711,7 +711,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
@@ -726,7 +726,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
@@ -741,7 +741,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
@@ -826,7 +826,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -841,7 +841,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -856,7 +856,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -946,7 +946,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -961,7 +961,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -976,7 +976,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -1112,7 +1112,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           ("A_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1127,7 +1127,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           ("A_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1142,7 +1142,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
-          "", 0.01, -1, 1)),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
