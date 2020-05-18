@@ -1713,4 +1713,5 @@ double Configuration::ReturnACPInit(Neutral neutral, Bachelor bachelor) {
       }
       break;
   }
+  return ACPInit;
 }

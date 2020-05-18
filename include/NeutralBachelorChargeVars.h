@@ -1,5 +1,6 @@
 #pragma once
 #include "Configuration.h"
+#include "BachelorDaughtersVars.h"
 #include "RooAbsReal.h"
 #include "RooUnblindUniform.h"
 // Templated classes/functions mean that the compiler will automatically create
