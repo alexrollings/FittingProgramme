@@ -33,11 +33,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -54,11 +54,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -76,11 +76,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -97,11 +97,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -118,11 +118,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -139,11 +139,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooConstVar> A_Bs2D0Kpi_;
@@ -160,11 +160,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooConstVar> A_Bs2D0Kpi_;
@@ -181,11 +181,11 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> A_MisRec_;
+  std::shared_ptr<RooAbsReal> A_MisRec_;
   std::unique_ptr<RooAbsReal> N_tot_MisRec_;
-  std::unique_ptr<RooAbsReal> A_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_;
   std::unique_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> A_PartRec_;
+  std::shared_ptr<RooAbsReal> A_PartRec_;
   std::unique_ptr<RooAbsReal> N_tot_PartRec_;
   std::unique_ptr<RooConstVar> A_Bs2Dst0Kpi_;
   std::unique_ptr<RooConstVar> A_Bs2D0Kpi_;
@@ -250,12 +250,17 @@ class NeutralBachelorDaughtersVars {
   }
 
   RooAbsReal &A_MisRec() { return *impl_.A_MisRec_; }
+  std::shared_ptr<RooAbsReal> A_MisRec_GetPointer() { return impl_.A_MisRec_; }
   RooAbsReal &N_tot_MisRec() { return *impl_.N_tot_MisRec_; }
 
   RooAbsReal &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
+  std::shared_ptr<RooAbsReal> A_Bu2D0h_GetPointer() { return impl_.A_Bu2D0h_; }
   RooAbsReal &N_tot_Bu2D0h() { return *impl_.N_tot_Bu2D0h_; }
 
   RooAbsReal &A_PartRec() { return *impl_.A_PartRec_; }
+  std::shared_ptr<RooAbsReal> A_PartRec_GetPointer() {
+    return impl_.A_PartRec_;
+  }
   RooAbsReal &N_tot_PartRec() { return *impl_.N_tot_PartRec_; }
 
   RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
@@ -607,48 +612,45 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_MisRec_(new RooRealVar(
-          ("A_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_MisRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_MisRec_GetPointer()),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
+                  uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bu2D0h_(new RooRealVar(
-          ("A_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_Bu2D0h_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_Bu2D0h_GetPointer()),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
+                  uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_PartRec_(new RooRealVar(
-          ("A_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                              Daughters::kk>::Get(uniqueId)
+                     .A_PartRec_GetPointer()),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           "",
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
+                  uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
@@ -1108,11 +1110,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                   .N_tot_Bu2Dst0h_D0pi0(),
               NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
                   .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))),
-      A_MisRec_(new RooRealVar(
-          ("A_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_MisRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_MisRec_GetPointer()),
       N_tot_MisRec_(new RooRealVar(
           ("N_tot_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1123,11 +1123,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bu2D0h_(new RooRealVar(
-          ("A_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_Bu2D0h_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_Bu2D0h_GetPointer()),
       N_tot_Bu2D0h_(new RooRealVar(
           ("N_tot_Bu2D0h_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1138,11 +1136,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_PartRec_(new RooRealVar(
-          ("A_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
-              .c_str(),
-          "", 0.01, -5, 5)),
+      A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                              Daughters::kk>::Get(uniqueId)
+                     .A_PartRec_GetPointer()),
       N_tot_PartRec_(new RooRealVar(
           ("N_tot_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
