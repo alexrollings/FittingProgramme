@@ -1277,12 +1277,14 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string bhString = std::to_string(buDeltaHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) +
-                  "_misId_" + EnumToString(mode) + "_as_" +
-                  EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
+                  EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
+                  "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
+                  ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
-                  EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
+                  EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
+                  ReturnBoxString() + ".txt";
   }
 
   // Check if txt file containing efficiencies for particular mode and box dimns
@@ -1391,11 +1393,11 @@ void Configuration::SetEfficiencies(Mode mode, Bachelor bachelor,
   std::string dphString = std::to_string(deltaPartialHigh_);
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) +
                   "_misId_" + EnumToString(mode) + "_as_" +
                   EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "../txt_efficiencies_new_2/" + EnumToString(neutral()) + "_" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" + EnumToString(neutral()) + "_" +
                   EnumToString(mode) + "_" + ReturnBoxString() + ".txt";
   }
 
