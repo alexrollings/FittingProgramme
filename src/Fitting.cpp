@@ -1736,7 +1736,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   blindBox.SetTextColor(kRed + 1);
   blindBox.SetFillColor(10);
   if (daughters == Daughters::pik && config.blindFit() == true &&
-      config.splitByCharge == true) {
+      config.splitByCharge() == true) {
     blindBox.Draw("same");
   }
   legend.Draw("same");
