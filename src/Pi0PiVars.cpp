@@ -45,6 +45,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdf2BuPartial_Bu2Dst0h_D0pi0_(),
       pdf3BuPartial_Bu2Dst0h_D0pi0_(),
       pdfBuPartial_Bu2Dst0h_D0pi0_(),
+      mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0pi0", uniqueId, Neutral::pi0, Bachelor::pi,
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
+                                           Bachelor::pi, true),
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
+                                           Bachelor::pi, false),
+          Systematic::mcEffs, Sign::positive)),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_meanBu", uniqueId, Neutral::pi0, Bachelor::pi,
@@ -107,6 +114,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId).Bu2Dst0h_D0gamma_n1Bu())),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
+      mcEff_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId, Neutral::pi0, Bachelor::pi,
@@ -262,6 +270,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       buDeltaCutEffMisId_PartRec_(nullptr),
       deltaCutEffMisId_PartRec_(nullptr),
       deltaPartialCutEffMisId_PartRec_(nullptr) {
+  std::cout << "\n\n\n MC EFF "
+            << Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0,
+                                                Neutral::pi0, Bachelor::pi, true)
+            << " +/- "
+            << Configuration::Get().ReturnMCEff(
+                   Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi, false)
+            << "\n\n\n";
+
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0pi0, true);

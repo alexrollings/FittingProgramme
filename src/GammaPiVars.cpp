@@ -55,6 +55,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .Bu2Dst0h_D0gamma_aBuPartial(),
           NeutralVars<Neutral::gamma>::Get(uniqueId)
               .Bu2Dst0h_D0gamma_nBuPartial()),
+      mcEff_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0gamma", uniqueId, Neutral::gamma, Bachelor::pi,
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0gamma,
+                                           Neutral::gamma, Bachelor::pi, true),
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0gamma,
+                                           Neutral::gamma, Bachelor::pi, false),
+          Systematic::mcEffs, Sign::positive)),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId, Neutral::gamma,
@@ -163,6 +170,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                         .Bu2Dst0h_D0pi0_fracPdfCb1BuPartial(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId)
                         .Bu2Dst0h_D0pi0_fracPdfCb2BuPartial())),
+      mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0pi0", uniqueId, Neutral::gamma, Bachelor::pi,
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0,
+                                           Neutral::gamma, Bachelor::pi, true),
+          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0,
+                                           Neutral::gamma, Bachelor::pi, false),
+          Systematic::mcEffs, Sign::positive)),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_meanBu", uniqueId, Neutral::gamma, Bachelor::pi,

@@ -1412,7 +1412,6 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral,
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
     for (auto &str : lineVec) {
-      std::cout << str << "\n";
       if (lineVec[0] == EnumToString(neutral) &&
           lineVec[1] == EnumToString(bachelor)) {
         if (returnEff == true) {
