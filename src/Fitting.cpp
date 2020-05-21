@@ -2831,7 +2831,7 @@ int main(int argc, char **argv) {
                    "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
                    "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                    "deltaPartialMisIdCutEffs,pidEffPi,"
-                   "pidEffK,A_Prod,A_Kpi,A_pi,Delta_A_CP} "
+                   "pidEffK,A_Prod,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2968,7 +2968,7 @@ int main(int argc, char **argv) {
                  "misIdPartRecKPdfBuPartial,buDeltaCutEffs,deltaCutEffs,"
                  "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                  "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,A_Prod,A_Kpi,A_pi,"
-                 "Delta_A_CP\n";
+                 "Delta_A_CP,mcEffs\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
