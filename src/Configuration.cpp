@@ -310,6 +310,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::A_pi;
   } else if (systematic == "Delta_A_CP") {
     return Systematic::Delta_A_CP;
+  } else if (systematic == "mcEffs") {
+    return Systematic::mcEffs;
   }
   throw std::invalid_argument(
       "Systematic must take a value in "
@@ -326,7 +328,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
       "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/A_Prod/"
-      "A_Kpi/A_pi/Delta_A_CP]");
+      "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
 }
 
 
@@ -426,6 +428,8 @@ std::string EnumToString(Systematic systematic) {
       return "A_pi";
     case Systematic::Delta_A_CP:
       return "Delta_A_CP";
+    case Systematic::mcEffs:
+      return "mcEffs";
   }
 }
 
@@ -1393,6 +1397,34 @@ inline std::vector<std::string> SplitLine(std::string const &str) {
   return stringVector;
 }
 
+double Configuration::ReturnMCEff(Mode mode, Neutral neutral,
+                                     Bachelor bachelor, bool returnEff) {
+  std::string txtFileName =
+      "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
+      EnumToString(mode) + ".txt";
+  if (!file_exists(txtFileName)) {
+    throw std::logic_error("ReadMCEffs: " + txtFileName + " doesn't exist.");
+  }
+  std::ifstream inFile(txtFileName);
+  std::string line;
+  // Loop over lines in txt file
+  while (std::getline(inFile, line)) {
+    // Separate label and value (white space)
+    std::vector<std::string> lineVec = SplitLine(line);
+    for (auto &str : lineVec) {
+      std::cout << str << "\n";
+      if (lineVec[0] == EnumToString(neutral) &&
+          lineVec[1] == EnumToString(bachelor)) {
+        if (returnEff == true) {
+          return std::stod(lineVec[2]);
+        } else {
+          return std::stod(lineVec[3]);
+        }
+      }
+    }
+  }
+}
+
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
@@ -1673,8 +1705,6 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
     //           << EnumToString(mode) << "...\n";
     std::ifstream inFile(txtFileName);
-    // Create map to store efficiency string (label) and eff value
-    std::unordered_map<std::string, double> effMap;
     std::string line;
     // Loop over lines in txt file
     while (std::getline(inFile, line)) {

@@ -83,7 +83,8 @@ enum class Systematic {
   A_Prod,
   A_Kpi,
   A_pi,
-  Delta_A_CP
+  Delta_A_CP,
+  mcEffs 
 };
 
 // There is only a single instance of categories therefore we do not have to
@@ -173,10 +174,12 @@ class Configuration {
   bool &plotToys() { return plotToys_; }
   int nCPU() { return nCPU_; }
 
+  double ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
+                     bool returnEff);
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
   void ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      std::map<std::string, double> &map, bool misId);
-  double ReturnACPInit(Neutral neutral, Bachelor bachelor); 
+  double ReturnACPInit(Neutral neutral, Bachelor bachelor);
 
  private:
   Configuration();
