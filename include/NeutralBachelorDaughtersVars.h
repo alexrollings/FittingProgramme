@@ -827,13 +827,17 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           ("N_tot_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
-          "", "@0*@1",
+          "", "@0*@1*(@2/@3)",
           RooArgSet(
               NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                            Daughters::kpi>::Get(uniqueId)
                   .N_tot_Bu2Dst0h_D0pi0(),
               NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
-                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()))),
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .mcEff_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                  .mcEff_Bu2Dst0h_D0pi0()))),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr),
       A_MisRec_(new RooRealVar(
@@ -886,19 +890,23 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
         ("N_tot_Bu2Dst0h_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
-        "", "@0*@1",
+        "", "@0*@1*(@2/@3)",
         RooArgSet(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                                Daughters::kpi>::Get(uniqueId)
                       .N_tot_Bu2Dst0h_D0gamma(),
                   NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
-                      .R_Dst0KDst0pi_Bu2Dst0h_D0gamma())));
+                      .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
+                  NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                      .mcEff_Bu2Dst0h_D0gamma(),
+                  NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                      .mcEff_Bu2Dst0h_D0gamma()))),
     // FOR NOW fix asym to 0 as such small yield: change when improving
     // stability (otherwise add as systematic)
-    A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_PartRec_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "", 0));
+        A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
+            ("A_PartRec_" +
+             ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+                .c_str(),
+            "", 0));
   } else {
     A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_PartRec_" +

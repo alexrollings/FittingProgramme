@@ -45,7 +45,7 @@ class NeutralBachelorVars {
   RooRealVar &Bu2Dst0h_D0gamma_sigmaBuPartial() { return *Bu2Dst0h_D0gamma_sigmaBuPartial_; }
   RooCBShape &pdfBuPartial_Bu2Dst0h_D0gamma() { return pdfBuPartial_Bu2Dst0h_D0gamma_; }
   RooRealVar &mcEff_Bu2Dst0h_D0gamma() {
-    return mcEff_Bu2Dst0h_D0gamma_;
+    return *mcEff_Bu2Dst0h_D0gamma_;
   }
   // -------------------- Mis-ID ------------------- //
   RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() {
@@ -73,7 +73,7 @@ class NeutralBachelorVars {
     return pdfBuPartial_Bu2Dst0h_D0pi0_;
   }
   RooRealVar &mcEff_Bu2Dst0h_D0pi0() {
-    return mcEff_Bu2Dst0h_D0pi0_;
+    return *mcEff_Bu2Dst0h_D0pi0_;
   }
   // -------------------- Mis-ID ------------------- //
   RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0pi0() {
