@@ -30,6 +30,6 @@ add_executable(Fitting src/Fitting.cpp)
 
 #Find all external code programme needs to run (ROOT normally finds itself)
 #First argument = target
-target_link_libraries(Fitting ${FITTING_LIBS})
-# target_link_libraries(PlotToys ${FITTING_LIBS})
-# target_link_libraries(SaveRooDataSets ${FITTING_LIBS})
+target_link_libraries(Fitting ${FITTING_LIBS} stdc++fs)
+# target_link_libraries(PlotToys ${FITTING_LIBS} stdc++fs)
+# target_link_libraries(SaveRooDataSets ${FITTING_LIBS} stdc++fs)
