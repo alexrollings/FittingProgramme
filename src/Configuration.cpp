@@ -1,7 +1,11 @@
-#include "Configuration.h"
 #include <cmath>
 #include <iomanip>
 #include <sstream>
+#include <experimental/filesystem>
+#include <regex>
+#include <algorithm>
+
+#include "Configuration.h"
 #include "Params.h"
 
 Configuration::Configuration()
@@ -32,9 +36,9 @@ Configuration::Configuration()
       initYieldFAVSignal_(60000),
       pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
                                          Systematic::pidEffK, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFixed(
-          "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
-      // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
+      // pidEffPi_(Params::Get().CreateFixed(
+          // "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
+      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
       A_Prod_(Params::Get().CreateFixed(
           "A_Prod", 3.17e-04, 6.74e-04, Systematic::A_Prod, Sign::none)),
       A_Kpi_(Params::Get().CreateFixed(
@@ -1424,35 +1428,30 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral,
   }
 }
 
+// Check file exists
+bool fexists(std::string const &filename) {
+  std::ifstream infile(filename.c_str());
+  return infile.is_open();
+}
+
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
 void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
-  std::string modeString = EnumToString(mode);
-  std::string dirString;
-  // std::cout << txtFileName
-  //           << " doesn't exist:\n\tCalculating and setting efficiencies
-  //           for"
-  //           << modeString << "...\n";
-  if (mode == Mode::Bu2Dst0pi_D0gamma_WN || mode == Mode::Bu2Dst0pi_D0pi0_WN) {
-    // To remove _WN for directory
-    dirString = modeString.substr(0, modeString.size() - 3);
-  } else {
-    dirString = modeString;
-  }
-
+  std::cout << "Extracting chain\n";
+  namespace fs = std::experimental::filesystem;
   std::string path, ttree;
   switch (neutral()) {
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
           path =
-              "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+              "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
               "cross_feed_removed/";
           break;
         case Bachelor::k:
           path =
-              "gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
+              "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
               "cross_feed_removed/";
           break;
       }
@@ -1461,73 +1460,38 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          path = "pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           break;
         case Bachelor::k:
-          path = "pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           break;
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
       break;
   }
-
-  std::string inputfile_1("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2011_MagUp/" + path + modeString +
-                          "_2011_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_2("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2011_MagDown/" + path + modeString +
-                          "_2011_MagDown_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_3("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2012_MagUp/" + path + modeString +
-                          "_2012_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_4("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2012_MagDown/" + path + modeString +
-                          "_2012_MagDown_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_5("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2015_MagUp/" + path + modeString +
-                          "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_6("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2015_MagDown/" + path + modeString +
-                          "_2015_MagDown_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_7("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2016_MagUp/" + path + modeString +
-                          "_2016_MagUp_BDT1_BDT2_PID_TM.root");
-  std::string inputfile_8("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                          dirString + "_2016_MagDown/" + path + modeString +
-                          "_2016_MagDown_BDT1_BDT2_PID_TM.root");
-
-  chain.Add(inputfile_1.c_str());
-  chain.Add(inputfile_2.c_str());
-  chain.Add(inputfile_3.c_str());
-  chain.Add(inputfile_4.c_str());
-  chain.Add(inputfile_5.c_str());
-  chain.Add(inputfile_6.c_str());
-  chain.Add(inputfile_7.c_str());
-  chain.Add(inputfile_8.c_str());
-
-  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma &&
-      mode != Mode::Bu2Dst0pi_D0pi0_WN && mode != Mode::Bu2Dst0pi_D0gamma_WN &&
-      mode != Mode::Bu2Dst0K_D0pi0 && mode != Mode::Bu2Dst0K_D0gamma) {
-    std::string inputfile_9("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                            dirString + "_2015_MagUp/" + path + modeString +
-                            "_2015_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_10("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2015_MagDown/" + path +
-                             modeString +
-                             "_ReDecay_2015_MagDown_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_11("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2016_MagUp/" + path +
-                             modeString +
-                             "_ReDecay_2016_MagUp_BDT1_BDT2_PID_TM.root");
-    std::string inputfile_12("/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" +
-                             dirString + "_ReDecay_2016_MagDown/" + path +
-                             modeString +
-                             "_ReDecay_2016_MagDown_BDT1_BDT2_PID_TM.root");
-    chain.Add(inputfile_9.c_str());
-    chain.Add(inputfile_10.c_str());
-    chain.Add(inputfile_11.c_str());
-    chain.Add(inputfile_12.c_str());
+  std::string dir = "/data/lhcb/users/rollings/Bu2Dst0h_mc_new_3/";
+  std::string modeString = EnumToString(mode);
+  std::cout << "Looping over " << dir << "\n";
+  for (auto &p : fs::directory_iterator(dir)) {
+    std::ostringstream pStream;
+    pStream << p;
+    std::string subdir = pStream.str();
+    std::regex re(".+(" + modeString + "_((201.+)|ReDecay_201.+))");
+    std::smatch match;
+    if (std::regex_search(subdir, match, re)) {
+      std::string decay = match.str(1);
+      decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
+      std::string fName =
+          dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2.root";
+      if (fexists(fName)) {
+        chain.Add(fName.c_str());
+        // std::cout << "Added " << fName << " to chain\n";
+      } else {
+        throw std::runtime_error(fName + " does not exist\n");
+      }
+    }
   }
+  std::cout << "Added files to chain\n";
 }
 
 void CalcBinomialErr(double eff, double nInit, double &err) {

@@ -265,4 +265,6 @@ std::string ComposeFilename(Year year, Polarity polarity,
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
+bool fexists(std::string const &filename);
+
 void CalcBinomialErr(double nInit, double nFinal, double &err);

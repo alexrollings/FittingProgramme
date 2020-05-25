@@ -2732,12 +2732,6 @@ std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
   return values;
 }
 
-// Check file exists
-bool fexists(std::string const &filename) {
-  std::ifstream infile(filename.c_str());
-  return infile.is_open();
-}
-
 int main(int argc, char **argv) {
   std::string inputDir = "";
   std::string outputDir;
