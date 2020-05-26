@@ -36,9 +36,9 @@ Configuration::Configuration()
       initYieldFAVSignal_(60000),
       pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
                                          Systematic::pidEffK, Sign::positive)),
-      // pidEffPi_(Params::Get().CreateFixed(
-          // "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
+      pidEffPi_(Params::Get().CreateFixed(
+          "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
+      // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
       A_Prod_(Params::Get().CreateFixed(
           "A_Prod", 3.17e-04, 6.74e-04, Systematic::A_Prod, Sign::none)),
       A_Kpi_(Params::Get().CreateFixed(
@@ -1518,12 +1518,16 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   }
   std::string txtFileName;
   if (misId == true) {
+    // txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
+    //               EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
+    //               "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
+    //               ".txt";
     txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
                   EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
                   "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
                   ".txt";
   } else {
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
                   EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
                   ReturnBoxString() + ".txt";
   }
@@ -1665,8 +1669,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     }
   } else {
     //   // If exists, read in from txt file
-    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-    //           << EnumToString(mode) << "...\n";
+    std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+              << EnumToString(mode) << "...\n";
     std::ifstream inFile(txtFileName);
     std::string line;
     // Loop over lines in txt file
@@ -1676,6 +1680,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       // Add to map
       map.insert(
           std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+      std::cout << lineVec[0] << "\t" << lineVec[1] << "\n";
     }
   }
 }
