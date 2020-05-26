@@ -1640,11 +1640,15 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
 
       map.insert(
           std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
+      // map.insert(
+      //     std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
       map.insert(
-          std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
+          std::pair<std::string, double>("buDeltaCutEffErr", 0.05));
       map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
+      // map.insert(
+      //     std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
       map.insert(
-          std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
+          std::pair<std::string, double>("deltaCutEffErr", 0.05));
 
       double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
       if (fitBuPartial_ == true) {
@@ -1661,8 +1665,10 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                        std::to_string(deltaPartialCutEffErr) + "\n";
         map.insert(std::pair<std::string, double>("deltaPartialCutEff",
                                                   deltaPartialCutEff));
+        // map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
+        //                                           deltaPartialCutEffErr));
         map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
-                                                  deltaPartialCutEffErr));
+                                                  0.05));
       }
 
       outFile.close();
@@ -1678,9 +1684,26 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       // Separate label and value (white space)
       std::vector<std::string> lineVec = SplitLine(line);
       // Add to map
-      map.insert(
-          std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
-      std::cout << lineVec[0] << "\t" << lineVec[1] << "\n";
+      std::size_t found = lineVec[0].find("EffErr");
+      if (found != std::string::npos) {
+        map.insert(
+            std::pair<std::string, double>(lineVec[0], 0.05));
+      } else {
+        map.insert(
+            std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
+      }
+    }
+    std::vector<std::string> errStrVec = {"deltaCutEffErr", "buDeltaCutEffErr"};
+    if (fitBuPartial_ == true) {
+      errStrVec.emplace_back("deltaPartialCutEffErr");
+    }
+    for (auto &err : errStrVec) {
+      if (map.find(err) == map.end()) {
+        map.insert(std::pair<std::string, double>(err, 0.05));
+      }
+    }
+    for (auto elem : map) {
+      std::cout << elem.first << " " << elem.second << "\n";
     }
   }
 }
