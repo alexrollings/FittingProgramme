@@ -1527,7 +1527,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                   "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
                   ".txt";
   } else {
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
                   EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
                   ReturnBoxString() + ".txt";
   }
