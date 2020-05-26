@@ -1522,7 +1522,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     //               EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
     //               "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
     //               ".txt";
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
                   EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
                   "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
                   ".txt";
