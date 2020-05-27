@@ -109,6 +109,19 @@ class NeutralVars {
   double &initYieldFAVBu2Dst0h_D0gamma() {
     return initYieldFAVBu2Dst0h_D0gamma_;
   }
+  // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
+  RooCBShape &pdfBu_Bu2Dst0h_D0gamma_FAVasSUP() {
+    return pdfBu_Bu2Dst0h_D0gamma_FAVasSUP_;
+  }
+  RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP() {
+    return pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP_;
+  }
+  RooRealVar &buDeltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP() {
+    return *buDeltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP_;
+  }
+  RooRealVar &deltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP() {
+    return *deltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP_;
+  }
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
   RooRealVar &Bu2Dst0h_D0pi0_a1Delta() { return *Bu2Dst0h_D0pi0_a1Delta_; }
   RooRealVar &Bu2Dst0h_D0pi0_a2Delta() { return *Bu2Dst0h_D0pi0_a2Delta_; }
@@ -169,6 +182,25 @@ class NeutralVars {
     return *deltaPartialCutEffBu2Dst0h_D0pi0_;
   }
   double &initYieldFAVBu2Dst0h_D0pi0() { return initYieldFAVBu2Dst0h_D0pi0_; }
+  // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
+  RooCBShape &pdfBu_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooCBShape &pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooRealVar &buDeltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return *buDeltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooRealVar &deltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return *deltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooRealVar &deltaPartialCutEff_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return *deltaPartialCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -265,6 +297,24 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0gamma_;
   double fracBu2Dst0h_D0gamma_;
   double initYieldFAVBu2Dst0h_D0gamma_;
+  // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_meanDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_sigmaDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_a1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_a2Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_n2Delta_;
+  RooCBShape pdf1Delta_Bu2Dst0h_D0gamma_FAVasSUP_;
+  RooCBShape pdf2Delta_Bu2Dst0h_D0gamma_FAVasSUP_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_fracPdf1Delta_;
+  RooAddPdf pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_meanBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_sigmaBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_a1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_FAVasSUP_n1Bu_;
+  RooCBShape pdfBu_Bu2Dst0h_D0gamma_FAVasSUP_;
+  std::shared_ptr<RooRealVar> buDeltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP_;
+  std::shared_ptr<RooRealVar> deltaCutEff_Bu2Dst0h_D0gamma_FAVasSUP_;
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_meanDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_sigmaDelta_;
@@ -300,6 +350,26 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0pi0_;
   double fracBu2Dst0h_D0pi0_;
   double initYieldFAVBu2Dst0h_D0pi0_;
+  // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a2Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n2Delta_;
+  RooCBShape pdf1Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  RooCBShape pdf2Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_fracPdf1Delta_;
+  RooAddPdf pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_;
+  RooCBShape pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_;
+  RooCBShape pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> buDeltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> deltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> deltaPartialCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;
