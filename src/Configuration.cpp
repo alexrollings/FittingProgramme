@@ -39,6 +39,10 @@ Configuration::Configuration()
       pidEffPi_(Params::Get().CreateFixed(
           "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
       // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
+      // Run 1 = 5.34 +/- 0.27 e-05, Run2 = 10.16 +/- 0.37 e-05
+      crossFeedRate_(
+          Params::Get().CreateFixed("crossFeedRate", 8.53e-05, 0.26e-05,
+                                    Systematic::crossFeedRate, Sign::positive)),
       A_Prod_(Params::Get().CreateFixed("A_Prod", 3.17e-04, 6.74e-04,
                                         Systematic::A_Prod, Sign::none)),
       A_Kpi_(Params::Get().CreateFixed("A_Kpi", -1.13e-02, 1.5e-03,
@@ -331,6 +335,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pidEffPi;
   } else if (systematic == "pidEffK") {
     return Systematic::pidEffK;
+  } else if (systematic == "crossFeedRate") {
+    return Systematic::crossFeedRate;
   } else if (systematic == "A_Prod") {
     return Systematic::A_Prod;
   } else if (systematic == "A_Kpi") {
@@ -358,7 +364,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
       "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
-      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/A_Prod/"
+      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/crossFeedRate/A_Prod/"
       "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
 }
 
@@ -460,6 +466,8 @@ std::string EnumToString(Systematic systematic) {
       return "pidEffPi";
     case Systematic::pidEffK:
       return "pidEffK";
+    case Systematic::crossFeedRate:
+      return "crossFeedRate";
     case Systematic::A_Prod:
       return "A_Prod";
     case Systematic::A_Kpi:
@@ -1725,7 +1733,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       double deltaCutEffErr;
       CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
       // if (D02pik == true) {
-      //   std::cout << chain.GetEntries(cutString.c_str()) << "\t" << nBuCut << "\t" << nDeltaCut
+      //   std::cout << chain.GetEntries(cutString.c_str()) << "\t" << nBuCut <<
+      //   "\t" << nDeltaCut
       //             << "\t" << nOr << "\n";
       // }
 

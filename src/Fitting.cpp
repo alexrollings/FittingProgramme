@@ -2666,10 +2666,10 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
 
   std::shared_ptr<RooFitResult> toyFitResult;
   if (config.noFit() == false) {
-    toyFitResult = std::shared_ptr<RooFitResult>(
-        simPdfToFit->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                           RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+    toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
+        RooFit::NumCPU(config.nCPU())));
     toyFitResult->SetName("ToyResult");
     // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
@@ -2828,7 +2828,7 @@ int main(int argc, char **argv) {
                    "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
                    "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                    "deltaPartialMisIdCutEffs,pidEffPi,"
-                   "pidEffK,A_Prod,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
+                   "pidEffK,crossFeedRate,A_Prod,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -2966,7 +2966,8 @@ int main(int argc, char **argv) {
                  "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
                  "pi0FAVasSUPBuPartialPdf,buDeltaCutEffs,deltaCutEffs,"
                  "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
-                 "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,A_Prod,A_Kpi,A_pi,"
+                 "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,crossFeedRate,A_"
+                 "Prod,A_Kpi,A_pi,"
                  "Delta_A_CP,mcEffs\n";
           return 1;
         }

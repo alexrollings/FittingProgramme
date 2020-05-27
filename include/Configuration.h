@@ -89,6 +89,7 @@ enum class Systematic {
   deltaPartialMisIdCutEffs,
   pidEffPi,
   pidEffK,
+  crossFeedRate,
   A_Prod,
   A_Kpi,
   A_pi,
@@ -162,6 +163,7 @@ class Configuration {
     }
   }
 
+  RooRealVar &crossFeedRate() { return *crossFeedRate_; }
   RooRealVar &A_Prod() { return *A_Prod_; }
   RooRealVar &A_Kpi() { return *A_Kpi_; }
   RooRealVar &A_pi() { return *A_pi_; }
@@ -232,6 +234,7 @@ class Configuration {
   double initYieldFAVSignal_;
   std::shared_ptr<RooRealVar> pidEffK_;
   std::shared_ptr<RooRealVar> pidEffPi_;
+  std::shared_ptr<RooRealVar> crossFeedRate_;
   std::shared_ptr<RooRealVar> A_Prod_;
   std::shared_ptr<RooRealVar> A_Kpi_;
   std::shared_ptr<RooRealVar> A_pi_;
