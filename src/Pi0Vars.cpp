@@ -144,6 +144,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_FAVasSUP_a1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_(),
+      buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_sigmaDelta_(nullptr),
@@ -365,6 +368,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_(0.290),
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
                            fracPartRec_) {
+
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                                      mapBu2Dst0h_D0pi0, false);
@@ -378,6 +382,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "deltaCutEffBu2Dst0h_D0pi0", uniqueId, Neutral::pi0,
           mapBu2Dst0h_D0pi0["deltaCutEff"], mapBu2Dst0h_D0pi0["deltaCutEffErr"],
+          Systematic::deltaCutEffs, Sign::positive));
+
+  std::map<std::string, double> mapBu2Dst0h_D0pi0_FAVasSUP;
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik,
+                                     Bachelor::pi, mapBu2Dst0h_D0pi0_FAVasSUP,
+                                     false);
+  buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0pi0_FAVasSUP["buDeltaCutEff"],
+          mapBu2Dst0h_D0pi0_FAVasSUP["buDeltaCutEffErr"],
+          Systematic::buDeltaCutEffs, Sign::positive));
+  deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBu2Dst0h_D0pi0_FAVasSUP", uniqueId, Neutral::pi0,
+          mapBu2Dst0h_D0pi0_FAVasSUP["deltaCutEff"],
+          mapBu2Dst0h_D0pi0_FAVasSUP["deltaCutEffErr"],
           Systematic::deltaCutEffs, Sign::positive));
 
   std::map<std::string, double> mapBu2Dst0h_D0gamma;

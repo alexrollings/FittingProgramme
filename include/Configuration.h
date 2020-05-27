@@ -28,9 +28,13 @@ enum class Mode {
   Bu2Dst0rho_D0pi0,
   Bu2Dst0pi_D0gamma,
   Bu2Dst0K_D0gamma,
+  Bu2Dst0pi_D0gamma_D02pik,
+  Bu2Dst0K_D0gamma_D02pik,
   Bu2Dst0pi_D0gamma_WN,
   Bu2Dst0pi_D0pi0,
   Bu2Dst0K_D0pi0,
+  Bu2Dst0pi_D0pi0_D02pik,
+  Bu2Dst0K_D0pi0_D02pik,
   Bu2Dst0pi_D0pi0_WN
 };
 // Gamma only: BuPartial, crossFeedBu, gamma
@@ -181,7 +185,7 @@ class Configuration {
 
   double ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
                      bool returnEff);
-  void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain);
+  void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik);
   void ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      std::map<std::string, double> &map, bool misId);
   double ReturnACPInit(Neutral neutral, Bachelor bachelor);

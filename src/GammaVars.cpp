@@ -564,7 +564,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Sign::positive));
 
   std::map<std::string, double> mapBu2Dst0h_D0gamma_FAVasSUP;
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0h_D0gamma_D02pik,
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma_D02pik,
                                      Bachelor::pi, mapBu2Dst0h_D0gamma_FAVasSUP,
                                      false);
   buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_ =
@@ -596,7 +596,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Systematic::deltaCutEffs, Sign::positive));
 
   std::map<std::string, double> mapBu2Dst0h_D0pi0_FAVasSUP;
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0h_D0pi0_D02pik,
+  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik,
                                      Bachelor::pi, mapBu2Dst0h_D0pi0_FAVasSUP,
                                      false);
   buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_ =

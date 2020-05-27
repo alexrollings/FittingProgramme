@@ -666,9 +666,6 @@ std::string EnumToString(Mode mode) {
     case Mode::Bu2Dst0K_D0gamma:
       return "Bu2Dst0K_D0gamma";
       break;
-    case Mode::Bu2Dst0h_D0gamma_D02pik:
-      return "Bu2Dst0h_D0gamma_D02pik";
-      break;
     case Mode::Bu2Dst0pi_D0gamma_D02pik:
       return "Bu2Dst0pi_D0gamma_D02pik";
       break;
@@ -683,9 +680,6 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bu2Dst0K_D0pi0:
       return "Bu2Dst0K_D0pi0";
-      break;
-    case Mode::Bu2Dst0h_D0pi0_D02pik:
-      return "Bu2Dst0h_D0pi0_D02pik";
       break;
     case Mode::Bu2Dst0pi_D0pi0_D02pik:
       return "Bu2Dst0pi_D0pi0_D02pik";
@@ -1611,8 +1605,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   // exists, if not, calculate eff and save in txt file
   if (plotToys_ == true || !file_exists(txtFileName)) {
     bool D02pik;
-    if (mode == Mode::Bu2Dst0h_D0gamma_D02pik ||
-        mode == Mode::Bu2Dst0h_D0pi0_D02pik) {
+    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+        mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
       D02pik = true;
     }
     std::string cutString, ttree;
