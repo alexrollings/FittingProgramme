@@ -2822,6 +2822,9 @@ int main(int argc, char **argv) {
                    "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
                    "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
                    "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
+                   "gammaFAVasSUPDeltaPdf,"
+                   "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
+                   "pi0FAVasSUPBuPartialPdf,"
                    "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
                    "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                    "deltaPartialMisIdCutEffs,pidEffPi,"
@@ -2959,7 +2962,9 @@ int main(int argc, char **argv) {
                  "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
                  "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
                  "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
-                 "misIdPartRecKPdfBuPartial,buDeltaCutEffs,deltaCutEffs,"
+                 "misIdPartRecKPdfBuPartial,gammaFAVasSUPDeltaPdf,"
+                 "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
+                 "pi0FAVasSUPBuPartialPdf,buDeltaCutEffs,deltaCutEffs,"
                  "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                  "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,A_Prod,A_Kpi,A_pi,"
                  "Delta_A_CP,mcEffs\n";
@@ -3030,7 +3035,7 @@ int main(int argc, char **argv) {
       }
     }
   }
-  
+
   if (inputDir != "" &&
       (daughtersVec.size() > 1 && config.blindFit() == false &&
        config.noFit() == false)) {
@@ -3312,9 +3317,9 @@ int main(int argc, char **argv) {
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
       // if (config.runSystematics() == false) {
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                     dataFitResult.get(), yMaxMap);
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+                   dataFitResult.get(), yMaxMap);
         // }
       }
 

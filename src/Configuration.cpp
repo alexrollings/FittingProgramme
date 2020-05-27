@@ -290,6 +290,16 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdPartRecKPdfBu;
   } else if (systematic == "misIdPartRecKPdfBuPartial") {
     return Systematic::misIdPartRecKPdfBuPartial;
+  } else if (systematic == "gammaFAVasSUPDeltaPdf") {
+    return Systematic::gammaFAVasSUPDeltaPdf;
+  } else if (systematic == "gammaFAVasSUPBuPdf") {
+    return Systematic::gammaFAVasSUPBuPdf;
+  } else if (systematic == "pi0FAVasSUPDeltaPdf") {
+    return Systematic::pi0FAVasSUPDeltaPdf;
+  } else if (systematic == "pi0FAVasSUPBuPdf") {
+    return Systematic::pi0FAVasSUPBuPdf;
+  } else if (systematic == "pi0FAVasSUPBuPartialPdf") {
+    return Systematic::pi0FAVasSUPBuPartialPdf;
   } else if (systematic == "buDeltaCutEffs") {
     return Systematic::buDeltaCutEffs;
   } else if (systematic == "deltaCutEffs") {
@@ -329,7 +339,9 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "Bs2D0KpiBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/"
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
       "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
-      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/buDeltaCutEffs/"
+      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/gammaFAVasSUPDeltaPdf/"
+      "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
+      "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
       "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/A_Prod/"
       "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
@@ -408,6 +420,16 @@ std::string EnumToString(Systematic systematic) {
       return "misIdPartRecKPdfBu";
     case Systematic::misIdPartRecKPdfBuPartial:
       return "misIdPartRecKPdfBuPartial";
+    case Systematic::gammaFAVasSUPDeltaPdf:
+      return "gammaFAVasSUPDeltaPdf";
+    case Systematic::gammaFAVasSUPBuPdf:
+      return "gammaFAVasSUPBuPdf";
+    case Systematic::pi0FAVasSUPDeltaPdf:
+      return "pi0FAVasSUPDeltaPdf";
+    case Systematic::pi0FAVasSUPBuPdf:
+      return "pi0FAVasSUPBuPdf";
+    case Systematic::pi0FAVasSUPBuPartialPdf:
+      return "pi0FAVasSUPBuPartialPdf";
     case Systematic::buDeltaCutEffs:
       return "buDeltaCutEffs";
     case Systematic::deltaCutEffs:
