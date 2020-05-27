@@ -2194,6 +2194,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap["PartRecK"] = kRed + 4;
   colorMap["Bs2Dst0Kpi"] = kOrange - 3;
   colorMap["Bs2D0Kpi"] = kOrange + 4;
+  colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
+  colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
   TLegend labels(0.14, 0.25, 0.28, 0.9);
   labels.SetLineColor(kWhite);
