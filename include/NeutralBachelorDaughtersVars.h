@@ -462,15 +462,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       A_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(new RooFormulaVar(
-          ("N_tot_Bu2Dst0h_D0gamma_FAVasSUP_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                  Daughters::kpi>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0gamma(),
-                     Configuration::Get().crossFeedRate()))),
+      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(new RooFormulaVar(
           ("N_tot_Bu2Dst0h_D0pi0_FAVasSUP_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -615,16 +607,26 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                       .N_tot_Bu2Dst0h_D0pi0(),
                   *R_ADS_Bu2Dst0h_D0pi0_))));
   if (_neutral == Neutral::gamma) {
-    N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
-        (new RooFormulaVar(
-             ("N_tot_Bu2Dst0h_D0gamma_" +
+    N_tot_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>((new RooFormulaVar(
+        ("N_tot_Bu2Dst0h_D0gamma_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+            .c_str(),
+        "@0*@1",
+        RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                                Daughters::kpi>::Get(uniqueId)
+                       .N_tot_Bu2Dst0h_D0gamma(),
+                   *R_ADS_Bu2Dst0h_D0gamma_))));
+    N_tot_Bu2Dst0h_D0gamma_FAVasSUP_ =
+        std::unique_ptr<RooFormulaVar>((new RooFormulaVar(
+            ("N_tot_Bu2Dst0h_D0gamma_FAVasSUP_" +
              ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-             .c_str(),
-         "@0*@1",
-         RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                 Daughters::kpi>::Get(uniqueId)
-                        .N_tot_Bu2Dst0h_D0gamma(),
-                    *R_ADS_Bu2Dst0h_D0gamma_))));
+                .c_str(),
+            "@0*@1",
+            RooArgList(
+                NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                             Daughters::kpi>::Get(uniqueId)
+                    .N_tot_Bu2Dst0h_D0gamma(),
+                Configuration::Get().crossFeedRate()))));
   }
 }
 
@@ -1016,15 +1018,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       A_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(new RooFormulaVar(
-          ("N_tot_Bu2Dst0h_D0gamma_FAVasSUP_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-              .c_str(),
-          "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                                  Daughters::kpi>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0gamma(),
-                     Configuration::Get().crossFeedRate()))),
+      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(new RooFormulaVar(
           ("N_tot_Bu2Dst0h_D0pi0_FAVasSUP_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1187,6 +1181,17 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                                  Daughters::kpi>::Get(uniqueId)
                         .N_tot_Bu2Dst0h_D0gamma(),
                     *R_ADS_Bu2Dst0h_D0gamma_))));
+    N_tot_Bu2Dst0h_D0gamma_FAVasSUP_ =
+        std::unique_ptr<RooFormulaVar>((new RooFormulaVar(
+            ("N_tot_Bu2Dst0h_D0gamma_FAVasSUP_" +
+             ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+                .c_str(),
+            "@0*@1",
+            RooArgList(
+                NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                             Daughters::kpi>::Get(uniqueId)
+                    .N_tot_Bu2Dst0h_D0gamma(),
+                Configuration::Get().crossFeedRate()))));
   }
   if (_neutral == Neutral::gamma) {
     N_tot_Bs2Dst0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(

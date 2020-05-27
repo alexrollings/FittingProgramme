@@ -490,7 +490,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
             *N_Bu2Dst0h_D0pi0_FAVasSUP_,
             NeutralVars<neutral>::Get(uniqueId)
                 .buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP()));
-    if (neutral == Neutral::pi0) {
+    if (neutral == Neutral::gamma) {
       N_Bu2Dst0h_D0gamma_FAVasSUP_ = std::unique_ptr<RooFormulaVar>(
           MakeYield<neutral, bachelor, daughters, charge>(
               uniqueId, "N_Bu2Dst0h_D0gamma_FAVasSUP_",
