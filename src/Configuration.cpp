@@ -128,86 +128,86 @@ Configuration::Configuration()
   h1ID_.SetName("h1_D_ID");
   h1ID_.SetTitle("h1 D0 daughter ID");
 
-    buPdgId_.SetName("Bu_ID");
-    buPdgId_.SetTitle("Bu PDG ID");
-    buPdgId_.setMax(550);
-    buPdgId_.setMin(-550);
-    buPdgId_.setUnit(kNoUnit);
+  buPdgId_.SetName("Bu_ID");
+  buPdgId_.SetTitle("Bu PDG ID");
+  buPdgId_.setMax(550);
+  buPdgId_.setMin(-550);
+  buPdgId_.setUnit(kNoUnit);
 
-    bachPID_.SetName("bach_PIDK");
-    bachPID_.SetTitle("Bachelor PIDK");
-    bachPID_.setMax(150);
-    bachPID_.setMin(-150);
-    bachPID_.setUnit(kNoUnit);
+  bachPID_.SetName("bach_PIDK");
+  bachPID_.SetTitle("Bachelor PIDK");
+  bachPID_.setMax(150);
+  bachPID_.setMin(-150);
+  bachPID_.setUnit(kNoUnit);
 
-    h1ID_.SetName("h1_D_ID");
-    h1ID_.SetTitle("h1 D0 daughter ID");
-    h1ID_.setMax(550);
-    h1ID_.setMin(-550);
-    h1ID_.setUnit(kNoUnit);
+  h1ID_.SetName("h1_D_ID");
+  h1ID_.SetTitle("h1 D0 daughter ID");
+  h1ID_.setMax(550);
+  h1ID_.setMin(-550);
+  h1ID_.setUnit(kNoUnit);
 
-    h2ID_.SetName("h2_D_ID");
-    h2ID_.SetTitle("h2 D0 daughter ID");
-    h2ID_.setMax(550);
-    h2ID_.setMin(-550);
-    h2ID_.setUnit(kNoUnit);
+  h2ID_.SetName("h2_D_ID");
+  h2ID_.SetTitle("h2 D0 daughter ID");
+  h2ID_.setMax(550);
+  h2ID_.setMin(-550);
+  h2ID_.setUnit(kNoUnit);
 
-    h1PID_.SetName("h1_D_PIDK");
-    h1PID_.SetTitle("h1 D0 daughter PIDK");
-    h1PID_.setMax(150);
-    h1PID_.setMin(-150);
-    h1PID_.setUnit(kNoUnit);
+  h1PID_.SetName("h1_D_PIDK");
+  h1PID_.SetTitle("h1 D0 daughter PIDK");
+  h1PID_.setMax(150);
+  h1PID_.setMin(-150);
+  h1PID_.setUnit(kNoUnit);
 
-    h2PID_.SetName("h2_D_PIDK");
-    h2PID_.SetTitle("h2 D0 daughter PIDK");
-    h2PID_.setMax(150);
-    h2PID_.setMin(-150);
-    h2PID_.setUnit(kNoUnit);
+  h2PID_.SetName("h2_D_PIDK");
+  h2PID_.SetTitle("h2 D0 daughter PIDK");
+  h2PID_.setMax(150);
+  h2PID_.setMin(-150);
+  h2PID_.setUnit(kNoUnit);
 
-    BDT1_.SetName("BDT1");
-    BDT1_.SetTitle("BDT1");
-    BDT1_.setMax(0.5);
-    BDT1_.setMin(-0.2);
-    BDT1_.setUnit(kNoUnit);
+  BDT1_.SetName("BDT1");
+  BDT1_.SetTitle("BDT1");
+  BDT1_.setMax(0.5);
+  BDT1_.setMin(-0.2);
+  BDT1_.setUnit(kNoUnit);
 
-    BDT2_.SetName("BDT2");
-    BDT2_.SetTitle("BDT2");
-    BDT2_.setMax(0.4);
-    BDT2_.setMin(-0.3);
-    BDT2_.setUnit(kNoUnit);
+  BDT2_.SetName("BDT2");
+  BDT2_.SetTitle("BDT2");
+  BDT2_.setMax(0.4);
+  BDT2_.setMin(-0.3);
+  BDT2_.setUnit(kNoUnit);
 
-    hAngle_.SetName("DstNeut_Dst0_hAngle");
-    hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
-    hAngle_.setMax(1);
-    hAngle_.setMin(-1);
+  hAngle_.SetName("DstNeut_Dst0_hAngle");
+  hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
+  hAngle_.setMax(1);
+  hAngle_.setMin(-1);
 
-    d0FdSig_.setUnit(kNoUnit);
-    d0FdSig_.SetName("D0_FD_ZSIG");
-    d0FdSig_.SetTitle("D0 z-axis flight distance significance");
-    d0FdSig_.setMax(300);
-    d0FdSig_.setMin(-100);
-    d0FdSig_.setUnit(kNoUnit);
+  d0FdSig_.setUnit(kNoUnit);
+  d0FdSig_.SetName("D0_FD_ZSIG");
+  d0FdSig_.SetTitle("D0 z-axis flight distance significance");
+  d0FdSig_.setMax(300);
+  d0FdSig_.setMin(-100);
+  d0FdSig_.setUnit(kNoUnit);
 
-    variableArgSet_.add(buMass_);
-    variableArgSet_.add(buDeltaMass_);
-    variableArgSet_.add(deltaMass_);
-    variableArgSet_.add(pi0Mass_);
-    variableArgSet_.add(d0hMass_);
-    variableArgSet_.add(buPdgId_);
-    variableArgSet_.add(bachPID_);
-    variableArgSet_.add(h1ID_);
-    variableArgSet_.add(h2ID_);
-    variableArgSet_.add(h1PID_);
-    variableArgSet_.add(h2PID_);
-    variableArgSet_.add(BDT1_);
-    variableArgSet_.add(BDT2_);
-    variableArgSet_.add(hAngle_);
-    variableArgSet_.add(d0FdSig_);
+  variableArgSet_.add(buMass_);
+  variableArgSet_.add(buDeltaMass_);
+  variableArgSet_.add(deltaMass_);
+  variableArgSet_.add(pi0Mass_);
+  variableArgSet_.add(d0hMass_);
+  variableArgSet_.add(buPdgId_);
+  variableArgSet_.add(bachPID_);
+  variableArgSet_.add(h1ID_);
+  variableArgSet_.add(h2ID_);
+  variableArgSet_.add(h1PID_);
+  variableArgSet_.add(h2PID_);
+  variableArgSet_.add(BDT1_);
+  variableArgSet_.add(BDT2_);
+  variableArgSet_.add(hAngle_);
+  variableArgSet_.add(d0FdSig_);
 
-    fullArgSet_.add(variableArgSet_);
+  fullArgSet_.add(variableArgSet_);
 
-    fittingArgSet_.add(buDeltaMass_);
-    fittingArgSet_.add(deltaMass_);
+  fittingArgSet_.add(buDeltaMass_);
+  fittingArgSet_.add(deltaMass_);
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
@@ -1494,7 +1494,7 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == true) {
+          if (D02pik == false) {
             path =
                 "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
                 "cross_feed_removed/";
@@ -1503,7 +1503,7 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
           }
           break;
         case Bachelor::k:
-          if (D02pik == true) {
+          if (D02pik == false) {
             path =
                 "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
                 "cross_feed_removed/";
@@ -1516,14 +1516,14 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == true) {
+          if (D02pik == false) {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
           }
           break;
         case Bachelor::k:
-          if (D02pik == true) {
+          if (D02pik == false) {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
@@ -1546,19 +1546,20 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
       std::string decay = match.str(1);
       decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
       std::string fName;
-      if (D02pik == true) {
+      if (D02pik == false) {
         fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2.root";
       } else {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       }
       if (fexists(fName)) {
         chain.Add(fName.c_str());
-        // std::cout << "Added " << fName << " to chain\n";
+        std::cout << "Added " << fName << " to chain\n";
       } else {
         throw std::runtime_error(fName + " does not exist\n");
       }
     }
   }
+  // std::cout << chain.GetEntries() << "\n";
   std::cout << "Added files to chain\n";
 }
 
@@ -1566,9 +1567,9 @@ void CalcBinomialErr(double eff, double nInit, double &err) {
   if (eff > 1) {
     throw std::logic_error("Cannot have efficiency > 1");
   }
-  std::cout << eff << "\t" << nInit << "\n";
+  // std::cout << eff << "\t" << nInit << "\n";
   err = std::sqrt((eff * (1 - eff)) / nInit);
-  std::cout << err << "\n";
+  // std::cout << err << "\n";
 };
 
 void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
@@ -1678,11 +1679,11 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       double orEff = nOr / nInitial;
       double orEffErr;
       CalcBinomialErr(orEff, nInitial, orEffErr);
-      std::cout << "\n\n\n orEff err = " << orEffErr << "\n\n\n";
+      // std::cout << "\n\n\n orEff err = " << orEffErr << "\n\n\n";
       double boxEff = nBox / nInitial;
       double boxEffErr;
       CalcBinomialErr(boxEff, nInitial, boxEffErr);
-      std::cout << "\n\n\n boxEff err = " << boxEffErr << "\n\n\n";
+      // std::cout << "\n\n\n boxEff err = " << boxEffErr << "\n\n\n";
       map.insert(std::pair<std::string, double>("orEff", orEff));
       map.insert(std::pair<std::string, double>("orEffErr", orEffErr));
       map.insert(std::pair<std::string, double>("boxEff", boxEff));
@@ -1723,10 +1724,10 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       CalcBinomialErr(buDeltaCutEff, nOr, buDeltaCutEffErr);
       double deltaCutEffErr;
       CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
-      if (D02pik == true) {
-        std::cout << chain.GetEntries() << "\t" << nBuCut << "\t" << nDeltaCut
-                  << "\t" << nOr << "\n";
-      }
+      // if (D02pik == true) {
+      //   std::cout << chain.GetEntries(cutString.c_str()) << "\t" << nBuCut << "\t" << nDeltaCut
+      //             << "\t" << nOr << "\n";
+      // }
 
       std::ofstream outFile;
       outFile.open(txtFileName);
@@ -1771,8 +1772,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     }
   } else {
     //   // If exists, read in from txt file
-    std::cout << txtFileName << " exists:\n\tReading efficiencies for "
-              << EnumToString(mode) << "...\n";
+    // std::cout << txtFileName << " exists:\n\tReading efficiencies for "
+    //           << EnumToString(mode) << "...\n";
     std::ifstream inFile(txtFileName);
     std::string line;
     // Loop over lines in txt file
@@ -1797,9 +1798,9 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
         map.insert(std::pair<std::string, double>(err, 0.05));
       }
     }
-    for (auto elem : map) {
-      std::cout << elem.first << " " << elem.second << "\n";
-    }
+    // for (auto elem : map) {
+    //   std::cout << elem.first << " " << elem.second << "\n";
+    // }
   }
 }
 
