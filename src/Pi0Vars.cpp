@@ -91,6 +91,52 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       initYieldFAVBu2Dst0h_D0pi0_(
           initYieldFAVBu2Dst0h_D0pi0_ =
               Configuration::Get().initYieldFAVSignal()),
+      // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
+      Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId, Neutral::pi0,
+          1.4274e+02, 2.38e-01, Systematic::pdfFAVasSUP, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta", uniqueId, Neutral::pi0,
+          2.7445e+00, 1.00, Systematic::NA, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_a1Delta", uniqueId, Neutral::pi0,
+          -1.0183e+00, 1.00, Systematic::NA, Sign::none)),
+      Bu2Dst0h_D0pi0_FAVasSUP_a2Delta_(nullptr),
+      Bu2Dst0h_D0pi0_FAVasSUP_n1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_n1Delta", uniqueId, Neutral::pi0, 1.1431e+00,
+          1.00, Systematic::NA, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_n2Delta_(nullptr),
+      pdf1Delta_Bu2Dst0h_D0pi0_FAVasSUP_(),
+      pdf2Delta_Bu2Dst0h_D0pi0_FAVasSUP_(),
+      Bu2Dst0h_D0pi0_FAVasSUP_fracPdf1Delta_(nullptr),
+      pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_(
+          new RooCBShape(("pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_" +
+                          ComposeName(uniqueId, Neutral::pi0))
+                             .c_str(),
+                         "", Configuration::Get().deltaMass(),
+                         *Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_,
+                         *Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_,
+                         *Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_,
+                         *Bu2Dst0h_D0pi0_FAVasSUP_n1Delta_)),
+      Bu2Dst0h_D0pi0_FAVasSUP_meanBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_meanBu", uniqueId, Neutral::pi0, 5.2723e+03,
+          5.12e+00, Systematic::pdfFAVasSUP, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu", uniqueId, Neutral::pi0, 9.1079e+01,
+          4.14e+00, Systematic::pdfFAVasSUP, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_a1Bu", uniqueId, Neutral::pi0, 1.7278e+00,
+          4.38e-01, Systematic::pdfFAVasSUP, Sign::none)),
+      Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_n1Bu", uniqueId, Neutral::pi0, 1.0000e+01,
+          1.00, Systematic::NA, Sign::positive)),
+      pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_(
+          ("pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_" +
+           ComposeName(uniqueId, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          *Bu2Dst0h_D0pi0_FAVasSUP_meanBu_, *Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_,
+          *Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_, *Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_sigmaDelta_(nullptr),
