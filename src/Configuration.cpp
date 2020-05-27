@@ -1,9 +1,9 @@
-#include <cmath>
-#include <iomanip>
-#include <sstream>
-#include <experimental/filesystem>
-#include <regex>
 #include <algorithm>
+#include <cmath>
+#include <experimental/filesystem>
+#include <iomanip>
+#include <regex>
+#include <sstream>
 
 #include "Configuration.h"
 #include "Params.h"
@@ -39,14 +39,15 @@ Configuration::Configuration()
       pidEffPi_(Params::Get().CreateFixed(
           "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
       // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
-      A_Prod_(Params::Get().CreateFixed(
-          "A_Prod", 3.17e-04, 6.74e-04, Systematic::A_Prod, Sign::none)),
-      A_Kpi_(Params::Get().CreateFixed(
-          "A_Kpi", -1.13e-02, 1.5e-03, Systematic::A_Kpi, Sign::none)),
-      A_pi_(Params::Get().CreateFixed(
-          "A_pi", -6.45e-04, 1.84e-04, Systematic::A_pi, Sign::none)),
-      Delta_A_CP_(Params::Get().CreateFixed(
-          "Delta_A_CP", -1.54e-03, 2.9e-04, Systematic::Delta_A_CP, Sign::none)),
+      A_Prod_(Params::Get().CreateFixed("A_Prod", 3.17e-04, 6.74e-04,
+                                        Systematic::A_Prod, Sign::none)),
+      A_Kpi_(Params::Get().CreateFixed("A_Kpi", -1.13e-02, 1.5e-03,
+                                       Systematic::A_Kpi, Sign::none)),
+      A_pi_(Params::Get().CreateFixed("A_pi", -6.45e-04, 1.84e-04,
+                                      Systematic::A_pi, Sign::none)),
+      Delta_A_CP_(Params::Get().CreateFixed("Delta_A_CP", -1.54e-03, 2.9e-04,
+                                            Systematic::Delta_A_CP,
+                                            Sign::none)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
@@ -126,72 +127,87 @@ Configuration::Configuration()
 
   h1ID_.SetName("h1_D_ID");
   h1ID_.SetTitle("h1 D0 daughter ID");
-  h1ID_.setMax(550);
-  h1ID_.setMin(-550);
-  h1ID_.setUnit(kNoUnit);
 
-  h2ID_.SetName("h2_D_ID");
-  h2ID_.SetTitle("h2 D0 daughter ID");
-  h2ID_.setMax(550);
-  h2ID_.setMin(-550);
-  h2ID_.setUnit(kNoUnit);
+    buPdgId_.SetName("Bu_ID");
+    buPdgId_.SetTitle("Bu PDG ID");
+    buPdgId_.setMax(550);
+    buPdgId_.setMin(-550);
+    buPdgId_.setUnit(kNoUnit);
 
-  h1PID_.SetName("h1_D_PIDK");
-  h1PID_.SetTitle("h1 D0 daughter PIDK");
-  h1PID_.setMax(150);
-  h1PID_.setMin(-150);
-  h1PID_.setUnit(kNoUnit);
+    bachPID_.SetName("bach_PIDK");
+    bachPID_.SetTitle("Bachelor PIDK");
+    bachPID_.setMax(150);
+    bachPID_.setMin(-150);
+    bachPID_.setUnit(kNoUnit);
 
-  h2PID_.SetName("h2_D_PIDK");
-  h2PID_.SetTitle("h2 D0 daughter PIDK");
-  h2PID_.setMax(150);
-  h2PID_.setMin(-150);
-  h2PID_.setUnit(kNoUnit);
+    h1ID_.SetName("h1_D_ID");
+    h1ID_.SetTitle("h1 D0 daughter ID");
+    h1ID_.setMax(550);
+    h1ID_.setMin(-550);
+    h1ID_.setUnit(kNoUnit);
 
-  BDT1_.SetName("BDT1");
-  BDT1_.SetTitle("BDT1");
-  BDT1_.setMax(0.5);
-  BDT1_.setMin(-0.2);
-  BDT1_.setUnit(kNoUnit);
+    h2ID_.SetName("h2_D_ID");
+    h2ID_.SetTitle("h2 D0 daughter ID");
+    h2ID_.setMax(550);
+    h2ID_.setMin(-550);
+    h2ID_.setUnit(kNoUnit);
 
-  BDT2_.SetName("BDT2");
-  BDT2_.SetTitle("BDT2");
-  BDT2_.setMax(0.4);
-  BDT2_.setMin(-0.3);
-  BDT2_.setUnit(kNoUnit);
+    h1PID_.SetName("h1_D_PIDK");
+    h1PID_.SetTitle("h1 D0 daughter PIDK");
+    h1PID_.setMax(150);
+    h1PID_.setMin(-150);
+    h1PID_.setUnit(kNoUnit);
 
-  hAngle_.SetName("DstNeut_Dst0_hAngle");
-  hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
-  hAngle_.setMax(1);
-  hAngle_.setMin(-1);
+    h2PID_.SetName("h2_D_PIDK");
+    h2PID_.SetTitle("h2 D0 daughter PIDK");
+    h2PID_.setMax(150);
+    h2PID_.setMin(-150);
+    h2PID_.setUnit(kNoUnit);
 
-  d0FdSig_.setUnit(kNoUnit);
-  d0FdSig_.SetName("D0_FD_ZSIG");
-  d0FdSig_.SetTitle("D0 z-axis flight distance significance");
-  d0FdSig_.setMax(300);
-  d0FdSig_.setMin(-100);
-  d0FdSig_.setUnit(kNoUnit);
+    BDT1_.SetName("BDT1");
+    BDT1_.SetTitle("BDT1");
+    BDT1_.setMax(0.5);
+    BDT1_.setMin(-0.2);
+    BDT1_.setUnit(kNoUnit);
 
-  variableArgSet_.add(buMass_);
-  variableArgSet_.add(buDeltaMass_);
-  variableArgSet_.add(deltaMass_);
-  variableArgSet_.add(pi0Mass_);
-  variableArgSet_.add(d0hMass_);
-  variableArgSet_.add(buPdgId_);
-  variableArgSet_.add(bachPID_);
-  variableArgSet_.add(h1ID_);
-  variableArgSet_.add(h2ID_);
-  variableArgSet_.add(h1PID_);
-  variableArgSet_.add(h2PID_);
-  variableArgSet_.add(BDT1_);
-  variableArgSet_.add(BDT2_);
-  variableArgSet_.add(hAngle_);
-  variableArgSet_.add(d0FdSig_);
+    BDT2_.SetName("BDT2");
+    BDT2_.SetTitle("BDT2");
+    BDT2_.setMax(0.4);
+    BDT2_.setMin(-0.3);
+    BDT2_.setUnit(kNoUnit);
 
-  fullArgSet_.add(variableArgSet_);
+    hAngle_.SetName("DstNeut_Dst0_hAngle");
+    hAngle_.SetTitle("Helicity Angle of neutral in D^{*0} rest frame");
+    hAngle_.setMax(1);
+    hAngle_.setMin(-1);
 
-  fittingArgSet_.add(buDeltaMass_);
-  fittingArgSet_.add(deltaMass_);
+    d0FdSig_.setUnit(kNoUnit);
+    d0FdSig_.SetName("D0_FD_ZSIG");
+    d0FdSig_.SetTitle("D0 z-axis flight distance significance");
+    d0FdSig_.setMax(300);
+    d0FdSig_.setMin(-100);
+    d0FdSig_.setUnit(kNoUnit);
+
+    variableArgSet_.add(buMass_);
+    variableArgSet_.add(buDeltaMass_);
+    variableArgSet_.add(deltaMass_);
+    variableArgSet_.add(pi0Mass_);
+    variableArgSet_.add(d0hMass_);
+    variableArgSet_.add(buPdgId_);
+    variableArgSet_.add(bachPID_);
+    variableArgSet_.add(h1ID_);
+    variableArgSet_.add(h2ID_);
+    variableArgSet_.add(h1PID_);
+    variableArgSet_.add(h2PID_);
+    variableArgSet_.add(BDT1_);
+    variableArgSet_.add(BDT2_);
+    variableArgSet_.add(hAngle_);
+    variableArgSet_.add(d0FdSig_);
+
+    fullArgSet_.add(variableArgSet_);
+
+    fittingArgSet_.add(buDeltaMass_);
+    fittingArgSet_.add(deltaMass_);
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
@@ -199,19 +215,18 @@ std::string Configuration::ReturnBoxString() {
   std::ostringstream out;
   if (fitBuPartial_ == true) {
     if (fit1D_ == true) {
-      out << deltaPartialLow_ << "_"
-          << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_;
+      out << deltaPartialLow_ << "_" << deltaPartialHigh_ << "_" << deltaLow_
+          << "_" << deltaHigh_;
     } else {
-      out << deltaPartialLow_ << "_"
-          << deltaPartialHigh_ << "_" << deltaLow_ << "_" << deltaHigh_ << "_"
-          << buDeltaLow_ << "_" << buDeltaHigh_;
+      out << deltaPartialLow_ << "_" << deltaPartialHigh_ << "_" << deltaLow_
+          << "_" << deltaHigh_ << "_" << buDeltaLow_ << "_" << buDeltaHigh_;
     }
   } else {
     if (fit1D_ == true) {
       out << deltaLow_ << "_" << deltaHigh_;
     } else {
-      out << deltaLow_ << "_" << deltaHigh_ << "_"
-          << buDeltaLow_ << "_" << buDeltaHigh_;
+      out << deltaLow_ << "_" << deltaHigh_ << "_" << buDeltaLow_ << "_"
+          << buDeltaHigh_;
     }
   }
   return out.str();
@@ -346,7 +361,6 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/A_Prod/"
       "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
 }
-
 
 std::string EnumToString(Systematic systematic) {
   switch (systematic) {
@@ -652,6 +666,15 @@ std::string EnumToString(Mode mode) {
     case Mode::Bu2Dst0K_D0gamma:
       return "Bu2Dst0K_D0gamma";
       break;
+    case Mode::Bu2Dst0h_D0gamma_D02pik:
+      return "Bu2Dst0h_D0gamma_D02pik";
+      break;
+    case Mode::Bu2Dst0pi_D0gamma_D02pik:
+      return "Bu2Dst0pi_D0gamma_D02pik";
+      break;
+    case Mode::Bu2Dst0K_D0gamma_D02pik:
+      return "Bu2Dst0K_D0gamma_D02pik";
+      break;
     case Mode::Bu2Dst0pi_D0gamma_WN:
       return "Bu2Dst0pi_D0gamma_WN";
       break;
@@ -660,6 +683,15 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bu2Dst0K_D0pi0:
       return "Bu2Dst0K_D0pi0";
+      break;
+    case Mode::Bu2Dst0h_D0pi0_D02pik:
+      return "Bu2Dst0h_D0pi0_D02pik";
+      break;
+    case Mode::Bu2Dst0pi_D0pi0_D02pik:
+      return "Bu2Dst0pi_D0pi0_D02pik";
+      break;
+    case Mode::Bu2Dst0K_D0pi0_D02pik:
+      return "Bu2Dst0K_D0pi0_D02pik";
       break;
     case Mode::Bu2Dst0pi_D0pi0_WN:
       return "Bu2Dst0pi_D0pi0_WN";
@@ -1423,8 +1455,8 @@ inline std::vector<std::string> SplitLine(std::string const &str) {
   return stringVector;
 }
 
-double Configuration::ReturnMCEff(Mode mode, Neutral neutral,
-                                     Bachelor bachelor, bool returnEff) {
+double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
+                                  bool returnEff) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
       EnumToString(mode) + ".txt";
@@ -1459,7 +1491,8 @@ bool fexists(std::string const &filename) {
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
-void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
+void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
+                                 bool D02pik) {
   std::cout << "Extracting chain\n";
   namespace fs = std::experimental::filesystem;
   std::string path, ttree;
@@ -1467,25 +1500,40 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          path =
-              "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-              "cross_feed_removed/";
+          if (D02pik == true) {
+            path =
+                "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+                "cross_feed_removed/";
+          } else {
+            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
+          }
           break;
         case Bachelor::k:
-          path =
-              "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
-              "cross_feed_removed/";
-          break;
+          if (D02pik == true) {
+            path =
+                "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
+                "cross_feed_removed/";
+          } else {
+            path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
+          }
       }
       ttree = "BtoDstar0h3_h1h2gammaTuple";
       break;
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          if (D02pik == true) {
+            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
+            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
+          }
           break;
         case Bachelor::k:
-          path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          if (D02pik == true) {
+            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
+            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
+          }
           break;
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
@@ -1503,8 +1551,12 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
     if (std::regex_search(subdir, match, re)) {
       std::string decay = match.str(1);
       decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
-      std::string fName =
-          dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2.root";
+      std::string fName;
+      if (D02pik == true) {
+        fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2.root";
+      } else {
+        fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
+      }
       if (fexists(fName)) {
         chain.Add(fName.c_str());
         // std::cout << "Added " << fName << " to chain\n";
@@ -1544,34 +1596,59 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     //               EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
     //               "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
     //               ".txt";
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
-                  EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
-                  "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
-                  ".txt";
+    txtFileName =
+        "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
+        EnumToString(neutral()) + "_misId_" + EnumToString(mode) + "_as_" +
+        EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
-                  EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
-                  ReturnBoxString() + ".txt";
+    txtFileName =
+        "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
+        EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
+        ReturnBoxString() + ".txt";
   }
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
   if (plotToys_ == true || !file_exists(txtFileName)) {
+    bool D02pik;
+    if (mode == Mode::Bu2Dst0h_D0gamma_D02pik ||
+        mode == Mode::Bu2Dst0h_D0pi0_D02pik) {
+      D02pik = true;
+    }
     std::string cutString, ttree;
 
     switch (neutral()) {
       case Neutral::gamma:
-        cutString = gammaCutString_;
+        if (D02pik == false) {
+          cutString = gammaCutString_;
+        } else {
+          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
+        }
         ttree = "BtoDstar0h3_h1h2gammaTuple";
         break;
       case Neutral::pi0:
-        cutString = pi0CutString_;
+        if (D02pik == false) {
+          cutString = pi0CutString_;
+        } else {
+          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
+        }
         ttree = "BtoDstar0h3_h1h2pi0RTuple";
         break;
     }
 
     TChain chain(ttree.c_str());
-    ExtractChain(mode, bachelor, chain);
+    if (D02pik == false) {
+      ExtractChain(mode, bachelor, chain, D02pik);
+    } else {
+      if (neutral_ == Neutral::gamma) {
+        ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain,
+                     D02pik);
+        ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, D02pik);
+      } else {
+        ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain, D02pik);
+        ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain, D02pik);
+      }
+    }
 
     std::string orString;
     if (fitBuPartial_ == false) {
@@ -1631,8 +1708,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
         CalcBinomialErr(boxPartialEff, nInitial, boxPartialEffErr);
         map.insert(
             std::pair<std::string, double>("boxPartialEff", boxPartialEff));
-        map.insert(
-            std::pair<std::string, double>("boxPartialEffErr", boxPartialEffErr));
+        map.insert(std::pair<std::string, double>("boxPartialEffErr",
+                                                  boxPartialEffErr));
       }
     } else {
       double nBuCut =
@@ -1652,6 +1729,10 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       CalcBinomialErr(buDeltaCutEff, nOr, buDeltaCutEffErr);
       double deltaCutEffErr;
       CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
+      if (D02pik == true) {
+        std::cout << chain.GetEntries() << "\t" << nBuCut << "\t" << nDeltaCut
+                  << "\t" << nOr << "\n";
+      }
 
       std::ofstream outFile;
       outFile.open(txtFileName);
@@ -1663,14 +1744,13 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       map.insert(
           std::pair<std::string, double>("buDeltaCutEff", buDeltaCutEff));
       // map.insert(
-      //     std::pair<std::string, double>("buDeltaCutEffErr", buDeltaCutEffErr));
-      map.insert(
-          std::pair<std::string, double>("buDeltaCutEffErr", 0.05));
+      //     std::pair<std::string, double>("buDeltaCutEffErr",
+      //     buDeltaCutEffErr));
+      map.insert(std::pair<std::string, double>("buDeltaCutEffErr", 0.05));
       map.insert(std::pair<std::string, double>("deltaCutEff", deltaCutEff));
       // map.insert(
       //     std::pair<std::string, double>("deltaCutEffErr", deltaCutEffErr));
-      map.insert(
-          std::pair<std::string, double>("deltaCutEffErr", 0.05));
+      map.insert(std::pair<std::string, double>("deltaCutEffErr", 0.05));
 
       double nDeltaPartialCut, deltaPartialCutEff, deltaPartialCutEffErr;
       if (fitBuPartial_ == true) {
@@ -1689,8 +1769,8 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                                                   deltaPartialCutEff));
         // map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
         //                                           deltaPartialCutEffErr));
-        map.insert(std::pair<std::string, double>("deltaPartialCutEffErr",
-                                                  0.05));
+        map.insert(
+            std::pair<std::string, double>("deltaPartialCutEffErr", 0.05));
       }
 
       outFile.close();
@@ -1708,8 +1788,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       // Add to map
       std::size_t found = lineVec[0].find("EffErr");
       if (found != std::string::npos) {
-        map.insert(
-            std::pair<std::string, double>(lineVec[0], 0.05));
+        map.insert(std::pair<std::string, double>(lineVec[0], 0.05));
       } else {
         map.insert(
             std::pair<std::string, double>(lineVec[0], std::stod(lineVec[1])));
