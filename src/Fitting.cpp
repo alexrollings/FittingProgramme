@@ -1454,7 +1454,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           } else {
             compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName() << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1467,7 +1469,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           }
           simPdf.plotOn(
               frame.get(),
@@ -1490,7 +1494,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           } else {
             compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
@@ -1502,7 +1508,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           }
           simPdf.plotOn(
               frame.get(),
@@ -1526,7 +1534,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
             simPdf.plotOn(
                 frame.get(),
                 RooFit::Slice(config.fitting,
@@ -1547,7 +1557,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName();
+                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
             simPdf.plotOn(
                 frame.get(),
                 RooFit::Slice(config.fitting,
@@ -1568,7 +1580,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1586,7 +1600,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1603,7 +1619,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1619,7 +1637,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1635,7 +1655,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1650,7 +1672,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1663,7 +1687,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName();
+                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1675,7 +1701,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_PartRec().GetName();
+          compStream << pdf.pdfDelta_misId_PartRec().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1686,6 +1714,38 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::Components(compStream.str().c_str()),
               RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+          if (daughters == Daughters::pik) {
+            compStream.str(std::string());
+            compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+            simPdf.plotOn(
+                frame.get(),
+                RooFit::Slice(config.fitting,
+                              ComposeFittingName(mass, neutral, bachelor,
+                                                 daughters, charge)
+                                  .c_str()),
+                RooFit::ProjWData(config.fitting, fullDataSet),
+                RooFit::Components(compStream.str().c_str()),
+                RooFit::DrawOption("F"),
+                RooFit::FillColor(
+                    colorMap["pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP"]),
+                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+            compStream.str(std::string());
+            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+            simPdf.plotOn(
+                frame.get(),
+                RooFit::Slice(config.fitting,
+                              ComposeFittingName(mass, neutral, bachelor,
+                                                 daughters, charge)
+                                  .c_str()),
+                RooFit::ProjWData(config.fitting, fullDataSet),
+                RooFit::Components(compStream.str().c_str()),
+                RooFit::DrawOption("F"),
+                RooFit::FillColor(
+                    colorMap["pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP"]),
+                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+          }
         } else {
           std::stringstream compStream;
           if (daughters == Daughters::kpi) {
