@@ -186,8 +186,8 @@ class NeutralVars {
   RooCBShape &pdfBu_Bu2Dst0h_D0pi0_FAVasSUP() {
     return pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
-  RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP() {
-    return pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return *pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
   RooCBShape &pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP() {
     return pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
@@ -352,7 +352,8 @@ class NeutralVars {
   double initYieldFAVBu2Dst0h_D0pi0_;
   // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigma2Delta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a2Delta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1Delta_;
@@ -360,12 +361,16 @@ class NeutralVars {
   RooCBShape pdf1Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
   RooCBShape pdf2Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_fracPdf1Delta_;
-  RooAddPdf pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::unique_ptr<RooAbsPdf> pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanBu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_;
   RooCBShape pdfBu_Bu2Dst0h_D0pi0_FAVasSUP_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_;
   RooCBShape pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::shared_ptr<RooRealVar> buDeltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::shared_ptr<RooRealVar> deltaCutEff_Bu2Dst0h_D0pi0_FAVasSUP_;

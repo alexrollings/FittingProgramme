@@ -94,10 +94,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId, Neutral::pi0,
-          1.4274e+02, 2.38e-01, Systematic::pdfFAVasSUP, Sign::positive)),
-      Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta", uniqueId, Neutral::pi0,
+          1.4274e+02, 2.38e-01, Systematic::pi0FAVasSUPDeltaPdf,
+          Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta", uniqueId, Neutral::pi0,
           2.7445e+00, 1.00, Systematic::NA, Sign::positive)),
+      Bu2Dst0h_D0pi0_FAVasSUP_sigma2Delta_(nullptr),
       Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_a1Delta", uniqueId, Neutral::pi0,
           -1.0183e+00, 1.00, Systematic::NA, Sign::none)),
@@ -115,18 +117,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                              .c_str(),
                          "", Configuration::Get().deltaMass(),
                          *Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_,
-                         *Bu2Dst0h_D0pi0_FAVasSUP_sigmaDelta_,
+                         *Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta_,
                          *Bu2Dst0h_D0pi0_FAVasSUP_a1Delta_,
                          *Bu2Dst0h_D0pi0_FAVasSUP_n1Delta_)),
       Bu2Dst0h_D0pi0_FAVasSUP_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanBu", uniqueId, Neutral::pi0, 5.2723e+03,
-          5.12e+00, Systematic::pdfFAVasSUP, Sign::positive)),
+          5.12e+00, Systematic::pi0FAVasSUPBuPdf, Sign::positive)),
       Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu", uniqueId, Neutral::pi0, 9.1079e+01,
-          4.14e+00, Systematic::pdfFAVasSUP, Sign::positive)),
+          4.14e+00, Systematic::pi0FAVasSUPBuPdf, Sign::positive)),
       Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_a1Bu", uniqueId, Neutral::pi0, 1.7278e+00,
-          4.38e-01, Systematic::pdfFAVasSUP, Sign::none)),
+          4.38e-01, Systematic::pi0FAVasSUPBuPdf, Sign::none)),
       Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_n1Bu", uniqueId, Neutral::pi0, 1.0000e+01,
           1.00, Systematic::NA, Sign::positive)),
@@ -137,6 +139,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "", Configuration::Get().deltaMass(),
           *Bu2Dst0h_D0pi0_FAVasSUP_meanBu_, *Bu2Dst0h_D0pi0_FAVasSUP_sigmaBu_,
           *Bu2Dst0h_D0pi0_FAVasSUP_a1Bu_, *Bu2Dst0h_D0pi0_FAVasSUP_n1Bu_),
+      Bu2Dst0h_D0pi0_FAVasSUP_meanBuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_FAVasSUP_sigmaBuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_FAVasSUP_a1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_(nullptr),
+      pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_(),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_sigmaDelta_(nullptr),
