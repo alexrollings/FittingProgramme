@@ -201,6 +201,24 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracBu2Dst0h_D0gamma_(0.213),
       initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() *
                                     fracBu2Dst0h_D0gamma_),
+      // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
+      Bu2Dst0h_D0gamma_FAVasSUP_meanDelta_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_sigmaDelta_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_a1Delta_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_a2Delta_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_n1Delta_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_n2Delta_(nullptr),
+      pdf1Delta_Bu2Dst0h_D0gamma_FAVasSUP_(),
+      pdf2Delta_Bu2Dst0h_D0gamma_FAVasSUP_(),
+      Bu2Dst0h_D0gamma_FAVasSUP_fracPdf1Delta_(nullptr),
+      pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP_(),
+      Bu2Dst0h_D0gamma_FAVasSUP_meanBu_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_sigmaBu_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_a1Bu_(nullptr),
+      Bu2Dst0h_D0gamma_FAVasSUP_n1Bu_(nullptr),
+      pdfBu_Bu2Dst0h_D0gamma_FAVasSUP_(),
+      buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
+      deltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId, Neutral::pi0, 1.3549e+02, 1e-01,
