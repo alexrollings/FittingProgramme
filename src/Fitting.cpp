@@ -857,7 +857,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
                    << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
                    << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(frame.get(),
                       RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
@@ -873,7 +874,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
                    << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
                    << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
@@ -888,7 +890,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         compStream << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
                    << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
                    << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
@@ -902,7 +905,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         compStream.str(std::string());
         compStream << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
                    << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(frame.get(),
                       RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
@@ -915,7 +919,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                       RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
         compStream.str(std::string());
         compStream << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(
             frame.get(),
             RooFit::Slice(
@@ -927,7 +932,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
             RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
             RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
         compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName();
+        compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
+                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
         simPdf.plotOn(frame.get(),
                       RooFit::Slice(config.fitting,
                                     ComposeFittingName(mass, neutral, bachelor,
@@ -938,6 +944,21 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                       RooFit::DrawOption("F"),
                       RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
                       RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+        if (daughters == Daughters::pik) {
+          compStream.str(std::string());
+          compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+          simPdf.plotOn(
+              frame.get(),
+              RooFit::Slice(
+                  config.fitting,
+                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                      .c_str()),
+              RooFit::ProjWData(config.fitting, fullDataSet),
+              RooFit::Components(compStream.str().c_str()),
+              RooFit::DrawOption("F"),
+              RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
+              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+        }
       } else {
         std::stringstream compStream;
         if (daughters == Daughters::kpi) {
