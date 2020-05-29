@@ -27,7 +27,7 @@ if __name__ == '__main__':
       type=str,
       help=
       'File where systematics from error correction are stored',
-      required=True)
+      required=False)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
   # Observables we are interested have this stem (match with regex)
   observables = [
-      'N_tot_Bu2Dst0h', 'R_ADS_Bu2Dst0h', 'R_CP_Bu2Dst0h',
+      'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h'
   ]
   # Dict to hold fit result and calculated errors of observables
@@ -66,7 +66,7 @@ if __name__ == '__main__':
             par_name = p.GetName()
             m0 = re.search(obs + '(_[A-Za-z][0-9])+', par_name)
             if m0:
-              if obs == 'R_ADS_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h' or obs == 'A_Bu2Dst0h':
+              if obs == 'R_piK_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h' or obs == 'A_Bu2Dst0h':
                 value = 0
               else:
                 value = p.getVal()
@@ -120,23 +120,29 @@ if __name__ == '__main__':
           fits_status[syst_label]['Failed'] += 1
 
   syst_errs = {}
-
   # Syst error from error correction: read in from file
   g_err_corr = 'Stat. Error Correction'
-  if os.path.exists(error_file):
-    with open(error_file) as f:
-      error_dict = dict(line.strip().split(',') for line in f)
-    # print(error_dict)
-    for p, v in grouped_errs.items():
-      syst_errs[p] = {}
-      if p in error_dict:
-        v[g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
-        syst_errs[p][g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
-      else:
-        v[g_err_corr] = 0.
-        syst_errs[p][g_err_corr] = 0.
+  if error_file != None:
+    if os.path.exists(error_file):
+      with open(error_file) as f:
+        error_dict = dict(line.strip().split(',') for line in f)
+      # print(error_dict)
+      for p, v in grouped_errs.items():
+        syst_errs[p] = {}
+        if p in error_dict:
+          v[g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
+          syst_errs[p][g_err_corr] = float(error_dict[p]) * value_errs[p]['Statistical Error']
+        else:
+          v[g_err_corr] = 0.015 * value_errs[p]['Statistical Error']
+          syst_errs[p][g_err_corr] = 0.015 * value_errs[p]['Statistical Error']
+    else:
+      print('No error file: calculating systematics with error correction')
+  # If don't have box scan results yet, use 0.015 as placeholder (average RMS)
   else:
-    print('No error file: calculating systematics with error correction')
+    for p, v in grouped_errs.items():
+      v[g_err_corr] = 0.015 * value_errs[p]['Statistical Error']
+      syst_errs[p] = {}
+      syst_errs[p][g_err_corr] = 0.015 * value_errs[p]['Statistical Error']
 
   # Calculate individual systematic errors from std dev of arrays on syst_fit results
   # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
@@ -172,7 +178,8 @@ if __name__ == '__main__':
     j = { 'N': 0, 'R': 0, 'A': 0}
     for s_label in sorted(syst):
       if i[key] == 0:
-        row_arr[key].append(s_label)
+        # Replace _ with \_ in LaTeX
+        row_arr[key].append(s_label.replace('_', '\\_'))
       err = syst[s_label]
       err_str = f' & ${err:.4g}$'
       row_arr[key][j[key]] = row_arr[key][j[key]] + err_str

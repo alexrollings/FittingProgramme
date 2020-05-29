@@ -8,12 +8,17 @@ def return_group(syst):
       'Bs2Dst0\S+': 'Part-reco PDFs',
       'misRec\S+': 'Mis-reco PDFs',
       'Bs2D0\S+': 'Mis-reco PDFs',
-      'crossFeed\S+': 'Mis-reco PDFs',
-      '\S+CutEffs': '$\epsilon_{BOX}$',
-      'pidEffK': '$\epsilon_{PIDK}$',
-      'pidEffK': '$\epsilon_{PIDK}$',
+      'pi0FAVasSUP\S+': 'Mis-reco PDFs',
+      'gammaFAVasSUP\S+': 'Mis-reco PDFs',
+      'crossFeed\S+Pdf': 'Mis-reco PDFs',
+      '\S+CutEffs': '$\\epsilon_{BOX}$',
       'pi0\S+': 'Signal PDFs',
       'gamma\S+': 'Signal PDFs',
+      'pidEffK': '$\\epsilon^{K}_{PIDK}$',
+      'pidEffPi': '$\\epsilon^{\\pi}_{PIDK}$',
+      'crossFeedRate': 'Rate of FAV as SUP',
+      '(\S+A_\S+)|(A_\S+)': 'Detector Asymmetries',
+      'mcEffs': '$\\epsilon_{MC}$',
   }
   match = False
   for k, v in re_group_dict.items():
@@ -42,6 +47,18 @@ def return_label(observable_string):
           '$R^{D^{*}K/D^{*}\\pi}_{D\\gamma}$',
       'R_CP_Bu2Dst0h_D0gamma_Blind_gamma_kk':
           '$R^{CP}_{D\\gamma}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_pi_total':
+          '$R^{\\pm}_{(D\\gamma)\\pi^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_k_total':
+          '$R^{\\pm}_{(D\\gamma)K^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_pi_plus':
+          '$R^{+}_{(D\\gamma)\\pi^{+}}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_k_plus':
+          '$R^{+}_{(D\\gamma)K^{+}}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_pi_minus':
+          '$R^{-}_{(D\\gamma)\\pi^{-}}$',
+      'R_piK_Bu2Dst0h_D0gamma_Blind_gamma_k_minus':
+          '$R^{-}_{(D\\gamma)K^{-}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_total':
           '$R^{\\pm}_{(D\\gamma)\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_total':
@@ -72,6 +89,18 @@ def return_label(observable_string):
           '$R^{D^{*}K/D^{*}\\pi}_{D\\pi^{0}}$',
       'R_CP_Bu2Dst0h_D0pi0_Blind_gamma_kk':
           '$R^{CP}_{D\\pi^{0}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_pi_total':
+          '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_k_total':
+          '$R^{\\pm}_{(D\\pi^{0})K^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_pi_plus':
+          '$R^{+}_{(D\\pi^{0})\\pi^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_k_plus':
+          '$R^{+}_{(D\\pi^{0})K^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_pi_minus':
+          '$R^{-}_{(D\\pi^{0})\\pi^{-}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_gamma_k_minus':
+          '$R^{-}_{(D\\pi^{0})K^{-}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_total':
           '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_total':
@@ -102,6 +131,18 @@ def return_label(observable_string):
           '$R^{D^{*}K/D^{*}\\pi}_{D\\pi^{0}}$',
       'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk':
           '$R^{CP}_{D\\pi^{0}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_pi_total':
+          '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_k_total':
+          '$R^{\\pm}_{(D\\pi^{0})K^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_pi_plus':
+          '$R^{+}_{(D\\pi^{0})\\pi^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_k_plus':
+          '$R^{+}_{(D\\pi^{0})K^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_pi_minus':
+          '$R^{-}_{(D\\pi^{0})\\pi^{-}}$',
+      'R_piK_Bu2Dst0h_D0pi0_Blind_pi0_k_minus':
+          '$R^{-}_{(D\\pi^{0})K^{-}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total':
           '$R^{\\pm}_{(D\\pi^{0})\\pi^{\\pm}}$',
       'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total':
