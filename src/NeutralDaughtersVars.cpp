@@ -1,13 +1,12 @@
 #include "NeutralDaughtersVars.h"
 #include "RooUnblindUniform.h"
 
-// template <Neutral neutral, Daughters daughters>
-// RooRealVar *Make_R_Dst0KDst0pi_Bu2Dst0h_D0gamma(int uniqueId) {
-//   return new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
-//                          ComposeName(uniqueId, neutral, daughters))
-//                             .c_str(),
-//                         "", 0.07930, -1, 1);
-// }
+template <Neutral neutral, Daughters daughters>
+RooRealVar *Make_R_Dst0KDst0pi(int uniqueId, const char *name, double val) {
+  return new RooRealVar(
+      (name + ComposeName(uniqueId, neutral, daughters)).c_str(), "", val, -2,
+      2);
+}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
@@ -18,10 +17,8 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
-          new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
-                          ComposeName(uniqueId, Neutral::pi0, Daughters::kpi))
-                             .c_str(),
-                         "", 0.07930, -1, 1)) {}
+          Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kpi>(
+              uniqueId, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_", 0.07930)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
