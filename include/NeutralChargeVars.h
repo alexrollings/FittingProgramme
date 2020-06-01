@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "Params.h"
 
 template <Neutral neutral, Charge charge>
 
@@ -48,7 +49,7 @@ double NeutralChargeVars<neutral, charge>::ReturnPidEffs(bool returnEff) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/pid_corr/output/PID_effs_" +
       EnumToString(neutral) + ".txt";
-  if (!file_exists(txtFileName)) {
+  if (!fexists(txtFileName)) {
     throw std::logic_error("ReturnPidEffs: " + txtFileName + " doesn't exist.");
   }
   std::ifstream inFile(txtFileName);
@@ -70,7 +71,7 @@ double NeutralChargeVars<neutral, charge>::ReturnPidEffs(bool returnEff) {
 };
 
 template <Neutral neutral, Charge charge>
-NeutralChargeVars<neutral, charge>::NeutralChargeVars()
+NeutralChargeVars<neutral, charge>::NeutralChargeVars(int uniqueId)
     : pidEffK_(Params::Get().CreateFixed(
           "pidEffK", uniqueId, neutral, charge, ReturnPidEffs(true),
           ReturnPidEffs(false), Systematic::pidEffK, Sign::positive)) {}
