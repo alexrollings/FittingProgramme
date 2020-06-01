@@ -64,9 +64,11 @@ if __name__ == '__main__':
         for p in data_result.floatParsFinal():
           for obs in observables:
             par_name = p.GetName()
-            m0 = re.search(obs + '(_[A-Za-z][0-9])+', par_name)
+            m0 = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
             if m0:
-              if obs == 'R_piK_Bu2Dst0h' or obs == 'R_CP_Bu2Dst0h' or obs == 'A_Bu2Dst0h':
+              print(par_name)
+              m1 = re.match('\S+Blind\S+', par_name)
+              if m1:
                 value = 0
               else:
                 value = p.getVal()
@@ -319,4 +321,3 @@ if __name__ == '__main__':
   tex_file.write("\\end{table}\n")
   tex_file.write("\\end{document}")
   tex_file.close()
-
