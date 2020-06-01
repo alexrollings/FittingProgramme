@@ -1005,7 +1005,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
               .mcEff_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0())),
-      A_PartRec_(nullptr),
+      A_PartRec_(new RooRealVar(
+          ("A_PartRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::pik>(
           uniqueId, "N_tot_PartRec_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1226,7 +1230,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .mcEff_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0())),
-      A_PartRec_(nullptr),
+      A_PartRec_(new RooRealVar(
+          ("A_PartRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          "", 0.01, -5, 5)),
       N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::kk>(
           uniqueId, "N_tot_PartRec_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
