@@ -39,6 +39,16 @@ class NeutralDaughtersVars {
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
 
+  RooAbsReal &R_Dst0KDst0pi_MisRec() {
+    return *R_Dst0KDst0pi_MisRec_;
+  }
+  RooAbsReal &R_Dst0KDst0pi_Bu2D0h() {
+    return *R_Dst0KDst0pi_Bu2D0h_;
+  }
+  RooAbsReal &R_Dst0KDst0pi_PartRec() {
+    return *R_Dst0KDst0pi_PartRec_;
+  }
+
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   }
@@ -66,6 +76,9 @@ class NeutralDaughtersVars {
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_MisRec_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0h_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_PartRec_;
 };
 
 template <>
