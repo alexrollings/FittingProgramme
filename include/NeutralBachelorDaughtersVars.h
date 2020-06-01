@@ -19,6 +19,15 @@
 // because otherwise it won't actually know how to cater to external callers to
 // your
 // class/function (unless you explicitly specialize, see below).
+//
+template <Neutral neutral, Daughters daughters>
+RooFormulaVar *MakeKYield(int uniqueId, const char *name, RooAbsReal &yieldPi,
+                       RooAbsReal &ratio, RooAbsReal &mcEffPi,
+                       RooAbsReal &mcEffK) {
+  return new RooFormulaVar(
+      (name + ComposeName(uniqueId, neutral, Bachelor::k, daughters)).c_str(),
+      "", "@0*@1*(@2/@3)", RooArgSet(yieldPi, ratio, mcEffPi, mcEffK));
+}
 
 namespace {  // Anonymous namespace
 
@@ -841,21 +850,17 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .c_str(),
           "", 0.01, -1, 1)),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_(new RooFormulaVar(
-          ("N_tot_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-              .c_str(),
-          "", "@0*@1*(@2/@3)",
-          RooArgSet(
-              NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                           Daughters::kpi>::Get(uniqueId)
-                  .N_tot_Bu2Dst0h_D0pi0(),
-              NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
-                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
-              NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                  .mcEff_Bu2Dst0h_D0pi0(),
-              NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                  .mcEff_Bu2Dst0h_D0pi0()))),
+      N_tot_Bu2Dst0h_D0pi0_(MakeKYield<_neutral, Daughters::kpi>(
+          uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kpi>::Get(uniqueId)
+              .N_tot_Bu2Dst0h_D0pi0(),
+          NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .mcEff_Bu2Dst0h_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .mcEff_Bu2Dst0h_D0pi0())),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
