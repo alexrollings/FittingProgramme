@@ -1467,14 +1467,12 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
   while (std::getline(inFile, line)) {
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
-    for (auto &str : lineVec) {
-      if (lineVec[0] == EnumToString(neutral) &&
-          lineVec[1] == EnumToString(bachelor)) {
-        if (returnEff == true) {
-          return std::stod(lineVec[2]);
-        } else {
-          return std::stod(lineVec[3]);
-        }
+    if (lineVec[0] == EnumToString(neutral) &&
+        lineVec[1] == EnumToString(bachelor)) {
+      if (returnEff == true) {
+        return std::stod(lineVec[2]);
+      } else {
+        return std::stod(lineVec[3]);
       }
     }
   }

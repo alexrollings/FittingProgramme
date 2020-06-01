@@ -58,13 +58,11 @@ double NeutralChargeVars<neutral, charge>::ReturnPidEffs(bool returnEff) {
   while (std::getline(inFile, line)) {
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
-    for (auto &str : lineVec) {
-      if (lineVec[0] == EnumToString(charge)) {
-        if (returnEff == true) {
-          return std::stod(lineVec[1]);
-        } else {
-          return std::stod(lineVec[2]);
-        }
+    if (lineVec[0] == EnumToString(charge)) {
+      if (returnEff == true) {
+        return std::stod(lineVec[1]);
+      } else {
+        return std::stod(lineVec[2]);
       }
     }
   }
