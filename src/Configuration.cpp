@@ -1436,14 +1436,12 @@ void Configuration::DefineCategories() {
   }
 }
 
-// inline allows a function to be defined multiple times. Templated functions
-// are implicitly inline
-inline bool file_exists(const std::string &name) {
+bool fexists(const std::string &name) {
   std::ifstream infile(name);
   return infile.good();
 }
 
-inline std::vector<std::string> SplitLine(std::string const &str) {
+std::vector<std::string> SplitLine(std::string const &str) {
   std::stringstream ss;
   ss.str(str);
   std::string tempString;
@@ -1460,7 +1458,7 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
       EnumToString(mode) + ".txt";
-  if (!file_exists(txtFileName)) {
+  if (!fexists(txtFileName)) {
     throw std::logic_error("ReturnMCEffs: " + txtFileName + " doesn't exist.");
   }
   std::ifstream inFile(txtFileName);
@@ -1480,12 +1478,6 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
       }
     }
   }
-}
-
-// Check file exists
-bool fexists(std::string const &filename) {
-  std::ifstream infile(filename.c_str());
-  return infile.is_open();
 }
 
 // Function to be called in constructor of NVars, in order to construct
@@ -1610,7 +1602,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
-  if (plotToys_ == true || !file_exists(txtFileName)) {
+  if (plotToys_ == true || !fexists(txtFileName)) {
     bool D02pik;
     if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
         mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {

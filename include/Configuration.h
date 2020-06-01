@@ -155,6 +155,7 @@ class Configuration {
   // gamma in different neutral cases: always need to delcare signal yield first
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
 
+  RooRealVar &pidEffPi() { return *pidEffPi_; }
   RooRealVar &crossFeedRate() { return *crossFeedRate_; }
   RooRealVar &A_Prod() { return *A_Prod_; }
   RooRealVar &A_Kpi() { return *A_Kpi_; }
@@ -269,5 +270,6 @@ std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Da
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
 bool fexists(std::string const &filename);
+std::vector<std::string> SplitLine(std::string const &str);
 
 void CalcBinomialErr(double nInit, double nFinal, double &err);
