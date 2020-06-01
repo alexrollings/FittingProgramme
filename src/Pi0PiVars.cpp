@@ -274,14 +274,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       buDeltaCutEffMisId_PartRec_(nullptr),
       deltaCutEffMisId_PartRec_(nullptr),
       deltaPartialCutEffMisId_PartRec_(nullptr) {
-  std::cout << "\n\n\n MC EFF "
-            << Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0,
-                                                Neutral::pi0, Bachelor::pi, true)
-            << " +/- "
-            << Configuration::Get().ReturnMCEff(
-                   Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi, false)
-            << "\n\n\n";
-
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0pi0, true);
