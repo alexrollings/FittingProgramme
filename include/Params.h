@@ -126,6 +126,17 @@ class Params {
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Charge charge,
+                                          double mean, double std,
+                                          Systematic systematic, Sign sign) {
+    // Add charge daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), EnumToString(charge));
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, charge);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              double start, double min_value,
                                              double max_value) {
