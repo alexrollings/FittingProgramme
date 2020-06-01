@@ -5,6 +5,7 @@
 #include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
+#include "NeutralChargeVars.h"
 
 // Return yield with correct asymmetry definition
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
@@ -231,7 +232,9 @@ RooFormulaVar *MakeYield1D(int uniqueId, const char *nameStr, RooAbsReal &N,
       (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
           .c_str(),
       "@0*@1*@2",
-      RooArgList(N, cutEff, Configuration::Get().GetPidEff(bachelor)));
+      RooArgList(N, cutEff,
+                 NeutralChargeVars<neutral, charge>::Get(uniqueId).GetPidEff(
+                     bachelor)));
 }
 
 // To calculate 1D yields, for 1D fit, multiply total events by PID eff only
@@ -247,7 +250,9 @@ RooFormulaVar *MakeYield1D(int uniqueId, const char *nameStr, RooAbsReal &N) {
   return new RooFormulaVar(
       (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
           .c_str(),
-      "@0*@1", RooArgList(N, Configuration::Get().GetPidEff(bachelor)));
+      "@0*@1",
+      RooArgList(N, NeutralChargeVars<neutral, charge>::Get(uniqueId).GetPidEff(
+                        bachelor)));
 }
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,

@@ -1,5 +1,6 @@
 #pragma once
 #include "NeutralBachelorVars.h"
+#include "NeutralChargeVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
 #include "RooAbsReal.h"
@@ -475,9 +476,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
             .pdfBu_misId_Bu2Dst0h_D0gamma());
     PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0gamma_);
     if (_daughters == Daughters::pik) {
-      PdfBase::functionsBu_.add(
-          NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-              .pdfBu_Bu2Dst0h_D0gamma_FAVasSUP());
+      PdfBase::functionsBu_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                    .pdfBu_Bu2Dst0h_D0gamma_FAVasSUP());
       PdfBase::yieldsBu_.add(
           Yields<_neutral, _bachelor, _daughters, _charge>::Get(
               PdfBase::uniqueId_)
@@ -495,9 +495,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
           .pdfBu_misId_Bu2Dst0h_D0pi0());
   PdfBase::yieldsBu_.add(*PdfBase::N_Bu_misId_Bu2Dst0h_D0pi0_);
   if (_daughters == Daughters::pik) {
-    PdfBase::functionsBu_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfBu_Bu2Dst0h_D0pi0_FAVasSUP());
+    PdfBase::functionsBu_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                  .pdfBu_Bu2Dst0h_D0pi0_FAVasSUP());
     PdfBase::yieldsBu_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
@@ -757,7 +756,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 RooArgList(Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                                PdfBase::uniqueId_)
                                .N_Bu2Dst0h_D0gamma(),
-                           Configuration::Get().GetPidEff(Bachelor::k))));
+                           NeutralChargeVars<_neutral, _charge>::Get(
+                               PdfBase::uniqueId_)
+                               .GetPidEff(Bachelor::k))));
       }
       PdfBase::N_misId_Bu2Dst0h_D0pi0_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -766,10 +767,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                        _daughters, _charge))
                   .c_str(),
               "@0/@1*(1-@1)",
-              RooArgList(Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
-                             PdfBase::uniqueId_)
-                             .N_Bu2Dst0h_D0pi0(),
-                         Configuration::Get().GetPidEff(Bachelor::k))));
+              RooArgList(
+                  Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
+                      PdfBase::uniqueId_)
+                      .N_Bu2Dst0h_D0pi0(),
+                  NeutralChargeVars<_neutral, _charge>::Get(PdfBase::uniqueId_)
+                      .GetPidEff(Bachelor::k))));
       if (Configuration::Get().fit1D() == true &&
           Configuration::Get().fitBuPartial() == false) {
         if (_neutral == Neutral::gamma) {
@@ -784,7 +787,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                       Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                           PdfBase::uniqueId_)
                           .N_Bu2Dst0h_D0gamma(),
-                      Configuration::Get().GetPidEff(Bachelor::k))));
+                      NeutralChargeVars<_neutral, _charge>::Get(
+                          PdfBase::uniqueId_)
+                          .GetPidEff(Bachelor::k))));
         }
         PdfBase::N_Bu_misId_Bu2Dst0h_D0pi0_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -796,7 +801,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 RooArgList(Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                                PdfBase::uniqueId_)
                                .N_Bu2Dst0h_D0pi0(),
-                           Configuration::Get().GetPidEff(Bachelor::k))));
+                           NeutralChargeVars<_neutral, _charge>::Get(
+                               PdfBase::uniqueId_)
+                               .GetPidEff(Bachelor::k))));
       } else {
         if (Configuration::Get().fit1D() == true) {
           if (_neutral == Neutral::gamma) {
@@ -811,7 +818,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                         Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                             PdfBase::uniqueId_)
                             .N_Bu2Dst0h_D0gamma(),
-                        Configuration::Get().GetPidEff(Bachelor::k))));
+                        NeutralChargeVars<_neutral, _charge>::Get(
+                            PdfBase::uniqueId_)
+                            .GetPidEff(Bachelor::k))));
           }
         } else {
           if (_neutral == Neutral::gamma) {
@@ -867,7 +876,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
                         .N_Bu2Dst0h_D0gamma(),
-                    Configuration::Get().GetPidEff(Bachelor::pi))));
+                    NeutralChargeVars<_neutral, _charge>::Get(
+                        PdfBase::uniqueId_)
+                        .GetPidEff(Bachelor::pi))));
       }
       PdfBase::N_misId_Bu2Dst0h_D0pi0_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -876,40 +887,48 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                                                        _daughters, _charge))
                   .c_str(),
               "@0/@1*(1-@1)",
-              RooArgList(Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
-                             PdfBase::uniqueId_)
-                             .N_Bu2Dst0h_D0pi0(),
-                         Configuration::Get().GetPidEff(Bachelor::pi))));
+              RooArgList(
+                  Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
+                      PdfBase::uniqueId_)
+                      .N_Bu2Dst0h_D0pi0(),
+                  NeutralChargeVars<_neutral, _charge>::Get(PdfBase::uniqueId_)
+                      .GetPidEff(Bachelor::pi))));
       PdfBase::N_misId_MisRec_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_misId_MisRec_" + ComposeName(PdfBase::uniqueId_, _neutral,
                                                _bachelor, _daughters, _charge))
                   .c_str(),
               "@0/@1*(1-@1)",
-              RooArgList(Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
-                             PdfBase::uniqueId_)
-                             .N_MisRec(),
-                         Configuration::Get().GetPidEff(Bachelor::pi))));
+              RooArgList(
+                  Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
+                      PdfBase::uniqueId_)
+                      .N_MisRec(),
+                  NeutralChargeVars<_neutral, _charge>::Get(PdfBase::uniqueId_)
+                      .GetPidEff(Bachelor::pi))));
       PdfBase::N_misId_Bu2D0h_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_misId_Bu2D0h_" + ComposeName(PdfBase::uniqueId_, _neutral,
                                                _bachelor, _daughters, _charge))
                   .c_str(),
               "@0/@1*(1-@1)",
-              RooArgList(Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
-                             PdfBase::uniqueId_)
-                             .N_Bu2D0h(),
-                         Configuration::Get().GetPidEff(Bachelor::pi))));
+              RooArgList(
+                  Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
+                      PdfBase::uniqueId_)
+                      .N_Bu2D0h(),
+                  NeutralChargeVars<_neutral, _charge>::Get(PdfBase::uniqueId_)
+                      .GetPidEff(Bachelor::pi))));
       PdfBase::N_misId_PartRec_ =
           std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
               ("N_misId_PartRec_" + ComposeName(PdfBase::uniqueId_, _neutral,
                                                 _bachelor, _daughters, _charge))
                   .c_str(),
               "@0/@1*(1-@1)",
-              RooArgList(Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
-                             PdfBase::uniqueId_)
-                             .N_PartRec(),
-                         Configuration::Get().GetPidEff(Bachelor::pi))));
+              RooArgList(
+                  Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
+                      PdfBase::uniqueId_)
+                      .N_PartRec(),
+                  NeutralChargeVars<_neutral, _charge>::Get(PdfBase::uniqueId_)
+                      .GetPidEff(Bachelor::pi))));
       if (Configuration::Get().fit1D() == true &&
           Configuration::Get().fitBuPartial() == false) {
         if (_neutral == Neutral::gamma) {
@@ -924,7 +943,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                       Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                           PdfBase::uniqueId_)
                           .N_Bu2Dst0h_D0gamma(),
-                      Configuration::Get().GetPidEff(Bachelor::pi))));
+                      NeutralChargeVars<_neutral, _charge>::Get(
+                          PdfBase::uniqueId_)
+                          .GetPidEff(Bachelor::pi))));
         }
         PdfBase::N_Bu_misId_Bu2Dst0h_D0pi0_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -937,7 +958,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
                         .N_Bu2Dst0h_D0pi0(),
-                    Configuration::Get().GetPidEff(Bachelor::pi))));
+                    NeutralChargeVars<_neutral, _charge>::Get(
+                        PdfBase::uniqueId_)
+                        .GetPidEff(Bachelor::pi))));
         PdfBase::N_Bu_misId_MisRec_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
                 ("N_Bu_misId_MisRec_" + ComposeName(PdfBase::uniqueId_,
@@ -949,7 +972,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
                         .N_MisRec(),
-                    Configuration::Get().GetPidEff(Bachelor::pi))));
+                    NeutralChargeVars<_neutral, _charge>::Get(
+                        PdfBase::uniqueId_)
+                        .GetPidEff(Bachelor::pi))));
         PdfBase::N_Bu_misId_Bu2D0h_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
                 ("N_Bu_misId_Bu2D0h_" + ComposeName(PdfBase::uniqueId_,
@@ -961,7 +986,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
                         .N_Bu2D0h(),
-                    Configuration::Get().GetPidEff(Bachelor::pi))));
+                    NeutralChargeVars<_neutral, _charge>::Get(
+                        PdfBase::uniqueId_)
+                        .GetPidEff(Bachelor::pi))));
         PdfBase::N_Bu_misId_PartRec_ =
             std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
                 ("N_Bu_misId_PartRec_" + ComposeName(PdfBase::uniqueId_,
@@ -973,7 +1000,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
                         .N_PartRec(),
-                    Configuration::Get().GetPidEff(Bachelor::pi))));
+                    NeutralChargeVars<_neutral, _charge>::Get(
+                        PdfBase::uniqueId_)
+                        .GetPidEff(Bachelor::pi))));
       } else {
         if (Configuration::Get().fit1D() == true) {
           if (_neutral == Neutral::gamma) {
@@ -988,7 +1017,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                         Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                             PdfBase::uniqueId_)
                             .N_Bu2Dst0h_D0gamma(),
-                        Configuration::Get().GetPidEff(Bachelor::pi))));
+                        NeutralChargeVars<_neutral, _charge>::Get(
+                            PdfBase::uniqueId_)
+                            .GetPidEff(Bachelor::pi))));
           }
         } else {
           if (_neutral == Neutral::gamma) {
