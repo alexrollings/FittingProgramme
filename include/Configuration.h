@@ -155,14 +155,6 @@ class Configuration {
   // gamma in different neutral cases: always need to delcare signal yield first
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
 
-  RooRealVar &GetPidEff(Bachelor bachelor) {
-    if (bachelor == Bachelor::pi) {
-      return *pidEffPi_;
-    } else {
-      return *pidEffK_;
-    }
-  }
-
   RooRealVar &crossFeedRate() { return *crossFeedRate_; }
   RooRealVar &A_Prod() { return *A_Prod_; }
   RooRealVar &A_Kpi() { return *A_Kpi_; }
@@ -232,7 +224,6 @@ class Configuration {
   float deltaPartialLow_;
   float deltaPartialHigh_;
   double initYieldFAVSignal_;
-  std::shared_ptr<RooRealVar> pidEffK_;
   std::shared_ptr<RooRealVar> pidEffPi_;
   std::shared_ptr<RooRealVar> crossFeedRate_;
   std::shared_ptr<RooRealVar> A_Prod_;

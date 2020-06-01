@@ -34,16 +34,14 @@ Configuration::Configuration()
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
       initYieldFAVSignal_(60000),
-      pidEffK_(Params::Get().CreateFixed("pidEffK", 0.98 * 6.8493e-01, 2e-02,
-                                         Systematic::pidEffK, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFixed(
-          "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
-      // pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
+      // pidEffPi_(Params::Get().CreateFixed(
+      //     "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
+      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
       // Run 1 = 5.34 +/- 0.27 e-05, Run2 = 10.16 +/- 0.37 e-05
       crossFeedRate_(
           Params::Get().CreateFixed("crossFeedRate", 8.53e-05, 0.26e-05,
                                     Systematic::crossFeedRate, Sign::positive)),
-      A_Prod_(Params::Get().CreateFixed("A_Prod", 3.17e-04, 6.74e-04,
+      A_Prod_(Params::Get().CreateFixed("A_Prod", 2.5806e-04, 6.87e-04,
                                         Systematic::A_Prod, Sign::none)),
       A_Kpi_(Params::Get().CreateFixed("A_Kpi", -1.13e-02, 1.5e-03,
                                        Systematic::A_Kpi, Sign::none)),
@@ -1463,7 +1461,7 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
       EnumToString(mode) + ".txt";
   if (!file_exists(txtFileName)) {
-    throw std::logic_error("ReadMCEffs: " + txtFileName + " doesn't exist.");
+    throw std::logic_error("ReturnMCEffs: " + txtFileName + " doesn't exist.");
   }
   std::ifstream inFile(txtFileName);
   std::string line;
