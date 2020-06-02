@@ -53,10 +53,16 @@ Configuration::Configuration()
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
+      // gammaCutString_(
+      //     "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
+      //     "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
       pi0CutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_"
           "M<5200"),
+      // pi0CutString_(
+      //     "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
+      //     "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2"),
       fit1D_(false),
       runToy_(false),
       splitByCharge_(false),
@@ -85,8 +91,10 @@ Configuration::Configuration()
   buDeltaMass_.SetName("Bu_Delta_M");
   buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
   buDeltaMass_.setMax(5500);
+  // buDeltaMass_.setMax(5600);
   buDeltaMass_.setMin(5050);
   buDeltaMass_.setBins(45);
+  buDeltaMass_.setBins(55);
   // buDeltaMass_.setMax(6000);
   // buDeltaMass_.setMin(4000);
   // buDeltaMass_.setBins(400);
@@ -654,11 +662,20 @@ std::string EnumToString(Mode mode) {
     case Mode::Bd2Dstpi:
       return "Bd2Dstpi";
       break;
+    case Mode::Bd2DstK:
+      return "Bd2DstK";
+      break;
     case Mode::Bu2D0pi:
       return "Bu2D0pi";
       break;
+    case Mode::Bu2D0K:
+      return "Bu2D0K";
+      break;
     case Mode::Bu2D0rho:
       return "Bu2D0rho";
+      break;
+    case Mode::Bu2D0Kst:
+      return "Bu2D0Kst";
       break;
     case Mode::Bu2Dst0rho_D0gamma:
       return "Bu2Dst0rho_D0gamma";
