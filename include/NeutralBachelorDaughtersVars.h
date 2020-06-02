@@ -903,17 +903,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0())),
       A_PartRec_(nullptr),
-      N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::kpi>(
-          uniqueId, "N_tot_PartRec_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                       Daughters::kpi>::Get(uniqueId)
-              .N_tot_PartRec(),
-          NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
-              .R_Dst0KDst0pi_PartRec(),
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+      N_tot_PartRec_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -943,12 +933,34 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
         "", 0));
+    N_tot_PartRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_tot_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+            .c_str(),
+        "",
+        NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
+            BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
+                .kBR()
+                .getVal(),
+        -1000000, 1000000));
   } else {
     A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_PartRec_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
         "", 0.01, -5, 5));
+    N_tot_PartRec_ =
+        std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::kpi>(
+            uniqueId, "N_tot_PartRec_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_PartRec(),
+            NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
+                .R_Dst0KDst0pi_PartRec(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0()));
   }
 }
 
@@ -1010,17 +1022,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
           "", 0.01, -5, 5)),
-      N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::pik>(
-          uniqueId, "N_tot_PartRec_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                       Daughters::pik>::Get(uniqueId)
-              .N_tot_PartRec(),
-          NeutralDaughtersVars<_neutral, Daughters::pik>::Get(uniqueId)
-              .R_Dst0KDst0pi_PartRec(),
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+      N_tot_PartRec_(nullptr),
       A_Bs2Dst0Kpi_(new RooConstVar(
           ("A_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1133,8 +1135,16 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                            _neutral, Bachelor::k, Daughters::kpi>::Get(uniqueId)
                            .N_tot_Bu2Dst0h_D0gamma(),
                        Configuration::Get().crossFeedRate()))));
-  }
-  if (_neutral == Neutral::gamma) {
+    N_tot_PartRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_tot_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+            .c_str(),
+        "",
+        NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
+            BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
+                .kBR()
+                .getVal(),
+        -1000000, 1000000));
     N_tot_Bs2Dst0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2Dst0Kpi_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1156,6 +1166,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                 .getVal(),
         -1000, 1000));
   } else {
+    N_tot_PartRec_ =
+        std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::pik>(
+            uniqueId, "N_tot_PartRec_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::pik>::Get(uniqueId)
+                .N_tot_PartRec(),
+            NeutralDaughtersVars<_neutral, Daughters::pik>::Get(uniqueId)
+                .R_Dst0KDst0pi_PartRec(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0()));
     N_tot_Bs2Dst0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2Dst0Kpi_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1235,17 +1257,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "", 0.01, -5, 5)),
-      N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::kk>(
-          uniqueId, "N_tot_PartRec_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                       Daughters::kk>::Get(uniqueId)
-              .N_tot_PartRec(),
-          NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
-              .R_Dst0KDst0pi_PartRec(),
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+      N_tot_PartRec_(nullptr),
       A_Bs2Dst0Kpi_(new RooConstVar(
           ("A_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -1296,6 +1308,29 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
                 .N_tot_Bu2Dst0h_D0gamma(),
             NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
                 .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
+    N_tot_PartRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_tot_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+            .c_str(),
+        "",
+        NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
+            BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
+                .kBR()
+                .getVal(),
+        -1000000, 1000000));
+  } else {
+    N_tot_PartRec_ =
+        std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::kk>(
+            uniqueId, "N_tot_PartRec_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kk>::Get(uniqueId)
+                .N_tot_PartRec(),
+            NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+                .R_Dst0KDst0pi_PartRec(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0()));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
@@ -1396,17 +1431,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                               Daughters::kk>::Get(uniqueId)
                      .A_PartRec_GetPointer()),
-      N_tot_PartRec_(MakeYieldKFAV<_neutral, Daughters::pipi>(
-          uniqueId, "N_tot_PartRec_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                       Daughters::pipi>::Get(uniqueId)
-              .N_tot_PartRec(),
-          NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
-              .R_Dst0KDst0pi_PartRec(),
-          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
-          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+      N_tot_PartRec_(nullptr),
       A_Bs2Dst0Kpi_(new RooConstVar(
           ("A_Bs2Dst0Kpi_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1457,6 +1482,29 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                 .N_tot_Bu2Dst0h_D0gamma(),
             NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
                 .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
+    N_tot_PartRec_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_tot_PartRec_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+            .c_str(),
+        "",
+        NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
+            BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
+                .kBR()
+                .getVal(),
+        -1000000, 1000000));
+  } else {
+    N_tot_PartRec_ =
+        std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::pipi>(
+            uniqueId, "N_tot_PartRec_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::pipi>::Get(uniqueId)
+                .N_tot_PartRec(),
+            NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
+                .R_Dst0KDst0pi_PartRec(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .mcEff_Bu2Dst0h_D0pi0()));
   }
   if (Configuration::Get().blindFit() == true) {
     A_Bu2Dst0h_D0gamma_Blind_ =
