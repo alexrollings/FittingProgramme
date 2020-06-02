@@ -220,6 +220,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       Bu2D0h_sigmaLBuPartial_(),
       Bu2D0h_sigmaRBuPartial_(),
       pdfBuPartial_Bu2D0h_(),
+      mcEff_Bu2D0h_(Params::Get().CreateFixed(
+          "mcEff_Bu2D0h", uniqueId, Neutral::pi0, Bachelor::pi,
+          Configuration::Get().ReturnMCEff(Mode::Bu2D0pi, Neutral::pi0,
+                                           Bachelor::pi, true),
+          Configuration::Get().ReturnMCEff(Mode::Bu2D0pi, Neutral::pi0,
+                                           Bachelor::pi, false),
+          Systematic::mcEffs, Sign::positive)),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2D0h_meanBu_(),
       misId_Bu2D0h_sigmaLBu_(),

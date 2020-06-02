@@ -899,9 +899,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
+              .mcEff_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+              .mcEff_Bu2D0h())),
       A_PartRec_(nullptr),
       N_tot_PartRec_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
@@ -942,7 +942,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("A_PartRec_" +
@@ -1014,9 +1014,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
           NeutralDaughtersVars<_neutral, Daughters::pik>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
+              .mcEff_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+              .mcEff_Bu2D0h())),
       A_PartRec_(new RooRealVar(
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1144,7 +1144,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
     N_tot_Bs2Dst0Kpi_ = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_tot_Bs2Dst0Kpi_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1249,9 +1249,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
+              .mcEff_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+              .mcEff_Bu2D0h())),
       A_PartRec_(new RooRealVar(
           ("A_PartRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -1317,7 +1317,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     N_tot_PartRec_ =
         std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::kk>(
@@ -1425,9 +1425,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0(),
+              .mcEff_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+              .mcEff_Bu2D0h())),
       A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                               Daughters::kk>::Get(uniqueId)
                      .A_PartRec_GetPointer()),
@@ -1491,7 +1491,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     N_tot_PartRec_ =
         std::unique_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::pipi>(

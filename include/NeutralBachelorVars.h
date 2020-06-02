@@ -115,6 +115,9 @@ class NeutralBachelorVars {
   RooRealVar &deltaPartialCutEffMisId_Bu2D0h() {
     return *deltaPartialCutEffMisId_Bu2D0h_;
   }
+  RooRealVar &mcEff_Bu2D0h() {
+    return *mcEff_Bu2D0h_;
+  }
   // -------------------- PART REC -------------------- //
   RooRealVar &PartRec_D0pi0_sigmaLBu() { return *PartRec_D0pi0_sigmaLBu_; }
   RooRealVar &PartRec_D0pi0_sigmaRBu() { return *PartRec_D0pi0_sigmaRBu_; }
@@ -261,6 +264,7 @@ class NeutralBachelorVars {
   RooRealVar Bu2D0h_sigmaLBuPartial_;
   RooRealVar Bu2D0h_sigmaRBuPartial_;
   RooCruijff pdfBuPartial_Bu2D0h_;
+  std::shared_ptr<RooRealVar> mcEff_Bu2D0h_;
   // -------------------- Mis-ID ------------------- //
   RooRealVar misId_Bu2D0h_meanBu_;
   RooRealVar misId_Bu2D0h_sigmaLBu_;
