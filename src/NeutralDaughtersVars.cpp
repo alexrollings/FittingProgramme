@@ -19,6 +19,11 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kpi>(
               uniqueId, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_", 0.07930)),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
+      //     new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
+      //                    ComposeName(uniqueId, Neutral::pi0, Daughters::kpi))
+      //         .c_str(),
+      //     "", 0.081)),
       R_Dst0KDst0pi_MisRec_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kpi>(
           uniqueId, "R_Dst0KDst0pi_MisRec_", 0.06)),
       R_Dst0KDst0pi_Bu2D0h_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kpi>(
@@ -134,9 +139,19 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
           Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
               uniqueId, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_", 0.07930)),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
+      //     new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
+      //                    ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
+      //         .c_str(),
+      //     "", 0.081)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
               uniqueId, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_", 0.07930)),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
+      //     new RooRealVar(("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
+      //                    ComposeName(uniqueId, Neutral::gamma, Daughters::kpi))
+      //         .c_str(),
+      //     "", 0.081)),
       R_Dst0KDst0pi_MisRec_(Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
           uniqueId, "R_Dst0KDst0pi_MisRec_", 0.06)),
       R_Dst0KDst0pi_Bu2D0h_(Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
