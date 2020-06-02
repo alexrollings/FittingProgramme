@@ -94,7 +94,7 @@ Configuration::Configuration()
   // buDeltaMass_.setMax(5600);
   buDeltaMass_.setMin(5050);
   buDeltaMass_.setBins(45);
-  buDeltaMass_.setBins(55);
+  // buDeltaMass_.setBins(55);
   // buDeltaMass_.setMax(6000);
   // buDeltaMass_.setMin(4000);
   // buDeltaMass_.setBins(400);
