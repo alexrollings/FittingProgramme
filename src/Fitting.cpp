@@ -3672,6 +3672,45 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
+        int tmpId = 0;
+        if (config.neutral() == Neutral::pi0) {
+          std::string pi0RatioName =
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(tmpId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()
+                  .GetName();
+          std::string misRatioName =
+              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(tmpId)
+                  .R_Dst0KDst0pi_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << pi0RatioName << " and "
+                    << misRatioName << ":\t "
+                    << dataFitResult->correlation(pi0RatioName.c_str(),
+                                                  misRatioName.c_str())
+                    << "\n";
+        } else {
+          std::string pi0RatioName =
+              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()
+                  .GetName();
+          std::string misRatioName =
+              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
+                  .R_Dst0KDst0pi_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << pi0RatioName << " and "
+                    << misRatioName << ":\t "
+                    << dataFitResult->correlation(pi0RatioName.c_str(),
+                                                  misRatioName.c_str())
+                    << "\n";
+          std::string gammaRatioName =
+              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
+                  .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()
+                  .GetName();
+          std::cout << "Correlation of " << gammaRatioName << " and "
+                    << misRatioName << ":\t "
+                    << dataFitResult->correlation(gammaRatioName.c_str(),
+                                                  misRatioName.c_str())
+                    << "\n";
+        }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
