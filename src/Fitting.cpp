@@ -3663,12 +3663,12 @@ int main(int argc, char **argv) {
       // Whilst blinding is in place, we need to store y-axis max for FAV
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
-      if (config.runSystematics() == false) {
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
-        }
-      }
+      // if (config.runSystematics() == false) {
+      // for (auto &p : pdfs) {
+      //   Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+      //              dataFitResult.get(), yMaxMap);
+      //   }
+      // }
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
@@ -3686,6 +3686,21 @@ int main(int argc, char **argv) {
                     << misRatioName << ":\t "
                     << dataFitResult->correlation(pi0RatioName.c_str(),
                                                   misRatioName.c_str())
+                    << "\n";
+          std::string pi0AsymName =
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_Bu2Dst0h_D0pi0()
+                  .GetName();
+          std::string misAsymName =
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << pi0AsymName << " and "
+                    << misAsymName << ":\t "
+                    << dataFitResult->correlation(pi0AsymName.c_str(),
+                                                  misAsymName.c_str())
                     << "\n";
         } else {
           std::string pi0RatioName =
@@ -3709,6 +3724,31 @@ int main(int argc, char **argv) {
                     << misRatioName << ":\t "
                     << dataFitResult->correlation(gammaRatioName.c_str(),
                                                   misRatioName.c_str())
+                    << "\n";
+          std::string pi0AsymName =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_Bu2Dst0h_D0pi0()
+                  .GetName();
+          std::string misAsymName =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << pi0AsymName << " and "
+                    << misAsymName << ":\t "
+                    << dataFitResult->correlation(pi0AsymName.c_str(),
+                                                  misAsymName.c_str())
+                    << "\n";
+          std::string gammaAsymName =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_Bu2Dst0h_D0gamma()
+                  .GetName();
+          std::cout << "Correlation of " << gammaAsymName << " and "
+                    << misAsymName << ":\t "
+                    << dataFitResult->correlation(gammaAsymName.c_str(),
+                                                  misAsymName.c_str())
                     << "\n";
         }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
