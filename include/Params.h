@@ -88,7 +88,7 @@ class FixedParameter {
 
 class Params {
  private:
-  using Key = std::tuple<std::string, std::string, std::string, std::string>;
+  using Key = std::tuple<std::string, std::string, std::string, std::string, std::string>;
 
  public:
   using ValueFixed = FixedParameter;
@@ -102,7 +102,7 @@ class Params {
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, double mean,
                       double std, Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, "", "", "");
+    auto key = std::make_tuple(name, "", "", "", "");
     auto var_name = name;
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
@@ -110,7 +110,7 @@ class Params {
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
                       double std, Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral), "");
+    auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
@@ -121,8 +121,22 @@ class Params {
                                           Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
     auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(bachelor));
+                               EnumToString(neutral), EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor,
+                                          Daughters daughters, double mean,
+                                          double std, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), EnumToString(daughters));
+    auto var_name =
+        name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
@@ -132,7 +146,7 @@ class Params {
                                           Systematic systematic, Sign sign) {
     // Add charge daughter charge as empty strings: , "", "", ""
     auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(charge));
+                               EnumToString(neutral), EnumToString(charge), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, charge);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
@@ -140,7 +154,7 @@ class Params {
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              double start, double min_value,
                                              double max_value) {
-    auto key = std::make_tuple(name, "", "", "");
+    auto key = std::make_tuple(name, "", "", "", "");
     auto var_name = name;
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -152,7 +166,7 @@ class Params {
                                              double start, double min_value,
                                              double max_value) {
     auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), "");
+                               EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -165,7 +179,7 @@ class Params {
                                              double min_value,
                                              double max_value) {
     auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(bachelor));
+                               EnumToString(neutral), EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
