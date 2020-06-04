@@ -3702,6 +3702,21 @@ int main(int argc, char **argv) {
                     << dataFitResult->correlation(pi0AsymName.c_str(),
                                                   misAsymName.c_str())
                     << "\n";
+          std::string prodAsymName =
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_Bu2Dst0h_D0pi0()
+                  .GetName();
+          std::string misPiAsymName =
+              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << prodAsymName << " and "
+                    << misPiAsymName << ":\t "
+                    << dataFitResult->correlation(prodAsymName.c_str(),
+                                                  misPiAsymName.c_str())
+                    << "\n";
         } else {
           std::string pi0RatioName =
               NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
@@ -3750,6 +3765,20 @@ int main(int argc, char **argv) {
                     << dataFitResult->correlation(gammaAsymName.c_str(),
                                                   misAsymName.c_str())
                     << "\n";
+          std::string prodAsymName =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_Bu2Dst0h_D0gamma()
+                  .GetName();
+          std::string misPiAsymName =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>::Get(tmpId)
+                  .A_MisRec()
+                  .GetName();
+          std::cout << "Correlation of " << prodAsymName << " and "
+                    << misPiAsymName << ":\t "
+                    << dataFitResult->correlation(prodAsymName.c_str(),
+                                                  misPiAsymName.c_str());
         }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
