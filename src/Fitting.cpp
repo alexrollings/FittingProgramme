@@ -3173,7 +3173,7 @@ int main(int argc, char **argv) {
                    "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
                    "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                    "deltaPartialMisIdCutEffs,pidEffPi,"
-                   "pidEffK,crossFeedRate,A_Prod,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
+                   "pidEffK,crossFeedRate,A_FAV,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
                    "default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
@@ -3312,7 +3312,7 @@ int main(int argc, char **argv) {
                  "pi0FAVasSUPBuPartialPdf,buDeltaCutEffs,deltaCutEffs,"
                  "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
                  "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,crossFeedRate,A_"
-                 "Prod,A_Kpi,A_pi,"
+                 "FAV,A_Kpi,A_pi,"
                  "Delta_A_CP,mcEffs\n";
           return 1;
         }

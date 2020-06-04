@@ -41,8 +41,8 @@ Configuration::Configuration()
       crossFeedRate_(
           Params::Get().CreateFixed("crossFeedRate", 8.53e-05, 0.26e-05,
                                     Systematic::crossFeedRate, Sign::positive)),
-      A_Prod_(Params::Get().CreateFixed("A_Prod", 2.5806e-04, 6.87e-04,
-                                        Systematic::A_Prod, Sign::none)),
+      A_FAV_(Params::Get().CreateFixed("A_FAV", 0, 0.05, Systematic::A_FAV,
+                                       Sign::none)),
       A_Kpi_(Params::Get().CreateFixed("A_Kpi", -1.13e-02, 1.5e-03,
                                        Systematic::A_Kpi, Sign::none)),
       A_pi_(Params::Get().CreateFixed("A_pi", -6.45e-04, 1.84e-04,
@@ -343,8 +343,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pidEffK;
   } else if (systematic == "crossFeedRate") {
     return Systematic::crossFeedRate;
-  } else if (systematic == "A_Prod") {
-    return Systematic::A_Prod;
+  } else if (systematic == "A_FAV") {
+    return Systematic::A_FAV;
   } else if (systematic == "A_Kpi") {
     return Systematic::A_Kpi;
   } else if (systematic == "A_pi") {
@@ -370,7 +370,7 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
       "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
-      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/crossFeedRate/A_Prod/"
+      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/crossFeedRate/A_FAV/"
       "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
 }
 
@@ -474,8 +474,8 @@ std::string EnumToString(Systematic systematic) {
       return "pidEffK";
     case Systematic::crossFeedRate:
       return "crossFeedRate";
-    case Systematic::A_Prod:
-      return "A_Prod";
+    case Systematic::A_FAV:
+      return "A_FAV";
     case Systematic::A_Kpi:
       return "A_Kpi";
     case Systematic::A_pi:
