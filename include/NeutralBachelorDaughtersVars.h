@@ -351,7 +351,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_Bu2Dst0h_D0pi0_(new RooRealVar(
-          ("A_Bu2Dst0h_D0pi0_" +
+          ("A_Prod_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
               .c_str(),
           "", 0.001, -1, 1)),
@@ -430,11 +430,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
                 .kBR()
                 .getVal(),
         -1000000, 1000000));
-    A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
-            .c_str(),
-        "", 0.001, -1, 1));
+    // Set A_Prod to be the same for the partial π0/gamma modes - doesn't make
+    // sense to have 2
+    A_Bu2Dst0h_D0gamma_ = A_Bu2Dst0h_D0pi0_;
   }
 }
 
