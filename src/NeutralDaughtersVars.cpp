@@ -41,18 +41,20 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
-      R_Dst0KDst0pi_MisRec_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_MisRec_", 0.06)),
-      R_Dst0KDst0pi_Bu2D0h_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2D0h_", 0.07930)),
-      R_Dst0KDst0pi_PartRec_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_PartRec_", 0.02)) {
+      R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_MisRec", uniqueId, Neutral::pi0, Daughters::kk, 0.06,
+          -2, 2)),
+      R_Dst0KDst0pi_Bu2D0h_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2D0h", uniqueId, Neutral::pi0, Daughters::kk,
+          0.07930, -2, 2)),
+      R_Dst0KDst0pi_PartRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_PartRec", uniqueId, Neutral::pi0, Daughters::kk, 0.02,
+          -2, 2)) {
   if (Configuration::Get().blindFit() == true) {
-    R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
-        new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_Blind_" +
-                        ComposeName(uniqueId_, Neutral::pi0, Daughters::kk))
-                           .c_str(),
-                       "", 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId, Neutral::pi0, Daughters::kk,
+            1.138, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_CP_Bu2Dst0h_D0pi0_" +
@@ -64,11 +66,10 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
                 .c_str(),
             0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
-    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
-        new RooRealVar(("R_CP_Bu2Dst0h_D0pi0_" +
-                        ComposeName(uniqueId_, Neutral::pi0, Daughters::kk))
-                           .c_str(),
-                       "", 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0", uniqueId, Neutral::pi0, Daughters::kk,
+            1.138, -2, 2));
   }
   R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
       std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
