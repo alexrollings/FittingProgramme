@@ -44,7 +44,7 @@ class NeutralBachelorChargeVars {
     // i->second to get the value
     auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
     if (it == singletons.end()) {
-      // If it doesn't, create it as a new unique_ptr by calling emplace, which
+      // If it doesn't, create it as a new shared_ptr by calling emplace, which
       // will forward the pointer to the constructor of std::unique_ptr
       it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId))
                .first;
@@ -72,10 +72,10 @@ class NeutralBachelorChargeVars {
   int uniqueId_;
   // BR for decay relative to FAV mode (π, Kπ)
   // Can add for different bkgs if necessary
-  std::unique_ptr<RooRealVar> R_piK_Bu2Dst0h_D0gamma_Blind_;
-  std::unique_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_;
-  std::unique_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_Blind_;
-  std::unique_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0gamma_Blind_;
+  std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_;
 };
 
 // Now we just need to define the constructors separately so the values are
@@ -87,11 +87,11 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
     int uniqueId)
     : uniqueId_(uniqueId),
       R_piK_Bu2Dst0h_D0gamma_Blind_(nullptr),
-      R_piK_Bu2Dst0h_D0gamma_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      R_piK_Bu2Dst0h_D0gamma_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
-    R_piK_Bu2Dst0h_D0pi0_Blind_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+    R_piK_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("R_piK_Bu2Dst0h_D0pi0_Blind_" +
          ComposeName(uniqueId_, neutral, bachelor, charge))
             .c_str(),
@@ -101,7 +101,7 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
             .getVal(),
         -1, 1));
     R_piK_Bu2Dst0h_D0pi0_ =
-        std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
+        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_piK_Bu2Dst0h_D0pi0_" +
              ComposeName(uniqueId_, neutral, bachelor, charge))
                 .c_str(),
@@ -115,7 +115,7 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
             *R_piK_Bu2Dst0h_D0pi0_Blind_));
     if (neutral == Neutral::gamma) {
       R_piK_Bu2Dst0h_D0gamma_Blind_ =
-          std::unique_ptr<RooRealVar>(new RooRealVar(
+          std::shared_ptr<RooRealVar>(new RooRealVar(
               ("R_piK_Bu2Dst0h_D0gamma_Blind_" +
                ComposeName(uniqueId_, neutral, bachelor, charge))
                   .c_str(),
@@ -125,7 +125,7 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
                   .getVal(),
               -1, 1));
       R_piK_Bu2Dst0h_D0gamma_ =
-          std::unique_ptr<RooUnblindUniform>(new RooUnblindUniform(
+          std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
               ("R_piK_Bu2Dst0h_D0gamma_" +
                ComposeName(uniqueId_, neutral, bachelor, charge))
                   .c_str(),
@@ -139,7 +139,7 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
               *R_piK_Bu2Dst0h_D0gamma_Blind_));
     }
   } else {
-    R_piK_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+    R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
         ("R_piK_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId_, neutral, bachelor, charge))
             .c_str(),
@@ -149,7 +149,7 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
             .getVal(),
         -1, 1));
     if (neutral == Neutral::gamma) {
-      R_piK_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooRealVar>(new RooRealVar(
+      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
           ("R_piK_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId_, neutral, bachelor, charge))
               .c_str(),
