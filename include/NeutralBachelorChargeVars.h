@@ -115,11 +115,9 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
             *R_piK_Bu2Dst0h_D0pi0_Blind_));
     if (neutral == Neutral::gamma) {
       R_piK_Bu2Dst0h_D0gamma_Blind_ =
-          std::shared_ptr<RooRealVar>(new RooRealVar(
-              ("R_piK_Bu2Dst0h_D0gamma_Blind_" +
-               ComposeName(uniqueId_, neutral, bachelor, charge))
-                  .c_str(),
-              "",
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, neutral, bachelor,
+              charge,
               BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
                   .kBR()
                   .getVal(),
@@ -139,25 +137,21 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
               *R_piK_Bu2Dst0h_D0gamma_Blind_));
     }
   } else {
-    R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("R_piK_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId_, neutral, bachelor, charge))
-            .c_str(),
-        "",
-        BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
-            .kBR()
-            .getVal(),
-        -1, 1));
+    R_piK_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_piK_Bu2Dst0h_D0pi0", uniqueId_, neutral, bachelor, charge,
+            BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+                .kBR()
+                .getVal(),
+            -1, 1));
     if (neutral == Neutral::gamma) {
-      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-          ("R_piK_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId_, neutral, bachelor, charge))
-              .c_str(),
-          "",
-          BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
-              .kBR()
-              .getVal(),
-          -1, 1));
+      R_piK_Bu2Dst0h_D0gamma_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "R_piK_Bu2Dst0h_D0gamma", uniqueId_, neutral, bachelor, charge,
+              BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+                  .kBR()
+                  .getVal(),
+              -1, 1));
     }
   }
 }
