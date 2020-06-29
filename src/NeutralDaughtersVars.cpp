@@ -217,26 +217,18 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
             "R_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Daughters::kk,
             1.138, -2, 2));
   }
-  R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
-      std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId_, Neutral::gamma, Daughters::kk))
-              .c_str(),
-          "@0*@1",
-          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-                         uniqueId_)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
-                     *R_CP_Bu2Dst0h_D0gamma_)));
-  R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
-      std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("R_Dst0KDst0pi_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId_, Neutral::gamma, Daughters::kk))
-              .c_str(),
-          "@0*@1",
-          RooArgList(NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(
-                         uniqueId_)
-                         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
-                     *R_CP_Bu2Dst0h_D0pi0_)));
+  R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooFormulaVar>(
+      Make_R_Dst0KDst0pi_CP<Neutral::gamma, Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_",
+          NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
+          *R_CP_Bu2Dst0h_D0gamma_));
+  R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>(
+      Make_R_Dst0KDst0pi_CP<Neutral::gamma, Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_",
+          NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
+          *R_CP_Bu2Dst0h_D0pi0_));
 }
 
 template <>
