@@ -100,19 +100,14 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
                 .kBR()
                 .getVal(),
             -1, 1));
-    R_piK_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-            ("R_piK_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId_, neutral, bachelor, charge))
-                .c_str(),
-            "Blind",
-            ("R_piK_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId_, neutral, bachelor, charge))
-                .c_str(),
-            BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
-                .kBR()
-                .getVal(),
-            *R_piK_Bu2Dst0h_D0pi0_Blind_));
+    R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_piK_Bu2Dst0h_D0pi0_" +
+         ComposeName(uniqueId_, neutral, bachelor, charge))
+            .c_str(),
+        BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+            .kBR()
+            .getVal(),
+        *R_piK_Bu2Dst0h_D0pi0_Blind_));
     if (neutral == Neutral::gamma) {
       R_piK_Bu2Dst0h_D0gamma_Blind_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -122,19 +117,14 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
                   .kBR()
                   .getVal(),
               -1, 1));
-      R_piK_Bu2Dst0h_D0gamma_ =
-          std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-              ("R_piK_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId_, neutral, bachelor, charge))
-                  .c_str(),
-              "Blind",
-              ("R_piK_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId_, neutral, bachelor, charge))
-                  .c_str(),
-              BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
-                  .kBR()
-                  .getVal(),
-              *R_piK_Bu2Dst0h_D0gamma_Blind_));
+      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+          ("R_piK_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, neutral, bachelor, charge))
+              .c_str(),
+          BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+              .kBR()
+              .getVal(),
+          *R_piK_Bu2Dst0h_D0gamma_Blind_));
     }
   } else {
     R_piK_Bu2Dst0h_D0pi0_ =
