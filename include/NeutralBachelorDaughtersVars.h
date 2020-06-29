@@ -434,7 +434,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(new RooFormulaVar(
+          ("N_tot_Bu2Dst0h_D0pi0_FAVasSUP_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                                  Daughters::kpi>::Get(uniqueId)
+                         .N_tot_Bu2Dst0h_D0pi0(),
+                     Configuration::Get().crossFeedRate()))),
       N_tot_MisRec_(Params::Get().CreateFloating(
           "N_tot_MisRec", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
