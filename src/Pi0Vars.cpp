@@ -86,13 +86,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(nullptr),
-      buDeltaCutEffBu2Dst0h_D0pi0_(nullptr),
-      deltaCutEffBu2Dst0h_D0pi0_(nullptr),
-      deltaPartialCutEffBu2Dst0h_D0pi0_(nullptr),
-      fracBu2Dst0h_D0pi0_(),
-      initYieldFAVBu2Dst0h_D0pi0_(
-          initYieldFAVBu2Dst0h_D0pi0_ =
-              Configuration::Get().initYieldFAVSignal()),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::pi0,
@@ -146,9 +139,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_FAVasSUP_a1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_(),
-      buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
       Bu2Dst0h_D0gamma_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_sigmaDelta_(nullptr),
@@ -200,12 +190,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_aBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_nBuPartial_(nullptr),
-      buDeltaCutEffBu2Dst0h_D0gamma_(nullptr),
-      deltaCutEffBu2Dst0h_D0gamma_(nullptr),
-      deltaPartialCutEffBu2Dst0h_D0gamma_(nullptr),
-      fracBu2Dst0h_D0gamma_(0.213),
-      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() *
-                                    fracBu2Dst0h_D0gamma_),
       // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
       Bu2Dst0h_D0gamma_FAVasSUP_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_FAVasSUP_sigmaDelta_(nullptr),
@@ -222,8 +206,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_FAVasSUP_a1Bu_(nullptr),
       Bu2Dst0h_D0gamma_FAVasSUP_n1Bu_(nullptr),
       pdfBu_Bu2Dst0h_D0gamma_FAVasSUP_(),
-      buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      deltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
@@ -263,19 +245,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       MisRec_meanBuPartial_(nullptr),
       MisRec_aLBuPartial_(nullptr),
       MisRec_aRBuPartial_(nullptr),
-      buDeltaCutEffMisRec_(nullptr),
-      deltaCutEffMisRec_(nullptr),
-      deltaPartialCutEffMisRec_(nullptr),
-      fracMisRec_Bu2Dst0h_D0gamma_(0.213),
-      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.481),
-      fracMisRec_Bu2Dst0h_D0pi0_WN_(2.722),
-      fracMisRec_Bu2D0hst_(1.083),
-      fracMisRec_Bd2Dsth_(0.491),
-      fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
-                  fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
-                  fracMisRec_Bd2Dsth_ + fracMisRec_Bu2Dst0h_D0gamma_),
-      initYieldFAVMisRec_(Configuration::Get().initYieldFAVSignal() *
-                          fracMisRec_ / 2),
       // -------------------- Bu2D0h -------------------- //
       Bu2D0h_thresholdDelta_(
           ("Bu2D0h_thresholdDelta_" + ComposeName(uniqueId_, Neutral::pi0))
@@ -319,12 +288,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0h_meanBuPartial_(),
       Bu2D0h_aLBuPartial_(),
       Bu2D0h_aRBuPartial_(),
-      buDeltaCutEffBu2D0h_(nullptr),
-      deltaCutEffBu2D0h_(nullptr),
-      deltaPartialCutEffBu2D0h_(nullptr),
-      fracBu2D0h_(1.363),
-      initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
-                          fracBu2D0h_),
       // -------------------- PART REC -------------------- //
       PartRec_thresholdDelta_(Params::Get().CreateFixed(
           "PartRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3596e+02,
@@ -362,9 +325,48 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       PartRec_meanBuPartial_(nullptr),
       PartRec_aLBuPartial_(nullptr),
       PartRec_aRBuPartial_(nullptr),
+      // -------------------- Correct ID BOX EFFs -------------------- //
+      buDeltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      buDeltaCutEffBu2Dst0h_D0gamma_(nullptr),
+      buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
+      buDeltaCutEffMisRec_(nullptr),
+      buDeltaCutEffBu2D0h_(nullptr),
       buDeltaCutEffPartRec_(nullptr),
+      deltaCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      deltaCutEffBu2Dst0h_D0gamma_(nullptr),
+      deltaCutEffBu2Dst0h_D0gamma_FAVasSUP_(nullptr),
+      deltaCutEffMisRec_(nullptr),
+      deltaCutEffBu2D0h_(nullptr),
       deltaCutEffPartRec_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0pi0_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      deltaPartialCutEffBu2Dst0h_D0gamma_(nullptr),
+      deltaPartialCutEffMisRec_(nullptr),
+      deltaPartialCutEffBu2D0h_(nullptr),
       deltaPartialCutEffPartRec_(nullptr),
+      // ------------- Expected yields and relative fractions w.r.t. sig -------------//
+      fracBu2Dst0h_D0pi0_(),
+      initYieldFAVBu2Dst0h_D0pi0_(
+          initYieldFAVBu2Dst0h_D0pi0_ =
+              Configuration::Get().initYieldFAVSignal()),
+      fracBu2Dst0h_D0gamma_(0.213),
+      initYieldFAVBu2Dst0h_D0gamma_(Configuration::Get().initYieldFAVSignal() *
+                                    fracBu2Dst0h_D0gamma_),
+      fracMisRec_Bu2Dst0h_D0gamma_(0.213),
+      fracMisRec_Bu2Dst0h_D0gamma_WN_(0.481),
+      fracMisRec_Bu2Dst0h_D0pi0_WN_(2.722),
+      fracMisRec_Bu2D0hst_(1.083),
+      fracMisRec_Bd2Dsth_(0.491),
+      fracMisRec_(fracMisRec_Bu2Dst0h_D0gamma_WN_ +
+                  fracMisRec_Bu2Dst0h_D0pi0_WN_ + fracMisRec_Bu2D0hst_ +
+                  fracMisRec_Bd2Dsth_ + fracMisRec_Bu2Dst0h_D0gamma_),
+      initYieldFAVMisRec_(Configuration::Get().initYieldFAVSignal() *
+                          fracMisRec_ / 2),
+      fracBu2D0h_(1.363),
+      initYieldFAVBu2D0h_(Configuration::Get().initYieldFAVSignal() *
+                          fracBu2D0h_),
       fracPartRec_Bu2Dst0hst_D0pi0_(),
       fracPartRec_Bu2Dst0hst_D0gamma_(),
       fracPartRec_(0.290),
