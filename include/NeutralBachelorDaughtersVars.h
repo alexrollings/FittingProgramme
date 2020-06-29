@@ -420,69 +420,46 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
+      A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
+                                             Bachelor::pi, Daughters::pik, 0,
+                                             -5, 5)),
+      A_Bu2D0h_(Params::Get().CreateFloating("A_Bu2D0h", uniqueId, _neutral,
+                                             Bachelor::pi, Daughters::pik, 0,
+                                             -5, 5)),
+      A_PartRec_(Params::Get().CreateFloating("A_PartRec", uniqueId, _neutral,
+                                              Bachelor::pi, Daughters::pik, 0,
+                                              -5, 5)),
+      A_Bs2Dst0Kpi_(nullptr),
+      A_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(new RooFormulaVar(
-          ("N_tot_Bu2Dst0h_D0pi0_FAVasSUP_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "@0*@1",
-          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                                  Daughters::kpi>::Get(uniqueId)
-                         .N_tot_Bu2Dst0h_D0pi0(),
-                     Configuration::Get().crossFeedRate()))),
-      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
-      A_MisRec_(new RooRealVar(
-          ("A_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_MisRec_(new RooRealVar(
-          ("N_tot_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "",
+      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_MisRec_(Params::Get().CreateFloating(
+          "N_tot_MisRec", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bu2D0h_(new RooRealVar(
-          ("A_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_Bu2D0h_(new RooRealVar(
-          ("N_tot_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "",
+      N_tot_Bu2D0h_(Params::Get().CreateFloating(
+          "N_tot_Bu2D0h", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_PartRec_(new RooRealVar(
-          ("A_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_PartRec_(new RooRealVar(
-          ("N_tot_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "",
+      N_tot_PartRec_(Params::Get().CreateFloating(
+          "N_tot_PartRec", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      A_Bs2D0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
     R_ADS_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
         ("R_ADS_Bu2Dst0h_D0pi0_" +
