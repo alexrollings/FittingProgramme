@@ -574,15 +574,24 @@ template <Neutral _neutral>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_Blind_(nullptr),
-      A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
+      A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
+                                             Bachelor::pi, Daughters::kk, 0, -5,
+                                             5)),
+      A_Bu2D0h_(Params::Get().CreateFloating("A_Bu2D0h", uniqueId, _neutral,
+                                             Bachelor::pi, Daughters::kk, 0, -5,
+                                             5)),
+      A_PartRec_(Params::Get().CreateFloating("A_PartRec", uniqueId, _neutral,
+                                              Bachelor::pi, Daughters::kk, 0,
+                                              -5, 5)),
+      A_Bs2Dst0Kpi_(nullptr),
+      A_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_(new RooRealVar(
-          ("N_tot_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "",
+      N_tot_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "N_tot_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi,
+          Daughters::kk,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0pi0() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
@@ -590,63 +599,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           -1000000, 1000000)),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
-      A_MisRec_(new RooRealVar(
-          ("A_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_MisRec_(new RooRealVar(
-          ("N_tot_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "",
+      N_tot_MisRec_(Params::Get().CreateFloating(
+          "N_tot_MisRec", uniqueId, _neutral, Bachelor::pi, Daughters::kk,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bu2D0h_(new RooRealVar(
-          ("A_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_Bu2D0h_(new RooRealVar(
-          ("N_tot_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "",
+      N_tot_Bu2D0h_(Params::Get().CreateFloating(
+          "N_tot_Bu2D0h", uniqueId, _neutral, Bachelor::pi, Daughters::kk,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_PartRec_(new RooRealVar(
-          ("A_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "", 0.01, -5, 5)),
-      N_tot_PartRec_(new RooRealVar(
-          ("N_tot_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-              .c_str(),
-          "",
+      N_tot_PartRec_(Params::Get().CreateFloating(
+          "N_tot_PartRec", uniqueId, _neutral, Bachelor::pi, Daughters::kk,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      A_Bs2D0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (_neutral == Neutral::gamma) {
-    N_tot_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("N_tot_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-            .c_str(),
-        "",
+    N_tot_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+        RooRealVar>(Params::Get().CreateFloating(
+        "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+        Daughters::kk,
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0gamma() *
             BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                 .kBR()
@@ -654,51 +636,33 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
         -1000000, 1000000));
   }
   if (Configuration::Get().blindFit() == true) {
-    A_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0gamma_Blind_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-            .c_str(),
-        "", Configuration::Get().ReturnACPInit(Neutral::gamma, Bachelor::pi),
-        -1, 1));
-    A_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0pi0_Blind_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-            .c_str(),
-        "", Configuration::Get().ReturnACPInit(Neutral::pi0, Bachelor::pi), -1,
-        1));
-    A_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-            ("A_Bu2Dst0h_D0gamma_" +
-             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            "Blind",
-            ("A_Bu2Dst0h_D0gamma_" +
-             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            0.03, *A_Bu2Dst0h_D0gamma_Blind_));
-    A_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-            ("A_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            "Blind",
-            ("A_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            0.03, *A_Bu2Dst0h_D0pi0_Blind_));
+    A_Bu2Dst0h_D0gamma_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_Bu2Dst0h_D0gamma_Blind", uniqueId, _neutral, Bachelor::pi,
+            Daughters::kk, -0.003, -1, 1));
+    A_Bu2Dst0h_D0pi0_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_Bu2Dst0h_D0pi0_Blind", uniqueId, _neutral, Bachelor::pi,
+            Daughters::kk, 0.025, -1, 1));
+    A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_Bu2Dst0h_D0gamma_" +
+                   ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+                      .c_str(),
+                  0.03, *A_Bu2Dst0h_D0gamma_Blind_));
+    A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+                      .c_str(),
+                  0.03, *A_Bu2Dst0h_D0pi0_Blind_));
   } else {
-    A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-            .c_str(),
-        "", Configuration::Get().ReturnACPInit(Neutral::gamma, Bachelor::pi),
-        -1, 1));
-    A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
-            .c_str(),
-        "", Configuration::Get().ReturnACPInit(Neutral::pi0, Bachelor::pi), -1,
-        1));
+    A_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+            Daughters::kk, -0.003, -1, 1));
+    A_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kk,
+            0.025, -1, 1));
   }
 }
 
