@@ -126,12 +126,15 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersVars(
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
-      R_Dst0KDst0pi_MisRec_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::pik>(
-          uniqueId_, "R_Dst0KDst0pi_MisRec_", 0.06)),
-      R_Dst0KDst0pi_Bu2D0h_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::pik>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2D0h_", 0.07930)),
-      R_Dst0KDst0pi_PartRec_(Make_R_Dst0KDst0pi<Neutral::pi0, Daughters::pik>(
-          uniqueId_, "R_Dst0KDst0pi_PartRec_", 0.02)) {}
+      R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_MisRec", uniqueId, Neutral::pi0, Daughters::pik, 0.06,
+          -2, 2)),
+      R_Dst0KDst0pi_Bu2D0h_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2D0h", uniqueId, Neutral::pi0, Daughters::pik,
+          0.07930, -2, 2)),
+      R_Dst0KDst0pi_PartRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_PartRec", uniqueId, Neutral::pi0, Daughters::pik, 0.02,
+          -2, 2)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
