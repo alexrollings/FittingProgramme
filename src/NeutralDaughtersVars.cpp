@@ -1,6 +1,5 @@
 #include "NeutralDaughtersVars.h"
 #include "Params.h"
-#include "RooUnblindUniform.h"
 
 template <Neutral neutral, Daughters daughters>
 RooFormulaVar *Make_R_Dst0KDst0pi_CP(int uniqueId, const char *name,
@@ -57,16 +56,11 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, Neutral::pi0, Daughters::kk,
             1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-            ("R_CP_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            "Blind",
-            ("R_CP_Bu2Dst0h_D0pi0_" +
-             ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi, Daughters::kk))
-                .c_str(),
-            0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("R_CP_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId_, Neutral::pi0, Daughters::kk))
+                      .c_str(),
+                  0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -183,30 +177,19 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
             "R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, Neutral::gamma,
             Daughters::kk, 0.902, -2, 2));
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(
-        new RooUnblindUniform(("R_CP_Bu2Dst0h_D0gamma_" +
-                               ComposeName(uniqueId_, Neutral::gamma,
-                                           Bachelor::pi, Daughters::kk))
-                                  .c_str(),
-                              "Blind",
-                              ("R_CP_Bu2Dst0h_D0gamma_" +
-                               ComposeName(uniqueId_, Neutral::gamma,
-                                           Bachelor::pi, Daughters::kk))
-                                  .c_str(),
-                              0.5, *R_CP_Bu2Dst0h_D0gamma_Blind_));
+        MakeBlind(("R_CP_Bu2Dst0h_D0gamma_" +
+                   ComposeName(uniqueId_, Neutral::gamma, Daughters::kk))
+                      .c_str(),
+                  0.3, *R_CP_Bu2Dst0h_D0gamma_Blind_));
     R_CP_Bu2Dst0h_D0pi0_Blind_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, Neutral::gamma,
             Daughters::kk, 1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
-            ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma,
-                                                  Bachelor::pi, Daughters::kk))
-                .c_str(),
-            "Blind",
-            ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma,
-                                                  Bachelor::pi, Daughters::kk))
-                .c_str(),
-            0.5, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("R_CP_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId_, Neutral::gamma, Daughters::kk))
+                      .c_str(),
+                  0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
     R_CP_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
