@@ -1476,7 +1476,14 @@ double Configuration::ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
       EnumToString(mode) + ".txt";
   if (!fexists(txtFileName)) {
-    throw std::logic_error("ReturnMCEffs: " + txtFileName + " doesn't exist.");
+    std::cerr
+        << "!!!!!!!!!!\nReturnMCEffs: " << txtFileName
+        << " doesn't exist: setting eff to 1.0 and error to 0.0.\n!!!!!!!!!!";
+    if (returnEff == true) {
+      return 1.0;
+    } else {
+      return 0.0;
+    }
   }
   std::ifstream inFile(txtFileName);
   std::string line;
