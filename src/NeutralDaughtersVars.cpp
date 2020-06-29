@@ -144,18 +144,21 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0gamma_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
-          Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
-              uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_", 0.07930)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
-          Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
-              uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_", 0.07930)),
-      R_Dst0KDst0pi_MisRec_(Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
-          uniqueId_, "R_Dst0KDst0pi_MisRec_", 0.06)),
-      R_Dst0KDst0pi_Bu2D0h_(Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2D0h_", 0.07930)),
-      R_Dst0KDst0pi_PartRec_(Make_R_Dst0KDst0pi<Neutral::gamma, Daughters::kpi>(
-          uniqueId_, "R_Dst0KDst0pi_PartRec_", 0.02)) {}
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId, Neutral::gamma,
+          Daughters::kpi, 0.07930, -2, 2)),
+      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId, Neutral::gamma,
+          Daughters::kpi, 0.07930, -2, 2)),
+      R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_MisRec", uniqueId, Neutral::gamma, Daughters::kpi,
+          0.06, -2, 2)),
+      R_Dst0KDst0pi_Bu2D0h_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2D0h", uniqueId, Neutral::gamma, Daughters::kpi,
+          0.07930, -2, 2)),
+      R_Dst0KDst0pi_PartRec_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_PartRec", uniqueId, Neutral::gamma, Daughters::kpi,
+          0.02, -2, 2)) {}
 
 template <>
 NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
