@@ -670,77 +670,61 @@ template <Neutral _neutral>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_Blind_(nullptr),
-      A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
+      A_MisRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_MisRec_GetPointer()),
+      A_Bu2D0h_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                             Daughters::kk>::Get(uniqueId)
+                    .A_Bu2D0h_GetPointer()),
+      A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                              Daughters::kk>::Get(uniqueId)
+                     .A_PartRec_GetPointer()),
+      A_Bs2Dst0Kpi_(nullptr),
+      A_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_(new RooRealVar(
-          ("N_tot_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "",
+      N_tot_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "N_tot_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi,
+          Daughters::pipi,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0pi0() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
-                  uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
-      A_MisRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                             Daughters::kk>::Get(uniqueId)
-                    .A_MisRec_GetPointer()),
-      N_tot_MisRec_(new RooRealVar(
-          ("N_tot_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "",
+      N_tot_MisRec_(Params::Get().CreateFloating(
+          "N_tot_MisRec", uniqueId, _neutral, Bachelor::pi, Daughters::pipi,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVMisRec() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
-                  uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bu2D0h_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                             Daughters::kk>::Get(uniqueId)
-                    .A_Bu2D0h_GetPointer()),
-      N_tot_Bu2D0h_(new RooRealVar(
-          ("N_tot_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "",
+      N_tot_Bu2D0h_(Params::Get().CreateFloating(
+          "N_tot_Bu2D0h", uniqueId, _neutral, Bachelor::pi, Daughters::pipi,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2D0h() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
-                  uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_PartRec_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                              Daughters::kk>::Get(uniqueId)
-                     .A_PartRec_GetPointer()),
-      N_tot_PartRec_(new RooRealVar(
-          ("N_tot_PartRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-              .c_str(),
-          "",
+      N_tot_PartRec_(Params::Get().CreateFloating(
+          "N_tot_PartRec", uniqueId, _neutral, Bachelor::pi, Daughters::pipi,
           NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
-              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(
-                  uniqueId)
+              BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
           -1000000, 1000000)),
-      A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      A_Bs2D0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (_neutral == Neutral::gamma) {
-    N_tot_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("N_tot_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
-            .c_str(),
-        "",
+    N_tot_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+        RooRealVar>(Params::Get().CreateFloating(
+        "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+        Daughters::pipi,
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVBu2Dst0h_D0gamma() *
             BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(uniqueId)
                 .kBR()
