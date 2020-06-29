@@ -1,6 +1,6 @@
  #include "GlobalVars.h"
 
-GlobalVars::GlobalVars(int uniqueId) {}
+GlobalVars::GlobalVars(int uniqueId) : uniqueId_(uniqueId) {}
 
 std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge) {
