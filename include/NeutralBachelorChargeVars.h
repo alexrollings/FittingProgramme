@@ -1,8 +1,10 @@
 #pragma once
-#include "BachelorDaughtersVars.h"
-#include "Configuration.h"
 #include "RooAbsReal.h"
 #include "RooUnblindUniform.h"
+
+#include "BachelorDaughtersVars.h"
+#include "Configuration.h"
+#include "Params.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
 // of the entire class for you for every permutation of template arguments it is
@@ -91,15 +93,13 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
       R_piK_Bu2Dst0h_D0gamma_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
-    R_piK_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("R_piK_Bu2Dst0h_D0pi0_Blind_" +
-         ComposeName(uniqueId_, neutral, bachelor, charge))
-            .c_str(),
-        "",
-        BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
-            .kBR()
-            .getVal(),
-        -1, 1));
+    R_piK_Bu2Dst0h_D0pi0_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_, neutral, bachelor, charge,
+            BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+                .kBR()
+                .getVal(),
+            -1, 1));
     R_piK_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooUnblindUniform>(new RooUnblindUniform(
             ("R_piK_Bu2Dst0h_D0pi0_" +
