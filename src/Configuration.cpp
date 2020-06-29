@@ -14,7 +14,6 @@ RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                                paramToBlind);
 }
 
-
 Configuration::Configuration()
     : neutral_(),
       fitting("fitting", "fitting"),
