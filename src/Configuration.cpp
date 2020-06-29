@@ -8,6 +8,13 @@
 #include "Configuration.h"
 #include "Params.h"
 
+RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
+                             RooAbsReal &paramToBlind) {
+  return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
+                               paramToBlind);
+}
+
+
 Configuration::Configuration()
     : neutral_(),
       fitting("fitting", "fitting"),
