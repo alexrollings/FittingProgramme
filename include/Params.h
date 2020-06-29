@@ -211,6 +211,18 @@ class Params {
                                       max_value);
   }
 
+  std::shared_ptr<RooRealVar> CreateFloating(
+      std::string const &name, int uniqueId, Neutral neutral, Bachelor bachelor,
+      Daughters daughters, double start, double min_value, double max_value) {
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), EnumToString(daughters));
+    auto var_name =
+        name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
   template <typename Iterator>
   void RandomiseParameters(Iterator const &systematic_begin,
                            Iterator const &systematic_end, TRandom3 &random) {
