@@ -257,22 +257,23 @@ class NeutralBachelorDaughtersVars {
  public:
   // Need to construct the Impl field here (don't HAVE to do this if imple_
   // doesn't take an argument, as it happens implicitly.
-  NeutralBachelorDaughtersVars(int uniqueId_) : impl_(uniqueId_) {}
+  NeutralBachelorDaughtersVars(int uniqueId)
+      : uniqueId_(uniqueId), impl_(uniqueId_) {}
   ~NeutralBachelorDaughtersVars() {}
 
   using This_t = NeutralBachelorDaughtersVars<neutral, bachelor, daughters>;
 
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
-  static This_t &Get(int uniqueId_) {
+  static This_t &Get(int uniqueId) {
     static std::map<int, std::shared_ptr<This_t>> singletons;
     // An iterator to a map is a std::pair<key, value>, so we need to call
     // i->second to get the value
-    auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
+    auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
     if (it == singletons.end()) {
       // If it doesn't, create it as a new unique_ptr by calling emplace, which
       // will forward the pointer to the constructor of std::unique_ptr
-      it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
+      it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId))
                .first;
     }
     return *it->second;
@@ -281,8 +282,31 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   // Don't want to be able to access the blinded results
+  std::shared_ptr<RooRealVar> A_Bu2Dst0h_D0gamma_Blind_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0gamma_Blind_;
+  }
+  std::shared_ptr<RooRealVar> A_Bu2Dst0h_D0pi0_Blind_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0pi0_Blind_;
+  }
   RooAbsReal &A_Bu2Dst0h_D0gamma() { return *impl_.A_Bu2Dst0h_D0gamma_; }
+  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0gamma_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0gamma_;
+  }
   RooAbsReal &A_Bu2Dst0h_D0pi0() { return *impl_.A_Bu2Dst0h_D0pi0_; }
+  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_GetPointer() {
+    return impl_.A_Bu2Dst0h_D0pi0_;
+  }
+  RooRealVar &A_MisRec() { return *impl_.A_MisRec_; }
+  std::shared_ptr<RooRealVar> A_MisRec_GetPointer() { return impl_.A_MisRec_; }
+  RooRealVar &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
+  std::shared_ptr<RooRealVar> A_Bu2D0h_GetPointer() { return impl_.A_Bu2D0h_; }
+  RooRealVar &A_PartRec() { return *impl_.A_PartRec_; }
+  std::shared_ptr<RooRealVar> A_PartRec_GetPointer() {
+    return impl_.A_PartRec_;
+  }
+  RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
+  RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
+
   RooAbsReal &N_tot_Bu2Dst0h_D0gamma() {
     return *impl_.N_tot_Bu2Dst0h_D0gamma_;
   }
@@ -293,42 +317,16 @@ class NeutralBachelorDaughtersVars {
   RooFormulaVar &N_tot_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *impl_.N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
+  RooAbsReal &N_tot_MisRec() { return *impl_.N_tot_MisRec_; }
+  RooAbsReal &N_tot_Bu2D0h() { return *impl_.N_tot_Bu2D0h_; }
+  RooAbsReal &N_tot_PartRec() { return *impl_.N_tot_PartRec_; }
+  RooAbsReal &N_tot_Bs2Dst0Kpi() { return *impl_.N_tot_Bs2Dst0Kpi_; }
+  RooAbsReal &N_tot_Bs2D0Kpi() { return *impl_.N_tot_Bs2D0Kpi_; }
+
   RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() {
     return *impl_.R_ADS_Bu2Dst0h_D0gamma_;
   }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *impl_.R_ADS_Bu2Dst0h_D0pi0_; }
-
-  std::shared_ptr<RooRealVar> A_Bu2Dst0h_D0gamma_Blind_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0gamma_Blind_;
-  }
-  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0gamma_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0gamma_;
-  }
-  std::shared_ptr<RooRealVar> A_Bu2Dst0h_D0pi0_Blind_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0pi0_Blind_;
-  }
-  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0pi0_;
-  }
-
-  RooRealVar &A_MisRec() { return *impl_.A_MisRec_; }
-  std::shared_ptr<RooRealVar> A_MisRec_GetPointer() { return impl_.A_MisRec_; }
-  RooAbsReal &N_tot_MisRec() { return *impl_.N_tot_MisRec_; }
-
-  RooRealVar &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
-  std::shared_ptr<RooRealVar> A_Bu2D0h_GetPointer() { return impl_.A_Bu2D0h_; }
-  RooAbsReal &N_tot_Bu2D0h() { return *impl_.N_tot_Bu2D0h_; }
-
-  RooRealVar &A_PartRec() { return *impl_.A_PartRec_; }
-  std::shared_ptr<RooRealVar> A_PartRec_GetPointer() {
-    return impl_.A_PartRec_;
-  }
-  RooAbsReal &N_tot_PartRec() { return *impl_.N_tot_PartRec_; }
-
-  RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
-  RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
-  RooAbsReal &N_tot_Bs2Dst0Kpi() { return *impl_.N_tot_Bs2Dst0Kpi_; }
-  RooAbsReal &N_tot_Bs2D0Kpi() { return *impl_.N_tot_Bs2D0Kpi_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -337,7 +335,6 @@ class NeutralBachelorDaughtersVars {
   // Indicate if only used by one daughters
   int uniqueId_;
 
-  // N_Dpi is the total Bu2Dst0pi_D0neut events = signal + SCF + CF + missID
   NeutralBachelorDaughtersVarsImpl<neutral, bachelor, daughters> impl_;
 };
 
