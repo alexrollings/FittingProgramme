@@ -908,50 +908,21 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       deltaCutEffBs2D0Kpi_(nullptr),
       deltaPartialCutEffBs2D0Kpi_(nullptr) {
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
+  std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
+  std::map<std::string, double> mapMisId_Bu2D0h;
+  std::map<std::string, double> mapBs2Dst0Kpi;
+  std::map<std::string, double> mapBs2D0Kpi;
+
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
                                      mapMisId_Bu2Dst0h_D0gamma, true);
-  buDeltaCutEffMisId_Bu2Dst0h_D0gamma_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "buDeltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"],
-          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEffErr"],
-          Systematic::buDeltaMisIdCutEffs, Sign::positive));
-  deltaCutEffMisId_Bu2Dst0h_D0gamma_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"],
-          mapMisId_Bu2Dst0h_D0gamma["deltaCutEffErr"],
-          Systematic::deltaMisIdCutEffs, Sign::positive));
-
-  std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
                                      mapMisId_Bu2Dst0h_D0pi0, true);
-  buDeltaCutEffMisId_Bu2Dst0h_D0pi0_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "buDeltaCutEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEff"],
-          mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEffErr"],
-          Systematic::buDeltaMisIdCutEffs, Sign::positive));
-  deltaCutEffMisId_Bu2Dst0h_D0pi0_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"],
-          mapMisId_Bu2Dst0h_D0pi0["deltaCutEffErr"],
-          Systematic::deltaMisIdCutEffs, Sign::positive));
-
-  std::map<std::string, double> mapMisId_Bu2D0h;
   Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::k,
                                      mapMisId_Bu2D0h, true);
-  buDeltaCutEffMisId_Bu2D0h_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "buDeltaCutEffMisId_Bu2D0h", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2D0h["buDeltaCutEff"], mapMisId_Bu2D0h["buDeltaCutEffErr"],
-          Systematic::NA, Sign::positive));
-  deltaCutEffMisId_Bu2D0h_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffMisId_Bu2D0h", uniqueId_, Neutral::gamma,
-          mapMisId_Bu2D0h["deltaCutEff"], mapMisId_Bu2D0h["deltaCutEffErr"],
-          Systematic::NA, Sign::positive));
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
+                                     mapBs2Dst0Kpi, false);
+  Configuration::Get().ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
+                                     false);
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
@@ -997,16 +968,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     }
     ++it;
   }
-  buDeltaCutEffMisId_MisRec_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "buDeltaCutEffMisId_MisRec", uniqueId_, Neutral::gamma,
-          mapMisId_MisRec["buDeltaCutEff"], mapMisId_MisRec["buDeltaCutEffErr"],
-          Systematic::buDeltaMisIdCutEffs, Sign::positive));
-  deltaCutEffMisId_MisRec_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffMisId_MisRec", uniqueId_, Neutral::gamma,
-          mapMisId_MisRec["deltaCutEff"], mapMisId_MisRec["deltaCutEffErr"],
-          Systematic::deltaMisIdCutEffs, Sign::positive));
 
   std::map<Mode, double> partRecModesMap = {
       {Mode::Bu2Dst0rho_D0pi0,
@@ -1046,40 +1007,78 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     }
     ++it;
   }
+
+  buDeltaCutEffMisId_Bu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"],
+          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEffErr"],
+          Systematic::buDeltaMisIdCutEffs, Sign::positive));
+  buDeltaCutEffMisId_Bu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEff"],
+          mapMisId_Bu2Dst0h_D0pi0["buDeltaCutEffErr"],
+          Systematic::buDeltaMisIdCutEffs, Sign::positive));
+  buDeltaCutEffMisId_Bu2D0h_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffMisId_Bu2D0h", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2D0h["buDeltaCutEff"], mapMisId_Bu2D0h["buDeltaCutEffErr"],
+          Systematic::NA, Sign::positive));
+  buDeltaCutEffMisId_MisRec_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "buDeltaCutEffMisId_MisRec", uniqueId_, Neutral::gamma,
+          mapMisId_MisRec["buDeltaCutEff"], mapMisId_MisRec["buDeltaCutEffErr"],
+          Systematic::buDeltaMisIdCutEffs, Sign::positive));
   buDeltaCutEffMisId_PartRec_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "buDeltaCutEffMisId_PartRec", uniqueId_, Neutral::gamma,
           mapMisId_PartRec["buDeltaCutEff"],
           mapMisId_PartRec["buDeltaCutEffErr"], Systematic::buDeltaMisIdCutEffs,
           Sign::positive));
-  deltaCutEffMisId_PartRec_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffMisId_PartRec", uniqueId_, Neutral::gamma,
-          mapMisId_PartRec["deltaCutEff"], mapMisId_PartRec["deltaCutEffErr"],
-          Systematic::deltaMisIdCutEffs, Sign::positive));
-
-  std::map<std::string, double> mapBs2Dst0Kpi;
-  Configuration::Get().ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
-                                     mapBs2Dst0Kpi, false);
   buDeltaCutEffBs2Dst0Kpi_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "buDeltaCutEffBs2Dst0Kpi", uniqueId_, Neutral::gamma, Bachelor::k,
           mapBs2Dst0Kpi["buDeltaCutEff"], mapBs2Dst0Kpi["buDeltaCutEffErr"],
           Systematic::buDeltaCutEffs, Sign::positive));
-  deltaCutEffBs2Dst0Kpi_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "deltaCutEffBs2Dst0Kpi", uniqueId_, Neutral::gamma, Bachelor::k,
-          mapBs2Dst0Kpi["deltaCutEff"], mapBs2Dst0Kpi["deltaCutEffErr"],
-          Systematic::deltaCutEffs, Sign::positive));
-
-  std::map<std::string, double> mapBs2D0Kpi;
-  Configuration::Get().ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
-                                     false);
   buDeltaCutEffBs2D0Kpi_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "buDeltaCutEffBs2D0Kpi", uniqueId_, Neutral::gamma, Bachelor::k,
           mapBs2D0Kpi["buDeltaCutEff"], mapBs2D0Kpi["buDeltaCutEffErr"],
           Systematic::buDeltaCutEffs, Sign::positive));
+  deltaCutEffMisId_Bu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"],
+          mapMisId_Bu2Dst0h_D0gamma["deltaCutEffErr"],
+          Systematic::deltaMisIdCutEffs, Sign::positive));
+
+  deltaCutEffMisId_Bu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"],
+          mapMisId_Bu2Dst0h_D0pi0["deltaCutEffErr"],
+          Systematic::deltaMisIdCutEffs, Sign::positive));
+  deltaCutEffMisId_Bu2D0h_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffMisId_Bu2D0h", uniqueId_, Neutral::gamma,
+          mapMisId_Bu2D0h["deltaCutEff"], mapMisId_Bu2D0h["deltaCutEffErr"],
+          Systematic::NA, Sign::positive));
+  deltaCutEffMisId_MisRec_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffMisId_MisRec", uniqueId_, Neutral::gamma,
+          mapMisId_MisRec["deltaCutEff"], mapMisId_MisRec["deltaCutEffErr"],
+          Systematic::deltaMisIdCutEffs, Sign::positive));
+  deltaCutEffMisId_PartRec_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffMisId_PartRec", uniqueId_, Neutral::gamma,
+          mapMisId_PartRec["deltaCutEff"], mapMisId_PartRec["deltaCutEffErr"],
+          Systematic::deltaMisIdCutEffs, Sign::positive));
+  deltaCutEffBs2Dst0Kpi_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "deltaCutEffBs2Dst0Kpi", uniqueId_, Neutral::gamma, Bachelor::k,
+          mapBs2Dst0Kpi["deltaCutEff"], mapBs2Dst0Kpi["deltaCutEffErr"],
+          Systematic::deltaCutEffs, Sign::positive));
   deltaCutEffBs2D0Kpi_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "deltaCutEffBs2D0Kpi", uniqueId_, Neutral::gamma, Bachelor::k,
       mapBs2D0Kpi["deltaCutEff"], mapBs2D0Kpi["deltaCutEffErr"],
@@ -1096,8 +1095,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "deltaPartialCutEffMisId_Bu2D0h", uniqueId_, Neutral::gamma,
             mapMisId_Bu2D0h["deltaPartialCutEff"],
-            mapMisId_Bu2D0h["deltaPartialCutEffErr"],
-            Systematic::NA, Sign::positive));
+            mapMisId_Bu2D0h["deltaPartialCutEffErr"], Systematic::NA,
+            Sign::positive));
     deltaPartialCutEffMisId_MisRec_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "deltaPartialCutEffMisId_MisRec", uniqueId_, Neutral::gamma,
