@@ -1,4 +1,32 @@
- #include "GlobalVars.h"
+#include "GlobalVars.h"
+
+std::string MakePidKey(Bachelor bachelor, Charge charge) {
+  return EnumToString(bachelor) + "_" + EnumToString(charge);
+}
+
+double ReturnPidEffs(Charge charge, bool returnEff) {
+  std::string txtFileName =
+      "/home/rollings/Bu2Dst0h_scripts/pid_corr/output/PID_effs_" +
+      EnumToString(Configuration::Get().neutral()) + ".txt";
+  if (!fexists(txtFileName)) {
+    throw std::logic_error("ReturnPidEffs: " + txtFileName + " doesn't exist.");
+  }
+  std::ifstream inFile(txtFileName);
+  std::string line;
+  // Loop over lines in txt file
+  while (std::getline(inFile, line)) {
+    // Separate label and value (white space)
+    std::vector<std::string> lineVec = SplitLine(line);
+    if (lineVec[0] == EnumToString(charge)) {
+      if (returnEff == true) {
+        return std::stod(lineVec[1]);
+      } else {
+        return std::stod(lineVec[2]);
+      }
+    }
+  }
+}
+
 
 GlobalVars::GlobalVars(int uniqueId)
     : uniqueId_(uniqueId),
@@ -16,7 +44,33 @@ GlobalVars::GlobalVars(int uniqueId)
                                       Systematic::A_pi, Sign::none)),
       Delta_A_CP_(Params::Get().CreateFixed("Delta_A_CP", uniqueId_, -1.54e-03,
                                             2.9e-04, Systematic::Delta_A_CP,
-                                            Sign::none)) {
+                                            Sign::none)),
+      pidEffMap_() {
+  std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
+  for (auto &c : chargeVec) {
+    pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
+        "pidEffK", uniqueId_, Configuration::Get().neutral(), c,
+        ReturnPidEffs(c, true), ReturnPidEffs(c, false), Systematic::pidEffK,
+        Sign::positive);
+  }
+  pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
+      std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+          ("pidEffK_" + ComposeName(uniqueId_, Configuration::Get().neutral(),
+                                    Charge::total))
+              .c_str(),
+          "0.5*(@0+@1)",
+          RooArgList(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
+                     *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
+  // One floating PID eff for pi
+  pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
+      Params::Get().CreateFloating("pidEffPi", uniqueId_,
+                                   Configuration::Get().neutral(),
+                                   Charge::total, 0.996, 0.5, 1.5);
+  pidEffMap_[MakePidKey(Bachelor::pi, Charge::plus)] =
+      pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
+  pidEffMap_[MakePidKey(Bachelor::pi, Charge::minus)] =
+      pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
+
   std::vector<Year> yVec = {Year::y2011, Year::y2012, Year::y2015,
                             Year::y2016, Year::y2017, Year::y2018};
   double wRun1 = 0;

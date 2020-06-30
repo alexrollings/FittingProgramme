@@ -1,7 +1,10 @@
 #pragma once
-#include <string>
+#include "RooFormulaVar.h"
+
 #include "Configuration.h"
 #include "Params.h"
+
+#include <string>
 
 // There is only a single instance of categories therefore we do not have to
 // pass it around any more
@@ -29,6 +32,7 @@ class GlobalVars {
 
   int uniqueId() { return uniqueId_; }
 
+  std::map<std::string, std::shared_ptr<RooAbsReal> > &pidEffMap() { return pidEffMap_; }
   RooRealVar &pidEffPi() { return *pidEffPi_; }
   RooRealVar &crossFeedRate() { return *crossFeedRate_; }
   RooRealVar &A_FAV() { return *A_FAV_; }
@@ -44,6 +48,7 @@ class GlobalVars {
 
   int uniqueId_;
 
+  std::map<std::string, std::shared_ptr<RooAbsReal> > pidEffMap_;
   std::shared_ptr<RooRealVar> pidEffPi_;
   std::shared_ptr<RooRealVar> crossFeedRate_;
   std::shared_ptr<RooRealVar> A_FAV_;
