@@ -287,17 +287,16 @@ RooFormulaVar *Make_N_1D(int uniqueId, const char *nameStr, RooAbsReal &N,
         (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
         "@0*@1",
-        RooArgList(N,
-                   NeutralChargeVars<neutral, charge>::Get(uniqueId).GetPidEff(
-                       bachelor)));
+        RooArgList(N, *GlobalVars::Get(uniqueId)
+                          .pidEffMap()[MakePidKey(bachelor, Charge::total)]));
   } else {
     return new RooFormulaVar(
         (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters, charge))
             .c_str(),
         "@0*@1*@2",
         RooArgList(N, cutEff,
-                   NeutralChargeVars<neutral, charge>::Get(uniqueId).GetPidEff(
-                       bachelor)));
+                   *GlobalVars::Get(uniqueId)
+                       .pidEffMap()[MakePidKey(bachelor, Charge::total)]));
   }
 }
 

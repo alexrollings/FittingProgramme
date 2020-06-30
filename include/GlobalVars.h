@@ -56,3 +56,5 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> A_pi_;
   std::shared_ptr<RooRealVar> Delta_A_CP_;
 };
+
+std::string MakePidKey(Bachelor bachelor, Charge charge);
