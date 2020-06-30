@@ -396,12 +396,12 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> mcEff_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> mcEff_Bs2D0Kpi_;
   // -------------------- CP Observables -------------------- //
-  std::unique_ptr<RooRealVar> A_CP_Bu2Dst0h_D0gamma_Blind_;
-  std::unique_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
-  std::unique_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
-  std::unique_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
-  // std::unique_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
-  // std::unique_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
+  // std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
+  // std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
 };
 
 template <>
