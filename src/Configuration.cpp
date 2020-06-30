@@ -1830,32 +1830,3 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     // }
   }
 }
-
-// Place function to return ACP in config s.t. don't have to instantiate all
-// gamma templates when running π0 fit and vice versa
-double Configuration::ReturnACPInit(Neutral neutral, Bachelor bachelor) {
-  double ACPInit = 0;
-  switch (neutral) {
-    case Neutral::gamma:
-      switch (bachelor) {
-        case Bachelor::pi:
-          ACPInit = -0.003;
-          break;
-        case Bachelor::k:
-          ACPInit = 0.276;
-          break;
-      }
-      break;
-    case Neutral::pi0:
-      switch (bachelor) {
-        case Bachelor::pi:
-          ACPInit = 0.025;
-          break;
-        case Bachelor::k:
-          ACPInit = -0.151;
-          break;
-      }
-      break;
-  }
-  return ACPInit;
-}

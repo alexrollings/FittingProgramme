@@ -187,7 +187,6 @@ class Configuration {
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik);
   void ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      std::map<std::string, double> &map, bool misId);
-  double ReturnACPInit(Neutral neutral, Bachelor bachelor);
 
  private:
   Configuration();
