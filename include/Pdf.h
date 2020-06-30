@@ -470,15 +470,8 @@ class Pdf : public PdfBase {
 // PDFBase objects
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
-// How does it know it's the same unique ID when one is uniqueId_ and the other
-// uniqueId?
 Pdf<_neutral, _bachelor, _daughters, _charge>::Pdf(int uniqueId)
-    : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {
-  // CreateBuAddPdf();
-  // if (Configuration::Get().fit1D() == false) {
-  //   CreateDeltaAddPdf();
-  // }
-}
+    : PdfBase(uniqueId, _neutral, _bachelor, _daughters, _charge) {}
 
 // Whatever you assign as a template argument MUST BE RESOLVABLE AT COMPILE
 // TIME
