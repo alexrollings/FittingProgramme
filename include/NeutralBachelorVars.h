@@ -166,6 +166,18 @@ class NeutralBachelorVars {
   RooRealVar &mcEff_Bs2Dst0Kpi() { return *mcEff_Bs2Dst0Kpi_; }
   RooRealVar &mcEff_Bs2D0Kpi() { return *mcEff_Bs2D0Kpi_; }
 
+  // -------------------- CP Observables -------------------- //
+  RooAbsReal &A_CP_Bu2Dst0h_D0gamma_Blind() {
+    return *A_CP_Bu2Dst0h_D0gamma_Blind_;
+  }
+  RooAbsReal &A_CP_Bu2Dst0h_D0pi0_Blind() {
+    return *A_CP_Bu2Dst0h_D0pi0_Blind_;
+  }
+  RooAbsReal &A_CP_Bu2Dst0h_D0gamma() { return *A_CP_Bu2Dst0h_D0gamma_; }
+  RooAbsReal &A_CP_Bu2Dst0h_D0pi0() { return *A_CP_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
+
  private:
   int uniqueId_;
   // -------------------- PDF SHAPES -------------------- //
@@ -353,7 +365,6 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> Bs2D0Kpi_aLBuPartial_;
   std::shared_ptr<RooRealVar> Bs2D0Kpi_aRBuPartial_;
   RooCruijff pdfBuPartial_Bs2D0Kpi_;
-
   // -------------------- Mis-ID BoxEffs ------------------- //
   std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2Dst0h_D0pi0_;
@@ -369,7 +380,6 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_MisRec_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_Bu2D0h_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_PartRec_;
-
   // -------------------- Bs BoxEffs ------------------- //
   std::shared_ptr<RooRealVar> buDeltaCutEffBs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> deltaCutEffBs2Dst0Kpi_;
@@ -377,7 +387,6 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> buDeltaCutEffBs2D0Kpi_;
   std::shared_ptr<RooRealVar> deltaCutEffBs2D0Kpi_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffBs2D0Kpi_;
-
   // -------------------- MC Efficiencies -------------------- //
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_;
@@ -386,6 +395,13 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> mcEff_PartRec_;
   std::shared_ptr<RooRealVar> mcEff_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> mcEff_Bs2D0Kpi_;
+  // -------------------- CP Observables -------------------- //
+  std::unique_ptr<RooRealVar> A_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::unique_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::unique_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
 };
 
 template <>
