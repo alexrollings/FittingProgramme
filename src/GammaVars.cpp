@@ -551,7 +551,36 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       fracPartRec_(fracPartRec_Bu2Dst0hst_D0gamma_ +
                    fracPartRec_Bu2Dst0hst_D0pi0_),
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
-                           fracPartRec_) {
+                           fracPartRec_),
+      // -------------------- CP Observables -------------------- //
+      R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
+      R_CP_Bu2Dst0h_D0gamma_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_(nullptr) {
+  if (Configuration::Get().blindFit() == true) {
+    R_CP_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_,
+                                     Neutral::gamma, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, Neutral::gamma))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0gamma_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+                                     Neutral::gamma, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+  } else {
+    R_CP_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, 1.138, -2, 2));
+  }
+
   std::map<std::string, double> mapBu2Dst0h_D0gamma;
   std::map<std::string, double> mapBu2Dst0h_D0gamma_FAVasSUP;
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
