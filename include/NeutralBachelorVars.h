@@ -175,8 +175,8 @@ class NeutralBachelorVars {
   }
   RooAbsReal &A_CP_Bu2Dst0h_D0gamma() { return *A_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0() { return *A_CP_Bu2Dst0h_D0pi0_; }
-  // RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
-  // RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
 
  private:
   int uniqueId_;
@@ -400,8 +400,8 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
-  // std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
-  // std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
 };
 
 template <>

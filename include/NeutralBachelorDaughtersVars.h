@@ -106,13 +106,13 @@ RooFormulaVar *Make_A_D2CP(int uniqueId, const char *name, RooAbsReal &A_CP) {
       return new RooFormulaVar(
           (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
           "", "@0+0.5*@1",
-          RooArgList(A_CP, GlobalVars::Get(uniqueId).Delta_A_CP()));
+          RooArgList(A_CP, Configuration::Get().Delta_A_CP()));
       break;
     case Daughters::pipi:
       return new RooFormulaVar(
           (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
           "", "@0-0.5*@1",
-          RooArgList(A_CP, GlobalVars::Get(uniqueId).Delta_A_CP()));
+          RooArgList(A_CP, Configuration::Get().Delta_A_CP()));
       break;
   }
 }

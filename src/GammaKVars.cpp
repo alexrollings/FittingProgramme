@@ -928,9 +928,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_(nullptr),
-      A_CP_Bu2Dst0h_D0pi0_(nullptr) {
-  // R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-  // R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      A_CP_Bu2Dst0h_D0pi0_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     A_CP_Bu2Dst0h_D0gamma_Blind_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
