@@ -89,6 +89,15 @@ RooFormulaVar *Make_A_ADS(int uniqueId, const char *name,
       "", "(@0-@1)/(@0+@1)", RooArgSet(R_piK_minus, R_piK_plus));
 }
 
+// In pik, N_tot = N_tot_kpi * R_ADS
+template <Neutral neutral, Bachelor bachelor>
+RooFormulaVar *Make_N_tot_pik(int uniqueId, const char *name,
+                              RooAbsReal &N_tot_kpi, RooAbsReal &R_ADS) {
+  return new RooFormulaVar(
+      (name + ComposeName(uniqueId, neutral, bachelor, Daughters::pik)).c_str(),
+      "", "@0*@1", RooArgSet(N_tot_kpi, R_ADS));
+}
+
 namespace {  // Anonymous namespace
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters>
@@ -576,15 +585,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                   .R_piK_Bu2Dst0h_D0gamma()));
     }
   }
-  N_tot_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-      ("N_tot_Bu2Dst0h_D0pi0_" +
-       ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-          .c_str(),
-      "@0*@1",
-      RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                              Daughters::kpi>::Get(uniqueId)
-                     .N_tot_Bu2Dst0h_D0pi0(),
-                 *R_ADS_Bu2Dst0h_D0pi0_))));
+  N_tot_Bu2Dst0h_D0pi0_ =
+      std::shared_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::pi>(
+          uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kpi>::Get(uniqueId)
+              .N_tot_Bu2Dst0h_D0pi0(),
+          *R_ADS_Bu2Dst0h_D0pi0_));
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
         ("N_tot_Bu2Dst0h_D0gamma_" +
