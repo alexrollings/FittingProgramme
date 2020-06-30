@@ -1,8 +1,6 @@
 #pragma once
 #include "Configuration.h"
-#include "RooCategory.h"
-#include "RooRealVar.h"
-#include "RooConstVar.h"
+#include "Params.h"
 #include <string>
 
 // There is only a single instance of categories therefore we do not have to pass it around any more
@@ -41,18 +39,3 @@ public:
   int uniqueId_;
 };
 
-std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
-                        Bachelor bachelor, Daughters daughters, Charge charge);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor, Daughters daughters, Charge charge);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor, Daughters daughters);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor, Charge charge);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Daughters daughters);
-std::string ComposeName(int uniqueId, Neutral neutral);
-std::string ComposeName(int uniqueId, Neutral neutral, Charge charge);
-std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);

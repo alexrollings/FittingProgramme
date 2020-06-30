@@ -6,8 +6,6 @@
 #include <vector>
 #include <regex>
 
-#include "GlobalVars.h"
-
 #include "TRandom3.h"
 #include "RooRandom.h"
 

@@ -279,3 +279,19 @@ bool fexists(std::string const &filename);
 std::vector<std::string> SplitLine(std::string const &str);
 
 void CalcBinomialErr(double nInit, double nFinal, double &err);
+
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
+                        Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeName(int uniqueId, Neutral neutral,
+                        Bachelor bachelor, Daughters daughters, Charge charge);
+std::string ComposeName(int uniqueId, Neutral neutral,
+                        Bachelor bachelor, Daughters daughters);
+std::string ComposeName(int uniqueId, Neutral neutral,
+                        Bachelor bachelor);
+std::string ComposeName(int uniqueId, Neutral neutral,
+                        Bachelor bachelor, Charge charge);
+std::string ComposeName(int uniqueId, Neutral neutral,
+                        Daughters daughters);
+std::string ComposeName(int uniqueId, Neutral neutral);
+std::string ComposeName(int uniqueId, Neutral neutral, Charge charge);
+std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
