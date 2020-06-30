@@ -1,4 +1,5 @@
 #include "NeutralDaughtersVars.h"
+#include "NeutralVars.h"
 #include "Params.h"
 
 template <Neutral neutral, Daughters daughters>
