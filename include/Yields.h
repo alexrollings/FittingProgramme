@@ -4,7 +4,6 @@
 #include "NeutralBachelorChargeVars.h"
 #include "NeutralBachelorDaughtersVars.h"
 #include "NeutralBachelorVars.h"
-#include "NeutralChargeVars.h"
 #include "NeutralVars.h"
 
 // Return yield with correct asymmetry definition

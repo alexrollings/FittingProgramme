@@ -1,6 +1,5 @@
 #pragma once
 #include "NeutralBachelorVars.h"
-#include "NeutralChargeVars.h"
 #include "NeutralVars.h"
 #include "RooAbsPdf.h"
 #include "RooAbsReal.h"
