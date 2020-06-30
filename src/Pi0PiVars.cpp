@@ -334,19 +334,19 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
   }
   if (Configuration::Get().splitByCharge() == true) {
     R_ADS_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
                                       Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
                                       Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
   } else {
     R_ADS_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
                                       Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
   }
