@@ -498,6 +498,40 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
             "A_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::pi,
             0.025, -1, 1));
   }
+  if (Configuration::Get().splitByCharge() == true) {
+    R_ADS_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma(),
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma()));
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0(),
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
+  } else {
+    R_ADS_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma()));
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::pi,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
+  }
+
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
 

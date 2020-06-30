@@ -544,9 +544,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_(nullptr),
-      A_CP_Bu2Dst0h_D0pi0_(nullptr) {
-  // R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-  // R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      A_CP_Bu2Dst0h_D0pi0_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
@@ -560,6 +560,24 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
     A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
                                      Neutral::pi0, Bachelor::k, -0.151, -1, 1));
+  }
+  if (Configuration::Get().splitByCharge() == true) {
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0(),
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
+  } else {
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
   }
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;

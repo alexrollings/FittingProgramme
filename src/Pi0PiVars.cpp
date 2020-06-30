@@ -332,6 +332,25 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
                                      Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
   }
+  if (Configuration::Get().splitByCharge() == true) {
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0(),
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
+  } else {
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::k,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
+  }
+
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
 
