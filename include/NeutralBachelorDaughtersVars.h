@@ -755,13 +755,20 @@ template <Neutral _neutral>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_Blind_(nullptr),
-      A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      A_Bu2Dst0h_D0pi0_(new RooRealVar(
-          ("A_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-              .c_str(),
-          "", 0.01, -1, 1)),
+      A_Bu2Dst0h_D0gamma_(nullptr),
+      A_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
+          0.01, -1, 1)),
+      A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
+                                             Bachelor::k, Daughters::kpi, 0,
+                                             -1, 1)),
+      A_Bu2D0h_(Params::Get().CreateFloating("A_Bu2D0h", uniqueId, _neutral,
+                                             Bachelor::k, Daughters::kpi, 0,
+                                             -1, 1)),
+      A_PartRec_(nullptr),
+      A_Bs2Dst0Kpi_(nullptr),
+      A_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(MakeYieldKFAV<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
@@ -776,13 +783,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .mcEff_Bu2Dst0h_D0pi0())),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
-      A_MisRec_(new RooRealVar(
-          ("A_MisRec_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-              .c_str(),
-          "", 0.01, -5, 5)),
       N_tot_MisRec_(MakeYieldKFAV<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_MisRec_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -794,11 +794,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .mcEff_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0())),
-      A_Bu2D0h_(new RooRealVar(
-          ("A_Bu2D0h_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-              .c_str(),
-          "", 0.01, -5, 5)),
       N_tot_Bu2D0h_(MakeYieldKFAV<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2D0h_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -810,12 +805,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .mcEff_Bu2D0h(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2D0h())),
-      A_PartRec_(nullptr),
       N_tot_PartRec_(nullptr),
-      A_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      A_Bs2D0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::kpi>(
@@ -829,34 +823,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
                 .mcEff_Bu2Dst0h_D0gamma(),
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .mcEff_Bu2Dst0h_D0gamma()));
-    A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_Bu2Dst0h_D0gamma_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "", 0.01, -1, 1));
-    // FOR NOW fix asym to 0 as such small yield: change when improving
-    // stability (otherwise add as systematic)
-    A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_PartRec_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "", 0));
-    N_tot_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("N_tot_PartRec_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "",
+    A_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::k,
+            Daughters::kpi, -0.01, -1, 1));
+    // Add systematic
+    A_PartRec_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_PartRec", uniqueId, _neutral, Bachelor::k, Daughters::kpi, 0, 0,
+        Systematic::NA, Sign::none));
+    N_tot_PartRec_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+        "N_tot_PartRec", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
             BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        0, 1000000));
+        -1000000, 1000000));
   } else {
-    A_PartRec_ = std::shared_ptr<RooRealVar>(new RooRealVar(
-        ("A_PartRec_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "", 0.01, -5, 5));
+    A_PartRec_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("A_PartRec", uniqueId, _neutral,
+                                     Bachelor::k, Daughters::kpi, 0, -5, 5));
     N_tot_PartRec_ =
         std::shared_ptr<RooFormulaVar>(MakeYieldKFAV<_neutral, Daughters::kpi>(
             uniqueId, "N_tot_PartRec_",
