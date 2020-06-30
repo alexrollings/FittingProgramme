@@ -71,12 +71,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Bachelor::pi, 2.2742e+01, 1.61e+00, Systematic::misIdGammaPiPdfBu,
           Sign::positive)),
       misId_Bu2Dst0h_D0gamma_a1Bu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0gamma_a1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
-          1.5478e-01, 1.46e-02, Systematic::misIdGammaPiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0gamma_a1Bu", uniqueId_, Neutral::gamma,
+          Bachelor::pi, 1.5478e-01, 1.46e-02, Systematic::misIdGammaPiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0gamma_a2Bu_(nullptr),
       misId_Bu2Dst0h_D0gamma_n1Bu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0gamma_n1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
-          5.2558e-02, 2.08e-02, Systematic::misIdGammaPiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0gamma_n1Bu", uniqueId_, Neutral::gamma,
+          Bachelor::pi, 5.2558e-02, 2.08e-02, Systematic::misIdGammaPiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0gamma_n2Bu_(nullptr),
       pdf1Bu_misId_Bu2Dst0h_D0gamma_(),
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
@@ -165,8 +167,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                         .Bu2Dst0h_D0pi0_fracPdfCb2BuPartial())),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma, Bachelor::pi,
-          5.3011e+03, 5.57e+00, Systematic::misIdPi0PiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma,
+          Bachelor::pi, 5.3011e+03, 5.57e+00, Systematic::misIdPi0PiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0pi0_sigma1Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_sigma1Bu", uniqueId_, Neutral::gamma,
           Bachelor::pi, 9.7560e+01, 3.46e+00, Systematic::misIdPi0PiPdfBu,
@@ -230,11 +233,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          *misId_Bu2Dst0h_D0pi0_n1BuPartial_)),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
-          "MisRec_sigmaLBu", uniqueId_, Neutral::gamma, Bachelor::pi, 1.3446e+02,
-          1.27e+00, Systematic::misRecBuPdf, Sign::positive)),
+          "MisRec_sigmaLBu", uniqueId_, Neutral::gamma, Bachelor::pi,
+          1.3446e+02, 1.27e+00, Systematic::misRecBuPdf, Sign::positive)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
-          "MisRec_sigmaRBu", uniqueId_, Neutral::gamma, Bachelor::pi, 8.5469e+01,
-          5.55e-01, Systematic::misRecBuPdf, Sign::positive)),
+          "MisRec_sigmaRBu", uniqueId_, Neutral::gamma, Bachelor::pi,
+          8.5469e+01, 5.55e-01, Systematic::misRecBuPdf, Sign::positive)),
       pdfBu_MisRec_(("pdfBu_MisRec_" +
                      ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
                         .c_str(),
@@ -440,9 +443,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0,
                                            Neutral::gamma, Bachelor::pi, false),
           Systematic::mcEffs, Sign::positive)),
-          mcEff_MisRec_(Params::Get().CreateFixed(
-              "mcEff_MisRec", uniqueId_, Neutral::gamma, Bachelor::pi, 1.0, 0.0,
-              Systematic::NA, Sign::positive)),
+      mcEff_MisRec_(Params::Get().CreateFixed(
+          "mcEff_MisRec", uniqueId_, Neutral::gamma, Bachelor::pi, 1.0, 0.0,
+          Systematic::NA, Sign::positive)),
       mcEff_Bu2D0h_(Params::Get().CreateFixed(
           "mcEff_Bu2D0h", uniqueId_, Neutral::gamma, Bachelor::pi,
           Configuration::Get().ReturnMCEff(Mode::Bu2D0pi, Neutral::gamma,
@@ -458,7 +461,43 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
           "mcEff_Bs2D0Kpi", uniqueId_, Neutral::gamma, Bachelor::pi, 1.0, 0.0,
-          Systematic::NA, Sign::positive)) {
+          Systematic::NA, Sign::positive)),
+      // -------------------- CP Observables -------------------- //
+      A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0gamma_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_(nullptr) {
+  // R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+  // R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+  if (Configuration::Get().blindFit() == true) {
+    A_CP_Bu2Dst0h_D0gamma_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, Neutral::gamma,
+            Bachelor::pi, -0.003, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, Neutral::gamma,
+            Bachelor::pi, 0.025, -1, 1));
+    A_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0gamma_" +
+                   ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0gamma_Blind_));
+    A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
+  } else {
+    A_CP_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::pi,
+            -0.003, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::pi,
+            0.025, -1, 1));
+  }
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
 

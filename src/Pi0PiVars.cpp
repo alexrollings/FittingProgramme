@@ -52,11 +52,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "misId_Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::pi0, Bachelor::pi,
           5.2120e+03, 4.05e+00, Systematic::misIdPi0PiPdfBu, Sign::positive)),
       misId_Bu2Dst0h_D0pi0_sigma1Bu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          3.5925e+01, 3.93e+00, Systematic::misIdPi0PiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0pi0_sigma1Bu", uniqueId_, Neutral::pi0,
+          Bachelor::pi, 3.5925e+01, 3.93e+00, Systematic::misIdPi0PiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0pi0_sigma2Bu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_sigma2Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          2.5289e+01, 2.87e+00, Systematic::misIdPi0PiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0pi0_sigma2Bu", uniqueId_, Neutral::pi0,
+          Bachelor::pi, 2.5289e+01, 2.87e+00, Systematic::misIdPi0PiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
           3.9062e-02, 3.83e-02, Systematic::misIdPi0PiPdfBu, Sign::positive)),
@@ -108,8 +110,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          5.2148e+03, 4.77e+00, Systematic::misIdGammaPiPdfBu, Sign::positive)),
+          "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId_, Neutral::pi0,
+          Bachelor::pi, 5.2148e+03, 4.77e+00, Systematic::misIdGammaPiPdfBu,
+          Sign::positive)),
       misId_Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0gamma_sigma1Bu", uniqueId_, Neutral::pi0,
           Bachelor::pi, 5.3863e+01, 3.00e+00, Systematic::misIdGammaPiPdfBu,
@@ -142,12 +145,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::pi, 5.6386e+01,
           1.67e+00, Systematic::misRecBuPdf, Sign::positive)),
       // MisRec_sigmaLBu_(Params::Get().CreateFloating(
-      //     "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::pi, 5.6386e+01, 30, 70)),
+      //     "MisRec_sigmaLBu", uniqueId_, Neutral::pi0,
+      //     Bachelor::pi, 5.6386e+01, 30, 70)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
           "MisRec_sigmaRBu", uniqueId_, Neutral::pi0, Bachelor::pi, 5.7104e+01,
           7.42e-01, Systematic::misRecBuPdf, Sign::positive)),
       // MisRec_sigmaRBu_(Params::Get().CreateFloating(
-      //     "MisRec_sigmaRBu", uniqueId_, Neutral::pi0, Bachelor::pi, 5.7104e+01, 30, 70)),
+      //     "MisRec_sigmaRBu", uniqueId_, Neutral::pi0,
+      //     Bachelor::pi, 5.7104e+01, 30, 70)),
       pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
@@ -231,7 +236,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       PartRec_D0gamma_sigmaRBu_(nullptr),
       pdfBu_PartRec_D0gamma_(),
       pdfBu_PartRec_(new RooCruijff(
-          ("pdfBu_PartRec_" + ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+          ("pdfBu_PartRec_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).PartRec_D0pi0_meanBu(),
@@ -303,8 +309,29 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
           "mcEff_Bs2D0Kpi", uniqueId_, Neutral::pi0, Bachelor::pi, 1.0, 0.0,
-          Systematic::NA, Sign::positive)) {
+          Systematic::NA, Sign::positive)),
+      // -------------------- CP Observables -------------------- //
+      A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0gamma_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_(nullptr) {
+  // R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+  // R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
 
+  if (Configuration::Get().blindFit() == true) {
+    A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+                                     Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
+  } else {
+    A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
+                                     Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
+  }
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
 
@@ -323,20 +350,19 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "buDeltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
           mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEff"],
-          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEffErr"],
-          Systematic::NA, Sign::positive));
+          mapMisId_Bu2Dst0h_D0gamma["buDeltaCutEffErr"], Systematic::NA,
+          Sign::positive));
 
   deltaCutEffMisId_Bu2Dst0h_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "deltaCutEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
           mapMisId_Bu2Dst0h_D0gamma["deltaCutEff"],
-          mapMisId_Bu2Dst0h_D0gamma["deltaCutEffErr"],
-          Systematic::NA, Sign::positive));
+          mapMisId_Bu2Dst0h_D0gamma["deltaCutEffErr"], Systematic::NA,
+          Sign::positive));
   deltaCutEffMisId_Bu2Dst0h_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "deltaCutEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0,
           mapMisId_Bu2Dst0h_D0pi0["deltaCutEff"],
           mapMisId_Bu2Dst0h_D0pi0["deltaCutEffErr"],
           Systematic::deltaMisIdCutEffs, Sign::positive));
-
 }

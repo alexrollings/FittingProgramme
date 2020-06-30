@@ -169,12 +169,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.7157e+01,
           6.09e+00, Systematic::misRecBuPdf, Sign::positive)),
       // MisRec_sigmaLBu_(Params::Get().CreateFloating(
-      //     "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.7157e+01, 30, 70)),
+      //     "MisRec_sigmaLBu", uniqueId_, Neutral::pi0,
+      //     Bachelor::k, 5.7157e+01, 30, 70)),
       MisRec_sigmaRBu_(Params::Get().CreateFixed(
           "MisRec_sigmaRBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.5962e+01,
           4.14e+00, Systematic::misRecBuPdf, Sign::positive)),
       // MisRec_sigmaRBu_(Params::Get().CreateFloating(
-      //     "MisRec_sigmaRBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.5962e+01, 30, 70)),
+      //     "MisRec_sigmaRBu", uniqueId_, Neutral::pi0,
+      //     Bachelor::k, 5.5962e+01, 30, 70)),
       pdfBu_MisRec_(
           ("pdfBu_MisRec_" + ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
@@ -322,11 +324,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           7.7901e+01, 7.10e+00, Systematic::misIdPartRecKPdfBu,
           Sign::positive)),
       misId_PartRec_aLBu_(Params::Get().CreateFixed(
-          "misId_PartRec_aLBu", uniqueId_, Neutral::pi0, Bachelor::k, 1.8171e-09,
-          3.43e-02, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+          "misId_PartRec_aLBu", uniqueId_, Neutral::pi0, Bachelor::k,
+          1.8171e-09, 3.43e-02, Systematic::misIdPartRecKPdfBu,
+          Sign::positive)),
       misId_PartRec_aRBu_(Params::Get().CreateFixed(
-          "misId_PartRec_aRBu", uniqueId_, Neutral::pi0, Bachelor::k, 2.1857e-01,
-          3.11e-02, Systematic::misIdPartRecKPdfBu, Sign::positive)),
+          "misId_PartRec_aRBu", uniqueId_, Neutral::pi0, Bachelor::k,
+          2.1857e-01, 3.11e-02, Systematic::misIdPartRecKPdfBu,
+          Sign::positive)),
       pdfBu_misId_PartRec_(("pdfBu_misId_PartRec_" +
                             ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
                                .c_str(),
@@ -345,8 +349,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           "Bs2Dst0Kpi_thresholdDelta", uniqueId_, Neutral::pi0, Bachelor::k,
           1.3627e+02, 1e00, Systematic::NA, Sign::positive)),
       Bs2Dst0Kpi_aDelta_(Params::Get().CreateFixed(
-          "Bs2Dst0Kpi_aDelta", uniqueId_, Neutral::pi0, Bachelor::k, -7.8318e+00,
-          1e00, Systematic::NA, Sign::none)),
+          "Bs2Dst0Kpi_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+          -7.8318e+00, 1e00, Systematic::NA, Sign::none)),
       Bs2Dst0Kpi_bDelta_(Params::Get().CreateFixed(
           "Bs2Dst0Kpi_bDelta", uniqueId_, Neutral::pi0, Bachelor::k, 7.3621e-02,
           1e00, Systematic::NA, Sign::none)),
@@ -409,8 +413,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdfPeakDeltaGamma_Bs2Dst0Kpi_(),
       Bs2Dst0Kpi_fracPeakDeltaGamma_(nullptr),
       Bs2Dst0Kpi_mean1Bu_(Params::Get().CreateFixed(
-          "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::pi0, Bachelor::k, 5.2065e+03,
-          1e00, Systematic::NA, Sign::positive)),
+          "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::pi0, Bachelor::k,
+          5.2065e+03, 1e00, Systematic::NA, Sign::positive)),
       Bs2Dst0Kpi_sigma1Bu_(Params::Get().CreateFixed(
           "Bs2Dst0Kpi_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::k,
           3.1366e+01, 3.25e+00, Systematic::Bs2Dst0KpiBuPdf, Sign::positive)),
@@ -467,11 +471,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bs2D0Kpi_sigma1Bu_(Params::Get().CreateFixed(
           "Bs2D0Kpi_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::k, 8.2330e+01,
           1.51e+01, Systematic::Bs2D0KpiBuPdf, Sign::positive)),
-      pdfBu_Bs2D0Kpi_(new RooGaussian(
-          ("pdfBu_Bs2D0Kpi_" + ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", Configuration::Get().buDeltaMass(), *Bs2D0Kpi_mean1Bu_,
-          *Bs2D0Kpi_sigma1Bu_)),
+      pdfBu_Bs2D0Kpi_(
+          new RooGaussian(("pdfBu_Bs2D0Kpi_" +
+                           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+                              .c_str(),
+                          "", Configuration::Get().buDeltaMass(),
+                          *Bs2D0Kpi_mean1Bu_, *Bs2D0Kpi_sigma1Bu_)),
       Bs2D0Kpi_mean2Bu_(nullptr),
       Bs2D0Kpi_sigma2Bu_(nullptr),
       Bs2D0Kpi_a1Bu_(nullptr),
@@ -534,7 +539,28 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
           "mcEff_Bs2D0Kpi", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,
-          Systematic::NA, Sign::positive)) {
+          Systematic::NA, Sign::positive)),
+      // -------------------- CP Observables -------------------- //
+      A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0gamma_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_(nullptr) {
+  // R_ADS_Bu2Dst0h_D0gamma_(nullptr),
+  // R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+  if (Configuration::Get().blindFit() == true) {
+    A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+                                     Neutral::pi0, Bachelor::k, -0.151, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0pi0_" +
+                   ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
+  } else {
+    A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
+                                     Neutral::pi0, Bachelor::k, -0.151, -1, 1));
+  }
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
   std::map<std::string, double> mapMisId_Bu2D0h;
@@ -557,7 +583,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
-       NeutralVars<Neutral::pi0>::Get(uniqueId_).fracMisRec_Bu2Dst0h_D0pi0_WN() /
+       NeutralVars<Neutral::pi0>::Get(uniqueId_)
+               .fracMisRec_Bu2Dst0h_D0pi0_WN() /
            NeutralVars<Neutral::pi0>::Get(uniqueId_).fracMisRec()},
       {Mode::Bu2Dst0pi_D0gamma,
        NeutralVars<Neutral::pi0>::Get(uniqueId_).fracMisRec_Bu2Dst0h_D0gamma() /
