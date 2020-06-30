@@ -531,61 +531,49 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
         NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
             uniqueId)
             .R_piK_Bu2Dst0h_D0pi0()));
-    A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-        ("A_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-            .c_str(),
-        "(@0-@1)/(@0+@1)",
-        RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                             Charge::minus>::Get(uniqueId)
-                       .R_piK_Bu2Dst0h_D0pi0(),
-                   NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                             Charge::plus>::Get(uniqueId)
-                       .R_piK_Bu2Dst0h_D0pi0()))));
+    A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral,
+                                                                  Bachelor::pi>(
+        uniqueId, "A_ADS_Bu2Dst0h_D0pi0_",
+        NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::minus>::Get(
+            uniqueId)
+            .R_piK_Bu2Dst0h_D0pi0(),
+        NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
+            uniqueId)
+            .R_piK_Bu2Dst0h_D0pi0()));
     if (_neutral == Neutral::gamma) {
-      R_ADS_Bu2Dst0h_D0gamma_ =
-          std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-              ("R_ADS_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-                  .c_str(),
-              "(@0+@1)/2",
-              RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                                   Charge::minus>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma(),
-                         NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                                   Charge::plus>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma()))));
-      A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-          ("A_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-              .c_str(),
-          "(@0-@1)/(@0+@1)",
-          RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                               Charge::minus>::Get(uniqueId)
-                         .R_piK_Bu2Dst0h_D0gamma(),
-                     NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                               Charge::plus>::Get(uniqueId)
-                         .R_piK_Bu2Dst0h_D0gamma()))));
+      R_ADS_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+          RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::pi>(
+          uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+          NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::minus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma(),
+          NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma()));
+      A_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+          RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::pi>(
+          uniqueId, "A_ADS_Bu2Dst0h_D0gamma_",
+          NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::minus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma(),
+          NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma()));
     }
   } else {
-    R_ADS_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-        ("R_ADS_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-            .c_str(),
-        "@0",
-        RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                             Charge::total>::Get(uniqueId)
-                       .R_piK_Bu2Dst0h_D0pi0()))));
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<_neutral, Bachelor::pi,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
     if (_neutral == Neutral::gamma) {
       R_ADS_Bu2Dst0h_D0gamma_ =
-          std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-              ("R_ADS_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::pi,
-                                                   Charge::total>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma()))));
+          std::shared_ptr<RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::pi>(
+              uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+              NeutralBachelorChargeVars<_neutral, Bachelor::pi,
+                                        Charge::total>::Get(uniqueId)
+                  .R_piK_Bu2Dst0h_D0gamma()));
     }
   }
   N_tot_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
@@ -966,74 +954,58 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
-    R_ADS_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-        ("R_ADS_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-            .c_str(),
-        "(@0+@1)/2",
-        RooArgList(
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
             NeutralBachelorChargeVars<_neutral, Bachelor::k,
                                       Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
             NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
                 uniqueId)
-                .R_piK_Bu2Dst0h_D0pi0()))));
-    A_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-        ("A_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-            .c_str(),
-        "(@0-@1)/(@0+@1)",
-        RooArgList(
+                .R_piK_Bu2Dst0h_D0pi0()));
+    A_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
+            uniqueId, "A_ADS_Bu2Dst0h_D0pi0_",
             NeutralBachelorChargeVars<_neutral, Bachelor::k,
                                       Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
             NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
                 uniqueId)
-                .R_piK_Bu2Dst0h_D0pi0()))));
+                .R_piK_Bu2Dst0h_D0pi0()));
     if (_neutral == Neutral::gamma) {
-      R_ADS_Bu2Dst0h_D0gamma_ =
-          std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-              ("R_ADS_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-                  .c_str(),
-              "(@0+@1)/2",
-              RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                                   Charge::minus>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma(),
-                         NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                                   Charge::plus>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma()))));
-      A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-          ("A_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-              .c_str(),
-          "(@0-@1)/(@0+@1)",
-          RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                               Charge::minus>::Get(uniqueId)
-                         .R_piK_Bu2Dst0h_D0gamma(),
-                     NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                               Charge::plus>::Get(uniqueId)
-                         .R_piK_Bu2Dst0h_D0gamma()))));
+      R_ADS_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+          RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::k>(
+          uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+          NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::minus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma(),
+          NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma()));
+      A_Bu2Dst0h_D0gamma_ = std::shared_ptr<
+          RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
+          uniqueId, "A_ADS_Bu2Dst0h_D0gamma_",
+          NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::minus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma(),
+          NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
+              uniqueId)
+              .R_piK_Bu2Dst0h_D0gamma()));
     }
   } else {
-    R_ADS_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-        ("R_ADS_Bu2Dst0h_D0pi0_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-            .c_str(),
-        "@0",
-        RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                             Charge::total>::Get(uniqueId)
-                       .R_piK_Bu2Dst0h_D0pi0()))));
+    R_ADS_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
+            NeutralBachelorChargeVars<_neutral, Bachelor::k,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0()));
     if (_neutral == Neutral::gamma) {
       R_ADS_Bu2Dst0h_D0gamma_ =
-          std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
-              ("R_ADS_Bu2Dst0h_D0gamma_" +
-               ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
-                  .c_str(),
-              "@0",
-              RooArgList(NeutralBachelorChargeVars<_neutral, Bachelor::k,
-                                                   Charge::total>::Get(uniqueId)
-                             .R_piK_Bu2Dst0h_D0gamma()))));
+          std::shared_ptr<RooFormulaVar>(Make_R_ADS<_neutral, Bachelor::k>(
+              uniqueId, "R_ADS_Bu2Dst0h_D0gamma_",
+              NeutralBachelorChargeVars<_neutral, Bachelor::k,
+                                        Charge::total>::Get(uniqueId)
+                  .R_piK_Bu2Dst0h_D0gamma()));
     }
   }
   N_tot_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooFormulaVar>((new RooFormulaVar(
