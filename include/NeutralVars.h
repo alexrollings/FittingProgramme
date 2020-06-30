@@ -271,6 +271,12 @@ class NeutralVars {
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
+  // -------------------- CP Observables -------------------- //
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() { return *R_CP_Bu2Dst0h_D0gamma_Blind_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() { return *R_CP_Bu2Dst0h_D0pi0_Blind_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
+
  private:
   // Indicate if only used by one neutral
 
@@ -413,7 +419,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> PartRec_meanBuPartial_;
   std::shared_ptr<RooRealVar> PartRec_aLBuPartial_;
   std::shared_ptr<RooRealVar> PartRec_aRBuPartial_;
-
   // -------------------- Correct ID BOX EFFs -------------------- //
   std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_;
@@ -435,7 +440,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaPartialCutEffMisRec_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffBu2D0h_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffPartRec_;
-
   // -------------Expected yields and relative fractions w.r.t. sig -------------//
   double fracBu2Dst0h_D0gamma_;
   double initYieldFAVBu2Dst0h_D0gamma_;
@@ -454,6 +458,12 @@ class NeutralVars {
   double fracPartRec_Bu2Dst0hst_D0gamma_;
   double fracPartRec_;
   double initYieldFAVPartRec_;
+  // -------------------- CP Observables -------------------- //
+  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
+  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
+
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
