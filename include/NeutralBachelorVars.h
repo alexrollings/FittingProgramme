@@ -2,6 +2,7 @@
 #include "Configuration.h"
 #include "GlobalVars.h"
 #include "NeutralVars.h"
+#include "NeutralBachelorChargeVars.h"
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"
@@ -11,7 +12,23 @@
 #include "RooFormulaVar.h"
 #include "RooProdPdf.h"
 
-// Bachelor
+// Split by charge; only for pik
+template <Neutral neutral, Bachelor bachelor>
+RooFormulaVar *Make_R_ADS(int uniqueId, const char *name,
+                          RooAbsReal &R_piK_minus, RooAbsReal &R_piK_plus) {
+  return new RooFormulaVar(
+      (name + ComposeName(uniqueId, neutral, bachelor, Daughters::pik)).c_str(),
+      "", "(@0+@1)/2", RooArgSet(R_piK_minus, R_piK_plus));
+}
+
+// Summed over charge; only for pik
+template <Neutral neutral, Bachelor bachelor>
+RooFormulaVar *Make_R_ADS(int uniqueId, const char *name,
+                          RooAbsReal &R_piK_total) {
+  return new RooFormulaVar(
+      (name + ComposeName(uniqueId, neutral, bachelor, Daughters::pik)).c_str(),
+      "", "@0", RooArgSet(R_piK_total));
+}
 
 template <Neutral neutral, Bachelor bachelor>
 class NeutralBachelorVars {
