@@ -23,9 +23,9 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                    ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                       .c_str(),
                   "(@0/2)*(1-(@1-@2-@3-@4))",
-                  RooArgList(N_tot, A_RAW, Configuration::Get().A_FAV(),
-                             Configuration::Get().A_Kpi(),
-                             Configuration::Get().A_pi()));
+                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_FAV(),
+                             GlobalVars::Get(uniqueId).A_Kpi(),
+                             GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               // A_pi0 = A_gamma for production asym
@@ -39,8 +39,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -57,7 +57,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -70,8 +70,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -88,7 +88,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -101,8 +101,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -119,8 +119,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -133,7 +133,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -149,9 +149,9 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                    ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                       .c_str(),
                   "(@0/2)*(1+(@1+@2+@3+@4))",
-                  RooArgList(N_tot, A_RAW, Configuration::Get().A_FAV(),
-                             Configuration::Get().A_Kpi(),
-                             Configuration::Get().A_pi()));
+                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_FAV(),
+                             GlobalVars::Get(uniqueId).A_Kpi(),
+                             GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -164,8 +164,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -182,7 +182,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -195,8 +195,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -213,7 +213,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -226,8 +226,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;
@@ -244,8 +244,8 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_Kpi(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_Kpi(),
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
             case Bachelor::k:
               return new RooFormulaVar(
@@ -258,7 +258,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                       NeutralBachelorDaughtersVars<
                           neutral, Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                           .A_Bu2Dst0h_D0pi0(),
-                      Configuration::Get().A_pi()));
+                      GlobalVars::Get(uniqueId).A_pi()));
               break;
           }
           break;

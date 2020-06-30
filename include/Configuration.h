@@ -159,13 +159,6 @@ class Configuration {
   // gamma in different neutral cases: always need to delcare signal yield first
   double &initYieldFAVSignal() { return initYieldFAVSignal_; }
 
-  RooRealVar &pidEffPi() { return *pidEffPi_; }
-  RooRealVar &crossFeedRate() { return *crossFeedRate_; }
-  RooRealVar &A_FAV() { return *A_FAV_; }
-  RooRealVar &A_Kpi() { return *A_Kpi_; }
-  RooRealVar &A_pi() { return *A_pi_; }
-  RooRealVar &Delta_A_CP() { return *Delta_A_CP_; }
-
   std::string ReturnBoxString();
 
   std::string &gammaCutString() { return gammaCutString_; }
@@ -228,12 +221,6 @@ class Configuration {
   float deltaPartialLow_;
   float deltaPartialHigh_;
   double initYieldFAVSignal_;
-  std::shared_ptr<RooRealVar> pidEffPi_;
-  std::shared_ptr<RooRealVar> crossFeedRate_;
-  std::shared_ptr<RooRealVar> A_FAV_;
-  std::shared_ptr<RooRealVar> A_Kpi_;
-  std::shared_ptr<RooRealVar> A_pi_;
-  std::shared_ptr<RooRealVar> Delta_A_CP_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;

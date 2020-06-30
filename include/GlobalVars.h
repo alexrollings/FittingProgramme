@@ -1,12 +1,12 @@
 #pragma once
+#include <string>
 #include "Configuration.h"
 #include "Params.h"
-#include <string>
 
-// There is only a single instance of categories therefore we do not have to pass it around any more
+// There is only a single instance of categories therefore we do not have to
+// pass it around any more
 class GlobalVars {
-
-public:
+ public:
   GlobalVars(int uniqueId);
 
   using This_t = GlobalVars;
@@ -27,8 +27,14 @@ public:
     return *it->second;
   }
 
-  
   int uniqueId() { return uniqueId_; }
+
+  RooRealVar &pidEffPi() { return *pidEffPi_; }
+  RooRealVar &crossFeedRate() { return *crossFeedRate_; }
+  RooRealVar &A_FAV() { return *A_FAV_; }
+  RooRealVar &A_Kpi() { return *A_Kpi_; }
+  RooRealVar &A_pi() { return *A_pi_; }
+  RooRealVar &Delta_A_CP() { return *Delta_A_CP_; }
 
  private:
   GlobalVars(GlobalVars const &) = delete;
@@ -37,5 +43,11 @@ public:
   GlobalVars &operator=(GlobalVars &&) = delete;
 
   int uniqueId_;
-};
 
+  std::shared_ptr<RooRealVar> pidEffPi_;
+  std::shared_ptr<RooRealVar> crossFeedRate_;
+  std::shared_ptr<RooRealVar> A_FAV_;
+  std::shared_ptr<RooRealVar> A_Kpi_;
+  std::shared_ptr<RooRealVar> A_pi_;
+  std::shared_ptr<RooRealVar> Delta_A_CP_;
+};

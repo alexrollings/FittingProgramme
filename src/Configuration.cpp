@@ -40,22 +40,6 @@ Configuration::Configuration()
       deltaPartialLow_(60.0),
       deltaPartialHigh_(105.0),
       initYieldFAVSignal_(60000),
-      // pidEffPi_(Params::Get().CreateFixed(
-      //     "pidEffPi", 0.996, 3e-03, Systematic::pidEffPi, Sign::positive)),
-      pidEffPi_(Params::Get().CreateFloating("pidEffPi", 0.996, 0.5, 1.5)),
-      // Run 1 = 5.34 +/- 0.27 e-05, Run2 = 10.16 +/- 0.37 e-05
-      crossFeedRate_(
-          Params::Get().CreateFixed("crossFeedRate", 8.53e-05, 0.26e-05,
-                                    Systematic::crossFeedRate, Sign::positive)),
-      A_FAV_(Params::Get().CreateFixed("A_FAV", 0, 0.05, Systematic::A_FAV,
-                                       Sign::none)),
-      A_Kpi_(Params::Get().CreateFixed("A_Kpi", -1.13e-02, 1.5e-03,
-                                       Systematic::A_Kpi, Sign::none)),
-      A_pi_(Params::Get().CreateFixed("A_pi", -6.45e-04, 1.84e-04,
-                                      Systematic::A_pi, Sign::none)),
-      Delta_A_CP_(Params::Get().CreateFixed("Delta_A_CP", -1.54e-03, 2.9e-04,
-                                            Systematic::Delta_A_CP,
-                                            Sign::none)),
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),

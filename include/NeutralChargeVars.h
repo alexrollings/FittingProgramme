@@ -33,7 +33,7 @@ class NeutralChargeVars {
 
   RooRealVar &GetPidEff(Bachelor bachelor) {
     if (bachelor == Bachelor::pi) {
-      return Configuration::Get().pidEffPi();
+      return GlobalVars::Get(uniqueId_).pidEffPi();
     } else {
       return *pidEffK_;
     }

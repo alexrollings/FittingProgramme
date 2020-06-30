@@ -1,11 +1,11 @@
 #pragma once
 #include "BachelorDaughtersVars.h"
 #include "Configuration.h"
-#include "Params.h"
 #include "NeutralBachelorChargeVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
+#include "Params.h"
 #include "RooUnblindUniform.h"
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
@@ -45,7 +45,8 @@ RooFormulaVar *Make_N_tot_FAVasSUP(int uniqueId, const char *name,
                                    RooAbsReal &N_tot_FAV) {
   return new RooFormulaVar(
       (name + ComposeName(uniqueId, neutral, bachelor, Daughters::pik)).c_str(),
-      "", "@0*@1", RooArgSet(N_tot_FAV, Configuration::Get().crossFeedRate()));
+      "", "@0*@1",
+      RooArgSet(N_tot_FAV, GlobalVars::Get(uniqueId).crossFeedRate()));
 }
 
 // CP yield for Bs background = πk yield * BR (D->CP/D->kπ)
@@ -87,12 +88,14 @@ RooFormulaVar *Make_A_D2CP(int uniqueId, const char *name, RooAbsReal &A_CP) {
     case Daughters::kk:
       return new RooFormulaVar(
           (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
-          "", "@0+0.5*@1", RooArgList(A_CP, Configuration::Get().Delta_A_CP()));
+          "", "@0+0.5*@1",
+          RooArgList(A_CP, GlobalVars::Get(uniqueId).Delta_A_CP()));
       break;
     case Daughters::pipi:
       return new RooFormulaVar(
           (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
-          "", "@0-0.5*@1", RooArgList(A_CP, Configuration::Get().Delta_A_CP()));
+          "", "@0-0.5*@1",
+          RooArgList(A_CP, GlobalVars::Get(uniqueId).Delta_A_CP()));
       break;
   }
 }

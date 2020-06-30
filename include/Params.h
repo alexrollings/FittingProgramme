@@ -2,16 +2,17 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
 
-#include "TRandom3.h"
 #include "RooRandom.h"
+#include "TRandom3.h"
 
 // Add dummy parameter: Params::Get().Empty();
 // RooRealVar var();
-// Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in fit)
+// Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in
+// fit)
 enum class Sign { positive, negative, none };
 
 class FixedParameter {
@@ -86,7 +87,8 @@ class FixedParameter {
 
 class Params {
  private:
-  using Key = std::tuple<std::string, std::string, std::string, std::string, std::string>;
+  using Key = std::tuple<std::string, std::string, std::string, std::string,
+                         std::string>;
 
  public:
   using ValueFixed = FixedParameter;
@@ -97,18 +99,22 @@ class Params {
     return params;
   }
 
-  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, double mean,
-                      double std, Systematic systematic, Sign sign) {
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          double mean, double std,
+                                          Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, "", "", "", "");
-    auto var_name = name;
+    auto key = std::make_tuple(name, std::to_string(uniqueId), "", "", "");
+    auto var_name = name + "_" + std::to_string(uniqueId);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
-  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId, Neutral neutral, double mean,
-                      double std, Systematic systematic, Sign sign) {
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, double mean,
+                                          double std, Systematic systematic,
+                                          Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral), "", "");
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
@@ -118,8 +124,9 @@ class Params {
                                           double mean, double std,
                                           Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(bachelor), "");
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
@@ -150,14 +157,14 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
-                                             double start, double min_value,
+                                             int uniqueId, double start,
+                                             double min_value,
                                              double max_value) {
-    auto key = std::make_tuple(name, "", "", "", "");
-    auto var_name = name;
+    auto key = std::make_tuple(name, std::to_string(uniqueId), "", "", "");
+    auto var_name = name + "_" + std::to_string(uniqueId);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
-
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              int uniqueId, Neutral neutral,
@@ -170,14 +177,14 @@ class Params {
                                       max_value);
   }
 
-
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              int uniqueId, Neutral neutral,
                                              Bachelor bachelor, double start,
                                              double min_value,
                                              double max_value) {
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(bachelor), "");
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -188,8 +195,9 @@ class Params {
                                              Daughters daughters, double start,
                                              double min_value,
                                              double max_value) {
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), EnumToString(daughters), "");
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(daughters), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, daughters);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -227,9 +235,10 @@ class Params {
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
         if (t.second.systematic() == *i) {
-          std::cout << " \n\n -------------------------------------------- \n\n"
-                    << EnumToString(*i) << ": " << t.second.name() 
-                    << " \n\n -------------------------------------------- \n\n";
+          std::cout
+              << " \n\n -------------------------------------------- \n\n"
+              << EnumToString(*i) << ": " << t.second.name()
+              << " \n\n -------------------------------------------- \n\n";
           t.second.Randomise(random);
           break;
         }
@@ -237,7 +246,8 @@ class Params {
     }
   }
 
-  void WriteFixedParametersToFile(std::string const &path, std::vector<Systematic> &systematicVec) {
+  void WriteFixedParametersToFile(std::string const &path,
+                                  std::vector<Systematic> &systematicVec) {
     std::ofstream of(path);
     for (auto &t : fixed_parameters_) {
       for (auto s : systematicVec) {
@@ -257,9 +267,9 @@ class Params {
   }
 
  private:
-  std::shared_ptr<RooRealVar> ConstructFixedParameter(Key const &key, std::string const &var_name,
-                                  double mean, double std,
-                                  Systematic systematic, Sign sign) {
+  std::shared_ptr<RooRealVar> ConstructFixedParameter(
+      Key const &key, std::string const &var_name, double mean, double std,
+      Systematic systematic, Sign sign) {
     return fixed_parameters_
         .emplace(std::piecewise_construct, key,
                  // Calling FixedParam constructor (takes all arguments and
@@ -269,18 +279,18 @@ class Params {
         .first->second.roo_variable();
   }
 
-  std::shared_ptr<RooRealVar> ConstructFloatingParameter(Key const &key,
-                                         std::string const &var_name,
-                                         double start, double min_value,
-                                         double max_value) {
+  std::shared_ptr<RooRealVar> ConstructFloatingParameter(
+      Key const &key, std::string const &var_name, double start,
+      double min_value, double max_value) {
     std::string var_title = "";
     return floating_parameters_
-        .emplace(key,
-                 // Calling RooRealVar constructor (takes all arguments and
-                 // forwards them to the constructor). Necessary so as not to
-                 // copy any RooFit objects !!!
-                 std::make_shared<ValueFloating>(var_name.c_str(), var_title.c_str(),
-                                       start, min_value, max_value))
+        .emplace(
+            key,
+            // Calling RooRealVar constructor (takes all arguments and
+            // forwards them to the constructor). Necessary so as not to
+            // copy any RooFit objects !!!
+            std::make_shared<ValueFloating>(var_name.c_str(), var_title.c_str(),
+                                            start, min_value, max_value))
         .first->second;
   }
 
