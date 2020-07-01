@@ -873,4 +873,36 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
       break;
     }
   }
+  if (_neutral == Neutral::gamma) {
+    N_misId_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+            uniqueId_, "N_misId_Delta_Bu2Dst0h_D0gamma_",
+            *N_misId_Bu2Dst0h_D0gamma_,
+            NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                .buDeltaCutEffMisId_Bu2Dst0h_D0gamma()));
+  }
+  N_misId_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
+      Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+          uniqueId_, "N_misId_Delta_Bu2Dst0h_D0pi0_",
+          *N_misId_Bu2Dst0h_D0pi0_,
+          NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+              .buDeltaCutEffMisId_Bu2Dst0h_D0pi0()));
+  N_misId_Delta_MisRec_ = std::unique_ptr<RooFormulaVar>(
+      Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+          uniqueId_, "N_misId_Delta_MisRec_",
+          *N_misId_MisRec_,
+          NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+              .buDeltaCutEffMisId_MisRec()));
+  N_misId_Delta_Bu2D0h_ = std::unique_ptr<RooFormulaVar>(
+      Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+          uniqueId_, "N_misId_Delta_Bu2D0h_",
+          *N_misId_Bu2D0h_,
+          NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+              .buDeltaCutEffMisId_Bu2D0h()));
+  N_misId_Delta_PartRec_ = std::unique_ptr<RooFormulaVar>(
+      Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+          uniqueId_, "N_misId_Delta_PartRec_",
+          *N_misId_PartRec_,
+          NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+              .buDeltaCutEffPartId_PartRec()));
 }
