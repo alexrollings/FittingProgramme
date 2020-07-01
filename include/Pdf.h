@@ -629,6 +629,33 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
       "", PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
 }
 
+template <Neutral neutral, Bachelor bachelor, Daughters daughters,
+          Charge charge>
+RooFormulaVar *Make_N_misId(int uniqueId, const char *nameStr,
+                             RooAbsReal &N_split) {
+  switch(bachelor) {
+    case Bachelor::pi:
+      return new RooFormulaVar(
+          (nameStr +
+           ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "@0*(1-@1)",
+          RooArgList(N_split, *GlobalVars::Get(uniqueId).pidEffMap()[MakePidKey(
+                                  Bachelor::k, Charge::total)]));
+      break;
+    case Bachelor::k:
+      return new RooFormulaVar(
+          (nameStr +
+           ComposeName(uniqueId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "@0*(1-@1)",
+          RooArgList(N_split, *GlobalVars::Get(uniqueId).pidEffMap()[MakePidKey(
+                                  Bachelor::pi, Charge::total)]));
+      break;
+  }
+}
+
+
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
