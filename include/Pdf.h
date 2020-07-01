@@ -150,6 +150,11 @@ class Pdf : public PdfBase {
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
 
+  virtual void AssignMisIdYields() {
+    Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .AssignMisIdYields();
+  }
+
   virtual RooAbsReal &N_trueId_Bu_Bu2Dst0h_D0gamma() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_trueId_Bu_Bu2Dst0h_D0gamma();
