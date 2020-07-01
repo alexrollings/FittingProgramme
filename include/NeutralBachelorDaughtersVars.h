@@ -1171,6 +1171,37 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       A_Bs2D0Kpi_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                                Daughters::pik>::Get(uniqueId)
                       .A_Bs2D0Kpi_GetPointer()),
+      a_Bu2Dst0h_D0gamma_(nullptr),
+      a_Bu2Dst0h_D0pi0_(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_Bu2Dst0h_D0pi0_)),
+      a_MisRec_(MakeLittleAsym(
+          ("a_MisRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_MisRec_)),
+      a_Bu2D0h_(MakeLittleAsym(
+          ("a_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_Bu2D0h_)),
+      a_PartRec_(MakeLittleAsym(
+          ("a_PartRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_PartRec_)),
+      a_Bs2Dst0Kpi_(MakeLittleAsym(
+          ("a_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_Bs2Dst0Kpi_)),
+      a_Bs2D0Kpi_(MakeLittleAsym(
+          ("a_Bs2D0Kpi_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_Bs2D0Kpi_)),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
@@ -1234,6 +1265,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             uniqueId, "A_Bu2Dst0h_D0gamma_",
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .A_CP_Bu2Dst0h_D0gamma()));
+    a_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+        ("a_Bu2Dst0h_D0gamma_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+            .c_str(),
+        *A_Bu2Dst0h_D0gamma_));
     N_tot_PartRec_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "N_tot_PartRec", uniqueId, _neutral, Bachelor::k, Daughters::kk,
         NeutralVars<_neutral>::Get(uniqueId).initYieldFAVPartRec() *
