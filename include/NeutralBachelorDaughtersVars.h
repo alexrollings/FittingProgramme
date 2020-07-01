@@ -661,6 +661,29 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
                                               -5, 5)),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
+      a_Bu2Dst0h_D0gamma_(nullptr),
+      a_Bu2Dst0h_D0pi0_(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          *A_Bu2Dst0h_D0pi0_)),
+      a_MisRec_(MakeLittleAsym(
+          ("a_MisRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          *A_MisRec_)),
+      a_Bu2D0h_(MakeLittleAsym(
+          ("a_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          *A_Bu2D0h_)),
+      a_PartRec_(MakeLittleAsym(
+          ("a_PartRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          *A_PartRec_)),
+      a_Bs2Dst0Kpi_(nullptr),
+      a_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
           "N_tot_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi,
@@ -710,6 +733,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             uniqueId, "A_Bu2Dst0h_D0gamma_",
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .A_CP_Bu2Dst0h_D0gamma()));
+    a_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+        ("a_Bu2Dst0h_D0gamma_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+            .c_str(),
+        *A_Bu2Dst0h_D0gamma_));
   }
 }
 
