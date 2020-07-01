@@ -496,7 +496,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
               BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
   if (_neutral == Neutral::gamma) {
@@ -584,7 +584,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
               BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
@@ -718,7 +718,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
               BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(uniqueId)
                   .kBR()
                   .getVal(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
   if (_neutral == Neutral::gamma) {
@@ -821,7 +821,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                   uniqueId)
                   .kBR()
                   .getVal(),
-          -1000000, 1000000)),
+          0, 1000000)),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
   if (_neutral == Neutral::gamma) {
@@ -953,7 +953,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     A_PartRec_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_PartRec", uniqueId, _neutral,
@@ -1120,7 +1120,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     N_tot_PartRec_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::pik>(
@@ -1279,7 +1279,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     N_tot_PartRec_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kk>(
@@ -1424,7 +1424,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
             BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(uniqueId)
                 .kBR()
                 .getVal(),
-        -1000000, 1000000));
+        0, 1000000));
   } else {
     N_tot_PartRec_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::pipi>(
