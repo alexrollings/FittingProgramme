@@ -533,6 +533,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                                               -5, 5)),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
+      a_Bu2Dst0h_D0gamma_(nullptr),
+      a_Bu2Dst0h_D0pi0_(nullptr),
+      a_MisRec_(MakeLittleAsym(
+          ("a_MisRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_MisRec_)),
+      a_Bu2D0h_(MakeLittleAsym(
+          ("a_Bu2D0h_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bu2D0h_)),
+      a_PartRec_(MakeLittleAsym(
+          ("a_PartRec_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_PartRec_)),
+      a_Bs2Dst0Kpi_(nullptr),
+      a_Bs2D0Kpi_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
@@ -575,6 +594,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
         NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
             uniqueId)
             .R_piK_Bu2Dst0h_D0pi0()));
+    a_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+        ("a_Bu2Dst0h_D0pi0_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+            .c_str(),
+        *A_Bu2Dst0h_D0pi0_));
     if (_neutral == Neutral::gamma) {
       A_Bu2Dst0h_D0gamma_ = std::shared_ptr<
           RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::pi>(
@@ -585,6 +609,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
           NeutralBachelorChargeVars<_neutral, Bachelor::pi, Charge::plus>::Get(
               uniqueId)
               .R_piK_Bu2Dst0h_D0gamma()));
+      a_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bu2Dst0h_D0gamma_));
     }
   }
   N_tot_Bu2Dst0h_D0pi0_ =
