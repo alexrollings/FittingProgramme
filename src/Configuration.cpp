@@ -14,9 +14,8 @@ RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                                paramToBlind);
 }
 
-RooFormulaVar MakeLittleAsym(const char *name,
-                             std::shared_ptr<RooRealVar> &bigAsym) {
-  return RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(*bigAsym));
+RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
+  return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
 }
 
 Configuration::Configuration()

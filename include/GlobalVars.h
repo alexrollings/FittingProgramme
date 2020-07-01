@@ -38,9 +38,9 @@ class GlobalVars {
   RooRealVar &A_Prod() { return *A_Prod_; }
   RooRealVar &A_Kpi() { return *A_Kpi_; }
   RooRealVar &A_pi() { return *A_pi_; }
-  RooFormulaVar &a_Prod() { return a_Prod_; }
-  RooFormulaVar &a_Kpi() { return a_Kpi_; }
-  RooFormulaVar &a_pi() { return a_pi_; }
+  RooFormulaVar &a_Prod() { return *a_Prod_; }
+  RooFormulaVar &a_Kpi() { return *a_Kpi_; }
+  RooFormulaVar &a_pi() { return *a_pi_; }
 
  private:
   GlobalVars(GlobalVars const &) = delete;
@@ -56,9 +56,9 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> A_Prod_;
   std::shared_ptr<RooRealVar> A_Kpi_;
   std::shared_ptr<RooRealVar> A_pi_;
-  RooFormulaVar a_Prod_;
-  RooFormulaVar a_Kpi_;
-  RooFormulaVar a_pi_;
+  std::unique_ptr<RooFormulaVar> a_Prod_;
+  std::unique_ptr<RooFormulaVar> a_Kpi_;
+  std::unique_ptr<RooFormulaVar> a_pi_;
 };
 
 std::string MakePidKey(Bachelor bachelor, Charge charge);

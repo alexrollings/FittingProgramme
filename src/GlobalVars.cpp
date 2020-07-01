@@ -39,11 +39,11 @@ GlobalVars::GlobalVars(int uniqueId)
       A_pi_(Params::Get().CreateFixed("A_pi", uniqueId_, -6.45e-04, 1.84e-04,
                                       Systematic::A_pi, Sign::none)),
       a_Prod_(MakeLittleAsym(("a_Prod_" + std::to_string(uniqueId_)).c_str(),
-                             A_Prod_)),
+                             *A_Prod_)),
       a_Kpi_(MakeLittleAsym(("a_Kpi_" + std::to_string(uniqueId_)).c_str(),
-                            A_Kpi_)),
+                            *A_Kpi_)),
       a_pi_(
-          MakeLittleAsym(("a_pi_" + std::to_string(uniqueId_)).c_str(), A_pi_)),
+          MakeLittleAsym(("a_pi_" + std::to_string(uniqueId_)).c_str(), *A_pi_)),
       pidEffMap_() {
   std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   for (auto &c : chargeVec) {

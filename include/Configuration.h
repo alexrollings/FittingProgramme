@@ -256,8 +256,8 @@ std::string EnumToLabel(Neutral);
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind);
-RooFormulaVar MakeLittleAsym(const char *uniqueName,
-                             std::shared_ptr<RooRealVar> &bigAsym);
+RooFormulaVar *MakeLittleAsym(const char *uniqueName,
+                             RooAbsReal &bigAsym);
 
 std::string ComposeFilename(Year year, Polarity polarity,
                             Bachelor bachelor, Neutral neutral,
