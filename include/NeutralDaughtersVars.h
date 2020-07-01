@@ -13,19 +13,7 @@ class NeutralDaughtersVars {
 
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
-  static This_t &Get(int uniqueId) {
-    static std::map<int, std::shared_ptr<This_t>> singletons;
-    // An iterator to a map is a std::pair<key, value>, so we need to call
-    // i->second to get the value
-    auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
-    if (it == singletons.end()) {
-      // If it doesn't, create it as a new shared_ptr by calling emplace, which
-      // will forward the pointer to the constructor of std::shared_ptr
-      it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId))
-               .first;
-    }
-    return *it->second;
-  }
+  static This_t &Get(int uniqueId);
 
   int uniqueId() { return uniqueId_; }
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0gamma() {

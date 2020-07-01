@@ -46,3 +46,72 @@ void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
     simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
   }
 }
+
+template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
+          Charge _charge>
+Pdf<_neutral, _bachelor, _daughters, _charge>
+    &Pdf<_neutral, _bachelor, _daughters, _charge>::Get(int uniqueId) {
+  static std::map<int, std::shared_ptr<This_t>> singletons;
+  // An iterator to a map is a std::pair<key, value>, so we need to call
+  // i->second to get the value
+  auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
+  if (it == singletons.end()) {
+    // If it doesn't, create it as a new unique_ptr by calling emplace, which
+    // will forward the pointer to the constructor of std::unique_ptr
+    it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId))
+             .first;
+  }
+  return *it->second;
+}
+
+// Instantiations
+void InstantiatePdfs() {
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::kk, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pipi, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::pi, Daughters::pik, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::kk, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pipi, Charge::total>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, Charge::plus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, Charge::minus>::Get(-1);
+  Pdf<Neutral::pi0, Bachelor::k, Daughters::pik, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::total>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::minus>::Get(-1);
+  Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::total>::Get(-1);
+}

@@ -57,3 +57,30 @@ BachelorDaughtersVars<Bachelor::k, Daughters::pik>::BachelorDaughtersVars(
     : kBR_(
           ("kBR_" + ComposeName(uniqueId, Bachelor::k, Daughters::pik)).c_str(),
           "", 0.0015) {}
+
+template <Bachelor bachelor, Daughters daughters>
+BachelorDaughtersVars<bachelor, daughters>
+    &BachelorDaughtersVars<bachelor, daughters>::Get(int uniqueId_) {
+  static std::map<int, std::shared_ptr<This_t>> singletons;
+  // An iterator to a map is a std::pair<key, value>, so we need to call
+  // i->second to get the value
+  auto it = singletons.find(uniqueId_);  // Check if uniqueId_ already exists
+  if (it == singletons.end()) {
+    // If it doesn't, create it as a new unique_ptr by calling emplace, which
+    // will forward the pointer to the constructor of std::unique_ptr
+    it = singletons.emplace(uniqueId_, std::make_shared<This_t>(uniqueId_))
+             .first;
+  }
+  return *it->second;
+}
+
+void InstantiateBachelorDaughtersVars() {
+  BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(-1);
+  BachelorDaughtersVars<Bachelor::pi, Daughters::kk>::Get(-1);
+  BachelorDaughtersVars<Bachelor::pi, Daughters::pipi>::Get(-1);
+  BachelorDaughtersVars<Bachelor::pi, Daughters::pik>::Get(-1);
+  BachelorDaughtersVars<Bachelor::k, Daughters::kpi>::Get(-1);
+  BachelorDaughtersVars<Bachelor::k, Daughters::kk>::Get(-1);
+  BachelorDaughtersVars<Bachelor::k, Daughters::pipi>::Get(-1);
+  BachelorDaughtersVars<Bachelor::k, Daughters::pik>::Get(-1);
+}

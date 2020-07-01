@@ -175,3 +175,29 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersVars(
       R_Dst0KDst0pi_PartRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_PartRec", uniqueId_, Neutral::gamma, Daughters::pik,
           0.02, -2, 2)) {}
+
+template <Neutral neutral, Daughters daughters>
+NeutralDaughtersVars<neutral, daughters>
+    &NeutralDaughtersVars<neutral, daughters>::Get(int uniqueId) {
+  static std::map<int, std::shared_ptr<This_t>> singletons;
+  // An iterator to a map is a std::pair<key, value>, so we need to call
+  // i->second to get the value
+  auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
+  if (it == singletons.end()) {
+    // If it doesn't, create it as a new shared_ptr by calling emplace, which
+    // will forward the pointer to the constructor of std::shared_ptr
+    it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId)).first;
+  }
+  return *it->second;
+}
+
+void InstantiateNeutralDaughtersVars() {
+  NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(-1);
+  NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(-1);
+  NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::Get(-1);
+  NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::Get(-1);
+  NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(-1);
+  NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(-1);
+  NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::Get(-1);
+  NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::Get(-1);
+}

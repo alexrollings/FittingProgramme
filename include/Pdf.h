@@ -111,19 +111,7 @@ class Pdf : public PdfBase {
  public:
   // Get() method of PDF now doesn't always return the same PDF, but the same
   // PDF for the given ID
-  static This_t &Get(int uniqueId) {
-    static std::map<int, std::shared_ptr<This_t>> singletons;
-    // An iterator to a map is a std::pair<key, value>, so we need to call
-    // i->second to get the value
-    auto it = singletons.find(uniqueId);  // Check if uniqueId already exists
-    if (it == singletons.end()) {
-      // If it doesn't, create it as a new unique_ptr by calling emplace, which
-      // will forward the pointer to the constructor of std::unique_ptr
-      it = singletons.emplace(uniqueId, std::make_shared<This_t>(uniqueId))
-               .first;
-    }
-    return *it->second;
-  }
+  static This_t &Get(int uniqueId);
 
   void CreateBuAddPdf();
   void CreateBuPartialAddPdf();
@@ -647,4 +635,3 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
           .c_str(),
       "", PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
 }
-
