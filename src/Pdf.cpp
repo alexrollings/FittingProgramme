@@ -30,7 +30,26 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
       functionsDelta_(
           ("functionsDelta_" +
            ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
-              .c_str()) {
+              .c_str()),
+      N_misId_Bu2Dst0h_D0gamma_(nullptr),
+      N_misId_Bu2Dst0h_D0pi0_(nullptr),
+      N_misId_MisRec_(nullptr),
+      N_misId_Bu2D0h_(nullptr),
+      N_misId_PartRec_(nullptr),
+      N_misId_Delta_Bu2Dst0h_D0gamma_(nullptr),
+      N_misId_Delta_Bu2Dst0h_D0pi0_(nullptr),
+      N_misId_Delta_MisRec_(nullptr),
+      N_misId_Delta_Bu2D0h_(nullptr),
+      N_misId_Delta_PartRec_(nullptr),
+      N_misId_Bu_Bu2Dst0h_D0gamma_(nullptr),
+      N_misId_Bu_Bu2Dst0h_D0pi0_(nullptr),
+      N_misId_Bu_MisRec_(nullptr),
+      N_misId_Bu_Bu2D0h_(nullptr),
+      N_misId_Bu_PartRec_(nullptr),
+      N_misId_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
+      N_misId_BuPartial_MisRec_(nullptr),
+      N_misId_BuPartial_Bu2D0h_(nullptr),
+      N_misId_BuPartial_PartRec_(nullptr) {
   // std::cout << "Constructing PDF " << EnumToString(neutral_) << " "
   //           << EnumToString(bachelor_) << " " << EnumToString(daughters_)
   //           << std::endl;
