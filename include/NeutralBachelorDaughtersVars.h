@@ -367,30 +367,33 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   // Don't want to be able to access the blinded results
-  RooAbsReal &A_Bu2Dst0h_D0gamma() { return *impl_.A_Bu2Dst0h_D0gamma_; }
-  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0gamma_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0gamma_;
-  }
-  RooAbsReal &A_Bu2Dst0h_D0pi0() { return *impl_.A_Bu2Dst0h_D0pi0_; }
-  std::shared_ptr<RooAbsReal> A_Bu2Dst0h_D0pi0_GetPointer() {
-    return impl_.A_Bu2Dst0h_D0pi0_;
-  }
-  RooRealVar &A_MisRec() { return *impl_.A_MisRec_; }
   std::shared_ptr<RooRealVar> A_MisRec_GetPointer() { return impl_.A_MisRec_; }
-  RooRealVar &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
   std::shared_ptr<RooRealVar> A_Bu2D0h_GetPointer() { return impl_.A_Bu2D0h_; }
-  RooRealVar &A_PartRec() { return *impl_.A_PartRec_; }
   std::shared_ptr<RooRealVar> A_PartRec_GetPointer() {
     return impl_.A_PartRec_;
   }
-  RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_GetPointer() {
     return impl_.A_Bs2Dst0Kpi_;
   }
-  RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_GetPointer() {
     return impl_.A_Bs2D0Kpi_;
   }
+
+  RooAbsReal &A_Bu2Dst0h_D0gamma() { return *impl_.A_Bu2Dst0h_D0gamma_; }
+  RooAbsReal &A_Bu2Dst0h_D0pi0() { return *impl_.A_Bu2Dst0h_D0pi0_; }
+  RooRealVar &A_MisRec() { return *impl_.A_MisRec_; }
+  RooRealVar &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
+  RooRealVar &A_PartRec() { return *impl_.A_PartRec_; }
+  RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
+  RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
+
+  RooFormulaVar &a_Bu2Dst0h_D0gamma() { return *impl_.a_Bu2Dst0h_D0gamma_; }
+  RooFormulaVar &a_Bu2Dst0h_D0pi0() { return *impl_.a_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &a_MisRec() { return *impl_.a_MisRec_; }
+  RooFormulaVar &a_Bu2D0h() { return *impl_.a_Bu2D0h_; }
+  RooFormulaVar &a_PartRec() { return *impl_.a_PartRec_; }
+  RooFormulaVar &a_Bs2Dst0Kpi() { return *impl_.a_Bs2Dst0Kpi_; }
+  RooFormulaVar &a_Bs2D0Kpi() { return *impl_.a_Bs2D0Kpi_; }
 
   RooAbsReal &N_tot_Bu2Dst0h_D0gamma() {
     return *impl_.N_tot_Bu2Dst0h_D0gamma_;
