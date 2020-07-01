@@ -67,11 +67,11 @@ class PdfBase {
     return *N_BuPartial_misId_PartRec_;
   }
 
-  virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const = 0;
-  virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const = 0;
-  virtual RooAbsReal &N_MisRec() const = 0;
-  virtual RooAbsReal &N_Bu2D0h() const = 0;
-  virtual RooAbsReal &N_PartRec() const = 0;
+  virtual RooAbsReal &N_split_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_split_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsReal &N_split_MisRec() const = 0;
+  virtual RooAbsReal &N_split_Bu2D0h() const = 0;
+  virtual RooAbsReal &N_split_PartRec() const = 0;
 
   virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
@@ -218,25 +218,25 @@ class Pdf : public PdfBase {
   // It shouldn't be private, it sould be protected then it can be accessed by
   // inheriting classes
 
-  virtual RooAbsReal &N_Bu2Dst0h_D0gamma() const {
+  virtual RooAbsReal &N_split_Bu2Dst0h_D0gamma() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_Bu2Dst0h_D0gamma();
+        .N_split_Bu2Dst0h_D0gamma();
   }
-  virtual RooAbsReal &N_Bu2Dst0h_D0pi0() const {
+  virtual RooAbsReal &N_split_Bu2Dst0h_D0pi0() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_Bu2Dst0h_D0pi0();
+        .N_split_Bu2Dst0h_D0pi0();
   }
-  virtual RooAbsReal &N_MisRec() const {
+  virtual RooAbsReal &N_split_MisRec() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_MisRec();
+        .N_split_MisRec();
   }
-  virtual RooAbsReal &N_Bu2D0h() const {
+  virtual RooAbsReal &N_split_Bu2D0h() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_Bu2D0h();
+        .N_split_Bu2D0h();
   }
-  virtual RooAbsReal &N_PartRec() const {
+  virtual RooAbsReal &N_split_PartRec() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_PartRec();
+        .N_split_PartRec();
   }
 
   virtual RooAbsReal &N_Bu_Bu2Dst0h_D0gamma() const {
@@ -768,7 +768,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 "@0/@1*(1-@1)",
                 RooArgList(Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                                PdfBase::uniqueId_)
-                               .N_Bu2Dst0h_D0gamma(),
+                               .N_split_Bu2Dst0h_D0gamma(),
                            *GlobalVars::Get(PdfBase::uniqueId_)
                                 .pidEffMap()[MakePidKey(Bachelor::k,
                                                         Charge::total)])));
@@ -783,7 +783,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               RooArgList(
                   Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                       PdfBase::uniqueId_)
-                      .N_Bu2Dst0h_D0pi0(),
+                      .N_split_Bu2Dst0h_D0pi0(),
                   *GlobalVars::Get(PdfBase::uniqueId_)
                        .pidEffMap()[MakePidKey(Bachelor::k, Charge::total)])));
       if (Configuration::Get().fit1D() == true &&
@@ -799,7 +799,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   RooArgList(
                       Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                           PdfBase::uniqueId_)
-                          .N_Bu2Dst0h_D0gamma(),
+                          .N_split_Bu2Dst0h_D0gamma(),
                       *GlobalVars::Get(PdfBase::uniqueId_)
                            .pidEffMap()[MakePidKey(Bachelor::k,
                                                    Charge::total)])));
@@ -813,7 +813,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 "@0/@1*(1-@1)",
                 RooArgList(Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                                PdfBase::uniqueId_)
-                               .N_Bu2Dst0h_D0pi0(),
+                               .N_split_Bu2Dst0h_D0pi0(),
                            *GlobalVars::Get(PdfBase::uniqueId_)
                                 .pidEffMap()[MakePidKey(Bachelor::k,
                                                         Charge::total)])));
@@ -830,7 +830,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     RooArgList(
                         Pdf<_neutral, Bachelor::k, _daughters, _charge>::Get(
                             PdfBase::uniqueId_)
-                            .N_Bu2Dst0h_D0gamma(),
+                            .N_split_Bu2Dst0h_D0gamma(),
                         *GlobalVars::Get(PdfBase::uniqueId_)
                              .pidEffMap()[MakePidKey(Bachelor::k,
                                                      Charge::total)])));
@@ -888,7 +888,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 RooArgList(
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
-                        .N_Bu2Dst0h_D0gamma(),
+                        .N_split_Bu2Dst0h_D0gamma(),
                     *GlobalVars::Get(PdfBase::uniqueId_)
                          .pidEffMap()[MakePidKey(Bachelor::pi,
                                                  Charge::total)])));
@@ -903,7 +903,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               RooArgList(
                   Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                       PdfBase::uniqueId_)
-                      .N_Bu2Dst0h_D0pi0(),
+                      .N_split_Bu2Dst0h_D0pi0(),
                   *GlobalVars::Get(PdfBase::uniqueId_)
                        .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
       PdfBase::N_misId_MisRec_ =
@@ -915,7 +915,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               RooArgList(
                   Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                       PdfBase::uniqueId_)
-                      .N_MisRec(),
+                      .N_split_MisRec(),
                   *GlobalVars::Get(PdfBase::uniqueId_)
                        .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
       PdfBase::N_misId_Bu2D0h_ =
@@ -927,7 +927,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               RooArgList(
                   Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                       PdfBase::uniqueId_)
-                      .N_Bu2D0h(),
+                      .N_split_Bu2D0h(),
                   *GlobalVars::Get(PdfBase::uniqueId_)
                        .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
       PdfBase::N_misId_PartRec_ =
@@ -939,7 +939,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               RooArgList(
                   Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                       PdfBase::uniqueId_)
-                      .N_PartRec(),
+                      .N_split_PartRec(),
                   *GlobalVars::Get(PdfBase::uniqueId_)
                        .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
       if (Configuration::Get().fit1D() == true &&
@@ -955,7 +955,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   RooArgList(
                       Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                           PdfBase::uniqueId_)
-                          .N_Bu2Dst0h_D0gamma(),
+                          .N_split_Bu2Dst0h_D0gamma(),
                       *GlobalVars::Get(PdfBase::uniqueId_)
                            .pidEffMap()[MakePidKey(Bachelor::pi,
                                                    Charge::total)])));
@@ -970,7 +970,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 RooArgList(
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
-                        .N_Bu2Dst0h_D0pi0(),
+                        .N_split_Bu2Dst0h_D0pi0(),
                     *GlobalVars::Get(PdfBase::uniqueId_)
                          .pidEffMap()[MakePidKey(Bachelor::pi,
                                                  Charge::total)])));
@@ -983,7 +983,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
             RooArgList(
                 Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                     PdfBase::uniqueId_)
-                    .N_MisRec(),
+                    .N_split_MisRec(),
                 *GlobalVars::Get(PdfBase::uniqueId_)
                      .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
         PdfBase::N_Bu_misId_Bu2D0h_ = std::unique_ptr<
@@ -995,7 +995,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
             RooArgList(
                 Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                     PdfBase::uniqueId_)
-                    .N_Bu2D0h(),
+                    .N_split_Bu2D0h(),
                 *GlobalVars::Get(PdfBase::uniqueId_)
                      .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)])));
         PdfBase::N_Bu_misId_PartRec_ =
@@ -1008,7 +1008,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 RooArgList(
                     Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                         PdfBase::uniqueId_)
-                        .N_PartRec(),
+                        .N_split_PartRec(),
                     *GlobalVars::Get(PdfBase::uniqueId_)
                          .pidEffMap()[MakePidKey(Bachelor::pi,
                                                  Charge::total)])));
@@ -1025,7 +1025,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     RooArgList(
                         Pdf<_neutral, Bachelor::pi, _daughters, _charge>::Get(
                             PdfBase::uniqueId_)
-                            .N_Bu2Dst0h_D0gamma(),
+                            .N_split_Bu2Dst0h_D0gamma(),
                         *GlobalVars::Get(PdfBase::uniqueId_)
                              .pidEffMap()[MakePidKey(Bachelor::pi,
                                                      Charge::total)])));
