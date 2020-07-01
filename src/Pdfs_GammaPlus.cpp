@@ -13,10 +13,10 @@ void AddPdfsGammaPlus(Configuration &config,
                                Charge::plus>::Get(id));
         pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi,
                                Charge::plus>::Get(id));
-        Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(id)
-            .AssignMisIdYields();
-        Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(id)
-            .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
         Pdf<Neutral::gamma, Bachelor::pi, Daughters::kpi, Charge::plus>::Get(id)
             .CreateBuAddPdf();
         Pdf<Neutral::gamma, Bachelor::k, Daughters::kpi, Charge::plus>::Get(id)
@@ -44,10 +44,10 @@ void AddPdfsGammaPlus(Configuration &config,
         pdfs.emplace_back(
             &Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus>::Get(
                 id));
-        Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus>::Get(id)
-            .AssignMisIdYields();
-        Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus>::Get(id)
-            .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
         Pdf<Neutral::gamma, Bachelor::pi, Daughters::kk, Charge::plus>::Get(id)
             .CreateBuAddPdf();
         Pdf<Neutral::gamma, Bachelor::k, Daughters::kk, Charge::plus>::Get(id)
@@ -72,11 +72,11 @@ void AddPdfsGammaPlus(Configuration &config,
                                Charge::plus>::Get(id));
         pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi,
                                Charge::plus>::Get(id));
-        Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus>::Get(
-            id)
-            .AssignMisIdYields();
-        Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::plus>::Get(id)
-            .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus>::Get(
+        //     id)
+        //     .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::k, Daughters::pipi, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
         Pdf<Neutral::gamma, Bachelor::pi, Daughters::pipi, Charge::plus>::Get(
             id)
             .CreateBuAddPdf();
@@ -104,10 +104,10 @@ void AddPdfsGammaPlus(Configuration &config,
                                Charge::plus>::Get(id));
         pdfs.emplace_back(&Pdf<Neutral::gamma, Bachelor::k, Daughters::pik,
                                Charge::plus>::Get(id));
-        Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus>::Get(id)
-            .AssignMisIdYields();
-        Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus>::Get(id)
-            .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
+        // Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus>::Get(id)
+        //     .AssignMisIdYields();
         Pdf<Neutral::gamma, Bachelor::pi, Daughters::pik, Charge::plus>::Get(id)
             .CreateBuAddPdf();
         Pdf<Neutral::gamma, Bachelor::k, Daughters::pik, Charge::plus>::Get(id)
