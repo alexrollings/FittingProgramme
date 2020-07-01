@@ -35,7 +35,7 @@ class GlobalVars {
   std::map<std::string, std::shared_ptr<RooAbsReal> > &pidEffMap() { return pidEffMap_; }
   RooRealVar &pidEffPi() { return *pidEffPi_; }
   RooRealVar &crossFeedRate() { return *crossFeedRate_; }
-  RooRealVar &A_FAV() { return *A_FAV_; }
+  RooRealVar &A_Prod() { return *A_Prod_; }
   RooRealVar &A_Kpi() { return *A_Kpi_; }
   RooRealVar &A_pi() { return *A_pi_; }
   RooRealVar &Delta_A_CP() { return *Delta_A_CP_; }
@@ -51,7 +51,7 @@ class GlobalVars {
   std::map<std::string, std::shared_ptr<RooAbsReal> > pidEffMap_;
   std::shared_ptr<RooRealVar> pidEffPi_;
   std::shared_ptr<RooRealVar> crossFeedRate_;
-  std::shared_ptr<RooRealVar> A_FAV_;
+  std::shared_ptr<RooRealVar> A_Prod_;
   std::shared_ptr<RooRealVar> A_Kpi_;
   std::shared_ptr<RooRealVar> A_pi_;
   std::shared_ptr<RooRealVar> Delta_A_CP_;

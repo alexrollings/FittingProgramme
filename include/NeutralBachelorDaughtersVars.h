@@ -369,9 +369,9 @@ template <Neutral _neutral>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(nullptr),
-      A_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating("A_Prod", uniqueId,
-                                                     _neutral, Bachelor::pi,
-                                                     Daughters::kpi, 0, -1, 1)),
+      A_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
+          0, 0.0005, Systematic::A_FAV_Pi0, Sign::none)),
       A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
                                              Bachelor::pi, Daughters::kpi, 0,
                                              -5, 5)),
@@ -427,9 +427,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
                 .kBR()
                 .getVal(),
         -1000000, 1000000));
-    // Set A_Prod to be the same for the partial π0/gamma modes - doesn't make
-    // sense to have 2
-    A_Bu2Dst0h_D0gamma_ = A_Bu2Dst0h_D0pi0_;
+    A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
+        0, 0.0005, Systematic::A_FAV_Gamma, Sign::none));
   }
 }
 

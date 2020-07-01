@@ -333,8 +333,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::pidEffK;
   } else if (systematic == "crossFeedRate") {
     return Systematic::crossFeedRate;
-  } else if (systematic == "A_FAV") {
-    return Systematic::A_FAV;
+  } else if (systematic == "A_FAV_Pi0") {
+    return Systematic::A_FAV_Pi0;
+  } else if (systematic == "A_FAV_Gamma") {
+    return Systematic::A_FAV_Gamma;
   } else if (systematic == "A_Kpi") {
     return Systematic::A_Kpi;
   } else if (systematic == "A_pi") {
@@ -360,7 +362,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
       "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
       "deltaCutEffs/deltaPartialCutEffs/"
-      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/crossFeedRate/A_FAV/"
+      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/"
+      "crossFeedRate/A_FAV_Pi0/A_FAV_Gamma/"
       "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
 }
 
@@ -464,8 +467,10 @@ std::string EnumToString(Systematic systematic) {
       return "pidEffK";
     case Systematic::crossFeedRate:
       return "crossFeedRate";
-    case Systematic::A_FAV:
-      return "A_FAV";
+    case Systematic::A_FAV_Pi0:
+      return "A_FAV_Pi0";
+    case Systematic::A_FAV_Gamma:
+      return "A_FAV_Gamma";
     case Systematic::A_Kpi:
       return "A_Kpi";
     case Systematic::A_pi:

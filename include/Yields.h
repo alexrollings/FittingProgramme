@@ -22,7 +22,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                    ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                       .c_str(),
                   "(@0/2)*(1-(@1-@2-@3-@4))",
-                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_FAV(),
+                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_Prod(),
                              GlobalVars::Get(uniqueId).A_Kpi(),
                              GlobalVars::Get(uniqueId).A_pi()));
               break;
@@ -148,7 +148,7 @@ RooFormulaVar *Make_N_Split(int uniqueId, const char *nameStr,
                    ComposeName(uniqueId, neutral, bachelor, daughters, charge))
                       .c_str(),
                   "(@0/2)*(1+(@1+@2+@3+@4))",
-                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_FAV(),
+                  RooArgList(N_tot, A_RAW, GlobalVars::Get(uniqueId).A_Prod(),
                              GlobalVars::Get(uniqueId).A_Kpi(),
                              GlobalVars::Get(uniqueId).A_pi()));
               break;

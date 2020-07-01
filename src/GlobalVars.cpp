@@ -36,8 +36,7 @@ GlobalVars::GlobalVars(int uniqueId)
           Params::Get().CreateFloating("pidEffPi", uniqueId_, 0.996, 0.5, 1.5)),
       // Run 1 = 5.34 +/- 0.27 e-05, Run2 = 10.16 +/- 0.37 e-05
       crossFeedRate_(nullptr),
-      A_FAV_(Params::Get().CreateFixed("A_FAV", uniqueId_, 0, 0.05,
-                                       Systematic::A_FAV, Sign::none)),
+      A_Prod_(Params::Get().CreateFloating("A_Prod", uniqueId_, 0, -1, 1)),
       A_Kpi_(Params::Get().CreateFixed("A_Kpi", uniqueId_, -1.13e-02, 1.5e-03,
                                        Systematic::A_Kpi, Sign::none)),
       A_pi_(Params::Get().CreateFixed("A_pi", uniqueId_, -6.45e-04, 1.84e-04,
