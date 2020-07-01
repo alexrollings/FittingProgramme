@@ -2,6 +2,7 @@
 #include "RooCategory.h"
 #include "RooRealVar.h"
 #include "RooConstVar.h"
+#include "RooFormulaVar.h"
 #include "RooArgSet.h"
 #include "RooUnblindUniform.h"
 #include "TChain.h" 
@@ -255,6 +256,8 @@ std::string EnumToLabel(Neutral);
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind);
+RooFormulaVar MakeLittleAsym(const char *uniqueName,
+                             std::shared_ptr<RooRealVar> &bigAsym);
 
 std::string ComposeFilename(Year year, Polarity polarity,
                             Bachelor bachelor, Neutral neutral,
