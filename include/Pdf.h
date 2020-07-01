@@ -101,6 +101,29 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdfBu_;
   std::unique_ptr<RooAddPdf> addPdfBuPartial_;
   std::unique_ptr<RooAddPdf> addPdfDelta_;
+
+  std::unique_ptr<RooAbsReal> N_misId_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooAbsReal> N_misId_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooAbsReal> N_misId_MisRec_;
+  std::unique_ptr<RooAbsReal> N_misId_Bu2D0h_;
+  std::unique_ptr<RooAbsReal> N_misId_PartRec_;
+
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_PartRec_;
+
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_PartRec_;
+
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_PartRec_;
 };
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
