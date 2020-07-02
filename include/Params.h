@@ -132,6 +132,18 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Daughters daughters,
+                                          double mean, double std,
+                                          Systematic systematic, Sign sign) {
+    // Add daughters daughter charge as empty strings: , "", "", ""
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(daughters), "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, daughters);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Neutral neutral, Bachelor bachelor,
                                           Daughters daughters, double mean,
                                           double std, Systematic systematic,
