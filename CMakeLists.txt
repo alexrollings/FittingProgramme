@@ -15,11 +15,35 @@ endif()
 
 #Find header files
 include_directories(${ROOT_INCLUDE_DIR} include)
-set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit MathMore Minuit Foam TreePlayer)
+set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITTING_SRC src/ParseArguments.cpp src/Configuration.cpp src/GlobalVars.cpp src/Pi0Vars.cpp src/GammaVars.cpp src/Pi0PiVars.cpp src/Pi0KVars.cpp src/GammaPiVars.cpp src/GammaKVars.cpp src/NeutralDaughtersVars.cpp src/BachelorDaughtersVars.cpp src/Pdf.cpp src/RooCruijff.cpp src/Pdfs_GammaTotal.cpp src/Pdfs_GammaPlus.cpp src/Pdfs_GammaMinus.cpp src/Pdfs_Pi0Total.cpp src/Pdfs_Pi0Plus.cpp src/Pdfs_Pi0Minus.cpp)
+set(FITTING_SRC
+    src/BachelorDaughtersVars.cpp
+    src/Configuration.cpp
+    src/GammaVars.cpp
+    src/GammaPiVars.cpp
+    src/GammaKVars.cpp
+    src/GlobalVars.cpp
+    src/NeutralBachelorChargeVars.cpp
+    src/NeutralBachelorDaughtersVars.cpp
+    src/NeutralBachelorVars.cpp
+    src/NeutralDaughtersVars.cpp
+    src/NeutralVars.cpp
+    src/ParseArguments.cpp
+    src/Pdf.cpp
+    src/Pdfs_GammaMinus.cpp
+    src/Pdfs_GammaPlus.cpp
+    src/Pdfs_GammaTotal.cpp
+    src/Pdfs_Pi0Minus.cpp
+    src/Pdfs_Pi0Plus.cpp
+    src/Pdfs_Pi0Total.cpp
+    src/Pi0KVars.cpp
+    src/Pi0PiVars.cpp
+    src/Pi0Vars.cpp
+    src/RooCruijff.cpp
+    src/Yields.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
