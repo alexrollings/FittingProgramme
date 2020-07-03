@@ -2975,60 +2975,6 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
-// void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
-//                 int const id, RooAddPdf &addPdf2d, PdfBase &pdf, Configuration &config,
-//                 std::string const &outputDir) {
-//   gStyle->SetTitleSize(0.03, "XYZ");
-//   gStyle->SetLabelSize(1.025, "XYZ");
-//   gStyle->SetTitleOffset(1, "X");
-//   gStyle->SetTitleOffset(1.2, "Y");
-//   gStyle->SetTitleOffset(1.5, "Z");
-//   gStyle->SetPadRightMargin(0.15);
-//
-//   Bachelor bachelor = pdf.bachelor();
-//   Daughters daughters = pdf.daughters();
-//   Neutral neutral = pdf.neutral();
-//   Charge charge = pdf.charge();
-//
-//   auto dataHist = std::unique_ptr<RooDataHist>(
-//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
-//                                                charge)]
-//           ->binnedClone(("dataHist_" + ComposeDataLabelName(neutral, bachelor,
-//                                                             daughters, charge))
-//                             .c_str(),
-//                         "dataHist"));
-//   if (dataHist == nullptr) {
-//     throw std::runtime_error("Could not extact binned dataSet.");
-//   }
-//
-//   RooHistPdf histPdf(
-//       ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
-//           .c_str(),
-//       "", config.fittingArgSet(), *dataHist.get(), 2);
-//
-//   auto toyData = histPdf.generate(
-//       config.fittingArgSet(),
-//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
-//                                                charge)]
-//           ->numEntries());
-//
-//   if (mapDataLabelToy.find(ComposeDataLabelName(
-//           neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
-//     mapDataLabelToy.insert(std::make_pair(
-//         ComposeDataLabelName(neutral, bachelor, daughters, charge), toyData));
-//     std::cout << "Created key-value pair for category " +
-//                      ComposeDataLabelName(neutral, bachelor, daughters,
-//                                           charge) +
-//                      " and corresponding toy\n";
-//   } else {
-//     mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
-//         ->append(*toyData);
-//     std::cout << "Appended toy to category " +
-//                      ComposeDataLabelName(neutral, bachelor, daughters,
-//                                           charge) +
-//                      "\n";
-//   }
-// }
 
 void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                        int id, PdfBase &pdf, Configuration &config,
@@ -3056,15 +3002,16 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
+    RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = nullptr;
     if (daughters == Daughters::pik) {
-      RooProdPdf pdf2d_Bu2Dst0h_D0pi0_FAVasSUP(
+      pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = new RooProdPdf(
           ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
           RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
                     pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
-      functions2d.add(pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
+      functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
       yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
     }
     RooProdPdf pdf2d_MisRec(
@@ -3247,8 +3194,11 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
             .c_str());
   }
 }
-void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
-                      std::string const &outputDir, int id) {
+void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
+                      std::unique_ptr<RooSimultaneous> &simPdf,
+                      Configuration &config, std::string const &outputDir,
+                      std::vector<Daughters> const &daughtersVec,
+                      std::vector<Charge> const &chargeVec, int id) {
   std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
             << " -------------------------- \n\n";
   // Setting the random seed to 0 is a special case which generates a
@@ -3266,61 +3216,56 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
     m.second->Print();
   }
 
-  // auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-  //
-  // std::map<std::string, RooDataSet *> mapFittingDataSet;
-  // std::map<std::string, RooDataSet *> mapFittingToy;
-  // for (auto &p : pdfs) {
-  //   MakeMapFittingDataSet(*p, mapDataLabelDataSet, mapFittingDataSet, config);
-  //   MakeMapFittingDataSet(*p, mapDataLabelToy, mapFittingToy, config);
-  // }
-  //
-  // RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
-  //                       RooFit::Index(config.fitting),
-  //                       RooFit::Import(mapFittingToy));
+  std::map<std::string, RooDataSet *> mapFittingToy;
+  for (auto &p : pdfs) {
+    MakeMapFittingDataSet(*p, mapDataLabelToy, mapFittingToy, config);
+  }
 
-  // toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
-  // auto toyDataHist = std::unique_ptr<RooDataHist>(
-  //     toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
-  //                             ("toyDataHist" + std::to_string(id)).c_str()));
-  // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-  //
-  // auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
-  //     ("simPdfFit_" + std::to_string(id)).c_str(),
-  //     ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
-  //
-  // auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
-  // simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
-  //
-  // std::shared_ptr<RooFitResult> toyFitResult;
-  // if (config.noFit() == false) {
-  //   toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
-  //       *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-  //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
-  //       RooFit::NumCPU(config.nCPU())));
-  //   toyFitResult->SetName("ToyResult");
-  //   // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
-  // }
-  // // if (id == 1) {
-  // //   auto pdfs = p.second;
-  // //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
-  // //   for (auto &p : pdfs) {
-  // //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-  // //                toyFitResult.get(), yMaxMap);
-  // //   }
-  // //   if (config.noFit() == false) {
-  // //     PlotCorrelations(toyFitResult.get(), outputDir, config);
-  // //   }
-  // // }
-  // if (config.noFit() == false) {
-  //   // to make a unique result each time
-  //   toyFitResult->Print("v");
-  //   outputFile.cd();
-  //   toyFitResult->Write();
-  //   outputFile.Close();
-  //   std::cout << toyFitResult->GetName() << " has been saved to file "
-  //             << outputFile.GetName() << "\n";
-  // }
+  RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
+                        RooFit::Index(config.fitting),
+                        RooFit::Import(mapFittingToy));
+
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      toyDataSet.binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
+                              ("toyDataHist" + std::to_string(id)).c_str()));
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+
+  auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+      ("simPdfFit_" + std::to_string(id)).c_str(),
+      ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
+
+  auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+  simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
+
+  std::shared_ptr<RooFitResult> toyFitResult;
+  if (config.noFit() == false) {
+    toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+        *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
+        RooFit::NumCPU(config.nCPU())));
+    toyFitResult->SetName("ToyResult");
+    // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+  }
+  if (id == 1) {
+    auto toyPdfs = p.second;
+    std::map<Neutral, std::map<Mass, double> > yMaxMap;
+    for (auto &p : toyPdfs) {
+      Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+                 toyFitResult.get(), yMaxMap);
+    }
+    if (config.noFit() == false) {
+      PlotCorrelations(toyFitResult.get(), outputDir, config);
+    }
+  }
+  if (config.noFit() == false) {
+    // to make a unique result each time
+    toyFitResult->Print("v");
+    // outputFile.cd();
+    // toyFitResult->Write();
+    // outputFile.Close();
+    // std::cout << toyFitResult->GetName() << " has been saved to file "
+    //           << outputFile.GetName() << "\n";
+  }
 }
 
 void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
@@ -3922,7 +3867,6 @@ int main(int argc, char **argv) {
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     pdfs = p.second;
-    Run2DToysFromPdf(pdfs, config, outputDir, id);
     // Apply box cuts and split PDF into mass categories too
     std::map<std::string, RooDataSet *> mapFittingDataSet;
     for (auto &p : pdfs) {
@@ -3949,6 +3893,8 @@ int main(int argc, char **argv) {
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
       dataFitResult->SetName("DataFitResult");
+      int tmpId = 1;
+      Run2DToysFromPdf(pdfs, simPdf, config, outputDir, daughtersVec, chargeVec, tmpId);
     }
 
     // Have to shift params after creating simPdf
