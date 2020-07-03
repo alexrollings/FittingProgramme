@@ -3030,6 +3030,205 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
 //   }
 // }
 
+void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+                       int id, PdfBase &pdf, Configuration &config,
+                       std::string const &outputDir) {
+  Neutral neutral = pdf.neutral();
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Charge charge = pdf.charge();
+  if (config.neutral() == Neutral::pi0) {
+    RooArgList functions2d;
+    RooArgList yields2d;
+    RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
+        ("pdf2d_Bu2Dst0h_D0pi0_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfDelta_Bu2Dst0h_D0pi0()));
+    functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
+    yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0());
+    RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
+        ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "",
+        RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_D0pi0(),
+                  pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
+    functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
+    yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
+    if (daughters == Daughters::pik) {
+      RooProdPdf pdf2d_Bu2Dst0h_D0pi0_FAVasSUP(
+          ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "",
+          RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
+                    pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
+      functions2d.add(pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
+      yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
+    }
+    RooProdPdf pdf2d_MisRec(
+        ("pdf2d_MisRec_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_MisRec(), pdf.pdfDelta_MisRec()));
+    functions2d.add(pdf2d_MisRec);
+    yields2d.add(pdf.N_trueId_MisRec());
+    RooProdPdf pdf2d_PartRec(
+        ("pdf2d_PartRec_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_PartRec(), pdf.pdfDelta_PartRec()));
+    functions2d.add(pdf2d_PartRec);
+    yields2d.add(pdf.N_trueId_PartRec());
+    RooProdPdf *pdf2d_misId_MisRec;
+    RooProdPdf *pdf2d_misId_PartRec;
+    RooProdPdf *pdf2d_Bs2Dst0Kpi;
+    RooProdPdf *pdf2d_Bs2D0Kpi;
+    if (bachelor == Bachelor::k) {
+      pdf2d_misId_MisRec = new RooProdPdf(
+          ("pdf2d_misId_MisRec_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(pdf.pdfBu_misId_MisRec(), pdf.pdfDelta_misId_MisRec()));
+      functions2d.add(*pdf2d_misId_MisRec);
+      yields2d.add(pdf.N_misId_MisRec());
+      pdf2d_misId_PartRec = new RooProdPdf(
+          ("pdf2d_misId_PartRec_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(pdf.pdfBu_misId_PartRec(), pdf.pdfDelta_misId_PartRec()));
+      functions2d.add(*pdf2d_misId_PartRec);
+      yields2d.add(pdf.N_misId_PartRec());
+      if (daughters != Daughters::kpi &&
+          Configuration::Get().runADS() == true) {
+        pdf2d_Bs2Dst0Kpi = new RooProdPdf(
+            ("pdf2d_Bs2Dst0Kpi_" +
+             ComposeName(id, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "", RooArgSet(pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfDelta_Bs2Dst0Kpi()));
+        functions2d.add(*pdf2d_Bs2Dst0Kpi);
+        yields2d.add(pdf.N_trueId_Bs2Dst0Kpi());
+        pdf2d_Bs2D0Kpi = new RooProdPdf(
+            ("pdf2d_Bs2D0Kpi_" +
+             ComposeName(id, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "", RooArgSet(pdf.pdfBu_Bs2D0Kpi(), pdf.pdfDelta_Bs2D0Kpi()));
+        functions2d.add(*pdf2d_Bs2D0Kpi);
+        yields2d.add(pdf.N_trueId_Bs2D0Kpi());
+      }
+    }
+    RooAddPdf addPdf2d(
+        ("addPdf2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", functions2d, yields2d);
+    // Number of events to generate is total of all yields BEFORE
+    // splitting
+    double nYields = yields2d.getSize();
+    double N_2d = 0.;
+    RooAbsArg *N_AbsArg = nullptr;
+    RooAbsReal *N_AbsReal = nullptr;
+    for (double i = 0; i < nYields; ++i) {
+      std::string N_str = yields2d.at(i)->GetName();
+      N_AbsArg = yields2d.find(N_str.c_str());
+      if (N_AbsArg == nullptr) {
+        throw std::runtime_error("N_AbsArg gives nullptr for " + N_str);
+      }
+      N_AbsReal = dynamic_cast<RooAbsReal *>(N_AbsArg);
+      if (N_AbsReal == nullptr) {
+        throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
+      }
+      N_2d += N_AbsReal->getVal();
+    }
+    std::cout << "Generating toy dataset..." << std::endl;
+    RooDataSet *genData = addPdf2d.generate(
+        RooArgSet(config.buDeltaMass(), config.deltaMass()), N_2d);
+    genData->SetName(
+        ("gen_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str());
+    std::cout << "Generated!" << std::endl;
+    genData->Print();
+
+    auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
+        ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str()));
+
+    gStyle->SetTitleSize(0.03, "XYZ");
+    gStyle->SetLabelSize(0.025, "XYZ");
+    gStyle->SetTitleOffset(1, "X");
+    gStyle->SetTitleOffset(1.2, "Y");
+    gStyle->SetTitleOffset(1.5, "Z");
+    gStyle->SetPadRightMargin(0.15);
+
+    // Make two-dimensional plot of sampled PDF in x vs y
+    TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
+        ("histModel_" +
+         ComposeDataLabelName(neutral, bachelor, daughters, charge))
+            .c_str(),
+        config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+        RooFit::YVar(config.deltaMass(),
+                     RooFit::Binning(config.deltaMass().getBins())));
+    histModel->SetTitle("");
+
+    // Make 2D plot of data
+    TH2F *histData = (TH2F *)dataHist->createHistogram(
+        "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+        config.deltaMass().getBins());
+    histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
+                                                          daughters, charge))
+                          .c_str());
+    histData->SetTitle("");
+
+    // Scale model plot to total number of data events
+    histModel->Scale(histData->Integral());
+
+    // 2D PDF plot
+    TCanvas canvas2DPdf(
+        ("canvas2DPdf" +
+         ComposeDataLabelName(neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    histModel->SetStats(0);
+    histModel->Draw("colz");
+    histModel->SetTitle(("B^{" + EnumToLabel(charge) +
+                         "}#rightarrow#font[132]{[}#font[132]{[}" +
+                         EnumToLabel(daughters, charge) +
+                         "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                         "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                         "^{" + EnumToLabel(charge) + "}")
+                            .c_str());
+    histModel->Draw("colz");
+    canvas2DPdf.Update();
+    canvas2DPdf.SaveAs(
+        (outputDir + "/plots/AddPdf2d_" +
+         ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+            .c_str());
+
+    // 2D data plot
+    TCanvas canvas2DData(
+        ("canvas2DData" +
+         ComposeDataLabelName(neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", 1000, 800);
+    histData->SetStats(0);
+    histData->Draw("colz");
+    histData->SetTitle(("B^{" + EnumToLabel(charge) +
+                        "}#rightarrow#font[132]{[}#font[132]{[}" +
+                        EnumToLabel(daughters, charge) +
+                        "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                        "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                        "^{" + EnumToLabel(charge) + "}")
+                           .c_str());
+    histData->Draw("colz");
+    canvas2DData.Update();
+    canvas2DData.SaveAs(
+        (outputDir + "/plots/Toy2d_" +
+         ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+            .c_str());
+  }
+}
 void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
                       std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
@@ -3039,207 +3238,24 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
   // generates toys in a replicable way, in case you need to debug
   // something.
 
+  std::map<std::string, RooDataSet *> mapDataLabelToy;
+
   for (auto &p : pdfs) {
-    Neutral neutral = p->neutral();
-    Bachelor bachelor = p->bachelor();
-    Daughters daughters = p->daughters();
-    Charge charge = p->charge();
-    if (config.neutral() == Neutral::pi0) {
-      RooArgList functions2d;
-      RooArgList yields2d;
-      RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
-          ("pdf2d_Bu2Dst0h_D0pi0_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "",
-          RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0(), p->pdfDelta_Bu2Dst0h_D0pi0()));
-      functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
-      yields2d.add(p->N_trueId_Bu2Dst0h_D0pi0());
-      RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
-          ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "",
-          RooArgSet(p->pdfBu_misId_Bu2Dst0h_D0pi0(),
-                    p->pdfDelta_misId_Bu2Dst0h_D0pi0()));
-      functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
-      yields2d.add(p->N_misId_Bu2Dst0h_D0pi0());
-      if (daughters == Daughters::pik) {
-        RooProdPdf pdf2d_Bu2Dst0h_D0pi0_FAVasSUP(
-            ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
-             ComposeName(id, neutral, bachelor, daughters, charge))
-                .c_str(),
-            "",
-            RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
-                      p->pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
-        functions2d.add(pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
-        yields2d.add(p->N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
-      }
-      RooProdPdf pdf2d_MisRec(
-          ("pdf2d_MisRec_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", RooArgSet(p->pdfBu_MisRec(), p->pdfDelta_MisRec()));
-      functions2d.add(pdf2d_MisRec);
-      yields2d.add(p->N_trueId_MisRec());
-      RooProdPdf pdf2d_PartRec(
-          ("pdf2d_PartRec_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", RooArgSet(p->pdfBu_PartRec(), p->pdfDelta_PartRec()));
-      functions2d.add(pdf2d_PartRec);
-      yields2d.add(p->N_trueId_PartRec());
-      RooProdPdf *pdf2d_misId_MisRec;
-      RooProdPdf *pdf2d_misId_PartRec;
-      RooProdPdf *pdf2d_Bs2Dst0Kpi;
-      RooProdPdf *pdf2d_Bs2D0Kpi;
-      if (bachelor == Bachelor::k) {
-        pdf2d_misId_MisRec = new RooProdPdf(
-            ("pdf2d_misId_MisRec_" +
-             ComposeName(id, neutral, bachelor, daughters, charge))
-                .c_str(),
-            "", RooArgSet(p->pdfBu_misId_MisRec(), p->pdfDelta_misId_MisRec()));
-        functions2d.add(*pdf2d_misId_MisRec);
-        yields2d.add(p->N_misId_MisRec());
-        pdf2d_misId_PartRec = new RooProdPdf(
-            ("pdf2d_misId_PartRec_" +
-             ComposeName(id, neutral, bachelor, daughters, charge))
-                .c_str(),
-            "",
-            RooArgSet(p->pdfBu_misId_PartRec(), p->pdfDelta_misId_PartRec()));
-        functions2d.add(*pdf2d_misId_PartRec);
-        yields2d.add(p->N_misId_PartRec());
-        if (daughters != Daughters::kpi &&
-            Configuration::Get().runADS() == true) {
-          pdf2d_Bs2Dst0Kpi = new RooProdPdf(
-              ("pdf2d_Bs2Dst0Kpi_" +
-               ComposeName(id, neutral, bachelor, daughters, charge))
-                  .c_str(),
-              "", RooArgSet(p->pdfBu_Bs2Dst0Kpi(), p->pdfDelta_Bs2Dst0Kpi()));
-          functions2d.add(*pdf2d_Bs2Dst0Kpi);
-          yields2d.add(p->N_trueId_Bs2Dst0Kpi());
-          pdf2d_Bs2D0Kpi = new RooProdPdf(
-              ("pdf2d_Bs2D0Kpi_" +
-               ComposeName(id, neutral, bachelor, daughters, charge))
-                  .c_str(),
-              "", RooArgSet(p->pdfBu_Bs2D0Kpi(), p->pdfDelta_Bs2D0Kpi()));
-          functions2d.add(*pdf2d_Bs2D0Kpi);
-          yields2d.add(p->N_trueId_Bs2D0Kpi());
-            }
-        }
-        RooAddPdf addPdf2d(("addPdf2d_" + ComposeName(id, neutral, bachelor,
-                                                      daughters, charge))
-                               .c_str(),
-                           "", functions2d, yields2d);
-        // Number of events to generate is total of all yields BEFORE
-        // splitting
-        double nYields = yields2d.getSize();
-        double N_2d = 0.;
-        RooAbsArg *N_AbsArg = nullptr;
-        RooAbsReal *N_AbsReal = nullptr;
-        for (double i = 0; i < nYields; ++i) {
-          std::string N_str = yields2d.at(i)->GetName();
-          N_AbsArg = yields2d.find(N_str.c_str());
-          if (N_AbsArg == nullptr) {
-            throw std::runtime_error("N_AbsArg gives nullptr for " + N_str);
-          }
-          N_AbsReal = dynamic_cast<RooAbsReal *>(N_AbsArg);
-          if (N_AbsReal == nullptr) {
-            throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
-          }
-          N_2d += N_AbsReal->getVal();
-      }
-      std::cout << "Generating toy dataset..." << std::endl;
-      RooDataSet *genData = addPdf2d.generate(
-          RooArgSet(config.buDeltaMass(), config.deltaMass()), N_2d);
-      genData->SetName(
-          ("gen_" + ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str());
-      std::cout << "Generated!" << std::endl;
-      genData->Print();
-
-      auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
-          ("toyDataHist_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          ("toyDataHist_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str()));
-
-      gStyle->SetTitleSize(0.03, "XYZ");
-      gStyle->SetLabelSize(0.025, "XYZ");
-      gStyle->SetTitleOffset(1, "X");
-      gStyle->SetTitleOffset(1.2, "Y");
-      gStyle->SetTitleOffset(1.5, "Z");
-      gStyle->SetPadRightMargin(0.15);
-
-      // Make two-dimensional plot of sampled PDF in x vs y
-      TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
-          ("histModel_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-          RooFit::YVar(config.deltaMass(),
-                       RooFit::Binning(config.deltaMass().getBins())));
-      histModel->SetTitle("");
-
-      // Make 2D plot of data
-      TH2F *histData = (TH2F *)dataHist->createHistogram(
-          "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
-          config.deltaMass().getBins());
-      histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
-                                                            daughters, charge))
-                            .c_str());
-      histData->SetTitle("");
-
-      // Scale model plot to total number of data events
-      histModel->Scale(histData->Integral());
-
-      // 2D PDF plot
-      TCanvas canvas2DPdf(
-          ("canvas2DPdf" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", 1000, 800);
-      histModel->SetStats(0);
-      histModel->Draw("colz");
-      histModel->SetTitle(("B^{" + EnumToLabel(charge) +
-                           "}#rightarrow#font[132]{[}#font[132]{[}" +
-                           EnumToLabel(daughters, charge) +
-                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                           "^{" + EnumToLabel(charge) + "}")
-                              .c_str());
-      histModel->Draw("colz");
-      canvas2DPdf.Update();
-      canvas2DPdf.SaveAs(
-          (outputDir + "/plots/AddPdf2d_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-              .c_str());
-
-      // 2D data plot
-      TCanvas canvas2DData(
-          ("canvas2DData" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", 1000, 800);
-      histData->SetStats(0);
-      histData->Draw("colz");
-      histData->SetTitle(("B^{" + EnumToLabel(charge) +
-                          "}#rightarrow#font[132]{[}#font[132]{[}" +
-                          EnumToLabel(daughters, charge) +
-                          "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                          "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                          "^{" + EnumToLabel(charge) + "}")
-                             .c_str());
-      histData->Draw("colz");
-      canvas2DData.Update();
-      canvas2DData.SaveAs(
-          (outputDir + "/plots/Toy2d_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-              .c_str());
-    }
+    Generate2DFromPdf(mapDataLabelToy, id, *p, config, outputDir);
   }
+
+  // auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+  //
+  // std::map<std::string, RooDataSet *> mapFittingDataSet;
+  // std::map<std::string, RooDataSet *> mapFittingToy;
+  // for (auto &p : pdfs) {
+  //   MakeMapFittingDataSet(*p, mapDataLabelDataSet, mapFittingDataSet, config);
+  //   MakeMapFittingDataSet(*p, mapDataLabelToy, mapFittingToy, config);
+  // }
+  //
+  // RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
+  //                       RooFit::Index(config.fitting),
+  //                       RooFit::Import(mapFittingToy));
 
   // toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
   // auto toyDataHist = std::unique_ptr<RooDataHist>(
