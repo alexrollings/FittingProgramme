@@ -214,8 +214,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           compStream.str(std::string());
           compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                    << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                    << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -230,7 +230,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           if (daughters == Daughters::pik) {
             compStream.str(std::string());
             compStream << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                      << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
             simPdf.plotOn(
                 frame.get(),
                 RooFit::Slice(config.fitting,
@@ -1203,8 +1203,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_PartRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1223,8 +1223,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_PartRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1242,8 +1242,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_PartRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1259,8 +1259,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_PartRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1275,8 +1275,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream << pdf.pdfDelta_PartRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1290,8 +1290,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1305,8 +1305,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1456,7 +1456,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           } else {
             compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName() << ","
@@ -1471,7 +1472,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           }
           simPdf.plotOn(
@@ -1496,7 +1498,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           } else {
             compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
@@ -1510,7 +1513,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           }
           simPdf.plotOn(
@@ -1536,7 +1540,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
             simPdf.plotOn(
                 frame.get(),
@@ -1559,7 +1564,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                        << pdf.pdfDelta_misId_MisRec().GetName() << ","
                        << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                        << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
+                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                       << ","
                        << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
             simPdf.plotOn(
                 frame.get(),
@@ -1582,8 +1588,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1602,8 +1608,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1621,8 +1627,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1639,8 +1645,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1657,8 +1663,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                      << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1674,8 +1680,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream << pdf.pdfDelta_misId_MisRec().GetName() << ","
                      << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1689,8 +1695,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
                      << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1703,8 +1709,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           compStream.str(std::string());
           compStream << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
+                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
+                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
           simPdf.plotOn(
               frame.get(),
               RooFit::Slice(
@@ -1743,8 +1749,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                 RooFit::ProjWData(config.fitting, fullDataSet),
                 RooFit::Components(compStream.str().c_str()),
                 RooFit::DrawOption("F"),
-                RooFit::FillColor(
-                    colorMap["pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP"]),
+                RooFit::FillColor(colorMap["pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP"]),
                 RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
           }
         } else {
@@ -1966,138 +1971,137 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                     .c_str()),
                   RooFit::ProjWData(config.fitting, fullDataSet),
                   RooFit::LineColor(kBlue));
-    }
+  }
 
-    fullDataSet.plotOn(frame.get(),
-                       RooFit::Cut(("fitting==fitting::" +
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge))
-                                       .c_str()));
+  fullDataSet.plotOn(frame.get(),
+                     RooFit::Cut(("fitting==fitting::" +
+                                  ComposeFittingName(mass, neutral, bachelor,
+                                                     daughters, charge))
+                                     .c_str()));
 
-    if (mass == Mass::delta) {
-      if (neutral == Neutral::gamma) {
-        frame->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
-      } else {
-        frame->SetXTitle(
-            "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-      }
+  if (mass == Mass::delta) {
+    if (neutral == Neutral::gamma) {
+      frame->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
     } else {
-      frame->SetXTitle(("m[D^{*0}" + EnumToLabel(bachelor) + "^{" +
-                        EnumToLabel(charge) + "}" +
-                        "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})")
-                           .c_str());
+      frame->SetXTitle(
+          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
     }
+  } else {
+    frame->SetXTitle(("m[D^{*0}" + EnumToLabel(bachelor) + "^{" +
+                      EnumToLabel(charge) + "}" +
+                      "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})")
+                         .c_str());
+  }
 
-    // --------------- plot onto canvas ---------------------
+  // --------------- plot onto canvas ---------------------
 
-    TCanvas canvas(("canvas_" +
-                    ComposeName(id, mass, neutral, bachelor, daughters, charge))
-                       .c_str(),
-                   "canvas", 1200, 1000);
+  TCanvas canvas(
+      ("canvas_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "canvas", 1200, 1000);
 
-    TPad pad1(
-        ("pad1_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
-    pad1.Draw();
+  TPad pad1(
+      ("pad1_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
+  pad1.Draw();
 
-    TPad pad2(
-        ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "pad2", 0.0, 0.02, 1.0, 0.14, kWhite);
-    pad2.Draw();
+  TPad pad2(
+      ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "pad2", 0.0, 0.02, 1.0, 0.14, kWhite);
+  pad2.Draw();
 
-    TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-    zeroLine.SetLineColor(kRed);
-    zeroLine.SetLineStyle(kDashed);
+  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineStyle(kDashed);
 
-    if (config.noFit() == false) {
-      canvas.cd();
-      pad2.cd();
-      pullFrame->addPlotable(pullHist /* .get() */, "P");
-      pullFrame->SetName(
-          ("pullFrame_" +
-           ComposeName(id, mass, neutral, bachelor, daughters, charge))
-              .c_str());
-      pullFrame->SetTitle("");
-      pullFrame->SetXTitle(" ");
-      pullFrame->GetYaxis()->SetTitle(" ");
-      // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
-      // pullFrame->SetTitleSize(0.2, "Y");
-      // pullFrame->SetTitleOffset(0.1, "Y");
-      pullFrame->SetLabelSize(0.15, "Y");
-      pullFrame->SetLabelOffset(0.02, "Y");
-      pullFrame->SetLabelFont(132, "Y");
-      pullFrame->Draw();
-      zeroLine.Draw("same");
-    }
-
+  if (config.noFit() == false) {
     canvas.cd();
-    pad1.cd();
-    if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
-         daughters == Daughters::pik) &&
-        config.blindFit() == true) {
-      frame->SetLabelOffset(50, "Y");
-      frame->GetYaxis()->SetTickLength(0.);
-    }
-    frame->Draw();
+    pad2.cd();
+    pullFrame->addPlotable(pullHist /* .get() */, "P");
+    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
+                                                   daughters, charge))
+                           .c_str());
+    pullFrame->SetTitle("");
+    pullFrame->SetXTitle(" ");
+    pullFrame->GetYaxis()->SetTitle(" ");
+    // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
+    // pullFrame->SetTitleSize(0.2, "Y");
+    // pullFrame->SetTitleOffset(0.1, "Y");
+    pullFrame->SetLabelSize(0.15, "Y");
+    pullFrame->SetLabelOffset(0.02, "Y");
+    pullFrame->SetLabelFont(132, "Y");
+    pullFrame->Draw();
+    zeroLine.Draw("same");
+  }
 
-    double blindMin, blindMax;
-    if (mass == Mass::delta) {
-      blindMin = var.getMin();
-      if (neutral == Neutral::gamma) {
-        blindMax = 160;
-      } else {
-        blindMax = 155;
-      }
-    } else if (mass == Mass::buDelta) {
-      blindMin = 5150;
-      if (neutral == Neutral::gamma) {
-        blindMax = 5375;
-      } else {
-        blindMax = 5350;
-      }
+  canvas.cd();
+  pad1.cd();
+  if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
+       daughters == Daughters::pik) &&
+      config.blindFit() == true) {
+    frame->SetLabelOffset(50, "Y");
+    frame->GetYaxis()->SetTickLength(0.);
+  }
+  frame->Draw();
+
+  double blindMin, blindMax;
+  if (mass == Mass::delta) {
+    blindMin = var.getMin();
+    if (neutral == Neutral::gamma) {
+      blindMax = 160;
     } else {
-      blindMin = 5150;
-      blindMax = 5400;
+      blindMax = 155;
     }
+  } else if (mass == Mass::buDelta) {
+    blindMin = 5150;
+    if (neutral == Neutral::gamma) {
+      blindMax = 5375;
+    } else {
+      blindMax = 5350;
+    }
+  } else {
+    blindMin = 5150;
+    blindMax = 5400;
+  }
 
-    if (daughters == Daughters::pik && config.blindFit() == true) {
-      frame->SetMinimum(0.001);
-      if (bachelor == Bachelor::pi) {
-        // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
-        frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
-      } else {
-        // frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
-        frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
-      }
+  if (daughters == Daughters::pik && config.blindFit() == true) {
+    frame->SetMinimum(0.001);
+    if (bachelor == Bachelor::pi) {
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
+    } else {
+      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
+      frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
     }
-    TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
-                        "#font[12]{Blind}", "");
-    blindBox.SetBorderSize(0);
-    blindBox.SetTextSize(0.07);
-    // blindBox.SetTextAngle(30);
-    blindBox.SetTextColor(kRed + 1);
-    blindBox.SetFillColor(10);
-    if (daughters == Daughters::pik && config.blindFit() == true &&
-        config.splitByCharge() == true) {
-      blindBox.Draw("same");
-    }
-    legend.Draw("same");
+  }
+  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
+                      "#font[12]{Blind}", "");
+  blindBox.SetBorderSize(0);
+  blindBox.SetTextSize(0.07);
+  // blindBox.SetTextAngle(30);
+  blindBox.SetTextColor(kRed + 1);
+  blindBox.SetFillColor(10);
+  if (daughters == Daughters::pik && config.blindFit() == true &&
+      config.splitByCharge() == true) {
+    blindBox.Draw("same");
+  }
+  legend.Draw("same");
 
-    if (mass == Mass::buDelta && daughters == Daughters::kpi) {
-      labels.Draw("same");
-    }
-    // Stores max values for kpi, to set in pik
-    if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
-      yMaxMap[neutral][mass] = frame->GetMaximum();
-    }
+  if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+    labels.Draw("same");
+  }
+  // Stores max values for kpi, to set in pik
+  if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
+    yMaxMap[neutral][mass] = frame->GetMaximum();
+  }
 
-    canvas.Update();
-    canvas.SaveAs((outputDir + "/plots/" +
-                   ComposeName(id, mass, neutral, bachelor, daughters, charge) +
-                   "_" + config.ReturnBoxString() + ".pdf")
-                      .c_str());
+  canvas.Update();
+  canvas.SaveAs((outputDir + "/plots/" +
+                 ComposeName(id, mass, neutral, bachelor, daughters, charge) +
+                 "_" + config.ReturnBoxString() + ".pdf")
+                    .c_str());
 }
 
 // Plot projections
@@ -2975,7 +2979,6 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
-
 void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                        int id, PdfBase &pdf, Configuration &config,
                        std::string const &outputDir) {
@@ -2990,7 +2993,8 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         ("pdf2d_Bu2Dst0h_D0pi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
-        "", RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfDelta_Bu2Dst0h_D0pi0()));
+        "",
+        RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfDelta_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0());
     RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
@@ -3004,13 +3008,13 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = nullptr;
     if (daughters == Daughters::pik) {
-      pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = new RooProdPdf(
-          ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "",
-          RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
-                    pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
+      pdf2d_Bu2Dst0h_D0pi0_FAVasSUP =
+          new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str(),
+                         "",
+                         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
+                                   pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
       functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
       yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
     }
@@ -3044,7 +3048,8 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
           ("pdf2d_misId_PartRec_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
-          "", RooArgSet(pdf.pdfBu_misId_PartRec(), pdf.pdfDelta_misId_PartRec()));
+          "",
+          RooArgSet(pdf.pdfBu_misId_PartRec(), pdf.pdfDelta_misId_PartRec()));
       functions2d.add(*pdf2d_misId_PartRec);
       yields2d.add(pdf.N_misId_PartRec());
       if (daughters != Daughters::kpi &&
@@ -3114,88 +3119,94 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                        "\n";
     }
 
-    auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
-        ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str()));
+    if (id == 1) {
+      auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
+          ("toyDataHist_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          ("toyDataHist_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str()));
 
-    gStyle->SetTitleSize(0.03, "XYZ");
-    gStyle->SetLabelSize(0.025, "XYZ");
-    gStyle->SetTitleOffset(1, "X");
-    gStyle->SetTitleOffset(1.2, "Y");
-    gStyle->SetTitleOffset(1.5, "Z");
-    gStyle->SetPadRightMargin(0.15);
+      gStyle->SetTitleSize(0.03, "XYZ");
+      gStyle->SetLabelSize(0.025, "XYZ");
+      gStyle->SetTitleOffset(1, "X");
+      gStyle->SetTitleOffset(1.2, "Y");
+      gStyle->SetTitleOffset(1.5, "Z");
+      gStyle->SetPadRightMargin(0.15);
 
-    // Make two-dimensional plot of sampled PDF in x vs y
-    TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
-        ("histModel_" +
-         ComposeDataLabelName(neutral, bachelor, daughters, charge))
-            .c_str(),
-        config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-        RooFit::YVar(config.deltaMass(),
-                     RooFit::Binning(config.deltaMass().getBins())));
-    histModel->SetTitle("");
+      // Make two-dimensional plot of sampled PDF in x vs y
+      TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
+          ("histModel_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+          RooFit::YVar(config.deltaMass(),
+                       RooFit::Binning(config.deltaMass().getBins())));
+      histModel->SetTitle("");
 
-    // Make 2D plot of data
-    TH2F *histData = (TH2F *)dataHist->createHistogram(
-        "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
-        config.deltaMass().getBins());
-    histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
-                                                          daughters, charge))
-                          .c_str());
-    histData->SetTitle("");
-
-    // Scale model plot to total number of data events
-    histModel->Scale(histData->Integral());
-
-    // 2D PDF plot
-    TCanvas canvas2DPdf(
-        ("canvas2DPdf" +
-         ComposeDataLabelName(neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 1000, 800);
-    histModel->SetStats(0);
-    histModel->Draw("colz");
-    histModel->SetTitle(("B^{" + EnumToLabel(charge) +
-                         "}#rightarrow#font[132]{[}#font[132]{[}" +
-                         EnumToLabel(daughters, charge) +
-                         "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                         "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                         "^{" + EnumToLabel(charge) + "}")
+      // Make 2D plot of data
+      TH2F *histData = (TH2F *)dataHist->createHistogram(
+          "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+          config.deltaMass().getBins());
+      histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
+                                                            daughters, charge))
                             .c_str());
-    histModel->Draw("colz");
-    canvas2DPdf.Update();
-    canvas2DPdf.SaveAs(
-        (outputDir + "/plots/AddPdf2d_" +
-         ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-            .c_str());
+      histData->SetTitle("");
 
-    // 2D data plot
-    TCanvas canvas2DData(
-        ("canvas2DData" +
-         ComposeDataLabelName(neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", 1000, 800);
-    histData->SetStats(0);
-    histData->Draw("colz");
-    histData->SetTitle(("B^{" + EnumToLabel(charge) +
-                        "}#rightarrow#font[132]{[}#font[132]{[}" +
-                        EnumToLabel(daughters, charge) +
-                        "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                        "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                        "^{" + EnumToLabel(charge) + "}")
-                           .c_str());
-    histData->Draw("colz");
-    canvas2DData.Update();
-    canvas2DData.SaveAs(
-        (outputDir + "/plots/Toy2d_" +
-         ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-            .c_str());
+      // Scale model plot to total number of data events
+      histModel->Scale(histData->Integral());
+
+      // 2D PDF plot
+      TCanvas canvas2DPdf(
+          ("canvas2DPdf" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", 1000, 800);
+      histModel->SetStats(0);
+      histModel->Draw("colz");
+      histModel->SetTitle(("B^{" + EnumToLabel(charge) +
+                           "}#rightarrow#font[132]{[}#font[132]{[}" +
+                           EnumToLabel(daughters, charge) +
+                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                           "^{" + EnumToLabel(charge) + "}")
+                              .c_str());
+      histModel->Draw("colz");
+      canvas2DPdf.Update();
+      canvas2DPdf.SaveAs(
+          (outputDir + "/plots/AddPdf2d_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+              .c_str());
+
+      // 2D data plot
+      TCanvas canvas2DData(
+          ("canvas2DData" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", 1000, 800);
+      histData->SetStats(0);
+      histData->Draw("colz");
+      histData->SetTitle(("B^{" + EnumToLabel(charge) +
+                          "}#rightarrow#font[132]{[}#font[132]{[}" +
+                          EnumToLabel(daughters, charge) +
+                          "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                          "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                          "^{" + EnumToLabel(charge) + "}")
+                             .c_str());
+      histData->Draw("colz");
+      canvas2DData.Update();
+      canvas2DData.SaveAs(
+          (outputDir + "/plots/Toy2d_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+              .c_str());
+    }
   }
 }
 void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
                       std::unique_ptr<RooSimultaneous> &simPdf,
+                      TFile &outputFile,
+                      std::unique_ptr<RooFitResult> &dataFitResult,
                       Configuration &config, std::string const &outputDir,
                       std::vector<Daughters> const &daughtersVec,
                       std::vector<Charge> const &chargeVec, int id) {
@@ -3227,7 +3238,7 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
 
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet.binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
-                              ("toyDataHist" + std::to_string(id)).c_str()));
+                             ("toyDataHist" + std::to_string(id)).c_str()));
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
   auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
@@ -3260,16 +3271,18 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
-    // outputFile.cd();
-    // toyFitResult->Write();
-    // outputFile.Close();
-    // std::cout << toyFitResult->GetName() << " has been saved to file "
-    //           << outputFile.GetName() << "\n";
+    outputFile.cd();
+    toyFitResult->Write();
+    dataFitResult->Write();
+    outputFile.Close();
+    std::cout << toyFitResult->GetName() << " has been saved to file "
+              << outputFile.GetName() << "\n";
   }
 }
 
 void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
                 Configuration &config,
+                std::unique_ptr<RooFitResult> &dataFitResult,
                 std::vector<Daughters> const &daughtersVec,
                 std::vector<Charge> const &chargeVec,
                 std::string const &outputDir, int id) {
@@ -3328,6 +3341,7 @@ void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
     toyFitResult->Print("v");
     outputFile.cd();
     toyFitResult->Write();
+    dataFitResult->Write();
     outputFile.Close();
     std::cout << toyFitResult->GetName() << " has been saved to file "
               << outputFile.GetName() << "\n";
@@ -3423,9 +3437,9 @@ int main(int argc, char **argv) {
                 << "-inputDir=<RooDataSets directory name> if fitting to data "
                    "or toy generated from data \n"
                 << "-outputDir=<output directory> \n";
-      std::cout
-          << "Give box dimensions:\n"
-          << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma mode)\n";
+      std::cout << "Give box dimensions:\n"
+                << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma "
+                   "mode)\n";
       std::cout << "Followed by the possible options (to specify multiple "
                    "options, separate them by commas):\n";
       std::cout << "    -1D, default fit is double 1D\n";
@@ -3448,28 +3462,30 @@ int main(int argc, char **argv) {
       std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
                    "to data. Default is 2D toys, generated from RooHistPdf of "
                    "data.\n";
-      std::cout << "    -systematic=<choice "
-                   "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuPartialTails,"
-                   "pi0BuPartialFrac,"
-                   "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
-                   "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
-                   "misRecDeltaPdf,misRecBuPdf,misRecBuPartialPdf,"
-                   "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
-                   "Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,Bs2Dst0KpiBuPartialPdf,"
-                   "Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,Bs2D0KpiBuPartialPdf,"
-                   "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
-                   "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
-                   "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
-                   "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
-                   "gammaFAVasSUPDeltaPdf,"
-                   "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
-                   "pi0FAVasSUPBuPartialPdf,"
-                   "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
-                   "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
-                   "deltaPartialMisIdCutEffs,pidEffPi,"
-                   "pidEffK,crossFeedRate,A_FAV_Pi0,A_FAV_Gamma,A_Kpi,A_pi,Delta_A_CP,mcEffs} "
-                   "default: None>"
-                << "\n";
+      std::cout
+          << "    -systematic=<choice "
+             "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuPartialTails,"
+             "pi0BuPartialFrac,"
+             "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
+             "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
+             "misRecDeltaPdf,misRecBuPdf,misRecBuPartialPdf,"
+             "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
+             "Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,Bs2Dst0KpiBuPartialPdf,"
+             "Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,Bs2D0KpiBuPartialPdf,"
+             "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
+             "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
+             "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
+             "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
+             "gammaFAVasSUPDeltaPdf,"
+             "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
+             "pi0FAVasSUPBuPartialPdf,"
+             "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
+             "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
+             "deltaPartialMisIdCutEffs,pidEffPi,"
+             "pidEffK,crossFeedRate,A_FAV_Pi0,A_FAV_Gamma,A_Kpi,A_pi,Delta_A_"
+             "CP,mcEffs} "
+             "default: None>"
+          << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
       std::cout << " ----------------------------------------------------------"
@@ -3679,8 +3695,8 @@ int main(int argc, char **argv) {
   if (inputDir != "" &&
       (daughtersVec.size() > 1 && config.blindFit() == false &&
        config.noFit() == false)) {
-    std::cerr
-        << "\n\n !!!!!! Cannot run unblinded fit for signal modes !!!!!! \n\n";
+    std::cerr << "\n\n !!!!!! Cannot run unblinded fit for signal modes "
+                 "!!!!!! \n\n";
     return 1;
   }
 
@@ -3695,8 +3711,8 @@ int main(int argc, char **argv) {
   // Configuration
   config.DefineCategories();
 
-  // Declare simPDF and result before any if statements so that it can be passed
-  // to RunD1DToys no matter what
+  // Declare simPDF and result before any if statements so that it can be
+  // passed to RunD1DToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
   std::vector<PdfBase *> pdfs;
   std::unique_ptr<RooFitResult> dataFitResult;
@@ -3843,24 +3859,25 @@ int main(int argc, char **argv) {
     }
 
     std::vector<std::string> toyFileNames(nToys);
-    if (config.runToy() == true && d1dToys == false) {
-      // start at id = 1 to reserve 0 for data fit
-      for (int id = 1; id < nToys + 1; ++id) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        double randomTag = random.Rndm();
-        TFile toyResultFile(
-            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(randomTag) + ".root")
-                .c_str(),
-            "recreate");
-        // Pass random??
-        Run2DToys(toyResultFile, mapDataLabelDataSet, config, daughtersVec,
-                  chargeVec, outputDir, id);
-        toyFileNames[id - 1] = toyResultFile.GetName();
-        toyResultFile.Close();
-      }
-    }
+    // if (config.runToy() == true && d1dToys == false) {
+    //   // start at id = 1 to reserve 0 for data fit
+    //   for (int id = 1; id < nToys + 1; ++id) {
+    //     RooRandom::randomGenerator()->SetSeed(0);
+    //     TRandom3 random(0);
+    //     double randomTag = random.Rndm();
+    //     TFile toyResultFile(
+    //         (outputDir + "/results/Result2D_" + config.ReturnBoxString() +
+    //         "_" +
+    //          std::to_string(randomTag) + ".root")
+    //             .c_str(),
+    //         "recreate");
+    //     // Pass random??
+    //     Run2DToys(toyResultFile, mapDataLabelDataSet, config, daughtersVec,
+    //               chargeVec, outputDir, id);
+    //     toyFileNames[id - 1] = toyResultFile.GetName();
+    //     toyResultFile.Close();
+    //   }
+    // }
 
     // id = 0 for data fit
     int id = 0;
@@ -3893,8 +3910,6 @@ int main(int argc, char **argv) {
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
       dataFitResult->SetName("DataFitResult");
-      int tmpId = 1;
-      Run2DToysFromPdf(pdfs, simPdf, config, outputDir, daughtersVec, chargeVec, tmpId);
     }
 
     // Have to shift params after creating simPdf
@@ -3935,6 +3950,23 @@ int main(int argc, char **argv) {
         systResultFile.Close();
       }
     }
+    if (config.runToy() == true && d1dToys == false) {
+      // start at id = 1 to reserve 0 for data fit
+      for (int id = 1; id < nToys + 1; ++id) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        double randomTag = random.Rndm();
+        TFile toyResultFile(
+            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
+             std::to_string(randomTag) + ".root")
+                .c_str(),
+            "recreate");
+        Run2DToysFromPdf(pdfs, simPdf, toyResultFile, dataFitResult, config,
+                         outputDir, daughtersVec, chargeVec, id);
+        toyFileNames[id - 1] = toyResultFile.GetName();
+        toyResultFile.Close();
+      }
+    }
 
     if (config.runToy() == true && d1dToys == true) {
       // start at id = 1 to reserve 0 for data fit
@@ -3947,8 +3979,8 @@ int main(int argc, char **argv) {
              "_" + std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
-        RunD1DToys(simPdf, toyResultFile, config, daughtersVec, chargeVec,
-                   outputDir, id);
+        RunD1DToys(simPdf, toyResultFile, config, dataFitResult, daughtersVec,
+                   chargeVec, outputDir, id);
         toyFileNames[id - 1] = toyResultFile.GetName();
         toyResultFile.Close();
       }
@@ -4098,17 +4130,18 @@ int main(int argc, char **argv) {
     } else {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        for (int id = 1; id < nToys + 1; ++id) {
-          if (dataFitResult != nullptr) {
-            TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
-            dataFitResult->Write();
-            toyResultFile.Close();
-            std::cout << "DataFitResult saved to file " << toyFileNames[id - 1]
-                      << "\n";
-          } else {
-            throw std::runtime_error("DataFitResult empty.");
-          }
-        }
+        // for (int id = 1; id < nToys + 1; ++id) {
+        //   if (dataFitResult != nullptr) {
+        //     TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
+        //     dataFitResult->Write();
+        //     toyResultFile.Close();
+        //     std::cout << "DataFitResult saved to file " << toyFileNames[id
+        //     - 1]
+        //               << "\n";
+        //   } else {
+        //     throw std::runtime_error("DataFitResult empty.");
+        //   }
+        // }
       }
     }
   } else {
