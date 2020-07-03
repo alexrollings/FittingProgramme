@@ -6,6 +6,7 @@
 #include "RooMCStudy.h"
 #include "RooNumIntConfig.h"
 #include "RooPlot.h"
+#include "RooProdPdf.h"
 #include "RooRandom.h"
 #include "TCanvas.h"
 #include "TChain.h"
@@ -2974,6 +2975,152 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
+void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
+                      std::vector<PdfBase *> &pdfs, TFile &outputFile,
+                      Configuration &config,
+                      std::vector<Daughters> const &daughtersVec,
+                      std::vector<Charge> const &chargeVec,
+                      std::string const &outputDir, int id) {
+  std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
+            << " -------------------------- \n\n";
+  // Setting the random seed to 0 is a special case which generates a
+  // different seed every time you run. Setting the seed to an integer
+  // generates toys in a replicable way, in case you need to debug
+  // something.
+
+  int tmpId = 0;
+  for (auto &p : pdfs) {
+    Neutral neutral = p->neutral();
+    Bachelor bachelor = p->bachelor();
+    Daughters daughters = p->daughters();
+    Charge charge = p->charge();
+    if (config.neutral() == Neutral::pi0) {
+      RooArgSet functions2d;
+      RooArgSet yields2d;
+      RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
+          ("pdf2d_Bu2Dst0h_D0pi0_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "",
+          RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0(), p->pdfDelta_Bu2Dst0h_D0pi0()));
+      functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
+      yields2d.add(p->N_trueId_Bu2Dst0h_D0pi0());
+      RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
+          ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "",
+          RooArgSet(p->pdfBu_misId_Bu2Dst0h_D0pi0(),
+                    p->pdfDelta_misId_Bu2Dst0h_D0pi0()));
+      functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
+      yields2d.add(p->N_misId_Bu2Dst0h_D0pi0());
+      if (daughters == Daughters::pik) {
+        RooProdPdf pdf2d_Bu2Dst0h_D0pi0_FAVasSUP(
+            ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
+             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "",
+            RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
+                      p->pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
+        functions2d.add(pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
+        yields2d.add(p->N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
+      }
+      RooProdPdf pdf2d_MisRec(
+          ("pdf2d_MisRec_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(p->pdfBu_MisRec(), p->pdfDelta_MisRec()));
+      functions2d.add(pdf2d_MisRec);
+      yields2d.add(p->N_trueId_MisRec());
+      RooProdPdf pdf2d_PartRec(
+          ("pdf2d_PartRec_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(p->pdfBu_PartRec(), p->pdfDelta_PartRec()));
+      functions2d.add(pdf2d_PartRec);
+      yields2d.add(p->N_trueId_PartRec());
+      if (bachelor == Bachelor::k) {
+        RooProdPdf pdf2d_misId_MisRec(
+            ("pdf2d_misId_MisRec_" +
+             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "",
+            RooArgSet(p->pdfBu_misId_MisRec(), p->pdfDelta_misId_MisRec()));
+        functions2d.add(pdf2d_misId_MisRec);
+        yields2d.add(p->N_misId_MisRec());
+        RooProdPdf pdf2d_misId_PartRec(
+            ("pdf2d_misId_PartRec_" +
+             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "",
+            RooArgSet(p->pdfBu_misId_PartRec(), p->pdfDelta_misId_PartRec()));
+        functions2d.add(pdf2d_misId_PartRec);
+        yields2d.add(p->N_misId_PartRec());
+        if (daughters != Daughters::kpi &&
+            Configuration::Get().runADS() == true) {
+          RooProdPdf pdf2d_Bs2Dst0Kpi(
+              ("pdf2d_Bs2Dst0Kpi_" +
+               ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                  .c_str(),
+              "", RooArgSet(p->pdfBu_Bs2Dst0Kpi(), p->pdfDelta_Bs2Dst0Kpi()));
+          functions2d.add(pdf2d_Bs2Dst0Kpi);
+          yields2d.add(p->N_trueId_Bs2Dst0Kpi());
+          RooProdPdf pdf2d_Bs2D0Kpi(
+              ("pdf2d_Bs2D0Kpi_" +
+               ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                  .c_str(),
+              "", RooArgSet(p->pdfBu_Bs2D0Kpi(), p->pdfDelta_Bs2D0Kpi()));
+          functions2d.add(pdf2d_Bs2D0Kpi);
+          yields2d.add(p->N_trueId_Bs2D0Kpi());
+        }
+      }
+    }
+  }
+
+  // toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
+  // auto toyDataHist = std::unique_ptr<RooDataHist>(
+  //     toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
+  //                             ("toyDataHist" + std::to_string(id)).c_str()));
+  // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+  //
+  // auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+  //     ("simPdfFit_" + std::to_string(id)).c_str(),
+  //     ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
+  //
+  // auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+  // simPdfToFit = std::unique_ptr<RooSimultaneous>(p.first);
+  //
+  // std::shared_ptr<RooFitResult> toyFitResult;
+  // if (config.noFit() == false) {
+  //   toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
+  //       *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+  //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
+  //       RooFit::NumCPU(config.nCPU())));
+  //   toyFitResult->SetName("ToyResult");
+  //   // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+  // }
+  // // if (id == 1) {
+  // //   auto pdfs = p.second;
+  // //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
+  // //   for (auto &p : pdfs) {
+  // //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+  // //                toyFitResult.get(), yMaxMap);
+  // //   }
+  // //   if (config.noFit() == false) {
+  // //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+  // //   }
+  // // }
+  // if (config.noFit() == false) {
+  //   // to make a unique result each time
+  //   toyFitResult->Print("v");
+  //   outputFile.cd();
+  //   toyFitResult->Write();
+  //   outputFile.Close();
+  //   std::cout << toyFitResult->GetName() << " has been saved to file "
+  //             << outputFile.GetName() << "\n";
+  // }
+}
+
 void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
                 Configuration &config,
                 std::vector<Daughters> const &daughtersVec,
@@ -3404,6 +3551,7 @@ int main(int argc, char **argv) {
   // Declare simPDF and result before any if statements so that it can be passed
   // to RunD1DToys no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
+  std::vector<PdfBase *> pdfs;
   std::unique_ptr<RooFitResult> dataFitResult;
 
   if (inputDir != "") {
@@ -3571,7 +3719,7 @@ int main(int argc, char **argv) {
     int id = 0;
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-    auto pdfs = p.second;
+    pdfs = p.second;
     // Apply box cuts and split PDF into mass categories too
     std::map<std::string, RooDataSet *> mapFittingDataSet;
     for (auto &p : pdfs) {
