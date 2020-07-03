@@ -62,9 +62,12 @@ GlobalVars::GlobalVars(int uniqueId)
                      *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
   // One floating PID eff for pi
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
-      Params::Get().CreateFloating("pidEffPi", uniqueId_,
-                                   Configuration::Get().neutral(),
-                                   Charge::total, 0.996, 0.5, 1.5);
+      // Params::Get().CreateFloating("pidEffPi", uniqueId_,
+      //                              Configuration::Get().neutral(),
+      //                              Charge::total, 0.996, 0.5, 1.5);
+      Params::Get().CreateFixed("pidEffPi", uniqueId_,
+                                Configuration::Get().neutral(), Charge::total,
+                                0.996, 0, Systematic::NA, Sign::none);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::minus)] =
