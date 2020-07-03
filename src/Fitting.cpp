@@ -3030,11 +3030,7 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
 //   }
 // }
 
-void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
-                      std::vector<PdfBase *> &pdfs, TFile &outputFile,
-                      Configuration &config,
-                      std::vector<Daughters> const &daughtersVec,
-                      std::vector<Charge> const &chargeVec,
+void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
                       std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
             << " -------------------------- \n\n";
