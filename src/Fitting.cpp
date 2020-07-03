@@ -2975,6 +2975,61 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
+// void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+//                 int const id, RooAddPdf &addPdf2d, PdfBase &pdf, Configuration &config,
+//                 std::string const &outputDir) {
+//   gStyle->SetTitleSize(0.03, "XYZ");
+//   gStyle->SetLabelSize(1.025, "XYZ");
+//   gStyle->SetTitleOffset(1, "X");
+//   gStyle->SetTitleOffset(1.2, "Y");
+//   gStyle->SetTitleOffset(1.5, "Z");
+//   gStyle->SetPadRightMargin(0.15);
+//
+//   Bachelor bachelor = pdf.bachelor();
+//   Daughters daughters = pdf.daughters();
+//   Neutral neutral = pdf.neutral();
+//   Charge charge = pdf.charge();
+//
+//   auto dataHist = std::unique_ptr<RooDataHist>(
+//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
+//                                                charge)]
+//           ->binnedClone(("dataHist_" + ComposeDataLabelName(neutral, bachelor,
+//                                                             daughters, charge))
+//                             .c_str(),
+//                         "dataHist"));
+//   if (dataHist == nullptr) {
+//     throw std::runtime_error("Could not extact binned dataSet.");
+//   }
+//
+//   RooHistPdf histPdf(
+//       ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
+//           .c_str(),
+//       "", config.fittingArgSet(), *dataHist.get(), 2);
+//
+//   auto toyData = histPdf.generate(
+//       config.fittingArgSet(),
+//       mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
+//                                                charge)]
+//           ->numEntries());
+//
+//   if (mapDataLabelToy.find(ComposeDataLabelName(
+//           neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
+//     mapDataLabelToy.insert(std::make_pair(
+//         ComposeDataLabelName(neutral, bachelor, daughters, charge), toyData));
+//     std::cout << "Created key-value pair for category " +
+//                      ComposeDataLabelName(neutral, bachelor, daughters,
+//                                           charge) +
+//                      " and corresponding toy\n";
+//   } else {
+//     mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+//         ->append(*toyData);
+//     std::cout << "Appended toy to category " +
+//                      ComposeDataLabelName(neutral, bachelor, daughters,
+//                                           charge) +
+//                      "\n";
+//   }
+// }
+
 void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
                       std::vector<PdfBase *> &pdfs, TFile &outputFile,
                       Configuration &config,
@@ -2995,8 +3050,8 @@ void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
     Daughters daughters = p->daughters();
     Charge charge = p->charge();
     if (config.neutral() == Neutral::pi0) {
-      RooArgSet functions2d;
-      RooArgSet yields2d;
+      RooArgList functions2d;
+      RooArgList yields2d;
       RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
           ("pdf2d_Bu2Dst0h_D0pi0_" +
            ComposeName(tmpId, neutral, bachelor, daughters, charge))
@@ -3072,6 +3127,23 @@ void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
               "", RooArgSet(p->pdfBu_Bs2D0Kpi(), p->pdfDelta_Bs2D0Kpi()));
           functions2d.add(pdf2d_Bs2D0Kpi);
           yields2d.add(p->N_trueId_Bs2D0Kpi());
+
+          RooAddPdf addPdf2d(
+              ("addPdf2d_" +
+               ComposeName(tmpId, neutral, bachelor, daughters, charge))
+                  .c_str(),
+              "", functions2d, yields2d);
+          // Number of events to generate is total of all yields BEFORE
+          // splitting
+          double nYields = yields2d.getSize();
+          double N_2d = 0.;
+          RooAbsArg* N_AbsArg = nullptr;
+          RooRealVar* N_RealVar = nullptr;
+          for (double i = 0; i < nYields; ++i) {
+            N_AbsArg = yields2d.find(yields2d.at(i)->GetName());
+            N_RealVar = dynamic_cast<RooRealVar *>(N_AbsArg);
+            N_2d += N_RealVar->getVal();
+          }
         }
       }
     }
