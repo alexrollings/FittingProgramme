@@ -3149,6 +3149,24 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     std::cout << "Generated!" << std::endl;
     genData->Print();
 
+    if (mapDataLabelToy.find(ComposeDataLabelName(
+            neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
+      mapDataLabelToy.insert(std::make_pair(
+          ComposeDataLabelName(neutral, bachelor, daughters, charge), genData));
+      std::cout << "Created key-value pair for category " +
+                       ComposeDataLabelName(neutral, bachelor, daughters,
+                                            charge) +
+                       " and corresponding toy\n";
+    } else {
+      mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters,
+                                           charge)]
+          ->append(*genData);
+      std::cout << "Appended toy to category " +
+                       ComposeDataLabelName(neutral, bachelor, daughters,
+                                            charge) +
+                       "\n";
+    }
+
     auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
         ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
@@ -3242,6 +3260,10 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
 
   for (auto &p : pdfs) {
     Generate2DFromPdf(mapDataLabelToy, id, *p, config, outputDir);
+  }
+
+  for (auto &m : mapDataLabelToy) {
+    m.second->Print();
   }
 
   // auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
