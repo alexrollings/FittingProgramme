@@ -218,4 +218,4 @@ if __name__ == '__main__':
         #     '-toyInit=' + toy_init + ' ' + '-buPartial')
   else:
     sys.exit('File list empty')
-  os.remove(filename)
+  # os.remove(filename)

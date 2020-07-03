@@ -18,7 +18,7 @@ cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
 mkdir build
 cd build
 cmake ../
-make -j
+make
 ./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
 
 cd /data/lhcb/users/rollings/multi_scripts/
