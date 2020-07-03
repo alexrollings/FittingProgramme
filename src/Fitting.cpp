@@ -3039,7 +3039,6 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
   // generates toys in a replicable way, in case you need to debug
   // something.
 
-  int tmpId = 0;
   for (auto &p : pdfs) {
     Neutral neutral = p->neutral();
     Bachelor bachelor = p->bachelor();
@@ -3050,7 +3049,7 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
       RooArgList yields2d;
       RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
           ("pdf2d_Bu2Dst0h_D0pi0_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
           RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0(), p->pdfDelta_Bu2Dst0h_D0pi0()));
@@ -3058,7 +3057,7 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
       yields2d.add(p->N_trueId_Bu2Dst0h_D0pi0());
       RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
           ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           "",
           RooArgSet(p->pdfBu_misId_Bu2Dst0h_D0pi0(),
@@ -3068,7 +3067,7 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
       if (daughters == Daughters::pik) {
         RooProdPdf pdf2d_Bu2Dst0h_D0pi0_FAVasSUP(
             ("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
-             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+             ComposeName(id, neutral, bachelor, daughters, charge))
                 .c_str(),
             "",
             RooArgSet(p->pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
@@ -3078,55 +3077,57 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
       }
       RooProdPdf pdf2d_MisRec(
           ("pdf2d_MisRec_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           "", RooArgSet(p->pdfBu_MisRec(), p->pdfDelta_MisRec()));
       functions2d.add(pdf2d_MisRec);
       yields2d.add(p->N_trueId_MisRec());
       RooProdPdf pdf2d_PartRec(
           ("pdf2d_PartRec_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           "", RooArgSet(p->pdfBu_PartRec(), p->pdfDelta_PartRec()));
       functions2d.add(pdf2d_PartRec);
       yields2d.add(p->N_trueId_PartRec());
+      RooProdPdf *pdf2d_misId_MisRec;
+      RooProdPdf *pdf2d_misId_PartRec;
+      RooProdPdf *pdf2d_Bs2Dst0Kpi;
+      RooProdPdf *pdf2d_Bs2D0Kpi;
       if (bachelor == Bachelor::k) {
-        RooProdPdf pdf2d_misId_MisRec(
+        pdf2d_misId_MisRec = new RooProdPdf(
             ("pdf2d_misId_MisRec_" +
-             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+             ComposeName(id, neutral, bachelor, daughters, charge))
                 .c_str(),
-            "",
-            RooArgSet(p->pdfBu_misId_MisRec(), p->pdfDelta_misId_MisRec()));
-        functions2d.add(pdf2d_misId_MisRec);
+            "", RooArgSet(p->pdfBu_misId_MisRec(), p->pdfDelta_misId_MisRec()));
+        functions2d.add(*pdf2d_misId_MisRec);
         yields2d.add(p->N_misId_MisRec());
-        RooProdPdf pdf2d_misId_PartRec(
+        pdf2d_misId_PartRec = new RooProdPdf(
             ("pdf2d_misId_PartRec_" +
-             ComposeName(tmpId, neutral, bachelor, daughters, charge))
+             ComposeName(id, neutral, bachelor, daughters, charge))
                 .c_str(),
             "",
             RooArgSet(p->pdfBu_misId_PartRec(), p->pdfDelta_misId_PartRec()));
-        functions2d.add(pdf2d_misId_PartRec);
+        functions2d.add(*pdf2d_misId_PartRec);
         yields2d.add(p->N_misId_PartRec());
         if (daughters != Daughters::kpi &&
             Configuration::Get().runADS() == true) {
-          RooProdPdf pdf2d_Bs2Dst0Kpi(
+          pdf2d_Bs2Dst0Kpi = new RooProdPdf(
               ("pdf2d_Bs2Dst0Kpi_" +
-               ComposeName(tmpId, neutral, bachelor, daughters, charge))
+               ComposeName(id, neutral, bachelor, daughters, charge))
                   .c_str(),
               "", RooArgSet(p->pdfBu_Bs2Dst0Kpi(), p->pdfDelta_Bs2Dst0Kpi()));
-          functions2d.add(pdf2d_Bs2Dst0Kpi);
+          functions2d.add(*pdf2d_Bs2Dst0Kpi);
           yields2d.add(p->N_trueId_Bs2Dst0Kpi());
-          RooProdPdf pdf2d_Bs2D0Kpi(
+          pdf2d_Bs2D0Kpi = new RooProdPdf(
               ("pdf2d_Bs2D0Kpi_" +
-               ComposeName(tmpId, neutral, bachelor, daughters, charge))
+               ComposeName(id, neutral, bachelor, daughters, charge))
                   .c_str(),
               "", RooArgSet(p->pdfBu_Bs2D0Kpi(), p->pdfDelta_Bs2D0Kpi()));
-          functions2d.add(pdf2d_Bs2D0Kpi);
+          functions2d.add(*pdf2d_Bs2D0Kpi);
           yields2d.add(p->N_trueId_Bs2D0Kpi());
-
-          }
+            }
         }
-        RooAddPdf addPdf2d(("addPdf2d_" + ComposeName(tmpId, neutral, bachelor,
+        RooAddPdf addPdf2d(("addPdf2d_" + ComposeName(id, neutral, bachelor,
                                                       daughters, charge))
                                .c_str(),
                            "", functions2d, yields2d);
@@ -3135,28 +3136,42 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs, Configuration &config,
         double nYields = yields2d.getSize();
         double N_2d = 0.;
         RooAbsArg *N_AbsArg = nullptr;
-        RooRealVar *N_RealVar = nullptr;
+        RooAbsReal *N_AbsReal = nullptr;
         for (double i = 0; i < nYields; ++i) {
-          N_AbsArg = yields2d.find(yields2d.at(i)->GetName());
-          N_RealVar = dynamic_cast<RooRealVar *>(N_AbsArg);
-          N_2d += N_RealVar->getVal();
+          std::string N_str = yields2d.at(i)->GetName();
+          N_AbsArg = yields2d.find(N_str.c_str());
+          if (N_AbsArg == nullptr) {
+            throw std::runtime_error("N_AbsArg gives nullptr for " + N_str);
+          }
+          N_AbsReal = dynamic_cast<RooAbsReal *>(N_AbsArg);
+          if (N_AbsReal == nullptr) {
+            throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
+          }
+          N_2d += N_AbsReal->getVal();
       }
       std::cout << "Generating toy dataset..." << std::endl;
       RooDataSet *genData = addPdf2d.generate(
-          RooArgSet(config.buMass(), config.deltaMass()), N_2d);
+          RooArgSet(config.buDeltaMass(), config.deltaMass()), N_2d);
       genData->SetName(
-          ("gen_" + ComposeName(tmpId, neutral, bachelor, daughters, charge))
+          ("gen_" + ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str());
       std::cout << "Generated!" << std::endl;
       genData->Print();
 
       auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
           ("toyDataHist_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
           ("toyDataHist_" +
-           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+           ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str()));
+
+      gStyle->SetTitleSize(0.03, "XYZ");
+      gStyle->SetLabelSize(0.025, "XYZ");
+      gStyle->SetTitleOffset(1, "X");
+      gStyle->SetTitleOffset(1.2, "Y");
+      gStyle->SetTitleOffset(1.5, "Z");
+      gStyle->SetPadRightMargin(0.15);
 
       // Make two-dimensional plot of sampled PDF in x vs y
       TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
@@ -3869,6 +3884,7 @@ int main(int argc, char **argv) {
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
     simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     pdfs = p.second;
+    Run2DToysFromPdf(pdfs, config, outputDir, id);
     // Apply box cuts and split PDF into mass categories too
     std::map<std::string, RooDataSet *> mapFittingDataSet;
     for (auto &p : pdfs) {
@@ -3960,12 +3976,12 @@ int main(int argc, char **argv) {
       // Whilst blinding is in place, we need to store y-axis max for FAV
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
-      if (config.runSystematics() == false) {
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
-        }
-      }
+      // if (config.runSystematics() == false) {
+      // for (auto &p : pdfs) {
+      //   Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+      //              dataFitResult.get(), yMaxMap);
+      //   }
+      // }
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
