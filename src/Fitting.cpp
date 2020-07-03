@@ -3128,24 +3128,105 @@ void Run2DToysFromPdf(std::unique_ptr<RooSimultaneous> &simPdf,
           functions2d.add(pdf2d_Bs2D0Kpi);
           yields2d.add(p->N_trueId_Bs2D0Kpi());
 
-          RooAddPdf addPdf2d(
-              ("addPdf2d_" +
-               ComposeName(tmpId, neutral, bachelor, daughters, charge))
-                  .c_str(),
-              "", functions2d, yields2d);
-          // Number of events to generate is total of all yields BEFORE
-          // splitting
-          double nYields = yields2d.getSize();
-          double N_2d = 0.;
-          RooAbsArg* N_AbsArg = nullptr;
-          RooRealVar* N_RealVar = nullptr;
-          for (double i = 0; i < nYields; ++i) {
-            N_AbsArg = yields2d.find(yields2d.at(i)->GetName());
-            N_RealVar = dynamic_cast<RooRealVar *>(N_AbsArg);
-            N_2d += N_RealVar->getVal();
           }
         }
+        RooAddPdf addPdf2d(("addPdf2d_" + ComposeName(tmpId, neutral, bachelor,
+                                                      daughters, charge))
+                               .c_str(),
+                           "", functions2d, yields2d);
+        // Number of events to generate is total of all yields BEFORE
+        // splitting
+        double nYields = yields2d.getSize();
+        double N_2d = 0.;
+        RooAbsArg *N_AbsArg = nullptr;
+        RooRealVar *N_RealVar = nullptr;
+        for (double i = 0; i < nYields; ++i) {
+          N_AbsArg = yields2d.find(yields2d.at(i)->GetName());
+          N_RealVar = dynamic_cast<RooRealVar *>(N_AbsArg);
+          N_2d += N_RealVar->getVal();
       }
+      std::cout << "Generating toy dataset..." << std::endl;
+      RooDataSet *genData = addPdf2d.generate(
+          RooArgSet(config.buMass(), config.deltaMass()), N_2d);
+      genData->SetName(
+          ("gen_" + ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str());
+      std::cout << "Generated!" << std::endl;
+      genData->Print();
+
+      auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
+          ("toyDataHist_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str(),
+          ("toyDataHist_" +
+           ComposeName(tmpId, neutral, bachelor, daughters, charge))
+              .c_str()));
+
+      // Make two-dimensional plot of sampled PDF in x vs y
+      TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
+          ("histModel_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+          RooFit::YVar(config.deltaMass(),
+                       RooFit::Binning(config.deltaMass().getBins())));
+      histModel->SetTitle("");
+
+      // Make 2D plot of data
+      TH2F *histData = (TH2F *)dataHist->createHistogram(
+          "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
+          config.deltaMass().getBins());
+      histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
+                                                            daughters, charge))
+                            .c_str());
+      histData->SetTitle("");
+
+      // Scale model plot to total number of data events
+      histModel->Scale(histData->Integral());
+
+      // 2D PDF plot
+      TCanvas canvas2DPdf(
+          ("canvas2DPdf" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", 1000, 800);
+      histModel->SetStats(0);
+      histModel->Draw("colz");
+      histModel->SetTitle(("B^{" + EnumToLabel(charge) +
+                           "}#rightarrow#font[132]{[}#font[132]{[}" +
+                           EnumToLabel(daughters, charge) +
+                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                           "^{" + EnumToLabel(charge) + "}")
+                              .c_str());
+      histModel->Draw("colz");
+      canvas2DPdf.Update();
+      canvas2DPdf.SaveAs(
+          (outputDir + "/plots/AddPdf2d_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+              .c_str());
+
+      // 2D data plot
+      TCanvas canvas2DData(
+          ("canvas2DData" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", 1000, 800);
+      histData->SetStats(0);
+      histData->Draw("colz");
+      histData->SetTitle(("B^{" + EnumToLabel(charge) +
+                          "}#rightarrow#font[132]{[}#font[132]{[}" +
+                          EnumToLabel(daughters, charge) +
+                          "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
+                          "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
+                          "^{" + EnumToLabel(charge) + "}")
+                             .c_str());
+      histData->Draw("colz");
+      canvas2DData.Update();
+      canvas2DData.SaveAs(
+          (outputDir + "/plots/Toy2d_" +
+           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
+              .c_str());
     }
   }
 
