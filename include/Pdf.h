@@ -28,6 +28,22 @@ class PdfBase {
   inline RooAddPdf &addPdfBuPartial() { return *addPdfBuPartial_; }
   inline RooAddPdf &addPdfDelta() { return *addPdfDelta_; }
 
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_FAVasSUP() const = 0;
+  virtual RooFormulaVar &N_trueId_MisRec() const = 0;
+  virtual RooFormulaVar &N_trueId_Bu2D0h() const = 0;
+  virtual RooFormulaVar &N_trueId_PartRec() const = 0;
+  virtual RooFormulaVar &N_trueId_Bs2Dst0Kpi() const = 0;
+  virtual RooFormulaVar &N_trueId_Bs2D0Kpi() const = 0;
+
+  virtual RooFormulaVar &N_misId_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooFormulaVar &N_misId_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooFormulaVar &N_misId_MisRec() const = 0;
+  virtual RooFormulaVar &N_misId_Bu2D0h() const = 0;
+  virtual RooFormulaVar &N_misId_PartRec() const = 0;
+
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
@@ -128,6 +144,63 @@ class Pdf : public PdfBase {
         .AssignMisIdYields();
   }
 
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bu2Dst0h_D0gamma();
+  }
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma_FAVasSUP() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bu2Dst0h_D0gamma_FAVasSUP();
+  }
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bu2Dst0h_D0pi0();
+  }
+  virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_FAVasSUP() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bu2Dst0h_D0pi0_FAVasSUP();
+  }
+  virtual RooFormulaVar &N_trueId_MisRec() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_MisRec();
+  }
+  virtual RooFormulaVar &N_trueId_Bu2D0h() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bu2D0h();
+  }
+  virtual RooFormulaVar &N_trueId_PartRec() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_PartRec();
+  }
+  virtual RooFormulaVar &N_trueId_Bs2Dst0Kpi() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bs2Dst0Kpi();
+  }
+  virtual RooFormulaVar &N_trueId_Bs2D0Kpi() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_trueId_Bs2D0Kpi();
+  }
+
+  virtual RooFormulaVar &N_misId_Bu2Dst0h_D0gamma() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_misId_Bu2Dst0h_D0gamma();
+  }
+  virtual RooFormulaVar &N_misId_Bu2Dst0h_D0pi0() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_misId_Bu2Dst0h_D0pi0();
+  }
+  virtual RooFormulaVar &N_misId_MisRec() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_misId_MisRec();
+  }
+  virtual RooFormulaVar &N_misId_Bu2D0h() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_misId_Bu2D0h();
+  }
+  virtual RooFormulaVar &N_misId_PartRec() const {
+    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
+        .N_misId_PartRec();
+  }
 
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0gamma();

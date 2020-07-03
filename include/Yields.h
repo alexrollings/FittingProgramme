@@ -310,6 +310,30 @@ class Yields {
   RooFormulaVar &N_split_Bs2Dst0Kpi() { return *N_split_Bs2Dst0Kpi_; }
   RooFormulaVar &N_split_Bs2D0Kpi() { return *N_split_Bs2D0Kpi_; }
 
+  RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() {
+    return *N_trueId_Bu2Dst0h_D0gamma_;
+  }
+  RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma_FAVasSUP() {
+    return *N_trueId_Bu2Dst0h_D0gamma_FAVasSUP_;
+  }
+  RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0() { return *N_trueId_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_FAVasSUP() {
+    return *N_trueId_Bu2Dst0h_D0pi0_FAVasSUP_;
+  }
+  RooFormulaVar &N_trueId_MisRec() { return *N_trueId_MisRec_; }
+  RooFormulaVar &N_trueId_Bu2D0h() { return *N_trueId_Bu2D0h_; }
+  RooFormulaVar &N_trueId_PartRec() { return *N_trueId_PartRec_; }
+  RooFormulaVar &N_trueId_Bs2Dst0Kpi() { return *N_trueId_Bs2Dst0Kpi_; }
+  RooFormulaVar &N_trueId_Bs2D0Kpi() { return *N_trueId_Bs2D0Kpi_; }
+
+  RooFormulaVar &N_misId_Bu2Dst0h_D0gamma() {
+    return *N_misId_Bu2Dst0h_D0gamma_;
+  }
+  RooFormulaVar &N_misId_Bu2Dst0h_D0pi0() { return *N_misId_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &N_misId_MisRec() { return *N_misId_MisRec_; }
+  RooFormulaVar &N_misId_Bu2D0h() { return *N_misId_Bu2D0h_; }
+  RooFormulaVar &N_misId_PartRec() { return *N_misId_PartRec_; }
+
   RooFormulaVar &N_trueId_Delta_Bu2Dst0h_D0gamma() {
     return *N_trueId_Delta_Bu2Dst0h_D0gamma_;
   }
@@ -460,11 +484,11 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2D0Kpi_;
 
-  std::unique_ptr<RooAbsReal> N_misId_Bu2Dst0h_D0gamma_;
-  std::unique_ptr<RooAbsReal> N_misId_Bu2Dst0h_D0pi0_;
-  std::unique_ptr<RooAbsReal> N_misId_MisRec_;
-  std::unique_ptr<RooAbsReal> N_misId_Bu2D0h_;
-  std::unique_ptr<RooAbsReal> N_misId_PartRec_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0h_D0gamma_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0h_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_MisRec_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2D0h_;
+  std::unique_ptr<RooFormulaVar> N_misId_PartRec_;
 
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0pi0_;
