@@ -2555,10 +2555,10 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
                         .c_str());
 }
 
-void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
-                std::map<std::string, RooDataSet *> &mapDataLabelToy,
-                int const id, PdfBase &pdf, Configuration &config,
-                std::string const &outputDir) {
+void GenerateToyFromData(
+    std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+    std::map<std::string, RooDataSet *> &mapDataLabelToy, int const id,
+    PdfBase &pdf, Configuration &config, std::string const &outputDir) {
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(1.025, "XYZ");
   gStyle->SetTitleOffset(1, "X");
@@ -2586,112 +2586,6 @@ void Generate2D(std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
       ("histPdf_" + ComposeDataLabelName(neutral, bachelor, daughters, charge))
           .c_str(),
       "", config.fittingArgSet(), *dataHist.get(), 2);
-  //
-  // RooPlot *frame1 = config.buDeltaMass().frame(RooFit::Title(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
-  //     +
-  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
-  //      EnumToLabel(bachelor) +
-  //      "^{" + EnumToLabel(charge) + "}")
-  //         .c_str()));
-  // dataHist->plotOn(frame1);
-  // histPdf.plotOn(frame1, RooFit::LineColor(kBlue));
-  //
-  // RooPlot *frame2 = config.deltaMass().frame(RooFit::Title(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
-  //     +
-  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
-  //      EnumToLabel(bachelor) +
-  //      "^{" + EnumToLabel(charge) + "}")
-  //         .c_str()));
-  // dataHist->plotOn(frame2);
-  // histPdf.plotOn(frame2, RooFit::LineColor(kBlue));
-  //
-  // TCanvas canvas_1d(("canvas_1d_" + ComposeDataLabelName(neutral, bachelor,
-  // daughters, charge)).c_str(), "canvas", 1800, 900); canvas_1d.Divide(2, 1);
-  //
-  // canvas_1d.cd(1);
-  // frame1->Draw();
-  //
-  // canvas_1d.cd(2);
-  // frame2->Draw();
-  //
-  // canvas_1d.Update();
-  // canvas_1d.SaveAs(
-  //     (outputDir + "/plots/1DProjections_" + ComposeDataLabelName(neutral,
-  //     bachelor, daughters, charge) + ".pdf")
-  //         .c_str());
-  //
-  // // Make two-dimensional plot of sampled PDF in x vs y
-  // TH2F *histModel = (TH2F *)histPdf.createHistogram(
-  //     ("histModel_" +
-  //      ComposeDataLabelName(neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-  //     RooFit::YVar(config.deltaMass(),
-  //                  RooFit::Binning(config.deltaMass().getBins())));
-  // histModel->SetTitle("");
-  //
-  // // Make 2D plot of data
-  // TH2F *histData = (TH2F *)dataHist->createHistogram(
-  //     "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
-  //     config.deltaMass().getBins());
-  // histData->SetName(
-  //     ("histData_" + ComposeDataLabelName(neutral, bachelor, daughters,
-  //     charge))
-  //         .c_str());
-  // histData->SetTitle("");
-  //
-  // // Scale model plot to total number of data events
-  // histModel->Scale(histData->Integral());
-  //
-  // // 2D PDF plot
-  // TCanvas canvas2DPdf(("canvas2DPdf" + ComposeDataLabelName(neutral,
-  // bachelor,
-  //                                                           daughters,
-  //                                                           charge))
-  //                         .c_str(),
-  //                     "", 1000, 800);
-  // histModel->SetStats(0);
-  // histModel->Draw("colz");
-  // histModel->SetTitle(
-  //     ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}"
-  //     +
-  //      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
-  //      EnumToLabel(neutral) + "#font[132]{]}_{D^{*0}}" +
-  //      EnumToLabel(bachelor) +
-  //      "^{" + EnumToLabel(charge) + "}")
-  //         .c_str());
-  // histModel->Draw("colz");
-  // canvas2DPdf.Update();
-  // canvas2DPdf.SaveAs(
-  //     (outputDir + "/plots/2DHistPdf_" +
-  //      ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-  //         .c_str());
-  //
-  // // 2D data plot
-  // TCanvas canvas2DData(
-  //     ("canvas2DData" +
-  //      ComposeDataLabelName(neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "", 1000, 800);
-  // histData->SetStats(0);
-  // histData->Draw("colz");
-  // histData->SetTitle(("B^{" + EnumToLabel(charge) +
-  //                     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //                     EnumToLabel(daughters, charge) +
-  //                     "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-  //                     "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) + "^{"
-  //                     + EnumToLabel(charge) + "}")
-  //                        .c_str());
-  // histData->Draw("colz");
-  // canvas2DData.Update();
-  // canvas2DData.SaveAs(
-  //     (outputDir + "/plots/2DData_" +
-  //      ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-  //         .c_str());
 
   auto toyData = histPdf.generate(
       config.fittingArgSet(),
@@ -2801,12 +2695,13 @@ void MakeMapFittingDataSet(
   }
 }
 
-void Run2DToys(TFile &outputFile,
-               std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
-               Configuration &config,
-               std::vector<Daughters> const &daughtersVec,
-               std::vector<Charge> const &chargeVec,
-               std::string const &outputDir, int id) {
+void RunToys2DData(TFile &outputFile,
+                   std::unique_ptr<RooFitResult> &dataFitResult,
+                   std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+                   Configuration &config,
+                   std::vector<Daughters> const &daughtersVec,
+                   std::vector<Charge> const &chargeVec,
+                   std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running toy #" << id
             << " -------------------------- \n\n";
   auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
@@ -2815,7 +2710,8 @@ void Run2DToys(TFile &outputFile,
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 
   for (auto &p : pdfs) {
-    Generate2D(mapDataLabelDataSet, mapDataLabelToy, id, *p, config, outputDir);
+    GenerateToyFromData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config,
+                        outputDir);
   }
 
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
@@ -2881,6 +2777,7 @@ void Run2DToys(TFile &outputFile,
     toyFitResult->Print("v");
     outputFile.cd();
     toyFitResult->Write();
+    dataFitResult->Write();
     outputFile.Close();
     std::cout << toyFitResult->GetName() << " has been saved to file "
               << outputFile.GetName() << "\n";
@@ -2979,9 +2876,9 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   }
 }
 
-void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
-                       int id, PdfBase &pdf, Configuration &config,
-                       std::string const &outputDir) {
+void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+                        int id, PdfBase &pdf, Configuration &config,
+                        std::string const &outputDir) {
   Neutral neutral = pdf.neutral();
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -3118,98 +3015,14 @@ void Generate2DFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                                             charge) +
                        "\n";
     }
-
-    if (id == 1) {
-      auto dataHist = std::unique_ptr<RooDataHist>(genData->binnedClone(
-          ("toyDataHist_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          ("toyDataHist_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str()));
-
-      gStyle->SetTitleSize(0.03, "XYZ");
-      gStyle->SetLabelSize(0.025, "XYZ");
-      gStyle->SetTitleOffset(1, "X");
-      gStyle->SetTitleOffset(1.2, "Y");
-      gStyle->SetTitleOffset(1.5, "Z");
-      gStyle->SetPadRightMargin(0.15);
-
-      // Make two-dimensional plot of sampled PDF in x vs y
-      TH2F *histModel = (TH2F *)addPdf2d.createHistogram(
-          ("histModel_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
-          RooFit::YVar(config.deltaMass(),
-                       RooFit::Binning(config.deltaMass().getBins())));
-      histModel->SetTitle("");
-
-      // Make 2D plot of data
-      TH2F *histData = (TH2F *)dataHist->createHistogram(
-          "Bu_Delta_M,Delta_M", config.buDeltaMass().getBins(),
-          config.deltaMass().getBins());
-      histData->SetName(("histData_" + ComposeDataLabelName(neutral, bachelor,
-                                                            daughters, charge))
-                            .c_str());
-      histData->SetTitle("");
-
-      // Scale model plot to total number of data events
-      histModel->Scale(histData->Integral());
-
-      // 2D PDF plot
-      TCanvas canvas2DPdf(
-          ("canvas2DPdf" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", 1000, 800);
-      histModel->SetStats(0);
-      histModel->Draw("colz");
-      histModel->SetTitle(("B^{" + EnumToLabel(charge) +
-                           "}#rightarrow#font[132]{[}#font[132]{[}" +
-                           EnumToLabel(daughters, charge) +
-                           "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                           "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                           "^{" + EnumToLabel(charge) + "}")
-                              .c_str());
-      histModel->Draw("colz");
-      canvas2DPdf.Update();
-      canvas2DPdf.SaveAs(
-          (outputDir + "/plots/AddPdf2d_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-              .c_str());
-
-      // 2D data plot
-      TCanvas canvas2DData(
-          ("canvas2DData" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", 1000, 800);
-      histData->SetStats(0);
-      histData->Draw("colz");
-      histData->SetTitle(("B^{" + EnumToLabel(charge) +
-                          "}#rightarrow#font[132]{[}#font[132]{[}" +
-                          EnumToLabel(daughters, charge) +
-                          "#font[132]{]}_{D^{0}}" + EnumToLabel(neutral) +
-                          "#font[132]{]}_{D^{*0}}" + EnumToLabel(bachelor) +
-                          "^{" + EnumToLabel(charge) + "}")
-                             .c_str());
-      histData->Draw("colz");
-      canvas2DData.Update();
-      canvas2DData.SaveAs(
-          (outputDir + "/plots/Toy2d_" +
-           ComposeDataLabelName(neutral, bachelor, daughters, charge) + ".pdf")
-              .c_str());
-    }
   }
 }
-void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
-                      std::unique_ptr<RooSimultaneous> &simPdf,
-                      TFile &outputFile,
-                      std::unique_ptr<RooFitResult> &dataFitResult,
-                      Configuration &config, std::string const &outputDir,
-                      std::vector<Daughters> const &daughtersVec,
-                      std::vector<Charge> const &chargeVec, int id) {
+void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
+                  std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
+                  std::unique_ptr<RooFitResult> &dataFitResult,
+                  Configuration &config, std::string const &outputDir,
+                  std::vector<Daughters> const &daughtersVec,
+                  std::vector<Charge> const &chargeVec, int id) {
   std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
             << " -------------------------- \n\n";
   // Setting the random seed to 0 is a special case which generates a
@@ -3220,7 +3033,7 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 
   for (auto &p : pdfs) {
-    Generate2DFromPdf(mapDataLabelToy, id, *p, config, outputDir);
+    GenerateToyFromPdf(mapDataLabelToy, id, *p, config, outputDir);
   }
 
   for (auto &m : mapDataLabelToy) {
@@ -3257,17 +3070,17 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
     toyFitResult->SetName("ToyResult");
     // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
-  if (id == 1) {
-    auto toyPdfs = p.second;
-    std::map<Neutral, std::map<Mass, double> > yMaxMap;
-    for (auto &p : toyPdfs) {
-      Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-                 toyFitResult.get(), yMaxMap);
-    }
-    if (config.noFit() == false) {
-      PlotCorrelations(toyFitResult.get(), outputDir, config);
-    }
-  }
+  // if (id == 1) {
+  //   auto toyPdfs = p.second;
+  //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
+  //   for (auto &p : toyPdfs) {
+  //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+  //                toyFitResult.get(), yMaxMap);
+  //   }
+  //   if (config.noFit() == false) {
+  //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+  //   }
+  // }
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
@@ -3280,12 +3093,12 @@ void Run2DToysFromPdf(std::vector<PdfBase *> &pdfs,
   }
 }
 
-void RunD1DToys(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
-                Configuration &config,
-                std::unique_ptr<RooFitResult> &dataFitResult,
-                std::vector<Daughters> const &daughtersVec,
-                std::vector<Charge> const &chargeVec,
-                std::string const &outputDir, int id) {
+void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
+                   Configuration &config,
+                   std::unique_ptr<RooFitResult> &dataFitResult,
+                   std::vector<Daughters> const &daughtersVec,
+                   std::vector<Charge> const &chargeVec,
+                   std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running toy #" << id
             << " -------------------------- \n\n";
   // Setting the random seed to 0 is a special case which generates a
@@ -3399,7 +3212,9 @@ int main(int argc, char **argv) {
 
   int nToys = 0;
   int nSyst = 1;
-  bool d1dToys = false;
+  bool pdfD1D = false;
+  bool pdf2D = false;
+  bool data2D = false;
   Configuration &config = Configuration::Get();
 
   // By letting the ParseArguments object go out of scope it will print a
@@ -3459,8 +3274,9 @@ int main(int argc, char **argv) {
                 << chargeArg << ">\n";
       std::cout << "    -toys=<# toys>"
                 << "\n";
-      std::cout << "    -D1D, to run D1D toys generated from PDF after fitting "
-                   "to data. Default is 2D toys, generated from RooHistPdf of "
+      std::cout << "    -pdfD1D, to run D1D toys generated from D1D PDF"
+                << "    -pdf2D, to run 2D toys generated from 2D PDF"
+                << "    -data2D, to run 2D toys generated from RooHistPdf of "
                    "data.\n";
       std::cout
           << "    -systematic=<choice "
@@ -3500,11 +3316,19 @@ int main(int argc, char **argv) {
         nToys = toysArg;
         config.runToy() = true;
         std::cout << "Running " << nToys << " toys\n";
-        if (args("D1D")) {
-          d1dToys = true;
+        if (args("pdfD1D")) {
+          pdfD1D = true;
           std::cout << "Toys generated from D1D PDF.\n";
-        } else {
+        } else if (args("pdf2D")) {
+          pdf2D = true;
+          std::cout << "Toys generated from 2D PDF.\n";
+        } else if (args("data2D")) {
+          data2D = true;
           std::cout << "Toys generated from 2D data.\n";
+        } else {
+          std::cerr
+              << "Must specify type of toy to run: pdfD1D, pdf2D, data2D\n";
+          return 1;
         }
       }
 
@@ -3712,7 +3536,7 @@ int main(int argc, char **argv) {
   config.DefineCategories();
 
   // Declare simPDF and result before any if statements so that it can be
-  // passed to RunD1DToys no matter what
+  // passed to RunToysD1DPdf no matter what
   std::unique_ptr<RooSimultaneous> simPdf;
   std::vector<PdfBase *> pdfs;
   std::unique_ptr<RooFitResult> dataFitResult;
@@ -3858,27 +3682,6 @@ int main(int argc, char **argv) {
       }
     }
 
-    std::vector<std::string> toyFileNames(nToys);
-    // if (config.runToy() == true && d1dToys == false) {
-    //   // start at id = 1 to reserve 0 for data fit
-    //   for (int id = 1; id < nToys + 1; ++id) {
-    //     RooRandom::randomGenerator()->SetSeed(0);
-    //     TRandom3 random(0);
-    //     double randomTag = random.Rndm();
-    //     TFile toyResultFile(
-    //         (outputDir + "/results/Result2D_" + config.ReturnBoxString() +
-    //         "_" +
-    //          std::to_string(randomTag) + ".root")
-    //             .c_str(),
-    //         "recreate");
-    //     // Pass random??
-    //     Run2DToys(toyResultFile, mapDataLabelDataSet, config, daughtersVec,
-    //               chargeVec, outputDir, id);
-    //     toyFileNames[id - 1] = toyResultFile.GetName();
-    //     toyResultFile.Close();
-    //   }
-    // }
-
     // id = 0 for data fit
     int id = 0;
     auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
@@ -3950,7 +3753,7 @@ int main(int argc, char **argv) {
         systResultFile.Close();
       }
     }
-    if (config.runToy() == true && d1dToys == false) {
+    if (config.runToy() == true && data2D == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -3961,14 +3764,31 @@ int main(int argc, char **argv) {
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
-        Run2DToysFromPdf(pdfs, simPdf, toyResultFile, dataFitResult, config,
-                         outputDir, daughtersVec, chargeVec, id);
-        toyFileNames[id - 1] = toyResultFile.GetName();
+        // Pass random??
+        RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet, config,
+                      daughtersVec, chargeVec, outputDir, id);
         toyResultFile.Close();
       }
     }
 
-    if (config.runToy() == true && d1dToys == true) {
+    if (config.runToy() == true && pdf2D == true) {
+      // start at id = 1 to reserve 0 for data fit
+      for (int id = 1; id < nToys + 1; ++id) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        double randomTag = random.Rndm();
+        TFile toyResultFile(
+            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
+             std::to_string(randomTag) + ".root")
+                .c_str(),
+            "recreate");
+        RunToys2DPdf(pdfs, simPdf, toyResultFile, dataFitResult, config,
+                     outputDir, daughtersVec, chargeVec, id);
+        toyResultFile.Close();
+      }
+    }
+
+    if (config.runToy() == true && pdfD1D == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
         RooRandom::randomGenerator()->SetSeed(0);
@@ -3979,9 +3799,8 @@ int main(int argc, char **argv) {
              "_" + std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
-        RunD1DToys(simPdf, toyResultFile, config, dataFitResult, daughtersVec,
-                   chargeVec, outputDir, id);
-        toyFileNames[id - 1] = toyResultFile.GetName();
+        RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
+                      daughtersVec, chargeVec, outputDir, id);
         toyResultFile.Close();
       }
     }
@@ -4001,114 +3820,6 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        int tmpId = 0;
-        if (config.neutral() == Neutral::pi0) {
-          std::string pi0RatioName =
-              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(tmpId)
-                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()
-                  .GetName();
-          std::string misRatioName =
-              NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(tmpId)
-                  .R_Dst0KDst0pi_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << pi0RatioName << " and "
-                    << misRatioName << ":\t "
-                    << dataFitResult->correlation(pi0RatioName.c_str(),
-                                                  misRatioName.c_str())
-                    << "\n";
-          std::string pi0AsymName =
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_Bu2Dst0h_D0pi0()
-                  .GetName();
-          std::string misAsymName =
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::k,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << pi0AsymName << " and "
-                    << misAsymName << ":\t "
-                    << dataFitResult->correlation(pi0AsymName.c_str(),
-                                                  misAsymName.c_str())
-                    << "\n";
-          std::string prodAsymName =
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_Bu2Dst0h_D0pi0()
-                  .GetName();
-          std::string misPiAsymName =
-              NeutralBachelorDaughtersVars<Neutral::pi0, Bachelor::pi,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << prodAsymName << " and "
-                    << misPiAsymName << ":\t "
-                    << dataFitResult->correlation(prodAsymName.c_str(),
-                                                  misPiAsymName.c_str())
-                    << "\n";
-        } else {
-          std::string pi0RatioName =
-              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
-                  .R_Dst0KDst0pi_Bu2Dst0h_D0pi0()
-                  .GetName();
-          std::string misRatioName =
-              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
-                  .R_Dst0KDst0pi_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << pi0RatioName << " and "
-                    << misRatioName << ":\t "
-                    << dataFitResult->correlation(pi0RatioName.c_str(),
-                                                  misRatioName.c_str())
-                    << "\n";
-          std::string gammaRatioName =
-              NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::Get(tmpId)
-                  .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()
-                  .GetName();
-          std::cout << "Correlation of " << gammaRatioName << " and "
-                    << misRatioName << ":\t "
-                    << dataFitResult->correlation(gammaRatioName.c_str(),
-                                                  misRatioName.c_str())
-                    << "\n";
-          std::string pi0AsymName =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_Bu2Dst0h_D0pi0()
-                  .GetName();
-          std::string misAsymName =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << pi0AsymName << " and "
-                    << misAsymName << ":\t "
-                    << dataFitResult->correlation(pi0AsymName.c_str(),
-                                                  misAsymName.c_str())
-                    << "\n";
-          std::string gammaAsymName =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::k,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_Bu2Dst0h_D0gamma()
-                  .GetName();
-          std::cout << "Correlation of " << gammaAsymName << " and "
-                    << misAsymName << ":\t "
-                    << dataFitResult->correlation(gammaAsymName.c_str(),
-                                                  misAsymName.c_str())
-                    << "\n";
-          std::string prodAsymName =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_Bu2Dst0h_D0gamma()
-                  .GetName();
-          std::string misPiAsymName =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>::Get(tmpId)
-                  .A_MisRec()
-                  .GetName();
-          std::cout << "Correlation of " << prodAsymName << " and "
-                    << misPiAsymName << ":\t "
-                    << dataFitResult->correlation(prodAsymName.c_str(),
-                                                  misPiAsymName.c_str());
-        }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
@@ -4130,18 +3841,6 @@ int main(int argc, char **argv) {
     } else {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        // for (int id = 1; id < nToys + 1; ++id) {
-        //   if (dataFitResult != nullptr) {
-        //     TFile toyResultFile(toyFileNames[id - 1].c_str(), "update");
-        //     dataFitResult->Write();
-        //     toyResultFile.Close();
-        //     std::cout << "DataFitResult saved to file " << toyFileNames[id
-        //     - 1]
-        //               << "\n";
-        //   } else {
-        //     throw std::runtime_error("DataFitResult empty.");
-        //   }
-        // }
       }
     }
   } else {
