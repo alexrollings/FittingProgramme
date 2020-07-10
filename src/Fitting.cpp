@@ -2877,6 +2877,7 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
 }
 
 void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+                        std::map<std::string, RooDataSet *> &mapDataLabelData,
                         int id, PdfBase &pdf, Configuration &config,
                         std::string const &outputDir) {
   Neutral neutral = pdf.neutral();
@@ -2998,6 +2999,9 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     std::cout << "Generated!" << std::endl;
     genData->Print();
 
+    mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+        ->Print();
+
     if (mapDataLabelToy.find(ComposeDataLabelName(
             neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
       mapDataLabelToy.insert(std::make_pair(
@@ -3018,6 +3022,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
   }
 }
 void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
+                  std::map<std::string, RooDataSet *> &mapDataLabelData,
                   std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
                   std::unique_ptr<RooFitResult> &dataFitResult,
                   Configuration &config, std::string const &outputDir,
@@ -3033,7 +3038,8 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 
   for (auto &p : pdfs) {
-    GenerateToyFromPdf(mapDataLabelToy, id, *p, config, outputDir);
+    GenerateToyFromPdf(mapDataLabelToy, mapDataLabelData, id, *p, config,
+                       outputDir);
   }
 
   for (auto &m : mapDataLabelToy) {
@@ -3782,7 +3788,7 @@ int main(int argc, char **argv) {
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
-        RunToys2DPdf(pdfs, simPdf, toyResultFile, dataFitResult, config,
+        RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile, dataFitResult, config,
                      outputDir, daughtersVec, chargeVec, id);
         toyResultFile.Close();
       }
