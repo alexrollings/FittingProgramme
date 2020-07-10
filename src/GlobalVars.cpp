@@ -60,6 +60,17 @@ GlobalVars::GlobalVars(int uniqueId)
           "0.5*(@0+@1)",
           RooArgList(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
                      *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
+  // Total PID eff from MC effs, and systematic from gamma MC vs data difference
+  // (higher stats)
+  // pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
+  //     Params::Get().CreateFixed("pidEffK", uniqueId_,
+  //                               Configuration::Get().neutral(), c,
+  //                               ReturnPidEffs(Charge::total, true), 0.01,
+  //                               Systematic::pidEffK, Sign::positive);
+  // pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
+  //     pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
+  // pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
+  //     pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   // One floating PID eff for pi
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
       // Params::Get().CreateFloating("pidEffPi", uniqueId_,
