@@ -2990,6 +2990,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
       }
       N_2d += N_AbsReal->getVal();
     }
+    // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+    //     ->numEntries();
     std::cout << "Generating toy dataset..." << std::endl;
     RooDataSet *genData = addPdf2d.generate(
         RooArgSet(config.buDeltaMass(), config.deltaMass()), N_2d);
@@ -3001,6 +3003,137 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
 
     mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
         ->Print();
+
+    // double N_2d =
+    //     mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters,
+    //                                           charge)]
+    //         // ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+    //         //           "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+    //         //           ")||(Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+    //         //           "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()) +
+    //         //           ")")
+    //         //              .c_str())
+    //         ->numEntries();
+    // std::cout << "Generating toy dataset with " << N_2d << " events..." << std::endl;
+    // Generate 50% more events than needed
+    // int nEvtsToGenerate = (int)N_2d * 2;
+    // // tmp dataset w/ more events than needed
+    // RooDataSet *tmpToy =
+    //     addPdf2d.generate(config.fittingArgSet(), nEvtsToGenerate);
+    // tmpToy->SetName(
+    //     ("tmpToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+    //         .c_str());
+    // std::cout << "# of events generated = " << tmpToy->numEntries() << "\n";
+    // RooDataSet *boxToy = nullptr;
+    // if (tmpToy != nullptr) {
+    //   boxToy = dynamic_cast<RooDataSet *>(tmpToy->reduce(
+    //       ("(Delta_M>" + std::to_string(config.deltaLow()) + "&&Delta_M<" +
+    //        std::to_string(config.deltaHigh()) + ")||(Bu_Delta_M>" +
+    //        std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
+    //        std::to_string(config.buDeltaHigh()) + ")")
+    //           .c_str()));
+    // } else {
+    //   throw std::runtime_error("tmpToy is empty.\n");
+    // }
+    // if (boxToy == nullptr) {
+    //   throw std::runtime_error("Could not reduce tmpToy with box cuts.\n");
+    // }
+    // boxToy->SetName(
+    //     ("boxToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+    //         .c_str());
+    // std::cout << "# of events left after box cuts = " << boxToy->numEntries()
+    //           << "\n";
+    // RooDataSet *genData = new RooDataSet(
+    //     ("genData_" + ComposeName(id, neutral, bachelor, daughters, charge))
+    //         .c_str(),
+    //     "", config.fittingArgSet());
+    // // Loop ober tmp dataset and sample # of events in data (assumed random
+    // // storage of events in DS)
+    // for (int i = 0; i < N_2d; ++i) {
+    //   if (boxToy->get(i) == nullptr) {
+    //     throw std::runtime_error("Could not extract event " +
+    //                              std::to_string(i) + " from boxToy.\n");
+    //   }
+    //   genData->add(*boxToy->get(i));
+    // }
+    std::cout << "# of events in toy DS = " << genData->numEntries() << "\n";
+    std::cout << "Generated!" << std::endl;
+
+    RooAbsData *gds = genData->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                      "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+                      ")||(Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                      "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()) +
+                      ")")
+                         .c_str());
+    std::cout << "nEvts = " << gds->numEntries() << "\n";
+    std::cout
+        << "nEvts in box = "
+        << gds
+               ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                         "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+                         ")&&(Bu_Delta_M>" +
+                         std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
+                         std::to_string(config.buDeltaHigh()) + ")")
+                            .c_str())
+               ->numEntries()
+        << "\n";
+
+    std::cout << "nEvts in delta = "
+              << gds
+                     ->reduce(("(Bu_Delta_M>" +
+                               std::to_string(config.buDeltaLow()) +
+                               "&&Bu_Delta_M<" +
+                               std::to_string(config.buDeltaHigh()) + ")")
+                                  .c_str())
+                     ->numEntries()
+              << "\n";
+
+    std::cout << "nEvts in bu = "
+              << gds
+                     ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                               "&&Delta_M<" +
+                               std::to_string(config.deltaHigh()) + ")")
+                                  .c_str())
+                     ->numEntries()
+              << "\n";
+    RooAbsData *ds =
+        mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters,
+                                              charge)]
+            ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                      "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+                      ")||(Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                      "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()) +
+                      ")")
+                         .c_str());
+    std::cout << "nEvts = " << ds->numEntries() << "\n";
+    std::cout << "nEvts in box = "
+              << ds->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                             "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+                             ")&&(Bu_Delta_M>" +
+                             std::to_string(config.buDeltaLow()) +
+                             "&&Bu_Delta_M<" +
+                             std::to_string(config.buDeltaHigh()) + ")")
+                                .c_str())
+                     ->numEntries()
+              << "\n";
+
+    std::cout << "nEvts in delta = "
+              << ds->reduce(("(Bu_Delta_M>" +
+                             std::to_string(config.buDeltaLow()) +
+                             "&&Bu_Delta_M<" +
+                             std::to_string(config.buDeltaHigh()) + ")")
+                                .c_str())
+                     ->numEntries()
+              << "\n";
+
+    std::cout << "nEvts in bu = "
+              << ds->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                             "&&Delta_M<" + std::to_string(config.deltaHigh()) +
+                             ")")
+                                .c_str())
+                     ->numEntries()
+              << "\n";
+
 
     if (mapDataLabelToy.find(ComposeDataLabelName(
             neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
