@@ -6,7 +6,7 @@ std::string MakePidKey(Bachelor bachelor, Charge charge) {
 
 double ReturnPidEffs(Charge charge, bool returnEff) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_scripts/pid_corr/output/PID_effs_" +
+      "/home/rollings/Bu2Dst0h_scripts/pid_corr/output/PID_effs_mc_" +
       EnumToString(Configuration::Get().neutral()) + ".txt";
   if (!fexists(txtFileName)) {
     throw std::logic_error("ReturnPidEffs: " + txtFileName + " doesn't exist.");
@@ -45,33 +45,32 @@ GlobalVars::GlobalVars(int uniqueId)
       a_pi_(
           MakeLittleAsym(("a_pi_" + std::to_string(uniqueId_)).c_str(), *A_pi_)),
       pidEffMap_() {
-  std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
-  for (auto &c : chargeVec) {
-    pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
-        "pidEffK", uniqueId_, Configuration::Get().neutral(), c,
-        ReturnPidEffs(c, true), ReturnPidEffs(c, false), Systematic::pidEffK,
-        Sign::positive);
-  }
-  pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
-      std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
-          ("pidEffK_" + ComposeName(uniqueId_, Configuration::Get().neutral(),
-                                    Charge::total))
-              .c_str(),
-          "0.5*(@0+@1)",
-          RooArgList(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
-                     *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
+  // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
+  // for (auto &c : chargeVec) {
+  //   pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
+  //       "pidEffK", uniqueId_, Configuration::Get().neutral(), c,
+  //       ReturnPidEffs(c, true), ReturnPidEffs(c, false), Systematic::pidEffK,
+  //       Sign::positive);
+  // }
+  // pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
+  //     std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+  //         ("pidEffK_" + ComposeName(uniqueId_, Configuration::Get().neutral(),
+  //                                   Charge::total))
+  //             .c_str(),
+  //         "0.5*(@0+@1)",
+  //         RooArgList(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
+  //                    *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
   // Total PID eff from MC effs, and systematic from gamma MC vs data difference
   // (higher stats)
-  // pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
-  //     Params::Get().CreateFixed("pidEffK", uniqueId_,
-  //                               Configuration::Get().neutral(), c,
-  //                               ReturnPidEffs(Charge::total, true), 0.01,
-  //                               Systematic::pidEffK, Sign::positive);
-  // pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
-  //     pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
-  // pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
-  //     pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
-  // One floating PID eff for pi
+  pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
+      Params::Get().CreateFixed("pidEffK", uniqueId_,
+                                Configuration::Get().neutral(), Charge::total,
+                                ReturnPidEffs(Charge::total, true), 0.01,
+                                Systematic::pidEffK, Sign::positive);
+  pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
+      pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
+  pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
+      pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
       // Params::Get().CreateFloating("pidEffPi", uniqueId_,
       //                              Configuration::Get().neutral(),
