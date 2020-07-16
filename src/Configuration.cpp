@@ -1563,7 +1563,7 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
       decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
       std::string fName;
       if (D02pik == false) {
-        fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_FIT.root";
+        fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_Fit.root";
       } else {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       }
