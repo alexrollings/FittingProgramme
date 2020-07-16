@@ -41,6 +41,7 @@
 #include "Pdf.h"
 
 #include "Plotting.h"
+#include "Fitting.h"
 
 void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
                 std::unique_ptr<RooFitResult> &dataFitResult,
