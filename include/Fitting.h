@@ -25,3 +25,8 @@ void AddPdfsPi0Plus(Configuration &config,
 void AddPdfsPi0Minus(Configuration &config,
                        std::vector<Daughters> const &daughtersVec, int id,
                        std::vector<PdfBase *> &pdfs);
+
+std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
+    int const id, Configuration &config,
+    std::vector<Daughters> const &daughtersVec,
+    std::vector<Charge> const &chargeVec);
