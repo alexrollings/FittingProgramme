@@ -43,7 +43,9 @@ set(FITTING_SRC
     src/Pi0PiVars.cpp
     src/Pi0Vars.cpp
     src/RooCruijff.cpp
-    src/Yields.cpp)
+    src/Yields.cpp
+    src/Plotting.cpp
+    src/ToyFunctions.cpp)
 add_library(fittingsrc ${FITTING_SRC})
 set(FITTING_LIBS ${FITTING_LIBS} fittingsrc)
 
