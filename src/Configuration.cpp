@@ -1670,10 +1670,10 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     } else {
       cutStr = "abs(D0_M_DOUBLESW_KP-1864)>15";
     }
-    cutStr += "&&Bu_Delta_M>" + std::to_string(buDeltaMass_.getMax()) +
-              "&&Bu_Delta_M<" + std::to_string(buDeltaMass_.getMin()) +
-              "&&Delta_M>" + std::to_string(deltaMass_.getMax()) +
-              "&&Delta_M<, ttree" + std::to_string(deltaMass_.getMin());
+    cutStr += "&&Bu_Delta_M<" + std::to_string(buDeltaMass_.getMax()) +
+              "&&Bu_Delta_M>" + std::to_string(buDeltaMass_.getMin()) +
+              "&&Delta_M<" + std::to_string(deltaMass_.getMax()) +
+              "&&Delta_M>" + std::to_string(deltaMass_.getMin());
 
     std::string orString;
     if (fitBuPartial_ == false) {
