@@ -135,7 +135,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   .Bu2Dst0h_D0pi0_KpiSigmaBuPartial()))),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
-           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "@0*@1",
           RooArgSet(*Bu2Dst0h_D0pi0_sigma1BuPartial_,
@@ -143,7 +143,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         .Bu2Dst0h_D0pi0_sigmaRatio21BuPartial()))),
       Bu2Dst0h_D0pi0_sigma3BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma3BuPartial_" +
-           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "@0*@1",
           RooArgSet(*Bu2Dst0h_D0pi0_sigma1BuPartial_,
