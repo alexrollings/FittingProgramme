@@ -638,8 +638,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_",
             *N_trueId_Bu2Dst0h_D0gamma_,
-            NeutralVars<neutral>::Get(uniqueId_)
-                .buDeltaCutEffBu2Dst0h_D0gamma()));
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                .deltaEffBu2Dst0h_D0gamma()));
   }
   if (daughters == Daughters::pik) {
     N_split_Bu2Dst0h_D0pi0_FAVasSUP_ = std::unique_ptr<RooFormulaVar>(
@@ -726,8 +726,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_",
             *N_trueId_Bu2Dst0h_D0gamma_,
-            NeutralVars<neutral>::Get(uniqueId_)
-                .deltaCutEffBu2Dst0h_D0gamma()));
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                .buEffBu2Dst0h_D0gamma()));
   }
   N_trueId_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
       Make_N_1D<neutral, bachelor, daughters, charge>(
@@ -780,8 +780,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_Bu2Dst0h_D0gamma_",
             *N_trueId_Bu2Dst0h_D0gamma_,
-            NeutralVars<neutral>::Get(uniqueId_)
-                .deltaPartialCutEffBu2Dst0h_D0gamma()));
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                .buPartialEffBu2Dst0h_D0gamma()));
     N_trueId_BuPartial_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_Bu2Dst0h_D0pi0_",

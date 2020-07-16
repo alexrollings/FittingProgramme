@@ -870,11 +870,28 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                              Bachelor::k,
                                              Efficiency::buEffErr, false),
           Systematic::NA, Sign::positive)),
+      buEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0gamma_", uniqueId_, Neutral::gamma, Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma,
+                                             Bachelor::k,
+                                             Efficiency::buEff, false),
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma,
+                                             Bachelor::k,
+                                             Efficiency::buEffErr, false),
+          Systematic::NA, Sign::positive)),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::gamma, Bachelor::k,
           Configuration::Get().ReturnBoxEffs(
               Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::deltaEff, false),
           Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
+                                             Bachelor::k,
+                                             Efficiency::deltaEffErr, false),
+          Systematic::NA, Sign::positive)),
+      deltaEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0gamma_", uniqueId_, Neutral::gamma, Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0gamma, Bachelor::k, Efficiency::deltaEff, false),
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma,
                                              Bachelor::k,
                                              Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::positive)),
@@ -886,6 +903,16 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               Efficiency::buPartialEff, false),
           Configuration::Get().ReturnBoxEffs(
               Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+              Efficiency::buPartialEffErr, false),
+          Systematic::NA, Sign::positive)),
+      buPartialEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0h_D0gamma_", uniqueId_, Neutral::gamma,
+          Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
+              Efficiency::buPartialEff, false),
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
               Efficiency::buPartialEffErr, false),
           Systematic::NA, Sign::positive)),
       // -------------------- Mis-ID BoxEffs ------------------- //
