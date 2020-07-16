@@ -13,6 +13,7 @@
 #include <sstream>
 #include <unordered_map>
 
+enum class Efficiency { buEff, buEffErr, deltaEff, deltaEffErr, buPartialEff, buPartialEffErr, orEff, orEffErr };
 enum class Polarity { up, down };
 enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
@@ -182,6 +183,8 @@ class Configuration {
   void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik);
   void ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      std::map<std::string, double> &map, bool misId);
+  double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency efficiency,
+                     bool misId);
 
  private:
   Configuration();

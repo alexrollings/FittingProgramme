@@ -47,16 +47,10 @@ Configuration::Configuration()
       gammaCutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_M<5200"),
-      // gammaCutString_(
-      //     "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
-      //     "05&&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2"),
       pi0CutString_(
           "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_"
           "M<5200"),
-      // pi0CutString_(
-      //     "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0."
-      //     "05&&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2"),
       fit1D_(false),
       runToy_(false),
       splitByCharge_(false),
@@ -793,7 +787,7 @@ std::string EnumToLabel(Neutral neutral) {
 }
 
 void Configuration::DefineCategories() {
-  switch (neutral()) {
+  switch (neutral_) {
     case Neutral::pi0:
       if (splitByCharge() == false) {
         fitting.defineType(ComposeFittingName(Mass::buDelta, Neutral::pi0,
@@ -1509,44 +1503,44 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
   std::cout << "Extracting chain\n";
   namespace fs = std::experimental::filesystem;
   std::string path, ttree;
-  switch (neutral()) {
+  switch (neutral_) {
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == false) {
-            path =
-                "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-                "cross_feed_removed/";
-          } else {
+          // if (D02pik == false) {
+          //   path =
+          //       "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+          //       "cross_feed_removed/";
+          // } else {
             path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
-          }
+          // }
           break;
         case Bachelor::k:
-          if (D02pik == false) {
-            path =
-                "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
-                "cross_feed_removed/";
-          } else {
+          // if (D02pik == false) {
+          //   path =
+          //       "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
+          //       "cross_feed_removed/";
+          // } else {
             path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
-          }
+          // }
       }
       ttree = "BtoDstar0h3_h1h2gammaTuple";
       break;
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == false) {
-            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
-          } else {
+          // if (D02pik == false) {
+          //   path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          // } else {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
-          }
+          // }
           break;
         case Bachelor::k:
-          if (D02pik == false) {
-            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
-          } else {
+          // if (D02pik == false) {
+          //   path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          // } else {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
-          }
+          // }
           break;
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
@@ -1566,7 +1560,7 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
       decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
       std::string fName;
       if (D02pik == false) {
-        fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2.root";
+        fName = dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_FIT.root";
       } else {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       }
@@ -1591,6 +1585,207 @@ void CalcBinomialErr(double eff, double nInit, double &err) {
   // std::cout << err << "\n";
 };
 
+double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
+                                  Efficiency eff, bool misId) {
+  // std::cout << EnumToString(mode) << std::endl;
+  std::string dlString = std::to_string(deltaLow_);
+  std::string dhString = std::to_string(deltaHigh_);
+  std::string blString = std::to_string(buDeltaLow_);
+  std::string bhString = std::to_string(buDeltaHigh_);
+  std::string dplString, dphString;
+  if (fitBuPartial_ == true) {
+    dplString = std::to_string(deltaPartialLow_);
+    dphString = std::to_string(deltaPartialHigh_);
+  }
+  std::string txtFileName;
+  if (misId == true) {
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+                  EnumToString(neutral_) + "_misId_" + EnumToString(mode) +
+                  "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
+                  ".txt";
+  } else {
+    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+                  EnumToString(neutral_) + "_" + EnumToString(mode) + "_" +
+                  ReturnBoxString() + ".txt";
+  }
+
+  std::string effStr;
+  if (eff == Efficiency::deltaEff) {
+    // Box eff for delta dimn is eff of buDelta window, and vice versa
+    effStr = "buDeltaCutEff";
+  } else if (eff == Efficiency::deltaEffErr) {
+    effStr = "buDeltaCutEffErr";
+  } else if (eff == Efficiency::buEff) {
+    effStr = "deltaCutEff";
+  } else if (eff == Efficiency::buEffErr) {
+    effStr = "deltaCutEffErr";
+  } else if (eff == Efficiency::buPartialEff) {
+    effStr = "deltaPartialCutEff";
+  } else if (eff == Efficiency::buPartialEffErr) {
+    effStr = "deltaPartialCutEffErr";
+  } else if (eff == Efficiency::orEff) {
+    effStr = "orEff";
+  } else if (eff == Efficiency::orEffErr) {
+    effStr = "orEffErr";
+  } else {
+    throw std::runtime_error("Efficiency not recognised.\n");
+  }
+
+  // Check if txt file containing efficiencies for particular mode and box dimns
+  // exists, if not, calculate eff and save in txt file
+  if (!fexists(txtFileName)) {
+    bool D02pik;
+    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+        mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
+      D02pik = true;
+    }
+    std::string cutString, ttree;
+
+    switch (neutral_) {
+      case Neutral::gamma:
+        if (D02pik == false) {
+          cutString = gammaCutString_;
+        } else {
+          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
+        }
+        ttree = "BtoDstar0h3_h1h2gammaTuple";
+        break;
+      case Neutral::pi0:
+        if (D02pik == false) {
+          cutString = pi0CutString_;
+        } else {
+          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
+        }
+        ttree = "BtoDstar0h3_h1h2pi0RTuple";
+        break;
+    }
+
+    TChain chain(ttree.c_str());
+    if (D02pik == false) {
+      ExtractChain(mode, bachelor, chain, D02pik);
+    } else {
+      if (neutral_ == Neutral::gamma) {
+        // Use K and π bachelor to calculate box effs for FAV->SUP
+        ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain,
+                     D02pik);
+        ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, D02pik);
+      } else {
+        ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain, D02pik);
+        ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain, D02pik);
+      }
+    }
+
+    std::string cutStr, orString;
+    if (neutral_ == Neutral::pi0) {
+      cutStr = pi0CutString_;
+    } else {
+      cutStr = gammaCutString_;
+    }
+    cutStr += "&&Bu_Delta_M>" + std::to_string(buDeltaMass_.getMax()) +
+              "&&Bu_Delta_M<" + std::to_string(buDeltaMass_.getMin()) +
+              "&&Delta_M>" + std::to_string(deltaMass_.getMax()) +
+              "&&Delta_M<" + std::to_string(deltaMass_.getMin());
+    if (fitBuPartial_ == false) {
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 "))";
+    } else {
+      orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
+    }
+    if (misId == true && bachelor == Bachelor::pi) {
+      cutStr += "&&bach_PIDK_corr<12";
+    }
+
+    double nInitial = chain.GetEntries(cutStr.c_str());
+    std::cout << "nInitial = " << nInitial << "\n";
+    double nOr = chain.GetEntries((cutStr + "&&" + orString).c_str());
+    std::cout << "nOr = " << nOr << "\n";
+    double nBuCut =
+        chain.GetEntries((cutStr + "&&" + orString + "&&Bu_Delta_M>" +
+                          blString + "&&Bu_Delta_M<" + bhString)
+                             .c_str());
+    std::cout << "nBuCut = " << nBuCut << "\n";
+    double nDeltaCut =
+        chain.GetEntries((cutStr + "&&" + orString + "&&Delta_M>" + dlString +
+                          "&&Delta_M<" + dhString)
+                             .c_str());
+    std::cout << "nDeltaCut = " << nDeltaCut << "\n";
+
+    double orEff = nOr / nInitial;
+    double buDeltaCutEff = nBuCut / nOr;
+    double deltaCutEff = nDeltaCut / nOr;
+
+    double orEffErr;
+    double buDeltaCutEffErr;
+    double deltaCutEffErr;
+
+    CalcBinomialErr(orEff, nInitial, orEffErr);
+    CalcBinomialErr(buDeltaCutEff, nOr, buDeltaCutEffErr);
+    CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
+
+    std::ofstream outFile;
+    outFile.open(txtFileName);
+    outFile << "orEff " + std::to_string(orEff) + "\n";
+    outFile << "orEffErr " + std::to_string(orEffErr) + "\n";
+    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
+    outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
+    outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
+    outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
+
+    if (neutral_ == Neutral::gamma) {
+      double nDeltaPartialCut =
+          chain.GetEntries((cutStr + "&&" + orString + "&&Delta_M>" +
+                            dplString + "&&Delta_M<" + dphString)
+                               .c_str());
+      std::cout << "nDeltaPartialCut = " << nDeltaPartialCut << "\n";
+      double deltaPartialCutEff = nDeltaPartialCut / nOr;
+      double deltaPartialCutEffErr;
+      CalcBinomialErr(deltaPartialCutEff, nOr, deltaPartialCutEffErr);
+      outFile << "deltaPartialCutEff " + std::to_string(deltaPartialCutEff) +
+                     "\n";
+      outFile << "deltaPartialCutEffErr " +
+                     std::to_string(deltaPartialCutEffErr) + "\n";
+      if (eff == Efficiency::buPartialEff) {
+        return deltaPartialCutEff;
+      } else if (eff == Efficiency::buPartialEffErr) {
+        return deltaPartialCutEffErr;
+      }
+    }
+
+    if (eff == Efficiency::deltaEff) {
+      return buDeltaCutEff;
+    } else if (eff == Efficiency::deltaEffErr) {
+      return buDeltaCutEffErr;
+    } else if (eff == Efficiency::buEff) {
+      return deltaCutEff;
+    } else if (eff == Efficiency::buEffErr) {
+      return deltaCutEffErr;
+    } else if (eff == Efficiency::orEff) {
+      return orEff;
+    } else {
+      return orEffErr;
+    }
+
+  } else {
+    //   // If exists, read in from txt file
+    std::cout << txtFileName << " exists.\n";
+    std::ifstream inFile(txtFileName);
+    std::string line;
+    // Loop over lines in txt file
+    while (std::getline(inFile, line)) {
+      // Separate label and value (white space)
+      std::vector<std::string> lineVec = SplitLine(line);
+      if (lineVec[0] == effStr) {
+        std::cout << std::stod(lineVec[1]) << "\n";
+        return std::stod(lineVec[1]);
+      }
+    }
+    throw std::runtime_error("Efficiency not found.\n");
+  }
+}
+
 void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                                   std::map<std::string, double> &map,
                                   bool misId) {
@@ -1606,18 +1801,14 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   }
   std::string txtFileName;
   if (misId == true) {
-    // txtFileName = "/data/lhcb/users/rollings/txt_efficiencies_old/" +
-    //               EnumToString(neutral()) + "_misId_" + EnumToString(mode) +
-    //               "_as_" + EnumToString(bachelor) + "_" + ReturnBoxString() +
-    //               ".txt";
     txtFileName =
         "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
-        EnumToString(neutral()) + "_misId_" + EnumToString(mode) + "_as_" +
+        EnumToString(neutral_) + "_misId_" + EnumToString(mode) + "_as_" +
         EnumToString(bachelor) + "_" + ReturnBoxString() + ".txt";
   } else {
     txtFileName =
         "/data/lhcb/users/rollings/txt_efficiencies_old/txt_efficiencies/" +
-        EnumToString(neutral()) + "_" + EnumToString(mode) + "_" +
+        EnumToString(neutral_) + "_" + EnumToString(mode) + "_" +
         ReturnBoxString() + ".txt";
   }
 
@@ -1631,7 +1822,7 @@ void Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     }
     std::string cutString, ttree;
 
-    switch (neutral()) {
+    switch (neutral_) {
       case Neutral::gamma:
         if (D02pik == false) {
           cutString = gammaCutString_;
@@ -1831,24 +2022,22 @@ std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
          EnumToString(charge) + "_" + std::to_string(uniqueId);
 }
 
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor, Daughters daughters, Charge charge) {
-  return EnumToString(neutral) + "_" +
-         EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
-         EnumToString(charge) + "_" + std::to_string(uniqueId);
-}
-
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor, Daughters daughters) {
-  return EnumToString(neutral) + "_" +
-         EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
+                        Daughters daughters, Charge charge) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters) + "_" + EnumToString(charge) + "_" +
          std::to_string(uniqueId);
 }
 
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Bachelor bachelor) {
-  return EnumToString(neutral) + "_" +
-         EnumToString(bachelor) + "_" + std::to_string(uniqueId);
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
+                        Daughters daughters) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         EnumToString(daughters) + "_" + std::to_string(uniqueId);
+}
+
+std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor) {
+  return EnumToString(neutral) + "_" + EnumToString(bachelor) + "_" +
+         std::to_string(uniqueId);
 }
 
 std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
@@ -1857,10 +2046,9 @@ std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
          EnumToString(charge) + "_" + std::to_string(uniqueId);
 }
 
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Daughters daughters) {
-  return EnumToString(neutral) + "_" +
-         EnumToString(daughters) + "_" + std::to_string(uniqueId);
+std::string ComposeName(int uniqueId, Neutral neutral, Daughters daughters) {
+  return EnumToString(neutral) + "_" + EnumToString(daughters) + "_" +
+         std::to_string(uniqueId);
 }
 
 std::string ComposeName(int uniqueId, Neutral neutral) {
@@ -1868,7 +2056,8 @@ std::string ComposeName(int uniqueId, Neutral neutral) {
 }
 
 std::string ComposeName(int uniqueId, Neutral neutral, Charge charge) {
-  return EnumToString(neutral) + "_" + EnumToString(charge) + "_" + std::to_string(uniqueId);
+  return EnumToString(neutral) + "_" + EnumToString(charge) + "_" +
+         std::to_string(uniqueId);
 }
 
 std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters) {
