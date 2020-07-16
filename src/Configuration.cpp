@@ -1512,40 +1512,38 @@ void Configuration::ExtractChain(Mode mode, Bachelor bachelor, TChain &chain,
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          // if (D02pik == false) {
-          //   path =
-          //       "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-          //       "cross_feed_removed/";
-          // } else {
+          if (D02pik == false) {
+            path =
+                "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
             path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
-          // }
+          }
           break;
         case Bachelor::k:
-          // if (D02pik == false) {
-          //   path =
-          //       "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
-          //       "cross_feed_removed/";
-          // } else {
+          if (D02pik == false) {
+            path =
+                "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
             path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
-          // }
+          }
       }
       ttree = "BtoDstar0h3_h1h2gammaTuple";
       break;
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          // if (D02pik == false) {
-          //   path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
-          // } else {
+          if (D02pik == false) {
+            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
-          // }
+          }
           break;
         case Bachelor::k:
-          // if (D02pik == false) {
-          //   path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
-          // } else {
+          if (D02pik == false) {
+            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
+          } else {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
-          // }
+          }
           break;
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
