@@ -217,15 +217,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
           *Bu2Dst0h_D0pi0_fracPdf1Delta_),
       Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma, 5.3423e+03,
-          1.03e+00, Systematic::crossFeedBuPdf, Sign::positive)),
+          "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma, 5.3371e+03,
+          2.22e+00, Systematic::crossFeedBuPdf, Sign::positive)),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(nullptr),
       Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::gamma, 8.2132e-01,
-          2.77e-02, Systematic::crossFeedBuPdf, Sign::positive)),
+          "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::gamma, 9.4845e-01,
+          6.81e-02, Systematic::crossFeedBuPdf, Sign::positive)),
       Bu2Dst0h_D0pi0_a2Bu_(nullptr),
       Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::gamma, 1.0000e+01, 1e+00,
+          "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::gamma, 10, 0,
           Systematic::NA, Sign::positive)),
       Bu2Dst0h_D0pi0_n2Bu_(nullptr),
       Bu2Dst0h_D0pi0_fracPdf1Bu_(nullptr),
