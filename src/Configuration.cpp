@@ -1615,16 +1615,16 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
   std::string effStr;
   if (eff == Efficiency::deltaEff) {
     // Box eff for delta dimn is eff of buDelta window, and vice versa
-    effStr = "buDeltaCutEff";
+    effStr = "buCutEff";
   } else if (eff == Efficiency::deltaEffErr) {
-    effStr = "buDeltaCutEffErr";
-  } else if (eff == Efficiency::buDeltaEff) {
+    effStr = "buCutEffErr";
+  } else if (eff == Efficiency::buEff) {
     effStr = "deltaCutEff";
-  } else if (eff == Efficiency::buDeltaEffErr) {
+  } else if (eff == Efficiency::buEffErr) {
     effStr = "deltaCutEffErr";
-  } else if (eff == Efficiency::buDeltaPartialEff) {
+  } else if (eff == Efficiency::buPartialEff) {
     effStr = "deltaPartialCutEff";
-  } else if (eff == Efficiency::buDeltaPartialEffErr) {
+  } else if (eff == Efficiency::buPartialEffErr) {
     effStr = "deltaPartialCutEffErr";
   } else if (eff == Efficiency::orEff) {
     effStr = "orEff";
@@ -1705,23 +1705,23 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     std::cout << "nDeltaCut = " << nDeltaCut << "\n";
 
     double orEff = nOr / nInitial;
-    double buDeltaCutEff = nBuCut / nOr;
+    double buCutEff = nBuCut / nOr;
     double deltaCutEff = nDeltaCut / nOr;
 
     double orEffErr;
-    double buDeltaCutEffErr;
+    double buCutEffErr;
     double deltaCutEffErr;
 
     CalcBinomialErr(orEff, nInitial, orEffErr);
-    CalcBinomialErr(buDeltaCutEff, nOr, buDeltaCutEffErr);
+    CalcBinomialErr(buCutEff, nOr, buCutEffErr);
     CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
 
     std::ofstream outFile;
     outFile.open(txtFileName);
     outFile << "orEff " + std::to_string(orEff) + "\n";
     outFile << "orEffErr " + std::to_string(orEffErr) + "\n";
-    outFile << "buDeltaCutEff " + std::to_string(buDeltaCutEff) + "\n";
-    outFile << "buDeltaCutEffErr " + std::to_string(buDeltaCutEffErr) + "\n";
+    outFile << "buCutEff " + std::to_string(buCutEff) + "\n";
+    outFile << "buCutEffErr " + std::to_string(buCutEffErr) + "\n";
     outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
     outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
 
@@ -1738,20 +1738,20 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      "\n";
       outFile << "deltaPartialCutEffErr " +
                      std::to_string(deltaPartialCutEffErr) + "\n";
-      if (eff == Efficiency::buDeltaPartialEff) {
+      if (eff == Efficiency::buPartialEff) {
         return deltaPartialCutEff;
-      } else if (eff == Efficiency::buDeltaPartialEffErr) {
+      } else if (eff == Efficiency::buPartialEffErr) {
         return deltaPartialCutEffErr;
       }
     }
 
     if (eff == Efficiency::deltaEff) {
-      return buDeltaCutEff;
+      return buCutEff;
     } else if (eff == Efficiency::deltaEffErr) {
-      return buDeltaCutEffErr;
-    } else if (eff == Efficiency::buDeltaEff) {
+      return buCutEffErr;
+    } else if (eff == Efficiency::buEff) {
       return deltaCutEff;
-    } else if (eff == Efficiency::buDeltaEffErr) {
+    } else if (eff == Efficiency::buEffErr) {
       return deltaCutEffErr;
     } else if (eff == Efficiency::orEff) {
       return orEff;

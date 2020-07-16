@@ -234,8 +234,8 @@ RooFormulaVar *Make_N_trueId(int uniqueId, const char *nameStr,
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
 RooFormulaVar *Make_N_misId(int uniqueId, const char *nameStr,
-                             RooAbsReal &N_split) {
-  switch(bachelor) {
+                            RooAbsReal &N_split) {
+  switch (bachelor) {
     case Bachelor::pi:
       return new RooFormulaVar(
           (nameStr +
@@ -565,11 +565,12 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bs2Dst0Kpi_(nullptr),
       N_trueId_Bs2D0Kpi_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0gamma_(nullptr),
-      N_trueId_Delta_Bu2Dst0h_D0pi0_(Make_N_1D<neutral, bachelor, daughters,
-                                               charge>(
-          uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0pi0_",
-          *N_trueId_Bu2Dst0h_D0pi0_,
-          NeutralVars<neutral>::Get(uniqueId_).buDeltaCutEffBu2Dst0h_D0pi0())),
+      N_trueId_Delta_Bu2Dst0h_D0pi0_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0pi0_",
+              *N_trueId_Bu2Dst0h_D0pi0_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBu2Dst0h_D0pi0())),
       N_trueId_Delta_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_trueId_Delta_MisRec_(Make_N_1D<neutral, bachelor, daughters, charge>(
@@ -731,7 +732,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
   N_trueId_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
       Make_N_1D<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_", *N_trueId_Bu2Dst0h_D0pi0_,
-          NeutralVars<neutral>::Get(uniqueId_).deltaCutEffBu2Dst0h_D0pi0()));
+          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+              .buEffBu2Dst0h_D0pi0()));
   N_trueId_Bu_MisRec_ = std::unique_ptr<RooFormulaVar>(
       Make_N_1D<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bu_MisRec_", *N_trueId_MisRec_,
@@ -784,8 +786,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_Bu2Dst0h_D0pi0_",
             *N_trueId_Bu2Dst0h_D0pi0_,
-            NeutralVars<neutral>::Get(uniqueId_)
-                .deltaPartialCutEffBu2Dst0h_D0pi0()));
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                .buPartialEffBu2Dst0h_D0pi0()));
     N_trueId_BuPartial_MisRec_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_MisRec_", *N_trueId_MisRec_,

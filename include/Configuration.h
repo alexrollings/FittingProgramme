@@ -14,12 +14,12 @@
 #include <unordered_map>
 
 enum class Efficiency {
-  buDeltaEff,
-  buDeltaEffErr,
+  buEff,
+  buEffErr,
   deltaEff,
   deltaEffErr,
-  buDeltaPartialEff,
-  buDeltaPartialEffErr,
+  buPartialEff,
+  buPartialEffErr,
   orEff,
   orEffErr
 };
