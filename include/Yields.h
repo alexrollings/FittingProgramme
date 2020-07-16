@@ -829,6 +829,9 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
+  std::cout << "Assigning misId yields for " << EnumToString(_neutral) << " "
+            << EnumToString(_bachelor) << " " << EnumToString(_daughters) << " "
+            << EnumToString(_charge) << "\n";
   switch (_bachelor) {
     case Bachelor::pi: {
       // For misId yields, need to scale split yield of TRUE bachelor by PID
