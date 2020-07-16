@@ -239,7 +239,7 @@ class Pdf : public PdfBase {
         .pdfDelta_misId_Bu2Dst0h_D0gamma();
   }
   virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfDelta_misId_Bu2Dst0h_D0pi0();
   }
   virtual RooDstD0BG &pdfDelta_misId_MisRec() const {
@@ -635,8 +635,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   PdfBase::yieldsDelta_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Delta_Bu2Dst0h_D0pi0());
-  PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                   .pdfDelta_misId_Bu2Dst0h_D0pi0());
+  PdfBase::functionsDelta_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdfDelta_misId_Bu2Dst0h_D0pi0());
   PdfBase::yieldsDelta_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_misId_Delta_Bu2Dst0h_D0pi0());
