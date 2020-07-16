@@ -1620,13 +1620,13 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
     effStr = "buDeltaCutEff";
   } else if (eff == Efficiency::deltaEffErr) {
     effStr = "buDeltaCutEffErr";
-  } else if (eff == Efficiency::buEff) {
+  } else if (eff == Efficiency::buDeltaEff) {
     effStr = "deltaCutEff";
-  } else if (eff == Efficiency::buEffErr) {
+  } else if (eff == Efficiency::buDeltaEffErr) {
     effStr = "deltaCutEffErr";
-  } else if (eff == Efficiency::buPartialEff) {
+  } else if (eff == Efficiency::buDeltaPartialEff) {
     effStr = "deltaPartialCutEff";
-  } else if (eff == Efficiency::buPartialEffErr) {
+  } else if (eff == Efficiency::buDeltaPartialEffErr) {
     effStr = "deltaPartialCutEffErr";
   } else if (eff == Efficiency::orEff) {
     effStr = "orEff";
@@ -1740,9 +1740,9 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
                      "\n";
       outFile << "deltaPartialCutEffErr " +
                      std::to_string(deltaPartialCutEffErr) + "\n";
-      if (eff == Efficiency::buPartialEff) {
+      if (eff == Efficiency::buDeltaPartialEff) {
         return deltaPartialCutEff;
-      } else if (eff == Efficiency::buPartialEffErr) {
+      } else if (eff == Efficiency::buDeltaPartialEffErr) {
         return deltaPartialCutEffErr;
       }
     }
@@ -1751,9 +1751,9 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       return buDeltaCutEff;
     } else if (eff == Efficiency::deltaEffErr) {
       return buDeltaCutEffErr;
-    } else if (eff == Efficiency::buEff) {
+    } else if (eff == Efficiency::buDeltaEff) {
       return deltaCutEff;
-    } else if (eff == Efficiency::buEffErr) {
+    } else if (eff == Efficiency::buDeltaEffErr) {
       return deltaCutEffErr;
     } else if (eff == Efficiency::orEff) {
       return orEff;

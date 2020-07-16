@@ -13,7 +13,16 @@
 #include <sstream>
 #include <unordered_map>
 
-enum class Efficiency { buEff, buEffErr, deltaEff, deltaEffErr, buPartialEff, buPartialEffErr, orEff, orEffErr };
+enum class Efficiency {
+  buDeltaEff,
+  buDeltaEffErr,
+  deltaEff,
+  deltaEffErr,
+  buDeltaPartialEff,
+  buDeltaPartialEffErr,
+  orEff,
+  orEffErr
+};
 enum class Polarity { up, down };
 enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
