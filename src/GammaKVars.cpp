@@ -864,6 +864,34 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(), *Bs2D0Kpi_meanBuPartial_,
           *Bs2D0Kpi_sigmaLBuPartial_, *Bs2D0Kpi_sigmaRBuPartial_,
           *Bs2D0Kpi_aLBuPartial_, *Bs2D0Kpi_aRBuPartial_),
+      // -------------------- Correct ID BOX EFFs -------------------- //
+      buDeltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "buDeltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::gamma, Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
+                                             Bachelor::k,
+                                             Efficiency::buDeltaEff, false),
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
+                                             Bachelor::k,
+                                             Efficiency::buDeltaEffErr, false),
+          Systematic::NA, Sign::positive)),
+      deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::gamma, Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::deltaEff, false),
+          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
+                                             Bachelor::k,
+                                             Efficiency::deltaEffErr, false),
+          Systematic::NA, Sign::positive)),
+      buDeltaPartialEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "buDeltaPartialEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::gamma,
+          Bachelor::k,
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+              Efficiency::buDeltaPartialEff, false),
+          Configuration::Get().ReturnBoxEffs(
+              Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+              Efficiency::buDeltaPartialEffErr, false),
+          Systematic::NA, Sign::positive)),
       // -------------------- Mis-ID BoxEffs ------------------- //
       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(nullptr),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(nullptr),
