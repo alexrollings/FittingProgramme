@@ -57,25 +57,25 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           *Bu2Dst0h_D0pi0_fracPdf1Delta_),
       Bu2Dst0h_D0pi0_meanBu_(
           Params::Get().CreateFloating("Bu2Dst0h_D0pi0_meanBu", uniqueId_,
-                                       Neutral::pi0, 5.2735e+03, 5270, 5275)),
+                                       Neutral::pi0, 5.2742e+03, 5270, 5280)),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(
           Params::Get().CreateFloating("Bu2Dst0h_D0pi0_KpiSigmaBu", uniqueId_,
                                        Neutral::pi0, 0.95, 0.5, 1.5)),
       Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::pi0, 1.4278e+00, 2.89e-01,
+          "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::pi0, 1.3086e+00, 1.70e-01,
           Systematic::pi0BuTails, Sign::positive)),
-      Bu2Dst0h_D0pi0_a2Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_a2Bu", uniqueId_, Neutral::pi0, -1.8126e+00, 1.11e-01,
-          Systematic::pi0BuTails, Sign::negative)),
       Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::pi0, 2.6674e+00, 1.85e+00,
-          Systematic::pi0BuTails, Sign::positive)),
+          "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::pi0, 10, 0, Systematic::NA,
+          Sign::positive)),
+      Bu2Dst0h_D0pi0_a2Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_a2Bu", uniqueId_, Neutral::pi0, -1.8276e+00, 1.12e-01,
+          Systematic::pi0BuTails, Sign::negative)),
       Bu2Dst0h_D0pi0_n2Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_n2Bu", uniqueId_, Neutral::pi0, 1.0000e+01, 1e+00,
-          Systematic::NA, Sign::positive)),
+          "Bu2Dst0h_D0pi0_n2Bu", uniqueId_, Neutral::pi0, 10, 0, Systematic::NA,
+          Sign::positive)),
       Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::pi0, 2.0967e-01,
-          1e+00, Systematic::NA, Sign::positive)),
+          "Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::pi0, 3.5549e-01,
+          1.36e-01, Systematic::pi0BuFrac, Sign::positive)),
       Bu2Dst0h_D0pi0_meanCbBuPartial_(nullptr),
       Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_(nullptr),
       Bu2Dst0h_D0pi0_meanGausBuPartial_(),

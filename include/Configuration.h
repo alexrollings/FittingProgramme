@@ -50,6 +50,7 @@ enum class Systematic {
   pi0DeltaTails,
   pi0DeltaFrac,
   pi0BuTails,
+  pi0BuFrac,
   pi0BuPartialTails,
   pi0BuPartialFrac,
   pi0BuPartialSigma1,
