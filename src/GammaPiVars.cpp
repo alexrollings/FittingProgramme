@@ -259,12 +259,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0pi0_a1BuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a1BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi, 1.2608e+00, 0, Systematic::NA, Sign::positive)),
-      misId_Bu2Dst0h_D0pi0_a2BuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_a2BuPartial", uniqueId_, Neutral::gamma,
-          Bachelor::pi, -2.4389e+00, 0, Systematic::NA, Sign::positive)),
       misId_Bu2Dst0h_D0pi0_n1BuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n1BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi, 10, 0, Systematic::NA, Sign::positive)),
+      misId_Bu2Dst0h_D0pi0_a2BuPartial_(Params::Get().CreateFixed(
+          "misId_Bu2Dst0h_D0pi0_a2BuPartial", uniqueId_, Neutral::gamma,
+          Bachelor::pi, -2.4389e+00, 0, Systematic::NA, Sign::positive)),
       misId_Bu2Dst0h_D0pi0_n2BuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n2BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi, 10, 0, Systematic::NA, Sign::positive)),
