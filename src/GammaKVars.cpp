@@ -115,7 +115,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
       Bu2Dst0h_D0pi0_sigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigmaBu", uniqueId_, Neutral::gamma, Bachelor::k,
-          4.4834e+01, 7.73e-01, Systematic::crossFeedBuPdf, Sign::positive)),
+          4.8981e+01, 1.75e+00, Systematic::crossFeedBuPdf, Sign::positive)),
       pdf1Bu_Bu2Dst0h_D0pi0_(),
       pdf2Bu_Bu2Dst0h_D0pi0_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
@@ -139,24 +139,20 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   .Bu2Dst0h_D0pi0_KpiSigmaBuPartial()))),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
-           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-                  .Bu2Dst0h_D0pi0_sigma2BuPartial(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                  .Bu2Dst0h_D0pi0_KpiSigmaBuPartial()))),
+          "@0*@1",
+          RooArgSet(*Bu2Dst0h_D0pi0_sigma1BuPartial_,
+                    NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                        .Bu2Dst0h_D0pi0_sigmaRatio21BuPartial()))),
       Bu2Dst0h_D0pi0_sigma3BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma3BuPartial_" +
-           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-                  .Bu2Dst0h_D0pi0_sigma3BuPartial(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                  .Bu2Dst0h_D0pi0_KpiSigmaBuPartial()))),
+          "@0*@1",
+          RooArgSet(*Bu2Dst0h_D0pi0_sigma1BuPartial_,
+                    NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                        .Bu2Dst0h_D0pi0_sigmaRatio31BuPartial()))),
       pdf1BuPartial_Bu2Dst0h_D0pi0_(
           ("pdf1BuPartial_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
