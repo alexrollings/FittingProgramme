@@ -128,14 +128,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("pdf1Bu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buBuMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
           *misId_Bu2Dst0h_D0pi0_sigma1Bu_, *misId_Bu2Dst0h_D0pi0_a1Bu_,
           *misId_Bu2Dst0h_D0pi0_n1Bu_)),
       pdf2Bu_misId_Bu2Dst0h_D0pi0_(
           ("pdf2Bu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buBuMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
           *misId_Bu2Dst0h_D0pi0_sigma2Bu_, *misId_Bu2Dst0h_D0pi0_a2Bu_,
           *misId_Bu2Dst0h_D0pi0_n2Bu_),
       misId_Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(

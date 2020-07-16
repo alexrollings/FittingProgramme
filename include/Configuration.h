@@ -84,6 +84,8 @@ enum class Systematic {
   Bs2D0KpiBuPartialPdf,
   misIdPi0PiPdfBu,
   misIdPi0KPdfBu,
+  misIdPi0PiPdfDelta,
+  misIdPi0KPdfDelta,
   misIdPi0PiPdfBuPartial,
   misIdPi0KPdfBuPartial,
   misIdGammaPiPdfBu,

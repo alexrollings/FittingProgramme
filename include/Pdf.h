@@ -55,7 +55,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfDelta_Bs2D0Kpi() const = 0;
 
   virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const = 0;
-  virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_MisRec() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_Bu2D0h() const = 0;
   virtual RooDstD0BG &pdfDelta_misId_PartRec() const = 0;
@@ -238,7 +238,7 @@ class Pdf : public PdfBase {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_misId_Bu2Dst0h_D0gamma();
   }
-  virtual RooAddPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const {
+  virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfDelta_misId_Bu2Dst0h_D0pi0();
   }

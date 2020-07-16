@@ -300,7 +300,8 @@ int main(int argc, char **argv) {
                    "data.\n";
       std::cout
           << "    -systematic=<choice "
-             "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,pi0BuPartialTails,"
+             "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,"
+             "pi0BuPartialTails,"
              "pi0BuPartialFrac,"
              "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
              "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
@@ -308,7 +309,8 @@ int main(int argc, char **argv) {
              "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
              "Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,Bs2Dst0KpiBuPartialPdf,"
              "Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,Bs2D0KpiBuPartialPdf,"
-             "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfBuPartial,"
+             "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfDelta,"
+             "misIdPi0KPdfDelta,misIdPi0PiPdfBuPartial,"
              "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
              "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
              "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
@@ -458,6 +460,7 @@ int main(int argc, char **argv) {
                  "partRecBuPartialPdf,Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,"
                  "Bs2Dst0KpiBuPartialPdf,Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,"
                  "Bs2D0KpiBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
+                 "misIdPi0PiPdfDelta,misIdPi0KPdfDelta,"
                  "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
                  "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
                  "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
@@ -615,8 +618,9 @@ int main(int argc, char **argv) {
                 } else {
                   std::cout << "inputDataSet extracted: \n";
                   inputDataSet->Print();
-                  RooDataSet *reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
-                        inputDataSet->reduce(config.ReturnCutString().c_str()));
+                  RooDataSet *reducedInputDataSet_n =
+                      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                          config.ReturnCutString().c_str()));
                   if (reducedInputDataSet_n == nullptr) {
                     throw std::runtime_error(
                         "Could not reduce input w/ neutral cuts dataSet.\n");
@@ -796,8 +800,9 @@ int main(int argc, char **argv) {
              std::to_string(randomTag) + ".root")
                 .c_str(),
             "recreate");
-        RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile, dataFitResult, config,
-                     outputDir, daughtersVec, chargeVec, id);
+        RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
+                     dataFitResult, config, outputDir, daughtersVec, chargeVec,
+                     id);
         toyResultFile.Close();
       }
     }

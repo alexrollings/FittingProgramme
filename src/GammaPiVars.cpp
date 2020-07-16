@@ -237,7 +237,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ("pdfBu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_meanBu_,
+          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
           *misId_Bu2Dst0h_D0pi0_sigma1Bu_, *misId_Bu2Dst0h_D0pi0_a1Bu_,
           *misId_Bu2Dst0h_D0pi0_n1Bu_)),
       misId_Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFixed(
