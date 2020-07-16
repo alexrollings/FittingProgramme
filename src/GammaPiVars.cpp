@@ -14,7 +14,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
     : uniqueId_(uniqueId),
       Bu2Dst0h_D0gamma_sigma1Bu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0gamma_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
-          2.0271e+01, 15, 25)),
+          1.9997e+01, 15, 25)),
       Bu2Dst0h_D0gamma_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0gamma_(
           ("pdf1Bu_Bu2Dst0h_D0gamma_" +
@@ -43,7 +43,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .Bu2Dst0h_D0gamma_fracPdf1Bu())),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_sigmaBuPartial", uniqueId_, Neutral::gamma,
-          Bachelor::pi, 2.9969e+01, 2.68e+00, Systematic::crossFeedBuPartialPdf,
+          Bachelor::pi, 3.0721e+01, 2.73e+00, Systematic::crossFeedBuPartialPdf,
           Sign::positive)),
       pdfBuPartial_Bu2Dst0h_D0gamma_(
           ("pdfBuPartial_Bu2Dst0h_D0gamma_" +
@@ -52,11 +52,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0h_D0gamma_meanBuPartial(),
-          *Bu2Dst0h_D0gamma_sigmaBuPartial_,
-          NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0gamma_aBuPartial(),
-          NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0gamma_nBuPartial()),
+          *Bu2Dst0h_D0gamma_sigmaBuPartial_),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0gamma_meanBu", uniqueId_, Neutral::gamma,

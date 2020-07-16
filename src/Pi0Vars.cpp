@@ -166,8 +166,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_n2Bu_(nullptr),
       Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),
-      Bu2Dst0h_D0gamma_aBuPartial_(nullptr),
-      Bu2Dst0h_D0gamma_nBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
       Bu2Dst0h_D0gamma_FAVasSUP_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_FAVasSUP_sigmaDelta_(nullptr),
