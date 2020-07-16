@@ -2806,7 +2806,7 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
 
-    RooRandom::randomGenerator()->SetSeed(0);
+    RooRandom::randomGenerator()->SetSeed(10);
     TRandom3 random(0);
     double randomTag = random.Rndm();
 
