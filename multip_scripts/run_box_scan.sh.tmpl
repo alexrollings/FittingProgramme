@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+source /home/rollings/.zshrc
+source_root
+
+cd /data/lhcb/users/rollings/multip_scripts/
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -daughters=kpi -neutral=${N} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} 
