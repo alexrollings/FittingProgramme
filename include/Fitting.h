@@ -30,3 +30,7 @@ std::pair<RooSimultaneous *, std::vector<PdfBase *> > MakeSimultaneousPdf(
     int const id, Configuration &config,
     std::vector<Daughters> const &daughtersVec,
     std::vector<Charge> const &chargeVec);
+void MakeMapFittingDataSet(
+    PdfBase &pdf, std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+    std::map<std::string, RooDataSet *> &mapFittingDataSet,
+    Configuration &config);
