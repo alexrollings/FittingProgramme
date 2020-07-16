@@ -204,12 +204,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
           *Bu2Dst0h_D0pi0_fracPdf1Delta_),
-      pdfDelta_misId_Bu2Dst0h_D0pi0_(
-          ("pdfDelta_misId_Bu2Dst0h_D0pi0_" +
-           ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
-          *Bu2Dst0h_D0pi0_fracPdf1Delta_),
       Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma, 5.3371e+03,
           2.22e+00, Systematic::crossFeedBuPdf, Sign::positive)),
