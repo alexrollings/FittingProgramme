@@ -164,8 +164,16 @@ class Configuration {
 
   std::string ReturnBoxString();
 
-  std::string &gammaCutString() { return gammaCutString_; }
-  std::string &pi0CutString() { return pi0CutString_; }
+  std::string &ReturnCutString() {
+    if (neutral_ == Neutral::gamma) {
+      return gammaCutString_;
+    } else if (neutral_ == Neutral::pi0) {
+      return pi0CutString_;
+    } else {
+      throw std::runtime_error(
+          "Cannot return cutString before neutral is defined\n");
+    }
+  }
 
   bool &fit1D() { return fit1D_; }
   bool &runToy() { return runToy_; }

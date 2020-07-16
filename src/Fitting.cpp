@@ -3734,14 +3734,8 @@ int main(int argc, char **argv) {
                 } else {
                   std::cout << "inputDataSet extracted: \n";
                   inputDataSet->Print();
-                  RooDataSet *reducedInputDataSet_n = nullptr;
-                  if (config.neutral() == Neutral::pi0) {
-                    reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
-                        inputDataSet->reduce(config.pi0CutString().c_str()));
-                  } else {
-                    reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
-                        inputDataSet->reduce(config.gammaCutString().c_str()));
-                  }
+                  RooDataSet *reducedInputDataSet_n = dynamic_cast<RooDataSet *>(
+                        inputDataSet->reduce(config.ReturnCutString().c_str()));
                   if (reducedInputDataSet_n == nullptr) {
                     throw std::runtime_error(
                         "Could not reduce input w/ neutral cuts dataSet.\n");

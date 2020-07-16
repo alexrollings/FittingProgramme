@@ -206,6 +206,7 @@ Configuration::Configuration()
 
   fittingArgSet_.add(buDeltaMass_);
   fittingArgSet_.add(deltaMass_);
+
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
@@ -1639,27 +1640,13 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
         mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
       D02pik = true;
     }
-    std::string cutString, ttree;
 
-    switch (neutral_) {
-      case Neutral::gamma:
-        if (D02pik == false) {
-          cutString = gammaCutString_;
-        } else {
-          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
-        }
-        ttree = "BtoDstar0h3_h1h2gammaTuple";
-        break;
-      case Neutral::pi0:
-        if (D02pik == false) {
-          cutString = pi0CutString_;
-        } else {
-          cutString = "abs(D0_M_DOUBLESW_KP-1864)>15";
-        }
-        ttree = "BtoDstar0h3_h1h2pi0RTuple";
-        break;
+    std::string ttree;
+    if (neutral_ == Neutral::gamma) {
+      ttree = "BtoDstar0h3_h1h2gammaTuple";
+    } else {
+      ttree = "BtoDstar0h3_h1h2pi0RTuple";
     }
-
     TChain chain(ttree.c_str());
     if (D02pik == false) {
       ExtractChain(mode, bachelor, chain, D02pik);
@@ -1675,16 +1662,18 @@ double Configuration::ReturnBoxEffs(Mode mode, Bachelor bachelor,
       }
     }
 
-    std::string cutStr, orString;
-    if (neutral_ == Neutral::pi0) {
-      cutStr = pi0CutString_;
+    std::string cutStr;
+    if (D02pik == false) {
+      cutStr = ReturnCutString();
     } else {
-      cutStr = gammaCutString_;
+      cutStr = "abs(D0_M_DOUBLESW_KP-1864)>15";
     }
     cutStr += "&&Bu_Delta_M>" + std::to_string(buDeltaMass_.getMax()) +
               "&&Bu_Delta_M<" + std::to_string(buDeltaMass_.getMin()) +
               "&&Delta_M>" + std::to_string(deltaMass_.getMax()) +
-              "&&Delta_M<" + std::to_string(deltaMass_.getMin());
+              "&&Delta_M<, ttree" + std::to_string(deltaMass_.getMin());
+
+    std::string orString;
     if (fitBuPartial_ == false) {
       orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
                  ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
