@@ -180,6 +180,47 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdf2Bu_misId_Bu2Dst0h_D0gamma_(),
       misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       pdfBu_misId_Bu2Dst0h_D0gamma_(nullptr),
+      // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
+      Bu2Dst0h_D0pi0_WN_sigmaBu_(new RooFormulaVar(
+          ("Bu2Dst0h_D0pi0_WN_sigmaBu_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_WN_sigmaBu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_WN_KpiSigmaBu()))),
+      pdf1Bu_Bu2Dst0h_D0pi0_WN_(
+          ("pdf1Bu_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_meanBu(),
+          *Bu2Dst0h_D0pi0_WN_sigmaBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_n1Bu()),
+      pdf2Bu_Bu2Dst0h_D0pi0_WN_(
+          ("pdf2Bu_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_meanBu(),
+          *Bu2Dst0h_D0pi0_WN_sigmaBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_a2Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_n2Bu()),
+      pdfBu_Bu2Dst0h_D0pi0_WN_(new RooAddPdf(
+          ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", RooArgSet(pdf1Bu_Bu2Dst0h_D0pi0_WN_, pdf2Bu_Bu2Dst0h_D0pi0_WN_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_WN_fracPdf1Bu())),
+      Bu2Dst0h_D0pi0_WN_sigma1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_sigma2BuPartial_(nullptr),
+      pdf1BuPartial_Bu2Dst0h_D0pi0_WN_(),
+      pdf2BuPartial_Bu2Dst0h_D0pi0_WN_(),
+      pdfBuPartial_Bu2Dst0h_D0pi0_WN_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.7157e+01,
