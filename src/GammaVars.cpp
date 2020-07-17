@@ -59,13 +59,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "",
           RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
           *Bu2Dst0h_D0gamma_fracPdf1Delta_)),
-      pdfDelta_misId_Bu2Dst0h_D0gamma_(new RooAddPdf(
-          ("pdfDelta_misId_Bu2Dst0h_D0gamma_" +
-           ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "",
-          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
-          *Bu2Dst0h_D0gamma_fracPdf1Delta_)),
       Bu2Dst0h_D0gamma_meanBu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0gamma_meanBu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma, 5275, 5285)),

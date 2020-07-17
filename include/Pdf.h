@@ -235,7 +235,7 @@ class Pdf : public PdfBase {
   }
 
   virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfDelta_misId_Bu2Dst0h_D0gamma();
   }
   virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0pi0() const {
@@ -524,10 +524,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
   PdfBase::functionsBuPartial_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdfBuPartial_misId_Bu2Dst0h_D0pi0());
-    PdfBase::yieldsBuPartial_.add(
-        Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-            PdfBase::uniqueId_)
-            .N_misId_BuPartial_Bu2Dst0h_D0pi0());
+  PdfBase::yieldsBuPartial_.add(
+      Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
+          .N_misId_BuPartial_Bu2Dst0h_D0pi0());
   if (_daughters == Daughters::pik) {
     PdfBase::functionsBuPartial_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
@@ -614,8 +613,9 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_trueId_Delta_Bu2Dst0h_D0gamma());
-    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                     .pdfDelta_misId_Bu2Dst0h_D0gamma());
+    PdfBase::functionsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdfDelta_misId_Bu2Dst0h_D0gamma());
     PdfBase::yieldsDelta_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)

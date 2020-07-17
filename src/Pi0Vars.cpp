@@ -152,7 +152,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_bDelta_(nullptr),
       Bu2Dst0h_D0gamma_cDelta_(nullptr),
       pdfDelta_Bu2Dst0h_D0gamma_(nullptr),
-      pdfDelta_misId_Bu2Dst0h_D0gamma_(nullptr),
       Bu2Dst0h_D0gamma_meanBu_(nullptr),
       Bu2Dst0h_D0gamma_KpiSigmaBu_(nullptr),
       Bu2Dst0h_D0gamma_a1Bu_(nullptr),
