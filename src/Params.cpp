@@ -1,5 +1,43 @@
 #include "Params.h"
 
+void FixedParameter::Randomise(TRandom3 &random) {
+  double shifted_value_ = random.Gaus(mean_, std_);
+  if (sign_ == Sign::positive) {
+    std::cout << "Positive\n";
+    std::cout << shifted_value_ << "\n";
+    while (shifted_value_ < 0) {
+      RooRandom::randomGenerator()->SetSeed(0);
+      TRandom3 random(0);
+      shifted_value_ = random.Gaus(mean_, std_);
+    }
+    std::cout << shifted_value_ << "\n";
+  } else if (sign_ == Sign::negative) {
+    std::cout << "Negative\n";
+    std::cout << shifted_value_ << "\n";
+    while (shifted_value_ > 0) {
+      RooRandom::randomGenerator()->SetSeed(0);
+      TRandom3 random(0);
+      shifted_value_ = random.Gaus(mean_, std_);
+    }
+    std::cout << shifted_value_ << "\n";
+  }
+  std::smatch match;
+  static const std::regex pattern("\\S+Eff\\S+");
+  if (std::regex_match(name_, match, pattern)) {
+    std::cout << "0 < Efficiency < 1\n";
+    std::cout << shifted_value_ << "\n";
+    while (shifted_value_ > 1 || shifted_value_ < 0) {
+      RooRandom::randomGenerator()->SetSeed(0);
+      TRandom3 random(0);
+      shifted_value_ = random.Gaus(mean_, std_);
+    }
+    std::cout << shifted_value_ << "\n";
+  }
+  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
+            << "\n";
+  roo_variable_->setVal(shifted_value_);
+}
+
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind) {
   return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
@@ -11,7 +49,7 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
 }
 
 double ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
-                         std::string const &parName, Param param) {
+                   std::string const &parName, Param param) {
   std::string fname =
       "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +

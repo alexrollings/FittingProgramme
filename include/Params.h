@@ -43,44 +43,7 @@ class FixedParameter {
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
-
-  void Randomise(TRandom3 &random) {
-    double shifted_value_ = random.Gaus(mean_, std_);
-    if (sign_ == Sign::positive) {
-      std::cout << "Positive\n";
-      std::cout << shifted_value_ << "\n";
-      while (shifted_value_ < 0) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        shifted_value_ = random.Gaus(mean_, std_);
-      }
-      std::cout << shifted_value_ << "\n";
-    } else if (sign_ == Sign::negative) {
-      std::cout << "Negative\n";
-      std::cout << shifted_value_ << "\n";
-      while (shifted_value_ > 0) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        shifted_value_ = random.Gaus(mean_, std_);
-      }
-      std::cout << shifted_value_ << "\n";
-    }
-    std::smatch match;
-    static const std::regex pattern("\\S+Eff\\S+");
-    if (std::regex_match(name_, match, pattern)) {
-      std::cout << "0 < Efficiency < 1\n";
-      std::cout << shifted_value_ << "\n";
-      while (shifted_value_ > 1 || shifted_value_ < 0) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        shifted_value_ = random.Gaus(mean_, std_);
-      }
-      std::cout << shifted_value_ << "\n";
-    }
-    std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
-              << "\n";
-    roo_variable_->setVal(shifted_value_);
-  }
+  void Randomise(TRandom3 &random); 
 
  private:
   double mean_, std_;
