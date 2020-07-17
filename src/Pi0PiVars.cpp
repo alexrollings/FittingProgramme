@@ -294,16 +294,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Correct ID BOX EFFs -------------------- //
       buEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, Efficiency::buEff, false),
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, Efficiency::buEffErr, false),
           Systematic::NA, Sign::positive)),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, Efficiency::deltaEff, false),
-          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
                                              Bachelor::pi,
                                              Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::positive)),
@@ -314,17 +314,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Mis-ID BoxEffs ------------------- //
       buEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0K_D0pi0, Bachelor::pi, Efficiency::buEff, true),
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0K_D0pi0, Bachelor::pi, Efficiency::buEffErr, true),
           Systematic::NA, Sign::positive)),
       deltaEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0,
           Bachelor::pi,
-          Configuration::Get().ReturnBoxEffs(
+          ReturnBoxEffs(
               Mode::Bu2Dst0K_D0pi0, Bachelor::pi, Efficiency::deltaEff, true),
-          Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0,
                                              Bachelor::pi,
                                              Efficiency::deltaEffErr, true),
           Systematic::NA, Sign::positive)),
@@ -354,9 +354,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- MC Efficiencies -------------------- //
       mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
                                            Bachelor::pi, true),
-          Configuration::Get().ReturnMCEff(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
                                            Bachelor::pi, false),
           Systematic::mcEffs, Sign::positive)),
       mcEff_Bu2Dst0h_D0gamma_(nullptr),
@@ -365,9 +365,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bu2D0h_(Params::Get().CreateFixed(
           "mcEff_Bu2D0h", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Configuration::Get().ReturnMCEff(Mode::Bu2D0pi, Neutral::pi0,
+          ReturnMCEffs(Mode::Bu2D0pi, Neutral::pi0,
                                            Bachelor::pi, true),
-          Configuration::Get().ReturnMCEff(Mode::Bu2D0pi, Neutral::pi0,
+          ReturnMCEffs(Mode::Bu2D0pi, Neutral::pi0,
                                            Bachelor::pi, false),
           Systematic::mcEffs, Sign::positive)),
       mcEff_PartRec_(Params::Get().CreateFixed(
@@ -422,9 +422,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
 
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0pi0, true);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::pi,
                                      mapMisId_Bu2Dst0h_D0gamma, true);
 
   buDeltaCutEffMisId_Bu2Dst0h_D0pi0_ =

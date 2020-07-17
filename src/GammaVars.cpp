@@ -581,16 +581,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   std::map<std::string, double> mapBu2Dst0h_D0pi0_FAVasSUP;
   std::map<std::string, double> mapBu2D0h;
 
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                                      mapBu2Dst0h_D0gamma, false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma_D02pik,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma_D02pik,
                                      Bachelor::pi, mapBu2Dst0h_D0gamma_FAVasSUP,
                                      false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                                      mapBu2Dst0h_D0pi0, false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi,
                                      mapBu2Dst0h_D0pi0_FAVasSUP, false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
+  ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
                                      false);
 
   std::map<Mode, double> misRecModesMap = {
@@ -604,7 +604,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   unsigned int it = 0;
   for (auto &m : misRecModesMap) {
     std::map<std::string, double> mapMisRecTmp;
-    Configuration::Get().ReturnBoxEffs(m.first, Bachelor::pi, mapMisRecTmp,
+    ReturnBoxEffs(m.first, Bachelor::pi, mapMisRecTmp,
                                        false);
     if (it == 0) {
       mapMisRec.insert(std::pair<std::string, double>(
@@ -636,7 +636,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
   it = 0;
   for (auto &m : partRecModesMap) {
     std::map<std::string, double> mapPartRecTmp;
-    Configuration::Get().ReturnBoxEffs(m.first, Bachelor::pi, mapPartRecTmp,
+    ReturnBoxEffs(m.first, Bachelor::pi, mapPartRecTmp,
                                        false);
     if (it == 0) {
       mapPartRec.insert(std::pair<std::string, double>(

@@ -1,5 +1,6 @@
 #pragma once
 #include "Configuration.h"
+#include "Efficiencies.h"
 #include "GlobalVars.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"

@@ -184,7 +184,7 @@ void MakeMapFittingDataSet(
 void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
                    Mode mode) {
   std::map<std::string, double> effMap;
-  config.ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
+  ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
   outputFile.cd();
   tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(),
               &effMap["buDeltaCutEff"],

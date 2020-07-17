@@ -367,16 +367,16 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   std::map<std::string, double> mapBu2D0h;
   std::map<std::string, double> mapPartRec;
 
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                                      mapBu2Dst0h_D0pi0, false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_D02pik,
                                      Bachelor::pi, mapBu2Dst0h_D0pi0_FAVasSUP,
                                      false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                                      mapBu2Dst0h_D0gamma, false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
+  ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::pi, mapBu2D0h,
                                      false);
-  Configuration::Get().ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
+  ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
                                      mapPartRec, false);
 
   std::map<Mode, double> misRecModesMap = {
@@ -391,7 +391,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   unsigned int it = 0;
   for (auto &m : misRecModesMap) {
     std::map<std::string, double> mapMisRecTmp;
-    Configuration::Get().ReturnBoxEffs(m.first, Bachelor::pi, mapMisRecTmp,
+    ReturnBoxEffs(m.first, Bachelor::pi, mapMisRecTmp,
                                        false);
     if (it == 0) {
       mapMisRec.insert(std::pair<std::string, double>(

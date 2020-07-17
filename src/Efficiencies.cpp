@@ -23,7 +23,7 @@ std::vector<std::string> SplitLine(std::string const &str) {
   return stringVector;
 }
 
-double ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
+double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                    bool returnEff) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
@@ -363,7 +363,7 @@ void ReturnBoxEffs(Mode mode, Bachelor bachelor,
 
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
-  if (Configuration::Get().PlotToys() == true || !fexists(txtFileName)) {
+  if (Configuration::Get().plotToys() == true || !fexists(txtFileName)) {
     bool D02pik;
     if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
         mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
@@ -424,7 +424,7 @@ void ReturnBoxEffs(Mode mode, Bachelor bachelor,
       }
     }
     double nOr = chain.GetEntries((cutString + "&&" + orString).c_str());
-    if (Configuration::Get().PlotToys() == true) {
+    if (Configuration::Get().plotToys() == true) {
       double nInitial = chain.GetEntries(cutString.c_str());
       double nBox;
       if (Configuration::Get().fit1D() == false) {

@@ -266,7 +266,7 @@ std::string ComposeFilename(Year year, Polarity polarity,
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
-Efficienciesstd::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
+std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeName(int uniqueId, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge);

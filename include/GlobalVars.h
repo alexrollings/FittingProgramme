@@ -2,6 +2,7 @@
 #include "RooFormulaVar.h"
 
 #include "Configuration.h"
+#include "Efficiencies.h"
 #include "Params.h"
 
 #include <string>
