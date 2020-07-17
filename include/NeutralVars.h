@@ -99,12 +99,16 @@ class NeutralVars {
   RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() { return pdfDelta_Bu2Dst0h_D0pi0_; }
   RooRealVar &Bu2Dst0h_D0pi0_meanBu() { return *Bu2Dst0h_D0pi0_meanBu_; }
   RooRealVar &Bu2Dst0h_D0pi0_sigmaBu() { return *Bu2Dst0h_D0pi0_sigmaBu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_KpiSigmaBu() { return *Bu2Dst0h_D0pi0_KpiSigmaBu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_KpiSigmaBu() {
+    return *Bu2Dst0h_D0pi0_KpiSigmaBu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_a1Bu() { return *Bu2Dst0h_D0pi0_a1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_a2Bu() { return *Bu2Dst0h_D0pi0_a2Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_n1Bu() { return *Bu2Dst0h_D0pi0_n1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_n2Bu() { return *Bu2Dst0h_D0pi0_n2Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Bu() { return *Bu2Dst0h_D0pi0_fracPdf1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_fracPdf1Bu() {
+    return *Bu2Dst0h_D0pi0_fracPdf1Bu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_mean1BuPartial() {
     return *Bu2Dst0h_D0pi0_mean1BuPartial_;
   }
@@ -152,23 +156,28 @@ class NeutralVars {
     return pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
-  RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0_WN() { return pdfDelta_Bu2Dst0h_D0pi0_WN_; }
+  RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_WN() {
+    return *pdfDelta_Bu2Dst0h_D0pi0_WN_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_meanBu() { return *Bu2Dst0h_D0pi0_WN_meanBu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_sigmaBu() { return *Bu2Dst0h_D0pi0_WN_sigmaBu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_KpiSigmaBu() { return *Bu2Dst0h_D0pi0_WN_KpiSigmaBu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_KpiSigmaBu() {
+    return *Bu2Dst0h_D0pi0_WN_KpiSigmaBu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_a1Bu() { return *Bu2Dst0h_D0pi0_WN_a1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_WN_a2Bu() { return *Bu2Dst0h_D0pi0_WN_a2Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_WN_n1Bu() { return *Bu2Dst0h_D0pi0_WN_n1Bu_; }
   RooRealVar &Bu2Dst0h_D0pi0_WN_n2Bu() { return *Bu2Dst0h_D0pi0_WN_n2Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf1Bu() { return *Bu2Dst0h_D0pi0_WN_fracPdf1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf1Bu() {
+    return *Bu2Dst0h_D0pi0_WN_fracPdf1Bu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_mean1BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_mean1BuPartial_;
   }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_meanOffset21BuPartial() {
-    return *Bu2Dst0h_D0pi0_WN_meanOffset21BuPartial_;
+  RooRealVar &Bu2Dst0h_D0pi0_WN_meanOffset31BuPartial() {
+    return *Bu2Dst0h_D0pi0_WN_meanOffset31BuPartial_;
   }
-  RooFormulaVar &Bu2Dst0h_D0pi0_WN_mean2BuPartial() {
-    return Bu2Dst0h_D0pi0_WN_mean2BuPartial_;
+  RooFormulaVar &Bu2Dst0h_D0pi0_WN_mean3BuPartial() {
+    return Bu2Dst0h_D0pi0_WN_mean3BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial() {
     return *Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial_;
@@ -176,14 +185,26 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial_;
   }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_sigmaRatio31BuPartial() {
+    return *Bu2Dst0h_D0pi0_WN_sigmaRatio31BuPartial_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_a1BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_a1BuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_a2BuPartial() {
+    return *Bu2Dst0h_D0pi0_WN_a2BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0pi0_WN_n1BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_n1BuPartial_;
   }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_n2BuPartial() {
+    return *Bu2Dst0h_D0pi0_WN_n2BuPartial_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf1BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_fracPdf1BuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial() {
+    return *Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_;
   }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
@@ -263,7 +284,8 @@ class NeutralVars {
     return *deltaPartialCutEffPartRec_;
   }
 
-  // -------------Expected yields and relative fractions w.r.t. sig -------------//
+  // -------------Expected yields and relative fractions w.r.t. sig
+  // -------------//
   double &initYieldFAVBu2Dst0h_D0gamma() {
     return initYieldFAVBu2Dst0h_D0gamma_;
   }
@@ -290,8 +312,12 @@ class NeutralVars {
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
   // -------------------- CP Observables -------------------- //
-  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() { return *R_CP_Bu2Dst0h_D0gamma_Blind_; }
-  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() { return *R_CP_Bu2Dst0h_D0pi0_Blind_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() {
+    return *R_CP_Bu2Dst0h_D0gamma_Blind_;
+  }
+  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() {
+    return *R_CP_Bu2Dst0h_D0pi0_Blind_;
+  }
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
 
@@ -388,9 +414,8 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_cDelta_;
   RooDstD0BG pdfDeltaFlat_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta_;
-  RooAddPdf pdfDelta_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooAbsPdf> pdfDelta_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanBu_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_sigmaBu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_KpiSigmaBu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a2Bu_;
@@ -398,13 +423,17 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_n2Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_mean1BuPartial_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanOffset21BuPartial_;
-  RooFormulaVar Bu2Dst0h_D0pi0_WN_mean2BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanOffset31BuPartial_;
+  RooFormulaVar Bu2Dst0h_D0pi0_WN_mean3BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_sigmaRatio31BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a2BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_n1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_n2BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_;
   // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta_;
@@ -457,7 +486,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> PartRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> PartRec_aDelta_;
   std::shared_ptr<RooRealVar> PartRec_bDelta_;
-     std::shared_ptr<RooRealVar> PartRec_cDelta_;
+  std::shared_ptr<RooRealVar> PartRec_cDelta_;
   RooDstD0BG pdfDelta_PartRec_;
   RooDstD0BG pdfDelta_misId_PartRec_;
   std::shared_ptr<RooRealVar> PartRec_D0pi0_meanBu_;
@@ -491,7 +520,8 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaPartialCutEffMisRec_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffBu2D0h_;
   std::shared_ptr<RooRealVar> deltaPartialCutEffPartRec_;
-  // -------------Expected yields and relative fractions w.r.t. sig -------------//
+  // -------------Expected yields and relative fractions w.r.t. sig
+  // -------------//
   double fracBu2Dst0h_D0gamma_;
   double initYieldFAVBu2Dst0h_D0gamma_;
   double fracBu2Dst0h_D0pi0_;
@@ -514,7 +544,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
-
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

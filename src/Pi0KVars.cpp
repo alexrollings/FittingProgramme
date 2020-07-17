@@ -218,8 +218,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .Bu2Dst0h_D0pi0_WN_fracPdf1Bu())),
       Bu2Dst0h_D0pi0_WN_sigma1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_sigma2BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_sigma3BuPartial_(nullptr),
       pdf1BuPartial_Bu2Dst0h_D0pi0_WN_(),
       pdf2BuPartial_Bu2Dst0h_D0pi0_WN_(),
+      pdf3BuPartial_Bu2Dst0h_D0pi0_WN_(),
       pdfBuPartial_Bu2Dst0h_D0pi0_WN_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(

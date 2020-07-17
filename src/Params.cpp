@@ -81,7 +81,8 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
     absArg = floatPars.find(parName.c_str());
     if (absArg == nullptr) {
       throw std::runtime_error("Cannot find parameter " + parName +
-                               " in fit result");
+                               " in fit result for bachelor " +
+                               EnumToString(bachelor));
     } 
   }
   RooRealVar *realVar = dynamic_cast<RooRealVar *>(absArg);

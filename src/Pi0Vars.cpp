@@ -148,14 +148,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
-      pdfDelta_Bu2Dst0h_D0pi0_WN_(
+      pdfDelta_Bu2Dst0h_D0pi0_WN_(new RooAddPdf(
           ("pdfDelta_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::pi0))
               .c_str(),
           "",
           RooArgList(pdfDeltaPeak_Bu2Dst0h_D0pi0_WN_,
                      pdfDeltaFlat_Bu2Dst0h_D0pi0_WN_),
-          *Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta_),
+          *Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta_)),
       Bu2Dst0h_D0pi0_WN_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_meanBu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
@@ -178,13 +178,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0pi0_WN_fracPdf1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_WN_mean1BuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_WN_meanOffset21BuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_WN_mean2BuPartial_(),
+      Bu2Dst0h_D0pi0_WN_meanOffset31BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_mean3BuPartial_(),
       Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_sigmaRatio31BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_a1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_a2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_n1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_n2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_fracPdf1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::pi0,
