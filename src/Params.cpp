@@ -1,5 +1,14 @@
 #include "Params.h"
 
+RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
+                             RooAbsReal &paramToBlind) {
+  return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
+                               paramToBlind);
+}
+RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
+  return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
+}
+
 void FixedParameter::Randomise(TRandom3 &random) {
   double shifted_value_ = random.Gaus(mean_, std_);
   if (sign_ == Sign::positive) {
@@ -38,17 +47,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
   roo_variable_->setVal(shifted_value_);
 }
 
-RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
-                             RooAbsReal &paramToBlind) {
-  return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
-                               paramToBlind);
-}
-
-RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
-  return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
-}
-
-double ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
+double Params::ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
                    std::string const &parName, Param param) {
   std::string fname =
       "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
