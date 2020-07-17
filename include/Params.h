@@ -246,7 +246,7 @@ class Params {
     auto key =
         std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
                         EnumToString(bachelor), "");
-    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     double start = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -273,7 +273,7 @@ class Params {
     auto key =
         std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
                         EnumToString(bachelor), "");
-    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     double mean = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     double std = ReturnValErr(mode, neutral, bachelor, name, Param::err);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
