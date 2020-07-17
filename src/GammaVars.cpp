@@ -11,24 +11,26 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     // -------------------- PDF SHAPES -------------------- //
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : uniqueId_(uniqueId),
-      Bu2Dst0h_D0gamma_meanDelta_(
-          Params::Get().CreateFloating("Bu2Dst0h_D0gamma_meanDelta", uniqueId_,
-                                       Neutral::gamma, 1.4254e+02, 135, 150)),
-      Bu2Dst0h_D0gamma_sigmaDelta_(
-          Params::Get().CreateFloating("Bu2Dst0h_D0gamma_sigmaDelta", uniqueId_,
-                                       Neutral::gamma, 8.4013e+00, 2, 15)),
+      Bu2Dst0h_D0gamma_meanDelta_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0gamma_meanDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, 135, 150)),
+      Bu2Dst0h_D0gamma_sigmaDelta_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0gamma_sigmaDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, 2, 15)),
       Bu2Dst0h_D0gamma_a1Delta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0gamma_a1Delta", uniqueId_, Neutral::gamma, 1.4638e+00,
-          8.12e-02, Systematic::gammaDeltaTails, Sign::positive)),
+          "Bu2Dst0h_D0gamma_a1Delta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, Systematic::gammaDeltaTails, Sign::same)),
       Bu2Dst0h_D0gamma_n1Delta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0gamma_n1Delta", uniqueId_, Neutral::gamma, 10, 0,
-          Systematic::NA, Sign::positive)),
+          "Bu2Dst0h_D0gamma_n1Delta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, Systematic::gammaDeltaTails,
+          Sign::positive)),
       Bu2Dst0h_D0gamma_a2Delta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0gamma_a2Delta", uniqueId_, Neutral::gamma, -6.2499e-01,
-          2.34e-02, Systematic::gammaDeltaTails, Sign::negative)),
+          "Bu2Dst0h_D0gamma_a2Delta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, Systematic::gammaDeltaTails, Sign::same)),
       Bu2Dst0h_D0gamma_n2Delta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0gamma_n2Delta", uniqueId_, Neutral::gamma, 10, 0,
-          Systematic::NA, Sign::positive)),
+          "Bu2Dst0h_D0gamma_n2Delta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma, Systematic::gammaDeltaTails,
+          Sign::positive)),
       pdf1Delta_Bu2Dst0h_D0gamma_(
           ("pdf1Delta_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma))
@@ -45,7 +47,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           *Bu2Dst0h_D0gamma_n2Delta_),
       Bu2Dst0h_D0gamma_fracPdf1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_fracPdf1Delta", uniqueId_, Neutral::gamma,
-          2.5654e-01, 3.91e-02, Systematic::gammaDeltaFrac, Sign::positive)),
+          Mode::Bu2Dst0pi_D0gamma, Systematic::gammaDeltaFrac, Sign::positive)),
       Bu2Dst0h_D0gamma_thresholdDelta_(nullptr),
       Bu2Dst0h_D0gamma_aDelta_(nullptr),
       Bu2Dst0h_D0gamma_bDelta_(nullptr),
@@ -247,13 +249,15 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails, Sign::same)),
       Bu2Dst0h_D0pi0_n1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n1BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails,
+          Sign::positive)),
       Bu2Dst0h_D0pi0_a2BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a2BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails, Sign::same)),
       Bu2Dst0h_D0pi0_n2BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n2BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails,
+          Sign::positive)),
       Bu2Dst0h_D0pi0_fracPdf1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialFrac, Sign::positive)),
