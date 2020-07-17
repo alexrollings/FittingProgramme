@@ -6,10 +6,10 @@
 #include <string>
 #include <vector>
 
-#include "RooRandom.h"
-#include "TRandom3.h"
 #include "RooFitResult.h"
+#include "RooRandom.h"
 #include "TFile.h"
+#include "TRandom3.h"
 
 #include "Configuration.h"
 
@@ -43,7 +43,7 @@ class FixedParameter {
   double std() const { return std_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
-  void Randomise(TRandom3 &random); 
+  void Randomise(TRandom3 &random);
 
  private:
   double mean_, std_;
@@ -62,7 +62,7 @@ class Params {
   using ValueFixed = FixedParameter;
   using ValueFloating = RooRealVar;
   double ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
-                         std::string const &parName, Param param);
+                      std::string const &parName, Param param);
 
   static Params &Get() {
     static Params params;
@@ -177,9 +177,8 @@ class Params {
                                              Charge charge, double start,
                                              double min_value,
                                              double max_value) {
-    auto key =
-        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
-                        EnumToString(charge), "");
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), EnumToString(charge), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, charge);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -244,8 +243,9 @@ class Params {
                                              Bachelor bachelor, Mode mode,
                                              double min_value,
                                              double max_value) {
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), "", "");
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     double start = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     return ConstructFloatingParameter(key, var_name, start, min_value,
@@ -270,8 +270,9 @@ class Params {
                                           Mode mode, Systematic systematic,
                                           Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), "", "");
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     double mean = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     double std = ReturnValErr(mode, neutral, bachelor, name, Param::err);
@@ -351,5 +352,4 @@ class Params {
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind);
-RooFormulaVar *MakeLittleAsym(const char *uniqueName,
-                             RooAbsReal &bigAsym);
+RooFormulaVar *MakeLittleAsym(const char *uniqueName, RooAbsReal &bigAsym);
