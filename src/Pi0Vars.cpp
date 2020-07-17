@@ -70,9 +70,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuFrac, Sign::positive)),
-      Bu2Dst0h_D0pi0_meanCbBuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_meanOffsetGausBuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_meanGausBuPartial_(),
+      Bu2Dst0h_D0pi0_mean1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_meanOffset31BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_mean3BuPartial_(),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(nullptr),
       Bu2Dst0h_D0pi0_sigmaRatio21BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_sigmaRatio31BuPartial_(nullptr),
@@ -80,8 +80,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_a2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_n1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_n2BuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_fracPdfCb1BuPartial_(nullptr),
-      Bu2Dst0h_D0pi0_fracPdfCb2BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_fracPdf1BuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_fracPdf2BuPartial_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::pi0,

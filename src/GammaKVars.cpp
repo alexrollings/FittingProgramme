@@ -155,7 +155,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_meanCbBuPartial(),
+              .Bu2Dst0h_D0pi0_mean1BuPartial(),
           *Bu2Dst0h_D0pi0_sigma1BuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0h_D0pi0_a1BuPartial(),
@@ -167,7 +167,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_meanCbBuPartial(),
+              .Bu2Dst0h_D0pi0_mean1BuPartial(),
           *Bu2Dst0h_D0pi0_sigma2BuPartial_,
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0h_D0pi0_a2BuPartial(),
@@ -179,7 +179,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_meanGausBuPartial(),
+              .Bu2Dst0h_D0pi0_mean3BuPartial(),
           *Bu2Dst0h_D0pi0_sigma3BuPartial_),
       pdfBuPartial_Bu2Dst0h_D0pi0_(
           ("pdfBuPartial_Bu2Dst0h_D0pi0_" +
@@ -190,9 +190,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     pdf2BuPartial_Bu2Dst0h_D0pi0_,
                     pdf3BuPartial_Bu2Dst0h_D0pi0_),
           RooArgSet(NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                        .Bu2Dst0h_D0pi0_fracPdfCb1BuPartial(),
+                        .Bu2Dst0h_D0pi0_fracPdf1BuPartial(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                        .Bu2Dst0h_D0pi0_fracPdfCb2BuPartial())),
+                        .Bu2Dst0h_D0pi0_fracPdf2BuPartial())),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanDelta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_meanDelta", uniqueId_, Neutral::gamma,
