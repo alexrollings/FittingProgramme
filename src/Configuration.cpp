@@ -7,7 +7,6 @@
 
 #include "Configuration.h"
 
-
 Configuration::Configuration()
     : neutral_(),
       fitting("fitting", "fitting"),
@@ -196,7 +195,6 @@ Configuration::Configuration()
 
   fittingArgSet_.add(buDeltaMass_);
   fittingArgSet_.add(deltaMass_);
-
 }
 
 // Function returns delta mass string if 1D fit, full box dimns if D1D fit
@@ -292,6 +290,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdGammaPiPdfBu;
   } else if (systematic == "misIdGammaKPdfBu") {
     return Systematic::misIdGammaKPdfBu;
+  } else if (systematic == "misIdGammaPiPdfDelta") {
+    return Systematic::misIdGammaPiPdfDelta;
+  } else if (systematic == "misIdGammaKPdfDelta") {
+    return Systematic::misIdGammaKPdfDelta;
   } else if (systematic == "misIdMisRecKPdfBu") {
     return Systematic::misIdMisRecKPdfBu;
   } else if (systematic == "misIdMisRecKPdfBuPartial") {
@@ -350,9 +352,11 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
       "misRecBuPartialPdf/partRecDeltaPdf/partRecBuPdf/"
       "partRecBuPartialPdf/Bs2Dst0KpiDeltaPdf/Bs2Dst0KpiBuPdf/"
       "Bs2Dst0KpiBuPartialPdf/Bs2D0KpiDeltaPdf/Bs2D0KpiBuPdf/"
-      "Bs2D0KpiBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/misIdPi0PiPdfDelta/misIdPi0KPdfDelta/"
+      "Bs2D0KpiBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/misIdPi0PiPdfDelta/"
+      "misIdPi0KPdfDelta/"
       "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
-      "misIdGammaKPdfBu/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
+      "misIdGammaKPdfBu/misIdGammaPiPdfDelta/"
+      "misIdGammaKPdfDelta/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
       "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/gammaFAVasSUPDeltaPdf/"
       "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
       "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
@@ -432,6 +436,10 @@ std::string EnumToString(Systematic systematic) {
       return "misIdGammaPiPdfBu";
     case Systematic::misIdGammaKPdfBu:
       return "misIdGammaKPdfBu";
+    case Systematic::misIdGammaPiPdfDelta:
+      return "misIdGammaPiPdfDelta";
+    case Systematic::misIdGammaKPdfDelta:
+      return "misIdGammaKPdfDelta";
     case Systematic::misIdMisRecKPdfBu:
       return "misIdMisRecKPdfBu";
     case Systematic::misIdMisRecKPdfBuPartial:

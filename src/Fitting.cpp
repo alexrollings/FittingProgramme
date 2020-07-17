@@ -299,30 +299,7 @@ int main(int argc, char **argv) {
                 << "    -data2D, to run 2D toys generated from RooHistPdf of "
                    "data.\n";
       std::cout
-          << "    -systematic=<choice "
-             "{pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,"
-             "pi0BuPartialTails,"
-             "pi0BuPartialFrac,"
-             "pi0BuPartialSigma1,crossFeedBuPdf,crossFeedBuPartialPdf,"
-             "gammaDeltaTails,gammaDeltaFrac,gammaBuTails,gammaBuFrac,"
-             "misRecDeltaPdf,misRecBuPdf,misRecBuPartialPdf,"
-             "partRecDeltaPdf,partRecBuPdf,partRecBuPartialPdf,"
-             "Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,Bs2Dst0KpiBuPartialPdf,"
-             "Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,Bs2D0KpiBuPartialPdf,"
-             "misIdPi0PiPdfBu,misIdPi0KPdfBu,misIdPi0PiPdfDelta,"
-             "misIdPi0KPdfDelta,misIdPi0PiPdfBuPartial,"
-             "misIdPi0KPdfBuPartial,misIdGammaPiPdfBu,misIdGammaKPdfBu,"
-             "misIdMisRecKPdfBu,misIdMisRecKPdfBuPartial,"
-             "misIdPartRecKPdfBu,misIdPartRecKPdfBuPartial,"
-             "gammaFAVasSUPDeltaPdf,"
-             "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
-             "pi0FAVasSUPBuPartialPdf,"
-             "buDeltaCutEffs,deltaCutEffs,deltaPartialCutEffs,"
-             "buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
-             "deltaPartialMisIdCutEffs,pidEffPi,"
-             "pidEffK,crossFeedRate,A_FAV_Pi0,A_FAV_Gamma,A_Kpi,A_pi,Delta_A_"
-             "CP,mcEffs} "
-             "default: None>"
+          << "    -systematic=<choice, default: None>"
           << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
@@ -450,27 +427,7 @@ int main(int argc, char **argv) {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
           std::cerr
-              << "systematic assignment failed, please specify: "
-                 "-systematic=pi0DeltaTails,pi0DeltaFrac,pi0BuTails,pi0BuFrac,"
-                 "pi0BuPartialTails,pi0BuPartialFrac,"
-                 "pi0BuPartialSigma1,crossFeedBuPdf,"
-                 "crossFeedBuPartialPdf,gammaDeltaTails,gammaDeltaFrac,"
-                 "gammaBuTails,gammaBuFrac,misRecDeltaPdf,misRecBuPdf,"
-                 "misRecBuPartialPdf,partRecDeltaPdf,partRecBuPdf,"
-                 "partRecBuPartialPdf,Bs2Dst0KpiDeltaPdf,Bs2Dst0KpiBuPdf,"
-                 "Bs2Dst0KpiBuPartialPdf,Bs2D0KpiDeltaPdf,Bs2D0KpiBuPdf,"
-                 "Bs2D0KpiBuPartialPdf,misIdPi0PiPdfBu,misIdPi0KPdfBu,"
-                 "misIdPi0PiPdfDelta,misIdPi0KPdfDelta,"
-                 "misIdPi0PiPdfBuPartial,misIdPi0KPdfBuPartial,"
-                 "misIdGammaPiPdfBu,misIdGammaKPdfBu,misIdMisRecKPdfBu,"
-                 "misIdMisRecKPdfBuPartial,misIdPartRecKPdfBu,"
-                 "misIdPartRecKPdfBuPartial,gammaFAVasSUPDeltaPdf,"
-                 "gammaFAVasSUPBuPdf,pi0FAVasSUPDeltaPdf,pi0FAVasSUPBuPdf,"
-                 "pi0FAVasSUPBuPartialPdf,buDeltaCutEffs,deltaCutEffs,"
-                 "deltaPartialCutEffs,buDeltaMisIdCutEffs,deltaMisIdCutEffs,"
-                 "deltaPartialMisIdCutEffs,pidEffPi,pidEffK,crossFeedRate,A_"
-                 "FAV_Pi0,A_FAV_Gamma,A_Kpi,A_pi,"
-                 "Delta_A_CP,mcEffs\n";
+              << "systematic assignment failed, please specify.\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
