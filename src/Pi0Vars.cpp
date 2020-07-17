@@ -13,9 +13,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
     : uniqueId_(uniqueId),
       Bu2Dst0h_D0pi0_meanDelta_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_meanDelta", uniqueId_, Neutral::pi0,
-          Params::Get().ReturnValErr(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
-                            "Bu2Dst0h_D0pi0_meanDelta", Param::val),
-          138, 146)),
+          Mode::Bu2Dst0pi_D0pi0, 138, 146)),
       Bu2Dst0h_D0pi0_sigmaDelta_(
           Params::Get().CreateFloating("Bu2Dst0h_D0pi0_sigmaDelta", uniqueId_,
                                        Neutral::pi0, 1.5815e+00, 0.1, 3)),

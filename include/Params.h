@@ -159,6 +159,20 @@ class Params {
                                       max_value);
   }
 
+  // Reads in starting value of parameter from MC file
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Neutral neutral,
+                                             Mode mode, double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    // Use pi bachelor if no bach specified
+    double start = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              int uniqueId, Neutral neutral,
                                              Bachelor bachelor, double start,
