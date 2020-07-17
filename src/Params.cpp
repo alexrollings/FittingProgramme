@@ -64,6 +64,9 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
       EnumToString(bachelor) + ".root";
   auto file = std::unique_ptr<TFile>(TFile::Open(fname.c_str()));
+  if (file == nullptr) {
+    throw std::runtime_error(fname + " does not exist\n");
+  }
   auto fitResult = std::unique_ptr<RooFitResult>(
       dynamic_cast<RooFitResult *>(file->FindObjectAny("FitResult")));
   RooArgList constPars = fitResult->constPars();
