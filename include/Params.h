@@ -99,9 +99,6 @@ class Params {
   using ValueFixed = FixedParameter;
   using ValueFloating = RooRealVar;
 
-  double ReturnParamValErr(Mode mode, Neutral neutral, Bachelor bachelor,
-                         std::string &parName, Param param);
-
   static Params &Get() {
     static Params params;
     return params;
@@ -334,7 +331,8 @@ class Params {
 };
 
 
-
+double ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
+                         std::string const &parName, Param param);
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind);
 RooFormulaVar *MakeLittleAsym(const char *uniqueName,

@@ -10,11 +10,11 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
   return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
 }
 
-double Params::ReturnParamValErr(Mode mode, Neutral neutral, Bachelor bachelor,
-                         std::string &parName, Param param) {
+double ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
+                         std::string const &parName, Param param) {
   std::string fname =
       "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
-      EnumToString(mode) + "_" + EnumToString(neutral) + "_" +
+      EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
       EnumToString(bachelor) + ".root";
   auto file = std::unique_ptr<TFile>(TFile::Open(fname.c_str()));
   auto fitResult = std::unique_ptr<RooFitResult>(
