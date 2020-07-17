@@ -6,17 +6,7 @@
 #include <sstream>
 
 #include "Configuration.h"
-#include "Params.h"
 
-RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
-                             RooAbsReal &paramToBlind) {
-  return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
-                               paramToBlind);
-}
-
-RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
-  return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
-}
 
 Configuration::Configuration()
     : neutral_(),

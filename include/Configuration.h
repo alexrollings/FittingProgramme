@@ -277,11 +277,6 @@ std::string EnumToLabel(Daughters, Charge);
 std::string EnumToLabel(Bachelor);
 std::string EnumToLabel(Neutral);
 
-RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
-                             RooAbsReal &paramToBlind);
-RooFormulaVar *MakeLittleAsym(const char *uniqueName,
-                             RooAbsReal &bigAsym);
-
 std::string ComposeFilename(Year year, Polarity polarity,
                             Bachelor bachelor, Neutral neutral,
                             Daughters daughters, Charge charge);

@@ -8,12 +8,17 @@
 
 #include "RooRandom.h"
 #include "TRandom3.h"
+#include "RooFitResult.h"
+#include "TFile.h"
+
+#include "Configuration.h"
 
 // Add dummy parameter: Params::Get().Empty();
 // RooRealVar var();
 // Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in
 // fit)
 enum class Sign { positive, negative, none };
+enum class Param { val, err };
 
 class FixedParameter {
  public:
@@ -93,6 +98,9 @@ class Params {
  public:
   using ValueFixed = FixedParameter;
   using ValueFloating = RooRealVar;
+
+  double ReturnParamValErr(Mode mode, Neutral neutral, Bachelor bachelor,
+                         std::string &parName, Param param);
 
   static Params &Get() {
     static Params params;
@@ -324,3 +332,10 @@ class Params {
   std::map<Key, ValueFixed> fixed_parameters_;
   std::map<Key, std::shared_ptr<ValueFloating>> floating_parameters_;
 };
+
+
+
+RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
+                             RooAbsReal &paramToBlind);
+RooFormulaVar *MakeLittleAsym(const char *uniqueName,
+                             RooAbsReal &bigAsym);
