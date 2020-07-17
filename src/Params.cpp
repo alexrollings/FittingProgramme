@@ -59,10 +59,14 @@ void FixedParameter::Randomise(TRandom3 &random) {
 
 double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                    std::string const &parName, Param param) {
+  std::string bachStr = EnumToString(bachelor);
+  if (bachelor == Bachelor::k) {
+    bachStr = "K";
+  }
   std::string fname =
       "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
-      EnumToString(bachelor) + ".root";
+      bachStr + ".root";
   auto file = std::unique_ptr<TFile>(TFile::Open(fname.c_str()));
   if (file == nullptr) {
     throw std::runtime_error(fname + " does not exist\n");
