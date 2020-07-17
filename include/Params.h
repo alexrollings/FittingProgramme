@@ -61,7 +61,7 @@ class Params {
  public:
   using ValueFixed = FixedParameter;
   using ValueFloating = RooRealVar;
-  double ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
+  double ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                          std::string const &parName, Param param);
 
   static Params &Get() {

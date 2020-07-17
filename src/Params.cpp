@@ -47,7 +47,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
   roo_variable_->setVal(shifted_value_);
 }
 
-double Params::ReturnParam(Mode mode, Neutral neutral, Bachelor bachelor,
+double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                    std::string const &parName, Param param) {
   std::string fname =
       "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
