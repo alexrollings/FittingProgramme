@@ -159,20 +159,6 @@ class Params {
                                       max_value);
   }
 
-  // Reads in starting value of parameter from MC file
-  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
-                                             int uniqueId, Neutral neutral,
-                                             Mode mode, double min_value,
-                                             double max_value) {
-    auto key = std::make_tuple(name, std::to_string(uniqueId),
-                               EnumToString(neutral), "", "");
-    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
-    // Use pi bachelor if no bach specified
-    double start = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
-    return ConstructFloatingParameter(key, var_name, start, min_value,
-                                      max_value);
-  }
-
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
                                              int uniqueId, Neutral neutral,
                                              Bachelor bachelor, double start,
@@ -236,6 +222,60 @@ class Params {
         name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
+  }
+
+  // Reads in starting value of parameters from MC file, rather than passing to
+  // constructor
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Neutral neutral,
+                                             Mode mode, double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    // Use pi bachelor if no bach specified
+    double start = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Neutral neutral,
+                                             Bachelor bachelor, Mode mode,
+                                             double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    double start = ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Mode mode,
+                                          Systematic systematic, Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    // Use pi bachelor if no bach specified
+    double mean = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+    double std = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::err);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor,
+                                          Mode mode, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(neutral), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    double mean = ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    double std = ReturnValErr(mode, neutral, bachelor, name, Param::err);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
   template <typename Iterator>
