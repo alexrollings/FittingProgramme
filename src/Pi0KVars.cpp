@@ -57,25 +57,26 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0pi0_meanDelta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_meanDelta", uniqueId_, Neutral::pi0,
-          Bachelor::k, 1.4234e+02, 7.63e-02, Systematic::misIdPi0KPdfDelta,
+          Bachelor::k, Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta,
           Sign::positive)),
       misId_Bu2Dst0h_D0pi0_sigmaDelta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_sigmaDelta", uniqueId_, Neutral::pi0,
-          Bachelor::k, 1.5546e+00, 1.04e-01, Systematic::misIdPi0KPdfDelta,
+          Bachelor::k, Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta,
           Sign::positive)),
       misId_Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0, Bachelor::k,
-          7.9136e-01, 1.51e-01, Systematic::misIdPi0KPdfDelta, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta, Sign::same)),
       misId_Bu2Dst0h_D0pi0_n1Delta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n1Delta", uniqueId_, Neutral::pi0, Bachelor::k,
-          10, 0, Systematic::NA, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta,
+          Sign::positive)),
       misId_Bu2Dst0h_D0pi0_a2Delta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_a2Delta", uniqueId_, Neutral::pi0, Bachelor::k,
-          -4.4312e-01, 4.69e-02, Systematic::misIdPi0KPdfDelta,
-          Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta, Sign::same)),
       misId_Bu2Dst0h_D0pi0_n2Delta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_n2Delta", uniqueId_, Neutral::pi0, Bachelor::k,
-          10, 0, Systematic::NA, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta,
+          Sign::positive)),
       pdf1Delta_misId_Bu2Dst0h_D0pi0_(
           ("pdf1Delta_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
@@ -92,7 +93,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           *misId_Bu2Dst0h_D0pi0_a2Delta_, *misId_Bu2Dst0h_D0pi0_n2Delta_),
       misId_Bu2Dst0h_D0pi0_fracPdf1Delta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_fracPdf1Delta", uniqueId_, Neutral::pi0,
-          Bachelor::k, 4.3762e-01, 7.79e-02, Systematic::misIdPi0KPdfDelta,
+          Bachelor::k, Mode::Bu2Dst0pi_D0pi0, Systematic::misIdPi0KPdfDelta,
           Sign::positive)),
       pdfDelta_misId_Bu2Dst0h_D0pi0_(
           new RooAddPdf(("pdfDelta_misId_Bu2Dst0h_D0pi0_" +
@@ -128,16 +129,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("pdf1Bu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
-          *misId_Bu2Dst0h_D0pi0_sigma1Bu_, *misId_Bu2Dst0h_D0pi0_a1Bu_,
-          *misId_Bu2Dst0h_D0pi0_n1Bu_)),
+          "", Configuration::Get().buDeltaMass(),
+          *misId_Bu2Dst0h_D0pi0_mean1Bu_, *misId_Bu2Dst0h_D0pi0_sigma1Bu_,
+          *misId_Bu2Dst0h_D0pi0_a1Bu_, *misId_Bu2Dst0h_D0pi0_n1Bu_)),
       pdf2Bu_misId_Bu2Dst0h_D0pi0_(
           ("pdf2Bu_misId_Bu2Dst0h_D0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().buDeltaMass(), *misId_Bu2Dst0h_D0pi0_mean1Bu_,
-          *misId_Bu2Dst0h_D0pi0_sigma2Bu_, *misId_Bu2Dst0h_D0pi0_a2Bu_,
-          *misId_Bu2Dst0h_D0pi0_n2Bu_),
+          "", Configuration::Get().buDeltaMass(),
+          *misId_Bu2Dst0h_D0pi0_mean1Bu_, *misId_Bu2Dst0h_D0pi0_sigma2Bu_,
+          *misId_Bu2Dst0h_D0pi0_a2Bu_, *misId_Bu2Dst0h_D0pi0_n2Bu_),
       misId_Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::pi0,
           Bachelor::k, 1.2498e-01, 8.57e-02, Systematic::misIdPi0KPdfBu,
@@ -509,17 +510,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- Correct ID BOX EFFs -------------------- //
       buEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-                                             Efficiency::buEff, false),
-          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-                                             Efficiency::buEffErr, false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buEffErr,
+                        false),
           Systematic::NA, Sign::positive)),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::deltaEff,
+                        false),
           ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-                                             Efficiency::deltaEff, false),
-          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-                                             Efficiency::deltaEffErr, false),
+                        Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::positive)),
       buPartialEffBu2Dst0h_D0pi0_(nullptr),
       buEffBu2Dst0h_D0gamma_(nullptr),
@@ -528,19 +529,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- Mis-ID BoxEffs ------------------- //
       buEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnBoxEffs(
-              Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::buEff, true),
-          ReturnBoxEffs(
-              Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::buEffErr, true),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::buEff,
+                        true),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+                        Efficiency::buEffErr, true),
           Systematic::NA, Sign::positive)),
       deltaEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-          "deltaEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0,
-          Bachelor::k,
-          ReturnBoxEffs(
-              Mode::Bu2Dst0pi_D0pi0, Bachelor::k, Efficiency::deltaEff, true),
-          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0,
-                                             Bachelor::k,
-                                             Efficiency::deltaEffErr, true),
+          "deltaEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+                        Efficiency::deltaEff, true),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
+                        Efficiency::deltaEffErr, true),
           Systematic::NA, Sign::positive)),
       buPartialEffMisId_Bu2Dst0h_D0pi0_(nullptr),
       // -------------------- Mis-ID BoxEffs ------------------- //
@@ -568,10 +567,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- MC Efficiencies -------------------- //
       mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0,
-                                           Bachelor::k, true),
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0,
-                                           Bachelor::k, false),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k, true),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k, false),
           Systematic::mcEffs, Sign::positive)),
       mcEff_Bu2Dst0h_D0gamma_(nullptr),
       mcEff_MisRec_(Params::Get().CreateFixed(
@@ -579,10 +576,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bu2D0h_(Params::Get().CreateFixed(
           "mcEff_Bu2D0h", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0,
-                                           Bachelor::k, true),
-          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0,
-                                           Bachelor::k, false),
+          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k, true),
+          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k, false),
           Systematic::mcEffs, Sign::positive)),
       mcEff_PartRec_(Params::Get().CreateFixed(
           "mcEff_PartRec", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,
