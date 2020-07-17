@@ -33,7 +33,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
     std::cout << "Same\n";
     std::cout << shifted_value_ << "\n";
     std::cout << shifted_value_*shifted_value_ << "\n";
-    while (shifted_value_*shifted_value_ < 0) {
+    while (shifted_value_*mean_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       shifted_value_ = random.Gaus(mean_, std_);
