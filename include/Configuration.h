@@ -13,16 +13,6 @@
 #include <sstream>
 #include <unordered_map>
 
-enum class Efficiency {
-  buEff,
-  buEffErr,
-  deltaEff,
-  deltaEffErr,
-  buPartialEff,
-  buPartialEffErr,
-  orEff,
-  orEffErr
-};
 enum class Polarity { up, down };
 enum class Daughters { kpi, kk, pipi, pik };
 enum class Bachelor { pi, k };
@@ -198,14 +188,6 @@ class Configuration {
   bool &plotToys() { return plotToys_; }
   int nCPU() { return nCPU_; }
 
-  double ReturnMCEff(Mode mode, Neutral neutral, Bachelor bachelor,
-                     bool returnEff);
-  void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik);
-  void ReturnBoxEffs(Mode mode, Bachelor bachelor,
-                     std::map<std::string, double> &map, bool misId);
-  double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency efficiency,
-                     bool misId);
-
  private:
   Configuration();
   Configuration(Configuration const &) = delete;
@@ -284,12 +266,7 @@ std::string ComposeFilename(Year year, Polarity polarity,
 std::string ComposeFittingName(Mass mass, Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeDataLabelName(Neutral neutral, Bachelor bachelor, Daughters daughters, Charge charge);
 
-bool fexists(std::string const &filename);
-std::vector<std::string> SplitLine(std::string const &str);
-
-void CalcBinomialErr(double nInit, double nFinal, double &err);
-
-std::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
+Efficienciesstd::string ComposeName(int uniqueId, Mass mass, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge);
 std::string ComposeName(int uniqueId, Neutral neutral,
                         Bachelor bachelor, Daughters daughters, Charge charge);
