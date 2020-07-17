@@ -17,7 +17,7 @@
 // RooRealVar var();
 // Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in
 // fit)
-enum class Sign { positive, negative, none };
+enum class Sign { positive, negative, same, none };
 enum class Param { val, err };
 
 class FixedParameter {

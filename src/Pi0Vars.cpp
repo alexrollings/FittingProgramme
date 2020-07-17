@@ -19,13 +19,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0pi0, 0.1, 3)),
       Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0,
-          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
       Bu2Dst0h_D0pi0_n1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n1Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::positive)),
       Bu2Dst0h_D0pi0_a2Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a2Delta", uniqueId_, Neutral::pi0,
-          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::positive)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
       Bu2Dst0h_D0pi0_n2Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n2Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::positive)),
@@ -57,13 +57,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        Neutral::pi0, 0.95, 0.5, 1.5)),
       Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0,
-          Systematic::pi0BuTails, Sign::positive)),
+          Systematic::pi0BuTails, Sign::same)),
       Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0,
           Systematic::pi0BuTails, Sign::positive)),
       Bu2Dst0h_D0pi0_a2Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a2Bu", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0,
-          Systematic::pi0BuTails, Sign::negative)),
+          Systematic::pi0BuTails, Sign::same)),
       Bu2Dst0h_D0pi0_n2Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n2Bu", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0,
           Systematic::pi0BuTails, Sign::positive)),
