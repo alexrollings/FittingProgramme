@@ -163,12 +163,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_(nullptr),
       pdfBuPartial_misId_Bu2Dst0h_D0pi0_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma -------------------- //
-      Bu2Dst0h_D0gamma_sigma1Bu_(nullptr),
-      Bu2Dst0h_D0gamma_sigma2Bu_(nullptr),
+      Bu2Dst0h_D0gamma_sigmaBu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0gamma_(),
       pdf2Bu_Bu2Dst0h_D0gamma_(),
       pdfBu_Bu2Dst0h_D0gamma_(nullptr),
-      Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0h_D0gamma_(),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_meanBu_(nullptr),
