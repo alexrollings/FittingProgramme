@@ -88,9 +88,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           *misId_Bu2Dst0h_D0gamma_sigma2Bu_, *misId_Bu2Dst0h_D0gamma_a1Bu_,
           *misId_Bu2Dst0h_D0gamma_n1Bu_)),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-      Bu2Dst0h_D0pi0_sigmaBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_sigmaBu", uniqueId_, Neutral::gamma, Bachelor::pi,
-          4.8981e+01, 1.75e+00, Systematic::crossFeedBuPdf, Sign::positive)),
+      Bu2Dst0h_D0pi0_sigmaBu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0pi0_(),
       pdf2Bu_Bu2Dst0h_D0pi0_(),
       pdfBu_Bu2Dst0h_D0pi0_(new RooCBShape(
@@ -99,12 +97,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_meanBu(),
-          *Bu2Dst0h_D0pi0_sigmaBu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_sigmaBu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_n1Bu())),
       Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId_, Neutral::gamma,
-          Bachelor::pi, 2.5848e+01, 1.47e+00, Systematic::pi0BuPartialSigma1,
+          Bachelor::pi, Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialSigma1,
           Sign::positive)),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +

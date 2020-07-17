@@ -52,6 +52,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, 5270, 5280)),
+      Bu2Dst0h_D0pi0_sigmaBu_(nullptr),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(
           Params::Get().CreateFloating("Bu2Dst0h_D0pi0_KpiSigmaBu", uniqueId_,
                                        Neutral::pi0, 0.95, 0.5, 1.5)),
