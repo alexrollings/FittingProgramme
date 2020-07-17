@@ -50,6 +50,9 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() { return *pdfBu_Bu2Dst0h_D0gamma_; }
   RooGaussian &pdfBuPartial_Bu2Dst0h_D0gamma() { return pdfBuPartial_Bu2Dst0h_D0gamma_; }
   // -------------------- Mis-ID ------------------- //
+  RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma() {
+    return *pdfDelta_misId_Bu2Dst0h_D0gamma_;
+  }
   RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma() {
     return *pdfBu_misId_Bu2Dst0h_D0gamma_;
   }
@@ -224,9 +227,18 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_;
   RooGaussian pdfBuPartial_Bu2Dst0h_D0gamma_;
   // -------------------- Mis-ID ------------------- //
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_meanDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_sigmaDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_a2Delta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_a1Delta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_n2Delta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_n1Delta_;
+  RooCBShape pdf1Delta_misId_Bu2Dst0h_D0gamma_;
+  RooCBShape pdf2Delta_misId_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_fracPdf1Delta_;
+  std::unique_ptr<RooAbsPdf> pdfDelta_misId_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_meanBu_;
-  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_sigma1Bu_;
-  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_sigma2Bu_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_sigmaBu_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_a2Bu_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_a1Bu_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_n2Bu_;
