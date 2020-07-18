@@ -149,8 +149,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
       pdfDelta_Bu2Dst0h_D0pi0_WN_(new RooAddPdf(
-          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" +
-           ComposeName(uniqueId_, Neutral::pi0))
+          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" + ComposeName(uniqueId_, Neutral::pi0))
               .c_str(),
           "",
           RooArgList(pdfDeltaPeak_Bu2Dst0h_D0pi0_WN_,
@@ -449,6 +448,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       fracPartRec_(0.290),
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
                            fracPartRec_),
+      // -------------------- Global Fractions: WN -------------------- //
+      globalFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
+          "globalFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0, Bachelor::pi,
+                       Efficiency::mcEff) /
+              ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
+                           Efficiency::mcEff),
+          -5, 5)),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),

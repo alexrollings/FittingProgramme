@@ -311,6 +311,11 @@ class NeutralVars {
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
+  // -------------------- Global Fractions: WN -------------------- //
+  RooRealVar &globalFrac_Bu2Dst0h_D0pi0_WN() {
+    return *globalFrac_Bu2Dst0h_D0pi0_WN_;
+  }
+
   // -------------------- CP Observables -------------------- //
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() {
     return *R_CP_Bu2Dst0h_D0gamma_Blind_;
@@ -543,6 +548,8 @@ class NeutralVars {
   double fracPartRec_Bu2Dst0hst_D0gamma_;
   double fracPartRec_;
   double initYieldFAVPartRec_;
+  // -------------------- Global Fractions: WN -------------------- //
+  std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0h_D0pi0_WN_;
   // -------------------- CP Observables -------------------- //
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;

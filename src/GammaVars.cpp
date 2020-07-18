@@ -617,6 +617,14 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                    fracPartRec_Bu2Dst0hst_D0pi0_),
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
                            fracPartRec_),
+      // -------------------- Global Fractions: WN -------------------- //
+      globalFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
+          "globalFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
+                       Efficiency::mcEff) /
+              ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+                           Efficiency::mcEff),
+          -5, 5)),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
