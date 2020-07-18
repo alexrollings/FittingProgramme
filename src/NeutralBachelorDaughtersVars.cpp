@@ -66,8 +66,8 @@ template <Neutral _neutral>
 NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-          "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
-          0, 0.0005, Systematic::A_FAV_Gamma, Sign::none)),
+          "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+          Daughters::kpi, 0, 0.0005, Systematic::A_FAV_Gamma, Sign::none)),
       A_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
           0, 0.0005, Systematic::A_FAV_Pi0, Sign::none)),
@@ -128,7 +128,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           Make_N_Bu2Dst0pi_D0gamma_D02kpi<_neutral>(uniqueId)),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_Bu2Dst0pi_D0pi0_D02kpi<_neutral>(
           uniqueId, *N_tot_Bu2Dst0h_D0gamma_)),
-      N_tot_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_(new RooFormulaVar(
+          ("N_tot_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+              .c_str(),
+          "@0*@1",
+          RooArgList(*N_tot_Bu2Dst0h_D0pi0_,
+                     NeutralVars<_neutral>::Get(uniqueId)
+                         .globalFrac_Bu2Dst0h_D0pi0_WN()))),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_tot_MisRec_(Params::Get().CreateFloating(
