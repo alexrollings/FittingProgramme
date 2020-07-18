@@ -327,6 +327,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_PartRec_aRBuPartial_(nullptr),
       pdfBuPartial_misId_PartRec_(),
       // -------------------- Correct ID BOX EFFs -------------------- //
+      buEffBu2Dst0h_D0gamma_(nullptr),
       buEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, Efficiency::buEff,
@@ -334,7 +335,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                         Efficiency::buEffErr, false),
           Systematic::NA, Sign::same)),
-      buEffBu2Dst0h_D0gamma_(nullptr),
+      buEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0pi0_WN_", uniqueId_, Neutral::pi0, Bachelor::pi,
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::pi,
+                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::pi,
+                        Efficiency::buEffErr, false),
+          Systematic::NA, Sign::same)),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
@@ -343,8 +350,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                         Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::same)),
       deltaEffBu2Dst0h_D0gamma_(nullptr),
-      buPartialEffBu2Dst0h_D0pi0_(nullptr),
+      deltaEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0pi0_WN_", uniqueId_, Neutral::pi0, Bachelor::pi,
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::pi,
+                        Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::pi,
+                        Efficiency::deltaEffErr, false),
+          Systematic::NA, Sign::same)),
       buPartialEffBu2Dst0h_D0gamma_(nullptr),
+      buPartialEffBu2Dst0h_D0pi0_(nullptr),
+      buPartialEffBu2Dst0h_D0pi0_WN_(nullptr),
       // -------------------- Mis-ID BoxEffs ------------------- //
       buEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "buEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
