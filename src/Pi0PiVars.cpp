@@ -334,6 +334,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                         Efficiency::buEffErr, false),
           Systematic::NA, Sign::same)),
+      buEffBu2Dst0h_D0gamma_(nullptr),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
@@ -341,9 +342,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi,
                         Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::same)),
-      buPartialEffBu2Dst0h_D0pi0_(nullptr),
-      buEffBu2Dst0h_D0gamma_(nullptr),
       deltaEffBu2Dst0h_D0gamma_(nullptr),
+      buPartialEffBu2Dst0h_D0pi0_(nullptr),
       buPartialEffBu2Dst0h_D0gamma_(nullptr),
       // -------------------- Mis-ID BoxEffs ------------------- //
       buEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
@@ -353,6 +353,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                         Efficiency::buEffErr, true),
           Systematic::NA, Sign::same)),
+      buEffMisId_Bu2Dst0h_D0gamma_(nullptr),
       deltaEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffMisId_Bu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0,
           Bachelor::pi,
@@ -361,7 +362,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::pi,
                         Efficiency::deltaEffErr, true),
           Systematic::NA, Sign::same)),
+      deltaEffMisId_Bu2Dst0h_D0gamma_(nullptr),
       buPartialEffMisId_Bu2Dst0h_D0pi0_(nullptr),
+      buPartialEffMisId_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Mis-ID BoxEffs ------------------- //
       buDeltaCutEffMisId_Bu2Dst0h_D0gamma_(nullptr),
       buDeltaCutEffMisId_Bu2Dst0h_D0pi0_(nullptr),
