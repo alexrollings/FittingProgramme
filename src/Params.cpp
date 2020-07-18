@@ -2,7 +2,18 @@
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind) {
-  return new RooUnblindUniform(uniqueName, "Blind", uniqueName, range,
+  // convert const char to string
+  std::string blindStr(uniqueName);
+  std::string s("_WN");
+  // std::cout << "Blinding parameter " << blindStr << "\n";
+  if (blindStr.find(s) != std::string::npos) {
+    // std::cout << "String contains " << s <<  "\n";
+    // find returns starting position of string. Erase removes number of symbols
+    // fromthis position
+    blindStr.erase(blindStr.find(s), 3);
+  } 
+  // std::cout << "String to blind with = " << blindStr << "\n";
+  return new RooUnblindUniform(uniqueName, "Blind", blindStr.c_str(), range,
                                paramToBlind);
 }
 RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
