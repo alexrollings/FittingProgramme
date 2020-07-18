@@ -896,7 +896,7 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
             uniqueId_, "N_misId_Delta_Bu2Dst0h_D0gamma_",
             *N_misId_Bu2Dst0h_D0gamma_,
             NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                .buDeltaCutEffMisId_Bu2Dst0h_D0gamma()));
+                .deltaEffMisId_Bu2Dst0h_D0gamma()));
   }
   N_misId_Delta_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
       Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
@@ -926,7 +926,7 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
             uniqueId_, "N_misId_Bu_Bu2Dst0h_D0gamma_",
             *N_misId_Bu2Dst0h_D0gamma_,
             NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                .deltaCutEffMisId_Bu2Dst0h_D0gamma()));
+                .buEffMisId_Bu2Dst0h_D0gamma()));
   }
   N_misId_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
       Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
