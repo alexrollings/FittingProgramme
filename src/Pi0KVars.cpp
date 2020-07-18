@@ -609,22 +609,28 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // -------------------- MC Efficiencies -------------------- //
       mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k, true),
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k, false),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       mcEff_Bu2Dst0h_D0gamma_(nullptr),
       mcEff_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k, true),
-          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k, false),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       mcEff_MisRec_(Params::Get().CreateFixed(
           "mcEff_MisRec", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,
           Systematic::NA, Sign::positive)),
       mcEff_Bu2D0h_(Params::Get().CreateFixed(
           "mcEff_Bu2D0h", uniqueId_, Neutral::pi0, Bachelor::k,
-          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k, true),
-          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k, false),
+          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2D0K, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       mcEff_PartRec_(Params::Get().CreateFixed(
           "mcEff_PartRec", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,

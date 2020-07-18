@@ -24,7 +24,7 @@ std::vector<std::string> SplitLine(std::string const &str) {
 }
 
 double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
-                   bool returnEff) {
+                    Efficiency eff) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
       EnumToString(mode) + "_MultipleCands.txt";
@@ -32,10 +32,13 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
     std::cerr
         << "!!!!!!!!!!\nReturnMCEffs: " << txtFileName
         << " doesn't exist: setting eff to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnEff == true) {
+    if (eff == Efficiency::mcEff) {
       return 1.0;
-    } else {
+    } else if (eff == Efficiency::mcEffErr) {
       return 0.0;
+    } else {
+      throw std::runtime_error(
+          "Can only pass mcEff/mcEffErr enum to ReturnMCEffs\n");
     }
   }
   std::ifstream inFile(txtFileName);
@@ -46,10 +49,13 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
     std::vector<std::string> lineVec = SplitLine(line);
     if (lineVec[0] == EnumToString(neutral) &&
         lineVec[1] == EnumToString(bachelor)) {
-      if (returnEff == true) {
+      if (eff == Efficiency::mcEff) {
         return std::stod(lineVec[2]);
-      } else {
+      } else if (eff == Efficiency::mcEffErr) {
         return std::stod(lineVec[3]);
+      } else {
+        throw std::runtime_error(
+            "Can only pass mcEff/mcEffErr enum to ReturnMCEffs\n");
       }
     }
   }
