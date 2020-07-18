@@ -110,7 +110,11 @@ enum class Systematic {
   A_Kpi,
   A_pi,
   Delta_A_CP,
-  mcEffs 
+  mcEffs,
+  kBF_Bu2Dst0pi,
+  kBF_Bu2Dst0K,
+  kBF_Dst02D0pi0,
+  kBF_Dst02D0gamma
 };
 
 // There is only a single instance of categories therefore we do not have to

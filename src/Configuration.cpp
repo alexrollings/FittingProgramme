@@ -348,29 +348,16 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Delta_A_CP;
   } else if (systematic == "mcEffs") {
     return Systematic::mcEffs;
+  } else if (systematic == "kBF_Bu2Dst0pi") {
+    return Systematic::kBF_Bu2Dst0pi;
+  } else if (systematic == "kBF_Bu2Dst0K") {
+    return Systematic::kBF_Bu2Dst0K;
+  } else if (systematic == "kBF_Dst02D0pi0") {
+    return Systematic::kBF_Dst02D0pi0;
+  } else if (systematic == "kBF_Dst02D0gamma") {
+    return Systematic::kBF_Dst02D0gamma;
   }
-  throw std::invalid_argument(
-      "Systematic must take a value in "
-      "[pi0DeltaTails/pi0DeltaFrac/pi0BuTails/pi0BuFrac/pi0BuPartialTails/"
-      "pi0BuPartialFrac/pi0BuPartialSigma1/"
-      "crossFeedBuPdf/crossFeedBuPartialPdf/crossFeedDeltaPdf/gammaDeltaTails/"
-      "gammaDeltaFrac/gammaBuTails/gammaBuFrac/misRecDeltaPdf/misRecBuPdf/"
-      "misRecBuPartialPdf/pi0WNDeltaPdf/pi0WNBuPdf/"
-      "pi0WNBuPartialPdf/partRecDeltaPdf/partRecBuPdf/"
-      "partRecBuPartialPdf/Bs2Dst0KpiDeltaPdf/Bs2Dst0KpiBuPdf/"
-      "Bs2Dst0KpiBuPartialPdf/Bs2D0KpiDeltaPdf/Bs2D0KpiBuPdf/"
-      "Bs2D0KpiBuPartialPdf/misIdPi0PiPdfBu/misIdPi0KPdfBu/misIdPi0PiPdfDelta/"
-      "misIdPi0KPdfDelta/"
-      "misIdPi0PiPdfBuPartial/misIdPi0KPdfBuPartial/misIdGammaPiPdfBu/"
-      "misIdGammaKPdfBu/misIdGammaPiPdfDelta/"
-      "misIdGammaKPdfDelta/misIdMisRecKPdfBu/misIdMisRecKPdfBuPartial/"
-      "misIdPartRecKPdfBu/misIdPartRecKPdfBuPartial/gammaFAVasSUPDeltaPdf/"
-      "gammaFAVasSUPBuPdf/pi0FAVasSUPDeltaPdf/pi0FAVasSUPBuPdf/"
-      "pi0FAVasSUPBuPartialPdf/buDeltaCutEffs/"
-      "deltaCutEffs/deltaPartialCutEffs/"
-      "deltaMisIdCutEffs/deltaPartialMisIdCutEffs/pidEffPi/pidEffK/"
-      "crossFeedRate/A_FAV_Pi0/A_FAV_Gamma/"
-      "A_Kpi/A_pi/Delta_A_CP/mcEffs]");
+  throw std::invalid_argument("Invalid systematic passed to StringToEnum");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -501,6 +488,14 @@ std::string EnumToString(Systematic systematic) {
       return "Delta_A_CP";
     case Systematic::mcEffs:
       return "mcEffs";
+    case Systematic::kBF_Bu2Dst0pi:
+      return "kBF_Bu2Dst0pi";
+    case Systematic::kBF_Bu2Dst0K:
+      return "kBF_Bu2Dst0K";
+    case Systematic::kBF_Dst02D0pi0:
+      return "kBF_Dst02D0pi0";
+    case Systematic::kBF_Dst02D0gamma:
+      return "kBF_Dst02D0gamma";
   }
 }
 

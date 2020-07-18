@@ -42,8 +42,20 @@ GlobalVars::GlobalVars(int uniqueId)
                              *A_Prod_)),
       a_Kpi_(MakeLittleAsym(("a_Kpi_" + std::to_string(uniqueId_)).c_str(),
                             *A_Kpi_)),
-      a_pi_(
-          MakeLittleAsym(("a_pi_" + std::to_string(uniqueId_)).c_str(), *A_pi_)),
+      a_pi_(MakeLittleAsym(("a_pi_" + std::to_string(uniqueId_)).c_str(),
+                           *A_pi_)),
+      kBF_Bu2Dst0pi_(Params::Get().CreateFixed(
+          "kBF_Bu2Dst0pi", uniqueId_, 4.90e-03, 0.17e-03,
+          Systematic::kBF_Bu2Dst0pi, Sign::none)),
+      kBF_Bu2Dst0K_(Params::Get().CreateFixed(
+          "kBF_Bu2Dst0K", uniqueId_, 3.97e-04, 0.31e-04,
+          Systematic::kBF_Bu2Dst0K, Sign::none)),
+      kBF_Dst02D0pi0_(Params::Get().CreateFixed(
+          "kBF_Dst02D0pi0", uniqueId_, 64.7e-02, 0.9e-02,
+          Systematic::kBF_Dst02D0pi0, Sign::none)),
+      kBF_Dst02D0gamma_(Params::Get().CreateFixed(
+          "kBF_Dst02D0gamma", uniqueId_, 35.3e-02, 0.9e-02,
+          Systematic::kBF_Dst02D0gamma, Sign::none)),
       pidEffMap_() {
   // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   // for (auto &c : chargeVec) {
