@@ -18,10 +18,16 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0,
-          Daughters::kpi, 0.07930, -2, 2)),
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          -2, 2)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
-          Daughters::kpi, 0.07930, -2, 2)),
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          -2, 2)),
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0,
       //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
@@ -112,16 +118,25 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
     : uniqueId_(uniqueId),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
-          Daughters::kpi, 0.07930, -2, 2)),
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          -2, 2)),
       // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
       //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
-          Daughters::kpi, 0.07930, -2, 2)),
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          -2, 2)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
-          Daughters::kpi, 0.07930, -2, 2)),
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          -2, 2)),
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
       //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
