@@ -260,7 +260,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       pdf1Delta_Bu2Dst0h_D0pi0_WN_(),
       pdf2Delta_Bu2Dst0h_D0pi0_WN_(),
       Bu2Dst0h_D0pi0_WN_fracPdf1Delta_(nullptr),
-      pdfDeltaPeak_Bu2Dst0h_D0pi0_WN_(),
+      // pdfPeakDelta_Bu2Dst0h_D0pi0_WN_(),
       Bu2Dst0h_D0pi0_WN_thresholdDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_thresholdDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
@@ -273,7 +273,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_cDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_cDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
-      pdfDeltaFlat_Bu2Dst0h_D0pi0_WN_(),
+      pdfFlatDelta_Bu2Dst0h_D0pi0_WN_(),
       Bu2Dst0h_D0pi0_WN_fracPdfPeakDelta_(nullptr),
       pdfDelta_Bu2Dst0h_D0pi0_WN_(new RooDstD0BG(
           ("pdfDelta_Bu2Dst0h_D0pi0_WN_" +
@@ -620,11 +620,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // -------------------- Global Fractions: WN -------------------- //
       globalFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "globalFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
-          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
-                       Efficiency::mcEff) /
-              ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
-                           Efficiency::mcEff),
-          -5, 5)),
+          // ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
+          //              Efficiency::mcEff) /
+          //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+          //                  Efficiency::mcEff),
+          2, -5, 5)),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
@@ -632,6 +632,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       R_CP_Bu2Dst0h_D0gamma_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_WN_(nullptr) {
+  std::cout << "\n\n\n" << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
+                            Bachelor::pi, Efficiency::mcEff)
+            << "\n";
+  std::cout << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+                            Efficiency::mcEff)
+            << "\n\n\n";
   if (Configuration::Get().blindFit() == true) {
     R_CP_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_,

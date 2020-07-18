@@ -100,8 +100,8 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   if (realVar == nullptr) {
     throw std::runtime_error("Canot cast AbsArg to AbsReal for " + parName);
   }
-  // std::cout << parName << "," << realVar->getVal() << "," << realVar->getError()
-  //           << "\n";
+  std::cout << parName << "," << realVar->getVal() << "," << realVar->getError()
+            << "\n";
   if (param == Param::val) {
     return realVar->getVal();
   } else {
