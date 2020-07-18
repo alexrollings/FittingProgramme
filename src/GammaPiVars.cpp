@@ -732,6 +732,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
                        false),
           Systematic::mcEffs, Sign::positive)),
+      mcEff_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::pi,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
+                       true),
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
+                       false),
+          Systematic::mcEffs, Sign::positive)),
       mcEff_MisRec_(Params::Get().CreateFixed(
           "mcEff_MisRec", uniqueId_, Neutral::gamma, Bachelor::pi, 1.0, 0.0,
           Systematic::NA, Sign::positive)),

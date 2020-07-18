@@ -27,7 +27,7 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                    bool returnEff) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
-      EnumToString(mode) + ".txt";
+      EnumToString(mode) + "_MultipleCands.txt";
   if (!fexists(txtFileName)) {
     std::cerr
         << "!!!!!!!!!!\nReturnMCEffs: " << txtFileName

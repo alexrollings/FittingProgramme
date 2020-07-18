@@ -613,6 +613,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k, false),
           Systematic::mcEffs, Sign::positive)),
       mcEff_Bu2Dst0h_D0gamma_(nullptr),
+      mcEff_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k, true),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k, false),
+          Systematic::mcEffs, Sign::positive)),
       mcEff_MisRec_(Params::Get().CreateFixed(
           "mcEff_MisRec", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,
           Systematic::NA, Sign::positive)),

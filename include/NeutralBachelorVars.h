@@ -214,6 +214,7 @@ class NeutralBachelorVars {
   // -------------------- MC Efficiencies -------------------- //
   RooRealVar &mcEff_Bu2Dst0h_D0gamma() { return *mcEff_Bu2Dst0h_D0gamma_; }
   RooRealVar &mcEff_Bu2Dst0h_D0pi0() { return *mcEff_Bu2Dst0h_D0pi0_; }
+  RooRealVar &mcEff_Bu2Dst0h_D0pi0_WN() { return *mcEff_Bu2Dst0h_D0pi0_WN_; }
   RooRealVar &mcEff_MisRec() { return *mcEff_MisRec_; }
   RooRealVar &mcEff_Bu2D0h() { return *mcEff_Bu2D0h_; }
   RooRealVar &mcEff_PartRec() { return *mcEff_PartRec_; }
@@ -490,6 +491,7 @@ class NeutralBachelorVars {
   // -------------------- MC Efficiencies -------------------- //
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> mcEff_MisRec_;
   std::shared_ptr<RooRealVar> mcEff_Bu2D0h_;
   std::shared_ptr<RooRealVar> mcEff_PartRec_;
