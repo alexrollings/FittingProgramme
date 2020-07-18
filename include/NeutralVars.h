@@ -547,7 +547,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
   // Include blinded R_CP for WN: should measure signal R_CP - just make
-  // blinding string the same for both
+  // blinding string the same for both (in MakeBlind)
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;

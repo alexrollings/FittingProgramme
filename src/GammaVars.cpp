@@ -634,7 +634,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     // KEEP same blinding string as signal for WN - can tell if measure same
     // number
     R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
                                      Neutral::gamma, 1.138, -2, 2));
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_CP_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, Neutral::gamma))

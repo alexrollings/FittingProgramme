@@ -1142,10 +1142,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
       // -------------------- CP Observables -------------------- //
       A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_(nullptr),
+      A_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      R_ADS_Bu2Dst0h_D0pi0_WN_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     A_CP_Bu2Dst0h_D0gamma_Blind_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -1155,6 +1158,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, Neutral::gamma, Bachelor::k,
             -0.151, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_WN_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_, Neutral::gamma,
+            Bachelor::k, -0.151, -1, 1));
     A_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(
         MakeBlind(("A_CP_Bu2Dst0h_D0gamma_" +
                    ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
@@ -1165,6 +1172,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                    ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
                       .c_str(),
                   0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
+    A_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0pi0_WN_" +
+                   ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0pi0_WN_Blind_));
   } else {
     A_CP_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -1173,6 +1185,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     A_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "A_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+            -0.151, -1, 1));
+    A_CP_Bu2Dst0h_D0pi0_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
             -0.151, -1, 1));
   }
   if (Configuration::Get().splitByCharge() == true) {
@@ -1194,6 +1210,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
             NeutralBachelorChargeVars<Neutral::gamma, Bachelor::k,
                                       Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
+    R_ADS_Bu2Dst0h_D0pi0_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::k,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0_WN(),
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::k,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0_WN()));
   } else {
     R_ADS_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::k>(
@@ -1207,6 +1232,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
             NeutralBachelorChargeVars<Neutral::gamma, Bachelor::k,
                                       Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
+    R_ADS_Bu2Dst0h_D0pi0_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::gamma, Bachelor::k>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
+            NeutralBachelorChargeVars<Neutral::gamma, Bachelor::k,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0pi0_WN()));
   }
 
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
@@ -1215,16 +1246,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   std::map<std::string, double> mapBs2Dst0Kpi;
   std::map<std::string, double> mapBs2D0Kpi;
 
-  ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::k,
-                                     mapMisId_Bu2Dst0h_D0gamma, true);
-  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k,
-                                     mapMisId_Bu2Dst0h_D0pi0, true);
-  ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::k,
-                                     mapMisId_Bu2D0h, true);
-  ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
-                                     mapBs2Dst0Kpi, false);
-  ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi,
-                                     false);
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::k, mapMisId_Bu2Dst0h_D0gamma,
+                true);
+  ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::k, mapMisId_Bu2Dst0h_D0pi0,
+                true);
+  ReturnBoxEffs(Mode::Bu2D0pi, Bachelor::k, mapMisId_Bu2D0h, true);
+  ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k, mapBs2Dst0Kpi, false);
+  ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, mapBs2D0Kpi, false);
 
   std::map<Mode, double> misRecModesMap = {
       {Mode::Bu2Dst0pi_D0pi0_WN,
@@ -1246,8 +1274,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   unsigned int it = 0;
   for (auto &m : misRecModesMap) {
     std::map<std::string, double> mapMisId_MisRecTmp;
-    ReturnBoxEffs(m.first, Bachelor::k, mapMisId_MisRecTmp,
-                                       true);
+    ReturnBoxEffs(m.first, Bachelor::k, mapMisId_MisRecTmp, true);
     if (it == 0) {
       mapMisId_MisRec.insert(std::pair<std::string, double>(
           "buDeltaCutEff", mapMisId_MisRecTmp["buDeltaCutEff"] * m.second));
@@ -1285,8 +1312,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
   it = 0;
   for (auto &m : misRecModesMap) {
     std::map<std::string, double> mapMisId_PartRecTmp;
-    ReturnBoxEffs(m.first, Bachelor::k,
-                                       mapMisId_PartRecTmp, true);
+    ReturnBoxEffs(m.first, Bachelor::k, mapMisId_PartRecTmp, true);
     if (it == 0) {
       mapMisId_PartRec.insert(std::pair<std::string, double>(
           "buDeltaCutEff", mapMisId_PartRecTmp["buDeltaCutEff"] * m.second));

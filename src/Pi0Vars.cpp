@@ -461,7 +461,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                      Neutral::pi0, 1.138, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
                                      Neutral::pi0, 1.138, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),

@@ -47,11 +47,15 @@ class NeutralBachelorChargeVars {
   RooRealVar &R_piK_Bu2Dst0h_D0gamma_Blind() {
     return *R_piK_Bu2Dst0h_D0gamma_Blind_;
   }
-  RooAbsReal &R_piK_Bu2Dst0h_D0gamma() { return *R_piK_Bu2Dst0h_D0gamma_; }
   RooRealVar &R_piK_Bu2Dst0h_D0pi0_Blind() {
     return *R_piK_Bu2Dst0h_D0pi0_Blind_;
   }
+  RooRealVar &R_piK_Bu2Dst0h_D0pi0_WN_Blind() {
+    return *R_piK_Bu2Dst0h_D0pi0_WN_Blind_;
+  }
+  RooAbsReal &R_piK_Bu2Dst0h_D0gamma() { return *R_piK_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_piK_Bu2Dst0h_D0pi0() { return *R_piK_Bu2Dst0h_D0pi0_; }
+  RooAbsReal &R_piK_Bu2Dst0h_D0pi0_WN() { return *R_piK_Bu2Dst0h_D0pi0_WN_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -64,8 +68,10 @@ class NeutralBachelorChargeVars {
   // Can add for different bkgs if necessary
   std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_WN_;
 };
 
 // Now we just need to define the constructors separately so the values are
@@ -78,12 +84,22 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
     : uniqueId_(uniqueId),
       R_piK_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      R_piK_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       R_piK_Bu2Dst0h_D0gamma_(nullptr),
-      R_piK_Bu2Dst0h_D0pi0_(nullptr) {
+      R_piK_Bu2Dst0h_D0pi0_(nullptr),
+      R_piK_Bu2Dst0h_D0pi0_WN_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     R_piK_Bu2Dst0h_D0pi0_Blind_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_, neutral, bachelor, charge,
+            BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+                .kBR()
+                .getVal(),
+            -1, 1));
+    R_piK_Bu2Dst0h_D0pi0_WN_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_piK_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_, neutral, bachelor,
+            charge,
             BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
                 .kBR()
                 .getVal(),
@@ -96,6 +112,14 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
             .kBR()
             .getVal(),
         *R_piK_Bu2Dst0h_D0pi0_Blind_));
+    R_piK_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_piK_Bu2Dst0h_D0pi0_WN_" +
+         ComposeName(uniqueId_, neutral, bachelor, charge))
+            .c_str(),
+        BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+            .kBR()
+            .getVal(),
+        *R_piK_Bu2Dst0h_D0pi0_WN_Blind_));
     if (neutral == Neutral::gamma) {
       R_piK_Bu2Dst0h_D0gamma_Blind_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -118,6 +142,13 @@ NeutralBachelorChargeVars<neutral, bachelor, charge>::NeutralBachelorChargeVars(
     R_piK_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_piK_Bu2Dst0h_D0pi0", uniqueId_, neutral, bachelor, charge,
+            BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
+                .kBR()
+                .getVal(),
+            -1, 1));
+    R_piK_Bu2Dst0h_D0pi0_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_piK_Bu2Dst0h_D0pi0_WN", uniqueId_, neutral, bachelor, charge,
             BachelorDaughtersVars<bachelor, Daughters::pik>::Get(uniqueId_)
                 .kBR()
                 .getVal(),
