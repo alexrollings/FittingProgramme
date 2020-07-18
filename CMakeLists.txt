@@ -22,6 +22,7 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 set(FITTING_SRC
     src/BachelorDaughtersVars.cpp
     src/Configuration.cpp
+    src/Efficiencies.cpp
     src/GammaVars.cpp
     src/GammaPiVars.cpp
     src/GammaKVars.cpp
@@ -31,6 +32,7 @@ set(FITTING_SRC
     src/NeutralBachelorVars.cpp
     src/NeutralDaughtersVars.cpp
     src/NeutralVars.cpp
+    src/Params.cpp
     src/ParseArguments.cpp
     src/Pdf.cpp
     src/Pdfs_GammaMinus.cpp
