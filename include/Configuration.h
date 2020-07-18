@@ -114,7 +114,11 @@ enum class Systematic {
   kBF_Bu2Dst0pi,
   kBF_Bu2Dst0K,
   kBF_Dst02D0pi0,
-  kBF_Dst02D0gamma
+  kBF_Dst02D0gamma,
+  kBF_D02kpi,
+  kBF_D02kk,
+  kBF_D02pipi,
+  kBF_D02pik
 };
 
 // There is only a single instance of categories therefore we do not have to

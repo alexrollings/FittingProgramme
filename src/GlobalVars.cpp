@@ -56,6 +56,18 @@ GlobalVars::GlobalVars(int uniqueId)
       kBF_Dst02D0gamma_(Params::Get().CreateFixed(
           "kBF_Dst02D0gamma", uniqueId_, 35.3e-02, 0.9e-02,
           Systematic::kBF_Dst02D0gamma, Sign::none)),
+      kBF_D02kpi_(Params::Get().CreateFixed("kBF_D02kpi", uniqueId_, 3.950e-02,
+                                            0.031e-02, Systematic::kBF_D02kpi,
+                                            Sign::none)),
+      kBF_D02kk_(Params::Get().CreateFixed("kBF_D02kk", uniqueId_, 4.08e-03,
+                                           0.06e-03, Systematic::kBF_D02kk,
+                                           Sign::none)),
+      kBF_D02pipi_(Params::Get().CreateFixed(
+          "kBF_D02pipi", uniqueId_, 1.455e-03, 0.024e-03,
+          Systematic::kBF_D02pipi, Sign::none)),
+      kBF_D02pik_(Params::Get().CreateFixed("kBF_D02pik", uniqueId_, 1.50e-04,
+                                            0.07e-04, Systematic::kBF_D02pik,
+                                            Sign::none)),
       pidEffMap_() {
   // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   // for (auto &c : chargeVec) {
