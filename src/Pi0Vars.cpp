@@ -266,6 +266,49 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
+      // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
+      pdf1Delta_Bu2Dst0h_D0gamma_WN_(),
+      pdf2Delta_Bu2Dst0h_D0gamma_WN_(),
+      pdfPeakDelta_Bu2Dst0h_D0gamma_WN_(),
+      Bu2Dst0h_D0gamma_WN_thresholdDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_aDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_bDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_cDelta_(nullptr),
+      pdfFlatDelta_Bu2Dst0h_D0gamma_WN_(),
+      Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_meanDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_meanDelta", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_sigmaDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_sigmaDelta", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_a1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_a1Delta", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_n1Delta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_n1Delta", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      pdfDelta_Bu2Dst0h_D0gamma_WN_(
+          new RooCBShape(("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
+                         ComposeName(uniqueId_, Neutral::pi0))
+                            .c_str(),
+          "", Configuration::Get().deltaMass(),
+          *Bu2Dst0h_D0gamma_WN_meanDelta_, *Bu2Dst0h_D0gamma_WN_sigmaDelta_,
+          *Bu2Dst0h_D0gamma_WN_a1Delta_, *Bu2Dst0h_D0gamma_WN_n1Delta_)),
+      Bu2Dst0h_D0gamma_WN_mean1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_mean1Bu", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_meanOffset21Bu_(nullptr),
+      Bu2Dst0h_D0gamma_WN_mean2Bu_(),
+      Bu2Dst0h_D0gamma_WN_KpiSigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.0,
+          Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_sigmaRatio21Bu_(nullptr),
+      Bu2Dst0h_D0gamma_WN_a1Bu_(nullptr),
+      Bu2Dst0h_D0gamma_WN_n1Bu_(nullptr),
+      Bu2Dst0h_D0gamma_WN_fracPdf1Bu_(nullptr),
+      Bu2Dst0h_D0gamma_WN_meanBuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma_FAVasSUP -------------------- //
       Bu2Dst0h_D0gamma_FAVasSUP_meanDelta_(nullptr),
       Bu2Dst0h_D0gamma_FAVasSUP_sigmaDelta_(nullptr),

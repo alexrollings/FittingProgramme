@@ -295,6 +295,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_meanDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_sigmaDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_a1Delta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_n1Delta_(nullptr),
       pdfDelta_Bu2Dst0h_D0gamma_WN_(
           new RooAddPdf(("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
                          ComposeName(uniqueId_, Neutral::gamma))
