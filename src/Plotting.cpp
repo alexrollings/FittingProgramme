@@ -100,22 +100,37 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
 
   // ------------- Draw Legends -------------- //
-  std::map<std::string, Color_t> colorMap;
+  std::map<std::string, std::map<std::string, Color_t> > colorMap;
 
-  colorMap["Bu2Dst0pi_D0gamma"] = kAzure - 4;
-  colorMap["Bu2Dst0K_D0gamma"] = kRed + 1;
-  colorMap["Bu2Dst0pi_D0pi0"] = kAzure + 3;
-  colorMap["Bu2Dst0K_D0pi0"] = kMagenta - 1;
-  colorMap["MisRecPi"] = kBlue - 6;
-  colorMap["MisRecK"] = kMagenta - 10;
-  colorMap["Bu2D0pi"] = kBlue + 4;
-  colorMap["Bu2D0K"] = kMagenta - 7;
-  colorMap["PartRecPi"] = kGreen + 3;
-  colorMap["PartRecK"] = kRed + 4;
-  colorMap["Bs2Dst0Kpi"] = kOrange - 3;
-  colorMap["Bs2D0Kpi"] = kOrange + 4;
-  colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
-  colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma"] = kAzure - 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"] = kRed + 1;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"] = kAzure + 3;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"] = kMagenta - 1;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] =
+      kMagenta - 10;
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"];
+  // colorMap["MisRecPi"] = kBlue - 6;
+  // colorMap["MisRecK"] = kMagenta - 10;
+  // colorMap["Bu2D0pi"] = kBlue + 4;
+  // colorMap["Bu2D0K"] = kMagenta - 7;
+  // colorMap["PartRecPi"] = kGreen + 3;
+  // colorMap["PartRecK"] = kRed + 4;
+  // colorMap["Bs2Dst0Kpi"] = kOrange - 3;
+  // colorMap["Bs2D0Kpi"] = kOrange + 4;
+  // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
+  // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
   TLegend labels(0.14, 0.25, 0.28, 0.9);
   labels.SetLineColor(kWhite);
@@ -134,7 +149,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0pi_D0gamma", 1, 0, 1);
-  hist_Bu2Dst0pi_D0gamma->SetLineColor(colorMap["Bu2Dst0pi_D0gamma"]);
+  hist_Bu2Dst0pi_D0gamma->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma"]);
   hist_Bu2Dst0pi_D0gamma->SetLineWidth(3);
   std::string str_Bu2Dst0pi_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
@@ -142,12 +158,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
       EnumToLabel(charge) + "}}";
+
   auto hist_Bu2Dst0pi_D0pi0 = std::make_unique<TH1D>(
       ("hist_Bu2Dst0pi_D0pi0" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0pi_D0pi0", 1, 0, 1);
-  hist_Bu2Dst0pi_D0pi0->SetLineColor(colorMap["Bu2Dst0pi_D0pi0"]);
+  hist_Bu2Dst0pi_D0pi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"]);
   hist_Bu2Dst0pi_D0pi0->SetLineWidth(3);
   std::string str_Bu2Dst0pi_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
@@ -155,45 +173,78 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
       EnumToLabel(charge) + "}}";
-  auto hist_MisRecPi = std::make_unique<TH1D>(
-      ("hist_MisRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
+
+  // auto hist_Bu2Dst0pi_D0gamma_WN = std::make_unique<TH1D>(
+  //     ("hist_Bu2Dst0pi_D0gamma_WN" +
+  //      ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_Bu2Dst0pi_D0gamma_WN", 1, 0, 1);
+  // hist_Bu2Dst0pi_D0gamma_WN->SetLineColor(
+  //     colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"]);
+  // hist_Bu2Dst0pi_D0gamma_WN->SetLineWidth(3);
+  // std::string str_Bu2Dst0pi_D0gamma_WN =
+  //     "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+  //     EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0pi_D0pi0_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0pi_D0pi0_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "hist_MisRecPi", 1, 0, 1);
-  hist_MisRecPi->SetLineColor(colorMap["MisRecPi"]);
-  hist_MisRecPi->SetLineWidth(3);
-  std::string str_Bu2D0rho =
-      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
-      EnumToLabel(charge) + "}}";
-  std::string str_Bd2Dstpi =
-      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
-      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" +
-      EnumToLabel(charge) + "}}";
-  auto hist_PartRecPi = std::make_unique<TH1D>(
-      ("hist_PartRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_PartRecPi", 1, 0, 1);
-  hist_PartRecPi->SetLineColor(colorMap["PartRecPi"]);
-  hist_PartRecPi->SetLineWidth(3);
-  std::string str_PartRecPi_D0pi0 =
-      " #font[12]{B^{" + EnumToLabel(charge) +
+      "hist_Bu2Dst0pi_D0pi0_WN", 1, 0, 1);
+  hist_Bu2Dst0pi_D0pi0_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"]);
+  hist_Bu2Dst0pi_D0pi0_WN->SetLineWidth(3);
+  std::string str_Bu2Dst0pi_D0pi0_WN =
+      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
-      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
       EnumToLabel(charge) + "}}";
-  std::string str_PartRecPi_D0gamma =
-      " #font[12]{B^{" + EnumToLabel(charge) +
-      "}#rightarrow#font[132]{[}#font[132]{[}" +
-      EnumToLabel(daughters, charge) +
-      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
-      EnumToLabel(charge) + "}}";
+
+  // auto hist_MisRecPi = std::make_unique<TH1D>(
+  //     ("hist_MisRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_MisRecPi", 1, 0, 1);
+  // hist_MisRecPi->SetLineColor(colorMap["MisRecPi"]);
+  // hist_MisRecPi->SetLineWidth(3);
+  // std::string str_Bu2D0rho =
+  //     " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
+  //     EnumToLabel(charge) + "}}";
+  // std::string str_Bd2Dstpi =
+  //     " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+  //     oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" +
+  //     EnumToLabel(charge) + "}}";
+  // auto hist_PartRecPi = std::make_unique<TH1D>(
+  //     ("hist_PartRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_PartRecPi", 1, 0, 1);
+  // hist_PartRecPi->SetLineColor(colorMap["PartRecPi"]);
+  // hist_PartRecPi->SetLineWidth(3);
+  // std::string str_PartRecPi_D0pi0 =
+  //     " #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
+  //     EnumToLabel(charge) + "}}";
+  // std::string str_PartRecPi_D0gamma =
+  //     " #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+  //     EnumToLabel(charge) + "}}";
+
   auto hist_Bu2Dst0K_D0gamma = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0gamma" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0K_D0gamma", 1, 0, 1);
-  hist_Bu2Dst0K_D0gamma->SetLineColor(colorMap["Bu2Dst0K_D0gamma"]);
+  hist_Bu2Dst0K_D0gamma->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"]);
   hist_Bu2Dst0K_D0gamma->SetLineWidth(3);
   std::string str_Bu2Dst0K_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
@@ -201,12 +252,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
       EnumToLabel(charge) + "}}";
+
   auto hist_Bu2Dst0K_D0pi0 = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0pi0" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0K_D0pi0", 1, 0, 1);
-  hist_Bu2Dst0K_D0pi0->SetLineColor(colorMap["Bu2Dst0K_D0pi0"]);
+  hist_Bu2Dst0K_D0pi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0"]);
   hist_Bu2Dst0K_D0pi0->SetLineWidth(3);
   std::string str_Bu2Dst0K_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
@@ -214,54 +267,87 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
       EnumToLabel(charge) + "}}";
-  auto hist_MisRecK = std::make_unique<TH1D>(
-      ("hist_MisRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
+
+  // auto hist_Bu2Dst0K_D0gamma_WN = std::make_unique<TH1D>(
+  //     ("hist_Bu2Dst0K_D0gamma_WN" +
+  //      ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_Bu2Dst0K_D0gamma_WN", 1, 0, 1);
+  // hist_Bu2Dst0K_D0gamma_WN->SetLineColor(
+  //     colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"]);
+  // hist_Bu2Dst0K_D0gamma_WN->SetLineWidth(3);
+  // std::string str_Bu2Dst0K_D0gamma_WN =
+  //     "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
+  //     EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0K_D0pi0_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0K_D0pi0_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "hist_MisRecK", 1, 0, 1);
-  hist_MisRecK->SetLineColor(colorMap["MisRecK"]);
-  hist_MisRecK->SetLineWidth(3);
-  std::string str_Bu2D0Kst =
-      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
-      EnumToLabel(charge) + "}}";
-  std::string str_Bd2DstK =
-      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
-      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
-      EnumToLabel(charge) + "}}";
-  auto hist_PartRecK = std::make_unique<TH1D>(
-      ("hist_PartRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_PartRecK", 1, 0, 1);
-  hist_PartRecK->SetLineColor(colorMap["PartRecK"]);
-  hist_PartRecK->SetLineWidth(3);
-  std::string str_PartRecK_D0pi0 =
-      " #font[12]{B^{" + EnumToLabel(charge) +
+      "hist_Bu2Dst0K_D0pi0_WN", 1, 0, 1);
+  hist_Bu2Dst0K_D0pi0_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"]);
+  hist_Bu2Dst0K_D0pi0_WN->SetLineWidth(3);
+  std::string str_Bu2Dst0K_D0pi0_WN =
+      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
-      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
-      EnumToLabel(charge) + "}}";
-  std::string str_PartRecK_D0gamma =
-      " #font[12]{B^{" + EnumToLabel(charge) +
-      "}#rightarrow#font[132]{[}#font[132]{[}" +
-      EnumToLabel(daughters, charge) +
-      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
       EnumToLabel(charge) + "}}";
 
-  labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
-  labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
-  labels.AddEntry(blankHist.get(), str_Bd2Dstpi.c_str(), "l");
-  labels.AddEntry(hist_PartRecPi.get(), str_PartRecPi_D0pi0.c_str(), "l");
-  labels.AddEntry(blankHist.get(), str_PartRecPi_D0gamma.c_str(), "l");
-  labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
-  labels.AddEntry(hist_MisRecK.get(), str_Bu2D0Kst.c_str(), "l");
-  labels.AddEntry(blankHist.get(), str_Bd2DstK.c_str(), "l");
-  labels.AddEntry(hist_PartRecK.get(), str_PartRecK_D0pi0.c_str(), "l");
-  labels.AddEntry(blankHist.get(), str_PartRecK_D0gamma.c_str(), "l");
+  // auto hist_MisRecK = std::make_unique<TH1D>(
+  //     ("hist_MisRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_MisRecK", 1, 0, 1);
+  // hist_MisRecK->SetLineColor(colorMap["MisRecK"]);
+  // hist_MisRecK->SetLineWidth(3);
+  // std::string str_Bu2D0Kst =
+  //     " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
+  //     EnumToLabel(charge) + "}}";
+  // std::string str_Bd2DstK =
+  //     " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+  //     oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
+  //     EnumToLabel(charge) + "}}";
+  // auto hist_PartRecK = std::make_unique<TH1D>(
+  //     ("hist_PartRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
+  //         .c_str(),
+  //     "hist_PartRecK", 1, 0, 1);
+  // hist_PartRecK->SetLineColor(colorMap["PartRecK"]);
+  // hist_PartRecK->SetLineWidth(3);
+  // std::string str_PartRecK_D0pi0 =
+  //     " #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
+  //     EnumToLabel(charge) + "}}";
+  // std::string str_PartRecK_D0gamma =
+  //     " #font[12]{B^{" + EnumToLabel(charge) +
+  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
+  //     EnumToLabel(daughters, charge) +
+  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
+  //     EnumToLabel(charge) + "}}";
+
+  // labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
+  //                 "l");
+  // labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
+  // labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(), str_Bu2Dst0pi_D0pi0_WN.c_str(),
+  //                 "l");
+  // // labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_Bd2Dstpi.c_str(), "l");
+  // // labels.AddEntry(hist_PartRecPi.get(), str_PartRecPi_D0pi0.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_PartRecPi_D0gamma.c_str(), "l");
+  // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+  //                 "l");
+  // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+  // // labels.AddEntry(hist_MisRecK.get(), str_Bu2D0Kst.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_Bd2DstK.c_str(), "l");
+  // // labels.AddEntry(hist_PartRecK.get(), str_PartRecK_D0pi0.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_PartRecK_D0gamma.c_str(), "l");
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
@@ -418,12 +504,12 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
 
 // Function to plot 1D projections - written so that it can be used for both bu
 // and delta mass
-void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
-                   RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                   TLegend &legend, TLegend &labels,
-                   std::string const &outputDir, Configuration &config,
-                   std::map<std::string, Color_t> colorMap,
-                   std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
+void PlotComponent(
+    Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
+    RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
+    std::string const &outputDir, Configuration &config,
+    std::map<std::string, std::map<std::string, Color_t> > &colorMap,
+    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -459,1869 +545,74 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   pullHist = frame->RooPlot::pullHist();
 
   if (config.noFit() == false) {
+    std::vector<const char *> pdfCharVec;
+    // Need to add in list of components here rather than just using functions
+    // RooArgList as need specific order
     if (mass == Mass::buDelta) {
-      std::cout << "Plotting " << pdf.addPdfBu().GetName() << "\n";
-      if (bachelor == Bachelor::pi) {
-        if (neutral == Neutral::gamma) {
-          std::stringstream compStream;
-          compStream << pdf.pdfBu_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0gamma_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        } else {
-          std::stringstream compStream;
-          compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["pdfBu_Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        }
+      if (neutral == Neutral::pi0) {
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
       } else {
-        if (neutral == Neutral::gamma) {
-          std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
-            compStream << pdf.pdfBu_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          } else {
-            compStream << pdf.pdfBu_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          }
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters != Daughters::kpi) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2Dst0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2D0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0K"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0gamma_FAVasSUP().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu_Bu2Dst0h_D0gamma_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu_Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        } else {
-          std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          } else {
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          }
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters != Daughters::kpi) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2Dst0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfBu_MisRec().GetName() << ","
-                       << pdf.pdfBu_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_PartRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfBu_misId_MisRec().GetName() << ","
-                       << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfBu_misId_PartRec().GetName() << ","
-                       << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2D0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_MisRec().GetName() << ","
-                     << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0K"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_PartRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_MisRec().GetName() << ","
-                     << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBu_misId_PartRec().GetName() << ","
-                     << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        }
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
       }
-    } else if (mass == Mass::buDeltaPartial) {
-      std::cout << "Plotting " << pdf.addPdfBuPartial().GetName() << "\n";
-      if (bachelor == Bachelor::pi) {
-        std::stringstream compStream;
-        compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0pi_D0gamma"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        if (daughters == Daughters::pik) {
-          compStream.str(std::string());
-          compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        }
+    } else if (mass == Mass::delta) {
+      if (neutral == Neutral::pi0) {
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
       } else {
-        std::stringstream compStream;
-        if (daughters == Daughters::kpi) {
-          compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBuPartial_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        } else {
-          compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_Bs2Dst0Kpi().GetName() << ","
-                     << pdf.pdfBuPartial_Bs2D0Kpi().GetName() << ","
-                     << pdf.pdfBuPartial_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBuPartial_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        }
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        if (daughters != Daughters::kpi) {
-          compStream.str(std::string());
-          compStream << pdf.pdfBuPartial_Bs2Dst0Kpi().GetName() << ","
-                     << pdf.pdfBuPartial_Bs2D0Kpi().GetName() << ","
-                     << pdf.pdfBuPartial_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBuPartial_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bs2Dst0Kpi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfBuPartial_Bs2D0Kpi().GetName() << ","
-                     << pdf.pdfBuPartial_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfBuPartial_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                     << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                     << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bs2D0Kpi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        }
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecK"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0K"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName() << ","
-                   << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0K_D0gamma"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                   << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(frame.get(),
-                      RooFit::Slice(config.fitting,
-                                    ComposeFittingName(mass, neutral, bachelor,
-                                                       daughters, charge)
-                                        .c_str()),
-                      RooFit::ProjWData(config.fitting, fullDataSet),
-                      RooFit::Components(compStream.str().c_str()),
-                      RooFit::DrawOption("F"),
-                      RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-                      RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_MisRec().GetName() << ","
-                   << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_Bu2D0h().GetName() << ","
-                   << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        compStream.str(std::string());
-        compStream << pdf.pdfBuPartial_misId_PartRec().GetName() << ","
-                   << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-        simPdf.plotOn(
-            frame.get(),
-            RooFit::Slice(
-                config.fitting,
-                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                    .c_str()),
-            RooFit::ProjWData(config.fitting, fullDataSet),
-            RooFit::Components(compStream.str().c_str()),
-            RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        if (daughters == Daughters::pik) {
-          compStream.str(std::string());
-          compStream << pdf.pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-        }
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
       }
     } else {
-      std::cout << "Plotting " << pdf.addPdfDelta().GetName() << "\n";
-      if (bachelor == Bachelor::pi) {
-        if (neutral == Neutral::gamma) {
-          std::stringstream compStream;
-          compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0gamma_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        } else {
-          std::stringstream compStream;
-          compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        }
-      } else {
-        if (neutral == Neutral::gamma) {
-          std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          } else {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          }
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          if (daughters == Daughters::kpi) {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          } else {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          }
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters != Daughters::kpi) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2Dst0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2D0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0K"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0gamma"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                     << "," << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP().GetName()
-                       << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(
-                    colorMap["pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        } else {
-          std::stringstream compStream;
-          if (daughters == Daughters::kpi) {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          } else {
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          }
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0K_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters != Daughters::kpi) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bs2Dst0Kpi().GetName() << ","
-                       << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2Dst0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bs2D0Kpi().GetName() << ","
-                       << pdf.pdfDelta_MisRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_PartRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                       << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                       << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                       << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                       << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bs2D0Kpi"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_MisRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0K"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_PartRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecK"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName() << ","
-                     << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"),
-              RooFit::FillColor(colorMap["Bu2Dst0pi_D0pi0"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_MisRec().GetName() << ","
-                     << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["MisRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_Bu2D0h().GetName() << ","
-                     << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["Bu2D0pi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          compStream.str(std::string());
-          compStream << pdf.pdfDelta_misId_PartRec().GetName() << ","
-                     << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-          simPdf.plotOn(
-              frame.get(),
-              RooFit::Slice(
-                  config.fitting,
-                  ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                      .c_str()),
-              RooFit::ProjWData(config.fitting, fullDataSet),
-              RooFit::Components(compStream.str().c_str()),
-              RooFit::DrawOption("F"), RooFit::FillColor(colorMap["PartRecPi"]),
-              RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          if (daughters == Daughters::pik) {
-            compStream.str(std::string());
-            compStream << pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP().GetName();
-            simPdf.plotOn(
-                frame.get(),
-                RooFit::Slice(config.fitting,
-                              ComposeFittingName(mass, neutral, bachelor,
-                                                 daughters, charge)
-                                  .c_str()),
-                RooFit::ProjWData(config.fitting, fullDataSet),
-                RooFit::Components(compStream.str().c_str()),
-                RooFit::DrawOption("F"),
-                RooFit::FillColor(colorMap["Bu2Dst0h_D0pi0_FAVasSUP"]),
-                RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-          }
-        }
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
+    } 
+    // To pass to Components in plotOn, need string in the format "pdf1,pdf2,pdf3"
+    while (pdfCharVec.size() > 0) {
+      std::string totPdfStr = "";
+      for (auto &chars : pdfCharVec) {
+        totPdfStr.append(chars);
+        totPdfStr.append(",");
       }
+      // Remove comma from end
+      totPdfStr.pop_back();
+      // Find decay mode in order to select correct color for component in
+      // colorMap
+      std::string pdfStr(pdfCharVec[0]); 
+      std::regex re("pdf([A-Za-z]+)_(.+)_(pi0|gamma)_.+");
+      std::smatch match;
+      std::string modeStr;
+      if (std::regex_search(pdfStr, match, re)) {
+        modeStr = match.str(2);
+      } else {
+        throw std::runtime_error(
+            "Plotting.cpp: Can't find decay mode in pdfString with regex\n");
+      }
+      std::cout << modeStr << "\n\n\n";
+      simPdf.plotOn(frame.get(),
+                    RooFit::Slice(config.fitting,
+                                  ComposeFittingName(mass, neutral, bachelor,
+                                                     daughters, charge)
+                                      .c_str()),
+                    RooFit::ProjWData(config.fitting, fullDataSet),
+                    RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
+                    RooFit::FillColor(colorMap[EnumToString(bachelor)][modeStr.c_str()]),
+                    RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+      // Remove first pdf string in vector: plot all others w/out this w/ new color 
+      pdfCharVec.erase(pdfCharVec.begin());
+      // continue until no PDFs left
     }
     simPdf.plotOn(frame.get(),
                   RooFit::Slice(config.fitting,
