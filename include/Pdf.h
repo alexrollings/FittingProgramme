@@ -514,7 +514,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
   PdfBase::yieldsBu_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Bu_Bu2Dst0h_D0gamma_WN());
-  if (_bachelor == Bachelor::pi || _neutral == Neutral::gamma) {
+  if (_bachelor == Bachelor::k || _neutral == Neutral::gamma) {
     PdfBase::functionsBu_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfBu_misId_Bu2Dst0h_D0gamma_WN());
@@ -643,15 +643,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
   PdfBase::yieldsBuPartial_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_BuPartial_Bu2Dst0h_D0gamma_WN());
-  if (_bachelor == Bachelor::pi || _neutral == Neutral::gamma) {
-    PdfBase::functionsBuPartial_.add(
-        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-            .pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN());
-    PdfBase::yieldsBuPartial_.add(
-        Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-            PdfBase::uniqueId_)
-            .N_misId_BuPartial_Bu2Dst0h_D0gamma_WN());
-  }
+  PdfBase::functionsBuPartial_.add(
+      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+          .pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN());
+  PdfBase::yieldsBuPartial_.add(
+      Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
+          .N_misId_BuPartial_Bu2Dst0h_D0gamma_WN());
   PdfBase::functionsBuPartial_.add(
       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
           .pdfBuPartial_Bu2Dst0h_D0pi0_WN());
@@ -786,7 +783,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   PdfBase::yieldsDelta_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Delta_Bu2Dst0h_D0gamma_WN());
-  if (_bachelor == Bachelor::pi || _neutral == Neutral::gamma) {
+  if (_bachelor == Bachelor::k || _neutral == Neutral::gamma) {
     PdfBase::functionsDelta_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfDelta_misId_Bu2Dst0h_D0gamma_WN());

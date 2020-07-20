@@ -997,6 +997,12 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0()));
+      N_misId_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bu2Dst0h_D0gamma_WN_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bu2Dst0h_D0gamma_WN()));
       N_misId_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
           Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
               uniqueId_, "N_misId_Bu2Dst0h_D0pi0_WN_",
@@ -1021,6 +1027,12 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0()));
+      N_misId_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bu2Dst0h_D0gamma_WN_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bu2Dst0h_D0gamma_WN()));
       N_misId_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
           Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
               uniqueId_, "N_misId_Bu2Dst0h_D0pi0_WN_",
