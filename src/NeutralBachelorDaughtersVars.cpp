@@ -657,6 +657,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bu2Dst0h_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0h_D0pi0", uniqueId, _neutral,
                                        Bachelor::k, Daughters::kpi, 0, -1, 1)),
+      A_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
+          "A_Bu2Dst0h_D0gamma_WN", uniqueId, _neutral, Bachelor::k,
+          Daughters::kpi, 0, -1, 1)),
       A_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "A_Bu2Dst0h_D0pi0_WN", uniqueId, _neutral, Bachelor::k,
           Daughters::kpi, 0, -1, 1)),
@@ -677,6 +680,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
               .c_str(),
           *A_Bu2Dst0h_D0pi0_)),
+      a_Bu2Dst0h_D0gamma_WN_(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+              .c_str(),
+          *A_Bu2Dst0h_D0gamma_WN_)),
       a_Bu2Dst0h_D0pi0_WN_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
@@ -711,6 +719,17 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .mcEff_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0gamma_WN_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
+          uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kpi>::Get(uniqueId)
+              .N_tot_Bu2Dst0h_D0gamma_WN(),
+          NeutralDaughtersVars<_neutral, Daughters::kpi>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .mcEff_Bu2Dst0h_D0gamma_WN(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .mcEff_Bu2Dst0h_D0gamma_WN())),
       N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
