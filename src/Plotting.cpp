@@ -106,6 +106,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"] = kRed + 1;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"] = kAzure + 3;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"] = kMagenta - 1;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"] = kAzure + 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"] =
+      kPink - 7;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] =
       kMagenta - 10;
@@ -117,6 +120,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0_WN"] =
@@ -174,20 +181,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
       EnumToLabel(charge) + "}}";
 
-  // auto hist_Bu2Dst0pi_D0gamma_WN = std::make_unique<TH1D>(
-  //     ("hist_Bu2Dst0pi_D0gamma_WN" +
-  //      ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_Bu2Dst0pi_D0gamma_WN", 1, 0, 1);
-  // hist_Bu2Dst0pi_D0gamma_WN->SetLineColor(
-  //     colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"]);
-  // hist_Bu2Dst0pi_D0gamma_WN->SetLineWidth(3);
-  // std::string str_Bu2Dst0pi_D0gamma_WN =
-  //     "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
-  //     EnumToLabel(charge) + "}}";
+  auto hist_Bu2Dst0pi_D0gamma_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0pi_D0gamma_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0pi_D0gamma_WN", 1, 0, 1);
+  hist_Bu2Dst0pi_D0gamma_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"]);
+  hist_Bu2Dst0pi_D0gamma_WN->SetLineWidth(3);
+  std::string str_Bu2Dst0pi_D0gamma_WN =
+      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+      EnumToLabel(charge) + "}}";
 
   auto hist_Bu2Dst0pi_D0pi0_WN = std::make_unique<TH1D>(
       ("hist_Bu2Dst0pi_D0pi0_WN" +
@@ -268,20 +275,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
       EnumToLabel(charge) + "}}";
 
-  // auto hist_Bu2Dst0K_D0gamma_WN = std::make_unique<TH1D>(
-  //     ("hist_Bu2Dst0K_D0gamma_WN" +
-  //      ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_Bu2Dst0K_D0gamma_WN", 1, 0, 1);
-  // hist_Bu2Dst0K_D0gamma_WN->SetLineColor(
-  //     colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"]);
-  // hist_Bu2Dst0K_D0gamma_WN->SetLineWidth(3);
-  // std::string str_Bu2Dst0K_D0gamma_WN =
-  //     "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
-  //     EnumToLabel(charge) + "}}";
+  auto hist_Bu2Dst0K_D0gamma_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0K_D0gamma_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0K_D0gamma_WN", 1, 0, 1);
+  hist_Bu2Dst0K_D0gamma_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"]);
+  hist_Bu2Dst0K_D0gamma_WN->SetLineWidth(3);
+  std::string str_Bu2Dst0K_D0gamma_WN =
+      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
+      EnumToLabel(charge) + "}}";
 
   auto hist_Bu2Dst0K_D0pi0_WN = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0pi0_WN" +
@@ -335,6 +342,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
   //                 "l");
   // labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
+  // labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(), str_Bu2Dst0pi_D0gamma_WN.c_str(),
+  //                 "l");
   // labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(), str_Bu2Dst0pi_D0pi0_WN.c_str(),
   //                 "l");
   // // labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
@@ -552,11 +561,13 @@ void PlotComponent(
       if (neutral == Neutral::pi0) {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
@@ -567,11 +578,13 @@ void PlotComponent(
       if (neutral == Neutral::pi0) {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
@@ -581,6 +594,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
     } 
