@@ -81,6 +81,20 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBuPartial_misId_Bu2Dst0h_D0pi0() {
     return *pdfBuPartial_misId_Bu2Dst0h_D0pi0_;
   }
+  // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
+  RooAbsReal &Bu2Dst0h_D0gamma_WN_sigma1Bu() {
+    return *Bu2Dst0h_D0gamma_WN_sigma1Bu_;
+  }
+  RooAbsReal &Bu2Dst0h_D0gamma_WN_sigma2Bu() {
+    return *Bu2Dst0h_D0gamma_WN_sigma2Bu_;
+  }
+  RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma_WN() { return *pdfBu_Bu2Dst0h_D0gamma_WN_; }
+  RooAbsReal &Bu2Dst0h_D0gamma_WN_sigmaBuPartial() {
+    return *Bu2Dst0h_D0gamma_WN_sigmaBuPartial_;
+  }
+  RooGaussian &pdfBuPartial_Bu2Dst0h_D0gamma_WN() {
+    return pdfBuPartial_Bu2Dst0h_D0gamma_WN_;
+  }
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   RooAbsReal &Bu2Dst0h_D0pi0_WN_sigmaBu() { return *Bu2Dst0h_D0pi0_WN_sigmaBu_; }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0_WN() { return *pdfBu_Bu2Dst0h_D0pi0_WN_; }
@@ -352,6 +366,14 @@ class NeutralBachelorVars {
   RooCBShape pdf2BuPartial_misId_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
   std::unique_ptr<RooAbsPdf> pdfBuPartial_misId_Bu2Dst0h_D0pi0_;
+  // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
+  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigma1Bu_;
+  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigma2Bu_;
+  RooCBShape pdf1Bu_Bu2Dst0h_D0gamma_WN_;
+  RooGaussian pdf2Bu_Bu2Dst0h_D0gamma_WN_;
+  std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigmaBuPartial_;
+  RooGaussian pdfBuPartial_Bu2Dst0h_D0gamma_WN_;
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   std::shared_ptr<RooAbsReal> Bu2Dst0h_D0pi0_WN_sigmaBu_;
   RooCBShape pdf1Bu_Bu2Dst0h_D0pi0_WN_;
