@@ -1215,6 +1215,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
           uniqueId, "A_Bu2Dst0h_D0pi0_",
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .A_CP_Bu2Dst0h_D0pi0())),
+      A_Bu2Dst0h_D0gamma_WN_(Make_A_D2CP<_neutral, Bachelor::k, Daughters::pipi>(
+          uniqueId, "A_Bu2Dst0h_D0gamma_WN_",
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .A_CP_Bu2Dst0h_D0gamma_WN())),
       A_Bu2Dst0h_D0pi0_WN_(Make_A_D2CP<_neutral, Bachelor::k, Daughters::pipi>(
           uniqueId, "A_Bu2Dst0h_D0pi0_WN_",
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
@@ -1240,6 +1244,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           *A_Bu2Dst0h_D0pi0_)),
+      a_Bu2Dst0h_D0gamma_WN_(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+              .c_str(),
+          *A_Bu2Dst0h_D0gamma_WN_)),
       a_Bu2Dst0h_D0pi0_WN_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1278,6 +1287,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
               .N_tot_Bu2Dst0h_D0pi0(),
           NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0gamma_WN_(Make_N_tot_k_CP<_neutral, Daughters::pipi>(
+          uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::pipi>::Get(uniqueId)
+              .N_tot_Bu2Dst0h_D0gamma_WN(),
+          NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN())),
       N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_tot_k_CP<_neutral, Daughters::pipi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,

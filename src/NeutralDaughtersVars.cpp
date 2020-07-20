@@ -22,12 +22,13 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -2, 2)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0,
-          Daughters::kpi,
-          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-          -2, 2)),
+      // Fix for gamma WN in π0 mode (systenatic taken care of in BF error)
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
+          ("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_" +
+               ComposeName(uniqueId_, Neutral::pi0, Daughters::kpi).c_str(),
+           "@0/@1",
+           RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K(),
+                     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi())))),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
           Daughters::kpi,
