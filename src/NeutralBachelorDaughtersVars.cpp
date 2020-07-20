@@ -818,6 +818,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_(nullptr),
+      A_Bu2Dst0h_D0gamma_WN_(nullptr),
       A_Bu2Dst0h_D0pi0_WN_(nullptr),
       A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
                                              Bachelor::k, Daughters::pik, 0, -1,
@@ -837,6 +838,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                             Systematic::NA, Sign::none)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(nullptr),
+      a_Bu2Dst0h_D0gamma_WN_(nullptr),
       a_Bu2Dst0h_D0pi0_WN_(nullptr),
       a_MisRec_(MakeLittleAsym(
           ("a_MisRec_" +
@@ -871,6 +873,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
               .N_tot_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .R_ADS_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0gamma_WN_(Make_N_tot_pik<_neutral, Bachelor::k>(
+          uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                       Daughters::kpi>::Get(uniqueId)
+              .N_tot_Bu2Dst0h_D0gamma_WN(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .R_ADS_Bu2Dst0h_D0gamma_WN())),
       N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_tot_pik<_neutral, Bachelor::k>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
@@ -919,6 +928,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
                 uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
+    A_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
+            uniqueId, "A_ADS_Bu2Dst0h_D0gamma_WN_",
+            NeutralBachelorChargeVars<_neutral, Bachelor::k,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma_WN(),
+            NeutralBachelorChargeVars<_neutral, Bachelor::k, Charge::plus>::Get(
+                uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma_WN()));
     A_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
             uniqueId, "A_ADS_Bu2Dst0h_D0pi0_WN_",
@@ -933,6 +951,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
             .c_str(),
         *A_Bu2Dst0h_D0pi0_));
+    a_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+        ("a_Bu2Dst0h_D0gamma_WN_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+            .c_str(),
+        *A_Bu2Dst0h_D0gamma_WN_));
     a_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
         ("a_Bu2Dst0h_D0pi0_WN_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
