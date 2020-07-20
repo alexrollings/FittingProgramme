@@ -512,6 +512,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           uniqueId, "A_Bu2Dst0h_D0pi0_",
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .A_CP_Bu2Dst0h_D0pi0())),
+      A_Bu2Dst0h_D0gamma_WN_(
+          Make_A_D2CP<_neutral, Bachelor::pi, Daughters::pipi>(
+              uniqueId, "A_Bu2Dst0h_D0gamma_WN_",
+              NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                  .A_CP_Bu2Dst0h_D0gamma_WN())),
       A_Bu2Dst0h_D0pi0_WN_(Make_A_D2CP<_neutral, Bachelor::pi, Daughters::pipi>(
           uniqueId, "A_Bu2Dst0h_D0pi0_WN_",
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
@@ -533,6 +538,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
               .c_str(),
           *A_Bu2Dst0h_D0pi0_)),
+      a_Bu2Dst0h_D0gamma_WN_(MakeLittleAsym(
+          ("a_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+              .c_str(),
+          *A_Bu2Dst0h_D0gamma_WN_)),
       a_Bu2Dst0h_D0pi0_WN_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -598,14 +608,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           0, 1000000)),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
+  N_tot_Bu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+          Daughters::pipi,
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kpi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0gamma()
+                  .getVal() *
+              GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
+              GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
+          -1000000, 1000000));
   if (_neutral == Neutral::gamma) {
-    N_tot_Bu2Dst0h_D0gamma_ =
+    N_tot_Bu2Dst0h_D0gamma_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
+            "N_tot_Bu2Dst0h_D0gamma_WN", uniqueId, _neutral, Bachelor::pi,
             Daughters::pipi,
             NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                          Daughters::kpi>::Get(uniqueId)
-                    .N_tot_Bu2Dst0h_D0gamma()
+                    .N_tot_Bu2Dst0h_D0gamma_WN()
                     .getVal() *
                 GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
                 GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
@@ -620,6 +641,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
             .c_str(),
         *A_Bu2Dst0h_D0gamma_));
+  } else {
+    N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_WN<_neutral, Bachelor::pi, Daughters::pipi>(
+            uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
+            NeutralVars<_neutral>::Get(uniqueId)
+                .globalFrac_Bu2Dst0h_D0gamma_WN()));
   }
 }
 
