@@ -564,6 +564,10 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        if (bachelor == Bachelor::pi) {
+          pdfCharVec.emplace_back(
+              pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        }
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
@@ -573,6 +577,8 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
       }
     } else if (mass == Mass::delta) {
       if (neutral == Neutral::pi0) {
@@ -580,24 +586,37 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        if (bachelor == Bachelor::pi) {
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
       }
     } else {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
-    } 
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
+      pdfCharVec.emplace_back(
+          pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
+      pdfCharVec.emplace_back(
+          pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
+      pdfCharVec.emplace_back(
+          pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN().GetName());
+    }
     // To pass to Components in plotOn, need string in the format "pdf1,pdf2,pdf3"
     while (pdfCharVec.size() > 0) {
       std::string totPdfStr = "";
