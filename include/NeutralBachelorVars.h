@@ -85,9 +85,6 @@ class NeutralBachelorVars {
   RooAbsReal &Bu2Dst0h_D0gamma_WN_sigma1Bu() {
     return *Bu2Dst0h_D0gamma_WN_sigma1Bu_;
   }
-  RooAbsReal &Bu2Dst0h_D0gamma_WN_sigma2Bu() {
-    return *Bu2Dst0h_D0gamma_WN_sigma2Bu_;
-  }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma_WN() { return *pdfBu_Bu2Dst0h_D0gamma_WN_; }
   RooAbsReal &Bu2Dst0h_D0gamma_WN_sigmaBuPartial() {
     return *Bu2Dst0h_D0gamma_WN_sigmaBuPartial_;
@@ -163,6 +160,9 @@ class NeutralBachelorVars {
   RooRealVar &buEffBu2Dst0h_D0pi0() {
     return *buEffBu2Dst0h_D0pi0_;
   }
+  RooRealVar &buEffBu2Dst0h_D0gamma_WN() {
+    return *buEffBu2Dst0h_D0gamma_WN_;
+  }
   RooRealVar &buEffBu2Dst0h_D0pi0_WN() {
     return *buEffBu2Dst0h_D0pi0_WN_;
   }
@@ -172,6 +172,9 @@ class NeutralBachelorVars {
   RooRealVar &deltaEffBu2Dst0h_D0pi0() {
     return *deltaEffBu2Dst0h_D0pi0_;
   }
+  RooRealVar &deltaEffBu2Dst0h_D0gamma_WN() {
+    return *deltaEffBu2Dst0h_D0gamma_WN_;
+  }
   RooRealVar &deltaEffBu2Dst0h_D0pi0_WN() {
     return *deltaEffBu2Dst0h_D0pi0_WN_;
   }
@@ -180,6 +183,9 @@ class NeutralBachelorVars {
   }
   RooRealVar &buPartialEffBu2Dst0h_D0pi0() {
     return *buPartialEffBu2Dst0h_D0pi0_;
+  }
+  RooRealVar &buPartialEffBu2Dst0h_D0gamma_WN() {
+    return *buPartialEffBu2Dst0h_D0gamma_WN_;
   }
   RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() {
     return *buPartialEffBu2Dst0h_D0pi0_WN_;
@@ -265,6 +271,7 @@ class NeutralBachelorVars {
   // -------------------- MC Efficiencies -------------------- //
   RooRealVar &mcEff_Bu2Dst0h_D0gamma() { return *mcEff_Bu2Dst0h_D0gamma_; }
   RooRealVar &mcEff_Bu2Dst0h_D0pi0() { return *mcEff_Bu2Dst0h_D0pi0_; }
+  RooRealVar &mcEff_Bu2Dst0h_D0gamma_WN() { return *mcEff_Bu2Dst0h_D0gamma_WN_; }
   RooRealVar &mcEff_Bu2Dst0h_D0pi0_WN() { return *mcEff_Bu2Dst0h_D0pi0_WN_; }
   RooRealVar &mcEff_MisRec() { return *mcEff_MisRec_; }
   RooRealVar &mcEff_Bu2D0h() { return *mcEff_Bu2D0h_; }
@@ -368,7 +375,7 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBuPartial_misId_Bu2Dst0h_D0pi0_;
   // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
   std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigma1Bu_;
-  std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigma2Bu_;
+  RooFormulaVar Bu2Dst0h_D0gamma_WN_sigma2Bu_;
   RooCBShape pdf1Bu_Bu2Dst0h_D0gamma_WN_;
   RooGaussian pdf2Bu_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_WN_;
@@ -534,12 +541,15 @@ class NeutralBachelorVars {
   // -------------------- Correct ID BOX EFFs -------------------- //
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0pi0_WN_;
   // -------------------- Mis-ID BoxEffs ------------------- //
   std::shared_ptr<RooRealVar> buEffMisId_Bu2Dst0h_D0gamma_;
@@ -576,6 +586,7 @@ class NeutralBachelorVars {
   // -------------------- MC Efficiencies -------------------- //
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> mcEff_MisRec_;
   std::shared_ptr<RooRealVar> mcEff_Bu2D0h_;
