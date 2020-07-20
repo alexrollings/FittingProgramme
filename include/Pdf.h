@@ -704,8 +704,6 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
           .N_misId_Delta_Bu2Dst0h_D0pi0());
   PdfBase::functionsDelta_.add(
       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_Bu2Dst0h_D0pi0_WN());
-      // NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfFlatDelta_Bu2Dst0h_D0pi0_WN());
-      // NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfPeakDelta_Bu2Dst0h_D0pi0_WN());
   PdfBase::yieldsDelta_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Delta_Bu2Dst0h_D0pi0_WN());
