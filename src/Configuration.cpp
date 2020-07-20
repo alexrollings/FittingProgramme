@@ -318,6 +318,18 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdGammaPiPdfDelta;
   } else if (systematic == "misIdGammaKPdfDelta") {
     return Systematic::misIdGammaKPdfDelta;
+  } else if (systematic == "misIdGammaWNPiPdfBu") {
+    return Systematic::misIdGammaWNPiPdfBu;
+  } else if (systematic == "misIdGammaWNKPdfBu") {
+    return Systematic::misIdGammaWNKPdfBu;
+  } else if (systematic == "misIdGammaWNPiPdfDelta") {
+    return Systematic::misIdGammaWNPiPdfDelta;
+  } else if (systematic == "misIdGammaWNKPdfDelta") {
+    return Systematic::misIdGammaWNKPdfDelta;
+  } else if (systematic == "misIdGammaWNPiPdfBuPartial") {
+    return Systematic::misIdGammaWNPiPdfBuPartial;
+  } else if (systematic == "misIdGammaWNKPdfBuPartial") {
+    return Systematic::misIdGammaWNKPdfBuPartial;
   } else if (systematic == "misIdMisRecKPdfBu") {
     return Systematic::misIdMisRecKPdfBu;
   } else if (systematic == "misIdMisRecKPdfBuPartial") {
@@ -484,6 +496,18 @@ std::string EnumToString(Systematic systematic) {
       return "misIdGammaPiPdfDelta";
     case Systematic::misIdGammaKPdfDelta:
       return "misIdGammaKPdfDelta";
+    case Systematic::misIdGammaWNPiPdfBu:
+      return "misIdGammaWNPiPdfBu";
+    case Systematic::misIdGammaWNKPdfBu:
+      return "misIdGammaWNKPdfBu";
+    case Systematic::misIdGammaWNPiPdfDelta:
+      return "misIdGammaWNPiPdfDelta";
+    case Systematic::misIdGammaWNKPdfDelta:
+      return "misIdGammaWNKPdfDelta";
+    case Systematic::misIdGammaWNPiPdfBuPartial:
+      return "misIdGammaWNPiPdfBuPartial";
+    case Systematic::misIdGammaWNKPdfBuPartial:
+      return "misIdGammaWNKPdfBuPartial";
     case Systematic::misIdMisRecKPdfBu:
       return "misIdMisRecKPdfBu";
     case Systematic::misIdMisRecKPdfBuPartial:

@@ -91,6 +91,8 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   if (absArg == nullptr) {
     absArg = floatPars.find(parName.c_str());
     if (absArg == nullptr) {
+      // std::cout << fname << "\n";
+      // fitResult->Print();
       throw std::runtime_error("Cannot find parameter " + parName +
                                " in fit result for bachelor " +
                                EnumToString(bachelor));
