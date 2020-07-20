@@ -92,6 +92,16 @@ class NeutralBachelorVars {
   RooGaussian &pdfBuPartial_Bu2Dst0h_D0gamma_WN() {
     return pdfBuPartial_Bu2Dst0h_D0gamma_WN_;
   }
+  // -------------------- Mis-ID ------------------- //
+  RooAbsPdf &pdfDelta_misId_Bu2Dst0h_D0gamma_WN() {
+    return *pdfDelta_misId_Bu2Dst0h_D0gamma_WN_;
+  }
+  RooAbsPdf &pdfBu_misId_Bu2Dst0h_D0gamma_WN() {
+    return *pdfBu_misId_Bu2Dst0h_D0gamma_WN_;
+  }
+  RooCBShape &pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN() {
+    return pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_;
+  }
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   RooAbsReal &Bu2Dst0h_D0pi0_WN_sigmaBu() { return *Bu2Dst0h_D0pi0_WN_sigmaBu_; }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0_WN() { return *pdfBu_Bu2Dst0h_D0pi0_WN_; }
@@ -386,6 +396,24 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> Bu2Dst0h_D0gamma_WN_sigmaBuPartial_;
   RooGaussian pdfBuPartial_Bu2Dst0h_D0gamma_WN_;
+  // -------------------- Mis-ID ------------------- //
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_meanBu_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_sigmaBu_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_a1Bu_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_n1Bu_;
+  std::unique_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_thresholdDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_aDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_bDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_cDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_meanDelta_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_sigmaDelta_;
+  std::unique_ptr<RooAbsPdf> pdfDelta_misId_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_meanBuPartial_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_;
+  std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_;
+  RooCBShape pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_;
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   std::shared_ptr<RooAbsReal> Bu2Dst0h_D0pi0_WN_sigmaBu_;
   RooCBShape pdf1Bu_Bu2Dst0h_D0pi0_WN_;
