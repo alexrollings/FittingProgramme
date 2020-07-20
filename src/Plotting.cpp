@@ -564,7 +564,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        if (bachelor == Bachelor::pi) {
+        if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
               pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
         }
@@ -588,7 +588,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        if (bachelor == Bachelor::pi) {
+        if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
               pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
         }
