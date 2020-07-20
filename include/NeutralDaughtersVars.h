@@ -22,6 +22,9 @@ class NeutralDaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN() {
+    return *R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
+  }
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
   }
@@ -33,6 +36,9 @@ class NeutralDaughtersVars {
   }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
   }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
@@ -51,6 +57,7 @@ class NeutralDaughtersVars {
   int uniqueId_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_MisRec_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0h_;
