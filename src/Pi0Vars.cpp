@@ -500,6 +500,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
           //                  Efficiency::mcEff),
           2, -5, 5)),
+      // No global frac for gamma mode in π0: different physics
+      globalFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
