@@ -250,17 +250,105 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf2BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf2BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialFrac, Sign::same)),
+      // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
+      pdf1Delta_Bu2Dst0h_D0gamma_WN_(
+          ("pdf1Delta_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
+          *Bu2Dst0h_D0gamma_sigmaDelta_, *Bu2Dst0h_D0gamma_a1Delta_,
+          *Bu2Dst0h_D0gamma_n1Delta_),
+      pdf2Delta_Bu2Dst0h_D0gamma_WN_(
+          ("pdf2Delta_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
+          *Bu2Dst0h_D0gamma_sigmaDelta_, *Bu2Dst0h_D0gamma_a2Delta_,
+          *Bu2Dst0h_D0gamma_n2Delta_),
+      pdfPeakDelta_Bu2Dst0h_D0gamma_WN_(
+          ("pdfPeakDelta_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_WN_,
+                     pdf2Delta_Bu2Dst0h_D0gamma_WN_),
+          *Bu2Dst0h_D0gamma_fracPdf1Delta_),
+      Bu2Dst0h_D0gamma_WN_thresholdDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_thresholdDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_aDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_aDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_bDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_bDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_cDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_cDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      pdfFlatDelta_Bu2Dst0h_D0gamma_WN_(
+          ("pdfFlatDelta_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          *Bu2Dst0h_D0gamma_WN_thresholdDelta_, *Bu2Dst0h_D0gamma_WN_cDelta_,
+          *Bu2Dst0h_D0gamma_WN_aDelta_, *Bu2Dst0h_D0gamma_WN_bDelta_),
+      Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      pdfDelta_Bu2Dst0h_D0gamma_WN_(
+          new RooAddPdf(("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
+                         ComposeName(uniqueId_, Neutral::gamma))
+                            .c_str(),
+                        "",
+                        RooArgList(pdfPeakDelta_Bu2Dst0h_D0gamma_WN_,
+                                   pdfFlatDelta_Bu2Dst0h_D0gamma_WN_),
+                        *Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_)),
+      Bu2Dst0h_D0gamma_WN_mean1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_mean1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_meanOffset21Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_meanOffset21Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_mean2Bu_(
+          ("Bu2Dst0h_D0gamma_WN_mean2Bu_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "@0+@1",
+          RooArgSet(*Bu2Dst0h_D0gamma_WN_mean1Bu_,
+                    *Bu2Dst0h_D0gamma_WN_meanOffset21Bu_)),
+      Bu2Dst0h_D0gamma_WN_KpiSigmaBu_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0gamma_WN_KpiSigmaBu", uniqueId_, Neutral::gamma, 0.95,
+          0.5, 1.5)),
+      Bu2Dst0h_D0gamma_WN_sigmaRatio21Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_sigmaRatio21Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_a1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_a1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_n1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_n1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_fracPdf1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_fracPdf1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_meanBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_meanBuPartial", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPartialPdf,
+          Sign::same)),
+      Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial", uniqueId_, Neutral::gamma,
+          1.0, 0.0, Systematic::gammaWNBuPartialPdf, Sign::same)),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
-      Bu2Dst0h_D0pi0_WN_meanDelta_(nullptr),
-      Bu2Dst0h_D0pi0_WN_sigmaDelta_(nullptr),
-      Bu2Dst0h_D0pi0_WN_a1Delta_(nullptr),
-      Bu2Dst0h_D0pi0_WN_n1Delta_(nullptr),
-      Bu2Dst0h_D0pi0_WN_a2Delta_(nullptr),
-      Bu2Dst0h_D0pi0_WN_n2Delta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_meanDelta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_sigmaDelta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_a1Delta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_n1Delta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_a2Delta_(nullptr),
+      // Bu2Dst0h_D0pi0_WN_n2Delta_(nullptr),
       pdf1Delta_Bu2Dst0h_D0pi0_WN_(),
       pdf2Delta_Bu2Dst0h_D0pi0_WN_(),
-      Bu2Dst0h_D0pi0_WN_fracPdf1Delta_(nullptr),
-      // pdfPeakDelta_Bu2Dst0h_D0pi0_WN_(),
+      // Bu2Dst0h_D0pi0_WN_fracPdf1Delta_(nullptr),
+      pdfPeakDelta_Bu2Dst0h_D0pi0_WN_(),
       Bu2Dst0h_D0pi0_WN_thresholdDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_thresholdDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
@@ -620,9 +708,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // -------------------- Global Fractions: WN -------------------- //
       globalFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "globalFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
-          // ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
+          // ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
+          // Bachelor::pi,
           //              Efficiency::mcEff) /
-          //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+          //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma,
+          //     Bachelor::pi,
           //                  Efficiency::mcEff),
           2, -5, 5)),
       // -------------------- CP Observables -------------------- //
