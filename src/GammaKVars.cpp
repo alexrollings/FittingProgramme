@@ -373,6 +373,71 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         RooArgSet(pdf1BuPartial_misId_Bu2Dst0h_D0pi0_,
                                   pdf2BuPartial_misId_Bu2Dst0h_D0pi0_),
                         *misId_Bu2Dst0h_D0pi0_fracPdf1BuPartial_)),
+      // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
+      Bu2Dst0h_D0gamma_WN_sigma1Bu_(new RooFormulaVar(
+          ("Bu2Dst0h_D0gamma_WN_sigma1Bu_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_WN_sigma1Bu(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_WN_KpiSigmaBu()))),
+      Bu2Dst0h_D0gamma_WN_sigma2Bu_(
+          ("Bu2Dst0h_D0gamma_WN_sigma2Bu" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "@0*@1",
+          RooArgSet(*Bu2Dst0h_D0gamma_WN_sigma1Bu_,
+                    NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                        .Bu2Dst0h_D0gamma_WN_sigmaRatio21Bu())),
+      pdf1Bu_Bu2Dst0h_D0gamma_WN_(
+          ("pdf1Bu_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_mean1Bu(),
+          *Bu2Dst0h_D0gamma_WN_sigma1Bu_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_a1Bu(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_n1Bu()),
+      pdf2Bu_Bu2Dst0h_D0gamma_WN_(
+          ("pdf2Bu_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_mean2Bu(),
+          Bu2Dst0h_D0gamma_WN_sigma2Bu_),
+      pdfBu_Bu2Dst0h_D0gamma_WN_(new RooAddPdf(
+          ("pdfBu_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgSet(pdf1Bu_Bu2Dst0h_D0gamma_WN_, pdf2Bu_Bu2Dst0h_D0gamma_WN_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_fracPdf1Bu())),
+      Bu2Dst0h_D0gamma_WN_sigmaBuPartial_(new RooFormulaVar(
+          ("Bu2Dst0h_D0gamma_WN_sigmaBuPartial_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_WN_sigmaBuPartial(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial()))),
+      pdfBuPartial_Bu2Dst0h_D0gamma_WN_(
+          ("pdfBuPartial_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_WN_meanBuPartial(),
+          *Bu2Dst0h_D0gamma_WN_sigmaBuPartial_),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
       Bu2Dst0h_D0pi0_WN_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigmaBu_" +
@@ -1174,9 +1239,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                         Efficiency::buEffErr, true),
           Systematic::NA, Sign::same)),
       buEffMisId_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-          "buEffMisId_Bu2Dst0h_D0pi0_WN_", uniqueId_, Neutral::gamma, Bachelor::k,
-          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::k, Efficiency::buEff,
-                        true),
+          "buEffMisId_Bu2Dst0h_D0pi0_WN_", uniqueId_, Neutral::gamma,
+          Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::k,
+                        Efficiency::buEff, true),
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0_WN, Bachelor::k,
                         Efficiency::buEffErr, true),
           Systematic::NA, Sign::same)),
