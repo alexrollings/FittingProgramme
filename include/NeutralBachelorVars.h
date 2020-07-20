@@ -286,14 +286,19 @@ class NeutralBachelorVars {
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0_Blind() {
     return *A_CP_Bu2Dst0h_D0pi0_Blind_;
   }
+  RooAbsReal &A_CP_Bu2Dst0h_D0gamma_WN_Blind() {
+    return *A_CP_Bu2Dst0h_D0gamma_WN_Blind_;
+  }
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0_WN_Blind() {
     return *A_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   }
   RooAbsReal &A_CP_Bu2Dst0h_D0gamma() { return *A_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0() { return *A_CP_Bu2Dst0h_D0pi0_; }
+  RooAbsReal &A_CP_Bu2Dst0h_D0gamma_WN() { return *A_CP_Bu2Dst0h_D0gamma_WN_; }
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0_WN() { return *A_CP_Bu2Dst0h_D0pi0_WN_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma_WN() { return *R_ADS_Bu2Dst0h_D0gamma_WN_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0_WN() { return *R_ADS_Bu2Dst0h_D0pi0_WN_; }
 
  private:
@@ -596,12 +601,15 @@ class NeutralBachelorVars {
   // -------------------- CP Observables -------------------- //
   std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
+  std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0gamma_WN_Blind_;
   std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_WN_;
 };
 
