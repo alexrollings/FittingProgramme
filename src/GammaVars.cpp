@@ -734,8 +734,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       R_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0gamma_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
+      R_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_WN_(nullptr) {
-  std::cout << "\n\n\n" << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
+  std::cout << "\n\n\n"
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
                             Bachelor::pi, Efficiency::mcEff)
             << "\n";
   std::cout << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
@@ -748,8 +750,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                      Neutral::gamma, 1.138, -2, 2));
-    // KEEP same blinding string as signal for WN - can tell if measure same
-    // number
+    R_CP_Bu2Dst0h_D0gamma_WN_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_WN_Blind",
+                                     uniqueId_, Neutral::gamma, 0.902, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
                                      Neutral::gamma, 1.138, -2, 2));
@@ -761,6 +764,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
             .c_str(),
         0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0gamma_WN_" + ComposeName(uniqueId_, Neutral::gamma))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
     R_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_CP_Bu2Dst0h_D0pi0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
             .c_str(),
@@ -772,6 +779,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_,
+                                     Neutral::gamma, 0.902, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, 1.138, -2, 2));

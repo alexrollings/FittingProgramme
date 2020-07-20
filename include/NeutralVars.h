@@ -362,11 +362,15 @@ class NeutralVars {
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() {
     return *R_CP_Bu2Dst0h_D0pi0_Blind_;
   }
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_WN_Blind() {
+    return *R_CP_Bu2Dst0h_D0gamma_WN_Blind_;
+  }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0_WN_Blind() {
     return *R_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   }
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
+  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_WN() { return *R_CP_Bu2Dst0h_D0gamma_WN_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0_WN() { return *R_CP_Bu2Dst0h_D0pi0_WN_; }
 
  private:
@@ -620,9 +624,11 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
   // Include blinded R_CP for WN: should measure signal R_CP - just make
   // blinding string the same for both (in MakeBlind)
+  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_WN_Blind_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_WN_;
 };
 
