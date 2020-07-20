@@ -542,17 +542,24 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- CP Observables -------------------- //
       A_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      A_CP_Bu2Dst0h_D0gamma_WN_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_(nullptr),
+      A_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr),
+      R_ADS_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_WN_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                      Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
+    A_CP_Bu2Dst0h_D0gamma_WN_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_, Neutral::pi0,
+            Bachelor::pi, -0.003, -1, 1));
     A_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
                                      Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
@@ -561,6 +568,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                    ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
                       .c_str(),
                   0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
+    A_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("A_CP_Bu2Dst0h_D0gamma_WN_" +
+                   ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+                      .c_str(),
+                  0.03, *A_CP_Bu2Dst0h_D0gamma_WN_Blind_));
     A_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(
         MakeBlind(("A_CP_Bu2Dst0h_D0pi0_WN_" +
                    ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -570,6 +582,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
     A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
                                      Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
+    A_CP_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "A_CP_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, Bachelor::pi,
+            -0.003, -1, 1));
     A_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_WN", uniqueId_,
                                      Neutral::pi0, Bachelor::pi, 0.025, -1, 1));
@@ -584,6 +600,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
             NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
                                       Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
+    R_ADS_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma_WN(),
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma_WN()));
     R_ADS_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
@@ -600,6 +625,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
             NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
                                       Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
+    R_ADS_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
+            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
+            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
+                                      Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_D0gamma_WN()));
     R_ADS_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
