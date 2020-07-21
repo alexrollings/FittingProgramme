@@ -28,6 +28,18 @@ class NeutralDaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
   }
+  RooAbsReal &R_Dst0KDst0pi_Bd2Dsth() {
+    return *R_Dst0KDst0pi_Bd2Dsth_;
+  }
+  RooAbsReal &R_Dst0KDst0pi_Bu2D0hst() {
+    return *R_Dst0KDst0pi_Bu2D0hst_;
+  }
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0gamma() {
+    return *R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
+  }
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0() {
+    return *R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
+  }
   RooAbsReal &R_Dst0KDst0pi_MisRec() { return *R_Dst0KDst0pi_MisRec_; }
   RooAbsReal &R_Dst0KDst0pi_Bu2D0h() { return *R_Dst0KDst0pi_Bu2D0h_; }
   RooAbsReal &R_Dst0KDst0pi_PartRec() { return *R_Dst0KDst0pi_PartRec_; }
@@ -42,6 +54,18 @@ class NeutralDaughtersVars {
   }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bd2Dsth_GetPointer() {
+    return R_Dst0KDst0pi_Bd2Dsth_;
+  }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2D0hst_GetPointer() {
+    return R_Dst0KDst0pi_Bu2D0hst_;
+  }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_MisRec_GetPointer() {
     return R_Dst0KDst0pi_MisRec_;
@@ -59,6 +83,10 @@ class NeutralDaughtersVars {
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0hst_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_MisRec_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0h_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_PartRec_;
