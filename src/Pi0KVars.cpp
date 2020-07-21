@@ -1241,10 +1241,18 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       A_CP_Bu2Dst0h_D0pi0_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
+      A_CP_Bd2Dsth_(nullptr),
+      A_CP_Bu2D0hst_(nullptr),
+      A_CP_Bu2Dst0hst_D0gamma_(nullptr),
+      A_CP_Bu2Dst0hst_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_WN_(nullptr) {
+      R_ADS_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_ADS_Bd2Dsth_(nullptr),
+      R_ADS_Bu2D0hst_(nullptr),
+      R_ADS_Bu2Dst0hst_D0gamma_(nullptr),
+      R_ADS_Bu2Dst0hst_D0pi0_(nullptr) {
   if (Configuration::Get().blindFit() == true) {
     A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
@@ -1283,6 +1291,17 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_WN", uniqueId_,
                                      Neutral::pi0, Bachelor::k, -0.151, -1, 1));
   }
+  A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      "A_CP_Bd2Dsth", uniqueId_, Neutral::pi0, Bachelor::k, 0.0, 0.02,
+      Systematic::NA, Sign::none));
+  // Fixed from HFLAV: A_CP+
+  A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      "A_CP_Bu2D0hst", uniqueId_, Neutral::pi0, Bachelor::k, -0.142, 0.032,
+      Systematic::NA, Sign::none));
+  // No measured params for B->D*h* modes: just initialise same as signal
+  A_CP_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0pi0", uniqueId_,
+                                   Neutral::pi0, Bachelor::k, -0.151, -1, 1));
   if (Configuration::Get().splitByCharge() == true) {
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
@@ -1331,6 +1350,18 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                                       Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0_WN()));
   }
+  R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      "R_ADS_Bd2Dsth", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.02,
+      Systematic::NA, Sign::none));
+  // Float to allow B->Dππ to fall in this PDF (only in ADS mode) 
+  R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_ADS_Bu2D0hst", uniqueId_,
+                                   Neutral::pi0, Bachelor::k, 1, -5, 5));
+  // No measured params for B->D*h* modes: just let float 
+  R_ADS_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0pi0", uniqueId_,
+                                   Neutral::pi0, Bachelor::k, 1, -5, 5));
+
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
   std::map<std::string, double> mapMisId_Bu2D0h;

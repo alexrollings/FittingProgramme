@@ -487,10 +487,10 @@ class NeutralBachelorVars {
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma_WN() { return *R_ADS_Bu2Dst0h_D0gamma_WN_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0_WN() { return *R_ADS_Bu2Dst0h_D0pi0_WN_; }
-  RooFormulaVar &R_ADS_Bd2Dsth() { return *R_ADS_Bd2Dsth_; }
-  RooFormulaVar &R_ADS_Bu2D0hst() { return *R_ADS_Bu2D0hst_; }
-  RooFormulaVar &R_ADS_Bu2Dst0hst_D0gamma() { return *R_ADS_Bu2Dst0hst_D0gamma_; }
-  RooFormulaVar &R_ADS_Bu2Dst0hst_D0pi0() { return *R_ADS_Bu2Dst0hst_D0pi0_; }
+  RooAbsReal &R_ADS_Bd2Dsth() { return *R_ADS_Bd2Dsth_; }
+  RooAbsReal &R_ADS_Bu2D0hst() { return *R_ADS_Bu2D0hst_; }
+  RooAbsReal &R_ADS_Bu2Dst0hst_D0gamma() { return *R_ADS_Bu2Dst0hst_D0gamma_; }
+  RooAbsReal &R_ADS_Bu2Dst0hst_D0pi0() { return *R_ADS_Bu2Dst0hst_D0pi0_; }
 
  private:
   int uniqueId_;
@@ -959,10 +959,10 @@ class NeutralBachelorVars {
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_WN_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bd2Dsth_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bu2D0hst_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0hst_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_ADS_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> R_ADS_Bu2D0hst_;
+  std::shared_ptr<RooAbsReal> R_ADS_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_ADS_Bu2Dst0hst_D0pi0_;
 };
 
 template <>
