@@ -278,10 +278,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
       Bu2Dst0h_D0gamma_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_aDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::none)),
       Bu2Dst0h_D0gamma_WN_bDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_bDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::none)),
       Bu2Dst0h_D0gamma_WN_cDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_cDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
@@ -358,10 +358,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
       Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
+          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
       Bu2Dst0h_D0pi0_WN_bDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_bDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
+          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
       Bu2Dst0h_D0pi0_WN_cDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_cDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
@@ -524,10 +524,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Systematic::Bd2DsthDeltaPdf, Sign::same)),
       Bd2Dsth_aDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_aDelta", uniqueId_, Neutral::gamma, Mode::Bd2Dstpi,
-          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+          Systematic::Bd2DsthDeltaPdf, Sign::none)),
       Bd2Dsth_bDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_bDelta", uniqueId_, Neutral::gamma, Mode::Bd2Dstpi,
-          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+          Systematic::Bd2DsthDeltaPdf, Sign::none)),
       Bd2Dsth_cDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_cDelta", uniqueId_, Neutral::gamma, Mode::Bd2Dstpi,
           Systematic::Bd2DsthDeltaPdf, Sign::same)),
