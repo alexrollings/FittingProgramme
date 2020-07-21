@@ -127,6 +127,15 @@ class NeutralBachelorVars {
   RooCBShape &pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN() {
     return pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN_;
   }
+  // -------------------- Bd2Dsth -------------------- //
+  RooAbsReal &Bd2Dsth_sigmaBu() { return *Bd2Dsth_sigmaBu_; }
+  RooGaussian &pdfBu_Bd2Dsth() { return pdfBu_Bd2Dsth_; }
+  RooAbsReal &Bd2Dsth_sigmaBuPartial() {
+    return *Bd2Dsth_sigmaBuPartial_;
+  }
+  RooCBShape &pdfBuPartial_Bd2Dsth() {
+    return pdfBuPartial_Bd2Dsth_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooCruijff &pdfBu_MisRec() { return pdfBu_MisRec_; }
   RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
@@ -176,6 +185,12 @@ class NeutralBachelorVars {
   RooRealVar &buEffBu2Dst0h_D0pi0_WN() {
     return *buEffBu2Dst0h_D0pi0_WN_;
   }
+  RooRealVar &buEffBd2Dsth() {
+    return *buEffBd2Dsth_;
+  }
+  RooRealVar &buEffBu2D0hst() {
+    return *buEffBu2D0hst_;
+  }
   RooRealVar &deltaEffBu2Dst0h_D0gamma() {
     return *deltaEffBu2Dst0h_D0gamma_;
   }
@@ -188,6 +203,12 @@ class NeutralBachelorVars {
   RooRealVar &deltaEffBu2Dst0h_D0pi0_WN() {
     return *deltaEffBu2Dst0h_D0pi0_WN_;
   }
+  RooRealVar &deltaEffBd2Dsth() {
+    return *deltaEffBd2Dsth_;
+  }
+  RooRealVar &deltaEffBu2D0hst() {
+    return *deltaEffBu2D0hst_;
+  }
   RooRealVar &buPartialEffBu2Dst0h_D0gamma() {
     return *buPartialEffBu2Dst0h_D0gamma_;
   }
@@ -199,6 +220,12 @@ class NeutralBachelorVars {
   }
   RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() {
     return *buPartialEffBu2Dst0h_D0pi0_WN_;
+  }
+  RooRealVar &buPartialEffBd2Dsth() {
+    return *buPartialEffBd2Dsth_;
+  }
+  RooRealVar &buPartialEffBu2D0hst() {
+    return *buPartialEffBu2D0hst_;
   }
   // -------------------- Mis-ID BoxEffs ------------------- //
   RooRealVar &buEffMisId_Bu2Dst0h_D0gamma() {
@@ -292,6 +319,8 @@ class NeutralBachelorVars {
   RooRealVar &mcEff_Bu2Dst0h_D0pi0() { return *mcEff_Bu2Dst0h_D0pi0_; }
   RooRealVar &mcEff_Bu2Dst0h_D0gamma_WN() { return *mcEff_Bu2Dst0h_D0gamma_WN_; }
   RooRealVar &mcEff_Bu2Dst0h_D0pi0_WN() { return *mcEff_Bu2Dst0h_D0pi0_WN_; }
+  RooRealVar &mcEff_Bd2Dsth() { return *mcEff_Bd2Dsth_; }
+  RooRealVar &mcEff_Bu2D0hst() { return *mcEff_Bu2D0hst_; }
   RooRealVar &mcEff_MisRec() { return *mcEff_MisRec_; }
   RooRealVar &mcEff_Bu2D0h() { return *mcEff_Bu2D0h_; }
   RooRealVar &mcEff_PartRec() { return *mcEff_PartRec_; }
@@ -451,6 +480,11 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_a1BuPartial_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_n1BuPartial_;
   RooCBShape pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN_;
+  // -------------------- Bd2Dsth -------------------- //
+  std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBu_;
+  RooGaussian pdfBu_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBuPartial_;
+  RooCBShape pdfBuPartial_Bd2Dsth_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
   std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;
@@ -585,14 +619,20 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0pi0_;
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> buEffBu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> buEffBd2Dsth_;
+  std::shared_ptr<RooRealVar> buEffBu2D0hst_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0pi0_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> deltaEffBu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> deltaEffBd2Dsth_;
+  std::shared_ptr<RooRealVar> deltaEffBu2D0hst_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0pi0_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> buPartialEffBd2Dsth_;
+  std::shared_ptr<RooRealVar> buPartialEffBu2D0hst_;
   // -------------------- Mis-ID BoxEffs ------------------- //
   std::shared_ptr<RooRealVar> buEffMisId_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> buEffMisId_Bu2Dst0h_D0pi0_;
@@ -633,6 +673,8 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> mcEff_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> mcEff_Bd2Dsth_;
+  std::shared_ptr<RooRealVar> mcEff_Bu2D0hst_;
   std::shared_ptr<RooRealVar> mcEff_MisRec_;
   std::shared_ptr<RooRealVar> mcEff_Bu2D0h_;
   std::shared_ptr<RooRealVar> mcEff_PartRec_;
