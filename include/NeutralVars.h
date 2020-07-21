@@ -484,6 +484,10 @@ class NeutralVars {
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma_WN() { return *R_CP_Bu2Dst0h_D0gamma_WN_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0_WN() { return *R_CP_Bu2Dst0h_D0pi0_WN_; }
+  RooAbsReal &R_CP_Bd2Dsth() { return *R_CP_Bd2Dsth_; }
+  RooAbsReal &R_CP_Bu2D0hst() { return *R_CP_Bu2D0hst_; }
+  RooAbsReal &R_CP_Bu2Dst0hst_D0gamma() { return *R_CP_Bu2Dst0hst_D0gamma_; }
+  RooAbsReal &R_CP_Bu2Dst0hst_D0pi0() { return *R_CP_Bu2Dst0hst_D0pi0_; }
 
  private:
   // Indicate if only used by one neutral
@@ -790,6 +794,10 @@ class NeutralVars {
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> R_CP_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2D0hst_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0hst_D0pi0_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

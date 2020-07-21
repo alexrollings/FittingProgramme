@@ -893,13 +893,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           //                  Efficiency::mcEff),
           2, -5, 5)),
       // -------------------- CP Observables -------------------- //
+      // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0gamma_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
       R_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_WN_(nullptr) {
+      R_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_CP_Bd2Dsth_(nullptr),
+      R_CP_Bu2D0hst_(nullptr),
+      R_CP_Bu2Dst0hst_D0gamma_(nullptr),
+      R_CP_Bu2Dst0hst_D0pi0_(nullptr) {
   std::cout << "\n\n\n"
             << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
                             Bachelor::pi, Efficiency::mcEff)
@@ -950,6 +955,20 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, 1.138, -2, 2));
   }
+  R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFixed("R_CP_Bd2Dsth", uniqueId_, Neutral::gamma, 0.0,
+                                0.0, Systematic::NA, Sign::none));
+  // HFLAV: R_CP+
+  R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFixed("R_CP_Bu2D0hst", uniqueId_, Neutral::gamma, 1.22,
+                                0.07, Systematic::NA, Sign::none));
+  // No numbers for B->D*h* modes: just use signal
+  R_CP_Bu2Dst0hst_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, 0.902, -2, 2));
+  R_CP_Bu2Dst0hst_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, 1.138, -2, 2));
 
   std::map<std::string, double> mapBu2Dst0h_D0gamma;
   std::map<std::string, double> mapBu2Dst0h_D0gamma_FAVasSUP;
