@@ -144,6 +144,16 @@ class NeutralBachelorVars {
   RooAbsPdf &pdfBu_Bu2D0hst() { return *pdfBu_Bu2D0hst_; }
   RooAbsReal &Bu2D0hst_sigmaBuPartial() { return *Bu2D0hst_sigmaBuPartial_; }
   RooGaussian &pdfBuPartial_Bu2D0hst() { return pdfBuPartial_Bu2D0hst_; }
+  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+  RooAbsReal &Bu2Dst0hst_D0gamma_sigma1Bu() { return *Bu2Dst0hst_D0gamma_sigma1Bu_; }
+  RooFormulaVar &Bu2Dst0hst_D0gamma_sigma2Bu() { return Bu2Dst0hst_D0gamma_sigma2Bu_; }
+  RooFormulaVar &Bu2Dst0hst_D0gamma_sigma3Bu() { return Bu2Dst0hst_D0gamma_sigma3Bu_; }
+  RooCBShape &pdf1Bu_Bu2Dst0hst_D0gamma() { return pdf1Bu_Bu2Dst0hst_D0gamma_; }
+  RooCBShape &pdf2Bu_Bu2Dst0hst_D0gamma() { return pdf2Bu_Bu2Dst0hst_D0gamma_; }
+  RooGaussian &pdfFlatBu_Bu2Dst0hst_D0gamma() { return pdfFlatBu_Bu2Dst0hst_D0gamma_; }
+  RooAddPdf &pdfBu_Bu2Dst0hst_D0gamma() { return pdfBu_Bu2Dst0hst_D0gamma_; }
+  RooAbsReal &Bu2Dst0hst_D0gamma_sigmaBuPartial() { return *Bu2Dst0hst_D0gamma_sigmaBuPartial_; }
+  RooGaussian &pdfBuPartial_Bu2Dst0hst_D0gamma() { return pdfBuPartial_Bu2Dst0hst_D0gamma_; }
   // -------------------- MIS-REC -------------------- //
   RooCruijff &pdfBu_MisRec() { return pdfBu_MisRec_; }
   RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
@@ -501,6 +511,16 @@ class NeutralBachelorVars {
   std::unique_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> Bu2D0hst_sigmaBuPartial_;
   RooGaussian pdfBuPartial_Bu2D0hst_;
+  // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+  std::shared_ptr<RooAbsReal> Bu2Dst0hst_D0gamma_sigma1Bu_;
+  RooFormulaVar Bu2Dst0hst_D0gamma_sigma2Bu_;
+  RooFormulaVar Bu2Dst0hst_D0gamma_sigma3Bu_;
+  RooCBShape pdf1Bu_Bu2Dst0hst_D0gamma_;
+  RooCBShape pdf2Bu_Bu2Dst0hst_D0gamma_;
+  RooGaussian pdfFlatBu_Bu2Dst0hst_D0gamma_;
+  RooAddPdf pdfBu_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooAbsReal> Bu2Dst0hst_D0gamma_sigmaBuPartial_;
+  RooGaussian pdfBuPartial_Bu2Dst0hst_D0gamma_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
   std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;

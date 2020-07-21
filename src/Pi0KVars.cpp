@@ -381,6 +381,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           *Bu2D0hst_sigma1Bu_)),
       Bu2D0hst_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2D0hst_(),
+      // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+      Bu2Dst0hst_D0gamma_sigma1Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_sigma2Bu_(),
+      Bu2Dst0hst_D0gamma_sigma3Bu_(),
+      pdf1Bu_Bu2Dst0hst_D0gamma_(),
+      pdf2Bu_Bu2Dst0hst_D0gamma_(),
+      pdfFlatBu_Bu2Dst0hst_D0gamma_(),
+      pdfBu_Bu2Dst0hst_D0gamma_(),
+      Bu2Dst0hst_D0gamma_sigmaBuPartial_(nullptr),
+      pdfBuPartial_Bu2Dst0hst_D0gamma_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.7157e+01,
