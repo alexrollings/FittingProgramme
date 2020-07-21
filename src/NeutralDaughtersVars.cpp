@@ -25,10 +25,11 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
       // Fix for gamma WN in π0 mode (systenatic taken care of in BF error)
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
           ("R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_" +
-               ComposeName(uniqueId_, Neutral::pi0, Daughters::kpi)).c_str(),
-           "@0/@1",
-           RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K(),
-                     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi()))),
+           ComposeName(uniqueId_, Neutral::pi0, Daughters::kpi))
+              .c_str(),
+          "@0/@1",
+          RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K(),
+                    GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi()))),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
           Daughters::kpi,
@@ -38,6 +39,27 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0,
       //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
+      R_Dst0KDst0pi_Bd2Dsth_(new RooFormulaVar(
+          ("R_Dst0KDst0pi_Bd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::pi0, Daughters::kpi))
+              .c_str(),
+          "@0/@1",
+          RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bd2DstK(),
+                    GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi()))),
+      R_Dst0KDst0pi_Bu2D0hst_(new RooFormulaVar(
+          ("R_Dst0KDst0pi_Bu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::pi0, Daughters::kpi))
+              .c_str(),
+          "@0/@1",
+          RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2D0Kst(),
+                    GlobalVars::Get(uniqueId_).kBF_Bu2D0rho()))),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0,
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
+          -5, 5)),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::pi0, Daughters::kpi, 0.06,
           -2, 2)),
@@ -166,6 +188,28 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kpi>::NeutralDaughtersVars(
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
       //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
+      R_Dst0KDst0pi_Bd2Dsth_(new RooFormulaVar(
+          ("R_Dst0KDst0pi_Bd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::gamma, Daughters::kpi))
+              .c_str(),
+          "@0/@1",
+          RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bd2DstK(),
+                    GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi()))),
+      R_Dst0KDst0pi_Bu2D0hst_(new RooFormulaVar(
+          ("R_Dst0KDst0pi_Bu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Daughters::kpi))
+              .c_str(),
+          "@0/@1",
+          RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2D0Kst(),
+                    GlobalVars::Get(uniqueId_).kBF_Bu2D0rho()))),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
+          Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
+          -5, 5)),
+      // Ratio of K/π for part rec should be same for Dgamma and Dπ0
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::gamma, Daughters::kpi,
           0.06, -2, 2)),
