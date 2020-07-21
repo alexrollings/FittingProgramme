@@ -406,6 +406,14 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::kBF_D02pipi;
   } else if (systematic == "kBF_D02pik") {
     return Systematic::kBF_D02pik;
+  } else if (systematic == "kBF_Bd2Dstpi") {
+    return Systematic::kBF_Bd2Dstpi;
+  } else if (systematic == "kBF_Bd2DstK") {
+    return Systematic::kBF_Bd2DstK;
+  } else if (systematic == "kBF_Bu2D0rho") {
+    return Systematic::kBF_Bu2D0rho;
+  } else if (systematic == "kBF_Bu2D0Kst") {
+    return Systematic::kBF_Bu2D0Kst;
   }
   throw std::invalid_argument("Invalid systematic passed to StringToEnum");
 }
@@ -596,6 +604,14 @@ std::string EnumToString(Systematic systematic) {
       return "kBF_D02pipi";
     case Systematic::kBF_D02pik:
       return "kBF_D02pik";
+    case Systematic::kBF_Bd2Dstpi:
+      return "kBF_Bd2Dstpi";
+    case Systematic::kBF_Bd2DstK:
+      return "kBF_Bd2DstK";
+    case Systematic::kBF_Bu2D0rho:
+      return "kBF_Bu2D0rho";
+    case Systematic::kBF_Bu2D0Kst:
+      return "kBF_Bu2D0Kst";
   }
 }
 
