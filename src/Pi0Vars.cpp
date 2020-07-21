@@ -636,7 +636,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
             "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0, 1.138, -2, 2));
   }
   R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFixed("R_CP_Bd2Dsth", uniqueId_, Neutral::pi0, 0.0,
+      Params::Get().CreateFixed("R_CP_Bd2Dsth", uniqueId_, Neutral::pi0, 1.0,
                                 0.0, Systematic::NA, Sign::none));
   // HFLAV: R_CP+
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
