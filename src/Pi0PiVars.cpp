@@ -327,6 +327,18 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           *Bu2D0hst_sigma1Bu_)),
       Bu2D0hst_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2D0hst_(),
+      // -------------------- Mis-ID ------------------- //
+      misId_Bu2D0hst_meanBu_(nullptr),
+      misId_Bu2D0hst_sigmaBu_(nullptr),
+      pdfBu_misId_Bu2D0hst_(),
+      misId_Bu2D0hst_thresholdDelta_(nullptr),
+      misId_Bu2D0hst_aDelta_(nullptr),
+      misId_Bu2D0hst_bDelta_(nullptr),
+      misId_Bu2D0hst_cDelta_(nullptr),
+      pdfDelta_misId_Bu2D0hst_(),
+      misId_Bu2D0hst_meanBuPartial_(nullptr),
+      misId_Bu2D0hst_sigmaBuPartial_(nullptr),
+      pdfBuPartial_misId_Bu2D0hst_(),
       // -------------------- Bu2Dst0hst_D0gamma -------------------- //
       Bu2Dst0hst_D0gamma_sigma1Bu_(nullptr),
       Bu2Dst0hst_D0gamma_sigma2Bu_(),
