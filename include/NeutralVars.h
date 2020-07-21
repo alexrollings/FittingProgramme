@@ -242,6 +242,28 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_;
   }
+  // -------------------- Bd2Dsth -------------------- //
+  RooDstD0BG &pdfDelta_Bd2Dsth() {
+    return pdfDelta_Bd2Dsth_;
+  }
+  RooRealVar &Bd2Dsth_meanBu() {
+    return *Bd2Dsth_meanBu_;
+  }
+  RooRealVar &Bd2Dsth_KpiSigmaBu() {
+    return *Bd2Dsth_KpiSigmaBu_;
+  }
+  RooRealVar &Bd2Dsth_meanBuPartial() {
+    return *Bd2Dsth_meanBuPartial_;
+  }
+  RooRealVar &Bd2Dsth_KpiSigmaBuPartial() {
+    return *Bd2Dsth_KpiSigmaBuPartial_;
+  }
+  RooRealVar &Bd2Dsth_a1BuPartial() {
+    return *Bd2Dsth_a1BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_n1BuPartial() {
+    return *Bd2Dsth_n1BuPartial_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -533,6 +555,18 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_a1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_;
   RooCBShape pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
+  // -------------------- Bd2Dsth -------------------- //
+  std::shared_ptr<RooRealVar> Bd2Dsth_thresholdBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_aBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_bBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_cBu_;
+  RooDstD0BG pdfDelta_Bd2Dsth_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_meanBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_n1BuPartial_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;
