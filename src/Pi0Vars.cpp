@@ -398,6 +398,16 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0hst_D0gamma_fracPdf1Bu_(nullptr),
       Bu2Dst0hst_D0gamma_meanBuPartial_(nullptr),
       Bu2Dst0hst_D0gamma_KpiSigmaBuPartial_(nullptr),
+      // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+      Bu2Dst0hst_D0pi0_meanBu_(Params::Get().CreateFixed(
+          "Bu2Dst0hst_D0pi0_meanBu", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0rho_D0pi0, Systematic::Bu2Dst0hst_D0pi0BuPdf,
+          Sign::same)),
+      Bu2Dst0hst_D0pi0_KpiSigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0hst_D0pi0_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.0,
+          Systematic::Bu2Dst0hst_D0pi0BuPdf, Sign::same)),
+      Bu2Dst0hst_D0pi0_meanBuPartial_(nullptr),
+      Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
