@@ -675,6 +675,18 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bd2Dsth_meanBuPartial(),
           *Bd2Dsth_sigmaBuPartial_),
+      // -------------------- Mis-ID ------------------- //
+      misId_Bd2Dsth_meanBu_(nullptr),
+      misId_Bd2Dsth_sigmaBu_(nullptr),
+      pdfBu_misId_Bd2Dsth_(),
+      misId_Bd2Dsth_thresholdDelta_(nullptr),
+      misId_Bd2Dsth_aDelta_(nullptr),
+      misId_Bd2Dsth_bDelta_(nullptr),
+      misId_Bd2Dsth_cDelta_(nullptr),
+      pdfDelta_misId_Bd2Dsth_(),
+      misId_Bd2Dsth_meanBuPartial_(nullptr),
+      misId_Bd2Dsth_sigmaBuPartial_(nullptr),
+      pdfBuPartial_misId_Bd2Dsth_(),
       // -------------------- Bu2D0hst -------------------- //
       Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
