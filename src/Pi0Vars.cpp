@@ -381,6 +381,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_fracPdf1Bu_(nullptr),
       Bu2D0hst_meanBuPartial_(nullptr),
       Bu2D0hst_KpiSigmaBuPartial_(nullptr),
+      // -------------------- Bu2Dst0hst_D0gamma -------------------- //
+      Bu2Dst0hst_D0gamma_mean1Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_meanOffset21Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_mean2Bu_(),
+      Bu2Dst0hst_D0gamma_meanOffset31Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_mean3Bu_(),
+      Bu2Dst0hst_D0gamma_KpiSigmaBu_(nullptr),
+      Bu2Dst0hst_D0gamma_sigmaRatio21Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_sigmaRatio31Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_a1Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_n1Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_a2Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_n2Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_fracPdfFlatBu_(nullptr),
+      Bu2Dst0hst_D0gamma_fracPdf1Bu_(nullptr),
+      Bu2Dst0hst_D0gamma_meanBuPartial_(nullptr),
+      Bu2Dst0hst_D0gamma_KpiSigmaBuPartial_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
