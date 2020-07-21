@@ -287,6 +287,18 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_(nullptr),
       misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
       pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(),
+      // -------------------- Bd2Dsth -------------------- //
+      Bd2Dsth_sigmaBu_(Params::Get().CreateFixed(
+          "Bd2Dsth_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
+          Mode::Bd2Dstpi, Systematic::Bd2DsthBuPdf, Sign::same)),
+      pdfBu_Bd2Dsth_(("pdfBu_Bd2Dsth_" +
+                      ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+                         .c_str(),
+                     "", Configuration::Get().buDeltaMass(),
+                     NeutralVars<Neutral::pi0>::Get(uniqueId_).Bd2Dsth_meanBu(),
+                     *Bd2Dsth_sigmaBu_),
+      Bd2Dsth_sigmaBuPartial_(nullptr),
+      pdfBuPartial_Bd2Dsth_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::pi, 5.6386e+01,
