@@ -133,7 +133,7 @@ class NeutralBachelorVars {
   RooAbsReal &Bd2Dsth_sigmaBuPartial() {
     return *Bd2Dsth_sigmaBuPartial_;
   }
-  RooCBShape &pdfBuPartial_Bd2Dsth() {
+  RooGaussian &pdfBuPartial_Bd2Dsth() {
     return pdfBuPartial_Bd2Dsth_;
   }
   // -------------------- MIS-REC -------------------- //
@@ -484,7 +484,7 @@ class NeutralBachelorVars {
   std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBu_;
   RooGaussian pdfBu_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBuPartial_;
-  RooCBShape pdfBuPartial_Bd2Dsth_;
+  RooGaussian pdfBuPartial_Bd2Dsth_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
   std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;

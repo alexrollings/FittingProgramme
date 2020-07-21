@@ -350,8 +350,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Systematic::Bd2DsthBuPdf, Sign::same)),
       Bd2Dsth_meanBuPartial_(nullptr),
       Bd2Dsth_KpiSigmaBuPartial_(nullptr),
-      Bd2Dsth_a1BuPartial_(nullptr),
-      Bd2Dsth_n1BuPartial_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,

@@ -258,12 +258,6 @@ class NeutralVars {
   RooRealVar &Bd2Dsth_KpiSigmaBuPartial() {
     return *Bd2Dsth_KpiSigmaBuPartial_;
   }
-  RooRealVar &Bd2Dsth_a1BuPartial() {
-    return *Bd2Dsth_a1BuPartial_;
-  }
-  RooRealVar &Bd2Dsth_n1BuPartial() {
-    return *Bd2Dsth_n1BuPartial_;
-  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -565,8 +559,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBu_;
   std::shared_ptr<RooRealVar> Bd2Dsth_meanBuPartial_;
   std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBuPartial_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_a1BuPartial_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_n1BuPartial_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;

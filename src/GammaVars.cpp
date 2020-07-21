@@ -548,12 +548,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bd2Dsth_KpiSigmaBuPartial_(Params::Get().CreateFixed(
           "Bd2Dsth_KpiSigmaBuPartial", uniqueId_, Neutral::gamma, 1.0, 0.0,
           Systematic::Bd2DsthBuPartialPdf, Sign::same)),
-      Bd2Dsth_a1BuPartial_(Params::Get().CreateFixed(
-          "Bd2Dsth_a1BuPartial", uniqueId_, Neutral::gamma, Mode::Bd2Dstpi,
-          Systematic::Bd2DsthBuPartialPdf, Sign::same)),
-      Bd2Dsth_n1BuPartial_(Params::Get().CreateFixed(
-          "Bd2Dsth_n1BuPartial", uniqueId_, Neutral::gamma, Mode::Bd2Dstpi,
-          Systematic::Bd2DsthBuPartialPdf, Sign::same)),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::gamma, 4.9426e+01,
