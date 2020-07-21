@@ -262,6 +262,18 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::gammaWNBuPdf;
   } else if (systematic == "gammaWNBuPartialPdf") {
     return Systematic::gammaWNBuPartialPdf;
+  } else if (systematic == "Bd2DsthDeltaPdf") {
+    return Systematic::Bd2DsthDeltaPdf;
+  } else if (systematic == "Bd2DsthBuPdf") {
+    return Systematic::Bd2DsthBuPdf;
+  } else if (systematic == "Bd2DsthBuPartialPdf") {
+    return Systematic::Bd2DsthBuPartialPdf;
+  } else if (systematic == "Bu2D0hstDeltaPdf") {
+    return Systematic::Bu2D0hstDeltaPdf;
+  } else if (systematic == "Bu2D0hstBuPdf") {
+    return Systematic::Bu2D0hstBuPdf;
+  } else if (systematic == "Bu2D0hstBuPartialPdf") {
+    return Systematic::Bu2D0hstBuPartialPdf;
   } else if (systematic == "misRecDeltaPdf") {
     return Systematic::misRecDeltaPdf;
   } else if (systematic == "misRecBuPdf") {
@@ -440,6 +452,18 @@ std::string EnumToString(Systematic systematic) {
       return "gammaWNBuPdf";
     case Systematic::gammaWNBuPartialPdf:
       return "gammaWNBuPartialPdf";
+    case Systematic::Bd2DsthDeltaPdf:
+      return "Bd2DsthDeltaPdf";
+    case Systematic::Bd2DsthBuPdf:
+      return "Bd2DsthBuPdf";
+    case Systematic::Bd2DsthBuPartialPdf:
+      return "Bd2DsthBuPartialPdf";
+    case Systematic::Bu2D0hstDeltaPdf:
+      return "Bu2D0hstDeltaPdf";
+    case Systematic::Bu2D0hstBuPdf:
+      return "Bu2D0hstBuPdf";
+    case Systematic::Bu2D0hstBuPartialPdf:
+      return "Bu2D0hstBuPartialPdf";
     case Systematic::misRecDeltaPdf:
       return "misRecDeltaPdf";
     case Systematic::misRecBuPdf:
