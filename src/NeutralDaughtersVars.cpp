@@ -138,6 +138,10 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(
           NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(uniqueId_)
               .R_Dst0KDst0pi_MisRec_GetPointer()),
@@ -156,6 +160,15 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pipi>::NeutralDaughtersVars(
   R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_ =
       NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(uniqueId_)
           .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer();
+  R_Dst0KDst0pi_Bd2Dsth_ =
+      NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bd2Dsth_GetPointer();
+  R_Dst0KDst0pi_Bu2D0hst_ =
+      NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2D0hst_GetPointer();
+  R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_ =
+      NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer();
 }
 
 template <>
