@@ -354,6 +354,30 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::misIdGammaWNPiPdfBuPartial;
   } else if (systematic == "misIdGammaWNKPdfBuPartial") {
     return Systematic::misIdGammaWNKPdfBuPartial;
+  } else if (systematic == "misIdBd2DsthKPdfBu") {
+    return Systematic::misIdBd2DsthKPdfBu;
+  } else if (systematic == "misIdBd2DsthKPdfDelta") {
+    return Systematic::misIdBd2DsthKPdfDelta;
+  } else if (systematic == "misIdBd2DsthKPdfBuPartial") {
+    return Systematic::misIdBd2DsthKPdfBuPartial;
+  } else if (systematic == "misIdBu2D0hstKPdfBu") {
+    return Systematic::misIdBu2D0hstKPdfBu;
+  } else if (systematic == "misIdBu2D0hstKPdfDelta") {
+    return Systematic::misIdBu2D0hstKPdfDelta;
+  } else if (systematic == "misIdBu2D0hstKPdfBuPartial") {
+    return Systematic::misIdBu2D0hstKPdfBuPartial;
+  } else if (systematic == "misIdBu2Dst0hst_D0gammaKPdfBu") {
+    return Systematic::misIdBu2Dst0hst_D0gammaKPdfBu;
+  } else if (systematic == "misIdBu2Dst0hst_D0gammaKPdfDelta") {
+    return Systematic::misIdBu2Dst0hst_D0gammaKPdfDelta;
+  } else if (systematic == "misIdBu2Dst0hst_D0gammaKPdfBuPartial") {
+    return Systematic::misIdBu2Dst0hst_D0gammaKPdfBuPartial;
+  } else if (systematic == "misIdBu2Dst0hst_D0pi0KPdfBu") {
+    return Systematic::misIdBu2Dst0hst_D0pi0KPdfBu;
+  } else if (systematic == "misIdBu2Dst0hst_D0pi0KPdfDelta") {
+    return Systematic::misIdBu2Dst0hst_D0pi0KPdfDelta;
+  } else if (systematic == "misIdBu2Dst0hst_D0pi0KPdfBuPartial") {
+    return Systematic::misIdBu2Dst0hst_D0pi0KPdfBuPartial;
   } else if (systematic == "misIdMisRecKPdfBu") {
     return Systematic::misIdMisRecKPdfBu;
   } else if (systematic == "misIdMisRecKPdfBuPartial") {
@@ -568,6 +592,30 @@ std::string EnumToString(Systematic systematic) {
       return "misIdGammaWNPiPdfBuPartial";
     case Systematic::misIdGammaWNKPdfBuPartial:
       return "misIdGammaWNKPdfBuPartial";
+    case Systematic::misIdBd2DsthKPdfBu:
+      return "misIdBd2DsthKPdfBu";
+    case Systematic::misIdBd2DsthKPdfDelta:
+      return "misIdBd2DsthKPdfDelta";
+    case Systematic::misIdBd2DsthKPdfBuPartial:
+      return "misIdBd2DsthKPdfBuPartial";
+    case Systematic::misIdBu2D0hstKPdfBu:
+      return "misIdBu2D0hstKPdfBu";
+    case Systematic::misIdBu2D0hstKPdfDelta:
+      return "misIdBu2D0hstKPdfDelta";
+    case Systematic::misIdBu2D0hstKPdfBuPartial:
+      return "misIdBu2D0hstKPdfBuPartial";
+    case Systematic::misIdBu2Dst0hst_D0gammaKPdfBu:
+      return "misIdBu2Dst0hst_D0gammaKPdfBu";
+    case Systematic::misIdBu2Dst0hst_D0gammaKPdfDelta:
+      return "misIdBu2Dst0hst_D0gammaKPdfDelta";
+    case Systematic::misIdBu2Dst0hst_D0gammaKPdfBuPartial:
+      return "misIdBu2Dst0hst_D0gammaKPdfBuPartial";
+    case Systematic::misIdBu2Dst0hst_D0pi0KPdfBu:
+      return "misIdBu2Dst0hst_D0pi0KPdfBu";
+    case Systematic::misIdBu2Dst0hst_D0pi0KPdfDelta:
+      return "misIdBu2Dst0hst_D0pi0KPdfDelta";
+    case Systematic::misIdBu2Dst0hst_D0pi0KPdfBuPartial:
+      return "misIdBu2Dst0hst_D0pi0KPdfBuPartial";
     case Systematic::misIdMisRecKPdfBu:
       return "misIdMisRecKPdfBu";
     case Systematic::misIdMisRecKPdfBuPartial:
