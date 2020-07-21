@@ -78,6 +78,10 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::pi0, Daughters::kk, 0.06,
           -2, 2)),
@@ -106,6 +110,24 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kk>::NeutralDaughtersVars(
           NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).R_CP_Bu2Dst0h_D0pi0_WN()));
+  R_Dst0KDst0pi_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
+      Make_R_Dst0KDst0pi_CP<Neutral::pi0, Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bd2Dsth_",
+          NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bd2Dsth(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).R_CP_Bd2Dsth()));
+  R_Dst0KDst0pi_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
+      Make_R_Dst0KDst0pi_CP<Neutral::pi0, Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2D0hst_",
+          NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bu2D0hst(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).R_CP_Bu2D0hst()));
+  R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
+      Make_R_Dst0KDst0pi_CP<Neutral::pi0, Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_",
+          NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).R_CP_Bu2Dst0hst_D0pi0()));
 }
 
 template <>
@@ -228,6 +250,10 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::gamma, Daughters::kk,
           0.06, -2, 2)),
