@@ -50,6 +50,18 @@ Configuration::Configuration()
       runADS_(false),
       plotToys_(false),
       nCPU_(4) {
+      // k_A_CP_Bu2Dst0K_D0pi0_D02kpi(),
+      // k_A_CP_Bu2Dst0K_D0gamma_D02kpi(),
+      // k_A_CP_Bu2Dst0K_D0pi0_D02hh(),
+      // k_A_CP_Bu2Dst0K_D0gamma_D02hh(),
+      // k_R_CP_Bu2Dst0pi_D0pi0(),
+      // k_R_CP_Bu2Dst0pi_D0gamma(),
+      // k_R_CP_Bu2Dst0K_D0K0(),
+      // k_R_CP_Bu2Dst0K_D0gamma(),
+      // k_R_piK_Bu2Dst0pi_D0pi0(),
+      // k_R_piK_Bu2Dst0pi_D0gamma(),
+      // k_R_piK_Bu2Dst0K_D0pi0(),
+      // k_R_piK_Bu2Dst0K_D0gamma() {
   // constexpr means they're known at compile time and immutable (unchangable)
   constexpr const char *kMassUnit = "MeV/c^{2}";
   constexpr const char *kMomentumUnit = "MeV/c";
