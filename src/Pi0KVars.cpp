@@ -391,6 +391,26 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdfBu_Bu2Dst0hst_D0gamma_(),
       Bu2Dst0hst_D0gamma_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2Dst0hst_D0gamma_(),
+      // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+      Bu2Dst0hst_D0pi0_sigmaBu_(new RooFormulaVar(
+          ("Bu2Dst0hst_D0pi0_sigmaBu_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_sigmaBu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_KpiSigmaBu()))),
+      pdfBu_Bu2Dst0hst_D0pi0_(
+          ("pdfBu_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0hst_D0pi0_meanBu(),
+          *Bu2Dst0hst_D0pi0_sigmaBu_),
+      Bu2Dst0hst_D0pi0_sigmaBuPartial_(nullptr),
+      pdfBuPartial_Bu2Dst0hst_D0pi0_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::pi0, Bachelor::k, 5.7157e+01,

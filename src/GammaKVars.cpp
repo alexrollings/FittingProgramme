@@ -860,6 +860,42 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0hst_D0gamma_meanBuPartial(),
           *Bu2Dst0hst_D0gamma_sigmaBuPartial_),
+      // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+      Bu2Dst0hst_D0pi0_sigmaBu_(new RooFormulaVar(
+          ("Bu2Dst0hst_D0pi0_sigmaBu_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_sigmaBu(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_KpiSigmaBu()))),
+      pdfBu_Bu2Dst0hst_D0pi0_(
+          ("pdfBu_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0hst_D0pi0_meanBu(),
+          *Bu2Dst0hst_D0pi0_sigmaBu_),
+      Bu2Dst0hst_D0pi0_sigmaBuPartial_(new RooFormulaVar(
+          ("Bu2Dst0hst_D0pi0_sigmaBuPartial_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_sigmaBuPartial(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0hst_D0pi0_KpiSigmaBuPartial()))),
+      pdfBuPartial_Bu2Dst0hst_D0pi0_(
+          ("pdfBuPartial_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0hst_D0pi0_meanBuPartial(),
+          *Bu2Dst0hst_D0pi0_sigmaBuPartial_),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::gamma, Bachelor::k, 1.2599e+02,
