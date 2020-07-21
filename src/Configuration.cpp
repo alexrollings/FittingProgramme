@@ -414,6 +414,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::kBF_Bu2D0rho;
   } else if (systematic == "kBF_Bu2D0Kst") {
     return Systematic::kBF_Bu2D0Kst;
+  } else if (systematic == "kBF_Bu2Dst0rho") {
+    return Systematic::kBF_Bu2Dst0rho;
+  } else if (systematic == "kBF_Bu2Dst0Kst") {
+    return Systematic::kBF_Bu2Dst0Kst;
   }
   throw std::invalid_argument("Invalid systematic passed to StringToEnum");
 }
@@ -612,6 +616,10 @@ std::string EnumToString(Systematic systematic) {
       return "kBF_Bu2D0rho";
     case Systematic::kBF_Bu2D0Kst:
       return "kBF_Bu2D0Kst";
+    case Systematic::kBF_Bu2Dst0rho:
+      return "kBF_Bu2Dst0rho";
+    case Systematic::kBF_Bu2Dst0Kst:
+      return "kBF_Bu2Dst0Kst";
   }
 }
 

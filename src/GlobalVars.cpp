@@ -80,6 +80,12 @@ GlobalVars::GlobalVars(int uniqueId)
       kBF_Bu2D0Kst_(
           Params::Get().CreateFixed("kBF_Bu2D0Kst", uniqueId_, 5.3e-04, 0.4e-04,
                                     Systematic::kBF_Bu2D0Kst, Sign::none)),
+      kBF_Bu2Dst0rho_(Params::Get().CreateFixed(
+          "kBF_Bu2Dst0rho", uniqueId_, 9.8e-03, 1.7e-03,
+          Systematic::kBF_Bu2Dst0rho, Sign::none)),
+      kBF_Bu2Dst0Kst_(
+          Params::Get().CreateFixed("kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
+                                    Systematic::kBF_Bu2Dst0Kst, Sign::none)),
       pidEffMap_() {
   // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   // for (auto &c : chargeVec) {

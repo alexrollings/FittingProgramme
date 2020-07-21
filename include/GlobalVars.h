@@ -55,6 +55,8 @@ class GlobalVars {
   RooRealVar &kBF_Bd2DstK() { return *kBF_Bd2DstK_; }
   RooRealVar &kBF_Bu2D0rho() { return *kBF_Bu2D0rho_; }
   RooRealVar &kBF_Bu2D0Kst() { return *kBF_Bu2D0Kst_; }
+  RooRealVar &kBF_Bu2Dst0rho() { return *kBF_Bu2Dst0rho_; }
+  RooRealVar &kBF_Bu2Dst0Kst() { return *kBF_Bu2Dst0Kst_; }
 
  private:
   GlobalVars(GlobalVars const &) = delete;
@@ -86,6 +88,8 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> kBF_Bd2DstK_;
   std::shared_ptr<RooRealVar> kBF_Bu2D0rho_;
   std::shared_ptr<RooRealVar> kBF_Bu2D0Kst_;
+  std::shared_ptr<RooRealVar> kBF_Bu2Dst0rho_;
+  std::shared_ptr<RooRealVar> kBF_Bu2Dst0Kst_;
 };
 
 std::string MakePidKey(Bachelor bachelor, Charge charge);
