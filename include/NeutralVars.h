@@ -556,10 +556,10 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_n1BuPartial_;
   RooCBShape pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
   // -------------------- Bd2Dsth -------------------- //
-  std::shared_ptr<RooRealVar> Bd2Dsth_thresholdBu_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_aBu_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_bBu_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_cBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_thresholdDelta_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_aDelta_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_bDelta_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_cDelta_;
   RooDstD0BG pdfDelta_Bd2Dsth_;
   std::shared_ptr<RooRealVar> Bd2Dsth_meanBu_;
   std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBu_;
