@@ -179,6 +179,10 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::pik>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::pi0, Daughters::pik, 0.06,
           -2, 2)),
@@ -336,6 +340,10 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(
           NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
               .R_Dst0KDst0pi_MisRec_GetPointer()),
@@ -357,6 +365,18 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pipi>::NeutralDaughtersVars(
   R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_ =
       NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
           .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer();
+  R_Dst0KDst0pi_Bd2Dsth_ =
+      NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bd2Dsth_GetPointer();
+  R_Dst0KDst0pi_Bu2D0hst_ =
+      NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2D0hst_GetPointer();
+  R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_ =
+      NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_GetPointer();
+  R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_ =
+      NeutralDaughtersVars<Neutral::gamma, Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer();
 }
 
 template <>
@@ -367,6 +387,10 @@ NeutralDaughtersVars<Neutral::gamma, Daughters::pik>::NeutralDaughtersVars(
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bd2Dsth_(nullptr),
+      R_Dst0KDst0pi_Bu2D0hst_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::gamma, Daughters::pik,
           0.06, -2, 2)),
