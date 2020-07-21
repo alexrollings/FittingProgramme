@@ -288,13 +288,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_n1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_n1Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
-      pdfDelta_Bu2Dst0h_D0gamma_WN_(
-          new RooCBShape(("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
-                         ComposeName(uniqueId_, Neutral::pi0))
-                            .c_str(),
-          "", Configuration::Get().deltaMass(),
-          *Bu2Dst0h_D0gamma_WN_meanDelta_, *Bu2Dst0h_D0gamma_WN_sigmaDelta_,
-          *Bu2Dst0h_D0gamma_WN_a1Delta_, *Bu2Dst0h_D0gamma_WN_n1Delta_)),
+      pdfDelta_Bu2Dst0h_D0gamma_WN_(new RooCBShape(
+          ("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_WN_meanDelta_,
+          *Bu2Dst0h_D0gamma_WN_sigmaDelta_, *Bu2Dst0h_D0gamma_WN_a1Delta_,
+          *Bu2Dst0h_D0gamma_WN_n1Delta_)),
       Bu2Dst0h_D0gamma_WN_mean1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_mean1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNBuPdf, Sign::same)),
@@ -325,6 +325,33 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_FAVasSUP_a1Bu_(nullptr),
       Bu2Dst0h_D0gamma_FAVasSUP_n1Bu_(nullptr),
       pdfBu_Bu2Dst0h_D0gamma_FAVasSUP_(),
+      // -------------------- Bd2Dsth -------------------- //
+      Bd2Dsth_thresholdDelta_(Params::Get().CreateFixed(
+          "Bd2Dsth_thresholdDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+      Bd2Dsth_aDelta_(Params::Get().CreateFixed(
+          "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+      Bd2Dsth_bDelta_(Params::Get().CreateFixed(
+          "Bd2Dsth_bDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+      Bd2Dsth_cDelta_(Params::Get().CreateFixed(
+          "Bd2Dsth_cDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          Systematic::Bd2DsthDeltaPdf, Sign::same)),
+      pdfDelta_Bd2Dsth_(
+          ("pdfDelta_Bd2Dsth_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
+          "", Configuration::Get().deltaMass(), *Bd2Dsth_thresholdDelta_,
+          *Bd2Dsth_cDelta_, *Bd2Dsth_aDelta_, *Bd2Dsth_bDelta_),
+      Bd2Dsth_meanBu_(Params::Get().CreateFixed(
+          "Bd2Dsth_meanBu", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          Systematic::Bd2DsthBuPdf, Sign::same)),
+      Bd2Dsth_KpiSigmaBu_(Params::Get().CreateFixed(
+          "Bd2Dsth_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.0,
+          Systematic::Bd2DsthBuPdf, Sign::same)),
+      Bd2Dsth_meanBuPartial_(nullptr),
+      Bd2Dsth_KpiSigmaBuPartial_(nullptr),
+      Bd2Dsth_a1BuPartial_(nullptr),
+      Bd2Dsth_n1BuPartial_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
