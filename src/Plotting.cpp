@@ -619,6 +619,7 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0gamma().GetName());
         }
       }
     } else if (mass == Mass::delta) {
@@ -654,6 +655,7 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst_D0gamma().GetName());
         }
       }
     } else {
@@ -674,6 +676,7 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
         }
     }
     std::cout << "\n\n\n";
