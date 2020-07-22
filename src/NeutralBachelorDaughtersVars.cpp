@@ -85,6 +85,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0pi0_WN", uniqueId, _neutral, Bachelor::pi,
           Daughters::kpi, 0, 0.0005, Systematic::A_FAV_Pi0, Sign::none)),
+      A_Bd2Dsth_(Params::Get().CreateFixed(
+          "A_Bd2Dsth", uniqueId, _neutral, Bachelor::pi,
+          Daughters::kpi, 0, 0.0, Systematic::NA, Sign::none)),
+      A_Bu2D0hst_(Params::Get().CreateFixed(
+          "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi,
+          Daughters::kpi, 0, 0.02, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
+          Daughters::kpi, 0, 0.02, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
+          0, 0.02, Systematic::NA, Sign::none)),
       // A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
       //                                        Bachelor::pi, Daughters::kpi, 0,
       //                                        -5, 5)),
