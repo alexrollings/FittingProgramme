@@ -118,6 +118,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kGreen + 2;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] =
       kOrange - 3;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"] = kGreen + 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] =
+      kOrange + 4;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"] = kBlue + 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] =
+    kRed + 3;
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
@@ -142,6 +148,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2D0hst"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0pi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0pi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0gamma"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
   // colorMap["MisRecPi"] = kBlue - 6;
   // colorMap["MisRecK"] = kMagenta - 10;
   // colorMap["Bu2D0pi"] = kBlue + 4;
