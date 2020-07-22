@@ -824,6 +824,19 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
           Make_N_trueId<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_trueId_Bu2Dst0h_D0pi0_WN_",
               *N_split_Bu2Dst0h_D0pi0_WN_)),
+      N_trueId_Bd2Dsth_(
+          Make_N_trueId<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bd2Dsth_",
+              *N_split_Bd2Dsth_)),
+      N_trueId_Bu2D0hst_(
+          Make_N_trueId<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu2D0hst_",
+              *N_split_Bu2D0hst_)),
+      N_trueId_Bu2Dst0hst_D0pi0_(
+          Make_N_trueId<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu2Dst0hst_D0pi0_",
+              *N_split_Bu2Dst0hst_D0pi0_)),
+      N_trueId_Bu2Dst0hst_D0gamma_(nullptr),
       N_trueId_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_trueId_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_trueId_MisRec_(Make_N_trueId<neutral, bachelor, daughters, charge>(
@@ -937,6 +950,10 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
         Make_N_trueId<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_Bu2Dst0h_D0gamma_",
             *N_split_Bu2Dst0h_D0gamma_));
+    N_trueId_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_trueId<neutral, bachelor, daughters, charge>(
+            uniqueId_, "N_trueId_Bu2Dst0hst_D0gamma_",
+            *N_split_Bu2Dst0hst_D0gamma_));
     N_trueId_Delta_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_",
