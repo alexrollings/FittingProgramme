@@ -866,6 +866,25 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               *N_trueId_Bu2Dst0h_D0pi0_WN_,
               NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                   .deltaEffBu2Dst0h_D0pi0_WN())),
+      N_trueId_Delta_Bd2Dsth_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bd2Dsth_",
+              *N_trueId_Bd2Dsth_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBd2Dsth())),
+      N_trueId_Delta_Bu2D0hst_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bu2D0hst_",
+              *N_trueId_Bu2D0hst_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBu2D0hst())),
+      N_trueId_Delta_Bu2Dst0hst_D0pi0_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bu2Dst0hst_D0pi0_",
+              *N_trueId_Bu2Dst0hst_D0pi0_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBu2Dst0hst_D0pi0())),
+      N_trueId_Delta_Bu2Dst0hst_D0gamma_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_trueId_Delta_MisRec_(Make_N_1D<neutral, bachelor, daughters, charge>(
@@ -960,6 +979,12 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
             *N_trueId_Bu2Dst0h_D0gamma_,
             NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                 .deltaEffBu2Dst0h_D0gamma()));
+    N_trueId_Delta_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_1D<neutral, bachelor, daughters, charge>(
+            uniqueId_, "N_trueId_Delta_Bu2Dst0hst_D0gamma_",
+            *N_trueId_Bu2Dst0hst_D0gamma_,
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                .deltaEffBu2Dst0hst_D0gamma()));
   }
   if (daughters == Daughters::pik) {
     N_split_Bu2Dst0h_D0pi0_FAVasSUP_ = std::unique_ptr<RooFormulaVar>(
