@@ -307,6 +307,18 @@ class Yields {
   RooFormulaVar &N_split_Bu2Dst0h_D0pi0_WN() {
     return *N_split_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_split_Bd2Dsth() {
+    return *N_split_Bd2Dsth_;
+  }
+  RooFormulaVar &N_split_Bu2D0hst() {
+    return *N_split_Bu2D0hst_;
+  }
+  RooFormulaVar &N_split_Bu2Dst0hst_D0pi0() {
+    return *N_split_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_split_Bu2Dst0hst_D0gamma() {
+    return *N_split_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_split_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *N_split_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
@@ -329,6 +341,18 @@ class Yields {
   RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_WN() {
     return *N_trueId_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_trueId_Bd2Dsth() {
+    return *N_trueId_Bd2Dsth_;
+  }
+  RooFormulaVar &N_trueId_Bu2D0hst() {
+    return *N_trueId_Bu2D0hst_;
+  }
+  RooFormulaVar &N_trueId_Bu2Dst0hst_D0pi0() {
+    return *N_trueId_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_trueId_Bu2Dst0hst_D0gamma() {
+    return *N_trueId_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *N_trueId_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
@@ -348,6 +372,18 @@ class Yields {
   RooFormulaVar &N_misId_Bu2Dst0h_D0pi0_WN() {
     return *N_misId_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_misId_Bd2Dsth() {
+    return *N_misId_Bd2Dsth_;
+  }
+  RooFormulaVar &N_misId_Bu2D0hst() {
+    return *N_misId_Bu2D0hst_;
+  }
+  RooFormulaVar &N_misId_Bu2Dst0hst_D0pi0() {
+    return *N_misId_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_misId_Bu2Dst0hst_D0gamma() {
+    return *N_misId_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_misId_MisRec() { return *N_misId_MisRec_; }
   RooFormulaVar &N_misId_Bu2D0h() { return *N_misId_Bu2D0h_; }
   RooFormulaVar &N_misId_PartRec() { return *N_misId_PartRec_; }
@@ -366,6 +402,18 @@ class Yields {
   }
   RooFormulaVar &N_trueId_Delta_Bu2Dst0h_D0pi0_WN() {
     return *N_trueId_Delta_Bu2Dst0h_D0pi0_WN_;
+  }
+  RooFormulaVar &N_trueId_Delta_Bd2Dsth() {
+    return *N_trueId_Delta_Bd2Dsth_;
+  }
+  RooFormulaVar &N_trueId_Delta_Bu2D0hst() {
+    return *N_trueId_Delta_Bu2D0hst_;
+  }
+  RooFormulaVar &N_trueId_Delta_Bu2Dst0hst_D0pi0() {
+    return *N_trueId_Delta_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_trueId_Delta_Bu2Dst0hst_D0gamma() {
+    return *N_trueId_Delta_Bu2Dst0hst_D0gamma_;
   }
   RooFormulaVar &N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
@@ -393,6 +441,18 @@ class Yields {
   RooFormulaVar &N_trueId_Bu_Bu2Dst0h_D0pi0_WN() {
     return *N_trueId_Bu_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_trueId_Bu_Bd2Dsth() {
+    return *N_trueId_Bu_Bd2Dsth_;
+  }
+  RooFormulaVar &N_trueId_Bu_Bu2D0hst() {
+    return *N_trueId_Bu_Bu2D0hst_;
+  }
+  RooFormulaVar &N_trueId_Bu_Bu2Dst0hst_D0pi0() {
+    return *N_trueId_Bu_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_trueId_Bu_Bu2Dst0hst_D0gamma() {
+    return *N_trueId_Bu_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_trueId_Bu_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *N_trueId_Bu_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
@@ -413,6 +473,18 @@ class Yields {
   }
   RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN() {
     return *N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_;
+  }
+  RooFormulaVar &N_trueId_BuPartial_Bd2Dsth() {
+    return *N_trueId_BuPartial_Bd2Dsth_;
+  }
+  RooFormulaVar &N_trueId_BuPartial_Bu2D0hst() {
+    return *N_trueId_BuPartial_Bu2D0hst_;
+  }
+  RooFormulaVar &N_trueId_BuPartial_Bu2Dst0hst_D0pi0() {
+    return *N_trueId_BuPartial_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_trueId_BuPartial_Bu2Dst0hst_D0gamma() {
+    return *N_trueId_BuPartial_Bu2Dst0hst_D0gamma_;
   }
   RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *N_trueId_BuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
@@ -445,6 +517,18 @@ class Yields {
   RooFormulaVar &N_misId_Delta_Bu2Dst0h_D0pi0_WN() {
     return *N_misId_Delta_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_misId_Delta_Bd2Dsth() {
+    return *N_misId_Delta_Bd2Dsth_;
+  }
+  RooFormulaVar &N_misId_Delta_Bu2D0hst() {
+    return *N_misId_Delta_Bu2D0hst_;
+  }
+  RooFormulaVar &N_misId_Delta_Bu2Dst0hst_D0pi0() {
+    return *N_misId_Delta_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_misId_Delta_Bu2Dst0hst_D0gamma() {
+    return *N_misId_Delta_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_misId_Delta_MisRec() { return *N_misId_Delta_MisRec_; }
   RooFormulaVar &N_misId_Delta_Bu2D0h() { return *N_misId_Delta_Bu2D0h_; }
   RooFormulaVar &N_misId_Delta_PartRec() { return *N_misId_Delta_PartRec_; }
@@ -460,6 +544,18 @@ class Yields {
   RooFormulaVar &N_misId_Bu_Bu2Dst0h_D0pi0_WN() {
     return *N_misId_Bu_Bu2Dst0h_D0pi0_WN_;
   }
+  RooFormulaVar &N_misId_Bu_Bd2Dsth() {
+    return *N_misId_Bu_Bd2Dsth_;
+  }
+  RooFormulaVar &N_misId_Bu_Bu2D0hst() {
+    return *N_misId_Bu_Bu2D0hst_;
+  }
+  RooFormulaVar &N_misId_Bu_Bu2Dst0hst_D0pi0() {
+    return *N_misId_Bu_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_misId_Bu_Bu2Dst0hst_D0gamma() {
+    return *N_misId_Bu_Bu2Dst0hst_D0gamma_;
+  }
   RooFormulaVar &N_misId_Bu_Bu2Dst0h_D0gamma() {
     return *N_misId_Bu_Bu2Dst0h_D0gamma_;
   }
@@ -473,6 +569,18 @@ class Yields {
   }
   RooFormulaVar &N_misId_BuPartial_Bu2Dst0h_D0pi0_WN() {
     return *N_misId_BuPartial_Bu2Dst0h_D0pi0_WN_;
+  }
+  RooFormulaVar &N_misId_BuPartial_Bd2Dsth() {
+    return *N_misId_BuPartial_Bd2Dsth_;
+  }
+  RooFormulaVar &N_misId_BuPartial_Bu2D0hst() {
+    return *N_misId_BuPartial_Bu2D0hst_;
+  }
+  RooFormulaVar &N_misId_BuPartial_Bu2Dst0hst_D0pi0() {
+    return *N_misId_BuPartial_Bu2Dst0hst_D0pi0_;
+  }
+  RooFormulaVar &N_misId_BuPartial_Bu2Dst0hst_D0gamma() {
+    return *N_misId_BuPartial_Bu2Dst0hst_D0gamma_;
   }
   RooFormulaVar &N_misId_BuPartial_MisRec() {
     return *N_misId_BuPartial_MisRec_;
@@ -494,6 +602,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_split_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_split_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_split_MisRec_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2D0h_;
@@ -506,6 +618,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_trueId_MisRec_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2D0h_;
@@ -518,6 +634,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_MisRec_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2D0h_;
@@ -530,6 +650,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_MisRec_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2D0h_;
@@ -541,6 +665,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0pi0_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_MisRec_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2D0h_;
@@ -552,6 +680,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misId_MisRec_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu2D0h_;
   std::unique_ptr<RooFormulaVar> N_misId_PartRec_;
@@ -560,6 +692,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_MisRec_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_Bu2D0h_;
   std::unique_ptr<RooFormulaVar> N_misId_Delta_PartRec_;
@@ -568,6 +704,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu_MisRec_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu_Bu2D0h_;
   std::unique_ptr<RooFormulaVar> N_misId_Bu_PartRec_;
@@ -575,6 +715,10 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0h_D0pi0_;
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0h_D0gamma_WN_;
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0h_D0pi0_WN_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bd2Dsth_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2D0hst_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0hst_D0pi0_;
+  std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_MisRec_;
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_Bu2D0h_;
   std::unique_ptr<RooFormulaVar> N_misId_BuPartial_PartRec_;
