@@ -115,6 +115,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"] = kBlue - 3;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] =
       kMagenta + 4;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kGreen + 2;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] =
+      kOrange - 3;
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
@@ -131,6 +134,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bd2Dsth"] =
       colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2D0hst"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"];
   // colorMap["MisRecPi"] = kBlue - 6;
   // colorMap["MisRecK"] = kMagenta - 10;
   // colorMap["Bu2D0pi"] = kBlue + 4;
@@ -568,6 +573,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
               pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
@@ -578,6 +584,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
@@ -590,6 +597,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(
@@ -604,6 +612,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
@@ -617,6 +626,7 @@ void PlotComponent(
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
