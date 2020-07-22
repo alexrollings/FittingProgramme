@@ -1606,6 +1606,28 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .N_tot_Bu2Dst0h_D0pi0_WN(),
           NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN())),
+      N_tot_Bd2Dsth_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
+          uniqueId, "N_tot_Bd2Dsth_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kk>::Get(uniqueId)
+              .N_tot_Bd2Dsth(),
+          NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bd2Dsth())),
+      N_tot_Bu2D0hst_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
+          uniqueId, "N_tot_Bu2D0hst_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kk>::Get(uniqueId)
+              .N_tot_Bu2D0hst(),
+          NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bu2D0hst())),
+      N_tot_Bu2Dst0hst_D0pi0_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
+          uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kk>::Get(uniqueId)
+              .N_tot_Bu2Dst0hst_D0pi0(),
+          NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0())),
+      N_tot_Bu2Dst0hst_D0gamma_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_tot_MisRec_(Make_N_tot_k_kpi<_neutral, Daughters::kk>(
@@ -1656,6 +1678,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
                 .N_tot_Bu2Dst0h_D0gamma(),
             NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
                 .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
+    N_tot_Bu2Dst0hst_D0gamma_ =
+        std::shared_ptr<RooFormulaVar>(Make_N_tot_k_CP<_neutral, Daughters::kk>(
+            uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kk>::Get(uniqueId)
+                .N_tot_Bu2Dst0hst_D0gamma(),
+            NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
+                .R_Dst0KDst0pi_Bu2Dst0hst_D0gamma()));
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooAbsReal>(
         Make_A_D2CP<_neutral, Bachelor::k, Daughters::kk>(
             uniqueId, "A_Bu2Dst0h_D0gamma_",
