@@ -756,6 +756,34 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                   uniqueId_)
                   .a_Bu2Dst0h_D0pi0_WN())),
+      N_split_Bd2Dsth_(
+          Make_N_split<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_split_Bd2Dsth_",
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .N_tot_Bd2Dsth(),
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .a_Bd2Dsth())),
+      N_split_Bu2D0hst_(
+          Make_N_split<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_split_Bu2D0hst_",
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .N_tot_Bu2D0hst(),
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .a_Bu2D0hst())),
+      N_split_Bu2Dst0hst_D0pi0_(
+          Make_N_split<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_split_Bu2Dst0hst_D0pi0_",
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .N_tot_Bu2Dst0hst_D0pi0(),
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .a_Bu2Dst0hst_D0pi0())),
+      N_split_Bu2Dst0hst_D0gamma_(nullptr),
       N_split_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_split_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_split_MisRec_(Make_N_split<neutral, bachelor, daughters, charge>(
@@ -896,6 +924,15 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
             NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                 uniqueId_)
                 .a_Bu2Dst0h_D0gamma()));
+    N_split_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_split<neutral, bachelor, daughters, charge>(
+            uniqueId_, "N_split_Bu2Dst0hst_D0gamma_",
+            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                uniqueId_)
+                .N_tot_Bu2Dst0hst_D0gamma(),
+            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                uniqueId_)
+                .a_Bu2Dst0hst_D0gamma()));
     N_trueId_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
         Make_N_trueId<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_Bu2Dst0h_D0gamma_",
