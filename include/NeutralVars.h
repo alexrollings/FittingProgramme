@@ -466,6 +466,16 @@ class NeutralVars {
   RooRealVar &globalFrac_Bu2Dst0h_D0gamma_WN() {
     return *globalFrac_Bu2Dst0h_D0gamma_WN_;
   }
+  RooRealVar &globalFrac_Bd2Dsth() {
+    return *globalFrac_Bd2Dsth_;
+  }
+  RooRealVar &globalFrac_Bu2D0hst() {
+    return *globalFrac_Bu2D0hst_;
+  }
+  // For Bu2Dst0hst_D0gamma, fix w.r.t. Bu2Dst0hst_D0pi0
+  RooRealVar &globalFrac_Bu2Dst0hst_D0pi0() {
+    return *globalFrac_Bu2Dst0hst_D0pi0_;
+  }
 
   // -------------------- CP Observables -------------------- //
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() {
@@ -783,6 +793,9 @@ class NeutralVars {
   // -------------------- Global Fractions: WN -------------------- //
   std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> globalFrac_Bd2Dsth_;
+  std::shared_ptr<RooRealVar> globalFrac_Bu2D0hst_;
+  std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0hst_D0pi0_;
   // -------------------- CP Observables -------------------- //
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
