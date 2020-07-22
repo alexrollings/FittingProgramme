@@ -684,18 +684,12 @@ void PlotComponent(
           pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
         }
     }
-    std::cout << "\n\n\n";
-    for (auto &chars : pdfCharVec) {
-      std::cout << chars << "\n";
-    }
-    std::cout << "\n\n\n";
     // To pass to Components in plotOn, need string in the format "pdf1,pdf2,pdf3"
     while (pdfCharVec.size() > 0) {
       std::string totPdfStr = "";
       for (auto &chars : pdfCharVec) {
         totPdfStr.append(chars);
         totPdfStr.append(",");
-        std::cout << totPdfStr << "\n";
       }
       // Remove comma from end
       totPdfStr.pop_back();
