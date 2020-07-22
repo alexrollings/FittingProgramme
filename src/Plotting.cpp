@@ -608,6 +608,7 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
         // pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
@@ -661,6 +662,7 @@ void PlotComponent(
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
       // pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0gamma().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0pi0().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(
@@ -841,9 +843,9 @@ void PlotComponent(
   }
   legend.Draw("same");
 
-  if (mass == Mass::buDelta && daughters == Daughters::kpi) {
-    labels.Draw("same");
-  }
+  // if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+  //   labels.Draw("same");
+  // }
   // Stores max values for kpi, to set in pik
   if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
     yMaxMap[neutral][mass] = frame->GetMaximum();

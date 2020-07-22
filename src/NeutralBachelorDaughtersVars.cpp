@@ -33,7 +33,7 @@ RooFormulaVar *Make_N_Frac(int uniqueId, const char *nameStr,
                            RooAbsReal &mcEff_rel) {
   return new RooFormulaVar(
       (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
-      "@0*(@1/*@2)*(@3/@4)",
+      "@0*(@1/@2)*(@3/@4)",
       RooArgList(N_tot_rel, kBF, kBF_rel, mcEff, mcEff_rel));
 }
 
