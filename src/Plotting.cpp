@@ -130,10 +130,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
+  colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bd2Dsth"] =
       colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2D0hst"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"];
   // colorMap["MisRecPi"] = kBlue - 6;
@@ -570,20 +576,21 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
               pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
@@ -591,12 +598,15 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        if (bachelor == Bachelor::k) {
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
+        }
       }
     } else if (mass == Mass::delta) {
       if (neutral == Neutral::pi0) {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
@@ -605,13 +615,14 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
               pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
@@ -620,12 +631,15 @@ void PlotComponent(
             pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        if (bachelor == Bachelor::k) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
+        }
       }
     } else {
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
+      // pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(
@@ -634,13 +648,22 @@ void PlotComponent(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
       pdfCharVec.emplace_back(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        if (bachelor == Bachelor::k) {
+          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
+        }
     }
+    std::cout << "\n\n\n";
+    for (auto &chars : pdfCharVec) {
+      std::cout << chars << "\n";
+    }
+    std::cout << "\n\n\n";
     // To pass to Components in plotOn, need string in the format "pdf1,pdf2,pdf3"
     while (pdfCharVec.size() > 0) {
       std::string totPdfStr = "";
       for (auto &chars : pdfCharVec) {
         totPdfStr.append(chars);
         totPdfStr.append(",");
+        std::cout << totPdfStr << "\n";
       }
       // Remove comma from end
       totPdfStr.pop_back();
@@ -654,7 +677,8 @@ void PlotComponent(
         modeStr = match.str(2);
       } else {
         throw std::runtime_error(
-            "Plotting.cpp: Can't find decay mode in pdfString with regex\n");
+            "Plotting.cpp: Can't find decay mode in pdfString with regex: " +
+            pdfStr + "\n");
       }
       std::cout << modeStr << "\n\n\n";
       simPdf.plotOn(frame.get(),
