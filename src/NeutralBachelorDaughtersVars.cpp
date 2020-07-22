@@ -316,6 +316,26 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       a_Bu2Dst0h_D0pi0_(nullptr),
       a_Bu2Dst0h_D0gamma_WN_(nullptr),
       a_Bu2Dst0h_D0pi0_WN_(nullptr),
+      a_Bd2Dsth_(MakeLittleAsym(
+          ("a_Bd2Dsth_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bd2Dsth_)),
+      a_Bu2D0hst_(MakeLittleAsym(
+          ("a_Bu2D0hst_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bu2D0hst_)),
+      a_Bu2Dst0hst_D0pi0_(MakeLittleAsym(
+          ("a_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bu2Dst0hst_D0pi0_)),
+      a_Bu2Dst0hst_D0gamma_(MakeLittleAsym(
+          ("a_Bu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_Bu2Dst0hst_D0gamma_)),
       a_MisRec_(MakeLittleAsym(
           ("a_MisRec_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
