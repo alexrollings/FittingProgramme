@@ -1315,6 +1315,12 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                 Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                     uniqueId_)
                     .N_split_Bu2Dst0h_D0gamma()));
+        N_misId_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(
+            Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+                uniqueId_, "N_misId_Bu2Dst0hst_D0gamma_",
+                Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                    uniqueId_)
+                    .N_split_Bu2Dst0hst_D0gamma()));
       }
       N_misId_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
           Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
@@ -1334,6 +1340,24 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0_WN()));
+      N_misId_Bd2Dsth_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bd2Dsth_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bd2Dsth()));
+      N_misId_Bu2D0hst_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bu2D0hst_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bu2D0hst()));
+      N_misId_Bu2Dst0hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bu2Dst0hst_D0pi0_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bu2Dst0hst_D0pi0()));
       N_misId_MisRec_ = std::unique_ptr<RooFormulaVar>(
           Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
               uniqueId_, "N_misId_MisRec_",
