@@ -231,9 +231,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
-    N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
-        uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
-        NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+    N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+            uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
+            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
         Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0gamma_,
@@ -284,6 +285,22 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       A_Bu2Dst0h_D0pi0_(nullptr),
       A_Bu2Dst0h_D0gamma_WN_(nullptr),
       A_Bu2Dst0h_D0pi0_WN_(nullptr),
+      A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
+                                           Bachelor::pi, Daughters::pik, 0, 0.0,
+                                           Systematic::NA, Sign::none)),
+      // FIX THIS when we know what it is (A_ADS in Dπ)
+      A_Bu2D0hst_(Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
+                                               Bachelor::pi, Daughters::pik, 0,
+                                               -5, 5)),
+      // A_Bu2D0hst_(Params::Get().CreateFixed("A_Bu2D0hst", uniqueId, _neutral,
+      //                                      Bachelor::pi, Daughters::pik, 0,
+      //                                      0.0, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0pi0_(
+          Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
+                                       Bachelor::pi, Daughters::pik, 0, -5, 5)),
+      A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+          "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
+          Daughters::pik, 0, -5, 5)),
       A_MisRec_(Params::Get().CreateFloating("A_MisRec", uniqueId, _neutral,
                                              Bachelor::pi, Daughters::pik, 0,
                                              -5, 5)),
