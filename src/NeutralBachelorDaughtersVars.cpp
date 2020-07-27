@@ -975,14 +975,19 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(nullptr),
       A_Bu2Dst0h_D0pi0_(
-          Params::Get().CreateFloating("A_Bu2Dst0h_D0pi0", uniqueId, _neutral,
-                                       Bachelor::k, Daughters::kpi, 0, -1, 1)),
+          Params::Get().CreateFloating("A_Bu2Dst0h_D0pi0", uniqueId,
+          _neutral,
+                                       Bachelor::k, Daughters::kpi, 0, -1,
+                                       1)),
+      // A_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+      //     "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
+      //     0., 0., Systematic::NA, Sign::none)),
       A_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0gamma_WN", uniqueId, _neutral, Bachelor::k,
           Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
       A_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-          "A_Bu2Dst0h_D0pi0_WN", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
-          0.0, 0.02, Systematic::NA, Sign::none)),
+          "A_Bu2Dst0h_D0pi0_WN", uniqueId, _neutral, Bachelor::k,
+          Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::k, Daughters::kpi, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
@@ -1174,6 +1179,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_Bu2Dst0h_D0gamma", uniqueId, _neutral,
                                      Bachelor::k, Daughters::kpi, 0, -1, 1));
+    // A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    //     "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
+    //     0., 0., Systematic::NA, Sign::none));
     A_Bu2Dst0hst_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
