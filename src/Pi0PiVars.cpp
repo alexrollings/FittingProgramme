@@ -241,7 +241,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
-          *misId_Bu2Dst0h_D0pi0_WN_meanBu_, *misId_Bu2Dst0h_D0pi0_WN_sigmaBu_)),
+          *misId_Bu2Dst0h_D0pi0_WN_mean1Bu_, *misId_Bu2Dst0h_D0pi0_WN_sigma1Bu_)),
       misId_Bu2Dst0h_D0pi0_WN_meanBuPartial_(nullptr),
       misId_Bu2Dst0h_D0pi0_WN_sigmaBuPartial_(nullptr),
       misId_Bu2Dst0h_D0pi0_WN_a1BuPartial_(nullptr),
