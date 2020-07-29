@@ -671,10 +671,10 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
                             .c_str(),
                         "",
-                        RooArtSet(pdf1Bu_misId_Bu2Dst0h_D0pi0_WN_,
+                        RooArgSet(pdf1Bu_misId_Bu2Dst0h_D0pi0_WN_,
                                   *pdf2Bu_misId_Bu2Dst0h_D0pi0_WN_,
                                   pdf3Bu_misId_Bu2Dst0h_D0pi0_WN_),
-                        RooArtSet(*misId_Bu2Dst0h_D0pi0_WN_fracPdf1Bu_,
+                        RooArgSet(*misId_Bu2Dst0h_D0pi0_WN_fracPdf1Bu_,
                                   *misId_Bu2Dst0h_D0pi0_WN_fracPdf2Bu_))),
       misId_Bu2Dst0h_D0pi0_WN_meanBuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0h_D0pi0_WN_meanBu", uniqueId_, Neutral::gamma,

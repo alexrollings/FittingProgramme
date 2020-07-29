@@ -691,8 +691,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           Bachelor::k, Mode::Bu2Dst0pi_D0pi0_WN, Systematic::misIdPi0WNKPdfBu,
           Sign::same)),
       misId_Bu2Dst0h_D0pi0_WN_fracPdf2Bu_(nullptr),
-      pdf2Bu_misId_Bu2Dst0h_D0pi0_WN_(
-          new RooAddPdf(("pdf2Bu_misId_Bu2Dst0h_D0pi0_WN_" +
+      pdfBu_misId_Bu2Dst0h_D0pi0_WN_(
+          new RooAddPdf(("pdfBu_misId_Bu2Dst0h_D0pi0_WN_" +
                          ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
                             .c_str(),
                         "",
