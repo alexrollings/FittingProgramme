@@ -504,9 +504,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::gamma, Bachelor::pi,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
-      pdf1Bu_Bu2Dst0h_D0pi0_WN_(),
-      pdf2Bu_Bu2Dst0h_D0pi0_WN_(),
-      pdfBu_Bu2Dst0h_D0pi0_WN_(new RooCBShape(
+      pdfBu_Bu2Dst0h_D0pi0_WN_(
           ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -516,7 +514,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           *Bu2Dst0h_D0pi0_WN_sigmaBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_WN_n1Bu())),
+              .Bu2Dst0h_D0pi0_WN_n1Bu()),
       Bu2Dst0h_D0pi0_WN_sigma1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigma1BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi, Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPartialPdf,

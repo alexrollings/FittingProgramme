@@ -532,9 +532,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                   .Bu2Dst0h_D0pi0_WN_sigmaBu(),
               NeutralVars<Neutral::gamma>::Get(uniqueId_)
                   .Bu2Dst0h_D0pi0_WN_KpiSigmaBu()))),
-      pdf1Bu_Bu2Dst0h_D0pi0_WN_(),
-      pdf2Bu_Bu2Dst0h_D0pi0_WN_(),
-      pdfBu_Bu2Dst0h_D0pi0_WN_(new RooCBShape(
+      pdfBu_Bu2Dst0h_D0pi0_WN_(
           ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -544,7 +542,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           *Bu2Dst0h_D0pi0_WN_sigmaBu_,
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_a1Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_WN_n1Bu())),
+              .Bu2Dst0h_D0pi0_WN_n1Bu()),
       Bu2Dst0h_D0pi0_WN_sigma1BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigma1BuPartial_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))

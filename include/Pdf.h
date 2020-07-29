@@ -59,7 +59,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma_WN() const = 0;
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooDstD0BG &pdfDelta_Bu2Dst0h_D0pi0_WN() const = 0;
   virtual RooDstD0BG &pdfDelta_Bd2Dsth() const = 0;
   virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
@@ -85,7 +85,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma_WN() const = 0;
-  virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0_WN() const = 0;
   virtual RooGaussian &pdfBu_Bd2Dsth() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2D0hst() const = 0;
   virtual RooAddPdf &pdfBu_Bu2Dst0hst_D0gamma() const = 0;
@@ -307,7 +307,7 @@ class Pdf : public PdfBase {
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma_WN() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0gamma_WN();
   }
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_WN() const {
+  virtual RooDstD0BG &pdfDelta_Bu2Dst0h_D0pi0_WN() const {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0pi0_WN();
   }
   virtual RooDstD0BG &pdfDelta_Bd2Dsth() const {
@@ -400,7 +400,7 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_D0gamma_WN();
   }
-  virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0_WN() const {
+  virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0_WN() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_D0pi0_WN();
   }
