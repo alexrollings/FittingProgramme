@@ -512,7 +512,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "misId_Bu2Dst0h_D0gamma_WN_n1Bu", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0pi_D0gamma_WN,
           Systematic::misIdGammaWNKPdfBuPartial, Sign::same)),
-      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(
+      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(new RooCBShape(
           ("pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
@@ -520,7 +520,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           *misId_Bu2Dst0h_D0gamma_WN_meanBuPartial_,
           *misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_,
           *misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_,
-          *misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_),
+          *misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_)),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
       Bu2Dst0h_D0pi0_WN_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigmaBu_" +

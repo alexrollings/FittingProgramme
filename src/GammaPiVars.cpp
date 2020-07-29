@@ -483,23 +483,15 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           "misId_Bu2Dst0h_D0gamma_WN_sigmaBu", uniqueId_, Neutral::gamma,
           Bachelor::pi, Mode::Bu2Dst0K_D0gamma_WN,
           Systematic::misIdGammaWNPiPdfBuPartial, Sign::same)),
-      misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0gamma_WN_a1Bu", uniqueId_, Neutral::gamma,
-          Bachelor::pi, Mode::Bu2Dst0K_D0gamma_WN,
-          Systematic::misIdGammaWNPiPdfBuPartial, Sign::same)),
-      misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0gamma_WN_n1Bu", uniqueId_, Neutral::gamma,
-          Bachelor::pi, Mode::Bu2Dst0K_D0gamma_WN,
-          Systematic::misIdGammaWNPiPdfBuPartial, Sign::same)),
-      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(
+      misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_(nullptr),
+      misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
+      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(new RooGaussian(
           ("pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           *misId_Bu2Dst0h_D0gamma_WN_meanBuPartial_,
-          *misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_,
-          *misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_,
-          *misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_),
+          *misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_)),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
       Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::gamma, Bachelor::pi,

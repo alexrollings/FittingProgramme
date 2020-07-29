@@ -334,7 +334,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_(nullptr),
       misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_(nullptr),
       misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
-      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(),
+      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(nullptr),
       // -------------------- Bd2Dsth -------------------- //
       Bd2Dsth_sigmaBu_(new RooFormulaVar(
           ("Bd2Dsth_sigmaBu_" +

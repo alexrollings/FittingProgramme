@@ -281,7 +281,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_WN_sigmaBuPartial_(nullptr),
       misId_Bu2Dst0h_D0gamma_WN_a1BuPartial_(nullptr),
       misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
-      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(),
+      pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(nullptr),
       // -------------------- Bd2Dsth -------------------- //
       Bd2Dsth_sigmaBu_(Params::Get().CreateFixed(
           "Bd2Dsth_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
