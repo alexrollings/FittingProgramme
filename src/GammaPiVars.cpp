@@ -767,7 +767,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Mis-ID ------------------- //
       misId_Bd2Dsth_meanBu_(nullptr),
       misId_Bd2Dsth_sigmaBu_(nullptr),
-      pdfBu_misId_Bd2Dsth_(),
+      misId_Bd2Dsth_a1Bu_(nullptr),
+      misId_Bd2Dsth_n1Bu_(nullptr),
+      pdfBu_misId_Bd2Dsth_(nullptr),
       misId_Bd2Dsth_thresholdDelta_(nullptr),
       misId_Bd2Dsth_aDelta_(nullptr),
       misId_Bd2Dsth_bDelta_(nullptr),
@@ -775,6 +777,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       pdfDelta_misId_Bd2Dsth_(),
       misId_Bd2Dsth_meanBuPartial_(nullptr),
       misId_Bd2Dsth_sigmaBuPartial_(nullptr),
+      misId_Bd2Dsth_a1BuPartial_(nullptr),
+      misId_Bd2Dsth_n1BuPartial_(nullptr),
       pdfBuPartial_misId_Bd2Dsth_(),
       // -------------------- Bu2D0hst -------------------- //
       Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
