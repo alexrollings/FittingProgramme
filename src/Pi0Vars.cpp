@@ -97,8 +97,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0pi0_WN_cDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
       pdfDelta_Bu2Dst0h_D0pi0_WN_(
-          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" +
-           ComposeName(uniqueId_, Neutral::pi0))
+          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" + ComposeName(uniqueId_, Neutral::pi0))
               .c_str(),
           "", Configuration::Get().deltaMass(),
           *Bu2Dst0h_D0pi0_WN_thresholdDelta_, *Bu2Dst0h_D0pi0_WN_cDelta_,
@@ -283,14 +282,30 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("pdfDelta_Bd2Dsth_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), *Bd2Dsth_thresholdDelta_,
           *Bd2Dsth_cDelta_, *Bd2Dsth_aDelta_, *Bd2Dsth_bDelta_),
-      Bd2Dsth_meanBu_(Params::Get().CreateFixed(
-          "Bd2Dsth_meanBu", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+      Bd2Dsth_mean1Bu_(Params::Get().CreateFixed(
+          "Bd2Dsth_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2DsthBuPdf, Sign::same)),
+      Bd2Dsth_meanOffset21Bu_(nullptr),
+      Bd2Dsth_mean2Bu_(),
+      Bd2Dsth_sigmaRatio21Bu_(nullptr),
+      Bd2Dsth_a1Bu_(nullptr),
+      Bd2Dsth_n1Bu_(nullptr),
+      Bd2Dsth_a2Bu_(nullptr),
+      Bd2Dsth_n2Bu_(nullptr),
+      Bd2Dsth_fracPdf1Bu_(nullptr),
       Bd2Dsth_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bd2Dsth_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
           Systematic::Bd2DsthBuPdf, Sign::same)),
-      Bd2Dsth_meanBuPartial_(nullptr),
+      Bd2Dsth_mean1BuPartial_(nullptr),
+      Bd2Dsth_meanOffset21BuPartial_(nullptr),
+      Bd2Dsth_mean2BuPartial_(),
       Bd2Dsth_KpiSigmaBuPartial_(nullptr),
+      Bd2Dsth_sigmaRatio21BuPartial_(nullptr),
+      Bd2Dsth_a1BuPartial_(nullptr),
+      Bd2Dsth_n1BuPartial_(nullptr),
+      Bd2Dsth_a2BuPartial_(nullptr),
+      Bd2Dsth_n2BuPartial_(nullptr),
+      Bd2Dsth_fracPdf1BuPartial_(nullptr),
       // -------------------- Bu2D0hst -------------------- //
       Bu2D0hst_thresholdDelta_(Params::Get().CreateFixed(
           "Bu2D0hst_thresholdDelta", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,

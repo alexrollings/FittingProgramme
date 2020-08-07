@@ -235,17 +235,65 @@ class NeutralVars {
   RooDstD0BG &pdfDelta_Bd2Dsth() {
     return pdfDelta_Bd2Dsth_;
   }
-  RooRealVar &Bd2Dsth_meanBu() {
-    return *Bd2Dsth_meanBu_;
+  RooRealVar &Bd2Dsth_mean1Bu() {
+    return *Bd2Dsth_mean1Bu_;
+  }
+  RooRealVar &Bd2Dsth_meanOffset21Bu() {
+    return *Bd2Dsth_meanOffset21Bu_;
+  }
+  RooFormulaVar &Bd2Dsth_mean2Bu() {
+    return Bd2Dsth_mean2Bu_;
   }
   RooRealVar &Bd2Dsth_KpiSigmaBu() {
     return *Bd2Dsth_KpiSigmaBu_;
   }
-  RooRealVar &Bd2Dsth_meanBuPartial() {
-    return *Bd2Dsth_meanBuPartial_;
+  RooRealVar &Bd2Dsth_sigmaRatio21Bu() {
+    return *Bd2Dsth_sigmaRatio21Bu_;
+  }
+  RooRealVar &Bd2Dsth_a1Bu() {
+    return *Bd2Dsth_a1Bu_;
+  }
+  RooRealVar &Bd2Dsth_n1Bu() {
+    return *Bd2Dsth_n1Bu_;
+  }
+  RooRealVar &Bd2Dsth_a2Bu() {
+    return *Bd2Dsth_a2Bu_;
+  }
+  RooRealVar &Bd2Dsth_n2Bu() {
+    return *Bd2Dsth_n2Bu_;
+  }
+  RooRealVar &Bd2Dsth_fracPdf1Bu() {
+    return *Bd2Dsth_fracPdf1Bu_;
+  }
+  RooRealVar &Bd2Dsth_mean1BuPartial() {
+    return *Bd2Dsth_mean1BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_meanOffset21BuPartial() {
+    return *Bd2Dsth_meanOffset21BuPartial_;
+  }
+  RooFormulaVar &Bd2Dsth_mean2BuPartial() {
+    return Bd2Dsth_mean2BuPartial_;
   }
   RooRealVar &Bd2Dsth_KpiSigmaBuPartial() {
     return *Bd2Dsth_KpiSigmaBuPartial_;
+  }
+  RooRealVar &Bd2Dsth_sigmaRatio21BuPartial() {
+    return *Bd2Dsth_sigmaRatio21BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_a1BuPartial() {
+    return *Bd2Dsth_a1BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_n1BuPartial() {
+    return *Bd2Dsth_n1BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_a2BuPartial() {
+    return *Bd2Dsth_a2BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_n2BuPartial() {
+    return *Bd2Dsth_n2BuPartial_;
+  }
+  RooRealVar &Bd2Dsth_fracPdf1BuPartial() {
+    return *Bd2Dsth_fracPdf1BuPartial_;
   }
   // -------------------- Bu2D0hst -------------------- //
   RooDstD0BG &pdfDelta_Bu2D0hst() {
@@ -639,10 +687,26 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bd2Dsth_bDelta_;
   std::shared_ptr<RooRealVar> Bd2Dsth_cDelta_;
   RooDstD0BG pdfDelta_Bd2Dsth_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_meanBu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_mean1Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_meanOffset21Bu_;
+  RooFormulaVar Bd2Dsth_mean2Bu_;
   std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBu_;
-  std::shared_ptr<RooRealVar> Bd2Dsth_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_sigmaRatio21Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_a1Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_n1Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_a2Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_n2Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_fracPdf1Bu_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_mean1BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_meanOffset21BuPartial_;
+  RooFormulaVar Bd2Dsth_mean2BuPartial_;
   std::shared_ptr<RooRealVar> Bd2Dsth_KpiSigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_sigmaRatio21BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_n1BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_a2BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_n2BuPartial_;
+  std::shared_ptr<RooRealVar> Bd2Dsth_fracPdf1BuPartial_;
   // -------------------- Bu2D0hst -------------------- //
   std::shared_ptr<RooRealVar> Bu2D0hst_thresholdDelta_;
   std::shared_ptr<RooRealVar> Bu2D0hst_aDelta_;

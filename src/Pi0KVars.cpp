@@ -336,22 +336,30 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
       pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN_(nullptr),
       // -------------------- Bd2Dsth -------------------- //
-      Bd2Dsth_sigmaBu_(new RooFormulaVar(
-          ("Bd2Dsth_sigmaBu_" +
+      Bd2Dsth_sigma1Bu_(new RooFormulaVar(
+          ("Bd2Dsth_sigma1Bu_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", "@0*@1",
           RooArgList(
               NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId_)
-                  .Bd2Dsth_sigmaBu(),
-              NeutralVars<Neutral::pi0>::Get(uniqueId_).Bd2Dsth_KpiSigmaBu()))),
-      pdfBu_Bd2Dsth_(("pdfBu_Bd2Dsth_" +
-                      ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
-                         .c_str(),
-                     "", Configuration::Get().buDeltaMass(),
-                     NeutralVars<Neutral::pi0>::Get(uniqueId_).Bd2Dsth_meanBu(),
-                     *Bd2Dsth_sigmaBu_),
-      Bd2Dsth_sigmaBuPartial_(nullptr),
+                  .Bd2Dsth_sigma1Bu(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                  .Bd2Dsth_KpiSigmaBu()))),
+      Bd2Dsth_sigma2Bu_(),
+      pdf1Bu_Bd2Dsth_(),
+      pdf2Bu_Bd2Dsth_(),
+      pdfBu_Bd2Dsth_(new RooGaussian(
+          ("pdfBu_Bd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bd2Dsth_mean1Bu(),
+          *Bd2Dsth_sigma1Bu_)),
+      Bd2Dsth_sigma1BuPartial_(nullptr),
+      Bd2Dsth_sigma2BuPartial_(),
+      pdf1BuPartial_Bd2Dsth_(),
+      pdf2BuPartial_Bd2Dsth_(),
       pdfBuPartial_Bd2Dsth_(),
       // -------------------- Mis-ID ------------------- //
       misId_Bd2Dsth_meanBu_(Params::Get().CreateFixed(

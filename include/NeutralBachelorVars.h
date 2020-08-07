@@ -128,14 +128,16 @@ class NeutralBachelorVars {
     return pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN_;
   }
   // -------------------- Bd2Dsth -------------------- //
-  RooAbsReal &Bd2Dsth_sigmaBu() { return *Bd2Dsth_sigmaBu_; }
-  RooGaussian &pdfBu_Bd2Dsth() { return pdfBu_Bd2Dsth_; }
-  RooAbsReal &Bd2Dsth_sigmaBuPartial() {
-    return *Bd2Dsth_sigmaBuPartial_;
-  }
-  RooGaussian &pdfBuPartial_Bd2Dsth() {
-    return pdfBuPartial_Bd2Dsth_;
-  }
+  RooAbsReal &Bd2Dsth_sigma1Bu() { return *Bd2Dsth_sigma1Bu_; }
+  RooFormulaVar &Bd2Dsth_sigma2Bu() { return Bd2Dsth_sigma2Bu_; }
+  RooCBShape &pdf1Bu_Bd2Dsth() { return pdf1Bu_Bd2Dsth_; }
+  RooCBShape &pdf2Bu_Bd2Dsth() { return pdf2Bu_Bd2Dsth_; }
+  RooAbsPdf &pdfBu_Bd2Dsth() { return *pdfBu_Bd2Dsth_; }
+  RooAbsReal &Bd2Dsth_sigma1BuPartial() { return *Bd2Dsth_sigma1BuPartial_; }
+  RooFormulaVar &Bd2Dsth_sigma2BuPartial() { return Bd2Dsth_sigma2BuPartial_; }
+  RooCBShape &pdf1BuPartial_Bd2Dsth() { return pdf1BuPartial_Bd2Dsth_; }
+  RooCBShape &pdf2BuPartial_Bd2Dsth() { return pdf2BuPartial_Bd2Dsth_; }
+  RooAddPdf &pdfBuPartial_Bd2Dsth() { return pdfBuPartial_Bd2Dsth_; }
   // -------------------- Mis-ID ------------------- //
   RooDstD0BG &pdfDelta_misId_Bd2Dsth() {
     return pdfDelta_misId_Bd2Dsth_;
@@ -633,10 +635,16 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_n1BuPartial_;
   RooCBShape pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN_;
   // -------------------- Bd2Dsth -------------------- //
-  std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBu_;
-  RooGaussian pdfBu_Bd2Dsth_;
-  std::shared_ptr<RooAbsReal> Bd2Dsth_sigmaBuPartial_;
-  RooGaussian pdfBuPartial_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> Bd2Dsth_sigma1Bu_;
+  RooFormulaVar Bd2Dsth_sigma2Bu_;
+  RooCBShape pdf1Bu_Bd2Dsth_;
+  RooCBShape pdf2Bu_Bd2Dsth_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bd2Dsth_;
+  std::shared_ptr<RooAbsReal> Bd2Dsth_sigma1BuPartial_;
+  RooFormulaVar Bd2Dsth_sigma2BuPartial_;
+  RooCBShape pdf1BuPartial_Bd2Dsth_;
+  RooCBShape pdf2BuPartial_Bd2Dsth_;
+  RooAddPdf pdfBuPartial_Bd2Dsth_;
   // -------------------- Mis-ID ------------------- //
   std::shared_ptr<RooRealVar> misId_Bd2Dsth_meanBu_;
   std::shared_ptr<RooRealVar> misId_Bd2Dsth_sigmaBu_;
