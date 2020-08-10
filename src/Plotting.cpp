@@ -413,25 +413,39 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
       EnumToLabel(charge) + "}}";
 
-
-  // labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
-  //                 "l");
-  // labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
-  // labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(), str_Bu2Dst0pi_D0gamma_WN.c_str(),
-  //                 "l");
-  // labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(), str_Bu2Dst0pi_D0pi0_WN.c_str(),
-  //                 "l");
-  // // labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_Bd2Dstpi.c_str(), "l");
-  // // labels.AddEntry(hist_Bu2Dst0rho.get(), str_Bu2Dst0rho_D0pi0.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_Bu2Dst0rho_D0gamma.c_str(), "l");
-  // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
-  //                 "l");
-  // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
-  // // labels.AddEntry(hist_MisRecK.get(), str_Bu2D0Kst.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_Bd2DstK.c_str(), "l");
-  // // labels.AddEntry(hist_Bu2Dst0Kst.get(), str_Bu2Dst0Kst_D0pi0.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_Bu2Dst0Kst_D0gamma.c_str(), "l");
+  if (neutral == Neutral::gamma) {
+    labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
+                    "l");
+  }
+  labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
+  labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(), str_Bu2Dst0pi_D0gamma_WN.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(), str_Bu2Dst0pi_D0pi0_WN.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2D0rho.get(), str_Bu2D0rho.c_str(), "l");
+  labels.AddEntry(hist_Bd2Dstpi.get(), str_Bd2Dstpi.c_str(), "l");
+  labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(), "l");
+  if (neutral == Neutral::gamma) {
+    labels.AddEntry(hist_Bu2Dst0rho_D0gamma.get(),
+                    str_Bu2Dst0rho_D0gamma.c_str(), "l");
+  }
+  labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+  labels.AddEntry(hist_Bu2Dst0K_D0gamma_WN.get(), str_Bu2Dst0K_D0gamma_WN.c_str(),
+                  "l");
+  labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(), str_Bu2Dst0K_D0pi0_WN.c_str(),
+                  "l");
+  if (bachelor == Bachelor::k) {
+    labels.AddEntry(hist_Bu2D0Kst.get(), str_Bu2D0Kst.c_str(), "l");
+    labels.AddEntry(hist_Bd2DstK.get(), str_Bd2DstK.c_str(), "l");
+    labels.AddEntry(hist_Bu2Dst0Kst_D0pi0.get(), str_Bu2Dst0Kst_D0pi0.c_str(),
+                    "l");
+    if (neutral == Neutral::gamma) {
+      labels.AddEntry(hist_Bu2Dst0Kst_D0gamma.get(),
+                      str_Bu2Dst0Kst_D0gamma.c_str(), "l");
+    }
+  }
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
