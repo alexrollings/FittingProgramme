@@ -661,26 +661,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", "@0+@1",
           RooArgSet(*Bu2Dst0hst_D0gamma_mean1Bu_,
                     *Bu2Dst0hst_D0gamma_meanOffset21Bu_)),
-      Bu2Dst0hst_D0gamma_meanOffset31Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0hst_D0gamma_meanOffset31Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
-          Sign::none)),
-      Bu2Dst0hst_D0gamma_mean3Bu_(
-          ("Bu2Dst0hst_D0gamma_mean3Bu_" +
-           ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "", "@0+@1",
-          RooArgSet(*Bu2Dst0hst_D0gamma_mean1Bu_,
-                    *Bu2Dst0hst_D0gamma_meanOffset31Bu_)),
       Bu2Dst0hst_D0gamma_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_KpiSigmaBu", uniqueId_, Neutral::gamma, 1.0, 0.05,
           Systematic::Bu2Dst0hst_D0gammaBuPdf, Sign::same)),
       Bu2Dst0hst_D0gamma_sigmaRatio21Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_sigmaRatio21Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
-          Sign::same)),
-      Bu2Dst0hst_D0gamma_sigmaRatio31Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0hst_D0gamma_sigmaRatio31Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
           Sign::same)),
       Bu2Dst0hst_D0gamma_a1Bu_(Params::Get().CreateFixed(
@@ -701,10 +686,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Sign::same)),
       Bu2Dst0hst_D0gamma_fracPdf1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
-          Sign::same)),
-      Bu2Dst0hst_D0gamma_fracPdfFlatBu_(Params::Get().CreateFixed(
-          "Bu2Dst0hst_D0gamma_fracPdfFlatBu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
           Sign::same)),
       Bu2Dst0hst_D0gamma_meanBuPartial_(Params::Get().CreateFixed(
