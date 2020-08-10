@@ -879,7 +879,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
                            Efficiency::mcEff),
           -5, 5)),
-      // 1, -5, 5)),
       // globalFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
       //     "globalFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
@@ -896,7 +895,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
                            Bachelor::pi, Efficiency::mcEff),
           -5, 5)),
-      // 1, -5, 5)),
       // globalFrac_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
       //     "globalFrac_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::gamma,
@@ -913,7 +911,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
                            Efficiency::mcEff),
           -5, 5)),
-      // 0.3, -5, 5)),
       // globalFrac_Bd2Dsth_(Params::Get().CreateFixed(
       //     "globalFrac_Bd2Dsth", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bd2Dstpi, Neutral::gamma, Bachelor::pi,
@@ -929,7 +926,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
                            Efficiency::mcEff),
           -5, 5)),
-      // 0.3, -5, 5)),
       // globalFrac_Bu2D0hst_(Params::Get().CreateFixed(
       //     "globalFrac_Bu2D0hst", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bu2D0rho, Neutral::gamma, Bachelor::pi,
@@ -945,7 +941,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
                            Efficiency::mcEff),
           -5, 5)),
-      // 0.3, -5, 5)),
       // globalFrac_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
       //     "globalFrac_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::gamma, Bachelor::pi,
