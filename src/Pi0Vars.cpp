@@ -207,15 +207,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_sigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
-      pdf1Delta_Bu2Dst0h_D0gamma_WN_(),
-      pdf2Delta_Bu2Dst0h_D0gamma_WN_(),
-      pdfPeakDelta_Bu2Dst0h_D0gamma_WN_(),
-      Bu2Dst0h_D0gamma_WN_thresholdDelta_(nullptr),
-      Bu2Dst0h_D0gamma_WN_aDelta_(nullptr),
-      Bu2Dst0h_D0gamma_WN_bDelta_(nullptr),
-      Bu2Dst0h_D0gamma_WN_cDelta_(nullptr),
-      pdfFlatDelta_Bu2Dst0h_D0gamma_WN_(),
-      Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_(nullptr),
       Bu2Dst0h_D0gamma_WN_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_meanDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
@@ -228,6 +219,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_n1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_n1Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::gammaWNDeltaPdf, Sign::same)),
+      Bu2Dst0h_D0gamma_WN_thresholdDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_aDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_bDelta_(nullptr),
+      Bu2Dst0h_D0gamma_WN_cDelta_(nullptr),
       pdfDelta_Bu2Dst0h_D0gamma_WN_(new RooCBShape(
           ("pdfDelta_Bu2Dst0h_D0gamma_WN_" +
            ComposeName(uniqueId_, Neutral::pi0))

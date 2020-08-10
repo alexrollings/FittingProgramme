@@ -601,19 +601,14 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf2BuPartial_;
   // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
-  RooCBShape pdf1Delta_Bu2Dst0h_D0gamma_WN_;
-  RooCBShape pdf2Delta_Bu2Dst0h_D0gamma_WN_;
-  RooAddPdf pdfPeakDelta_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_thresholdDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_aDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_bDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_cDelta_;
-  RooDstD0BG pdfFlatDelta_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_fracPdfPeakDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_meanDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_sigmaDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_a1Delta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_n1Delta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_thresholdDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_aDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_bDelta_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_cDelta_;
   std::unique_ptr<RooAbsPdf> pdfDelta_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_mean1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_meanOffset21Bu_;

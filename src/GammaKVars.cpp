@@ -700,19 +700,19 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                   *pdf2Bu_misId_Bu2Dst0h_D0pi0_WN_),
                         *misId_Bu2Dst0h_D0pi0_WN_fracPdf1Bu_)),
       misId_Bu2Dst0h_D0pi0_WN_meanBuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_WN_meanBu", uniqueId_, Neutral::gamma,
+          "misId_Bu2Dst0h_D0pi0_WN_meanBuPartial", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0pi_D0pi0_WN,
           Systematic::misIdPi0WNKPdfBuPartial, Sign::same)),
       misId_Bu2Dst0h_D0pi0_WN_sigmaBuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::gamma,
+          "misId_Bu2Dst0h_D0pi0_WN_sigmaBuPartial", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0pi_D0pi0_WN,
           Systematic::misIdPi0WNKPdfBuPartial, Sign::same)),
       misId_Bu2Dst0h_D0pi0_WN_a1BuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::gamma,
+          "misId_Bu2Dst0h_D0pi0_WN_a1BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0pi_D0pi0_WN,
           Systematic::misIdPi0WNKPdfBuPartial, Sign::same)),
       misId_Bu2Dst0h_D0pi0_WN_n1BuPartial_(Params::Get().CreateFixed(
-          "misId_Bu2Dst0h_D0pi0_WN_n1Bu", uniqueId_, Neutral::gamma,
+          "misId_Bu2Dst0h_D0pi0_WN_n1BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0pi_D0pi0_WN,
           Systematic::misIdPi0WNKPdfBuPartial, Sign::same)),
       pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN_(
