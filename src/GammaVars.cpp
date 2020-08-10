@@ -212,7 +212,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf1Bu_(nullptr),
       Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 5270, 5290)),
+          Mode::Bu2Dst0pi_D0pi0, 5280, 5310)),
       // Bu2Dst0h_D0pi0_meanOffset31BuPartial_(Params::Get().CreateFloating(
       //     "Bu2Dst0h_D0pi0_meanOffset31BuPartial", uniqueId_, Neutral::gamma,
       //     Mode::Bu2Dst0pi_D0pi0, 10, 50)),
@@ -229,12 +229,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_KpiSigmaBuPartial", uniqueId_, Neutral::gamma, 0.95,
           0.5, 1.5)),
-      Bu2Dst0h_D0pi0_sigmaRatio21BuPartial_(Params::Get().CreateFloating(
+      Bu2Dst0h_D0pi0_sigmaRatio21BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigmaRatio21BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 1, 2.5)),
-      Bu2Dst0h_D0pi0_sigmaRatio31BuPartial_(Params::Get().CreateFloating(
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_sigmaRatio31BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigmaRatio31BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 0.2, 1.5)),
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_a1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0BuPartialTails, Sign::same)),
