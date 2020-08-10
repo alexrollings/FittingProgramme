@@ -62,7 +62,7 @@ std::shared_ptr<RooRealVar> Make_N_Bu2Dst0pi_D0pi0_D02kpi(int uniqueId,
     case Neutral::pi0:
       return Params::Get().CreateFloating(
           "N_tot_Bu2Dst0h_D0pi0", uniqueId, Neutral::pi0, Bachelor::pi,
-          Daughters::kpi, 15000, -1000000, 1000000);
+          Daughters::kpi, 22000, -1000000, 1000000);
       break;
     case Neutral::gamma:
       return Params::Get().CreateFloating(

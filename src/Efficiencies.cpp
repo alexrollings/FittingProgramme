@@ -75,14 +75,14 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
           if (D02pik == false) {
             path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
-            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
+            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/";
           }
           break;
         case Bachelor::k:
           if (D02pik == false) {
             path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
-            path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
+            path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/";
           }
       }
       ttree = "BtoDstar0h3_h1h2gammaTuple";
@@ -90,18 +90,10 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == false) {
-            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
-          } else {
-            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
-          }
+          path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           break;
         case Bachelor::k:
-          if (D02pik == false) {
-            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
-          } else {
-            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
-          }
+          path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           break;
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
@@ -122,7 +114,7 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
       std::string fName;
       if (D02pik == false) {
         fName =
-            dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_Fit.root";
+            dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_MERemoved_Fit.root";
       } else {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       }
