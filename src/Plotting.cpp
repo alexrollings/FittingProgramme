@@ -239,39 +239,62 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
       EnumToLabel(charge) + "}}";
 
-  // auto hist_MisRecPi = std::make_unique<TH1D>(
-  //     ("hist_MisRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_MisRecPi", 1, 0, 1);
-  // hist_MisRecPi->SetLineColor(colorMap["MisRecPi"]);
-  // hist_MisRecPi->SetLineWidth(3);
-  // std::string str_Bu2D0rho =
-  //     " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
-  //     EnumToLabel(charge) + "}}";
-  // std::string str_Bd2Dstpi =
-  //     " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
-  //     oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" +
-  //     EnumToLabel(charge) + "}}";
-  // auto hist_PartRecPi = std::make_unique<TH1D>(
-  //     ("hist_PartRecPi" + ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_PartRecPi", 1, 0, 1);
-  // hist_PartRecPi->SetLineColor(colorMap["PartRecPi"]);
-  // hist_PartRecPi->SetLineWidth(3);
-  // std::string str_PartRecPi_D0pi0 =
-  //     " #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
-  //     EnumToLabel(charge) + "}}";
-  // std::string str_PartRecPi_D0gamma =
-  //     " #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
-  //     EnumToLabel(charge) + "}}";
+  auto hist_Bu2D0rho = std::make_unique<TH1D>(
+      ("hist_Bu2D0rho" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2D0rho", 1, 0, 1);
+  hist_Bu2D0rho->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"]);
+  hist_Bu2D0rho->SetLineWidth(3);
+  std::string str_Bu2D0rho =
+      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bd2Dstpi = std::make_unique<TH1D>(
+      ("hist_Bd2Dstpi" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bd2Dstpi", 1, 0, 1);
+  hist_Bd2Dstpi->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"]);
+  hist_Bd2Dstpi->SetLineWidth(3);
+  std::string str_Bd2Dstpi =
+      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0rho_D0pi0 = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0rho_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0rho_D0pi0", 1, 0, 1);
+  hist_Bu2Dst0rho_D0pi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"]);
+  hist_Bu2Dst0rho_D0pi0->SetLineWidth(3);
+  std::string str_Bu2Dst0rho_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0rho_D0gamma = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0rho_D0gamma" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0rho_D0gamma", 1, 0, 1);
+  hist_Bu2Dst0rho_D0gamma->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"]);
+  hist_Bu2Dst0rho_D0gamma->SetLineWidth(3);
+  std::string str_Bu2Dst0rho_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+      EnumToLabel(charge) + "}}";
 
   auto hist_Bu2Dst0K_D0gamma = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0gamma" +
@@ -333,39 +356,63 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
       EnumToLabel(charge) + "}}";
 
-  // auto hist_MisRecK = std::make_unique<TH1D>(
-  //     ("hist_MisRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_MisRecK", 1, 0, 1);
-  // hist_MisRecK->SetLineColor(colorMap["MisRecK"]);
-  // hist_MisRecK->SetLineWidth(3);
-  // std::string str_Bu2D0Kst =
-  //     " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
-  //     EnumToLabel(charge) + "}}";
-  // std::string str_Bd2DstK =
-  //     " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
-  //     oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
-  //     EnumToLabel(charge) + "}}";
-  // auto hist_PartRecK = std::make_unique<TH1D>(
-  //     ("hist_PartRecK" + ComposeName(id, neutral, bachelor, daughters, charge))
-  //         .c_str(),
-  //     "hist_PartRecK", 1, 0, 1);
-  // hist_PartRecK->SetLineColor(colorMap["PartRecK"]);
-  // hist_PartRecK->SetLineWidth(3);
-  // std::string str_PartRecK_D0pi0 =
-  //     " #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
-  //     EnumToLabel(charge) + "}}";
-  // std::string str_PartRecK_D0gamma =
-  //     " #font[12]{B^{" + EnumToLabel(charge) +
-  //     "}#rightarrow#font[132]{[}#font[132]{[}" +
-  //     EnumToLabel(daughters, charge) +
-  //     "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
-  //     EnumToLabel(charge) + "}}";
+  auto hist_Bu2D0Kst = std::make_unique<TH1D>(
+      ("hist_Bu2D0Kst" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2D0Kst", 1, 0, 1);
+  hist_Bu2D0Kst->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"]);
+  hist_Bu2D0Kst->SetLineWidth(3);
+  std::string str_Bu2D0Kst =
+      " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bd2DstK = std::make_unique<TH1D>(
+      ("hist_Bd2DstK" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bd2DstK", 1, 0, 1);
+  hist_Bd2DstK->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"]);
+  hist_Bd2DstK->SetLineWidth(3);
+  std::string str_Bd2DstK =
+      " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
+      oppCharge + "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0Kst_D0pi0 = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0Kst_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0Kst_D0pi0", 1, 0, 1);
+  hist_Bu2Dst0Kst_D0pi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0pi0"]);
+  hist_Bu2Dst0Kst_D0pi0->SetLineWidth(3);
+  std::string str_Bu2Dst0Kst_D0pi0 =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+
+  auto hist_Bu2Dst0Kst_D0gamma = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0Kst_D0gamma" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0Kst_D0gamma", 1, 0, 1);
+  hist_Bu2Dst0Kst_D0gamma->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0gamma"]);
+  hist_Bu2Dst0Kst_D0gamma->SetLineWidth(3);
+  std::string str_Bu2Dst0Kst_D0gamma =
+      " #font[12]{B^{" + EnumToLabel(charge) +
+      "}#rightarrow#font[132]{[}#font[132]{[}" +
+      EnumToLabel(daughters, charge) +
+      "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
+      EnumToLabel(charge) + "}}";
+
 
   // labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
   //                 "l");
@@ -376,15 +423,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   //                 "l");
   // // labels.AddEntry(hist_MisRecPi.get(), str_Bu2D0rho.c_str(), "l");
   // // labels.AddEntry(blankHist.get(), str_Bd2Dstpi.c_str(), "l");
-  // // labels.AddEntry(hist_PartRecPi.get(), str_PartRecPi_D0pi0.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_PartRecPi_D0gamma.c_str(), "l");
+  // // labels.AddEntry(hist_Bu2Dst0rho.get(), str_Bu2Dst0rho_D0pi0.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_Bu2Dst0rho_D0gamma.c_str(), "l");
   // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
   //                 "l");
   // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
   // // labels.AddEntry(hist_MisRecK.get(), str_Bu2D0Kst.c_str(), "l");
   // // labels.AddEntry(blankHist.get(), str_Bd2DstK.c_str(), "l");
-  // // labels.AddEntry(hist_PartRecK.get(), str_PartRecK_D0pi0.c_str(), "l");
-  // // labels.AddEntry(blankHist.get(), str_PartRecK_D0gamma.c_str(), "l");
+  // // labels.AddEntry(hist_Bu2Dst0Kst.get(), str_Bu2Dst0Kst_D0pi0.c_str(), "l");
+  // // labels.AddEntry(blankHist.get(), str_Bu2Dst0Kst_D0gamma.c_str(), "l");
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
