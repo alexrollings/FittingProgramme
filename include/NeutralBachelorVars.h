@@ -57,7 +57,7 @@ class NeutralBachelorVars {
     return *pdfBu_misId_Bu2Dst0h_D0gamma_;
   }
   // -------------------- Bu2Dst0h_D0pi0 -------------------- //
-  RooRealVar &Bu2Dst0h_D0pi0_sigmaDelta() { return *Bu2Dst0h_D0pi0_sigmaDelta_; }
+  RooAbsReal &Bu2Dst0h_D0pi0_sigmaDelta() { return *Bu2Dst0h_D0pi0_sigmaDelta_; }
   RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() { return pdfDelta_Bu2Dst0h_D0pi0_; }
   RooAbsReal &Bu2Dst0h_D0pi0_sigmaBu() { return *Bu2Dst0h_D0pi0_sigmaBu_; }
   RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() { return *pdfBu_Bu2Dst0h_D0pi0_; }

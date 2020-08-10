@@ -156,6 +156,43 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                                   pdf2Bu_misId_Bu2Dst0h_D0gamma_),
                         *misId_Bu2Dst0h_D0gamma_fracPdf1Bu_)),
       // -------------------- Bu2Dst0h_D0pi0 -------------------- //
+      Bu2Dst0h_D0pi0_sigmaDelta_(new RooFormulaVar(
+          ("Bu2Dst0h_D0pi0_sigmaDelta_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_sigmaDelta(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_KpiSigmaDelta()))),
+      pdf1Delta_Bu2Dst0h_D0pi0_(
+          ("pdf1Delta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_a1Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_n1Delta()),
+      pdf2Delta_Bu2Dst0h_D0pi0_(
+          ("pdf2Delta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_a2Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_n2Delta()),
+      pdfDelta_Bu2Dst0h_D0pi0_(
+          ("pdfDelta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
       Bu2Dst0h_D0pi0_sigmaBu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0pi0_(),
       pdf2Bu_Bu2Dst0h_D0pi0_(),

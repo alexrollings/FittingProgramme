@@ -159,9 +159,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_meanDelta_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_meanDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, 75, 95)),
-      Bu2Dst0h_D0pi0_sigmaDelta_(Params::Get().CreateFloating(
-          "Bu2Dst0h_D0pi0_sigmaDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 5, 15)),
+      Bu2Dst0h_D0pi0_KpiSigmaDelta_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0pi0_KpiSigmaDelta", uniqueId_, Neutral::gamma,
+          1, 0.9, 1.1)),
       Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
@@ -174,26 +174,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_n2Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n2Delta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
-      pdf1Delta_Bu2Dst0h_D0pi0_(
-          ("pdf1Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0pi0_meanDelta_,
-          *Bu2Dst0h_D0pi0_sigmaDelta_, *Bu2Dst0h_D0pi0_a1Delta_,
-          *Bu2Dst0h_D0pi0_n1Delta_),
-      pdf2Delta_Bu2Dst0h_D0pi0_(
-          ("pdf2Delta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0pi0_meanDelta_,
-          *Bu2Dst0h_D0pi0_sigmaDelta_, *Bu2Dst0h_D0pi0_a2Delta_,
-          *Bu2Dst0h_D0pi0_n2Delta_),
       Bu2Dst0h_D0pi0_fracPdf1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1Delta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaFrac, Sign::same)),
-      pdfDelta_Bu2Dst0h_D0pi0_(
-          ("pdfDelta_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
-              .c_str(),
-          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
-          *Bu2Dst0h_D0pi0_fracPdf1Delta_),
       Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
