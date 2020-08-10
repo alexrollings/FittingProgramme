@@ -75,7 +75,7 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
     bachStr = "K";
   }
   std::string fname =
-      "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/results/MC_" +
+      "/home/rollings/Bu2Dst0h_scripts/2d_fit/ana_pdfs/new/results/MC_" +
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
       bachStr + ".root";
   auto file = std::unique_ptr<TFile>(TFile::Open(fname.c_str()));

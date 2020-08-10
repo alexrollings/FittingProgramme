@@ -26,8 +26,8 @@ std::vector<std::string> SplitLine(std::string const &str) {
 double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                     Efficiency eff) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt/effs_" +
-      EnumToString(mode) + "_MultipleCands.txt";
+      "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt_new/effs_" +
+      EnumToString(mode) + ".txt";
   if (!fexists(txtFileName)) {
     std::cerr
         << "!!!!!!!!!!\nReturnMCEffs: " << txtFileName
