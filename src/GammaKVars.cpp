@@ -1152,14 +1152,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooArgSet(pdf1Delta_misId_Bu2Dst0hst_D0gamma_,
                     pdf2Delta_misId_Bu2Dst0hst_D0gamma_),
           *misId_Bu2Dst0h_D0gamma_fracPdf1Delta_),
-      // Share DstD0BG with Bd2Dsth misID shape
+      // Share DstD0BG with D0gamma WN misID shape
       pdfFlatDelta_misId_Bu2Dst0hst_D0gamma_(
           ("pdfFlatDelta_misId_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", Configuration::Get().deltaMass(), *misId_Bd2Dsth_thresholdDelta_,
-          *misId_Bd2Dsth_cDelta_, *misId_Bd2Dsth_aDelta_,
-          *misId_Bd2Dsth_bDelta_),
+          "", Configuration::Get().deltaMass(), *misId_Bu2Dst0h_D0gamma_WN_thresholdDelta_,
+          *misId_Bu2Dst0h_D0gamma_WN_cDelta_, *misId_Bu2Dst0h_D0gamma_WN_aDelta_,
+          *misId_Bu2Dst0h_D0gamma_WN_bDelta_),
       misId_Bu2Dst0hst_D0gamma_fracPdfPeakDelta_(Params::Get().CreateFixed(
           "misId_Bu2Dst0hst_D0gamma_fracPdfPeakDelta", uniqueId_,
           Neutral::gamma, Bachelor::k, Mode::Bu2Dst0rho_D0gamma,
