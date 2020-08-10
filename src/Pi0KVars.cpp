@@ -12,6 +12,41 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
     // -------------------- PDF SHAPES -------------------- //
     // -------------------- Bu2Dst0h_D0pi0 -------------------- //
     : uniqueId_(uniqueId),
+      Bu2Dst0h_D0pi0_sigmaDelta_(new RooFormulaVar(
+          ("Bu2Dst0h_D0pi0_sigmaDelta_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_sigmaDelta(),
+              NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                  .Bu2Dst0h_D0pi0_KpiSigmaDelta()))),
+      pdf1Delta_Bu2Dst0h_D0pi0_(
+          ("pdf1Delta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_a1Delta(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_n1Delta()),
+      pdf2Delta_Bu2Dst0h_D0pi0_(
+          ("pdf2Delta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_a2Delta(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_n2Delta()),
+      pdfDelta_Bu2Dst0h_D0pi0_(
+          ("pdfDelta_Bu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
       Bu2Dst0h_D0pi0_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigmaBu_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
