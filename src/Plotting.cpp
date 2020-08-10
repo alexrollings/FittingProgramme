@@ -167,7 +167,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
-  TLegend labels(0.14, 0.25, 0.28, 0.9);
+  TLegend labels(0.14, 0.3, 0.28, 0.9);
   labels.SetLineColor(kWhite);
 
   std::string oppCharge;
@@ -186,7 +186,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0pi_D0gamma", 1, 0, 1);
   hist_Bu2Dst0pi_D0gamma->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma"]);
-  hist_Bu2Dst0pi_D0gamma->SetLineWidth(3);
+  hist_Bu2Dst0pi_D0gamma->SetLineWidth(5);
   std::string str_Bu2Dst0pi_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -201,7 +201,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0pi_D0pi0", 1, 0, 1);
   hist_Bu2Dst0pi_D0pi0->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"]);
-  hist_Bu2Dst0pi_D0pi0->SetLineWidth(3);
+  hist_Bu2Dst0pi_D0pi0->SetLineWidth(5);
   std::string str_Bu2Dst0pi_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -216,13 +216,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0pi_D0gamma_WN", 1, 0, 1);
   hist_Bu2Dst0pi_D0gamma_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"]);
-  hist_Bu2Dst0pi_D0gamma_WN->SetLineWidth(3);
+  hist_Bu2Dst0pi_D0gamma_WN->SetLineWidth(5);
   std::string str_Bu2Dst0pi_D0gamma_WN =
-      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "#font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
-      EnumToLabel(charge) + "}}";
+      EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2Dst0pi_D0pi0_WN = std::make_unique<TH1D>(
       ("hist_Bu2Dst0pi_D0pi0_WN" +
@@ -231,13 +231,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0pi_D0pi0_WN", 1, 0, 1);
   hist_Bu2Dst0pi_D0pi0_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"]);
-  hist_Bu2Dst0pi_D0pi0_WN->SetLineWidth(3);
+  hist_Bu2Dst0pi_D0pi0_WN->SetLineWidth(5);
   std::string str_Bu2Dst0pi_D0pi0_WN =
-      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "#font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
-      EnumToLabel(charge) + "}}";
+      EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2D0rho = std::make_unique<TH1D>(
       ("hist_Bu2D0rho" +
@@ -246,7 +246,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2D0rho", 1, 0, 1);
   hist_Bu2D0rho->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"]);
-  hist_Bu2D0rho->SetLineWidth(3);
+  hist_Bu2D0rho->SetLineWidth(5);
   std::string str_Bu2D0rho =
       " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#rho^{" +
@@ -259,7 +259,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bd2Dstpi", 1, 0, 1);
   hist_Bd2Dstpi->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"]);
-  hist_Bd2Dstpi->SetLineWidth(3);
+  hist_Bd2Dstpi->SetLineWidth(5);
   std::string str_Bd2Dstpi =
       " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
@@ -273,7 +273,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0rho_D0pi0", 1, 0, 1);
   hist_Bu2Dst0rho_D0pi0->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"]);
-  hist_Bu2Dst0rho_D0pi0->SetLineWidth(3);
+  hist_Bu2Dst0rho_D0pi0->SetLineWidth(5);
   std::string str_Bu2Dst0rho_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -288,7 +288,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0rho_D0gamma", 1, 0, 1);
   hist_Bu2Dst0rho_D0gamma->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"]);
-  hist_Bu2Dst0rho_D0gamma->SetLineWidth(3);
+  hist_Bu2Dst0rho_D0gamma->SetLineWidth(5);
   std::string str_Bu2Dst0rho_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -303,7 +303,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0K_D0gamma", 1, 0, 1);
   hist_Bu2Dst0K_D0gamma->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"]);
-  hist_Bu2Dst0K_D0gamma->SetLineWidth(3);
+  hist_Bu2Dst0K_D0gamma->SetLineWidth(5);
   std::string str_Bu2Dst0K_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -318,7 +318,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0K_D0pi0", 1, 0, 1);
   hist_Bu2Dst0K_D0pi0->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0"]);
-  hist_Bu2Dst0K_D0pi0->SetLineWidth(3);
+  hist_Bu2Dst0K_D0pi0->SetLineWidth(5);
   std::string str_Bu2Dst0K_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -333,13 +333,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0K_D0gamma_WN", 1, 0, 1);
   hist_Bu2Dst0K_D0gamma_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"]);
-  hist_Bu2Dst0K_D0gamma_WN->SetLineWidth(3);
+  hist_Bu2Dst0K_D0gamma_WN->SetLineWidth(5);
   std::string str_Bu2Dst0K_D0gamma_WN =
-      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "#font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
-      EnumToLabel(charge) + "}}";
+      EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2Dst0K_D0pi0_WN = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0pi0_WN" +
@@ -348,13 +348,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0K_D0pi0_WN", 1, 0, 1);
   hist_Bu2Dst0K_D0pi0_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"]);
-  hist_Bu2Dst0K_D0pi0_WN->SetLineWidth(3);
+  hist_Bu2Dst0K_D0pi0_WN->SetLineWidth(5);
   std::string str_Bu2Dst0K_D0pi0_WN =
-      "Mis. Rec. #font[12]{B^{" + EnumToLabel(charge) +
+      "#font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
-      EnumToLabel(charge) + "}}";
+      EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2D0Kst = std::make_unique<TH1D>(
       ("hist_Bu2D0Kst" +
@@ -363,7 +363,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2D0Kst", 1, 0, 1);
   hist_Bu2D0Kst->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"]);
-  hist_Bu2D0Kst->SetLineWidth(3);
+  hist_Bu2D0Kst->SetLineWidth(5);
   std::string str_Bu2D0Kst =
       " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}K^{*" +
@@ -376,7 +376,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bd2DstK", 1, 0, 1);
   hist_Bd2DstK->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"]);
-  hist_Bd2DstK->SetLineWidth(3);
+  hist_Bd2DstK->SetLineWidth(5);
   std::string str_Bd2DstK =
       " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
       EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}#pi^{" +
@@ -390,7 +390,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0Kst_D0pi0", 1, 0, 1);
   hist_Bu2Dst0Kst_D0pi0->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0pi0"]);
-  hist_Bu2Dst0Kst_D0pi0->SetLineWidth(3);
+  hist_Bu2Dst0Kst_D0pi0->SetLineWidth(5);
   std::string str_Bu2Dst0Kst_D0pi0 =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -405,7 +405,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "hist_Bu2Dst0Kst_D0gamma", 1, 0, 1);
   hist_Bu2Dst0Kst_D0gamma->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0gamma"]);
-  hist_Bu2Dst0Kst_D0gamma->SetLineWidth(3);
+  hist_Bu2Dst0Kst_D0gamma->SetLineWidth(5);
   std::string str_Bu2Dst0Kst_D0gamma =
       " #font[12]{B^{" + EnumToLabel(charge) +
       "}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -413,38 +413,64 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
       EnumToLabel(charge) + "}}";
 
-  if (neutral == Neutral::gamma) {
-    labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(), str_Bu2Dst0pi_D0gamma.c_str(),
+  if (bachelor == Bachelor::pi) {
+    if (neutral == Neutral::gamma) {
+      labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(),
+                      str_Bu2Dst0pi_D0gamma.c_str(), "l");
+      // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+      //                 "l");
+    }
+    labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(),
                     "l");
-  }
-  labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(), "l");
-  labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(), str_Bu2Dst0pi_D0gamma_WN.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(), str_Bu2Dst0pi_D0pi0_WN.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2D0rho.get(), str_Bu2D0rho.c_str(), "l");
-  labels.AddEntry(hist_Bd2Dstpi.get(), str_Bd2Dstpi.c_str(), "l");
-  labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(), "l");
-  if (neutral == Neutral::gamma) {
-    labels.AddEntry(hist_Bu2Dst0rho_D0gamma.get(),
-                    str_Bu2Dst0rho_D0gamma.c_str(), "l");
-  }
-  labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
-  labels.AddEntry(hist_Bu2Dst0K_D0gamma_WN.get(), str_Bu2Dst0K_D0gamma_WN.c_str(),
-                  "l");
-  labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(), str_Bu2Dst0K_D0pi0_WN.c_str(),
-                  "l");
-  if (bachelor == Bachelor::k) {
+    // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+    labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(),
+                    str_Bu2Dst0pi_D0gamma_WN.c_str(), "l");
+    // labels.AddEntry(hist_Bu2Dst0K_D0gamma_WN.get(),
+    //                 str_Bu2Dst0K_D0gamma_WN.c_str(), "l");
+    labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(),
+                    str_Bu2Dst0pi_D0pi0_WN.c_str(), "l");
+    // labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(), str_Bu2Dst0K_D0pi0_WN.c_str(),
+    //                 "l");
+    labels.AddEntry(hist_Bu2D0rho.get(), str_Bu2D0rho.c_str(), "l");
+    labels.AddEntry(hist_Bd2Dstpi.get(), str_Bd2Dstpi.c_str(), "l");
+    if (neutral == Neutral::gamma) {
+      labels.AddEntry(hist_Bu2Dst0rho_D0gamma.get(),
+                      str_Bu2Dst0rho_D0gamma.c_str(), "l");
+    }
+    labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(),
+                    "l");
+  } else {
+    if (neutral == Neutral::gamma) {
+      labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+                      "l");
+      // labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(),
+      //                 str_Bu2Dst0pi_D0gamma.c_str(), "l");
+    }
+    labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+    // labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(),
+    //                 "l");
+    labels.AddEntry(hist_Bu2Dst0K_D0gamma_WN.get(),
+                    str_Bu2Dst0K_D0gamma_WN.c_str(), "l");
+    // labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(),
+    //                 str_Bu2Dst0pi_D0gamma_WN.c_str(), "l");
+    labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(), str_Bu2Dst0K_D0pi0_WN.c_str(),
+                    "l");
+    // labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(),
+    //                 str_Bu2Dst0pi_D0pi0_WN.c_str(), "l");
     labels.AddEntry(hist_Bu2D0Kst.get(), str_Bu2D0Kst.c_str(), "l");
+    // labels.AddEntry(hist_Bu2D0rho.get(), str_Bu2D0rho.c_str(), "l");
     labels.AddEntry(hist_Bd2DstK.get(), str_Bd2DstK.c_str(), "l");
-    labels.AddEntry(hist_Bu2Dst0Kst_D0pi0.get(), str_Bu2Dst0Kst_D0pi0.c_str(),
-                    "l");
+    // labels.AddEntry(hist_Bd2Dstpi.get(), str_Bd2Dstpi.c_str(), "l");
     if (neutral == Neutral::gamma) {
       labels.AddEntry(hist_Bu2Dst0Kst_D0gamma.get(),
                       str_Bu2Dst0Kst_D0gamma.c_str(), "l");
+      // labels.AddEntry(hist_Bu2Dst0rho_D0gamma.get(),
+      //                 str_Bu2Dst0rho_D0gamma.c_str(), "l");
     }
+    labels.AddEntry(hist_Bu2Dst0Kst_D0pi0.get(), str_Bu2Dst0Kst_D0pi0.c_str(),
+                    "l");
+    // labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(),
+    //                 "l");
   }
 
   // Loop over entries in legend and set size
@@ -906,9 +932,9 @@ void PlotComponent(
   }
   legend.Draw("same");
 
-  // if (mass == Mass::buDelta && daughters == Daughters::kpi) {
-  //   labels.Draw("same");
-  // }
+  if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+    labels.Draw("same");
+  }
   // Stores max values for kpi, to set in pik
   if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
     yMaxMap[neutral][mass] = frame->GetMaximum();
