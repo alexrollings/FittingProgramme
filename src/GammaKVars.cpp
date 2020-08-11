@@ -1187,14 +1187,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "misId_Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0rho_D0gamma,
           Systematic::misIdBu2Dst0hst_D0gammaKPdfBu, Sign::same)),
-      pdfBu_misId_Bu2Dst0hst_D0gamma_(
+      pdfBu_misId_Bu2Dst0hst_D0gamma_(new RooAddPdf(
           ("pdfBu_misId_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "",
           RooArgSet(pdf1Bu_misId_Bu2Dst0hst_D0gamma_,
                     pdf2Bu_misId_Bu2Dst0hst_D0gamma_),
-          *misId_Bu2Dst0hst_D0gamma_fracPdf1Bu_),
+          *misId_Bu2Dst0hst_D0gamma_fracPdf1Bu_)),
       // For peaking delta PDF, fix all params except mean and sigma from mis ID
       // signal shape
       misId_Bu2Dst0hst_D0gamma_meanDelta_(Params::Get().CreateFixed(
@@ -1241,14 +1241,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           "misId_Bu2Dst0hst_D0gamma_fracPdfPeakDelta", uniqueId_,
           Neutral::gamma, Bachelor::k, Mode::Bu2Dst0rho_D0gamma,
           Systematic::misIdBu2Dst0hst_D0gammaKPdfDelta, Sign::same)),
-      pdfDelta_misId_Bu2Dst0hst_D0gamma_(
+      pdfDelta_misId_Bu2Dst0hst_D0gamma_(new RooAddPdf(
           ("pdfDelta_misId_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "",
           RooArgSet(pdfPeakDelta_misId_Bu2Dst0hst_D0gamma_,
                     pdfFlatDelta_misId_Bu2Dst0hst_D0gamma_),
-          *misId_Bu2Dst0hst_D0gamma_fracPdfPeakDelta_),
+          *misId_Bu2Dst0hst_D0gamma_fracPdfPeakDelta_)),
       misId_Bu2Dst0hst_D0gamma_meanBuPartial_(Params::Get().CreateFixed(
           "misId_Bu2Dst0hst_D0gamma_meanBuPartial", uniqueId_, Neutral::gamma,
           Bachelor::k, Mode::Bu2Dst0rho_D0gamma,
