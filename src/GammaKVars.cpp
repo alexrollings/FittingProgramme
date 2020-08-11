@@ -12,6 +12,46 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
     // -------------------- PDF SHAPES -------------------- //
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : uniqueId_(uniqueId),
+      Bu2Dst0h_D0gamma_sigmaDelta_(new RooFormulaVar(
+          ("Bu2Dst0h_D0gamma_sigmaDelta_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(
+              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_sigmaDelta(),
+              NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                  .Bu2Dst0h_D0gamma_KpiSigmaDelta()))),
+      pdf1Delta_Bu2Dst0h_D0gamma_(
+          ("pdf1Delta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0gamma_a1Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n1Delta()),
+      pdf2Delta_Bu2Dst0h_D0gamma_(
+          ("pdf2Delta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0gamma_a2Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n2Delta()),
+      pdfDelta_Bu2Dst0h_D0gamma_(
+          ("pdfDelta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_fracPdf1Delta()),
       Bu2Dst0h_D0gamma_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_D0gamma_sigmaBu_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))

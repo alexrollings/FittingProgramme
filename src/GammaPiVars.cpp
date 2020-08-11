@@ -12,6 +12,39 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
     // -------------------- PDF SHAPES -------------------- //
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
     : uniqueId_(uniqueId),
+      Bu2Dst0h_D0gamma_sigmaDelta_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0gamma_sigmaDelta", uniqueId_, Neutral::gamma,
+          Bachelor::pi, Mode::Bu2Dst0pi_D0gamma, 2, 15)),
+      pdf1Delta_Bu2Dst0h_D0gamma_(
+          ("pdf1Delta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0gamma_a1Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n1Delta()),
+      pdf2Delta_Bu2Dst0h_D0gamma_(
+          ("pdf2Delta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0gamma_a2Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n2Delta()),
+      pdfDelta_Bu2Dst0h_D0gamma_(
+          ("pdfDelta_Bu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_fracPdf1Delta()),
       Bu2Dst0h_D0gamma_sigmaBu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0gamma_sigmaBu", uniqueId_, Neutral::gamma, Bachelor::pi,
           Mode::Bu2Dst0pi_D0gamma, 15, 25)),

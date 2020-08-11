@@ -56,7 +56,7 @@ class PdfBase {
   virtual RooFormulaVar &N_misId_Bu2D0h() const = 0;
   virtual RooFormulaVar &N_misId_PartRec() const = 0;
 
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma_WN() const = 0;
   virtual RooDstD0BG &pdfDelta_Bu2Dst0h_D0pi0_WN() const = 0;
@@ -298,8 +298,9 @@ class Pdf : public PdfBase {
         .N_misId_PartRec();
   }
 
-  virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2Dst0h_D0gamma();
+  virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .pdfDelta_Bu2Dst0h_D0gamma();
   }
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -1006,8 +1007,9 @@ template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
           Charge _charge>
 void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   if (_neutral == Neutral::gamma) {
-    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                     .pdfDelta_Bu2Dst0h_D0gamma());
+    PdfBase::functionsDelta_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdfDelta_Bu2Dst0h_D0gamma());
     PdfBase::yieldsDelta_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
