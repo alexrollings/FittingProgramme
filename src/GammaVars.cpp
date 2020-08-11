@@ -948,24 +948,42 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::gamma, Bachelor::pi,
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::same)),
-      bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
-          "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
+      // bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+      //     "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
+      //     ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
+      //                  Efficiency::mcEff) /
+      //         ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
+      //                      Bachelor::pi, Efficiency::mcEff) *
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+      //     -5, 5)),
+      // // Fix w.r.t. gamma mode
+      // bkgFracFAV_Bu2Dst0hst_D0pi0_(new RooFormulaVar(
+      //     ("bkgFracFAV_Bu2Dst0hst_D0pi0_" +
+      //      ComposeName(uniqueId_, Neutral::gamma))
+      //         .c_str(),
+      //     "", "@0/@1*@2/@3",
+      //     RooArgList(*mcEff_Bu2Dst0hst_D0pi0_, *mcEff_Bu2Dst0hst_D0gamma_,
+      //                GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+      //                GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma()))),
+      bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
+          "bkgFracFAV_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma,
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::gamma, Bachelor::pi,
                        Efficiency::mcEff) /
-              ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
-                           Bachelor::pi, Efficiency::mcEff) *
+              ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+                           Efficiency::mcEff) *
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -5, 5)),
       // Fix w.r.t. π0 mode
-      bkgFracFAV_Bu2Dst0hst_D0pi0_(new RooFormulaVar(
-          ("bkgFracFAV_Bu2Dst0hst_D0pi0_" +
+      bkgFracFAV_Bu2Dst0hst_D0gamma_(new RooFormulaVar(
+          ("bkgFracFAV_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "", "@0/@1*@2/@3",
-          RooArgList(*mcEff_Bu2Dst0hst_D0pi0_, *mcEff_Bu2Dst0hst_D0gamma_,
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma()))),
+          RooArgList(*mcEff_Bu2Dst0hst_D0gamma_, *mcEff_Bu2Dst0hst_D0pi0_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
