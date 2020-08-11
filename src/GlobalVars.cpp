@@ -74,6 +74,9 @@ GlobalVars::GlobalVars(int uniqueId)
       kBF_Bd2DstK_(Params::Get().CreateFixed("kBF_Bd2DstK", uniqueId_, 2.12e-04,
                                              0.15e-04, Systematic::kBF_Bd2DstK,
                                              Sign::none)),
+      kBF_Dst2D0pi_(Params::Get().CreateFixed("kBF_Dst2D0pi", uniqueId_, 0.677,
+                                             0.005, Systematic::kBF_Dst2D0pi,
+                                             Sign::none)),
       kBF_Bu2D0rho_(Params::Get().CreateFixed(
           "kBF_Bu2D0rho", uniqueId_, 1.34e-02, 0.18e-02,
           Systematic::kBF_Bu2D0rho, Sign::none)),

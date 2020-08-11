@@ -162,6 +162,7 @@ enum class Systematic {
   kBF_D02pik,
   kBF_Bd2Dstpi,
   kBF_Bd2DstK,
+  kBF_Dst2D0pi,
   kBF_Bu2D0rho,
   kBF_Bu2D0Kst,
   kBF_Bu2Dst0rho,
