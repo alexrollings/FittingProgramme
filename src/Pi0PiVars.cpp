@@ -1033,6 +1033,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
   R_ADS_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0pi0", uniqueId_,
                                    Neutral::pi0, Bachelor::k, 1, -5, 5));
+  R_ADS_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0gamma", uniqueId_,
+                                   Neutral::gamma, Bachelor::k, 1, -5, 5));
 
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0gamma;
