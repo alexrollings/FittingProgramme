@@ -493,22 +493,24 @@ class NeutralVars {
   double &fracPartRec() { return fracPartRec_; }
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
-  // -------------------- Global Fractions: WN -------------------- //
-  RooRealVar &globalFrac_Bu2Dst0h_D0pi0_WN() {
-    return *globalFrac_Bu2Dst0h_D0pi0_WN_;
+  // -------------------- Bkg Fractions -------------------- //
+  RooRealVar &bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
+    return *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   }
-  RooRealVar &globalFrac_Bu2Dst0h_D0gamma_WN() {
-    return *globalFrac_Bu2Dst0h_D0gamma_WN_;
+  RooRealVar &bkgFracGlobal_Bu2Dst0h_D0gamma_WN() {
+    return *bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   }
-  RooRealVar &globalFrac_Bd2Dsth() {
-    return *globalFrac_Bd2Dsth_;
+  RooRealVar &bkgFracFAV_Bd2Dsth() {
+    return *bkgFracFAV_Bd2Dsth_;
   }
-  RooRealVar &globalFrac_Bu2D0hst() {
-    return *globalFrac_Bu2D0hst_;
+  RooRealVar &bkgFracFAV_Bu2D0hst() {
+    return *bkgFracFAV_Bu2D0hst_;
   }
-  // For Bu2Dst0hst_D0gamma, fix w.r.t. Bu2Dst0hst_D0pi0
-  RooRealVar &globalFrac_Bu2Dst0hst_D0pi0() {
-    return *globalFrac_Bu2Dst0hst_D0pi0_;
+  RooRealVar &bkgFracFAV_Bu2Dst0hst_D0pi0() {
+    return *bkgFracFAV_Bu2Dst0hst_D0pi0_;
+  }
+  RooRealVar &bkgFracFAV_Bu2Dst0hst_D0gamma() {
+    return *bkgFracFAV_Bu2Dst0hst_D0gamma_;
   }
 
   // -------------------- CP Observables -------------------- //
@@ -813,11 +815,12 @@ class NeutralVars {
   double fracPartRec_;
   double initYieldFAVPartRec_;
   // -------------------- Global Fractions: WN -------------------- //
-  std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0h_D0pi0_WN_;
-  std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooRealVar> globalFrac_Bd2Dsth_;
-  std::shared_ptr<RooRealVar> globalFrac_Bu2D0hst_;
-  std::shared_ptr<RooRealVar> globalFrac_Bu2Dst0hst_D0pi0_;
+  std::shared_ptr<RooRealVar> bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> bkgFracFAV_Bd2Dsth_;
+  std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
+  std::shared_ptr<RooRealVar> bkgFracFAV_Bu2Dst0hst_D0pi0_;
+  std::shared_ptr<RooRealVar> bkgFracFAV_Bu2Dst0hst_D0gamma_;
   // -------------------- CP Observables -------------------- //
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;

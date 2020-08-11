@@ -19,7 +19,7 @@ NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(int uniqueId) {
 }
 
 template <Neutral neutral, Bachelor bachelor, Daughters daughters>
-RooFormulaVar *Make_N_GlobalFrac(int uniqueId, const char *nameStr,
+RooFormulaVar *Make_N_BkgFrac(int uniqueId, const char *nameStr,
                                  RooAbsReal &N_sig, RooAbsReal &globalFrac) {
   return new RooFormulaVar(
       (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
@@ -189,10 +189,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Bu2Dst0h_D0pi0_(Make_N_Bu2Dst0pi_D0pi0_D02kpi<_neutral>(
           uniqueId, *N_tot_Bu2Dst0h_D0gamma_)),
       N_tot_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::pi,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::pi,
                                                  Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(nullptr),
       N_tot_Bu2D0hst_(nullptr),
       N_tot_Bu2Dst0hst_D0pi0_(nullptr),
@@ -224,23 +224,23 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Bs2D0Kpi_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_Frac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_", *N_tot_Bu2Dst0hst_D0pi0_,
@@ -264,18 +264,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
                     .getVal(),
             -1000000, 1000000));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
   }
 }
 
@@ -370,10 +370,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       //         .N_tot_Bu2Dst0h_D0pi0_WN(),
       //     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
       //         .R_ADS_Bu2Dst0h_D0pi0_WN())),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::pi,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::pi,
                                                  Daughters::pik>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(Make_N_tot_pik<_neutral, Bachelor::pi>(
           uniqueId, "N_tot_Bd2Dsth_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -501,10 +501,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .R_ADS_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pik>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pik>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bu2Dst0hst_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::pi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
@@ -626,10 +626,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
               GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
           -1000000, 1000000)),
       N_tot_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::pi,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::pi,
                                                  Daughters::kk>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(nullptr),
       N_tot_Bu2D0hst_(nullptr),
       N_tot_Bu2Dst0hst_D0pi0_(nullptr),
@@ -672,23 +672,23 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           -1000000, 1000000));
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_Frac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_", *N_tot_Bu2Dst0hst_D0pi0_,
@@ -731,18 +731,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
                 GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
             -1000000, 1000000));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
   }
 }
 
@@ -847,10 +847,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
               GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
               GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
           -1000000, 1000000)),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::pi,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::pi,
                                                  Daughters::pipi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(nullptr),
       N_tot_Bu2D0hst_(nullptr),
       N_tot_Bu2Dst0hst_D0pi0_(nullptr),
@@ -896,23 +896,23 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
           -1000000, 1000000));
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_Frac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_", *N_tot_Bu2Dst0hst_D0pi0_,
@@ -955,18 +955,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                 GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
             -1000000, 1000000));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bd2Dsth()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2D0hst()));
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::pi, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0hst_D0pi0()));
+                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
   }
 }
 
@@ -1082,10 +1082,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       //         .mcEff_Bu2Dst0h_D0pi0_WN(),
       //     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
       //         .mcEff_Bu2Dst0h_D0pi0_WN())),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::k,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::k,
                                                  Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bd2Dsth_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1160,10 +1160,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .mcEff_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::k, Daughters::kpi>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
@@ -1326,10 +1326,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       //         .N_tot_Bu2Dst0h_D0pi0_WN(),
       //     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
       //         .R_ADS_Bu2Dst0h_D0pi0_WN())),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::k,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::k,
                                                  Daughters::pik>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(Make_N_tot_pik<_neutral, Bachelor::k>(
           uniqueId, "N_tot_Bd2Dsth_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
@@ -1462,10 +1462,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .R_ADS_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::k, Daughters::pik>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bu2Dst0h_D0gamma_FAVasSUP_ = std::unique_ptr<RooFormulaVar>(
         Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_FAVasSUP_",
@@ -1642,10 +1642,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       //         .N_tot_Bu2Dst0h_D0pi0_WN(),
       //     NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
       //         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN())),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::k,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::k,
                                                  Daughters::kk>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
           uniqueId, "N_tot_Bd2Dsth_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1719,10 +1719,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             NeutralDaughtersVars<_neutral, Daughters::kk>::Get(uniqueId)
                 .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::k, Daughters::kk>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bu2Dst0hst_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_k_CP<_neutral, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
@@ -1900,10 +1900,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       //         .N_tot_Bu2Dst0h_D0pi0_WN(),
       //     NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
       //         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN())),
-      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_GlobalFrac<_neutral, Bachelor::k,
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_BkgFrac<_neutral, Bachelor::k,
                                                  Daughters::kk>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-          NeutralVars<_neutral>::Get(uniqueId).globalFrac_Bu2Dst0h_D0pi0_WN())),
+          NeutralVars<_neutral>::Get(uniqueId).bkgFracGlobal_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bd2Dsth_(Make_N_tot_k_CP<_neutral, Daughters::pipi>(
           uniqueId, "N_tot_Bd2Dsth_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1977,10 +1977,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
             NeutralDaughtersVars<_neutral, Daughters::pipi>::Get(uniqueId)
                 .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_GlobalFrac<_neutral, Bachelor::k, Daughters::pipi>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId)
-                .globalFrac_Bu2Dst0h_D0gamma_WN()));
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_CP<_neutral, Daughters::pipi>(
             uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
