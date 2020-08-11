@@ -647,11 +647,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0rho_D0pi0, Systematic::Bu2Dst0hst_D0pi0DeltaPdf,
           Sign::same)),
       Bu2Dst0hst_D0pi0_pdfDelta_(("Bu2Dst0hst_D0pi0_pdfDelta_" +
-                                  ComposeName(uniqueId_, Neutral::gamma))
-                                     .c_str(),
-                                 "", Configuration::Get().deltaMass(),
-                                 *Bu2Dst0hst_D0pi0_meanDelta_,
-                                 *Bu2Dst0hst_D0pi0_sigmaDelta_),
+                                    ComposeName(uniqueId_, Neutral::gamma))
+                                       .c_str(),
+                                   "", Configuration::Get().deltaMass(),
+                                   *Bu2Dst0hst_D0pi0_meanDelta_,
+                                   *Bu2Dst0hst_D0pi0_sigmaDelta_),
       Bu2Dst0hst_D0pi0_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0pi0_meanBu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0pi0, Systematic::Bu2Dst0hst_D0pi0BuPdf,

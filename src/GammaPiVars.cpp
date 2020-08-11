@@ -940,13 +940,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0hst_D0gamma_a2Bu(),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0hst_D0gamma_n2Bu()),
-      pdfBu_Bu2Dst0hst_D0gamma_(
+      pdfBu_Bu2Dst0hst_D0gamma_(new RooAddPdf(
           ("pdfBu_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", RooArgSet(pdf1Bu_Bu2Dst0hst_D0gamma_, pdf2Bu_Bu2Dst0hst_D0gamma_),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bu2Dst0hst_D0gamma_fracPdf1Bu()),
+              .Bu2Dst0hst_D0gamma_fracPdf1Bu())),
       Bu2Dst0hst_D0gamma_sigmaBuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_sigmaBuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi, Mode::Bu2Dst0rho_D0gamma,
