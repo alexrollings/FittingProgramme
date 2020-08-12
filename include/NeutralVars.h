@@ -819,8 +819,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bd2Dsth_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
-  std::shared_ptr<RooRealVar> mcEff_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> mcEff_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
   // -------------------- CP Observables -------------------- //

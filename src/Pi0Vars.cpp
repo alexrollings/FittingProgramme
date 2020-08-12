@@ -568,21 +568,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
       //  GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()),
       //     0.0, Systematic::NA, Sign::same)),
-      //     MC effs to calculate gamma part reco as frac of π0 in FAV mode
-      mcEff_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-          "mcEff_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0,
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::pi,
-                       Efficiency::mcEff),
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::pi,
-                       Efficiency::mcEffErr),
-          Systematic::mcEffs, Sign::same)),
-      mcEff_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-          "mcEff_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0,
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
-                       Efficiency::mcEff),
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
-                       Efficiency::mcEffErr),
-          Systematic::mcEffs, Sign::same)),
       bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0,
           ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
@@ -592,15 +577,17 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -5, 5)),
-      // Fix w.r.t. π0 mode
-      bkgFracFAV_Bu2Dst0hst_D0gamma_(new RooFormulaVar(
-          ("bkgFracFAV_Bu2Dst0hst_D0gamma_" +
-           ComposeName(uniqueId_, Neutral::pi0))
-              .c_str(),
-          "", "@0/@1*@2/@3",
-          RooArgList(*mcEff_Bu2Dst0hst_D0gamma_, *mcEff_Bu2Dst0hst_D0pi0_,
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))),
+      // Don't use: fix yield w.r.t. π0 mode in NBDVars
+      bkgFracFAV_Bu2Dst0hst_D0gamma_(nullptr),
+      // bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+      //     "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0,
+      //     ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::pi,
+      //                  Efficiency::mcEff) /
+      //         ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::pi0, Bachelor::pi,
+      //                      Efficiency::mcEff) *
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+      //     -5, 5)),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),

@@ -242,10 +242,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId)
                 .bkgFracFAV_Bu2Dst0hst_D0gamma()));
     N_tot_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
-            uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId)
-                .bkgFracFAV_Bu2Dst0hst_D0pi0()));
+        Make_N_Frac<_neutral, Bachelor::pi, Daughters::kpi>(
+            uniqueId, "N_tot_Bu2Dst0hst_D0pi0_", *N_tot_Bu2Dst0hst_D0gamma_,
+            GlobalVars::Get(uniqueId).kBF_Dst02D0pi0(),
+            GlobalVars::Get(uniqueId).kBF_Dst02D0gamma(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0hst_D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0hst_D0gamma()));
   } else {
     N_tot_Bu2Dst0h_D0gamma_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -275,10 +279,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId)
                 .bkgFracFAV_Bu2Dst0hst_D0pi0()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
-            uniqueId, "N_tot_Bu2Dst0hst_D0gamma_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralVars<_neutral>::Get(uniqueId)
-                .bkgFracFAV_Bu2Dst0hst_D0gamma()));
+        Make_N_Frac<_neutral, Bachelor::pi, Daughters::kpi>(
+            uniqueId, "N_tot_Bu2Dst0hst_D0gamma_", *N_tot_Bu2Dst0hst_D0pi0_,
+            GlobalVars::Get(uniqueId).kBF_Dst02D0gamma(),
+            GlobalVars::Get(uniqueId).kBF_Dst02D0pi0(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0hst_D0gamma(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .mcEff_Bu2Dst0hst_D0pi0()));
   }
 }
 
