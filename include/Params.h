@@ -90,6 +90,17 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Bachelor bachelor, double mean,
+                                          double std, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(bachelor), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, bachelor);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Neutral neutral, Bachelor bachelor,
                                           double mean, double std,
                                           Systematic systematic, Sign sign) {
@@ -203,6 +214,17 @@ class Params {
         std::make_tuple(name, std::to_string(uniqueId), EnumToString(bachelor),
                         EnumToString(charge), "");
     auto var_name = name + "_" + ComposeName(uniqueId, bachelor, charge);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
+                                             int uniqueId, Bachelor bachelor,
+                                             double start, double min_value,
+                                             double max_value) {
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(bachelor), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, bachelor);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
