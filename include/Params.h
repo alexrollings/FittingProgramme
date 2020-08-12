@@ -102,14 +102,13 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
-                                          Neutral neutral, Daughters daughters,
-                                          double mean, double std,
-                                          Systematic systematic, Sign sign) {
+                                          Daughters daughters, double mean,
+                                          double std, Systematic systematic,
+                                          Sign sign) {
     // Add daughters daughter charge as empty strings: , "", "", ""
-    auto key =
-        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
-                        EnumToString(daughters), "");
-    auto var_name = name + "_" + ComposeName(uniqueId, neutral, daughters);
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(daughters), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, daughters);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
@@ -185,14 +184,12 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
-                                             int uniqueId, Neutral neutral,
-                                             Daughters daughters, double start,
-                                             double min_value,
+                                             int uniqueId, Daughters daughters,
+                                             double start, double min_value,
                                              double max_value) {
-    auto key =
-        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
-                        EnumToString(daughters), "");
-    auto var_name = name + "_" + ComposeName(uniqueId, neutral, daughters);
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(daughters), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, daughters);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }

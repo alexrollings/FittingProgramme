@@ -2,8 +2,8 @@
 #include "Configuration.h"
 #include "NeutralBachelorChargeVars.h"
 #include "NeutralBachelorVars.h"
-#include "NeutralDaughtersVars.h"
 #include "NeutralVars.h"
+#include "DaughtersVars.h"
 #include "Params.h"
 #include "RooUnblindUniform.h"
 // Templated classes/functions mean that the compiler will automatically create
