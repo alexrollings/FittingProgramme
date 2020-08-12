@@ -1,5 +1,4 @@
 #pragma once
-#include "BachelorDaughtersVars.h"
 #include "Configuration.h"
 #include "NeutralBachelorChargeVars.h"
 #include "NeutralBachelorVars.h"
@@ -53,14 +52,21 @@ RooFormulaVar *Make_N_tot_FAVasSUP(int uniqueId, const char *name,
 template <Neutral neutral, Bachelor bachelor, Daughters daughters>
 RooFormulaVar *Make_N_tot_Bs_CP(int uniqueId, const char *name,
                                 RooAbsReal &N_tot_Bs_pik) {
-  return new RooFormulaVar(
-      (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(), "",
-      "@0*(@1/@2)",
-      RooArgSet(
-          N_tot_Bs_pik,
-          BachelorDaughtersVars<Bachelor::pi, daughters>::Get(uniqueId).kBR(),
-          BachelorDaughtersVars<Bachelor::pi, Daughters::kpi>::Get(uniqueId)
-              .kBR()));
+  if (daughters == Daughters::kk) {
+    return new RooFormulaVar(
+        (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
+        "", "@0*(@1/@2)",
+        RooArgSet(N_tot_Bs_pik, GlobalVars::Get(uniqueId).kBF_D02kk(),
+                  GlobalVars::Get(uniqueId).kBF_D02kpi()));
+  } else if (daughters == Daughters::pipi) {
+    return new RooFormulaVar(
+        (name + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
+        "", "@0*(@1/@2)",
+        RooArgSet(N_tot_Bs_pik, GlobalVars::Get(uniqueId).kBF_D02pipi(),
+                  GlobalVars::Get(uniqueId).kBF_D02kpi()));
+  } else {
+    throw std::runtime_error("Make_N_tot_Bs_CP only for KK and ππ daughters");
+  }
 }
 
 // Only for pik
@@ -116,9 +122,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -129,9 +132,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -144,9 +144,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -162,9 +159,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -175,9 +169,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -190,9 +181,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -209,9 +197,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -222,9 +207,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -237,9 +219,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi,
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -255,9 +234,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -268,9 +244,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -283,9 +256,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -301,9 +271,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -314,9 +281,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -329,9 +293,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -347,9 +308,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -360,9 +318,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -375,9 +330,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -393,9 +345,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -406,9 +355,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -421,9 +367,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -439,9 +382,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
-  std::shared_ptr<RooRealVar> A_MisRec_;
-  std::shared_ptr<RooRealVar> A_Bu2D0h_;
-  std::shared_ptr<RooRealVar> A_PartRec_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0h_D0gamma_;
@@ -452,9 +392,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::unique_ptr<RooFormulaVar> a_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0pi0_;
   std::unique_ptr<RooFormulaVar> a_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooFormulaVar> a_MisRec_;
-  std::unique_ptr<RooFormulaVar> a_Bu2D0h_;
-  std::unique_ptr<RooFormulaVar> a_PartRec_;
   std::unique_ptr<RooFormulaVar> a_Bs2Dst0Kpi_;
   std::unique_ptr<RooFormulaVar> a_Bs2D0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0h_D0gamma_;
@@ -467,9 +404,6 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> N_tot_Bu2Dst0hst_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0gamma_FAVasSUP_;
   std::unique_ptr<RooFormulaVar> N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooAbsReal> N_tot_MisRec_;
-  std::shared_ptr<RooAbsReal> N_tot_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> N_tot_PartRec_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
 };
@@ -499,11 +433,6 @@ class NeutralBachelorDaughtersVars {
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
   // Don't want to be able to access the blinded results
-  std::shared_ptr<RooRealVar> A_MisRec_GetPointer() { return impl_.A_MisRec_; }
-  std::shared_ptr<RooRealVar> A_Bu2D0h_GetPointer() { return impl_.A_Bu2D0h_; }
-  std::shared_ptr<RooRealVar> A_PartRec_GetPointer() {
-    return impl_.A_PartRec_;
-  }
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_GetPointer() {
     return impl_.A_Bs2Dst0Kpi_;
   }
@@ -519,9 +448,6 @@ class NeutralBachelorDaughtersVars {
   RooAbsReal &A_Bu2D0hst() { return *impl_.A_Bu2D0hst_; }
   RooAbsReal &A_Bu2Dst0hst_D0pi0() { return *impl_.A_Bu2Dst0hst_D0pi0_; }
   RooAbsReal &A_Bu2Dst0hst_D0gamma() { return *impl_.A_Bu2Dst0hst_D0gamma_; }
-  RooRealVar &A_MisRec() { return *impl_.A_MisRec_; }
-  RooRealVar &A_Bu2D0h() { return *impl_.A_Bu2D0h_; }
-  RooRealVar &A_PartRec() { return *impl_.A_PartRec_; }
   RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
   RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
 
@@ -535,9 +461,6 @@ class NeutralBachelorDaughtersVars {
   RooFormulaVar &a_Bu2D0hst() { return *impl_.a_Bu2D0hst_; }
   RooFormulaVar &a_Bu2Dst0hst_D0pi0() { return *impl_.a_Bu2Dst0hst_D0pi0_; }
   RooFormulaVar &a_Bu2Dst0hst_D0gamma() { return *impl_.a_Bu2Dst0hst_D0gamma_; }
-  RooFormulaVar &a_MisRec() { return *impl_.a_MisRec_; }
-  RooFormulaVar &a_Bu2D0h() { return *impl_.a_Bu2D0h_; }
-  RooFormulaVar &a_PartRec() { return *impl_.a_PartRec_; }
   RooFormulaVar &a_Bs2Dst0Kpi() { return *impl_.a_Bs2Dst0Kpi_; }
   RooFormulaVar &a_Bs2D0Kpi() { return *impl_.a_Bs2D0Kpi_; }
 
@@ -565,9 +488,6 @@ class NeutralBachelorDaughtersVars {
   RooFormulaVar &N_tot_Bu2Dst0h_D0pi0_FAVasSUP() {
     return *impl_.N_tot_Bu2Dst0h_D0pi0_FAVasSUP_;
   }
-  RooAbsReal &N_tot_MisRec() { return *impl_.N_tot_MisRec_; }
-  RooAbsReal &N_tot_Bu2D0h() { return *impl_.N_tot_Bu2D0h_; }
-  RooAbsReal &N_tot_PartRec() { return *impl_.N_tot_PartRec_; }
   RooAbsReal &N_tot_Bs2Dst0Kpi() { return *impl_.N_tot_Bs2Dst0Kpi_; }
   RooAbsReal &N_tot_Bs2D0Kpi() { return *impl_.N_tot_Bs2D0Kpi_; }
 

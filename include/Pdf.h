@@ -38,9 +38,6 @@ class PdfBase {
   virtual RooFormulaVar &N_trueId_Bu2Dst0hst_D0pi0() const = 0;
   virtual RooFormulaVar &N_trueId_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_FAVasSUP() const = 0;
-  virtual RooFormulaVar &N_trueId_MisRec() const = 0;
-  virtual RooFormulaVar &N_trueId_Bu2D0h() const = 0;
-  virtual RooFormulaVar &N_trueId_PartRec() const = 0;
   virtual RooFormulaVar &N_trueId_Bs2Dst0Kpi() const = 0;
   virtual RooFormulaVar &N_trueId_Bs2D0Kpi() const = 0;
 
@@ -52,9 +49,6 @@ class PdfBase {
   virtual RooFormulaVar &N_misId_Bu2D0hst() const = 0;
   virtual RooFormulaVar &N_misId_Bu2Dst0hst_D0pi0() const = 0;
   virtual RooFormulaVar &N_misId_Bu2Dst0hst_D0gamma() const = 0;
-  virtual RooFormulaVar &N_misId_MisRec() const = 0;
-  virtual RooFormulaVar &N_misId_Bu2D0h() const = 0;
-  virtual RooFormulaVar &N_misId_PartRec() const = 0;
 
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0() const = 0;
@@ -64,9 +58,6 @@ class PdfBase {
   virtual RooDstD0BG &pdfDelta_Bu2D0hst() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP() const = 0;
-  virtual RooDstD0BG &pdfDelta_MisRec() const = 0;
-  virtual RooDstD0BG &pdfDelta_Bu2D0h() const = 0;
-  virtual RooDstD0BG &pdfDelta_PartRec() const = 0;
   virtual RooAbsPdf &pdfDelta_Bs2Dst0Kpi() const = 0;
   virtual RooAbsPdf &pdfDelta_Bs2D0Kpi() const = 0;
 
@@ -78,9 +69,6 @@ class PdfBase {
   virtual RooDstD0BG &pdfDelta_misId_Bu2D0hst() const = 0;
   virtual RooAbsPdf &pdfDelta_misId_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooAddPdf &pdfDelta_misId_Bu2Dst0hst_D0pi0() const = 0;
-  virtual RooDstD0BG &pdfDelta_misId_MisRec() const = 0;
-  virtual RooDstD0BG &pdfDelta_misId_Bu2D0h() const = 0;
-  virtual RooDstD0BG &pdfDelta_misId_PartRec() const = 0;
 
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0pi0() const = 0;
@@ -92,9 +80,6 @@ class PdfBase {
   virtual RooGaussian &pdfBu_Bu2Dst0hst_D0pi0() const = 0;
   virtual RooCBShape &pdfBu_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
   virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0_FAVasSUP() const = 0;
-  virtual RooCruijff &pdfBu_MisRec() const = 0;
-  virtual RooCruijff &pdfBu_Bu2D0h() const = 0;
-  virtual RooAbsPdf &pdfBu_PartRec() const = 0;
   virtual RooAbsPdf &pdfBu_Bs2Dst0Kpi() const = 0;
   virtual RooAbsPdf &pdfBu_Bs2D0Kpi() const = 0;
 
@@ -106,9 +91,6 @@ class PdfBase {
   virtual RooAbsPdf &pdfBu_misId_Bu2D0hst() const = 0;
   virtual RooAbsPdf &pdfBu_misId_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooCBShape &pdfBu_misId_Bu2Dst0hst_D0pi0() const = 0;
-  virtual RooAbsPdf &pdfBu_misId_MisRec() const = 0;
-  virtual RooCruijff &pdfBu_misId_Bu2D0h() const = 0;
-  virtual RooCruijff &pdfBu_misId_PartRec() const = 0;
 
   virtual RooGaussian &pdfBuPartial_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAddPdf &pdfBuPartial_Bu2Dst0h_D0pi0() const = 0;
@@ -119,9 +101,6 @@ class PdfBase {
   virtual RooGaussian &pdfBuPartial_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooGaussian &pdfBuPartial_Bu2Dst0hst_D0pi0() const = 0;
   virtual RooCBShape &pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP() const = 0;
-  virtual RooCruijff &pdfBuPartial_MisRec() const = 0;
-  virtual RooCruijff &pdfBuPartial_Bu2D0h() const = 0;
-  virtual RooCruijff &pdfBuPartial_PartRec() const = 0;
   virtual RooAbsPdf &pdfBuPartial_Bs2Dst0Kpi() const = 0;
   virtual RooAbsPdf &pdfBuPartial_Bs2D0Kpi() const = 0;
 
@@ -132,9 +111,6 @@ class PdfBase {
   virtual RooCBShape &pdfBuPartial_misId_Bu2D0hst() const = 0;
   virtual RooGaussian &pdfBuPartial_misId_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooAddPdf &pdfBuPartial_misId_Bu2Dst0hst_D0pi0() const = 0;
-  virtual RooCruijff &pdfBuPartial_misId_MisRec() const = 0;
-  virtual RooCruijff &pdfBuPartial_misId_Bu2D0h() const = 0;
-  virtual RooCruijff &pdfBuPartial_misId_PartRec() const = 0;
 
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
@@ -232,18 +208,6 @@ class Pdf : public PdfBase {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_trueId_Bu2Dst0h_D0pi0_FAVasSUP();
   }
-  virtual RooFormulaVar &N_trueId_MisRec() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_trueId_MisRec();
-  }
-  virtual RooFormulaVar &N_trueId_Bu2D0h() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_trueId_Bu2D0h();
-  }
-  virtual RooFormulaVar &N_trueId_PartRec() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_trueId_PartRec();
-  }
   virtual RooFormulaVar &N_trueId_Bs2Dst0Kpi() const {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_trueId_Bs2Dst0Kpi();
@@ -285,18 +249,6 @@ class Pdf : public PdfBase {
     return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .N_misId_Bu2Dst0hst_D0pi0();
   }
-  virtual RooFormulaVar &N_misId_MisRec() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_misId_MisRec();
-  }
-  virtual RooFormulaVar &N_misId_Bu2D0h() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_misId_Bu2D0h();
-  }
-  virtual RooFormulaVar &N_misId_PartRec() const {
-    return Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
-        .N_misId_PartRec();
-  }
 
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -325,15 +277,6 @@ class Pdf : public PdfBase {
   virtual RooAbsPdf &pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP();
-  }
-  virtual RooDstD0BG &pdfDelta_MisRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_MisRec();
-  }
-  virtual RooDstD0BG &pdfDelta_Bu2D0h() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_Bu2D0h();
-  }
-  virtual RooDstD0BG &pdfDelta_PartRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_PartRec();
   }
   virtual RooAbsPdf &pdfDelta_Bs2Dst0Kpi() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -376,15 +319,6 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfDelta_misId_Bu2Dst0hst_D0pi0();
   }
-  virtual RooDstD0BG &pdfDelta_misId_MisRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_misId_MisRec();
-  }
-  virtual RooDstD0BG &pdfDelta_misId_Bu2D0h() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_misId_Bu2D0h();
-  }
-  virtual RooDstD0BG &pdfDelta_misId_PartRec() const {
-    return NeutralVars<_neutral>::Get(uniqueId_).pdfDelta_misId_PartRec();
-  }
 
   virtual RooAbsPdf &pdfBu_Bu2Dst0h_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -425,18 +359,6 @@ class Pdf : public PdfBase {
   virtual RooCBShape &pdfBu_Bu2Dst0h_D0pi0_FAVasSUP() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfBu_Bu2Dst0h_D0pi0_FAVasSUP();
-  }
-  virtual RooCruijff &pdfBu_MisRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_MisRec();
-  }
-  virtual RooCruijff &pdfBu_Bu2D0h() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_Bu2D0h();
-  }
-  virtual RooAbsPdf &pdfBu_PartRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_PartRec();
   }
   virtual RooAbsPdf &pdfBu_Bs2Dst0Kpi() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -479,18 +401,6 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBu_misId_Bu2Dst0hst_D0pi0();
   }
-  virtual RooAbsPdf &pdfBu_misId_MisRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_misId_MisRec();
-  }
-  virtual RooCruijff &pdfBu_misId_Bu2D0h() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_misId_Bu2D0h();
-  }
-  virtual RooCruijff &pdfBu_misId_PartRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBu_misId_PartRec();
-  }
 
   virtual RooGaussian &pdfBuPartial_Bu2Dst0h_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -528,18 +438,6 @@ class Pdf : public PdfBase {
     return NeutralVars<_neutral>::Get(uniqueId_)
         .pdfBuPartial_Bu2Dst0h_D0pi0_FAVasSUP();
   }
-  virtual RooCruijff &pdfBuPartial_MisRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_MisRec();
-  }
-  virtual RooCruijff &pdfBuPartial_Bu2D0h() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_Bu2D0h();
-  }
-  virtual RooCruijff &pdfBuPartial_PartRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_PartRec();
-  }
   virtual RooAbsPdf &pdfBuPartial_Bs2Dst0Kpi() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBuPartial_Bs2Dst0Kpi();
@@ -576,18 +474,6 @@ class Pdf : public PdfBase {
   virtual RooAddPdf &pdfBuPartial_misId_Bu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBuPartial_misId_Bu2Dst0hst_D0pi0();
-  }
-  virtual RooCruijff &pdfBuPartial_misId_MisRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_misId_MisRec();
-  }
-  virtual RooCruijff &pdfBuPartial_misId_Bu2D0h() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_misId_Bu2D0h();
-  }
-  virtual RooCruijff &pdfBuPartial_misId_PartRec() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-        .pdfBuPartial_misId_PartRec();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
@@ -752,49 +638,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
   //           PdfBase::uniqueId_)
   //           .N_trueId_Bu_Bu2Dst0h_D0pi0_FAVasSUP());
   // }
-  // PdfBase::functionsBu_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBu_MisRec());
-  // PdfBase::yieldsBu_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_Bu_MisRec());
-  // // PdfBase::functionsBu_.add(
-  // //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  // //         .pdfBu_Bu2D0h());
-  // // PdfBase::yieldsBu_.add(
-  // //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  // //         PdfBase::uniqueId_)
-  // //         .N_trueId_Bu_Bu2D0h());
-  // PdfBase::functionsBu_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBu_PartRec());
-  // PdfBase::yieldsBu_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_Bu_PartRec());
   // if (_bachelor == Bachelor::k) {
-  //   PdfBase::functionsBu_.add(
-  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //           .pdfBu_misId_MisRec());
-  //   PdfBase::yieldsBu_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_Bu_MisRec());
-  //   // PdfBase::functionsBu_.add(
-  //   //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //   //         .pdfBu_misId_Bu2D0h());
-  //   // PdfBase::yieldsBu_.add(
-  //   //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //   //         PdfBase::uniqueId_)
-  //   //         .N_misId_Bu_Bu2D0h());
-  //   PdfBase::functionsBu_.add(
-  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //           .pdfBu_misId_PartRec());
-  //   PdfBase::yieldsBu_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_Bu_PartRec());
   //   if (_daughters != Daughters::kpi && Configuration::Get().runADS() ==
   //   true) {
   //     std::cout << "ADS mode: include BS\n";
@@ -933,49 +777,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
   //           PdfBase::uniqueId_)
   //           .N_trueId_BuPartial_Bu2Dst0h_D0pi0_FAVasSUP());
   // }
-  // PdfBase::functionsBuPartial_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBuPartial_MisRec());
-  // PdfBase::yieldsBuPartial_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_BuPartial_MisRec());
-  // // PdfBase::functionsBuPartial_.add(
-  // //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  // //         .pdfBuPartial_Bu2D0h());
-  // // PdfBase::yieldsBuPartial_.add(
-  // //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  // //         PdfBase::uniqueId_)
-  // //         .N_trueId_BuPartial_Bu2D0h());
-  // PdfBase::functionsBuPartial_.add(
-  //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //         .pdfBuPartial_PartRec());
-  // PdfBase::yieldsBuPartial_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_BuPartial_PartRec());
   // if (_bachelor == Bachelor::k) {
-  //   PdfBase::functionsBuPartial_.add(
-  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //           .pdfBuPartial_misId_MisRec());
-  //   PdfBase::yieldsBuPartial_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_BuPartial_MisRec());
-  //   // PdfBase::functionsBuPartial_.add(
-  //   //     NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //   //         .pdfBuPartial_misId_Bu2D0h());
-  //   // PdfBase::yieldsBuPartial_.add(
-  //   //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //   //         PdfBase::uniqueId_)
-  //   //         .N_misId_BuPartial_Bu2D0h());
-  //   PdfBase::functionsBuPartial_.add(
-  //       NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-  //           .pdfBuPartial_misId_PartRec());
-  //   PdfBase::yieldsBuPartial_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_BuPartial_PartRec());
   //   if (_daughters != Daughters::kpi && Configuration::Get().runADS() ==
   //   true) {
   //     std::cout << "ADS mode: include BS\n";
@@ -1118,44 +920,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   //           PdfBase::uniqueId_)
   //           .N_trueId_Delta_Bu2Dst0h_D0pi0_FAVasSUP());
   // }
-  // PdfBase::functionsDelta_.add(
-  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_MisRec());
-  // PdfBase::yieldsDelta_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_Delta_MisRec());
-  // // PdfBase::functionsDelta_.add(
-  // //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_Bu2D0h());
-  // // PdfBase::yieldsDelta_.add(
-  // //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  // //         PdfBase::uniqueId_)
-  // //         .N_trueId_Delta_Bu2D0h());
-  // PdfBase::functionsDelta_.add(
-  //     NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_PartRec());
-  // PdfBase::yieldsDelta_.add(
-  //     Yields<_neutral, _bachelor, _daughters,
-  //     _charge>::Get(PdfBase::uniqueId_)
-  //         .N_trueId_Delta_PartRec());
   // if (_bachelor == Bachelor::k) {
-  //   PdfBase::functionsDelta_.add(
-  //       NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_MisRec());
-  //   PdfBase::yieldsDelta_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_Delta_MisRec());
-  //   // PdfBase::functionsDelta_.add(
-  //   //
-  //   NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfDelta_misId_Bu2D0h());
-  //   // PdfBase::yieldsDelta_.add(
-  //   //     Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //   //         PdfBase::uniqueId_)
-  //   //         .N_misId_Delta_Bu2D0h());
-  //   PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-  //                                    .pdfDelta_misId_PartRec());
-  //   PdfBase::yieldsDelta_.add(
-  //       Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-  //           PdfBase::uniqueId_)
-  //           .N_misId_Delta_PartRec());
   //   if (_daughters != Daughters::kpi && Configuration::Get().runADS() ==
   //   true) {
   //     std::cout << "ADS mode: include BS\n";
