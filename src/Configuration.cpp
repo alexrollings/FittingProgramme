@@ -1720,9 +1720,8 @@ std::string ComposeName(int uniqueId, Neutral neutral, Bachelor bachelor,
          EnumToString(charge) + "_" + std::to_string(uniqueId);
 }
 
-std::string ComposeName(int uniqueId, Neutral neutral, Daughters daughters) {
-  return EnumToString(neutral) + "_" + EnumToString(daughters) + "_" +
-         std::to_string(uniqueId);
+std::string ComposeName(int uniqueId, Daughters daughters) {
+  return EnumToString(daughters) + "_" + std::to_string(uniqueId);
 }
 
 std::string ComposeName(int uniqueId, Neutral neutral) {

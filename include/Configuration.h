@@ -339,8 +339,7 @@ std::string ComposeName(int uniqueId, Neutral neutral,
                         Bachelor bachelor);
 std::string ComposeName(int uniqueId, Neutral neutral,
                         Bachelor bachelor, Charge charge);
-std::string ComposeName(int uniqueId, Neutral neutral,
-                        Daughters daughters);
+std::string ComposeName(int uniqueId, Daughters daughters);
 std::string ComposeName(int uniqueId, Neutral neutral);
 std::string ComposeName(int uniqueId, Neutral neutral, Charge charge);
 std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
