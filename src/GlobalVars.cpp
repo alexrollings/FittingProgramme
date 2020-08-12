@@ -89,7 +89,19 @@ GlobalVars::GlobalVars(int uniqueId)
       kBF_Bu2Dst0Kst_(
           Params::Get().CreateFixed("kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
                                     Systematic::kBF_Bu2Dst0Kst, Sign::none)),
-      pidEffMap_() {
+      pidEffMap_(),
+      // -------------------- CP Observables -------------------- //
+      R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
+      R_CP_Bu2Dst0h_D0gamma_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_(nullptr),
+      R_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
+      R_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_CP_Bd2Dsth_(nullptr),
+      R_CP_Bu2D0hst_(nullptr),
+      R_CP_Bu2Dst0hst_D0gamma_(nullptr),
+      R_CP_Bu2Dst0hst_D0pi0_(nullptr) {
   // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   // for (auto &c : chargeVec) {
   //   pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
@@ -165,4 +177,59 @@ GlobalVars::GlobalVars(int uniqueId)
   crossFeedRate_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFixed("crossFeedRate", uniqueId_, cfAv, cfErr,
                                 Systematic::crossFeedRate, Sign::positive));
+
+  if (Configuration::Get().blindFit() == true) {
+    R_CP_Bu2Dst0h_D0gamma_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_WN_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_WN_Blind_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0gamma_" + std::to_string(uniqueId_))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0gamma_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0pi0_" + std::to_string(uniqueId_)).c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0gamma_WN_" + std::to_string(uniqueId_))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_CP_Bu2Dst0h_D0pi0_WN_" + std::to_string(uniqueId_))
+            .c_str(),
+        0.3, *R_CP_Bu2Dst0h_D0pi0_WN_Blind_));
+  } else {
+    R_CP_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0gamma", uniqueId_, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0", uniqueId_, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, 1.138, -2, 2));
+  }
+  R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
+  // HFLAV: R_CP+
+  R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      "R_CP_Bu2D0hst", uniqueId_, 1.22, 0.07, Systematic::NA, Sign::none));
+  // No numbers for B->D*h* modes: just use signal
+  R_CP_Bu2Dst0hst_D0pi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, 1, -2, 2));
+  R_CP_Bu2Dst0hst_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, 1, -2, 2));
 }

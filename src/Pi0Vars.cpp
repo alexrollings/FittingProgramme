@@ -578,7 +578,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -5, 5)),
       // Don't use: fix yield w.r.t. π0 mode in NBDVars
-      bkgFracFAV_Bu2Dst0hst_D0gamma_(nullptr),
+      bkgFracFAV_Bu2Dst0hst_D0gamma_(nullptr) {
       // bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0,
       //     ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::pi,
@@ -587,71 +587,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //                      Efficiency::mcEff) *
       //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
       //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-      //     -5, 5)),
-      // -------------------- CP Observables -------------------- //
-      R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
-      R_CP_Bu2Dst0h_D0gamma_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_(nullptr),
-      R_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
-      R_CP_Bd2Dsth_(nullptr),
-      R_CP_Bu2D0hst_(nullptr),
-      R_CP_Bu2Dst0hst_D0gamma_(nullptr),
-      R_CP_Bu2Dst0hst_D0pi0_(nullptr) {
+      //     -5, 5)) {
   std::cout << "\n\n\n" << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0,
                             Bachelor::pi, Efficiency::mcEff)
             << "\n";
   std::cout << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
                             Efficiency::mcEff)
             << "\n\n\n";
-  if (Configuration::Get().blindFit() == true) {
-    R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
-                                     Neutral::pi0, 1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0gamma_WN_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_WN_Blind",
-                                     uniqueId_, Neutral::pi0, 0.902, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
-                                     Neutral::pi0, 1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
-    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0gamma_WN_" + ComposeName(uniqueId_, Neutral::pi0))
-            .c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
-    R_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0pi0_WN_" + ComposeName(uniqueId_, Neutral::pi0))
-            .c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0pi0_WN_Blind_));
-  } else {
-    R_CP_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, 1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0gamma_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, 0.902, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0, 1.138, -2, 2));
-  }
-  R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFixed("R_CP_Bd2Dsth", uniqueId_, Neutral::pi0, 1.0,
-                                0.0, Systematic::NA, Sign::none));
-  // HFLAV: R_CP+
-  R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFixed("R_CP_Bu2D0hst", uniqueId_, Neutral::pi0, 1.22,
-                                0.07, Systematic::NA, Sign::none));
-  // No numbers for B->D*h* modes: just use signal
-  R_CP_Bu2Dst0hst_D0pi0_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0, 1, -2, 2));
-  R_CP_Bu2Dst0hst_D0gamma_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0, 1, -2, 2));
 
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   std::map<std::string, double> mapBu2Dst0h_D0pi0_FAVasSUP;
