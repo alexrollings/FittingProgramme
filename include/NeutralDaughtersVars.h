@@ -40,9 +40,6 @@ class NeutralDaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   }
-  RooAbsReal &R_Dst0KDst0pi_MisRec() { return *R_Dst0KDst0pi_MisRec_; }
-  RooAbsReal &R_Dst0KDst0pi_Bu2D0h() { return *R_Dst0KDst0pi_Bu2D0h_; }
-  RooAbsReal &R_Dst0KDst0pi_PartRec() { return *R_Dst0KDst0pi_PartRec_; }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   }
@@ -67,15 +64,6 @@ class NeutralDaughtersVars {
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   }
-  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_MisRec_GetPointer() {
-    return R_Dst0KDst0pi_MisRec_;
-  }
-  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2D0h_GetPointer() {
-    return R_Dst0KDst0pi_Bu2D0h_;
-  }
-  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_PartRec_GetPointer() {
-    return R_Dst0KDst0pi_PartRec_;
-  }
 
  private:
   int uniqueId_;
@@ -87,9 +75,6 @@ class NeutralDaughtersVars {
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_MisRec_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0h_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_PartRec_;
 };
 
 template <>
