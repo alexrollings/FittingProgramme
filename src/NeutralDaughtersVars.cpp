@@ -53,13 +53,14 @@ NeutralDaughtersVars<Neutral::pi0, Daughters::kpi>::NeutralDaughtersVars(
           "@0/@1",
           RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2D0Kst(),
                     GlobalVars::Get(uniqueId_).kBF_Bu2D0rho()))),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0,
           Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           -5, 5)),
+      // Same R value for D* decays
+      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_),
       R_Dst0KDst0pi_MisRec_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_MisRec", uniqueId_, Neutral::pi0, Daughters::kpi, 0.06,
           -2, 2)),
