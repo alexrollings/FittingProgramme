@@ -969,11 +969,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       Systematic::NA, Sign::none));
   // Fixed from HFLAV: A_CP+
   A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "A_CP_Bu2D0hst", uniqueId_, Neutral::pi0, Bachelor::pi, 0, -1, 1)),
+      "A_CP_Bu2D0hst", uniqueId_, Neutral::pi0, Bachelor::pi, 0, -1, 1));
   // No measured params for B->D*h* modes
-      A_CP_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
-          Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0pi0", uniqueId_,
-                                       Neutral::pi0, Bachelor::pi, 0, -1, 1));
+  A_CP_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0pi0", uniqueId_,
+                                   Neutral::pi0, Bachelor::pi, 0, -1, 1));
+  A_CP_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0gamma", uniqueId_,
+                                   Neutral::pi0, Bachelor::pi, 0, -1, 1));
   if (Configuration::Get().splitByCharge() == true) {
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(

@@ -689,7 +689,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
                   .N_tot_Bu2Dst0h_D0pi0_WN(),
               NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                   uniqueId_)
-                  .a_Bu2Dst0h_D0pi0_WN())),
+                  // .a_Bu2Dst0h_D0pi0_WN())),
+                  .a_Bu2Dst0h_D0pi0())),
       N_split_Bd2Dsth_(
           Make_N_split<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_split_Bd2Dsth_",

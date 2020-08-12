@@ -648,7 +648,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
   // No numbers for B->D*h* modes: just use signal
   R_CP_Bu2Dst0hst_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0, 1.138, -2, 2));
+          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0, 1, -2, 2));
+  R_CP_Bu2Dst0hst_D0gamma_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0, 1, -2, 2));
 
   std::map<std::string, double> mapBu2Dst0h_D0pi0;
   std::map<std::string, double> mapBu2Dst0h_D0pi0_FAVasSUP;

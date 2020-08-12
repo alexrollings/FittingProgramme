@@ -1396,7 +1396,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
   // No measured params for B->D*h* modes: just initialise same as signal
   A_CP_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0pi0", uniqueId_,
-                                   Neutral::pi0, Bachelor::k, -0.151, -1, 1));
+                                   Neutral::pi0, Bachelor::k, 0, -1, 1));
+  A_CP_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("A_CP_Bu2Dst0hst_D0gamma", uniqueId_,
+                                   Neutral::pi0, Bachelor::k, 0, -1, 1));
   if (Configuration::Get().splitByCharge() == true) {
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::k>(
@@ -1455,6 +1458,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
   // No measured params for B->D*h* modes: just let float 
   R_ADS_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0pi0", uniqueId_,
+                                   Neutral::pi0, Bachelor::k, 1, -5, 5));
+  R_ADS_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0gamma", uniqueId_,
                                    Neutral::pi0, Bachelor::k, 1, -5, 5));
 
   std::map<std::string, double> mapMisId_Bu2Dst0h_D0pi0;

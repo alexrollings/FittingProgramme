@@ -116,10 +116,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       // Remove these -- share with signal?
       A_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0gamma_WN", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0005, Systematic::A_FAV_Gamma, Sign::none)),
+          Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
       A_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0pi0_WN", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0005, Systematic::A_FAV_Pi0, Sign::none)),
+          Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::pi, Daughters::kpi, 0, 0.0,
                                            Systematic::NA, Sign::none)),
@@ -808,8 +808,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
           0.0, 0.02, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-          "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
-          0.0, 0.02, Systematic::NA, Sign::none)),
+          "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
+          Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
       a_Bu2Dst0h_D0gamma_(nullptr),
