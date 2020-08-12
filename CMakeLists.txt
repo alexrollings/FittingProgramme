@@ -20,17 +20,17 @@ set(FITTING_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit Minuit Foam TreePlayer)
 
 #Define source code. Add list of files
 set(FITTING_SRC
-    src/BachelorDaughtersVars.cpp
     src/Configuration.cpp
     src/Efficiencies.cpp
     src/GammaVars.cpp
     src/GammaPiVars.cpp
     src/GammaKVars.cpp
     src/GlobalVars.cpp
-    src/NeutralBachelorChargeVars.cpp
+    src/BachelorChargeVars.cpp
+    src/BachelorVars.cpp
     src/NeutralBachelorDaughtersVars.cpp
     src/NeutralBachelorVars.cpp
-    src/NeutralDaughtersVars.cpp
+    src/DaughtersVars.cpp
     src/NeutralVars.cpp
     src/Params.cpp
     src/ParseArguments.cpp
