@@ -1,10 +1,6 @@
 #pragma once
 #include "Configuration.h"
-#include "GlobalVars.h"
-#include "NeutralBachelorChargeVars.h"
 #include "NeutralBachelorDaughtersVars.h"
-#include "NeutralBachelorVars.h"
-#include "NeutralVars.h"
 
 // Return yield with correct asymmetry definition
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,

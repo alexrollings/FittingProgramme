@@ -981,58 +981,48 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::minus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::plus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
     R_ADS_Bu2Dst0h_D0gamma_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::minus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0gamma_WN(),
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::plus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0gamma_WN()));
     R_ADS_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::minus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::minus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0_WN(),
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::plus>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0_WN()));
   } else {
     R_ADS_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::total>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
     R_ADS_Bu2Dst0h_D0gamma_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::total>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0gamma_WN()));
     R_ADS_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<Neutral::pi0, Bachelor::pi>(
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
-            NeutralBachelorChargeVars<Neutral::pi0, Bachelor::pi,
-                                      Charge::total>::Get(uniqueId)
+            BachelorChargeVars<Bachelor::pi, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0_WN()));
   }
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_ADS_Bd2Dsth", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.02,
       Systematic::NA, Sign::none));
-  // Float to allow B->Dππ to fall in this PDF (only in ADS mode) 
-  R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFloating("R_ADS_Bu2D0hst", uniqueId_,
-                                   Neutral::pi0, Bachelor::k, 1, -5, 5));
-  // No measured params for B->D*h* modes: just let float 
+  // Float to allow B->Dππ to fall in this PDF (only in ADS mode)
+  R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+      "R_ADS_Bu2D0hst", uniqueId_, Neutral::pi0, Bachelor::k, 1, -5, 5));
+  // No measured params for B->D*h* modes: just let float
   R_ADS_Bu2Dst0hst_D0pi0_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_ADS_Bu2Dst0hst_D0pi0", uniqueId_,
                                    Neutral::pi0, Bachelor::k, 1, -5, 5));

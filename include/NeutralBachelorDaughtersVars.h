@@ -1,6 +1,6 @@
 #pragma once
 #include "Configuration.h"
-#include "NeutralBachelorChargeVars.h"
+#include "BachelorChargeVars.h"
 #include "NeutralBachelorVars.h"
 #include "NeutralVars.h"
 #include "DaughtersVars.h"

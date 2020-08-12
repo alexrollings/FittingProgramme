@@ -3,7 +3,7 @@
 #include "Efficiencies.h"
 #include "GlobalVars.h"
 #include "NeutralVars.h"
-#include "NeutralBachelorChargeVars.h"
+#include "BachelorChargeVars.h"
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"

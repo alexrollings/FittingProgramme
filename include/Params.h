@@ -195,15 +195,14 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFloating(std::string const &name,
-                                             int uniqueId, Neutral neutral,
-                                             Bachelor bachelor, Charge charge,
-                                             double start, double min_value,
+                                             int uniqueId, Bachelor bachelor,
+                                             Charge charge, double start,
+                                             double min_value,
                                              double max_value) {
     auto key =
-        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
-                        EnumToString(bachelor), EnumToString(charge));
-    auto var_name =
-        name + "_" + ComposeName(uniqueId, neutral, bachelor, charge);
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(bachelor),
+                        EnumToString(charge), "");
+    auto var_name = name + "_" + ComposeName(uniqueId, bachelor, charge);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
