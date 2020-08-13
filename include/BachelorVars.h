@@ -90,8 +90,3 @@ class BachelorVars {
   std::shared_ptr<RooAbsReal> R_ADS_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> R_ADS_Bu2Dst0hst_D0pi0_;
 };
-
-template <>
-BachelorVars<Bachelor::pi>::BachelorVars(int uniqueId);
-template <>
-BachelorVars<Bachelor::k>::BachelorVars(int uniqueId);
