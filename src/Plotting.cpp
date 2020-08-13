@@ -735,6 +735,8 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0pi0().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());

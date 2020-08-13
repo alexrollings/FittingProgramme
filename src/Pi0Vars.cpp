@@ -311,7 +311,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // -------------------- Bu2Dst0hst_D0gamma -------------------- //
       Bu2Dst0hst_D0gamma_meanDelta_(nullptr),
       Bu2Dst0hst_D0gamma_sigmaDelta_(nullptr),
-      Bu2Dst0hst_D0gamma_pdfDelta_(),
+      pdfDelta_Bu2Dst0hst_D0gamma_(),
       Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
@@ -332,7 +332,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
       Bu2Dst0hst_D0pi0_meanDelta_(nullptr),
       Bu2Dst0hst_D0pi0_sigmaDelta_(nullptr),
-      Bu2Dst0hst_D0pi0_pdfDelta_(),
+      pdfDelta_Bu2Dst0hst_D0pi0_(),
       Bu2Dst0hst_D0pi0_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0pi0_meanBu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0rho_D0pi0, Systematic::Bu2Dst0hst_D0pi0BuPdf,

@@ -582,7 +582,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0hst_D0gamma_sigmaDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaDeltaPdf,
           Sign::same)),
-      Bu2Dst0hst_D0gamma_pdfDelta_(("Bu2Dst0hst_D0gamma_pdfDelta_" +
+      pdfDelta_Bu2Dst0hst_D0gamma_(("pdfDelta_Bu2Dst0hst_D0gamma_" +
                                     ComposeName(uniqueId_, Neutral::gamma))
                                        .c_str(),
                                    "", Configuration::Get().deltaMass(),
@@ -646,7 +646,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0hst_D0pi0_sigmaDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0pi0, Systematic::Bu2Dst0hst_D0pi0DeltaPdf,
           Sign::same)),
-      Bu2Dst0hst_D0pi0_pdfDelta_(("Bu2Dst0hst_D0pi0_pdfDelta_" +
+      pdfDelta_Bu2Dst0hst_D0pi0_(("pdfDelta_Bu2Dst0hst_D0pi0_" +
                                   ComposeName(uniqueId_, Neutral::gamma))
                                      .c_str(),
                                  "", Configuration::Get().deltaMass(),
