@@ -1265,7 +1265,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k,
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
-      mcEff_Bu2Dst0h_D0gamma_(nullptr),
+      mcEff_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "mcEff_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0K_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0K_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
       mcEff_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, Bachelor::k,
           ReturnMCEffs(Mode::Bu2Dst0K_D0gamma_WN, Neutral::pi0, Bachelor::k,
