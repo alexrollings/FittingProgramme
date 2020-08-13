@@ -420,52 +420,6 @@ class NeutralVars {
   RooRealVar &PartRec_aLBuPartial() { return *PartRec_aLBuPartial_; }
   RooRealVar &PartRec_aRBuPartial() { return *PartRec_aRBuPartial_; }
 
-  // -------------------- Correct ID BOX EFFs -------------------- //
-  RooRealVar &buDeltaCutEffBu2Dst0h_D0gamma() {
-    return *buDeltaCutEffBu2Dst0h_D0gamma_;
-  }
-  RooRealVar &buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP() {
-    return *buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_;
-  }
-  RooRealVar &buDeltaCutEffBu2Dst0h_D0pi0() {
-    return *buDeltaCutEffBu2Dst0h_D0pi0_;
-  }
-  RooRealVar &buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP() {
-    return *buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  }
-  RooRealVar &buDeltaCutEffMisRec() { return *buDeltaCutEffMisRec_; }
-  RooRealVar &buDeltaCutEffBu2D0h() { return *buDeltaCutEffBu2D0h_; }
-  RooRealVar &buDeltaCutEffPartRec() { return *buDeltaCutEffPartRec_; }
-  RooRealVar &deltaCutEffBu2Dst0h_D0gamma() {
-    return *deltaCutEffBu2Dst0h_D0gamma_;
-  }
-  RooRealVar &deltaCutEffBu2Dst0h_D0gamma_FAVasSUP() {
-    return *deltaCutEffBu2Dst0h_D0gamma_FAVasSUP_;
-  }
-  RooRealVar &deltaCutEffBu2Dst0h_D0pi0() {
-    return *deltaCutEffBu2Dst0h_D0pi0_;
-  }
-  RooRealVar &deltaCutEffBu2Dst0h_D0pi0_FAVasSUP() {
-    return *deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  }
-  RooRealVar &deltaCutEffMisRec() { return *deltaCutEffMisRec_; }
-  RooRealVar &deltaCutEffBu2D0h() { return *deltaCutEffBu2D0h_; }
-  RooRealVar &deltaCutEffPartRec() { return *deltaCutEffPartRec_; }
-  RooRealVar &deltaPartialCutEffBu2Dst0h_D0gamma() {
-    return *deltaPartialCutEffBu2Dst0h_D0gamma_;
-  }
-  RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0() {
-    return *deltaPartialCutEffBu2Dst0h_D0pi0_;
-  }
-  RooRealVar &deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP() {
-    return *deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  }
-  RooRealVar &deltaPartialCutEffMisRec() { return *deltaPartialCutEffMisRec_; }
-  RooRealVar &deltaPartialCutEffBu2D0h() { return *deltaPartialCutEffBu2D0h_; }
-  RooRealVar &deltaPartialCutEffPartRec() {
-    return *deltaPartialCutEffPartRec_;
-  }
-
   // -------------Expected yields and relative fractions w.r.t. sig
   // -------------//
   double &initYieldFAVBu2Dst0h_D0gamma() {
@@ -753,27 +707,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> PartRec_meanBuPartial_;
   std::shared_ptr<RooRealVar> PartRec_aLBuPartial_;
   std::shared_ptr<RooRealVar> PartRec_aRBuPartial_;
-  // -------------------- Correct ID BOX EFFs -------------------- //
-  std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0gamma_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0gamma_FAVasSUP_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisRec_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffBu2D0h_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffPartRec_;
-  std::shared_ptr<RooRealVar> deltaCutEffBu2Dst0h_D0gamma_;
-  std::shared_ptr<RooRealVar> deltaCutEffBu2Dst0h_D0gamma_FAVasSUP_;
-  std::shared_ptr<RooRealVar> deltaCutEffBu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> deltaCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisRec_;
-  std::shared_ptr<RooRealVar> deltaCutEffBu2D0h_;
-  std::shared_ptr<RooRealVar> deltaCutEffPartRec_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0gamma_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2Dst0h_D0pi0_FAVasSUP_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffMisRec_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffBu2D0h_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffPartRec_;
   // -------------Expected yields and relative fractions w.r.t. sig
   // -------------//
   double fracBu2Dst0h_D0gamma_;

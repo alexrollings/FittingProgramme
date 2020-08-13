@@ -379,43 +379,6 @@ class NeutralBachelorVars {
   RooRealVar &buPartialEffMisId_Bu2Dst0hst_D0pi0() {
     return *buPartialEffMisId_Bu2Dst0hst_D0pi0_;
   }
-  // -------------------- Mis-ID BoxEffs ------------------- //
-  RooRealVar &buDeltaCutEffMisId_Bu2Dst0h_D0gamma() {
-    return *buDeltaCutEffMisId_Bu2Dst0h_D0gamma_;
-  }
-  RooRealVar &buDeltaCutEffMisId_Bu2Dst0h_D0pi0() {
-    return *buDeltaCutEffMisId_Bu2Dst0h_D0pi0_;
-  }
-  RooRealVar &buDeltaCutEffMisId_MisRec() {
-    return *buDeltaCutEffMisId_MisRec_;
-  }
-  RooRealVar &buDeltaCutEffMisId_Bu2D0h() {
-    return *buDeltaCutEffMisId_Bu2D0h_;
-  }
-  RooRealVar &buDeltaCutEffMisId_PartRec() {
-    return *buDeltaCutEffMisId_PartRec_;
-  }
-  RooRealVar &deltaCutEffMisId_Bu2Dst0h_D0gamma() {
-    return *deltaCutEffMisId_Bu2Dst0h_D0gamma_;
-  }
-  RooRealVar &deltaCutEffMisId_Bu2Dst0h_D0pi0() {
-    return *deltaCutEffMisId_Bu2Dst0h_D0pi0_;
-  }
-  RooRealVar &deltaCutEffMisId_MisRec() { return *deltaCutEffMisId_MisRec_; }
-  RooRealVar &deltaCutEffMisId_Bu2D0h() { return *deltaCutEffMisId_Bu2D0h_; }
-  RooRealVar &deltaCutEffMisId_PartRec() { return *deltaCutEffMisId_PartRec_; }
-  RooRealVar &deltaPartialCutEffMisId_Bu2Dst0h_D0pi0() {
-    return *deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_;
-  }
-  RooRealVar &deltaPartialCutEffMisId_MisRec() {
-    return *deltaPartialCutEffMisId_MisRec_;
-  }
-  RooRealVar &deltaPartialCutEffMisId_Bu2D0h() {
-    return *deltaPartialCutEffMisId_Bu2D0h_;
-  }
-  RooRealVar &deltaPartialCutEffMisId_PartRec() {
-    return *deltaPartialCutEffMisId_PartRec_;
-  }
 
   // -------------------- Bs BoxEffs ------------------- //
   RooRealVar &buDeltaCutEffBs2Dst0Kpi() { return *buDeltaCutEffBs2Dst0Kpi_; }
@@ -892,21 +855,6 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> buPartialEffMisId_Bu2D0hst_;
   std::shared_ptr<RooRealVar> buPartialEffMisId_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooRealVar> buPartialEffMisId_Bu2Dst0hst_D0pi0_;
-
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2Dst0h_D0gamma_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_MisRec_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_Bu2D0h_;
-  std::shared_ptr<RooRealVar> buDeltaCutEffMisId_PartRec_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisId_Bu2Dst0h_D0gamma_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisId_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisId_MisRec_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisId_Bu2D0h_;
-  std::shared_ptr<RooRealVar> deltaCutEffMisId_PartRec_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_MisRec_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_Bu2D0h_;
-  std::shared_ptr<RooRealVar> deltaPartialCutEffMisId_PartRec_;
   // -------------------- Bs BoxEffs ------------------- //
   std::shared_ptr<RooRealVar> buDeltaCutEffBs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> deltaCutEffBs2Dst0Kpi_;
