@@ -14,14 +14,7 @@ RooFormulaVar *Make_R_Dst0KDst0pi_CP(int uniqueId, const char *name,
 template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-          -2, 2)),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_,
-      //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
@@ -53,12 +46,32 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           RooArgSet(GlobalVars::Get(uniqueId_).kBF_Bu2D0Kst(),
                     GlobalVars::Get(uniqueId_).kBF_Bu2D0rho()))),
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0hst_", uniqueId_, Daughters::kpi,
+          "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           -5, 5)),
       // Ratio of K/π for part rec should be same for Dgamma and Dπ0
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_) {}
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_) {
+  if (Configuration::Get().neutral() == Neutral::gamma) {
+    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+            -2, 2));
+    // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+    // std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_,
+    //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive));
+  } else {
+    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+            0., Systematic::NA, Sign::same));
+  }
+}
 
 template <>
 DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)

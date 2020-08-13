@@ -445,7 +445,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             BachelorVars<Bachelor::pi>::Get(uniqueId)
-                .R_ADS_Bu2Dst0h_D0gamma_WN()));
+                .R_ADS_Bu2Dst0h_D0gamma()));
   }
 }
 
@@ -910,7 +910,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             DaughtersVars<Daughters::kpi>::Get(uniqueId)
-                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN(),
+                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .mcEff_Bu2Dst0h_D0gamma_WN(),
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
@@ -1105,7 +1105,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             BachelorVars<Bachelor::k>::Get(uniqueId)
-                .R_ADS_Bu2Dst0h_D0gamma_WN()));
+                .R_ADS_Bu2Dst0h_D0gamma()));
   }
   N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
       "N_tot_Bs2Dst0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 100,
@@ -1286,7 +1286,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
                                          Daughters::kk>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             DaughtersVars<Daughters::kk>::Get(uniqueId)
-                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN()));
+                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
   }
 }
 
@@ -1463,7 +1463,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                                          Daughters::pipi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             DaughtersVars<Daughters::pipi>::Get(uniqueId)
-                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN()));
+                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
   }
 }
 
