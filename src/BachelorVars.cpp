@@ -139,9 +139,9 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0,
                                   0.02, Systematic::NA, Sign::none));
   } else {
-    // Fixed from HFLAV: A_CP+
+    // HFLAV: A_CP+, BF average of B+ and B0
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.08,
+        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06,
                                   0.06, Systematic::NA, Sign::none));
   }
   // No measured params for B->D*h* modes
@@ -166,10 +166,10 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
         -5, 5));
   } else {
-    // Fixed from HFLAV
+    // HFLAV: R_ADS+, BF average of B+ and B0
     R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, Bachelor::k,
-                                  0.0012, 0.004, Systematic::NA, Sign::none));
+                                  0.016, 0.004, Systematic::NA, Sign::none));
   }
   // No measured params for B->D*h* modes: just let float
   R_ADS_Bu2Dst0hst_D0gamma_ =

@@ -758,9 +758,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::k, Daughters::kpi, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
+      // HFLAV: A_Kpi, BF average of B+ and B0
       A_Bu2D0hst_(Params::Get().CreateFixed("A_Bu2D0hst", uniqueId, _neutral,
-                                            Bachelor::k, Daughters::kpi, 0.0,
-                                            0.02, Systematic::NA, Sign::none)),
+                                            Bachelor::k, Daughters::kpi, -0.006,
+                                            0.029, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
                                        Bachelor::k, Daughters::kpi, 0, -1, 1)),
@@ -938,9 +939,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::k, Daughters::pik, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
+      // HFLAV: A_ADS+, BF average of B+ and B0
       A_Bu2D0hst_(Params::Get().CreateFixed("A_Bu2D0hst", uniqueId, _neutral,
-                                            Bachelor::k, Daughters::pik, -0.75,
-                                            0.16, Systematic::NA, Sign::none)),
+                                            Bachelor::k, Daughters::pik, -0.69,
+                                            0.15, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
                                        Bachelor::k, Daughters::pik, 0, -1, 1)),

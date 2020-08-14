@@ -228,9 +228,9 @@ GlobalVars::GlobalVars(int uniqueId)
   }
   R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
-  // HFLAV: R_CP+
+  // HFLAV: R_CP+, BF average of B+ and B0
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      "R_CP_Bu2D0hst", uniqueId_, 1.22, 0.07, Systematic::NA, Sign::none));
+      "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
   // No numbers for B->D*h* modes: just use signal
   R_CP_Bu2Dst0hst_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
