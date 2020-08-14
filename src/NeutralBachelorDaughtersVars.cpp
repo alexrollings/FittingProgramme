@@ -274,13 +274,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::pi, Daughters::pik, 0, 0.0,
                                            Systematic::NA, Sign::none)),
-      // FIX THIS when we know what it is (A_ADS in Dπ)
+      // Float due to presence of B->Dππ in D*π mode
       A_Bu2D0hst_(Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
                                                Bachelor::pi, Daughters::pik, 0,
                                                -5, 5)),
-      // A_Bu2D0hst_(Params::Get().CreateFixed("A_Bu2D0hst", uniqueId, _neutral,
-      //                                      Bachelor::pi, Daughters::pik, 0,
-      //                                      0.0, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
                                        Bachelor::pi, Daughters::pik, 0, -5, 5)),
@@ -758,12 +755,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bu2D0hst_(Params::Get().CreateFixed("A_Bu2D0hst", uniqueId, _neutral,
                                             Bachelor::k, Daughters::kpi, 0.0,
                                             0.02, Systematic::NA, Sign::none)),
-      A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-          "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
-          0.0, 0.02, Systematic::NA, Sign::none)),
-      A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-          "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
-          Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0pi0_(
+          Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
+                                       Bachelor::k, Daughters::kpi, 0, -1, 1)),
+      // A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+      //     "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
+      //     0.0, 0.02, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0gamma_(
+          Params::Get().CreateFloating("A_Bu2Dst0hst_D0gamma", uniqueId, _neutral,
+                                       Bachelor::k, Daughters::kpi, 0, -1, 1)),
+      // A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+      //     "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
+      //     Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
