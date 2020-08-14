@@ -26,6 +26,9 @@ class PdfBase {
   inline RooAddPdf &addPdfBuPartial() { return *addPdfBuPartial_; }
   inline RooAddPdf &addPdfDelta() { return *addPdfDelta_; }
 
+  virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
+
   virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() const = 0;
   virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma_FAVasSUP() const = 0;
   virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0() const = 0;
@@ -166,6 +169,17 @@ class Pdf : public PdfBase {
   virtual void AssignMisIdYields() {
     Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .AssignMisIdYields();
+  }
+
+  virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+               uniqueId_)
+        .N_tot_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+               uniqueId_)
+        .N_tot_Bu2Dst0h_D0pi0();
   }
 
   virtual RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() const {
