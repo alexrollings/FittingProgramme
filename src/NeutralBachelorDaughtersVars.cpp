@@ -126,12 +126,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bu2D0hst_(Params::Get().CreateFixed(
           "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
           0.0005, Systematic::NA, Sign::none)),
-      A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+      A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
-      A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          Daughters::kpi, 0, -1, 1)),
+      // A_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+      //     "A_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
+      //     Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
+      A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
+          Daughters::kpi, 0, -1, 1)),
+      // A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+      //     "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
+      //     Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
