@@ -134,14 +134,18 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFixed("A_CP_Bd2Dsth", uniqueId_, _bachelor, 0.0,
                                 0, Systematic::NA, Sign::none));
-  // Get number from Donal
-  A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
-  // // Fixed from HFLAV: A_CP+
-  // A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-  //     Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, -0.142,
-  //                               0.032, Systematic::NA, Sign::none));
+  if (_bachelor == Bachelor::pi) {
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0,
+                                  0.02, Systematic::NA, Sign::none));
+  } else {
+    // Fixed from HFLAV: A_CP+
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.08,
+                                  0.06, Systematic::NA, Sign::none));
+  }
   // No measured params for B->D*h* modes
+  // Fix for D*π to 0 with systematic??
   A_CP_Bu2Dst0hst_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
           "A_CP_Bu2Dst0hst_D0gamma", uniqueId_, _bachelor, 0, -1, 1));
@@ -154,12 +158,19 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
           GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
       0, Systematic::NA, Sign::none));
-  // Float to allow B->Dππ to fall in this PDF (only in ADS mode)
-  R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "R_ADS_Bu2D0hst", uniqueId_, _bachelor,
-      GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
-          GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
-      -5, 5));
+  if (_bachelor == Bachelor::pi) {
+    // Float to allow B->Dππ to fall in this PDF (only in ADS mode)
+    R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+        "R_ADS_Bu2D0hst", uniqueId_, _bachelor,
+        GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
+            GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
+        -5, 5));
+  } else {
+    // Fixed from HFLAV
+    R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, Bachelor::k,
+                                  0.0012, 0.004, Systematic::NA, Sign::none));
+  }
   // No measured params for B->D*h* modes: just let float
   R_ADS_Bu2Dst0hst_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
