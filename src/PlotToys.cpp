@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 #include "Configuration.h"
+#include "Efficiencies.h"
 #include "NeutralVars.h"
 #include "ParseArguments.h"
 #include "RooArgList.h"
@@ -54,30 +55,6 @@ RooArgList ReturnInitPars(bool dataToy,
     RooArgList initialPars = resultVec[it].floatParsInit();
     return initialPars;
   }
-}
-
-void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
-                   Mode mode) {
-  std::map<std::string, double> effMap;
-  ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
-  outputFile.cd();
-  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &effMap["orEff"],
-              ("orEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("orEffErr_" + EnumToString(mode)).c_str(), &effMap["orEffErr"],
-              ("orEffErr_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &effMap["boxEff"],
-              ("boxEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("boxEffErr_" + EnumToString(mode)).c_str(), &effMap["boxEffErr"],
-              ("boxEffErr_" + EnumToString(mode) + "/D").c_str());
-  if (config.fitBuPartial() == true) {
-    tree.Branch(("boxPartialEff_" + EnumToString(mode)).c_str(),
-                &effMap["boxPartialEff"],
-                ("boxPartialEff_" + EnumToString(mode) + "/D").c_str());
-    tree.Branch(("boxPartialEffErr_" + EnumToString(mode)).c_str(),
-                &effMap["boxPartialEffErr"],
-                ("boxPartialEffErr_" + EnumToString(mode) + "/D").c_str());
-  }
-  tree.Fill();
 }
 
 int main(int argc, char *argv[]) {

@@ -181,25 +181,6 @@ void MakeMapFittingDataSet(
   }
 }
 
-void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
-                   Mode mode) {
-  std::map<std::string, double> effMap;
-  ReturnBoxEffs(mode, Bachelor::pi, effMap, false);
-  outputFile.cd();
-  tree.Branch(("buDeltaCutEff_" + EnumToString(mode)).c_str(),
-              &effMap["buDeltaCutEff"],
-              ("buDeltaCutEff_" + EnumToString(mode) + "/D").c_str());
-  tree.Branch(("deltaCutEff_" + EnumToString(mode)).c_str(),
-              &effMap["deltaCutEff"],
-              ("deltaCutEff_" + EnumToString(mode) + "/D").c_str());
-  if (config.fitBuPartial() == true) {
-    tree.Branch(("deltaPartialCutEff_" + EnumToString(mode)).c_str(),
-                &effMap["deltaPartialCutEff"],
-                ("deltaPartialCutEff_" + EnumToString(mode) + "/D").c_str());
-  }
-  tree.Fill();
-}
-
 // ExtractEnumList() allows user to parse multiple options separated by
 // commas.
 // Takes full options string as input and outputs a vector containing each
