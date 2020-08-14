@@ -184,47 +184,47 @@ GlobalVars::GlobalVars(int uniqueId)
       Params::Get().CreateFixed("crossFeedRate", uniqueId_, cfAv, cfErr,
                                 Systematic::crossFeedRate, Sign::positive));
 
+  double k_R_CP_Bu2Dst0h_D0gamma = 0.902;
+  double k_R_CP_Bu2Dst0h_D0pi0 = 1.138;
   if (Configuration::Get().blindFit() == true) {
-    R_CP_Bu2Dst0h_D0gamma_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, 0.902, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_, 1.138, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_,
+                                     k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+                                     k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
     R_CP_Bu2Dst0h_D0gamma_WN_Blind_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_, 0.902, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_WN_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_, 1.138, -2, 2));
+            "R_CP_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_,
+            k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
+    R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
+                                     k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0gamma_" + std::to_string(uniqueId_))
-            .c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0gamma_Blind_));
-    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0pi0_" + std::to_string(uniqueId_)).c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
+        ("R_CP_Bu2Dst0h_D0gamma_" + std::to_string(uniqueId_)).c_str(), 0.3,
+        *R_CP_Bu2Dst0h_D0gamma_Blind_));
+    R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
+        MakeBlind(("R_CP_Bu2Dst0h_D0pi0_" + std::to_string(uniqueId_)).c_str(),
+                  0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
     R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0gamma_WN_" + std::to_string(uniqueId_))
-            .c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
+        ("R_CP_Bu2Dst0h_D0gamma_WN_" + std::to_string(uniqueId_)).c_str(), 0.3,
+        *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
     R_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0pi0_WN_" + std::to_string(uniqueId_))
-            .c_str(),
-        0.3, *R_CP_Bu2Dst0h_D0pi0_WN_Blind_));
+        ("R_CP_Bu2Dst0h_D0pi0_WN_" + std::to_string(uniqueId_)).c_str(), 0.3,
+        *R_CP_Bu2Dst0h_D0pi0_WN_Blind_));
   } else {
-    R_CP_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma", uniqueId_, 0.902, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma", uniqueId_,
+                                     k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0", uniqueId_, 1.138, -2, 2));
-    R_CP_Bu2Dst0h_D0gamma_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_, 0.902, -2, 2));
+            "R_CP_Bu2Dst0h_D0pi0", uniqueId_, k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
+    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_,
+                                     k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
     R_CP_Bu2Dst0h_D0pi0_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, 1.138, -2, 2));
+            "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
   }
   R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
