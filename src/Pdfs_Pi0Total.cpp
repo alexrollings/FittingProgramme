@@ -11,17 +11,23 @@ void AddPdfsPi0Total(Configuration &config,
       case Daughters::kpi:
         pdfs.emplace_back(&Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi,
                                Charge::total>::Get(id));
+        std::cout << "\n\n\na\n\n\n" << std::endl;
         pdfs.emplace_back(
             &Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(
                 id));
+        std::cout << "\n\n\nb\n\n\n" << std::endl;
         Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(id)
             .AssignMisIdYields();
+        std::cout << "\n\n\nc\n\n\n" << std::endl;
         Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(id)
             .AssignMisIdYields();
+        std::cout << "\n\n\nd\n\n\n" << std::endl;
         Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(id)
             .CreateBuAddPdf();
+        std::cout << "\n\n\ne\n\n\n" << std::endl;
         Pdf<Neutral::pi0, Bachelor::k, Daughters::kpi, Charge::total>::Get(id)
             .CreateBuAddPdf();
+        std::cout << "\n\n\nf\n\n\n" << std::endl;
         if (config.fit1D() == false) {
           Pdf<Neutral::pi0, Bachelor::pi, Daughters::kpi, Charge::total>::Get(
               id)

@@ -777,6 +777,24 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
+        for (auto &p : pdfs) {
+          std::cout << "N_tot_Bu2Dst0h_D0pi0 = "
+                    << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "N_trueId_Bu2Dst0h_D0pi0 = "
+                    << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "N_misId_Bu2Dst0h_D0pi0 = "
+                    << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "N_misId_inFit_Bu2Dst0h_D0pi0 = "
+                    << p->N_misId_inFit_Bu2Dst0h_D0pi0().getVal() << "\n";
+          std::cout << "N_tot_Bu2Dst0h_D0gamma = "
+                    << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << "N_trueId_Bu2Dst0h_D0gamma = "
+                    << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << "N_misId_Bu2Dst0h_D0gamma = "
+                    << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << "N_misId_inFit_Bu2Dst0h_D0gamma = "
+                    << p->N_misId_inFit_Bu2Dst0h_D0gamma().getVal() << "\n";
+        }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
