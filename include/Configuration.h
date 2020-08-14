@@ -165,6 +165,8 @@ enum class Systematic {
   kBF_Dst2D0pi,
   kBF_Bu2D0rho,
   kBF_Bu2D0Kst,
+  kBF_Bd2D0rho0,
+  kBF_Bd2D0Kst0,
   kBF_Bu2Dst0rho,
   kBF_Bu2Dst0Kst
 };

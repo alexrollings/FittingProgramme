@@ -56,6 +56,8 @@ class GlobalVars {
   RooRealVar &kBF_Dst2D0pi() { return *kBF_Dst2D0pi_; }
   RooRealVar &kBF_Bu2D0rho() { return *kBF_Bu2D0rho_; }
   RooRealVar &kBF_Bu2D0Kst() { return *kBF_Bu2D0Kst_; }
+  RooRealVar &kBF_Bd2D0rho0() { return *kBF_Bd2D0rho0_; }
+  RooRealVar &kBF_Bd2D0Kst0() { return *kBF_Bd2D0Kst0_; }
   RooRealVar &kBF_Bu2Dst0rho() { return *kBF_Bu2Dst0rho_; }
   RooRealVar &kBF_Bu2Dst0Kst() { return *kBF_Bu2Dst0Kst_; }
 
@@ -112,6 +114,8 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> kBF_Dst2D0pi_;
   std::shared_ptr<RooRealVar> kBF_Bu2D0rho_;
   std::shared_ptr<RooRealVar> kBF_Bu2D0Kst_;
+  std::shared_ptr<RooRealVar> kBF_Bd2D0rho0_;
+  std::shared_ptr<RooRealVar> kBF_Bd2D0Kst0_;
   std::shared_ptr<RooRealVar> kBF_Bu2Dst0rho_;
   std::shared_ptr<RooRealVar> kBF_Bu2Dst0Kst_;
 
