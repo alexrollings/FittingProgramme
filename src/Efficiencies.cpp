@@ -121,7 +121,7 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
       std::string fName;
       if (D02pik == false) {
         fName =
-            dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_MERemoved_Fit.root";
+            dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_MERemoved.root";
       } else {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       }
