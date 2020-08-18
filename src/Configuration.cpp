@@ -234,14 +234,20 @@ std::string Configuration::ReturnBoxString() {
 // Need a template for this as each enum option is a different 'type'
 template <>
 Systematic StringToEnum<Systematic>(std::string const &systematic) {
-  if (systematic == "pi0DeltaTails") {
+  if (systematic == "pi0DeltaWidthRatio") {
+    return Systematic::pi0DeltaWidthRatio;
+  } else if (systematic == "pi0DeltaTails") {
     return Systematic::pi0DeltaTails;
   } else if (systematic == "pi0DeltaFrac") {
     return Systematic::pi0DeltaFrac;
+  } else if (systematic == "pi0BuWidthRatio") {
+    return Systematic::pi0BuWidthRatio;
   } else if (systematic == "pi0BuTails") {
     return Systematic::pi0BuTails;
   } else if (systematic == "pi0BuFrac") {
     return Systematic::pi0BuFrac;
+  } else if (systematic == "pi0BuPartialWidthRatio") {
+    return Systematic::pi0BuPartialWidthRatio;
   } else if (systematic == "pi0BuPartialTails") {
     return Systematic::pi0BuPartialTails;
   } else if (systematic == "pi0BuPartialFrac") {
@@ -254,10 +260,14 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::crossFeedBuPartialPdf;
   } else if (systematic == "crossFeedDeltaPdf") {
     return Systematic::crossFeedDeltaPdf;
+  } else if (systematic == "gammaDeltaWidthRatio") {
+    return Systematic::gammaDeltaWidthRatio;
   } else if (systematic == "gammaDeltaTails") {
     return Systematic::gammaDeltaTails;
   } else if (systematic == "gammaDeltaFrac") {
     return Systematic::gammaDeltaFrac;
+  } else if (systematic == "gammaBuWidthRatio") {
+    return Systematic::gammaBuWidthRatio;
   } else if (systematic == "gammaBuTails") {
     return Systematic::gammaBuTails;
   } else if (systematic == "gammaBuFrac") {
@@ -478,14 +488,20 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
 
 std::string EnumToString(Systematic systematic) {
   switch (systematic) {
+    case Systematic::pi0DeltaWidthRatio:
+      return "pi0DeltaWidthRatio";
     case Systematic::pi0DeltaTails:
       return "pi0DeltaTails";
     case Systematic::pi0DeltaFrac:
       return "pi0DeltaFrac";
+    case Systematic::pi0BuWidthRatio:
+      return "pi0BuWidthRatio";
     case Systematic::pi0BuTails:
       return "pi0BuTails";
     case Systematic::pi0BuFrac:
       return "pi0BuFrac";
+    case Systematic::pi0BuPartialWidthRatio:
+      return "pi0BuPartialWidthRatio";
     case Systematic::pi0BuPartialTails:
       return "pi0BuPartialTails";
     case Systematic::pi0BuPartialFrac:
@@ -498,10 +514,14 @@ std::string EnumToString(Systematic systematic) {
       return "crossFeedBuPartialPdf";
     case Systematic::crossFeedDeltaPdf:
       return "crossFeedDeltaPdf";
+    case Systematic::gammaDeltaWidthRatio:
+      return "gammaDeltaWidthRatio";
     case Systematic::gammaDeltaTails:
       return "gammaDeltaTails";
     case Systematic::gammaDeltaFrac:
       return "gammaDeltaFrac";
+    case Systematic::gammaBuWidthRatio:
+      return "gammaBuWidthRatio";
     case Systematic::gammaBuTails:
       return "gammaBuTails";
     case Systematic::gammaBuFrac:
