@@ -778,17 +778,17 @@ int main(int argc, char **argv) {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         for (auto &p : pdfs) {
-          std::cout << "N_tot_Bu2Dst0h_D0pi0 = "
+          std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
                     << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "N_trueId_Bu2Dst0h_D0pi0 = "
+          std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
                     << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "N_misId_Bu2Dst0h_D0pi0 = "
+          std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
                     << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          std::cout << "N_tot_Bu2Dst0h_D0gamma = "
+          std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
                     << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << "N_trueId_Bu2Dst0h_D0gamma = "
+          std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
                     << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << "N_misId_Bu2Dst0h_D0gamma = "
+          std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
                     << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
         }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
