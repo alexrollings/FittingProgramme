@@ -20,6 +20,11 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -2, 2)),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+      //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
+      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+      //     0, Systematic::NA, Sign::same)),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
@@ -30,17 +35,14 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -2, 2)),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_,
-      //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive)),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
-          "R_Dst0KDst0pi_Bd2Dsth", uniqueId_,
-          Daughters::kpi, 0.077, 0.007, Systematic::NA, Sign::positive)),
+          "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.077, 0.007,
+          Systematic::NA, Sign::positive)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
       R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFixed(
-          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_,
-          Daughters::kpi, 0.047, 0.006, Systematic::NA, Sign::positive)),
+          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.006,
+          Systematic::NA, Sign::positive)),
       // Float as only pick up on part of D*rho phase space - R slightly lower
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
@@ -57,9 +59,11 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
                 GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
             -2, 2));
     // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
-    // std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-    //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_,
-    //     Daughters::kpi, 0.0810, 0, Systematic::NA, Sign::positive));
+    //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    //         "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+    //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+    //             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+    //         0, Systematic::NA, Sign::same));
   } else {
     R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
