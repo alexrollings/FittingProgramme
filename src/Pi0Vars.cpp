@@ -88,27 +88,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_thresholdDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_thresholdDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
-      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0,
-      //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
-      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, -4.8517e+00,
-          3.66e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
-      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
-      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0,
-      //     Mode::Bu2Dst0pi_D0pi0_WN, -10, 10)),
-      Bu2Dst0h_D0pi0_WN_bDelta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_bDelta", uniqueId_, Neutral::pi0,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
       Bu2Dst0h_D0pi0_WN_cDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_cDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::same)),
-      pdfDelta_Bu2Dst0h_D0pi0_WN_(
-          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" + ComposeName(uniqueId_, Neutral::pi0))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          *Bu2Dst0h_D0pi0_WN_thresholdDelta_, *Bu2Dst0h_D0pi0_WN_cDelta_,
-          *Bu2Dst0h_D0pi0_WN_aDelta_, *Bu2Dst0h_D0pi0_WN_bDelta_),
       Bu2Dst0h_D0pi0_WN_meanBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_meanBu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
@@ -271,12 +253,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
       //     Systematic::Bd2DsthDeltaPdf, Sign::none)),
       //     Float along to reduce systematic if needed
-      Bd2Dsth_aDelta_(Params::Get().CreateFixed(
-          "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, 3.0827e+00, 1.65e+00, 
-          Systematic::Bd2DsthDeltaPdf, Sign::none)),
-      // Bd2Dsth_aDelta_(Params::Get().CreateFloating(
-      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
-      //     -5, 5)),
+      // Bd2Dsth_aDelta_(Params::Get().CreateFixed(
+      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, 3.0827e+00, 1.65e+00, 
+      //     Systematic::Bd2DsthDeltaPdf, Sign::none)),
+      Bd2Dsth_aDelta_(Params::Get().CreateFloating(
+          "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
+          -5, 5)),
       Bd2Dsth_bDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_bDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2DsthDeltaPdf, Sign::none)),

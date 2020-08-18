@@ -220,6 +220,27 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       pdfBu_misId_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
+      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+      //     Mode::Bu2Dst0K_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
+      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+      //     -4.8517e+00, 3.66e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
+      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+          Mode::Bu2Dst0K_D0pi0_WN, -10, 10)),
+      Bu2Dst0h_D0pi0_WN_bDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_WN_bDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+          Mode::Bu2Dst0K_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
+      pdfDelta_Bu2Dst0h_D0pi0_WN_(
+          ("pdfDelta_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_WN_thresholdDelta(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_cDelta(),
+          *Bu2Dst0h_D0pi0_WN_aDelta_, *Bu2Dst0h_D0pi0_WN_bDelta_),
       Bu2Dst0h_D0pi0_WN_sigmaBu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigmaBu_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
