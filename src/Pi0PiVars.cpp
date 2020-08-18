@@ -206,12 +206,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
       //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
-      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
-      //     -4.8517e+00, 3.66e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
-      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
+      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Mode::Bu2Dst0pi_D0pi0_WN, -10, 10)),
+          -2.8370e+00, 1.20e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
+      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, -10, 10)),
       Bu2Dst0h_D0pi0_WN_bDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_bDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
@@ -228,12 +228,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               .Bu2Dst0h_D0pi0_WN_thresholdDelta(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_cDelta(),
           *Bu2Dst0h_D0pi0_WN_aDelta_, *Bu2Dst0h_D0pi0_WN_bDelta_),
-      Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFloating(
-          "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Mode::Bu2Dst0pi_D0pi0_WN, 40, 70)),
+      // Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, 40, 70)),
       // Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
       //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
+          6.3682e+01, 9.94e-01, Systematic::pi0WNBuPdf, Sign::same)),
       pdfBu_Bu2Dst0h_D0pi0_WN_(
           ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))

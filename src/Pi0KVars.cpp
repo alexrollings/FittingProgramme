@@ -223,12 +223,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
       //     Mode::Bu2Dst0K_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
-      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
-      //     -4.8517e+00, 3.66e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
-      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
+      Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
-          Mode::Bu2Dst0K_D0pi0_WN, -10, 10)),
+          -1.3417e+00, 2.68e-01, Systematic::pi0WNDeltaPdf, Sign::none)),
+      // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
+      //     Mode::Bu2Dst0K_D0pi0_WN, -10, 10)),
       Bu2Dst0h_D0pi0_WN_bDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_bDelta", uniqueId_, Neutral::pi0, Bachelor::k,
           Mode::Bu2Dst0K_D0pi0_WN, Systematic::pi0WNDeltaPdf, Sign::none)),
