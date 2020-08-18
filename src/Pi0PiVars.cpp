@@ -203,9 +203,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bu2Dst0h_D0gamma_fracPdf1Bu_(nullptr),
       pdfBu_misId_Bu2Dst0h_D0gamma_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
-      Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
+      // Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+          Mode::Bu2Dst0pi_D0pi0_WN, 40, 70)),
       pdfBu_Bu2Dst0h_D0pi0_WN_(
           ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
