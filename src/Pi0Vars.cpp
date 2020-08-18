@@ -252,7 +252,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // Bd2Dsth_aDelta_(Params::Get().CreateFixed(
       //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
       //     Systematic::Bd2DsthDeltaPdf, Sign::none)),
-      //     Float along to reduce systematic if needed
       // Bd2Dsth_aDelta_(Params::Get().CreateFixed(
       //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, 3.0827e+00, 1.65e+00, 
       //     Systematic::Bd2DsthDeltaPdf, Sign::none)),
@@ -325,8 +324,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
           Systematic::Bu2D0hstBuPdf, Sign::same)),
       Bu2D0hst_sigmaRatio21Bu_(nullptr),
-      Bu2D0hst_a1Bu_(nullptr),
-      Bu2D0hst_n1Bu_(nullptr),
+      Bu2D0hst_a1Bu_(Params::Get().CreateFixed(
+          "Bu2D0hst_a1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
+          Systematic::Bu2D0hstBuPdf, Sign::same)),
+      Bu2D0hst_n1Bu_(Params::Get().CreateFixed(
+          "Bu2D0hst_n1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
+          Systematic::Bu2D0hstBuPdf, Sign::same)),
       Bu2D0hst_fracPdf1Bu_(nullptr),
       Bu2D0hst_meanBuPartial_(nullptr),
       Bu2D0hst_KpiSigmaBuPartial_(nullptr),

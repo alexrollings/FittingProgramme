@@ -472,13 +472,15 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       Bu2D0hst_sigma2Bu_(),
       pdf1Bu_Bu2D0hst_(),
       pdf2Bu_Bu2D0hst_(),
-      pdfBu_Bu2D0hst_(new RooGaussian(
+      pdfBu_Bu2D0hst_(new RooCBShape(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2D0hst_mean1Bu(),
-          *Bu2D0hst_sigma1Bu_)),
+          *Bu2D0hst_sigma1Bu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2D0hst_a1Bu(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2D0hst_n1Bu())),
       Bu2D0hst_sigmaBuPartial_(nullptr),
       pdfBuPartial_Bu2D0hst_(),
       // -------------------- Mis-ID ------------------- //
