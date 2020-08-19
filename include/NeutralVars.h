@@ -192,13 +192,39 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0pi0_WN_thresholdDelta() {
     return *Bu2Dst0h_D0pi0_WN_thresholdDelta_;
   }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_cDelta() { return *Bu2Dst0h_D0pi0_WN_cDelta_; }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_meanBu() { return *Bu2Dst0h_D0pi0_WN_meanBu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_cDelta() {
+    return *Bu2Dst0h_D0pi0_WN_cDelta_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_mean1Bu() {
+    return *Bu2Dst0h_D0pi0_WN_mean1Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_meanOffset21Bu() {
+    return *Bu2Dst0h_D0pi0_WN_meanOffset21Bu_;
+  }
+  RooFormulaVar &Bu2Dst0h_D0pi0_WN_mean2Bu() {
+    return Bu2Dst0h_D0pi0_WN_mean2Bu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_KpiSigmaBu() {
     return *Bu2Dst0h_D0pi0_WN_KpiSigmaBu_;
   }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_a1Bu() { return *Bu2Dst0h_D0pi0_WN_a1Bu_; }
-  RooRealVar &Bu2Dst0h_D0pi0_WN_n1Bu() { return *Bu2Dst0h_D0pi0_WN_n1Bu_; }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu() {
+    return *Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_a1Bu() {
+    return *Bu2Dst0h_D0pi0_WN_a1Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_a2Bu() {
+    return *Bu2Dst0h_D0pi0_WN_a2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_n1Bu() {
+    return *Bu2Dst0h_D0pi0_WN_n1Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_n2Bu() {
+    return *Bu2Dst0h_D0pi0_WN_n2Bu_;
+  }
+  RooRealVar &Bu2Dst0h_D0pi0_WN_fracPdf1Bu() {
+    return *Bu2Dst0h_D0pi0_WN_fracPdf1Bu_;
+  }
   RooRealVar &Bu2Dst0h_D0pi0_WN_mean1BuPartial() {
     return *Bu2Dst0h_D0pi0_WN_mean1BuPartial_;
   }
@@ -558,10 +584,16 @@ class NeutralVars {
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_thresholdDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_cDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_mean1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanOffset21Bu_;
+  RooFormulaVar Bu2Dst0h_D0pi0_WN_mean2Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_KpiSigmaBu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_a2Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_n1Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_n2Bu_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_mean1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_meanOffset31BuPartial_;
   RooFormulaVar Bu2Dst0h_D0pi0_WN_mean3BuPartial_;

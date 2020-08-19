@@ -234,18 +234,21 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
       //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_WN_sigmaBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_sigmaBu", uniqueId_, Neutral::pi0, Bachelor::pi,
+      Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
           6.3682e+01, 9.94e-01, Systematic::pi0WNBuPdf, Sign::same)),
-      pdfBu_Bu2Dst0h_D0pi0_WN_(
+      Bu2Dst0h_D0pi0_WN_sigma2Bu_(nullptr),
+      pdf1Bu_Bu2Dst0h_D0pi0_WN_(),
+      pdf2Bu_Bu2Dst0h_D0pi0_WN_(),
+      pdfBu_Bu2Dst0h_D0pi0_WN_(new RooCBShape(
           ("pdfBu_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "", Configuration::Get().buDeltaMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_meanBu(),
-          *Bu2Dst0h_D0pi0_WN_sigmaBu_,
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_mean1Bu(),
+          *Bu2Dst0h_D0pi0_WN_sigma1Bu_,
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_a1Bu(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_n1Bu()),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_n1Bu())),
       Bu2Dst0h_D0pi0_WN_sigma1BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_sigma2BuPartial_(nullptr),
       Bu2Dst0h_D0pi0_WN_sigma3BuPartial_(nullptr),
