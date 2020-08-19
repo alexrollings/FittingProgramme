@@ -213,7 +213,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bd2Dsth()));
     N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
-            uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bu2Dst0h_D0gamma_,
+            uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bd2Dsth_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     N_tot_Bu2Dst0hst_D0gamma_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(

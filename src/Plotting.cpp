@@ -667,6 +667,18 @@ void PlotComponent(
   std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
   pullHist = frame->RooPlot::pullHist();
+  pullFrame->SetTitle("");
+  pullFrame->SetXTitle(" ");
+  pullFrame->GetYaxis()->SetTitle("Residual (#sigma)");
+  pullFrame->GetYaxis()->CenterTitle();
+  // pullFrame->SetLabelFont(132, "XY");
+  // pullFrame->SetTitleFont(132, "XY");
+  // pullFrame->SetTitleSize(0.13, "Y");
+  // pullFrame->SetTitleOffset(0.35, "Y");
+  // pullFrame->SetLabelSize(0.12, "XY");
+  // pullFrame->SetLabelOffset(0.01, "Y");
+  pullFrame->GetYaxis()->SetRangeUser(-5, 5);
+  pullFrame->GetYaxis()->SetNdivisions(6);
 
   if (config.noFit() == false) {
     std::vector<const char *> pdfCharVec;
@@ -868,15 +880,16 @@ void PlotComponent(
     pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
                                                    daughters, charge))
                            .c_str());
-    pullFrame->SetTitle("");
-    pullFrame->SetXTitle(" ");
-    pullFrame->GetYaxis()->SetTitle(" ");
-    // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
-    // pullFrame->SetTitleSize(0.2, "Y");
-    // pullFrame->SetTitleOffset(0.1, "Y");
-    pullFrame->SetLabelSize(0.15, "Y");
-    pullFrame->SetLabelOffset(0.02, "Y");
-    pullFrame->SetLabelFont(132, "Y");
+    // pullFrame->SetTitle("");
+    // pullFrame->SetXTitle(" ");
+    // pullFrame->GetYaxis()->SetTitle(" ");
+    // // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
+    // // pullFrame->SetTitleSize(0.2, "Y");
+    // // pullFrame->SetTitleOffset(0.1, "Y");
+    pullFrame->SetLabelSize(0.15, "XY");
+    pullFrame->SetLabelOffset(0.02, "XY");
+    pullFrame->SetLabelFont(132, "XY");
+    pullFrame->GetYaxis()->SetRangeUser(-5, 5);
     pullFrame->Draw();
     zeroLine.Draw("same");
   }
