@@ -313,15 +313,21 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFixed(
+      // Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+          1, 0, 5)),
       Bu2Dst0h_D0pi0_WN_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_n1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_WN_a2Bu_(Params::Get().CreateFixed(
+      // Bu2Dst0h_D0pi0_WN_a2Bu_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_WN_a2Bu", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_WN_a2Bu_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_WN_a2Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
+          -1, -5, -0.00001)),
       Bu2Dst0h_D0pi0_WN_n2Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_n2Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
@@ -345,8 +351,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //     "Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial", uniqueId_, Neutral::gamma,
       //     0.95, 0.5, 1.5)),
       Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial", uniqueId_, Neutral::gamma, 0.937220,
-          0.059189, Systematic::pi0WNBuPartialPdf, Sign::same)),
+          "Bu2Dst0h_D0pi0_WN_KpiSigmaBuPartial", uniqueId_, Neutral::gamma,
+          0.937220, 0.059189, Systematic::pi0WNBuPartialPdf, Sign::same)),
       Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigmaRatio21BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPartialPdf, Sign::same)),
@@ -581,6 +587,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0hst_a1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_a1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::same)),
+      // Bu2D0hst_a1Bu_(Params::Get().CreateFloating(
+      //     "Bu2D0hst_a1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho, 0, 5)),
       Bu2D0hst_n1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_n1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::same)),
@@ -945,13 +953,25 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //                      Sign::none)),
       bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
-          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma,
+          Bachelor::pi,
                        Efficiency::mcEff) /
               ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
                            Bachelor::pi, Efficiency::mcEff) *
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -5, 5)),
+      // bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+      //     "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
+      //     ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
+      //                  Efficiency::mcEff) /
+      //         ReturnMCEffs(Mode::Bd2Dstpi, Neutral::gamma, Bachelor::pi,
+      //                      Efficiency::mcEff) *
+      //         (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() *
+      //          GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal()) /
+      //         (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
+      //          GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()), 0.0,
+      //     Systematic::NA, Sign::same)),
       // Don't use: fix yield w.r.t. gamma mode in NBDVars
       bkgFracFAV_Bu2Dst0hst_D0pi0_(nullptr) {}
 // bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(

@@ -580,6 +580,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::positive)),
+      // Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
+      //     Mode::Bu2Dst0pi_D0pi0_WN, 55, 75)),
       Bu2Dst0h_D0pi0_WN_sigma2Bu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigma2Bu_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
@@ -893,6 +896,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
           Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same)),
+      // Bu2D0hst_sigma1Bu_(Params::Get().CreateFloating(
+      //     "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
+      //     Mode::Bu2D0rho, 55, 75)),
       Bu2D0hst_sigma2Bu_(("Bu2D0hst_sigma2Bu_" +
                           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
                              .c_str(),
