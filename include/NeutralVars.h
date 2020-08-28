@@ -562,10 +562,6 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_fracPdf2BuPartial_;
   // -------------------- Bu2Dst0h_D0gamma_WN -------------------- //
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_meanDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_sigmaDelta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_a1Delta_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_n1Delta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_thresholdDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_aDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_bDelta_;
