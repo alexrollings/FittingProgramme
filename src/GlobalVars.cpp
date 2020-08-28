@@ -234,8 +234,8 @@ GlobalVars::GlobalVars(int uniqueId)
   // No numbers for B->D*h* modes: just use signal
   R_CP_Bu2Dst0hst_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, 1, -2, 2));
+          "R_CP_Bu2Dst0hst_D0pi0", uniqueId_, 1, -5, 5));
   R_CP_Bu2Dst0hst_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, 1, -2, 2));
+          "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, 1, -5, 5));
 }
