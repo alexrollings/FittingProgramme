@@ -23,10 +23,12 @@
 template <Neutral neutral, Daughters daughters>
 RooFormulaVar *Make_N_tot_k_kpi(int uniqueId, const char *name,
                                 RooAbsReal &N_tot_pi, RooAbsReal &ratio,
-                                RooAbsReal &mcEffPi, RooAbsReal &mcEffK) {
+                                RooAbsReal &mcEffPi, RooAbsReal &mcEffK,
+                                RooAbsReal &orEffPi, RooAbsReal &orEffK) {
   return new RooFormulaVar(
       (name + ComposeName(uniqueId, neutral, Bachelor::k, daughters)).c_str(),
-      "", "@0*@1*(@2/@3)", RooArgSet(N_tot_pi, ratio, mcEffPi, mcEffK));
+      "", "@0*@1*(@2/@3)*(@4/@5)",
+      RooArgSet(N_tot_pi, ratio, mcEffK, mcEffPi, orEffK, orEffPi));
 }
 
 // DON'T need to multiple CP K yields by MC effs as ratio defined in terms of

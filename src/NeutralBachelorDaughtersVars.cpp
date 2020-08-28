@@ -244,7 +244,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
                     .getVal() *
                 GlobalVars::Get(uniqueId).kBF_Dst02D0gamma().getVal() /
                 GlobalVars::Get(uniqueId).kBF_Dst02D0pi0().getVal(),
-            -1000000, 1000000));
+            0, 10000));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0pi0_,
@@ -746,36 +746,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
               GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
               GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
           -1000000, 1000000)),
-      // N_tot_Bu2Dst0hst_D0pi0_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
-      //     uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
-      //     NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-      //                                  Daughters::kpi>::Get(uniqueId)
-      //         .N_tot_Bu2Dst0hst_D0pi0())),
-      N_tot_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
-          "N_tot_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
-          Daughters::pipi,
+      N_tot_Bu2Dst0hst_D0pi0_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
+          uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                        Daughters::kpi>::Get(uniqueId)
-                  .N_tot_Bu2Dst0hst_D0pi0()
-                  .getVal() *
-              GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
-              GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
-          -1000000, 1000000)),
-      // N_tot_Bu2Dst0hst_D0gamma_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
-      //     uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
+              .N_tot_Bu2Dst0hst_D0pi0())),
+      // N_tot_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
+      //     "N_tot_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
+      //     Daughters::pipi,
       //     NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
       //                                  Daughters::kpi>::Get(uniqueId)
-      //         .N_tot_Bu2Dst0hst_D0gamma())),
-      N_tot_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
-          "N_tot_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
-          Daughters::pipi,
+      //             .N_tot_Bu2Dst0hst_D0pi0()
+      //             .getVal() *
+      //         GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
+      //         GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
+      //     -1000000, 1000000)),
+      N_tot_Bu2Dst0hst_D0gamma_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
+          uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                        Daughters::kpi>::Get(uniqueId)
-                  .N_tot_Bu2Dst0hst_D0gamma()
-                  .getVal() *
-              GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
-              GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
-          -1000000, 1000000)),
+              .N_tot_Bu2Dst0hst_D0gamma())),
+      // N_tot_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+      //     "N_tot_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
+      //     Daughters::pipi,
+      //     NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+      //                                  Daughters::kpi>::Get(uniqueId)
+      //             .N_tot_Bu2Dst0hst_D0gamma()
+      //             .getVal() *
+      //         GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
+      //         GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
+      //     -1000000, 1000000)),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
@@ -883,7 +883,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0gamma(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0gamma())),
+              .mcEff_Bu2Dst0h_D0gamma(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBu2Dst0h_D0gamma(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBu2Dst0h_D0gamma())),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -894,7 +898,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bu2Dst0h_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0h_D0pi0())),
+              .mcEff_Bu2Dst0h_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBu2Dst0h_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBu2Dst0h_D0pi0())),
       N_tot_Bu2Dst0h_D0gamma_WN_(nullptr),
       // N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
       //     uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_",
@@ -906,7 +914,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       //     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
       //         .mcEff_Bu2Dst0h_D0pi0_WN(),
       //     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-      //         .mcEff_Bu2Dst0h_D0pi0_WN())),
+      //         .mcEff_Bu2Dst0h_D0pi0_WN(),
+      //     NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+      //         .orEffBu2Dst0h_D0pi0_WN(),
+      //     NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+      //         .orEffBu2Dst0h_D0pi0_WN())),
       N_tot_Bu2Dst0h_D0pi0_WN_(
           Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::kpi>(
               uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
@@ -921,7 +933,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bd2Dsth(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bd2Dsth())),
+              .mcEff_Bd2Dsth(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBd2Dsth(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBd2Dsth())),
       N_tot_Bu2D0hst_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2D0hst_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -931,7 +947,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bu2D0hst(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2D0hst())),
+              .mcEff_Bu2D0hst(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBu2D0hst(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBu2D0hst())),
       N_tot_Bu2Dst0hst_D0pi0_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -942,7 +962,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bu2Dst0hst_D0pi0(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0hst_D0pi0())),
+              .mcEff_Bu2Dst0hst_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBu2Dst0hst_D0pi0(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBu2Dst0hst_D0pi0())),
       N_tot_Bu2Dst0hst_D0gamma_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -953,7 +977,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
           NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
               .mcEff_Bu2Dst0hst_D0gamma(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-              .mcEff_Bu2Dst0hst_D0gamma())),
+              .mcEff_Bu2Dst0hst_D0gamma(),
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .orEffBu2Dst0hst_D0gamma(),
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .orEffBu2Dst0hst_D0gamma())),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -978,7 +1006,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .mcEff_Bu2Dst0h_D0gamma_WN(),
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                .mcEff_Bu2Dst0h_D0gamma_WN()));
+                .mcEff_Bu2Dst0h_D0gamma_WN(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .orEffBu2Dst0h_D0gamma_WN(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .orEffBu2Dst0h_D0gamma_WN()));
     A_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::k, Daughters::kpi,
         0., 0., Systematic::NA, Sign::none));
