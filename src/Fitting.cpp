@@ -777,20 +777,22 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        // for (auto &p : pdfs) {
-        //   std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
-        //             << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //             << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //             << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //   std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
-        //             << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //   std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
-        //             << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //   std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
-        //             << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        // }
+        for (auto &p : pdfs) {
+          // std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
+          //           << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
+          // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //           << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          // std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
+          // std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
+                    << p->N_tot_Bu2D0hst().getVal() << "\n";
+        }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
