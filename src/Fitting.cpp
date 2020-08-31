@@ -664,13 +664,28 @@ int main(int argc, char **argv) {
     }
 
     if (config.noFit() == false) {
-      dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-          RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-          RooFit::Constrain(
-              NeutralVars<Neutral::pi0>::Get(id)
-                  .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
+      if (config.neutral() == Neutral::pi0) {
+        dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+            RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+            RooFit::Constrain(
+                NeutralVars<Neutral::pi0>::Get(id)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
+      } else {
+        dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+            RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+            // RooFit::Constrain(
+            //     NeutralVars<Neutral::gamma>::Get(id)
+            //         .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
+            RooFit::Constrain(RooArgSet(
+                NeutralVars<Neutral::gamma>::Get(id)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN(),
+                NeutralVars<Neutral::gamma>::Get(id)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN()))));
+      }
       dataFitResult->SetName("DataFitResult");
     }
 
