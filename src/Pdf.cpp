@@ -10,6 +10,9 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
       addPdfBu_(nullptr),
       addPdfBuPartial_(nullptr),
       addPdfDelta_(nullptr),
+      prodPdfBu_(nullptr),
+      prodPdfBuPartial_(nullptr),
+      prodPdfDelta_(nullptr),
       yieldsBu_(("yieldsBu_" +
                  ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
                     .c_str()),

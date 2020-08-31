@@ -25,6 +25,9 @@ class PdfBase {
   inline RooAddPdf &addPdfBu() { return *addPdfBu_; }
   inline RooAddPdf &addPdfBuPartial() { return *addPdfBuPartial_; }
   inline RooAddPdf &addPdfDelta() { return *addPdfDelta_; }
+  inline RooProdPdf &prodPdfBu() { return *prodPdfBu_; }
+  inline RooProdPdf &prodPdfBuPartial() { return *prodPdfBuPartial_; }
+  inline RooProdPdf &prodPdfDelta() { return *prodPdfDelta_; }
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
@@ -145,6 +148,9 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdfBu_;
   std::unique_ptr<RooAddPdf> addPdfBuPartial_;
   std::unique_ptr<RooAddPdf> addPdfDelta_;
+  std::unique_ptr<RooProdPdf> prodPdfBu_;
+  std::unique_ptr<RooProdPdf> prodPdfBuPartial_;
+  std::unique_ptr<RooProdPdf> prodPdfDelta_;
 };
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -693,6 +699,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
                                                _bachelor, _daughters, _charge))
                         .c_str(),
                     "", PdfBase::functionsBu_, PdfBase::yieldsBu_));
+  PdfBase::prodPdfBu_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+      ("prodPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
+                                  _daughters, _charge))
+          .c_str(),
+      "",
+      RooArgSet(*addPdfBu_,
+                NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
 }
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -789,13 +803,13 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_misId_BuPartial_Bu2Dst0hst_D0pi0());
-      PdfBase::functionsBuPartial_.add(
-          NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
-              .pdfBuPartial_misId_Bu2Dst0hst_D0gamma());
-      PdfBase::yieldsBuPartial_.add(
-          Yields<_neutral, _bachelor, _daughters, _charge>::Get(
-              PdfBase::uniqueId_)
-              .N_misId_BuPartial_Bu2Dst0hst_D0gamma());
+    PdfBase::functionsBuPartial_.add(
+        NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+            .pdfBuPartial_misId_Bu2Dst0hst_D0gamma());
+    PdfBase::yieldsBuPartial_.add(
+        Yields<_neutral, _bachelor, _daughters, _charge>::Get(
+            PdfBase::uniqueId_)
+            .N_misId_BuPartial_Bu2Dst0hst_D0gamma());
   }
   // if (_daughters == Daughters::pik) {
   //   PdfBase::functionsBuPartial_.add(
@@ -832,6 +846,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
                                         _daughters, _charge))
           .c_str(),
       "", PdfBase::functionsBuPartial_, PdfBase::yieldsBuPartial_));
+  PdfBase::prodPdfBuPartial_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+      ("prodPdfBuPartial_" + ComposeName(PdfBase::uniqueId_, _neutral,
+                                         _bachelor, _daughters, _charge))
+          .c_str(),
+      "",
+      RooArgSet(*addPdfBuPartial_,
+                NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
 }
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -911,16 +933,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Delta_Bu2D0hst());
   if (_neutral == Neutral::gamma) {
-    PdfBase::functionsDelta_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0hst_D0pi0());
+    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                     .pdfDelta_Bu2Dst0hst_D0pi0());
     PdfBase::yieldsDelta_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_trueId_Delta_Bu2Dst0hst_D0pi0());
-    PdfBase::functionsDelta_.add(
-        NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-            .pdfDelta_Bu2Dst0hst_D0gamma());
+    PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                                     .pdfDelta_Bu2Dst0hst_D0gamma());
     PdfBase::yieldsDelta_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
@@ -992,4 +1012,12 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
                                     _daughters, _charge))
           .c_str(),
       "", PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
+  PdfBase::prodPdfDelta_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+      ("prodPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
+                                     _daughters, _charge))
+          .c_str(),
+      "",
+      RooArgSet(*addPdfDelta_,
+                NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+                    .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
 }
