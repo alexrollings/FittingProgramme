@@ -41,12 +41,20 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(*addPdfBu_, CategoryName(Mass::buDelta).c_str());
+  // if (Configuration::Get().fitBuPartial() == true) {
+  //   simPdf.addPdf(*addPdfBuPartial_,
+  //                 CategoryName(Mass::buDeltaPartial).c_str());
+  // }
+  // if (Configuration::Get().fit1D() == false) {
+  //   simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
+  // }
+  simPdf.addPdf(*prodPdfBu_, CategoryName(Mass::buDelta).c_str());
   if (Configuration::Get().fitBuPartial() == true) {
-    simPdf.addPdf(*addPdfBuPartial_,
+    simPdf.addPdf(*prodPdfBuPartial_,
                   CategoryName(Mass::buDeltaPartial).c_str());
   }
   if (Configuration::Get().fit1D() == false) {
-    simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
+    simPdf.addPdf(*prodPdfDelta_, CategoryName(Mass::delta).c_str());
   }
 }
 

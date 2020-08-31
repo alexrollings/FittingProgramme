@@ -699,6 +699,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
                                                _bachelor, _daughters, _charge))
                         .c_str(),
                     "", PdfBase::functionsBu_, PdfBase::yieldsBu_));
+  // Model with constraints
   PdfBase::prodPdfBu_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
       ("prodPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                   _daughters, _charge))
@@ -846,6 +847,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
                                         _daughters, _charge))
           .c_str(),
       "", PdfBase::functionsBuPartial_, PdfBase::yieldsBuPartial_));
+  // Model with constraints
   PdfBase::prodPdfBuPartial_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
       ("prodPdfBuPartial_" + ComposeName(PdfBase::uniqueId_, _neutral,
                                          _bachelor, _daughters, _charge))
@@ -1012,6 +1014,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
                                     _daughters, _charge))
           .c_str(),
       "", PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
+  // Model with constraints
   PdfBase::prodPdfDelta_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
       ("prodPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
                                      _daughters, _charge))
