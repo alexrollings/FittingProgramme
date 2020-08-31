@@ -1022,7 +1022,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                         Efficiency::mcEff) /
                            ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma,
                                         Bachelor::pi, Efficiency::mcEff)),
-          RooFit::RooConst(0.1)),
+          RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN,
+                                        Neutral::gamma, Bachelor::pi,
+                                        Efficiency::mcEffErr))),
       constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_(
           ("constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_" +
            ComposeName(uniqueId_, Neutral::gamma))
@@ -1033,4 +1035,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                         Efficiency::mcEff) /
                            ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
                                         Bachelor::pi, Efficiency::mcEff)),
-          RooFit::RooConst(0.1)) {}
+          RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN,
+                                        Neutral::gamma, Bachelor::pi,
+                                        Efficiency::mcEffErr))) {}
