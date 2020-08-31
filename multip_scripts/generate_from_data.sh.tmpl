@@ -19,7 +19,7 @@ mkdir build
 cd build
 cmake ../
 make
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -pdf2D -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -pdfD1D -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
 
 cd /data/lhcb/users/rollings/multi_scripts/
 rm -rf job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${nJob}
