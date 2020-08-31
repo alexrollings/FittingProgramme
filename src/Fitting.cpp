@@ -663,34 +663,14 @@ int main(int argc, char **argv) {
       throw std::runtime_error("Could not cast to RooAbsData.");
     }
 
-    std::unique_ptr<RooProdPdf> prodPdf;
-    if (config.neutral() == Neutral::pi0) {
-      std::cout << "\n\n\n";
-      NeutralVars<Neutral::pi0>::Get(id)
-          .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN()
-          .Print();
-      std::cout << "\n\n\n";
-      prodPdf = std::unique_ptr<RooProdPdf>(new RooProdPdf(
-          "prodPdf", "",
-          RooArgSet(*simPdf,
-                    NeutralVars<Neutral::pi0>::Get(id)
-                        .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
-    } else {
-      prodPdf = std::unique_ptr<RooProdPdf>(new RooProdPdf(
-          "prodPdf", "",
-          RooArgSet(*simPdf,
-                    NeutralVars<Neutral::gamma>::Get(id)
-                        .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
-    }
-
     if (config.noFit() == false) {
-      std::cout << "1" << std::endl;
-      dataFitResult = std::unique_ptr<RooFitResult>(
-          // simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-          prodPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
-      std::cout << "2" << std::endl;
+      dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+          RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+          RooFit::Constrain(
+              NeutralVars<Neutral::pi0>::Get(id)
+                  .constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN())));
       dataFitResult->SetName("DataFitResult");
     }
 
