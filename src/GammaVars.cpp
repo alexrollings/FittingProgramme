@@ -906,6 +906,16 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               (GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal() /
                GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal()),
           0, 5)),
+      constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(
+          ("constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
+          RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
+                                        Bachelor::pi, Efficiency::mcEff) /
+                           ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma,
+                                        Bachelor::pi, Efficiency::mcEff)),
+          RooFit::RooConst(0.1)),
       // bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
       //     "bkgFracGlobal_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
       //     (ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
