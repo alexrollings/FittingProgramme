@@ -478,9 +478,6 @@ class NeutralVars {
   RooRealVar &bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
     return *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   }
-  RooGaussian &constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
-    return constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
-  }
   RooRealVar &bkgFracGlobal_Bu2Dst0h_D0gamma_WN() {
     return *bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   }
@@ -495,6 +492,12 @@ class NeutralVars {
   }
   RooAbsReal &bkgFracFAV_Bu2Dst0hst_D0gamma() {
     return *bkgFracFAV_Bu2Dst0hst_D0gamma_;
+  }
+  RooGaussian &constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
+    return constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
+  }
+  RooGaussian &constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN() {
+    return constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   }
 
 
@@ -757,12 +760,13 @@ class NeutralVars {
   double initYieldFAVPartRec_;
   // -------------------- Global Fractions: WN -------------------- //
   std::shared_ptr<RooRealVar> bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
-  RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bd2Dsth_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
+  RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
+  RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

@@ -545,16 +545,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
                            Efficiency::mcEff),
           -5, 5)),
-      constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(
-          ("constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_" +
-           ComposeName(uniqueId_, Neutral::pi0))
-              .c_str(),
-          "", *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
-          RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0,
-                                        Bachelor::pi, Efficiency::mcEff) /
-                           ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
-                                        Bachelor::pi, Efficiency::mcEff)),
-          RooFit::RooConst(0.1)),
       // bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
       //     "bkgFracGlobal_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
       //     ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0, Bachelor::pi,
@@ -616,4 +606,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           -5, 5)),
       // Don't use: fix yield w.r.t. π0 mode in NBDVars
-      bkgFracFAV_Bu2Dst0hst_D0gamma_(nullptr) {}
+      bkgFracFAV_Bu2Dst0hst_D0gamma_(nullptr),
+      constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(
+          ("constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
+          RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0,
+                                        Bachelor::pi, Efficiency::mcEff) /
+                           ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0,
+                                        Bachelor::pi, Efficiency::mcEff)),
+          RooFit::RooConst(0.1)),
+      constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_() {}
