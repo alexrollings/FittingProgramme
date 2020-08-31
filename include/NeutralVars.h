@@ -478,7 +478,7 @@ class NeutralVars {
   RooRealVar &bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
     return *bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   }
-  RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
+  RooGaussian &constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
     return constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   }
   RooRealVar &bkgFracGlobal_Bu2Dst0h_D0gamma_WN() {
