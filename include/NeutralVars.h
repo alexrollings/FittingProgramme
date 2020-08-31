@@ -499,6 +499,9 @@ class NeutralVars {
   RooGaussian &constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN() {
     return constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
   }
+  RooArgSet &constraints_argSet() {
+    return constraints_argSet_;
+  }
 
 
  private:
@@ -767,6 +770,7 @@ class NeutralVars {
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
   RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_;
   RooGaussian constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_;
+  RooArgSet constraints_argSet_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see

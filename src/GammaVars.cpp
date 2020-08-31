@@ -1037,4 +1037,6 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                         Bachelor::pi, Efficiency::mcEff)),
           RooFit::RooConst(ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN,
                                         Neutral::gamma, Bachelor::pi,
-                                        Efficiency::mcEffErr))) {}
+                                        Efficiency::mcEffErr))),
+      constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
+                         constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_) {}
