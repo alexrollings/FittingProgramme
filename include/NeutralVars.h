@@ -475,7 +475,7 @@ class NeutralVars {
   double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
 
   // -------------------- Bkg Fractions -------------------- //
-  RooRealVar &frac_WN_() {
+  RooRealVar &frac_WN() {
     return *frac_WN_;
   }
   RooRealVar &bkgFracGlobal_Bu2Dst0h_D0pi0_WN() {
