@@ -231,20 +231,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .mcEff_Bu2Dst0hst_D0gamma()));
   } else {
-    N_tot_Bu2Dst0h_D0gamma_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "N_tot_Bu2Dst0h_D0gamma_WN", uniqueId, _neutral, Bachelor::pi,
-            Daughters::kpi,
-            N_tot_Bu2Dst0h_D0pi0_->getVal() *
-                NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                    .mcEff_Bu2Dst0h_D0gamma_WN()
-                    .getVal() /
-                NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                    .mcEff_Bu2Dst0h_D0pi0()
-                    .getVal() *
-                GlobalVars::Get(uniqueId).kBF_Dst02D0gamma().getVal() /
-                GlobalVars::Get(uniqueId).kBF_Dst02D0pi0().getVal(),
-            0, 10000));
+    N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
+            uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0pi0_,
+            NeutralVars<_neutral>::Get(uniqueId)
+                .bkgFracGlobal_Bu2Dst0h_D0gamma_WN()));
     N_tot_Bd2Dsth_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bd2Dsth_", *N_tot_Bu2Dst0h_D0pi0_,

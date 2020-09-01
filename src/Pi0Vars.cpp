@@ -668,6 +668,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooFit::RooConst(ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0,
                                         Bachelor::pi, Efficiency::mcEffErr))),
       constraint_bkgFracFAV_Bu2D0hst_(),
-      constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_) {}
-      // constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
-      //                     constraint_bkgFracFAV_Bd2Dsth_) {}
+      constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
+                          constraint_bkgFracGlobal_Bu2Dst0h_D0gamma_WN_) {}
+// constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
+//                     constraint_bkgFracFAV_Bd2Dsth_) {}
