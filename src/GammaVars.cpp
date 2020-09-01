@@ -894,6 +894,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       initYieldFAVPartRec_(Configuration::Get().initYieldFAVSignal() *
                            fracPartRec_),
       // -------------------- Bkg Fractions -------------------- //
+      frac_WN_(Params::Get().CreateFloating("frac_WN", uniqueId_,
+                                            Neutral::gamma, 1, -5, 5)),
       bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
           "bkgFracGlobal_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
           (ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma, Bachelor::pi,
