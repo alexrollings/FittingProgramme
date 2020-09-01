@@ -17,9 +17,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_KpiSigmaDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_KpiSigmaDelta", uniqueId_, Neutral::pi0, 1.038649,
           0.031802, Systematic::pi0DeltaWidthRatio, Sign::same)),
+      // Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
+      //     "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0,
+      //     Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
       Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0,
-          Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
+          "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0, 7.2821e-01,
+          5.31e-02, Systematic::pi0DeltaTails, Sign::same)),
+      // Bu2Dst0h_D0pi0_a1Delta_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_a1Delta", uniqueId_, Neutral::pi0,
+      //     Mode::Bu2Dst0pi_D0pi0, 0, 5)),
       Bu2Dst0h_D0pi0_n1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n1Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaTails, Sign::same)),
