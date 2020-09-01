@@ -704,8 +704,8 @@ void PlotComponent(
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0gamma().GetName());
@@ -727,9 +727,9 @@ void PlotComponent(
       if (neutral == Neutral::pi0) {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
@@ -743,8 +743,8 @@ void PlotComponent(
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0gamma().GetName());
@@ -767,11 +767,11 @@ void PlotComponent(
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0gamma().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0pi0().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
       pdfCharVec.emplace_back(
