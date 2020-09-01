@@ -487,6 +487,8 @@ int main(int argc, char **argv) {
 
   // Raise lower mass boundary in delta mass for pi0 plots
   if (config.neutral() == Neutral::pi0) {
+    config.buDeltaMass().setMax(5450);
+    config.buDeltaMass().setBins(40);
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
     config.initYieldFAVSignal() = 22000;
