@@ -977,6 +977,9 @@ std::string EnumToString(Mode mode) {
     case Mode::Bu2Dst0K_D0pi0_WN:
       return "Bu2Dst0K_D0pi0_WN";
       break;
+    case Mode::Lb2Omecacpi_Lcpi0:
+      return "Lb2Omecacpi_Lcpi0";
+      break;
   }
 }
 
