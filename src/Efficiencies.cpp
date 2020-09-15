@@ -64,7 +64,7 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
-void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
+void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
   std::cout << "Extracting chain\n";
   namespace fs = std::experimental::filesystem;
   std::string path, ttree;
@@ -72,17 +72,29 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == false) {
-            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/";
+          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+              mode == Mode::Lb2Omegacpi_Lcpi0) {
+            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
           } else {
-            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+            path =
+                "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
+                "cross_feed_removed/";
           }
           break;
         case Bachelor::k:
-          if (D02pik == false) {
-            path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/";
-          } else {
+          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+              mode == Mode::Lb2Omegacpi_Lcpi0) {
             path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
+          } else {
+            path =
+                "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
+                "cross_feed_removed/";
           }
       }
       ttree = "BtoDstar0h3_h1h2gammaTuple";
@@ -90,17 +102,25 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          if (D02pik == false) {
-            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
+          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+              mode == Mode::Lb2Omegacpi_Lcpi0) {
+            path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
           } else {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           }
           break;
         case Bachelor::k:
-          if (D02pik == false) {
-            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
-          } else {
+          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+              mode == Mode::Lb2Omegacpi_Lcpi0) {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
+          } else {
+            path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           }
       }
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
@@ -119,11 +139,14 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool D02pik) {
       std::string decay = match.str(1);
       decay.erase(std::remove(decay.begin(), decay.end(), '"'), decay.end());
       std::string fName;
-      if (D02pik == false) {
-        fName =
-            dir + decay + path + decay + "_PID_TM_Triggers_BDT1_BDT2_MERemoved.root";
-      } else {
+      if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+          mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+          mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+          mode == Mode::Bu2Dst0K_D0pi0_D02pik || mode == Mode::Lb2Omegacpi_Lcpi0) {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
+      } else {
+        fName =
+            dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2_MERemoved.root";
       }
       if (fexists(fName)) {
         chain.Add(fName.c_str());
@@ -195,12 +218,6 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
   // Check if txt file containing efficiencies for particular mode and box dimns
   // exists, if not, calculate eff and save in txt file
   if (!fexists(txtFileName)) {
-    bool D02pik;
-    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-        mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
-      D02pik = true;
-    }
-
     std::string ttree;
     if (Configuration::Get().neutral() == Neutral::gamma) {
       ttree = "BtoDstar0h3_h1h2gammaTuple";
@@ -208,25 +225,35 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
     }
     TChain chain(ttree.c_str());
-    if (D02pik == false) {
-      ExtractChain(mode, bachelor, chain, D02pik);
+    // Passing K bach to FAVasSUP???
+    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik) {
+      ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain);
+      ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain);
+    } else if (mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
+      ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain);
+      ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain);
     } else {
-      if (Configuration::Get().neutral() == Neutral::gamma) {
-        // Use K and π bachelor to calculate box effs for FAV->SUP
-        ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain,
-                     D02pik);
-        ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, D02pik);
-      } else {
-        ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain, D02pik);
-        ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain, D02pik);
-      }
+      ExtractChain(mode, bachelor, chain);
     }
+    // if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+    //     mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
+    //   if (Configuration::Get().neutral() == Neutral::gamma) {
+    //     // Use K and π bachelor to calculate box effs for FAV->SUP
+    //     ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain);
+    //     ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain);
+    //   } else {
+    //     ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain);
+    //     ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain);
+    //   }
 
     std::string cutStr;
-    if (D02pik == false) {
-      cutStr = Configuration::Get().ReturnCutString();
-    } else {
+    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+        mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
       cutStr = "abs(D0_M_DOUBLESW_KP-1864)>15";
+    } else if (mode == Mode::Lb2Omegacpi_Lcpi0) {
+      cutStr = "abs(D0_M-1864)<25&&D0h_M>4900";
+    } else {
+      cutStr = Configuration::Get().ReturnCutString();
     }
     cutStr += "&&Bu_Delta_M<" +
               std::to_string(Configuration::Get().buDeltaMass().getMax()) +
