@@ -308,6 +308,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bu2Dst0hst_D0pi0BuPdf;
   } else if (systematic == "Bu2Dst0hst_D0pi0BuPartialPdf") {
     return Systematic::Bu2Dst0hst_D0pi0BuPartialPdf;
+  } else if (systematic == "Lb2Omegach_Lcpi0DeltaPdf") {
+    return Systematic::Lb2Omegach_Lcpi0DeltaPdf;
+  } else if (systematic == "Lb2Omegach_Lcpi0BuPdf") {
+    return Systematic::Lb2Omegach_Lcpi0BuPdf;
+  } else if (systematic == "Lb2Omegach_Lcpi0BuPartialPdf") {
+    return Systematic::Lb2Omegach_Lcpi0BuPartialPdf;
   } else if (systematic == "misRecDeltaPdf") {
     return Systematic::misRecDeltaPdf;
   } else if (systematic == "misRecBuPdf") {
@@ -562,6 +568,12 @@ std::string EnumToString(Systematic systematic) {
       return "Bu2Dst0hst_D0pi0BuPdf";
     case Systematic::Bu2Dst0hst_D0pi0BuPartialPdf:
       return "Bu2Dst0hst_D0pi0BuPartialPdf";
+    case Systematic::Lb2Omegach_Lcpi0DeltaPdf:
+      return "Lb2Omegach_Lcpi0DeltaPdf";
+    case Systematic::Lb2Omegach_Lcpi0BuPdf:
+      return "Lb2Omegach_Lcpi0BuPdf";
+    case Systematic::Lb2Omegach_Lcpi0BuPartialPdf:
+      return "Lb2Omegach_Lcpi0BuPartialPdf";
     case Systematic::misRecDeltaPdf:
       return "misRecDeltaPdf";
     case Systematic::misRecBuPdf:
