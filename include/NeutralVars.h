@@ -415,6 +415,16 @@ class NeutralVars {
   RooRealVar &Bu2Dst0hst_D0pi0_KpiSigmaBuPartial() {
     return *Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_;
   }
+  // -------------------- Lb2Omegach_Lcpi0 -------------------- //
+  RooDstD0BG &pdfDelta_Lb2Omegach_Lcpi0() {
+    return pdfDelta_Lb2Omegach_Lcpi0_;
+  }
+  RooCBShape &pdfBu_Lb2Omegach_Lcpi0() {
+    return pdfBu_Lb2Omegach_Lcpi0_;
+  }
+  RooCBShape &pdfBuPartial_Lb2Omegach_Lcpi0() {
+    return pdfBuPartial_Lb2Omegach_Lcpi0_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -708,6 +718,22 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0hst_D0pi0_KpiSigmaBu_;
   std::shared_ptr<RooRealVar> Bu2Dst0hst_D0pi0_meanBuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_;
+  // -------------------- Lb2Omegach_Lcpi0 -------------------- //
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_thresholdDelta_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_aDelta_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_bDelta_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_cDelta_;
+  RooDstD0BG pdfDelta_Lb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_meanBu_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_sigmaBu_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_a1Bu_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_n1Bu_;
+  RooCBShape pdfBu_Lb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_sigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_n1BuPartial_;
+  RooCBShape pdfBuPartial_Lb2Omegach_Lcpi0_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;
