@@ -64,7 +64,7 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
 // Function to be called in constructor of NVars, in order to construct
 // efficiency RCVars
 // Anything defined outside the class definition needs the scope :: operator
-void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
+void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
   std::cout << "Extracting chain\n";
   namespace fs = std::experimental::filesystem;
   std::string path, ttree;
@@ -145,8 +145,13 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain) {
           mode == Mode::Bu2Dst0K_D0pi0_D02pik || mode == Mode::Lb2Omegacpi_Lcpi0) {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       } else {
-        fName =
-            dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2_MERemoved.root";
+        if (misId == true && bachelor == Bachelor::pi) {
+          fName = dir + decay + path + decay +
+                  "_PID_TM_Triggers_BDT1_BDT2_MERemoved.root";
+        } else {
+          fName = dir + decay + path + decay +
+                  "_TM_Triggers_BDT1_BDT2_MERemoved.root";
+        }
       }
       if (fexists(fName)) {
         chain.Add(fName.c_str());
@@ -227,13 +232,13 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     TChain chain(ttree.c_str());
     // Passing K bach to FAVasSUP???
     if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik) {
-      ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain);
-      ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain);
+      ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain, misId);
+      ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, misId);
     } else if (mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
-      ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain);
-      ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain);
+      ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain, misId);
+      ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain, misId);
     } else {
-      ExtractChain(mode, bachelor, chain);
+      ExtractChain(mode, bachelor, chain, misId);
     }
     // if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
     //     mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
