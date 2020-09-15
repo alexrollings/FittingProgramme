@@ -425,6 +425,16 @@ class NeutralVars {
   RooCBShape &pdfBuPartial_Lb2Omegach_Lcpi0() {
     return pdfBuPartial_Lb2Omegach_Lcpi0_;
   }
+  // Box effs for Lb --> no K MC, only π
+  RooRealVar &deltaEffLb2Omegach_Lcpi0() {
+    return *deltaEffLb2Omegach_Lcpi0_;
+  }
+  RooRealVar &buEffLb2Omegach_Lcpi0() {
+    return *buEffLb2Omegach_Lcpi0_;
+  }
+  RooRealVar &buPartialEffLb2Omegach_Lcpi0() {
+    return *buPartialEffLb2Omegach_Lcpi0_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -737,6 +747,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_a1BuPartial_;
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_n1BuPartial_;
   RooCBShape pdfBuPartial_Lb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> deltaEffLb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> buEffLb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> buPartialEffLb2Omegach_Lcpi0_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;

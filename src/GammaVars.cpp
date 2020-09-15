@@ -792,6 +792,27 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", Configuration::Get().buDeltaMass(),
           *Lb2Omegach_Lcpi0_meanBuPartial_, *Lb2Omegach_Lcpi0_sigmaBuPartial_,
           *Lb2Omegach_Lcpi0_a1BuPartial_, *Lb2Omegach_Lcpi0_n1BuPartial_),
+      deltaEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "deltaEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::gamma,
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::deltaEffErr, false),
+          Systematic::NA, Sign::same)),
+      buEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "buEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::gamma,
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::buEffErr, false),
+          Systematic::NA, Sign::same)),
+      buPartialEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "buPartialEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::gamma,
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::buPartialEff, false),
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::NA, Sign::same)),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::gamma, 4.9426e+01,
