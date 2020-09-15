@@ -397,6 +397,56 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Systematic::Bu2Dst0hst_D0pi0BuPdf, Sign::same)),
       Bu2Dst0hst_D0pi0_meanBuPartial_(nullptr),
       Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_(nullptr),
+      // -------------------- Lb2Omegach_Lcpi0 -------------------- //
+      Lb2Omegach_Lcpi0_thresholdDelta_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_thresholdDelta", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0DeltaPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_aDelta_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_aDelta", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0DeltaPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_bDelta_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_bDelta", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0DeltaPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_cDelta_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_cDelta", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0DeltaPdf,
+          Sign::same)),
+      pdfDelta_Lb2Omegach_Lcpi0_(
+          ("pdfDelta_Lb2Omegach_Lcpi0_" + ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          *Lb2Omegach_Lcpi0_thresholdDelta_, *Lb2Omegach_Lcpi0_cDelta_,
+          *Lb2Omegach_Lcpi0_aDelta_, *Lb2Omegach_Lcpi0_bDelta_),
+      Lb2Omegach_Lcpi0_meanBu_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_meanBu", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0BuPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_sigmaBu_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_sigmaBu", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0BuPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_a1Bu_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_a1Bu", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0BuPdf,
+          Sign::same)),
+      Lb2Omegach_Lcpi0_n1Bu_(Params::Get().CreateFixed(
+          "Lb2Omegach_Lcpi0_n1Bu", uniqueId_, Neutral::pi0,
+          Mode::Lb2Omegacpi_Lcpi0, Systematic::Lb2Omegach_Lcpi0BuPdf,
+          Sign::same)),
+      pdfBu_Lb2Omegach_Lcpi0_(
+          ("pdfBu_Lb2Omegach_Lcpi0_" + ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(), *Lb2Omegach_Lcpi0_meanBu_,
+          *Lb2Omegach_Lcpi0_sigmaBu_, *Lb2Omegach_Lcpi0_a1Bu_,
+          *Lb2Omegach_Lcpi0_n1Bu_),
+      Lb2Omegach_Lcpi0_meanBuPartial_(nullptr),
+      Lb2Omegach_Lcpi0_sigmaBuPartial_(nullptr),
+      Lb2Omegach_Lcpi0_a1BuPartial_(nullptr),
+      Lb2Omegach_Lcpi0_n1BuPartial_(nullptr),
+      pdfBuPartial_Lb2Omegach_Lcpi0_(),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
