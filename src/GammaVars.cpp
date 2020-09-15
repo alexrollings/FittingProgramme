@@ -1083,6 +1083,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal(),
           0.0, Systematic::NA, Sign::same)),
+      bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
+          "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::gamma, 0.1, -5, 5)),
       // bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma,
       //     ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::gamma, Bachelor::pi,
