@@ -150,14 +150,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
-  colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kSpring + 1;
-  colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kPink - 1;
-  // colorMap["MisRecPi"] = kBlue - 6;
-  // colorMap["MisRecK"] = kMagenta - 10;
-  // colorMap["Bu2D0pi"] = kBlue + 4;
-  // colorMap["Bu2D0K"] = kMagenta - 7;
-  // colorMap["PartRecPi"] = kGreen + 3;
-  // colorMap["PartRecK"] = kRed + 4;
+  colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kCyan - 3;
+  colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kViolet + 5;
   // colorMap["Bs2Dst0Kpi"] = kOrange - 3;
   // colorMap["Bs2D0Kpi"] = kOrange + 4;
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
@@ -302,7 +296,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
       "}_{c}}#"
       "pi^{" +
-      EnumToString(charge) + "}}";
+      EnumToLabel(charge) + "}}";
 
   auto hist_Bu2Dst0K_D0gamma = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0gamma" +
@@ -429,9 +423,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#pi#"
       "font[132]{]}_{#Lambda^{" +
       oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
-      "}_{c}}#"
+      "}_{c}}"
       "K^{" +
-      EnumToString(charge) + "}}";
+      EnumToLabel(charge) + "}}";
 
   if (bachelor == Bachelor::pi) {
     if (neutral == Neutral::gamma) {
