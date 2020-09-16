@@ -156,6 +156,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
+  colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kSpring + 1;
+  colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kPink - 1;
   // colorMap["MisRecPi"] = kBlue - 6;
   // colorMap["MisRecK"] = kMagenta - 10;
   // colorMap["Bu2D0pi"] = kBlue + 4;
@@ -296,6 +298,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
       EnumToLabel(charge) + "}}";
 
+  auto hist_Lb2Omegacpi_Lcpi0 = std::make_unique<TH1D>(
+      ("hist_Lb2Omegacpi_Lcpi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Lb2Omegacpi_Lcpi0", 1, 0, 1);
+  hist_Lb2Omegacpi_Lcpi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"]);
+  hist_Lb2Omegacpi_Lcpi0->SetLineWidth(5);
+  std::string str_Lb2Omegacpi_Lcpi0 =
+      "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#pi#"
+      "font[132]{]}_{#Lambda^{" +
+      oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
+      "}_{c}}#"
+      "pi^{" +
+      EnumToString(charge) + "}}";
+
   auto hist_Bu2Dst0K_D0gamma = std::make_unique<TH1D>(
       ("hist_Bu2Dst0K_D0gamma" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -412,6 +430,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(daughters, charge) +
       "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
       EnumToLabel(charge) + "}}";
+
+  auto hist_Lb2OmegacK_Lcpi0 = std::make_unique<TH1D>(
+      ("hist_Lb2OmegacK_Lcpi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Lb2OmegacK_Lcpi0", 1, 0, 1);
+  hist_Lb2OmegacK_Lcpi0->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"]);
+  hist_Lb2OmegacK_Lcpi0->SetLineWidth(5);
+  std::string str_Lb2OmegacK_Lcpi0 =
+      "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#pi#"
+      "font[132]{]}_{#Lambda^{" +
+      oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
+      "}_{c}}#"
+      "K^{" +
+      EnumToString(charge) + "}}";
 
   if (bachelor == Bachelor::pi) {
     if (neutral == Neutral::gamma) {
