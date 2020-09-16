@@ -18,7 +18,6 @@ void SetStyle() {
   gStyle->SetPadLeftMargin(0.11);
 }
 
-
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
@@ -107,23 +106,18 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"] = kAzure + 3;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"] = kMagenta - 1;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"] = kAzure + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"] =
-      kPink - 7;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"] = kPink - 7;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] =
       kMagenta - 10;
   colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"] = kBlue - 3;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] =
-      kMagenta + 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] = kMagenta + 4;
   colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kGreen + 2;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] =
-      kOrange - 3;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] = kOrange - 3;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"] = kGreen + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] =
-      kOrange + 4;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] = kOrange + 4;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"] = kBlue + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] =
-    kRed + 3;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] = kRed + 3;
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
@@ -242,12 +236,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2D0rho = std::make_unique<TH1D>(
-      ("hist_Bu2D0rho" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hist_Bu2D0rho" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2D0rho", 1, 0, 1);
-  hist_Bu2D0rho->SetLineColor(
-      colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"]);
+  hist_Bu2D0rho->SetLineColor(colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"]);
   hist_Bu2D0rho->SetLineWidth(5);
   std::string str_Bu2D0rho =
       " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
@@ -255,12 +247,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(charge) + "}}";
 
   auto hist_Bd2Dstpi = std::make_unique<TH1D>(
-      ("hist_Bd2Dstpi" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hist_Bd2Dstpi" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bd2Dstpi", 1, 0, 1);
-  hist_Bd2Dstpi->SetLineColor(
-      colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"]);
+  hist_Bd2Dstpi->SetLineColor(colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"]);
   hist_Bd2Dstpi->SetLineWidth(5);
   std::string str_Bd2Dstpi =
       " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -375,12 +365,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(charge) + "}} WN";
 
   auto hist_Bu2D0Kst = std::make_unique<TH1D>(
-      ("hist_Bu2D0Kst" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hist_Bu2D0Kst" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2D0Kst", 1, 0, 1);
-  hist_Bu2D0Kst->SetLineColor(
-      colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"]);
+  hist_Bu2D0Kst->SetLineColor(colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"]);
   hist_Bu2D0Kst->SetLineWidth(5);
   std::string str_Bu2D0Kst =
       " #font[12]{B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}" +
@@ -388,12 +376,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       EnumToLabel(charge) + "}}";
 
   auto hist_Bd2DstK = std::make_unique<TH1D>(
-      ("hist_Bd2DstK" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hist_Bd2DstK" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bd2DstK", 1, 0, 1);
-  hist_Bd2DstK->SetLineColor(
-      colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"]);
+  hist_Bd2DstK->SetLineColor(colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"]);
   hist_Bd2DstK->SetLineWidth(5);
   std::string str_Bd2DstK =
       " #font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
@@ -451,19 +437,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     if (neutral == Neutral::gamma) {
       labels.AddEntry(hist_Bu2Dst0pi_D0gamma.get(),
                       str_Bu2Dst0pi_D0gamma.c_str(), "l");
-      // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
+      // labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(),
+      // str_Bu2Dst0K_D0gamma.c_str(),
       //                 "l");
     }
     labels.AddEntry(hist_Bu2Dst0pi_D0pi0.get(), str_Bu2Dst0pi_D0pi0.c_str(),
                     "l");
-    // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(), "l");
+    // labels.AddEntry(hist_Bu2Dst0K_D0pi0.get(), str_Bu2Dst0K_D0pi0.c_str(),
+    // "l");
     labels.AddEntry(hist_Bu2Dst0pi_D0gamma_WN.get(),
                     str_Bu2Dst0pi_D0gamma_WN.c_str(), "l");
     // labels.AddEntry(hist_Bu2Dst0K_D0gamma_WN.get(),
     //                 str_Bu2Dst0K_D0gamma_WN.c_str(), "l");
     labels.AddEntry(hist_Bu2Dst0pi_D0pi0_WN.get(),
                     str_Bu2Dst0pi_D0pi0_WN.c_str(), "l");
-    // labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(), str_Bu2Dst0K_D0pi0_WN.c_str(),
+    // labels.AddEntry(hist_Bu2Dst0K_D0pi0_WN.get(),
+    // str_Bu2Dst0K_D0pi0_WN.c_str(),
     //                 "l");
     labels.AddEntry(hist_Bu2D0rho.get(), str_Bu2D0rho.c_str(), "l");
     labels.AddEntry(hist_Bd2Dstpi.get(), str_Bd2Dstpi.c_str(), "l");
@@ -507,7 +496,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                     "l");
     labels.AddEntry(hist_Lb2OmegacK_Lcpi0.get(), str_Lb2OmegacK_Lcpi0.c_str(),
                     "l");
-    // labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(),
+    // labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(),
+    // str_Bu2Dst0rho_D0pi0.c_str(),
     //                 "l");
   }
 
@@ -643,7 +633,6 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
                         .c_str());
 }
 
-
 void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
                       Configuration &config) {
   TCanvas corrCanvas("corrCanvas", "corrCanvas", 1700, 900);
@@ -729,6 +718,9 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
+        if (daughters == Daughters::kk) {
+          pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
+        }
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
@@ -746,6 +738,9 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
+        if (daughters == Daughters::kk) {
+          pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
+        }
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
@@ -758,7 +753,8 @@ void PlotComponent(
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0gamma().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfBu_misId_Bu2Dst0hst_D0gamma().GetName());
         }
       }
     } else if (mass == Mass::delta) {
@@ -768,6 +764,9 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+        if (daughters == Daughters::kk) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
+        }
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
@@ -776,7 +775,8 @@ void PlotComponent(
               pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
@@ -785,6 +785,9 @@ void PlotComponent(
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+        if (daughters == Daughters::kk) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
+        }
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0pi0().GetName());
         pdfCharVec.emplace_back(
@@ -797,8 +800,10 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst_D0gamma().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0hst_D0gamma().GetName());
         }
       }
     } else {
@@ -808,6 +813,9 @@ void PlotComponent(
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
+      if (daughters == Daughters::kk) {
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Lb2Omegach_Lcpi0().GetName());
+      }
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0gamma().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0pi0().GetName());
       pdfCharVec.emplace_back(
@@ -816,14 +824,17 @@ void PlotComponent(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
       pdfCharVec.emplace_back(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN().GetName());
-        if (bachelor == Bachelor::k) {
-          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst_D0pi0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
-        }
+      if (bachelor == Bachelor::k) {
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfBuPartial_misId_Bu2Dst0hst_D0pi0().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
+      }
     }
-    // To pass to Components in plotOn, need string in the format "pdf1,pdf2,pdf3"
+    // To pass to Components in plotOn, need string in the format
+    // "pdf1,pdf2,pdf3"
     while (pdfCharVec.size() > 0) {
       std::string totPdfStr = "";
       for (auto &chars : pdfCharVec) {
@@ -834,7 +845,7 @@ void PlotComponent(
       totPdfStr.pop_back();
       // Find decay mode in order to select correct color for component in
       // colorMap
-      std::string pdfStr(pdfCharVec[0]); 
+      std::string pdfStr(pdfCharVec[0]);
       std::regex re("pdf([A-Za-z]+)_(.+)_(pi0|gamma)_.+");
       std::smatch match;
       std::string modeStr;
@@ -846,16 +857,18 @@ void PlotComponent(
             pdfStr + "\n");
       }
       std::cout << modeStr << "\n\n\n";
-      simPdf.plotOn(frame.get(),
-                    RooFit::Slice(config.fitting,
-                                  ComposeFittingName(mass, neutral, bachelor,
-                                                     daughters, charge)
-                                      .c_str()),
-                    RooFit::ProjWData(config.fitting, fullDataSet),
-                    RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
-                    RooFit::FillColor(colorMap[EnumToString(bachelor)][modeStr.c_str()]),
-                    RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
-      // Remove first pdf string in vector: plot all others w/out this w/ new color 
+      simPdf.plotOn(
+          frame.get(),
+          RooFit::Slice(
+              config.fitting,
+              ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                  .c_str()),
+          RooFit::ProjWData(config.fitting, fullDataSet),
+          RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
+          RooFit::FillColor(colorMap[EnumToString(bachelor)][modeStr.c_str()]),
+          RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+      // Remove first pdf string in vector: plot all others w/out this w/ new
+      // color
       pdfCharVec.erase(pdfCharVec.begin());
       // continue until no PDFs left
     }
