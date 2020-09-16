@@ -54,7 +54,8 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           0, 2)),
       // Ratio of K/π for part rec should be same for Dgamma and Dπ0
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_) {
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_),
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
   if (Configuration::Get().neutral() == Neutral::gamma) {
     R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -119,7 +120,11 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst_D0pi0())) {}
+          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst_D0pi0())),
+      // Increase uncertainty: from Lb -> Lc K / Lb -> Lc π
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073, 0.009,
+          Systematic::NA, Sign::positive)) {}
 
 template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
@@ -145,7 +150,8 @@ DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_GetPointer()),
       R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(
           DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer()) {}
+              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer()),
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
 
 template <>
 DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
@@ -157,7 +163,8 @@ DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
       R_Dst0KDst0pi_Bd2Dsth_(nullptr),
       R_Dst0KDst0pi_Bu2D0hst_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr) {}
+      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
 
 template <Daughters daughters>
 DaughtersVars<daughters> &DaughtersVars<daughters>::Get(
