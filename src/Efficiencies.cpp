@@ -367,7 +367,7 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
         return std::stod(lineVec[1]);
       }
     }
-    throw std::runtime_error("Efficiency not found.\n");
+    throw std::runtime_error(effStr + " not found in file " + txtFileName + "\n");
   }
 }
 
