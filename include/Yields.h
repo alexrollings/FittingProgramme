@@ -813,16 +813,50 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Delta_Lb2Omegach_Lcpi0_(nullptr),
       N_trueId_Delta_Bs2Dst0Kpi_(nullptr),
       N_trueId_Delta_Bs2D0Kpi_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0gamma_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0pi0_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0pi0_WN_(nullptr),
-      N_trueId_Bu_Bd2Dsth_(nullptr),
-      N_trueId_Bu_Bu2D0hst_(nullptr),
-      N_trueId_Bu_Bu2Dst0hst_D0pi0_(nullptr),
-      N_trueId_Bu_Bu2Dst0hst_D0gamma_(nullptr),
+      N_trueId_Bu_Bu2Dst0h_D0gamma_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_",
+              *N_trueId_Bu2Dst0h_D0gamma_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0gamma())),
+      N_trueId_Bu_Bu2Dst0h_D0pi0_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_",
+              *N_trueId_Bu2Dst0h_D0pi0_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0pi0())),
+      N_trueId_Bu_Bu2Dst0h_D0gamma_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_WN_",
+              *N_trueId_Bu2Dst0h_D0gamma_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0gamma_WN())),
+      N_trueId_Bu_Bu2Dst0h_D0pi0_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_WN_",
+              *N_trueId_Bu2Dst0h_D0pi0_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0pi0_WN())),
+      N_trueId_Bu_Bd2Dsth_(Make_N_1D<neutral, bachelor, daughters, charge>(
+          uniqueId_, "N_trueId_Bu_Bd2Dsth_", *N_trueId_Bd2Dsth_,
+          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+              .buEffBd2Dsth())),
+      N_trueId_Bu_Bu2D0hst_(Make_N_1D<neutral, bachelor, daughters, charge>(
+          uniqueId_, "N_trueId_Bu_Bu2D0hst_", *N_trueId_Bu2D0hst_,
+          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+              .buEffBu2D0hst())),
+      N_trueId_Bu_Bu2Dst0hst_D0pi0_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0hst_D0pi0_",
+              *N_trueId_Bu2Dst0hst_D0pi0_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0hst_D0pi0())),
+      N_trueId_Bu_Bu2Dst0hst_D0gamma_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0hst_D0gamma_",
+              *N_trueId_Bu2Dst0hst_D0gamma_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0hst_D0gamma())),
       N_trueId_Bu_Lb2Omegach_Lcpi0_(nullptr),
       N_trueId_Bu_Bs2Dst0Kpi_(nullptr),
       N_trueId_Bu_Bs2D0Kpi_(nullptr),
@@ -972,51 +1006,6 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
             NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                 .buDeltaCutEffBs2D0Kpi()));
   }
-  N_trueId_Bu_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_",
-          *N_trueId_Bu2Dst0h_D0gamma_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0gamma()));
-  N_trueId_Bu_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_", *N_trueId_Bu2Dst0h_D0pi0_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0pi0()));
-  N_trueId_Bu_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_WN_",
-          *N_trueId_Bu2Dst0h_D0gamma_WN_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0gamma_WN()));
-  N_trueId_Bu_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_WN_",
-          *N_trueId_Bu2Dst0h_D0pi0_WN_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0pi0_WN()));
-  N_trueId_Bu_Bd2Dsth_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bd2Dsth_", *N_trueId_Bd2Dsth_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBd2Dsth()));
-  N_trueId_Bu_Bu2D0hst_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2D0hst_", *N_trueId_Bu2D0hst_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2D0hst()));
-  N_trueId_Bu_Bu2Dst0hst_D0pi0_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0hst_D0pi0_",
-          *N_trueId_Bu2Dst0hst_D0pi0_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0hst_D0pi0()));
-  N_trueId_Bu_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooFormulaVar>(
-      Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_Bu2Dst0hst_D0gamma_",
-          *N_trueId_Bu2Dst0hst_D0gamma_,
-          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-              .buEffBu2Dst0hst_D0gamma()));
   // if (daughters == Daughters::pik) {
   //   N_trueId_Bu_Bu2Dst0h_D0gamma_FAVasSUP_ = std::unique_ptr<RooFormulaVar>(
   //       Make_N_1D<neutral, bachelor, daughters, charge>(
