@@ -473,6 +473,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
     labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(),
                     "l");
+    labels.AddEntry(hist_Lb2Omegacpi_Lcpi0.get(), str_Lb2Omegacpi_Lcpi0.c_str(),
+                    "l");
   } else {
     if (neutral == Neutral::gamma) {
       labels.AddEntry(hist_Bu2Dst0K_D0gamma.get(), str_Bu2Dst0K_D0gamma.c_str(),
@@ -502,6 +504,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       //                 str_Bu2Dst0rho_D0gamma.c_str(), "l");
     }
     labels.AddEntry(hist_Bu2Dst0Kst_D0pi0.get(), str_Bu2Dst0Kst_D0pi0.c_str(),
+                    "l");
+    labels.AddEntry(hist_Lb2OmegacK_Lcpi0.get(), str_Lb2OmegacK_Lcpi0.c_str(),
                     "l");
     // labels.AddEntry(hist_Bu2Dst0rho_D0pi0.get(), str_Bu2Dst0rho_D0pi0.c_str(),
     //                 "l");
