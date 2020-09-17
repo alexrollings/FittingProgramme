@@ -1036,7 +1036,32 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                        .c_str(),
                                    "", *bkgFracGlobal_WN_, RooFit::RooConst(1),
                                    RooFit::RooConst(0.1)),
-      constraint_bkgFracFAV_Bu2D0hst_(),
-      constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(),
-      constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_(),
-      constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
+      constraint_bkgFracFAV_Bu2D0hst_(
+          ("constraint_bkgFracFAV_Bu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", *bkgFracFAV_Bu2D0hst_,
+          RooFit::RooConst(ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, "val")),
+          RooFit::RooConst(ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, "std"))),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(
+          ("constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", *bkgFracFAV_Bu2Dst0hst_D0gamma_,
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0gamma, "val")),
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0gamma, "std"))),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_(
+          ("constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", *bkgFracFAV_Bu2Dst0hst_D0pi0_,
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0pi0, "val")),
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0pi0, "std"))),
+      constraints_argSet_(constraint_bkgFracGlobal_WN_,
+                          constraint_bkgFracFAV_Bu2D0hst_,
+                          constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_,
+                          constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_) {}

@@ -661,7 +661,38 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                                        .c_str(),
                                    "", *bkgFracGlobal_WN_, RooFit::RooConst(1),
                                    RooFit::RooConst(0.1)),
-      constraint_bkgFracFAV_Bu2D0hst_(),
-      constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(),
-      constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_(),
-      constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
+      constraint_bkgFracFAV_Bu2D0hst_(
+          ("constraint_bkgFracFAV_Bu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", *bkgFracFAV_Bu2D0hst_,
+          RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "val")),
+          RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "std"))),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_(
+          ("constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", *bkgFracFAV_Bu2Dst0hst_D0pi0_,
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho_D0pi0, "val")),
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho_D0pi0, "std"))),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(
+          ("constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", *bkgFracFAV_Bu2Dst0hst_D0gamma_,
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho_D0gamma, "val")),
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho_D0gamma, "std"))),
+      constraints_argSet_(constraint_bkgFracGlobal_WN_,
+                          constraint_bkgFracFAV_Bu2D0hst_,
+                          constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_,
+                          constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_) {
+  std::cout << "\n\n\n\n\n";
+  constraint_bkgFracFAV_Bu2D0hst_.Print();
+  constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_.Print();
+  constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_.Print();
+  std::cout << "\n\n\n\n\n";
+}
