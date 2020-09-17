@@ -117,7 +117,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     4.40e-01, Systematic::pi0WNBuPdf, Sign::same)),
       // Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFloating(
       //     "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::pi0,
-      //     Mode::Bu2Dst0pi_D0pi0_WN, -5, 5)),
+      //     Mode::Bu2Dst0pi_D0pi0_WN, 0, 5)),
       Bu2Dst0h_D0pi0_WN_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_n1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::same)),
@@ -274,7 +274,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, 3.0827e+00, 1.65e+00,
       //     Systematic::Bd2DsthDeltaPdf, Sign::none)),
       // Bd2Dsth_aDelta_(Params::Get().CreateFloating(
-      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi, -5, 5)),
+      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi, 0, 5)),
       Bd2Dsth_bDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_bDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2DsthDeltaPdf, Sign::none)),
@@ -467,7 +467,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,
           Systematic::NA, Sign::same)),
       MisRec_aDelta_(Params::Get().CreateFloating(
-          "MisRec_aDelta", uniqueId_, Neutral::pi0, -1.5314e+00, -5, 5)),
+          "MisRec_aDelta", uniqueId_, Neutral::pi0, -1.5314e+00, 0, 5)),
       MisRec_bDelta_(Params::Get().CreateFixed(
           "MisRec_bDelta", uniqueId_, Neutral::pi0, -7.4912e-03, 7.87e-02,
           Systematic::misRecDeltaPdf, Sign::none)),
@@ -610,7 +610,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                            fracPartRec_),
       // -------------------- Bkg Fractions -------------------- //
       bkgFracGlobal_WN_(Params::Get().CreateFloating(
-          "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, -5, 5)),
+          "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
           ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
@@ -621,29 +621,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()) /
               (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()),
-          -5, 5)),
-      // bkgFracFAV_Bd2Dsth_(Params::Get().CreateFixed(
-      //     "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
-      //     ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
-      //                  Efficiency::mcEff) /
-      //         ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
-      //                      Efficiency::mcEff) *
-      //         (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
-      //          GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()) /
-      //         (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
-      //          GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()),
-      //     0.0, Systematic::NA, Sign::same)),
-      // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
-      //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
-      //     ReturnMCEffs(Mode::Bu2D0rho, Neutral::pi0, Bachelor::pi,
-      //                  Efficiency::mcEff) /
-      //         ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
-      //                      Efficiency::mcEff) *
-      //         GlobalVars::Get(uniqueId_).kBF_Bu2D0rho().getVal() /
-      //         (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
-      //          GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()),
-      //     -5, 5)),
-      bkgFracFAV_Bu2D0hst_(Params::Get().CreateFixed(
+          0, 5)),
+      // Constrained relative to Bd2Dsth
+      bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
           ReturnMCEffs(Mode::Bu2D0rho, Neutral::pi0, Bachelor::pi,
                        Efficiency::mcEff) /
@@ -652,8 +632,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2D0rho().getVal() /
               (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()),
-          0.0, Systematic::NA, Sign::same)),
-      bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          0, 5)),
+      bkgFracFAV_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0,
           ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
                        Efficiency::mcEff) /
@@ -663,9 +643,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()) /
               (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()),
-          0.0, Systematic::NA, Sign::same)),
-      // Don't use: fix yield w.r.t. π0 mode in NBDVars
-      bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          0, 5)),
+      // Constrained relative to Bu2Dst0hst_D0pi0
+      bkgFracFAV_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0,
           ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::pi,
                        Efficiency::mcEff) /
@@ -673,31 +653,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                            Efficiency::mcEff) *
               GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal(),
-          0.0, Systematic::NA, Sign::same)),
+          0, 5)),
       bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
-          "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, -5, 5)),
+          "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, 0, 5)),
       constraint_bkgFracGlobal_WN_(("constraint_bkgFracGlobal_WN_" +
                                     ComposeName(uniqueId_, Neutral::pi0))
                                        .c_str(),
                                    "", *bkgFracGlobal_WN_, RooFit::RooConst(1),
                                    RooFit::RooConst(0.1)),
-      constraint_bkgFracFAV_Bd2Dsth_(
-          ("constraint_bkgFracFAV_Bd2Dsth_" +
-           ComposeName(uniqueId_, Neutral::pi0))
-              .c_str(),
-          "", *bkgFracFAV_Bd2Dsth_,
-          RooFit::RooConst(
-              ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
-                           Efficiency::mcEff) /
-              ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::pi,
-                           Efficiency::mcEff) *
-              (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
-               GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()) /
-              (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
-               GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal())),
-          RooFit::RooConst(ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0,
-                                        Bachelor::pi, Efficiency::mcEffErr))),
       constraint_bkgFracFAV_Bu2D0hst_(),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(),
+      constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_(),
       constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
-// constraints_argSet_(constraint_bkgFracGlobal_Bu2Dst0h_D0pi0_WN_,
-//                     constraint_bkgFracFAV_Bd2Dsth_) {}
