@@ -689,10 +689,4 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       constraints_argSet_(constraint_bkgFracGlobal_WN_,
                           constraint_bkgFracFAV_Bu2D0hst_,
                           constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_,
-                          constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_) {
-  std::cout << "\n\n\n\n\n";
-  constraint_bkgFracFAV_Bu2D0hst_.Print();
-  constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_.Print();
-  constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_.Print();
-  std::cout << "\n\n\n\n\n";
-}
+                          constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_) {}
