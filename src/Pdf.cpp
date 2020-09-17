@@ -10,9 +10,9 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
       addPdfBu_(nullptr),
       addPdfBuPartial_(nullptr),
       addPdfDelta_(nullptr),
-      prodPdfBu_(nullptr),
-      prodPdfBuPartial_(nullptr),
-      prodPdfDelta_(nullptr),
+      // prodPdfBu_(nullptr),
+      // prodPdfBuPartial_(nullptr),
+      // prodPdfDelta_(nullptr),
       yieldsBu_(("yieldsBu_" +
                  ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
                     .c_str()),
@@ -41,21 +41,21 @@ PdfBase::PdfBase(int uniqueId, Neutral neutral, Bachelor bachelor,
 
 void PdfBase::AddToSimultaneousPdf(RooSimultaneous &simPdf) const {
   simPdf.addPdf(*addPdfBu_, CategoryName(Mass::buDelta).c_str());
-  // if (Configuration::Get().fitBuPartial() == true) {
-  //   simPdf.addPdf(*addPdfBuPartial_,
-  //                 CategoryName(Mass::buDeltaPartial).c_str());
-  // }
-  // if (Configuration::Get().fit1D() == false) {
-  //   simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
-  // }
-  simPdf.addPdf(*prodPdfBu_, CategoryName(Mass::buDelta).c_str());
   if (Configuration::Get().fitBuPartial() == true) {
-    simPdf.addPdf(*prodPdfBuPartial_,
+    simPdf.addPdf(*addPdfBuPartial_,
                   CategoryName(Mass::buDeltaPartial).c_str());
   }
   if (Configuration::Get().fit1D() == false) {
-    simPdf.addPdf(*prodPdfDelta_, CategoryName(Mass::delta).c_str());
+    simPdf.addPdf(*addPdfDelta_, CategoryName(Mass::delta).c_str());
   }
+  // simPdf.addPdf(*prodPdfBu_, CategoryName(Mass::buDelta).c_str());
+  // if (Configuration::Get().fitBuPartial() == true) {
+  //   simPdf.addPdf(*prodPdfBuPartial_,
+  //                 CategoryName(Mass::buDeltaPartial).c_str());
+  // }
+  // if (Configuration::Get().fit1D() == false) {
+  //   simPdf.addPdf(*prodPdfDelta_, CategoryName(Mass::delta).c_str());
+  // }
 }
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,

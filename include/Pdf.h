@@ -25,9 +25,9 @@ class PdfBase {
   inline RooAddPdf &addPdfBu() { return *addPdfBu_; }
   inline RooAddPdf &addPdfBuPartial() { return *addPdfBuPartial_; }
   inline RooAddPdf &addPdfDelta() { return *addPdfDelta_; }
-  inline RooProdPdf &prodPdfBu() { return *prodPdfBu_; }
-  inline RooProdPdf &prodPdfBuPartial() { return *prodPdfBuPartial_; }
-  inline RooProdPdf &prodPdfDelta() { return *prodPdfDelta_; }
+  // inline RooProdPdf &prodPdfBu() { return *prodPdfBu_; }
+  // inline RooProdPdf &prodPdfBuPartial() { return *prodPdfBuPartial_; }
+  // inline RooProdPdf &prodPdfDelta() { return *prodPdfDelta_; }
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
@@ -152,9 +152,9 @@ class PdfBase {
   std::unique_ptr<RooAddPdf> addPdfBu_;
   std::unique_ptr<RooAddPdf> addPdfBuPartial_;
   std::unique_ptr<RooAddPdf> addPdfDelta_;
-  std::unique_ptr<RooProdPdf> prodPdfBu_;
-  std::unique_ptr<RooProdPdf> prodPdfBuPartial_;
-  std::unique_ptr<RooProdPdf> prodPdfDelta_;
+  // std::unique_ptr<RooProdPdf> prodPdfBu_;
+  // std::unique_ptr<RooProdPdf> prodPdfBuPartial_;
+  // std::unique_ptr<RooProdPdf> prodPdfDelta_;
 };
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -724,13 +724,13 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
                         .c_str(),
                     "", PdfBase::functionsBu_, PdfBase::yieldsBu_));
   // Model with constraints
-  PdfBase::prodPdfBu_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
-      ("prodPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
-                                  _daughters, _charge))
-          .c_str(),
-      "",
-      RooArgSet(*addPdfBu_, NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                .constraints_argSet())));
+  // PdfBase::prodPdfBu_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+  //     ("prodPdfBu_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
+  //                                 _daughters, _charge))
+  //         .c_str(),
+  //     "",
+  //     RooArgSet(*addPdfBu_, NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                               .constraints_argSet())));
 }
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -880,14 +880,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
           .c_str(),
       "", PdfBase::functionsBuPartial_, PdfBase::yieldsBuPartial_));
   // Model with constraints
-  PdfBase::prodPdfBuPartial_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
-      ("prodPdfBuPartial_" + ComposeName(PdfBase::uniqueId_, _neutral,
-                                         _bachelor, _daughters, _charge))
-          .c_str(),
-      "",
-      RooArgSet(*addPdfBuPartial_,
-                NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                    .constraints_argSet())));
+  // PdfBase::prodPdfBuPartial_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+  //     ("prodPdfBuPartial_" + ComposeName(PdfBase::uniqueId_, _neutral,
+  //                                        _bachelor, _daughters, _charge))
+  //         .c_str(),
+  //     "",
+  //     RooArgSet(*addPdfBuPartial_,
+  //               NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                   .constraints_argSet())));
 }
 
 template <Neutral _neutral, Bachelor _bachelor, Daughters _daughters,
@@ -1055,11 +1055,11 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
           .c_str(),
       "", PdfBase::functionsDelta_, PdfBase::yieldsDelta_));
   // Model with constraints
-  PdfBase::prodPdfDelta_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
-      ("prodPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
-                                     _daughters, _charge))
-          .c_str(),
-      "",
-      RooArgSet(*addPdfDelta_, NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
-                                   .constraints_argSet())));
+  // PdfBase::prodPdfDelta_ = std::unique_ptr<RooProdPdf>(new RooProdPdf(
+  //     ("prodPdfDelta_" + ComposeName(PdfBase::uniqueId_, _neutral, _bachelor,
+  //                                    _daughters, _charge))
+  //         .c_str(),
+  //     "",
+  //     RooArgSet(*addPdfDelta_, NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
+  //                                  .constraints_argSet())));
 }

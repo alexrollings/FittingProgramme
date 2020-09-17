@@ -6,7 +6,6 @@
 #include "RooMCStudy.h"
 #include "RooNumIntConfig.h"
 #include "RooPlot.h"
-#include "RooProdPdf.h"
 #include "RooRandom.h"
 #include "TCanvas.h"
 #include "TChain.h"
@@ -671,14 +670,18 @@ int main(int argc, char **argv) {
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            RooFit::Constrain(
+            // RooFit::Constrain(
+            //     NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
+            RooFit::ExternalConstraints(
                 NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
       } else {
         dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            RooFit::Constrain(
+            // RooFit::Constrain(
+            //     NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
+            RooFit::ExternalConstraints(
                 NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
       }
       dataFitResult->SetName("DataFitResult");
