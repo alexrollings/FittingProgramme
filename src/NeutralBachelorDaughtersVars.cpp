@@ -763,36 +763,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       //         GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
       //         GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
       //     -1000000, 1000000)),
-      N_tot_Bu2Dst0hst_D0pi0_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
-          uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                       Daughters::kpi>::Get(uniqueId)
-              .N_tot_Bu2Dst0hst_D0pi0())),
-      // N_tot_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
-      //     "N_tot_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
-      //     Daughters::pipi,
+      // N_tot_Bu2Dst0hst_D0pi0_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
+      //     uniqueId, "N_tot_Bu2Dst0hst_D0pi0_",
       //     NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
       //                                  Daughters::kpi>::Get(uniqueId)
-      //             .N_tot_Bu2Dst0hst_D0pi0()
-      //             .getVal() *
-      //         GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
-      //         GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
-      //     -1000000, 1000000)),
-      N_tot_Bu2Dst0hst_D0gamma_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
-          uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
+      //         .N_tot_Bu2Dst0hst_D0pi0())),
+      N_tot_Bu2Dst0hst_D0pi0_(Params::Get().CreateFloating(
+          "N_tot_Bu2Dst0hst_D0pi0", uniqueId, _neutral, Bachelor::pi,
+          Daughters::pipi,
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                        Daughters::kpi>::Get(uniqueId)
-              .N_tot_Bu2Dst0hst_D0gamma())),
-      // N_tot_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
-      //     "N_tot_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
-      //     Daughters::pipi,
+                  .N_tot_Bu2Dst0hst_D0pi0()
+                  .getVal() *
+              GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
+              GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
+          -1000000, 1000000)),
+      // N_tot_Bu2Dst0hst_D0gamma_(Make_N_scaled_kpi<_neutral, Daughters::pipi>(
+      //     uniqueId, "N_tot_Bu2Dst0hst_D0gamma_",
       //     NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
       //                                  Daughters::kpi>::Get(uniqueId)
-      //             .N_tot_Bu2Dst0hst_D0gamma()
-      //             .getVal() *
-      //         GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
-      //         GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
-      //     -1000000, 1000000)),
+      //         .N_tot_Bu2Dst0hst_D0gamma())),
+      N_tot_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
+          "N_tot_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
+          Daughters::pipi,
+          NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                       Daughters::kpi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0hst_D0gamma()
+                  .getVal() *
+              GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
+              GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
+          -1000000, 1000000)),
       N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
       N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
