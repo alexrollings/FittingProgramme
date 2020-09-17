@@ -581,11 +581,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPdf, Sign::positive)),
       // Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
-      //     6.4774e+01, 1.23e+00, Systematic::pi0WNBuPdf, Sign::positive)),
+      //     "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma,
+      //     Bachelor::pi, 6.4774e+01, 1.23e+00, Systematic::pi0WNBuPdf,
+      //     Sign::positive)),
       // Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFloating(
-      //     "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
-      //     Mode::Bu2Dst0pi_D0pi0_WN, 55, 75)),
+      //     "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::gamma,
+      //     Bachelor::pi, Mode::Bu2Dst0pi_D0pi0_WN, 55, 75)),
       Bu2Dst0h_D0pi0_WN_sigma2Bu_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_WN_sigma2Bu_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
@@ -1822,4 +1823,33 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           Systematic::NA, Sign::positive)),
       mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
           "mcEff_Bs2D0Kpi", uniqueId_, Neutral::gamma, Bachelor::pi, 1.0, 0.0,
-          Systematic::NA, Sign::positive)) {}
+          Systematic::NA, Sign::positive)),
+      // -------------------- Bkg Fractions -------------------- //
+      // bkgFracGlobal_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
+      //     "bkgFracGlobal_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
+      //     (ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::gamma,
+      //     Bachelor::pi,
+      //                   Efficiency::mcEff) /
+      //      ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::gamma, Bachelor::pi,
+      //                   Efficiency::mcEff)),
+      //     0, 5)),
+      bkgFrac_Bu2Dst0h_D0pi0_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "@0/@1",
+          RooArgList(*mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
+      // bkgFracGlobal_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
+      //     "bkgFracGlobal_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
+      //     ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::gamma,
+      //     Bachelor::pi,
+      //                  Efficiency::mcEff) /
+      //         ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
+      //                      Bachelor::pi, Efficiency::mcEff),
+      //     0, 5)),
+      bkgFrac_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
+              .c_str(),
+          "@0/@1",
+          RooArgList(*mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_))) {}

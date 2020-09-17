@@ -465,6 +465,14 @@ class NeutralBachelorVars {
   RooRealVar &mcEff_Bs2Dst0Kpi() { return *mcEff_Bs2Dst0Kpi_; }
   RooRealVar &mcEff_Bs2D0Kpi() { return *mcEff_Bs2D0Kpi_; }
 
+  // -------------------- Bkg Fractions -------------------- //
+  RooAbsReal &bkgFrac_Bu2Dst0h_D0pi0_WN() {
+    return *bkgFrac_Bu2Dst0h_D0pi0_WN_;
+  }
+  RooAbsReal &bkgFrac_Bu2Dst0h_D0gamma_WN() {
+    return *bkgFrac_Bu2Dst0h_D0gamma_WN_;
+  }
+
  private:
   int uniqueId_;
   // -------------------- PDF SHAPES -------------------- //
@@ -956,6 +964,9 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> mcEff_PartRec_;
   std::shared_ptr<RooRealVar> mcEff_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> mcEff_Bs2D0Kpi_;
+  // -------------------- Bkg Fractions -------------------- //
+  std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0gamma_WN_;
 };
 
 template <>
