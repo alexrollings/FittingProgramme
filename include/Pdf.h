@@ -190,6 +190,43 @@ class PdfBase {
   virtual RooGaussian &pdfBuPartial_misId_Bu2Dst0hst_D0gamma() const = 0;
   virtual RooAddPdf &pdfBuPartial_misId_Bu2Dst0hst_D0pi0() const = 0;
 
+  virtual RooRealVar &orEffBu2Dst0h_D0gamma() const = 0;
+  virtual RooRealVar &orEffBu2Dst0h_D0pi0() const = 0;
+  virtual RooRealVar &orEffBu2Dst0h_D0gamma_WN() const = 0;
+  virtual RooRealVar &orEffBu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooRealVar &orEffBd2Dsth() const = 0;
+  virtual RooRealVar &orEffBu2D0hst() const = 0;
+  virtual RooRealVar &orEffBu2Dst0hst_D0pi0() const = 0;
+  virtual RooRealVar &orEffBu2Dst0hst_D0gamma() const = 0;
+
+  virtual RooRealVar &buEffBu2Dst0h_D0gamma() const = 0;
+  virtual RooRealVar &buEffBu2Dst0h_D0pi0() const = 0;
+  virtual RooRealVar &buEffBu2Dst0h_D0gamma_WN() const = 0;
+  virtual RooRealVar &buEffBu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooRealVar &buEffBd2Dsth() const = 0;
+  virtual RooRealVar &buEffBu2D0hst() const = 0;
+  virtual RooRealVar &buEffBu2Dst0hst_D0pi0() const = 0;
+  virtual RooRealVar &buEffBu2Dst0hst_D0gamma() const = 0;
+
+  virtual RooRealVar &deltaEffBu2Dst0h_D0gamma() const = 0;
+  virtual RooRealVar &deltaEffBu2Dst0h_D0pi0() const = 0;
+  virtual RooRealVar &deltaEffBu2Dst0h_D0gamma_WN() const = 0;
+  virtual RooRealVar &deltaEffBu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooRealVar &deltaEffBd2Dsth() const = 0;
+  virtual RooRealVar &deltaEffBu2D0hst() const = 0;
+  virtual RooRealVar &deltaEffBu2Dst0hst_D0pi0() const = 0;
+  virtual RooRealVar &deltaEffBu2Dst0hst_D0gamma() const = 0;
+
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0gamma() const = 0;
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0pi0() const = 0;
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0gamma_WN() const = 0;
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooRealVar &buPartialEffBd2Dsth() const = 0;
+  virtual RooRealVar &buPartialEffBu2D0hst() const = 0;
+  virtual RooRealVar &buPartialEffBu2Dst0hst_D0pi0() const = 0;
+  virtual RooRealVar &buPartialEffBu2Dst0hst_D0gamma() const = 0;
+
+
   // If a function or a method is defined in the header file, and the class is
   // not a template, it should be inline because otherwise the linker might fail
   // as the function will be present in multiple compiltation unit
@@ -842,6 +879,138 @@ class Pdf : public PdfBase {
   virtual RooAddPdf &pdfBuPartial_misId_Bu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .pdfBuPartial_misId_Bu2Dst0hst_D0pi0();
+  }
+
+  virtual RooRealVar &orEffBu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0h_D0gamma();
+  }
+  virtual RooRealVar &orEffBu2Dst0h_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0h_D0pi0();
+  }
+  virtual RooRealVar &orEffBu2Dst0h_D0gamma_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0h_D0gamma_WN();
+  }
+  virtual RooRealVar &orEffBu2Dst0h_D0pi0_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0h_D0pi0_WN();
+  }
+  virtual RooRealVar &orEffBd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBd2Dsth();
+  }
+  virtual RooRealVar &orEffBu2D0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2D0hst();
+  }
+  virtual RooRealVar &orEffBu2Dst0hst_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &orEffBu2Dst0hst_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffBu2Dst0hst_D0pi0();
+  }
+
+  virtual RooRealVar &buEffBu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0h_D0gamma();
+  }
+  virtual RooRealVar &buEffBu2Dst0h_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0h_D0pi0();
+  }
+  virtual RooRealVar &buEffBu2Dst0h_D0gamma_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0h_D0gamma_WN();
+  }
+  virtual RooRealVar &buEffBu2Dst0h_D0pi0_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0h_D0pi0_WN();
+  }
+  virtual RooRealVar &buEffBd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBd2Dsth();
+  }
+  virtual RooRealVar &buEffBu2D0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2D0hst();
+  }
+  virtual RooRealVar &buEffBu2Dst0hst_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &buEffBu2Dst0hst_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buEffBu2Dst0hst_D0pi0();
+  }
+
+  virtual RooRealVar &deltaEffBu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0h_D0gamma();
+  }
+  virtual RooRealVar &deltaEffBu2Dst0h_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0h_D0pi0();
+  }
+  virtual RooRealVar &deltaEffBu2Dst0h_D0gamma_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0h_D0gamma_WN();
+  }
+  virtual RooRealVar &deltaEffBu2Dst0h_D0pi0_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0h_D0pi0_WN();
+  }
+  virtual RooRealVar &deltaEffBd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBd2Dsth();
+  }
+  virtual RooRealVar &deltaEffBu2D0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2D0hst();
+  }
+  virtual RooRealVar &deltaEffBu2Dst0hst_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &deltaEffBu2Dst0hst_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .deltaEffBu2Dst0hst_D0pi0();
+  }
+
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0h_D0gamma();
+  }
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0h_D0pi0();
+  }
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0gamma_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0h_D0gamma_WN();
+  }
+  virtual RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0h_D0pi0_WN();
+  }
+  virtual RooRealVar &buPartialEffBd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBd2Dsth();
+  }
+  virtual RooRealVar &buPartialEffBu2D0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2D0hst();
+  }
+  virtual RooRealVar &buPartialEffBu2Dst0hst_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &buPartialEffBu2Dst0hst_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .buPartialEffBu2Dst0hst_D0pi0();
   }
 
   // Map of PDF objects with a unique ID for each identical PDF (PDF + ID =
