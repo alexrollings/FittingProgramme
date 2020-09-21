@@ -18,6 +18,49 @@ void SetStyle() {
   gStyle->SetPadLeftMargin(0.11);
 }
 
+void MakeLaTeXLabel(std::string &str) {
+  std::replace(str.begin(), str.end(), '#', '\\');
+  str = "$" + str + "$";
+}
+
+void LatexYields(Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir) {
+  Neutral n = config.neutral();
+  std::ofstream outfile;
+  outfile.open(outputDir + "/results/Yields_" + EnumToString(n) + ".tex");
+  outfile << "\\documentclass[12pt, landscape]{article}\n";
+  outfile << "\\usepackage[margin=0.1in]{geometry}\n";
+  outfile << "\\usepackage{mathtools}\n";
+  outfile << "\\usepackage{float}\n";
+  outfile << "\\usepackage{xcolor}\n";
+  outfile << "\\restylefloat{table}\n";
+  outfile << "\\begin{document}\n";
+  for (auto &p : pdfs) {
+    Bachelor b = p->bachelor();
+    Daughters d = p->daughters();
+    Charge c = p->charge();
+    outfile << "\\begin{table}[t]\n";
+    outfile << "\t\\centering\n";
+    outfile << "\t\\footnotesize\n";
+    outfile << "\\resizebox{\\textwidth}{!}{%\n";
+    outfile << "\t\\begin{tabular}{cccccc}\n";
+    outfile << "\t\t";
+    outfile << "\t\\end{tabular}\n";
+    outfile << "}\n";
+    std::string n_str = EnumToLabel(n);
+    MakeLaTeXLabel(n_str);
+    std::string b_str = EnumToLabel(b);
+    MakeLaTeXLabel(b_str);
+    std::string d_str = EnumToLabel(d, c);
+    MakeLaTeXLabel(d_str);
+    std::string c_str = EnumToString(n);
+    outfile << "\\caption{Yields for category: Neutral " << n_str
+            << ", Bachelor " << b_str << ", Daughters " << d_str << ", Charge "
+            << c_str << ".}\n";
+    outfile << "\\end{table}\n";
+  }
+  outfile << "\\end{document}\n";
+}
+
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
