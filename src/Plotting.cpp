@@ -23,7 +23,24 @@ void MakeLaTeXLabel(std::string &str) {
   str = "$" + str + "$";
 }
 
-void LatexYields(Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir) {
+std::string to_string_with_precision(double value) {
+  std::ostringstream out;
+  out << std::setprecision(3) << value;
+  return out.str();
+}
+
+void LaTeXYields(
+    Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir,
+    std::map<std::string, std::map<std::string, std::string> > &labelMap,
+    RooFitResult *result) {
+  for (auto &outer_map_pair : labelMap) {
+    for (auto &inner_map_pair : outer_map_pair.second) {
+      // Convert Root formated label to Tex formatted label
+      std::string label = inner_map_pair.second;
+      MakeLaTeXLabel(label);
+      labelMap[outer_map_pair.first][inner_map_pair.first] = label;
+    }
+  }
   Neutral n = config.neutral();
   std::ofstream outfile;
   outfile.open(outputDir + "/results/Yields_" + EnumToString(n) + ".tex");
@@ -42,8 +59,71 @@ void LatexYields(Configuration &config, std::vector<PdfBase *> &pdfs, std::strin
     outfile << "\t\\centering\n";
     outfile << "\t\\footnotesize\n";
     outfile << "\\resizebox{\\textwidth}{!}{%\n";
-    outfile << "\t\\begin{tabular}{cccccc}\n";
-    outfile << "\t\t";
+    if (n == Neutral::gamma) {
+      outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|c|c|}\n";
+    } else {
+      outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|}\n";
+    }
+    outfile << "\t\t & $\\epsilon_{cross}$ & N$_{cross}$ & $\\epsilon_{B}$ & "
+               "N$_{B}$ & $\\epsilon_{\\Delta}$ & N$_{\\Delta}$ \\\\ \\hline";
+    if (n == Neutral::gamma) {
+      outfile << "\t\t " << labelMap[EnumToString(b)]["Bu2Dst0h_D0gamma"]
+              << " & ";
+      outfile << "$"
+              << to_string_with_precision(p->orEffBu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(p->orEffBu2Dst0h_D0gamma().getError())
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Bu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Bu2Dst0h_D0gamma().getPropagatedError(*result))
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(p->buEffBu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(p->buEffBu2Dst0h_D0gamma().getError())
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Bu_Bu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Bu_Bu2Dst0h_D0gamma().getPropagatedError(
+                         *result))
+              << "$ &";
+      outfile
+          << "$"
+          << to_string_with_precision(p->deltaEffBu2Dst0h_D0gamma().getVal())
+          << " \\pm "
+          << to_string_with_precision(p->deltaEffBu2Dst0h_D0gamma().getError())
+          << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Delta_Bu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Delta_Bu2Dst0h_D0gamma().getPropagatedError(
+                         *result))
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->buPartialEffBu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(
+                     p->buPartialEffBu2Dst0h_D0gamma().getError())
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_BuPartial_Bu2Dst0h_D0gamma().getVal())
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_BuPartial_Bu2Dst0h_D0gamma()
+                         .getPropagatedError(*result))
+              << "$ \\\\ \\hline";
+    }
     outfile << "\t\\end{tabular}\n";
     outfile << "}\n";
     std::string n_str = EnumToLabel(n);
