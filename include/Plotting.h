@@ -43,7 +43,9 @@
 
 void SetStyle();
 void MakeLaTeXLabel(std::string &str);
-void LatexYields(Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir);
+void LaTeXYields(
+    Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir,
+    std::map<std::string, std::map<std::string, std::string> > &labelMap);
 void PlotComponent(
     Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
     RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
