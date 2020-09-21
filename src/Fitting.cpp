@@ -198,6 +198,16 @@ std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
   return values;
 }
 
+void LatexYields(std::vector<PdfBase *> &pdfs) {
+  for (auto &p : pdfs) {
+    Neutral n = p->neutral();
+    Bachelor b = p->bachelor();
+    Daughters d = p->daughters();
+    Charge c = p->charge();
+    
+  }
+}
+
 int main(int argc, char **argv) {
   std::string inputDir = "";
   std::string outputDir;
