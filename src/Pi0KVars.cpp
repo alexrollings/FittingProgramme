@@ -1482,6 +1482,63 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
           "mcEff_Bs2D0Kpi", uniqueId_, Neutral::pi0, Bachelor::k, 1.0, 0.0,
           Systematic::NA, Sign::positive)),
+      // -------------------- MC misId Efficiencies -------------------- //
+      mcEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bd2Dsth_(Params::Get().CreateFixed(
+          "mcEffMisId_Bd2Dsth", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2D0hst_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2D0hst", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2D0rho, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2D0rho, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0hst_D0gamma", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
+      mcEffMisId_Bu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "mcEffMisId_Bu2Dst0hst_D0pi0", uniqueId_, Neutral::pi0, Bachelor::k,
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEff),
+          ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::k,
+                       Efficiency::mcEffErr),
+          Systematic::mcEffs, Sign::positive)),
       // -------------------- Bkg Fractions -------------------- //
       // bkgFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
       //     "bkgFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
@@ -1494,14 +1551,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("bkgFrac_Bu2Dst0h_D0pi0_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0/@1",
-          RooArgList(*mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
+          "(@0/@1)*(@2/@3)",
+          RooArgList(*orEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_,
+                     *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
       // No global frac for gamma mode in π0: different physics
       bkgFrac_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
           ("bkgFrac_Bu2Dst0h_D0gamma_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "(@0/@1)*(@2/@3)",
-          RooArgList(*mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_,
+          "(@0/@1)*(@2/@3)*(@4/@5)",
+          RooArgList(*orEffBu2Dst0h_D0gamma_WN_, *orEffBu2Dst0h_D0pi0_,
+                     *mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))) {}

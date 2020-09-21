@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration.h"
 #include "GlobalVars.h"
+#include "NeutralVars.h"
 #include "RooFormulaVar.h"
 
 template <Daughters daughters>
@@ -36,6 +37,9 @@ class DaughtersVars {
   }
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0gamma() {
     return *R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
+  }
+  RooGaussian &constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma() {
+    return constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
   }
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
@@ -77,6 +81,7 @@ class DaughtersVars {
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
+  RooGaussian constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Lb2Omegach_Lcpi0_;
 };

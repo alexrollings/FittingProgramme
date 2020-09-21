@@ -459,11 +459,18 @@ class NeutralBachelorVars {
   RooRealVar &mcEff_Bu2D0hst() { return *mcEff_Bu2D0hst_; }
   RooRealVar &mcEff_Bu2Dst0hst_D0gamma() { return *mcEff_Bu2Dst0hst_D0gamma_; }
   RooRealVar &mcEff_Bu2Dst0hst_D0pi0() { return *mcEff_Bu2Dst0hst_D0pi0_; }
-  RooRealVar &mcEff_MisRec() { return *mcEff_MisRec_; }
-  RooRealVar &mcEff_Bu2D0h() { return *mcEff_Bu2D0h_; }
-  RooRealVar &mcEff_PartRec() { return *mcEff_PartRec_; }
   RooRealVar &mcEff_Bs2Dst0Kpi() { return *mcEff_Bs2Dst0Kpi_; }
   RooRealVar &mcEff_Bs2D0Kpi() { return *mcEff_Bs2D0Kpi_; }
+
+  // -------------------- MC misId Efficiencies -------------------- //
+  RooRealVar &mcEffMisId_Bu2Dst0h_D0gamma() { return *mcEffMisId_Bu2Dst0h_D0gamma_; }
+  RooRealVar &mcEffMisId_Bu2Dst0h_D0pi0() { return *mcEffMisId_Bu2Dst0h_D0pi0_; }
+  RooRealVar &mcEffMisId_Bu2Dst0h_D0gamma_WN() { return *mcEffMisId_Bu2Dst0h_D0gamma_WN_; }
+  RooRealVar &mcEffMisId_Bu2Dst0h_D0pi0_WN() { return *mcEffMisId_Bu2Dst0h_D0pi0_WN_; }
+  RooRealVar &mcEffMisId_Bd2Dsth() { return *mcEffMisId_Bd2Dsth_; }
+  RooRealVar &mcEffMisId_Bu2D0hst() { return *mcEffMisId_Bu2D0hst_; }
+  RooRealVar &mcEffMisId_Bu2Dst0hst_D0gamma() { return *mcEffMisId_Bu2Dst0hst_D0gamma_; }
+  RooRealVar &mcEffMisId_Bu2Dst0hst_D0pi0() { return *mcEffMisId_Bu2Dst0hst_D0pi0_; }
 
   // -------------------- Bkg Fractions -------------------- //
   RooAbsReal &bkgFrac_Bu2Dst0h_D0pi0_WN() {
@@ -964,6 +971,15 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> mcEff_PartRec_;
   std::shared_ptr<RooRealVar> mcEff_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> mcEff_Bs2D0Kpi_;
+  // -------------------- MC misId Efficiencies -------------------- //
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0h_D0gamma_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0h_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bd2Dsth_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2D0hst_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooRealVar> mcEffMisId_Bu2Dst0hst_D0pi0_;
   // -------------------- Bkg Fractions -------------------- //
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0gamma_WN_;

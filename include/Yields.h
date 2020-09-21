@@ -230,7 +230,8 @@ RooFormulaVar *Make_N_trueId(int uniqueId, const char *nameStr,
 template <Neutral neutral, Bachelor bachelor, Daughters daughters,
           Charge charge>
 RooFormulaVar *Make_N_misId(int uniqueId, const char *nameStr,
-                            RooAbsReal &N_split, RooRealVar &orEff_misId,
+                            RooAbsReal &N_split, RooRealVar &mcEff_misId,
+                            RooRealVar &mcEff_trueId, RooRealVar &orEff_misId,
                             RooAbsReal &orEff_trueId) {
   switch (bachelor) {
     case Bachelor::pi:
@@ -240,20 +241,22 @@ RooFormulaVar *Make_N_misId(int uniqueId, const char *nameStr,
               // misID components are generally shifted out of the box region,
               // so the yields need to be corrected by the or efficiencies
               .c_str(),
-          "(@0*(1-@3))*(@1/@2)",
-          RooArgList(N_split, orEff_misId, orEff_trueId,
-                     *GlobalVars::Get(uniqueId).pidEffMap()[MakePidKey(
-                         Bachelor::k, Charge::total)]));
+          "(@0*(1-@5))*(@1/@2)*(@3/@4)",
+          RooArgList(
+              N_split, mcEff_misId, mcEff_trueId, orEff_misId, orEff_trueId,
+              *GlobalVars::Get(uniqueId)
+                   .pidEffMap()[MakePidKey(Bachelor::k, Charge::total)]));
       break;
     case Bachelor::k:
       return new RooFormulaVar(
           (nameStr +
            ComposeName(uniqueId, neutral, bachelor, daughters, charge))
               .c_str(),
-          "(@0*(1-@3))*(@1/@2)",
-          RooArgList(N_split, orEff_misId, orEff_trueId,
-                     *GlobalVars::Get(uniqueId).pidEffMap()[MakePidKey(
-                         Bachelor::pi, Charge::total)]));
+          "(@0*(1-@5))*(@1/@2)*(@3/@4)",
+          RooArgList(
+              N_split, mcEff_misId, mcEff_trueId, orEff_misId, orEff_trueId,
+              *GlobalVars::Get(uniqueId)
+                   .pidEffMap()[MakePidKey(Bachelor::pi, Charge::total)]));
       break;
   }
 }
@@ -1132,6 +1135,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0gamma(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0gamma(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0gamma(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0gamma(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0gamma()));
@@ -1141,6 +1148,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
@@ -1152,6 +1163,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0gamma_WN(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0gamma_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0gamma_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0gamma_WN(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0gamma_WN()));
@@ -1161,6 +1176,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0pi0_WN(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0pi0_WN(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
@@ -1176,6 +1195,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0gamma(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0gamma(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0gamma(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0gamma(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0gamma()));
@@ -1185,6 +1208,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0pi0(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
@@ -1196,6 +1223,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0gamma_WN(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0gamma_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0gamma_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0gamma_WN(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0gamma_WN()));
@@ -1205,6 +1236,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0pi0_WN(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0h_D0pi0_WN(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
@@ -1216,6 +1251,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bd2Dsth(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bd2Dsth(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bd2Dsth(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bd2Dsth(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBd2Dsth()));
@@ -1225,6 +1264,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2D0hst(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2D0hst(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2D0hst(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2D0hst(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
@@ -1236,6 +1279,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   uniqueId_)
                   .N_split_Bu2Dst0hst_D0gamma(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0hst_D0gamma(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0hst_D0gamma(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0hst_D0gamma(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0hst_D0gamma()));
@@ -1245,6 +1292,10 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
               Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
                   uniqueId_)
                   .N_split_Bu2Dst0hst_D0pi0(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0hst_D0pi0(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0hst_D0pi0(),
               NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                   .orEffMisId_Bu2Dst0hst_D0pi0(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
