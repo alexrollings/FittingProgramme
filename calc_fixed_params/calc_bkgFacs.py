@@ -13,14 +13,29 @@ if __name__ == '__main__':
   args = parser.parse_args()
   neutral = args.neutral
 
-  effs_dict = {'Bd2Dstpi' : None, 'Bu2D0rho' : None, 'Bu2Dst0rho_D0pi0' : None, 'Bu2Dst0rho_D0gamma' : None}
+  mc_effs_dict = {'Bd2Dstpi' : None, 'Bu2D0rho' : None, 'Bu2Dst0rho_D0pi0' : None, 'Bu2Dst0rho_D0gamma' : None}
 
-  for mode in effs_dict:
+  for mode in mc_effs_dict:
     f_effs = open(f'/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt_new/effs_{mode}.txt', 'r')
     for line in f_effs:
       arr = line.rstrip('\n').split(' ')
       if arr[0] == neutral and arr[1] == 'pi':
-        effs_dict[mode] = ufloat(float(arr[2]), float(arr[3]))
+        mc_effs_dict[mode] = ufloat(float(arr[2]), float(arr[3]))
+
+  or_effs_dict = {'Bd2Dstpi' : None, 'Bu2D0rho' : None, 'Bu2Dst0rho_D0pi0' : None, 'Bu2Dst0rho_D0gamma' : None}
+
+  for mode in or_effs_dict:
+    if neutral == 'gamma':
+      f_effs = open(f'/data/lhcb/users/rollings/txt_efficiencies/gamma_{mode}_60_105_125_170_5240_5320.txt', 'r')
+    else:
+      f_effs = open(f'/data/lhcb/users/rollings/txt_efficiencies/pi0_{mode}_138_148_5220_5330.txt', 'r')
+    for line in f_effs:
+      arr = line.rstrip('\n').split(' ')
+      if arr[0] == 'orEff':
+        val = float(arr[1])
+      if arr[0] == 'orEffErr':
+        err = float(arr[1])
+    or_effs_dict[mode] = ufloat(float(val), float(err))
 
   kBF_Bd2Dstpi = ufloat(2.74e-03, 0.13e-03)
   kBF_Dst2D0pi = ufloat(0.677, 0.005)
@@ -32,27 +47,35 @@ if __name__ == '__main__':
 
   frac_dict = {'Bu2D0rho' : None, 'Bu2Dst0rho_D0pi0' : None, 'Bu2Dst0rho_D0gamma' : None}
 
-  frac_dict['Bu2D0rho'] = ((kBF_Bu2D0rho + kBF_Bd2D0rho0) /
-                   (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (effs_dict['Bu2D0rho'] /
-                                                     effs_dict['Bd2Dstpi'])
+  frac_dict['Bu2D0rho'] = (
+      (kBF_Bu2D0rho + kBF_Bd2D0rho0) / (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (
+          mc_effs_dict['Bu2D0rho'] / mc_effs_dict['Bd2Dstpi']) * (
+              or_effs_dict['Bu2D0rho'] / or_effs_dict['Bd2Dstpi'])
+
   if neutral == 'pi0':
     frac_dict['Bu2Dst0rho_D0pi0'] = (
-        (kBF_Bu2Dst0rho * kBF_Dst02D0pi0) /
-        (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (effs_dict['Bu2Dst0rho_D0pi0'] /
-                                          effs_dict['Bd2Dstpi'])
-    frac_dict['Bu2Dst0rho_D0gamma'] = (
-        (kBF_Dst02D0gamma / kBF_Dst02D0pi0) *
-        (effs_dict['Bu2Dst0rho_D0gamma'] / effs_dict['Bu2Dst0rho_D0pi0']))
+        (kBF_Bu2Dst0rho * kBF_Dst02D0pi0) / (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (
+            mc_effs_dict['Bu2Dst0rho_D0pi0'] / mc_effs_dict['Bd2Dstpi']) * (
+                or_effs_dict['Bu2Dst0rho_D0pi0'] / or_effs_dict['Bd2Dstpi'])
+
+    frac_dict['Bu2Dst0rho_D0gamma'] = ((kBF_Dst02D0gamma / kBF_Dst02D0pi0) *
+                                       (mc_effs_dict['Bu2Dst0rho_D0gamma'] /
+                                        mc_effs_dict['Bu2Dst0rho_D0pi0']) *
+                                       (or_effs_dict['Bu2Dst0rho_D0gamma'] /
+                                        or_effs_dict['Bu2Dst0rho_D0pi0']))
   else:
     frac_dict['Bu2Dst0rho_D0gamma'] = (
         (kBF_Bu2Dst0rho * kBF_Dst02D0gamma) /
-        (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (effs_dict['Bu2Dst0rho_D0gamma'] /
-                                          effs_dict['Bd2Dstpi'])
-    frac_dict['Bu2Dst0rho_D0pi0'] = (
-        (kBF_Dst02D0pi0 / kBF_Dst02D0gamma) *
-        (effs_dict['Bu2Dst0rho_D0pi0'] / effs_dict['Bu2Dst0rho_D0gamma']))
+        (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (
+            mc_effs_dict['Bu2Dst0rho_D0gamma'] / mc_effs_dict['Bd2Dstpi']) * (
+                or_effs_dict['Bu2Dst0rho_D0gamma'] / or_effs_dict['Bd2Dstpi'])
+
+    frac_dict['Bu2Dst0rho_D0pi0'] = ((kBF_Dst02D0pi0 / kBF_Dst02D0gamma) *
+                                     (mc_effs_dict['Bu2Dst0rho_D0pi0'] /
+                                      mc_effs_dict['Bu2Dst0rho_D0gamma']) *
+                                     (or_effs_dict['Bu2Dst0rho_D0pi0'] /
+                                      or_effs_dict['Bu2Dst0rho_D0gamma']))
 
   f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/bkgFracs_{neutral}.txt', 'w+')
   for mode, frac in frac_dict.items():
     f_out.write(f'{mode} {frac.nominal_value} {frac.std_dev}\n')
-
