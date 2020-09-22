@@ -1783,3 +1783,209 @@ std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters) {
   return EnumToString(bachelor) + "_" + EnumToString(daughters) + "_" +
          std::to_string(uniqueId);
 }
+
+std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
+                             bool isTex) {
+  std::string oppCharge;
+  if (charge == Charge::plus) {
+    oppCharge = "-";
+  } else if (charge == Charge::minus) {
+    oppCharge = "+";
+  } else {
+    oppCharge = "#mp";
+  }
+  std::string daughtersLabel = EnumToLabel(daughters, charge);
+  std::string chargeLabel = EnumToLabel(charge);
+  if (isTex == true) {
+    std::replace(daughtersLabel.begin(), daughtersLabel.end(), '#', '\\');
+    std::replace(chargeLabel.begin(), chargeLabel.end(), '#', '\\');
+    std::replace(oppCharge.begin(), oppCharge.end(), '#', '\\');
+  }
+
+  if (mode == Mode::Bu2Dst0pi_D0gamma) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}\\pi^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0K_D0gamma) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}K^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0pi_D0pi0) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}\\pi^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0K_D0pi0) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}K^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0pi_D0gamma_WN) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+             chargeLabel + "}} WN";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}\\pi^{" + chargeLabel + "} WN";
+    }
+  } else if (mode == Mode::Bu2Dst0K_D0gamma_WN) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{" +
+             chargeLabel + "}} WN";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}K^{" + chargeLabel + "} WN";
+    }
+  } else if (mode == Mode::Bu2Dst0pi_D0pi0_WN) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#pi^{" +
+             chargeLabel + "}} WN";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}\\pi^{" + chargeLabel + "} WN";
+    }
+  } else if (mode == Mode::Bu2Dst0K_D0pi0_WN) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{" +
+             chargeLabel + "}} WN";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}K^{" + chargeLabel + "} WN";
+    }
+  } else if (mode == Mode::Bu2D0rho) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
+             daughtersLabel + "#font[132]{]}_{D^{0}}#rho^{" + chargeLabel +
+             "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow[" + daughtersLabel +
+             "]_{D^{0}}\\rho^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2D0Kst) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
+             daughtersLabel + "#font[132]{]}_{D^{0}}#K^{*" + chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow[" + daughtersLabel +
+             "]_{D^{0}}\\K^{*" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bd2Dstpi) {
+    if (isTex == false) {
+      return "#font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+             daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{" + oppCharge +
+             "}#font[132]{]}_{D^{*" + oppCharge + "}}#pi^{" + chargeLabel +
+             "}}";
+    } else {
+      return "$B^{0}\\rightarrow([" + daughtersLabel + "]_{D^{0}}\\pi^{" +
+             oppCharge + "})_{D^{*" + oppCharge + "}}\\pi^{" + chargeLabel +
+             "}$";
+    }
+  } else if (mode == Mode::Bd2DstK) {
+    if (isTex == false) {
+      return "#font[12]{B^{0}#rightarrow#font[132]{[}#font[132]{[}" +
+             daughtersLabel + "#font[132]{]}_{D^{0}}#pi^{" + oppCharge +
+             "}#font[132]{]}_{D^{*" + oppCharge + "}}K^{" + chargeLabel + "}}";
+    } else {
+      return "$B^{0}\\rightarrow([" + daughtersLabel + "]_{D^{0}}\\pi^{" +
+             oppCharge + "})_{D^{*" + oppCharge + "}}K^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0rho_D0pi0) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}#rho^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}\\rho^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0Kst_D0pi0) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}#font[132]{]}_{D^{*0}}K^{*" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}K^{*" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0rho_D0gamma) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}\\rho^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0Kst_D0gamma) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}K^{*" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\gamma)_{D^{*0}}K^{*" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Lb2Omegacpi_Lcpi0) {
+    if (isTex == false) {
+      return "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#"
+             "pi#"
+             "font[132]{]}_{#Lambda^{" +
+             oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
+             "}_{c}}#"
+             "pi^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$\\Lambda^{0}_{b}\\rightarrow([pK\\pi]_{\\Lambda^{" + oppCharge +
+             "}_{c}}\\pi^{0})_{\\Omega^{" + oppCharge + "}_{c}}\\pi^{" +
+             chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Lb2OmegacK_Lcpi0) {
+    if (isTex == false) {
+      return "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#"
+             "pi#"
+             "font[132]{]}_{#Lambda^{" +
+             oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
+             "}_{c}}"
+             "K^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$\\Lambda^{0}_{b}\\rightarrow([pK\\pi]_{\\Lambda^{" + oppCharge +
+             "}_{c}}\\pi^{0})_{\\Omega^{" + oppCharge + "}_{c}}K^{" +
+             chargeLabel + "}$";
+    }
+  }
+}
