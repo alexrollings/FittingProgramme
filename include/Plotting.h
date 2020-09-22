@@ -42,10 +42,9 @@
 #include "Pdf.h"
 
 void SetStyle();
-void MakeLaTeXLabel(std::string &str);
 void LaTeXYields(
-    Configuration &config, std::vector<PdfBase *> &pdfs, std::string &outputDir,
-    std::map<std::string, std::map<std::string, std::string> > &labelMap);
+    Configuration &config, PdfBase &pdf, std::string &outputDir,
+    RooFitResult *result);
 void PlotComponent(
     Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
     RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
