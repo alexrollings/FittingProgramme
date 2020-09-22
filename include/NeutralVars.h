@@ -463,6 +463,9 @@ class NeutralVars {
     return pdfBuPartial_Lb2Omegach_Lcpi0_;
   }
   // Box effs for Lb --> no K MC, only π
+  RooRealVar &orEffLb2Omegach_Lcpi0() {
+    return *orEffLb2Omegach_Lcpi0_;
+  }
   RooRealVar &deltaEffLb2Omegach_Lcpi0() {
     return *deltaEffLb2Omegach_Lcpi0_;
   }
@@ -778,6 +781,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_a1BuPartial_;
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_n1BuPartial_;
   RooCBShape pdfBuPartial_Lb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> orEffLb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> deltaEffLb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> buEffLb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> buPartialEffLb2Omegach_Lcpi0_;

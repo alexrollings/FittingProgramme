@@ -447,6 +447,13 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Lb2Omegach_Lcpi0_a1BuPartial_(nullptr),
       Lb2Omegach_Lcpi0_n1BuPartial_(nullptr),
       pdfBuPartial_Lb2Omegach_Lcpi0_(),
+      orEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "orEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::pi0,
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::orEffErr, false),
+          Systematic::NA, Sign::same)),
       deltaEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
           "deltaEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::pi0,
           ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,

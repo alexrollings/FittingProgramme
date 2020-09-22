@@ -792,6 +792,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", Configuration::Get().buDeltaMass(),
           *Lb2Omegach_Lcpi0_meanBuPartial_, *Lb2Omegach_Lcpi0_sigmaBuPartial_,
           *Lb2Omegach_Lcpi0_a1BuPartial_, *Lb2Omegach_Lcpi0_n1BuPartial_),
+      orEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+          "orEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::gamma,
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
+                        Efficiency::orEffErr, false),
+          Systematic::NA, Sign::same)),
       deltaEffLb2Omegach_Lcpi0_(Params::Get().CreateFixed(
           "deltaEffLb2Omegach_Lcpi0_", uniqueId_, Neutral::gamma,
           ReturnBoxEffs(Mode::Lb2Omegacpi_Lcpi0, Bachelor::pi,
