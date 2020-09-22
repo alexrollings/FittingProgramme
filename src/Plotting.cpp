@@ -39,7 +39,7 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   outfile << "\\usepackage[margin=0.1in]{geometry}\n";
   outfile << "\\usepackage{mathtools}\n";
   outfile << "\\usepackage{float}\n";
-  outfile << "\\usepackage{xcolor}\n";
+  outfile << "\\usepackage[table]{xcolor}\n";
   outfile << "\\restylefloat{table}\n";
   outfile << "\\begin{document}\n";
   for (auto &p : pdfs) {
@@ -60,9 +60,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
                  "N$_{B(D\\pi^{0})}$\\\\ \\hline\n";
       outfile << "\t ";
       if (b == Bachelor::pi) {
-        outfile << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, d, c, true);
+        outfile << "\\cellcolor{blue!25}" << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, d, c, true);
       } else {
-        outfile << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, d, c, true);
+        outfile << "\\cellcolor{orange!50}" << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, d, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -125,9 +125,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     }
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, d, c, true);
+      outfile << "\\cellcolor{blue!25}" << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, d, c, true);
+      outfile << "\\cellcolor{orange!50}" << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, d, c, true);
     }
     outfile << " & ";
     outfile << "$"
@@ -181,9 +181,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, d, c, true);
     }
     outfile << " & ";
     outfile << "$"
@@ -240,9 +240,15 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, d, c, true);
+      if (n == Neutral::gamma) {
+        outfile << "\\cellcolor{green!35}"
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, d, c, true);
+      } else {
+        outfile << "\\cellcolor{pink}"
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, d, c, true);
+      }
     }
     outfile << " & ";
     outfile << "$"
@@ -301,9 +307,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
+      outfile << "\\cellcolor{blue!25}" << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
+      outfile << "\\cellcolor{pink}" << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBd2Dsth().getVal(), 3)
@@ -347,9 +353,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\t ";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
+      outfile << "\\cellcolor{pink}" << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBu2D0hst().getVal(), 3)
@@ -394,9 +400,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     }
     outfile << "\\\\ \\hline\n";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0rho_D0pi0, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2Dst0rho_D0pi0, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0Kst_D0pi0, d, c, true);
+      outfile << "\\cellcolor{orange!50}" << ReturnLaTeXLabel(Mode::Bu2Dst0Kst_D0pi0, d, c, true);
     }
     outfile << " & ";
     outfile << "$"
@@ -452,9 +458,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0rho_D0gamma, d, c, true);
+      outfile << "\\cellcolor{green!35}" << ReturnLaTeXLabel(Mode::Bu2Dst0rho_D0gamma, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bu2Dst0Kst_D0gamma, d, c, true);
+      outfile << "\\cellcolor{orange!50}" << ReturnLaTeXLabel(Mode::Bu2Dst0Kst_D0gamma, d, c, true);
     }
     outfile << " & ";
     outfile << "$"
@@ -514,9 +520,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     if (d == Daughters::kk) {
       outfile << "\t ";
       if (b == Bachelor::pi) {
-        outfile << ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, d, c, true);
+        outfile << "\\cellcolor{blue!25}" << ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, d, c, true);
       } else {
-        outfile << ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, d, c, true);
+        outfile << "\\cellcolor{pink}" << ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, d, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -585,7 +591,11 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     std::string c_str = EnumToString(c);
     outfile << "\\caption{Correctly ID'd yields for category: Neutral " << n_str
             << ", Bachelor " << b_str << ", Daughters " << d_str << ", Charge "
-            << c_str << ".}\n";
+            << c_str
+            << ". Key: \\colorbox{blue!25}{Floating RRV}; "
+               "\\colorbox{green!35}{Gaussian constrained RFV}; "
+               "\\colorbox{orange!50}{RFV with floating ratio}; "
+               "\\colorbox{pink}{RFV with fixed ratio}.}\n";
     outfile << "\\end{table}\n";
   }
   outfile << "\\end{document}\n";

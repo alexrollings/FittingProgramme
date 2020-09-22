@@ -198,6 +198,7 @@ class PdfBase {
   virtual RooRealVar &orEffBu2D0hst() const = 0;
   virtual RooRealVar &orEffBu2Dst0hst_D0pi0() const = 0;
   virtual RooRealVar &orEffBu2Dst0hst_D0gamma() const = 0;
+  virtual RooRealVar &orEffLb2Omegach_Lcpi0() const = 0;
 
   virtual RooRealVar &buEffBu2Dst0h_D0gamma() const = 0;
   virtual RooRealVar &buEffBu2Dst0h_D0pi0() const = 0;
@@ -207,6 +208,7 @@ class PdfBase {
   virtual RooRealVar &buEffBu2D0hst() const = 0;
   virtual RooRealVar &buEffBu2Dst0hst_D0pi0() const = 0;
   virtual RooRealVar &buEffBu2Dst0hst_D0gamma() const = 0;
+  virtual RooRealVar &buEffLb2Omegach_Lcpi0() const = 0;
 
   virtual RooRealVar &deltaEffBu2Dst0h_D0gamma() const = 0;
   virtual RooRealVar &deltaEffBu2Dst0h_D0pi0() const = 0;
@@ -216,6 +218,7 @@ class PdfBase {
   virtual RooRealVar &deltaEffBu2D0hst() const = 0;
   virtual RooRealVar &deltaEffBu2Dst0hst_D0pi0() const = 0;
   virtual RooRealVar &deltaEffBu2Dst0hst_D0gamma() const = 0;
+  virtual RooRealVar &deltaEffLb2Omegach_Lcpi0() const = 0;
 
   virtual RooRealVar &buPartialEffBu2Dst0h_D0gamma() const = 0;
   virtual RooRealVar &buPartialEffBu2Dst0h_D0pi0() const = 0;
@@ -225,6 +228,7 @@ class PdfBase {
   virtual RooRealVar &buPartialEffBu2D0hst() const = 0;
   virtual RooRealVar &buPartialEffBu2Dst0hst_D0pi0() const = 0;
   virtual RooRealVar &buPartialEffBu2Dst0hst_D0gamma() const = 0;
+  virtual RooRealVar &buPartialEffLb2Omegach_Lcpi0() const = 0;
 
 
   // If a function or a method is defined in the header file, and the class is
@@ -909,6 +913,10 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .orEffBu2Dst0hst_D0gamma();
   }
+  virtual RooRealVar &orEffLb2Omegach_Lcpi0() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .orEffLb2Omegach_Lcpi0();
+  }
   virtual RooRealVar &orEffBu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .orEffBu2Dst0hst_D0pi0();
@@ -941,6 +949,10 @@ class Pdf : public PdfBase {
   virtual RooRealVar &buEffBu2Dst0hst_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .buEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &buEffLb2Omegach_Lcpi0() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .buEffLb2Omegach_Lcpi0();
   }
   virtual RooRealVar &buEffBu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
@@ -975,6 +987,10 @@ class Pdf : public PdfBase {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .deltaEffBu2Dst0hst_D0gamma();
   }
+  virtual RooRealVar &deltaEffLb2Omegach_Lcpi0() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .deltaEffLb2Omegach_Lcpi0();
+  }
   virtual RooRealVar &deltaEffBu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .deltaEffBu2Dst0hst_D0pi0();
@@ -1007,6 +1023,10 @@ class Pdf : public PdfBase {
   virtual RooRealVar &buPartialEffBu2Dst0hst_D0gamma() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
         .buPartialEffBu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &buPartialEffLb2Omegach_Lcpi0() const {
+    return NeutralVars<_neutral>::Get(uniqueId_)
+        .buPartialEffLb2Omegach_Lcpi0();
   }
   virtual RooRealVar &buPartialEffBu2Dst0hst_D0pi0() const {
     return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)

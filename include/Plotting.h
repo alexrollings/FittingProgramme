@@ -42,9 +42,8 @@
 #include "Pdf.h"
 
 void SetStyle();
-void LaTeXYields(
-    Configuration &config, PdfBase &pdf, std::string &outputDir,
-    RooFitResult *result);
+void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
+                 std::string &outputDir, std::unique_ptr<RooFitResult> &result);
 void PlotComponent(
     Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
     RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
