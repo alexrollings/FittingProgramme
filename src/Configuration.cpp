@@ -1850,7 +1850,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
              chargeLabel + "}} WN";
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\gamma)_{D^{*0}}\\pi^{" + chargeLabel + "} WN";
+             "]_{D^{0}}\\gamma)_{D^{*0}}\\pi^{" + chargeLabel + "}$ WN";
     }
   } else if (mode == Mode::Bu2Dst0K_D0gamma_WN) {
     if (isTex == false) {
@@ -1860,7 +1860,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
              chargeLabel + "}} WN";
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\gamma)_{D^{*0}}K^{" + chargeLabel + "} WN";
+             "]_{D^{0}}\\gamma)_{D^{*0}}K^{" + chargeLabel + "}$ WN";
     }
   } else if (mode == Mode::Bu2Dst0pi_D0pi0_WN) {
     if (isTex == false) {
@@ -1870,7 +1870,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
              chargeLabel + "}} WN";
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0})_{D^{*0}}\\pi^{" + chargeLabel + "} WN";
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}\\pi^{" + chargeLabel + "}$ WN";
     }
   } else if (mode == Mode::Bu2Dst0K_D0pi0_WN) {
     if (isTex == false) {
@@ -1880,7 +1880,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
              chargeLabel + "}} WN";
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0})_{D^{*0}}K^{" + chargeLabel + "} WN";
+             "]_{D^{0}}\\pi^{0})_{D^{*0}}K^{" + chargeLabel + "}$ WN";
     }
   } else if (mode == Mode::Bu2D0rho) {
     if (isTex == false) {
@@ -1894,10 +1894,10 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
   } else if (mode == Mode::Bu2D0Kst) {
     if (isTex == false) {
       return "#font[12]{B^{" + chargeLabel + "}#rightarrow#font[132]{[}" +
-             daughtersLabel + "#font[132]{]}_{D^{0}}#K^{*" + chargeLabel + "}}";
+             daughtersLabel + "#font[132]{]}_{D^{0}}K^{*" + chargeLabel + "}}";
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow[" + daughtersLabel +
-             "]_{D^{0}}\\K^{*" + chargeLabel + "}$";
+             "]_{D^{0}}K^{*" + chargeLabel + "}$";
     }
   } else if (mode == Mode::Bd2Dstpi) {
     if (isTex == false) {

@@ -162,9 +162,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
                    p->N_trueId_Delta_Bu2Dst0h_D0pi0().getPropagatedError(
                        *result),
                    0)
-            << "$ &";
+            << "$ ";
     if (n == Neutral::gamma) {
-      outfile << "$"
+      outfile << "& $"
               << to_string_with_precision(
                      p->buPartialEffBu2Dst0h_D0pi0().getVal(), 3)
               << "$ &";
@@ -301,9 +301,9 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
+      outfile << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
     } else {
-      outfile << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
+      outfile << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBu2D0hst().getVal(), 3)
@@ -583,7 +583,7 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     std::string d_str = EnumToLabel(d, c);
     FormatLaTeX(d_str);
     std::string c_str = EnumToString(c);
-    outfile << "\\caption{Yields for category: Neutral " << n_str
+    outfile << "\\caption{Correctly ID'd yields for category: Neutral " << n_str
             << ", Bachelor " << b_str << ", Daughters " << d_str << ", Charge "
             << c_str << ".}\n";
     outfile << "\\end{table}\n";
