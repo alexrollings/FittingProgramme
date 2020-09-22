@@ -301,6 +301,52 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     outfile << "\t ";
     if (b == Bachelor::pi) {
+      outfile << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
+    } else {
+      outfile << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
+    }
+    outfile << " & ";
+    outfile << "$" << to_string_with_precision(p->orEffBd2Dsth().getVal(), 3)
+            << "$ &";
+    outfile << "$"
+            << to_string_with_precision(p->N_trueId_Bd2Dsth().getVal(), 0)
+            << " \\pm "
+            << to_string_with_precision(
+                   p->N_trueId_Bd2Dsth().getPropagatedError(*result), 0)
+            << "$ &";
+    outfile << "$" << to_string_with_precision(p->buEffBd2Dsth().getVal(), 3)
+            << "$ &";
+    outfile << std::fixed << "$"
+            << to_string_with_precision(p->N_trueId_Bu_Bd2Dsth().getVal(), 0)
+            << " \\pm "
+            << to_string_with_precision(
+                   p->N_trueId_Bu_Bd2Dsth().getPropagatedError(*result), 0)
+            << "$ &";
+    outfile << "$" << to_string_with_precision(p->deltaEffBd2Dsth().getVal(), 3)
+            << "$ &";
+    outfile << "$"
+            << to_string_with_precision(p->N_trueId_Delta_Bd2Dsth().getVal(), 0)
+            << " \\pm "
+            << to_string_with_precision(
+                   p->N_trueId_Delta_Bd2Dsth().getPropagatedError(*result), 0)
+            << "$ ";
+    if (n == Neutral::gamma) {
+      outfile << "& $"
+              << to_string_with_precision(p->buPartialEffBd2Dsth().getVal(), 3)
+              << "$ &";
+      outfile
+          << "$"
+          << to_string_with_precision(p->N_trueId_BuPartial_Bd2Dsth().getVal(),
+                                      0)
+          << " \\pm "
+          << to_string_with_precision(
+                 p->N_trueId_BuPartial_Bd2Dsth().getPropagatedError(*result), 0)
+          << "$";
+    }
+    outfile << "\\\\ \\hline\n";
+    outfile << "\t ";
+    outfile << "\t ";
+    if (b == Bachelor::pi) {
       outfile << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
     } else {
       outfile << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
@@ -347,52 +393,6 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
               << "$";
     }
     outfile << "\\\\ \\hline\n";
-    outfile << "\t ";
-    if (b == Bachelor::pi) {
-      outfile << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
-    } else {
-      outfile << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
-    }
-    outfile << " & ";
-    outfile << "$" << to_string_with_precision(p->orEffBd2Dsth().getVal(), 3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->N_trueId_Bd2Dsth().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Bd2Dsth().getPropagatedError(*result), 0)
-            << "$ &";
-    outfile << "$" << to_string_with_precision(p->buEffBd2Dsth().getVal(), 3)
-            << "$ &";
-    outfile << std::fixed << "$"
-            << to_string_with_precision(p->N_trueId_Bu_Bd2Dsth().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Bu_Bd2Dsth().getPropagatedError(*result), 0)
-            << "$ &";
-    outfile << "$" << to_string_with_precision(p->deltaEffBd2Dsth().getVal(), 3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->N_trueId_Delta_Bd2Dsth().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Delta_Bd2Dsth().getPropagatedError(*result), 0)
-            << "$ ";
-    if (n == Neutral::gamma) {
-      outfile << "& $"
-              << to_string_with_precision(p->buPartialEffBd2Dsth().getVal(), 3)
-              << "$ &";
-      outfile
-          << "$"
-          << to_string_with_precision(p->N_trueId_BuPartial_Bd2Dsth().getVal(),
-                                      0)
-          << " \\pm "
-          << to_string_with_precision(
-                 p->N_trueId_BuPartial_Bd2Dsth().getPropagatedError(*result), 0)
-          << "$";
-    }
-    outfile << "\\\\ \\hline\n";
-    outfile << "\t ";
     if (b == Bachelor::pi) {
       outfile << ReturnLaTeXLabel(Mode::Bu2Dst0rho_D0pi0, d, c, true);
     } else {
