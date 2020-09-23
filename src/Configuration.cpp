@@ -1989,18 +1989,18 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
     }
   } else if (mode == Mode::Bs2D0Kpi) {
     if (isTex == false) {
-      return "#font[12]{#B^{0}_{s}#rightarrow D^{0}K^{" + chargeLabel +
+      return "#font[12]{B^{0}_{s}#rightarrow D^{0}K^{" + chargeLabel +
              "}#pi^{" + oppCharge + "}}";
     } else {
-      return "\\B^{0}_{s}\\rightarrow D^{0}K^{" + chargeLabel + "}\\pi^{" +
+      return "B^{0}_{s}\\rightarrow D^{0}K^{" + chargeLabel + "}\\pi^{" +
              oppCharge + "}";
     }
   } else if (mode == Mode::Bs2Dst0Kpi) {
     if (isTex == false) {
-      return "#font[12]{#B^{0}_{s}#rightarrow D^{*0}K^{" + chargeLabel +
+      return "#font[12]{B^{0}_{s}#rightarrow D^{*0}K^{" + chargeLabel +
              "}#pi^{" + oppCharge + "}}";
     } else {
-      return "\\B^{0}_{s}\\rightarrow D^{*0}K^{" + chargeLabel + "}\\pi^{" +
+      return "B^{0}_{s}\\rightarrow D^{*0}K^{" + chargeLabel + "}\\pi^{" +
              oppCharge + "}";
     }
   }
