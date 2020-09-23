@@ -1212,6 +1212,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0gamma_WN()));
+    N_tot_Bs2D0Kpi_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
+            uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bu2Dst0h_D0gamma_,
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kpi()));
+    N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
+            uniqueId, "N_tot_Bs2Dst0Kpi_", *N_tot_Bu2Dst0h_D0gamma_,
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2Dst0Kpi()));
   } else {
     N_tot_Bu2Dst0h_D0gamma_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::k>(
@@ -1220,13 +1228,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0gamma_WN(),
             BachelorVars<Bachelor::k>::Get(uniqueId).R_ADS_Bu2Dst0h_D0gamma()));
+    N_tot_Bs2D0Kpi_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
+            uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bu2Dst0h_D0pi0_,
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kpi()));
+    N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
+            uniqueId, "N_tot_Bs2Dst0Kpi_", *N_tot_Bu2Dst0h_D0pi0_,
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2Dst0Kpi()));
   }
-  N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "N_tot_Bs2Dst0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 100,
-      -1000, 1000));
-  N_tot_Bs2D0Kpi_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "N_tot_Bs2D0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 100,
-      -1000, 1000));
 }
 
 template <Neutral _neutral>
