@@ -250,8 +250,16 @@ class Params {
     auto key = std::make_tuple(name, std::to_string(uniqueId),
                                EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
+    std::cout << EnumToString(mode) << "\n";
     // Use pi bachelor if no bach specified
-    double start = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+    double start;
+    if (mode == Mode::Bs2D0Kpi || mode == Mode::Bs2Dst0Kpi) {
+      // Bs mode only has component in K slice
+      start = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
+    } else {
+      start =
+          ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+    }
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
@@ -278,8 +286,15 @@ class Params {
                                EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
     // Use pi bachelor if no bach specified
-    double mean = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
-    double std = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::err);
+    double mean, std;
+    if (mode == Mode::Bs2D0Kpi || mode == Mode::Bs2Dst0Kpi) {
+      // Bs mode only has component in K slice
+      mean = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
+      std = ReturnValErr(mode, neutral, Bachelor::k, name, Param::err);
+    } else {
+      mean = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+      std = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::err);
+    }
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 

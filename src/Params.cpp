@@ -24,47 +24,47 @@ void FixedParameter::Randomise(TRandom3 &random) {
   double shifted_value_ = random.Gaus(mean_, std_);
   if (sign_ == Sign::positive) {
     std::cout << "Positive\n";
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
     while (shifted_value_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       shifted_value_ = random.Gaus(mean_, std_);
     }
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
   } else if (sign_ == Sign::negative) {
     std::cout << "Negative\n";
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
     while (shifted_value_ > 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       shifted_value_ = random.Gaus(mean_, std_);
     }
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
   } else if (sign_ == Sign::same) {
-    std::cout << "Same\n";
-    std::cout << shifted_value_ << "\n";
-    std::cout << shifted_value_*shifted_value_ << "\n";
+    // std::cout << "Same\n";
+    // std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_*shifted_value_ << "\n";
     while (shifted_value_*mean_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       shifted_value_ = random.Gaus(mean_, std_);
     }
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
   }
   std::smatch match;
   static const std::regex pattern("\\S+Eff\\S+");
   if (std::regex_match(name_, match, pattern)) {
     std::cout << "0 < Efficiency < 1\n";
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
     while (shifted_value_ > 1 || shifted_value_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       shifted_value_ = random.Gaus(mean_, std_);
     }
-    std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value_ << "\n";
   }
-  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
-            << "\n";
+  // std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
+  //           << "\n";
   roo_variable_->setVal(shifted_value_);
 }
 
@@ -102,8 +102,8 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   if (realVar == nullptr) {
     throw std::runtime_error("Canot cast AbsArg to AbsReal for " + parName);
   }
-  std::cout << parName << "," << realVar->getVal() << "," << realVar->getError()
-            << "\n";
+  // std::cout << parName << "," << realVar->getVal() << "," << realVar->getError()
+  //           << "\n";
   if (param == Param::val) {
     return realVar->getVal();
   } else {
