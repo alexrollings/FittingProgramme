@@ -208,6 +208,10 @@ class NeutralBachelorVars {
   RooAddPdf &pdfBuPartial_misId_Bu2Dst0hst_D0pi0() {
     return pdfBuPartial_misId_Bu2Dst0hst_D0pi0_;
   }
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  RooAddPdf &pdfDelta_Bs2Dst0Kpi() {
+    return pdfDelta_Bs2Dst0Kpi_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooCruijff &pdfBu_MisRec() { return pdfBu_MisRec_; }
   RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
@@ -735,6 +739,12 @@ class NeutralBachelorVars {
   RooGaussian pdf2BuPartial_misId_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0hst_D0pi0_fracPdf1BuPartial_;
   RooAddPdf pdfBuPartial_misId_Bu2Dst0hst_D0pi0_;
+  // -------------------- Bs2Dst0Kpi -------------------- //
+  RooCBShape pdfPeakGamma1Delta_Bs2Dst0Kpi_;
+  RooCBShape pdfPeakGamma2Delta_Bs2Dst0Kpi_;
+  RooCBShape pdfPeakPi01Delta_Bs2Dst0Kpi_;
+  RooCBShape pdfPeakPi02Delta_Bs2Dst0Kpi_;
+  RooAddPdf pdfDelta_Bs2Dst0Kpi_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
   std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;

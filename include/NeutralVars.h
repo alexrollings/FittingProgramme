@@ -501,9 +501,6 @@ class NeutralVars {
     return *buPartialEffBs2D0Kpi_;
   }
   // -------------------- Bs2Dst0Kpi -------------------- //
-  RooAddPdf &pdfDelta_Bs2Dst0Kpi() {
-    return pdfDelta_Bs2Dst0Kpi_;
-  }
   RooAddPdf &pdfBu_Bs2Dst0Kpi() {
     return pdfBu_Bs2Dst0Kpi_;
   }
@@ -861,13 +858,8 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_bDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_cDelta_;
   RooDstD0BG pdfFlatDelta_Bs2Dst0Kpi_;
-  RooCBShape pdfPeakGamma1Delta_Bs2Dst0Kpi_;
-  RooCBShape pdfPeakGamma2Delta_Bs2Dst0Kpi_;
-  RooCBShape pdfPeakPi01Delta_Bs2Dst0Kpi_;
-  RooCBShape pdfPeakPi02Delta_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_fracPdfGammaPeakDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_fracPdfPi0PeakDelta_;
-  RooAddPdf pdfDelta_Bs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_mean1Bu_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kpi_meanOffset21Bu_;
   RooFormulaVar Bs2Dst0Kpi_mean2Bu_;
