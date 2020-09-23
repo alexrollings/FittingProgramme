@@ -44,10 +44,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1Delta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaFrac, Sign::same)),
-      Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFloating(
-          "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::pi0,
+      Bu2Dst0h_D0pi0_mean1Bu_(Params::Get().CreateFloating(
+          "Bu2Dst0h_D0pi0_mean1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0, 5270, 5280)),
-      Bu2Dst0h_D0pi0_sigmaBu_(nullptr),
+      Bu2Dst0h_D0pi0_meanOffset21Bu_(nullptr),
+      Bu2Dst0h_D0pi0_mean2Bu_(),
+      Bu2Dst0h_D0pi0_sigmaRatio21Bu_(nullptr),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_KpiSigmaBu", uniqueId_, Neutral::pi0, 0.944180,
           0.013207, Systematic::pi0BuWidthRatio, Sign::same)),

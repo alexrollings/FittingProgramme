@@ -164,22 +164,39 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf1Delta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1Delta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::pi0DeltaFrac, Sign::same)),
-      Bu2Dst0h_D0pi0_meanBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_meanBu", uniqueId_, Neutral::gamma,
+      Bu2Dst0h_D0pi0_mean1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_mean1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_sigmaBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_sigmaBu", uniqueId_, Neutral::gamma,
+      Bu2Dst0h_D0pi0_meanOffset21Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_meanOffset21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_KpiSigmaBu_(nullptr),
+      Bu2Dst0h_D0pi0_mean2Bu_(
+          ("Bu2Dst0h_D0pi0_mean2Bu" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "@0+@1",
+          RooArgList(*Bu2Dst0h_D0pi0_mean1Bu_,
+                     *Bu2Dst0h_D0pi0_meanOffset21Bu_)),
+      Bu2Dst0h_D0pi0_sigmaRatio21Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_sigmaRatio21", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_KpiSigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_KpiSigmaBu", uniqueId_, Neutral::gamma, 1.0, 0.0,
+          Systematic::crossFeedBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_a1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_a2Bu_(nullptr),
+      Bu2Dst0h_D0pi0_a2Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_a2Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_n1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_n2Bu_(nullptr),
-      Bu2Dst0h_D0pi0_fracPdf1Bu_(nullptr),
+      Bu2Dst0h_D0pi0_n2Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_n2Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
+      Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, 5280, 5310)),
@@ -997,18 +1014,18 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::gamma,
           (ReturnBoxEffs(Mode::Bd2Dstpi, Bachelor::pi, Efficiency::orEff,
                          false) /
-           ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, Efficiency::orEff,
-                         false)) *
+           ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+                         Efficiency::orEff, false)) *
               (ReturnMCEffs(Mode::Bd2Dstpi, Neutral::gamma, Bachelor::pi,
                             Efficiency::mcEff) /
-               ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma, Bachelor::pi,
-                            Efficiency::mcEff)) *
+               ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, Neutral::gamma,
+                            Bachelor::pi, Efficiency::mcEff)) *
               (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()) /
               (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal()),
           0, 5)),
-      // Constrained relative to Bd2Dsth 
+      // Constrained relative to Bd2Dsth
       bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::gamma,
           (ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::orEff,
@@ -1029,8 +1046,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                          Efficiency::orEff, false) /
            ReturnBoxEffs(Mode::Bd2Dstpi, Bachelor::pi, Efficiency::orEff,
                          false)) *
-              (ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
-                            Efficiency::mcEff) /
+              (ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma,
+                            Bachelor::pi, Efficiency::mcEff) /
                ReturnMCEffs(Mode::Bd2Dstpi, Neutral::gamma, Bachelor::pi,
                             Efficiency::mcEff)) *
               (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() *
@@ -1047,8 +1064,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                          Efficiency::orEff, false)) *
               (ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::gamma,
                             Bachelor::pi, Efficiency::mcEff) /
-               ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma, Bachelor::pi,
-                            Efficiency::mcEff)) *
+               ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::gamma,
+                            Bachelor::pi, Efficiency::mcEff)) *
               GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal(),
           0, 5)),
@@ -1065,7 +1082,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", *bkgFracFAV_Bu2D0hst_,
           RooFit::RooConst(ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, "val")),
-          RooFit::RooConst(ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, "std"))),
+          RooFit::RooConst(
+              ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, "std"))),
       constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_(
           ("constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma))
