@@ -1530,6 +1530,81 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooArgSet(pdf1BuPartial_misId_Bu2Dst0hst_D0pi0_,
                     pdf2BuPartial_misId_Bu2Dst0hst_D0pi0_),
           *misId_Bu2Dst0hst_D0pi0_fracPdf1BuPartial_),
+      // -------------------- Bs2Dst0Kpi -------------------- //
+      pdfPeakGamma1Delta_Bs2Dst0Kpi_(
+          ("pdfPeakGamma1Delta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_a1Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n1Delta()),
+      pdfPeakGamma2Delta_Bs2Dst0Kpi_(
+          ("pdfPeakGamma2Delta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_meanDelta(),
+          *Bu2Dst0h_D0gamma_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_a2Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_n2Delta()),
+      pdfPeakGammaDelta_Bs2Dst0Kpi_(
+          ("pdfPeakGammaDelta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgList(pdfPeakGamma1Delta_Bs2Dst0Kpi_,
+                     pdfPeakGamma2Delta_Bs2Dst0Kpi_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_fracPdf1Delta()),
+      pdfPeakPi01Delta_Bs2Dst0Kpi_(
+          ("pdfPeakPi01Delta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_a1Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_n1Delta()),
+      pdfPeakPi02Delta_Bs2Dst0Kpi_(
+          ("pdfPeakPi02Delta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_meanDelta(),
+          *Bu2Dst0h_D0pi0_sigmaDelta_,
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_a2Delta(),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2Dst0h_D0pi0_n2Delta()),
+      pdfPeakPi0Delta_Bs2Dst0Kpi_(
+          ("pdfPeakPi0Delta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgList(pdfPeakPi01Delta_Bs2Dst0Kpi_,
+                     pdfPeakPi02Delta_Bs2Dst0Kpi_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
+      pdfDelta_Bs2Dst0Kpi_(
+          ("pdfDelta_Bs2Dst0Kpi_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgList(pdfPeakGammaDelta_Bs2Dst0Kpi_, pdfPeakPi0Delta_Bs2Dst0Kpi_,
+                     NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                         .pdfFlatDelta_Bs2Dst0Kpi()),
+          RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                         .Bs2Dst0Kpi_fracPdfGammaPeakDelta(),
+                     NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                         .Bs2Dst0Kpi_fracPdfPi0PeakDelta())),
       // -------------------- MIS-REC -------------------- //
       MisRec_sigmaLBu_(Params::Get().CreateFixed(
           "MisRec_sigmaLBu", uniqueId_, Neutral::gamma, Bachelor::k, 1.2599e+02,

@@ -742,8 +742,10 @@ class NeutralBachelorVars {
   // -------------------- Bs2Dst0Kpi -------------------- //
   RooCBShape pdfPeakGamma1Delta_Bs2Dst0Kpi_;
   RooCBShape pdfPeakGamma2Delta_Bs2Dst0Kpi_;
+  RooAddPdf pdfPeakGammaDelta_Bs2Dst0Kpi_;
   RooCBShape pdfPeakPi01Delta_Bs2Dst0Kpi_;
   RooCBShape pdfPeakPi02Delta_Bs2Dst0Kpi_;
+  RooAddPdf pdfPeakPi0Delta_Bs2Dst0Kpi_;
   RooAddPdf pdfDelta_Bs2Dst0Kpi_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;

@@ -933,6 +933,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", Configuration::Get().deltaMass(), *Bs2Dst0Kpi_thresholdDelta_,
           *Bs2Dst0Kpi_cDelta_, *Bs2Dst0Kpi_aDelta_, *Bs2Dst0Kpi_bDelta_),
+      Bs2Dst0Kpi_fracPdfGammaPeakDelta_(Params::Get().CreateFixed(
+          "Bs2Dst0Kpi_fracPdfGammaPeakDelta", uniqueId_, Neutral::gamma,
+          Mode::Bs2Dst0Kpi, Systematic::Bs2Dst0KpiDeltaPdf, Sign::same)),
+      Bs2Dst0Kpi_fracPdfPi0PeakDelta_(Params::Get().CreateFixed(
+          "Bs2Dst0Kpi_fracPdfPi0PeakDelta", uniqueId_, Neutral::gamma,
+          Mode::Bs2Dst0Kpi, Systematic::Bs2Dst0KpiDeltaPdf, Sign::same)),
       Bs2Dst0Kpi_mean1Bu_(Params::Get().CreateFixed(
           "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bs2Dst0Kpi,
           Systematic::Bs2Dst0KpiBuPdf, Sign::same)),

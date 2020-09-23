@@ -501,6 +501,15 @@ class NeutralVars {
     return *buPartialEffBs2D0Kpi_;
   }
   // -------------------- Bs2Dst0Kpi -------------------- //
+  RooRealVar &Bs2Dst0Kpi_fracPdfGammaPeakDelta() {
+    return *Bs2Dst0Kpi_fracPdfGammaPeakDelta_;
+  }
+  RooRealVar &Bs2Dst0Kpi_fracPdfPi0PeakDelta() {
+    return *Bs2Dst0Kpi_fracPdfPi0PeakDelta_;
+  }
+  RooDstD0BG &pdfFlatDelta_Bs2Dst0Kpi() {
+    return pdfFlatDelta_Bs2Dst0Kpi_;
+  }
   RooAddPdf &pdfBu_Bs2Dst0Kpi() {
     return pdfBu_Bs2Dst0Kpi_;
   }
