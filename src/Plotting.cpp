@@ -735,8 +735,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
   colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kCyan - 3;
   colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kViolet + 5;
-  // colorMap["Bs2Dst0Kpi"] = kOrange - 3;
-  // colorMap["Bs2D0Kpi"] = kOrange + 4;
+  colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"] = kOrange;
+  colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"] = kGreen + 3;
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
@@ -906,6 +906,22 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"]);
   hist_Lb2OmegacK_Lcpi0->SetLineWidth(5);
 
+  auto hist_Bs2D0Kpi = std::make_unique<TH1D>(
+      ("hist_Bs2D0Kpi" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bs2D0Kpi", 1, 0, 1);
+  hist_Bs2D0Kpi->SetLineColor(colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"]);
+  hist_Bs2D0Kpi->SetLineWidth(5);
+
+  auto hist_Bs2Dst0Kpi = std::make_unique<TH1D>(
+      ("hist_Bs2Dst0Kpi" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bs2Dst0Kpi", 1, 0, 1);
+  hist_Bs2Dst0Kpi->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"]);
+  hist_Bs2Dst0Kpi->SetLineWidth(5);
+
   if (bachelor == Bachelor::pi) {
     if (neutral == Neutral::gamma) {
       labels.AddEntry(
@@ -1001,6 +1017,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, daughters, charge, false)
             .c_str(),
         "l");
+    if (config.runADS() == true) {
+      labels.AddEntry(
+          hist_Bs2D0Kpi.get(),
+          ReturnLaTeXLabel(Mode::Bs2D0Kpi, daughters, charge, false).c_str(),
+          "l");
+      labels.AddEntry(
+          hist_Bs2Dst0Kpi.get(),
+          ReturnLaTeXLabel(Mode::Bs2Dst0Kpi, daughters, charge, false).c_str(),
+          "l");
+    }
   }
 
   // Loop over entries in legend and set size
