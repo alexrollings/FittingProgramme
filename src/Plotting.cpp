@@ -735,8 +735,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
   colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kCyan - 3;
   colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kViolet + 5;
-  colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"] = kOrange;
-  colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"] = kGreen + 3;
+  colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"] = kOrange;
+  colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"] = kGreen + 3;
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
@@ -1245,8 +1245,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
           if (config.runADS() == true && bachelor == Bachelor::k &&
               daughters != Daughters::kpi) {
-            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kpi().GetName());
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
           }
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1272,8 +1272,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
           if (config.runADS() == true && bachelor == Bachelor::k &&
               daughters != Daughters::kpi) {
-            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kpi().GetName());
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
           }
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1305,8 +1305,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
           if (config.runADS() == true && bachelor == Bachelor::k &&
               daughters != Daughters::kpi) {
-            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kpi().GetName());
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
           }
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1332,8 +1332,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
           if (config.runADS() == true && bachelor == Bachelor::k &&
               daughters != Daughters::kpi) {
-            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kpi().GetName());
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
           }
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1366,8 +1366,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kpi().GetName());
           pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2Dst0Kpi().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kpi().GetName());
           }
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(

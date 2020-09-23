@@ -589,11 +589,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bs2Dst0Kpi_fracPdf1Bu", uniqueId_, Neutral::pi0, Mode::Bs2Dst0Kpi,
           Systematic::Bs2Dst0KpiBuPdf, Sign::same)),
       pdf1Bu_Bs2Dst0Kpi_(
-          ("pdfBu_Bs2Dst0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
+          ("pdf1Bu_Bs2Dst0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().buDeltaMass(), *Bs2Dst0Kpi_mean1Bu_,
           *Bs2Dst0Kpi_sigma1Bu_, *Bs2Dst0Kpi_a1Bu_, *Bs2Dst0Kpi_n1Bu_),
       pdf2Bu_Bs2Dst0Kpi_(
-          ("pdfBu_Bs2Dst0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
+          ("pdf2Bu_Bs2Dst0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().buDeltaMass(), Bs2Dst0Kpi_mean2Bu_,
           Bs2Dst0Kpi_sigma2Bu_, *Bs2Dst0Kpi_a2Bu_, *Bs2Dst0Kpi_n2Bu_),
       pdfBu_Bs2Dst0Kpi_(
