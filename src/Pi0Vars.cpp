@@ -471,6 +471,64 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                         Efficiency::buEffErr, false),
           Systematic::NA, Sign::same)),
       buPartialEffLb2Omegach_Lcpi0_(nullptr),
+      // -------------------- Bs2D0Kpi -------------------- //
+      Bs2D0Kpi_thresholdDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_thresholdDelta", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiDeltaPdf, Sign::same)),
+      Bs2D0Kpi_aDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_aDelta", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiDeltaPdf, Sign::same)),
+      Bs2D0Kpi_bDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_bDelta", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiDeltaPdf, Sign::same)),
+      Bs2D0Kpi_cDelta_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_cDelta", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiDeltaPdf, Sign::same)),
+      pdfDelta_Bs2D0Kpi_(
+          ("pdfDelta_Bs2D0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
+          "", Configuration::Get().deltaMass(), *Bs2D0Kpi_thresholdDelta_,
+          *Bs2D0Kpi_cDelta_, *Bs2D0Kpi_aDelta_, *Bs2D0Kpi_bDelta_),
+      Bs2D0Kpi_meanBu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_meanBu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiBuPdf, Sign::same)),
+      Bs2D0Kpi_sigmaBu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_sigmaBu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiBuPdf, Sign::same)),
+      Bs2D0Kpi_a1Bu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_a1Bu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiBuPdf, Sign::same)),
+      Bs2D0Kpi_n1Bu_(Params::Get().CreateFixed(
+          "Bs2D0Kpi_n1Bu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kpi,
+          Systematic::Bs2D0KpiBuPdf, Sign::same)),
+      pdfBu_Bs2D0Kpi_(
+          ("pdfBu_Bs2D0Kpi_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
+          "", Configuration::Get().buDeltaMass(), *Bs2D0Kpi_meanBu_,
+          *Bs2D0Kpi_sigmaBu_, *Bs2D0Kpi_a1Bu_, *Bs2D0Kpi_n1Bu_),
+      Bs2D0Kpi_meanBuPartial_(nullptr),
+      Bs2D0Kpi_sigmaBuPartial_(nullptr),
+      Bs2D0Kpi_a1BuPartial_(nullptr),
+      Bs2D0Kpi_n1BuPartial_(nullptr),
+      pdfBuPartial_Bs2D0Kpi_(),
+      orEffBs2D0Kpi_(Params::Get().CreateFixed(
+          "orEffBs2D0Kpi_", uniqueId_, Neutral::pi0,
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::orEffErr,
+                        false),
+          Systematic::NA, Sign::same)),
+      deltaEffBs2D0Kpi_(Params::Get().CreateFixed(
+          "deltaEffBs2D0Kpi_", uniqueId_, Neutral::pi0,
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::deltaEff,
+                        false),
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::deltaEffErr,
+                        false),
+          Systematic::NA, Sign::same)),
+      buEffBs2D0Kpi_(Params::Get().CreateFixed(
+          "buEffBs2D0Kpi_", uniqueId_, Neutral::pi0,
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::buEffErr,
+                        false),
+          Systematic::NA, Sign::same)),
+      buPartialEffBs2D0Kpi_(nullptr),
       // -------------------- MIS-REC -------------------- //
       MisRec_thresholdDelta_(Params::Get().CreateFixed(
           "MisRec_thresholdDelta", uniqueId_, Neutral::pi0, 1.3549e+02, 1e-01,

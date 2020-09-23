@@ -477,6 +477,29 @@ class NeutralVars {
   RooRealVar &buPartialEffLb2Omegach_Lcpi0() {
     return *buPartialEffLb2Omegach_Lcpi0_;
   }
+  // -------------------- Bs2D0Kpi -------------------- //
+  RooDstD0BG &pdfDelta_Bs2D0Kpi() {
+    return pdfDelta_Bs2D0Kpi_;
+  }
+  RooCBShape &pdfBu_Bs2D0Kpi() {
+    return pdfBu_Bs2D0Kpi_;
+  }
+  RooCBShape &pdfBuPartial_Bs2D0Kpi() {
+    return pdfBuPartial_Bs2D0Kpi_;
+  }
+  // Box effs for Bs --> no π MC, only K
+  RooRealVar &orEffBs2D0Kpi() {
+    return *orEffBs2D0Kpi_;
+  }
+  RooRealVar &deltaEffBs2D0Kpi() {
+    return *deltaEffBs2D0Kpi_;
+  }
+  RooRealVar &buEffBs2D0Kpi() {
+    return *buEffBs2D0Kpi_;
+  }
+  RooRealVar &buPartialEffBs2D0Kpi() {
+    return *buPartialEffBs2D0Kpi_;
+  }
   // -------------------- MIS-REC -------------------- //
   RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
   RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
@@ -789,6 +812,26 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaEffLb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> buEffLb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> buPartialEffLb2Omegach_Lcpi0_;
+  // -------------------- Bs2D0Kpi -------------------- //
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_thresholdDelta_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_aDelta_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_bDelta_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_cDelta_;
+  RooDstD0BG pdfDelta_Bs2D0Kpi_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_meanBu_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_sigmaBu_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_a1Bu_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_n1Bu_;
+  RooCBShape pdfBu_Bs2D0Kpi_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_sigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kpi_n1BuPartial_;
+  RooCBShape pdfBuPartial_Bs2D0Kpi_;
+  std::shared_ptr<RooRealVar> orEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> deltaEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> buEffBs2D0Kpi_;
+  std::shared_ptr<RooRealVar> buPartialEffBs2D0Kpi_;
   // -------------------- MIS-REC -------------------- //
   std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
   std::shared_ptr<RooRealVar> MisRec_aDelta_;
