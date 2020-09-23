@@ -607,6 +607,12 @@ class NeutralVars {
   RooRealVar &bkgFracKK_Lb2Omegach_Lcpi0() {
     return *bkgFracKK_Lb2Omegach_Lcpi0_;
   }
+  RooRealVar &bkgFracADS_Bs2D0Kpi() {
+    return *bkgFracADS_Bs2D0Kpi_;
+  }
+  RooRealVar &bkgFracADS_Bs2Dst0Kpi() {
+    return *bkgFracADS_Bs2Dst0Kpi_;
+  }
   RooGaussian &constraint_bkgFracGlobal_WN() {
     return constraint_bkgFracGlobal_WN_;
   }
@@ -961,6 +967,8 @@ class NeutralVars {
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooRealVar> bkgFracKK_Lb2Omegach_Lcpi0_;
+  std::shared_ptr<RooRealVar> bkgFracADS_Bs2D0Kpi_;
+  std::shared_ptr<RooRealVar> bkgFracADS_Bs2Dst0Kpi_;
   RooGaussian constraint_bkgFracGlobal_WN_;
   RooGaussian constraint_bkgFracFAV_Bu2D0hst_;
   RooGaussian constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_;
