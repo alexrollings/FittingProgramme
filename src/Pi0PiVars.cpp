@@ -999,13 +999,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       buPartialEffMisId_Bu2D0hst_(nullptr),
       buPartialEffMisId_Bu2Dst0hst_D0gamma_(nullptr),
       buPartialEffMisId_Bu2Dst0hst_D0pi0_(nullptr),
-      // -------------------- Bs BoxEffs ------------------- //
-      buDeltaCutEffBs2Dst0Kpi_(nullptr),
-      buDeltaCutEffBs2D0Kpi_(nullptr),
-      deltaCutEffBs2Dst0Kpi_(nullptr),
-      deltaCutEffBs2D0Kpi_(nullptr),
-      deltaPartialCutEffBs2Dst0Kpi_(nullptr),
-      deltaPartialCutEffBs2D0Kpi_(nullptr),
       // -------------------- MC Efficiencies -------------------- //
       mcEff_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "mcEff_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::pi,
@@ -1063,12 +1056,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::same)),
-      mcEff_Bs2Dst0Kpi_(Params::Get().CreateFixed(
-          "mcEff_Bs2Dst0Kpi", uniqueId_, Neutral::pi0, Bachelor::pi, 1.0, 0.0,
-          Systematic::NA, Sign::same)),
-      mcEff_Bs2D0Kpi_(Params::Get().CreateFixed(
-          "mcEff_Bs2D0Kpi", uniqueId_, Neutral::pi0, Bachelor::pi, 1.0, 0.0,
-          Systematic::NA, Sign::same)),
       // -------------------- MC misId Efficiencies -------------------- //
       mcEffMisId_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "mcEffMisId_Bu2Dst0h_D0pi0", uniqueId_, Neutral::pi0, Bachelor::pi,
