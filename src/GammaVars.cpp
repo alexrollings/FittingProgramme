@@ -177,7 +177,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           RooArgList(*Bu2Dst0h_D0pi0_mean1Bu_,
                      *Bu2Dst0h_D0pi0_meanOffset21Bu_)),
       Bu2Dst0h_D0pi0_sigmaRatio21Bu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_sigmaRatio21", uniqueId_, Neutral::gamma,
+          "Bu2Dst0h_D0pi0_sigmaRatio21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
       Bu2Dst0h_D0pi0_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_KpiSigmaBu", uniqueId_, Neutral::gamma, 1.0, 0.0,
