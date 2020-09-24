@@ -29,6 +29,8 @@ class PdfBase {
   // inline RooProdPdf &prodPdfBuPartial() { return *prodPdfBuPartial_; }
   // inline RooProdPdf &prodPdfDelta() { return *prodPdfDelta_; }
 
+  virtual RooRealVar &bkgFracGlobal_WN() const = 0;
+
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsReal &N_tot_Bu2D0hst() const = 0;
@@ -287,6 +289,10 @@ class Pdf : public PdfBase {
   virtual void AssignMisIdYields() {
     Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .AssignMisIdYields();
+  }
+
+  virtual RooRealVar &bkgFracGlobal_WN() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).bkgFracGlobal_WN();
   }
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const {

@@ -1,0 +1,87 @@
+\documentclass[12pt, landscape]{article}
+\usepackage[margin=0.1in]{geometry}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{xcolor}
+\restylefloat{table}
+\begin{document}
+
+\textbf{Yield definitions in the FAV mode} (\colorbox{blue!25}{Floating RRV},
+\colorbox{green!35}{Gaussian constrainted RRV}, \colorbox{pink}{Fixed
+RRV}):
+
+\begin{itemize}
+  \item Yields for signal decays combined with the wrong neutral particle (WN)
+  are defined in each category, in relation to the signal yield, as:
+  \begin{equation*}
+    \colorbox{blue!25}{\text{N(WN)}} = \colorbox{blue!25}{\text{N(signal)}} \times
+    \colorbox{pink}{$\frac{\epsilon_{cross}\text{(WN)}}{\epsilon_{cross}\text{(signal)}}$}
+    \times
+    \colorbox{pink}{$\frac{\epsilon_{sel}\text{(WN)}}{\epsilon_{sel}\text{(signal)}}$}
+    \times 
+    \colorbox{green!35}{$f_{WN}$}
+  \end{equation*}
+  Where $f_{WN}$ is a floating RRV, representing the relative efficiency of
+  combining with the wrong neutral in data, compared to MC, and is shared across
+  both $D^*\rightarrow D\gamma$ and $D^*\rightarrow D\pi^0$ components. $f_{WN}$
+  is a gaussian constrained quantity, $\mu=1$, $\sigma=0.1$.
+
+  In the $D\pi^0$ fit, the $D\gamma$ WN yield is only calculated this way in the
+  favoured mode, where it is also corrected for by the branching ratio of the
+  two $D^*$ decays. In the other categories, the yields are related to the FAV
+  yield by physics parameters.  \item $B^0\rightarrow D^{*\pm}h^{\mp}$,
+  $B^{\pm}\rightarrow Dh^{*\pm}$ and $B^{\pm}\rightarrow D^{*0}h^{*\pm}$ MC
+  samples have the same simulation versions, therefore any effect on the
+  efficiencies from the mis-modelling of the underlying event in the samples
+  should be shared.
+  \item The $B^0\rightarrow D^{*\pm}\pi^{\mp}$ yield is a floating RRV.
+  \item The $B^{\pm}\rightarrow D\rho^{\pm}$ yield is a gaussian constrained RRV:
+    \begin{equation*}
+      \colorbox{green!35}{\text{N($B^{\pm}\rightarrow D\rho^{\pm}$)}} =
+      \colorbox{blue!25}{\text{N($B^0\rightarrow D^{*\pm}\pi^{\mp}$)}} \times 
+      \colorbox{pink}{$\frac{BF(B^{\pm}\rightarrow
+      D\rho^{\pm})}{BF(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
+      \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow
+      D\rho^{\pm})}{\epsilon_{sel}(B^0\rightarrow D^{*\pm}\pi^{\mp})}$}
+    \end{equation*}
+    The central value of the gaussian is the result of the above calculation,
+    and the standard deviation is the combined error of the selection
+    efficiencies and branching fractions.
+  \item The $B^{\pm}\rightarrow (D^*\rightarrow D\gamma(\pi^0))\rho^{\pm}$
+    yields are gaussian constrained RRVs. In the $D\gamma(D\pi^0)$ fit, the
+    $D\gamma(D\pi^0)$ component of this decay is constrained relative to the
+    $B^0\rightarrow D^{*\pm}\pi^{\mp}$ yield:
+    \begin{equation*}
+      \colorbox{green!35}{\text{N($B^{\pm}\rightarrow (D^*\rightarrow
+      D\gamma(\pi^0))\rho^{\pm}$)}} =
+      \colorbox{blue!25}{\text{N($B^0\rightarrow D^{*\pm}\pi^{\mp}$)}} \times 
+      \colorbox{pink}{$\frac{BF(B^{\pm}\rightarrow (D^*\rightarrow
+      D\gamma(\pi^0))\rho^{\pm})}{BF(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
+      \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow (D^*\rightarrow
+      D\gamma(\pi^0))\rho^{\pm})}{\epsilon_{sel}(B^0\rightarrow
+      D^{*\pm}\pi^{\mp})}$}
+    \end{equation*}
+    In the $D\gamma(D\pi^0)$ fit, the $D\pi^0(D\gamma)$ component of this decay
+  is constrained relative to the $D\gamma(D\pi^0)$ component (calculated above):
+    \begin{equation*}
+      \colorbox{green!35}{\text{N($B^{\pm}\rightarrow (D^*\rightarrow
+      D\pi^0(D\gamma))\rho^{\pm}$)}} =
+      \colorbox{green!35}{\text{N($B^{\pm}\rightarrow (D^*\rightarrow
+      D\gamma(\pi^0))\rho^{\pm}$)}} \times 
+      \colorbox{pink}{$\frac{BF(D^*\rightarrow
+      D\pi^0(D\gamma))}{BF(D^*\rightarrow D\gamma(\pi^0))}$} \times
+      \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow (D^*\rightarrow
+      D\pi^0(D\gamma))\rho^{\pm})}{\epsilon_{sel}(B^{\pm}\rightarrow
+      (D^*\rightarrow D\gamma(\pi^0))\rho^{\pm})}$}
+    \end{equation*}
+    Again, the central values of the gaussians are the result of the
+    calculations, and the standard deviations are the combined error of the
+    selection efficiencies and branching fractions.
+  \item $R(D^*K/D^*\pi)$ for $B^0\rightarrow D^{*\pm}h^{\mp}$ and
+    $B^{\pm}\rightarrow Dh^{*\pm}$ are fixed; $R(D^*K/D^*\pi)$ for
+    $B^{\pm}\rightarrow D^*h^{*\pm}$ is a gaussian constrained RRV, with a
+    standard deviation of 10\% (essentially floating).
+\end{itemize}
+
+\end{document}

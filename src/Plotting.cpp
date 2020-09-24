@@ -42,11 +42,115 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   outfile << "\\usepackage[table]{xcolor}\n";
   outfile << "\\restylefloat{table}\n";
   outfile << "\\begin{document}\n";
+  outfile << "\\newpage\n";
+  outfile << "\\begin{itemize}\n";
+  if (n == Neutral::gamma) {
+    outfile << "\t\\item $f_{WN} = "
+            << NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getVal()
+            << " \\pm "
+            << NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getError()
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\gamma \\text{ signal}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\gamma \\text{ WN}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\pi^0 \\text{ signal}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\pi^0 \\text{ WN}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+  } else {
+    outfile << "\t\\item $f_{WN} = "
+            << NeutralVars<Neutral::pi0>::Get(0).bkgFracGlobal_WN().getVal()
+            << " \\pm "
+            << NeutralVars<Neutral::pi0>::Get(0).bkgFracGlobal_WN().getError()
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\pi^0 \\text{ signal}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\pi^0 \\text{ WN}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0_WN, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+    outfile << "\t\\item $\\epsilon_{sel}(D\\gamma \\text{ WN}) = "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, n, Bachelor::pi,
+                            Efficiency::mcEff)
+            << " \\pm "
+            << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, n, Bachelor::pi,
+                            Efficiency::mcEffErr)
+            << "$\n";
+  }
+  outfile << "\t\\item $\\epsilon_{sel}(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp}) = "
+          << ReturnMCEffs(Mode::Bd2Dstpi, n, Bachelor::pi, Efficiency::mcEff)
+          << " \\pm " <<
+      ReturnMCEffs(Mode::Bd2Dstpi, n, Bachelor::pi, Efficiency::mcEffErr)
+          << "$\n";
+  outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow D\\rho^{\\pm}) = "
+          << ReturnMCEffs(Mode::Bu2D0rho, n, Bachelor::pi, Efficiency::mcEff)
+          << " \\pm " <<
+      ReturnMCEffs(Mode::Bu2D0rho, n, Bachelor::pi, Efficiency::mcEffErr)
+          << "$\n";
+  outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow "
+             "D\\pi^0)\\rho^{\\pm}) = "
+          << ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, n, Bachelor::pi,
+                          Efficiency::mcEff)
+          << " \\pm " <<
+      ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, n, Bachelor::pi,
+                   Efficiency::mcEffErr)
+          << "$\n";
+  outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow "
+             "D\\gamma)\\rho^{\\pm}) = "
+          << ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, n, Bachelor::pi,
+                          Efficiency::mcEff)
+          << " \\pm " <<
+      ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, n, Bachelor::pi,
+                   Efficiency::mcEffErr)
+          << "$\n";
+  outfile << "\t\\item $BF(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp}) = (2.74 \\pm "
+             "0.13) \\times 10^{-3}$\n";
+  outfile << "\t\\item $BF(D^{*\\pm}\\rightarrow D\\pi^{\\pm}) = 0.677 \\pm "
+             "0.005 $\n";
+  outfile << "\t\\item $BF(B^{\\pm}\\rightarrow D\\rho^{\\pm}) = (1.34 \\pm "
+             "0.18) \\times 10^{-2}$\n";
+  outfile << "\t\\item $BF(B^{\\pm}\\rightarrow D^*\\rho^{\\pm}) = (9.8 \\pm "
+             "1.7) \\times 10^{-3}$\n";
+  outfile << "\t\\item $BF(D^*\\rightarrow D\\pi^0) = 0.647 \\pm "
+             "0.9 $\n";
+  outfile << "\t\\item $BF(D^*\\rightarrow D\\gamma) = 0.353 \\pm "
+             "0.9 $\n";
+  outfile << "\\end{itemize}\n";
+  outfile << "\\newpage\n";
   for (auto &p : pdfs) {
     Bachelor b = p->bachelor();
     Daughters d = p->daughters();
     Charge c = p->charge();
-    outfile << "\\begin{table}[t]\n";
+    outfile << "\\begin{table}[H]\n";
     outfile << "\t\\centering\n";
     outfile << "\t\\footnotesize\n";
     outfile << "\\resizebox{\\textwidth}{!}{%\n";
