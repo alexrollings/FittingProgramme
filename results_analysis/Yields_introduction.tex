@@ -16,10 +16,8 @@ RRV}):
   are defined in each category, in relation to the signal yield, as:
   \begin{equation*}
     \colorbox{blue!25}{\text{N(WN)}} = \colorbox{blue!25}{\text{N(signal)}} \times
-    \colorbox{pink}{$\frac{\epsilon_{cross}\text{(WN)}}{\epsilon_{cross}\text{(signal)}}$}
-    \times
     \colorbox{pink}{$\frac{\epsilon_{sel}\text{(WN)}}{\epsilon_{sel}\text{(signal)}}$}
-    \times 
+    \times \colorbox{pink}{$\frac{\epsilon_{cross}\text{(WN)}}{\epsilon_{cross}\text{(signal)}}$} \times 
     \colorbox{green!35}{$f_{WN}$}
   \end{equation*}
   Where $f_{WN}$ is a floating RRV, representing the relative efficiency of
@@ -40,13 +38,15 @@ RRV}):
     \begin{equation*}
       \colorbox{green!35}{\text{N($B^{\pm}\rightarrow D\rho^{\pm}$)}} =
       \colorbox{blue!25}{\text{N($B^0\rightarrow D^{*\pm}\pi^{\mp}$)}} \times 
-      \colorbox{pink}{$\frac{BF(B^{\pm}\rightarrow
-      D\rho^{\pm})}{BF(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
+      \colorbox{pink}{$\frac{BF(B^{\pm}\rightarrow D\rho^{\pm}) +
+      BF(B^0\rightarrow D\rho^0)}{BF(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
       \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow
-      D\rho^{\pm})}{\epsilon_{sel}(B^0\rightarrow D^{*\pm}\pi^{\mp})}$}
-    \end{equation*}
+      D\rho^{\pm})}{\epsilon_{sel}(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
+      \colorbox{pink}{$\frac{\epsilon_{cross}(B^{\pm}\rightarrow
+      D\rho^{\pm})}{\epsilon_{cross}(B^0\rightarrow D^{*\pm}\pi^{\mp})}$}
+  \end{equation*}
     The central value of the gaussian is the result of the above calculation,
-    and the standard deviation is the combined error of the selection
+    and the standard deviation is the combined error of the selection, box
     efficiencies and branching fractions.
   \item The $B^{\pm}\rightarrow (D^*\rightarrow D\gamma(\pi^0))\rho^{\pm}$
     yields are gaussian constrained RRVs. In the $D\gamma(D\pi^0)$ fit, the
@@ -60,10 +60,13 @@ RRV}):
       D\gamma(\pi^0))\rho^{\pm})}{BF(B^0\rightarrow D^{*\pm}\pi^{\mp})}$} \times
       \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow (D^*\rightarrow
       D\gamma(\pi^0))\rho^{\pm})}{\epsilon_{sel}(B^0\rightarrow
-      D^{*\pm}\pi^{\mp})}$}
-    \end{equation*}
-    In the $D\gamma(D\pi^0)$ fit, the $D\pi^0(D\gamma)$ component of this decay
-  is constrained relative to the $D\gamma(D\pi^0)$ component (calculated above):
+    D^{*\pm}\pi^{\mp})}$} \times
+    \colorbox{pink}{$\frac{\epsilon_{cross}(B^{\pm}\rightarrow (D^*\rightarrow
+    D\gamma(\pi^0))\rho^{\pm})}{\epsilon_{cross}(B^0\rightarrow
+    D^{*\pm}\pi^{\mp})}$}
+  \end{equation*}
+  In the $D\gamma(D\pi^0)$ fit, the $D\pi^0(D\gamma)$ component of this decay is
+  constrained relative to the $D\gamma(D\pi^0)$ component (calculated above):
     \begin{equation*}
       \colorbox{green!35}{\text{N($B^{\pm}\rightarrow (D^*\rightarrow
       D\pi^0(D\gamma))\rho^{\pm}$)}} =
@@ -72,12 +75,14 @@ RRV}):
       \colorbox{pink}{$\frac{BF(D^*\rightarrow
       D\pi^0(D\gamma))}{BF(D^*\rightarrow D\gamma(\pi^0))}$} \times
       \colorbox{pink}{$\frac{\epsilon_{sel}(B^{\pm}\rightarrow (D^*\rightarrow
-      D\pi^0(D\gamma))\rho^{\pm})}{\epsilon_{sel}(B^{\pm}\rightarrow
-      (D^*\rightarrow D\gamma(\pi^0))\rho^{\pm})}$}
-    \end{equation*}
+    D\pi^0(D\gamma))\rho^{\pm})}{\epsilon_{sel}(B^{\pm}\rightarrow (D^*\rightarrow
+    D\gamma(\pi^0))\rho^{\pm})}$} \times
+    \colorbox{pink}{$\frac{\epsilon_{cross}(B^{\pm}\rightarrow (D^*\rightarrow
+    D\pi^0(D\gamma))\rho^{\pm})}{\epsilon_{cross}(B^{\pm}\rightarrow
+    (D^*\rightarrow D\gamma(\pi^0))\rho^{\pm})}$} \end{equation*}
     Again, the central values of the gaussians are the result of the
     calculations, and the standard deviations are the combined error of the
-    selection efficiencies and branching fractions.
+    selection, box efficiencies and branching fractions.
   \item $R(D^*K/D^*\pi)$ for $B^0\rightarrow D^{*\pm}h^{\mp}$ and
     $B^{\pm}\rightarrow Dh^{*\pm}$ are fixed; $R(D^*K/D^*\pi)$ for
     $B^{\pm}\rightarrow D^*h^{*\pm}$ is a gaussian constrained RRV, with a
