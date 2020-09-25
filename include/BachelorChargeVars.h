@@ -50,12 +50,6 @@ class BachelorChargeVars {
   RooRealVar &R_piK_Bu2Dst0h_D0pi0_Blind() {
     return *R_piK_Bu2Dst0h_D0pi0_Blind_;
   }
-  RooRealVar &R_piK_Bu2Dst0h_D0gamma_WN_Blind() {
-    return *R_piK_Bu2Dst0h_D0gamma_WN_Blind_;
-  }
-  RooRealVar &R_piK_Bu2Dst0h_D0pi0_WN_Blind() {
-    return *R_piK_Bu2Dst0h_D0pi0_WN_Blind_;
-  }
   RooAbsReal &R_piK_Bu2Dst0h_D0gamma() { return *R_piK_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_piK_Bu2Dst0h_D0pi0() { return *R_piK_Bu2Dst0h_D0pi0_; }
   RooAbsReal &R_piK_Bu2Dst0h_D0gamma_WN() {
@@ -74,8 +68,6 @@ class BachelorChargeVars {
   // Can add for different bkgs if necessary
   std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0gamma_Blind_;
   std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_Blind_;
-  std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0gamma_WN_Blind_;
-  std::shared_ptr<RooRealVar> R_piK_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_WN_;
@@ -87,68 +79,42 @@ class BachelorChargeVars {
 
 // ...by telling it exactly which specializations we are providing:
 template <Bachelor bachelor, Charge charge>
-BachelorChargeVars<bachelor, charge>::BachelorChargeVars(
-    int uniqueId)
+BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     : uniqueId_(uniqueId),
       R_piK_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_piK_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       R_piK_Bu2Dst0h_D0gamma_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_WN_(nullptr) {
   double R_piK_init = GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
                       GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal();
   if (Configuration::Get().blindFit() == true) {
-    R_piK_Bu2Dst0h_D0gamma_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, bachelor,
-            charge, R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0pi0_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_, bachelor, charge,
-            R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0gamma_WN_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_, bachelor,
-            charge, R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0pi0_WN_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_, bachelor,
-            charge, R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(
-        MakeBlind(("R_piK_Bu2Dst0h_D0gamma_" +
-                   ComposeName(uniqueId_, bachelor, charge))
-                      .c_str(),
-                  R_piK_init, *R_piK_Bu2Dst0h_D0gamma_Blind_));
-    R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
-        MakeBlind(("R_piK_Bu2Dst0h_D0pi0_" +
-                   ComposeName(uniqueId_, bachelor, charge))
-                      .c_str(),
-                  R_piK_init, *R_piK_Bu2Dst0h_D0pi0_Blind_));
-    R_piK_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(
-        MakeBlind(("R_piK_Bu2Dst0h_D0gamma_WN_" +
-                   ComposeName(uniqueId_, bachelor, charge))
-                      .c_str(),
-                  R_piK_init, *R_piK_Bu2Dst0h_D0gamma_WN_Blind_));
-    R_piK_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(
-        MakeBlind(("R_piK_Bu2Dst0h_D0pi0_WN_" +
-                   ComposeName(uniqueId_, bachelor, charge))
-                      .c_str(),
-                  R_piK_init, *R_piK_Bu2Dst0h_D0pi0_WN_Blind_));
+    R_piK_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_,
+                                     bachelor, charge, R_piK_init, -1, 1));
+    R_piK_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_,
+                                     bachelor, charge, R_piK_init, -1, 1));
+    R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
+            .c_str(),
+        R_piK_init, *R_piK_Bu2Dst0h_D0gamma_Blind_));
+    R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+        ("R_piK_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, bachelor, charge))
+            .c_str(),
+        R_piK_init, *R_piK_Bu2Dst0h_D0pi0_Blind_));
   } else {
-    R_piK_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0gamma", uniqueId_, bachelor, charge,
-            R_piK_init, -1, 1));
+    R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
+                                     bachelor, charge, R_piK_init, -1, 1));
     R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
                                      bachelor, charge, R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma_WN", uniqueId_,
-                                     bachelor, charge, R_piK_init, -1, 1));
-    R_piK_Bu2Dst0h_D0pi0_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_piK_Bu2Dst0h_D0pi0_WN", uniqueId_, bachelor, charge,
-            R_piK_init, -1, 1));
   }
+  R_piK_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma_WN", uniqueId_,
+                                   bachelor, charge, R_piK_init, -1, 1));
+  R_piK_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0_WN", uniqueId_,
+                                   bachelor, charge, R_piK_init, -1, 1));
 }
