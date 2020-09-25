@@ -43,12 +43,12 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       //     "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.077, 0.01,
       //     2)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
-      R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFixed(
-          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.006,
-          Systematic::NA, Sign::positive)),
-      // R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
-      //     "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.01,
-      //     2)),
+      // R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFixed(
+      //     "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.006,
+      //     Systematic::NA, Sign::positive)),
+      R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.01,
+          2)),
       // Float as only pick up on part of D*rho phase space - R slightly lower
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
