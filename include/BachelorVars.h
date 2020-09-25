@@ -44,8 +44,7 @@ class BachelorVars {
   }
   RooAbsReal &A_CP_Bu2Dst0h_D0gamma() { return *A_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &A_CP_Bu2Dst0h_D0pi0() { return *A_CP_Bu2Dst0h_D0pi0_; }
-  RooAbsReal &A_CP_Bu2Dst0h_D0gamma_WN() { return *A_CP_Bu2Dst0h_D0gamma_WN_; }
-  RooAbsReal &A_CP_Bu2Dst0h_D0pi0_WN() { return *A_CP_Bu2Dst0h_D0pi0_WN_; }
+  RooAbsReal &A_CP_Bu2Dst0h_WN() { return *A_CP_Bu2Dst0h_WN_; }
   RooAbsReal &A_CP_Bd2Dsth() { return *A_CP_Bd2Dsth_; }
   RooAbsReal &A_CP_Bu2D0hst() { return *A_CP_Bu2D0hst_; }
   RooAbsReal &A_CP_Bu2Dst0hst_D0gamma() { return *A_CP_Bu2Dst0hst_D0gamma_; }
@@ -53,8 +52,7 @@ class BachelorVars {
   RooAbsReal &A_CP_Lb2Omegach_Lcpi0() { return *A_CP_Lb2Omegach_Lcpi0_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0() { return *R_ADS_Bu2Dst0h_D0pi0_; }
-  RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma_WN() { return *R_ADS_Bu2Dst0h_D0gamma_WN_; }
-  RooFormulaVar &R_ADS_Bu2Dst0h_D0pi0_WN() { return *R_ADS_Bu2Dst0h_D0pi0_WN_; }
+  RooFormulaVar &R_ADS_Bu2Dst0h_WN() { return *R_ADS_Bu2Dst0h_WN_; }
   RooAbsReal &R_ADS_Bd2Dsth() { return *R_ADS_Bd2Dsth_; }
   RooAbsReal &R_ADS_Bu2D0hst() { return *R_ADS_Bu2D0hst_; }
   RooAbsReal &R_ADS_Bu2Dst0hst_D0gamma() { return *R_ADS_Bu2Dst0hst_D0gamma_; }
@@ -68,8 +66,7 @@ class BachelorVars {
   std::shared_ptr<RooRealVar> A_CP_Bu2Dst0h_D0pi0_Blind_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> A_CP_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0hst_D0gamma_;
@@ -77,8 +74,7 @@ class BachelorVars {
   std::shared_ptr<RooAbsReal> A_CP_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> R_ADS_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_ADS_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> R_ADS_Bu2Dst0hst_D0gamma_;

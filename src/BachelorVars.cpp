@@ -10,16 +10,14 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       A_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
       A_CP_Bu2Dst0h_D0gamma_(nullptr),
       A_CP_Bu2Dst0h_D0pi0_(nullptr),
-      A_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
-      A_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
+      A_CP_Bu2Dst0h_WN_(nullptr),
       A_CP_Bd2Dsth_(nullptr),
       A_CP_Bu2D0hst_(nullptr),
       A_CP_Bu2Dst0hst_D0gamma_(nullptr),
       A_CP_Bu2Dst0hst_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr),
-      R_ADS_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_ADS_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_ADS_Bu2Dst0h_WN_(nullptr),
       R_ADS_Bd2Dsth_(nullptr),
       R_ADS_Bu2D0hst_(nullptr),
       R_ADS_Bu2Dst0hst_D0gamma_(nullptr),
@@ -55,11 +53,8 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
                                      _bachelor, k_A_CP_Bu2Dst0h_D0pi0_, -1, 1));
   }
-  A_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0gamma_WN", uniqueId_,
-                                   _bachelor, 0, -1, 1));
-  A_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_WN", uniqueId_,
+  A_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("A_CP_Bu2Dst0h_WN", uniqueId_,
                                    _bachelor, 0, -1, 1));
 
   if (Configuration::Get().splitByCharge() == true) {
@@ -77,20 +72,13 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
             BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
-    R_ADS_Bu2Dst0h_D0gamma_WN_ =
+    R_ADS_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
+            uniqueId, "R_ADS_Bu2Dst0h_WN_",
             BachelorChargeVars<_bachelor, Charge::minus>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0gamma_WN(),
+                .R_piK_Bu2Dst0h_WN(),
             BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0gamma_WN()));
-    R_ADS_Bu2Dst0h_D0pi0_WN_ =
-        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
-            BachelorChargeVars<_bachelor, Charge::minus>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0pi0_WN(),
-            BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0pi0_WN()));
+                .R_piK_Bu2Dst0h_WN()));
   } else {
     R_ADS_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
@@ -102,16 +90,11 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
             BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
-    R_ADS_Bu2Dst0h_D0gamma_WN_ =
+    R_ADS_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-            uniqueId, "R_ADS_Bu2Dst0h_D0gamma_WN_",
+            uniqueId, "R_ADS_Bu2Dst0h_WN_",
             BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0gamma_WN()));
-    R_ADS_Bu2Dst0h_D0pi0_WN_ =
-        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-            uniqueId, "R_ADS_Bu2Dst0h_D0pi0_WN_",
-            BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
-                .R_piK_Bu2Dst0h_D0pi0_WN()));
+                .R_piK_Bu2Dst0h_WN()));
   }
 
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
