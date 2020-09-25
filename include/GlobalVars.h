@@ -68,16 +68,9 @@ class GlobalVars {
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0_Blind() {
     return *R_CP_Bu2Dst0h_D0pi0_Blind_;
   }
-  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_WN_Blind() {
-    return *R_CP_Bu2Dst0h_D0gamma_WN_Blind_;
-  }
-  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_WN_Blind() {
-    return *R_CP_Bu2Dst0h_D0pi0_WN_Blind_;
-  }
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma() { return *R_CP_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_CP_Bu2Dst0h_D0pi0() { return *R_CP_Bu2Dst0h_D0pi0_; }
-  RooAbsReal &R_CP_Bu2Dst0h_D0gamma_WN() { return *R_CP_Bu2Dst0h_D0gamma_WN_; }
-  RooAbsReal &R_CP_Bu2Dst0h_D0pi0_WN() { return *R_CP_Bu2Dst0h_D0pi0_WN_; }
+  RooAbsReal &R_CP_Bu2Dst0h_WN() { return *R_CP_Bu2Dst0h_WN_; }
   RooAbsReal &R_CP_Bd2Dsth() { return *R_CP_Bd2Dsth_; }
   RooAbsReal &R_CP_Bu2D0hst() { return *R_CP_Bu2D0hst_; }
   RooAbsReal &R_CP_Bu2Dst0hst_D0gamma() { return *R_CP_Bu2Dst0hst_D0gamma_; }
@@ -124,12 +117,9 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_Blind_;
   // Include blinded R_CP for WN: should measure signal R_CP - just make
   // blinding string the same for both (in MakeBlind)
-  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_WN_Blind_;
-  std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0pi0_WN_Blind_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> R_CP_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0hst_D0gamma_;

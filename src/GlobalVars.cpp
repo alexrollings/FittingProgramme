@@ -75,8 +75,8 @@ GlobalVars::GlobalVars(int uniqueId)
                                              0.15e-04, Systematic::kBF_Bd2DstK,
                                              Sign::none)),
       kBF_Dst2D0pi_(Params::Get().CreateFixed("kBF_Dst2D0pi", uniqueId_, 0.677,
-                                             0.005, Systematic::kBF_Dst2D0pi,
-                                             Sign::none)),
+                                              0.005, Systematic::kBF_Dst2D0pi,
+                                              Sign::none)),
       kBF_Bu2D0rho_(Params::Get().CreateFixed(
           "kBF_Bu2D0rho", uniqueId_, 1.34e-02, 0.18e-02,
           Systematic::kBF_Bu2D0rho, Sign::none)),
@@ -86,24 +86,22 @@ GlobalVars::GlobalVars(int uniqueId)
       kBF_Bd2D0rho0_(Params::Get().CreateFixed(
           "kBF_Bd2D0rho0", uniqueId_, 3.21e-04, 0.21e-04,
           Systematic::kBF_Bd2D0rho0, Sign::none)),
-      kBF_Bd2D0Kst0_(
-          Params::Get().CreateFixed("kBF_Bd2D0Kst0", uniqueId_, 4.5e-05, 0.6e-05,
-                                    Systematic::kBF_Bu2D0Kst, Sign::none)),
+      kBF_Bd2D0Kst0_(Params::Get().CreateFixed(
+          "kBF_Bd2D0Kst0", uniqueId_, 4.5e-05, 0.6e-05,
+          Systematic::kBF_Bu2D0Kst, Sign::none)),
       kBF_Bu2Dst0rho_(Params::Get().CreateFixed(
           "kBF_Bu2Dst0rho", uniqueId_, 9.8e-03, 1.7e-03,
           Systematic::kBF_Bu2Dst0rho, Sign::none)),
-      kBF_Bu2Dst0Kst_(
-          Params::Get().CreateFixed("kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
-                                    Systematic::kBF_Bu2Dst0Kst, Sign::none)),
+      kBF_Bu2Dst0Kst_(Params::Get().CreateFixed(
+          "kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
+          Systematic::kBF_Bu2Dst0Kst, Sign::none)),
       pidEffMap_(),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_WN_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0gamma_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_(nullptr),
-      R_CP_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_CP_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_CP_Bu2Dst0h_WN_(nullptr),
       R_CP_Bd2Dsth_(nullptr),
       R_CP_Bu2D0hst_(nullptr),
       R_CP_Bu2Dst0hst_D0gamma_(nullptr),
@@ -117,7 +115,8 @@ GlobalVars::GlobalVars(int uniqueId)
   // }
   // pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
   //     std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
-  //         ("pidEffK_" + ComposeName(uniqueId_, Configuration::Get().neutral(),
+  //         ("pidEffK_" + ComposeName(uniqueId_,
+  //         Configuration::Get().neutral(),
   //                                   Charge::total))
   //             .c_str(),
   //         "0.5*(@0+@1)",
@@ -193,25 +192,12 @@ GlobalVars::GlobalVars(int uniqueId)
     R_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                      k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
-    R_CP_Bu2Dst0h_D0gamma_WN_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0gamma_WN_Blind", uniqueId_,
-            k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_WN_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0pi0_WN_Blind", uniqueId_,
-                                     k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_CP_Bu2Dst0h_D0gamma_" + std::to_string(uniqueId_)).c_str(), 0.3,
         *R_CP_Bu2Dst0h_D0gamma_Blind_));
     R_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(
         MakeBlind(("R_CP_Bu2Dst0h_D0pi0_" + std::to_string(uniqueId_)).c_str(),
                   0.3, *R_CP_Bu2Dst0h_D0pi0_Blind_));
-    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0gamma_WN_" + std::to_string(uniqueId_)).c_str(), 0.3,
-        *R_CP_Bu2Dst0h_D0gamma_WN_Blind_));
-    R_CP_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_CP_Bu2Dst0h_D0pi0_WN_" + std::to_string(uniqueId_)).c_str(), 0.3,
-        *R_CP_Bu2Dst0h_D0pi0_WN_Blind_));
   } else {
     R_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma", uniqueId_,
@@ -219,13 +205,9 @@ GlobalVars::GlobalVars(int uniqueId)
     R_CP_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_CP_Bu2Dst0h_D0pi0", uniqueId_, k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
-    R_CP_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2Dst0h_D0gamma_WN", uniqueId_,
-                                     k_R_CP_Bu2Dst0h_D0gamma, -2, 2));
-    R_CP_Bu2Dst0h_D0pi0_WN_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_CP_Bu2Dst0h_D0pi0_WN", uniqueId_, k_R_CP_Bu2Dst0h_D0pi0, -2, 2));
   }
+  R_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_CP_Bu2Dst0h_WN", uniqueId_, 1, -2, 2));
   R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
   // HFLAV: R_CP+, BF average of B+ and B0
