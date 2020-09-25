@@ -25,13 +25,8 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
       //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
       //     0, Systematic::NA, Sign::same)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN", uniqueId_, Daughters::kpi,
-          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-          0, 2)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN", uniqueId_, Daughters::kpi,
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           0, 2)),
@@ -105,16 +100,11 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0pi0())),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_",
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_WN_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0gamma_WN())),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_",
-          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0pi0_WN())),
+              .R_Dst0KDst0pi_Bu2Dst0h_WN(),
+          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_WN())),
       R_Dst0KDst0pi_Bd2Dsth_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
           uniqueId_, "R_Dst0KDst0pi_Bd2Dsth_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_).R_Dst0KDst0pi_Bd2Dsth(),
@@ -148,12 +138,9 @@ DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           DaughtersVars<Daughters::kk>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(
           DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer()),
+              .R_Dst0KDst0pi_Bu2Dst0h_WN_GetPointer()),
       R_Dst0KDst0pi_Bd2Dsth_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
                                  .R_Dst0KDst0pi_Bd2Dsth_GetPointer()),
       R_Dst0KDst0pi_Bu2D0hst_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
@@ -171,8 +158,7 @@ DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(nullptr),
       R_Dst0KDst0pi_Bd2Dsth_(nullptr),
       R_Dst0KDst0pi_Bu2D0hst_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),

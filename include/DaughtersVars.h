@@ -23,11 +23,8 @@ class DaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
-  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN() {
-    return *R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
-  }
-  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN() {
-    return *R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0h_WN() {
+    return *R_Dst0KDst0pi_Bu2Dst0h_WN_;
   }
   RooAbsReal &R_Dst0KDst0pi_Bd2Dsth() {
     return *R_Dst0KDst0pi_Bd2Dsth_;
@@ -53,11 +50,8 @@ class DaughtersVars {
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
   }
-  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_GetPointer() {
-    return R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
-  }
-  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_GetPointer() {
-    return R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0h_WN_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0h_WN_;
   }
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bd2Dsth_GetPointer() {
     return R_Dst0KDst0pi_Bd2Dsth_;
@@ -76,8 +70,7 @@ class DaughtersVars {
   int uniqueId_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_WN_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
