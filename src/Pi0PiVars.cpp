@@ -1147,4 +1147,16 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           RooArgList(*orEffBu2Dst0h_D0gamma_WN_, *orEffBu2Dst0h_D0pi0_,
                      *mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))) {}
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))),
+      // -------------------- Bu2Dst0h_WN -------------------- //
+      Bu2Dst0h_WN_fracD0pi0_(
+          ("Bu2Dst0h_WN_fracD0pi0_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "@0*(@1*@2*@5)/(@1*@2*@5 + @3*@4*@6)",
+          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                         .Bu2Dst0h_WN_floatingFracD0pi0(),
+                     *orEffBu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_WN_,
+                     *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())) {}
