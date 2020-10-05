@@ -186,8 +186,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_WN -------------------- //
-      Bu2Dst0h_WN_fracD0pi0_(Params::Get().CreateFloating(
-          "Bu2Dst0h_WN_fracD0pi0", uniqueId_, Neutral::pi0, 1, 0, 10)),
+      Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFloating(
+          "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0, 10)),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::pi0,

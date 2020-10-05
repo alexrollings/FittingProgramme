@@ -301,8 +301,8 @@ class NeutralVars {
     return *Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_;
   }
   // -------------------- Bu2Dst0h_WN -------------------- //
-  RooRealVar &Bu2Dst0h_WN_fracD0pi0() {
-    return *Bu2Dst0h_WN_fracD0pi0_;
+  RooRealVar &Bu2Dst0h_WN_floatingFracD0pi0() {
+    return *Bu2Dst0h_WN_floatingFracD0pi0_;
   }
   // -------------------- Bd2Dsth -------------------- //
   RooDstD0BG &pdfDelta_Bd2Dsth() {
@@ -744,7 +744,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf1BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_;
   // -------------------- Bu2Dst0h_WN -------------------- //
-  std::shared_ptr<RooRealVar> Bu2Dst0h_WN_fracD0pi0_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_WN_floatingFracD0pi0_;
   // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_FAVasSUP_sigma1Delta_;
