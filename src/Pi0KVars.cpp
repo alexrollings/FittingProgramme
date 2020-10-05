@@ -1423,8 +1423,25 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       // -------------------- Bkg Fractions -------------------- //
-      bkgFrac_Bu2Dst0h_D0pi0_WN_(nullptr),
-      bkgFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
+      // bkgFrac_Bu2Dst0h_D0pi0_WN_(nullptr),
+      // bkgFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
+      bkgFrac_Bu2Dst0h_D0pi0_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*(@2/@3)",
+          RooArgList(*orEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_,
+                     *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
+      // No global frac for gamma mode in π0: different physics
+      bkgFrac_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "(@0/@1)*(@2/@3)*(@4/@5)",
+          RooArgList(*orEffBu2Dst0h_D0gamma_WN_, *orEffBu2Dst0h_D0pi0_,
+                     *mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))),
       bkgFrac_Bu2Dst0h_WN_(
           ("bkgFrac_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
@@ -1453,14 +1470,45 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("Bu2Dst0h_WN_fracD0pi0_Bu_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0*@1/(@1+@2)",
-          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *buEffBu2Dst0h_D0pi0_WN_,
-                     *buEffBu2Dst0h_D0gamma_WN_)),
+          "@0*(@1*@2*@3*@7)/(@1*@2*@3*@7 + @4*@5*@6*@8)",
+          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                         .Bu2Dst0h_WN_floatingFracD0pi0(),
+                     *buEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_WN_,
+                     *mcEff_Bu2Dst0h_D0pi0_WN_, *buEffBu2Dst0h_D0gamma_WN_,
+                     *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
       Bu2Dst0h_WN_fracD0pi0_Delta_(
           ("Bu2Dst0h_WN_fracD0pi0_Delta_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0*@1/(@1+@2)",
+          "@0*(@1*@2*@3*@7)/(@1*@2*@3*@7 + @4*@5*@6*@8)",
+          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                         .Bu2Dst0h_WN_floatingFracD0pi0(),
+                     *deltaEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_WN_,
+                     *mcEff_Bu2Dst0h_D0pi0_WN_, *deltaEffBu2Dst0h_D0gamma_WN_,
+                     *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      orEffBu2Dst0h_WN_(
+          ("orEffBu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *orEffBu2Dst0h_D0pi0_WN_,
+                     *orEffBu2Dst0h_D0gamma_WN_)),
+      buEffBu2Dst0h_WN_(
+          ("buEffBu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *buEffBu2Dst0h_D0pi0_WN_,
+                     *buEffBu2Dst0h_D0gamma_WN_)),
+      deltaEffBu2Dst0h_WN_(
+          ("deltaEffBu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
           RooArgList(Bu2Dst0h_WN_fracD0pi0_, *deltaEffBu2Dst0h_D0pi0_WN_,
                      *deltaEffBu2Dst0h_D0gamma_WN_)),
       Bu2Dst0h_WN_misId_fracD0pi0_(
@@ -1480,13 +1528,44 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           ("Bu2Dst0h_WN_misId_fracD0pi0_Bu_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0*@1/(@1+@2)",
-          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *buEffMisId_Bu2Dst0h_D0pi0_WN_,
-                     *buEffMisId_Bu2Dst0h_D0gamma_WN_)),
+          "@0*(@1*@2*@3*@7)/(@1*@2*@3*@7 + @4*@5*@6*@8)",
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                  .Bu2Dst0h_WN_floatingFracD0pi0(),
+              *buEffMisId_Bu2Dst0h_D0pi0_WN_, *orEffMisId_Bu2Dst0h_D0pi0_WN_,
+              *mcEffMisId_Bu2Dst0h_D0pi0_WN_, *buEffMisId_Bu2Dst0h_D0gamma_WN_,
+              *orEffMisId_Bu2Dst0h_D0gamma_WN_,
+              *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
+              GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+              GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
       Bu2Dst0h_WN_misId_fracD0pi0_Delta_(
           ("Bu2Dst0h_WN_misId_fracD0pi0_Delta_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "@0*@1/(@1+@2)",
-          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *deltaEffMisId_Bu2Dst0h_D0pi0_WN_,
+          "@0*(@1*@2*@3*@7)/(@1*@2*@3*@7 + @4*@5*@6*@8)",
+          RooArgList(NeutralVars<Neutral::pi0>::Get(uniqueId_)
+                         .Bu2Dst0h_WN_floatingFracD0pi0(),
+                     *deltaEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *orEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *mcEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *deltaEffMisId_Bu2Dst0h_D0gamma_WN_,
+                     *orEffMisId_Bu2Dst0h_D0gamma_WN_,
+                     *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
+                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      buEffMisId_Bu2Dst0h_WN_(
+          ("buEffMisId_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_misId_fracD0pi0_,
+                     *buEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *buEffMisId_Bu2Dst0h_D0gamma_WN_)),
+      deltaEffMisId_Bu2Dst0h_WN_(
+          ("deltaEffMisId_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_misId_fracD0pi0_,
+                     *deltaEffMisId_Bu2Dst0h_D0pi0_WN_,
                      *deltaEffMisId_Bu2Dst0h_D0gamma_WN_)) {}

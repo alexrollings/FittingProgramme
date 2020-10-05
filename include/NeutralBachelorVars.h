@@ -915,9 +915,17 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Delta_;
+  RooFormulaVar orEffBu2Dst0h_WN_;
+  RooFormulaVar buEffBu2Dst0h_WN_;
+  RooFormulaVar deltaEffBu2Dst0h_WN_;
+  RooFormulaVar mcEff_Bu2Dst0h_WN_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Delta_;
+  RooFormulaVar orEffMisId_Bu2Dst0h_WN_;
+  RooFormulaVar buEffMisId_Bu2Dst0h_WN_;
+  RooFormulaVar deltaEffMisId_Bu2Dst0h_WN_;
+  RooFormulaVar mcEffMisId_Bu2Dst0h_WN_;
 };
 
 template <>
