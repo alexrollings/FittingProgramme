@@ -466,6 +466,44 @@ class NeutralBachelorVars {
     return bkgFrac_Bu2Dst0h_WN_;
   }
 
+  // -------------------- Bu2Dst0h_WN -------------------- //
+  RooAddPdf &pdfBu_Bu2Dst0h_WN() {
+    return pdfBu_Bu2Dst0h_WN_;
+  }
+  RooAddPdf &pdfDelta_Bu2Dst0h_WN() {
+    return pdfDelta_Bu2Dst0h_WN_;
+  }
+  RooFormulaVar &orEffBu2Dst0h_WN() {
+    return orEffBu2Dst0h_WN_;
+  }
+  RooFormulaVar &buEffBu2Dst0h_WN() {
+    return buEffBu2Dst0h_WN_;
+  }
+  RooFormulaVar &deltaEffBu2Dst0h_WN() {
+    return deltaEffBu2Dst0h_WN_;
+  }
+  RooFormulaVar &mcEff_Bu2Dst0h_WN() {
+    return mcEff_Bu2Dst0h_WN_;
+  }
+  RooAddPdf &pdfBu_misId_Bu2Dst0h_WN() {
+    return pdfBu_misId_Bu2Dst0h_WN_;
+  }
+  RooAddPdf &pdfDelta_misId_Bu2Dst0h_WN() {
+    return pdfDelta_misId_Bu2Dst0h_WN_;
+  }
+  RooFormulaVar &orEffMisId_Bu2Dst0h_WN() {
+    return orEffMisId_Bu2Dst0h_WN_;
+  }
+  RooFormulaVar &buEffMisId_Bu2Dst0h_WN() {
+    return buEffMisId_Bu2Dst0h_WN_;
+  }
+  RooFormulaVar &deltaEffMisId_Bu2Dst0h_WN() {
+    return deltaEffMisId_Bu2Dst0h_WN_;
+  }
+  RooFormulaVar &mcEffMisId_Bu2Dst0h_WN() {
+    return mcEffMisId_Bu2Dst0h_WN_;
+  }
+
  private:
   int uniqueId_;
   // -------------------- PDF SHAPES -------------------- //
@@ -915,6 +953,8 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Delta_;
+  RooAddPdf pdfBu_Bu2Dst0h_WN_;
+  RooAddPdf pdfDelta_Bu2Dst0h_WN_;
   RooFormulaVar orEffBu2Dst0h_WN_;
   RooFormulaVar buEffBu2Dst0h_WN_;
   RooFormulaVar deltaEffBu2Dst0h_WN_;
@@ -922,6 +962,8 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Delta_;
+  RooAddPdf pdfBu_misId_Bu2Dst0h_WN_;
+  RooAddPdf pdfDelta_misId_Bu2Dst0h_WN_;
   RooFormulaVar orEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar buEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar deltaEffMisId_Bu2Dst0h_WN_;
