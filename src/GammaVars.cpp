@@ -428,7 +428,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPartialPdf, Sign::same)),
       // -------------------- Bu2Dst0h_WN -------------------- //
-      Bu2Dst0h_WN_fracD0pi0_(nullptr),
+      Bu2Dst0h_WN_floatingFracD0pi0_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::gamma,
