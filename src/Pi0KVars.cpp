@@ -752,7 +752,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               .Bu2Dst0h_D0pi0_fracPdf1Delta()),
       pdfDelta_Bs2Dst0Kpi_(("pdfDelta_Bs2Dst0Kpi_" +
                             ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-                               .c_str(), "",
+                               .c_str(),
+                           "",
                            RooArgList(pdfPeakPi0Delta_Bs2Dst0Kpi_,
                                       NeutralVars<Neutral::pi0>::Get(uniqueId_)
                                           .pdfFlatDelta_Bs2Dst0Kpi()),
@@ -1379,7 +1380,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       mcEffMisId_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
-          "mcEffMisId_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, Bachelor::k,
+          "mcEffMisId_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0,
+          Bachelor::k,
           ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::pi0, Bachelor::k,
                        Efficiency::mcEff),
           ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma_WN, Neutral::pi0, Bachelor::k,
@@ -1421,30 +1423,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                        Efficiency::mcEffErr),
           Systematic::mcEffs, Sign::positive)),
       // -------------------- Bkg Fractions -------------------- //
-      // bkgFrac_Bu2Dst0h_D0pi0_WN_(Params::Get().CreateFloating(
-      //     "bkgFrac_Bu2Dst0h_D0pi0_WN", uniqueId_, Neutral::pi0,
-      //     ReturnMCEffs(Mode::Bu2Dst0K_D0pi0_WN, Neutral::pi0, Bachelor::k,
-      //                  Efficiency::mcEff) /
-      //         ReturnMCEffs(Mode::Bu2Dst0K_D0pi0, Neutral::pi0, Bachelor::k,
-      //                      Efficiency::mcEff),
-      //     -5, 5)),
-      bkgFrac_Bu2Dst0h_D0pi0_WN_(new RooFormulaVar(
-          ("bkgFrac_Bu2Dst0h_D0pi0_WN_" +
+      bkgFrac_Bu2Dst0h_D0pi0_WN_(nullptr),
+      bkgFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
+      bkgFrac_Bu2Dst0h_WN_(
+          ("bkgFrac_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
               .c_str(),
-          "(@0/@1)*(@2/@3)",
-          RooArgList(*orEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_,
-                     *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
-      // No global frac for gamma mode in π0: different physics
-      bkgFrac_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
-          ("bkgFrac_Bu2Dst0h_D0gamma_WN_" +
-           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "(@0/@1)*(@2/@3)*(@4/@5)",
-          RooArgList(*orEffBu2Dst0h_D0gamma_WN_, *orEffBu2Dst0h_D0pi0_,
-                     *mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_,
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
-                     GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0()))),
+          "@0*(@1*@2*@8+@3*@4*@7)/(@5*@6*@8)",
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId_).bkgFracGlobal_WN(),
+              *orEffBu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_WN_,
+              *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+              *orEffBu2Dst0h_D0pi0_, *mcEff_Bu2Dst0h_D0pi0_,
+              GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma(),
+              GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0())),
       // -------------------- Bu2Dst0h_WN -------------------- //
       Bu2Dst0h_WN_fracD0pi0_(
           ("Bu2Dst0h_WN_fracD0pi0_" +

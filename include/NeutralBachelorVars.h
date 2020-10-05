@@ -462,6 +462,9 @@ class NeutralBachelorVars {
   RooAbsReal &bkgFrac_Bu2Dst0h_D0gamma_WN() {
     return *bkgFrac_Bu2Dst0h_D0gamma_WN_;
   }
+  RooFormulaVar &bkgFrac_Bu2Dst0h_WN() {
+    return bkgFrac_Bu2Dst0h_WN_;
+  }
 
  private:
   int uniqueId_;
@@ -907,6 +910,7 @@ class NeutralBachelorVars {
   // -------------------- Bkg Fractions -------------------- //
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0gamma_WN_;
+  RooFormulaVar bkgFrac_Bu2Dst0h_WN_;
   // -------------------- Bu2Dst0h_WN -------------------- //
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Bu_;
