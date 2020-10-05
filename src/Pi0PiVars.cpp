@@ -1212,6 +1212,13 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "@0*@1+(1-@0)*@2",
           RooArgList(Bu2Dst0h_WN_fracD0pi0_, *deltaEffBu2Dst0h_D0pi0_WN_,
                      *deltaEffBu2Dst0h_D0gamma_WN_)),
+      mcEff_Bu2Dst0h_WN_(
+          ("mcEff_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *mcEff_Bu2Dst0h_D0pi0_WN_,
+                     *mcEff_Bu2Dst0h_D0gamma_WN_)),
       Bu2Dst0h_WN_misId_fracD0pi0_(
           ("Bu2Dst0h_WN_misId_fracD0pi0_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1254,6 +1261,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      orEffMisId_Bu2Dst0h_WN_(
+          ("orEffMisId_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_misId_fracD0pi0_,
+                     *orEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *orEffMisId_Bu2Dst0h_D0gamma_WN_)),
       buEffMisId_Bu2Dst0h_WN_(
           ("buEffMisId_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1269,4 +1284,11 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "@0*@1+(1-@0)*@2",
           RooArgList(Bu2Dst0h_WN_misId_fracD0pi0_,
                      *deltaEffMisId_Bu2Dst0h_D0pi0_WN_,
-                     *deltaEffMisId_Bu2Dst0h_D0gamma_WN_)) {}
+                     *deltaEffMisId_Bu2Dst0h_D0gamma_WN_)),
+      mcEffMisId_Bu2Dst0h_WN_(
+          ("mcEffMisId_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "@0*@1+(1-@0)*@2",
+          RooArgList(Bu2Dst0h_WN_fracD0pi0_, *mcEffMisId_Bu2Dst0h_D0pi0_WN_,
+                     *mcEffMisId_Bu2Dst0h_D0gamma_WN_)) {}
