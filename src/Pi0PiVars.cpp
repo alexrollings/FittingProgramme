@@ -1191,6 +1191,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      // pdfBu_Bu2Dst0h_WN_(
+      //     ("pdfBu_Bu2Dst0h_WN_" +
+      //      ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+      //         .c_str(),
+      //     "", RooArgSet(*pdfBu_Bu2Dst0h_D0pi0_WN_, *pdfBu_Bu2Dst0h_D0gamma_WN_),
+      //     Bu2Dst0h_WN_fracD0pi0_Bu_),
+      // pdfDelta_Bu2Dst0h_WN_(("pdfDelta_Bu2Dst0h_WN_" +
+      //                        ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+      //                           .c_str(),
+      //                       "",
+      //                       RooArgSet(pdfDelta_Bu2Dst0h_D0pi0_WN_,
+      //                                 NeutralVars<Neutral::pi0>::Get(uniqueId)
+      //                                     .pdfDelta_Bu2Dst0h_D0gamma_WN()),
+      //                       Bu2Dst0h_WN_fracD0pi0_Delta_),
       orEffBu2Dst0h_WN_(
           ("orEffBu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1261,6 +1275,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      pdfBu_misId_Bu2Dst0h_WN_(pdfBu_misId_Bu2Dst0h_D0pi0_WN_.get()),
+      pdfDelta_misId_Bu2Dst0h_WN_(pdfDelta_misId_Bu2Dst0h_D0pi0_WN_),
       orEffMisId_Bu2Dst0h_WN_(
           ("orEffMisId_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
