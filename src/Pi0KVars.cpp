@@ -1490,6 +1490,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                      *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      pdfBu_Bu2Dst0h_WN_(
+          ("pdfBu_Bu2Dst0h_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+              .c_str(),
+          "", RooArgSet(*pdfBu_Bu2Dst0h_D0pi0_WN_, *pdfBu_Bu2Dst0h_D0gamma_WN_),
+          Bu2Dst0h_WN_fracD0pi0_Bu_),
+      pdfDelta_Bu2Dst0h_WN_(("pdfDelta_Bu2Dst0h_WN_" +
+                             ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+                                .c_str(),
+                            "",
+                            RooArgSet(pdfDelta_Bu2Dst0h_D0pi0_WN_,
+                                      NeutralVars<Neutral::pi0>::Get(uniqueId)
+                                          .pdfDelta_Bu2Dst0h_D0gamma_WN()),
+                            Bu2Dst0h_WN_fracD0pi0_Delta_),
       orEffBu2Dst0h_WN_(
           ("orEffBu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
@@ -1560,6 +1574,22 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
                      *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      pdfBu_misId_Bu2Dst0h_WN_(
+          new RooAddPdf(("pdfBu_misId_Bu2Dst0h_WN_" +
+                         ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+                            .c_str(),
+                        "",
+                        RooArgSet(*pdfBu_misId_Bu2Dst0h_D0pi0_WN_,
+                                  *pdfBu_misId_Bu2Dst0h_D0gamma_WN_),
+                        Bu2Dst0h_WN_misId_fracD0pi0_Bu_)),
+      pdfDelta_misId_Bu2Dst0h_WN_(
+          new RooAddPdf(("pdfDelta_misId_Bu2Dst0h_WN_" +
+                         ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
+                            .c_str(),
+                        "",
+                        RooArgSet(pdfDelta_misId_Bu2Dst0h_D0pi0_WN_,
+                                  *pdfDelta_misId_Bu2Dst0h_D0gamma_WN_),
+                        Bu2Dst0h_WN_misId_fracD0pi0_Delta_)),
       orEffMisId_Bu2Dst0h_WN_(
           ("orEffMisId_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
