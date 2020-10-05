@@ -47,9 +47,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // Bu2Dst0h_D0gamma_KpiSigmaBu_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0gamma_KpiSigmaBu", uniqueId_, Neutral::gamma, 0.957103,
       //     0.006106, Systematic::gammaBuWidthRatio, Sign::same)),
-      Bu2Dst0h_D0gamma_KpiSigmaBu_(Params::Get().CreateFloating(
-          "Bu2Dst0h_D0gamma_KpiSigmaBu", uniqueId_, Neutral::gamma, 0.957103,
-          0.9, 1.1)),
+      Bu2Dst0h_D0gamma_KpiSigmaBu_(
+          Params::Get().CreateFloating("Bu2Dst0h_D0gamma_KpiSigmaBu", uniqueId_,
+                                       Neutral::gamma, 0.957103, 0.9, 1.1)),
       Bu2Dst0h_D0gamma_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_a1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma, Systematic::gammaBuTails, Sign::same)),
@@ -147,8 +147,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0pi0_meanDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, 75, 95)),
       // Bu2Dst0h_D0pi0_KpiSigmaDelta_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_KpiSigmaDelta", uniqueId_, Neutral::gamma, 0.979346,
-      //     0.015985, Systematic::pi0DeltaWidthRatio, Sign::same)),
+      //     "Bu2Dst0h_D0pi0_KpiSigmaDelta", uniqueId_, Neutral::gamma,
+      //     0.979346, 0.015985, Systematic::pi0DeltaWidthRatio, Sign::same)),
       Bu2Dst0h_D0pi0_KpiSigmaDelta_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_KpiSigmaDelta", uniqueId_, Neutral::gamma, 0.979346,
           0.9, 1.1)),
@@ -221,7 +221,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                     *Bu2Dst0h_D0pi0_meanOffset31BuPartial_)),
       // Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_KpiSigmaBuPartial", uniqueId_, Neutral::gamma,
-      //     0.959297, 0.023821, Systematic::pi0BuPartialWidthRatio, Sign::same)),
+      //     0.959297, 0.023821, Systematic::pi0BuPartialWidthRatio,
+      //     Sign::same)),
       Bu2Dst0h_D0pi0_KpiSigmaBuPartial_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_KpiSigmaBuPartial", uniqueId_, Neutral::gamma,
           0.959297, 0.9, 1.1)),
@@ -426,6 +427,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_fracPdf2BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::pi0WNBuPartialPdf, Sign::same)),
+      // -------------------- Bu2Dst0h_WN -------------------- //
+      Bu2Dst0h_WN_fracD0pi0_(nullptr),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::gamma,
