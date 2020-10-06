@@ -45,6 +45,8 @@ enum class Mode {
   Bu2Dst0K_D0pi0_D02pik,
   Bu2Dst0pi_D0pi0_WN,
   Bu2Dst0K_D0pi0_WN,
+  Bu2Dst0pi_WN,
+  Bu2Dst0K_WN,
   Lb2Omegacpi_Lcpi0,
   Lb2OmegacK_Lcpi0
 };
