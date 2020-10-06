@@ -1287,9 +1287,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
           "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::gamma, 0.1, 0, 5)),
       bkgFracADS_Bs2D0Kpi_(Params::Get().CreateFloating(
-          "bkgFracADS_Bs2D0Kpi", uniqueId_, Neutral::gamma, 1, 0, 5)),
+          "bkgFracADS_Bs2D0Kpi", uniqueId_, Neutral::gamma, 1, 0, 10)),
       bkgFracADS_Bs2Dst0Kpi_(Params::Get().CreateFloating(
-          "bkgFracADS_Bs2Dst0Kpi", uniqueId_, Neutral::gamma, 1, 0, 5)),
+          "bkgFracADS_Bs2Dst0Kpi", uniqueId_, Neutral::gamma, 1, 0, 10)),
       constraint_bkgFracGlobal_WN_(("constraint_bkgFracGlobal_WN_" +
                                     ComposeName(uniqueId_, Neutral::gamma))
                                        .c_str(),
