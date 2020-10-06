@@ -797,6 +797,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] =
       kMagenta - 10;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"] = kBlue - 6;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_WN"] =
+      kMagenta - 10;
   colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"] = kBlue - 3;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] = kMagenta + 4;
   colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kGreen + 2;
@@ -821,6 +824,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bd2Dsth"] =
@@ -891,6 +898,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   hist_Bu2Dst0pi_D0pi0_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"]);
   hist_Bu2Dst0pi_D0pi0_WN->SetLineWidth(5);
+
+  auto hist_Bu2Dst0pi_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0pi_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0pi_WN", 1, 0, 1);
+  hist_Bu2Dst0pi_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"]);
+  hist_Bu2Dst0pi_WN->SetLineWidth(5);
 
   auto hist_Bu2D0rho = std::make_unique<TH1D>(
       ("hist_Bu2D0rho" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -968,6 +984,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   hist_Bu2Dst0K_D0pi0_WN->SetLineColor(
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"]);
   hist_Bu2Dst0K_D0pi0_WN->SetLineWidth(5);
+  
+  auto hist_Bu2Dst0K_WN = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0K_WN" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0K_WN", 1, 0, 1);
+  hist_Bu2Dst0K_WN->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_WN"]);
+  hist_Bu2Dst0K_WN->SetLineWidth(5);
 
   auto hist_Bu2D0Kst = std::make_unique<TH1D>(
       ("hist_Bu2D0Kst" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1039,6 +1064,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
+    if (neutral == Neutral::gamma) {
     labels.AddEntry(
         hist_Bu2Dst0pi_D0gamma_WN.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters, charge, false)
@@ -1049,6 +1075,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
             .c_str(),
         "l");
+    } else {
+    labels.AddEntry(
+        hist_Bu2Dst0pi_WN.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, daughters, charge, false)
+            .c_str(),
+        "l");
+    }
     labels.AddEntry(
         hist_Bu2D0rho.get(),
         ReturnLaTeXLabel(Mode::Bu2D0rho, daughters, charge, false).c_str(),
@@ -1087,6 +1120,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
+    if (neutral == Neutral::gamma) {
     labels.AddEntry(
         hist_Bu2Dst0K_D0gamma_WN.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters, charge, false)
@@ -1097,6 +1131,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
             .c_str(),
         "l");
+    } else {
+    labels.AddEntry(
+        hist_Bu2Dst0K_WN.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, daughters, charge, false)
+            .c_str(),
+        "l");
+    }
     labels.AddEntry(
         hist_Bu2D0Kst.get(),
         ReturnLaTeXLabel(Mode::Bu2D0Kst, daughters, charge, false).c_str(),
@@ -1352,8 +1393,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
             pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
           }
-          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
           if (daughters == Daughters::kk) {
@@ -1362,10 +1402,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
           pdfCharVec.emplace_back(
-              pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
+              pdf.pdfBu_misId_Bu2Dst0h_WN().GetName());
           if (bachelor == Bachelor::k) {
-            pdfCharVec.emplace_back(
-                pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
             pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
             pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
             pdfCharVec.emplace_back(
@@ -1412,8 +1450,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
             pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kpi().GetName());
             pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
           }
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_WN().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
           if (daughters == Daughters::kk) {
@@ -1422,10 +1459,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           pdfCharVec.emplace_back(
               pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
           pdfCharVec.emplace_back(
-              pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+              pdf.pdfDelta_misId_Bu2Dst0h_WN().GetName());
           if (bachelor == Bachelor::k) {
-            pdfCharVec.emplace_back(
-                pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
             pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
             pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
             pdfCharVec.emplace_back(
