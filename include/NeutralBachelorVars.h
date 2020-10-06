@@ -648,7 +648,7 @@ class NeutralBachelorVars {
   RooGaussian pdf3Bu_misId_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_fracPdf1Bu_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_fracPdf2Bu_;
-  std::unique_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_D0pi0_WN_;
+  std::shared_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_thresholdDelta_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_aDelta_;
   std::shared_ptr<RooRealVar> misId_Bu2Dst0h_D0pi0_WN_bDelta_;
@@ -962,8 +962,8 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0h_WN_misId_fracD0pi0_Delta_;
-  std::unique_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_WN_;
-  std::unique_ptr<RooAbsPdf> pdfDelta_misId_Bu2Dst0h_WN_;
+  std::shared_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0h_WN_;
+  std::shared_ptr<RooAbsPdf> pdfDelta_misId_Bu2Dst0h_WN_;
   RooFormulaVar orEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar buEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar deltaEffMisId_Bu2Dst0h_WN_;

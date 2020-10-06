@@ -1275,7 +1275,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *mcEffMisId_Bu2Dst0h_D0gamma_WN_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
-      pdfBu_misId_Bu2Dst0h_WN_(pdfBu_misId_Bu2Dst0h_D0pi0_WN_.get()),
+      pdfBu_misId_Bu2Dst0h_WN_(pdfBu_misId_Bu2Dst0h_D0pi0_WN_),
       pdfDelta_misId_Bu2Dst0h_WN_(
           new RooDstD0BG(pdfDelta_misId_Bu2Dst0h_D0pi0_WN_)),
       orEffMisId_Bu2Dst0h_WN_(
