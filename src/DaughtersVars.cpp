@@ -43,7 +43,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       //     "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.006,
       //     Systematic::NA, Sign::positive)),
       R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0.01,
+          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0,
           2)),
       // Float as only pick up on part of D*rho phase space - R slightly lower
       R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
