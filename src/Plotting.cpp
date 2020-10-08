@@ -517,7 +517,7 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\\cellcolor{green!35}"
               << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
     } else {
-      outfile << "\\cellcolor{pink}"
+      outfile << "\\cellcolor{orange!50}"
               << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
     }
     outfile << " & ";
