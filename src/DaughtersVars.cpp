@@ -67,24 +67,23 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
             "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
                 GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            -2, 2));
+            0, 2));
+    // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ = R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
     // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
     //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
     //         "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
     //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
     //             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
     //         0, Systematic::NA, Sign::same));
-    NeutralVars<Neutral::gamma>::Get(uniqueId_).constraints_argSet().add(
-        constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_);
+    // NeutralVars<Neutral::gamma>::Get(uniqueId_).constraints_argSet().add(
+    //     constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_);
   } else {
     R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
                 GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            0., Systematic::NA, Sign::same));
-    NeutralVars<Neutral::pi0>::Get(uniqueId_).constraints_argSet().add(
-        constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_);
+            0, 2));
   }
 }
 
