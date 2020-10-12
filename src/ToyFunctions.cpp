@@ -22,9 +22,9 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
 
-    RooRandom::randomGenerator()->SetSeed(10);
     TRandom3 random(0);
-    double randomTag = random.Rndm();
+    // random.SetSeed(655092302);
+    int rndmSeed = random.GetSeed();
 
     double nEvtsPerToy = simPdf->expectedEvents(config.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
@@ -150,7 +150,7 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
   // }
   if (config.noFit() == false) {
     // to make a unique result each time
-    toyFitResult->Print("v");
+    toyFitResult->Print();
     outputFile.cd();
     toyFitResult->Write();
     dataFitResult->Write();

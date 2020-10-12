@@ -703,9 +703,9 @@ int main(int argc, char **argv) {
         std::cout << "Running systematic " << s << "...\n";
         auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
         std::cout << "RandomiseParameters:\n";
-        RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
-        double randomTag = random.Rndm();
+        // random.SetSeed(655092302);
+        int rndmSeed = random.GetSeed(); 
         Params::Get().RandomiseParameters(systematicVec.begin(),
                                           systematicVec.end(), random);
         auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
@@ -717,7 +717,7 @@ int main(int argc, char **argv) {
         systResult->SetName("SystResult");
         TFile systResultFile(
             (outputDir + "/results/SystResult_" + config.ReturnBoxString() +
-             "_" + systString + "_" + std::to_string(randomTag) + ".root")
+             "_" + systString + "_" + std::to_string(rndmSeed) + ".root")
                 .c_str(),
             "recreate");
         systResult->Write();
@@ -728,12 +728,12 @@ int main(int argc, char **argv) {
     if (config.runToy() == true && data2D == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
-        double randomTag = random.Rndm();
+        // random.SetSeed(655092302);
+        int rndmSeed = random.GetSeed(); 
         TFile toyResultFile(
             (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(randomTag) + ".root")
+             std::to_string(rndmSeed) + ".root")
                 .c_str(),
             "recreate");
         // Pass random??
@@ -746,12 +746,12 @@ int main(int argc, char **argv) {
     if (config.runToy() == true && pdf2D == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
-        double randomTag = random.Rndm();
+        // random.SetSeed(655092302);
+        int rndmSeed = random.GetSeed(); 
         TFile toyResultFile(
             (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(randomTag) + ".root")
+             std::to_string(rndmSeed) + ".root")
                 .c_str(),
             "recreate");
         RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
@@ -764,12 +764,12 @@ int main(int argc, char **argv) {
     if (config.runToy() == true && pdfD1D == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        RooRandom::randomGenerator()->SetSeed(0);
         TRandom3 random(0);
-        double randomTag = random.Rndm();
+        // random.SetSeed(655092302);
+        int rndmSeed = random.GetSeed(); 
         TFile toyResultFile(
             (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() +
-             "_" + std::to_string(randomTag) + ".root")
+             "_" + std::to_string(rndmSeed) + ".root")
                 .c_str(),
             "recreate");
         RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
@@ -830,7 +830,7 @@ int main(int argc, char **argv) {
       }
     } else {
       if (config.noFit() == false) {
-        dataFitResult->Print("v");
+        dataFitResult->Print();
       }
     }
   } else {
