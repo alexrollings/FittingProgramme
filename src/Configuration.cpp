@@ -947,6 +947,9 @@ std::string EnumToString(Mode mode) {
     case Mode::Bu2Dst0rho_D0pi0:
       return "Bu2Dst0rho_D0pi0";
       break;
+    case Mode::Bu2Dst0rho:
+      return "Bu2Dst0rho";
+      break;
     case Mode::Bu2Dst0Kst_D0gamma:
       return "Bu2Dst0Kst_D0gamma";
       break;
@@ -955,6 +958,9 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bu2Dst0pi_D0gamma:
       return "Bu2Dst0pi_D0gamma";
+      break;
+    case Mode::Bu2Dst0Kst:
+      return "Bu2Dst0Kst";
       break;
     case Mode::Bu2Dst0K_D0gamma:
       return "Bu2Dst0K_D0gamma";
@@ -1978,6 +1984,26 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
     } else {
       return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
              "]_{D^{0}}\\gamma)_{D^{*0}}K^{*" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0rho) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}\\rho^{" + chargeLabel + "}$";
+    }
+  } else if (mode == Mode::Bu2Dst0Kst) {
+    if (isTex == false) {
+      return "#font[12]{B^{" + chargeLabel +
+             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
+             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}K^{*" +
+             chargeLabel + "}}";
+    } else {
+      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
+             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}K^{*" + chargeLabel + "}$";
     }
   } else if (mode == Mode::Lb2Omegacpi_Lcpi0) {
     if (isTex == false) {
