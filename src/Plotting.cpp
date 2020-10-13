@@ -46,9 +46,11 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   // outfile << "\\begin{itemize}\n";
   // if (n == Neutral::gamma) {
   //   outfile << "\t\\item $f_{WN} = "
-  //           << NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getVal()
+  //           <<
+  //           NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getVal()
   //           << " \\pm "
-  //           << NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getError()
+  //           <<
+  //           NeutralVars<Neutral::gamma>::Get(0).bkgFracGlobal_WN().getError()
   //           << "$\n";
   //   outfile << "\t\\item $\\epsilon_{sel}(D\\gamma \\text{ signal}) = "
   //           << ReturnMCEffs(Mode::Bu2Dst0pi_D0gamma, n, Bachelor::pi,
@@ -82,7 +84,8 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   //   outfile << "\t\\item $f_{WN} = "
   //           << NeutralVars<Neutral::pi0>::Get(0).bkgFracGlobal_WN().getVal()
   //           << " \\pm "
-  //           << NeutralVars<Neutral::pi0>::Get(0).bkgFracGlobal_WN().getError()
+  //           <<
+  //           NeutralVars<Neutral::pi0>::Get(0).bkgFracGlobal_WN().getError()
   //           << "$\n";
   //   outfile << "\t\\item $\\epsilon_{sel}(D\\pi^0 \\text{ signal}) = "
   //           << ReturnMCEffs(Mode::Bu2Dst0pi_D0pi0, n, Bachelor::pi,
@@ -106,17 +109,20 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   //                           Efficiency::mcEffErr)
   //           << "$\n";
   // }
-  // outfile << "\t\\item $\\epsilon_{sel}(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp}) = "
+  // outfile << "\t\\item $\\epsilon_{sel}(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp})
+  // = "
   //         << ReturnMCEffs(Mode::Bd2Dstpi, n, Bachelor::pi, Efficiency::mcEff)
   //         << " \\pm " <<
   //     ReturnMCEffs(Mode::Bd2Dstpi, n, Bachelor::pi, Efficiency::mcEffErr)
   //         << "$\n";
-  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow D\\rho^{\\pm}) = "
+  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow D\\rho^{\\pm}) =
+  // "
   //         << ReturnMCEffs(Mode::Bu2D0rho, n, Bachelor::pi, Efficiency::mcEff)
   //         << " \\pm " <<
   //     ReturnMCEffs(Mode::Bu2D0rho, n, Bachelor::pi, Efficiency::mcEffErr)
   //         << "$\n";
-  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow "
+  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow
+  // "
   //            "D\\pi^0)\\rho^{\\pm}) = "
   //         << ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, n, Bachelor::pi,
   //                         Efficiency::mcEff)
@@ -124,7 +130,8 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   //     ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, n, Bachelor::pi,
   //                  Efficiency::mcEffErr)
   //         << "$\n";
-  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow "
+  // outfile << "\t\\item $\\epsilon_{sel}(B^{\\pm}\\rightarrow (D^*\\rightarrow
+  // "
   //            "D\\gamma)\\rho^{\\pm}) = "
   //         << ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, n, Bachelor::pi,
   //                         Efficiency::mcEff)
@@ -132,13 +139,15 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   //     ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, n, Bachelor::pi,
   //                  Efficiency::mcEffErr)
   //         << "$\n";
-  // outfile << "\t\\item $BF(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp}) = (2.74 \\pm "
+  // outfile << "\t\\item $BF(B^0\\rightarrow D^{*\\pm}\\pi^{\\mp}) = (2.74 \\pm
+  // "
   //            "0.13) \\times 10^{-3}$\n";
   // outfile << "\t\\item $BF(D^{*\\pm}\\rightarrow D\\pi^{\\pm}) = 0.677 \\pm "
   //            "0.005 $\n";
   // outfile << "\t\\item $BF(B^{\\pm}\\rightarrow D\\rho^{\\pm}) = (1.34 \\pm "
   //            "0.18) \\times 10^{-2}$\n";
-  // outfile << "\t\\item $BF(B^{\\pm}\\rightarrow D^*\\rho^{\\pm}) = (9.8 \\pm "
+  // outfile << "\t\\item $BF(B^{\\pm}\\rightarrow D^*\\rho^{\\pm}) = (9.8 \\pm
+  // "
   //            "1.7) \\times 10^{-3}$\n";
   // outfile << "\t\\item $BF(D^*\\rightarrow D\\pi^0) = 0.647 \\pm "
   //            "0.9 $\n";
@@ -155,79 +164,83 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\t\\footnotesize\n";
     outfile << "\\resizebox{\\textwidth}{!}{%\n";
     if (n == Neutral::gamma) {
-    if (config.fitBuPartial() == true) {
-      outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|c|c|}\n";
-      outfile << "\t\\hline\n";
-      outfile << "\t& $\\epsilon_{cross}$ & N$_{cross}$ & "
-                 "$\\epsilon_{B(D\\gamma)}$ & "
-                 "N$_{B(D\\gamma)}$ & $\\epsilon_{\\Delta}$ & N$_{\\Delta}$ & "
-                 "$\\epsilon_{B(D\\pi^{0})}$ & "
-                 "N$_{B(D\\pi^{0})}$\\\\ \\hline\n";
-    } else {
-      outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|}\n";
-      outfile << "\t\\hline\n";
-      outfile << "\t& $\\epsilon_{cross}$ & N$_{cross}$ & "
-                 "$\\epsilon_{B(D\\gamma)}$ & "
-                 "N$_{B(D\\gamma)}$ & $\\epsilon_{\\Delta}$ & "
-                 "N$_{\\Delta}$\\\\ \\hline\n";
-    }
-    outfile << "\t ";
-    if (b == Bachelor::pi) {
-      outfile << "\\cellcolor{blue!25}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, d, c, true);
-    } else {
-      outfile << "\\cellcolor{orange!50}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, d, c, true);
-    }
-    outfile << " & ";
-    outfile << "$"
-            << to_string_with_precision(p->orEffBu2Dst0h_D0gamma().getVal(), 3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->N_trueId_Bu2Dst0h_D0gamma().getVal(),
-                                        0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Bu2Dst0h_D0gamma().getPropagatedError(*result),
-                   0)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->buEffBu2Dst0h_D0gamma().getVal(), 3)
-            << "$ &";
-    outfile
-        << std::fixed << "$"
-        << to_string_with_precision(p->N_trueId_Bu_Bu2Dst0h_D0gamma().getVal(),
-                                    0)
-        << " \\pm "
-        << to_string_with_precision(
-               p->N_trueId_Bu_Bu2Dst0h_D0gamma().getPropagatedError(*result), 0)
-        << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->deltaEffBu2Dst0h_D0gamma().getVal(),
-                                        3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(
-                   p->N_trueId_Delta_Bu2Dst0h_D0gamma().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Delta_Bu2Dst0h_D0gamma().getPropagatedError(
-                       *result),
-                   0)
-            << "$ ";
-    outfile << "& $"
-            << to_string_with_precision(
-                   p->buPartialEffBu2Dst0h_D0gamma().getVal(), 3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(
-                   p->N_trueId_BuPartial_Bu2Dst0h_D0gamma().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_BuPartial_Bu2Dst0h_D0gamma().getPropagatedError(
-                       *result),
-                   0)
-            << "$ \\\\ \\hline\n";
+      if (config.fitBuPartial() == true) {
+        outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|c|c|}\n";
+        outfile << "\t\\hline\n";
+        outfile
+            << "\t& $\\epsilon_{cross}$ & N$_{cross}$ & "
+               "$\\epsilon_{B(D\\gamma)}$ & "
+               "N$_{B(D\\gamma)}$ & $\\epsilon_{\\Delta}$ & N$_{\\Delta}$ & "
+               "$\\epsilon_{B(D\\pi^{0})}$ & "
+               "N$_{B(D\\pi^{0})}$\\\\ \\hline\n";
+      } else {
+        outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|}\n";
+        outfile << "\t\\hline\n";
+        outfile << "\t& $\\epsilon_{cross}$ & N$_{cross}$ & "
+                   "$\\epsilon_{B(D\\gamma)}$ & "
+                   "N$_{B(D\\gamma)}$ & $\\epsilon_{\\Delta}$ & "
+                   "N$_{\\Delta}$\\\\ \\hline\n";
+      }
+      outfile << "\t ";
+      if (b == Bachelor::pi) {
+        outfile << "\\cellcolor{blue!25}"
+                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, d, c, true);
+      } else {
+        outfile << "\\cellcolor{orange!50}"
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, d, c, true);
+      }
+      outfile << " & ";
+      outfile << "$"
+              << to_string_with_precision(p->orEffBu2Dst0h_D0gamma().getVal(),
+                                          3)
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Bu2Dst0h_D0gamma().getVal(), 0)
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Bu2Dst0h_D0gamma().getPropagatedError(*result),
+                     0)
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(p->buEffBu2Dst0h_D0gamma().getVal(),
+                                          3)
+              << "$ &";
+      outfile << std::fixed << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Bu_Bu2Dst0h_D0gamma().getVal(), 0)
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Bu_Bu2Dst0h_D0gamma().getPropagatedError(
+                         *result),
+                     0)
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->deltaEffBu2Dst0h_D0gamma().getVal(), 3)
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_Delta_Bu2Dst0h_D0gamma().getVal(), 0)
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_Delta_Bu2Dst0h_D0gamma().getPropagatedError(
+                         *result),
+                     0)
+              << "$ ";
+      outfile << "& $"
+              << to_string_with_precision(
+                     p->buPartialEffBu2Dst0h_D0gamma().getVal(), 3)
+              << "$ &";
+      outfile << "$"
+              << to_string_with_precision(
+                     p->N_trueId_BuPartial_Bu2Dst0h_D0gamma().getVal(), 0)
+              << " \\pm "
+              << to_string_with_precision(
+                     p->N_trueId_BuPartial_Bu2Dst0h_D0gamma()
+                         .getPropagatedError(*result),
+                     0)
+              << "$ \\\\ \\hline\n";
     } else {
       outfile << "\t\\begin{tabular}{|c|c|c|c|c|c|c|}\n";
       outfile << "\t\\hline\n";
@@ -871,6 +884,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] = kGray;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"] = kViolet + 9;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst"] = kViolet + 2;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst"] = kGray;
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
@@ -907,6 +922,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
+  colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst"];
   colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kSpring + 9;
   colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] =
       colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"];
@@ -1004,6 +1023,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"]);
   hist_Bu2Dst0rho_D0gamma->SetLineWidth(5);
 
+  auto hist_Bu2Dst0rho = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0rho" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0rho", 1, 0, 1);
+  hist_Bu2Dst0rho->SetLineColor(
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst"]);
+  hist_Bu2Dst0rho->SetLineWidth(5);
+
   auto hist_Lb2Omegacpi_Lcpi0 = std::make_unique<TH1D>(
       ("hist_Lb2Omegacpi_Lcpi0" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1090,6 +1118,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0gamma"]);
   hist_Bu2Dst0Kst_D0gamma->SetLineWidth(5);
 
+  auto hist_Bu2Dst0Kst = std::make_unique<TH1D>(
+      ("hist_Bu2Dst0Kst" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_Bu2Dst0Kst", 1, 0, 1);
+  hist_Bu2Dst0Kst->SetLineColor(
+      colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst"]);
+  hist_Bu2Dst0Kst->SetLineWidth(5);
+
   auto hist_Lb2OmegacK_Lcpi0 = std::make_unique<TH1D>(
       ("hist_Lb2OmegacK_Lcpi0" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1116,8 +1153,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   hist_Bs2Dst0Kpi->SetLineWidth(5);
 
   auto hist_MisID = std::make_unique<TH1D>(
-      ("hist_MisID" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
+      ("hist_MisID" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_MisID", 1, 0, 1);
   hist_MisID->SetLineColor(kGray);
@@ -1490,13 +1526,15 @@ void PlotComponent(
         if (daughters == Daughters::kk) {
           pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
         }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_WN().GetName());
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
@@ -1513,8 +1551,9 @@ void PlotComponent(
         if (daughters == Daughters::kk) {
           pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
         }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0gamma().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
@@ -1524,9 +1563,10 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfBu_misId_Bu2Dst0hst_D0gamma().GetName());
+          //   pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst_D0pi0().GetName());
+          //   pdfCharVec.emplace_back(
+          //       pdf.pdfBu_misId_Bu2Dst0hst_D0gamma().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
         }
       }
     } else if (mass == Mass::delta) {
@@ -1548,8 +1588,9 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          //   pdfCharVec.emplace_back(
+          //       pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
@@ -1566,8 +1607,9 @@ void PlotComponent(
         if (daughters == Daughters::kk) {
           pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
         }
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0pi0().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0gamma().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(
             pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
@@ -1578,10 +1620,11 @@ void PlotComponent(
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
           pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_misId_Bu2Dst0hst_D0gamma().GetName());
+          //   pdfCharVec.emplace_back(
+          //       pdf.pdfDelta_misId_Bu2Dst0hst_D0pi0().GetName());
+          //   pdfCharVec.emplace_back(
+          //       pdf.pdfDelta_misId_Bu2Dst0hst_D0gamma().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
         }
       }
     } else {
@@ -1599,8 +1642,9 @@ void PlotComponent(
       if (daughters == Daughters::kk) {
         pdfCharVec.emplace_back(pdf.pdfBuPartial_Lb2Omegach_Lcpi0().GetName());
       }
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0gamma().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0pi0().GetName());
+      // pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0gamma().GetName());
+      // pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst_D0pi0().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst().GetName());
       pdfCharVec.emplace_back(
           pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
       pdfCharVec.emplace_back(
@@ -1610,10 +1654,11 @@ void PlotComponent(
       if (bachelor == Bachelor::k) {
         pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(
-            pdf.pdfBuPartial_misId_Bu2Dst0hst_D0pi0().GetName());
-        pdfCharVec.emplace_back(
-            pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
+        //   pdfCharVec.emplace_back(
+        //       pdf.pdfBuPartial_misId_Bu2Dst0hst_D0pi0().GetName());
+        //   pdfCharVec.emplace_back(
+        //       pdf.pdfBuPartial_misId_Bu2Dst0hst_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst().GetName());
       }
     }
     // To pass to Components in plotOn, need string in the format
