@@ -187,8 +187,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_meanBuPartial_(nullptr),
       Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_WN -------------------- //
-      Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFloating(
-          "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0, 5)),
+      Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFixed(
+          "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0.,
+          Systematic::NA, Sign::same)),
       // -------------------- Bu2Dst0h_D0pi0_FAVasSUP -------------------- //
       Bu2Dst0h_D0pi0_FAVasSUP_meanDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_FAVasSUP_meanDelta", uniqueId_, Neutral::pi0,
@@ -870,12 +871,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                           Efficiency::orEff, false)) /
            ReturnBoxEffs(Mode::Bd2Dstpi, Bachelor::pi, Efficiency::orEff,
                          false)) *
-              ((ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0,
-                              Bachelor::pi, Efficiency::mcEff) +
+              ((ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
+                             Efficiency::mcEff) +
                 ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0,
-                              Bachelor::pi, Efficiency::mcEff)) /
+                             Bachelor::pi, Efficiency::mcEff)) /
                ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
-                             Efficiency::mcEff)) *
+                            Efficiency::mcEff)) *
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
               (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
                GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()),
