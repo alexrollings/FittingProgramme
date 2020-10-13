@@ -2117,6 +2117,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
       pdfBu_misId_Bu2Dst0hst_(),
       pdfDelta_misId_Bu2Dst0hst_(),
+      pdfBuPartial_misId_Bu2Dst0hst_(),
       orEffMisId_Bu2Dst0hst_(
           ("orEffMisId_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
