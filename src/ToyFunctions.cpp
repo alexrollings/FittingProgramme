@@ -10,10 +10,6 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
               << " -------------------------- \n\n";
-    // Setting the random seed to 0 is a special case which generates a
-    // different seed every time you run. Setting the seed to an integer
-    // generates toys in a replicable way, in case you need to debug
-    // something.
 
     if (simPdf == nullptr) {
       // id=0, equivalent to what would be the data fit
@@ -22,9 +18,12 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
       simPdf = std::unique_ptr<RooSimultaneous>(p.first);
     }
 
-    TRandom3 random(0);
-    // random.SetSeed(655092302);
-    int rndmSeed = random.GetSeed();
+    std::random_device rd;
+    std::default_random_engine rng(rd());
+    std::uniform_int_distribution<UInt_t> dist;
+    UInt_t seed = dist(rng);
+    // UInt_t seed = 0x96b725da;
+    RooRandom::randomGenerator()->SetSeed(seed);
 
     double nEvtsPerToy = simPdf->expectedEvents(config.fitting);
     std::unique_ptr<RooDataSet> toyDataSet;
@@ -75,11 +74,11 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
       if (config.fit1D() == true) {
         dimString = "1D";
       }
-      TFile outputFile(
-          (outputDir + "/results/Result" + dimString + "_" +
-           config.ReturnBoxString() + "_" + std::to_string(randomTag) + ".root")
-              .c_str(),
-          "recreate");
+      std::stringstream filename;
+      filename << outputDir << "/results/Result" + dimString + "_"
+               << config.ReturnBoxString() << "_" << std::hex << seed
+               << ".root";
+      TFile outputFile(filename.str().c_str(), "recreate");
 
       outputFile.cd();
       toyFitResult->Write();
@@ -100,13 +99,9 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
                    std::string const &outputDir, int id) {
   std::cout << "\n\n -------------------------- Running toy #" << id
             << " -------------------------- \n\n";
-  // Setting the random seed to 0 is a special case which generates a
-  // different seed every time you run. Setting the seed to an integer
-  // generates toys in a replicable way, in case you need to debug
-  // something.
-
   double nEvtsPerToy = simPdf->expectedEvents(config.fitting);
   std::unique_ptr<RooDataSet> toyDataSet;
+
   if (config.fit1D() == false) {
     toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
         RooArgSet(config.buDeltaMass(), config.deltaMass(), config.fitting),
@@ -115,6 +110,7 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
     toyDataSet = std::unique_ptr<RooDataSet>(simPdf->generate(
         RooArgSet(config.buDeltaMass(), config.fitting), nEvtsPerToy));
   }
+
   toyDataSet->SetName(("toyDataSet_" + std::to_string(id)).c_str());
   auto toyDataHist = std::unique_ptr<RooDataHist>(
       toyDataSet->binnedClone(("toyDataHist_" + std::to_string(id)).c_str(),
@@ -169,10 +165,6 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
                   std::vector<Charge> const &chargeVec, int id) {
   std::cout << "\n\n -------------------------- Running 2D PDF toy #" << id
             << " -------------------------- \n\n";
-  // Setting the random seed to 0 is a special case which generates a
-  // different seed every time you run. Setting the seed to an integer
-  // generates toys in a replicable way, in case you need to debug
-  // something.
 
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 

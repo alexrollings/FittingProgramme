@@ -26,6 +26,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -725,60 +726,42 @@ int main(int argc, char **argv) {
         systResultFile.Close();
       }
     }
-    if (config.runToy() == true && data2D == true) {
+
+    if (config.runToy() == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        TRandom3 random(0);
-        // random.SetSeed(655092302);
-        int rndmSeed = random.GetSeed(); 
-        TFile toyResultFile(
-            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(rndmSeed) + ".root")
-                .c_str(),
-            "recreate");
-        // Pass random??
-        RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet, config,
-                      daughtersVec, chargeVec, outputDir, id);
+        std::random_device rd;
+        std::default_random_engine rng(rd());
+        std::uniform_int_distribution<UInt_t> dist;
+        UInt_t seed = dist(rng);
+        // UInt_t seed = 0x96b725da;
+        RooRandom::randomGenerator()->SetSeed(seed);
+        std::stringstream filename;
+        if (config.runToy() == true && pdfD1D == true) {
+          filename << outputDir << "/results/ResultD1D_"
+                   << config.ReturnBoxString() << "_" << std::hex << seed
+                   << ".root";
+        } else {
+          filename << outputDir << "/results/Result2D_"
+                   << config.ReturnBoxString() << "_" << std::hex << seed
+                   << ".root";
+        }
+        TFile toyResultFile(filename.str().c_str(), "recreate");
+        if (config.runToy() == true && pdfD1D == true) {
+          RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
+                        daughtersVec, chargeVec, outputDir, id);
+        } else if (data2D == true) {
+          RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
+                        config, daughtersVec, chargeVec, outputDir, id);
+        } else {
+          RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
+                       dataFitResult, config, outputDir, daughtersVec,
+                       chargeVec, id);
+        }
         toyResultFile.Close();
       }
-    }
-
-    if (config.runToy() == true && pdf2D == true) {
-      // start at id = 1 to reserve 0 for data fit
-      for (int id = 1; id < nToys + 1; ++id) {
-        TRandom3 random(0);
-        // random.SetSeed(655092302);
-        int rndmSeed = random.GetSeed(); 
-        TFile toyResultFile(
-            (outputDir + "/results/Result2D_" + config.ReturnBoxString() + "_" +
-             std::to_string(rndmSeed) + ".root")
-                .c_str(),
-            "recreate");
-        RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
-                     dataFitResult, config, outputDir, daughtersVec, chargeVec,
-                     id);
-        toyResultFile.Close();
-      }
-    }
-
-    if (config.runToy() == true && pdfD1D == true) {
-      // start at id = 1 to reserve 0 for data fit
-      for (int id = 1; id < nToys + 1; ++id) {
-        TRandom3 random(0);
-        // random.SetSeed(655092302);
-        int rndmSeed = random.GetSeed(); 
-        TFile toyResultFile(
-            (outputDir + "/results/ResultD1D_" + config.ReturnBoxString() +
-             "_" + std::to_string(rndmSeed) + ".root")
-                .c_str(),
-            "recreate");
-        RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
-                      daughtersVec, chargeVec, outputDir, id);
-        toyResultFile.Close();
-      }
-    }
-
-    if (config.runToy() == false) {
+      //   dataFitResult->Print();
+    } else {
       // Loop over daughters again to plot correct PDFs
 
       // Whilst blinding is in place, we need to store y-axis max for FAV
@@ -827,10 +810,6 @@ int main(int argc, char **argv) {
         }
         outputFile.cd();
         tree.Write();
-      }
-    } else {
-      if (config.noFit() == false) {
-        dataFitResult->Print();
       }
     }
   } else {
