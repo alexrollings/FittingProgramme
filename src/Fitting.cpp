@@ -26,7 +26,6 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <random>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -734,7 +733,7 @@ int main(int argc, char **argv) {
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
         UInt_t seed = dist(rng);
-        // UInt_t seed = 0x96b725da;
+        // UInt_t seed = 0x12cd33b4;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
