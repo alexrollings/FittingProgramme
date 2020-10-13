@@ -1255,12 +1255,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         "l");
     if (config.runADS() == true) {
       labels.AddEntry(
-          hist_Bs2D0Kpi.get(),
-          ReturnLaTeXLabel(Mode::Bs2D0Kpi, daughters, charge, false).c_str(),
-          "l");
-      labels.AddEntry(
           hist_Bs2Dst0Kpi.get(),
           ReturnLaTeXLabel(Mode::Bs2Dst0Kpi, daughters, charge, false).c_str(),
+          "l");
+      labels.AddEntry(
+          hist_Bs2D0Kpi.get(),
+          ReturnLaTeXLabel(Mode::Bs2D0Kpi, daughters, charge, false).c_str(),
           "l");
     }
   }
