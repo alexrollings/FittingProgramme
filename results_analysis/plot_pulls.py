@@ -13,11 +13,11 @@ def pass_filename(root_file,
   if bu_low != None and bu_high != None:
     m = re.search(
         'Result' + dim + '_' + delta_low + '_' + delta_high + '_' + bu_low +
-        '_' + bu_high + '_0\.[0-9]+\.root', root_file)
+        '_' + bu_high + '_[a-z0-9]+\.root', root_file)
   else:
     m = re.search(
         'Result' + dim + '_' + delta_low + '_' + delta_high +
-        '_0\.[0-9]+\.root', root_file)
+        '_[a-z0-9]+\.root', root_file)
   if m:
     list_file.write(root_file + '\n')
     # print(root_file)
@@ -40,11 +40,11 @@ def pass_filename_bu_partial(root_file,
     m = re.search(
         'Result' + dim + '_' + delta_partial_low + '_' + delta_partial_high +
         '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high +
-        '_0\.[0-9]+\.root', root_file)
+        '_[a-z0-9]+\.root', root_file)
   else:
     m = re.search(
         'Result' + dim + '_' + delta_partial_low + '_' + delta_partial_high +
-        '_' + delta_low + '_' + delta_high + '_0\.[0-9]+\.root', root_file)
+        '_' + delta_low + '_' + delta_high + '_[a-z0-9]+\.root', root_file)
   if m:
     list_file.write(root_file + '\n')
 

@@ -64,7 +64,6 @@ int main(int argc, char *argv[]) {
   std::vector<std::string> resultFiles;
   bool dataToy;
   bool toys2D = false;
-  std::cout << "1" << std::endl;
 
   {
     ParseArguments args(argc, argv);
@@ -129,8 +128,10 @@ int main(int argc, char *argv[]) {
       resultFiles.emplace_back(tmp);
     }
     inStream.close();
+    if (resultFiles.size() < 1) {
+      throw std::runtime_error("No results files found\n");
+    }
   }
-  std::cout << "2" << std::endl;
 
   // Loop over filenames, open the files, then extract the RooFitResults and
   // from each and store in vector
@@ -141,11 +142,10 @@ int main(int argc, char *argv[]) {
   for (auto &filename : resultFiles) {
     std::string rndm;
     auto file = std::unique_ptr<TFile>(TFile::Open(filename.c_str()));
-    std::regex fileRexp1D(".+_([0-9]+)_([0-9]+)_([0-9].[0-9]+).root");
     if (config.fit1D() == false) {
       if (config.fitBuPartial() == false) {
         std::regex fileRexp(
-            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([a-z0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaLow(std::stod(fileMatch[1]));
@@ -159,8 +159,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].["
-            "0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([a-z0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
@@ -177,7 +176,7 @@ int main(int argc, char *argv[]) {
       }
     } else {
       if (config.fitBuPartial() == false) {
-        std::regex fileRexp(".+_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
+        std::regex fileRexp(".+_([0-9].+)_([0-9].+)_([a-z0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaLow(std::stod(fileMatch[1]));
@@ -189,7 +188,7 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].[0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([a-z0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
@@ -226,6 +225,10 @@ int main(int argc, char *argv[]) {
         // std::cout << "Extracted Result from " << filename << "\n";
       }
     }
+  }
+  
+  if (resultVec.size() < 1) {
+    throw std::runtime_error("No results found.");
   }
 
   // Create vector of histograms: automatically make histograms for the value,
@@ -270,14 +273,17 @@ int main(int argc, char *argv[]) {
     double fitStatus = resultVec[j].status();
     double covQual = resultVec[j].covQual();
     if (covQual < 2) {
+      std::cout << "Unconverged: " << rndmVec[j] << std::endl;
       nUnConv++;
       continue;
     }
     if (covQual < 3) {
+      std::cout << "FPD: " << rndmVec[j] << std::endl;
       nFPD++;
       continue;
     }
     if (fitStatus != 0) {
+      std::cout << "MINOS issues: " << rndmVec[j] << std::endl;
       nMINOS++;
       continue;
     }
