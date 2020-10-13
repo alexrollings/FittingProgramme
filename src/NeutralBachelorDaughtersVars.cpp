@@ -992,10 +992,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                             0.15, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
-                                       Bachelor::k, Daughters::pik, 0, -1, 1)),
+                                       Bachelor::k, Daughters::pik, 0, -5, 5)),
       A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
-          Daughters::pik, 0, -1, 1)),
+          Daughters::pik, 0, -5, 5)),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(Params::Get().CreateFixed(
           "A_Bs2Dst0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0, 0,
