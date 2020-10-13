@@ -41,6 +41,9 @@ class DaughtersVars {
   RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0() {
     return *R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   }
+  RooAbsReal &R_Dst0KDst0pi_Bu2Dst0hst() {
+    return *R_Dst0KDst0pi_Bu2Dst0hst_;
+  }
   RooAbsReal &R_Dst0KDst0pi_Lb2Omegach_Lcpi0() {
     return *R_Dst0KDst0pi_Lb2Omegach_Lcpi0_;
   }
@@ -65,6 +68,9 @@ class DaughtersVars {
   std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer() {
     return R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
   }
+  std::shared_ptr<RooAbsReal> &R_Dst0KDst0pi_Bu2Dst0hst_GetPointer() {
+    return R_Dst0KDst0pi_Bu2Dst0hst_;
+  }
 
  private:
   int uniqueId_;
@@ -76,6 +82,7 @@ class DaughtersVars {
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
   RooGaussian constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Lb2Omegach_Lcpi0_;
 };
 
