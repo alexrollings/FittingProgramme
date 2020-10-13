@@ -15,13 +15,15 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       A_CP_Bu2D0hst_(nullptr),
       A_CP_Bu2Dst0hst_D0gamma_(nullptr),
       A_CP_Bu2Dst0hst_D0pi0_(nullptr),
+      A_CP_Bu2Dst0hst_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
       R_ADS_Bu2Dst0h_D0pi0_(nullptr),
       R_ADS_Bu2Dst0h_WN_(nullptr),
       R_ADS_Bd2Dsth_(nullptr),
       R_ADS_Bu2D0hst_(nullptr),
       R_ADS_Bu2Dst0hst_D0gamma_(nullptr),
-      R_ADS_Bu2Dst0hst_D0pi0_(nullptr) {
+      R_ADS_Bu2Dst0hst_D0pi0_(nullptr),
+      R_ADS_Bu2Dst0hst_(nullptr) {
   double k_A_CP_Bu2Dst0h_D0gamma_, k_A_CP_Bu2Dst0h_D0pi0_;
   if (_bachelor == Bachelor::pi) {
     k_A_CP_Bu2Dst0h_D0gamma_ = -0.003; 
@@ -124,6 +126,9 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   A_CP_Bu2Dst0hst_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
           "A_CP_Bu2Dst0hst_D0pi0", uniqueId_, _bachelor, 0, -1, 1));
+  A_CP_Bu2Dst0hst_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
   // Fix to D BR
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_ADS_Bd2Dsth", uniqueId_, _bachelor,
@@ -153,6 +158,12 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   R_ADS_Bu2Dst0hst_D0pi0_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
           "R_ADS_Bu2Dst0hst_D0pi0", uniqueId_, _bachelor,
+          GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
+          -5, 5));
+  R_ADS_Bu2Dst0hst_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor,
           GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
               GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
           -5, 5));
