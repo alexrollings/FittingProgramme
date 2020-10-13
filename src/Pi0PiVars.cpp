@@ -1390,6 +1390,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *orEffBu2Dst0hst_D0gamma_, *mcEff_Bu2Dst0hst_D0gamma_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      Bu2Dst0hst_fracD0pi0_BuPartial_(),
       pdfBu_Bu2Dst0hst_(
           ("pdfBu_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1397,6 +1398,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "", RooArgSet(pdfBu_Bu2Dst0hst_D0pi0_, *pdfBu_Bu2Dst0hst_D0gamma_),
           Bu2Dst0hst_fracD0pi0_Bu_),
       pdfDelta_Bu2Dst0hst_(),
+      pdfBuPartial_Bu2Dst0hst_(),
       orEffBu2Dst0hst_(
           ("orEffBu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1418,6 +1420,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "@0*@1+(1-@0)*@2",
           RooArgList(Bu2Dst0hst_fracD0pi0_, *deltaEffBu2Dst0hst_D0pi0_,
                      *deltaEffBu2Dst0hst_D0gamma_)),
+      buPartialEffBu2Dst0hst_(),
       mcEff_Bu2Dst0hst_(
           ("mcEff_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1467,8 +1470,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                      *mcEffMisId_Bu2Dst0hst_D0gamma_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
+      Bu2Dst0hst_misId_fracD0pi0_BuPartial_(),
       pdfBu_misId_Bu2Dst0hst_(),
       pdfDelta_misId_Bu2Dst0hst_(),
+      pdfBuPartial_misId_Bu2Dst0hst_(),
       orEffMisId_Bu2Dst0hst_(
           ("orEffMisId_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
@@ -1493,6 +1498,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           RooArgList(Bu2Dst0hst_misId_fracD0pi0_,
                      *deltaEffMisId_Bu2Dst0hst_D0pi0_,
                      *deltaEffMisId_Bu2Dst0hst_D0gamma_)),
+      buPartialEffMisId_Bu2Dst0hst_(),
       mcEffMisId_Bu2Dst0hst_(
           ("mcEffMisId_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))

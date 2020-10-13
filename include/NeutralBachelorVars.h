@@ -465,6 +465,9 @@ class NeutralBachelorVars {
   RooFormulaVar &bkgFrac_Bu2Dst0h_WN() {
     return bkgFrac_Bu2Dst0h_WN_;
   }
+  RooFormulaVar &bkgFrac_Bu2Dst0hst() {
+    return bkgFrac_Bu2Dst0hst_;
+  }
 
   // -------------------- Bu2Dst0h_WN -------------------- //
   RooAddPdf &pdfBu_Bu2Dst0h_WN() {
@@ -502,6 +505,43 @@ class NeutralBachelorVars {
   }
   RooFormulaVar &mcEffMisId_Bu2Dst0h_WN() {
     return mcEffMisId_Bu2Dst0h_WN_;
+  }
+  // -------------------- Bu2Dst0hst -------------------- //
+  RooAddPdf &pdfBu_Bu2Dst0hst() {
+    return pdfBu_Bu2Dst0hst_;
+  }
+  RooAddPdf &pdfDelta_Bu2Dst0hst() {
+    return pdfDelta_Bu2Dst0hst_;
+  }
+  RooFormulaVar &orEffBu2Dst0hst() {
+    return orEffBu2Dst0hst_;
+  }
+  RooFormulaVar &buEffBu2Dst0hst() {
+    return buEffBu2Dst0hst_;
+  }
+  RooFormulaVar &deltaEffBu2Dst0hst() {
+    return deltaEffBu2Dst0hst_;
+  }
+  RooFormulaVar &mcEff_Bu2Dst0hst() {
+    return mcEff_Bu2Dst0hst_;
+  }
+  RooAddPdf &pdfBu_misId_Bu2Dst0hst() {
+    return pdfBu_misId_Bu2Dst0hst_;
+  }
+  RooAddPdf &pdfDelta_misId_Bu2Dst0hst() {
+    return pdfDelta_misId_Bu2Dst0hst_;
+  }
+  RooFormulaVar &orEffMisId_Bu2Dst0hst() {
+    return orEffMisId_Bu2Dst0hst_;
+  }
+  RooFormulaVar &buEffMisId_Bu2Dst0hst() {
+    return buEffMisId_Bu2Dst0hst_;
+  }
+  RooFormulaVar &deltaEffMisId_Bu2Dst0hst() {
+    return deltaEffMisId_Bu2Dst0hst_;
+  }
+  RooFormulaVar &mcEffMisId_Bu2Dst0hst() {
+    return mcEffMisId_Bu2Dst0hst_;
   }
 
  private:
@@ -949,6 +989,7 @@ class NeutralBachelorVars {
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0pi0_WN_;
   std::shared_ptr<RooAbsReal> bkgFrac_Bu2Dst0h_D0gamma_WN_;
   RooFormulaVar bkgFrac_Bu2Dst0h_WN_;
+  RooFormulaVar bkgFrac_Bu2Dst0hst_;
   // -------------------- Bu2Dst0h_WN -------------------- //
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_;
   RooFormulaVar Bu2Dst0h_WN_fracD0pi0_Bu_;
@@ -968,6 +1009,31 @@ class NeutralBachelorVars {
   RooFormulaVar buEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar deltaEffMisId_Bu2Dst0h_WN_;
   RooFormulaVar mcEffMisId_Bu2Dst0h_WN_;
+  // -------------------- Bu2Dst0hst -------------------- //
+  RooFormulaVar Bu2Dst0hst_fracD0pi0_;
+  RooFormulaVar Bu2Dst0hst_fracD0pi0_Bu_;
+  RooFormulaVar Bu2Dst0hst_fracD0pi0_Delta_;
+  RooFormulaVar Bu2Dst0hst_fracD0pi0_BuPartial_;
+  RooAddPdf pdfBu_Bu2Dst0hst_;
+  RooAddPdf pdfDelta_Bu2Dst0hst_;
+  RooAddPdf pdfBuPartial_Bu2Dst0hst_;
+  RooFormulaVar orEffBu2Dst0hst_;
+  RooFormulaVar buEffBu2Dst0hst_;
+  RooFormulaVar deltaEffBu2Dst0hst_;
+  RooFormulaVar buPartialEffBu2Dst0hst_;
+  RooFormulaVar mcEff_Bu2Dst0hst_;
+  RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_;
+  RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_Bu_;
+  RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_Delta_;
+  RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_BuPartial_;
+  RooAddPdf pdfBu_misId_Bu2Dst0hst_;
+  RooAddPdf pdfDelta_misId_Bu2Dst0hst_;
+  RooAddPdf pdfBuPartial_misId_Bu2Dst0hst_;
+  RooFormulaVar orEffMisId_Bu2Dst0hst_;
+  RooFormulaVar buEffMisId_Bu2Dst0hst_;
+  RooFormulaVar deltaEffMisId_Bu2Dst0hst_;
+  RooFormulaVar buPartialEffMisId_Bu2Dst0hst_;
+  RooFormulaVar mcEffMisId_Bu2Dst0hst_;
 };
 
 template <>
