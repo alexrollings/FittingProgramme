@@ -105,7 +105,8 @@ GlobalVars::GlobalVars(int uniqueId)
       R_CP_Bd2Dsth_(nullptr),
       R_CP_Bu2D0hst_(nullptr),
       R_CP_Bu2Dst0hst_D0gamma_(nullptr),
-      R_CP_Bu2Dst0hst_D0pi0_(nullptr) {
+      R_CP_Bu2Dst0hst_D0pi0_(nullptr),
+      R_CP_Bu2Dst0hst_(nullptr) {
   // std::vector<Charge> chargeVec = {Charge::plus, Charge::minus};
   // for (auto &c : chargeVec) {
   //   pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
@@ -220,4 +221,7 @@ GlobalVars::GlobalVars(int uniqueId)
   R_CP_Bu2Dst0hst_D0gamma_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
           "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, 1, 0, 5));
+  R_CP_Bu2Dst0hst_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "R_CP_Bu2Dst0hst", uniqueId_, 1, 0, 5));
 }
