@@ -8,6 +8,11 @@ if __name__ == '__main__':
                       type=str,
                       help='Directory where result is stored',
                       required=True)
+  parser.add_argument('-f',
+                      '--f_name',
+                      type=str,
+                      help='Result filename (if non standard)',
+                      required=False)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -17,11 +22,15 @@ if __name__ == '__main__':
 
   path = args.path
   neutral = args.neutral
+  f_name = args.f_name
 
-  if neutral == 'pi0':
-    f_input = path + '/DataResult_138_148_5220_5330.root'
+  if f_name is None:
+    if neutral == 'pi0':
+      f_input = path + '/DataResult_138_148_5220_5330.root'
+    else:
+      f_input = path + '/DataResult_60_105_125_170_5240_5320.root'
   else:
-    f_input = path + '/DataResult_60_105_125_170_5240_5320.root'
+    f_input = path + '/' + f_name
 
   tf = TFile(f_input)
   result = tf.Get("DataFitResult")

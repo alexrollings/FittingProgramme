@@ -409,6 +409,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Systematic::Bu2Dst0hst_D0pi0BuPdf, Sign::same)),
       Bu2Dst0hst_D0pi0_meanBuPartial_(nullptr),
       Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_(nullptr),
+      // -------------------- Bu2Dst0hst -------------------- //
+      Bu2Dst0hst_floatingFracD0pi0_(Params::Get().CreateFloating(
+          "Bu2Dst0hst_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0, 5)),
       // -------------------- Lb2Omegach_Lcpi0 -------------------- //
       Lb2Omegach_Lcpi0_thresholdDelta_(Params::Get().CreateFixed(
           "Lb2Omegach_Lcpi0_thresholdDelta", uniqueId_, Neutral::pi0,
