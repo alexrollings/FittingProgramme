@@ -856,22 +856,21 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma"] = kAzure - 4;
   colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"] = kRed + 1;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"] = kAzure + 3;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"] = kMagenta - 1;
-  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"] = kAzure + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"] = kPink - 7;
-  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] =
-      kMagenta - 10;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0"] = kMagenta + 4;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"] = kTeal - 9;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"] = kAzure + 7;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
   colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"] = kBlue - 6;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_WN"] = kMagenta - 10;
-  colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"] = kBlue - 3;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] = kMagenta + 4;
-  colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kGreen + 2;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] = kOrange - 3;
-  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"] = kGreen + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] = kOrange + 4;
-  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"] = kBlue + 4;
-  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] = kRed + 3;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_WN"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"] = kPink + 1;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"] = kOrange;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"] = kViolet + 2;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"] = kGray;
+  colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"] = kViolet + 9;
+  colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"] = kGray;
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma"];
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma"] =
@@ -881,41 +880,42 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0gamma_WN"] =
-      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0gamma_WN"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0_WN"] =
-      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0gamma_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0gamma_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_D0pi0_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_D0pi0_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_D0pi0_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_D0pi0_WN"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_WN"] =
-      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0h_WN"] =
+      colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0h_WN"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0h_WN"] =
       colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0h_WN"];
   colorMap[EnumToString(Bachelor::k)]["Bd2Dsth"] =
-      colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bd2Dsth"] =
       colorMap[EnumToString(Bachelor::pi)]["Bd2Dsth"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bd2Dsth"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bd2Dsth"];
   colorMap[EnumToString(Bachelor::k)]["Bu2D0hst"] =
-      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2D0hst"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2D0hst"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2D0hst"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2D0hst"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0pi0"] =
-      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0pi0"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0pi0"];
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0pi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0pi0"];
   colorMap[EnumToString(Bachelor::k)]["Bu2Dst0hst_D0gamma"] =
-      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
-  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
       colorMap[EnumToString(Bachelor::pi)]["Bu2Dst0hst_D0gamma"];
-  colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kCyan - 3;
-  colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] = kViolet + 5;
-  colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"] = kOrange;
-  colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"] = kGreen + 3;
+  colorMap[EnumToString(Bachelor::k)]["misId_Bu2Dst0hst_D0gamma"] =
+      colorMap[EnumToString(Bachelor::pi)]["misId_Bu2Dst0hst_D0gamma"];
+  colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"] = kSpring + 9;
+  colorMap[EnumToString(Bachelor::k)]["Lb2Omegach_Lcpi0"] =
+      colorMap[EnumToString(Bachelor::pi)]["Lb2Omegach_Lcpi0"];
+  colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"] = kViolet - 9;
+  colorMap[EnumToString(Bachelor::k)]["Bs2D0Kpi"] = kOrange + 3;
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
-  TLegend labels(0.14, 0.3, 0.28, 0.9);
+  TLegend labels(0.14, 0.2, 0.28, 0.95);
   labels.SetLineColor(kWhite);
 
   std::string oppCharge;
@@ -1115,6 +1115,14 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       colorMap[EnumToString(Bachelor::k)]["Bs2Dst0Kpi"]);
   hist_Bs2Dst0Kpi->SetLineWidth(5);
 
+  auto hist_MisID = std::make_unique<TH1D>(
+      ("hist_MisID" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_MisID", 1, 0, 1);
+  hist_MisID->SetLineColor(kGray);
+  hist_MisID->SetLineWidth(5);
+
   if (bachelor == Bachelor::pi) {
     if (neutral == Neutral::gamma) {
       labels.AddEntry(
@@ -1122,10 +1130,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, daughters, charge, false)
               .c_str(),
           "l");
+      labels.AddEntry(
+          hist_Bu2Dst0K_D0gamma.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, daughters, charge, false)
+              .c_str(),
+          "l");
     }
     labels.AddEntry(
         hist_Bu2Dst0pi_D0pi0.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, daughters, charge, false)
+            .c_str(),
+        "l");
+    labels.AddEntry(
+        hist_Bu2Dst0K_D0pi0.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
     if (neutral == Neutral::gamma) {
@@ -1178,10 +1196,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, daughters, charge, false)
               .c_str(),
           "l");
+      labels.AddEntry(
+          hist_Bu2Dst0pi_D0gamma.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, daughters, charge, false)
+              .c_str(),
+          "l");
     }
     labels.AddEntry(
         hist_Bu2Dst0K_D0pi0.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, daughters, charge, false)
+            .c_str(),
+        "l");
+    labels.AddEntry(
+        hist_Bu2Dst0pi_D0pi0.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
     if (neutral == Neutral::gamma) {
@@ -1236,6 +1264,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           "l");
     }
   }
+  labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
