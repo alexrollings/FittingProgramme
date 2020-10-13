@@ -612,6 +612,9 @@ class NeutralVars {
   RooAbsReal &bkgFracFAV_Bu2Dst0hst_D0gamma() {
     return *bkgFracFAV_Bu2Dst0hst_D0gamma_;
   }
+  RooAbsReal &bkgFracFAV_Bu2Dst0hst() {
+    return *bkgFracFAV_Bu2Dst0hst_;
+  }
   RooRealVar &bkgFracKK_Lb2Omegach_Lcpi0() {
     return *bkgFracKK_Lb2Omegach_Lcpi0_;
   }
@@ -978,6 +981,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
+  std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_;
   std::shared_ptr<RooRealVar> bkgFracKK_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2Dst0Kpi_;
