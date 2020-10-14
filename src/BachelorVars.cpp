@@ -116,7 +116,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                                   0.06, Systematic::NA, Sign::none));
     A_CP_Lb2Omegach_Lcpi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
+            "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -2, 2));
   }
   // No measured params for B->D*h* modes
   // Fix for D*π to 0 with systematic??
