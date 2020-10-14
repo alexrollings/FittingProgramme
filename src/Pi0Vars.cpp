@@ -918,10 +918,21 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     0, 5)),
       bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
           "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, 0, 5)),
-      bkgFracADS_Bs2D0Kpi_(Params::Get().CreateFloating(
-          "bkgFracADS_Bs2D0Kpi", uniqueId_, Neutral::pi0, 4, -2, 10)),
       bkgFracADS_Bs2Dst0Kpi_(Params::Get().CreateFloating(
           "bkgFracADS_Bs2Dst0Kpi", uniqueId_, Neutral::pi0, 4, -2, 15)),
+      // bkgFracADS_Bs2D0Kpi_(Params::Get().CreateFloating(
+      //     "bkgFracADS_Bs2D0Kpi", uniqueId_, Neutral::pi0, 4, -2, 10)),
+      bkgFracADS_Bs2D0Kpi_(Params::Get().CreateFixed(
+          "bkgFracADS_Bs2D0Kpi", uniqueId_, Neutral::pi0,
+          (ReturnBoxEffs(Mode::Bs2D0Kpi, Bachelor::k, Efficiency::orEff,
+                         false) /
+           ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k, Efficiency::orEff,
+                         false)) *
+              (ReturnMCEffs(Mode::Bs2D0Kpi, Neutral::pi0, Bachelor::k,
+                            Efficiency::mcEff) /
+               ReturnMCEffs(Mode::Bs2Dst0Kpi, Neutral::pi0, Bachelor::k,
+                            Efficiency::mcEff)),
+          0., Systematic::NA, Sign::same)),
       constraint_bkgFracGlobal_WN_(("constraint_bkgFracGlobal_WN_" +
                                     ComposeName(uniqueId_, Neutral::pi0))
                                        .c_str(),
@@ -953,6 +964,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooFit::RooConst(
               ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho_D0gamma, "std"))),
       constraints_argSet_() {}
-      // constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
+// constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
 // constraint_bkgFracFAV_Bu2D0hst_) {}
 // constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_) {}
