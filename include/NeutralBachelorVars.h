@@ -507,8 +507,8 @@ class NeutralBachelorVars {
     return mcEffMisId_Bu2Dst0h_WN_;
   }
   // -------------------- Bu2Dst0hst -------------------- //
-  RooAddPdf &pdfBu_Bu2Dst0hst() {
-    return pdfBu_Bu2Dst0hst_;
+  RooAbsPdf &pdfBu_Bu2Dst0hst() {
+    return *pdfBu_Bu2Dst0hst_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0hst() {
     return pdfDelta_Bu2Dst0hst_;
@@ -531,8 +531,8 @@ class NeutralBachelorVars {
   RooFormulaVar &mcEff_Bu2Dst0hst() {
     return mcEff_Bu2Dst0hst_;
   }
-  RooAddPdf &pdfBu_misId_Bu2Dst0hst() {
-    return pdfBu_misId_Bu2Dst0hst_;
+  RooAbsPdf &pdfBu_misId_Bu2Dst0hst() {
+    return *pdfBu_misId_Bu2Dst0hst_;
   }
   RooAddPdf &pdfDelta_misId_Bu2Dst0hst() {
     return pdfDelta_misId_Bu2Dst0hst_;
@@ -1026,7 +1026,7 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0hst_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0hst_fracD0pi0_Delta_;
   RooFormulaVar Bu2Dst0hst_fracD0pi0_BuPartial_;
-  RooAddPdf pdfBu_Bu2Dst0hst_;
+  std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_;
   RooAddPdf pdfDelta_Bu2Dst0hst_;
   RooAddPdf pdfBuPartial_Bu2Dst0hst_;
   RooFormulaVar orEffBu2Dst0hst_;
@@ -1038,7 +1038,7 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_Delta_;
   RooFormulaVar Bu2Dst0hst_misId_fracD0pi0_BuPartial_;
-  RooAddPdf pdfBu_misId_Bu2Dst0hst_;
+  std::unique_ptr<RooAbsPdf> pdfBu_misId_Bu2Dst0hst_;
   RooAddPdf pdfDelta_misId_Bu2Dst0hst_;
   RooAddPdf pdfBuPartial_misId_Bu2Dst0hst_;
   RooFormulaVar orEffMisId_Bu2Dst0hst_;

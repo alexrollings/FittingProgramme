@@ -2004,12 +2004,12 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                      *orEffBu2Dst0hst_D0gamma_, *mcEff_Bu2Dst0hst_D0gamma_,
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
                      GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
-      pdfBu_Bu2Dst0hst_(
+      pdfBu_Bu2Dst0hst_(new RooAddPdf(
           ("pdfBu_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
           "", RooArgSet(pdfBu_Bu2Dst0hst_D0pi0_, *pdfBu_Bu2Dst0hst_D0gamma_),
-          Bu2Dst0hst_fracD0pi0_Bu_),
+          Bu2Dst0hst_fracD0pi0_Bu_)),
       pdfDelta_Bu2Dst0hst_(
           ("pdfDelta_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
@@ -2115,7 +2115,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               *orEffMisId_Bu2Dst0hst_D0gamma_, *mcEffMisId_Bu2Dst0hst_D0gamma_,
               GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0(),
               GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma())),
-      pdfBu_misId_Bu2Dst0hst_(),
+      pdfBu_misId_Bu2Dst0hst_(nullptr),
       pdfDelta_misId_Bu2Dst0hst_(),
       pdfBuPartial_misId_Bu2Dst0hst_(),
       orEffMisId_Bu2Dst0hst_(
