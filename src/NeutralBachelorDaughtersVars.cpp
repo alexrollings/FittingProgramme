@@ -1298,7 +1298,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2Dst0Kpi()));
     N_tot_Bs2D0Kpi_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
-            uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bs2D0Kpi_,
+            uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bs2Dst0Kpi_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kpi()));
   }
 }
