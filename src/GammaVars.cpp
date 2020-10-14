@@ -626,6 +626,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::same)),
+      // Bu2D0hst_mean1Bu_(Params::Get().CreateFloating(
+      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho, 5150,
+      //     5250)),
       Bu2D0hst_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_meanOffset21Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::none)),
@@ -679,6 +682,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
           Sign::same)),
+      // Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFloating(
+      //     "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0rho_D0gamma, 5070, 5170)),
       Bu2Dst0hst_D0gamma_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_meanOffset21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gammaBuPdf,
