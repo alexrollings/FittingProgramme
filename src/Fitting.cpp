@@ -665,13 +665,15 @@ int main(int argc, char **argv) {
     }
 
     if (config.noFit() == false) {
+      // dataFitResult = std::unique_ptr<RooFitResult>(
+      //     simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+      //                   RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+      //                   RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
       if (config.neutral() == Neutral::pi0) {
         dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            // RooFit::Constrain(
-            //     NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
             RooFit::ExternalConstraints(
                 NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
       } else {
@@ -679,8 +681,6 @@ int main(int argc, char **argv) {
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            // RooFit::Constrain(
-            //     NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
             RooFit::ExternalConstraints(
                 NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
       }
@@ -729,11 +729,11 @@ int main(int argc, char **argv) {
     if (config.runToy() == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        std::random_device rd;
-        std::default_random_engine rng(rd());
-        std::uniform_int_distribution<UInt_t> dist;
-        UInt_t seed = dist(rng);
-        // UInt_t seed = 0x12cd33b4;
+        // std::random_device rd;
+        // std::default_random_engine rng(rd());
+        // std::uniform_int_distribution<UInt_t> dist;
+        // UInt_t seed = dist(rng);
+        UInt_t seed = 0x30cfb00e;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
