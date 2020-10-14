@@ -2737,6 +2737,14 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           RooArgSet(pdfDelta_misId_Bu2Dst0hst_D0pi0_,
                     *pdfDelta_misId_Bu2Dst0hst_D0gamma_),
           Bu2Dst0hst_misId_fracD0pi0_Delta_),
+      pdfBuPartial_misId_Bu2Dst0hst_(
+          ("pdfBuPartial_misId_Bu2Dst0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgSet(pdfBuPartial_misId_Bu2Dst0hst_D0pi0_,
+                    pdfBuPartial_misId_Bu2Dst0hst_D0gamma_),
+          Bu2Dst0hst_misId_fracD0pi0_BuPartial_),
       orEffMisId_Bu2Dst0hst_(
           ("orEffMisId_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))

@@ -1679,6 +1679,7 @@ void PlotComponent(
       std::string modeStr;
       if (std::regex_search(pdfStr, match, re)) {
         modeStr = match.str(2);
+        std::cout << modeStr << "\n";
       } else {
         throw std::runtime_error(
             "Plotting.cpp: Can't find decay mode in pdfString with regex: " +
