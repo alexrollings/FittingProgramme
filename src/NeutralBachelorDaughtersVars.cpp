@@ -147,6 +147,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bu2Dst0hst_(Params::Get().CreateFixed(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi,
           Daughters::kpi, 0, 0.0005, Systematic::NA, Sign::none)),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -293,6 +294,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       A_Bu2Dst0hst_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi,
           Daughters::pik, 0, -5, 5)),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
@@ -477,6 +479,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       A_Bu2Dst0hst_(Make_A_D2CP<_neutral, Bachelor::pi, Daughters::kk>(
           uniqueId, "A_Bu2Dst0hst_",
           BachelorVars<Bachelor::pi>::Get(uniqueId).A_CP_Bu2Dst0hst())),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(Make_A_D2CP<_neutral, Bachelor::pi, Daughters::kk>(
           uniqueId, "A_Lb2Omegach_Lcpi0_",
           BachelorVars<Bachelor::pi>::Get(uniqueId).A_CP_Lb2Omegach_Lcpi0())),
@@ -685,6 +688,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
                                         Daughters::pipi>(
           uniqueId, "A_Bu2Dst0hst_",
           BachelorVars<Bachelor::pi>::Get(uniqueId).A_CP_Bu2Dst0hst())),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -888,6 +892,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bu2Dst0hst_(Params::Get().CreateFixed(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k,
           Daughters::kpi, 0.0, 0.02, Systematic::NA, Sign::none)),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -1094,9 +1099,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
           Daughters::pik, 0, -5, 5)),
-      A_Bu2Dst0hst_(Params::Get().CreateFloating(
-          "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k,
-          Daughters::pik, 0, -100, 100)),
+      A_Bu2Dst0hst_(Params::Get().CreateFloating("A_Bu2Dst0hst", uniqueId,
+                                                 _neutral, Bachelor::k,
+                                                 Daughters::pik, 0.4, -10, 10)),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(Params::Get().CreateFixed(
           "A_Bs2Dst0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0, 0,
@@ -1203,6 +1209,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
+    if (_neutral == Neutral::gamma) {
+      constraint_A_Bu2Dst0hst_ = std::unique_ptr<RooGaussian>(new RooGaussian(
+          ("constraint_A_Bu2Dst0hst_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "", *A_Bu2Dst0hst_, RooFit::RooConst(3.2973e-01),
+          RooFit::RooConst(1.90e-01)));
+      NeutralVars<Neutral::gamma>::Get(uniqueId).constraints_argSet().add(
+          *constraint_A_Bu2Dst0hst_);
+    } else {
+      constraint_A_Bu2Dst0hst_ = std::unique_ptr<RooGaussian>(new RooGaussian(
+          ("constraint_A_Bu2Dst0hst_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "", *A_Bu2Dst0hst_, RooFit::RooConst(4.1092e-01),
+          RooFit::RooConst(3.09e-01)));
+      NeutralVars<Neutral::pi0>::Get(uniqueId).constraints_argSet().add(
+          *constraint_A_Bu2Dst0hst_);
+  }
     A_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
             uniqueId, "A_ADS_Bu2Dst0h_D0gamma_",
@@ -1305,6 +1330,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       A_Bu2Dst0hst_(Make_A_D2CP<_neutral, Bachelor::k, Daughters::kk>(
           uniqueId, "A_Bu2Dst0hst_",
           BachelorVars<Bachelor::k>::Get(uniqueId).A_CP_Bu2Dst0hst())),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(Make_A_D2CP<_neutral, Bachelor::k, Daughters::kk>(
           uniqueId, "A_Lb2Omegach_Lcpi0_",
           BachelorVars<Bachelor::k>::Get(uniqueId).A_CP_Lb2Omegach_Lcpi0())),
@@ -1495,6 +1521,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       A_Bu2Dst0hst_(Make_A_D2CP<_neutral, Bachelor::k, Daughters::pipi>(
           uniqueId, "A_Bu2Dst0hst_",
           BachelorVars<Bachelor::k>::Get(uniqueId).A_CP_Bu2Dst0hst())),
+      constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                                  Daughters::pik>::Get(uniqueId)

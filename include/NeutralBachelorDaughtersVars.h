@@ -125,6 +125,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -167,6 +168,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -209,6 +211,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pipi> 
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -251,6 +254,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -293,6 +297,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -335,6 +340,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -377,6 +383,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -419,6 +426,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0pi0_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
+  std::unique_ptr<RooGaussian> constraint_A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> A_Bs2D0Kpi_;
@@ -491,6 +499,7 @@ class NeutralBachelorDaughtersVars {
   RooAbsReal &A_Bu2Dst0hst_D0pi0() { return *impl_.A_Bu2Dst0hst_D0pi0_; }
   RooAbsReal &A_Bu2Dst0hst_D0gamma() { return *impl_.A_Bu2Dst0hst_D0gamma_; }
   RooAbsReal &A_Bu2Dst0hst() { return *impl_.A_Bu2Dst0hst_; }
+  RooGaussian &constraint_A_Bu2Dst0hst() { return *impl_.constraint_A_Bu2Dst0hst_; }
   RooAbsReal &A_Lb2Omegach_Lcpi0() { return *impl_.A_Lb2Omegach_Lcpi0_; }
   RooAbsReal &A_Bs2Dst0Kpi() { return *impl_.A_Bs2Dst0Kpi_; }
   RooAbsReal &A_Bs2D0Kpi() { return *impl_.A_Bs2D0Kpi_; }
