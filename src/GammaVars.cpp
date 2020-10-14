@@ -1403,7 +1403,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0pi0, "val")),
           RooFit::RooConst(
               ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho_D0pi0, "std"))),
-      constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
+      constraints_argSet_() {}
+      // constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
 // constraint_bkgFracFAV_Bu2D0hst_) {}
 // constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_,
 // constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_) {}
