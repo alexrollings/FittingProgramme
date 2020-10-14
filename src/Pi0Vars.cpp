@@ -865,21 +865,30 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           0, 5)),
       bkgFracFAV_Bu2Dst0hst_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2Dst0hst", uniqueId_, Neutral::pi0,
-          ((ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
-                          Efficiency::orEff, false) +
-            ReturnBoxEffs(Mode::Bu2Dst0rho_D0gamma, Bachelor::pi,
-                          Efficiency::orEff, false)) /
+          (ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
+                         Efficiency::orEff, false) /
            ReturnBoxEffs(Mode::Bd2Dstpi, Bachelor::pi, Efficiency::orEff,
                          false)) *
-              ((ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0, Bachelor::pi,
-                             Efficiency::mcEff) +
-                ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0,
-                             Bachelor::pi, Efficiency::mcEff)) /
-               ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
-                            Efficiency::mcEff)) *
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() /
-              (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
-               GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()),
+                  (ReturnMCEffs(Mode::Bu2Dst0rho_D0pi0, Neutral::pi0,
+                                Bachelor::pi, Efficiency::mcEff) /
+                   ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
+                                Efficiency::mcEff)) *
+                  (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() *
+                   GlobalVars::Get(uniqueId_).kBF_Dst02D0pi0().getVal()) /
+                  (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
+                   GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()) +
+              (ReturnBoxEffs(Mode::Bu2Dst0rho_D0gamma, Bachelor::pi,
+                             Efficiency::orEff, false) /
+               ReturnBoxEffs(Mode::Bd2Dstpi, Bachelor::pi, Efficiency::orEff,
+                             false)) *
+                  (ReturnMCEffs(Mode::Bu2Dst0rho_D0gamma, Neutral::pi0,
+                                Bachelor::pi, Efficiency::mcEff) /
+                   ReturnMCEffs(Mode::Bd2Dstpi, Neutral::pi0, Bachelor::pi,
+                                Efficiency::mcEff)) *
+                  (GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal() *
+                   GlobalVars::Get(uniqueId_).kBF_Dst02D0gamma().getVal()) /
+                  (GlobalVars::Get(uniqueId_).kBF_Bd2Dstpi().getVal() *
+                   GlobalVars::Get(uniqueId_).kBF_Dst2D0pi().getVal()),
           0, 5)),
       bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
           "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, 0, 5)),
