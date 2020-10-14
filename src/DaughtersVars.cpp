@@ -50,7 +50,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
-          0, 2)),
+          -2, 2)),
       constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(
           ("constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Daughters::kpi))
