@@ -1096,7 +1096,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
           Daughters::pik, 0, -5, 5)),
       A_Bu2Dst0hst_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k,
-          Daughters::pik, 0, -5, 5)),
+          Daughters::pik, 0, -100, 100)),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kpi_(Params::Get().CreateFixed(
           "A_Bs2Dst0Kpi", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0, 0,
