@@ -212,34 +212,6 @@ class NeutralBachelorVars {
   RooAddPdf &pdfDelta_Bs2Dst0Kpi() {
     return pdfDelta_Bs2Dst0Kpi_;
   }
-  // -------------------- MIS-REC -------------------- //
-  RooCruijff &pdfBu_MisRec() { return pdfBu_MisRec_; }
-  RooCruijff &pdfBuPartial_MisRec() { return pdfBuPartial_MisRec_; }
-  // -------------------- Mis-ID ------------------- //
-  RooAbsPdf &pdfBu_misId_MisRec() {
-    return *pdfBu_misId_MisRec_;
-  }
-  RooCruijff &pdfBuPartial_misId_MisRec() { return pdfBuPartial_misId_MisRec_; }
-  // -------------------- Bu2D0h -------------------- //
-  RooCruijff &pdfBu_Bu2D0h() { return pdfBu_Bu2D0h_; }
-  RooCruijff &pdfBuPartial_Bu2D0h() { return pdfBuPartial_Bu2D0h_; }
-  // -------------------- Mis-ID ------------------- //
-  RooCruijff &pdfBu_misId_Bu2D0h() { return pdfBu_misId_Bu2D0h_; }
-  RooCruijff &pdfBuPartial_misId_Bu2D0h() { return pdfBuPartial_misId_Bu2D0h_; }
-  // -------------------- PART REC -------------------- //
-  RooRealVar &PartRec_D0pi0_sigmaLBu() { return *PartRec_D0pi0_sigmaLBu_; }
-  RooRealVar &PartRec_D0pi0_sigmaRBu() { return *PartRec_D0pi0_sigmaRBu_; }
-  RooRealVar &PartRec_D0gamma_sigmaLBu() { return *PartRec_D0gamma_sigmaLBu_; }
-  RooRealVar &PartRec_D0gamma_sigmaRBu() { return *PartRec_D0gamma_sigmaRBu_; }
-  RooAbsPdf &pdfBu_PartRec() { return *pdfBu_PartRec_; }
-  RooRealVar &PartRec_sigmaLBuPartial() { return *PartRec_sigmaLBuPartial_; }
-  RooRealVar &PartRec_sigmaRBuPartial() { return *PartRec_sigmaRBuPartial_; }
-  RooCruijff &pdfBuPartial_PartRec() { return pdfBuPartial_PartRec_; }
-  // -------------------- Mis-ID ------------------- //
-  RooCruijff &pdfBu_misId_PartRec() {
-    return pdfBu_misId_PartRec_;
-  }
-  RooCruijff &pdfBuPartial_misId_PartRec() { return pdfBuPartial_misId_PartRec_; }
   // -------------------- Correct ID BOX EFFs -------------------- //
   RooRealVar &orEffBu2Dst0h_D0gamma() {
     return *orEffBu2Dst0h_D0gamma_;
@@ -840,76 +812,6 @@ class NeutralBachelorVars {
   RooCBShape pdfPeakPi02Delta_Bs2Dst0Kpi_;
   RooAddPdf pdfPeakPi0Delta_Bs2Dst0Kpi_;
   RooAddPdf pdfDelta_Bs2Dst0Kpi_;
-  // -------------------- MIS-REC -------------------- //
-  std::shared_ptr<RooRealVar> MisRec_sigmaLBu_;
-  std::shared_ptr<RooRealVar> MisRec_sigmaRBu_;
-  RooCruijff pdfBu_MisRec_;
-  std::shared_ptr<RooRealVar> MisRec_sigmaLBuPartial_;
-  std::shared_ptr<RooRealVar> MisRec_sigmaRBuPartial_;
-  RooCruijff pdfBuPartial_MisRec_;
-  // -------------------- Mis-ID ------------------- //
-  std::shared_ptr<RooRealVar> misId_MisRec_mean1Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_mean2Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_sigma1Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_sigma2Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_a2Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_a1Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_n2Bu_;
-  std::shared_ptr<RooRealVar> misId_MisRec_n1Bu_;
-  RooCBShape pdf1Bu_misId_MisRec_;
-  RooCBShape pdf2Bu_misId_MisRec_;
-  std::shared_ptr<RooRealVar> misId_MisRec_fracPdf1Bu_;
-  std::unique_ptr<RooAbsPdf> pdfBu_misId_MisRec_;
-  std::shared_ptr<RooRealVar> misId_MisRec_meanBuPartial_;
-  std::shared_ptr<RooRealVar> misId_MisRec_sigmaLBuPartial_;
-  std::shared_ptr<RooRealVar> misId_MisRec_sigmaRBuPartial_;
-  std::shared_ptr<RooRealVar> misId_MisRec_aLBuPartial_;
-  std::shared_ptr<RooRealVar> misId_MisRec_aRBuPartial_;
-  RooCruijff pdfBuPartial_misId_MisRec_;
-  // -------------------- Bu2D0h -------------------- //
-  RooRealVar Bu2D0h_sigmaLBu_;
-  RooRealVar Bu2D0h_sigmaRBu_;
-  RooCruijff pdfBu_Bu2D0h_;
-  RooRealVar Bu2D0h_sigmaLBuPartial_;
-  RooRealVar Bu2D0h_sigmaRBuPartial_;
-  RooCruijff pdfBuPartial_Bu2D0h_;
-  // -------------------- Mis-ID ------------------- //
-  RooRealVar misId_Bu2D0h_meanBu_;
-  RooRealVar misId_Bu2D0h_sigmaLBu_;
-  RooRealVar misId_Bu2D0h_sigmaRBu_;
-  RooRealVar misId_Bu2D0h_aLBu_;
-  RooRealVar misId_Bu2D0h_aRBu_;
-  RooCruijff pdfBu_misId_Bu2D0h_;
-  RooRealVar misId_Bu2D0h_meanBuPartial_;
-  RooRealVar misId_Bu2D0h_sigmaLBuPartial_;
-  RooRealVar misId_Bu2D0h_sigmaRBuPartial_;
-  RooRealVar misId_Bu2D0h_aLBuPartial_;
-  RooRealVar misId_Bu2D0h_aRBuPartial_;
-  RooCruijff pdfBuPartial_misId_Bu2D0h_;
-  // -------------------- PART REC -------------------- //
-  std::shared_ptr<RooRealVar> PartRec_D0pi0_sigmaLBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0pi0_sigmaRBu_;
-  RooCruijff pdfBu_PartRec_D0pi0_;
-  std::shared_ptr<RooRealVar> PartRec_D0gamma_sigmaLBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0gamma_sigmaRBu_;
-  RooCruijff pdfBu_PartRec_D0gamma_;
-  std::shared_ptr<RooRealVar> PartRec_sigmaLBuPartial_;
-  std::shared_ptr<RooRealVar> PartRec_sigmaRBuPartial_;
-  RooCruijff pdfBuPartial_PartRec_;
-  std::unique_ptr<RooAbsPdf> pdfBu_PartRec_;
-  // -------------------- Mis-ID ------------------- //
-  std::shared_ptr<RooRealVar> misId_PartRec_meanBu_;
-  std::shared_ptr<RooRealVar> misId_PartRec_sigmaLBu_;
-  std::shared_ptr<RooRealVar> misId_PartRec_sigmaRBu_;
-  std::shared_ptr<RooRealVar> misId_PartRec_aLBu_;
-  std::shared_ptr<RooRealVar> misId_PartRec_aRBu_;
-  RooCruijff pdfBu_misId_PartRec_;
-  std::shared_ptr<RooRealVar> misId_PartRec_meanBuPartial_;
-  std::shared_ptr<RooRealVar> misId_PartRec_sigmaLBuPartial_;
-  std::shared_ptr<RooRealVar> misId_PartRec_sigmaRBuPartial_;
-  std::shared_ptr<RooRealVar> misId_PartRec_aLBuPartial_;
-  std::shared_ptr<RooRealVar> misId_PartRec_aRBuPartial_;
-  RooCruijff pdfBuPartial_misId_PartRec_;
   // -------------------- Correct ID BOX EFFs -------------------- //
   std::shared_ptr<RooRealVar> orEffBu2Dst0h_D0gamma_;
   std::shared_ptr<RooRealVar> orEffBu2Dst0h_D0pi0_;

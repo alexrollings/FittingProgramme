@@ -729,13 +729,13 @@ int main(int argc, char **argv) {
     if (config.runToy() == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        // std::random_device rd;
-        // std::default_random_engine rng(rd());
-        // std::uniform_int_distribution<UInt_t> dist;
-        // UInt_t seed = dist(rng);
+        std::random_device rd;
+        std::default_random_engine rng(rd());
+        std::uniform_int_distribution<UInt_t> dist;
+        UInt_t seed = dist(rng);
         // UInt_t seed = 0x4a91efb7; //gamma unconverged
         // UInt_t seed = 0x3073cd83; //gamma FPD 
-        UInt_t seed = 0x85fb66eb; //π0 FPD 
+        // UInt_t seed = 0x85fb66eb; //π0 FPD 
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
@@ -769,12 +769,12 @@ int main(int argc, char **argv) {
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
       // LaTeXYields(config, pdfs, outputDir, dataFitResult);
-      // if (config.runSystematics() == false) {
-      // for (auto &p : pdfs) {
-      //   Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-      //              dataFitResult.get(), yMaxMap);
-      //   }
-      // }
+      if (config.runSystematics() == false) {
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+                   dataFitResult.get(), yMaxMap);
+        }
+      }
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");

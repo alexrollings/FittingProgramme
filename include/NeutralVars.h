@@ -537,65 +537,6 @@ class NeutralVars {
   RooRealVar &buPartialEffBs2Dst0Kpi() {
     return *buPartialEffBs2Dst0Kpi_;
   }
-  // -------------------- MIS-REC -------------------- //
-  RooDstD0BG &pdfDelta_MisRec() { return pdfDelta_MisRec_; }
-  RooDstD0BG &pdfDelta_misId_MisRec() { return pdfDelta_misId_MisRec_; }
-  RooRealVar &MisRec_meanBu() { return *MisRec_meanBu_; }
-  RooRealVar &MisRec_aLBu() { return *MisRec_aLBu_; }
-  RooRealVar &MisRec_aRBu() { return *MisRec_aRBu_; }
-  RooRealVar &MisRec_meanBuPartial() { return *MisRec_meanBuPartial_; }
-  RooRealVar &MisRec_aLBuPartial() { return *MisRec_aLBuPartial_; }
-  RooRealVar &MisRec_aRBuPartial() { return *MisRec_aRBuPartial_; }
-  // -------------------- Bu2D0h -------------------- //
-  RooDstD0BG &pdfDelta_Bu2D0h() { return pdfDelta_Bu2D0h_; }
-  RooDstD0BG &pdfDelta_misId_Bu2D0h() { return pdfDelta_misId_Bu2D0h_; }
-  RooRealVar &Bu2D0h_meanBu() { return Bu2D0h_meanBu_; }
-  RooRealVar &Bu2D0h_aLBu() { return Bu2D0h_aLBu_; }
-  RooRealVar &Bu2D0h_aRBu() { return Bu2D0h_aRBu_; }
-  RooRealVar &Bu2D0h_meanBuPartial() { return Bu2D0h_meanBuPartial_; }
-  RooRealVar &Bu2D0h_aLBuPartial() { return Bu2D0h_aLBuPartial_; }
-  RooRealVar &Bu2D0h_aRBuPartial() { return Bu2D0h_aRBuPartial_; }
-  // -------------------- PART REC -------------------- //
-  RooDstD0BG &pdfDelta_PartRec() { return pdfDelta_PartRec_; }
-  RooDstD0BG &pdfDelta_misId_PartRec() { return pdfDelta_misId_PartRec_; }
-  RooRealVar &PartRec_D0pi0_meanBu() { return *PartRec_D0pi0_meanBu_; }
-  RooRealVar &PartRec_D0pi0_aLBu() { return *PartRec_D0pi0_aLBu_; }
-  RooRealVar &PartRec_D0pi0_aRBu() { return *PartRec_D0pi0_aRBu_; }
-  RooRealVar &PartRec_D0gamma_meanBu() { return *PartRec_D0gamma_meanBu_; }
-  RooRealVar &PartRec_D0gamma_aLBu() { return *PartRec_D0gamma_aLBu_; }
-  RooRealVar &PartRec_D0gamma_aRBu() { return *PartRec_D0gamma_aRBu_; }
-  RooRealVar &PartRec_frac_D0pi0() { return *PartRec_frac_D0pi0_; }
-  RooRealVar &PartRec_meanBuPartial() { return *PartRec_meanBuPartial_; }
-  RooRealVar &PartRec_aLBuPartial() { return *PartRec_aLBuPartial_; }
-  RooRealVar &PartRec_aRBuPartial() { return *PartRec_aRBuPartial_; }
-
-  // -------------Expected yields and relative fractions w.r.t. sig
-  // -------------//
-  double &initYieldFAVBu2Dst0h_D0gamma() {
-    return initYieldFAVBu2Dst0h_D0gamma_;
-  }
-  double &initYieldFAVBu2Dst0h_D0pi0() { return initYieldFAVBu2Dst0h_D0pi0_; }
-  double &fracMisRec_Bu2Dst0h_D0gamma() { return fracMisRec_Bu2Dst0h_D0gamma_; }
-  double &fracMisRec_Bu2Dst0h_D0gamma_WN() {
-    return fracMisRec_Bu2Dst0h_D0gamma_WN_;
-  }
-  double &fracMisRec_Bu2Dst0h_D0pi0_WN() {
-    return fracMisRec_Bu2Dst0h_D0pi0_WN_;
-  }
-  double &fracMisRec_Bu2D0hst() { return fracMisRec_Bu2D0hst_; }
-  double &fracMisRec_Bd2Dsth() { return fracMisRec_Bd2Dsth_; }
-  const double &fracMisRec() { return fracMisRec_; }
-  double &initYieldFAVMisRec() { return initYieldFAVMisRec_; }
-  double &initYieldFAVBu2D0h() { return initYieldFAVBu2D0h_; }
-  double &fracPartRec_Bu2Dst0hst_D0pi0() {
-    return fracPartRec_Bu2Dst0hst_D0pi0_;
-  }
-  double &fracPartRec_Bu2Dst0hst_D0gamma() {
-    return fracPartRec_Bu2Dst0hst_D0gamma_;
-  }
-  double &fracPartRec() { return fracPartRec_; }
-  double &initYieldFAVPartRec() { return initYieldFAVPartRec_; }
-
   // -------------------- Bkg Fractions -------------------- //
   RooRealVar &bkgFracGlobal_WN() {
     return *bkgFracGlobal_WN_;
@@ -605,12 +546,6 @@ class NeutralVars {
   }
   RooRealVar &bkgFracFAV_Bu2D0hst() {
     return *bkgFracFAV_Bu2D0hst_;
-  }
-  RooAbsReal &bkgFracFAV_Bu2Dst0hst_D0pi0() {
-    return *bkgFracFAV_Bu2Dst0hst_D0pi0_;
-  }
-  RooAbsReal &bkgFracFAV_Bu2Dst0hst_D0gamma() {
-    return *bkgFracFAV_Bu2Dst0hst_D0gamma_;
   }
   RooAbsReal &bkgFracFAV_Bu2Dst0hst() {
     return *bkgFracFAV_Bu2Dst0hst_;
@@ -629,12 +564,6 @@ class NeutralVars {
   }
   RooGaussian &constraint_bkgFracFAV_Bu2D0hst() {
     return constraint_bkgFracFAV_Bu2D0hst_;
-  }
-  RooGaussian &constraint_bkgFracFAV_Bu2Dst0hst_D0pi0() {
-    return constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_;
-  }
-  RooGaussian &constraint_bkgFracFAV_Bu2Dst0hst_D0gamma() {
-    return constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_;
   }
   RooArgSet &constraints_argSet() {
     return constraints_argSet_;
@@ -913,82 +842,17 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> deltaEffBs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> buEffBs2Dst0Kpi_;
   std::shared_ptr<RooRealVar> buPartialEffBs2Dst0Kpi_;
-  // -------------------- MIS-REC -------------------- //
-  std::shared_ptr<RooRealVar> MisRec_thresholdDelta_;
-  std::shared_ptr<RooRealVar> MisRec_aDelta_;
-  std::shared_ptr<RooRealVar> MisRec_bDelta_;
-  std::shared_ptr<RooRealVar> MisRec_cDelta_;
-  RooDstD0BG pdfDelta_MisRec_;
-  RooDstD0BG pdfDelta_misId_MisRec_;
-  std::shared_ptr<RooRealVar> MisRec_meanBu_;
-  std::shared_ptr<RooRealVar> MisRec_aLBu_;
-  std::shared_ptr<RooRealVar> MisRec_aRBu_;
-  std::shared_ptr<RooRealVar> MisRec_meanBuPartial_;
-  std::shared_ptr<RooRealVar> MisRec_aLBuPartial_;
-  std::shared_ptr<RooRealVar> MisRec_aRBuPartial_;
-  // -------------------- Bu2D0h -------------------- //
-  RooRealVar Bu2D0h_thresholdDelta_;
-  RooRealVar Bu2D0h_aDelta_;
-  RooRealVar Bu2D0h_bDelta_;
-  RooRealVar Bu2D0h_cDelta_;
-  RooDstD0BG pdfDelta_Bu2D0h_;
-  RooDstD0BG pdfDelta_misId_Bu2D0h_;
-  RooRealVar Bu2D0h_meanBu_;
-  RooRealVar Bu2D0h_aLBu_;
-  RooRealVar Bu2D0h_aRBu_;
-  RooRealVar Bu2D0h_meanBuPartial_;
-  RooRealVar Bu2D0h_aLBuPartial_;
-  RooRealVar Bu2D0h_aRBuPartial_;
-  // -------------------- PART REC -------------------- //
-  std::shared_ptr<RooRealVar> PartRec_thresholdDelta_;
-  std::shared_ptr<RooRealVar> PartRec_aDelta_;
-  std::shared_ptr<RooRealVar> PartRec_bDelta_;
-  std::shared_ptr<RooRealVar> PartRec_cDelta_;
-  RooDstD0BG pdfDelta_PartRec_;
-  RooDstD0BG pdfDelta_misId_PartRec_;
-  std::shared_ptr<RooRealVar> PartRec_D0pi0_meanBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0pi0_aLBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0pi0_aRBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0gamma_meanBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0gamma_aLBu_;
-  std::shared_ptr<RooRealVar> PartRec_D0gamma_aRBu_;
-  std::shared_ptr<RooRealVar> PartRec_frac_D0pi0_;
-  std::shared_ptr<RooRealVar> PartRec_meanBuPartial_;
-  std::shared_ptr<RooRealVar> PartRec_aLBuPartial_;
-  std::shared_ptr<RooRealVar> PartRec_aRBuPartial_;
-  // -------------Expected yields and relative fractions w.r.t. sig
-  // -------------//
-  double fracBu2Dst0h_D0gamma_;
-  double initYieldFAVBu2Dst0h_D0gamma_;
-  double fracBu2Dst0h_D0pi0_;
-  double initYieldFAVBu2Dst0h_D0pi0_;
-  double fracMisRec_Bu2Dst0h_D0gamma_;
-  double fracMisRec_Bu2Dst0h_D0gamma_WN_;
-  double fracMisRec_Bu2Dst0h_D0pi0_WN_;
-  double fracMisRec_Bu2D0hst_;
-  double fracMisRec_Bd2Dsth_;
-  const double fracMisRec_;
-  double initYieldFAVMisRec_;
-  double fracBu2D0h_;
-  double initYieldFAVBu2D0h_;
-  double fracPartRec_Bu2Dst0hst_D0pi0_;
-  double fracPartRec_Bu2Dst0hst_D0gamma_;
-  double fracPartRec_;
-  double initYieldFAVPartRec_;
+
   // -------------------- Bkg Fractions -------------------- //
   std::shared_ptr<RooRealVar> bkgFracGlobal_WN_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bd2Dsth_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
-  std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0pi0_;
-  std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_;
   std::shared_ptr<RooRealVar> bkgFracKK_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2Dst0Kpi_;
   RooGaussian constraint_bkgFracGlobal_WN_;
   RooGaussian constraint_bkgFracFAV_Bu2D0hst_;
-  RooGaussian constraint_bkgFracFAV_Bu2Dst0hst_D0pi0_;
-  RooGaussian constraint_bkgFracFAV_Bu2Dst0hst_D0gamma_;
   RooArgSet constraints_argSet_;
 };
 
