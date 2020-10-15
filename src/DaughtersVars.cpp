@@ -46,20 +46,6 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0,
           2)),
       // Float as only pick up on part of D*rho phase space - R slightly lower
-      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
-          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
-          -1, 1)),
-      constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(
-          ("constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_" +
-           ComposeName(uniqueId_, Daughters::kpi))
-              .c_str(),
-          "", *R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_,
-          RooFit::RooConst(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_->getVal()),
-          RooFit::RooConst(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_->getVal() * 0.1)),
-      // Ratio of K/π for part rec should be same for Dgamma and Dπ0
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_),
       R_Dst0KDst0pi_Bu2Dst0hst_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
@@ -80,8 +66,6 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
     //             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
     //         0, Systematic::NA, Sign::same));
-    // NeutralVars<Neutral::gamma>::Get(uniqueId_).constraints_argSet().add(
-    //     constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_);
   } else {
     R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -119,16 +103,6 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2D0hst(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2D0hst())),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_",
-          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_D0gamma(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst_D0gamma())),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_",
-          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst_D0pi0())),
       R_Dst0KDst0pi_Bu2Dst0hst_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
           uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
@@ -155,12 +129,6 @@ DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
                                  .R_Dst0KDst0pi_Bd2Dsth_GetPointer()),
       R_Dst0KDst0pi_Bu2D0hst_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
                                   .R_Dst0KDst0pi_Bu2D0hst_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_GetPointer()),
       R_Dst0KDst0pi_Bu2Dst0hst_(
           DaughtersVars<Daughters::kk>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0hst_GetPointer()),
@@ -174,8 +142,6 @@ DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
       R_Dst0KDst0pi_Bu2Dst0h_WN_(nullptr),
       R_Dst0KDst0pi_Bd2Dsth_(nullptr),
       R_Dst0KDst0pi_Bu2D0hst_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0hst_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0hst_(nullptr),
       R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
 
