@@ -665,25 +665,25 @@ int main(int argc, char **argv) {
     }
 
     if (config.noFit() == false) {
-      // dataFitResult = std::unique_ptr<RooFitResult>(
-      //     simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-      //                   RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-      //                   RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
-      if (config.neutral() == Neutral::pi0) {
-        dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-            RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            RooFit::ExternalConstraints(
-                NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
-      } else {
-        dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-            RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-            RooFit::ExternalConstraints(
-                NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
-      }
+      dataFitResult = std::unique_ptr<RooFitResult>(
+          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                        RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+      // if (config.neutral() == Neutral::pi0) {
+      //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+      //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+      //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+      //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+      //       RooFit::ExternalConstraints(
+      //           NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
+      // } else {
+      //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+      //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+      //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+      //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+      //       RooFit::ExternalConstraints(
+      //           NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
+      // }
       dataFitResult->SetName("DataFitResult");
     }
 
@@ -733,7 +733,9 @@ int main(int argc, char **argv) {
         // std::default_random_engine rng(rd());
         // std::uniform_int_distribution<UInt_t> dist;
         // UInt_t seed = dist(rng);
-        UInt_t seed = 0x30cfb00e;
+        // UInt_t seed = 0x4a91efb7; //gamma unconverged
+        // UInt_t seed = 0x3073cd83; //gamma FPD 
+        UInt_t seed = 0x85fb66eb; //π0 FPD 
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
@@ -767,16 +769,16 @@ int main(int argc, char **argv) {
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
       // LaTeXYields(config, pdfs, outputDir, dataFitResult);
-      if (config.runSystematics() == false) {
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
-        }
-      }
+      // if (config.runSystematics() == false) {
+      // for (auto &p : pdfs) {
+      //   Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+      //              dataFitResult.get(), yMaxMap);
+      //   }
+      // }
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        for (auto &p : pdfs) {
+        // for (auto &p : pdfs) {
           // std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
           //           << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
           // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
@@ -789,9 +791,9 @@ int main(int argc, char **argv) {
           //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
           // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
           //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
-                    << p->N_tot_Bu2D0hst().getVal() << "\n";
-        }
+        //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
+        //             << p->N_tot_Bu2D0hst().getVal() << "\n";
+        // }
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors

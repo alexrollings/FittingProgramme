@@ -50,7 +50,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
-          -2, 2)),
+          -1, 1)),
       constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_(
           ("constraint_R_Dst0KDst0pi_Bu2Dst0hst_D0gamma_" +
            ComposeName(uniqueId_, Daughters::kpi))
@@ -64,7 +64,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
-          0, 2)),
+          -2, -2)),
       R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
   if (Configuration::Get().neutral() == Neutral::gamma) {
     R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =

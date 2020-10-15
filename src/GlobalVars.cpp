@@ -223,5 +223,5 @@ GlobalVars::GlobalVars(int uniqueId)
           "R_CP_Bu2Dst0hst_D0gamma", uniqueId_, 1, 0, 5));
   R_CP_Bu2Dst0hst_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst", uniqueId_, 1, -10, 10));
+          "R_CP_Bu2Dst0hst", uniqueId_, 1, 0, 10));
 }

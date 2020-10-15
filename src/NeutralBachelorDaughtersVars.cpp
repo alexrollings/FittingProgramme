@@ -284,18 +284,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                                            Bachelor::pi, Daughters::pik, 0, 0.0,
                                            Systematic::NA, Sign::none)),
       // Float due to presence of B->Dππ in D*π mode
-      A_Bu2D0hst_(Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
-                                               Bachelor::pi, Daughters::pik, 0,
-                                               -5, 5)),
+      A_Bu2D0hst_(nullptr),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
-                                       Bachelor::pi, Daughters::pik, 0, -5, 5)),
+                                       Bachelor::pi, Daughters::pik, 0, -1, 1)),
       A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::pi,
-          Daughters::pik, 0, -5, 5)),
-      A_Bu2Dst0hst_(Params::Get().CreateFloating("A_Bu2Dst0hst", uniqueId,
-                                                 _neutral, Bachelor::pi,
-                                                 Daughters::pik, 0, -5, 5)),
+          Daughters::pik, 0, -1, 1)),
+      A_Bu2Dst0hst_(nullptr),
       constraint_A_Bu2Dst0hst_(nullptr),
       A_Bs2Dst0Kpi_(nullptr),
       A_Bs2D0Kpi_(nullptr),
@@ -1111,10 +1107,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                             0.15, Systematic::NA, Sign::none)),
       A_Bu2Dst0hst_D0pi0_(
           Params::Get().CreateFloating("A_Bu2Dst0hst_D0pi0", uniqueId, _neutral,
-                                       Bachelor::k, Daughters::pik, 0, -5, 5)),
+                                       Bachelor::k, Daughters::pik, 0, -1, 1)),
       A_Bu2Dst0hst_D0gamma_(Params::Get().CreateFloating(
           "A_Bu2Dst0hst_D0gamma", uniqueId, _neutral, Bachelor::k,
-          Daughters::pik, 0, -5, 5)),
+          Daughters::pik, 0, -1, 1)),
       A_Bu2Dst0hst_(nullptr),
       constraint_A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),

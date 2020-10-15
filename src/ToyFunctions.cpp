@@ -160,7 +160,7 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
   // }
   if (config.noFit() == false) {
     // to make a unique result each time
-    toyFitResult->Print();
+    toyFitResult->Print("v");
     outputFile.cd();
     toyFitResult->Write();
     dataFitResult->Write();
