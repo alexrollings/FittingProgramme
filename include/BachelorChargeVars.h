@@ -53,6 +53,8 @@ class BachelorChargeVars {
   RooAbsReal &R_piK_Bu2Dst0h_D0gamma() { return *R_piK_Bu2Dst0h_D0gamma_; }
   RooAbsReal &R_piK_Bu2Dst0h_D0pi0() { return *R_piK_Bu2Dst0h_D0pi0_; }
   RooAbsReal &R_piK_Bu2Dst0h_WN() { return *R_piK_Bu2Dst0h_WN_; }
+  RooAbsReal &R_piK_Bu2D0hst() { return *R_piK_Bu2D0hst_; }
+  RooAbsReal &R_piK_Bu2Dst0hst() { return *R_piK_Bu2Dst0hst_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
@@ -68,6 +70,8 @@ class BachelorChargeVars {
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_D0pi0_;
   std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0h_WN_;
+  std::shared_ptr<RooAbsReal> R_piK_Bu2D0hst_;
+  std::shared_ptr<RooAbsReal> R_piK_Bu2Dst0hst_;
 };
 
 // Now we just need to define the constructors separately so the values are
@@ -81,7 +85,9 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
       R_piK_Bu2Dst0h_D0pi0_Blind_(nullptr),
       R_piK_Bu2Dst0h_D0gamma_(nullptr),
       R_piK_Bu2Dst0h_D0pi0_(nullptr),
-      R_piK_Bu2Dst0h_WN_(nullptr) {
+      R_piK_Bu2Dst0h_WN_(nullptr),
+      R_piK_Bu2D0hst_(nullptr),
+      R_piK_Bu2Dst0hst_(nullptr) {
   double R_piK_init = GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
                       GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal();
   if (Configuration::Get().blindFit() == true) {
@@ -109,5 +115,11 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
   }
   R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_piK_Bu2Dst0h_WN", uniqueId_,
+                                   bachelor, charge, R_piK_init, -1, 1));
+  R_piK_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_piK_Bu2D0hst", uniqueId_,
+                                   bachelor, charge, R_piK_init, -1, 1));
+  R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
+      Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_,
                                    bachelor, charge, R_piK_init, -1, 1));
 }
