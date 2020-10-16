@@ -583,53 +583,45 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
               << ReturnLaTeXLabel(Mode::Bu2Dst0Kst, d, c, true);
     }
     outfile << " & ";
-    outfile << "$"
-            << to_string_with_precision(p->orEffBu2Dst0hst().getVal(), 3)
+    outfile << "$" << to_string_with_precision(p->orEffBu2Dst0hst().getVal(), 3)
             << "$ &";
     outfile << "$"
-            << to_string_with_precision(p->N_trueId_Bu2Dst0hst().getVal(),
+            << to_string_with_precision(p->N_trueId_Bu2Dst0hst().getVal(), 0)
+            << " \\pm "
+            << to_string_with_precision(
+                   p->N_trueId_Bu2Dst0hst().getPropagatedError(*result), 0)
+            << "$ &";
+    outfile << "$" << to_string_with_precision(p->buEffBu2Dst0hst().getVal(), 3)
+            << "$ &";
+    outfile << std::fixed << "$"
+            << to_string_with_precision(p->N_trueId_Bu_Bu2Dst0hst().getVal(), 0)
+            << " \\pm "
+            << to_string_with_precision(
+                   p->N_trueId_Bu_Bu2Dst0hst().getPropagatedError(*result), 0)
+            << "$ &";
+    outfile << "$"
+            << to_string_with_precision(p->deltaEffBu2Dst0hst().getVal(), 3)
+            << "$ &";
+    outfile << "$"
+            << to_string_with_precision(p->N_trueId_Delta_Bu2Dst0hst().getVal(),
                                         0)
             << " \\pm "
             << to_string_with_precision(
-                   p->N_trueId_Bu2Dst0hst().getPropagatedError(*result),
-                   0)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->buEffBu2Dst0hst().getVal(), 3)
-            << "$ &";
-    outfile
-        << std::fixed << "$"
-        << to_string_with_precision(p->N_trueId_Bu_Bu2Dst0hst().getVal(),
-                                    0)
-        << " \\pm "
-        << to_string_with_precision(
-               p->N_trueId_Bu_Bu2Dst0hst().getPropagatedError(*result), 0)
-        << "$ &";
-    outfile << "$"
-            << to_string_with_precision(p->deltaEffBu2Dst0hst().getVal(),
-                                        3)
-            << "$ &";
-    outfile << "$"
-            << to_string_with_precision(
-                   p->N_trueId_Delta_Bu2Dst0hst().getVal(), 0)
-            << " \\pm "
-            << to_string_with_precision(
-                   p->N_trueId_Delta_Bu2Dst0hst().getPropagatedError(
-                       *result),
+                   p->N_trueId_Delta_Bu2Dst0hst().getPropagatedError(*result),
                    0)
             << "$ ";
     if (config.fitBuPartial() == true) {
       outfile << "& $"
-              << to_string_with_precision(
-                     p->buPartialEffBu2Dst0hst().getVal(), 3)
+              << to_string_with_precision(p->buPartialEffBu2Dst0hst().getVal(),
+                                          3)
               << "$ &";
       outfile << "$"
               << to_string_with_precision(
                      p->N_trueId_BuPartial_Bu2Dst0hst().getVal(), 0)
               << " \\pm "
               << to_string_with_precision(
-                     p->N_trueId_BuPartial_Bu2Dst0hst()
-                         .getPropagatedError(*result),
+                     p->N_trueId_BuPartial_Bu2Dst0hst().getPropagatedError(
+                         *result),
                      0)
               << "$";
     }
@@ -803,29 +795,45 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // ------------- Draw Legends -------------- //
   std::map<std::string, Color_t> colorMap;
 
-  colorMap["Bu2Dst0h_D0gamma"] = kTeal - 9;
-  colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
+  colorMap["Bu2Dst0h_D0gamma"] = kGreen - 10;
   colorMap["Bu2Dst0h_D0pi0"] = kAzure + 7;
-  colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
-  colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
-  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
-  colorMap["Bu2Dst0h_D0pi0_WN"] = kAzure + 3;
-  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
-  colorMap["Bu2Dst0h_WN"] = kAzure + 3;
-  colorMap["misId_Bu2Dst0h_WN"] = kGray;
-  colorMap["Bd2Dsth"] = kPink + 1;
-  colorMap["misId_Bd2Dsth"] = kGray;
-  colorMap["Bu2D0hst"] = kOrange;
-  colorMap["misId_Bu2D0hst"] = kGray;
+  if (config.simpleFit() == false) {
+    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_D0pi0_WN"] = kAzure + 3;
+    colorMap["Bu2Dst0h_WN"] = kAzure + 3;
+    colorMap["Bd2Dsth"] = kPink + 1;
+    colorMap["Bu2D0hst"] = kOrange;
+  } else {
+    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_WN"] = kBlue - 6;
+    colorMap["Bd2Dsth"] = kBlue - 6;
+    colorMap["Bu2D0hst"] = kBlue - 6;
+  }
   colorMap["Bu2Dst0hst"] = kViolet + 2;
-  colorMap["misId_Bu2Dst0hst"] = kGray;
-  colorMap["Lb2Omegach_Lcpi0"] = kSpring + 9;
+  colorMap["Lb2Omegach_Lcpi0"] = kOrange + 2;
   colorMap["Bs2Dst0Kpi"] = kViolet - 9;
   colorMap["Bs2D0Kpi"] = kOrange + 3;
+  colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
+  colorMap["misId_Bu2Dst0h_WN"] = kGray;
+  colorMap["misId_Bd2Dsth"] = kGray;
+  colorMap["misId_Bu2D0hst"] = kGray;
+  colorMap["misId_Bu2Dst0hst"] = kGray;
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
   TLegend labels(0.14, 0.2, 0.28, 0.95);
+  if (config.simpleFit() == true) {
+    if (bachelor == Bachelor::k) {
+      labels.SetY1(0.4);
+    } else {
+      labels.SetY1(0.5);
+    }
+    labels.SetY2(0.9);
+  }
   labels.SetLineColor(kWhite);
 
   std::string oppCharge;
@@ -842,8 +850,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0h_D0gamma", 1, 0, 1);
-  hist_Bu2Dst0h_D0gamma->SetLineColor(
-      colorMap["Bu2Dst0h_D0gamma"]);
+  hist_Bu2Dst0h_D0gamma->SetLineColor(colorMap["Bu2Dst0h_D0gamma"]);
   hist_Bu2Dst0h_D0gamma->SetLineWidth(5);
 
   auto hist_Bu2Dst0h_D0pi0 = std::make_unique<TH1D>(
@@ -851,8 +858,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0h_D0pi0", 1, 0, 1);
-  hist_Bu2Dst0h_D0pi0->SetLineColor(
-      colorMap["Bu2Dst0h_D0pi0"]);
+  hist_Bu2Dst0h_D0pi0->SetLineColor(colorMap["Bu2Dst0h_D0pi0"]);
   hist_Bu2Dst0h_D0pi0->SetLineWidth(5);
 
   auto hist_Bu2Dst0h_D0gamma_WN = std::make_unique<TH1D>(
@@ -860,8 +866,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0h_D0gamma_WN", 1, 0, 1);
-  hist_Bu2Dst0h_D0gamma_WN->SetLineColor(
-      colorMap["Bu2Dst0h_D0gamma_WN"]);
+  hist_Bu2Dst0h_D0gamma_WN->SetLineColor(colorMap["Bu2Dst0h_D0gamma_WN"]);
   hist_Bu2Dst0h_D0gamma_WN->SetLineWidth(5);
 
   auto hist_Bu2Dst0h_D0pi0_WN = std::make_unique<TH1D>(
@@ -869,8 +874,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0h_D0pi0_WN", 1, 0, 1);
-  hist_Bu2Dst0h_D0pi0_WN->SetLineColor(
-      colorMap["Bu2Dst0h_D0pi0_WN"]);
+  hist_Bu2Dst0h_D0pi0_WN->SetLineColor(colorMap["Bu2Dst0h_D0pi0_WN"]);
   hist_Bu2Dst0h_D0pi0_WN->SetLineWidth(5);
 
   auto hist_Bu2Dst0h_WN = std::make_unique<TH1D>(
@@ -878,8 +882,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0h_WN", 1, 0, 1);
-  hist_Bu2Dst0h_WN->SetLineColor(
-      colorMap["Bu2Dst0h_WN"]);
+  hist_Bu2Dst0h_WN->SetLineColor(colorMap["Bu2Dst0h_WN"]);
   hist_Bu2Dst0h_WN->SetLineWidth(5);
 
   auto hist_Bu2D0hst = std::make_unique<TH1D>(
@@ -901,8 +904,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bu2Dst0hst", 1, 0, 1);
-  hist_Bu2Dst0hst->SetLineColor(
-      colorMap["Bu2Dst0hst"]);
+  hist_Bu2Dst0hst->SetLineColor(colorMap["Bu2Dst0hst"]);
   hist_Bu2Dst0hst->SetLineWidth(5);
 
   auto hist_Lb2Omegach_Lcpi0 = std::make_unique<TH1D>(
@@ -910,8 +912,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Lb2Omegach_Lcpi0", 1, 0, 1);
-  hist_Lb2Omegach_Lcpi0->SetLineColor(
-      colorMap["Lb2Omegach_Lcpi0"]);
+  hist_Lb2Omegach_Lcpi0->SetLineColor(colorMap["Lb2Omegach_Lcpi0"]);
   hist_Lb2Omegach_Lcpi0->SetLineWidth(5);
 
   auto hist_Bs2D0Kpi = std::make_unique<TH1D>(
@@ -926,8 +927,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_Bs2Dst0Kpi", 1, 0, 1);
-  hist_Bs2Dst0Kpi->SetLineColor(
-      colorMap["Bs2Dst0Kpi"]);
+  hist_Bs2Dst0Kpi->SetLineColor(colorMap["Bs2Dst0Kpi"]);
   hist_Bs2Dst0Kpi->SetLineWidth(5);
 
   auto hist_MisID = std::make_unique<TH1D>(
@@ -950,32 +950,36 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
-    if (neutral == Neutral::gamma) {
+    if (config.simpleFit() == false) {
+      if (neutral == Neutral::gamma) {
+        labels.AddEntry(hist_Bu2Dst0h_D0gamma_WN.get(),
+                        ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters,
+                                         charge, false)
+                            .c_str(),
+                        "l");
+        labels.AddEntry(
+            hist_Bu2Dst0h_D0pi0_WN.get(),
+            ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
+                .c_str(),
+            "l");
+      } else {
+        labels.AddEntry(
+            hist_Bu2Dst0h_WN.get(),
+            ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, daughters, charge, false)
+                .c_str(),
+            "l");
+      }
       labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters, charge, false)
-              .c_str(),
+          hist_Bu2D0hst.get(),
+          ReturnLaTeXLabel(Mode::Bu2D0rho, daughters, charge, false).c_str(),
           "l");
       labels.AddEntry(
-          hist_Bu2Dst0h_D0pi0_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
-              .c_str(),
+          hist_Bd2Dsth.get(),
+          ReturnLaTeXLabel(Mode::Bd2Dstpi, daughters, charge, false).c_str(),
           "l");
     } else {
-      labels.AddEntry(
-          hist_Bu2Dst0h_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, daughters, charge, false)
-              .c_str(),
-          "l");
+      labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
     }
-    labels.AddEntry(
-        hist_Bu2D0hst.get(),
-        ReturnLaTeXLabel(Mode::Bu2D0rho, daughters, charge, false).c_str(),
-        "l");
-    labels.AddEntry(
-        hist_Bd2Dsth.get(),
-        ReturnLaTeXLabel(Mode::Bd2Dstpi, daughters, charge, false).c_str(),
-        "l");
     labels.AddEntry(
         hist_Bu2Dst0hst.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0rho, daughters, charge, false).c_str(),
@@ -998,30 +1002,36 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, daughters, charge, false)
             .c_str(),
         "l");
-    if (neutral == Neutral::gamma) {
+    if (config.simpleFit() == false) {
+      if (neutral == Neutral::gamma) {
+        labels.AddEntry(hist_Bu2Dst0h_D0gamma_WN.get(),
+                        ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters,
+                                         charge, false)
+                            .c_str(),
+                        "l");
+        labels.AddEntry(
+            hist_Bu2Dst0h_D0pi0_WN.get(),
+            ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
+                .c_str(),
+            "l");
+      } else {
+        labels.AddEntry(
+            hist_Bu2Dst0h_WN.get(),
+            ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, daughters, charge, false)
+                .c_str(),
+            "l");
+      }
       labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters, charge, false)
-              .c_str(),
+          hist_Bu2D0hst.get(),
+          ReturnLaTeXLabel(Mode::Bu2D0Kst, daughters, charge, false).c_str(),
           "l");
       labels.AddEntry(
-          hist_Bu2Dst0h_D0pi0_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
-              .c_str(),
+          hist_Bd2Dsth.get(),
+          ReturnLaTeXLabel(Mode::Bd2DstK, daughters, charge, false).c_str(),
           "l");
     } else {
-      labels.AddEntry(
-          hist_Bu2Dst0h_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, daughters, charge, false).c_str(),
-          "l");
+      labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
     }
-    labels.AddEntry(
-        hist_Bu2D0hst.get(),
-        ReturnLaTeXLabel(Mode::Bu2D0Kst, daughters, charge, false).c_str(),
-        "l");
-    labels.AddEntry(
-        hist_Bd2Dsth.get(),
-        ReturnLaTeXLabel(Mode::Bd2DstK, daughters, charge, false).c_str(), "l");
     labels.AddEntry(
         hist_Bu2Dst0hst.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0Kst, daughters, charge, false).c_str(),
@@ -1198,12 +1208,12 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
 
 // Function to plot 1D projections - written so that it can be used for both
 // bu and delta mass
-void PlotComponent(
-    Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
-    RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
-    std::string const &outputDir, Configuration &config,
-    std::map<std::string, Color_t> &colorMap,
-    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
+void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
+                   RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+                   TLegend &legend, TLegend &labels,
+                   std::string const &outputDir, Configuration &config,
+                   std::map<std::string, Color_t> &colorMap,
+                   std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
   Neutral neutral = pdf.neutral();
@@ -1415,8 +1425,8 @@ void PlotComponent(
                   .c_str()),
           RooFit::ProjWData(config.fitting, fullDataSet),
           RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
-          RooFit::FillColor(colorMap[modeStr.c_str()]),
-          RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+          RooFit::FillColor(colorMap[modeStr.c_str()]), RooFit::Precision(1e-3),
+          RooFit::NumCPU(config.nCPU()));
       // Remove first pdf string in vector: plot all others w/out this w/ new
       // color
       pdfCharVec.erase(pdfCharVec.begin());

@@ -259,6 +259,8 @@ int main(int argc, char **argv) {
                    "options, separate them by commas):\n";
       std::cout << "    -1D, default fit is double 1D\n";
       std::cout << "    -noFit, default is to fit PDF to data\n";
+      std::cout << "    -simple, to plot all mis-reconstructed components as "
+                   "one color\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016,2017,2018} default: "
                 << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
@@ -327,6 +329,10 @@ int main(int argc, char **argv) {
       if (args("noFit")) {
         std::cout << "Will not fit PDF to data, just plot both.\n";
         config.noFit() = true;
+      }
+      if (args("simple")) {
+        std::cout << "Plotting all mis-reconstructed PDFs as one colour.\n";
+        config.simpleFit() = true;
       }
       // Year
       // args matches "year" to string given in command line and assigns
@@ -733,9 +739,10 @@ int main(int argc, char **argv) {
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
         UInt_t seed = dist(rng);
-        // UInt_t seed = 0x4a91efb7; //gamma unconverged
-        // UInt_t seed = 0x3073cd83; //gamma FPD 
-        // UInt_t seed = 0x85fb66eb; //π0 FPD 
+        // UInt_t seed = 0x4ed0ad49; //gamma unconverged
+        // UInt_t seed = 0xa29204c6; //gamma FPD 
+        // UInt_t seed = 0x7ac0e910; //π0 FPD 
+        // UInt_t seed = 0x12adf8f6; //π0 MINOS 
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {

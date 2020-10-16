@@ -265,6 +265,7 @@ class Configuration {
   bool &runSystematics() { return runSystematics_; }
   bool &runADS() { return runADS_; }
   bool &plotToys() { return plotToys_; }
+  bool &simpleFit() { return simpleFit_; }
   int nCPU() { return nCPU_; }
 
  private:
@@ -318,6 +319,7 @@ class Configuration {
   bool runSystematics_;
   bool runADS_;
   bool plotToys_;
+  bool simpleFit_;
   int nCPU_;
 };
 

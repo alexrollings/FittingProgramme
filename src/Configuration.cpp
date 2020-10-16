@@ -49,6 +49,7 @@ Configuration::Configuration()
       runSystematics_(false),
       runADS_(false),
       plotToys_(false),
+      simpleFit_(false),
       nCPU_(4) {
       // k_A_CP_Bu2Dst0K_D0pi0_D02kpi(),
       // k_A_CP_Bu2Dst0K_D0gamma_D02kpi(),
@@ -1890,23 +1891,19 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
     }
   } else if (mode == Mode::Bu2Dst0pi_WN) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}#pi^{" +
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}#pi^{" +
              chargeLabel + "}} WN";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}\\pi^{" + chargeLabel + "}$ WN";
+      return "$B^{" + chargeLabel + "}\\rightarrow D^{*0}\\pi^{" + chargeLabel +
+             "}$ WN";
     }
   } else if (mode == Mode::Bu2Dst0K_WN) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}K^{" +
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}K^{" +
              chargeLabel + "}} WN";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}K^{" + chargeLabel + "}$ WN";
+      return "$B^{" + chargeLabel + "}\\rightarrow D^{*0}K^{" + chargeLabel +
+             "}$ WN";
     }
   } else if (mode == Mode::Bu2D0rho) {
     if (isTex == false) {
@@ -1987,50 +1984,34 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
     }
   } else if (mode == Mode::Bu2Dst0rho) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}#rho^{" +
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}#rho^{" +
              chargeLabel + "}}";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}\\rho^{" + chargeLabel + "}$";
+      return "$B^{" + chargeLabel + "}\\rightarrow D^{*0}\\rho^{" +
+             chargeLabel + "}$";
     }
   } else if (mode == Mode::Bu2Dst0Kst) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow#font[132]{[}#font[132]{[}" + daughtersLabel +
-             "#font[132]{]}_{D^{0}}#pi^{0}/#gamma#font[132]{]}_{D^{*0}}K^{*" +
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}K^{*" +
              chargeLabel + "}}";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow([" + daughtersLabel +
-             "]_{D^{0}}\\pi^{0}/\\gamma)_{D^{*0}}K^{*" + chargeLabel + "}$";
+      return "$B^{" + chargeLabel + "}\\rightarrow D^{*0}K^{*" + chargeLabel +
+             "}$";
     }
   } else if (mode == Mode::Lb2Omegacpi_Lcpi0) {
     if (isTex == false) {
-      return "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#"
-             "pi#"
-             "font[132]{]}_{#Lambda^{" +
-             oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
-             "}_{c}}#"
-             "pi^{" +
-             chargeLabel + "}}";
+      return "#font[12]{#Lambda^{0}_{b}#rightarrow#Omega^{" + oppCharge +
+             "}_{c}#pi^{" + chargeLabel + "}}";
     } else {
-      return "$\\Lambda^{0}_{b}\\rightarrow([pK\\pi]_{\\Lambda^{" + oppCharge +
-             "}_{c}}\\pi^{0})_{\\Omega^{" + oppCharge + "}_{c}}\\pi^{" +
+      return "$\\Lambda^{0}_{b}\\rightarrow\\Omega^{" + oppCharge + "}_{c}\\pi^{" +
              chargeLabel + "}$";
     }
   } else if (mode == Mode::Lb2OmegacK_Lcpi0) {
     if (isTex == false) {
-      return "#font[12]{#Lambda^{0}_{b}#rightarrow#font[132]{[}#font[132]{[}pK#"
-             "pi#"
-             "font[132]{]}_{#Lambda^{" +
-             oppCharge + "}_{c}}#pi^{0}#font[132]{]}_{#Omega^{" + oppCharge +
-             "}_{c}}"
-             "K^{" +
-             chargeLabel + "}}";
+      return "#font[12]{#Lambda^{0}_{b}#rightarrow#Omega^{" + oppCharge +
+             "}_{c}K^{" + chargeLabel + "}}";
     } else {
-      return "$\\Lambda^{0}_{b}\\rightarrow([pK\\pi]_{\\Lambda^{" + oppCharge +
-             "}_{c}}\\pi^{0})_{\\Omega^{" + oppCharge + "}_{c}}K^{" +
+      return "$\\Lambda^{0}_{b}\\rightarrow\\Omega^{" + oppCharge + "}_{c}}K^{" +
              chargeLabel + "}$";
     }
   } else if (mode == Mode::Bs2D0Kpi) {
