@@ -7,11 +7,11 @@ void SetStyle() {
   gStyle->SetStatFont(132);
   gStyle->SetStatFontSize(0.04);
   gStyle->SetTitleSize(0.04, "XY");
-  gStyle->SetLabelSize(0.035, "XY");
+  gStyle->SetLabelSize(0.04, "XY");
   gStyle->SetLegendFont(132);
   gStyle->SetLegendTextSize(0.05);
   gStyle->SetTitleOffset(1.0, "X");
-  gStyle->SetTitleOffset(1.3, "Y");
+  gStyle->SetTitleOffset(1.2, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
   gStyle->SetPadBottomMargin(0.1);
@@ -1247,13 +1247,13 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   pullFrame->SetXTitle(" ");
   pullFrame->GetYaxis()->SetTitle("Residual (#sigma)");
   pullFrame->GetYaxis()->CenterTitle();
-  // pullFrame->SetLabelFont(132, "XY");
-  // pullFrame->SetTitleFont(132, "XY");
-  // pullFrame->SetTitleSize(0.13, "Y");
-  // pullFrame->SetTitleOffset(0.35, "Y");
-  // pullFrame->SetLabelSize(0.12, "XY");
-  // pullFrame->SetLabelOffset(0.01, "Y");
-  pullFrame->GetYaxis()->SetRangeUser(-5, 5);
+  pullFrame->SetLabelFont(132, "XY");
+  pullFrame->SetTitleFont(132, "XY");
+  pullFrame->SetTitleSize(0.15, "Y");
+  pullFrame->SetTitleOffset(0.32, "Y");
+  pullFrame->SetLabelSize(0.15, "XY");
+  pullFrame->SetLabelOffset(0.02, "Y");
+  pullFrame->SetLabelOffset(50, "X");
   pullFrame->GetYaxis()->SetNdivisions(6);
 
   if (config.noFit() == false) {
@@ -1459,18 +1459,22 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   TPad pad1(
       ("pad1_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pad1", 0.0, 0.14, 1.0, 1.0, kWhite);
+      "pad1", 0.0, 0.2, 1.0, 1.0, kWhite);
   pad1.Draw();
 
   TPad pad2(
       ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
           .c_str(),
-      "pad2", 0.0, 0.02, 1.0, 0.14, kWhite);
+      "pad2", 0.0, 0.0, 1.0, 0.2, kWhite);
   pad2.Draw();
 
   TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kRed);
+  zeroLine.SetLineColor(kGray + 2);
   zeroLine.SetLineStyle(kDashed);
+  TLine upLine(var.getMin(), 3, var.getMax(), 3);
+  upLine.SetLineColor(kRed + 2);
+  TLine downLine(var.getMin(), -3, var.getMax(), -3);
+  downLine.SetLineColor(kRed + 2);
 
   if (config.noFit() == false) {
     canvas.cd();
@@ -1479,18 +1483,12 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
                                                    daughters, charge))
                            .c_str());
-    // pullFrame->SetTitle("");
-    // pullFrame->SetXTitle(" ");
-    // pullFrame->GetYaxis()->SetTitle(" ");
-    // // pullFrame->GetYaxis()->SetTitle("Residuals (#sigma)");
-    // // pullFrame->SetTitleSize(0.2, "Y");
-    // // pullFrame->SetTitleOffset(0.1, "Y");
-    pullFrame->SetLabelSize(0.15, "XY");
-    pullFrame->SetLabelOffset(0.02, "XY");
-    pullFrame->SetLabelFont(132, "XY");
     pullFrame->GetYaxis()->SetRangeUser(-5, 5);
     pullFrame->Draw();
     zeroLine.Draw("same");
+    upLine.Draw("same");
+    downLine.Draw("same");
+
   }
 
   canvas.cd();
