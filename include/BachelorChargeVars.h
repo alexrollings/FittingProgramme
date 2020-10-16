@@ -90,13 +90,20 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
       R_piK_Bu2Dst0hst_(nullptr) {
   double R_piK_init = GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
                       GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal();
+  double min, max;
+  max = 1.;
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    min = -1.;
+  } else {
+    min = 0.;
+  }
   if (Configuration::Get().blindFit() == true) {
     R_piK_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_,
-                                     bachelor, charge, R_piK_init, -1, 1));
+                                     bachelor, charge, R_piK_init, min, max));
     R_piK_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_,
-                                     bachelor, charge, R_piK_init, -1, 1));
+                                     bachelor, charge, R_piK_init, min, max));
     R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
             .c_str(),
@@ -108,19 +115,22 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
   } else {
     R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
-                                     bachelor, charge, R_piK_init, -1, 1));
+                                     bachelor, charge, R_piK_init, min, max));
     R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
-                                     bachelor, charge, R_piK_init, -1, 1));
+                                     bachelor, charge, R_piK_init, min, max));
   }
   R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_piK_Bu2Dst0h_WN", uniqueId_,
-                                   bachelor, charge, R_piK_init, -1, 1));
+                                   bachelor, charge, R_piK_init, min, max));
   R_piK_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_piK_Bu2D0hst", uniqueId_,
-                                   bachelor, charge, R_piK_init, -1, 1));
+                                   bachelor, charge, R_piK_init, min, max));
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    max = 2.;
+  }
   R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_,
-                                   bachelor, charge, R_piK_init, -1, 1));
+                                   bachelor, charge, R_piK_init, min, max));
   std::cout << "Made it here" << std::endl;
 }
