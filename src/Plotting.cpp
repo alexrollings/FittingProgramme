@@ -827,7 +827,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
 
   TLegend labels(0.14, 0.2, 0.28, 0.95);
   if (config.simpleFit() == true) {
-    if (bachelor == Bachelor::k) {
+    if (config.runADS() == true && bachelor == Bachelor::k) {
       labels.SetY1(0.4);
     } else {
       labels.SetY1(0.5);
