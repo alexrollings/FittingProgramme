@@ -825,14 +825,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
   // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
 
-  TLegend labels(0.14, 0.2, 0.28, 0.95);
+  TLegend labels(0.14, 0.3, 0.28, 0.9);
+  if (config.runADS() == true && bachelor == Bachelor::k) {
+    labels.SetY1(0.2);
+  }
   if (config.simpleFit() == true) {
     if (config.runADS() == true && bachelor == Bachelor::k) {
       labels.SetY1(0.4);
     } else {
       labels.SetY1(0.5);
     }
-    labels.SetY2(0.9);
   }
   labels.SetLineColor(kWhite);
 
