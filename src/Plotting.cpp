@@ -1168,10 +1168,6 @@ void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,
                          .c_str(),
                      "", 1000, 800);
   dataHist2d->SetStats(0);
-  if (neutral == Neutral::pi0) {
-    dataHist2d->GetYaxis()->SetTitle(
-        "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-  }
   dataHist2d->SetTitle(
       ("B^{" + EnumToLabel(charge) + "}#rightarrow#font[132]{[}#font[132]{[}" +
        EnumToLabel(daughters, charge) + "#font[132]{]}_{D^{0}}" +
@@ -1448,17 +1444,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                      .c_str()));
 
   if (mass == Mass::delta) {
-    if (neutral == Neutral::gamma) {
-      frame->SetXTitle("m[D^{*0}] - m[D^{0}] (MeV/c^{2})");
-    } else {
-      frame->SetXTitle(
-          "m[D^{*0}] - m[D^{0}] - m[#pi^{0}] + m[#pi^{0}]_{PDG} (MeV/c^{2})");
-    }
+      frame->SetXTitle("m(#Delta) (MeV/c^{2})");
   } else {
-    frame->SetXTitle(("m[D^{*0}" + EnumToLabel(bachelor) + "^{" +
-                      EnumToLabel(charge) + "}" +
-                      "] - m[D^{*0}] + m[D^{*0}]_{PDG} (MeV/c^{2})")
-                         .c_str());
+    frame->SetXTitle("m(B) (MeV/c^{2})");
   }
 
   // --------------- plot onto canvas ---------------------
