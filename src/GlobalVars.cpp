@@ -213,15 +213,7 @@ GlobalVars::GlobalVars(int uniqueId)
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
   // No numbers for B->D*h* modes: just use signal
-  double max, min;
-  if (Configuration::Get().neutral() == Neutral::gamma) {
-    max = 10.;
-    min = 0.;
-  } else {
-    max = 5.;
-    min = -1.;
-  }
   R_CP_Bu2Dst0hst_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst", uniqueId_, 1, min, max));
+          "R_CP_Bu2Dst0hst", uniqueId_, 1, 0, 10));
 }
