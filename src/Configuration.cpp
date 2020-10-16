@@ -69,7 +69,7 @@ Configuration::Configuration()
   constexpr const char *kNoUnit = "";
 
   buMass_.SetName("Bu_M_DTF");
-  buMass_.SetTitle("m[Bu]");
+  buMass_.SetTitle("m(B)");
   buMass_.setMax(5800);
   buMass_.setMin(4900);
   buMass_.setBins(75);
@@ -79,7 +79,7 @@ Configuration::Configuration()
   buMass_.setUnit(kMassUnit);
 
   buDeltaMass_.SetName("Bu_Delta_M");
-  buDeltaMass_.SetTitle("m[Bu] - m[D^{*0}] + m[D^{*0}]_{PDG}");
+  buDeltaMass_.SetTitle("m(B)");
   buDeltaMass_.setMax(5500);
   // buDeltaMass_.setMax(5600);
   buDeltaMass_.setMin(5050);
@@ -91,7 +91,7 @@ Configuration::Configuration()
   buDeltaMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
-  deltaMass_.SetTitle("m[D^{*0}] - m[D^{0}]");
+  deltaMass_.SetTitle("m(#Delta)");
   deltaMass_.setMax(190);
   deltaMass_.setMin(60);
   deltaMass_.setBins(65);
@@ -101,13 +101,13 @@ Configuration::Configuration()
   deltaMass_.setUnit(kMassUnit);
 
   pi0Mass_.SetName("Pi0_M");
-  pi0Mass_.SetTitle("m[#pi^{0}]");
+  pi0Mass_.SetTitle("m(#pi^{0})");
   pi0Mass_.setMax(185);
   pi0Mass_.setMin(110);
   pi0Mass_.setUnit(kMassUnit);
 
   d0hMass_.SetName("D0h_M");
-  d0hMass_.SetTitle("m[D^{0}h]");
+  d0hMass_.SetTitle("m(D^{0}h)");
   d0hMass_.setMax(6000);
   d0hMass_.setMin(4000);
   d0hMass_.setBins(400);
