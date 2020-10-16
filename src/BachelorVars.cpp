@@ -144,9 +144,17 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06,
                                   0.06, Systematic::NA, Sign::none));
+    double min, max;
+    if (Configuration::Get().neutral() == Neutral::gamma) {
+      min = -1.;
+      max = 1.;
+    } else {
+      min = -2.;
+      max = 2.;
+    }
     A_CP_Lb2Omegach_Lcpi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
+            "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, min, max));
   }
   // No measured params for B->D*h* modes
   // Fix for D*π to 0 with systematic??

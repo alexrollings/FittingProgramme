@@ -48,7 +48,7 @@ void PlotComponent(
     Mass mass, RooRealVar &var, PdfBase &pdf, RooAbsData const &fullDataSet,
     RooSimultaneous const &simPdf, TLegend &legend, TLegend &labels,
     std::string const &outputDir, Configuration &config,
-    std::map<std::string, std::map<std::string, Color_t> > &colorMap,
+    std::map<std::string, Color_t> &colorMap,
     std::map<Neutral, std::map<Mass, double> > &yMaxMap);
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
