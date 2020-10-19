@@ -72,12 +72,13 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
     case Neutral::gamma:
       switch (bachelor) {
         case Bachelor::pi:
-          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
-              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
-              mode == Mode::Lb2Omegacpi_Lcpi0) {
+          if (mode == Mode::Lb2Omegacpi_Lcpi0) {
             path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/";
+          } else if (mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+                     mode == Mode::Bu2Dst0pi_D0pi0_WN_D02pik ||
+                     mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+                     mode == Mode::Bu2Dst0pi_D0gamma_WN_D02pik) {
+            path = "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
             path =
                 "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
@@ -85,12 +86,13 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
           }
           break;
         case Bachelor::k:
-          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
-              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
-              mode == Mode::Lb2Omegacpi_Lcpi0) {
+          if (mode == Mode::Lb2Omegacpi_Lcpi0) {
             path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/";
+          } else if (mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+                     mode == Mode::Bu2Dst0K_D0pi0_WN_D02pik ||
+                     mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+                     mode == Mode::Bu2Dst0K_D0gamma_WN_D02pik) {
+            path = "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
           } else {
             path =
                 "/gamma/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/"
@@ -102,10 +104,8 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
     case Neutral::pi0:
       switch (bachelor) {
         case Bachelor::pi:
-          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
+          if (mode == Mode::Bu2Dst0pi_D0pi0_WN_D02pik ||
               mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
-              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
               mode == Mode::Lb2Omegacpi_Lcpi0) {
             path = "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/";
           } else {
@@ -113,11 +113,9 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
           }
           break;
         case Bachelor::k:
-          if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-              mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
-              mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
+          if (mode == Mode::Bu2Dst0K_D0pi0_WN_D02pik ||
               mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
-              mode == Mode::Lb2Omegacpi_Lcpi0) {
+              mode == Mode::Lb2OmegacK_Lcpi0) {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/";
           } else {
             path = "/pi0/bach_K/tmva_stage1/tmva_stage2_loose/to_fit/";
@@ -142,7 +140,12 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
       if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
           mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
           mode == Mode::Bu2Dst0K_D0gamma_D02pik ||
-          mode == Mode::Bu2Dst0K_D0pi0_D02pik || mode == Mode::Lb2Omegacpi_Lcpi0) {
+          mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+          mode == Mode::Bu2Dst0pi_D0gamma_WN_D02pik ||
+          mode == Mode::Bu2Dst0pi_D0pi0_WN_D02pik ||
+          mode == Mode::Bu2Dst0K_D0gamma_WN_D02pik ||
+          mode == Mode::Bu2Dst0K_D0pi0_WN_D02pik ||
+          mode == Mode::Lb2Omegacpi_Lcpi0) {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       } else {
         if (misId == true && bachelor == Bachelor::pi) {
@@ -230,30 +233,30 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
       ttree = "BtoDstar0h3_h1h2pi0RTuple";
     }
     TChain chain(ttree.c_str());
-    // Passing K bach to FAVasSUP???
-    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik) {
-      ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain, misId);
-      ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, misId);
-    } else if (mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
+
+    if (mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
       ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain, misId);
       ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain, misId);
+    } else if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik) {
+      ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain, misId);
+      ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain, misId);
+    } else if (mode == Mode::Bu2Dst0pi_D0pi0_WN_D02pik) {
+      ExtractChain(Mode::Bu2Dst0pi_D0pi0_WN_D02pik, Bachelor::pi, chain, misId);
+      ExtractChain(Mode::Bu2Dst0K_D0pi0_WN_D02pik, Bachelor::k, chain, misId);
+    } else if (mode == Mode::Bu2Dst0pi_D0gamma_WN_D02pik) {
+      ExtractChain(Mode::Bu2Dst0pi_D0gamma_WN_D02pik, Bachelor::pi, chain,
+                   misId);
+      ExtractChain(Mode::Bu2Dst0K_D0gamma_WN_D02pik, Bachelor::k, chain, misId);
     } else {
       ExtractChain(mode, bachelor, chain, misId);
     }
-    // if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-    //     mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
-    //   if (Configuration::Get().neutral() == Neutral::gamma) {
-    //     // Use K and π bachelor to calculate box effs for FAV->SUP
-    //     ExtractChain(Mode::Bu2Dst0pi_D0gamma_D02pik, Bachelor::pi, chain);
-    //     ExtractChain(Mode::Bu2Dst0K_D0gamma_D02pik, Bachelor::k, chain);
-    //   } else {
-    //     ExtractChain(Mode::Bu2Dst0pi_D0pi0_D02pik, Bachelor::pi, chain);
-    //     ExtractChain(Mode::Bu2Dst0K_D0pi0_D02pik, Bachelor::k, chain);
-    //   }
 
     std::string cutStr;
-    if (mode == Mode::Bu2Dst0pi_D0gamma_D02pik ||
-        mode == Mode::Bu2Dst0pi_D0pi0_D02pik) {
+    if (Configuration::Get().neutral() == Neutral::pi0 &&
+        (mode == Mode::Bu2Dst0pi_D0pi0_D02pik ||
+         mode == Mode::Bu2Dst0pi_D0pi0_WN_D02pik ||
+         mode == Mode::Bu2Dst0K_D0pi0_D02pik ||
+         mode == Mode::Bu2Dst0K_D0pi0_WN_D02pik)) {
       cutStr = "abs(D0_M_DOUBLESW_KP-1864)>15";
     } else if (mode == Mode::Lb2Omegacpi_Lcpi0) {
       cutStr = "abs(D0_M-1864)<25&&D0h_M>4900";
@@ -268,6 +271,7 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
               std::to_string(Configuration::Get().deltaMass().getMax()) +
               "&&Delta_M>" +
               std::to_string(Configuration::Get().deltaMass().getMin());
+
 
     std::string orString;
     if (Configuration::Get().fitBuPartial() == false) {
