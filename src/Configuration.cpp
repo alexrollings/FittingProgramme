@@ -26,6 +26,8 @@ Configuration::Configuration()
       BDT2_("", "", 0, 0, ""),
       hAngle_("", "", 0, 0, ""),
       d0FdSig_("", "", 0, 0, ""),
+      d0Mass_("", "", 0, 0, ""),
+      d0MassSwap_("", "", 0, 0, ""),
       buDeltaLow_(5240.0),
       buDeltaHigh_(5330.0),
       deltaLow_(125.0),
@@ -187,6 +189,20 @@ Configuration::Configuration()
   d0FdSig_.setMax(300);
   d0FdSig_.setMin(-100);
   d0FdSig_.setUnit(kNoUnit);
+
+  d0Mass_.setUnit(kMassUnit);
+  d0Mass_.SetName("D0_M");
+  d0Mass_.SetTitle("");
+  d0Mass_.setMax(3000);
+  d0Mass_.setMin(1000);
+  d0Mass_.setUnit(kNoUnit);
+
+  d0MassSwap_.setUnit(kMassUnit);
+  d0MassSwap_.SetName("D0_M_DOUBLESW_KP");
+  d0MassSwap_.SetTitle("");
+  d0MassSwap_.setMax(3000);
+  d0MassSwap_.setMin(1000);
+  d0MassSwap_.setUnit(kNoUnit);
 
   variableArgSet_.add(buMass_);
   variableArgSet_.add(buDeltaMass_);

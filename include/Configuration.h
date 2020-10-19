@@ -220,6 +220,8 @@ class Configuration {
   RooRealVar &BDT2() { return BDT2_; }
   RooRealVar &hAngle() { return hAngle_; }
   RooRealVar &d0FdSig() { return d0FdSig_; }
+  RooRealVar &d0Mass() { return d0Mass_; }
+  RooRealVar &d0MassSwap() { return d0MassSwap_; }
   RooArgSet &variableArgSet() { return variableArgSet_; }
   RooArgSet &fittingArgSet() { return fittingArgSet_; }
   RooArgSet &fullArgSet() { return fullArgSet_; }
@@ -296,6 +298,8 @@ class Configuration {
   RooRealVar BDT2_;
   RooRealVar hAngle_;
   RooRealVar d0FdSig_;
+  RooRealVar d0Mass_;
+  RooRealVar d0MassSwap_;
   RooArgSet variableArgSet_;
   RooArgSet fittingArgSet_;
   RooArgSet fullArgSet_;
