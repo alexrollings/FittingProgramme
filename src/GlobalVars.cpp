@@ -212,8 +212,13 @@ GlobalVars::GlobalVars(int uniqueId)
   // HFLAV: R_CP+, BF average of B+ and B0
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
-  // No numbers for B->D*h* modes: just use signal
+  double max = 20.;
+  double start = 4.;
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    max = 10.;
+    start = 1;
+  }
   R_CP_Bu2Dst0hst_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "R_CP_Bu2Dst0hst", uniqueId_, 1, 0, 10));
+          "R_CP_Bu2Dst0hst", uniqueId_, start, 0, max));
 }
