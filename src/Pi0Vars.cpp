@@ -607,6 +607,21 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_D02pik_,
                      pdf2Delta_Bu2Dst0h_D0pi0_D02pik_),
           *Bu2Dst0h_D0pi0_D02pik_fracPdf1Delta_),
+      Bu2Dst0h_D0pi0_D02pik_meanBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_D02pik_meanBu", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0pi0_D02pik, Systematic::NA, Sign::same)),
+      Bu2Dst0h_D0pi0_D02pik_sigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0pi0_D02pik_sigmaBu", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0pi0_D02pik, Systematic::NA, Sign::same)),
+      pdfBu_Bu2Dst0h_D0pi0_D02pik_(("pdfBu_Bu2Dst0h_D0pi0_D02pik_" +
+                                    ComposeName(uniqueId_, Neutral::pi0))
+                                       .c_str(),
+                                   "", Configuration::Get().buDeltaMass(),
+                                   *Bu2Dst0h_D0pi0_D02pik_meanBu_,
+                                   *Bu2Dst0h_D0pi0_D02pik_sigmaBu_),
+      Bu2Dst0h_D0pi0_D02pik_meanBuPartial_(nullptr),
+      Bu2Dst0h_D0pi0_D02pik_sigmaBuPartial_(nullptr),
+      pdfBuPartial_Bu2Dst0h_D0pi0_D02pik_(),
       // -------------------- Bkg Fractions -------------------- //
       bkgFracGlobal_WN_(Params::Get().CreateFloating(
           "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
