@@ -181,8 +181,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Bd2Dsth_(nullptr),
       N_tot_Bu2D0hst_(nullptr),
       N_tot_Bu2Dst0hst_(nullptr),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -294,18 +296,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                                        Daughters::kpi>::Get(uniqueId)
               .N_tot_Bu2Dst0hst(),
           BachelorVars<Bachelor::pi>::Get(uniqueId).R_ADS_Bu2Dst0hst())),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(
           Make_N_tot_FAVasSUP<_neutral, Bachelor::pi>(
-              uniqueId, "N_tot_Bu2Dst0h_D0gamma_FAVasSUP_",
+              uniqueId, "N_tot_Bu2Dst0h_D0gamma_D02pik_",
               NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                            Daughters::kpi>::Get(uniqueId)
                   .N_tot_Bu2Dst0h_D0gamma())),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(
           Make_N_tot_FAVasSUP<_neutral, Bachelor::pi>(
-              uniqueId, "N_tot_Bu2Dst0h_D0pi0_FAVasSUP_",
+              uniqueId, "N_tot_Bu2Dst0h_D0pi0_D02pik_",
               NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                            Daughters::kpi>::Get(uniqueId)
                   .N_tot_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -380,6 +384,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
+    N_tot_Bu2Dst0h_D0gamma_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::pi>(
+            uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0gamma_WN()));
+    N_tot_Bu2Dst0h_D0pi0_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::pi>(
+            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0pi0_WN()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::unique_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::pi>(
@@ -388,6 +404,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_WN(),
             BachelorVars<Bachelor::pi>::Get(uniqueId).R_ADS_Bu2Dst0h_WN()));
+    N_tot_Bu2Dst0h_D0pi0_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::pi>(
+            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_WN(),
+            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                .Bu2Dst0h_WN_fracD0pi0()));
   }
 }
 
@@ -511,8 +535,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
               GlobalVars::Get(uniqueId).kBF_D02kk().getVal() /
               GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
           -1000000, 1000000)),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -664,8 +690,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
               GlobalVars::Get(uniqueId).kBF_D02pipi().getVal() /
               GlobalVars::Get(uniqueId).kBF_D02kpi().getVal(),
           -1000000, 1000000)),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -833,7 +861,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .orEffBu2Dst0hst(),
           NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
               .orEffBu2Dst0hst())),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -953,17 +984,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                        Daughters::kpi>::Get(uniqueId)
               .N_tot_Bu2Dst0hst(),
           BachelorVars<Bachelor::k>::Get(uniqueId).R_ADS_Bu2Dst0hst())),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(
           Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
-              uniqueId, "N_tot_Bu2Dst0h_D0gamma_FAVasSUP_",
+              uniqueId, "N_tot_Bu2Dst0h_D0gamma_D02pik_",
               NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                            Daughters::kpi>::Get(uniqueId)
                   .N_tot_Bu2Dst0h_D0gamma())),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
-          uniqueId, "N_tot_Bu2Dst0h_D0pi0_FAVasSUP_",
-          NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                       Daughters::kpi>::Get(uniqueId)
-              .N_tot_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(
+          Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
+              uniqueId, "N_tot_Bu2Dst0h_D0pi0_D02pik_",
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::kpi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0pi0())),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
@@ -1030,6 +1064,18 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
             uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bs2Dst0Kpi_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kpi()));
+    N_tot_Bu2Dst0h_D0gamma_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
+            uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0gamma_WN()));
+    N_tot_Bu2Dst0h_D0pi0_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
+            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0pi0_WN()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::k>(
@@ -1046,6 +1092,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
             uniqueId, "N_tot_Bs2D0Kpi_", *N_tot_Bs2Dst0Kpi_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kpi()));
+    N_tot_Bu2Dst0h_D0pi0_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
+        Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
+            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                         Daughters::kpi>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_WN(),
+            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                .Bu2Dst0h_WN_fracD0pi0()));
   }
 }
 
@@ -1161,8 +1215,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .N_tot_Bu2Dst0hst(),
           DaughtersVars<Daughters::kk>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0hst())),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
           uniqueId, "N_tot_Lb2Omegach_Lcpi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1316,8 +1372,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
               .N_tot_Bu2Dst0hst(),
           DaughtersVars<Daughters::pipi>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0hst())),
-      N_tot_Bu2Dst0h_D0gamma_FAVasSUP_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_FAVasSUP_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
+      N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr) {
