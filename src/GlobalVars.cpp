@@ -212,7 +212,7 @@ GlobalVars::GlobalVars(int uniqueId)
   // HFLAV: R_CP+, BF average of B+ and B0
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
-  double max = 20.;
+  double max = 10.;
   double start = 4.;
   if (Configuration::Get().neutral() == Neutral::pi0) {
     max = 10.;
