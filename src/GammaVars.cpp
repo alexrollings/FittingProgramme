@@ -905,6 +905,44 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ReturnBoxEffs(Mode::Bs2Dst0Kpi, Bachelor::k,
                         Efficiency::buPartialEffErr, false),
           Systematic::NA, Sign::same)),
+      // -------------------- Bu2Dst0h_D0gamma_D02pik -------------------- //
+      Bu2Dst0h_D0gamma_D02pik_sigmaDelta_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_D02pik_sigmaDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_D02pik, Systematic::NA, Sign::same)),
+      pdf1Delta_Bu2Dst0h_D0gamma_D02pik_(
+          ("pdf1Delta_Bu2Dst0h_D0gamma_D02pik_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
+          *Bu2Dst0h_D0gamma_D02pik_sigmaDelta_, *Bu2Dst0h_D0gamma_a1Delta_,
+          *Bu2Dst0h_D0gamma_n1Delta_),
+      pdf2Delta_Bu2Dst0h_D0gamma_D02pik_(
+          ("pdf2Delta_Bu2Dst0h_D0gamma_D02pik_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().deltaMass(), *Bu2Dst0h_D0gamma_meanDelta_,
+          *Bu2Dst0h_D0gamma_D02pik_sigmaDelta_, *Bu2Dst0h_D0gamma_a2Delta_,
+          *Bu2Dst0h_D0gamma_n2Delta_),
+      pdfDelta_Bu2Dst0h_D0gamma_D02pik_(
+          ("pdfDelta_Bu2Dst0h_D0gamma_D02pik_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_D02pik_,
+                     pdf2Delta_Bu2Dst0h_D0gamma_D02pik_),
+          *Bu2Dst0h_D0gamma_fracPdf1Delta_),
+      Bu2Dst0h_D0gamma_D02pik_meanBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_D02pik_meanBu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_D02pik, Systematic::NA, Sign::same)),
+      Bu2Dst0h_D0gamma_D02pik_sigmaBu_(Params::Get().CreateFixed(
+          "Bu2Dst0h_D0gamma_D02pik_sigmaBu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_D02pik, Systematic::NA, Sign::same)),
+      pdfBu_Bu2Dst0h_D0gamma_D02pik_(("pdfBu_Bu2Dst0h_D0gamma_D02pik_" +
+                                    ComposeName(uniqueId_, Neutral::gamma))
+                                       .c_str(),
+                                   "", Configuration::Get().buDeltaMass(),
+                                   *Bu2Dst0h_D0gamma_D02pik_meanBu_,
+                                   *Bu2Dst0h_D0gamma_D02pik_sigmaBu_),
       // -------------------- Bu2Dst0h_D0pi0_D02pik -------------------- //
       Bu2Dst0h_D0pi0_D02pik_sigmaDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_D02pik_sigmaDelta", uniqueId_, Neutral::gamma,
