@@ -442,6 +442,9 @@ class NeutralBachelorVars {
   }
 
   // -------------------- Bu2Dst0h_WN -------------------- //
+  RooFormulaVar &Bu2Dst0h_WN_fracD0pi0() {
+    return Bu2Dst0h_WN_fracD0pi0_;
+  }
   RooAddPdf &pdfBu_Bu2Dst0h_WN() {
     return pdfBu_Bu2Dst0h_WN_;
   }
