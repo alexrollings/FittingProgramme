@@ -361,18 +361,18 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
-    RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = nullptr;
-    if (daughters == Daughters::pik) {
-      pdf2d_Bu2Dst0h_D0pi0_FAVasSUP =
-          new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
-                          ComposeName(id, neutral, bachelor, daughters, charge))
-                             .c_str(),
-                         "",
-                         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
-                                   pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
-      functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
-      yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
-    }
+    // RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = nullptr;
+    // if (daughters == Daughters::pik) {
+    //   pdf2d_Bu2Dst0h_D0pi0_FAVasSUP =
+    //       new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
+    //                       ComposeName(id, neutral, bachelor, daughters, charge))
+    //                          .c_str(),
+    //                      "",
+    //                      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
+    //                                pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
+    //   functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
+    //   yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
+    // }
     // RooProdPdf pdf2d_MisRec(
     //     ("pdf2d_MisRec_" +
     //      ComposeName(id, neutral, bachelor, daughters, charge))
