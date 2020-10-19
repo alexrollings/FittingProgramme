@@ -739,10 +739,7 @@ int main(int argc, char **argv) {
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
         UInt_t seed = dist(rng);
-        // UInt_t seed = 0x4ed0ad49; //gamma unconverged
-        // UInt_t seed = 0xa29204c6; //gamma FPD 
-        // UInt_t seed = 0x7ac0e910; //π0 FPD 
-        // UInt_t seed = 0x12adf8f6; //π0 MINOS 
+        // UInt_t seed = 0x3b5c142f;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
