@@ -822,8 +822,10 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   colorMap["misId_Bd2Dsth"] = kGray;
   colorMap["misId_Bu2D0hst"] = kGray;
   colorMap["misId_Bu2Dst0hst"] = kGray;
-  // colorMap["Bu2Dst0h_D0gamma_FAVasSUP"] = kGreen + 2;
-  // colorMap["Bu2Dst0h_D0pi0_FAVasSUP"] = kGreen - 6;
+  colorMap["Bu2Dst0h_D0pi0_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0gamma_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0pi0_WN_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0gamma_WN_D02pik"] = kCyan + 3;
 
   TLegend labels(0.14, 0.3, 0.28, 0.9);
   if (config.runADS() == true && bachelor == Bachelor::k) {
@@ -939,6 +941,13 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   hist_MisID->SetLineColor(kGray);
   hist_MisID->SetLineWidth(5);
 
+  auto hist_D02pik = std::make_unique<TH1D>(
+      ("hist_D02pik" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "hist_D02pik", 1, 0, 1);
+  hist_D02pik->SetLineColor(kGray);
+  hist_D02pik->SetLineWidth(5);
+
   if (bachelor == Bachelor::pi) {
     if (neutral == Neutral::gamma) {
       labels.AddEntry(
@@ -991,6 +1000,9 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, daughters, charge, false)
             .c_str(),
         "l");
+    if (config.runADS() == true) {
+      labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
+    }
   } else {
     if (neutral == Neutral::gamma) {
       labels.AddEntry(
@@ -1052,6 +1064,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
           hist_Bs2D0Kpi.get(),
           ReturnLaTeXLabel(Mode::Bs2D0Kpi, daughters, charge, false).c_str(),
           "l");
+      labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
     }
   }
   labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
