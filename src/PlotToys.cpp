@@ -1,4 +1,4 @@
-#include <fstream>
+
 #include <iostream>
 #include <memory>
 #include <regex>
@@ -260,7 +260,7 @@ int main(int argc, char *argv[]) {
   std::map<std::string, std::vector<double> > initValMap;
   std::map<std::string, std::vector<double> > valMap;
   std::map<std::string, std::vector<double> > errMap;
-  std::map<std::string, std::vector<double> > pullMap;
+  std::map<std::string, std::vector<std::pair<std::string, double> > > pullMap;
 
   RooAbsArg *initialAbsArg = nullptr;
   RooRealVar *initialRealVar = nullptr;
@@ -346,7 +346,7 @@ int main(int argc, char *argv[]) {
                             std::make_tuple(10000000));
         }
         if (pullMap.find(paramName) == pullMap.end()) {
-          pullMap.emplace(std::piecewise_construct, std::make_tuple(paramName),
+          pullMap.emplace(std::piecewise_construct, std::make_tuple(paramName), 
                           std::make_tuple());
         }
         if (pullMaxMap.find(paramName) == pullMaxMap.end()) {
@@ -388,7 +388,7 @@ int main(int argc, char *argv[]) {
         initValMap[paramName].emplace_back(initialVal);
         valMap[paramName].emplace_back(finalVal);
         errMap[paramName].emplace_back(finalErr);
-        pullMap[paramName].emplace_back(pull);
+        pullMap[paramName].emplace_back(std::make_pair(rndmVec[j], pull));
         // std::cout << initialPars.at(i)->GetName()
         //           << "\tInital Val = " << initialVal
         //           << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
@@ -469,18 +469,22 @@ int main(int argc, char *argv[]) {
     //               // round(resultVec.size()/10),
     //               pullMinMap[paramName] - pullRange / 5, pullMaxMap[paramName] +
     //               pullRange / 5);
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 240, -6, 6);
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
-    std::cout << "HERE WE GO\n";
+    if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus") {
+      std::cout << "HERE WE GO\n";
+    }
     for (double j = 0; j < initValMap[paramName].size(); ++j) {
       initValHist.Fill(initValMap[paramName][j]);
       valHist.Fill(valMap[paramName][j]);
       errHist.Fill(errMap[paramName][j]);
-      pullHist.Fill(pullMap[paramName][j]);
-      if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus"/*  && pullMap[paramName][j] == -0.12 */) {
-        std::cout << pullMap[paramName][j] << "\n";
+      pullHist.Fill(pullMap[paramName][j].second);
+      if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus" &&
+          pullMap[paramName][j].second < -0.2 && pullMap[paramName][j].second > -0.25) {
+        std::cout << pullMap[paramName][j].second << "\t";
+        std::cout << pullMap[paramName][j].first << "\n";
       }
     }
     int binMax = pullHist.GetMaximumBin();
