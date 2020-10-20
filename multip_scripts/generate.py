@@ -76,12 +76,12 @@ if __name__ == "__main__":
       type=str,
       help='Path to RDS of data: required to generate toys from data PDF',
       required=False)
-  # parser.add_argument(
-  #     '-d',
-  #     '--dim',
-  #     type=str,
-  #     help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
-  #     required=False)
+  parser.add_argument(
+      '-d',
+      '--dim',
+      type=str,
+      help='-d=pdfD1D, pdf2D,data2D',
+      required=True)
   parser.add_argument(
       '-g',
       '--gen',
@@ -128,7 +128,7 @@ if __name__ == "__main__":
   n_toys = args.n_toys
   n_jobs = args.n_jobs
   input_dir = args.input_dir
-  # dim = args.dim
+  dim = args.dim
   gen = args.gen
   delta_low = args.delta_low
   delta_high = args.delta_high
@@ -169,74 +169,58 @@ if __name__ == "__main__":
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-  if delta_low == None:
-    delta_low = "125"
-  if delta_high == None:
-    delta_high = "170"
-  if delta_partial_low == None:
-    delta_partial_low = "60"
-  if delta_partial_high == None:
-    delta_partial_high = "105"
-  if bu_low == None:
-    bu_low = "5240"
-  if bu_high == None:
-    bu_high = "5320"
+  if neutral == "gamma":
+    if delta_low == None:
+      delta_low = "125"
+    if delta_high == None:
+      delta_high = "170"
+    if delta_partial_low == None:
+      delta_partial_low = "60"
+    if delta_partial_high == None:
+      delta_partial_high = "105"
+    if bu_low == None:
+      bu_low = "5240"
+    if bu_high == None:
+      bu_high = "5320"
+  else:
+    if delta_low == None:
+      delta_low = "138"
+    if delta_high == None:
+      delta_high = "148"
+    if bu_low == None:
+      bu_low = "5220"
+    if bu_high == None:
+      bu_high = "5330"
 
   if input_dir == None:
     sys.exit("Must specify data dir")
 
   scriptList = []
   for i in range(0, n_jobs):
-    if gen == "model":
-      templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_model.sh.tmpl"
-      if neutral == "pi0":
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      else:
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_model_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      substitutions = {
-          "nJob": i,
-          "INPUT": input_dir,
-          "PATH": output_dir,
-          "NEUTRAL": neutral,
-          "DAUGHTERS": daughters,
-          "CHARGE": charge,
-          "NTOYS": n_toys,
-          "DL": delta_low,
-          "DH": delta_high,
-          "DPL": delta_partial_low,
-          "DPH": delta_partial_high,
-          "BL": bu_low,
-          "BH": bu_high
-      }
-      make_shell_script(templatePath, scriptPath, substitutions)
-      scriptList.append(scriptPath)
+    templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate.sh.tmpl"
+    if neutral == "pi0":
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + dim + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
+          i) + ".sh"
     else:
-      print("Generating toys from data PDF")
-      templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate_from_data.sh.tmpl"
-      if neutral == "pi0":
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      else:
-        scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_from_data_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-            i) + ".sh"
-      substitutions = {
-          "nJob": i,
-          "PATH": output_dir,
-          "NEUTRAL": neutral,
-          "DAUGHTERS": daughters,
-          "CHARGE": charge,
-          "NTOYS": n_toys,
-          "INPUT": input_dir,
-          "DL": delta_low,
-          "DH": delta_high,
-          "DPL": delta_partial_low,
-          "DPH": delta_partial_high,
-          "BL": bu_low,
-          "BH": bu_high
-      }
-      make_shell_script(templatePath, scriptPath, substitutions)
-      scriptList.append(scriptPath)
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + dim + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+          i) + ".sh"
+    substitutions = {
+        "nJob": i,
+        "PATH": output_dir,
+        "NEUTRAL": neutral,
+        "DAUGHTERS": daughters,
+        "CHARGE": charge,
+        "NTOYS": n_toys,
+        "INPUT": input_dir,
+        "DIM": dim,
+        "DL": delta_low,
+        "DH": delta_high,
+        "DPL": delta_partial_low,
+        "DPH": delta_partial_high,
+        "BL": bu_low,
+        "BH": bu_high
+    }
+    make_shell_script(templatePath, scriptPath, substitutions)
+    scriptList.append(scriptPath)
   p = mp.Pool(n_jobs)
   p.map(run_process, scriptList)
