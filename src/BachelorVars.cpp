@@ -141,7 +141,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor,
             GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
                 GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
-            0, 5));
+            -5, 5));
   }
 
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
@@ -172,8 +172,14 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   }
   // No measured params for B->D*h* modes
   // Fix for D*π to 0 with systematic??
+  double min = -2.;
+  double max = 2..;
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    min = -1.;
+    max = 1.;
+  }
   A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
+      "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, min, max));
   std::cout << "BachelorVars " << EnumToString(_bachelor) << std::endl;
 }
 
