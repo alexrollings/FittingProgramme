@@ -173,7 +173,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   // No measured params for B->D*h* modes
   // Fix for D*π to 0 with systematic??
   double min = -2.;
-  double max = 2..;
+  double max = 2.;
   if (Configuration::Get().neutral() == Neutral::pi0) {
     min = -1.;
     max = 1.;
