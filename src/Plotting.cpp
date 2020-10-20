@@ -945,7 +945,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
       ("hist_D02pik" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "hist_D02pik", 1, 0, 1);
-  hist_D02pik->SetLineColor(kGray);
+  hist_D02pik->SetLineColor(kCyan + 3);
   hist_D02pik->SetLineWidth(5);
 
   if (bachelor == Bachelor::pi) {
