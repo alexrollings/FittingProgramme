@@ -159,7 +159,8 @@ int main(int argc, char *argv[]) {
         }
       } else {
         std::regex fileRexp(
-            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([a-z0-9]+).root");
+            ".+_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_([0-9].+)_("
+            "[a-z0-9]+).root");
         std::smatch fileMatch;
         if (std::regex_search(filename, fileMatch, fileRexp)) {
           config.SetDeltaPartialLow(std::stod(fileMatch[1]));
@@ -206,14 +207,16 @@ int main(int argc, char *argv[]) {
         dynamic_cast<RooFitResult *>(file->FindObjectAny("ToyResult")));
     std::unique_ptr<RooFitResult> dataResult;
     if (result == nullptr) {
-      // throw std::runtime_error("Could not extract Result from " + filename);
+      // throw std::runtime_error("Could not extract Result from " +
+      // filename);
       continue;
     } else {
       if (dataToy == true) {
         dataResult = std::unique_ptr<RooFitResult>(
             dynamic_cast<RooFitResult *>(file->FindObjectAny("DataFitResult")));
         if (dataResult == nullptr) {
-          // throw std::runtime_error("Could not extract DataFitResult from " +
+          // throw std::runtime_error("Could not extract DataFitResult from "
+          // +
           //                          filename);
           continue;
         } else {
@@ -226,7 +229,7 @@ int main(int argc, char *argv[]) {
       }
     }
   }
-  
+
   if (resultVec.size() < 1) {
     throw std::runtime_error("No results found.");
   }
@@ -470,19 +473,25 @@ int main(int argc, char *argv[]) {
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
+    std::cout << "HERE WE GO\n";
     for (double j = 0; j < initValMap[paramName].size(); ++j) {
       initValHist.Fill(initValMap[paramName][j]);
       valHist.Fill(valMap[paramName][j]);
       errHist.Fill(errMap[paramName][j]);
       pullHist.Fill(pullMap[paramName][j]);
+      if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus"/*  && pullMap[paramName][j] == -0.12 */) {
+        std::cout << pullMap[paramName][j] << "\n";
+      }
     }
     int binMax = pullHist.GetMaximumBin();
     int maxContent = pullHist.GetBinContent(pullHist.GetMaximumBin());
     double maxPull = pullHist.GetXaxis()->GetBinCenter(binMax);
+    double minBin = pullHist.GetXaxis()->GetBinLowEdge(binMax);
+    double maxBin = pullHist.GetXaxis()->GetBinUpEdge(binMax);
     std::cout << "\n ----- \n";
     std::cout << paramName << "\t";
-    std::cout << binMax << "\t" << maxContent << "\t" << maxPull << "\t"
-              << pullHist.Integral();
+    std::cout << binMax << "\t" << maxContent << "\t" << maxPull << " ("
+              << minBin << ", " << maxBin << ")\t" << pullHist.Integral();
     std::cout << "\n ----- \n";
 
     // Create RRVs for each parameter's value, error and pull
