@@ -735,11 +735,11 @@ int main(int argc, char **argv) {
     if (config.runToy() == true) {
       // start at id = 1 to reserve 0 for data fit
       for (int id = 1; id < nToys + 1; ++id) {
-        // std::random_device rd;
-        // std::default_random_engine rng(rd());
-        // std::uniform_int_distribution<UInt_t> dist;
-        // UInt_t seed = dist(rng);
-        UInt_t seed = 0xada4c4d3;
+        std::random_device rd;
+        std::default_random_engine rng(rd());
+        std::uniform_int_distribution<UInt_t> dist;
+        UInt_t seed = dist(rng);
+        // UInt_t seed = 0xada4c4d3;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {

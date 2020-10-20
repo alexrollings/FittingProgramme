@@ -154,6 +154,15 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     A_CP_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor,
                                   0.0, 0.02, Systematic::NA, Sign::same));
+    if (Configuration::Get().neutral() == Neutral::pi0) {
+      A_CP_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
+    } else {
+      A_CP_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
+    }
   } else {
     // HFLAV: A_CP+, BF average of B+ and B0
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
@@ -164,23 +173,19 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
           std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
               "A_CP_Lb2Omegach_Lcpi0", uniqueId_, Bachelor::k, 0.0, 0.1,
               Systematic::NA, Sign::none));
+      A_CP_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+              "A_CP_Bu2Dst0hst", uniqueId_, Bachelor::k, 0.0, 0.1,
+              Systematic::NA, Sign::none));
     } else {
       A_CP_Lb2Omegach_Lcpi0_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
               "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
+      A_CP_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
     }
   }
-  // No measured params for B->D*h* modes
-  // Fix for D*π to 0 with systematic??
-  double min = -2.;
-  double max = 2.;
-  if (Configuration::Get().neutral() == Neutral::pi0) {
-    min = -1.;
-    max = 1.;
-  }
-  A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, min, max));
-  std::cout << "BachelorVars " << EnumToString(_bachelor) << std::endl;
 }
 
 template <Bachelor bachelor>
