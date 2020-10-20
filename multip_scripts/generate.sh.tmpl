@@ -3,12 +3,12 @@
 source /home/rollings/.zshrc
 source_root
 
-mkdir /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}
-cd /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}
+mkdir /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}
+cd /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}
 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeMacroParseArguments.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}/FindROOT.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeLists.txt 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}/CMakeLists.txt 
 
 mkdir src
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
@@ -19,7 +19,7 @@ mkdir build
 cd build
 cmake ../
 make
-./Fitting -outputDir=${PATH} -toys=${NTOYS} -${DIM} -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
+./Fitting -outputDir=${PATH} -toys=${NTOYS} -${GEN} -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -inputDir=${INPUT} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
 
 cd /data/lhcb/users/rollings/multi_scripts/
-rm -rf job_${NEUTRAL}_${DIM}_${DAUGHTERS}_${CHARGE}_${nJob}
+rm -rf job_${NEUTRAL}_${GEN}_${DAUGHTERS}_${CHARGE}_${nJob}

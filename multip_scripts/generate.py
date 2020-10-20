@@ -77,17 +77,10 @@ if __name__ == "__main__":
       help='Path to RDS of data: required to generate toys from data PDF',
       required=False)
   parser.add_argument(
-      '-d',
-      '--dim',
-      type=str,
-      help='-d=pdfD1D, pdf2D,data2D',
-      required=True)
-  parser.add_argument(
       '-g',
       '--gen',
       type=str,
-      help=
-      '--gen=model/data: Toy dataset generated from D1D model or 2D dataset',
+      help='-d=pdfD1D, pdf2D,data2D',
       required=True)
   parser.add_argument('-dl',
                       '--delta_low',
@@ -128,7 +121,6 @@ if __name__ == "__main__":
   n_toys = args.n_toys
   n_jobs = args.n_jobs
   input_dir = args.input_dir
-  dim = args.dim
   gen = args.gen
   delta_low = args.delta_low
   delta_high = args.delta_high
@@ -136,13 +128,6 @@ if __name__ == "__main__":
   delta_partial_high = args.delta_partial_high
   bu_low = args.bu_low
   bu_high = args.bu_high
-
-  if gen == "data":
-    print("Generating toys from 2D datasets")
-  elif gen == "model":
-    print("Generating toys from D1D model")
-  else:
-    sys.exit("-gen=model/data")
 
   if neutral != "pi0" and neutral != "gamma":
     sys.exit("Specify neutral: -n=pi0/gamma")
@@ -199,10 +184,10 @@ if __name__ == "__main__":
   for i in range(0, n_jobs):
     templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate.sh.tmpl"
     if neutral == "pi0":
-      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + dim + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".sh"
     else:
-      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + dim + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".sh"
     substitutions = {
         "nJob": i,
@@ -212,7 +197,7 @@ if __name__ == "__main__":
         "CHARGE": charge,
         "NTOYS": n_toys,
         "INPUT": input_dir,
-        "DIM": dim,
+        "GEN": gen,
         "DL": delta_low,
         "DH": delta_high,
         "DPL": delta_partial_low,
