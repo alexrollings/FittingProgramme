@@ -210,7 +210,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bd2Dsth_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
-    // pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(NeutralBachelorVars<_neutral, _bachelor>);
+    pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(
+        &NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+             .pdf1Bu_Bu2D0hst());
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(
+        &NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+             .pdf2Bu_Bu2D0hst());
+    pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                          .pdfBu_Bu2D0hst_GetPointer();
   } else {
     N_tot_Bu2Dst0h_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
