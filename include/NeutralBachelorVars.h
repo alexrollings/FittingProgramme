@@ -151,6 +151,9 @@ class NeutralBachelorVars {
   RooCBShape &pdf1Bu_Bu2D0hst() { return pdf1Bu_Bu2D0hst_; }
   RooGaussian &pdf2Bu_Bu2D0hst() { return pdf2Bu_Bu2D0hst_; }
   RooAbsPdf &pdfBu_Bu2D0hst() { return *pdfBu_Bu2D0hst_; }
+  std::shared_ptr<RooAbsPdf> &pdfBu_Bu2D0hst_GetPointer() {
+    return pdfBu_Bu2D0hst_;
+  }
   RooAbsReal &Bu2D0hst_sigmaBuPartial() { return *Bu2D0hst_sigmaBuPartial_; }
   RooGaussian &pdfBuPartial_Bu2D0hst() { return pdfBuPartial_Bu2D0hst_; }
   // -------------------- Mis-ID ------------------- //
