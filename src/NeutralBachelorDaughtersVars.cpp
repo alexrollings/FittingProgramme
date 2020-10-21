@@ -474,14 +474,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
+        5202.65, 5.20055, Systematic::Bu2D0hstBuPdf, Sign::same));
     // Bu2D0hst_mean1Bu_ =
-    // std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-    //     "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
-    //     Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
-    Bu2D0hst_mean1Bu_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
-            Daughters::pik, Mode::Bu2D0rho, 5150, 5250));
+    //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //         "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
+    //         Daughters::pik, Mode::Bu2D0rho, 5150, 5250));
     Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
         ("Bu2D0hst_mean2Bu_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -490,15 +489,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
         RooArgSet(
             *Bu2D0hst_mean1Bu_,
             NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
+    Bu2D0hst_sigma1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
+        68.6129, 3.12961, Systematic::Bu2D0hstBuPdf, Sign::same));
     // Bu2D0hst_sigma1Bu_ =
-    // std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-    //     "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi,
-    //     Daughters::pik, Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf,
-    //     Sign::same));
-    Bu2D0hst_sigma1Bu_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi,
-            Daughters::pik, Mode::Bu2D0rho, 55, 75));
+    //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //         "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi,
+    //         Daughters::pik, Mode::Bu2D0rho, 55, 75));
     Bu2D0hst_sigma2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
         ("Bu2D0hst_sigma2Bu_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
