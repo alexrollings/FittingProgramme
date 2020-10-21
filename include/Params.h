@@ -278,6 +278,20 @@ class Params {
                                       max_value);
   }
 
+  std::shared_ptr<RooRealVar> CreateFloating(
+      std::string const &name, int uniqueId, Neutral neutral, Bachelor bachelor,
+      Daughters daughters, Mode mode, double min_value, double max_value) {
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), EnumToString(daughters));
+    auto var_name =
+        name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
+    double start =
+        ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    return ConstructFloatingParameter(key, var_name, start, min_value,
+                                      max_value);
+  }
+
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Neutral neutral, Mode mode,
                                           Systematic systematic, Sign sign) {
@@ -309,6 +323,23 @@ class Params {
     auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
     double mean = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     double std = ReturnValErr(mode, neutral, bachelor, name, Param::err);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor, Daughters daughters,
+                                          Mode mode, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), EnumToString(daughters));
+    auto var_name =
+        name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
+    double mean =
+        ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    double std =
+        ReturnValErr(mode, neutral, bachelor, name, Param::err);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
