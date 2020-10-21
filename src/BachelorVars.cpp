@@ -181,14 +181,20 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06,
                                   0.06, Systematic::NA, Sign::none));
     if (Configuration::Get().neutral() == Neutral::pi0) {
+      // A_CP_Lb2Omegach_Lcpi0_ =
+      //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      //         "A_CP_Lb2Omegach_Lcpi0", uniqueId_, Bachelor::k, 0.0, 0.1,
+      //         Systematic::NA, Sign::none));
+      // A_CP_Bu2Dst0hst_ =
+      //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      //         "A_CP_Bu2Dst0hst", uniqueId_, Bachelor::k, 0.0, 0.1,
+      //         Systematic::NA, Sign::none));
       A_CP_Lb2Omegach_Lcpi0_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-              "A_CP_Lb2Omegach_Lcpi0", uniqueId_, Bachelor::k, 0.0, 0.1,
-              Systematic::NA, Sign::none));
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
       A_CP_Bu2Dst0hst_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-              "A_CP_Bu2Dst0hst", uniqueId_, Bachelor::k, 0.0, 0.1,
-              Systematic::NA, Sign::none));
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
     } else {
       A_CP_Lb2Omegach_Lcpi0_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
