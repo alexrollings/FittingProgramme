@@ -462,9 +462,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "", Configuration::Get().deltaMass(), *Bu2D0hst_thresholdDelta_,
           *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_),
-      Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
-          "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
-          Systematic::Bu2D0hstBuPdf, Sign::same)),
+      Bu2D0hst_mean1Bu_(nullptr),
+      // Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
+      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
+      //     Systematic::Bu2D0hstBuPdf, Sign::same)),
       // Bu2D0hst_mean1Bu_(Params::Get().CreateFloating(
       //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
       //     5150, 5250)),
