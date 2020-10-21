@@ -482,8 +482,10 @@ class NeutralBachelorVars {
     return mcEffMisId_Bu2Dst0h_WN_;
   }
   // -------------------- Bu2Dst0hst -------------------- //
-  RooAbsPdf &pdfBu_Bu2Dst0hst() {
-    return *pdfBu_Bu2Dst0hst_;
+  RooFormulaVar &Bu2Dst0hst_fracD0pi0_Bu() { return Bu2Dst0hst_fracD0pi0_Bu_; }
+  RooAbsPdf &pdfBu_Bu2Dst0hst() { return *pdfBu_Bu2Dst0hst_; }
+  std::shared_ptr<RooAbsPdf> &pdfBu_Bu2Dst0hst_GetPointer() {
+    return pdfBu_Bu2Dst0hst_;
   }
   RooAddPdf &pdfDelta_Bu2Dst0hst() {
     return pdfDelta_Bu2Dst0hst_;
@@ -928,7 +930,7 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2Dst0hst_fracD0pi0_Bu_;
   RooFormulaVar Bu2Dst0hst_fracD0pi0_Delta_;
   RooFormulaVar Bu2Dst0hst_fracD0pi0_BuPartial_;
-  std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_;
   RooAddPdf pdfDelta_Bu2Dst0hst_;
   RooAddPdf pdfBuPartial_Bu2Dst0hst_;
   RooFormulaVar orEffBu2Dst0hst_;

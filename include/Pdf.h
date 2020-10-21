@@ -826,7 +826,8 @@ class Pdf : public PdfBase {
         .pdfBu_Bu2D0hst();
   }
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+               uniqueId_)
         .pdfBu_Bu2Dst0hst();
   }
   virtual RooCBShape &pdfBu_Lb2Omegach_Lcpi0() const {
@@ -1276,7 +1277,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Bu_Bu2D0hst());
   PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+          PdfBase::uniqueId_)
           .pdfBu_Bu2Dst0hst());
   PdfBase::yieldsBu_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)

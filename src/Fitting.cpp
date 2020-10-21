@@ -739,7 +739,7 @@ int main(int argc, char **argv) {
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
         UInt_t seed = dist(rng);
-        // UInt_t seed = 0xf69d1de0;
+        // UInt_t seed = 0xae8a8f47;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
@@ -773,12 +773,12 @@ int main(int argc, char **argv) {
       // mode, to set y-axis max in ADS mode
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
       // LaTeXYields(config, pdfs, outputDir, dataFitResult);
-      if (config.runSystematics() == false) {
-      for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
-                   dataFitResult.get(), yMaxMap);
-        }
-      }
+      // if (config.runSystematics() == false) {
+      // for (auto &p : pdfs) {
+      //   Plotting1D(id, *p, config, fullDataSet, *simPdf, outputDir,
+      //              dataFitResult.get(), yMaxMap);
+      //   }
+      // }
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
@@ -812,6 +812,10 @@ int main(int argc, char **argv) {
           //   }
           // }
         }
+        // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
+        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+        // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
+        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
