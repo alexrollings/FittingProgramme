@@ -463,20 +463,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "", Configuration::Get().deltaMass(), *Bu2D0hst_thresholdDelta_,
           *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_),
       Bu2D0hst_mean1Bu_(nullptr),
-      // Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
-      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
-      //     Systematic::Bu2D0hstBuPdf, Sign::same)),
-      // Bu2D0hst_mean1Bu_(Params::Get().CreateFloating(
-      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
-      //     5150, 5250)),
       Bu2D0hst_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_meanOffset21Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::none)),
-      // Bu2D0hst_mean2Bu_(
-      //     ("Bu2D0hst_mean2Bu_" + ComposeName(uniqueId_, Neutral::gamma))
-      //         .c_str(),
-      //     "", "@0+@1",
-      //     RooArgSet(*Bu2D0hst_mean1Bu_, *Bu2D0hst_meanOffset21Bu_)),
       Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::gamma, 1.0, 0.05,
           Systematic::Bu2D0hstBuPdf, Sign::same)),

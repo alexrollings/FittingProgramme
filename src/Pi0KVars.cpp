@@ -477,8 +477,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
               NeutralVars<Neutral::pi0>::Get(uniqueId_)
                   .Bu2D0hst_KpiSigmaBu()))),
       Bu2D0hst_sigma2Bu_(),
-      // pdf1Bu_Bu2D0hst_(nullptr),
-      // pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(new RooCBShape(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))

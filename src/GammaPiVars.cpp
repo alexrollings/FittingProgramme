@@ -934,22 +934,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                          RooArgSet(*Bu2D0hst_sigma1Bu_,
                                    NeutralVars<Neutral::gamma>::Get(uniqueId_)
                                        .Bu2D0hst_sigmaRatio21Bu())),
-      // pdf1Bu_Bu2D0hst_(new RooCBShape(
-      //     ("pdf1Bu_Bu2D0hst_" +
-      //      ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
-      //         .c_str(),
-      //     "", Configuration::Get().buDeltaMass(),
-      //     NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2D0hst_mean1Bu(),
-      //     *Bu2D0hst_sigma1Bu_,
-      //     NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2D0hst_a1Bu(),
-      //     NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2D0hst_n1Bu())),
-      // pdf2Bu_Bu2D0hst_(new RooGaussian(
-      //     ("pdf2Bu_Bu2D0hst_" +
-      //      ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
-      //         .c_str(),
-      //     "", Configuration::Get().buDeltaMass(),
-      //     NeutralVars<Neutral::gamma>::Get(uniqueId_).Bu2D0hst_mean2Bu(),
-      //     Bu2D0hst_sigma2Bu_)),
       pdfBu_Bu2D0hst_(nullptr),
       Bu2D0hst_sigmaBuPartial_(Params::Get().CreateFixed(
           "Bu2D0hst_sigmaBuPartial", uniqueId_, Neutral::gamma, Bachelor::pi,
