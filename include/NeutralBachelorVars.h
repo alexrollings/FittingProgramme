@@ -170,9 +170,6 @@ class NeutralBachelorVars {
   RooFormulaVar &Bu2Dst0hst_D0gamma_sigma2Bu() {
     return Bu2Dst0hst_D0gamma_sigma2Bu_;
   }
-  RooCBShape &pdf1Bu_Bu2Dst0hst_D0gamma() { return pdf1Bu_Bu2Dst0hst_D0gamma_; }
-  RooCBShape &pdf2Bu_Bu2Dst0hst_D0gamma() { return pdf2Bu_Bu2Dst0hst_D0gamma_; }
-  RooAbsPdf &pdfBu_Bu2Dst0hst_D0gamma() { return *pdfBu_Bu2Dst0hst_D0gamma_; }
   RooAbsReal &Bu2Dst0hst_D0gamma_sigmaBuPartial() {
     return *Bu2Dst0hst_D0gamma_sigmaBuPartial_;
   }
@@ -739,9 +736,6 @@ class NeutralBachelorVars {
   // -------------------- Bu2Dst0hst_D0gamma -------------------- //
   std::shared_ptr<RooAbsReal> Bu2Dst0hst_D0gamma_sigma1Bu_;
   RooFormulaVar Bu2Dst0hst_D0gamma_sigma2Bu_;
-  RooCBShape pdf1Bu_Bu2Dst0hst_D0gamma_;
-  RooCBShape pdf2Bu_Bu2Dst0hst_D0gamma_;
-  std::unique_ptr<RooAbsPdf> pdfBu_Bu2Dst0hst_D0gamma_;
   std::shared_ptr<RooAbsReal> Bu2Dst0hst_D0gamma_sigmaBuPartial_;
   RooGaussian pdfBuPartial_Bu2Dst0hst_D0gamma_;
   // -------------------- Mis-ID ------------------- //
