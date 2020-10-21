@@ -434,7 +434,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // Bu2D0hst_sigma1Bu_(Params::Get().CreateFloating(
       //     "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
       //     Mode::Bu2D0rho, 65, 95)),
-      Bu2D0hst_sigma2Bu_(),
       pdfBu_Bu2D0hst_(new RooCBShape(
           ("pdfBu_Bu2D0hst_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))

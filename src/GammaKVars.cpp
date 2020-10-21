@@ -1022,23 +1022,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           *misId_Bd2Dsth_sigmaBuPartial_, *misId_Bd2Dsth_a1BuPartial_,
           *misId_Bd2Dsth_n1BuPartial_),
       // -------------------- Bu2D0hst -------------------- //
-      Bu2D0hst_sigma1Bu_(new RooFormulaVar(
-          ("Bu2D0hst_sigma1Bu_" +
-           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
-              .c_str(),
-          "", "@0*@1",
-          RooArgList(
-              NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-                  .Bu2D0hst_sigma1Bu(),
-              NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                  .Bu2D0hst_KpiSigmaBu()))),
-      Bu2D0hst_sigma2Bu_(("Bu2D0hst_sigma2Bu_" +
-                          ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
-                             .c_str(),
-                         "@0*@1",
-                         RooArgSet(*Bu2D0hst_sigma1Bu_,
-                                   NeutralVars<Neutral::gamma>::Get(uniqueId_)
-                                       .Bu2D0hst_sigmaRatio21Bu())),
+      Bu2D0hst_sigma1Bu_(nullptr),
       pdfBu_Bu2D0hst_(nullptr),
       Bu2D0hst_sigmaBuPartial_(new RooFormulaVar(
           ("Bu2D0hst_sigmaBuPartial_" +
