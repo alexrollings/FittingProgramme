@@ -718,7 +718,7 @@ class NeutralBachelorVars {
   RooFormulaVar Bu2D0hst_sigma2Bu_;
   RooCBShape pdf1Bu_Bu2D0hst_;
   RooGaussian pdf2Bu_Bu2D0hst_;
-  std::unique_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> Bu2D0hst_sigmaBuPartial_;
   RooGaussian pdfBuPartial_Bu2D0hst_;
   // -------------------- Mis-ID ------------------- //

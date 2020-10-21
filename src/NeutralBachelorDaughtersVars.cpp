@@ -187,7 +187,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
@@ -207,6 +210,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bd2Dsth_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
+    // pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(NeutralBachelorVars<_neutral, _bachelor>);
   } else {
     N_tot_Bu2Dst0h_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
@@ -314,7 +318,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
     A_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::pi>(
@@ -554,7 +561,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::kk>(
@@ -709,7 +719,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::pipi>(
@@ -880,7 +893,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (_neutral == Neutral::gamma) {
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::k, Daughters::kpi>(
@@ -1015,7 +1031,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (Configuration::Get().splitByCharge() == true) {
     A_Bu2Dst0h_D0pi0_ =
         std::shared_ptr<RooFormulaVar>(Make_A_ADS<_neutral, Bachelor::k>(
@@ -1254,7 +1273,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           DaughtersVars<Daughters::kk>::Get(uniqueId)
               .R_Dst0KDst0pi_Lb2Omegach_Lcpi0())),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (Configuration::Get().runADS() == true) {
     N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_Bs_CP<_neutral, Bachelor::k, Daughters::kk>(
@@ -1405,7 +1427,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
-      N_tot_Bs2D0Kpi_(nullptr) {
+      N_tot_Bs2D0Kpi_(nullptr),
+      pdf1Bu_Bu2D0hst_(nullptr),
+      pdf2Bu_Bu2D0hst_(nullptr),
+      pdfBu_Bu2D0hst_(nullptr) {
   if (Configuration::Get().runADS() == true) {
     N_tot_Bs2Dst0Kpi_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_Bs_CP<_neutral, Bachelor::k, Daughters::pipi>(

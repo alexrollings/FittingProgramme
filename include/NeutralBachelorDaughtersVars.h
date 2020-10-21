@@ -161,6 +161,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -199,6 +202,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -237,6 +243,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pipi> 
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -275,6 +284,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -313,6 +325,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -351,6 +366,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -389,6 +407,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 template <Neutral neutral>
@@ -427,6 +448,9 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
+  std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
 };
 
 }  // namespace
@@ -517,6 +541,10 @@ class NeutralBachelorDaughtersVars {
   }
   RooAbsReal &N_tot_Bs2Dst0Kpi() { return *impl_.N_tot_Bs2Dst0Kpi_; }
   RooAbsReal &N_tot_Bs2D0Kpi() { return *impl_.N_tot_Bs2D0Kpi_; }
+
+  RooCBShape &pdf1Bu_Bu2D0hst() { return *impl_.pdf1Bu_Bu2D0hst_; }
+  RooGaussian &pdf2Bu_Bu2D0hst() { return *impl_.pdf2Bu_Bu2D0hst_; }
+  RooAbsPdf &pdfBu_Bu2D0hst() { return *impl_.pdfBu_Bu2D0hst_; }
 
  private:
   // When we DO need to specialize certain cases, we can still do that (see
