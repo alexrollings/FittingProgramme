@@ -1935,19 +1935,15 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
     }
   } else if (mode == Mode::Bu2D0rho) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{0}#rho^{" +
-             chargeLabel + "}}";
+      return "#font[12]{B#rightarrow D#rho}";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow D^{0}\\rho^{" + chargeLabel +
-             "}$";
+      return "$B\\rightarrow D\\rho$";
     }
   } else if (mode == Mode::Bu2D0Kst) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{0}K^{*" +
-             chargeLabel + "}}";
+      return "#font[12]{B#rightarrow DK^{*}}";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow D^{0}K^{*" + chargeLabel +
-             "}$";
+      return "$B\\rightarrow DK^{*}$";
     }
   } else if (mode == Mode::Bd2Dstpi) {
     if (isTex == false) {
