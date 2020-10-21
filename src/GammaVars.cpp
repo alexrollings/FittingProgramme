@@ -808,8 +808,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bs2Dst0Kpi_fracPdfPi0PeakDelta", uniqueId_, Neutral::gamma,
           Mode::Bs2Dst0Kpi, Systematic::Bs2Dst0KpiDeltaPdf, Sign::same)),
       Bs2Dst0Kpi_mean1Bu_(Params::Get().CreateFixed(
-          "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bs2Dst0Kpi,
+          "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::gamma, 5.1989e+03, 4.93e+00,
           Systematic::Bs2Dst0KpiBuPdf, Sign::same)),
+      // Bs2Dst0Kpi_mean1Bu_(Params::Get().CreateFloating(
+      //     "Bs2Dst0Kpi_mean1Bu", uniqueId_, Neutral::gamma, Mode::Bs2Dst0Kpi,
+      //     5180, 5230)),
       Bs2Dst0Kpi_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bs2Dst0Kpi_meanOffset21Bu", uniqueId_, Neutral::gamma,
           Mode::Bs2Dst0Kpi, Systematic::Bs2Dst0KpiBuPdf, Sign::same)),
