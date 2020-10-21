@@ -216,9 +216,9 @@ GlobalVars::GlobalVars(int uniqueId)
   double max = 20.;
   double start = 4.5;
   if (Configuration::Get().neutral() == Neutral::pi0) {
-    min = -10.;
-    max = 10.;
-    start = 1.;
+    min = 0.;
+    max = 5.;
+    start = 1.8;
   }
   R_CP_Bu2Dst0hst_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
