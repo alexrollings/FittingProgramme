@@ -189,6 +189,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -212,12 +213,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bd2Dsth_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-        "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
-        Daughters::kpi, Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
+        "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
+        Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
     // Bu2D0hst_mean1Bu_ =
     // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-    //     "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+    //     "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
     //     Daughters::kpi, Mode::Bu2D0rho, 5150, 5250));
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -227,9 +236,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ =
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-            .pdf2Bu_Bu2D0hst_GetPointer();
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -346,6 +359,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -443,13 +457,22 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0pi0_WN()));
-    // Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    // Bu2D0hst_mean1Bu_ =
+    // std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
     //     "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
     //     Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
     Bu2D0hst_mean1Bu_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
             Daughters::pik, Mode::Bu2D0rho, 5150, 5250));
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -459,15 +482,19 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ =
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-            .pdf2Bu_Bu2D0hst_GetPointer();
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::pik))
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::unique_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::pi>(
@@ -617,6 +644,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -639,6 +667,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -648,15 +684,19 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ =
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-            .pdf2Bu_Bu2D0hst_GetPointer();
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::kk))
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -800,6 +840,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -818,6 +859,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -827,15 +876,19 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ =
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-            .pdf2Bu_Bu2D0hst_GetPointer();
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::pi, Daughters::pipi))
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
@@ -999,6 +1052,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1017,23 +1071,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
         "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean1Bu_,
-        NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                           .pdf2Bu_Bu2D0hst_GetPointer();
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::k, Daughters::kpi))
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
@@ -1159,6 +1226,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1253,23 +1321,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
             .c_str(),
         "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean1Bu_,
-        NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                           .pdf2Bu_Bu2D0hst_GetPointer();
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::k, Daughters::pik))
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_pik<_neutral, Bachelor::k>(
@@ -1425,6 +1506,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1457,23 +1539,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
             .c_str(),
         "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean1Bu_,
-        NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                           .pdf2Bu_Bu2D0hst_GetPointer();
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::k, Daughters::kk))
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_k_CP<_neutral, Daughters::kk>(
@@ -1603,6 +1698,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
       Bu2D0hst_mean1Bu_(nullptr),
+      Bu2D0hst_mean2Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1635,23 +1731,36 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
             .Bu2D0hst_mean1Bu_GetPointer();
+    Bu2D0hst_mean2Bu_ = std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+        ("Bu2D0hst_mean2Bu_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+            .c_str(),
+        "", "@0+@1",
+        RooArgSet(
+            *Bu2D0hst_mean1Bu_,
+            NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     pdf1Bu_Bu2D0hst_ = std::shared_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
             .c_str(),
         "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean1Bu_,
-        NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .Bu2D0hst_sigma1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_a1Bu(),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_n1Bu()));
-    pdf2Bu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                           .pdf2Bu_Bu2D0hst_GetPointer();
+    pdf2Bu_Bu2D0hst_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+        ("pdf2Bu_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+            .c_str(),
+        "", Configuration::Get().buDeltaMass(), *Bu2D0hst_mean2Bu_,
+        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+            .Bu2D0hst_sigma2Bu()));
     pdfBu_Bu2D0hst_ = std::shared_ptr<RooAddPdf>(new RooAddPdf(
         ("pdfBu_Bu2D0hst_" +
-         ComposeName(uniqueId, Neutral::gamma, Bachelor::k, Daughters::pipi))
+         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
-        NeutralVars<Neutral::gamma>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
   } else {
     N_tot_Bu2Dst0h_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_CP<_neutral, Daughters::pipi>(

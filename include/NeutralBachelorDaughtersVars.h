@@ -162,6 +162,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -204,6 +205,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -246,6 +248,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pipi> 
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -288,6 +291,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::pi, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -330,6 +334,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -372,6 +377,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -414,6 +420,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pipi> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
@@ -456,6 +463,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::pik> {
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kpi_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
+  std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
   std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
   std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;

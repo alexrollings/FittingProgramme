@@ -152,10 +152,10 @@ class NeutralBachelorVars {
   // std::shared_ptr<RooCBShape> &pdf1Bu_Bu2D0hst_GetPointer() {
   //   return pdf1Bu_Bu2D0hst_;
   // }
-  RooGaussian &pdf2Bu_Bu2D0hst() { return *pdf2Bu_Bu2D0hst_; }
-  std::shared_ptr<RooGaussian> &pdf2Bu_Bu2D0hst_GetPointer() {
-    return pdf2Bu_Bu2D0hst_;
-  }
+  // RooGaussian &pdf2Bu_Bu2D0hst() { return *pdf2Bu_Bu2D0hst_; }
+  // std::shared_ptr<RooGaussian> &pdf2Bu_Bu2D0hst_GetPointer() {
+  //   return pdf2Bu_Bu2D0hst_;
+  // }
   RooAbsPdf &pdfBu_Bu2D0hst() { return *pdfBu_Bu2D0hst_; }
   std::shared_ptr<RooAbsPdf> &pdfBu_Bu2D0hst_GetPointer() {
     return pdfBu_Bu2D0hst_;
@@ -726,7 +726,7 @@ class NeutralBachelorVars {
   std::shared_ptr<RooAbsReal> Bu2D0hst_sigma1Bu_;
   RooFormulaVar Bu2D0hst_sigma2Bu_;
   // std::shared_ptr<RooCBShape> pdf1Bu_Bu2D0hst_;
-  std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
+  // std::shared_ptr<RooGaussian> pdf2Bu_Bu2D0hst_;
   std::shared_ptr<RooAbsPdf> pdfBu_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> Bu2D0hst_sigmaBuPartial_;
   RooGaussian pdfBuPartial_Bu2D0hst_;
