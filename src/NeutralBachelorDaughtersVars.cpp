@@ -188,6 +188,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -210,6 +211,13 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2D0hst_", *N_tot_Bd2Dsth_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
+    Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+        Daughters::pik, Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
+    // Bu2D0hst_mean1Bu_ =
+    // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //     "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+    //     Daughters::pik, Mode::Bu2D0rho, 5150, 5250));
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -332,6 +340,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -429,6 +438,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -589,6 +602,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -607,6 +621,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
         Make_N_BkgFrac<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Lb2Omegach_Lcpi0_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracKK_Lb2Omegach_Lcpi0()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -761,6 +779,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -775,6 +794,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -949,6 +972,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -963,6 +987,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -1101,6 +1129,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1191,6 +1220,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                          Daughters::kpi>::Get(uniqueId)
                 .N_tot_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -1357,6 +1390,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .R_Dst0KDst0pi_Lb2Omegach_Lcpi0())),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1385,6 +1419,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
+    Bu2D0hst_mean1Bu_ =
+        NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                     Daughters::kpi>::Get(uniqueId)
+            .Bu2D0hst_mean1Bu_GetPointer();
     pdf1Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdf1Bu_Bu2D0hst_GetPointer();
@@ -1525,6 +1563,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kpi_(nullptr),
       N_tot_Bs2D0Kpi_(nullptr),
+      Bu2D0hst_mean1Bu_(nullptr),
       pdf1Bu_Bu2D0hst_(nullptr),
       pdf2Bu_Bu2D0hst_(nullptr),
       pdfBu_Bu2D0hst_(nullptr) {
@@ -1553,9 +1592,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
-    pdf1Bu_Bu2D0hst_ =
-        NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-            .pdf1Bu_Bu2D0hst_GetPointer();
+    Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+        Daughters::kpi, Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
+    // Bu2D0hst_mean1Bu_ =
+    // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //     "Bu2D0hst_mean1Bu", uniqueId, Neutral::gamma, Bachelor::pi,
+    //     Daughters::kpi, Mode::Bu2D0rho, 5150, 5250));
+    pdf1Bu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+                           .pdf1Bu_Bu2D0hst_GetPointer();
     pdf2Bu_Bu2D0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdf2Bu_Bu2D0hst_GetPointer();
