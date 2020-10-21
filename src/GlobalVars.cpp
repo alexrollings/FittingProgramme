@@ -213,8 +213,8 @@ GlobalVars::GlobalVars(int uniqueId)
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
   double min = 0.;
-  double max = 10.;
-  double start = 1.;
+  double max = 20.;
+  double start = 4.5;
   if (Configuration::Get().neutral() == Neutral::pi0) {
     min = -10.;
     max = 10.;
