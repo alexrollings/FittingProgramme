@@ -125,7 +125,8 @@ class PdfBase {
   virtual RooFormulaVar &N_trueId_BuPartial_Bs2Dst0Kpi() const = 0;
   virtual RooFormulaVar &N_trueId_BuPartial_Bs2D0Kpi() const = 0;
   virtual RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik() const = 0;
-  virtual RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik() const = 0;
+  virtual RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik()
+      const = 0;
 
   virtual RooFormulaVar &N_misId_BuPartial_Bu2Dst0h_D0pi0() const = 0;
   virtual RooFormulaVar &N_misId_BuPartial_Bu2Dst0h_D0gamma_WN() const = 0;
@@ -820,7 +821,8 @@ class Pdf : public PdfBase {
         .pdfBu_Bd2Dsth();
   }
   virtual RooAbsPdf &pdfBu_Bu2D0hst() const {
-    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+    return NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+               uniqueId_)
         .pdfBu_Bu2D0hst();
   }
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst() const {
@@ -837,8 +839,7 @@ class Pdf : public PdfBase {
     return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Bs2Dst0Kpi();
   }
   virtual RooGaussian &pdfBu_Bu2Dst0h_D0pi0_D02pik() const {
-    return NeutralVars<_neutral>::Get(uniqueId_)
-        .pdfBu_Bu2Dst0h_D0pi0_D02pik();
+    return NeutralVars<_neutral>::Get(uniqueId_).pdfBu_Bu2Dst0h_D0pi0_D02pik();
   }
   virtual RooGaussian &pdfBu_Bu2Dst0h_D0gamma_D02pik() const {
     return NeutralVars<_neutral>::Get(uniqueId_)
@@ -1268,7 +1269,8 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Bu_Bd2Dsth());
   PdfBase::functionsBu_.add(
-      NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
+      NeutralBachelorDaughtersVars<_neutral, _bachelor, _daughters>::Get(
+          PdfBase::uniqueId_)
           .pdfBu_Bu2D0hst());
   PdfBase::yieldsBu_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
