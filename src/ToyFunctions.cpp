@@ -345,6 +345,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
   if (config.neutral() == Neutral::pi0) {
     RooArgList functions2d;
     RooArgList yields2d;
+    std::vector<double> orEffVec;
     RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
         ("pdf2d_Bu2Dst0h_D0pi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -353,6 +354,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfDelta_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0());
+    orEffVec.emplace_back(pdf.orEffBu2Dst0h_D0pi0().getVal());
     RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
         ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -390,6 +392,18 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_WN);
     yields2d.add(pdf.N_misId_Bu2Dst0h_WN());
+    RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
+    if (daughters == Daughters::pik) {
+      pdf2d_Bu2Dst0h_D0pi0_WN_D02pik =
+          new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_WN_D02pik_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str(),
+                         "",
+                         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik(),
+                                   pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik()));
+      functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_WN_D02pik);
+      yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_WN_D02pik());
+    }
     RooProdPdf pdf2d_Bd2Dsth(
         ("pdf2d_Bd2Dsth_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -411,6 +425,18 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bu2Dst0hst(), pdf.pdfDelta_Bu2Dst0hst()));
     functions2d.add(pdf2d_Bu2Dst0hst);
     yields2d.add(pdf.N_trueId_Bu2Dst0hst());
+    RooProdPdf *pdf2d_Lb2Omegach_Lcpi0;
+    if (daughters == Daughters::kk) {
+      pdf2d_Lb2Omegach_Lcpi0 =
+          new RooProdPdf(("pdf2d_Lb2Omegach_Lcpi0_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str(),
+                         "",
+                         RooArgSet(pdf.pdfBu_Lb2Omegach_Lcpi0(),
+                                   pdf.pdfDelta_Lb2Omegach_Lcpi0()));
+      functions2d.add(*pdf2d_Lb2Omegach_Lcpi0);
+      yields2d.add(pdf.N_trueId_Lb2Omegach_Lcpi0());
+    }
     RooProdPdf *pdf2d_misId_Bu2D0hst;
     RooProdPdf *pdf2d_misId_Bd2Dsth;
     RooProdPdf *pdf2d_misId_Bu2Dst0hst;
@@ -466,6 +492,9 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     // It's OK that N_Data =/ N_toy, as N_Data contains events far out in the 2D
     // region. N_toy is generated from PDF defined in slices, and has yields
     // found in those slices in the data
+    // OR as it's generate in 2D (just without correlations), we should generate
+    // N / orEff to get 2D yields 
+    // yields stored in ArgList in order added - can store orEff in list too
     double nYields = yields2d.getSize();
     double N_2d = 0.;
     RooAbsArg *N_AbsArg = nullptr;
