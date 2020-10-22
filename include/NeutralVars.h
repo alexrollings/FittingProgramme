@@ -352,6 +352,9 @@ class NeutralVars {
     return *Bd2Dsth_fracPdf1BuPartial_;
   }
   // -------------------- Bu2D0hst -------------------- //
+  RooRealVar &Bu2D0hst_thresholdDelta() { return *Bu2D0hst_thresholdDelta_; }
+  RooRealVar &Bu2D0hst_bDelta() { return *Bu2D0hst_bDelta_; }
+  RooRealVar &Bu2D0hst_cDelta() { return *Bu2D0hst_cDelta_; }
   RooDstD0BG &pdfDelta_Bu2D0hst() { return *pdfDelta_Bu2D0hst_; }
   std::shared_ptr<RooDstD0BG> &pdfDelta_Bu2D0hst_GetPointer() {
     return pdfDelta_Bu2D0hst_;
