@@ -681,9 +681,6 @@ class NeutralBachelorDaughtersVars {
     return *impl_.pdfBu_Bu2Dst0hst_D0gamma_;
   }
   RooAbsPdf &pdfBu_Bu2Dst0hst() { return *impl_.pdfBu_Bu2Dst0hst_; }
-  std::shared_ptr<RooRealVar> &Bu2D0hst_aDelta_GetPointer() {
-    return impl_.Bu2D0hst_aDelta_;
-  }
   RooDstD0BG &pdfDelta_Bu2D0hst() { return *impl_.pdfDelta_Bu2D0hst_; }
 
  private:

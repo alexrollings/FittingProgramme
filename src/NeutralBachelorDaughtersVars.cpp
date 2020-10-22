@@ -706,12 +706,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                 .Bu2Dst0h_WN_fracD0pi0()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
-    // Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-    //     "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
-    //     Mode::Bu2D0rho, Systematic::NA, Sign::same));
-    Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
-        Mode::Bu2D0rho, -1, 1));
+        -2.6826e+00, 9.18e-01, Systematic::NA, Sign::same));
+    // Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //     "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
+    //     Mode::Bu2D0rho, -5, 5));
     pdfDelta_Bu2D0hst_ = std::shared_ptr<RooDstD0BG>(new RooDstD0BG(
         ("pdfDelta_Bu2D0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
