@@ -216,6 +216,8 @@ class PdfBase {
   virtual RooRealVar &orEffBu2Dst0hst_D0gamma() const = 0;
   virtual RooFormulaVar &orEffBu2Dst0hst() const = 0;
   virtual RooRealVar &orEffLb2Omegach_Lcpi0() const = 0;
+  virtual RooRealVar &orEffBs2Dst0Kpi() const = 0;
+  virtual RooRealVar &orEffBs2D0Kpi() const = 0;
 
   virtual RooRealVar &buEffBu2Dst0h_D0gamma() const = 0;
   virtual RooRealVar &buEffBu2Dst0h_D0pi0() const = 0;
@@ -1004,6 +1006,12 @@ class Pdf : public PdfBase {
   }
   virtual RooRealVar &orEffLb2Omegach_Lcpi0() const {
     return NeutralVars<_neutral>::Get(uniqueId_).orEffLb2Omegach_Lcpi0();
+  }
+  virtual RooRealVar &orEffBs2Dst0Kpi() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).orEffBs2Dst0Kpi();
+  }
+  virtual RooRealVar &orEffBs2D0Kpi() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).orEffBs2D0Kpi();
   }
 
   virtual RooRealVar &buEffBu2Dst0h_D0gamma() const {
