@@ -184,10 +184,10 @@ if __name__ == "__main__":
   for i in range(0, n_jobs):
     templatePath = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/multip_scripts/generate.sh.tmpl"
     if neutral == "pi0":
-      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + daughters + "_" + charge + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".sh"
     else:
-      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      scriptPath = '/data/lhcb/users/rollings/multi_process/tmp/generate_' + neutral + "_" + gen + "_" + daughters + "_" + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".sh"
     substitutions = {
         "nJob": i,
