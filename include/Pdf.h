@@ -219,6 +219,17 @@ class PdfBase {
   virtual RooRealVar &orEffBs2Dst0Kpi() const = 0;
   virtual RooRealVar &orEffBs2D0Kpi() const = 0;
 
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0pi0() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0gamma_WN() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0pi0_WN() const = 0;
+  virtual RooFormulaVar &orEffMisId_Bu2Dst0h_WN() const = 0;
+  virtual RooRealVar &orEffMisId_Bd2Dsth() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2D0hst() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2Dst0hst_D0pi0() const = 0;
+  virtual RooRealVar &orEffMisId_Bu2Dst0hst_D0gamma() const = 0;
+  virtual RooFormulaVar &orEffMisId_Bu2Dst0hst() const = 0;
+
   virtual RooRealVar &buEffBu2Dst0h_D0gamma() const = 0;
   virtual RooRealVar &buEffBu2Dst0h_D0pi0() const = 0;
   virtual RooRealVar &buEffBu2Dst0h_D0gamma_WN() const = 0;
@@ -1012,6 +1023,47 @@ class Pdf : public PdfBase {
   }
   virtual RooRealVar &orEffBs2D0Kpi() const {
     return NeutralVars<_neutral>::Get(uniqueId_).orEffBs2D0Kpi();
+  }
+
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0h_D0gamma();
+  }
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0h_D0pi0();
+  }
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0gamma_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0h_D0gamma_WN();
+  }
+  virtual RooRealVar &orEffMisId_Bu2Dst0h_D0pi0_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0h_D0pi0_WN();
+  }
+  virtual RooFormulaVar &orEffMisId_Bu2Dst0h_WN() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0h_WN();
+  }
+  virtual RooRealVar &orEffMisId_Bd2Dsth() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bd2Dsth();
+  }
+  virtual RooRealVar &orEffMisId_Bu2D0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2D0hst();
+  }
+  virtual RooRealVar &orEffMisId_Bu2Dst0hst_D0gamma() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0hst_D0gamma();
+  }
+  virtual RooRealVar &orEffMisId_Bu2Dst0hst_D0pi0() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0hst_D0pi0();
+  }
+  virtual RooFormulaVar &orEffMisId_Bu2Dst0hst() const {
+    return NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+        .orEffMisId_Bu2Dst0hst();
   }
 
   virtual RooRealVar &buEffBu2Dst0h_D0gamma() const {
