@@ -610,8 +610,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
-    pdfDelta_Bu2D0hst_ =
-        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
+    // Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    //     "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
+    //     Mode::Bu2D0rho, Systematic::NA, Sign::same));
+    Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+        "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
+        Mode::Bu2D0rho, -1, 1));
+    pdfDelta_Bu2D0hst_ = std::shared_ptr<RooDstD0BG>(new RooDstD0BG(
+        ("pdfDelta_Bu2D0hst_" +
+         ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+            .c_str(),
+        "", Configuration::Get().deltaMass(),
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_thresholdDelta(),
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_cDelta(),
+        *Bu2D0hst_aDelta_,
+        NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_bDelta()));
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId, _neutral, Bachelor::pi,
