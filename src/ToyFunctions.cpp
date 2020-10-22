@@ -221,6 +221,7 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
     toyFitResult->SetName("ToyResult");
     // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
+
   // if (id == 1) {
   //   auto toyPdfs = p.second;
   //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
@@ -361,82 +362,117 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
-    // RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_FAVasSUP = nullptr;
-    // if (daughters == Daughters::pik) {
-    //   pdf2d_Bu2Dst0h_D0pi0_FAVasSUP =
-    //       new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_FAVasSUP_" +
-    //                       ComposeName(id, neutral, bachelor, daughters, charge))
-    //                          .c_str(),
-    //                      "",
-    //                      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_FAVasSUP(),
-    //                                pdf.pdfDelta_Bu2Dst0h_D0pi0_FAVasSUP()));
-    //   functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_FAVasSUP);
-    //   yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_FAVasSUP());
-    // }
-    // RooProdPdf pdf2d_MisRec(
-    //     ("pdf2d_MisRec_" +
-    //      ComposeName(id, neutral, bachelor, daughters, charge))
-    //         .c_str(),
-    //     "", RooArgSet(pdf.pdfBu_MisRec(), pdf.pdfDelta_MisRec()));
-    // functions2d.add(pdf2d_MisRec);
-    // yields2d.add(pdf.N_trueId_MisRec());
-    // RooProdPdf pdf2d_PartRec(
-    //     ("pdf2d_PartRec_" +
-    //      ComposeName(id, neutral, bachelor, daughters, charge))
-    //         .c_str(),
-    //     "", RooArgSet(pdf.pdfBu_PartRec(), pdf.pdfDelta_PartRec()));
-    // functions2d.add(pdf2d_PartRec);
-    // yields2d.add(pdf.N_trueId_PartRec());
-    // RooProdPdf *pdf2d_misId_MisRec;
-    // RooProdPdf *pdf2d_misId_PartRec;
-    // RooProdPdf *pdf2d_Bs2Dst0Kpi;
-    // RooProdPdf *pdf2d_Bs2D0Kpi;
-    // if (bachelor == Bachelor::k) {
-    //   pdf2d_misId_MisRec = new RooProdPdf(
-    //       ("pdf2d_misId_MisRec_" +
-    //        ComposeName(id, neutral, bachelor, daughters, charge))
-    //           .c_str(),
-    //       "", RooArgSet(pdf.pdfBu_misId_MisRec(), pdf.pdfDelta_misId_MisRec()));
-    //   functions2d.add(*pdf2d_misId_MisRec);
-    //   yields2d.add(pdf.N_misId_MisRec());
-    //   pdf2d_misId_PartRec = new RooProdPdf(
-    //       ("pdf2d_misId_PartRec_" +
-    //        ComposeName(id, neutral, bachelor, daughters, charge))
-    //           .c_str(),
-    //       "",
-    //       RooArgSet(pdf.pdfBu_misId_PartRec(), pdf.pdfDelta_misId_PartRec()));
-    //   functions2d.add(*pdf2d_misId_PartRec);
-    //   yields2d.add(pdf.N_misId_PartRec());
-      // if (daughters != Daughters::kpi &&
-      //     Configuration::Get().runADS() == true) {
-        // pdf2d_Bs2Dst0Kpi = new RooProdPdf(
-        //     ("pdf2d_Bs2Dst0Kpi_" +
-        //      ComposeName(id, neutral, bachelor, daughters, charge))
-        //         .c_str(),
-        //     "", RooArgSet(pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfDelta_Bs2Dst0Kpi()));
-        // functions2d.add(*pdf2d_Bs2Dst0Kpi);
-        // yields2d.add(pdf.N_trueId_Bs2Dst0Kpi());
-        // pdf2d_Bs2D0Kpi = new RooProdPdf(
-        //     ("pdf2d_Bs2D0Kpi_" +
-        //      ComposeName(id, neutral, bachelor, daughters, charge))
-        //         .c_str(),
-        //     "", RooArgSet(pdf.pdfBu_Bs2D0Kpi(), pdf.pdfDelta_Bs2D0Kpi()));
-        // functions2d.add(*pdf2d_Bs2D0Kpi);
-        // yields2d.add(pdf.N_trueId_Bs2D0Kpi());
-    //   }
-    // }
+    RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_D02pik = nullptr;
+    if (daughters == Daughters::pik) {
+      pdf2d_Bu2Dst0h_D0pi0_D02pik =
+          new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_D02pik_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str(),
+                         "",
+                         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik(),
+                                   pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik()));
+      functions2d.add(*pdf2d_Bu2Dst0h_D0pi0_D02pik);
+      yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0_D02pik());
+    }
+    RooProdPdf pdf2d_Bu2Dst0h_WN(
+        ("pdf2d_Bu2Dst0h_WN_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_Bu2Dst0h_WN(), pdf.pdfDelta_Bu2Dst0h_WN()));
+    functions2d.add(pdf2d_Bu2Dst0h_WN);
+    yields2d.add(pdf.N_trueId_Bu2Dst0h_WN());
+    RooProdPdf pdf2d_misId_Bu2Dst0h_WN(
+        ("pdf2d_misId_Bu2Dst0h_WN_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "",
+        RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_WN(),
+                  pdf.pdfDelta_misId_Bu2Dst0h_WN()));
+    functions2d.add(pdf2d_misId_Bu2Dst0h_WN);
+    yields2d.add(pdf.N_misId_Bu2Dst0h_WN());
+    RooProdPdf pdf2d_Bd2Dsth(
+        ("pdf2d_Bd2Dsth_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_Bd2Dsth(), pdf.pdfDelta_Bd2Dsth()));
+    functions2d.add(pdf2d_Bd2Dsth);
+    yields2d.add(pdf.N_trueId_Bd2Dsth());
+    RooProdPdf pdf2d_Bu2D0hst(
+        ("pdf2d_Bu2D0hst_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_Bu2D0hst(), pdf.pdfDelta_Bu2D0hst()));
+    functions2d.add(pdf2d_Bu2D0hst);
+    yields2d.add(pdf.N_trueId_Bu2D0hst());
+    RooProdPdf pdf2d_Bu2Dst0hst(
+        ("pdf2d_Bu2Dst0hst_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", RooArgSet(pdf.pdfBu_Bu2Dst0hst(), pdf.pdfDelta_Bu2Dst0hst()));
+    functions2d.add(pdf2d_Bu2Dst0hst);
+    yields2d.add(pdf.N_trueId_Bu2Dst0hst());
+    RooProdPdf *pdf2d_misId_Bu2D0hst;
+    RooProdPdf *pdf2d_misId_Bd2Dsth;
+    RooProdPdf *pdf2d_misId_Bu2Dst0hst;
+    RooProdPdf *pdf2d_Bs2Dst0Kpi;
+    RooProdPdf *pdf2d_Bs2D0Kpi;
+    if (bachelor == Bachelor::k) {
+      pdf2d_misId_Bd2Dsth = new RooProdPdf(
+          ("pdf2d_misId_Bd2Dsth_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(pdf.pdfBu_misId_Bd2Dsth(), pdf.pdfDelta_misId_Bd2Dsth()));
+      functions2d.add(*pdf2d_misId_Bd2Dsth);
+      yields2d.add(pdf.N_misId_Bd2Dsth());
+      pdf2d_misId_Bu2D0hst = new RooProdPdf(
+          ("pdf2d_misId_Bu2D0hst_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "", RooArgSet(pdf.pdfBu_misId_Bu2D0hst(), pdf.pdfDelta_misId_Bu2D0hst()));
+      functions2d.add(*pdf2d_misId_Bu2D0hst);
+      yields2d.add(pdf.N_misId_Bu2D0hst());
+      pdf2d_misId_Bu2Dst0hst = new RooProdPdf(
+          ("pdf2d_misId_Bu2Dst0hst_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "",
+          RooArgSet(pdf.pdfBu_misId_Bu2Dst0hst(), pdf.pdfDelta_misId_Bu2Dst0hst()));
+      functions2d.add(*pdf2d_misId_Bu2Dst0hst);
+      yields2d.add(pdf.N_misId_Bu2Dst0hst());
+      if (daughters != Daughters::kpi &&
+          Configuration::Get().runADS() == true) {
+        pdf2d_Bs2Dst0Kpi = new RooProdPdf(
+            ("pdf2d_Bs2Dst0Kpi_" +
+             ComposeName(id, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "", RooArgSet(pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfDelta_Bs2Dst0Kpi()));
+        functions2d.add(*pdf2d_Bs2Dst0Kpi);
+        yields2d.add(pdf.N_trueId_Bs2Dst0Kpi());
+        pdf2d_Bs2D0Kpi = new RooProdPdf(
+            ("pdf2d_Bs2D0Kpi_" +
+             ComposeName(id, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "", RooArgSet(pdf.pdfBu_Bs2D0Kpi(), pdf.pdfDelta_Bs2D0Kpi()));
+        functions2d.add(*pdf2d_Bs2D0Kpi);
+        yields2d.add(pdf.N_trueId_Bs2D0Kpi());
+      }
+    }
     RooAddPdf addPdf2d(
         ("addPdf2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "", functions2d, yields2d);
     // Number of events to generate is total of all yields BEFORE
     // splitting
+    // It's OK that N_Data =/ N_toy, as N_Data contains events far out in the 2D
+    // region. N_toy is generated from PDF defined in slices, and has yields
+    // found in those slices in the data
     double nYields = yields2d.getSize();
     double N_2d = 0.;
     RooAbsArg *N_AbsArg = nullptr;
     RooAbsReal *N_AbsReal = nullptr;
     for (double i = 0; i < nYields; ++i) {
       std::string N_str = yields2d.at(i)->GetName();
+      std::cout << "N_str = " << N_str << "\n";
       N_AbsArg = yields2d.find(N_str.c_str());
       if (N_AbsArg == nullptr) {
         throw std::runtime_error("N_AbsArg gives nullptr for " + N_str);
