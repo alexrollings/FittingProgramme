@@ -457,11 +457,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2D0hst_cDelta_(Params::Get().CreateFixed(
           "Bu2D0hst_cDelta", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,
           Systematic::Bu2D0hstDeltaPdf, Sign::same)),
-      pdfDelta_Bu2D0hst_(
+      pdfDelta_Bu2D0hst_(new RooDstD0BG(
           ("pdfDelta_Bu2D0hst_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "", Configuration::Get().deltaMass(), *Bu2D0hst_thresholdDelta_,
-          *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_),
+          *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_meanOffset21Bu", uniqueId_, Neutral::gamma, Mode::Bu2D0rho,

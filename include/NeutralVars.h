@@ -352,12 +352,11 @@ class NeutralVars {
     return *Bd2Dsth_fracPdf1BuPartial_;
   }
   // -------------------- Bu2D0hst -------------------- //
-  RooDstD0BG &pdfDelta_Bu2D0hst() {
+  RooDstD0BG &pdfDelta_Bu2D0hst() { return *pdfDelta_Bu2D0hst_; }
+  std::shared_ptr<RooDstD0BG> &pdfDelta_Bu2D0hst_GetPointer() {
     return pdfDelta_Bu2D0hst_;
   }
-  RooRealVar &Bu2D0hst_mean1Bu() {
-    return *Bu2D0hst_mean1Bu_;
-  }
+  RooRealVar &Bu2D0hst_mean1Bu() { return *Bu2D0hst_mean1Bu_; }
   RooRealVar &Bu2D0hst_meanOffset21Bu() {
     return *Bu2D0hst_meanOffset21Bu_;
   }
@@ -749,7 +748,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2D0hst_aDelta_;
   std::shared_ptr<RooRealVar> Bu2D0hst_bDelta_;
   std::shared_ptr<RooRealVar> Bu2D0hst_cDelta_;
-  RooDstD0BG pdfDelta_Bu2D0hst_;
+  std::shared_ptr<RooDstD0BG> pdfDelta_Bu2D0hst_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
   std::shared_ptr<RooRealVar> Bu2D0hst_meanOffset21Bu_;
   std::shared_ptr<RooRealVar> Bu2D0hst_KpiSigmaBu_;

@@ -276,10 +276,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_cDelta_(Params::Get().CreateFixed(
           "Bu2D0hst_cDelta", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hstDeltaPdf, Sign::same)),
-      pdfDelta_Bu2D0hst_(
+      pdfDelta_Bu2D0hst_(new RooDstD0BG(
           ("pdfDelta_Bu2D0hst_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), *Bu2D0hst_thresholdDelta_,
-          *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_),
+          *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_)),
       Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hstBuPdf, Sign::same)),
