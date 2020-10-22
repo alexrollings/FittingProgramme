@@ -367,6 +367,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
     orEffMap[pdf.N_misId_Bu2Dst0h_D0pi0().GetName()] =
         pdf.orEffMisId_Bu2Dst0h_D0pi0().getVal();
+    pdf.orEffMisId_Bu2Dst0h_D0pi0().Print();
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_D02pik = nullptr;
     if (daughters == Daughters::pik) {
       pdf2d_Bu2Dst0h_D0pi0_D02pik =
@@ -386,8 +387,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bu2Dst0h_WN(), pdf.pdfDelta_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_Bu2Dst0h_WN);
     yields2d.add(pdf.N_trueId_Bu2Dst0h_WN());
-    orEffMap[pdf.N_trueId_Bu2Dst0h_D0pi0_WN().GetName()] =
-        pdf.orEffBu2Dst0h_D0pi0_WN().getVal();
+    orEffMap[pdf.N_trueId_Bu2Dst0h_WN().GetName()] =
+        pdf.orEffBu2Dst0h_WN().getVal();
     RooProdPdf pdf2d_misId_Bu2Dst0h_WN(
         ("pdf2d_misId_Bu2Dst0h_WN_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -397,8 +398,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_WN);
     yields2d.add(pdf.N_misId_Bu2Dst0h_WN());
-    orEffMap[pdf.N_misId_Bu2Dst0h_D0pi0_WN().GetName()] =
-        pdf.orEffBu2Dst0h_D0pi0_WN().getVal();
+    orEffMap[pdf.N_misId_Bu2Dst0h_WN().GetName()] =
+        pdf.orEffBu2Dst0h_WN().getVal();
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
     if (daughters == Daughters::pik) {
       pdf2d_Bu2Dst0h_D0pi0_WN_D02pik =
@@ -535,8 +536,10 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
       if (N_AbsReal == nullptr) {
         throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
       }
-      N_2d += N_AbsReal->getVal() / orEffMap[N_str.c_str()];
+      std::cout << N_AbsReal->GetName() << "\t" << orEffMap[N_AbsReal->GetName()] << "\n";
+      N_2d += N_AbsReal->getVal() / orEffMap[N_AbsReal->GetName()];
     }
+    std::cout << N_2d << "\n";
     // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor,
     // daughters, charge)]
     //     ->numEntries();
