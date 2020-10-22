@@ -345,7 +345,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
   if (config.neutral() == Neutral::pi0) {
     RooArgList functions2d;
     RooArgList yields2d;
-    std::vector<double> orEffVec;
+    std::map<const char *, double> orEffMap;
     RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
         ("pdf2d_Bu2Dst0h_D0pi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -354,7 +354,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfDelta_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_trueId_Bu2Dst0h_D0pi0());
-    orEffVec.emplace_back(pdf.orEffBu2Dst0h_D0pi0().getVal());
+    orEffMap[pdf.N_trueId_Bu2Dst0h_D0pi0().GetName()] =
+        pdf.orEffBu2Dst0h_D0pi0().getVal();
     RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
         ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -364,6 +365,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
     yields2d.add(pdf.N_misId_Bu2Dst0h_D0pi0());
+    orEffMap[pdf.N_misId_Bu2Dst0h_D0pi0().GetName()] =
+        pdf.orEffMisId_Bu2Dst0h_D0pi0().getVal();
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_D02pik = nullptr;
     if (daughters == Daughters::pik) {
       pdf2d_Bu2Dst0h_D0pi0_D02pik =
@@ -383,6 +386,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bu2Dst0h_WN(), pdf.pdfDelta_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_Bu2Dst0h_WN);
     yields2d.add(pdf.N_trueId_Bu2Dst0h_WN());
+    orEffMap[pdf.N_trueId_Bu2Dst0h_D0pi0_WN().GetName()] =
+        pdf.orEffBu2Dst0h_D0pi0_WN().getVal();
     RooProdPdf pdf2d_misId_Bu2Dst0h_WN(
         ("pdf2d_misId_Bu2Dst0h_WN_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -392,6 +397,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                   pdf.pdfDelta_misId_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_WN);
     yields2d.add(pdf.N_misId_Bu2Dst0h_WN());
+    orEffMap[pdf.N_misId_Bu2Dst0h_D0pi0_WN().GetName()] =
+        pdf.orEffBu2Dst0h_D0pi0_WN().getVal();
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
     if (daughters == Daughters::pik) {
       pdf2d_Bu2Dst0h_D0pi0_WN_D02pik =
@@ -411,6 +418,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bd2Dsth(), pdf.pdfDelta_Bd2Dsth()));
     functions2d.add(pdf2d_Bd2Dsth);
     yields2d.add(pdf.N_trueId_Bd2Dsth());
+    orEffMap[pdf.N_trueId_Bd2Dsth().GetName()] = pdf.orEffBd2Dsth().getVal();
     RooProdPdf pdf2d_Bu2D0hst(
         ("pdf2d_Bu2D0hst_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -418,6 +426,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bu2D0hst(), pdf.pdfDelta_Bu2D0hst()));
     functions2d.add(pdf2d_Bu2D0hst);
     yields2d.add(pdf.N_trueId_Bu2D0hst());
+    orEffMap[pdf.N_trueId_Bu2D0hst().GetName()] = pdf.orEffBu2D0hst().getVal();
     RooProdPdf pdf2d_Bu2Dst0hst(
         ("pdf2d_Bu2Dst0hst_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -425,6 +434,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         "", RooArgSet(pdf.pdfBu_Bu2Dst0hst(), pdf.pdfDelta_Bu2Dst0hst()));
     functions2d.add(pdf2d_Bu2Dst0hst);
     yields2d.add(pdf.N_trueId_Bu2Dst0hst());
+    orEffMap[pdf.N_trueId_Bu2Dst0hst().GetName()] =
+        pdf.orEffBu2Dst0hst().getVal();
     RooProdPdf *pdf2d_Lb2Omegach_Lcpi0;
     if (daughters == Daughters::kk) {
       pdf2d_Lb2Omegach_Lcpi0 =
@@ -436,6 +447,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                                    pdf.pdfDelta_Lb2Omegach_Lcpi0()));
       functions2d.add(*pdf2d_Lb2Omegach_Lcpi0);
       yields2d.add(pdf.N_trueId_Lb2Omegach_Lcpi0());
+      orEffMap[pdf.N_trueId_Lb2Omegach_Lcpi0().GetName()] =
+          pdf.orEffLb2Omegach_Lcpi0().getVal();
     }
     RooProdPdf *pdf2d_misId_Bu2D0hst;
     RooProdPdf *pdf2d_misId_Bd2Dsth;
@@ -447,24 +460,33 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
           ("pdf2d_misId_Bd2Dsth_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
-          "", RooArgSet(pdf.pdfBu_misId_Bd2Dsth(), pdf.pdfDelta_misId_Bd2Dsth()));
+          "",
+          RooArgSet(pdf.pdfBu_misId_Bd2Dsth(), pdf.pdfDelta_misId_Bd2Dsth()));
       functions2d.add(*pdf2d_misId_Bd2Dsth);
       yields2d.add(pdf.N_misId_Bd2Dsth());
+      orEffMap[pdf.N_misId_Bd2Dsth().GetName()] =
+          pdf.orEffMisId_Bd2Dsth().getVal();
       pdf2d_misId_Bu2D0hst = new RooProdPdf(
           ("pdf2d_misId_Bu2D0hst_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
-          "", RooArgSet(pdf.pdfBu_misId_Bu2D0hst(), pdf.pdfDelta_misId_Bu2D0hst()));
+          "",
+          RooArgSet(pdf.pdfBu_misId_Bu2D0hst(), pdf.pdfDelta_misId_Bu2D0hst()));
       functions2d.add(*pdf2d_misId_Bu2D0hst);
       yields2d.add(pdf.N_misId_Bu2D0hst());
-      pdf2d_misId_Bu2Dst0hst = new RooProdPdf(
-          ("pdf2d_misId_Bu2Dst0hst_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "",
-          RooArgSet(pdf.pdfBu_misId_Bu2Dst0hst(), pdf.pdfDelta_misId_Bu2Dst0hst()));
+      orEffMap[pdf.N_misId_Bu2D0hst().GetName()] =
+          pdf.orEffMisId_Bu2D0hst().getVal();
+      pdf2d_misId_Bu2Dst0hst =
+          new RooProdPdf(("pdf2d_misId_Bu2Dst0hst_" +
+                          ComposeName(id, neutral, bachelor, daughters, charge))
+                             .c_str(),
+                         "",
+                         RooArgSet(pdf.pdfBu_misId_Bu2Dst0hst(),
+                                   pdf.pdfDelta_misId_Bu2Dst0hst()));
       functions2d.add(*pdf2d_misId_Bu2Dst0hst);
       yields2d.add(pdf.N_misId_Bu2Dst0hst());
+      orEffMap[pdf.N_misId_Bu2Dst0hst().GetName()] =
+          pdf.orEffMisId_Bu2Dst0hst().getVal();
       if (daughters != Daughters::kpi &&
           Configuration::Get().runADS() == true) {
         pdf2d_Bs2Dst0Kpi = new RooProdPdf(
@@ -474,6 +496,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
             "", RooArgSet(pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfDelta_Bs2Dst0Kpi()));
         functions2d.add(*pdf2d_Bs2Dst0Kpi);
         yields2d.add(pdf.N_trueId_Bs2Dst0Kpi());
+        orEffMap[pdf.N_trueId_Bs2Dst0Kpi().GetName()] =
+            pdf.orEffBs2Dst0Kpi().getVal();
         pdf2d_Bs2D0Kpi = new RooProdPdf(
             ("pdf2d_Bs2D0Kpi_" +
              ComposeName(id, neutral, bachelor, daughters, charge))
@@ -481,6 +505,8 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
             "", RooArgSet(pdf.pdfBu_Bs2D0Kpi(), pdf.pdfDelta_Bs2D0Kpi()));
         functions2d.add(*pdf2d_Bs2D0Kpi);
         yields2d.add(pdf.N_trueId_Bs2D0Kpi());
+        orEffMap[pdf.N_trueId_Bs2D0Kpi().GetName()] =
+            pdf.orEffBs2D0Kpi().getVal();
       }
     }
     RooAddPdf addPdf2d(
@@ -493,7 +519,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     // region. N_toy is generated from PDF defined in slices, and has yields
     // found in those slices in the data
     // OR as it's generate in 2D (just without correlations), we should generate
-    // N / orEff to get 2D yields 
+    // N / orEff to get 2D yields
     // yields stored in ArgList in order added - can store orEff in list too
     double nYields = yields2d.getSize();
     double N_2d = 0.;
@@ -501,7 +527,6 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     RooAbsReal *N_AbsReal = nullptr;
     for (double i = 0; i < nYields; ++i) {
       std::string N_str = yields2d.at(i)->GetName();
-      std::cout << "N_str = " << N_str << "\n";
       N_AbsArg = yields2d.find(N_str.c_str());
       if (N_AbsArg == nullptr) {
         throw std::runtime_error("N_AbsArg gives nullptr for " + N_str);
@@ -510,9 +535,10 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
       if (N_AbsReal == nullptr) {
         throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
       }
-      N_2d += N_AbsReal->getVal();
+      N_2d += N_AbsReal->getVal();  /// orEffMap[i];
     }
-    // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+    // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor,
+    // daughters, charge)]
     //     ->numEntries();
     std::cout << "Generating toy dataset..." << std::endl;
     RooDataSet *genData = addPdf2d.generate(
@@ -531,14 +557,16 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     //                                           charge)]
     //         // ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
     //         //           "&&Delta_M<" + std::to_string(config.deltaHigh()) +
-    //         //           ")||(Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
-    //         //           "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()) +
+    //         //           ")||(Bu_Delta_M>" +
+    //         std::to_string(config.buDeltaLow()) +
+    //         //           "&&Bu_Delta_M<" +
+    //         std::to_string(config.buDeltaHigh()) +
     //         //           ")")
     //         //              .c_str())
     //         ->numEntries();
-    // std::cout << "Generating toy dataset with " << N_2d << " events..." << std::endl;
-    // Generate 50% more events than needed
-    // int nEvtsToGenerate = (int)N_2d * 2;
+    // std::cout << "Generating toy dataset with " << N_2d << " events..." <<
+    // std::endl; Generate 50% more events than needed int nEvtsToGenerate =
+    // (int)N_2d * 2;
     // // tmp dataset w/ more events than needed
     // RooDataSet *tmpToy =
     //     addPdf2d.generate(config.fittingArgSet(), nEvtsToGenerate);
@@ -581,41 +609,38 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
     std::cout << "# of events in toy DS = " << genData->numEntries() << "\n";
     std::cout << "Generated!" << std::endl;
 
-    RooAbsData *gds = genData->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
-                      "&&Delta_M<" + std::to_string(config.deltaHigh()) +
-                      ")||(Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
-                      "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()) +
-                      ")")
-                         .c_str());
+    RooAbsData *gds = genData->reduce(
+        ("(Delta_M>" + std::to_string(config.deltaLow()) + "&&Delta_M<" +
+         std::to_string(config.deltaHigh()) + ")||(Bu_Delta_M>" +
+         std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
+         std::to_string(config.buDeltaHigh()) + ")")
+            .c_str());
     std::cout << "nEvts = " << gds->numEntries() << "\n";
-    std::cout
-        << "nEvts in box = "
-        << gds
-               ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+    std::cout << "nEvts in box = "
+              << gds->reduce(
+                        ("(Delta_M>" + std::to_string(config.deltaLow()) +
                          "&&Delta_M<" + std::to_string(config.deltaHigh()) +
                          ")&&(Bu_Delta_M>" +
                          std::to_string(config.buDeltaLow()) + "&&Bu_Delta_M<" +
                          std::to_string(config.buDeltaHigh()) + ")")
                             .c_str())
-               ->numEntries()
-        << "\n";
+                     ->numEntries()
+              << "\n";
 
     std::cout << "nEvts in delta = "
-              << gds
-                     ->reduce(("(Bu_Delta_M>" +
-                               std::to_string(config.buDeltaLow()) +
-                               "&&Bu_Delta_M<" +
-                               std::to_string(config.buDeltaHigh()) + ")")
-                                  .c_str())
+              << gds->reduce(("(Bu_Delta_M>" +
+                              std::to_string(config.buDeltaLow()) +
+                              "&&Bu_Delta_M<" +
+                              std::to_string(config.buDeltaHigh()) + ")")
+                                 .c_str())
                      ->numEntries()
               << "\n";
 
     std::cout << "nEvts in bu = "
-              << gds
-                     ->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
-                               "&&Delta_M<" +
-                               std::to_string(config.deltaHigh()) + ")")
-                                  .c_str())
+              << gds->reduce(("(Delta_M>" + std::to_string(config.deltaLow()) +
+                              "&&Delta_M<" +
+                              std::to_string(config.deltaHigh()) + ")")
+                                 .c_str())
                      ->numEntries()
               << "\n";
     RooAbsData *ds =
@@ -655,7 +680,6 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                                 .c_str())
                      ->numEntries()
               << "\n";
-
 
     if (mapDataLabelToy.find(ComposeDataLabelName(
             neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
