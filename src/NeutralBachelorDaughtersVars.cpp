@@ -275,6 +275,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -349,6 +351,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -606,6 +610,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -700,6 +706,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                 .Bu2Dst0h_WN_fracD0pi0()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -910,6 +918,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -979,6 +989,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
             NeutralVars<_neutral>::Get(uniqueId).bkgFracKK_Lb2Omegach_Lcpi0()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -1179,6 +1191,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -1244,6 +1258,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
             -1000000, 1000000));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -1468,6 +1484,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -1538,6 +1556,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
                 .orEffBu2Dst0h_WN()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -1795,6 +1815,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -1872,6 +1894,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                 .Bu2Dst0h_WN_fracD0pi0()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -2090,6 +2114,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -2152,6 +2178,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
                 .R_Dst0KDst0pi_Bu2Dst0h_WN()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
@@ -2359,6 +2387,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
             .c_str(),
         "", RooArgSet(*pdf1Bu_Bu2D0hst_, *pdf2Bu_Bu2D0hst_),
         NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_fracPdf1Bu()));
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     Bu2Dst0hst_D0gamma_mean1Bu_ =
         NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
                                      Daughters::kpi>::Get(uniqueId)
@@ -2421,6 +2451,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                 .R_Dst0KDst0pi_Bu2Dst0h_WN()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
+    pdfDelta_Bu2D0hst_ =
+        NeutralVars<_neutral>::Get(uniqueId).pdfDelta_Bu2D0hst_GetPointer();
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
