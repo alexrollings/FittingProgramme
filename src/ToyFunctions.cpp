@@ -535,7 +535,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
       if (N_AbsReal == nullptr) {
         throw std::runtime_error("Canot cast AbsArg to AbsReal for " + N_str);
       }
-      N_2d += N_AbsReal->getVal();  /// orEffMap[i];
+      N_2d += N_AbsReal->getVal() / orEffMap[N_str.c_str()];
     }
     // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor,
     // daughters, charge)]
