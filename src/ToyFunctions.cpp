@@ -361,6 +361,7 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         pdf.N_trueId_Bu2Dst0h_D0pi0().getVal() /
             pdf.orEffBu2Dst0h_D0pi0().getVal(),
         0, 1000000);
+    std::cout << "1" << std::endl;
     yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0);
     RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
         ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
@@ -406,15 +407,15 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
             .c_str(),
         "", RooArgSet(pdf.pdfBu_Bu2Dst0h_WN(), pdf.pdfDelta_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_Bu2Dst0h_WN);
-    RooRealVar N_2d_trueId_Bu2Dst0h_D0pi0_WN(
-        ("N_2d_trueId_Bu2Dst0h_D0pi0_WN_" +
+    RooRealVar N_2d_trueId_Bu2Dst0h_WN(
+        ("N_2d_trueId_Bu2Dst0h_WN_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
-        pdf.N_trueId_Bu2Dst0h_D0pi0_WN().getVal() /
-            pdf.orEffBu2Dst0h_D0pi0_WN().getVal(),
+        pdf.N_trueId_Bu2Dst0h_WN().getVal() /
+            pdf.orEffBu2Dst0h_WN().getVal(),
         0, 1000000);
-    yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0_WN);
+    yields2d.add(N_2d_trueId_Bu2Dst0h_WN);
     RooProdPdf pdf2d_misId_Bu2Dst0h_WN(
         ("pdf2d_misId_Bu2Dst0h_WN_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -423,15 +424,15 @@ void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
         RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_WN(),
                   pdf.pdfDelta_misId_Bu2Dst0h_WN()));
     functions2d.add(pdf2d_misId_Bu2Dst0h_WN);
-    RooRealVar N_2d_misId_Bu2Dst0h_D0pi0_WN(
-        ("N_2d_misId_Bu2Dst0h_D0pi0_WN_" +
+    RooRealVar N_2d_misId_Bu2Dst0h_WN(
+        ("N_2d_misId_Bu2Dst0h_WN_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
-        pdf.N_misId_Bu2Dst0h_D0pi0_WN().getVal() /
-            pdf.orEffMisId_Bu2Dst0h_D0pi0_WN().getVal(),
+        pdf.N_misId_Bu2Dst0h_WN().getVal() /
+            pdf.orEffMisId_Bu2Dst0h_WN().getVal(),
         0, 1000000);
-    yields2d.add(N_2d_misId_Bu2Dst0h_D0pi0_WN);
+    yields2d.add(N_2d_misId_Bu2Dst0h_WN);
     RooProdPdf *pdf2d_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
     RooRealVar *N_2d_trueId_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
     if (daughters == Daughters::pik) {
