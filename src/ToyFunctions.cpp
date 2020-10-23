@@ -505,6 +505,39 @@ void GenerateToyFromGammaPdf(
           pdf.orEffBu2Dst0h_D0pi0().getVal(),
       0, 1000000);
   yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0);
+  RooRealVar fracPdfBu_misId_Bu2Dst0h_D0pi0(
+      ("fracPdfBu_misId_Bu2Dst0h_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      pdf.N_misId_Bu_Bu2Dst0h_D0pi0().getVal() /
+          (pdf.N_misId_Bu_Bu2Dst0h_D0pi0().getVal() +
+           pdf.N_misId_BuPartial_Bu2Dst0h_D0pi0().getVal()));
+  RooAddPdf pdfBu_tot_misId_Bu2Dst0h_D0pi0(
+      ("pdfBu_tot_misId_Bu2Dst0h_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      RooArgSet((pdf.pdfBu_misId_Bu2Dst0h_D0pi0(),
+                 pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0()),
+                fracPdfBu_misId_Bu2Dst0h_D0pi0));
+  RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
+      ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      RooArgSet(pdfBu_tot_misId_Bu2Dst0h_D0pi0,
+                pdf.pdfDelta_misId_Bu2Dst0h_D0pi0()));
+  functions2d.add(pdf2d_misId_Bu2Dst0h_D0pi0);
+  RooRealVar N_2d_misId_Bu2Dst0h_D0pi0(
+      ("N_2d_misId_Bu2Dst0h_D0pi0_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      pdf.N_misId_Bu2Dst0h_D0pi0().getVal() /
+          pdf.orEffMisId_Bu2Dst0h_D0pi0().getVal(),
+      0, 1000000);
+  yields2d.add(N_2d_misId_Bu2Dst0h_D0pi0);
 
   RooAddPdf addPdf2d(
       ("addPdf2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
