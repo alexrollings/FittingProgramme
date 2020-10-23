@@ -466,7 +466,66 @@ void CalculateNEvtsToGenerate(RooArgList &yields2d, double &N_2d) {
 void GenerateToyFromGammaPdf(
     std::map<std::string, RooDataSet *> &mapDataLabelToy,
     std::map<std::string, RooDataSet *> &mapDataLabelData, int id, PdfBase &pdf,
-    Configuration &config, std::string const &outputDir) {}
+    Configuration &config, std::string const &outputDir) {
+  std::cout << "Generating toy from gamma PDF\n";
+  Neutral neutral = pdf.neutral();
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Charge charge = pdf.charge();
+  RooArgList functions2d;
+  RooArgList yields2d;
+
+  RooRealVar fracPdfBu_Bu2Dst0h_D0pi0(
+      ("fracPdfBu_Bu2Dst0h_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      pdf.N_trueId_Bu_Bu2Dst0h_D0pi0().getVal() /
+          (pdf.N_trueId_Bu_Bu2Dst0h_D0pi0().getVal() +
+           pdf.N_trueId_BuPartial_Bu2Dst0h_D0pi0().getVal()));
+  RooAddPdf pdfBu_tot_Bu2Dst0h_D0pi0(
+      ("pdfBu_tot_Bu2Dst0h_D0pi0" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      RooArgSet((pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfBuPartial_Bu2Dst0h_D0pi0()),
+                fracPdfBu_Bu2Dst0h_D0pi0));
+  RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
+      ("pdf2d_Bu2Dst0h_D0pi0_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", RooArgSet(pdfBu_tot_Bu2Dst0h_D0pi0, pdf.pdfDelta_Bu2Dst0h_D0pi0()));
+  functions2d.add(pdf2d_Bu2Dst0h_D0pi0);
+  RooRealVar N_2d_trueId_Bu2Dst0h_D0pi0(
+      ("N_2d_trueId_Bu2Dst0h_D0pi0_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      pdf.N_trueId_Bu2Dst0h_D0pi0().getVal() /
+          pdf.orEffBu2Dst0h_D0pi0().getVal(),
+      0, 1000000);
+  yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0);
+
+  RooAddPdf addPdf2d(
+      ("addPdf2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", functions2d, yields2d);
+  
+  double N_2d = 0.;
+  CalculateNEvtsToGenerate(yields2d, N_2d);
+  std::cout << N_2d << "\n";
+  // N_2d = mapDataLabelData[ComposeDataLabelName(neutral, bachelor,
+  // daughters, charge)]
+  //     ->numEntries();
+  std::cout << "Generating toy dataset..." << std::endl;
+  RooDataSet *genData = addPdf2d.generate(
+      RooArgSet(config.buDeltaMass(), config.deltaMass()), N_2d);
+  genData->SetName(
+      ("gen_" + ComposeName(id, neutral, bachelor, daughters, charge)).c_str());
+  std::cout << "Generated!" << std::endl;
+
+  PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
+}
 
 void GenerateToyFromPi0Pdf(
     std::map<std::string, RooDataSet *> &mapDataLabelToy,
