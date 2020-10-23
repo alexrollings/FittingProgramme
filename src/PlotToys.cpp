@@ -473,7 +473,7 @@ int main(int argc, char *argv[]) {
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
-    if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus") {
+    if (paramName == "bkgFracADS_Bs2Dst0Kpi_pi0") {
       std::cout << "HERE WE GO\n";
     }
     for (double j = 0; j < initValMap[paramName].size(); ++j) {
@@ -481,8 +481,8 @@ int main(int argc, char *argv[]) {
       valHist.Fill(valMap[paramName][j]);
       errHist.Fill(errMap[paramName][j]);
       pullHist.Fill(pullMap[paramName][j].second);
-      if (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus" &&
-          pullMap[paramName][j].second < -0.2 && pullMap[paramName][j].second > -0.25) {
+      if (paramName == "bkgFracADS_Bs2Dst0Kpi_pi0" &&
+          pullMap[paramName][j].second > 1.0) {
         std::cout << pullMap[paramName][j].second << "\t";
         std::cout << pullMap[paramName][j].first << "\n";
       }
