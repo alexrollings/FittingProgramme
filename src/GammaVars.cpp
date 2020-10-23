@@ -138,9 +138,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_fracPdf1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_fracPdf1Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),
-      Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFloating(
+      // Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0pi_D0pi0, 5280, 5310)),
+      Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 5280, 5310)),
+          5.2983e+03, 2.18e-01, Systematic::NA,
+          Sign::same)),
       Bu2Dst0h_D0pi0_meanOffset31BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_meanOffset31BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0pi0, Systematic::crossFeedBuPdf, Sign::same)),

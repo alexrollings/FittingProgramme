@@ -254,13 +254,13 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
           "", RooArgSet(pdf1Bu_Bu2Dst0h_D0pi0_, pdf2Bu_Bu2Dst0h_D0pi0_),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bu2Dst0h_D0pi0_fracPdf1Bu())),
-      // Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId_, Neutral::gamma,
-      //     Bachelor::pi, Mode::Bu2Dst0pi_D0pi0,
-      //     Systematic::pi0BuPartialSigma1, Sign::positive)),
-      Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFloating(
+      Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId_, Neutral::gamma,
-          Bachelor::pi, Mode::Bu2Dst0pi_D0pi0, 20, 35)),
+          Bachelor::pi, 24.5653, 0.157787,
+          Systematic::pi0BuPartialSigma1, Sign::positive)),
+      // Bu2Dst0h_D0pi0_sigma1BuPartial_(Params::Get().CreateFloating(
+      //     "Bu2Dst0h_D0pi0_sigma1BuPartial", uniqueId_, Neutral::gamma,
+      //     Bachelor::pi, Mode::Bu2Dst0pi_D0pi0, 20, 30)),
       Bu2Dst0h_D0pi0_sigma2BuPartial_(new RooFormulaVar(
           ("Bu2Dst0h_D0pi0_sigma2BuPartial_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
