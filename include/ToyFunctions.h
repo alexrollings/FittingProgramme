@@ -16,7 +16,11 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
                    std::vector<Daughters> const &daughtersVec,
                    std::vector<Charge> const &chargeVec,
                    std::string const &outputDir, int id);
-void GenerateToyFromPdf(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+void GenerateToyFromPdf_BuDelta(std::map<std::string, RooDataSet *> &mapDataLabelToy,
+                        std::map<std::string, RooDataSet *> &mapDataLabelData,
+                        int id, PdfBase &pdf, Configuration &config,
+                        std::string const &outputDir);
+void GenerateToyFromPdf_BuDeltaBuPartial(std::map<std::string, RooDataSet *> &mapDataLabelToy,
                         std::map<std::string, RooDataSet *> &mapDataLabelData,
                         int id, PdfBase &pdf, Configuration &config,
                         std::string const &outputDir);
