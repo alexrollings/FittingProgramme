@@ -227,17 +227,17 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
     // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
 
-  // if (id == 1) {
-  //   auto toyPdfs = p.second;
-  //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
-  //   for (auto &p : toyPdfs) {
-  //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-  //                toyFitResult.get(), yMaxMap);
-  //   }
-  //   if (config.noFit() == false) {
-  //     PlotCorrelations(toyFitResult.get(), outputDir, config);
-  //   }
-  // }
+  if (id == 1) {
+    auto toyPdfs = p.second;
+    std::map<Neutral, std::map<Mass, double> > yMaxMap;
+    for (auto &p : toyPdfs) {
+      Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+                 toyFitResult.get(), yMaxMap);
+    }
+    if (config.noFit() == false) {
+      PlotCorrelations(toyFitResult.get(), outputDir, config);
+    }
+  }
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
@@ -443,6 +443,198 @@ void PrintEvents(RooDataSet *genData,
                                           charge) +
                      "\n";
   }
+}
+
+void PlottingGeneratedToy(Configuration &config, RooDataSet &toyDS, RooDataSet &dataDS,
+                RooAddPdf &addPdf, PdfBase &pdf, std::string const &outputDir,
+                int id) {
+  Neutral neutral = pdf.neutral();
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Charge charge = pdf.charge();
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(0.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.5, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  auto toyHist = std::unique_ptr<RooDataHist>(toyDS.binnedClone(
+      ("toyDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "toyDataHist"));
+
+  auto toyHist1d = toyHist->createHistogram(
+      ("toyHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
+  if (toyHist1d == nullptr) {
+    throw std::runtime_error("\n1D hist of toy returns nullptr\n");
+  }
+  auto toyHist2d = std::unique_ptr<TH2>(dynamic_cast<TH2F *>(toyHist1d));
+  if (toyHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of toy returns nullptr\n");
+  }
+  toyHist2d->SetTitle("");
+
+  // 2D data plot
+  TCanvas canvasToy(
+      ("canvasToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  toyHist2d->SetStats(0);
+  toyHist2d->Draw("colz");
+  canvasToy.Update();
+  canvasToy.SaveAs((outputDir + "/2d_plots/2dToy_" +
+                    ComposeName(id, neutral, bachelor, daughters, charge) +
+                    ".pdf")
+                       .c_str());
+
+  auto dataHist = std::unique_ptr<RooDataHist>(dataDS.binnedClone(
+      ("dataDataHist_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "dataDataHist"));
+
+  auto dataHist1d = dataHist->createHistogram(
+      ("dataHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
+  if (dataHist1d == nullptr) {
+    throw std::runtime_error("\n1D hist of data returns nullptr\n");
+  }
+  auto dataHist2d =
+      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(dataHist1d));
+  if (dataHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of data returns nullptr\n");
+  }
+  dataHist2d->SetTitle("");
+
+  // 2D data plot
+  TCanvas canvasData(
+      ("canvasData_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  dataHist2d->SetStats(0);
+  // dataHist2d->SetTitle(
+  //     "B^{#pm}#rightarrow#font[132]{[}#font[132]{[}K^{#pm}#"
+  //     "pi^{#mp}#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{#pm}");
+  dataHist2d->Draw("colz");
+  canvasData.Update();
+  canvasData.SaveAs((outputDir + "/2d_plots/2dData_" +
+                     ComposeName(id, neutral, bachelor, daughters, charge) +
+                     ".pdf")
+                        .c_str());
+
+  auto modelHist1d = addPdf.createHistogram(
+      ("modelHist2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      config.buDeltaMass(), RooFit::Binning(config.buDeltaMass().getBins()),
+      RooFit::YVar(config.deltaMass(),
+                   RooFit::Binning(config.deltaMass().getBins())));
+  if (modelHist1d == nullptr) {
+    throw std::runtime_error("\n1D hist of pdf returns nullptr\n");
+  }
+  auto modelHist2d =
+      std::unique_ptr<TH2>(dynamic_cast<TH2F *>(modelHist1d /* .get() */));
+  if (modelHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+  }
+  modelHist2d->SetTitle("");
+
+  // Make 2D plot of toy
+  // Plot ONLY one component of the toy
+  modelHist2d->Scale(toyHist2d->Integral() / modelHist2d->Integral());
+  TCanvas canvasModel(
+      ("canvasModel_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  modelHist2d->SetStats(0);
+  // modelHist2d->SetTitle(
+  //     "B^{#pm}#rightarrow#font[132]{[}#font[132]{[}K^{#pm}#"
+  //     "pi^{#mp}#font[132]{]}_{D^{0}}#gamma#font[132]{]}_{D^{*0}}#pi^{#pm}");
+  modelHist2d->Draw("colz");
+  modelHist2d->GetZaxis()->SetRangeUser(-0.00001, modelHist2d->GetMaximum());
+  canvasModel.Update();
+  canvasModel.SaveAs((outputDir + "/2d_plots/2dPdf_" +
+                      ComposeName(id, neutral, bachelor, daughters, charge) +
+                      ".pdf")
+                         .c_str());
+
+  gStyle->SetTitleOffset(1.2, "Z");
+  // Make a histogram with the Poisson stats in each data bin
+  auto errHist2d = std::unique_ptr<TH2F>(
+      new TH2F("errHist2d", "", config.buDeltaMass().getBins(),
+               config.buDeltaMass().getMin(), config.buDeltaMass().getMax(),
+               config.deltaMass().getBins(), config.deltaMass().getMin(),
+               config.deltaMass().getMax()));
+  for (int i = 0;
+       i < config.buDeltaMass().getBins() * config.deltaMass().getBins(); i++) {
+    float n_bin = toyHist2d->GetBinContent(i);
+    float err = sqrt(n_bin);
+    errHist2d->SetBinContent(i, err);
+  }
+
+  // 2D residuals plot (toy - data)/err
+  TCanvas canvasResData(
+      ("canvasResData" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  canvasResData.cd();
+  // auto resHist2d_temp = std::unique_ptr<TObject>(toyHist2d->Clone());
+  auto resDataHist2dToy_temp = toyHist2d->Clone();
+  if (resDataHist2dToy_temp == nullptr) {
+    throw std::runtime_error("\nCould not clone toyHist2d.\n");
+  }
+  auto resDataHist2dToy = std::unique_ptr<TH2F>(
+      dynamic_cast<TH2F *>(resDataHist2dToy_temp /* .get() */));
+  if (resDataHist2dToy == nullptr) {
+    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+  }
+  resDataHist2dToy->Add(dataHist2d.get(), -1);
+  resDataHist2dToy->Divide(errHist2d.get());
+  canvasResData.cd();
+  resDataHist2dToy->GetZaxis()->SetTitle("Resdual");
+  resDataHist2dToy->GetZaxis()->SetRangeUser(-6.0, 6.0);
+  resDataHist2dToy->SetStats(0);
+  resDataHist2dToy->Draw("colz");
+  canvasResData.Update();
+  canvasResData.SaveAs((outputDir + "/2d_plots/2dResToyData_" +
+                        ComposeName(id, neutral, bachelor, daughters, charge) +
+                        ".pdf")
+                           .c_str());
+
+  // 2D residuals plot (toy - PDF)/err
+  TCanvas canvasRes(
+      ("canvasRes" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", 1000, 800);
+  canvasRes.cd();
+  // auto resHist2d_temp = std::unique_ptr<TObject>(toyHist2d->Clone());
+  auto resHist2d_temp = toyHist2d->Clone();
+  if (resHist2d_temp == nullptr) {
+    throw std::runtime_error("\nCould not clone toyHist2d.\n");
+  }
+  auto resHist2d =
+      std::unique_ptr<TH2F>(dynamic_cast<TH2F *>(resHist2d_temp /* .get() */));
+  if (resHist2d == nullptr) {
+    throw std::runtime_error("\n2D hist of pdf returns nullptr\n");
+  }
+  resHist2d->Add(modelHist2d.get(), -1);
+  resHist2d->Divide(errHist2d.get());
+  canvasRes.cd();
+  resHist2d->GetZaxis()->SetTitle("Residual");
+  resHist2d->GetZaxis()->SetRangeUser(-6.0, 6.0);
+  resHist2d->SetStats(0);
+  resHist2d->Draw("colz");
+  canvasRes.Update();
+  canvasRes.SaveAs((outputDir + "/2d_plots/2dResToyPdf_" +
+                    ComposeName(id, neutral, bachelor, daughters, charge) +
+                    ".pdf")
+                       .c_str());
 }
 
 void CalculateNEvtsToGenerate(RooArgList &yields2d, double &N_2d) {
@@ -1148,6 +1340,10 @@ void GenerateToyFromGammaPdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
+  PlottingGeneratedToy(config, *genData,
+                       *mapDataLabelData[ComposeDataLabelName(
+                           neutral, bachelor, daughters, charge)],
+                       addPdf2d, pdf, outputDir, id);
 }
 
 void GenerateToyFromPi0Pdf(
@@ -1430,6 +1626,10 @@ void GenerateToyFromPi0Pdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
+  PlottingGeneratedToy(config, *genData,
+                       *mapDataLabelData[ComposeDataLabelName(
+                           neutral, bachelor, daughters, charge)],
+                       addPdf2d, pdf, outputDir, id);
 }
 
 void GenerateToyFromData(
