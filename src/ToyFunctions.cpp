@@ -533,7 +533,7 @@ void GenerateToyFromGammaPdf(
   }
 
   RooRealVar fracPdfBu_Bu2Dst0h_D0pi0(
-      ("fracPdfBu_Bu2Dst0h_D0pi0" +
+      ("fracPdfBu_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -541,12 +541,12 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bu2Dst0h_D0pi0().getVal() +
            pdf.N_trueId_BuPartial_Bu2Dst0h_D0pi0().getVal()));
   RooAddPdf pdfBu_tot_Bu2Dst0h_D0pi0(
-      ("pdfBu_tot_Bu2Dst0h_D0pi0" +
+      ("pdfBu_tot_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfBuPartial_Bu2Dst0h_D0pi0()),
-                fracPdfBu_Bu2Dst0h_D0pi0));
+      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0(), pdf.pdfBuPartial_Bu2Dst0h_D0pi0()),
+      fracPdfBu_Bu2Dst0h_D0pi0);
   RooProdPdf pdf2d_Bu2Dst0h_D0pi0(
       ("pdf2d_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -564,7 +564,7 @@ void GenerateToyFromGammaPdf(
   yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0);
 
   RooRealVar fracPdfBu_misId_Bu2Dst0h_D0pi0(
-      ("fracPdfBu_misId_Bu2Dst0h_D0pi0" +
+      ("fracPdfBu_misId_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -572,13 +572,13 @@ void GenerateToyFromGammaPdf(
           (pdf.N_misId_Bu_Bu2Dst0h_D0pi0().getVal() +
            pdf.N_misId_BuPartial_Bu2Dst0h_D0pi0().getVal()));
   RooAddPdf pdfBu_tot_misId_Bu2Dst0h_D0pi0(
-      ("pdfBu_tot_misId_Bu2Dst0h_D0pi0" +
+      ("pdfBu_tot_misId_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_misId_Bu2Dst0h_D0pi0(),
-                 pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0()),
-                fracPdfBu_misId_Bu2Dst0h_D0pi0));
+      RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_D0pi0(),
+                pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0()),
+      fracPdfBu_misId_Bu2Dst0h_D0pi0);
   RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0(
       ("pdf2d_misId_Bu2Dst0h_D0pi0_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -603,7 +603,7 @@ void GenerateToyFromGammaPdf(
   RooRealVar *N_2d_trueId_Bu2Dst0h_D0pi0_D02pik = nullptr;
   if (daughters == Daughters::pik) {
     fracPdfBu_Bu2Dst0h_D0pi0_D02pik = new RooRealVar(
-        ("fracPdfBu_Bu2Dst0h_D0pi0_D02pik" +
+        ("fracPdfBu_Bu2Dst0h_D0pi0_D02pik_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
@@ -611,13 +611,13 @@ void GenerateToyFromGammaPdf(
             (pdf.N_trueId_Bu_Bu2Dst0h_D0pi0_D02pik().getVal() +
              pdf.N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik().getVal()));
     pdfBu_tot_Bu2Dst0h_D0pi0_D02pik =
-        new RooAddPdf(("pdfBu_tot_Bu2Dst0h_D0pi0_D02pik" +
+        new RooAddPdf(("pdfBu_tot_Bu2Dst0h_D0pi0_D02pik_" +
                        ComposeName(id, neutral, bachelor, daughters, charge))
                           .c_str(),
                       "",
-                      RooArgSet((pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik(),
-                                 pdf.pdfBuPartial_Bu2Dst0h_D0pi0_D02pik()),
-                                *fracPdfBu_Bu2Dst0h_D0pi0_D02pik));
+                      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik(),
+                                pdf.pdfBuPartial_Bu2Dst0h_D0pi0_D02pik()),
+                      *fracPdfBu_Bu2Dst0h_D0pi0_D02pik);
     pdf2d_Bu2Dst0h_D0pi0_D02pik =
         new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_D02pik_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
@@ -638,7 +638,7 @@ void GenerateToyFromGammaPdf(
   }
 
   RooRealVar fracPdfBu_Bu2Dst0h_D0gamma_WN(
-      ("fracPdfBu_Bu2Dst0h_D0gamma_WN" +
+      ("fracPdfBu_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -646,13 +646,13 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bu2Dst0h_D0gamma_WN().getVal() +
            pdf.N_trueId_BuPartial_Bu2Dst0h_D0gamma_WN().getVal()));
   RooAddPdf pdfBu_tot_Bu2Dst0h_D0gamma_WN(
-      ("pdfBu_tot_Bu2Dst0h_D0gamma_WN" +
+      ("pdfBu_tot_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_Bu2Dst0h_D0gamma_WN(),
-                 pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN()),
-                fracPdfBu_Bu2Dst0h_D0gamma_WN));
+      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0gamma_WN(),
+                pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN()),
+      fracPdfBu_Bu2Dst0h_D0gamma_WN);
   RooProdPdf pdf2d_Bu2Dst0h_D0gamma_WN(
       ("pdf2d_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -672,7 +672,7 @@ void GenerateToyFromGammaPdf(
   yields2d.add(N_2d_trueId_Bu2Dst0h_D0gamma_WN);
 
   RooRealVar fracPdfBu_misId_Bu2Dst0h_D0gamma_WN(
-      ("fracPdfBu_misId_Bu2Dst0h_D0gamma_WN" +
+      ("fracPdfBu_misId_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -680,13 +680,13 @@ void GenerateToyFromGammaPdf(
           (pdf.N_misId_Bu_Bu2Dst0h_D0gamma_WN().getVal() +
            pdf.N_misId_BuPartial_Bu2Dst0h_D0gamma_WN().getVal()));
   RooAddPdf pdfBu_tot_misId_Bu2Dst0h_D0gamma_WN(
-      ("pdfBu_tot_misId_Bu2Dst0h_D0gamma_WN" +
+      ("pdfBu_tot_misId_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN(),
-                 pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN()),
-                fracPdfBu_misId_Bu2Dst0h_D0gamma_WN));
+      RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN(),
+                pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN()),
+      fracPdfBu_misId_Bu2Dst0h_D0gamma_WN);
   RooProdPdf pdf2d_misId_Bu2Dst0h_D0gamma_WN(
       ("pdf2d_misId_Bu2Dst0h_D0gamma_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -728,7 +728,7 @@ void GenerateToyFromGammaPdf(
   }
 
   RooRealVar fracPdfBu_Bu2Dst0h_D0pi0_WN(
-      ("fracPdfBu_Bu2Dst0h_D0pi0_WN" +
+      ("fracPdfBu_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -736,13 +736,13 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bu2Dst0h_D0pi0_WN().getVal() +
            pdf.N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN().getVal()));
   RooAddPdf pdfBu_tot_Bu2Dst0h_D0pi0_WN(
-      ("pdfBu_tot_Bu2Dst0h_D0pi0_WN" +
+      ("pdfBu_tot_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet(
-          (pdf.pdfBu_Bu2Dst0h_D0pi0_WN(), pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN()),
-          fracPdfBu_Bu2Dst0h_D0pi0_WN));
+      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_WN(),
+                pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN()),
+      fracPdfBu_Bu2Dst0h_D0pi0_WN);
   RooProdPdf pdf2d_Bu2Dst0h_D0pi0_WN(
       ("pdf2d_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -761,7 +761,7 @@ void GenerateToyFromGammaPdf(
   yields2d.add(N_2d_trueId_Bu2Dst0h_D0pi0_WN);
 
   RooRealVar fracPdfBu_misId_Bu2Dst0h_D0pi0_WN(
-      ("fracPdfBu_misId_Bu2Dst0h_D0pi0_WN" +
+      ("fracPdfBu_misId_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -769,13 +769,13 @@ void GenerateToyFromGammaPdf(
           (pdf.N_misId_Bu_Bu2Dst0h_D0pi0_WN().getVal() +
            pdf.N_misId_BuPartial_Bu2Dst0h_D0pi0_WN().getVal()));
   RooAddPdf pdfBu_tot_misId_Bu2Dst0h_D0pi0_WN(
-      ("pdfBu_tot_misId_Bu2Dst0h_D0pi0_WN" +
+      ("pdfBu_tot_misId_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN(),
+      RooArgSet(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN(),
                  pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN()),
-                fracPdfBu_misId_Bu2Dst0h_D0pi0_WN));
+                fracPdfBu_misId_Bu2Dst0h_D0pi0_WN);
   RooProdPdf pdf2d_misId_Bu2Dst0h_D0pi0_WN(
       ("pdf2d_misId_Bu2Dst0h_D0pi0_WN_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -800,7 +800,7 @@ void GenerateToyFromGammaPdf(
   RooRealVar *N_2d_trueId_Bu2Dst0h_D0pi0_WN_D02pik = nullptr;
   if (daughters == Daughters::pik) {
     fracPdfBu_Bu2Dst0h_D0pi0_WN_D02pik = new RooRealVar(
-        ("fracPdfBu_Bu2Dst0h_D0pi0_WN_D02pik" +
+        ("fracPdfBu_Bu2Dst0h_D0pi0_WN_D02pik_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
@@ -808,13 +808,13 @@ void GenerateToyFromGammaPdf(
             (pdf.N_trueId_Bu_Bu2Dst0h_D0pi0_WN_D02pik().getVal() +
              pdf.N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik().getVal()));
     pdfBu_tot_Bu2Dst0h_D0pi0_WN_D02pik =
-        new RooAddPdf(("pdfBu_tot_Bu2Dst0h_D0pi0_WN_D02pik" +
+        new RooAddPdf(("pdfBu_tot_Bu2Dst0h_D0pi0_WN_D02pik_" +
                        ComposeName(id, neutral, bachelor, daughters, charge))
                           .c_str(),
                       "",
-                      RooArgSet((pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik(),
-                                 pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik()),
-                                *fracPdfBu_Bu2Dst0h_D0pi0_WN_D02pik));
+                      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik(),
+                                pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik()),
+                      *fracPdfBu_Bu2Dst0h_D0pi0_WN_D02pik);
     pdf2d_Bu2Dst0h_D0pi0_WN_D02pik =
         new RooProdPdf(("pdf2d_Bu2Dst0h_D0pi0_WN_D02pik_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
@@ -835,7 +835,7 @@ void GenerateToyFromGammaPdf(
   }
 
   RooRealVar fracPdfBu_Bd2Dsth(
-      ("fracPdfBu_Bd2Dsth" +
+      ("fracPdfBu_Bd2Dsth_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -843,12 +843,12 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bd2Dsth().getVal() +
            pdf.N_trueId_BuPartial_Bd2Dsth().getVal()));
   RooAddPdf pdfBu_tot_Bd2Dsth(
-      ("pdfBu_tot_Bd2Dsth" +
+      ("pdfBu_tot_Bd2Dsth_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_Bd2Dsth(), pdf.pdfBuPartial_Bd2Dsth()),
-                fracPdfBu_Bd2Dsth));
+      RooArgSet(pdf.pdfBu_Bd2Dsth(), pdf.pdfBuPartial_Bd2Dsth()),
+                fracPdfBu_Bd2Dsth);
   RooProdPdf pdf2d_Bd2Dsth(
       ("pdf2d_Bd2Dsth_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
@@ -863,7 +863,7 @@ void GenerateToyFromGammaPdf(
   yields2d.add(N_2d_trueId_Bd2Dsth);
 
   RooRealVar fracPdfBu_Bu2D0hst(
-      ("fracPdfBu_Bu2D0hst" +
+      ("fracPdfBu_Bu2D0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -871,12 +871,12 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bu2D0hst().getVal() +
            pdf.N_trueId_BuPartial_Bu2D0hst().getVal()));
   RooAddPdf pdfBu_tot_Bu2D0hst(
-      ("pdfBu_tot_Bu2D0hst" +
+      ("pdfBu_tot_Bu2D0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_Bu2D0hst(), pdf.pdfBuPartial_Bu2D0hst()),
-                fracPdfBu_Bu2D0hst));
+      RooArgSet(pdf.pdfBu_Bu2D0hst(), pdf.pdfBuPartial_Bu2D0hst()),
+                fracPdfBu_Bu2D0hst);
   RooProdPdf pdf2d_Bu2D0hst(
       ("pdf2d_Bu2D0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -892,7 +892,7 @@ void GenerateToyFromGammaPdf(
   yields2d.add(N_2d_trueId_Bu2D0hst);
 
   RooRealVar fracPdfBu_Bu2Dst0hst(
-      ("fracPdfBu_Bu2Dst0hst" +
+      ("fracPdfBu_Bu2Dst0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
@@ -900,12 +900,12 @@ void GenerateToyFromGammaPdf(
           (pdf.N_trueId_Bu_Bu2Dst0hst().getVal() +
            pdf.N_trueId_BuPartial_Bu2Dst0hst().getVal()));
   RooAddPdf pdfBu_tot_Bu2Dst0hst(
-      ("pdfBu_tot_Bu2Dst0hst" +
+      ("pdfBu_tot_Bu2Dst0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "",
-      RooArgSet((pdf.pdfBu_Bu2Dst0hst(), pdf.pdfBuPartial_Bu2Dst0hst()),
-                fracPdfBu_Bu2Dst0hst));
+      RooArgSet(pdf.pdfBu_Bu2Dst0hst(), pdf.pdfBuPartial_Bu2Dst0hst()),
+                fracPdfBu_Bu2Dst0hst);
   RooProdPdf pdf2d_Bu2Dst0hst(
       ("pdf2d_Bu2Dst0hst_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
@@ -926,21 +926,21 @@ void GenerateToyFromGammaPdf(
   RooRealVar *N_2d_trueId_Lb2Omegach_Lcpi0 = nullptr;
   if (daughters == Daughters::kk) {
     fracPdfBu_Lb2Omegach_Lcpi0 = new RooRealVar(
-        ("fracPdfBu_Lb2Omegach_Lcpi0" +
+        ("fracPdfBu_Lb2Omegach_Lcpi0_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
         pdf.N_trueId_Bu_Lb2Omegach_Lcpi0().getVal() /
             (pdf.N_trueId_Bu_Lb2Omegach_Lcpi0().getVal() +
              pdf.N_trueId_BuPartial_Lb2Omegach_Lcpi0().getVal()));
-    pdfBu_tot_Lb2Omegach_Lcpi0 = new RooAddPdf(
-        ("pdfBu_tot_Lb2Omegach_Lcpi0" +
-         ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "",
-        RooArgSet(
-            (pdf.pdfBu_Lb2Omegach_Lcpi0(), pdf.pdfBuPartial_Lb2Omegach_Lcpi0()),
-            *fracPdfBu_Lb2Omegach_Lcpi0));
+    pdfBu_tot_Lb2Omegach_Lcpi0 =
+        new RooAddPdf(("pdfBu_tot_Lb2Omegach_Lcpi0_" +
+                       ComposeName(id, neutral, bachelor, daughters, charge))
+                          .c_str(),
+                      "",
+                      RooArgSet(pdf.pdfBu_Lb2Omegach_Lcpi0(),
+                                pdf.pdfBuPartial_Lb2Omegach_Lcpi0()),
+                      *fracPdfBu_Lb2Omegach_Lcpi0);
     pdf2d_Lb2Omegach_Lcpi0 =
         new RooProdPdf(("pdf2d_Lb2Omegach_Lcpi0_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
@@ -982,7 +982,7 @@ void GenerateToyFromGammaPdf(
   RooRealVar *N_2d_Bs2D0Kpi = nullptr;
   if (bachelor == Bachelor::k) {
     fracPdfBu_misId_Bd2Dsth =
-        new RooRealVar(("fracPdfBu_misId_Bd2Dsth" +
+        new RooRealVar(("fracPdfBu_misId_Bd2Dsth_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
                            .c_str(),
                        "",
@@ -990,12 +990,12 @@ void GenerateToyFromGammaPdf(
                            (pdf.N_misId_Bu_Bd2Dsth().getVal() +
                             pdf.N_misId_BuPartial_Bd2Dsth().getVal()));
     pdfBu_tot_misId_Bd2Dsth = new RooAddPdf(
-        ("pdfBu_tot_misId_Bd2Dsth" +
+        ("pdfBu_tot_misId_Bd2Dsth_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
         "",
-        RooArgSet((pdf.pdfBu_misId_Bd2Dsth(), pdf.pdfBuPartial_misId_Bd2Dsth()),
-                  *fracPdfBu_misId_Bd2Dsth));
+        RooArgSet(pdf.pdfBu_misId_Bd2Dsth(), pdf.pdfBuPartial_misId_Bd2Dsth()),
+        *fracPdfBu_misId_Bd2Dsth);
     pdf2d_misId_Bd2Dsth = new RooProdPdf(
         ("pdf2d_misId_Bd2Dsth_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1010,25 +1010,27 @@ void GenerateToyFromGammaPdf(
         1000000);
     yields2d.add(*N_2d_misId_Bd2Dsth);
     fracPdfBu_misId_Bu2D0hst =
-        new RooRealVar(("fracPdfBu_misId_Bu2D0hst" +
+        new RooRealVar(("fracPdfBu_misId_Bu2D0hst_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
                            .c_str(),
                        "",
                        pdf.N_misId_Bu_Bu2D0hst().getVal() /
                            (pdf.N_misId_Bu_Bu2D0hst().getVal() +
                             pdf.N_misId_BuPartial_Bu2D0hst().getVal()));
-    pdfBu_tot_misId_Bu2D0hst = new RooAddPdf(
-        ("pdfBu_tot_misId_Bu2D0hst" +
-         ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "",
-        RooArgSet((pdf.pdfBu_misId_Bu2D0hst(), pdf.pdfBuPartial_misId_Bu2D0hst()),
-                  *fracPdfBu_misId_Bu2D0hst));
+    pdfBu_tot_misId_Bu2D0hst =
+        new RooAddPdf(("pdfBu_tot_misId_Bu2D0hst_" +
+                       ComposeName(id, neutral, bachelor, daughters, charge))
+                          .c_str(),
+                      "",
+                      RooArgSet(pdf.pdfBu_misId_Bu2D0hst(),
+                                pdf.pdfBuPartial_misId_Bu2D0hst()),
+                      *fracPdfBu_misId_Bu2D0hst);
     pdf2d_misId_Bu2D0hst = new RooProdPdf(
         ("pdf2d_misId_Bu2D0hst_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
-        "", RooArgSet(*pdfBu_tot_misId_Bu2D0hst, pdf.pdfDelta_misId_Bu2D0hst()));
+        "",
+        RooArgSet(*pdfBu_tot_misId_Bu2D0hst, pdf.pdfDelta_misId_Bu2D0hst()));
     functions2d.add(*pdf2d_misId_Bu2D0hst);
     N_2d_misId_Bu2D0hst = new RooRealVar(
         ("N_2d_misId_Bu2D0hst_" +
@@ -1038,36 +1040,39 @@ void GenerateToyFromGammaPdf(
         1000000);
     yields2d.add(*N_2d_misId_Bu2D0hst);
     fracPdfBu_misId_Bu2Dst0hst =
-        new RooRealVar(("fracPdfBu_misId_Bu2Dst0hst" +
+        new RooRealVar(("fracPdfBu_misId_Bu2Dst0hst_" +
                         ComposeName(id, neutral, bachelor, daughters, charge))
                            .c_str(),
                        "",
                        pdf.N_misId_Bu_Bu2Dst0hst().getVal() /
                            (pdf.N_misId_Bu_Bu2Dst0hst().getVal() +
                             pdf.N_misId_BuPartial_Bu2Dst0hst().getVal()));
-    pdfBu_tot_misId_Bu2Dst0hst = new RooAddPdf(
-        ("pdfBu_tot_misId_Bu2Dst0hst" +
-         ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "",
-        RooArgSet((pdf.pdfBu_misId_Bu2Dst0hst(), pdf.pdfBuPartial_misId_Bu2Dst0hst()),
-                  *fracPdfBu_misId_Bu2Dst0hst));
-    pdf2d_misId_Bu2Dst0hst = new RooProdPdf(
-        ("pdf2d_misId_Bu2Dst0hst_" +
-         ComposeName(id, neutral, bachelor, daughters, charge))
-            .c_str(),
-        "", RooArgSet(*pdfBu_tot_misId_Bu2Dst0hst, pdf.pdfDelta_misId_Bu2Dst0hst()));
+    pdfBu_tot_misId_Bu2Dst0hst =
+        new RooAddPdf(("pdfBu_tot_misId_Bu2Dst0hst_" +
+                       ComposeName(id, neutral, bachelor, daughters, charge))
+                          .c_str(),
+                      "",
+                      RooArgSet(pdf.pdfBu_misId_Bu2Dst0hst(),
+                                pdf.pdfBuPartial_misId_Bu2Dst0hst()),
+                      *fracPdfBu_misId_Bu2Dst0hst);
+    pdf2d_misId_Bu2Dst0hst =
+        new RooProdPdf(("pdf2d_misId_Bu2Dst0hst_" +
+                        ComposeName(id, neutral, bachelor, daughters, charge))
+                           .c_str(),
+                       "",
+                       RooArgSet(*pdfBu_tot_misId_Bu2Dst0hst,
+                                 pdf.pdfDelta_misId_Bu2Dst0hst()));
     functions2d.add(*pdf2d_misId_Bu2Dst0hst);
     N_2d_misId_Bu2Dst0hst = new RooRealVar(
         ("N_2d_misId_Bu2Dst0hst_" +
          ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str(),
-        "", pdf.N_misId_Bu2Dst0hst().getVal() / pdf.orEffBu2Dst0hst().getVal(), 0,
-        1000000);
+        "", pdf.N_misId_Bu2Dst0hst().getVal() / pdf.orEffBu2Dst0hst().getVal(),
+        0, 1000000);
     yields2d.add(*N_2d_misId_Bu2Dst0hst);
-    if (daughters == Daughters::kpi) {
+    if (daughters == Daughters::pik) {
       fracPdfBu_Bs2Dst0Kpi =
-          new RooRealVar(("fracPdfBu_Bs2Dst0Kpi" +
+          new RooRealVar(("fracPdfBu_Bs2Dst0Kpi_" +
                           ComposeName(id, neutral, bachelor, daughters, charge))
                              .c_str(),
                          "",
@@ -1075,12 +1080,11 @@ void GenerateToyFromGammaPdf(
                              (pdf.N_trueId_Bu_Bs2Dst0Kpi().getVal() +
                               pdf.N_trueId_BuPartial_Bs2Dst0Kpi().getVal()));
       pdfBu_tot_Bs2Dst0Kpi = new RooAddPdf(
-          ("pdfBu_tot_Bs2Dst0Kpi" +
+          ("pdfBu_tot_Bs2Dst0Kpi_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
-          "",
-          RooArgSet((pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfBuPartial_Bs2Dst0Kpi()),
-                    *fracPdfBu_Bs2Dst0Kpi));
+          "", RooArgSet(pdf.pdfBu_Bs2Dst0Kpi(), pdf.pdfBuPartial_Bs2Dst0Kpi()),
+          *fracPdfBu_Bs2Dst0Kpi);
       pdf2d_Bs2Dst0Kpi = new RooProdPdf(
           ("pdf2d_Bs2Dst0Kpi_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1096,7 +1100,7 @@ void GenerateToyFromGammaPdf(
           0, 1000000);
       yields2d.add(*N_2d_Bs2Dst0Kpi);
       fracPdfBu_Bs2D0Kpi =
-          new RooRealVar(("fracPdfBu_Bs2D0Kpi" +
+          new RooRealVar(("fracPdfBu_Bs2D0Kpi_" +
                           ComposeName(id, neutral, bachelor, daughters, charge))
                              .c_str(),
                          "",
@@ -1104,12 +1108,11 @@ void GenerateToyFromGammaPdf(
                              (pdf.N_trueId_Bu_Bs2D0Kpi().getVal() +
                               pdf.N_trueId_BuPartial_Bs2D0Kpi().getVal()));
       pdfBu_tot_Bs2D0Kpi = new RooAddPdf(
-          ("pdfBu_tot_Bs2D0Kpi" +
+          ("pdfBu_tot_Bs2D0Kpi_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
               .c_str(),
-          "",
-          RooArgSet((pdf.pdfBu_Bs2D0Kpi(), pdf.pdfBuPartial_Bs2D0Kpi()),
-                    *fracPdfBu_Bs2D0Kpi));
+          "", RooArgSet(pdf.pdfBu_Bs2D0Kpi(), pdf.pdfBuPartial_Bs2D0Kpi()),
+          *fracPdfBu_Bs2D0Kpi);
       pdf2d_Bs2D0Kpi = new RooProdPdf(
           ("pdf2d_Bs2D0Kpi_" +
            ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1412,7 +1415,7 @@ void GenerateToyFromPi0Pdf(
       ("addPdf2d_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
       "", functions2d, yields2d);
-  
+
   double N_2d = 0.;
   CalculateNEvtsToGenerate(yields2d, N_2d);
   std::cout << N_2d << "\n";
