@@ -72,7 +72,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
             "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
             GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
                 GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            -1, 1));
+            0, 2));
   }
   R_Dst0KDst0pi_Bu2Dst0h_WN_ = R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
 }
