@@ -227,17 +227,17 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
     // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
   }
 
-  if (id == 1) {
-    auto toyPdfs = p.second;
-    std::map<Neutral, std::map<Mass, double> > yMaxMap;
-    for (auto &p : toyPdfs) {
-      Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
-                 toyFitResult.get(), yMaxMap);
-    }
-    if (config.noFit() == false) {
-      PlotCorrelations(toyFitResult.get(), outputDir, config);
-    }
-  }
+  // if (id == 1) {
+  //   auto toyPdfs = p.second;
+  //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
+  //   for (auto &p : toyPdfs) {
+  //     Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+  //                toyFitResult.get(), yMaxMap);
+  //   }
+  //   if (config.noFit() == false) {
+  //     PlotCorrelations(toyFitResult.get(), outputDir, config);
+  //   }
+  // }
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
@@ -667,12 +667,26 @@ void GenerateToyFromGammaPdf(
   RooArgList functions2d;
   RooArgList yields2d;
 
+  RooRealVar fracPdfBu_Bu2Dst0h_D0gamma(
+      ("fracPdfBu_Bu2Dst0h_D0gamma_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      pdf.N_trueId_Bu_Bu2Dst0h_D0gamma().getVal() /
+          (pdf.N_trueId_Bu_Bu2Dst0h_D0gamma().getVal() +
+           pdf.N_trueId_BuPartial_Bu2Dst0h_D0gamma().getVal()));
+  RooAddPdf pdfBu_tot_Bu2Dst0h_D0gamma(
+      ("pdfBu_tot_Bu2Dst0h_D0gamma_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "",
+      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0gamma(), pdf.pdfBuPartial_Bu2Dst0h_D0gamma()),
+      fracPdfBu_Bu2Dst0h_D0gamma);
   RooProdPdf pdf2d_Bu2Dst0h_D0gamma(
       ("pdf2d_Bu2Dst0h_D0gamma_" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "",
-      RooArgSet(pdf.pdfBu_Bu2Dst0h_D0gamma(), pdf.pdfDelta_Bu2Dst0h_D0gamma()));
+      "", RooArgSet(pdfBu_tot_Bu2Dst0h_D0gamma, pdf.pdfDelta_Bu2Dst0h_D0gamma()));
   functions2d.add(pdf2d_Bu2Dst0h_D0gamma);
   RooRealVar N_2d_trueId_Bu2Dst0h_D0gamma(
       ("N_2d_trueId_Bu2Dst0h_D0gamma_" +
@@ -1340,10 +1354,10 @@ void GenerateToyFromGammaPdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
-  PlottingGeneratedToy(config, *genData,
-                       *mapDataLabelData[ComposeDataLabelName(
-                           neutral, bachelor, daughters, charge)],
-                       addPdf2d, pdf, outputDir, id);
+  // PlottingGeneratedToy(config, *genData,
+  //                      *mapDataLabelData[ComposeDataLabelName(
+  //                          neutral, bachelor, daughters, charge)],
+  //                      addPdf2d, pdf, outputDir, id);
 }
 
 void GenerateToyFromPi0Pdf(
@@ -1626,10 +1640,10 @@ void GenerateToyFromPi0Pdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
-  PlottingGeneratedToy(config, *genData,
-                       *mapDataLabelData[ComposeDataLabelName(
-                           neutral, bachelor, daughters, charge)],
-                       addPdf2d, pdf, outputDir, id);
+  // PlottingGeneratedToy(config, *genData,
+  //                      *mapDataLabelData[ComposeDataLabelName(
+  //                          neutral, bachelor, daughters, charge)],
+  //                      addPdf2d, pdf, outputDir, id);
 }
 
 void GenerateToyFromData(
