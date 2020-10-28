@@ -127,7 +127,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     // HFLAV: R_ADS+, BF average of B+ and B0
     R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, Bachelor::k,
-                                  0.016, 0.004, Systematic::NA, Sign::none));
+                                  0.016, 0.004, Systematic::R_ADS_Bu2D0hst, Sign::none));
   }
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_ADS_Bd2Dsth", uniqueId_, _bachelor,
@@ -161,50 +161,25 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFixed("A_CP_Bd2Dsth", uniqueId_, _bachelor, 0.0, 0,
                                 Systematic::NA, Sign::none));
+  A_CP_Lb2Omegach_Lcpi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+        "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
+  } else {
+    A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+        "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
+  }
   if (_bachelor == Bachelor::pi) {
-    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0,
-                                  0.02, Systematic::NA, Sign::none));
-    A_CP_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFixed("A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor,
-                                  0.0, 0.02, Systematic::NA, Sign::same));
-    if (Configuration::Get().neutral() == Neutral::pi0) {
-      A_CP_Bu2Dst0hst_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
-    } else {
-      A_CP_Bu2Dst0hst_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
-    }
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0, 0.02,
+        Systematic::A_CP_pi_Bu2D0hst, Sign::none));
   } else {
     // HFLAV: A_CP+, BF average of B+ and B0
-    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06,
-                                  0.06, Systematic::NA, Sign::none));
-    if (Configuration::Get().neutral() == Neutral::pi0) {
-      // A_CP_Lb2Omegach_Lcpi0_ =
-      //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      //         "A_CP_Lb2Omegach_Lcpi0", uniqueId_, Bachelor::k, 0.0, 0.1,
-      //         Systematic::NA, Sign::none));
-      // A_CP_Bu2Dst0hst_ =
-      //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      //         "A_CP_Bu2Dst0hst", uniqueId_, Bachelor::k, 0.0, 0.1,
-      //         Systematic::NA, Sign::none));
-      A_CP_Lb2Omegach_Lcpi0_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
-      A_CP_Bu2Dst0hst_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
-    } else {
-      A_CP_Lb2Omegach_Lcpi0_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
-      A_CP_Bu2Dst0hst_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
-    }
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06, 0.06,
+        Systematic::A_CP_K_Bu2D0hst, Sign::none));
   }
 }
 

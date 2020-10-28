@@ -496,6 +496,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::A_pi;
   } else if (systematic == "R_CP_Bu2D0hst") {
     return Systematic::R_CP_Bu2D0hst;
+  } else if (systematic == "R_ADS_Bu2D0hst") {
+    return Systematic::R_ADS_Bu2D0hst;
+  } else if (systematic == "A_CP_pi_Bu2D0hst") {
+    return Systematic::A_CP_pi_Bu2D0hst;
+  } else if (systematic == "A_CP_K_Bu2D0hst") {
+    return Systematic::A_CP_K_Bu2D0hst;
   } else if (systematic == "Delta_A_CP") {
     return Systematic::Delta_A_CP;
   } else if (systematic == "kBF_Bu2Dst0pi") {
@@ -784,6 +790,12 @@ std::string EnumToString(Systematic systematic) {
       return "A_pi";
     case Systematic::R_CP_Bu2D0hst:
       return "R_CP_Bu2D0hst";
+    case Systematic::R_ADS_Bu2D0hst:
+      return "R_ADS_Bu2D0hst";
+    case Systematic::A_CP_pi_Bu2D0hst:
+      return "A_CP_pi_Bu2D0hst";
+    case Systematic::A_CP_K_Bu2D0hst:
+      return "A_CP_K_Bu2D0hst";
     case Systematic::Delta_A_CP:
       return "Delta_A_CP";
     case Systematic::kBF_Bu2Dst0pi:
