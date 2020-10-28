@@ -91,7 +91,9 @@ enum class Systematic {
   Bd2Dsth_PdfBu,
   Bd2Dsth_PdfBuPartial,
   Bu2D0hst_PdfDelta,
+  Bu2D0hst_PdfDelta_D02pik,
   Bu2D0hst_PdfBu,
+  Bu2D0hst_PdfBu_D02pik,
   Bu2D0hst_PdfBuPartial,
   Bu2Dst0hst_D0gamma_PdfDelta,
   Bu2Dst0hst_D0gamma_PdfBu,
@@ -99,6 +101,7 @@ enum class Systematic {
   Bu2Dst0hst_D0pi0_PdfDelta,
   Bu2Dst0hst_D0pi0_PdfBu,
   Bu2Dst0hst_D0pi0_PdfBuPartial,
+  Bu2Dst0hst_PdfBu_D02pik,
   Bu2Dst0hst_Frac,
   Lb2Omegach_Lcpi0_PdfDelta,
   Lb2Omegach_Lcpi0_PdfBu,
@@ -168,8 +171,15 @@ enum class Systematic {
   pidEffPi,
   pidEffK,
   crossFeedRate,
-  A_FAV_Pi0,
-  A_FAV_Gamma,
+  A_pi_Kpi_Bu2Dst0h_D0pi0,
+  A_pi_Kpi_Bu2Dst0h_D0gamma,
+  A_pi_Kpi_Bu2Dst0h_WN,
+  A_pi_Kpi_Bu2D0hst,
+  A_pi_Kpi_Bu2Dst0hst,
+  A_K_Kpi_Bu2Dst0h_WN,
+  A_K_Kpi_Bu2D0hst,
+  A_K_Kpi_Bu2Dst0hst,
+  A_K_piK_Bu2D0hst,
   A_Kpi,
   A_pi,
   Delta_A_CP,
@@ -250,7 +260,6 @@ class Configuration {
 
   // Have to declare this in Config as gamma depends on pi0 and pi0 depends on
   // gamma in different neutral cases: always need to delcare signal yield first
-  double &initYieldFAVSignal() { return initYieldFAVSignal_; }
 
   std::string ReturnBoxString();
 
@@ -318,7 +327,6 @@ class Configuration {
   float deltaHigh_;
   float deltaPartialLow_;
   float deltaPartialHigh_;
-  double initYieldFAVSignal_;
   std::string gammaCutString_;
   std::string pi0CutString_;
   bool fit1D_;

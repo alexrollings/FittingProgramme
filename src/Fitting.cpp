@@ -496,7 +496,6 @@ int main(int argc, char **argv) {
     config.buDeltaMass().setBins(40);
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
-    config.initYieldFAVSignal() = 22000;
   }
 
   // Define categories AFTER neutral and SplitByCharge have been set in
