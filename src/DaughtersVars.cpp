@@ -14,26 +14,21 @@ RooFormulaVar *Make_R_Dst0KDst0pi_CP(int uniqueId, const char *name,
 template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
-      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-      //     0, Systematic::NA, Sign::same)),
-      // R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFloating(
-      //     "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi,
-      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-      //     0, 2)),
-      R_Dst0KDst0pi_Bu2Dst0h_WN_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          0, 2)),
+      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+          0, 2)),
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
           "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.077, 0.007,
           Systematic::R_Dst0KDst0pi_Bd2Dsth, Sign::same)),
-      // R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFloating(
-      //     "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.077, 0.01,
-      //     2)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
       R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0, 2)),
@@ -43,36 +38,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           -1, 1)),
-      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
-  if (Configuration::Get().neutral() == Neutral::gamma) {
-    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            0, 2));
-    R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
-            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            0, 2));
-  } else {
-    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            0, 2));
-    R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
-            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-            0, 2));
-  }
-  R_Dst0KDst0pi_Bu2Dst0h_WN_ = R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
-}
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
 
 template <>
 DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
