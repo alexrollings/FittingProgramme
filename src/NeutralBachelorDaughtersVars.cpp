@@ -227,7 +227,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId).bkgFracFAV_Bu2D0hst()));
     Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
-        Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
+        Mode::Bu2D0rho, Systematic::Bu2D0hst_PdfBu, Sign::same));
     // Bu2D0hst_mean1Bu_ =
     // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //     "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -242,7 +242,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
             NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     Bu2D0hst_sigma1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
-        Mode::Bu2D0rho, Systematic::Bu2D0hstBuPdf, Sign::same));
+        Mode::Bu2D0rho, Systematic::Bu2D0hst_PdfBu, Sign::same));
     // Bu2D0hst_sigma1Bu_ =
     // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //     "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -281,7 +281,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId, _neutral, Bachelor::pi,
             Daughters::kpi, Mode::Bu2Dst0rho_D0gamma,
-            Systematic::Bu2Dst0hst_D0gammaBuPdf, Sign::same));
+            Systematic::Bu2Dst0hst_D0gamma_PdfBu, Sign::same));
     // Bu2Dst0hst_D0gamma_mean1Bu_ =
     // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //     "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -299,7 +299,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId, _neutral, Bachelor::pi,
             Daughters::kpi, Mode::Bu2Dst0rho_D0gamma,
-            Systematic::Bu2Dst0hst_D0gammaBuPdf, Sign::same));
+            Systematic::Bu2Dst0hst_D0gamma_PdfBu, Sign::same));
     pdf1Bu_Bu2Dst0hst_D0gamma_ = std::unique_ptr<RooCBShape>(new RooCBShape(
         ("pdf1Bu_Bu2Dst0hst_D0gamma_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -562,7 +562,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
                 .N_tot_Bu2Dst0h_D0pi0_WN()));
     Bu2D0hst_mean1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
-        5202.65, 5.20055, Systematic::Bu2D0hstBuPdf, Sign::same));
+        5202.65, 5.20055, Systematic::Bu2D0hst_PdfBu, Sign::same));
     // Bu2D0hst_mean1Bu_ =
     //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //         "Bu2D0hst_mean1Bu", uniqueId, _neutral, Bachelor::pi,
@@ -577,7 +577,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
             NeutralVars<_neutral>::Get(uniqueId).Bu2D0hst_meanOffset21Bu())));
     Bu2D0hst_sigma1Bu_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
-        68.6129, 3.12961, Systematic::Bu2D0hstBuPdf, Sign::same));
+        68.6129, 3.12961, Systematic::Bu2D0hst_PdfBu, Sign::same));
     // Bu2D0hst_sigma1Bu_ =
     //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //         "Bu2D0hst_sigma1Bu", uniqueId, _neutral, Bachelor::pi,

@@ -427,22 +427,6 @@ void PrintEvents(RooDataSet *genData,
                    ->numEntries()
             << "\n";
 
-  if (mapDataLabelToy.find(ComposeDataLabelName(
-          neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
-    mapDataLabelToy.insert(std::make_pair(
-        ComposeDataLabelName(neutral, bachelor, daughters, charge), genData));
-    std::cout << "Created key-value pair for category " +
-                     ComposeDataLabelName(neutral, bachelor, daughters,
-                                          charge) +
-                     " and corresponding toy\n";
-  } else {
-    mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
-        ->append(*genData);
-    std::cout << "Appended toy to category " +
-                     ComposeDataLabelName(neutral, bachelor, daughters,
-                                          charge) +
-                     "\n";
-  }
 }
 
 void PlottingGeneratedToy(Configuration &config, RooDataSet &toyDS, RooDataSet &dataDS,
@@ -1354,10 +1338,23 @@ void GenerateToyFromGammaPdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
-  // PlottingGeneratedToy(config, *genData,
-  //                      *mapDataLabelData[ComposeDataLabelName(
-  //                          neutral, bachelor, daughters, charge)],
-  //                      addPdf2d, pdf, outputDir, id);
+
+  if (mapDataLabelToy.find(ComposeDataLabelName(
+          neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
+    mapDataLabelToy.insert(std::make_pair(
+        ComposeDataLabelName(neutral, bachelor, daughters, charge), genData));
+    std::cout << "Created key-value pair for category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     " and corresponding toy\n";
+  } else {
+    mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+        ->append(*genData);
+    std::cout << "Appended toy to category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     "\n";
+  }
 }
 
 void GenerateToyFromPi0Pdf(
@@ -1640,10 +1637,23 @@ void GenerateToyFromPi0Pdf(
   std::cout << "Generated!" << std::endl;
 
   PrintEvents(genData, mapDataLabelData, mapDataLabelToy, config, pdf);
-  // PlottingGeneratedToy(config, *genData,
-  //                      *mapDataLabelData[ComposeDataLabelName(
-  //                          neutral, bachelor, daughters, charge)],
-  //                      addPdf2d, pdf, outputDir, id);
+  
+  if (mapDataLabelToy.find(ComposeDataLabelName(
+          neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
+    mapDataLabelToy.insert(std::make_pair(
+        ComposeDataLabelName(neutral, bachelor, daughters, charge), genData));
+    std::cout << "Created key-value pair for category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     " and corresponding toy\n";
+  } else {
+    mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+        ->append(*genData);
+    std::cout << "Appended toy to category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     "\n";
+  }
 }
 
 void GenerateToyFromData(

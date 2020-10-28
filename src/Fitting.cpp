@@ -739,7 +739,7 @@ int main(int argc, char **argv) {
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
         UInt_t seed = dist(rng);
-        // UInt_t seed = 0xae8a8f47;
+        // UInt_t seed = 0xd687db05;
         RooRandom::randomGenerator()->SetSeed(seed);
         std::stringstream filename;
         if (config.runToy() == true && pdfD1D == true) {
