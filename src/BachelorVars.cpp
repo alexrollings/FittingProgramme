@@ -127,7 +127,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     // HFLAV: R_ADS+, BF average of B+ and B0
     R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, Bachelor::k,
-                                  0.016, 0.004, Systematic::R_ADS_Bu2D0hst, Sign::none));
+                                  0.016, 0.004, Systematic::R_ADS_Bu2D0hst, Sign::same));
   }
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_ADS_Bd2Dsth", uniqueId_, _bachelor,
