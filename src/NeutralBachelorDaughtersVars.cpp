@@ -692,7 +692,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
     Bu2D0hst_aDelta_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
         -2.6826e+00, 9.18e-01, Systematic::Bu2D0hst_PdfDelta_D02pik,
-        Sign::same));
+        Sign::none));
     // Bu2D0hst_aDelta_ =
     // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
     //     "Bu2D0hst_aDelta", uniqueId, _neutral, Bachelor::pi, Daughters::pik,
