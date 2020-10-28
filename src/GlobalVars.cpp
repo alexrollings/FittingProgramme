@@ -46,55 +46,55 @@ GlobalVars::GlobalVars(int uniqueId)
                            *A_pi_)),
       kBF_Bu2Dst0pi_(Params::Get().CreateFixed(
           "kBF_Bu2Dst0pi", uniqueId_, 4.90e-03, 0.17e-03,
-          Systematic::kBF_Bu2Dst0pi, Sign::none)),
+          Systematic::kBF_Bu2Dst0pi, Sign::same)),
       kBF_Bu2Dst0K_(Params::Get().CreateFixed(
           "kBF_Bu2Dst0K", uniqueId_, 3.97e-04, 0.31e-04,
-          Systematic::kBF_Bu2Dst0K, Sign::none)),
+          Systematic::kBF_Bu2Dst0K, Sign::same)),
       kBF_Dst02D0pi0_(Params::Get().CreateFixed(
           "kBF_Dst02D0pi0", uniqueId_, 64.7e-02, 0.9e-02,
-          Systematic::kBF_Dst02D0pi0, Sign::none)),
+          Systematic::kBF_Dst02D0pi0, Sign::same)),
       kBF_Dst02D0gamma_(Params::Get().CreateFixed(
           "kBF_Dst02D0gamma", uniqueId_, 35.3e-02, 0.9e-02,
-          Systematic::kBF_Dst02D0gamma, Sign::none)),
+          Systematic::kBF_Dst02D0gamma, Sign::same)),
       kBF_D02kpi_(Params::Get().CreateFixed("kBF_D02kpi", uniqueId_, 3.950e-02,
                                             0.031e-02, Systematic::kBF_D02kpi,
-                                            Sign::none)),
+                                            Sign::same)),
       kBF_D02kk_(Params::Get().CreateFixed("kBF_D02kk", uniqueId_, 4.08e-03,
                                            0.06e-03, Systematic::kBF_D02kk,
-                                           Sign::none)),
+                                           Sign::same)),
       kBF_D02pipi_(Params::Get().CreateFixed(
           "kBF_D02pipi", uniqueId_, 1.455e-03, 0.024e-03,
-          Systematic::kBF_D02pipi, Sign::none)),
+          Systematic::kBF_D02pipi, Sign::same)),
       kBF_D02pik_(Params::Get().CreateFixed("kBF_D02pik", uniqueId_, 1.50e-04,
                                             0.07e-04, Systematic::kBF_D02pik,
-                                            Sign::none)),
+                                            Sign::same)),
       kBF_Bd2Dstpi_(Params::Get().CreateFixed(
           "kBF_Bd2Dstpi", uniqueId_, 2.74e-03, 0.13e-03,
-          Systematic::kBF_Bd2Dstpi, Sign::none)),
+          Systematic::kBF_Bd2Dstpi, Sign::same)),
       kBF_Bd2DstK_(Params::Get().CreateFixed("kBF_Bd2DstK", uniqueId_, 2.12e-04,
                                              0.15e-04, Systematic::kBF_Bd2DstK,
-                                             Sign::none)),
+                                             Sign::same)),
       kBF_Dst2D0pi_(Params::Get().CreateFixed("kBF_Dst2D0pi", uniqueId_, 0.677,
                                               0.005, Systematic::kBF_Dst2D0pi,
-                                              Sign::none)),
+                                              Sign::same)),
       kBF_Bu2D0rho_(Params::Get().CreateFixed(
           "kBF_Bu2D0rho", uniqueId_, 1.34e-02, 0.18e-02,
-          Systematic::kBF_Bu2D0rho, Sign::none)),
+          Systematic::kBF_Bu2D0rho, Sign::same)),
       kBF_Bu2D0Kst_(
           Params::Get().CreateFixed("kBF_Bu2D0Kst", uniqueId_, 5.3e-04, 0.4e-04,
-                                    Systematic::kBF_Bu2D0Kst, Sign::none)),
+                                    Systematic::kBF_Bu2D0Kst, Sign::same)),
       kBF_Bd2D0rho0_(Params::Get().CreateFixed(
           "kBF_Bd2D0rho0", uniqueId_, 3.21e-04, 0.21e-04,
-          Systematic::kBF_Bd2D0rho0, Sign::none)),
+          Systematic::kBF_Bd2D0rho0, Sign::same)),
       kBF_Bd2D0Kst0_(Params::Get().CreateFixed(
           "kBF_Bd2D0Kst0", uniqueId_, 4.5e-05, 0.6e-05,
-          Systematic::kBF_Bu2D0Kst, Sign::none)),
+          Systematic::kBF_Bu2D0Kst, Sign::same)),
       kBF_Bu2Dst0rho_(Params::Get().CreateFixed(
           "kBF_Bu2Dst0rho", uniqueId_, 9.8e-03, 1.7e-03,
-          Systematic::kBF_Bu2Dst0rho, Sign::none)),
+          Systematic::kBF_Bu2Dst0rho, Sign::same)),
       kBF_Bu2Dst0Kst_(Params::Get().CreateFixed(
           "kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
-          Systematic::kBF_Bu2Dst0Kst, Sign::none)),
+          Systematic::kBF_Bu2Dst0Kst, Sign::same)),
       pidEffMap_(),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
@@ -211,7 +211,7 @@ GlobalVars::GlobalVars(int uniqueId)
       "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
   // HFLAV: R_CP+, BF average of B+ and B0
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::NA, Sign::none));
+      "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::R_CP_Bu2D0hst, Sign::same));
   double min = 0.;
   double max = 20.;
   double start = 4.5;

@@ -182,6 +182,7 @@ enum class Systematic {
   A_K_piK_Bu2D0hst,
   A_Kpi,
   A_pi,
+  R_CP_Bu2D0hst,
   Delta_A_CP,
   kBF_Bu2Dst0pi,
   kBF_Bu2Dst0K,
