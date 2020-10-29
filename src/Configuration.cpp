@@ -352,26 +352,14 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bs2D0Kpi_PdfBu;
   } else if (systematic == "Bs2D0Kpi_PdfBuPartial") {
     return Systematic::Bs2D0Kpi_PdfBuPartial;
-  } else if (systematic == "Bu2Dst0K_D0pi0_asPi_PdfBu") {
-    return Systematic::Bu2Dst0K_D0pi0_asPi_PdfBu;
-  } else if (systematic == "Bu2Dst0pi_D0pi0_asK_PdfBu") {
-    return Systematic::Bu2Dst0pi_D0pi0_asK_PdfBu;
-  } else if (systematic == "Bu2Dst0K_D0pi0_asPi_PdfDelta") {
-    return Systematic::Bu2Dst0K_D0pi0_asPi_PdfDelta;
-  } else if (systematic == "Bu2Dst0pi_D0pi0_asK_PdfDelta") {
-    return Systematic::Bu2Dst0pi_D0pi0_asK_PdfDelta;
-  } else if (systematic == "Bu2Dst0K_D0pi0_asPi_PdfBuPartial") {
-    return Systematic::Bu2Dst0K_D0pi0_asPi_PdfBuPartial;
-  } else if (systematic == "Bu2Dst0pi_D0pi0_asK_PdfBuPartial") {
-    return Systematic::Bu2Dst0pi_D0pi0_asK_PdfBuPartial;
-  } else if (systematic == "Bu2Dst0K_D0gamma_asPi_PdfBu") {
-    return Systematic::Bu2Dst0K_D0gamma_asPi_PdfBu;
-  } else if (systematic == "Bu2Dst0pi_D0gamma_asK_PdfBu") {
-    return Systematic::Bu2Dst0pi_D0gamma_asK_PdfBu;
-  } else if (systematic == "Bu2Dst0K_D0gamma_asPi_PdfDelta") {
-    return Systematic::Bu2Dst0K_D0gamma_asPi_PdfDelta;
-  } else if (systematic == "Bu2Dst0pi_D0gamma_asK_PdfDelta") {
-    return Systematic::Bu2Dst0pi_D0gamma_asK_PdfDelta;
+  } else if (systematic == "Bu2Dst0K_D0pi0_asPi_Pdfs") {
+    return Systematic::Bu2Dst0K_D0pi0_asPi_Pdfs;
+  } else if (systematic == "Bu2Dst0pi_D0pi0_asK_Pdfs") {
+    return Systematic::Bu2Dst0pi_D0pi0_asK_Pdfs;
+  } else if (systematic == "Bu2Dst0K_D0gamma_asPi_Pdfs") {
+    return Systematic::Bu2Dst0K_D0gamma_asPi_Pdfs;
+  } else if (systematic == "Bu2Dst0pi_D0gamma_asK_Pdfs") {
+    return Systematic::Bu2Dst0pi_D0gamma_asK_Pdfs;
   } else if (systematic == "Bu2Dst0h_WN_misId_Pdfs") {
     return Systematic::Bu2Dst0h_WN_misId_Pdfs;
   } else if (systematic == "Bkg_misId_Pdfs") {
@@ -600,26 +588,14 @@ std::string EnumToString(Systematic systematic) {
       return "Bs2D0Kpi_PdfBu";
     case Systematic::Bs2D0Kpi_PdfBuPartial:
       return "Bs2D0Kpi_PdfBuPartial";
-    case Systematic::Bu2Dst0K_D0pi0_asPi_PdfBu:
-      return "Bu2Dst0K_D0pi0_asPi_PdfBu";
-    case Systematic::Bu2Dst0pi_D0pi0_asK_PdfBu:
-      return "Bu2Dst0pi_D0pi0_asK_PdfBu";
-    case Systematic::Bu2Dst0K_D0pi0_asPi_PdfDelta:
-      return "Bu2Dst0K_D0pi0_asPi_PdfDelta";
-    case Systematic::Bu2Dst0pi_D0pi0_asK_PdfDelta:
-      return "Bu2Dst0pi_D0pi0_asK_PdfDelta";
-    case Systematic::Bu2Dst0K_D0pi0_asPi_PdfBuPartial:
-      return "Bu2Dst0K_D0pi0_asPi_PdfBuPartial";
-    case Systematic::Bu2Dst0pi_D0pi0_asK_PdfBuPartial:
-      return "Bu2Dst0pi_D0pi0_asK_PdfBuPartial";
-    case Systematic::Bu2Dst0K_D0gamma_asPi_PdfBu:
-      return "Bu2Dst0K_D0gamma_asPi_PdfBu";
-    case Systematic::Bu2Dst0pi_D0gamma_asK_PdfBu:
-      return "Bu2Dst0pi_D0gamma_asK_PdfBu";
-    case Systematic::Bu2Dst0K_D0gamma_asPi_PdfDelta:
-      return "Bu2Dst0K_D0gamma_asPi_PdfDelta";
-    case Systematic::Bu2Dst0pi_D0gamma_asK_PdfDelta:
-      return "Bu2Dst0pi_D0gamma_asK_PdfDelta";
+    case Systematic::Bu2Dst0K_D0pi0_asPi_Pdfs:
+      return "Bu2Dst0K_D0pi0_asPi_Pdfs";
+    case Systematic::Bu2Dst0pi_D0pi0_asK_Pdfs:
+      return "Bu2Dst0pi_D0pi0_asK_Pdfs";
+    case Systematic::Bu2Dst0K_D0gamma_asPi_Pdfs:
+      return "Bu2Dst0K_D0gamma_asPi_Pdfs";
+    case Systematic::Bu2Dst0pi_D0gamma_asK_Pdfs:
+      return "Bu2Dst0pi_D0gamma_asK_Pdfs";
     case Systematic::Bu2Dst0h_WN_misId_Pdfs:
       return "Bu2Dst0h_WN_misId_Pdfs";
     case Systematic::Bkg_misId_Pdfs:
