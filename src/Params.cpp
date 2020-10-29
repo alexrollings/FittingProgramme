@@ -41,9 +41,9 @@ void FixedParameter::Randomise(TRandom3 &random) {
     }
     // std::cout << shifted_value_ << "\n";
   } else if (sign_ == Sign::same) {
-    // std::cout << "Same\n";
-    // std::cout << shifted_value_ << "\n";
-    // std::cout << shifted_value_*shifted_value_ << "\n";
+    std::cout << "Same test\n";
+    std::cout << shifted_value_ << "\n";
+    std::cout << shifted_value_*shifted_value_ << "\n";
     while (shifted_value_*mean_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
