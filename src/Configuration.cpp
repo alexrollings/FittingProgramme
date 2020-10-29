@@ -302,8 +302,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bu2Dst0h_D0gamma_WN_PdfBu;
   } else if (systematic == "Bu2Dst0h_D0gamma_WN_PdfBuPartial") {
     return Systematic::Bu2Dst0h_D0gamma_WN_PdfBuPartial;
-  } else if (systematic == "Bu2Dst0h_WN_Frac") {
-    return Systematic::Bu2Dst0h_WN_Frac;
+  // } else if (systematic == "Bu2Dst0h_WN_Frac") {
+  //   return Systematic::Bu2Dst0h_WN_Frac;
   } else if (systematic == "Bd2Dsth_PdfDelta") {
     return Systematic::Bd2Dsth_PdfDelta;
   } else if (systematic == "Bd2Dsth_PdfBu") {
@@ -600,8 +600,8 @@ std::string EnumToString(Systematic systematic) {
       return "Bu2Dst0h_D0gamma_WN_PdfBu";
     case Systematic::Bu2Dst0h_D0gamma_WN_PdfBuPartial:
       return "Bu2Dst0h_D0gamma_WN_PdfBuPartial";
-    case Systematic::Bu2Dst0h_WN_Frac:
-      return "Bu2Dst0h_WN_Frac";
+    // case Systematic::Bu2Dst0h_WN_Frac:
+    //   return "Bu2Dst0h_WN_Frac";
     case Systematic::Bd2Dsth_PdfDelta:
       return "Bd2Dsth_PdfDelta";
     case Systematic::Bd2Dsth_PdfBu:
