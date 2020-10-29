@@ -708,9 +708,13 @@ int main(int argc, char **argv) {
         std::cout << "Running systematic " << s << "...\n";
         auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
         std::cout << "RandomiseParameters:\n";
-        TRandom3 random(0);
-        // random.SetSeed(655092302);
-        int rndmSeed = random.GetSeed(); 
+        std::random_device rd;
+        std::default_random_engine rng(rd());
+        std::uniform_int_distribution<UInt_t> dist;
+        UInt_t seed = dist(rng);
+        // UInt_t seed = 0xbabe652;
+        RooRandom::randomGenerator()->SetSeed(seed);
+        TRandom3 random(seed);
         Params::Get().RandomiseParameters(systematicVec.begin(),
                                           systematicVec.end(), random);
         auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
@@ -720,11 +724,11 @@ int main(int argc, char **argv) {
             RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
         systResult->SetName("SystResult");
-        TFile systResultFile(
-            (outputDir + "/results/SystResult_" + config.ReturnBoxString() +
-             "_" + systString + "_" + std::to_string(rndmSeed) + ".root")
-                .c_str(),
-            "recreate");
+        std::stringstream filename;
+        filename << outputDir << "/results/SystResult_"
+                 << config.ReturnBoxString() << "_" << systString << "_"
+                 << std::hex << seed << ".root";
+        TFile systResultFile(filename.str().c_str(), "recreate");
         systResult->Write();
         systResult->Print("v");
         systResultFile.Close();
