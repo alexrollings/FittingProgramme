@@ -614,15 +614,15 @@ class NeutralVars {
   RooRealVar &bkgFracADS_Bs2Dst0Kpi() {
     return *bkgFracADS_Bs2Dst0Kpi_;
   }
-  RooGaussian &constraint_bkgFracGlobal_WN() {
-    return constraint_bkgFracGlobal_WN_;
-  }
-  RooGaussian &constraint_bkgFracFAV_Bu2D0hst() {
-    return constraint_bkgFracFAV_Bu2D0hst_;
-  }
-  RooArgSet &constraints_argSet() {
-    return constraints_argSet_;
-  }
+  // RooGaussian &constraint_bkgFracGlobal_WN() {
+  //   return constraint_bkgFracGlobal_WN_;
+  // }
+  // RooGaussian &constraint_bkgFracFAV_Bu2D0hst() {
+  //   return constraint_bkgFracFAV_Bu2D0hst_;
+  // }
+  // RooArgSet &constraints_argSet() {
+  //   return constraints_argSet_;
+  // }
 
 
  private:
@@ -924,9 +924,9 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> bkgFracKK_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2D0Kpi_;
   std::shared_ptr<RooRealVar> bkgFracADS_Bs2Dst0Kpi_;
-  RooGaussian constraint_bkgFracGlobal_WN_;
-  RooGaussian constraint_bkgFracFAV_Bu2D0hst_;
-  RooArgSet constraints_argSet_;
+  // RooGaussian constraint_bkgFracGlobal_WN_;
+  // RooGaussian constraint_bkgFracFAV_Bu2D0hst_;
+  // RooArgSet constraints_argSet_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
