@@ -210,6 +210,46 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
                              ("toyDataHist" + std::to_string(id)).c_str()));
   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
+  for (auto &p : pdfs) {
+    std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+              << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+    std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
+              << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+    if (p->neutral() == Neutral::gamma) {
+      std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+      std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
+      std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
+    } else {
+      std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_WN().getVal() << "\n";
+    }
+    std::cout << p->N_trueId_Bd2Dsth().GetName() << " = "
+              << p->N_trueId_Bd2Dsth().getVal() << "\n";
+    std::cout << p->N_trueId_Bu2D0hst().GetName() << " = "
+              << p->N_trueId_Bu2D0hst().getVal() << "\n";
+    std::cout << p->N_trueId_Bu2Dst0hst().GetName() << " = "
+              << p->N_trueId_Bu2Dst0hst().getVal() << "\n";
+    if (p->bachelor() == Bachelor::k) {
+      std::cout << p->N_misId_Bd2Dsth().GetName() << " = "
+                << p->N_misId_Bd2Dsth().getVal() << "\n";
+      std::cout << p->N_misId_Bu2D0hst().GetName() << " = "
+                << p->N_misId_Bu2D0hst().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0hst().GetName() << " = "
+                << p->N_misId_Bu2Dst0hst().getVal() << "\n";
+    }
+  }
+
   auto simPdfToFit = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
       ("simPdfFit_" + std::to_string(id)).c_str(),
       ("simPdfFit_" + std::to_string(id)).c_str(), config.fitting));
@@ -238,9 +278,49 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
   //     PlotCorrelations(toyFitResult.get(), outputDir, config);
   //   }
   // }
+  auto toyPdfs = p.second;
+  for (auto &p : toyPdfs) {
+    std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+              << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+    std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
+              << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+    if (p->neutral() == Neutral::gamma) {
+      std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+      std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
+      std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
+    } else {
+      std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+                << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0h_WN().GetName() << " = "
+                << p->N_misId_Bu2Dst0h_WN().getVal() << "\n";
+    }
+    std::cout << p->N_trueId_Bd2Dsth().GetName() << " = "
+              << p->N_trueId_Bd2Dsth().getVal() << "\n";
+    std::cout << p->N_trueId_Bu2D0hst().GetName() << " = "
+              << p->N_trueId_Bu2D0hst().getVal() << "\n";
+    std::cout << p->N_trueId_Bu2Dst0hst().GetName() << " = "
+              << p->N_trueId_Bu2Dst0hst().getVal() << "\n";
+    if (p->bachelor() == Bachelor::k) {
+      std::cout << p->N_misId_Bd2Dsth().GetName() << " = "
+                << p->N_misId_Bd2Dsth().getVal() << "\n";
+      std::cout << p->N_misId_Bu2D0hst().GetName() << " = "
+                << p->N_misId_Bu2D0hst().getVal() << "\n";
+      std::cout << p->N_misId_Bu2Dst0hst().GetName() << " = "
+                << p->N_misId_Bu2Dst0hst().getVal() << "\n";
+    }
+  }
   if (config.noFit() == false) {
     // to make a unique result each time
-    toyFitResult->Print("v");
+    toyFitResult->Print();
     outputFile.cd();
     toyFitResult->Write();
     dataFitResult->Write();
