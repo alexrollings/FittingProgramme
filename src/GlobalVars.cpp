@@ -110,7 +110,7 @@ GlobalVars::GlobalVars(int uniqueId)
   //   pidEffMap_[MakePidKey(Bachelor::k, c)] = Params::Get().CreateFixed(
   //       "pidEffK", uniqueId_, Configuration::Get().neutral(), c,
   //       ReturnPidEffs(c, true), ReturnPidEffs(c, false), Systematic::pidEffK,
-  //       Sign::positive);
+  //       Sign::same);
   // }
   // pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
   //     std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
@@ -127,7 +127,7 @@ GlobalVars::GlobalVars(int uniqueId)
       Params::Get().CreateFixed("pidEffK", uniqueId_,
                                 Configuration::Get().neutral(), Charge::total,
                                 ReturnPidEffs(Charge::total, true), 0.01,
-                                Systematic::pidEffK, Sign::positive);
+                                Systematic::pidEffK, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
@@ -138,7 +138,7 @@ GlobalVars::GlobalVars(int uniqueId)
       //                              Charge::total, 0.996, 0.5, 1.5);
       Params::Get().CreateFixed(
           "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
-          0.995, 0.002, Systematic::pidEffPi, Sign::positive);
+          0.995, 0.002, Systematic::pidEffPi, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::minus)] =
@@ -180,7 +180,7 @@ GlobalVars::GlobalVars(int uniqueId)
   double cfErr = std::sqrt(1 / (pow(cfRun1Err, -2) + pow(cfRun2Err, -2)));
   crossFeedRate_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFixed("crossFeedRate", uniqueId_, cfAv, cfErr,
-                                Systematic::crossFeedRate, Sign::positive));
+                                Systematic::crossFeedRate, Sign::same));
 
   double k_R_CP_Bu2Dst0h_D0gamma = 0.902;
   double k_R_CP_Bu2Dst0h_D0pi0 = 1.138;
