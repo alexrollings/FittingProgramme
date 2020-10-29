@@ -293,6 +293,19 @@ class Configuration {
   bool &simpleFit() { return simpleFit_; }
   int nCPU() { return nCPU_; }
 
+  // Want to set in Fitting
+  bool fit1D_;
+  bool runToy_;
+  bool splitByCharge_;
+  bool noFit_;
+  bool fitBuPartial_;
+  bool blindFit_;
+  bool runSystematics_;
+  bool runADS_;
+  bool plotToys_;
+  bool simpleFit_;
+  int nCPU_;
+
  private:
   Configuration();
   Configuration(Configuration const &) = delete;
@@ -336,17 +349,6 @@ class Configuration {
   float deltaPartialHigh_;
   std::string gammaCutString_;
   std::string pi0CutString_;
-  bool fit1D_;
-  bool runToy_;
-  bool splitByCharge_;
-  bool noFit_;
-  bool fitBuPartial_;
-  bool blindFit_;
-  bool runSystematics_;
-  bool runADS_;
-  bool plotToys_;
-  bool simpleFit_;
-  int nCPU_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);

@@ -409,6 +409,7 @@ int main(int argc, char **argv) {
       } else {
         std::cout << "Running systematics.\n";
         config.runSystematics() = true;
+        config.nCPU_ = 1;
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
