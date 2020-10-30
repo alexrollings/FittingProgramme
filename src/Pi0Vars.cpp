@@ -771,7 +771,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, "val"), 0, 5)),
+          2.8240e-01, 0, 5)),
+          // ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, "val"), 0, 5)),
       // Constrained relative to Bd2Dsth
       // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
