@@ -2,7 +2,7 @@
 #PBS -l cput=01:59:59 
 #PBS -N RUNSYST_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}
 
-source /home/rollings/.zshrc
+source /home/rollings/.zshrc.local
 source_root
 
 mkdir /data/lhcb/users/rollings/fitting_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}
@@ -20,7 +20,7 @@ cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
 mkdir build
 cd build
 cmake ../
-make -j
+make
 ./Fitting -inputDir=${INPUT} -outputDir=${PATH} -systematic=${SYST} -nSyst=${NFITS} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
 
 cd /data/lhcb/users/rollings/fitting_scripts/
