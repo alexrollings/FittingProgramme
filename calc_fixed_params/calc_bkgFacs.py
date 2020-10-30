@@ -74,12 +74,12 @@ if __name__ == '__main__':
 
   if neutral == 'pi0':
     frac_dict['Bd2Dstpi'] = (
-        (kBF_Bd2Dstpi + kBF_Dst2D0pi) / (kBF_Bu2Dst0pi + kBF_Dst02D0pi0)) * (
+        (kBF_Bd2Dstpi * kBF_Dst2D0pi) / (kBF_Bu2Dst0pi * kBF_Dst02D0pi0)) * (
             mc_effs_dict['Bd2Dstpi'] / mc_effs_dict['Bu2Dst0pi_D0pi0']) * (
                 or_effs_dict['Bd2Dstpi'] / or_effs_dict['Bu2Dst0pi_D0pi0'])
   else:
     frac_dict['Bd2Dstpi'] = (
-        (kBF_Bd2Dstpi + kBF_Dst2D0pi) / (kBF_Bu2Dst0pi + kBF_Dst02D0gamma)) * (
+        (kBF_Bd2Dstpi * kBF_Dst2D0pi) / (kBF_Bu2Dst0pi * kBF_Dst02D0gamma)) * (
             mc_effs_dict['Bd2Dstpi'] / mc_effs_dict['Bu2Dst0pi_D0gamma']) * (
                 or_effs_dict['Bd2Dstpi'] / or_effs_dict['Bu2Dst0pi_D0gamma'])
 
