@@ -576,10 +576,21 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                    "", Configuration::Get().deltaMass(),
                                    *Bu2Dst0hst_D0gamma_meanDelta_,
                                    *Bu2Dst0hst_D0gamma_sigmaDelta_),
+      Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+          Sign::same)),
       Bu2Dst0hst_D0gamma_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_meanOffset21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
           Sign::none)),
+      Bu2Dst0hst_D0gamma_mean2Bu_(
+          ("Bu2Dst0hst_D0gamma_mean2Bu_" +
+           ComposeName(uniqueId, Neutral::gamma))
+              .c_str(),
+          "", "@0+@1",
+          RooArgSet(*Bu2Dst0hst_D0gamma_mean1Bu_,
+                    *Bu2Dst0hst_D0gamma_meanOffset21Bu_)),
       Bu2Dst0hst_D0gamma_KpiSigmaBu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_KpiSigmaBu", uniqueId_, Neutral::gamma, 1.0, 0.05,
           Systematic::Bu2Dst0hst_D0gamma_PdfBu, Sign::same)),
@@ -603,6 +614,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0hst_D0gamma_n2Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
           Sign::same)),
+      Bu2Dst0hst_D0gamma_fracPdf1Bu_(Params::Get().CreateFixed(
+          "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId, Neutral::gamma, Mode::Bu2Dst0rho_D0gamma,
+          Systematic::Bu2Dst0hst_D0gamma_PdfBu, Sign::same)),
       Bu2Dst0hst_D0gamma_meanBuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_meanBuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBuPartial,
