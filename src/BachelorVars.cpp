@@ -156,9 +156,6 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFixed("A_CP_Bd2Dsth", uniqueId_, _bachelor, 0.0, 0,
                                 Systematic::NA, Sign::none));
-  A_CP_Lb2Omegach_Lcpi0_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-          "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
   if (Configuration::Get().neutral() == Neutral::pi0) {
     A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
@@ -167,12 +164,18 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
   }
   if (_bachelor == Bachelor::pi) {
-    // A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-    //     "A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0, 0.02,
-    //     Systematic::A_CP_pi_Bu2D0hst, Sign::none));
-    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-        "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.0,
+                                  0.02, Systematic::NA, Sign::none));
+    A_CP_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor,
+                                  0.0, 0.02, Systematic::NA, Sign::same));
+    // A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //     "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
   } else {
+  A_CP_Lb2Omegach_Lcpi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
     // HFLAV: A_CP+, BF average of B+ and B0
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06, 0.06,
