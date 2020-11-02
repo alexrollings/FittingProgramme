@@ -39,10 +39,15 @@ if __name__ == '__main__':
   neutral = args.neutral
   error_file = args.error_file
 
+  if neutral == 'pi0':
+    box_str = '138_148_5220_5330'
+  else:
+    box_str = '60_105_125_170_5240_5320'
+
   # Observables we are interested have this stem (match with regex)
   observables = [
       'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h'
+      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
   ]
   # Dict to hold fit result and calculated errors of observables
   value_errs = {}
@@ -56,17 +61,22 @@ if __name__ == '__main__':
   if os.path.isdir(input_dir):
     os.chdir(input_dir)
     for f in os.listdir(input_dir):
-      m = re.search('DataResult((?:_[0-9]+){4,6}).root', f)
+      m = re.search('DataResult_' + box_str + '.root', f)
+      # m = re.search('DataResult((?:_[0-9]+){4,6}).root', f)
       if m:
-        box_string = m.group(1)
+        # box_string = m.group(1)
         data_file = TFile(f)
         data_result = data_file.Get('DataFitResult')
-        for p in data_result.floatParsFinal():
-          for obs in observables:
+        for obs in observables:
+          for p in data_result.floatParsFinal():
             par_name = p.GetName()
             m0 = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
             if m0:
               print(par_name)
+              # m = re.match('\S+WN\S+', par_name)
+              # if m:
+              #   continue
+              #   print('WN - continue')
               m1 = re.match('\S+Blind\S+', par_name)
               if m1:
                 value = 0
@@ -85,7 +95,7 @@ if __name__ == '__main__':
     sys.exit('Data file does not exist.')
 
   # File where 2D pull results are stored
-  pull_file = pull_dir + "/Result" + box_string + ".root"
+  pull_file = pull_dir + "/Result_" + box_str + ".root"
   tf_pull = TFile(pull_file)
   # Extract pull result for vars stored in value_errs dict and correct stat error with pull width
   for k, v in value_errs.items():
@@ -102,7 +112,8 @@ if __name__ == '__main__':
   if os.path.isdir(input_dir):
     for f in os.listdir(input_dir):
       m = re.search(
-          'SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_0.[0-9]+.root', f)
+          'SystResult_' + box_str + '((?:_[0-9A-Za-z]+)+)_[a-z0-9]+.root', f)
+          # 'SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_[a-z0-9]+.root', f)
       if m:
         syst_file = TFile(f)
         syst_result = syst_file.Get('SystResult')
@@ -209,7 +220,7 @@ if __name__ == '__main__':
   title_str['A'] = title_str['A'] + ' \\\\ \\hline\n'
 
   tex_file = open(
-      f"/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex/Sytematics_{neutral}.tex",
+      f"/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Sytematics_{neutral}.tex",
       "w")
   tex_file.write("\\documentclass[12pt, portrait]{article}\n")
   tex_file.write("\\usepackage[landscape, margin=0.1in]{geometry}\n")
