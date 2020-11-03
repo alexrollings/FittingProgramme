@@ -13,7 +13,7 @@ def return_group(syst):
       'Bu2Dst0hst_D0gamma_Pdf\S+': 'Partially reconstructed PDFs',
       'Bu2Dst0hst_D0pi0_Pdf\S+': 'Partially reconstructed PDFs',
       'Bu2Dst0hst_Pdf\S+': 'Partially reconstructed PDFs',
-      'Bu2Dst0hst_Frac\S+': 'Partially reconstructed PDFs',
+      'Bu2Dst0hst_Fra\S+': 'Partially reconstructed PDFs',
       'Bs2D0Kpi_Pdf\S+': '$B_{s}$ PDFs',
       'Bs2Dst0Kpi_Pdf\S+': '$B_{s}$ PDFs',
       'Bu2Dst0\S+_D0\S+_as\S+_Pdfs': 'Mis-ID\'d signal PDFs',
@@ -31,7 +31,7 @@ def return_group(syst):
       '\S+_Bu2Dst0h_WN': 'Background Physics parameters',
       '\S+_Bu2D0hst': 'Background Physics parameters',
       '\S+_Bu2Dst0hst': 'Background Physics parameters',
-      '\S+_Bd2Dstpi': 'Background Physics parameters',
+      '\S+_Bd2Dsth': 'Background Physics parameters',
       '\S+_Lb2Omegach_Lcpi0': 'Background Physics parameters',
       'kBF_D0\S+': 'Background Physics parameters'
   }
