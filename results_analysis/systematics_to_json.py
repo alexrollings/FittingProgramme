@@ -3,6 +3,7 @@ from ROOT import TFile, RooFitResult
 import root_numpy as r_np
 import argparse
 import json
+from shutil import copyfile
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -32,16 +33,20 @@ if __name__ == '__main__':
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
   ]
 
-  json_fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/systematics/{neutral}_json.txt'
-  # If json file exists, load existing dict and append to file
-  if os.path.exists(json_fname):
-    with open(json_fname) as json_file:
-      json_dict = json.load(json_file)
-    json_file.close()
-  # If not, create empty dict and write to file
+  if os.path.isdir(input_dir):
+    json_fname = f'{input_dir}/systematics_{neutral}.json'
+    # If json file exists, load existing dict
+    if os.path.exists(json_fname):
+      with open(json_fname) as json_file:
+        json_dict = json.load(json_file)
+      json_file.close()
+    # If not, create empty dict
+    else:
+        json_dict = {}
   else:
-      json_dict = {}
+    sys.exit(input_dir + ' does not exist.')
 
+  input_dir = input_dir + '/results/'
   with open(json_fname, 'w') as json_file:
     if os.path.isdir(input_dir):
       count = 0
@@ -55,7 +60,6 @@ if __name__ == '__main__':
           if syst_label not in json_dict:
             json_dict[syst_label] = {}
           if seed not in json_dict[syst_label]:
-            print(f)
             count = count + 1
             syst_file = TFile(os.path.join(input_dir, f))
             syst_result = syst_file.Get('SystResult')
@@ -71,7 +75,10 @@ if __name__ == '__main__':
                   json_dict[syst_label][seed][par_name] = p.getVal()
             # Dump to json every 100 files
             if count == 100:
+              print('Saving to json')
               json.dump(json_dict, json_file)
+              # Make back up file before overwriting again
+              copyfile(json_fname, json_fname + '.bak')
               count = 0
     else:
       sys.exit(input_dir + ' does not exist.')
