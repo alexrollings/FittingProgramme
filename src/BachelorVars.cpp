@@ -157,8 +157,15 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       Params::Get().CreateFixed("A_CP_Bd2Dsth", uniqueId_, _bachelor, 0.0, 0,
                                 Systematic::NA, Sign::none));
   if (Configuration::Get().neutral() == Neutral::pi0) {
-    A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-        "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
+    if (_bachelor == Bachelor::pi) {
+      A_CP_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -1, 1));
+    } else {
+      A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
+          Params::Get().CreateFixed("A_CP_Bu2Dst0hst", uniqueId_, Bachelor::k,
+                                    0.0, 0.02, Systematic::NA, Sign::none));
+    }
   } else {
     A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
