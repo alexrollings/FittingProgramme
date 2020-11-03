@@ -53,10 +53,12 @@ if __name__ == '__main__':
 
   input_dir = input_dir + '/results/'
   if os.path.isdir(input_dir):
-    count = 0
+    save_count = 0
+    file_count = 0
     files = os.listdir(input_dir)
     n_files = len(files)
     for f in files:
+      file_count = file_count + 1
       m = re.search(
           f'SystResult_{box_str}((?:_[0-9A-Za-z]+)+)_([a-z0-9]+).root', f)
           # 'SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_[a-z0-9]+.root', f)
@@ -66,7 +68,7 @@ if __name__ == '__main__':
         if syst_label not in json_dict:
           json_dict[syst_label] = {}
         if seed not in json_dict[syst_label]:
-          count = count + 1
+          save_count = save_count + 1
           syst_file = TFile(os.path.join(input_dir, f))
           syst_result = syst_file.Get('SystResult')
           # Label each result with syst label and seed
@@ -81,12 +83,12 @@ if __name__ == '__main__':
                 json_dict[syst_label][seed][par_name] = p.getVal()
           syst_file.Close()
           # Dump to json every 100 files
-          if count % 100 == 0:
+          if save_count % 100 == 0:
             SaveToFile(json_fname, json_dict)
-            print(f'Saved result {count} out of {n_files}')
-            # if count == 1000:
+            print(f'Saved result {file_count} out of {n_files}')
+            # if save_count == 1000:
             #   sys.exit()
-    print(f'Saved result final {count} out of {n_files}')
+    print(f'Saved result final {file_count} out of {n_files}')
     SaveToFile(json_fname, json_dict)
   else:
     sys.exit(input_dir + ' does not exist.')
