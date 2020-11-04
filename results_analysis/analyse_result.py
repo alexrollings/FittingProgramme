@@ -104,7 +104,7 @@ if __name__ == '__main__':
       syst_dict = json.load(json_file_format)
   else:
     # Load in systematics from json
-    json_fname = f'{syst_dir}/systematics_{neutral}_small.json'
+    json_fname = f'{syst_dir}/systematics_{neutral}.json'
     if os.path.exists(json_fname):
       with open(json_fname, 'r') as json_file:
         json_dict = json.load(json_file)

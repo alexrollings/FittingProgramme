@@ -77,9 +77,11 @@ if __name__ == '__main__':
           # Save obs names and values
           for p in syst_result.floatParsFinal():
             for obs in observables:
-              par_name = p.GetName()[:-2]
-              m = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
+              par_name = p.GetName()
+              m = re.match(obs + '(\S+)_[0-9]+', par_name)
               if m:
+                # Results labelled with different numbers
+                par_name = obs + m.group(1)
                 json_dict[syst_label][seed][par_name] = p.getVal()
           syst_file.Close()
           # Dump to json every 100 files
