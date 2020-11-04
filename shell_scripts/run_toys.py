@@ -174,7 +174,7 @@ if __name__ == "__main__":
     if bu_low == None:
       bu_low = "5240"
     if bu_high == None:
-      bu_high = "5330"
+      bu_high = "5320"
     if delta_partial_low == None:
       delta_partial_low = "60"
     if delta_partial_high == None:
