@@ -86,7 +86,6 @@ enum class Systematic {
   Bu2Dst0h_D0gamma_WN_PdfDelta,
   Bu2Dst0h_D0gamma_WN_PdfBu,
   Bu2Dst0h_D0gamma_WN_PdfBuPartial,
-  // Bu2Dst0h_WN_Frac,
   Bd2Dsth_PdfDelta,
   Bd2Dsth_PdfBu,
   Bd2Dsth_PdfBuPartial,
@@ -136,7 +135,6 @@ enum class Systematic {
   mcEffs_Bkg_misId,
   Bu2D0hst_BkgFrac,
   Bu2Dst0hst_BkgFrac,
-  Bs2D0Kpi_BkgFrac,
   pidEffPi,
   pidEffK,
   crossFeedRate,
@@ -162,6 +160,10 @@ enum class Systematic {
   kBF_D02kk,
   kBF_D02pipi,
   // DON'T RUN BELOW
+  // π0
+  A_CP_pi_Lb2Omegach_Lcpi0,
+  A_CP_K_Lb2Omegach_Lcpi0,
+  Bs2D0Kpi_BkgFrac,
   kBF_Bu2Dst0pi,
   kBF_Bu2Dst0K,
   kBF_Dst02D0pi0,
