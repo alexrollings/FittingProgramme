@@ -135,12 +135,14 @@ if __name__ == "__main__":
   else:
     sys.exit("--charge=total/plus,minus")
 
-  if gen == "data":
-    print("Generating toys from 2D datasets")
-  elif gen == "model":
-    print("Generating toys from D1D model")
+  if gen == "pdfD1D":
+    print("Running toys generated from D1D PDF")
+  elif gen == "pdf2D":
+    print("Running toys generated from 2D PDF")
+  elif gen == "data2D":
+    print("Running toys generated from 2D data")
   else:
-    sys.exit("-gen=model/data")
+    sys.exit("-gen=pdfD1D/pdf2D/data2D")
 
   if neutral != "pi0" and neutral != "gamma":
     sys.exit("Specify neutral: -n=pi0/gamma")
@@ -181,7 +183,7 @@ if __name__ == "__main__":
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
     templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
-    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
         i) + ".sh"
     substitutions = {
         "nJob": i,
@@ -205,7 +207,7 @@ if __name__ == "__main__":
     else:
       run_process(["chmod", "+x", scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".submit"
       submitSubs = {
           "nJob": i,
