@@ -147,18 +147,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0pi0_WN_mean2Bu_(),
       Bu2Dst0h_D0pi0_WN_sigmaRatio21Bu_(nullptr),
       Bu2Dst0h_D0pi0_WN_KpiSigmaBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 0.98451,
-          0.01585, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
+          "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0,
+          0.05, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
       Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
           Sign::same)),
-      // Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::pi0, 3.3625e+00,
-      //     4.40e-01, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
-      // Bu2Dst0h_D0pi0_WN_a1Bu_(Params::Get().CreateFloating(
-      //     "Bu2Dst0h_D0pi0_WN_a1Bu", uniqueId_, Neutral::pi0,
-      //     Mode::Bu2Dst0pi_D0pi0_WN, 0, 5)),
       Bu2Dst0h_D0pi0_WN_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_n1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
@@ -216,9 +210,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "Bu2Dst0h_D0gamma_WN_a1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::Bu2Dst0h_D0gamma_WN_PdfBu,
           Sign::same)),
-      // Bu2Dst0h_D0gamma_WN_a1Bu_(Params::Get().CreateFloating(
-      //     "Bu2Dst0h_D0gamma_WN_a1Bu", uniqueId_, Neutral::pi0,
-      //     Mode::Bu2Dst0pi_D0gamma_WN, -5, -0.000001)),
       Bu2Dst0h_D0gamma_WN_n1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0gamma_WN_n1Bu", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::Bu2Dst0h_D0gamma_WN_PdfBu,
