@@ -61,25 +61,17 @@ if __name__ == "__main__":
                       type=int,
                       help='Number of jobs to run on batch',
                       required=True)
-  parser.add_argument(
-      '-g',
-      '--gen',
-      type=str,
-      help=
-      '--gen=model/data: Toy dataset generated from D1D model or 2D dataset',
-      required=True)
+  parser.add_argument('-g',
+                      '--gen',
+                      type=str,
+                      help='-d=pdfD1D, pdf2D,data2D',
+                      required=True)
   parser.add_argument(
       '-i',
       '--input_dir',
       type=str,
       help='Path to RDS of data: required to generate toys from data PDF',
       required=False)
-  # parser.add_argument(
-  #     '-d',
-  #     '--dim',
-  #     type=str,
-  #     help='Specify -d=1D if want to perform toys from 1D fit to BuDelta mass',
-  #     required=False)
   parser.add_argument('-dl',
                       '--delta_low',
                       type=str,
@@ -156,10 +148,6 @@ if __name__ == "__main__":
   if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi" and daughters != "kpi,kk,pipi,pik":
     sys.exit("Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik")
 
-  # if dim == "1":
-  #   print("Performing 1D toys to BuDelta mass")
-  #   dim = "-1D"
-
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -192,13 +180,14 @@ if __name__ == "__main__":
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
-    templatePath = home_path + 'shell_scripts/run_toys_' + gen + '.sh.tmpl'
-    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+    templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
         i) + ".sh"
     substitutions = {
         "nJob": i,
         "INPUT": input_dir,
         "PATH": output_dir,
+        "GEN": gen,
         "NEUTRAL": neutral,
         "DAUGHTERS": daughters,
         "CHARGE": charge,
@@ -209,17 +198,14 @@ if __name__ == "__main__":
         "DPH": delta_partial_high,
         "BL": bu_low,
         "BH": bu_high,
-        # "DIM":
-        #     dim
     }
     make_shell_script(templatePath, scriptPath, substitutions)
     if queue == 'batch':
-      # run_process(["sh", scriptPath])
       run_process(["qsub", scriptPath])
     else:
       run_process(["chmod", "+x", scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + charge + "_" + daughters + "_" + str(
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp_toys/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".submit"
       submitSubs = {
           "nJob": i,
@@ -235,8 +221,6 @@ if __name__ == "__main__":
           "BL": bu_low,
           "BH": bu_high,
           "CLUSTERID": '$(ClusterId)'
-          # "DIM":
-          #     dim
       }
       make_shell_script(submitTemplate, submitScript, submitSubs)
       run_process(["condor_submit", submitScript])
