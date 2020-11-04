@@ -234,6 +234,7 @@ int main(int argc, char **argv) {
     std::string systematicArg("");
     int toysArg = 0;
     int nSystArg = 0;
+    int nCPUArg;
     float deltaLowArg = 0.0;
     float deltaHighArg = 0.0;
     float deltaPartialLowArg = 0.0;
@@ -333,6 +334,10 @@ int main(int argc, char **argv) {
       if (args("simple")) {
         std::cout << "Plotting all mis-reconstructed PDFs as one colour.\n";
         config.simpleFit() = true;
+      }
+      if (args("nCPU", nCPUArg)) {
+        std::cout << "Setting nCPU to " << nCPUArg << "\n"; 
+        config.nCPU_ = nCPUArg;
       }
       // Year
       // args matches "year" to string given in command line and assigns
