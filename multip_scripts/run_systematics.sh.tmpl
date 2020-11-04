@@ -1,7 +1,25 @@
 #!/bin/zsh
 
-source /home/rollings/.zshrc
+source /home/rollings/.zshrc.local
 source_root
 
-cd /data/lhcb/users/rollings/multi_scripts/build/
-./Fitting -inputDir=${INPUT} -outputDir=${PATH} -systematic=${SYST} -nSyst=${NFITS} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH}
+mkdir /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}
+cd /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}
+
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/multi_scripts/job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}/CMakeLists.txt 
+
+mkdir src
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
+mkdir include
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
+
+mkdir build
+cd build
+cmake ../
+make
+./Fitting -inputDir=${INPUT} -outputDir=${PATH} -daughters=${DAUGHTERS} -charge=${CHARGE} -neutral=${NEUTRAL} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -systematic=${SYST} -nSyst=${NFITS}
+
+cd /data/lhcb/users/rollings/multi_scripts/
+rm -rf job_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${SYST}_${nJob}
