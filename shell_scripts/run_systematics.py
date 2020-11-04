@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
   if neutral == 'pi0':
     systematics = [
-        # 'Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi',
+        'Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi',
         'Bu2Dst0h_D0pi0_PdfDelta_Tails', 'Bu2Dst0h_D0pi0_PdfDelta_Frac',
         'Bu2Dst0h_D0pi0_PdfBu_SigmaRatioKpi', 'Bu2Dst0h_D0pi0_PdfBu_Tails',
         'Bu2Dst0h_D0pi0_PdfBu_Frac', 'Bu2Dst0h_D0pi0_WN_PdfDelta',
