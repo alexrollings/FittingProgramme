@@ -126,7 +126,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   if (_bachelor == Bachelor::k) {
     // HFLAV: R_ADS+, BF average of B+ and B0
     R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, Bachelor::k,
+        Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, _bachelor,
                                   0.016, 0.004, Systematic::R_ADS_Bu2D0hst, Sign::same));
   }
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
@@ -165,14 +165,22 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       // } else {
       //   A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
       //       Params::Get().CreateFixed("A_CP_Bu2Dst0hst", uniqueId_,
-      //       Bachelor::k,
-      //                                 0.0, 0.02, Systematic::NA,
+      //       _bachelor,
+      //                                 0.0, 0.2, Systematic::NA,
       //                                 Sign::none));
       // }
-      A_CP_Lb2Omegach_Lcpi0_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-              "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.02,
-              Systematic::NA, Sign::same));
+      // Needs own syst for π and K
+      if (_bachelor == Bachelor::pi) {
+        A_CP_Lb2Omegach_Lcpi0_ =
+            std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+                "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.02,
+                Systematic::NA, Sign::same));
+      } else {
+        A_CP_Lb2Omegach_Lcpi0_ =
+            std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+                "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.2,
+                Systematic::NA, Sign::same));
+      }
   } else {
     A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
@@ -189,7 +197,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   } else {
     // HFLAV: A_CP+, BF average of B+ and B0
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-        "A_CP_Bu2D0hst", uniqueId_, Bachelor::k, 0.06, 0.06,
+        "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.06,
         Systematic::A_CP_K_Bu2D0hst, Sign::none));
   }
 }
