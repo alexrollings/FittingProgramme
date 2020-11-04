@@ -229,9 +229,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       // -------------------- Bu2Dst0h_WN -------------------- //
       Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFloating(
           "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, -1, 2)),
-      // Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFixed(
-      //     "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0.,
-      //     Systematic::NA, Sign::same)),
       // -------------------- Bd2Dsth -------------------- //
       Bd2Dsth_thresholdDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_thresholdDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
@@ -239,11 +236,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bd2Dsth_aDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2Dsth_PdfDelta, Sign::none)),
-      // Bd2Dsth_aDelta_(Params::Get().CreateFixed(
-      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, 3.0827e+00, 1.65e+00,
-      //     Systematic::Bd2Dsth_PdfDelta, Sign::none)),
-      // Bd2Dsth_aDelta_(Params::Get().CreateFloating(
-      //     "Bd2Dsth_aDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi, 0, 5)),
       Bd2Dsth_bDelta_(Params::Get().CreateFixed(
           "Bd2Dsth_bDelta", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2Dsth_PdfDelta, Sign::none)),
@@ -257,9 +249,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bd2Dsth_mean1Bu_(Params::Get().CreateFixed(
           "Bd2Dsth_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
           Systematic::Bd2Dsth_PdfBu, Sign::same)),
-      // Bd2Dsth_mean1Bu_(Params::Get().CreateFloating(
-      //     "Bd2Dsth_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bd2Dstpi,
-      //     5255, 5275)),
       Bd2Dsth_meanOffset21Bu_(nullptr),
       Bd2Dsth_mean2Bu_(),
       Bd2Dsth_sigmaRatio21Bu_(nullptr),
@@ -288,12 +277,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_aDelta_(Params::Get().CreateFixed(
           "Bu2D0hst_aDelta", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hst_PdfDelta, Sign::none)),
-      // Bu2D0hst_aDelta_(Params::Get().CreateFixed(
-      //     "Bu2D0hst_aDelta", uniqueId_, Neutral::pi0, -3.2402e+00, 2.21e+00,
-      //     Systematic::Bu2D0hst_PdfDelta, Sign::none)),
-      // Bu2D0hst_aDelta_(Params::Get().CreateFloating(
-      //     "Bu2D0hst_aDelta", uniqueId_, Neutral::pi0, Mode::Bu2D0rho, -10,
-      //     10)),
       Bu2D0hst_bDelta_(Params::Get().CreateFixed(
           "Bu2D0hst_bDelta", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hst_PdfDelta, Sign::none)),
@@ -307,9 +290,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hst_PdfBu, Sign::same)),
-      // Bu2D0hst_mean1Bu_(Params::Get().CreateFloating(
-      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
-      //     5235, 5255)),
       Bu2D0hst_meanOffset21Bu_(nullptr),
       Bu2D0hst_mean2Bu_(),
       Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
@@ -319,13 +299,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_a1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_a1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hst_PdfBu, Sign::none)),
-      // Bu2D0hst_a1Bu_(Params::Get().CreateFixed(
-      //     "Bu2D0hst_a1Bu", uniqueId_, Neutral::pi0, 1.5254e+00, 2.10e-01,
-      //     Systematic::Bu2D0hst_PdfBu, Sign::none)),
-      // Bu2D0hst_a1Bu_(Params::Get().CreateFloating("Bu2D0hst_a1Bu", uniqueId_,
-      //                                             Neutral::pi0,
-      //                                             Mode::Bu2D0rho, -5,
-      //                                             -0.00001)),
       Bu2D0hst_n1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_n1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
           Systematic::Bu2D0hst_PdfBu, Sign::same)),
