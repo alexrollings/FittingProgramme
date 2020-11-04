@@ -73,12 +73,12 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0hst(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst())),
       // Increase uncertainty: from Lb -> Lc K / Lb -> Lc π
-      // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
-      //     "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
-      //     -1, 1)) {}
-      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
-          0.073*0.25, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0, Sign::same)) {}
+          -1, 1)) {}
+      // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+      //     "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
+      //     0.073*0.25, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0, Sign::same)) {}
 
 template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
