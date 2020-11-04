@@ -169,31 +169,28 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       //                                 0.0, 0.2, Systematic::A_CP_pi_Bu2Dst0hst,
       //                                 Sign::none));
       // }
-      // Needs own syst for π and K
-      if (_bachelor == Bachelor::pi) {
-        A_CP_Lb2Omegach_Lcpi0_ =
-            std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-                "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.02,
-                Systematic::A_CP_pi_Lb2Omegach_Lcpi0, Sign::none));
-      } else {
-        A_CP_Lb2Omegach_Lcpi0_ =
-            std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-                "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.2,
-                Systematic::A_CP_K_Lb2Omegach_Lcpi0, Sign::none));
-      }
+      // if (_bachelor == Bachelor::pi) {
+      //   A_CP_Lb2Omegach_Lcpi0_ =
+      //       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      //           "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.02,
+      //           Systematic::A_CP_pi_Lb2Omegach_Lcpi0, Sign::none));
+      // } else {
+      //   A_CP_Lb2Omegach_Lcpi0_ =
+      //       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      //           "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0.0, 0.2,
+      //           Systematic::A_CP_K_Lb2Omegach_Lcpi0, Sign::none));
+      // }
   } else {
     A_CP_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "A_CP_Bu2Dst0hst", uniqueId_, _bachelor, 0, -2, 2));
-    A_CP_Lb2Omegach_Lcpi0_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
   }
+  A_CP_Lb2Omegach_Lcpi0_ =
+      std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+          "A_CP_Lb2Omegach_Lcpi0", uniqueId_, _bachelor, 0, -1, 1));
   if (_bachelor == Bachelor::pi) {
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.0, 0.02,
         Systematic::A_CP_pi_Bu2D0hst, Sign::none));
-    // A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-    //     "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
   } else {
     // HFLAV: A_CP+, BF average of B+ and B0
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
