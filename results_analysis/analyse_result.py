@@ -1,171 +1,357 @@
-import math, re, os, sys, glob
+import math, re, os, sys
 from ROOT import TFile, RooFitResult
-import root_numpy as r_np
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
-from uncertainties import unumpy, ufloat
-from uncertainties.umath import *
-import uncertainties as u
 import argparse
+from useful_functions import return_label
+from useful_functions import return_group
+import json
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-i',
-        '--input_dir',
-        type=str,
-        help='Directory where results are stored',
-        required=True)
-    parser.add_argument('-n',
-                        '--neutral',
-                        type=str,
-                        help='Neutral = pi0/gamma',
-                        required=True)
-    parser.add_argument('-c',
-                        '--charge',
-                        type=str,
-                        help='Charge = total/plus,minus',
-                        required=True)
-    parser.add_argument('-dl',
-                        '--delta_low',
-                        type=str,
-                        help='Lower delta mass range',
-                        required=True)
-    parser.add_argument('-dh',
-                        '--delta_high',
-                        type=str,
-                        help='Upper delta mass range',
-                        required=True)
-    parser.add_argument('-dpl',
-                        '--delta_partial_low',
-                        type=str,
-                        help='Lower delta mass range',
-                        required=False)
-    parser.add_argument('-dph',
-                        '--delta_partial_high',
-                        type=str,
-                        help='Upper delta mass range',
-                        required=False)
-    parser.add_argument('-bl',
-                        '--bu_low',
-                        type=str,
-                        help='Lower bu mass range',
-                        required=False)
-    parser.add_argument('-bh',
-                        '--bu_high',
-                        type=str,
-                        help='Upper bu mass range',
-                        required=False)
-    args = parser.parse_args()
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser()
+  parser.add_argument(
+      '-s',
+      '--syst_dir',
+      type=str,
+      help='Directory where json systematic is stored',
+      required=True)
+  parser.add_argument(
+      '-p',
+      '--pull_dir',
+      type=str,
+      help=
+      'Directory where results of pull distributions from 2D toys are stored',
+      required=True)
+  parser.add_argument(
+      '-e',
+      '--error_file',
+      type=str,
+      help=
+      'File where systematics from error correction are stored',
+      required=False)
+  parser.add_argument('-n',
+                      '--neutral',
+                      type=str,
+                      help='Neutral: pi0/gamma',
+                      required=True)
+  args = parser.parse_args()
+  syst_dir = args.syst_dir
+  pull_dir = args.pull_dir
+  neutral = args.neutral
+  error_file = args.error_file
 
-    input_dir = args.input_dir
-    neutral = args.neutral
-    charge = args.charge.split(",")
-    delta_low = args.delta_low
-    delta_high = args.delta_high
-    delta_partial_low = args.delta_partial_low
-    delta_partial_high = args.delta_partial_high
-    bu_low = args.bu_low
-    bu_high = args.bu_high
+  if neutral == 'pi0':
+    box_str = '138_148_5220_5330'
+  else:
+    box_str = '60_105_125_170_5240_5320'
 
-    if neutral != "gamma" and neutral != "pi0":
-        sys.exit("Neutral = pi0/gamma only")
+  # Observables we are interested have this stem (match with regex)
+  observables = [
+      'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
+      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
+  ]
 
-    if delta_partial_low == None or delta_partial_high == None:
-        if bu_low == None or bu_high == None:
-            box_string = delta_low + "_" + delta_high
-        else:
-            box_string = delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+  # Dict to hold fit result and calculated errors of observables
+  fit_result = {}
+  # Dict to store values of observables from each systematic category
+  syst_dict = {}
+  # Dict to store systematic errors for grouped categories
+  group_dict = {}
+
+  # Extract data fit result (make not of box dimn for 2d toy pulls)
+  # Extract value and fit error of each observable of interest
+  if os.path.isdir(syst_dir):
+    data_fname = f'{syst_dir}/results/DataResult_{box_str}.root'
+    if not os.path.isfile(data_fname):
+      sys.exit(f'{data_fname} does not exist')
+    data_file = TFile(data_fname)
+    data_result = data_file.Get('DataFitResult')
+    for obs in observables:
+      for p in data_result.floatParsFinal():
+        par_name = p.GetName()
+        m0 = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
+        if m0:
+          m1 = re.match('\S+Blind\S+', par_name)
+          if m1:
+            value = 0
+          else:
+            value = p.getVal()
+          fit_result[par_name[:-2]] = {
+              'Value': value,
+              'Statistical Error': p.getError()
+          }
+          syst_dict[par_name[:-2]] = {}
+          group_dict[par_name[:-2]] = {}
+  else:
+    sys.exit(f'{syst_dir} does not exist')
+
+  # File where 2D pull results are stored
+  pull_fname = f'{pull_dir}/Result_{box_str}.root'
+  pull_file = TFile(pull_fname)
+  # Extract pull result for vars stored in fit_result dict and correct stat error with pull width
+  for k, v in fit_result.items():
+    pull_result = pull_file.Get(f'Result_Pull_{k}')
+    if pull_result == None:
+      print(f'Could not extract Result_Pull_{k} from {pull_fname}')
     else:
-        if bu_low == None or bu_high == None:
-            box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high
+      pull_pars = pull_result.floatParsFinal()
+      pull_width = pull_pars[1].getVal()
+      v['Statistical Error'] = v['Statistical Error'] * pull_width
+
+  # If json already exists for formatted systs, load this
+  json_fname_format = f'{syst_dir}/systematics_{neutral}_format.json'
+  if os.path.exists(json_fname_format):
+    with open(json_fname_format, 'r') as json_file_format:
+      syst_dict = json.load(json_file_format)
+  else:
+    # Load in systematics from json
+    json_fname = f'{syst_dir}/systematics_{neutral}_small.json'
+    if os.path.exists(json_fname):
+      with open(json_fname, 'r') as json_file:
+        json_dict = json.load(json_file)
+    else:
+      sys.exit(f'{json_fname} does not exist')
+    # Loop over json dict and sum up fit quality for each syst label
+    fits_status = {}
+    for syst_label in json_dict:
+      fits_status[syst_label] = {'Converged' : 0, 'MINOS' : 0, 'FPD' : 0, 'Unconverged' : 0}
+      for seed in json_dict[syst_label]:
+        covQual = json_dict[syst_label][seed]['covQual']
+        fitStatus = json_dict[syst_label][seed]['fitStatus']
+        if covQual < 2:
+          fits_status[syst_label]['Unconverged'] += 1
+        elif covQual < 3:
+          fits_status[syst_label]['FPD'] += 1
+        elif fitStatus != 0:
+          fits_status[syst_label]['MINOS'] += 1
+        elif (covQual >= 3 and fitStatus == 0):
+          fits_status[syst_label]['Converged'] += 1
+          # If fit has good quality, save systematic results in syst_dict
+          for par in syst_dict:
+            if par in json_dict[syst_label][seed]:
+              val = json_dict[syst_label][seed][par]
+              if syst_label not in syst_dict[par]:
+                syst_dict[par][syst_label] = [val]
+              else:
+                syst_dict[par][syst_label].append(val)
+            else:
+              sys.exit(f'{par} not in json_dict')
         else:
-            box_string = delta_partial_low + "_" + delta_partial_high + "_" + delta_low + "_" + delta_high + "_" + bu_low + "_" + bu_high
+          print(f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}')
+    # Save formatted systs and fot results to file
+    with open(json_fname_format, 'w') as json_file_format:
+      json.dump(syst_dict, json_file_format)
+    status_fname = f'{syst_dir}/systematics_{neutral}_status.json'
+    with open(status_fname, 'w') as status_file:
+      json.dump(fits_status, status_file)
 
-    fit_file = input_dir + "/data_results/DataResult_" + box_string + ".root"
-    tf_fit = TFile(fit_file)
-    fit_result = tf_fit.Get("DataFitResult")
-    if fit_result == None:
-        sys.exit("Could not extract DataFitResult from " + fit_file)
+  total_syst_dict = {}
+  g_err_corr = 'Stat. Error Correction'
+  # # Syst error from error correction: read in from file
+  # if error_file != None:
+  #   if os.path.exists(error_file):
+  #     with open(error_file) as f:
+  #       error_dict = dict(line.strip().split(',') for line in f)
+  #     # print(error_dict)
+  #     for p, v in group_dict.items():
+  #       total_syst_dict[p] = {}
+  #       if p in error_dict:
+  #         v[g_err_corr] = float(error_dict[p]) * fit_result[p]['Statistical Error']
+  #         total_syst_dict[p][g_err_corr] = float(error_dict[p]) * fit_result[p]['Statistical Error']
+  #       else:
+  #         v[g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
+  #         total_syst_dict[p][g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
+  #   else:
+  #     print('No error file: calculating systematics with error correction')
+  # If don't have box scan results yet, use 0.015 as placeholder (average RMS)
+  # else:
+  # Use average RMS as systematic for stat error correction
+  for p, v in group_dict.items():
+    v[g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
+    total_syst_dict[p] = {}
+    total_syst_dict[p][g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
 
-    pull_file = input_dir + "/pull_results/Result_" + box_string + ".root"
-    tf_pull = TFile(pull_file)
+  # Calculate individual systematic errors from std dev of arrays in syst_dict
+  # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
+  n_params = {'N' : 0, 'R': 0, 'A': 0}
+  for par, syst_arr in syst_dict.items():
+    n_params[par[0]] += 1
+    n_syst = len(syst_arr)
+    tot_syst = 0
+    for syst_label, arr in syst_arr.items():
+      np_arr = np.asarray(arr, dtype=np.float32)
+      std = np.std(np_arr)
+      total_syst_dict[par][syst_label] = std
+      tot_syst += std**2
+      # Grouping errors
+      group = return_group(syst_label)
+      if group in group_dict[par]:
+        group_dict[par][group] += std**2
+      else:
+        group_dict[par][group] = std**2
+    tot_syst += group_dict[par][g_err_corr]**2
+    fit_result[par]['Systematic Error'] = tot_syst**0.5
+    for k, v in group_dict[par].items():
+      if k != g_err_corr:
+        # Sqrt sum in quadrature of individual errs
+        group_dict[par][k] = v**0.5
 
-    #yields we want to correct
-    decays = [
-        "Bu2Dst0h_D0pi0",
-        "Bu2D0h",
-        "MisRec",
-        "PartRec",
-    ]
-    if neutral == "gamma":
-        decays.append("Bu2Dst0h_D0gamma")
-    # yields = []
-    # for d in decays:
-    #     for c in charge:
-    #         yields.append("N_tot_" + d + "_" + neutral + "_pi_" + c + "_0")
-    #         yields.append("N_tot_" + d + "_" + neutral + "_k_" + c + "_0")
+  # Separate tables for yields, ratios and asymmetries
+  title_str = { 'N' : '', 'R' : '' , 'A': ''}
+  row_arr = { 'N' : [], 'R' : [], 'A': []}
+  i = { 'N': 0, 'R': 0, 'A': 0}
+  for par, syst in total_syst_dict.items():
+    key = par[0]
+    title_str[key] = title_str[key] + ' & ' + return_label(par)
+    j = { 'N': 0, 'R': 0, 'A': 0}
+    for s_label in sorted(syst):
+      if i[key] == 0:
+        # Replace _ with \_ in LaTeX
+        row_arr[key].append(s_label.replace('_', '\\_'))
+      err = syst[s_label]
+      err_str = f' & ${err:.4g}$'
+      row_arr[key][j[key]] = row_arr[key][j[key]] + err_str
+      if i[key] == (n_params[key] - 1):
+        row_arr[key][j[key]] = row_arr[key][j[key]] + ' \\\\\n'
+      j[key] += 1
+    if i[key] == 0:
+      row_arr[key].append('\\hline\n')
+      row_arr[key].append('$\\sigma(Syst.)$')
+      row_arr[key].append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+    syst_err = fit_result[par]['Systematic Error']
+    stat_err = fit_result[par]['Statistical Error']
+    frac = syst_err / stat_err
+    tot_str = f' & ${syst_err:.4g}$'
+    frac_str = f' & ${frac:.4g}$'
+    row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + tot_str
+    row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + frac_str
+    if i[key] == (n_params[key] - 1):
+      row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + ' \\\\ \\hline\n'
+      row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + ' \\\\ \\hline\\hline\n'
+    i[key] += 1
 
-    #Dict to add the values and errors of the observables into
-    obs = {}
-    #Floating fit parameters
-    pars = fit_result.floatParsFinal()
-    fit_result.Print()
-    for i in range(0, len(pars)):
-        p = pars[i]
-        p_name = p.GetName()
-        # if (p_name in yields):
-        # In python, tuples () are immutable - can't change value: convert to tuple after calculating corrected error
-        pull_result = tf_pull.Get("Result_Pull_" + p_name[:-2])
-        if pull_result == None:
-            sys.exit("Could not extract Result_Pull_" + p_name[:-2] + " from " + pull_file)
-        pull_pars = pull_result.floatParsFinal()
-        pull_mean = pull_pars[0].getVal()
-        pull_width = pull_pars[1].getVal()
-        # obs[p_name] = [p.getVal() - pull_mean*p.getError(), p.getError()*pull_width]
-        obs[p_name] = [p.getVal(), p.getError()*pull_width]
+  title_str['N'] = title_str['N'] + ' \\\\ \\hline\n'
+  title_str['R'] = title_str['R'] + ' \\\\ \\hline\n'
+  title_str['A'] = title_str['A'] + ' \\\\ \\hline\n'
 
+  tex_file = open(
+      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Sytematics_{neutral}.tex',
+      'w')
+  tex_file.write('\\documentclass[12pt, portrait]{article}\n')
+  tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
+  tex_file.write('\\usepackage{graphicx}\n')
+  tex_file.write('\\usepackage{adjustbox}\n')
+  tex_file.write('\\usepackage{float}\n')
+  tex_file.write('\\restylefloat{table}\n')
+  tex_file.write('\\begin{document}\n')
+  # tex_file.write('\\begin{table}[t]\n')
+  # tex_file.write('\\centering\n')
+  # tex_file.write('\\begin{tabular}{' + 'l'*(n_params['N']+2) + '}\n')
+  # tex_file.write('\\hline\\hline\n')
+  # tex_file.write(title_str['N'])
+  # for row in row_arr['N']:
+  #   tex_file.write(row)
+  # tex_file.write('\\end{tabular}\n')
+  # tex_file.write('\\end{table}\n')
+  if n_params['R'] > 0:
+    tex_file.write('\\begin{table}[t]\n')
+    tex_file.write('\\centering\n')
+    tex_file.write('\\footnotesize\n')
+    tex_file.write('\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+    tex_file.write('\\begin{tabular}{' + 'l' * (n_params['R'] + 2) + '}\n')
+    tex_file.write('\\hline\\hline\n')
+    tex_file.write(title_str['R'])
+    for row in row_arr['R']:
+      tex_file.write(row)
+    tex_file.write('\\end{tabular}\n')
+    tex_file.write('\\end{adjustbox}\n')
+    tex_file.write('\\end{table}\n')
+  if n_params['A'] > 0:
+    tex_file.write('\\begin{table}[t]\n')
+    tex_file.write('\\centering\n')
+    tex_file.write('\\footnotesize\n')
+    tex_file.write('\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+    tex_file.write('\\begin{tabular}{' + 'l' * (n_params['A'] + 2) + '}\n')
+    tex_file.write('\\hline\\hline\n')
+    tex_file.write(title_str['A'])
+    for row in row_arr['A']:
+      tex_file.write(row)
+    tex_file.write('\\end{tabular}\n')
+    tex_file.write('\\end{adjustbox}\n')
+    tex_file.write('\\end{table}\n')
 
-    # Convert dict values from lists to tuples to make them immutable (easier to debug)
-    obs = {key: tuple(lst) for key, lst in obs.items()}
+  letter = ['R', 'A']
+  for l in letter:
+    title_str = ''
+    row_arr = []
+    i = 0
+    for par, g_err in group_dict.items():
+      if par[0] == l:
+        title_str = title_str + ' & ' + return_label(par)
+        j = 0
+        for g in sorted(g_err):
+          if i == 0:
+            row_arr.append(g)
+          err = g_err[g]
+          err_str = f' & ${err:.4g}$'
+          row_arr[j] = row_arr[j] + err_str
+          if i == (n_params[l] - 1):
+            row_arr[j] = row_arr[j] + ' \\\\\n'
+          j += 1
+        if i == 0:
+          row_arr.append('\\hline\n')
+          row_arr.append('$\\sigma(Syst.)$')
+          row_arr.append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+        syst_err = fit_result[par]['Systematic Error']
+        stat_err = fit_result[par]['Statistical Error']
+        frac = syst_err / stat_err
+        tot_str = f' & ${syst_err:.4g}$'
+        frac_str = f' & ${frac:.4g}$'
+        row_arr[j+1] = row_arr[j+1] + tot_str
+        row_arr[j+2] = row_arr[j+2] + frac_str
+        if i == (n_params[l] - 1):
+          row_arr[j+1] = row_arr[j+1] + ' \\\\ \\hline\n'
+          row_arr[j+2] = row_arr[j+2] + ' \\\\ \\hline\\hline\n'
+        i += 1
 
-    for d in decays:
-        for c in charge:
-            # Correlation matrix for yeilds (need to account for correlations between π and k yields when propagating uncertainties through to ratio)
-            bachelor = ["pi", "k"]
-            corr = np.ones((len(bachelor), len(bachelor)))
-            for a in range(0, len(bachelor)):
-                for b in range(0, len(bachelor)):
-                    corr[a, b] = fit_result.correlation("N_tot_" + d + "_" + neutral + "_" + bachelor[a] + "_" + c + "_0", "N_tot_" + d + "_" + neutral + "_" + bachelor[b] + "_" + c + "_0")
-            # Returns numbers with the correct uncertainties and correlations, given the covariance matrix
-            (obs["N_tot_" + d + "_" + neutral + "_pi_" + c + "_0_corr"], obs["N_tot_" + d + "_" + neutral + "_k_" + c + "_0_corr"]) = u.correlated_values_norm([obs["N_tot_" + d + "_" + neutral + "_pi_" + c + "_0"], obs["N_tot_" + d + "_" + neutral + "_k_" + c + "_0"]], corr)
-            obs["R_Kpi_" + d + "_" + neutral + "_" + c] = obs["N_tot_" + d + "_" + neutral + "_k_" + c + "_0_corr"] / obs["N_tot_" + d + "_" + neutral + "_pi_" + c + "_0_corr"]
+    title_str = title_str + ' \\\\ \\hline\n'
 
-    for k, v in obs.items():
-        # if isinstance(v, tuple):
-        #     print(k, " = ", v[0], " ± ", v[1])
-        if isinstance(v, u.UFloat):
-            print(k, ":")
-            print(v.nominal_value, " ± ", v.std_dev)
-            print(v.nominal_value, " ± ", (v.std_dev/v.nominal_value)*100, " %")
-            print(" ")
+    if n_params[l] > 0:
+      tex_file.write('\\begin{table}[t]\n')
+      tex_file.write('\\centering\n')
+      tex_file.write('\\small\n')
+      tex_file.write('\\begin{adjustbox}{max width=\\textwidth}\n')
+      tex_file.write('\\begin{tabular}{' + 'l'*(n_params[l]+2) + '}\n')
+      tex_file.write('\\hline\\hline\n')
+      tex_file.write(title_str)
+      for row in row_arr:
+        tex_file.write(row)
+      tex_file.write('\\end{tabular}\n')
+      tex_file.write('\\end{adjustbox}\n')
+      tex_file.write('\\end{table}\n')
 
-        # else:
-        #     print("Do not recognise type of object in obs for key ", k)
+  row_arr = []
+  for par, val_errs in fit_result.items():
+    val = val_errs['Value']
+    stat = val_errs['Statistical Error']
+    syst = val_errs['Systematic Error']
+    if val == 0:
+      results_str = f' & X & {stat:.4g} & {syst:.4g} \\\\\n'
+    else:
+      if par[0] == 'N':
+        results_str = f' & {val:.4g} & {stat:.4g} & - \\\\\n'
+      else:
+        results_str = f' & {val:.4g} & {stat:.4g} & {syst:.4g} \\\\\n'
+    row_arr.append(return_label(par) + results_str)
 
-    # file = open("../results/Yields_%s.tex" % years, "w")
-    # file.write("\\begin{table}[t]\n")
-    # file.write("\\centering\n")
-    # file.write("\\begin{tabular}{l l l}\n")
-    # file.write("\\hline\n")
-    # file.write("Mode & Yield (full Dalitz) & Yield ($K^*(892)^\\pm$ region) \\\\ \\hline\n")
-    # file.write("$N_{SS}^{D\\pipm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dpi_SS_N"],obs["n_dpi_SS_Y"]))
-    # file.write("$N_{OS}^{D\\pipm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dpi_OS_N"],obs["n_dpi_OS_Y"]))
-    # file.write("$N_{SS}^{D\\Kpm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dk_SS_N"],obs["n_dk_SS_Y"]))
-    # file.write("$N_{OS}^{D\\Kpm}$ & "+"${:.0fL}$ & ${:.0fL}$ \\\\\n".format(obs["n_dk_OS_N"],obs["n_dk_OS_Y"]))
-    # file.write("\\end{tabular}\n")
-    # file.write("\\caption{Total signal yields measured in the full Dalitz and restricted $K^*(892)^\\pm$ region invariant mass fits.}\n")
-    # file.write("\\label{tab:yields}\n")
-    # file.write("\\end{table}")
-    # file.close()
+  tex_file.write('\\begin{table}[t]\n')
+  tex_file.write('\\centering\n')
+  tex_file.write('\\begin{tabular}{l l l l}\n')
+  tex_file.write('\\hline\\hline\n')
+  tex_file.write(' & Value & Statistical Error & Systematic Error \\\\ \\hline\n')
+  for row in row_arr:
+    tex_file.write(row)
+  tex_file.write('\\hline\\hline\n')
+  tex_file.write('\\end{tabular}\n')
+  tex_file.write('\\end{table}\n')
+  tex_file.write('\\end{document}')
+  tex_file.close()
