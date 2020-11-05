@@ -381,7 +381,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
     //             .R_piK_Bu2Dst0h_WN()));
     A_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_Bu2Dst0h_WN", uniqueId, _neutral,
-                                     Bachelor::pi, Daughters::pik, 0, -1, 1));
+                                     Bachelor::pi, Daughters::pik, 0, -2, 2));
     a_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
         ("a_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
@@ -1346,7 +1346,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
     //             .R_piK_Bu2Dst0h_WN()));
     A_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_Bu2Dst0h_WN", uniqueId, _neutral,
-                                     Bachelor::k, Daughters::pik, 0, -1, 1));
+                                     Bachelor::k, Daughters::pik, 0, -2, 2));
     a_Bu2Dst0h_D0pi0_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
         ("a_Bu2Dst0h_D0pi0_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
