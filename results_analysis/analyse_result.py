@@ -7,6 +7,18 @@ from useful_functions import return_group
 import json
 import operator
 
+def PrintFitStatus(fit_status):
+  for syst_label, status in fit_status.items():
+    print(f'{syst_label}:\n')
+    for status_label, tally in status.items():
+      if status_label == 'Total':
+        print(f'\t{status_label} : {tally}')
+      else:
+        perc = (tally / status['Total']) * 100
+        print(f'\t{status_label} : {perc} %')
+    print('\n')
+
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument(
@@ -103,6 +115,14 @@ if __name__ == '__main__':
   if os.path.exists(json_fname_format):
     with open(json_fname_format, 'r') as json_file_format:
       syst_dict = json.load(json_file_format)
+      status_fname = f'{syst_dir}/systematics_{neutral}_status.json'
+      if os.path.exists(status_fname):
+        with open(status_fname, 'r') as status_file:
+          fit_status = json.load(status_file)
+          PrintFitStatus(fit_status)
+      else:
+        sys.err(
+            f'{status_fname} does not exist - cannot report on fit status')
   else:
     # Load in systematics from json
     json_fname = f'{syst_dir}/systematics_{neutral}.json'
@@ -112,20 +132,20 @@ if __name__ == '__main__':
     else:
       sys.exit(f'{json_fname} does not exist')
     # Loop over json dict and sum up fit quality for each syst label
-    fits_status = {}
+    fit_status = {}
     for syst_label in json_dict:
-      fits_status[syst_label] = {'Converged' : 0, 'MINOS' : 0, 'FPD' : 0, 'Unconverged' : 0}
+      fit_status[syst_label] = {'Total': 0, 'Converged' : 0, 'MINOS' : 0, 'FPD' : 0, 'Unconverged' : 0}
       for seed in json_dict[syst_label]:
         covQual = json_dict[syst_label][seed]['covQual']
         fitStatus = json_dict[syst_label][seed]['fitStatus']
         if covQual < 2:
-          fits_status[syst_label]['Unconverged'] += 1
+          fit_status[syst_label]['Unconverged'] += 1
         elif covQual < 3:
-          fits_status[syst_label]['FPD'] += 1
+          fit_status[syst_label]['FPD'] += 1
         elif fitStatus != 0:
-          fits_status[syst_label]['MINOS'] += 1
+          fit_status[syst_label]['MINOS'] += 1
         elif (covQual >= 3 and fitStatus == 0):
-          fits_status[syst_label]['Converged'] += 1
+          fit_status[syst_label]['Converged'] += 1
           # If fit has good quality, save systematic results in syst_dict
           for par in syst_dict:
             if par in json_dict[syst_label][seed]:
@@ -138,12 +158,14 @@ if __name__ == '__main__':
               sys.exit(f'{par} not in json_dict')
         else:
           print(f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}')
+        fit_status[syst_label]['Total'] += 1
     # Save formatted systs and fot results to file
     with open(json_fname_format, 'w') as json_file_format:
       json.dump(syst_dict, json_file_format)
     status_fname = f'{syst_dir}/systematics_{neutral}_status.json'
     with open(status_fname, 'w') as status_file:
-      json.dump(fits_status, status_file)
+      json.dump(fit_status, status_file)
+    PrintFitStatus(fit_status)
 
   total_syst_dict = {}
   g_err_corr = 'Stat. Error Correction'
