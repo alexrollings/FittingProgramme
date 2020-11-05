@@ -1,0 +1,69 @@
+\documentclass[12pt, landscape]{article}
+\usepackage[margin=0.1in]{geometry}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{tikz}
+%% Graphics
+\usepackage{graphicx}  % to include figures (can also use other packages)
+\usepackage{color}
+\usepackage{colortbl}
+\graphicspath{{../../results/new_shapes_2/pulls/pik_split_NEW/plots/}} % Make Latex search fig subdir for figures
+% \DeclareGraphicsExtensions{.pdf,.PDF,.png,.PNG}   % not needed
+\begin{document}
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_A_Bu2Dst0h_D0pi0_pi0_k_kpi_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_A_CP_Bu2Dst0h_D0pi0_Blind_pi_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_A_CP_Bu2Dst0h_D0pi0_Blind_k_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_A_Prod_Pull}};
+  \end{tikzpicture}
+  \caption{\small{Asymmetry pulls}}
+\end{figure}
+\newpage
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_CP_Bu2Dst0h_D0pi0_Blind_Pull}};
+  \end{tikzpicture}
+  \caption{\small{$R(D^{*}K/D^{*}\pi)$ and $R(CP)$ pulls}}
+\end{figure}
+\newpage
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_piK_Bu2Dst0h_D0pi0_Blind_k_minus_Pull}};
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.45]
+    \node[anchor=south west,inner sep=0] (image) at (0.5,0)
+    {\includegraphics[width=0.45\textwidth]{138_148_5220_5330_R_piK_Bu2Dst0h_D0pi0_Blind_k_plus_Pull}};
+  \end{tikzpicture}
+  \caption{\small{$R^{+}$ and $R^{-}$ pulls}}
+\end{figure}
+
+\end{document}
