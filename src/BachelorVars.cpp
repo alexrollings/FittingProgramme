@@ -69,13 +69,13 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0(),
             BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
-    // R_ADS_Bu2Dst0h_WN_ =
-    //     std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-    //         uniqueId, "R_ADS_Bu2Dst0h_WN_",
-    //         BachelorChargeVars<_bachelor, Charge::minus>::Get(uniqueId)
-    //             .R_piK_Bu2Dst0h_WN(),
-    //         BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
-    //             .R_piK_Bu2Dst0h_WN()));
+    R_ADS_Bu2Dst0h_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
+            uniqueId, "R_ADS_Bu2Dst0h_WN_",
+            BachelorChargeVars<_bachelor, Charge::minus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_WN(),
+            BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_WN()));
     if (Configuration::Get().neutral() == Neutral::gamma) {
       if (_bachelor == Bachelor::pi) {
         // Float to allow B->Dππ to fall in this PDF (only in ADS mode)
@@ -104,11 +104,11 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             uniqueId, "R_ADS_Bu2Dst0h_D0pi0_",
             BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2Dst0h_D0pi0()));
-    // R_ADS_Bu2Dst0h_WN_ =
-    //     std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
-    //         uniqueId, "R_ADS_Bu2Dst0h_WN_",
-    //         BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
-    //             .R_piK_Bu2Dst0h_WN()));
+    R_ADS_Bu2Dst0h_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
+            uniqueId, "R_ADS_Bu2Dst0h_WN_",
+            BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
+                .R_piK_Bu2Dst0h_WN()));
     if (Configuration::Get().neutral() == Neutral::gamma) {
       if (_bachelor == Bachelor::pi) {
         // Float to allow B->Dππ to fall in this PDF (only in ADS mode)
@@ -134,11 +134,11 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
           GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
       0, Systematic::NA, Sign::none));
-  R_ADS_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-      "R_ADS_Bu2Dst0h_WN", uniqueId_, _bachelor,
-      GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
-          GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
-      -1, 1));
+  // R_ADS_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+  //     "R_ADS_Bu2Dst0h_WN", uniqueId_, _bachelor,
+  //     GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
+  //         GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
+  //     -1, 1));
   if (Configuration::Get().neutral() == Neutral::pi0) {
     if (_bachelor == Bachelor::pi) {
       R_ADS_Bu2D0hst_ =
