@@ -5,6 +5,7 @@ import argparse
 from useful_functions import return_label
 from useful_functions import return_group
 import json
+import operator
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -173,7 +174,10 @@ if __name__ == '__main__':
   # Calculate individual systematic errors from std dev of arrays in syst_dict
   # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
   n_params = {'N' : 0, 'R': 0, 'A': 0}
+  # Dict to store dominant syst labels
+  max_systs = {}
   for par, syst_arr in syst_dict.items():
+    max_systs[par] = {'label' : None, 'group' : None }
     n_params[par[0]] += 1
     n_syst = len(syst_arr)
     tot_syst = 0
@@ -190,10 +194,14 @@ if __name__ == '__main__':
         group_dict[par][group] = std**2
     tot_syst += group_dict[par][g_err_corr]**2
     fit_result[par]['Systematic Error'] = tot_syst**0.5
+    max_systs[par]['label'] = max(total_syst_dict[par].items(),
+                                  key=operator.itemgetter(1))[0]
     for k, v in group_dict[par].items():
       if k != g_err_corr:
         # Sqrt sum in quadrature of individual errs
         group_dict[par][k] = v**0.5
+    max_systs[par]['group'] = max(group_dict[par].items(),
+                                  key=operator.itemgetter(1))[0]
 
   # Separate tables for yields, ratios and asymmetries
   title_str = { 'N' : '', 'R' : '' , 'A': ''}
