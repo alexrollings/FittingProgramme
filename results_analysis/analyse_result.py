@@ -216,7 +216,11 @@ if __name__ == '__main__':
         # Replace _ with \_ in LaTeX
         row_arr[key].append(s_label.replace('_', '\\_'))
       err = syst[s_label]
-      err_str = f' & ${err:.4g}$'
+      if max_systs[par]['label'] == s_label:
+        err_str = ' & \\cellcolor{pink} '
+      else:
+        err_str = ' & '
+      err_str += f'${err:.4g}$'
       row_arr[key][j[key]] = row_arr[key][j[key]] + err_str
       if i[key] == (n_params[key] - 1):
         row_arr[key][j[key]] = row_arr[key][j[key]] + ' \\\\\n'
@@ -248,6 +252,7 @@ if __name__ == '__main__':
   tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
   tex_file.write('\\usepackage{graphicx}\n')
   tex_file.write('\\usepackage{adjustbox}\n')
+  tex_file.write('\\usepackage[table]{xcolor}\n')
   tex_file.write('\\usepackage{float}\n')
   tex_file.write('\\restylefloat{table}\n')
   tex_file.write('\\begin{document}\n')
@@ -300,7 +305,11 @@ if __name__ == '__main__':
           if i == 0:
             row_arr.append(g)
           err = g_err[g]
-          err_str = f' & ${err:.4g}$'
+          if max_systs[par]['group'] == g:
+            err_str = ' & \\cellcolor{pink} '
+          else:
+            err_str = ' & '
+          err_str += f'${err:.4g}$'
           row_arr[j] = row_arr[j] + err_str
           if i == (n_params[l] - 1):
             row_arr[j] = row_arr[j] + ' \\\\\n'
