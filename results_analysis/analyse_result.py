@@ -242,7 +242,7 @@ if __name__ == '__main__':
         err_str = ' & \\cellcolor{pink} '
       else:
         err_str = ' & '
-      err_str += f'${err:.4g}$'
+      err_str += f'${err:.4f}$'
       row_arr[key][j[key]] = row_arr[key][j[key]] + err_str
       if i[key] == (n_params[key] - 1):
         row_arr[key][j[key]] = row_arr[key][j[key]] + ' \\\\\n'
@@ -254,8 +254,8 @@ if __name__ == '__main__':
     syst_err = fit_result[par]['Systematic Error']
     stat_err = fit_result[par]['Statistical Error']
     frac = syst_err / stat_err
-    tot_str = f' & ${syst_err:.4g}$'
-    frac_str = f' & ${frac:.4g}$'
+    tot_str = f' & ${syst_err:.4f}$'
+    frac_str = f' & ${frac:.4f}$'
     row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + tot_str
     row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + frac_str
     if i[key] == (n_params[key] - 1):
@@ -331,7 +331,7 @@ if __name__ == '__main__':
             err_str = ' & \\cellcolor{pink} '
           else:
             err_str = ' & '
-          err_str += f'${err:.4g}$'
+          err_str += f'${err:.4f}$'
           row_arr[j] = row_arr[j] + err_str
           if i == (n_params[l] - 1):
             row_arr[j] = row_arr[j] + ' \\\\\n'
@@ -343,8 +343,8 @@ if __name__ == '__main__':
         syst_err = fit_result[par]['Systematic Error']
         stat_err = fit_result[par]['Statistical Error']
         frac = syst_err / stat_err
-        tot_str = f' & ${syst_err:.4g}$'
-        frac_str = f' & ${frac:.4g}$'
+        tot_str = f' & ${syst_err:.4f}$'
+        frac_str = f' & ${frac:.4f}$'
         row_arr[j+1] = row_arr[j+1] + tot_str
         row_arr[j+2] = row_arr[j+2] + frac_str
         if i == (n_params[l] - 1):
@@ -374,12 +374,12 @@ if __name__ == '__main__':
     stat = val_errs['Statistical Error']
     syst = val_errs['Systematic Error']
     if val == 0:
-      results_str = f' & X & {stat:.4g} & {syst:.4g} \\\\\n'
+      results_str = f' & X & {stat:.4f} & {syst:.4f} \\\\\n'
     else:
       if par[0] == 'N':
-        results_str = f' & {val:.4g} & {stat:.4g} & - \\\\\n'
+        results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
       else:
-        results_str = f' & {val:.4g} & {stat:.4g} & {syst:.4g} \\\\\n'
+        results_str = f' & {val:.4f} & {stat:.4f} & {syst:.4f} \\\\\n'
     row_arr.append(return_label(par) + results_str)
 
   tex_file.write('\\begin{table}[t]\n')
