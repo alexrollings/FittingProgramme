@@ -262,6 +262,7 @@ int main(int argc, char **argv) {
       std::cout << "    -noFit, default is to fit PDF to data\n";
       std::cout << "    -simple, to plot all mis-reconstructed components as "
                    "one color\n";
+      std::cout << "    -unblind\n";
       std::cout << "    -year=<choice {2011,2012,2015,2016,2017,2018} default: "
                 << yearArg << ">\n";
       std::cout << "    -polarity=<choice {up,down} default: " << polarityArg
@@ -326,6 +327,10 @@ int main(int argc, char **argv) {
       if (args("1D")) {
         std::cout << "Running 1D fit.\n";
         config.fit1D() = true;
+      }
+      if (args("unblind")) {
+        std::cout << "Unblinding.\n";
+        config.blindFit() = false;
       }
       if (args("noFit")) {
         std::cout << "Will not fit PDF to data, just plot both.\n";
@@ -489,9 +494,9 @@ int main(int argc, char **argv) {
   }
 
   if (inputDir != "" &&
-      (daughtersVec.size() > 1 && config.blindFit() == false &&
+      (chargeVec.size() > 1 && daughtersVec.size() > 1 && config.blindFit() == false &&
        config.noFit() == false)) {
-    std::cerr << "\n\n !!!!!! Cannot run unblinded fit for signal modes "
+    std::cerr << "\n\n !!!!!! Cannot run unblinded split by charge fit for signal modes "
                  "!!!!!! \n\n";
     return 1;
   }
