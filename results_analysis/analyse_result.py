@@ -134,6 +134,8 @@ if __name__ == '__main__':
     # Loop over json dict and sum up fit quality for each syst label
     fit_status = {}
     for syst_label in json_dict:
+      if syst_label == 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0':
+        continue
       fit_status[syst_label] = {'Total': 0, 'Converged' : 0, 'MINOS' : 0, 'FPD' : 0, 'Unconverged' : 0}
       for seed in json_dict[syst_label]:
         covQual = json_dict[syst_label][seed]['covQual']
