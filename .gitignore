@@ -3,3 +3,6 @@
 !*/
 *.root
 *.txt
+*.pdf
+*.log
+*.aux
