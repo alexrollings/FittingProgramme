@@ -155,7 +155,7 @@ if __name__ == '__main__':
         'A_K_Kpi_Bu2D0hst', 'A_K_Kpi_Bu2Dst0hst', 'A_K_piK_Bu2D0hst', 'A_Kpi',
         'A_pi', 'Delta_A_CP', 'R_CP_Bu2D0hst', 'R_ADS_Bu2D0hst',
         'A_CP_pi_Bu2D0hst', 'A_CP_K_Bu2D0hst',
-        'R_Dst0KDst0pi_Bd2Dsth', 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0',
+        'R_Dst0KDst0pi_Bd2Dsth',
         'kBF_D02kpi', 'kBF_D02kk', 'kBF_D02pipi'
     ]
     if delta_low == None:
@@ -209,7 +209,7 @@ if __name__ == '__main__':
         'A_pi_Kpi_Bu2Dst0hst', 'A_K_Kpi_Bu2D0hst', 'A_K_Kpi_Bu2Dst0hst',
         'A_K_piK_Bu2D0hst', 'A_Kpi', 'A_pi', 'Delta_A_CP', 'R_CP_Bu2D0hst',
         'R_ADS_Bu2D0hst', 'A_CP_pi_Bu2D0hst', 'A_CP_K_Bu2D0hst',
-        'R_Dst0KDst0pi_Bd2Dsth', 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0',
+        'R_Dst0KDst0pi_Bd2Dsth',
         'kBF_D02kpi', 'kBF_D02kk', 'kBF_D02pipi'
     ]
     if delta_low == None:
