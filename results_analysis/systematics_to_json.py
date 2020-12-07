@@ -67,6 +67,9 @@ if __name__ == '__main__':
         seed = m.group(2)
         if syst_label not in json_dict:
           json_dict[syst_label] = {}
+        if syst_label == 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0':
+          json_dict.pop(syst_label)
+          continue
         if seed not in json_dict[syst_label]:
           syst_file = TFile(os.path.join(input_dir, f))
           syst_result = syst_file.Get('SystResult')
