@@ -20,6 +20,8 @@ if __name__ == '__main__':
       'Bu2D0rho': None,
       'Bu2Dst0rho_D0pi0': None,
       'Bu2Dst0rho_D0gamma': None,
+      'Bu2Dst0Kst_D0pi0': None,
+      'Bu2Dst0Kst_D0gamma': None,
       'Bs2Dst0Kpi': None,
       'Bs2D0Kpi': None
   }
@@ -43,6 +45,8 @@ if __name__ == '__main__':
       'Bu2D0rho': None,
       'Bu2Dst0rho_D0pi0': None,
       'Bu2Dst0rho_D0gamma': None,
+      'Bu2Dst0Kst_D0pi0': None,
+      'Bu2Dst0Kst_D0gamma': None,
       'Bs2Dst0Kpi': None,
       'Bs2D0Kpi': None
   }
@@ -66,11 +70,19 @@ if __name__ == '__main__':
   kBF_Bu2D0rho = ufloat(1.34e-02, 0.18e-02)
   kBF_Bd2D0rho0 = ufloat(3.21e-04, 0.21e-04)
   kBF_Bu2Dst0rho = ufloat(9.8e-03, 1.7e-03)
+  kBF_Bd2Dstrho = ufloat(6.8e-03, 0.9e-03)
   kBF_Dst02D0pi0 = ufloat(64.7e-02, 0.9e-02)
   kBF_Dst02D0gamma = ufloat(35.3e-02, 0.9e-02)
   kBR_Bs = ufloat(1.0, 0.25)
 
-  frac_dict = {'Bd2Dstpi': None, 'Bu2D0rho': None, 'Bu2Dst0rho': None, 'Bs2D0Kpi': None}
+  frac_dict = {
+      'Bd2Dstpi': None,
+      'Bu2D0rho': None,
+      'Bu2Dst0rho': None,
+      'Bs2D0Kpi': None,
+      'Bu2Dst0rho_D0pi0': None,
+      'Bu2Dst0Kst_D0pi0': None
+  }
 
   if neutral == 'pi0':
     frac_dict['Bd2Dstpi'] = (
@@ -91,16 +103,43 @@ if __name__ == '__main__':
   frac_dict['Bu2Dst0rho'] = (
       ((kBF_Bu2Dst0rho * kBF_Dst02D0pi0) / (kBF_Bd2Dstpi * kBF_Dst2D0pi)) *
       (mc_effs_dict['Bu2Dst0rho_D0pi0'] / mc_effs_dict['Bd2Dstpi']) *
-      (or_effs_dict['Bu2Dst0rho_D0pi0'] / or_effs_dict['Bd2Dstpi'])) + (
-          ((kBF_Bu2Dst0rho * kBF_Dst02D0gamma) /
-           (kBF_Bd2Dstpi * kBF_Dst2D0pi)) *
-          (mc_effs_dict['Bu2Dst0rho_D0gamma'] / mc_effs_dict['Bd2Dstpi']) *
-          (or_effs_dict['Bu2Dst0rho_D0gamma'] / or_effs_dict['Bd2Dstpi']))
+      (or_effs_dict['Bu2Dst0rho_D0pi0'] / or_effs_dict['Bd2Dstpi'])
+  ) + (
+      ((kBF_Bu2Dst0rho * kBF_Dst02D0gamma) / (kBF_Bd2Dstpi * kBF_Dst2D0pi)) *
+      (mc_effs_dict['Bu2Dst0rho_D0gamma'] / mc_effs_dict['Bd2Dstpi']) *
+      (or_effs_dict['Bu2Dst0rho_D0gamma'] / or_effs_dict['Bd2Dstpi'])
+  ) + (
+      # B0 -> D*- rho+
+      (kBF_Bd2Dstrho / kBF_Bd2Dstpi) *
+      # Same shape as Bu2Dst0rho_D0pi0, but adjust efficiency by ratio of D*- to D*0
+      (mc_effs_dict['Bu2Dst0rho_D0pi0'] *
+       (mc_effs_dict['Bd2Dstpi'] / mc_effs_dict['Bu2Dst0pi_D0pi0']) /
+       mc_effs_dict['Bd2Dstpi']) *
+      (or_effs_dict['Bu2Dst0rho_D0pi0'] / or_effs_dict['Bd2Dstpi']))
 
   frac_dict['Bs2D0Kpi'] = (
       kBR_Bs * (mc_effs_dict['Bs2D0Kpi'] / mc_effs_dict['Bs2Dst0Kpi']) *
       (or_effs_dict['Bs2D0Kpi'] / or_effs_dict['Bs2Dst0Kpi']))
 
+  # Fraction of D0π0 PDF in Bu2Dst0rho total PDF
+  frac_dict['Bu2Dst0rho_D0pi0'] = (
+      (kBF_Bd2Dstrho * kBF_Dst2D0pi * mc_effs_dict['Bd2Dstpi'] /
+       mc_effs_dict['Bu2Dst0pi_D0pi0'] + kBF_Bu2Dst0rho * kBF_Dst02D0pi0) *
+      mc_effs_dict['Bu2Dst0rho_D0pi0'] * or_effs_dict['Bu2Dst0rho_D0pi0']
+  ) / (
+      (kBF_Bd2Dstrho * kBF_Dst2D0pi * mc_effs_dict['Bd2Dstpi'] /
+       mc_effs_dict['Bu2Dst0pi_D0pi0'] + kBF_Bu2Dst0rho * kBF_Dst02D0pi0) *
+      mc_effs_dict['Bu2Dst0rho_D0pi0'] * or_effs_dict['Bu2Dst0rho_D0pi0'] +
+      (kBF_Bu2Dst0rho * kBF_Dst02D0gamma * mc_effs_dict['Bu2Dst0rho_D0gamma'] *
+       or_effs_dict['Bu2Dst0rho_D0gamma']))
+
+  # Fraction of D0π0 PDF in Bu2Dst0Kst total PDF - B0 -> D*-(K*+ -> K0 π+) i.e. doesn't contribute to D*K
+  frac_dict['Bu2Dst0Kst_D0pi0'] = (
+      kBF_Bu2Dst0rho * kBF_Dst02D0pi0 * mc_effs_dict['Bu2Dst0Kst_D0pi0'] *
+      or_effs_dict['Bu2Dst0Kst_D0pi0']
+  ) / (kBF_Bu2Dst0rho * kBF_Dst02D0pi0 * mc_effs_dict['Bu2Dst0Kst_D0pi0'] *
+       or_effs_dict['Bu2Dst0Kst_D0pi0'] + kBF_Bu2Dst0rho * kBF_Dst02D0gamma *
+       mc_effs_dict['Bu2Dst0Kst_D0gamma'] * or_effs_dict['Bu2Dst0Kst_D0gamma'])
 
   f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/bkgFracs_{neutral}.txt', 'w+')
   for mode, frac in frac_dict.items():
