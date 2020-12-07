@@ -36,17 +36,6 @@ RooFormulaVar *Make_N_WN(int uniqueId, const char *nameStr, RooAbsReal &N_sig,
                  NeutralVars<neutral>::Get(uniqueId).bkgFracGlobal_WN()));
 }
 
-template <Neutral neutral, Bachelor bachelor, Daughters daughters>
-RooFormulaVar *Make_N_Frac(int uniqueId, const char *nameStr,
-                           RooAbsReal &N_tot_rel, RooAbsReal &kBF,
-                           RooAbsReal &kBF_rel, RooAbsReal &mcEff,
-                           RooAbsReal &mcEff_rel) {
-  return new RooFormulaVar(
-      (nameStr + ComposeName(uniqueId, neutral, bachelor, daughters)).c_str(),
-      "@0*(@1/@2)*(@3/@4)",
-      RooArgList(N_tot_rel, kBF, kBF_rel, mcEff, mcEff_rel));
-}
-
 template <Neutral neutral>
 std::shared_ptr<RooRealVar> Make_N_Bu2Dst0pi_D0gamma_D02kpi(int uniqueId) {
   switch (neutral) {
