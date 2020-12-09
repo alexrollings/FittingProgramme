@@ -1822,7 +1822,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "", RooArgSet(pdfBu_Bu2Dst0hst_D0pi0_, *pdfBu_Bu2Dst0hst_D0gamma_),
           Bu2Dst0hst_fracD0pi0_Bu_)),
-      pdfDelta_Bu2Dst0hst_(
+      pdfDelta_Bu2Dst0hst_(new RooAddPdf(
           ("pdfDelta_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))
               .c_str(),
@@ -1831,7 +1831,7 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                         .pdfDelta_Bu2Dst0hst_D0pi0(),
                     NeutralVars<Neutral::gamma>::Get(uniqueId)
                         .pdfDelta_Bu2Dst0hst_D0gamma()),
-          Bu2Dst0hst_fracD0pi0_Delta_),
+          Bu2Dst0hst_fracD0pi0_Delta_)),
       pdfBuPartial_Bu2Dst0hst_(
           ("pdfBuPartial_Bu2Dst0hst_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi))

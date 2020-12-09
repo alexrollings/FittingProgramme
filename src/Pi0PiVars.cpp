@@ -1233,7 +1233,14 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           "", Configuration::Get().buDeltaMass(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0hst_D0pi0_meanBu(),
           *Bu2Dst0hst_D0pi0_sigmaBu_)),
-      pdfDelta_Bu2Dst0hst_(),
+      pdfDelta_Bu2Dst0hst_(new RooGaussian(
+          ("pdfDelta_Bu2Dst0hst_" + ComposeName(uniqueId_, Neutral::pi0))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0hst_D0pi0_meanDelta(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0hst_D0pi0_sigmaDelta())),
       pdfBuPartial_Bu2Dst0hst_(),
       orEffBu2Dst0hst_(("orEffBu2Dst0hst_" +
                         ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
