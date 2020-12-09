@@ -426,6 +426,12 @@ class NeutralVars {
     return *Bu2Dst0hst_D0gamma_KpiSigmaBuPartial_;
   }
   // -------------------- Bu2Dst0hst_D0pi0 -------------------- //
+  RooRealVar &Bu2Dst0hst_D0pi0_meanDelta() {
+    return *Bu2Dst0hst_D0pi0_meanDelta_;
+  }
+  RooRealVar &Bu2Dst0hst_D0pi0_sigmaDelta() {
+    return *Bu2Dst0hst_D0pi0_sigmaDelta_;
+  }
   RooGaussian &pdfDelta_Bu2Dst0hst_D0pi0() {
     return pdfDelta_Bu2Dst0hst_D0pi0_;
   }
