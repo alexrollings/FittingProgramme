@@ -1353,6 +1353,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         if (daughters == Daughters::kk) {
           pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
         }
+        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_WN().GetName());
         if (bachelor == Bachelor::k) {
