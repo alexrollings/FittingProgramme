@@ -717,46 +717,6 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       pdf2BuPartial_misId_Bu2Dst0hst_D0pi0_(),
       misId_Bu2Dst0hst_D0pi0_fracPdf1BuPartial_(nullptr),
       pdfBuPartial_misId_Bu2Dst0hst_D0pi0_(),
-      // -------------------- Bs2Dst0Kpi -------------------- //
-      pdfPeakGamma1Delta_Bs2Dst0Kpi_(),
-      pdfPeakGamma2Delta_Bs2Dst0Kpi_(),
-      pdfPeakGammaDelta_Bs2Dst0Kpi_(),
-      pdfPeakPi01Delta_Bs2Dst0Kpi_(
-          ("pdfPeakPi01Delta_Bs2Dst0Kpi_" +
-           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_meanDelta(),
-          *Bu2Dst0h_D0pi0_sigmaDelta_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_a1Delta(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_n1Delta()),
-      pdfPeakPi02Delta_Bs2Dst0Kpi_(
-          ("pdfPeakPi02Delta_Bs2Dst0Kpi_" +
-           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "", Configuration::Get().deltaMass(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_meanDelta(),
-          *Bu2Dst0h_D0pi0_sigmaDelta_,
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_a2Delta(),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_n2Delta()),
-      pdfPeakPi0Delta_Bs2Dst0Kpi_(
-          ("pdfPeakPi0Delta_Bs2Dst0Kpi_" +
-           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-              .c_str(),
-          "",
-          RooArgList(pdfPeakPi01Delta_Bs2Dst0Kpi_,
-                     pdfPeakPi02Delta_Bs2Dst0Kpi_),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_)
-              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
-      pdfDelta_Bs2Dst0Kpi_(("pdfDelta_Bs2Dst0Kpi_" +
-                            ComposeName(uniqueId_, Neutral::pi0, Bachelor::k))
-                               .c_str(),
-                           "",
-                           RooArgList(pdfPeakPi0Delta_Bs2Dst0Kpi_,
-                                      NeutralVars<Neutral::pi0>::Get(uniqueId_)
-                                          .pdfFlatDelta_Bs2Dst0Kpi()),
-                           NeutralVars<Neutral::pi0>::Get(uniqueId_)
-                               .Bs2Dst0Kpi_fracPdfPi0PeakDelta()),
       // -------------------- Correct ID BOX EFFs -------------------- //
       orEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "orEffBu2Dst0h_D0gamma_", uniqueId_, Neutral::pi0, Bachelor::k,

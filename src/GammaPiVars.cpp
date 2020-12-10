@@ -1117,14 +1117,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       pdf2BuPartial_misId_Bu2Dst0hst_D0pi0_(),
       misId_Bu2Dst0hst_D0pi0_fracPdf1BuPartial_(nullptr),
       pdfBuPartial_misId_Bu2Dst0hst_D0pi0_(),
-      // -------------------- Bs2Dst0Kpi -------------------- //
-      pdfPeakGamma1Delta_Bs2Dst0Kpi_(),
-      pdfPeakGamma2Delta_Bs2Dst0Kpi_(),
-      pdfPeakGammaDelta_Bs2Dst0Kpi_(),
-      pdfPeakPi01Delta_Bs2Dst0Kpi_(),
-      pdfPeakPi02Delta_Bs2Dst0Kpi_(),
-      pdfPeakPi0Delta_Bs2Dst0Kpi_(),
-      pdfDelta_Bs2Dst0Kpi_(),
       // -------------------- Correct ID BOX EFFs -------------------- //
       orEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "orEffBu2Dst0h_D0gamma_", uniqueId_, Neutral::gamma, Bachelor::pi,
