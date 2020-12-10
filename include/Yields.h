@@ -317,8 +317,8 @@ class Yields {
   RooFormulaVar &N_split_Lb2Omegach_Lcpi0() {
     return *N_split_Lb2Omegach_Lcpi0_;
   }
-  RooFormulaVar &N_split_Bs2Dst0Kpi() { return *N_split_Bs2Dst0Kpi_; }
-  RooFormulaVar &N_split_Bs2D0Kpi() { return *N_split_Bs2D0Kpi_; }
+  RooFormulaVar &N_split_Bs2Dst0Kst0() { return *N_split_Bs2Dst0Kst0_; }
+  RooFormulaVar &N_split_Bs2D0Kst0() { return *N_split_Bs2D0Kst0_; }
   RooFormulaVar &N_split_Bu2Dst0h_D0pi0_D02pik() {
     return *N_split_Bu2Dst0h_D0pi0_D02pik_;
   }
@@ -351,8 +351,8 @@ class Yields {
   RooFormulaVar &N_trueId_Lb2Omegach_Lcpi0() {
     return *N_trueId_Lb2Omegach_Lcpi0_;
   }
-  RooFormulaVar &N_trueId_Bs2Dst0Kpi() { return *N_trueId_Bs2Dst0Kpi_; }
-  RooFormulaVar &N_trueId_Bs2D0Kpi() { return *N_trueId_Bs2D0Kpi_; }
+  RooFormulaVar &N_trueId_Bs2Dst0Kst0() { return *N_trueId_Bs2Dst0Kst0_; }
+  RooFormulaVar &N_trueId_Bs2D0Kst0() { return *N_trueId_Bs2D0Kst0_; }
   RooFormulaVar &N_trueId_Bu2Dst0h_D0pi0_D02pik() {
     return *N_trueId_Bu2Dst0h_D0pi0_D02pik_;
   }
@@ -406,10 +406,10 @@ class Yields {
   RooFormulaVar &N_trueId_Delta_Lb2Omegach_Lcpi0() {
     return *N_trueId_Delta_Lb2Omegach_Lcpi0_;
   }
-  RooFormulaVar &N_trueId_Delta_Bs2Dst0Kpi() {
-    return *N_trueId_Delta_Bs2Dst0Kpi_;
+  RooFormulaVar &N_trueId_Delta_Bs2Dst0Kst0() {
+    return *N_trueId_Delta_Bs2Dst0Kst0_;
   }
-  RooFormulaVar &N_trueId_Delta_Bs2D0Kpi() { return *N_trueId_Delta_Bs2D0Kpi_; }
+  RooFormulaVar &N_trueId_Delta_Bs2D0Kst0() { return *N_trueId_Delta_Bs2D0Kst0_; }
   RooFormulaVar &N_trueId_Delta_Bu2Dst0h_D0pi0_D02pik() {
     return *N_trueId_Delta_Bu2Dst0h_D0pi0_D02pik_;
   }
@@ -444,8 +444,8 @@ class Yields {
   RooFormulaVar &N_trueId_Bu_Lb2Omegach_Lcpi0() {
     return *N_trueId_Bu_Lb2Omegach_Lcpi0_;
   }
-  RooFormulaVar &N_trueId_Bu_Bs2Dst0Kpi() { return *N_trueId_Bu_Bs2Dst0Kpi_; }
-  RooFormulaVar &N_trueId_Bu_Bs2D0Kpi() { return *N_trueId_Bu_Bs2D0Kpi_; }
+  RooFormulaVar &N_trueId_Bu_Bs2Dst0Kst0() { return *N_trueId_Bu_Bs2Dst0Kst0_; }
+  RooFormulaVar &N_trueId_Bu_Bs2D0Kst0() { return *N_trueId_Bu_Bs2D0Kst0_; }
   RooFormulaVar &N_trueId_Bu_Bu2Dst0h_D0pi0_D02pik() {
     return *N_trueId_Bu_Bu2Dst0h_D0pi0_D02pik_;
   }
@@ -483,11 +483,11 @@ class Yields {
   RooFormulaVar &N_trueId_BuPartial_Lb2Omegach_Lcpi0() {
     return *N_trueId_BuPartial_Lb2Omegach_Lcpi0_;
   }
-  RooFormulaVar &N_trueId_BuPartial_Bs2Dst0Kpi() {
-    return *N_trueId_BuPartial_Bs2Dst0Kpi_;
+  RooFormulaVar &N_trueId_BuPartial_Bs2Dst0Kst0() {
+    return *N_trueId_BuPartial_Bs2Dst0Kst0_;
   }
-  RooFormulaVar &N_trueId_BuPartial_Bs2D0Kpi() {
-    return *N_trueId_BuPartial_Bs2D0Kpi_;
+  RooFormulaVar &N_trueId_BuPartial_Bs2D0Kst0() {
+    return *N_trueId_BuPartial_Bs2D0Kst0_;
   }
   RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik() {
     return *N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik_;
@@ -569,8 +569,8 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_split_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0hst_;
   std::unique_ptr<RooFormulaVar> N_split_Lb2Omegach_Lcpi0_;
-  std::unique_ptr<RooFormulaVar> N_split_Bs2Dst0Kpi_;
-  std::unique_ptr<RooFormulaVar> N_split_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_split_Bs2Dst0Kst0_;
+  std::unique_ptr<RooFormulaVar> N_split_Bs2D0Kst0_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_D02pik_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_WN_D02pik_;
@@ -585,8 +585,8 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Lb2Omegach_Lcpi0_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Bs2Dst0Kpi_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bs2Dst0Kst0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bs2D0Kst0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_WN_D02pik_;
@@ -601,8 +601,8 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Lb2Omegach_Lcpi0_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bs2Dst0Kpi_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bs2Dst0Kst0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bs2D0Kst0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_WN_D02pik_;
@@ -617,8 +617,8 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Lb2Omegach_Lcpi0_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bs2Dst0Kpi_;
-  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bs2Dst0Kst0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bs2D0Kst0_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0pi0_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu_Bu2Dst0h_D0pi0_WN_D02pik_;
@@ -632,8 +632,8 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2D0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0hst_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Lb2Omegach_Lcpi0_;
-  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2Dst0Kpi_;
-  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2D0Kpi_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2Dst0Kst0_;
+  std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bs2D0Kst0_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik_;
 
@@ -722,8 +722,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               uniqueId_)
               .a_Bu2Dst0hst())),
       N_split_Lb2Omegach_Lcpi0_(nullptr),
-      N_split_Bs2Dst0Kpi_(nullptr),
-      N_split_Bs2D0Kpi_(nullptr),
+      N_split_Bs2Dst0Kst0_(nullptr),
+      N_split_Bs2D0Kst0_(nullptr),
       N_split_Bu2Dst0h_D0pi0_D02pik_(nullptr),
       N_split_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_split_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
@@ -745,8 +745,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bu2Dst0hst_(Make_N_trueId<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bu2Dst0hst_", *N_split_Bu2Dst0hst_)),
       N_trueId_Lb2Omegach_Lcpi0_(nullptr),
-      N_trueId_Bs2Dst0Kpi_(nullptr),
-      N_trueId_Bs2D0Kpi_(nullptr),
+      N_trueId_Bs2Dst0Kst0_(nullptr),
+      N_trueId_Bs2D0Kst0_(nullptr),
       N_trueId_Bu2Dst0h_D0pi0_D02pik_(nullptr),
       N_trueId_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_trueId_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
@@ -780,8 +780,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                   .deltaEffBu2Dst0hst())),
       N_trueId_Delta_Lb2Omegach_Lcpi0_(nullptr),
-      N_trueId_Delta_Bs2Dst0Kpi_(nullptr),
-      N_trueId_Delta_Bs2D0Kpi_(nullptr),
+      N_trueId_Delta_Bs2Dst0Kst0_(nullptr),
+      N_trueId_Delta_Bs2D0Kst0_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0pi0_D02pik_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
@@ -814,8 +814,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
               .buEffBu2Dst0hst())),
       N_trueId_Bu_Lb2Omegach_Lcpi0_(nullptr),
-      N_trueId_Bu_Bs2Dst0Kpi_(nullptr),
-      N_trueId_Bu_Bs2D0Kpi_(nullptr),
+      N_trueId_Bu_Bs2Dst0Kst0_(nullptr),
+      N_trueId_Bu_Bs2D0Kst0_(nullptr),
       N_trueId_Bu_Bu2Dst0h_D0pi0_D02pik_(nullptr),
       N_trueId_Bu_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_trueId_Bu_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
@@ -828,8 +828,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_BuPartial_Bu2D0hst_(nullptr),
       N_trueId_BuPartial_Bu2Dst0hst_(nullptr),
       N_trueId_BuPartial_Lb2Omegach_Lcpi0_(nullptr),
-      N_trueId_BuPartial_Bs2Dst0Kpi_(nullptr),
-      N_trueId_BuPartial_Bs2D0Kpi_(nullptr),
+      N_trueId_BuPartial_Bs2Dst0Kst0_(nullptr),
+      N_trueId_BuPartial_Bs2D0Kst0_(nullptr),
       N_trueId_BuPartial_Bu2Dst0h_D0pi0_D02pik_(nullptr),
       N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
       N_misId_Bu2Dst0h_D0gamma_(nullptr),
@@ -1068,46 +1068,46 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
   }
   if (Configuration::Get().runADS() == true && bachelor == Bachelor::k &&
       daughters != Daughters::kpi) {
-    N_split_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+    N_split_Bs2D0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_split<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_split_Bs2D0Kpi_",
+            uniqueId_, "N_split_Bs2D0Kst0_",
             NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                 uniqueId_)
-                .N_tot_Bs2D0Kpi(),
+                .N_tot_Bs2D0Kst0(),
             NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                 uniqueId_)
-                .a_Bs2D0Kpi()));
-    N_split_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+                .a_Bs2D0Kst0()));
+    N_split_Bs2Dst0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_split<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_split_Bs2Dst0Kpi_",
+            uniqueId_, "N_split_Bs2Dst0Kst0_",
             NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                 uniqueId_)
-                .N_tot_Bs2Dst0Kpi(),
+                .N_tot_Bs2Dst0Kst0(),
             NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                 uniqueId_)
-                .a_Bs2Dst0Kpi()));
-    N_trueId_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+                .a_Bs2Dst0Kst0()));
+    N_trueId_Bs2D0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_trueId<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bs2D0Kpi_", *N_split_Bs2D0Kpi_));
-    N_trueId_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            uniqueId_, "N_trueId_Bs2D0Kst0_", *N_split_Bs2D0Kst0_));
+    N_trueId_Bs2Dst0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_trueId<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bs2Dst0Kpi_", *N_split_Bs2Dst0Kpi_));
-    N_trueId_Delta_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            uniqueId_, "N_trueId_Bs2Dst0Kst0_", *N_split_Bs2Dst0Kst0_));
+    N_trueId_Delta_Bs2Dst0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Delta_Bs2Dst0Kpi_", *N_trueId_Bs2Dst0Kpi_,
-            NeutralVars<neutral>::Get(uniqueId_).deltaEffBs2Dst0Kpi()));
-    N_trueId_Delta_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            uniqueId_, "N_trueId_Delta_Bs2Dst0Kst0_", *N_trueId_Bs2Dst0Kst0_,
+            NeutralVars<neutral>::Get(uniqueId_).deltaEffBs2Dst0Kst0()));
+    N_trueId_Delta_Bs2D0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Delta_Bs2D0Kpi_", *N_trueId_Bs2D0Kpi_,
-            NeutralVars<neutral>::Get(uniqueId_).deltaEffBs2D0Kpi()));
-    N_trueId_Bu_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            uniqueId_, "N_trueId_Delta_Bs2D0Kst0_", *N_trueId_Bs2D0Kst0_,
+            NeutralVars<neutral>::Get(uniqueId_).deltaEffBs2D0Kst0()));
+    N_trueId_Bu_Bs2Dst0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu_Bs2Dst0Kpi_", *N_trueId_Bs2Dst0Kpi_,
-            NeutralVars<neutral>::Get(uniqueId_).buEffBs2Dst0Kpi()));
-    N_trueId_Bu_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+            uniqueId_, "N_trueId_Bu_Bs2Dst0Kst0_", *N_trueId_Bs2Dst0Kst0_,
+            NeutralVars<neutral>::Get(uniqueId_).buEffBs2Dst0Kst0()));
+    N_trueId_Bu_Bs2D0Kst0_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu_Bs2D0Kpi_", *N_trueId_Bs2D0Kpi_,
-            NeutralVars<neutral>::Get(uniqueId_).buEffBs2D0Kpi()));
+            uniqueId_, "N_trueId_Bu_Bs2D0Kst0_", *N_trueId_Bs2D0Kst0_,
+            NeutralVars<neutral>::Get(uniqueId_).buEffBs2D0Kst0()));
   }
   if (Configuration::Get().fitBuPartial() == true) {
     N_trueId_BuPartial_Bu2Dst0h_D0gamma_ = std::unique_ptr<RooFormulaVar>(
@@ -1176,15 +1176,15 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
     }
     if (Configuration::Get().runADS() == true && bachelor == Bachelor::k &&
         daughters != Daughters::kpi) {
-      N_trueId_BuPartial_Bs2Dst0Kpi_ = std::unique_ptr<RooFormulaVar>(
+      N_trueId_BuPartial_Bs2Dst0Kst0_ = std::unique_ptr<RooFormulaVar>(
           Make_N_1D<neutral, bachelor, daughters, charge>(
-              uniqueId_, "N_trueId_BuPartial_Bs2Dst0Kpi_",
-              *N_trueId_Bs2Dst0Kpi_,
-              NeutralVars<neutral>::Get(uniqueId_).buPartialEffBs2Dst0Kpi()));
-      N_trueId_BuPartial_Bs2D0Kpi_ = std::unique_ptr<RooFormulaVar>(
+              uniqueId_, "N_trueId_BuPartial_Bs2Dst0Kst0_",
+              *N_trueId_Bs2Dst0Kst0_,
+              NeutralVars<neutral>::Get(uniqueId_).buPartialEffBs2Dst0Kst0()));
+      N_trueId_BuPartial_Bs2D0Kst0_ = std::unique_ptr<RooFormulaVar>(
           Make_N_1D<neutral, bachelor, daughters, charge>(
-              uniqueId_, "N_trueId_BuPartial_Bs2D0Kpi_", *N_trueId_Bs2D0Kpi_,
-              NeutralVars<neutral>::Get(uniqueId_).buPartialEffBs2D0Kpi()));
+              uniqueId_, "N_trueId_BuPartial_Bs2D0Kst0_", *N_trueId_Bs2D0Kst0_,
+              NeutralVars<neutral>::Get(uniqueId_).buPartialEffBs2D0Kst0()));
     }
   }
 }
