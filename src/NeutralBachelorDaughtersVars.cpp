@@ -547,10 +547,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
         "", RooArgSet(*pdf1Bu_Bu2Dst0hst_D0gamma_, *pdf2Bu_Bu2Dst0hst_D0gamma_),
         *Bu2Dst0hst_D0gamma_fracPdf1Bu_));
     Bu2Dst0hst_floatingFracD0pi0_Bu_FAV_ADS_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "Bu2Dst0hst_floatingFracD0pi0_Bu_FAV_ADS_", uniqueId, _neutral,
-            Bachelor::pi, Daughters::pik, 1, 0, 2));
-    Bu2Dst0hst_floatingFracD0pi0_Bu_FAV_ADS_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "Bu2Dst0hst_floatingFracD0pi0_Bu_FAV_ADS_", uniqueId, _neutral,
             Bachelor::pi, Daughters::pik, 0.183008, 0.468965,
