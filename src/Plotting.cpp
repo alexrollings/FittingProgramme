@@ -812,8 +812,8 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   }
   colorMap["Bu2Dst0hst"] = kViolet + 2;
   colorMap["Lb2Omegach_Lcpi0"] = kOrange + 2;
-  colorMap["Bs2Dst0Kpi"] = kViolet - 9;
-  colorMap["Bs2D0Kpi"] = kOrange + 3;
+  colorMap["Bs2Dst0Kst0"] = kViolet - 9;
+  colorMap["Bs2D0Kst0"] = kOrange + 3;
   colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
   colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
   colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
@@ -919,20 +919,20 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   hist_Lb2Omegach_Lcpi0->SetLineColor(colorMap["Lb2Omegach_Lcpi0"]);
   hist_Lb2Omegach_Lcpi0->SetLineWidth(5);
 
-  auto hist_Bs2D0Kpi = std::make_unique<TH1D>(
-      ("hist_Bs2D0Kpi" + ComposeName(id, neutral, bachelor, daughters, charge))
+  auto hist_Bs2D0Kst0 = std::make_unique<TH1D>(
+      ("hist_Bs2D0Kst0" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "hist_Bs2D0Kpi", 1, 0, 1);
-  hist_Bs2D0Kpi->SetLineColor(colorMap["Bs2D0Kpi"]);
-  hist_Bs2D0Kpi->SetLineWidth(5);
+      "hist_Bs2D0Kst0", 1, 0, 1);
+  hist_Bs2D0Kst0->SetLineColor(colorMap["Bs2D0Kst0"]);
+  hist_Bs2D0Kst0->SetLineWidth(5);
 
-  auto hist_Bs2Dst0Kpi = std::make_unique<TH1D>(
-      ("hist_Bs2Dst0Kpi" +
+  auto hist_Bs2Dst0Kst0 = std::make_unique<TH1D>(
+      ("hist_Bs2Dst0Kst0" +
        ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str(),
-      "hist_Bs2Dst0Kpi", 1, 0, 1);
-  hist_Bs2Dst0Kpi->SetLineColor(colorMap["Bs2Dst0Kpi"]);
-  hist_Bs2Dst0Kpi->SetLineWidth(5);
+      "hist_Bs2Dst0Kst0", 1, 0, 1);
+  hist_Bs2Dst0Kst0->SetLineColor(colorMap["Bs2Dst0Kst0"]);
+  hist_Bs2Dst0Kst0->SetLineWidth(5);
 
   auto hist_MisID = std::make_unique<TH1D>(
       ("hist_MisID" + ComposeName(id, neutral, bachelor, daughters, charge))
@@ -1057,12 +1057,12 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         "l");
     if (config.runADS() == true) {
       labels.AddEntry(
-          hist_Bs2Dst0Kpi.get(),
-          ReturnLaTeXLabel(Mode::Bs2Dst0Kpi, daughters, charge, false).c_str(),
+          hist_Bs2Dst0Kst0.get(),
+          ReturnLaTeXLabel(Mode::Bs2Dst0Kst0, daughters, charge, false).c_str(),
           "l");
       labels.AddEntry(
-          hist_Bs2D0Kpi.get(),
-          ReturnLaTeXLabel(Mode::Bs2D0Kpi, daughters, charge, false).c_str(),
+          hist_Bs2D0Kst0.get(),
+          ReturnLaTeXLabel(Mode::Bs2D0Kst0, daughters, charge, false).c_str(),
           "l");
       labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
     }
@@ -1280,8 +1280,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kpi().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
         }
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
@@ -1307,8 +1307,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kpi().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kpi().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
         }
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1344,8 +1344,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kpi().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
         }
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
@@ -1372,8 +1372,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kpi().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kpi().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
         }
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
@@ -1411,8 +1411,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
       if (config.runADS() == true && bachelor == Bachelor::k &&
           daughters != Daughters::kpi) {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2Dst0Kpi().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kpi().GetName());
+        // pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2Dst0Kst0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kst0().GetName());
       }
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
