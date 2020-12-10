@@ -1764,31 +1764,31 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0hst_fracD0pi0_(Params::Get().CreateFixed(
           "Bu2Dst0hst_fracD0pi0", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_fracD0pi0",
-                                                     "val"),
+                                                     ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_fracD0pi0",
-                                                     "std"),
+                                                     ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_fracD0pi0_Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_fracD0pi0_Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_fracD0pi0_Bu",
-                                                     "val"),
+                                                     ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_fracD0pi0_Bu",
-                                                     "std"),
+                                                     ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_fracD0pi0_Delta_(Params::Get().CreateFixed(
           "Bu2Dst0hst_fracD0pi0_Delta", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_fracD0pi0_Delta", "val"),
+              "Bu2Dst0hst_fracD0pi0_Delta", ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_fracD0pi0_Delta", "std"),
+              "Bu2Dst0hst_fracD0pi0_Delta", ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_fracD0pi0_BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0hst_fracD0pi0_BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_fracD0pi0_BuPartial", "val"),
+              "Bu2Dst0hst_fracD0pi0_BuPartial", ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_fracD0pi0_BuPartial", "std"),
+              "Bu2Dst0hst_fracD0pi0_BuPartial", ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       pdfBu_Bu2Dst0hst_(new RooAddPdf(
           ("pdfBu_Bu2Dst0hst_" +
@@ -1852,31 +1852,31 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       Bu2Dst0hst_misId_fracD0pi0_(Params::Get().CreateFixed(
           "Bu2Dst0hst_misId_fracD0pi0", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_misId_fracD0pi0",
-                                                     "val"),
+                                                     ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_misId_fracD0pi0",
-                                                     "std"),
+                                                     ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_misId_fracD0pi0_Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_misId_fracD0pi0_Bu", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_misId_fracD0pi0_Bu",
-                                                     "val"),
+                                                     ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>("Bu2Dst0hst_misId_fracD0pi0_Bu",
-                                                     "std"),
+                                                     ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_misId_fracD0pi0_Delta_(Params::Get().CreateFixed(
           "Bu2Dst0hst_misId_fracD0pi0_Delta", uniqueId_, Neutral::gamma, Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_misId_fracD0pi0_Delta", "val"),
+              "Bu2Dst0hst_misId_fracD0pi0_Delta", ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_misId_fracD0pi0_Delta", "std"),
+              "Bu2Dst0hst_misId_fracD0pi0_Delta", ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       Bu2Dst0hst_misId_fracD0pi0_BuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0hst_misId_fracD0pi0_BuPartial", uniqueId_, Neutral::gamma,
           Bachelor::pi,
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_misId_fracD0pi0_BuPartial", "val"),
+              "Bu2Dst0hst_misId_fracD0pi0_BuPartial", ReturnType::val),
           ReadPdfFracs<Neutral::gamma, Bachelor::pi>(
-              "Bu2Dst0hst_misId_fracD0pi0_BuPartial", "std"),
+              "Bu2Dst0hst_misId_fracD0pi0_BuPartial", ReturnType::std),
           Systematic::Bu2Dst0hst_Frac, Sign::same)),
       pdfBu_misId_Bu2Dst0hst_(nullptr),
       pdfDelta_misId_Bu2Dst0hst_(),

@@ -10,8 +10,10 @@
 #include "RooRealVar.h"
 #include "TChain.h"
 
+enum class ReturnType { val, std };
+
 template <Neutral neutral>
-double ReadBkgFracs(Mode mode, const char* returnType) {
+double ReadBkgFracs(Mode mode, ReturnType returnType) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/bkgFracs_" +
       EnumToString(neutral) + ".txt";
@@ -19,9 +21,9 @@ double ReadBkgFracs(Mode mode, const char* returnType) {
     std::cerr
         << "!!!!!!!!!!\nReadBkgFracs: " << txtFileName
         << " doesn't exist: setting frac to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnType == "val") {
+    if (returnType == ReturnType::val) {
       return 1.0;
-    } else if (returnType == "std") {
+    } else if (returnType == ReturnType::std) {
       return 0.0;
     } else {
       throw std::runtime_error(
@@ -35,9 +37,9 @@ double ReadBkgFracs(Mode mode, const char* returnType) {
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
     if (lineVec[0] == EnumToString(mode)) {
-      if (returnType == "val") {
+      if (returnType == ReturnType::val) {
         return std::stod(lineVec[1]);
-      } else if (returnType == "std") {
+      } else if (returnType == ReturnType::std) {
         return std::stod(lineVec[2]);
       } else {
         throw std::runtime_error(
@@ -48,44 +50,37 @@ double ReadBkgFracs(Mode mode, const char* returnType) {
 }
 
 template <Neutral neutral, Bachelor bachelor>
-double ReadPdfFracs(const char* paramName, const char* returnType) {
+double ReadPdfFracs(const char* paramName, ReturnType returnType) {
   std::string txtFileName =
       "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/pdf_fracs_" +
       EnumToString(neutral) + ".txt";
+  std::stringstream paramLabel;
+  paramLabel << paramName << "_" << EnumToString(bachelor);
   if (!fexists(txtFileName)) {
     std::cerr
         << "!!!!!!!!!!\nReadPdfFracs: " << txtFileName
         << " doesn't exist: setting frac to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnType == "val") {
+    if (returnType == ReturnType::val) {
       return 1.0;
-    } else if (returnType == "std") {
-      return 0.0;
     } else {
-      throw std::runtime_error(
-          "ReadPdfFracs: return type = val/std\n");
+      return 0.0;
     }
   }
   std::ifstream inFile(txtFileName);
   std::string line;
-  std::stringstream paramLabel;
-  paramLabel << paramName << "_" << EnumToString(bachelor);
   // Loop over lines in txt file
   while (std::getline(inFile, line)) {
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
     if (lineVec[0] == paramLabel.str()) {
-      if (returnType == "val") {
+      if (returnType == ReturnType::val) {
         return std::stod(lineVec[1]);
-      } else if (returnType == "std") {
+      } { 
         return std::stod(lineVec[2]);
-      } else {
-        throw std::runtime_error(
-            "ReadPdfFracs: return type = val/std\n");
       }
     }
   }
 }
-
 
 // Templated classes/functions mean that the compiler will automatically create
 // a copy
