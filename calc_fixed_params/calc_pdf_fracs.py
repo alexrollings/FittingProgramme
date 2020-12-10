@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
   frac_dict = {}
 
-  frac_dict['Bs2D0Kst0_fracD0pi0_k'] = (
+  frac_dict['Bs2Dst0Kst0_fracD0pi0_k'] = (
       kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
       box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or']) / (
           kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
@@ -158,7 +158,7 @@ if __name__ == '__main__':
           kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
           box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'])
 
-  frac_dict['Bs2D0Kst0_fracD0pi0_Bu_k'] = (
+  frac_dict['Bs2Dst0Kst0_fracD0pi0_Bu_k'] = (
       kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
       box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
       box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaCut']) / (
@@ -169,7 +169,7 @@ if __name__ == '__main__':
           box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
           box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['deltaCut'])
 
-  frac_dict['Bs2D0Kst0_fracD0pi0_Delta_k'] = (
+  frac_dict['Bs2Dst0Kst0_fracD0pi0_Delta_k'] = (
       kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
       box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
       box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut']) / (
@@ -181,7 +181,7 @@ if __name__ == '__main__':
           box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['buCut'])
 
   if neutral == 'gamma':
-    frac_dict['Bs2D0Kst0_fracD0pi0_BuPartial_k'] = (
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_BuPartial_k'] = (
         kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
         box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
         box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaPartialCut']) / (
