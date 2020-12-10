@@ -1221,10 +1221,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           RooArgList(Bu2Dst0h_WN_fracD0pi0_, *mcEffMisId_Bu2Dst0h_D0pi0_WN_,
                      *mcEffMisId_Bu2Dst0h_D0gamma_WN_)),
       // -------------------- Bu2Dst0hst -------------------- //
-      Bu2Dst0hst_fracD0pi0_(),
-      Bu2Dst0hst_fracD0pi0_Bu_(),
-      Bu2Dst0hst_fracD0pi0_Delta_(),
-      Bu2Dst0hst_fracD0pi0_BuPartial_(),
+      Bu2Dst0hst_fracD0pi0_(nullptr),
+      Bu2Dst0hst_fracD0pi0_Bu_(nullptr),
+      Bu2Dst0hst_fracD0pi0_Delta_(nullptr),
+      Bu2Dst0hst_fracD0pi0_BuPartial_(nullptr),
       // Just pdfBu_Bu2Dst0hst_D0pi0
       pdfBu_Bu2Dst0hst_(new RooGaussian(
           ("pdfBu_Bu2Dst0hst_" +
@@ -1259,10 +1259,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                          ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
                             .c_str(),
                         "@0", RooArgList(*mcEff_Bu2Dst0hst_D0pi0_)),
-      Bu2Dst0hst_misId_fracD0pi0_(),
-      Bu2Dst0hst_misId_fracD0pi0_Bu_(),
-      Bu2Dst0hst_misId_fracD0pi0_Delta_(),
-      Bu2Dst0hst_misId_fracD0pi0_BuPartial_(),
+      Bu2Dst0hst_misId_fracD0pi0_(nullptr),
+      Bu2Dst0hst_misId_fracD0pi0_Bu_(nullptr),
+      Bu2Dst0hst_misId_fracD0pi0_Delta_(nullptr),
+      Bu2Dst0hst_misId_fracD0pi0_BuPartial_(nullptr),
       pdfBu_misId_Bu2Dst0hst_(nullptr),
       pdfDelta_misId_Bu2Dst0hst_(),
       pdfBuPartial_misId_Bu2Dst0hst_(),
