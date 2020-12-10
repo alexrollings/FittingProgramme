@@ -448,9 +448,9 @@ class NeutralVars {
     return *Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_;
   }
   // -------------------- Bu2Dst0hst -------------------- //
-  RooRealVar &Bu2Dst0hst_floatingFracD0pi0() {
-    return *Bu2Dst0hst_floatingFracD0pi0_;
-  }
+  // RooRealVar &Bu2Dst0hst_floatingFracD0pi0() {
+  //   return *Bu2Dst0hst_floatingFracD0pi0_;
+  // }
   // -------------------- Lb2Omegach_Lcpi0 -------------------- //
   RooDstD0BG &pdfDelta_Lb2Omegach_Lcpi0() {
     return pdfDelta_Lb2Omegach_Lcpi0_;
@@ -803,7 +803,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0hst_D0pi0_meanBuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_;
   // -------------------- Bu2Dst0hst -------------------- //
-  std::shared_ptr<RooRealVar> Bu2Dst0hst_floatingFracD0pi0_;
+  // std::shared_ptr<RooRealVar> Bu2Dst0hst_floatingFracD0pi0_;
   // -------------------- Lb2Omegach_Lcpi0 -------------------- //
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_thresholdDelta_;
   std::shared_ptr<RooRealVar> Lb2Omegach_Lcpi0_aDelta_;

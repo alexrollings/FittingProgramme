@@ -332,7 +332,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0hst_D0pi0_meanBuPartial_(nullptr),
       Bu2Dst0hst_D0pi0_KpiSigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0hst -------------------- //
-      Bu2Dst0hst_floatingFracD0pi0_(nullptr),
+      // Bu2Dst0hst_floatingFracD0pi0_(nullptr),
       // -------------------- Lb2Omegach_Lcpi0 -------------------- //
       Lb2Omegach_Lcpi0_thresholdDelta_(Params::Get().CreateFixed(
           "Lb2Omegach_Lcpi0_thresholdDelta", uniqueId_, Neutral::pi0,
