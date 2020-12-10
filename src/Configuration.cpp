@@ -340,6 +340,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Lb2Omegach_Lcpi0_PdfBu;
   } else if (systematic == "Lb2Omegach_Lcpi0_PdfBuPartial") {
     return Systematic::Lb2Omegach_Lcpi0_PdfBuPartial;
+  } else if (systematic == "Bs2Dst0Kst0_Frac") {
+    return Systematic::Bs2Dst0Kst0_Frac;
   } else if (systematic == "Bs2Dst0Kst0_PdfDelta") {
     return Systematic::Bs2Dst0Kst0_PdfDelta;
   } else if (systematic == "Bs2Dst0Kst0_PdfBu") {
@@ -576,6 +578,8 @@ std::string EnumToString(Systematic systematic) {
       return "Lb2Omegach_Lcpi0_PdfBu";
     case Systematic::Lb2Omegach_Lcpi0_PdfBuPartial:
       return "Lb2Omegach_Lcpi0_PdfBuPartial";
+    case Systematic::Bs2Dst0Kst0_Frac:
+      return "Bs2Dst0Kst0_Frac";
     case Systematic::Bs2Dst0Kst0_PdfDelta:
       return "Bs2Dst0Kst0_PdfDelta";
     case Systematic::Bs2Dst0Kst0_PdfBu:

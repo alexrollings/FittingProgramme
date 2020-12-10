@@ -107,6 +107,7 @@ enum class Systematic {
   Lb2Omegach_Lcpi0_PdfDelta,
   Lb2Omegach_Lcpi0_PdfBu,
   Lb2Omegach_Lcpi0_PdfBuPartial,
+  Bs2Dst0Kst0_Frac,
   Bs2Dst0Kst0_PdfDelta,
   Bs2Dst0Kst0_PdfBu,
   Bs2Dst0Kst0_PdfBuPartial,
