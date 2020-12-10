@@ -16,7 +16,7 @@
 template <Neutral neutral, Bachelor bachelor>
 double ReadPdfFracs(const char* paramName, const char* returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/Bu2Dst0hst_fracs_" +
+      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/pdf_fracs_" +
       EnumToString(neutral) + ".txt";
   if (!fexists(txtFileName)) {
     std::cerr
