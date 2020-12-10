@@ -107,6 +107,13 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   if (param == Param::val) {
     return realVar->getVal();
   } else {
-    return realVar->getError();
+    if (neutral == Neutral::pi0 && parName == "Bs2Dst0Kst0_D0pi0_sigmaBu") {
+      // Cutting tighter on the BDT reduced the disn width by 3 - take this to
+      // be systematic
+      double mcBdtDifference = 3.;
+      return mcBdtDifference; 
+    } else {
+      return realVar->getError();
+    }
   }
 }

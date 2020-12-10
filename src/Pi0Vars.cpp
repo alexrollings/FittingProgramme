@@ -470,6 +470,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2Dst0Kst0_D0pi0_sigmaBu_(Params::Get().CreateFixed(
           "Bs2Dst0Kst0_D0pi0_sigmaBu", uniqueId_, Neutral::pi0,
           Mode::Bs2Dst0Kst0_D0pi0, Systematic::Bs2Dst0Kst0_PdfBu, Sign::same)),
+      // Bs2Dst0Kst0_D0pi0_sigmaBu_(Params::Get().CreateFloating(
+      //     "Bs2Dst0Kst0_D0pi0_sigmaBu", uniqueId_, Neutral::pi0,
+      //     Mode::Bs2Dst0Kst0_D0pi0, 40, 60)),
       Bs2Dst0Kst0_D0pi0_a1Bu_(nullptr),
       Bs2Dst0Kst0_D0pi0_n1Bu_(nullptr),
       pdfBu_Bs2Dst0Kst0_D0pi0_(new RooGaussian(
@@ -608,23 +611,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2Dst0Kst0_fracD0pi0_(Params::Get().CreateFixed(
           "Bs2Dst0Kst0_fracD0pi0", uniqueId_, Neutral::pi0, Bachelor::k,
           ReadPdfFracs<Neutral::pi0, Bachelor::k>("Bs2Dst0Kst0_fracD0pi0",
-                                                    "val"),
+                                                    ReturnType::val),
           ReadPdfFracs<Neutral::pi0, Bachelor::k>("Bs2Dst0Kst0_fracD0pi0",
-                                                    "std"),
+                                                    ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
       Bs2Dst0Kst0_fracD0pi0_Bu_(Params::Get().CreateFixed(
           "Bs2Dst0Kst0_fracD0pi0_Bu", uniqueId_, Neutral::pi0, Bachelor::k,
           ReadPdfFracs<Neutral::pi0, Bachelor::k>("Bs2Dst0Kst0_fracD0pi0_Bu",
-                                                    "val"),
+                                                    ReturnType::val),
           ReadPdfFracs<Neutral::pi0, Bachelor::k>("Bs2Dst0Kst0_fracD0pi0_Bu",
-                                                    "std"),
+                                                    ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
       Bs2Dst0Kst0_fracD0pi0_Delta_(Params::Get().CreateFixed(
           "Bs2Dst0Kst0_fracD0pi0_Delta", uniqueId_, Neutral::pi0, Bachelor::k,
           ReadPdfFracs<Neutral::pi0, Bachelor::k>(
-              "Bs2Dst0Kst0_fracD0pi0_Delta", "val"),
+              "Bs2Dst0Kst0_fracD0pi0_Delta", ReturnType::val),
           ReadPdfFracs<Neutral::pi0, Bachelor::k>(
-              "Bs2Dst0Kst0_fracD0pi0_Delta", "std"),
+              "Bs2Dst0Kst0_fracD0pi0_Delta", ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
       Bs2Dst0Kst0_fracD0pi0_BuPartial_(nullptr),
       orEffBs2Dst0Kst0_(
@@ -842,25 +845,25 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, "val"), 0, 5)),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, ReturnType::val), 0, 5)),
       // Constrained relative to Bd2Dsth
       // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
-      // ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "val"),
+      // ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
       //     0, 5)),
       bkgFracFAV_Bu2D0hst_(Params::Get().CreateFixed(
           "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "val"),
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "std"),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::std),
           Systematic::Bu2D0hst_BkgFrac, Sign::same)),
       bkgFracFAV_Bu2Dst0hst_(Params::Get().CreateFixed(
           "bkgFracFAV_Bu2Dst0hst", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, "val"),
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, "std"),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, ReturnType::val),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, ReturnType::std),
           Systematic::Bu2Dst0hst_BkgFrac, Sign::same)),
       // bkgFracFAV_Bu2Dst0hst_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2Dst0hst", uniqueId_, Neutral::pi0,
-      // ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, "val"),
+      // ReadBkgFracs<Neutral::pi0>(Mode::Bu2Dst0rho, ReturnType::val),
       //     0, 5)),
       bkgFracKK_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
           "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, 0, 5)),
@@ -868,12 +871,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "bkgFracADS_Bs2Dst0Kst0", uniqueId_, Neutral::pi0, 4, -2, 15)),
       // bkgFracADS_Bs2D0Kst0_(Params::Get().CreateFixed(
       //     "bkgFracADS_Bs2D0Kst0", uniqueId_, Neutral::pi0,
-      //     ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, "val"),
-      //     ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, "std"),
+      //     ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::val),
+      //     ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::std),
       //     Systematic::Bs2D0Kst0_BkgFrac, Sign::same)) {}
       bkgFracADS_Bs2D0Kst0_(Params::Get().CreateFloating(
           "bkgFracADS_Bs2D0Kst0", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, "val"), 0, 10)) {}
+          ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::val), 0, 10)) {}
 // constraint_bkgFracGlobal_WN_(("constraint_bkgFracGlobal_WN_" +
 //                               ComposeName(uniqueId_, Neutral::pi0))
 //                                  .c_str(),
@@ -884,6 +887,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
 //      ComposeName(uniqueId_, Neutral::pi0))
 //         .c_str(),
 //     "", *bkgFracFAV_Bu2D0hst_,
-//     RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "val")),
-//     RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, "std"))),
+//     RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val)),
+//     RooFit::RooConst(ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::std))),
 // constraints_argSet_() {}
