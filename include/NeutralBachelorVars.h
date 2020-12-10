@@ -14,45 +14,6 @@
 #include "RooProdPdf.h"
 
 template <Neutral neutral, Bachelor bachelor>
-double ReadPdfFracs(const char* paramName, const char* returnType) {
-  std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/pdf_fracs_" +
-      EnumToString(neutral) + ".txt";
-  if (!fexists(txtFileName)) {
-    std::cerr
-        << "!!!!!!!!!!\nReadPdfFracs: " << txtFileName
-        << " doesn't exist: setting frac to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnType == "val") {
-      return 1.0;
-    } else if (returnType == "std") {
-      return 0.0;
-    } else {
-      throw std::runtime_error(
-          "ReadPdfFracs: return type = val/std\n");
-    }
-  }
-  std::ifstream inFile(txtFileName);
-  std::string line;
-  std::stringstream paramLabel;
-  paramLabel << paramName << "_" << EnumToString(bachelor);
-  // Loop over lines in txt file
-  while (std::getline(inFile, line)) {
-    // Separate label and value (white space)
-    std::vector<std::string> lineVec = SplitLine(line);
-    if (lineVec[0] == paramLabel.str()) {
-      if (returnType == "val") {
-        return std::stod(lineVec[1]);
-      } else if (returnType == "std") {
-        return std::stod(lineVec[2]);
-      } else {
-        throw std::runtime_error(
-            "ReadPdfFracs: return type = val/std\n");
-      }
-    }
-  }
-}
-
-template <Neutral neutral, Bachelor bachelor>
 class NeutralBachelorVars {
  public:
   NeutralBachelorVars(int uniqueId);
