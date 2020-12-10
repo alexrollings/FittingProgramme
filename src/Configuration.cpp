@@ -340,18 +340,18 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Lb2Omegach_Lcpi0_PdfBu;
   } else if (systematic == "Lb2Omegach_Lcpi0_PdfBuPartial") {
     return Systematic::Lb2Omegach_Lcpi0_PdfBuPartial;
-  } else if (systematic == "Bs2Dst0Kpi_PdfDelta") {
-    return Systematic::Bs2Dst0Kpi_PdfDelta;
-  } else if (systematic == "Bs2Dst0Kpi_PdfBu") {
-    return Systematic::Bs2Dst0Kpi_PdfBu;
-  } else if (systematic == "Bs2Dst0Kpi_PdfBuPartial") {
-    return Systematic::Bs2Dst0Kpi_PdfBuPartial;
-  } else if (systematic == "Bs2D0Kpi_PdfDelta") {
-    return Systematic::Bs2D0Kpi_PdfDelta;
-  } else if (systematic == "Bs2D0Kpi_PdfBu") {
-    return Systematic::Bs2D0Kpi_PdfBu;
-  } else if (systematic == "Bs2D0Kpi_PdfBuPartial") {
-    return Systematic::Bs2D0Kpi_PdfBuPartial;
+  } else if (systematic == "Bs2Dst0Kst0_PdfDelta") {
+    return Systematic::Bs2Dst0Kst0_PdfDelta;
+  } else if (systematic == "Bs2Dst0Kst0_PdfBu") {
+    return Systematic::Bs2Dst0Kst0_PdfBu;
+  } else if (systematic == "Bs2Dst0Kst0_PdfBuPartial") {
+    return Systematic::Bs2Dst0Kst0_PdfBuPartial;
+  } else if (systematic == "Bs2D0Kst0_PdfDelta") {
+    return Systematic::Bs2D0Kst0_PdfDelta;
+  } else if (systematic == "Bs2D0Kst0_PdfBu") {
+    return Systematic::Bs2D0Kst0_PdfBu;
+  } else if (systematic == "Bs2D0Kst0_PdfBuPartial") {
+    return Systematic::Bs2D0Kst0_PdfBuPartial;
   } else if (systematic == "Bu2Dst0K_D0pi0_asPi_Pdfs") {
     return Systematic::Bu2Dst0K_D0pi0_asPi_Pdfs;
   } else if (systematic == "Bu2Dst0pi_D0pi0_asK_Pdfs") {
@@ -372,10 +372,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::boxEffs_Bu2Dst0h_D0gamma;
   } else if (systematic == "boxEffs_Bkg") {
     return Systematic::boxEffs_Bkg;
-  } else if (systematic == "boxEffs_Bs2Dst0Kpi") {
-    return Systematic::boxEffs_Bs2Dst0Kpi;
-  } else if (systematic == "boxEffs_Bs2D0Kpi") {
-    return Systematic::boxEffs_Bs2D0Kpi;
+  } else if (systematic == "boxEffs_Bs2Dst0Kst0") {
+    return Systematic::boxEffs_Bs2Dst0Kst0;
+  } else if (systematic == "boxEffs_Bs2D0Kst0") {
+    return Systematic::boxEffs_Bs2D0Kst0;
   } else if (systematic == "boxEffs_D02pik") {
     return Systematic::boxEffs_D02pik;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0pi0_misId") {
@@ -400,8 +400,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bu2D0hst_BkgFrac;
   } else if (systematic == "Bu2Dst0hst_BkgFrac") {
     return Systematic::Bu2Dst0hst_BkgFrac;
-  } else if (systematic == "Bs2D0Kpi_BkgFrac") {
-    return Systematic::Bs2D0Kpi_BkgFrac;
+  } else if (systematic == "Bs2D0Kst0_BkgFrac") {
+    return Systematic::Bs2D0Kst0_BkgFrac;
   } else if (systematic == "pidEffPi") {
     return Systematic::pidEffPi;
   } else if (systematic == "pidEffK") {
@@ -576,18 +576,18 @@ std::string EnumToString(Systematic systematic) {
       return "Lb2Omegach_Lcpi0_PdfBu";
     case Systematic::Lb2Omegach_Lcpi0_PdfBuPartial:
       return "Lb2Omegach_Lcpi0_PdfBuPartial";
-    case Systematic::Bs2Dst0Kpi_PdfDelta:
-      return "Bs2Dst0Kpi_PdfDelta";
-    case Systematic::Bs2Dst0Kpi_PdfBu:
-      return "Bs2Dst0Kpi_PdfBu";
-    case Systematic::Bs2Dst0Kpi_PdfBuPartial:
-      return "Bs2Dst0Kpi_PdfBuPartial";
-    case Systematic::Bs2D0Kpi_PdfDelta:
-      return "Bs2D0Kpi_PdfDelta";
-    case Systematic::Bs2D0Kpi_PdfBu:
-      return "Bs2D0Kpi_PdfBu";
-    case Systematic::Bs2D0Kpi_PdfBuPartial:
-      return "Bs2D0Kpi_PdfBuPartial";
+    case Systematic::Bs2Dst0Kst0_PdfDelta:
+      return "Bs2Dst0Kst0_PdfDelta";
+    case Systematic::Bs2Dst0Kst0_PdfBu:
+      return "Bs2Dst0Kst0_PdfBu";
+    case Systematic::Bs2Dst0Kst0_PdfBuPartial:
+      return "Bs2Dst0Kst0_PdfBuPartial";
+    case Systematic::Bs2D0Kst0_PdfDelta:
+      return "Bs2D0Kst0_PdfDelta";
+    case Systematic::Bs2D0Kst0_PdfBu:
+      return "Bs2D0Kst0_PdfBu";
+    case Systematic::Bs2D0Kst0_PdfBuPartial:
+      return "Bs2D0Kst0_PdfBuPartial";
     case Systematic::Bu2Dst0K_D0pi0_asPi_Pdfs:
       return "Bu2Dst0K_D0pi0_asPi_Pdfs";
     case Systematic::Bu2Dst0pi_D0pi0_asK_Pdfs:
@@ -608,10 +608,10 @@ std::string EnumToString(Systematic systematic) {
       return "boxEffs_Bu2Dst0h_D0gamma";
     case Systematic::boxEffs_Bkg:
       return "boxEffs_Bkg";
-    case Systematic::boxEffs_Bs2Dst0Kpi:
-      return "boxEffs_Bs2Dst0Kpi";
-    case Systematic::boxEffs_Bs2D0Kpi:
-      return "boxEffs_Bs2D0Kpi";
+    case Systematic::boxEffs_Bs2Dst0Kst0:
+      return "boxEffs_Bs2Dst0Kst0";
+    case Systematic::boxEffs_Bs2D0Kst0:
+      return "boxEffs_Bs2D0Kst0";
     case Systematic::boxEffs_D02pik:
       return "boxEffs_D02pik";
     case Systematic::boxEffs_Bu2Dst0h_D0pi0_misId:
@@ -636,8 +636,8 @@ std::string EnumToString(Systematic systematic) {
       return "Bu2D0hst_BkgFrac";
     case Systematic::Bu2Dst0hst_BkgFrac:
       return "Bu2Dst0hst_BkgFrac";
-    case Systematic::Bs2D0Kpi_BkgFrac:
-      return "Bs2D0Kpi_BkgFrac";
+    case Systematic::Bs2D0Kst0_BkgFrac:
+      return "Bs2D0Kst0_BkgFrac";
     case Systematic::pidEffPi:
       return "pidEffPi";
     case Systematic::pidEffK:
@@ -883,11 +883,17 @@ std::string EnumToString(Mass mass) {
 
 std::string EnumToString(Mode mode) {
   switch (mode) {
-    case Mode::Bs2D0Kpi:
-      return "Bs2D0Kpi";
+    case Mode::Bs2D0Kst0:
+      return "Bs2D0Kst0";
       break;
-    case Mode::Bs2Dst0Kpi:
-      return "Bs2Dst0Kpi";
+    case Mode::Bs2Dst0Kst0:
+      return "Bs2Dst0Kst0";
+      break;
+    case Mode::Bs2Dst0Kst0_D0gamma:
+      return "Bs2Dst0Kst0_D0gamma";
+      break;
+    case Mode::Bs2Dst0Kst0_D0pi0:
+      return "Bs2Dst0Kst0_D0pi0";
       break;
     case Mode::Bd2Dstpi:
       return "Bd2Dstpi";
@@ -1982,7 +1988,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
       return "$\\Lambda^{0}_{b}\\rightarrow \\Omega^{" + oppCharge +
              "}_{c}}K^{" + chargeLabel + "}$";
     }
-  } else if (mode == Mode::Bs2D0Kpi) {
+  } else if (mode == Mode::Bs2D0Kst0) {
     if (isTex == false) {
       return "#font[12]{B^{0}_{s}#rightarrow D^{0}K^{" + chargeLabel +
              "}#pi^{" + oppCharge + "}}";
@@ -1990,7 +1996,7 @@ std::string ReturnLaTeXLabel(Mode mode, Daughters daughters, Charge charge,
       return "B^{0}_{s}\\rightarrow D^{0}K^{" + chargeLabel + "}\\pi^{" +
              oppCharge + "}";
     }
-  } else if (mode == Mode::Bs2Dst0Kpi) {
+  } else if (mode == Mode::Bs2Dst0Kst0) {
     if (isTex == false) {
       return "#font[12]{B^{0}_{s}#rightarrow D^{*0}K^{" + chargeLabel +
              "}#pi^{" + oppCharge + "}}";
