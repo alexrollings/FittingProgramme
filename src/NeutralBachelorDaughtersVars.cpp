@@ -1377,14 +1377,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
             uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0pi0_WN()));
-    N_tot_Bs2Dst0Kst0_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
-            uniqueId, "N_tot_Bs2Dst0Kst0_", *N_tot_Bu2Dst0h_D0gamma_,
-            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2Dst0Kst0()));
     N_tot_Bs2D0Kst0_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
-            uniqueId, "N_tot_Bs2D0Kst0_", *N_tot_Bs2Dst0Kst0_,
+            uniqueId, "N_tot_Bs2D0Kst0_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kst0()));
+    N_tot_Bs2Dst0Kst0_ = std::shared_ptr<RooFormulaVar>(
+        Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
+            uniqueId, "N_tot_Bs2Dst0Kst0_", *N_tot_Bs2D0Kst0_,
+            NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2Dst0Kst0()));
     N_tot_Bu2Dst0h_D0gamma_WN_D02pik_ = std::unique_ptr<RooFormulaVar>(
         Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_D02pik_",
