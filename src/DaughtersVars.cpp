@@ -27,7 +27,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
-          "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.077, 0.007,
+          "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.0774, 0.0066,
           Systematic::R_Dst0KDst0pi_Bd2Dsth, Sign::same)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
       R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
