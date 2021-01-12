@@ -70,6 +70,26 @@ void FixedParameter::Randomise(TRandom3 &random) {
 
 double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                    std::string const &parName, Param param) {
+  // For Delta PDF of Bs2Dst0Kst0 modes, use signal values (but still retain own
+  // parameter name for systematics)
+  std::string parNameToRead = parName;
+  std::smatch match;
+  static const std::regex pattern("(Bs2Dst0Kst0_D0(pi0|gamma))_(\\S+)");
+  if (std::regex_match(parName, match, pattern)) {
+    std::stringstream ss_mode_pi, ss_mode_pi_wn, ss_mode_k, ss_mode_k_wn;
+    ss_mode_pi << "Bu2Dst0pi_D0" << match[2];
+    ss_mode_pi_wn << "Bu2Dst0pi_D0" << match[2] << "_WN";
+    ss_mode_k << "Bu2Dst0K_D0" << match[2];
+    ss_mode_k_wn << "Bu2Dst0K_D0" << match[2] << "_WN";
+    if (mode == StringToEnum<Mode>(ss_mode_pi.str()) ||
+        mode == StringToEnum<Mode>(ss_mode_pi_wn.str()) ||
+        mode == StringToEnum<Mode>(ss_mode_k.str()) ||
+        mode == StringToEnum<Mode>(ss_mode_k_wn.str())) {
+      std::stringstream ss_par;
+      ss_par << "Bu2Dst0h_D0" << match[2] << "_" << match[3];
+      parNameToRead = ss_par.str();
+    }
+  }
   std::string bachStr = EnumToString(bachelor);
   if (bachelor == Bachelor::k) {
     bachStr = "K";
@@ -87,27 +107,27 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   RooArgList constPars = fitResult->constPars();
   RooArgList floatPars = fitResult->floatParsFinal();
   RooAbsArg *absArg = nullptr;
-  absArg = constPars.find(parName.c_str());
+  absArg = constPars.find(parNameToRead.c_str());
   if (absArg == nullptr) {
-    absArg = floatPars.find(parName.c_str());
+    absArg = floatPars.find(parNameToRead.c_str());
     if (absArg == nullptr) {
       // std::cout << fname << "\n";
       // fitResult->Print();
-      throw std::runtime_error("Cannot find parameter " + parName +
+      throw std::runtime_error("Cannot find parameter " + parNameToRead +
                                " in fit result for bachelor " +
                                EnumToString(bachelor));
     } 
   }
   RooRealVar *realVar = dynamic_cast<RooRealVar *>(absArg);
   if (realVar == nullptr) {
-    throw std::runtime_error("Canot cast AbsArg to AbsReal for " + parName);
+    throw std::runtime_error("Canot cast AbsArg to AbsReal for " + parNameToRead);
   }
-  // std::cout << parName << "," << realVar->getVal() << "," << realVar->getError()
+  // std::cout << parNameToRead << "," << realVar->getVal() << "," << realVar->getError()
   //           << "\n";
   if (param == Param::val) {
     return realVar->getVal();
   } else {
-    if (neutral == Neutral::pi0 && parName == "Bs2Dst0Kst0_D0pi0_sigmaBu") {
+    if (neutral == Neutral::pi0 && parNameToRead == "Bs2Dst0Kst0_D0pi0_sigmaBu") {
       // Cutting tighter on the BDT reduced the disn width by 3 - take this to
       // be systematic
       double mcBdtDifference = 3.;

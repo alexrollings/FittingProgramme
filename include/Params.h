@@ -254,7 +254,8 @@ class Params {
     // Use pi bachelor if no bach specified
     double start;
     if (mode == Mode::Bs2D0Kst0 || mode == Mode::Bs2Dst0Kst0_D0pi0 ||
-        mode == Mode::Bs2Dst0Kst0_D0gamma) {
+        mode == Mode::Bs2Dst0Kst0_D0gamma || mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
+        mode == Mode::Bs2Dst0Kst0_D0gamma_WN) {
       // Bs mode only has component in K slice
       start = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
     } else {
@@ -303,7 +304,8 @@ class Params {
     // Use pi bachelor if no bach specified
     double mean, std;
     if (mode == Mode::Bs2D0Kst0 || mode == Mode::Bs2Dst0Kst0_D0pi0 ||
-        mode == Mode::Bs2Dst0Kst0_D0gamma) {
+        mode == Mode::Bs2Dst0Kst0_D0gamma || mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
+        mode == Mode::Bs2Dst0Kst0_D0gamma_WN) {
       // Bs mode only has component in K slice
       mean = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
       std = ReturnValErr(mode, neutral, Bachelor::k, name, Param::err);
