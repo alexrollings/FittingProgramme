@@ -1037,9 +1037,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           ("bkgFrac_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          "@0*(@1*@2*@8+@3*@4*@7)/(@5*@6*@8)",
+          // "@0*(@1*@2*@8+@3*@4*@7)/(@5*@6*@8)",
+          "(@1*@2*@8+@3*@4*@7)/(@5*@6*@8)",
           RooArgList(
-              NeutralVars<Neutral::pi0>::Get(uniqueId_).bkgFracGlobal_WN(),
+              // NeutralVars<Neutral::pi0>::Get(uniqueId_).bkgFracGlobal_WN(),
               *orEffBu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_WN_,
               *orEffBu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
               *orEffBu2Dst0h_D0pi0_, *mcEff_Bu2Dst0h_D0pi0_,

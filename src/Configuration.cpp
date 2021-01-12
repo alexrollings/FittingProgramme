@@ -899,6 +899,12 @@ std::string EnumToString(Mode mode) {
     case Mode::Bs2Dst0Kst0_D0pi0:
       return "Bs2Dst0Kst0_D0pi0";
       break;
+    case Mode::Bs2Dst0Kst0_D0gamma_WN:
+      return "Bs2Dst0Kst0_D0gamma_WN";
+      break;
+    case Mode::Bs2Dst0Kst0_D0pi0_WN:
+      return "Bs2Dst0Kst0_D0pi0_WN";
+      break;
     case Mode::Bd2Dstpi:
       return "Bd2Dstpi";
       break;

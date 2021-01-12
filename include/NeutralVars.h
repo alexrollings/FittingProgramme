@@ -556,11 +556,26 @@ class NeutralVars {
   RooRealVar &Bs2Dst0Kst0_D0pi0_WN_cDelta() {
     return *Bs2Dst0Kst0_D0pi0_WN_cDelta_;
   }
-  RooAddPdf &pdfBu_Bs2Dst0Kst0() {
-    return pdfBu_Bs2Dst0Kst0_;
+  RooRealVar &Bs2Dst0Kst0_fracD0pi0_Delta() {
+    return *Bs2Dst0Kst0_fracD0pi0_Delta_;
   }
-  RooAddPdf &pdfBuPartial_Bs2Dst0Kst0() {
-    return pdfBuPartial_Bs2Dst0Kst0_;
+  RooAddPdf &pdfBu_Bs2Dst0Kst0_D0pi0() {
+    return pdfBu_Bs2Dst0Kst0_D0pi0_;
+  }
+  RooCBShape &pdfBuPartial_Bs2Dst0Kst0_D0pi0() {
+    return pdfBuPartial_Bs2Dst0Kst0_D0pi0_;
+  }
+  RooGaussian &pdfBu_Bs2Dst0Kst0_D0pi0_WN() {
+    return pdfBu_Bs2Dst0Kst0_D0pi0_WN_;
+  }
+  RooGaussian &pdfBuPartial_Bs2Dst0Kst0_D0pi0_WN() {
+    return pdfBuPartial_Bs2Dst0Kst0_D0pi0_WN_;
+  }
+  RooGaussian &pdfBu_Bs2Dst0Kst0_D0gamma_WN() {
+    return pdfBu_Bs2Dst0Kst0_D0gamma_WN_;
+  }
+  RooGaussian &pdfBuPartial_Bs2Dst0Kst0_D0gamma_WN() {
+    return pdfBuPartial_Bs2Dst0Kst0_D0gamma_WN_;
   }
   // Box effs for Bs --> no π MC, only K
   RooFormulaVar &orEffBs2Dst0Kst0() {
@@ -895,50 +910,59 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> buPartialEffBs2D0Kst0_;
   // -------------------- Bs2Dst0Kst0_D0pi0 -------------------- //
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_a1Delta_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_a2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_n1Delta_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_a2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_n2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_fracPdf1Delta_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_thresholdDelta_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_cDelta_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_meanBu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_sigmaBu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_mean1Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_meanOffset21Bu_;
+  RooFormulaVar Bs2Dst0Kst0_D0pi0_mean2Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_sigma1Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_sigmaRatio21Bu_;
+  RooFormulaVar Bs2Dst0Kst0_D0pi0_sigma2Bu_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_a1Bu_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_n1Bu_;
-  std::shared_ptr<RooAbsPdf> pdfBu_Bs2Dst0Kst0_D0pi0_;
+  RooCBShape pdf1Bu_Bs2Dst0Kst0_D0pi0_;
+  RooGaussian pdf2Bu_Bs2Dst0Kst0_D0pi0_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_fracPdf1Bu_;
+  RooAddPdf pdfBu_Bs2Dst0Kst0_D0pi0_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_meanBuPartial_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_sigmaBuPartial_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_a1BuPartial_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_n1BuPartial_;
   RooCBShape pdfBuPartial_Bs2Dst0Kst0_D0pi0_;
+  // -------------------- Bs2Dst0Kst0_D0pi0_WN -------------------- //
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_thresholdDelta_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_cDelta_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_meanBu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_sigmaBu_;
+  RooGaussian pdfBu_Bs2Dst0Kst0_D0pi0_WN_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_sigmaBuPartial_;
+  RooGaussian pdfBuPartial_Bs2Dst0Kst0_D0pi0_WN_;
   // -------------------- Bs2Dst0Kst0_D0gamma -------------------- //
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a1Delta_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n1Delta_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n2Delta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_fracPdf1Delta_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_meanBu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_sigmaBu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a1Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n1Bu_;
+  RooCBShape pdfBu_Bs2Dst0Kst0_D0gamma_;
+  // -------------------- Bs2Dst0Kst0_D0gamma_WN -------------------- //
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_thresholdDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_aDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_bDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_cDelta_;
   RooDstD0BG pdfDelta_Bs2Dst0Kst0_D0gamma_WN_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_meanBu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_sigma1Bu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_sigmaRatio21Bu_;
-  RooFormulaVar Bs2Dst0Kst0_D0gamma_sigma2Bu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a1Bu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n1Bu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a2Bu_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n2Bu_;
-  RooCBShape pdf1Bu_Bs2Dst0Kst0_D0gamma_;
-  RooCBShape pdf2Bu_Bs2Dst0Kst0_D0gamma_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_fracPdf1Bu_;
-  std::shared_ptr<RooAbsPdf> pdfBu_Bs2Dst0Kst0_D0gamma_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_meanBuPartial_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_sigmaBuPartial_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a1BuPartial_;
-  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n1BuPartial_;
-  RooCBShape pdfBuPartial_Bs2Dst0Kst0_D0gamma_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_meanBu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_sigmaBu_;
+  RooGaussian pdfBu_Bs2Dst0Kst0_D0gamma_WN_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_WN_sigmaBuPartial_;
+  RooGaussian pdfBuPartial_Bs2Dst0Kst0_D0gamma_WN_;
   // -------------------- Bs2Dst0Kst0 -------------------- //
   std::shared_ptr<RooRealVar> orEffBs2Dst0Kst0_D0pi0_;
   std::shared_ptr<RooRealVar> deltaEffBs2Dst0Kst0_D0pi0_;
@@ -956,9 +980,6 @@ class NeutralVars {
   RooFormulaVar buEffBs2Dst0Kst0_;
   RooFormulaVar deltaEffBs2Dst0Kst0_;
   RooFormulaVar buPartialEffBs2Dst0Kst0_;
-  RooAddPdf pdfBu_Bs2Dst0Kst0_;
-  RooAddPdf pdfDelta_Bs2Dst0Kst0_;
-  RooAddPdf pdfBuPartial_Bs2Dst0Kst0_;
   // -------------------- Bu2Dst0h_D0pi0_D02pik -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_D02pik_sigmaDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_D02pik_a2Delta_;

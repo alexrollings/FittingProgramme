@@ -24,6 +24,8 @@ enum class Mode {
   Bs2Dst0Kst0,
   Bs2Dst0Kst0_D0pi0,
   Bs2Dst0Kst0_D0gamma,
+  Bs2Dst0Kst0_D0pi0_WN,
+  Bs2Dst0Kst0_D0gamma_WN,
   Bs2D0Kst0,
   Bd2Dstpi,
   Bd2DstK,

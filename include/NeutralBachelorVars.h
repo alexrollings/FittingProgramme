@@ -952,11 +952,13 @@ class NeutralBachelorVars {
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_aDelta_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0pi0_WN_bDelta_;
   RooDstD0BG pdfDelta_Bs2Dst0Kst0_D0pi0_WN_;
+  RooFormulaVar Bs2Dst0Kst0_D0pi0_fracWN_;
   RooAddPdf pdfDeltaTot_Bs2Dst0Kst0_D0pi0_;
   // -------------------- Bs2Dst0Kst0_D0gamma -------------------- //
   RooCBShape pdf1Delta_Bs2Dst0Kst0_D0gamma_;
   RooCBShape pdf2Delta_Bs2Dst0Kst0_D0gamma_;
   RooAddPdf pdfDelta_Bs2Dst0Kst0_D0gamma_;
+  RooFormulaVar Bs2Dst0Kst0_D0gamma_fracWN_;
   RooAddPdf pdfDeltaTot_Bs2Dst0Kst0_D0gamma_;
   // -------------------- Bs2Dst0Kst0 -------------------- //
   RooAddPdf pdfDelta_Bs2Dst0Kst0_;

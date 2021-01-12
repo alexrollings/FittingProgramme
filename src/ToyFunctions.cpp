@@ -1349,12 +1349,12 @@ void GenerateToyFromGammaPdf(
                          pdf.N_trueId_Bu_Bs2Dst0Kst0().getVal() /
                              (pdf.N_trueId_Bu_Bs2Dst0Kst0().getVal() +
                               pdf.N_trueId_BuPartial_Bs2Dst0Kst0().getVal()));
-      pdfBu_tot_Bs2Dst0Kst0 = new RooAddPdf(
-          ("pdfBu_tot_Bs2Dst0Kst0_" +
-           ComposeName(id, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", RooArgSet(pdf.pdfBu_Bs2Dst0Kst0(), pdf.pdfBuPartial_Bs2Dst0Kst0()),
-          *fracPdfBu_Bs2Dst0Kst0);
+      // pdfBu_tot_Bs2Dst0Kst0 = new RooAddPdf(
+      //     ("pdfBu_tot_Bs2Dst0Kst0_" +
+      //      ComposeName(id, neutral, bachelor, daughters, charge))
+      //         .c_str(),
+      //     "", RooArgSet(pdf.pdfBu_Bs2Dst0Kst0(), pdf.pdfBuPartial_Bs2Dst0Kst0()),
+      //     *fracPdfBu_Bs2Dst0Kst0);
       // pdf2d_Bs2Dst0Kst0 = new RooProdPdf(
       //     ("pdf2d_Bs2Dst0Kst0_" +
       //      ComposeName(id, neutral, bachelor, daughters, charge))
