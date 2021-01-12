@@ -58,7 +58,7 @@ Configuration::Configuration()
   // k_A_CP_Bu2Dst0K_D0gamma_D02hh(),
   // k_R_CP_Bu2Dst0pi_D0pi0(),
   // k_R_CP_Bu2Dst0pi_D0gamma(),
-  // k_R_CP_Bu2Dst0K_D0K0(),
+  // k_R_CP_Bu2Dst0K_D0pi0(),
   // k_R_CP_Bu2Dst0K_D0gamma(),
   // k_R_piK_Bu2Dst0pi_D0pi0(),
   // k_R_piK_Bu2Dst0pi_D0gamma(),
@@ -245,6 +245,88 @@ std::string Configuration::ReturnBoxString() {
     }
   }
   return out.str();
+}
+
+template <>
+Mode StringToEnum<Mode>(std::string const &mode) {
+  if (mode == "Bs2Dst0Kst0") {
+    return Mode::Bs2Dst0Kst0;
+  } else if (mode == "Bs2Dst0Kst0_D0pi0") {
+    return Mode::Bs2Dst0Kst0_D0pi0;
+  } else if (mode == "Bs2Dst0Kst0_D0gamma") {
+    return Mode::Bs2Dst0Kst0_D0gamma;
+  } else if (mode == "Bs2Dst0Kst0_D0pi0_WN") {
+    return Mode::Bs2Dst0Kst0_D0pi0_WN;
+  } else if (mode == "Bs2Dst0Kst0_D0gamma_WN") {
+    return Mode::Bs2Dst0Kst0_D0gamma_WN;
+  } else if (mode == "Bs2D0Kst0") {
+    return Mode::Bs2D0Kst0;
+  } else if (mode == "Bd2Dstpi") {
+    return Mode::Bd2Dstpi;
+  } else if (mode == "Bd2DstK") {
+    return Mode::Bd2DstK;
+  } else if (mode == "Bu2D0pi") {
+    return Mode::Bu2D0pi;
+  } else if (mode == "Bu2D0K") {
+    return Mode::Bu2D0K;
+  } else if (mode == "Bu2D0rho") {
+    return Mode::Bu2D0rho;
+  } else if (mode == "Bu2D0Kst") {
+    return Mode::Bu2D0Kst;
+  } else if (mode == "Bu2Dst0rho_D0gamma") {
+    return Mode::Bu2Dst0rho_D0gamma;
+  } else if (mode == "Bu2Dst0rho_D0pi0") {
+    return Mode::Bu2Dst0rho_D0pi0;
+  } else if (mode == "Bu2Dst0rho") {
+    return Mode::Bu2Dst0rho;
+  } else if (mode == "Bu2Dst0Kst_D0gamma") {
+    return Mode::Bu2Dst0Kst_D0gamma;
+  } else if (mode == "Bu2Dst0Kst_D0pi0") {
+    return Mode::Bu2Dst0Kst_D0pi0;
+  } else if (mode == "Bu2Dst0Kst") {
+    return Mode::Bu2Dst0Kst;
+  } else if (mode == "Bu2Dst0pi_D0gamma") {
+    return Mode::Bu2Dst0pi_D0gamma;
+  } else if (mode == "Bu2Dst0pi_D0pi0") {
+    return Mode::Bu2Dst0pi_D0pi0;
+  } else if (mode == "Bu2Dst0K_D0gamma") {
+    return Mode::Bu2Dst0K_D0gamma;
+  } else if (mode == "Bu2Dst0K_D0pi0") {
+    return Mode::Bu2Dst0K_D0pi0;
+  } else if (mode == "Bu2Dst0pi_D0gamma_WN") {
+    return Mode::Bu2Dst0pi_D0gamma_WN;
+  } else if (mode == "Bu2Dst0pi_D0pi0_WN") {
+    return Mode::Bu2Dst0pi_D0pi0_WN;
+  } else if (mode == "Bu2Dst0K_D0gamma_WN") {
+    return Mode::Bu2Dst0K_D0gamma_WN;
+  } else if (mode == "Bu2Dst0K_D0pi0_WN") {
+    return Mode::Bu2Dst0K_D0pi0_WN;
+  } else if (mode == "Bu2Dst0pi_D0gamma_D02pik") {
+    return Mode::Bu2Dst0pi_D0gamma_D02pik;
+  } else if (mode == "Bu2Dst0pi_D0pi0_D02pik") {
+    return Mode::Bu2Dst0pi_D0pi0_D02pik;
+  } else if (mode == "Bu2Dst0K_D0gamma_D02pik") {
+    return Mode::Bu2Dst0K_D0gamma_D02pik;
+  } else if (mode == "Bu2Dst0K_D0pi0_D02pik") {
+    return Mode::Bu2Dst0K_D0pi0_D02pik;
+  } else if (mode == "Bu2Dst0pi_D0gamma_WN_D02pik") {
+    return Mode::Bu2Dst0pi_D0gamma_WN_D02pik;
+  } else if (mode == "Bu2Dst0pi_D0pi0_WN_D02pik") {
+    return Mode::Bu2Dst0pi_D0pi0_WN_D02pik;
+  } else if (mode == "Bu2Dst0K_D0gamma_WN_D02pik") {
+    return Mode::Bu2Dst0K_D0gamma_WN_D02pik;
+  } else if (mode == "Bu2Dst0K_D0pi0_WN_D02pik") {
+    return Mode::Bu2Dst0K_D0pi0_WN_D02pik;
+  } else if (mode == "Bu2Dst0pi_WN") {
+    return Mode::Bu2Dst0pi_WN;
+  } else if (mode == "Bu2Dst0K_WN") {
+    return Mode::Bu2Dst0K_WN;
+  } else if (mode == "Lb2Omegacpi_Lcpi0") {
+    return Mode::Lb2Omegacpi_Lcpi0;
+  } else if (mode == "Lb2OmegacK_Lcpi0") {
+    return Mode::Lb2OmegacK_Lcpi0;
+  }
+  throw std::invalid_argument("Invalid mode passed to StringToEnum");
 }
 
 // Need a template for this as each enum option is a different 'type'
