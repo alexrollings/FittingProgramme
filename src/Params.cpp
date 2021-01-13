@@ -76,15 +76,10 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   std::smatch match;
   static const std::regex pattern("(Bs2Dst0Kst0_D0(pi0|gamma))_(\\S+)");
   if (std::regex_match(parName, match, pattern)) {
-    std::stringstream ss_mode_pi, ss_mode_pi_wn, ss_mode_k, ss_mode_k_wn;
-    ss_mode_pi << "Bu2Dst0pi_D0" << match[2];
-    ss_mode_pi_wn << "Bu2Dst0pi_D0" << match[2] << "_WN";
-    ss_mode_k << "Bu2Dst0K_D0" << match[2];
-    ss_mode_k_wn << "Bu2Dst0K_D0" << match[2] << "_WN";
-    if (mode == StringToEnum<Mode>(ss_mode_pi.str()) ||
-        mode == StringToEnum<Mode>(ss_mode_pi_wn.str()) ||
-        mode == StringToEnum<Mode>(ss_mode_k.str()) ||
-        mode == StringToEnum<Mode>(ss_mode_k_wn.str())) {
+    std::smatch m;
+    static const std::regex re("Bu2Dst0(pi|K)_(\\S+)");
+    std::string modeStr = EnumToString(mode);
+    if (std::regex_match(modeStr, m, re)) {
       std::stringstream ss_par;
       ss_par << "Bu2Dst0h_D0" << match[2] << "_" << match[3];
       parNameToRead = ss_par.str();
