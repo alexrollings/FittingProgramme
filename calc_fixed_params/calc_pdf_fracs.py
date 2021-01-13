@@ -168,78 +168,119 @@ if __name__ == '__main__':
 
   frac_dict = {}
 
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'])
+  if neutral == 'pi0':
+    #π0 mode: only π0 true ID, so all π0 fracs are for WN only. In Bu dimn, only π0 WN compt included
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'])
 
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_Bu_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaCut']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaCut'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['deltaCut'])
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_Delta_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut'])
 
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_Delta_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['buCut'])
+    frac_dict['Bs2Dst0Kst0_fracWN_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] +
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'])
 
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'])
-
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_Bu_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['deltaCut'])
-
-  frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_Delta_k'] = (
-      kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
-      box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut']) / (
-          kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
-          kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
-          box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut'])
-
-  if neutral == 'gamma':
-    frac_dict['Bs2Dst0Kst0_fracD0pi0_BuPartial_k'] = (
-        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
-        box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-        box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaPartialCut']) / (
+    frac_dict['Bs2Dst0Kst0_fracWN_Bu_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut'] +
             kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
             box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
-            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaPartialCut'] +
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaCut'])
+
+    frac_dict['Bs2Dst0Kst0_fracWN_Delta_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut'] +
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut'])
+
+  else:
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'])
+
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_Delta_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut'] +
             kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
             box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
-            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['deltaPartialCut'])
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['buCut'])
 
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'])
+
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_Delta_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut'])
+
+    # In gamma B mass slice, only true gamma used - WN π0 fixed relative to WN gamma
+    frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_Bu_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['deltaCut'])
+
+    # In π0 B mass slice, only true π0 used - WN gamma fixed relative to WN π0
     frac_dict['Bs2Dst0Kst0_fracD0pi0_WN_BuPartial_k'] = (
         kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
         box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
@@ -250,6 +291,65 @@ if __name__ == '__main__':
             kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
             box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
             box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['deltaPartialCut'])
+
+    frac_dict['Bs2Dst0Kst0_fracWN_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] +
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'])
+
+    frac_dict['Bs2Dst0Kst0_fracWN_Delta_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['buCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['buCut'] +
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['buCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['buCut'])
+
+    frac_dict['Bs2Dst0Kst0_fracWN_Bu_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['deltaCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaCut'] +
+            kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0gamma']['k']['deltaCut'])
+
+    frac_dict['Bs2Dst0Kst0_fracWN_BuPartial_k'] = (
+        kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaPartialCut'] +
+        kBF_Dst02D0gamma * mc_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['or'] *
+        box_effs_dict['Bs2Dst0Kst0_D0gamma_WN']['k']['deltaPartialCut']) / (
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0_WN']['k']['deltaPartialCut'] +
+            kBF_Dst02D0pi0 * mc_effs_dict['Bs2Dst0Kst0_D0pi0']['k'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['or'] *
+            box_effs_dict['Bs2Dst0Kst0_D0pi0']['k']['deltaPartialCut'])
 
     # Fraction of D0π0 PDF in Bu2Dst0rho total PDF
     frac_dict['Bu2Dst0hst_fracD0pi0_pi'] = (
