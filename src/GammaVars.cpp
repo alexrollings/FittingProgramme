@@ -950,15 +950,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               "Bs2Dst0Kst0_fracD0pi0_Delta", ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
       orEffBs2Dst0Kst0_comb_(
-          ("orEffBs2Dst0Kst0_comb_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("orEffBs2Dst0Kst0_comb_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_, *orEffBs2Dst0Kst0_D0pi0_,
                      *orEffBs2Dst0Kst0_D0gamma_)),
       deltaEffBs2Dst0Kst0_comb_(
-          ("deltaEffBs2Dst0Kst0_comb_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("deltaEffBs2Dst0Kst0_comb_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_, *deltaEffBs2Dst0Kst0_D0pi0_,
@@ -1140,23 +1138,35 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ReadPdfFracs<Neutral::gamma, Bachelor::k>(
               "Bs2Dst0Kst0_fracD0pi0_WN_BuPartial", ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
-      orEffBs2Dst0Kst0_WN_(
-          ("orEffBs2Dst0Kst0_WN_" +
+      pdfBu_Bs2Dst0Kst0_WN_(
+          ("pdfBu_Bs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdfBu_Bs2Dst0Kst0_D0pi0_WN_,
+                     pdfBu_Bs2Dst0Kst0_D0gamma_WN_),
+          *Bs2Dst0Kst0_fracD0pi0_WN_Bu_),
+      pdfBuPartial_Bs2Dst0Kst0_WN_(
+          ("pdfBuPartial_Bs2Dst0Kst0_WN_" +
            ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdfBuPartial_Bs2Dst0Kst0_D0pi0_WN_,
+                     pdfBuPartial_Bs2Dst0Kst0_D0gamma_WN_),
+          *Bs2Dst0Kst0_fracD0pi0_WN_BuPartial_),
+      orEffBs2Dst0Kst0_WN_(
+          ("orEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *orEffBs2Dst0Kst0_D0pi0_WN_,
                      *orEffBs2Dst0Kst0_D0gamma_WN_)),
       buEffBs2Dst0Kst0_WN_(
-          ("buEffBs2Dst0Kst0_WN_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("buEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *buEffBs2Dst0Kst0_D0pi0_WN_,
                      *buEffBs2Dst0Kst0_D0gamma_WN_)),
       deltaEffBs2Dst0Kst0_WN_(
-          ("deltaEffBs2Dst0Kst0_WN_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("deltaEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *deltaEffBs2Dst0Kst0_D0pi0_WN_,
@@ -1538,6 +1548,34 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ReadPdfFracs<Neutral::gamma, Bachelor::k>(
               "Bs2Dst0Kst0_fracWN_BuPartial", ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
+      Bs2Dst0Kst0_floatingFracWN_Bu_(
+          ("Bs2Dst0Kst0_floatingFracWN_Bu_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Bu_, *bkgFracGlobal_WN_)),
+      Bs2Dst0Kst0_floatingFracWN_Delta_(
+          ("Bs2Dst0Kst0_floatingFracWN_Delta_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Delta_, *bkgFracGlobal_WN_)),
+      Bs2Dst0Kst0_floatingFracWN_BuPartial_(
+          ("Bs2Dst0Kst0_floatingFracWN_BuPartial_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "@0*@1",
+          RooArgList(*Bs2Dst0Kst0_fracWN_BuPartial_, *bkgFracGlobal_WN_)),
+      pdfBu_Bs2Dst0Kst0_(
+          ("pdfBu_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", RooArgList(pdfBu_Bs2Dst0Kst0_D0gamma_, pdfBu_Bs2Dst0Kst0_WN_),
+          Bs2Dst0Kst0_floatingFracWN_Bu_),
+      pdfBuPartial_Bs2Dst0Kst0_(
+          ("pdfBuPartial_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdfBuPartial_Bs2Dst0Kst0_D0pi0_,
+                     pdfBuPartial_Bs2Dst0Kst0_WN_),
+          Bs2Dst0Kst0_floatingFracWN_BuPartial_),
       orEffBs2Dst0Kst0_(
           ("orEffBs2Dst0Kst0_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
@@ -1565,4 +1603,5 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               .c_str(),
           "@2*(1-@0*@1)+@3*@0*@1",
           RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
-                     *buPartialEffBs2Dst0Kst0_D0pi0_, buPartialEffBs2Dst0Kst0_WN_)) {}
+                     *buPartialEffBs2Dst0Kst0_D0pi0_,
+                     buPartialEffBs2Dst0Kst0_WN_)) {}
