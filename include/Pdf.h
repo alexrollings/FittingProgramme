@@ -145,7 +145,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfDelta_Bu2Dst0hst() const = 0;
   virtual RooDstD0BG &pdfDelta_Lb2Omegach_Lcpi0() const = 0;
   virtual RooDstD0BG &pdfDelta_Bs2D0Kst0() const = 0;
-  // virtual RooAddPdf &pdfDelta_Bs2Dst0Kst0() const = 0;
+  virtual RooAddPdf &pdfDelta_Bs2Dst0Kst0() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0_D02pik() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0gamma_D02pik() const = 0;
   virtual RooAddPdf &pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik() const = 0;
@@ -170,7 +170,7 @@ class PdfBase {
   virtual RooAbsPdf &pdfBu_Bu2Dst0hst() const = 0;
   virtual RooCBShape &pdfBu_Lb2Omegach_Lcpi0() const = 0;
   virtual RooCBShape &pdfBu_Bs2D0Kst0() const = 0;
-  // virtual RooAddPdf &pdfBu_Bs2Dst0Kst0() const = 0;
+  virtual RooAddPdf &pdfBu_Bs2Dst0Kst0() const = 0;
   virtual RooGaussian &pdfBu_Bu2Dst0h_D0pi0_D02pik() const = 0;
   virtual RooGaussian &pdfBu_Bu2Dst0h_D0gamma_D02pik() const = 0;
   virtual RooGaussian &pdfBu_Bu2Dst0h_D0pi0_WN_D02pik() const = 0;
