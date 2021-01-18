@@ -1154,36 +1154,31 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
               "Bs2Dst0Kst0_fracWN_BuPartial", ReturnType::std),
           Systematic::Bs2Dst0Kst0_Frac, Sign::same)),
       orEffBs2Dst0Kst0_comb_(
-          ("orEffBs2Dst0Kst0_comb_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("orEffBs2Dst0Kst0_comb_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_, *orEffBs2Dst0Kst0_D0pi0_,
                      *orEffBs2Dst0Kst0_D0gamma_)),
       deltaEffBs2Dst0Kst0_comb_(
-          ("deltaEffBs2Dst0Kst0_comb_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("deltaEffBs2Dst0Kst0_comb_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_, *deltaEffBs2Dst0Kst0_D0pi0_,
                      *deltaEffBs2Dst0Kst0_D0gamma_)),
       orEffBs2Dst0Kst0_WN_(
-          ("orEffBs2Dst0Kst0_WN_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("orEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *orEffBs2Dst0Kst0_D0pi0_WN_,
                      *orEffBs2Dst0Kst0_D0gamma_WN_)),
       buEffBs2Dst0Kst0_WN_(
-          ("buEffBs2Dst0Kst0_WN_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("buEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *buEffBs2Dst0Kst0_D0pi0_WN_,
                      *buEffBs2Dst0Kst0_D0gamma_WN_)),
       deltaEffBs2Dst0Kst0_WN_(
-          ("deltaEffBs2Dst0Kst0_WN_" +
-           ComposeName(uniqueId_, Neutral::gamma))
+          ("deltaEffBs2Dst0Kst0_WN_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bs2Dst0Kst0_fracD0pi0_WN_, *deltaEffBs2Dst0Kst0_D0pi0_WN_,
@@ -1535,20 +1530,34 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       bkgFracADS_Bs2Dst0Kst0_(Params::Get().CreateFloating(
           "bkgFracADS_Bs2Dst0Kst0", uniqueId_, Neutral::gamma,
           ReadBkgFracs<Neutral::gamma>(Mode::Bs2Dst0Kst0, ReturnType::val), 0,
-          5)) {}
-// constraint_bkgFracGlobal_WN_(("constraint_bkgFracGlobal_WN_" +
-//                               ComposeName(uniqueId_, Neutral::gamma))
-//                                  .c_str(),
-//                              "", *bkgFracGlobal_WN_, RooFit::RooConst(1),
-//                              RooFit::RooConst(0.1)),
-// constraint_bkgFracFAV_Bu2D0hst_(
-//     ("constraint_bkgFracFAV_Bu2D0hst_" +
-//      ComposeName(uniqueId_, Neutral::gamma))
-//         .c_str(),
-//     "", *bkgFracFAV_Bu2D0hst_,
-//     RooFit::RooConst(ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, ReturnType::val)),
-//     RooFit::RooConst(
-//         ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, ReturnType::std))),
-// constraints_argSet_() {}
-// constraints_argSet_(constraint_bkgFracGlobal_WN_) {}
-// constraint_bkgFracFAV_Bu2D0hst_) {}
+          5)),
+      // -------------------- Bs2Dst0Kst0 -------------------- //
+      orEffBs2Dst0Kst0_(
+          ("orEffBs2Dst0Kst0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "@2*(1-@0*@1)+@3*@0*@1",
+          RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
+                     orEffBs2Dst0Kst0_comb_, orEffBs2Dst0Kst0_WN_)),
+      buEffBs2Dst0Kst0_(
+          ("buEffBs2Dst0Kst0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "@2*(1-@0*@1)+@3*@0*@1",
+          RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
+                     *buEffBs2Dst0Kst0_D0gamma_, buEffBs2Dst0Kst0_WN_)),
+      deltaEffBs2Dst0Kst0_(
+          ("deltaEffBs2Dst0Kst0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "@2*(1-@0*@1)+@3*@0*@1",
+          RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
+                     deltaEffBs2Dst0Kst0_comb_, deltaEffBs2Dst0Kst0_WN_)),
+      buPartialEffBs2Dst0Kst0_(
+          ("buPartialEffBs2Dst0Kst0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "@2*(1-@0*@1)+@3*@0*@1",
+          RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
+                     *buPartialEffBs2Dst0Kst0_D0pi0_,
+                     buPartialEffBs2Dst0Kst0_WN_)) {}
