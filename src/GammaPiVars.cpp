@@ -1917,4 +1917,22 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
               .c_str(),
           "@0*@1+(1-@0)*@2",
           RooArgList(*Bu2Dst0hst_fracD0pi0_, *mcEffMisId_Bu2Dst0hst_D0pi0_,
-                     *mcEffMisId_Bu2Dst0hst_D0gamma_)) {}
+                     *mcEffMisId_Bu2Dst0hst_D0gamma_)),
+      // -------------------- Bs2Dst0Kst0_D0pi0 -------------------- //
+      pdf1Delta_Bs2Dst0Kst0_D0pi0_(),
+      pdf2Delta_Bs2Dst0Kst0_D0pi0_(),
+      pdfDelta_Bs2Dst0Kst0_D0pi0_(),
+      // -------------------- Bs2Dst0Kst0_D0gamma -------------------- //
+      pdf1Delta_Bs2Dst0Kst0_D0gamma_(),
+      pdf2Delta_Bs2Dst0Kst0_D0gamma_(),
+      pdfDelta_Bs2Dst0Kst0_D0gamma_(),
+      // -------------------- Bs2Dst0Kst0_comb -------------------- //
+      pdfDelta_Bs2Dst0Kst0_comb_(),
+      // -------------------- Bs2Dst0Kst0_D0pi0_WN -------------------- //
+      Bs2Dst0Kst0_D0pi0_WN_aDelta_(nullptr),
+      Bs2Dst0Kst0_D0pi0_WN_bDelta_(nullptr),
+      pdfDelta_Bs2Dst0Kst0_D0pi0_WN_(),
+      // -------------------- Bs2Dst0Kst0_WN -------------------- //
+      pdfDelta_Bs2Dst0Kst0_WN_(),
+      // -------------------- Bs2Dst0Kst0 -------------------- //
+      pdfDelta_Bs2Dst0Kst0_() {}
