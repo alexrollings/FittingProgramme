@@ -796,12 +796,7 @@ int main(int argc, char **argv) {
 
       if (config.noFit() == false) {
         dataFitResult->Print("v");
-        if (config.neutral() == Neutral::gamma) {
-          NeutralVars<Neutral::gamma>::Get(id)
-              .Bs2Dst0Kst0_fracD0pi0_Delta()
-              .Print();
-        }
-        for (auto &p : pdfs) {
+        // for (auto &p : pdfs) {
           // std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
           //           << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
           // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
@@ -830,7 +825,7 @@ int main(int argc, char **argv) {
           //               << "\n";
           //   }
           // }
-        }
+        // }
         // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
         //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
         // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
