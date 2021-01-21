@@ -797,8 +797,23 @@ int main(int argc, char **argv) {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         // for (auto &p : pdfs) {
-          // std::cout << p->N_tot_Bu2Dst0h_D0pi0().GetName() << " = "
-          //           << p->N_tot_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //   if (p->daughters() == Daughters::kpi) {
+        //     if (config.neutral() == Neutral::pi0) {
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+        //     } else {
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
+        //     }
+        //   }
           // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
           //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
           // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
