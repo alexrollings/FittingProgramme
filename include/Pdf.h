@@ -30,6 +30,7 @@ class PdfBase {
   // inline RooProdPdf &prodPdfDelta() { return *prodPdfDelta_; }
 
   virtual RooRealVar &bkgFracGlobal_WN() const = 0;
+  virtual RooFormulaVar &Bs2Dst0Kst0_fracD0pi0_Delta() const = 0;
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
@@ -326,6 +327,10 @@ class Pdf : public PdfBase {
 
   virtual RooRealVar &bkgFracGlobal_WN() const {
     return NeutralVars<_neutral>::Get(uniqueId_).bkgFracGlobal_WN();
+  }
+
+  virtual RooFormulaVar &Bs2Dst0Kst0_fracD0pi0_Delta() const {
+    return NeutralVars<_neutral>::Get(uniqueId_).Bs2Dst0Kst0_fracD0pi0_Delta();
   }
 
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const {
