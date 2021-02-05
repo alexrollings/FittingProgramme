@@ -14,9 +14,10 @@ def Calc_Av_KK_pipi(ufloat_KK, ufloat_pipi):
   err_CP = pow(math.sqrt(weight_KK + weight_pipi), -1)
   return ufloat(val_CP, err_CP)
 
+# rB larger in Bd - take this into account? Should be K BF
 def Calc_Av_Bu_Bd(ufloat_Bu, ufloat_Bd):
-  BF_Bu = ufloat(0.00053, 0.00004)
-  BF_Bd = ufloat(0.000045, 0.000006)
+  BF_Bu = ufloat(5.3e-04, 0.4e-04)
+  BF_Bd = ufloat(4.5e-05, 0.6e-05)
   return (ufloat_Bu * BF_Bu + ufloat_Bd * BF_Bd) / (BF_Bu + BF_Bd)
 
 
