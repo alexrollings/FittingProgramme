@@ -1299,8 +1299,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         }
         if (daughters == Daughters::pik) {
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
@@ -1333,10 +1333,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
           pdfCharVec.emplace_back(
               pdf.pdfBu_Bu2Dst0h_D0gamma_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
       }
     } else if (mass == Mass::delta) {
@@ -1364,8 +1364,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         if (daughters == Daughters::pik) {
           pdfCharVec.emplace_back(
               pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
@@ -1400,10 +1400,10 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
               pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
           pdfCharVec.emplace_back(
               pdf.pdfDelta_Bu2Dst0h_D0gamma_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          // pdfCharVec.emplace_back(
+          //     pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
       }
     } else {
@@ -1436,8 +1436,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
       if (daughters == Daughters::pik) {
         pdfCharVec.emplace_back(
             pdf.pdfBuPartial_Bu2Dst0h_D0pi0_D02pik().GetName());
-        pdfCharVec.emplace_back(
-            pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+        // pdfCharVec.emplace_back(
+        //     pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
       }
     }
     // To pass to Components in plotOn, need string in the format
