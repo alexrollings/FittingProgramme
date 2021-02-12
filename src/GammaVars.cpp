@@ -8,9 +8,14 @@
 // unless we use pointers
 template <>
 NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
+    : uniqueId_(uniqueId),
+      A_Kpi_(Params::Get().CreateFixed("A_Kpi", uniqueId_, Neutral::gamma,
+                                       -1.15e-02, 1.6e-03, Systematic::A_Kpi,
+                                       Sign::none)),
+      a_Kpi_(MakeLittleAsym(
+          ("a_Kpi_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), *A_Kpi_)),
     // -------------------- PDF SHAPES -------------------- //
     // -------------------- Bu2Dst0h_D0gamma -------------------- //
-    : uniqueId_(uniqueId),
       Bu2Dst0h_D0gamma_meanDelta_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0gamma_meanDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma, 135, 150)),

@@ -37,10 +37,8 @@ class GlobalVars {
   RooRealVar &crossFeedRate() { return *crossFeedRate_; }
   RooRealVar &Delta_A_CP() { return *Delta_A_CP_; }
   RooRealVar &A_Prod() { return *A_Prod_; }
-  RooRealVar &A_Kpi() { return *A_Kpi_; }
   RooRealVar &A_pi() { return *A_pi_; }
   RooFormulaVar &a_Prod() { return *a_Prod_; }
-  RooFormulaVar &a_Kpi() { return *a_Kpi_; }
   RooFormulaVar &a_pi() { return *a_pi_; }
 
   RooRealVar &kBF_Bu2Dst0pi() { return *kBF_Bu2Dst0pi_; }
@@ -87,10 +85,8 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> crossFeedRate_;
   std::shared_ptr<RooRealVar> Delta_A_CP_;
   std::shared_ptr<RooRealVar> A_Prod_;
-  std::shared_ptr<RooRealVar> A_Kpi_;
   std::shared_ptr<RooRealVar> A_pi_;
   std::unique_ptr<RooFormulaVar> a_Prod_;
-  std::unique_ptr<RooFormulaVar> a_Kpi_;
   std::unique_ptr<RooFormulaVar> a_pi_;
 
   std::shared_ptr<RooRealVar> kBF_Bu2Dst0pi_;

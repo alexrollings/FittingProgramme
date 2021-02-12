@@ -127,6 +127,9 @@ class NeutralVars {
 
   // If RooShit wasn't so shit we would pass a const reference
   int uniqueId() { return uniqueId_; }
+
+  RooRealVar &A_Kpi() { return *A_Kpi_; }
+  RooFormulaVar &a_Kpi() { return *a_Kpi_; }
   // -------------------- PDF SHAPES -------------------- //
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   RooRealVar &Bu2Dst0h_D0gamma_meanDelta() { return *Bu2Dst0h_D0gamma_meanDelta_; }
@@ -700,6 +703,9 @@ class NeutralVars {
   // Indicate if only used by one neutral
 
   int uniqueId_;
+
+  std::shared_ptr<RooRealVar> A_Kpi_;
+  std::unique_ptr<RooFormulaVar> a_Kpi_;
   // -------------------- PDF SHAPES -------------------- //
   // -------------------- Bu2Dst0h_D0gamma -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_meanDelta_;
