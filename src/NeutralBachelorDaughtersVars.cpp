@@ -114,11 +114,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0005, Systematic::A_pi_Kpi_Bu2Dst0h_D0gamma,
+          Daughters::kpi, 0, 0.0008, 0.0003, Systematic::A_pi_Kpi_Bu2Dst0h_D0gamma,
           Sign::none)),
       A_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
-          0, 0.0005, Systematic::A_pi_Kpi_Bu2Dst0h_D0pi0, Sign::none)),
+          0, 0.0003, 0.0008, Systematic::A_pi_Kpi_Bu2Dst0h_D0pi0, Sign::none)),
       A_Bu2Dst0h_WN_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_WN", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
           0.0005, Systematic::A_pi_Kpi_Bu2Dst0h_WN, Sign::none)),
