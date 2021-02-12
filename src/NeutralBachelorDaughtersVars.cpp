@@ -130,7 +130,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
           0.0008, Systematic::A_pi_Kpi_Bu2D0hst, Sign::none)),
       A_Bu2Dst0hst_(Params::Get().CreateFixed(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
-          0.0008, Systematic::A_pi_Kpi_Bu2Dst0hst, Sign::none)),
+          0.001, Systematic::A_pi_Kpi_Bu2Dst0hst, Sign::none)),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
