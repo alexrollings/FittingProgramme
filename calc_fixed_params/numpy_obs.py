@@ -11,22 +11,22 @@ phi3 = np.random.normal(phi3_val_err.n, phi3_val_err.s, 10000)
 
 # # B- -> D*0 π-
 # # We assume nothing about rB and dB, and that it what makes the final asymmetried non Gaussian
-# rB = np.random.uniform(0.0, 0.02, 10000)
+rB = np.random.uniform(0.0, 0.02, 10000)
 # # rB = np.random.normal(0.01, 0.002, 10000)
 # dB = np.random.uniform(0.0, math.radians(180.0), 10000)
-# # dB = np.random.normal(math.radians(90.0), math.radians(15.0), 10000)
-
-# B- -> D0 K*-
-rB_val_err = ufloat(0.076,0.020)
-rB = np.random.normal(rB_val_err.n, rB_val_err.s, 10000)
-
-dB_av_err = (18 + 37)*0.5
-dB_val_err = ufloat(math.radians(98),math.radians(dB_av_err))
-dB = np.random.normal(dB_val_err.n, dB_val_err.s, 10000)
-
 
 # # For B->Drho / B ->D*rho, we can assume nothing about dB
-# dB = np.random.uniform(0.0, math.radians(360.0), 10000)
+dB = np.random.uniform(0.0, math.radians(360.0), 10000)
+# # dB = np.random.normal(math.radians(90.0), math.radians(15.0), 10000)
+
+# # B- -> D0 K*-
+# rB_val_err = ufloat(0.076,0.020)
+# rB = np.random.normal(rB_val_err.n, rB_val_err.s, 10000)
+#
+# dB_av_err = (18 + 37)*0.5
+# dB_val_err = ufloat(math.radians(98),math.radians(dB_av_err))
+# dB = np.random.normal(dB_val_err.n, dB_val_err.s, 10000)
+
 
 # FAV: D0 -> K-π+
 rD_val = np.sqrt(0.00344)
