@@ -21,6 +21,11 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
 }
 
 void FixedParameter::Randomise(TRandom3 &random) {
+  std::cout << "\n\n--------------------------------------------------------------\n";
+  std::cout << "FixedParameter::Randomise\n";
+  std::cout << name_ << "\n";
+  std::cout << std_pos_ << "\n";
+  std::cout << std_neg_ << "\n";
   double shifted_value_;
   std::smatch match;
   static const std::regex pattern("\\S+Eff\\S+");
@@ -34,7 +39,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
       shifted_value_ = random.Gaus(mean_, std_pos_);
       } else {
         throw std::runtime_error(
-            "Params.cpp line 36: no implementation for asymmetric errors of "
+            "Params.cpp FixedParameter::Randomise: no implementation for asymmetric errors of "
             "efficiencies");
       }
     }
@@ -60,6 +65,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
         rand_sign_ = 1;
       }
     }
+    std::cout << rand_sign_ << "\n";
     double std_;
     // If std_pos_ = std_neg_, doesn't matter. If not, choosed correct one
     if (rand_sign_ == 1) {
@@ -67,6 +73,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
     } else {
       std_ = std_neg_;
     }
+    std::cout << std_ << "\n";
     shifted_value_ = random.Gaus(mean_, std_);
     // If random sign and shifted value are not the same sign, pick again
     if (rand_sign_ * shifted_value_ < 0) {
@@ -77,8 +84,9 @@ void FixedParameter::Randomise(TRandom3 &random) {
       }
     }
   }
-  // std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
-  //           << "\n";
+  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
+            << "\n";
+  std::cout << "--------------------------------------------------------------\n\n";
   roo_variable_->setVal(shifted_value_);
 }
 
