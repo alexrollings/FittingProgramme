@@ -1230,9 +1230,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                            Bachelor::k, Daughters::pik, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
       // HFLAV: A_ADS+, BF average of B+ and B0
+    // 50% extra uncertainty for non-K* contributions
       A_Bu2D0hst_(Params::Get().CreateFixed(
           "A_Bu2D0hst", uniqueId, _neutral, Bachelor::k, Daughters::pik, -0.69,
-          0.15, Systematic::A_K_piK_Bu2D0hst, Sign::none)),
+          0.50, Systematic::A_K_piK_Bu2D0hst, Sign::none)),
       A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(Params::Get().CreateFixed(
