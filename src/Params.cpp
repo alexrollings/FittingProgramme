@@ -21,36 +21,7 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
 }
 
 void FixedParameter::Randomise(TRandom3 &random) {
-  double shifted_value_ = random.Gaus(mean_, std_);
-  if (sign_ == Sign::positive) {
-    std::cout << "Positive\n";
-    // std::cout << shifted_value_ << "\n";
-    while (shifted_value_ < 0) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
-      shifted_value_ = random.Gaus(mean_, std_);
-    }
-    // std::cout << shifted_value_ << "\n";
-  } else if (sign_ == Sign::negative) {
-    std::cout << "Negative\n";
-    // std::cout << shifted_value_ << "\n";
-    while (shifted_value_ > 0) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
-      shifted_value_ = random.Gaus(mean_, std_);
-    }
-    // std::cout << shifted_value_ << "\n";
-  } else if (sign_ == Sign::same) {
-    std::cout << "Same test\n";
-    std::cout << shifted_value_ << "\n";
-    std::cout << shifted_value_*shifted_value_ << "\n";
-    while (shifted_value_*mean_ < 0) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
-      shifted_value_ = random.Gaus(mean_, std_);
-    }
-    // std::cout << shifted_value_ << "\n";
-  }
+  double shifted_value_;
   std::smatch match;
   static const std::regex pattern("\\S+Eff\\S+");
   if (std::regex_match(name_, match, pattern)) {
@@ -59,9 +30,52 @@ void FixedParameter::Randomise(TRandom3 &random) {
     while (shifted_value_ > 1 || shifted_value_ < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
-      shifted_value_ = random.Gaus(mean_, std_);
+      if (std_pos_ == std_neg_) {
+      shifted_value_ = random.Gaus(mean_, std_pos_);
+      } else {
+        throw std::runtime_error(
+            "Params.cpp line 36: no implementation for asymmetric errors of "
+            "efficiencies");
+      }
     }
     // std::cout << shifted_value_ << "\n";
+  } else {
+    int rand_sign_;
+    if (sign_ == Sign::positive) {
+      rand_sign_ = 1;
+    } else if (sign_ == Sign::negative) {
+      rand_sign_ = -1;
+    } else if (sign_ == Sign::same) {
+      if (mean_ < 0) {
+        rand_sign_ = -1;
+      } else {
+        rand_sign_ = 1;
+      }
+    } else {  // Sign::none
+      // Randomly choose +ve/-ve shift
+      double tmp_ = random.Gaus(0, 1);
+      if (tmp_ < 0) {
+        rand_sign_ = -1;
+      } else {
+        rand_sign_ = 1;
+      }
+    }
+    double std_;
+    // If std_pos_ = std_neg_, doesn't matter. If not, choosed correct one
+    if (rand_sign_ == 1) {
+      std_ = std_pos_;
+    } else {
+      std_ = std_neg_;
+    }
+    shifted_value_ = random.Gaus(mean_, std_);
+    // If random sign and shifted value are not the same sign, pick again
+    if (rand_sign_ * shifted_value_ < 0) {
+      while (rand_sign_ * shifted_value_ < 0) {
+        RooRandom::randomGenerator()->SetSeed(0);
+        TRandom3 random(0);
+        shifted_value_ = random.Gaus(mean_, std_);
+      }
+    }
   }
   // std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
   //           << "\n";

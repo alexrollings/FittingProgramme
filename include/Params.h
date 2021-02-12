@@ -26,7 +26,18 @@ class FixedParameter {
                  Systematic systematic, Sign sign)
       : name_(name),
         mean_(mean),
-        std_(std),
+        std_pos_(std),
+        std_neg_(std),
+        systematic_(systematic),
+        sign_(sign),
+        roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
+
+  FixedParameter(std::string const &name, double mean, double std_pos,
+                 double std_neg, Systematic systematic, Sign sign)
+      : name_(name),
+        mean_(mean),
+        std_pos_(std_pos),
+        std_neg_(std_neg),
         systematic_(systematic),
         sign_(sign),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
@@ -40,13 +51,14 @@ class FixedParameter {
   std::shared_ptr<RooRealVar> roo_variable() { return roo_variable_; }
   double value() const { return roo_variable_->getVal(); }
   double mean() const { return mean_; }
-  double std() const { return std_; }
+  double std_pos() const { return std_pos_; }
+  double std_neg() const { return std_neg_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
   void Randomise(TRandom3 &random);
 
  private:
-  double mean_, std_;
+  double mean_, std_pos_, std_neg_;
   std::string const name_;
   Systematic systematic_;
   Sign sign_;
@@ -135,6 +147,21 @@ class Params {
     auto var_name =
         name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor,
+                                          Daughters daughters, double mean,
+                                          double std_pos, double std_neg,
+                                          Systematic systematic, Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), EnumToString(daughters));
+    auto var_name =
+        name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
+    return ConstructFixedParameter(key, var_name, mean, std_pos, std_neg,
+                                   systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
@@ -254,13 +281,13 @@ class Params {
     // Use pi bachelor if no bach specified
     double start;
     if (mode == Mode::Bs2D0Kst0 || mode == Mode::Bs2Dst0Kst0_D0pi0 ||
-        mode == Mode::Bs2Dst0Kst0_D0gamma || mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
+        mode == Mode::Bs2Dst0Kst0_D0gamma ||
+        mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
         mode == Mode::Bs2Dst0Kst0_D0gamma_WN) {
       // Bs mode only has component in K slice
       start = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
     } else {
-      start =
-          ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
+      start = ReturnValErr(mode, neutral, Bachelor::pi, name, Param::val);
     }
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
@@ -288,8 +315,7 @@ class Params {
                         EnumToString(bachelor), EnumToString(daughters));
     auto var_name =
         name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
-    double start =
-        ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    double start = ReturnValErr(mode, neutral, bachelor, name, Param::val);
     return ConstructFloatingParameter(key, var_name, start, min_value,
                                       max_value);
   }
@@ -304,7 +330,8 @@ class Params {
     // Use pi bachelor if no bach specified
     double mean, std;
     if (mode == Mode::Bs2D0Kst0 || mode == Mode::Bs2Dst0Kst0_D0pi0 ||
-        mode == Mode::Bs2Dst0Kst0_D0gamma || mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
+        mode == Mode::Bs2Dst0Kst0_D0gamma ||
+        mode == Mode::Bs2Dst0Kst0_D0pi0_WN ||
         mode == Mode::Bs2Dst0Kst0_D0gamma_WN) {
       // Bs mode only has component in K slice
       mean = ReturnValErr(mode, neutral, Bachelor::k, name, Param::val);
@@ -331,19 +358,17 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
-                                          Neutral neutral, Bachelor bachelor, Daughters daughters,
-                                          Mode mode, Systematic systematic,
-                                          Sign sign) {
+                                          Neutral neutral, Bachelor bachelor,
+                                          Daughters daughters, Mode mode,
+                                          Systematic systematic, Sign sign) {
     // Add bachelor daughter charge as empty strings: , "", "", ""
     auto key =
         std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
                         EnumToString(bachelor), EnumToString(daughters));
     auto var_name =
         name + "_" + ComposeName(uniqueId, neutral, bachelor, daughters);
-    double mean =
-        ReturnValErr(mode, neutral, bachelor, name, Param::val);
-    double std =
-        ReturnValErr(mode, neutral, bachelor, name, Param::err);
+    double mean = ReturnValErr(mode, neutral, bachelor, name, Param::val);
+    double std = ReturnValErr(mode, neutral, bachelor, name, Param::err);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
@@ -370,11 +395,20 @@ class Params {
     for (auto &t : fixed_parameters_) {
       for (auto s : systematicVec) {
         if (t.second.systematic() == s) {
-          of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
-             << std::get<3>(t.first) << "," << t.second.mean() << ","
-             << t.second.std() << "\n";
-          std::cout << t.second.name() << "," << t.second.mean() << ","
-                    << t.second.std() << "\n";
+          if (t.second.std_pos() == t.second.std_neg()) {
+            of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
+               << std::get<3>(t.first) << "," << t.second.mean() << ","
+               << t.second.std_pos() << "\n";
+            std::cout << t.second.name() << "," << t.second.mean() << ","
+                      << t.second.std_pos() << "\n";
+          } else {
+            of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
+               << std::get<3>(t.first) << "," << t.second.mean() << ","
+               << t.second.std_pos() << "," << t.second.std_neg() << "\n";
+            std::cout << t.second.name() << "," << t.second.mean() << ","
+                      << t.second.std_pos() << "," << t.second.std_neg()
+                      << "\n";
+          }
         }
       }
     }
@@ -394,6 +428,19 @@ class Params {
                  // forwards them to the constructor). Necessary so as not to
                  // copy any RooFit objects !!!
                  std::forward_as_tuple(var_name, mean, std, systematic, sign))
+        .first->second.roo_variable();
+  }
+
+  std::shared_ptr<RooRealVar> ConstructFixedParameter(
+      Key const &key, std::string const &var_name, double mean, double std_pos,
+      double std_neg, Systematic systematic, Sign sign) {
+    return fixed_parameters_
+        .emplace(std::piecewise_construct, key,
+                 // Calling FixedParam constructor (takes all arguments and
+                 // forwards them to the constructor). Necessary so as not to
+                 // copy any RooFit objects !!!
+                 std::forward_as_tuple(var_name, mean, std_pos, std_neg,
+                                       systematic, sign))
         .first->second.roo_variable();
   }
 
