@@ -1028,10 +1028,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bd2Dsth_(Params::Get().CreateFixed("A_Bd2Dsth", uniqueId, _neutral,
                                            Bachelor::k, Daughters::kpi, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
-      // HFLAV: A_Kpi, BF average of B+ and B0
       A_Bu2D0hst_(Params::Get().CreateFixed(
-          "A_Bu2D0hst", uniqueId, _neutral, Bachelor::k, Daughters::kpi, -0.006,
-          0.029, Systematic::A_K_Kpi_Bu2D0hst, Sign::none)),
+          "A_Bu2D0hst", uniqueId, _neutral, Bachelor::k, Daughters::kpi, 0.0,
+          0.009, Systematic::A_K_Kpi_Bu2D0hst, Sign::none)),
       A_Bu2Dst0hst_(Params::Get().CreateFixed(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k, Daughters::kpi, 0.0,
           0.02, Systematic::A_K_Kpi_Bu2Dst0hst, Sign::none)),
