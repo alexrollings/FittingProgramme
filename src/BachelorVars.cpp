@@ -125,9 +125,10 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   }
   if (_bachelor == Bachelor::k) {
     // HFLAV: R_ADS+, BF average of B+ and B0
+    // 50% extra uncertainty for non-K* contributions
     R_ADS_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFixed("R_ADS_Bu2D0hst", uniqueId_, _bachelor,
-                                  0.016, 0.004, Systematic::R_ADS_Bu2D0hst, Sign::same));
+                                  0.016, 0.012, Systematic::R_ADS_Bu2D0hst, Sign::same));
   }
   R_ADS_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_ADS_Bd2Dsth", uniqueId_, _bachelor,
