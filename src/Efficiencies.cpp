@@ -148,7 +148,13 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
           mode == Mode::Lb2Omegacpi_Lcpi0) {
         fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
       } else {
-        if (misId == true && bachelor == Bachelor::pi) {
+        if ((misId == true && bachelor == Bachelor::pi) ||
+            mode == Mode::Bu2Dst0pi_D0pi0 || mode == Mode::Bu2Dst0K_D0pi0 ||
+            mode == Mode::Bu2Dst0pi_D0gamma || mode == Mode::Bu2Dst0K_D0gamma ||
+            mode == Mode::Bu2Dst0pi_D0pi0_WN ||
+            mode == Mode::Bu2Dst0K_D0pi0_WN ||
+            mode == Mode::Bu2Dst0pi_D0gamma_WN ||
+            mode == Mode::Bu2Dst0K_D0gamma_WN) {
           fName = dir + decay + path + decay +
                   "_PID_TM_Triggers_BDT1_BDT2_MERemoved.root";
         } else {
