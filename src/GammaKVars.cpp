@@ -2467,6 +2467,6 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
           ("pdfDelta_Bs2Dst0Kst0_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", RooArgList(pdfDelta_Bs2Dst0Kst0_comb_, pdfDelta_Bs2Dst0Kst0_WN_),
+          "", RooArgList(pdfDelta_Bs2Dst0Kst0_WN_, pdfDelta_Bs2Dst0Kst0_comb_),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
               .Bs2Dst0Kst0_floatingFracWN_Delta()) {}

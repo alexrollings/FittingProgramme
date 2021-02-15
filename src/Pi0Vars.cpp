@@ -1031,7 +1031,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2Dst0Kst0_floatingFracWN_BuPartial_(),
       pdfBu_Bs2Dst0Kst0_(
           ("pdfBu_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
-          "", RooArgList(pdfBu_Bs2Dst0Kst0_D0pi0_, pdfBu_Bs2Dst0Kst0_D0pi0_WN_),
+          "", RooArgList(pdfBu_Bs2Dst0Kst0_D0pi0_WN_, pdfBu_Bs2Dst0Kst0_D0pi0_),
           Bs2Dst0Kst0_floatingFracWN_Bu_),
       pdfBuPartial_Bs2Dst0Kst0_(),
       mcEff_Bs2Dst0Kst0_(

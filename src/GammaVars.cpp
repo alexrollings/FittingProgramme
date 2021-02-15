@@ -1651,12 +1651,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("pdfBu_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "",
-          RooArgList(pdfBu_Bs2Dst0Kst0_D0gamma_, pdfBu_Bs2Dst0Kst0_WN_),
+          RooArgList(pdfBu_Bs2Dst0Kst0_WN_, pdfBu_Bs2Dst0Kst0_D0gamma_),
           Bs2Dst0Kst0_floatingFracWN_Bu_),
       pdfBuPartial_Bs2Dst0Kst0_(
           ("pdfBuPartial_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
-          "", RooArgList(pdfBuPartial_Bs2Dst0Kst0_D0pi0_, pdfBuPartial_Bs2Dst0Kst0_WN_),
+          "", RooArgList(pdfBuPartial_Bs2Dst0Kst0_WN_, pdfBuPartial_Bs2Dst0Kst0_D0pi0_),
           Bs2Dst0Kst0_floatingFracWN_BuPartial_),
       mcEff_Bs2Dst0Kst0_(
           ("mcEff_Bs2Dst0Kst0_" +
