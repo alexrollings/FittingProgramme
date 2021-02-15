@@ -130,9 +130,15 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
                                        bachelor, charge, R_piK_init, min, 1));
     }
   }
-  R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
-      Params::Get().CreateFloating("R_piK_Bu2Dst0h_WN", uniqueId_,
-                                   bachelor, charge, R_piK_init, min, 1));
+  if (bachelor == Bachelor::pi) {
+    R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_piK_Bu2Dst0h_WN", uniqueId_, bachelor,
+                                     charge, R_piK_init, 0, 1));
+  } else {
+    R_piK_Bu2Dst0h_WN_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_piK_Bu2Dst0h_WN", uniqueId_, bachelor, charge, 0.015, 0, 1));
+  }
   // Below params only used in gamma mode fit: defined as R_ADS and A_ADS for π0
   // fit
   R_piK_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
@@ -146,14 +152,9 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     if (charge == Charge::plus) {
       start = 0.2;
     }
+  }
     R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_, bachelor,
                                      charge, start, -2, 2));
                                      // charge, start, 0, 2));
-  } else {
-    R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_, bachelor,
-                                     charge, R_piK_init, 0, 1));
-  }
-  std::cout << "Made it here" << std::endl;
 }
