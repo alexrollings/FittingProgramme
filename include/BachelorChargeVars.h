@@ -152,9 +152,13 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     if (charge == Charge::plus) {
       start = 0.2;
     }
-  }
     R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_, bachelor,
                                      charge, start, -2, 2));
                                      // charge, start, 0, 2));
+  } else {
+    R_piK_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_piK_Bu2Dst0hst", uniqueId_, bachelor,
+                                     charge, R_piK_init, 0, 1));
+  }
 }
