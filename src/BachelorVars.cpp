@@ -85,13 +85,13 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                 .R_piK_Bu2D0hst(),
             BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
                 .R_piK_Bu2D0hst()));
-      }
       R_ADS_Bu2Dst0hst_ = std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
           uniqueId, "R_ADS_Bu2Dst0hst_",
           BachelorChargeVars<_bachelor, Charge::minus>::Get(uniqueId)
               .R_piK_Bu2Dst0hst(),
           BachelorChargeVars<_bachelor, Charge::plus>::Get(uniqueId)
               .R_piK_Bu2Dst0hst()));
+      }
     }
   } else {
     R_ADS_Bu2Dst0h_D0gamma_ =
@@ -116,11 +116,11 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             uniqueId, "R_ADS_Bu2D0hst_",
             BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
                 .R_piK_Bu2D0hst()));
-      }
       R_ADS_Bu2Dst0hst_ = std::shared_ptr<RooFormulaVar>(Make_R_ADS<_bachelor>(
           uniqueId, "R_ADS_Bu2Dst0hst_",
           BachelorChargeVars<_bachelor, Charge::total>::Get(uniqueId)
               .R_piK_Bu2Dst0hst()));
+      }
     }
   }
   if (_bachelor == Bachelor::k) {
@@ -135,28 +135,34 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
           GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
       0, Systematic::NA, Sign::none));
-  // R_ADS_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+  // R_ADS_Bu2Dst0h_WN_ =
+  // std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
   //     "R_ADS_Bu2Dst0h_WN", uniqueId_, _bachelor,
   //     GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
   //         GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
   //     -1, 1));
   if (Configuration::Get().neutral() == Neutral::pi0) {
+    double start = GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
+                   GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal();
     if (_bachelor == Bachelor::pi) {
       R_ADS_Bu2D0hst_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "R_ADS_Bu2D0hst", uniqueId_, _bachelor,
-              GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
-                  GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal(),
-              -1, 1));
+              "R_ADS_Bu2D0hst", uniqueId_, _bachelor, start, -1, 1));
+      R_ADS_Bu2Dst0hst_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor, start, 0, 5));
     }
-    double start = GlobalVars::Get(uniqueId_).kBF_D02pik().getVal() /
-                   GlobalVars::Get(uniqueId_).kBF_D02kpi().getVal();
-    if (_bachelor == Bachelor::k) {
-      start = 0.5;
-    }
-    R_ADS_Bu2Dst0hst_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor, start, 0, 5));
+    // if (_bachelor == Bachelor::k) {
+    //   start = 0.5;
+    // }
+    // R_ADS_Bu2Dst0hst_ =
+    //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //         "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor, start, 0, 5));
+  }
+  if (_bachelor == Bachelor::k) {
+    R_ADS_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("R_ADS_Bu2Dst0hst", uniqueId_, _bachelor,
+                                  0.015, 0.010, Systematic::NA, Sign::same));
   }
 
   A_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(
