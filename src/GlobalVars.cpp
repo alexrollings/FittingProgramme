@@ -206,8 +206,11 @@ GlobalVars::GlobalVars(int uniqueId)
   R_CP_Bd2Dsth_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
       "R_CP_Bd2Dsth", uniqueId_, 1.0, 0.0, Systematic::NA, Sign::none));
   // HFLAV: R_CP+, BF average of B+ and B0
+  // R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+  //     "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::R_CP_Bu2D0hst, Sign::same));
+  // //     Donal's calculation from hadronic parameters - consistent within 3 sigma
   R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::R_CP_Bu2D0hst, Sign::same));
+      "R_CP_Bu2D0hst", uniqueId_, 1.04, 0.06, Systematic::R_CP_Bu2D0hst, Sign::same));
   double min = 0.;
   double max = 20.;
   // double max = 15.;
