@@ -68,7 +68,7 @@ if __name__ == "__main__":
   parser.add_argument('-j',
                       '--n_jobs',
                       type=int,
-                      help='Number of jobs to run on batch',
+                      help='Number of jobs to run',
                       required=True)
   parser.add_argument(
       '-i',

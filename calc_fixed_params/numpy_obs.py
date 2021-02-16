@@ -11,12 +11,16 @@ phi3 = np.random.normal(phi3_val_err.n, phi3_val_err.s, 10000)
 
 # # B- -> D*0 π-
 # # We assume nothing about rB and dB, and that it what makes the final asymmetried non Gaussian
-rB = np.random.uniform(0.0, 0.02, 10000)
+# rB = np.random.uniform(0.0, 0.02, 10000)
 # # rB = np.random.normal(0.01, 0.002, 10000)
 # dB = np.random.uniform(0.0, math.radians(180.0), 10000)
 
+# B- -> D*0 K-
+rB = np.random.uniform(0.0, 0.2, 10000)
+dB = np.random.uniform(math.radians(180.0), math.radians(360.0), 10000)
+
 # # For B->Drho / B ->D*rho, we can assume nothing about dB
-dB = np.random.uniform(0.0, math.radians(360.0), 10000)
+# dB = np.random.uniform(0.0, math.radians(360.0), 10000)
 # # dB = np.random.normal(math.radians(90.0), math.radians(15.0), 10000)
 
 # # B- -> D0 K*-
@@ -84,7 +88,7 @@ Bu2D0hst_CP_minus = 1 + rB**2 + 2 * K * rB * np.cos(dB - phi3)
 A_Bu2D0hst_CP = (Bu2D0hst_CP_minus - Bu2D0hst_CP_plus)/(Bu2D0hst_CP_minus + Bu2D0hst_CP_plus)
 R_Bu2D0hst_CP = 1 + rB**2 + 2 * K * rB * np.cos(dB) * np.cos(phi3)
 
-rB = np.random.uniform(0.0, 0.3, 10000)
+rB = np.random.uniform(0.0, 0.2, 10000)
 # rB = np.random.normal(0.1, 0.05, 10000)
 dB = np.random.uniform(0.0, math.radians(360.0), 10000)
 
