@@ -29,6 +29,9 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
       //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
       //     0, 2)),
+      // R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFixed(
+      //     "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi, 0.08, 0,
+      //     Systematic::NA, Sign::same)),
       R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
@@ -78,12 +81,22 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0hst(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst())),
       // Increase uncertainty: from Lb -> Lc K / Lb -> Lc π
-      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
-          -1, 1)) {}
-      // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFixed(
+      // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
       //     "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
-      //     0.073*0.25, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0, Sign::same)) {}
+      //     0, 2)) {}
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
+            0.073 * 0.5, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0,
+            Sign::same));
+  } else {
+    R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_Dst0KDst0pi_Lb2Omegach_Lcpi0",
+                                     uniqueId_, Daughters::kk, 0.073, -1, 1));
+  }
+}
 
 template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
