@@ -432,9 +432,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
               BachelorChargeVars<Bachelor::pi, Charge::plus>::Get(uniqueId)
                   .R_piK_Bu2Dst0hst()));
     } else {
-      A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-          Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
-                                       Bachelor::pi, Daughters::pik, 0, -1, 1));
+      // A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+      //     Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
+      //                                  Bachelor::pi, Daughters::pik, 0, -1, 1));
+      A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+          "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi, Daughters::pik, 0,
+          0.0008, Systematic::NA, Sign::none));
       // A_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
       //     Params::Get().CreateFloating("A_Bu2Dst0hst", uniqueId, _neutral,
       //                                  Bachelor::pi, Daughters::pik, 0, -1,
