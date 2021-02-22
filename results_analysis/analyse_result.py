@@ -22,6 +22,12 @@ def PrintFitStatus(fit_status):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument(
+      '-r',
+      '--result',
+      type=str,
+      help='Data fit result',
+      required=True)
+  parser.add_argument(
       '-s',
       '--syst_dir',
       type=str,
@@ -47,6 +53,7 @@ if __name__ == '__main__':
                       help='Neutral: pi0/gamma',
                       required=True)
   args = parser.parse_args()
+  result = args.result
   syst_dir = args.syst_dir
   pull_dir = args.pull_dir
   neutral = args.neutral
@@ -60,6 +67,7 @@ if __name__ == '__main__':
   # Observables we are interested have this stem (match with regex)
   observables = [
       'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
+      # 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
   ]
 
@@ -73,10 +81,10 @@ if __name__ == '__main__':
   # Extract data fit result (make not of box dimn for 2d toy pulls)
   # Extract value and fit error of each observable of interest
   if os.path.isdir(syst_dir):
-    data_fname = f'{syst_dir}/results/DataResult_{box_str}.root'
-    if not os.path.isfile(data_fname):
-      sys.exit(f'{data_fname} does not exist')
-    data_file = TFile(data_fname)
+    # data_fname = f'{syst_dir}/results/DataResult_{box_str}.root'
+    if not os.path.isfile(result):
+      sys.exit(f'{result} does not exist')
+    data_file = TFile(result)
     data_result = data_file.Get('DataFitResult')
     for obs in observables:
       for p in data_result.floatParsFinal():
@@ -96,6 +104,9 @@ if __name__ == '__main__':
           group_dict[par_name[:-2]] = {}
   else:
     sys.exit(f'{syst_dir} does not exist')
+
+  # print(syst_dict)
+  # print(group_dict)
 
   # File where 2D pull results are stored
   pull_fname = f'{pull_dir}/Result_{box_str}.root'
@@ -119,7 +130,7 @@ if __name__ == '__main__':
       if os.path.exists(status_fname):
         with open(status_fname, 'r') as status_file:
           fit_status = json.load(status_file)
-          PrintFitStatus(fit_status)
+          # PrintFitStatus(fit_status)
       else:
         sys.err(
             f'{status_fname} does not exist - cannot report on fit status')
@@ -168,6 +179,15 @@ if __name__ == '__main__':
     with open(status_fname, 'w') as status_file:
       json.dump(fit_status, status_file)
     PrintFitStatus(fit_status)
+
+  # remove_keys = []
+  # for par in syst_dict:
+  #   m = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
+  #   if not m:
+  #     remove_keys.append(par)
+  #
+  # for par in remove_keys:
+  #   syst_dict.pop(par, None)
 
   total_syst_dict = {}
   g_err_corr = 'Stat. Error Correction'
