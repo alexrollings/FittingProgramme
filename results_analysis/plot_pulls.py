@@ -77,12 +77,12 @@ if __name__ == '__main__':
                       '--delta_low',
                       type=str,
                       help='Lower delta mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-dh',
                       '--delta_high',
                       type=str,
                       help='Upper delta mass range',
-                      required=True)
+                      required=False)
   parser.add_argument('-dpl',
                       '--delta_partial_low',
                       type=str,
@@ -119,12 +119,8 @@ if __name__ == '__main__':
 
   if dim == 'D1D':
     print('Analysing results from D1D toys')
-    if bu_low == None or bu_high == None:
-      sys.exit('Specify -bl= and -bh=')
   elif dim == '2D':
     print('Analysing results from 2D toys')
-    if bu_low == None or bu_high == None:
-      sys.exit('Specify -bl= and -bh=')
   elif dim == '1D':
     print('Analysing results from 1D toys')
   else:
@@ -139,6 +135,29 @@ if __name__ == '__main__':
 
   if neutral != 'pi0' and neutral != 'gamma':
     sys.exit('Specify neutral: -n=pi0/gamma')
+
+  if neutral == "gamma":
+    if delta_low == None:
+      delta_low = "125"
+    if delta_high == None:
+      delta_high = "170"
+    if delta_partial_low == None:
+      delta_partial_low = "60"
+    if delta_partial_high == None:
+      delta_partial_high = "105"
+    if bu_low == None:
+      bu_low = "5240"
+    if bu_high == None:
+      bu_high = "5320"
+  else:
+    if delta_low == None:
+      delta_low = "138"
+    if delta_high == None:
+      delta_high = "148"
+    if bu_low == None:
+      bu_low = "5220"
+    if bu_high == None:
+      bu_high = "5330"
 
   current_dir = os.getcwd()
   fit_bu_partial = False
