@@ -676,6 +676,9 @@ class NeutralVars {
   RooRealVar &bkgFracGlobal_WN() {
     return *bkgFracGlobal_WN_;
   }
+  RooRealVar &bkgFrac_Bu2Dst0h_D0gamma_WN() {
+    return *bkgFrac_Bu2Dst0h_D0gamma_WN_;
+  }
   RooRealVar &bkgFracFAV_Bd2Dsth() {
     return *bkgFracFAV_Bd2Dsth_;
   }
@@ -1062,6 +1065,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> buPartialEffBu2Dst0h_D0gamma_WN_D02pik_;
   // -------------------- Bkg Fractions -------------------- //
   std::shared_ptr<RooRealVar> bkgFracGlobal_WN_;
+  std::shared_ptr<RooRealVar> bkgFrac_Bu2Dst0h_D0gamma_WN_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bd2Dsth_;
   std::shared_ptr<RooRealVar> bkgFracFAV_Bu2D0hst_;
   std::shared_ptr<RooAbsReal> bkgFracFAV_Bu2Dst0hst_;

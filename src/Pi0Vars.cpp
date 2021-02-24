@@ -224,8 +224,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(nullptr),
       // -------------------- Bu2Dst0h_WN -------------------- //
       // Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFloating(
-      //     "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, -1,
-      //     2)),
+      //     "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0,
+      //     5)),
       Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFixed(
           "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0,
           Systematic::NA, Sign::same)),
@@ -970,6 +970,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN", uniqueId_,
                                                   Neutral::pi0, 1, 0.1,
                                                   Systematic::NA, Sign::same)),
+      bkgFrac_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
+          "bkgFrac_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
           ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, ReturnType::val), 0, 5)),
