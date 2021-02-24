@@ -1031,8 +1031,20 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                        Efficiency::mcEffErr),
           Systematic::mcEffs_Bkg_misId, Sign::same)),
       // -------------------- Bkg Fractions -------------------- //
-      bkgFrac_Bu2Dst0h_D0pi0_WN_(nullptr),
-      bkgFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
+      bkgFrac_Bu2Dst0h_D0pi0_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "(@0/@1)*(@2/@3)",
+          RooArgList(*orEffBu2Dst0h_D0pi0_WN_, *orEffBu2Dst0h_D0pi0_,
+                     *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0pi0_))),
+      bkgFrac_Bu2Dst0h_D0gamma_WN_(new RooFormulaVar(
+          ("bkgFrac_Bu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "(@0/@1)*(@2/@3)",
+          RooArgList(*orEffBu2Dst0h_D0gamma_WN_, *orEffBu2Dst0h_D0pi0_WN_,
+                     *mcEff_Bu2Dst0h_D0gamma_WN_, *mcEff_Bu2Dst0h_D0pi0_WN_))),
       bkgFrac_Bu2Dst0h_WN_(
           ("bkgFrac_Bu2Dst0h_WN_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
