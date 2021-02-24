@@ -65,6 +65,8 @@ pi0_DK_pik_minus = rB_DK**2 + rD**2 + 2 * rB_DK * rD * np.cos(dB_DK + dD - phi3)
 gamma_DK_pik_plus = rB_DK**2 + rD**2 - 2 * rB_DK * rD * np.cos(dB_DK + dD + phi3)
 gamma_DK_pik_minus = rB_DK**2 + rD**2 - 2 * rB_DK * rD * np.cos(dB_DK + dD - phi3)
 
+obs_dict = {}
+
 A_pi0_Dpi_kpi = (pi0_Dpi_kpi_minus - pi0_Dpi_kpi_plus)/(pi0_Dpi_kpi_minus + pi0_Dpi_kpi_plus)
 A_gamma_Dpi_kpi = (gamma_Dpi_kpi_minus - gamma_Dpi_kpi_plus)/(gamma_Dpi_kpi_minus + gamma_Dpi_kpi_plus)
 
@@ -150,60 +152,111 @@ plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_kpi, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_kpi.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('A_gamma_DK_kpi = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('A_gamma_DK_kpi = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_k_kpi'] = [0, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_Dpi_CP, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_Dpi_CP.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('A_gamma_Dpi_CP = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('A_gamma_Dpi_CP = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_CP_Bu2Dst0h_D0gamma_pi'] = [0, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_CP, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_CP.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('A_gamma_DK_CP = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('A_gamma_DK_CP = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_CP_Bu2Dst0h_D0gamma_k'] = [0, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_CP, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_CP.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_CP = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_CP = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_CP_Bu2Dst0h_D0gamma'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik_minus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik_minus.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_Dpi_pik_minus = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_Dpi_pik_minus = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_minus'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik_plus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik_plus.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_Dpi_pik_plus = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_Dpi_pik_plus = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_plus'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_Dpi_pik = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_Dpi_pik = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_ADS_Bu2Dst0h_D0gamma_pi'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_Dpi_pik, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_Dpi_pik.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('A_gamma_Dpi_pik = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('A_gamma_Dpi_pik = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_pi_pik'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik_minus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik_minus.png')
-max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_DK_pik_minus = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_DK_pik_minus = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_k_minus'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik_plus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik_plus.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_DK_pik_plus = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_DK_pik_plus = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_k_plus'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('R_gamma_DK_pik = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('R_gamma_DK_pik = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_ADS_Bu2Dst0h_D0gamma_k'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_pik, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_pik.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-print('A_gamma_DK_pik = '  + str(bins[max_index][0]) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+val = bins[max_index][0]
+min_bin = bins[0]
+max_bin = bins[len(bins)-1]
+print('A_gamma_DK_pik = '  + str(val) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_k_pik'] = [val, (val - min_bin)/3, (max_bin - val)/3]
 plt.clf()
+
+f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/gamma_obs.txt', 'w+')
+for par, arr in obs_dict.items():
+  f_out.write(f'{par} {arr[0]} {arr[1]} {arr[2]}\n')
