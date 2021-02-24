@@ -107,65 +107,65 @@ A_gamma_DK_pik = (R_gamma_DK_pik_minus - R_gamma_DK_pik_plus) / (R_gamma_DK_pik_
 n, bins, patces = plt.hist(phi3, 100, density=True)
 plt.savefig('gamma_obs/phi3.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(phi3)
+median = np.median(phi3)
 val = bins[max_index][0]
-print('phi3 = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('phi3 = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(rD, 100, density=True)
 plt.savefig('gamma_obs/rD.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(rD)
+median = np.median(rD)
 val = bins[max_index][0]
-print('rD = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('rD = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(dD, 100, density=True)
 plt.savefig('gamma_obs/dD.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(dD)
+median = np.median(dD)
 val = bins[max_index][0]
-print('dD = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('dD = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(rB_Dpi, 100, density=True)
 plt.savefig('gamma_obs/rB_Dpi.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(rB_Dpi)
+median = np.median(rB_Dpi)
 val = bins[max_index][0]
-print('rB_Dpi = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('rB_Dpi = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(dB_Dpi, 100, density=True)
 plt.savefig('gamma_obs/dB_Dpi.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(dB_Dpi)
+median = np.median(dB_Dpi)
 val = bins[max_index][0]
-print('dB_Dpi = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('dB_Dpi = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(rB_DK, 100, density=True)
 plt.savefig('gamma_obs/rB_DK.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(rB_DK)
+median = np.median(rB_DK)
 val = bins[max_index][0]
-print('rB_DK = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('rB_DK = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(dB_DK, 100, density=True)
 plt.savefig('gamma_obs/dB_DK.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(dB_DK)
+median = np.median(dB_DK)
 val = bins[max_index][0]
-print('dB_DK = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('dB_DK = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(R_DstKDstpi, 100, density=True)
 plt.savefig('gamma_obs/R_DstKDstpi.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(R_DstKDstpi)
+median = np.median(R_DstKDstpi)
 val = bins[max_index][0]
-print('R_DstKDstpi = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('R_DstKDstpi = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_Dpi_kpi, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_Dpi_kpi.png')
 max_index = np.where(np.array(n) == np.amax(np.array(n)))
-mean = np.mean(A_gamma_Dpi_kpi)
+median = np.median(A_gamma_Dpi_kpi)
 val = bins[max_index][0]
-print('A_gamma_Dpi_kpi = '  + str(mean) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
+print('A_gamma_Dpi_kpi = '  + str(median) + '\tmin = ' + str(bins[0]) + '\tmax = ' + str(bins[len(bins)-1]))
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_kpi, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_kpi.png')
@@ -173,9 +173,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(A_gamma_DK_kpi)
-print('A_gamma_DK_kpi = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['A_Bu2Dst0h_D0gamma_k_kpi'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(A_gamma_DK_kpi)
+print('A_gamma_DK_kpi = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_k_kpi'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_Dpi_CP, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_Dpi_CP.png')
@@ -183,9 +183,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(A_gamma_Dpi_CP)
-print('A_gamma_Dpi_CP = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['A_CP_Bu2Dst0h_D0gamma_pi'] = [0, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(A_gamma_Dpi_CP)
+print('A_gamma_Dpi_CP = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_CP_Bu2Dst0h_D0gamma_pi'] = [0, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_CP, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_CP.png')
@@ -193,9 +193,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(A_gamma_DK_CP)
-print('A_gamma_DK_CP = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['A_CP_Bu2Dst0h_D0gamma_k'] = [0, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(A_gamma_DK_CP)
+print('A_gamma_DK_CP = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_CP_Bu2Dst0h_D0gamma_k'] = [0, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_CP, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_CP.png')
@@ -203,9 +203,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_CP)
-print('R_gamma_CP = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_CP_Bu2Dst0h_D0gamma'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_CP)
+print('R_gamma_CP = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_CP_Bu2Dst0h_D0gamma'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik_minus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik_minus.png')
@@ -213,9 +213,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_Dpi_pik_minus)
-print('R_gamma_Dpi_pik_minus = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_minus'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_Dpi_pik_minus)
+print('R_gamma_Dpi_pik_minus = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_minus'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik_plus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik_plus.png')
@@ -223,9 +223,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_Dpi_pik_plus)
-print('R_gamma_Dpi_pik_plus = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_plus'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_Dpi_pik_plus)
+print('R_gamma_Dpi_pik_plus = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_pi_plus'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_Dpi_pik, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_Dpi_pik.png')
@@ -233,9 +233,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_Dpi_pik)
-print('R_gamma_Dpi_pik = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_ADS_Bu2Dst0h_D0gamma_pi'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_Dpi_pik)
+print('R_gamma_Dpi_pik = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_ADS_Bu2Dst0h_D0gamma_pi'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_Dpi_pik, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_Dpi_pik.png')
@@ -243,18 +243,18 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(A_gamma_Dpi_pik)
-print('A_gamma_Dpi_pik = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['A_Bu2Dst0h_D0gamma_pi_pik'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(A_gamma_Dpi_pik)
+print('A_gamma_Dpi_pik = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_pi_pik'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik_minus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik_minus.png')
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_DK_pik_minus)
-print('R_gamma_DK_pik_minus = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_piK_Bu2Dst0h_D0gamma_k_minus'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_DK_pik_minus)
+print('R_gamma_DK_pik_minus = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_k_minus'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik_plus, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik_plus.png')
@@ -262,9 +262,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_DK_pik_plus)
-print('R_gamma_DK_pik_plus = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_piK_Bu2Dst0h_D0gamma_k_plus'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_DK_pik_plus)
+print('R_gamma_DK_pik_plus = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_piK_Bu2Dst0h_D0gamma_k_plus'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(R_gamma_DK_pik, 100, density=True)
 plt.savefig('gamma_obs/R_gamma_DK_pik.png')
@@ -272,9 +272,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(R_gamma_DK_pik)
-print('R_gamma_DK_pik = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['R_ADS_Bu2Dst0h_D0gamma_k'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(R_gamma_DK_pik)
+print('R_gamma_DK_pik = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['R_ADS_Bu2Dst0h_D0gamma_k'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 n, bins, patches = plt.hist(A_gamma_DK_pik, 100, density=True)
 plt.savefig('gamma_obs/A_gamma_DK_pik.png')
@@ -282,9 +282,9 @@ max_index = np.where(np.array(n) == np.amax(np.array(n)))
 val = bins[max_index][0]
 min_bin = bins[0]
 max_bin = bins[len(bins)-1]
-mean = np.mean(A_gamma_DK_pik)
-print('A_gamma_DK_pik = '  + str(mean) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
-obs_dict['A_Bu2Dst0h_D0gamma_k_pik'] = [mean, (mean - min_bin)/3, (max_bin - mean)/3]
+median = np.median(A_gamma_DK_pik)
+print('A_gamma_DK_pik = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = ' + str(max_bin))
+obs_dict['A_Bu2Dst0h_D0gamma_k_pik'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 
 f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/gamma_obs.txt', 'w+')
