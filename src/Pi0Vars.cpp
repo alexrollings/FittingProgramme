@@ -965,11 +965,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       buEffBu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       buPartialEffBu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       // -------------------- Bkg Fractions -------------------- //
-      // bkgFracGlobal_WN_(Params::Get().CreateFloating(
-      //     "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
-      bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN", uniqueId_,
-                                                  Neutral::pi0, 1, 0.1,
-                                                  Systematic::NA, Sign::same)),
+      bkgFracGlobal_WN_(Params::Get().CreateFloating(
+          "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
+      // bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN", uniqueId_,
+      //                                             Neutral::pi0, 1, 0.1,
+      //                                             Systematic::NA, Sign::same)),
       bkgFloatingFrac_Bu2Dst0h_D0gamma_WN_(Params::Get().CreateFloating(
           "bkgFloatingFrac_Bu2Dst0h_D0gamma_WN", uniqueId_, Neutral::pi0, 1, 0, 5)),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
