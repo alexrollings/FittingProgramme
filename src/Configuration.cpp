@@ -269,15 +269,13 @@ void ReadFromFile(ReturnType returnType, std::string const &paramName,
                   double &returnVal, std::string const &txtFileName,
                   std::string const &errorStr) {
   if (!fexists(txtFileName)) {
-    std::cerr
-        << "\n!!!!!!!!!!ReadFromFile: " << txtFileName
-        << " doesn't exist: setting frac to 1.0 and error to 0.0.!!!!!!!!!!\n\n";
+    std::cerr << "\n!!!!!!!!!!ReadFromFile: " << txtFileName
+              << " doesn't exist: setting frac to 1.0 and error to "
+                 "0.0.!!!!!!!!!!\n\n";
     if (returnType == ReturnType::val) {
       returnVal = 1.0;
-    } else if (returnType == ReturnType::std) {
-      returnVal = 0.0;
     } else {
-      throw std::runtime_error(errorStr);
+      returnVal = 0.0;
     }
   }
   std::ifstream inFile(txtFileName);
@@ -291,11 +289,26 @@ void ReadFromFile(ReturnType returnType, std::string const &paramName,
         returnVal = std::stod(lineVec[1]);
       } else if (returnType == ReturnType::std) {
         returnVal = std::stod(lineVec[2]);
+      } else if (returnType == ReturnType::stdL) {
+        returnVal = std::stod(lineVec[2]);
+      } else if (returnType == ReturnType::stdH) {
+        returnVal = std::stod(lineVec[3]);
       } else {
         throw std::runtime_error(errorStr);
       }
     }
   }
+}
+
+double ReadGammaObs(const char *paramName, ReturnType returnType) {
+  std::string txtFileName =
+      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
+      "gamma_obs.txt";
+  double returnVal;
+  std::string errorStr =
+      "ReadGammaObs: return type = val/stdL/stdH (asymmetric errors)\n";
+  ReadFromFile(returnType, paramName, returnVal, txtFileName, errorStr);
+  return returnVal;
 }
 
 
