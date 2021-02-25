@@ -6,23 +6,6 @@
 #include <regex>
 #include <sstream>
 
-bool fexists(const std::string &name) {
-  std::ifstream infile(name);
-  return infile.good();
-}
-
-std::vector<std::string> SplitLine(std::string const &str) {
-  std::stringstream ss;
-  ss.str(str);
-  std::string tempString;
-  std::vector<std::string> stringVector;
-  // '' = char
-  while (std::getline(ss, tempString, ' ')) {
-    stringVector.emplace_back(tempString);
-  }
-  return stringVector;
-}
-
 double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                     Efficiency eff) {
   std::string txtFileName =

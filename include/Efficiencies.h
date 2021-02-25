@@ -16,8 +16,6 @@ enum class Efficiency {
   mcEffErr
 };
 
-bool fexists(std::string const &filename);
-std::vector<std::string> SplitLine(std::string const &str);
 void CalcBinomialErr(double nInit, double nFinal, double &err);
 double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                    Efficiency eff);

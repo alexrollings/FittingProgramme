@@ -368,3 +368,10 @@ std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
 
 
 std::string ReturnLaTeXLabel(Mode, Daughters, Charge, bool);
+
+bool fexists(std::string const &filename);
+std::vector<std::string> SplitLine(std::string const &str);
+enum class ReturnType { val, std };
+void ReadFromFile(ReturnType returnType, std::string const &paramName,
+                  double &returnVal, std::string const &txtFileName,
+                  std::string const &errorStr);

@@ -10,43 +10,17 @@
 #include "RooRealVar.h"
 #include "TChain.h"
 
-enum class ReturnType { val, std };
-
 template <Neutral neutral>
 double ReadBkgFracs(Mode mode, ReturnType returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/bkgFracs_" +
+      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
+      "bkgFracs_" +
       EnumToString(neutral) + ".txt";
-  if (!fexists(txtFileName)) {
-    std::cerr
-        << "!!!!!!!!!!\nReadBkgFracs: " << txtFileName
-        << " doesn't exist: setting frac to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnType == ReturnType::val) {
-      return 1.0;
-    } else if (returnType == ReturnType::std) {
-      return 0.0;
-    } else {
-      throw std::runtime_error(
-          "ReadBkgFracs: return type = val/std\n");
-    }
-  }
-  std::ifstream inFile(txtFileName);
-  std::string line;
-  // Loop over lines in txt file
-  while (std::getline(inFile, line)) {
-    // Separate label and value (white space)
-    std::vector<std::string> lineVec = SplitLine(line);
-    if (lineVec[0] == EnumToString(mode)) {
-      if (returnType == ReturnType::val) {
-        return std::stod(lineVec[1]);
-      } else if (returnType == ReturnType::std) {
-        return std::stod(lineVec[2]);
-      } else {
-        throw std::runtime_error(
-            "ReadBkgFracs: return type = val/std\n");
-      }
-    }
-  }
+  std::string paramName = EnumToString(mode);
+  double returnVal;
+  std::string errorStr = "ReadBkgFracs: returnVal = type = val/std\n";
+  ReadFromFile(returnType, paramName, returnVal, txtFileName, errorStr);
+  return returnVal;
 }
 
 template <Neutral neutral, Bachelor bachelor>
@@ -75,7 +49,7 @@ double ReadPdfFracs(const char* paramName, ReturnType returnType) {
     if (lineVec[0] == paramLabel.str()) {
       if (returnType == ReturnType::val) {
         return std::stod(lineVec[1]);
-      } { 
+      } else if (returnType == ReturnType::std) {
         return std::stod(lineVec[2]);
       }
     }

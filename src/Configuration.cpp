@@ -247,6 +247,58 @@ std::string Configuration::ReturnBoxString() {
   return out.str();
 }
 
+bool fexists(const std::string &name) {
+  std::ifstream infile(name);
+  return infile.good();
+}
+
+std::vector<std::string> SplitLine(std::string const &str) {
+  std::stringstream ss;
+  ss.str(str);
+  std::string tempString;
+  std::vector<std::string> stringVector;
+  // '' = char
+  while (std::getline(ss, tempString, ' ')) {
+    stringVector.emplace_back(tempString);
+  }
+  return stringVector;
+}
+
+
+void ReadFromFile(ReturnType returnType, std::string const &paramName,
+                  double &returnVal, std::string const &txtFileName,
+                  std::string const &errorStr) {
+  if (!fexists(txtFileName)) {
+    std::cerr
+        << "\n!!!!!!!!!!ReadFromFile: " << txtFileName
+        << " doesn't exist: setting frac to 1.0 and error to 0.0.!!!!!!!!!!\n\n";
+    if (returnType == ReturnType::val) {
+      returnVal = 1.0;
+    } else if (returnType == ReturnType::std) {
+      returnVal = 0.0;
+    } else {
+      throw std::runtime_error(errorStr);
+    }
+  }
+  std::ifstream inFile(txtFileName);
+  std::string line;
+  // Loop over lines in txt file
+  while (std::getline(inFile, line)) {
+    // Separate label and value (white space)
+    std::vector<std::string> lineVec = SplitLine(line);
+    if (lineVec[0] == paramName) {
+      if (returnType == ReturnType::val) {
+        returnVal = std::stod(lineVec[1]);
+      } else if (returnType == ReturnType::std) {
+        returnVal = std::stod(lineVec[2]);
+      } else {
+        throw std::runtime_error(errorStr);
+      }
+    }
+  }
+}
+
+
 template <>
 Mode StringToEnum<Mode>(std::string const &mode) {
   if (mode == "Bs2Dst0Kst0") {
