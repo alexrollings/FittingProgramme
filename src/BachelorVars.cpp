@@ -29,27 +29,44 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     k_A_CP_Bu2Dst0h_D0pi0_ = -0.151;
   }
   if (Configuration::Get().blindFit() == true) {
-    A_CP_Bu2Dst0h_D0gamma_Blind_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "A_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, _bachelor,
-            k_A_CP_Bu2Dst0h_D0gamma_, -1, 1));
+    if (Configuration::Get().neutral() == Neutral::gamma) {
+      A_CP_Bu2Dst0h_D0gamma_Blind_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0h_D0gamma_Blind", uniqueId_, _bachelor,
+              k_A_CP_Bu2Dst0h_D0gamma_, -1, 1));
+      A_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+          ("A_CP_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, _bachelor))
+              .c_str(),
+          0.03, *A_CP_Bu2Dst0h_D0gamma_Blind_));
+    }
     A_CP_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                      _bachelor, k_A_CP_Bu2Dst0h_D0pi0_, -1, 1));
-    A_CP_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("A_CP_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, _bachelor)).c_str(),
-        0.03, *A_CP_Bu2Dst0h_D0gamma_Blind_));
     A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("A_CP_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, _bachelor)).c_str(),
         0.03, *A_CP_Bu2Dst0h_D0pi0_Blind_));
   } else {
-    A_CP_Bu2Dst0h_D0gamma_ =
-        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-            "A_CP_Bu2Dst0h_D0gamma", uniqueId_, _bachelor,
-            k_A_CP_Bu2Dst0h_D0gamma_, -1, 1));
+    if (Configuration::Get().neutral() == Neutral::gamma) {
+      A_CP_Bu2Dst0h_D0gamma_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "A_CP_Bu2Dst0h_D0gamma", uniqueId_, _bachelor,
+              k_A_CP_Bu2Dst0h_D0gamma_, -1, 1));
+    }
     A_CP_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("A_CP_Bu2Dst0h_D0pi0", uniqueId_,
                                      _bachelor, k_A_CP_Bu2Dst0h_D0pi0_, -1, 1));
+  }
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    A_CP_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "A_CP_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
+            ReadGammaObs(
+                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(bachelor)).c_str(),
+                ReturnType::val),
+            ReadGammaObs(
+                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(bachelor)).c_str(),
+                ReturnType::std),
+            Systematic::NA, Sign::same));
   }
   A_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
       "A_CP_Bu2Dst0h_WN", uniqueId_, _bachelor, 0, -1, 1));
