@@ -61,10 +61,10 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "A_CP_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
             ReadGammaObs(
-                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(bachelor)).c_str(),
+                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
                 ReturnType::val),
             ReadGammaObs(
-                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(bachelor)).c_str(),
+                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
                 ReturnType::std),
             Systematic::NA, Sign::same));
   }
