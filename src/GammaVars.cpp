@@ -1564,7 +1564,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // -------------------- Bkg Fractions -------------------- //
       bkgFracGlobal_WN_(Params::Get().CreateFloating(
           "bkgFracGlobal_WN", uniqueId_, Neutral::gamma, 1, 0, 5)),
-      bkgFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
+      bkgFloatingFrac_Bu2Dst0h_D0gamma_WN_(nullptr),
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::gamma,
           ReadBkgFracs<Neutral::gamma>(Mode::Bd2Dstpi, ReturnType::val), 0, 5)),
