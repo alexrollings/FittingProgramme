@@ -59,7 +59,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   if (Configuration::Get().neutral() == Neutral::pi0) {
     A_CP_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-            "A_CP_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
+            "A_CP_Bu2Dst0h_D0gamma", uniqueId_, _bachelor,
             ReadGammaObs(
                 ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
                 ReturnType::val),
