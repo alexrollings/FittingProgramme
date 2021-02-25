@@ -173,11 +173,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       //     uniqueId, *N_tot_Bu2Dst0h_D0gamma_)),
       N_tot_Bu2Dst0h_D0pi0_(nullptr),
       N_tot_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_WN_(
-        Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
-            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                .bkgFrac_Bu2Dst0h_D0pi0_WN())),
+      N_tot_Bu2Dst0h_D0pi0_WN_(nullptr),
       N_tot_Bu2Dst0h_WN_(nullptr),
       N_tot_Bd2Dsth_(nullptr),
       N_tot_Bu2D0hst_(nullptr),
@@ -244,18 +240,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
         std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
             "N_tot_Bu2Dst0h_D0pi0", uniqueId, Neutral::pi0, Bachelor::pi,
             Daughters::kpi, 22000, -1000000, 1000000));
-    N_tot_Bu2Dst0h_D0gamma_WN_ =
-        std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
-            ("N_tot_Bu2Dst0h_D0gamma_WN_" +
-             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
-                .c_str(),
-            "@0*@1*@2",
-            RooArgList(
-                *N_tot_Bu2Dst0h_D0pi0_WN_,
-                NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
-                    .bkgFrac_Bu2Dst0h_D0gamma_WN(),
-                NeutralVars<_neutral>::Get(uniqueId)
-                    .bkgFloatingFrac_Bu2Dst0h_D0gamma_WN())));
     N_tot_Bu2Dst0h_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_WN_", *N_tot_Bu2Dst0h_D0pi0_,
@@ -272,6 +256,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
     pdfBu_Bu2Dst0hst_ =
         NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
+  }
+  N_tot_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooFormulaVar>(
+      Make_N_WN<_neutral, Bachelor::pi, Daughters::kpi>(
+          uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
+          NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+              .bkgFrac_Bu2Dst0h_D0pi0_WN()));
+  if (_neutral == Neutral::pi0) {
+    N_tot_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooFormulaVar>(new RooFormulaVar(
+            ("N_tot_Bu2Dst0h_D0gamma_WN_" +
+             ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+                .c_str(),
+            "@0*@1*@2",
+            RooArgList(
+                *N_tot_Bu2Dst0h_D0pi0_WN_,
+                NeutralBachelorVars<_neutral, Bachelor::pi>::Get(uniqueId)
+                    .bkgFrac_Bu2Dst0h_D0gamma_WN(),
+                NeutralVars<_neutral>::Get(uniqueId)
+                    .bkgFloatingFrac_Bu2Dst0h_D0gamma_WN())));
   }
   // Fixed relative to Bd2Dsth
   N_tot_Bu2D0hst_ = std::shared_ptr<RooFormulaVar>(
