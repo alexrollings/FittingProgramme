@@ -15,7 +15,7 @@ template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_", uniqueId_, Daughters::kpi,
+          "R_Dst0KDst0pi_Bu2Dst0h", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           0, 2)),
