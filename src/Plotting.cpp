@@ -963,16 +963,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         "l");
     if (config.simpleFit() == false) {
       // if (neutral == Neutral::gamma) {
-        labels.AddEntry(hist_Bu2Dst0h_D0gamma_WN.get(),
-                        ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters,
-                                         charge, false)
-                            .c_str(),
-                        "l");
-        labels.AddEntry(
-            hist_Bu2Dst0h_D0pi0_WN.get(),
-            ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
-                .c_str(),
-            "l");
+      labels.AddEntry(
+          hist_Bu2Dst0h_D0pi0_WN.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
+              .c_str(),
+          "l");
+      labels.AddEntry(
+          hist_Bu2Dst0h_D0gamma_WN.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters, charge, false)
+              .c_str(),
+          "l");
       // } else {
       //   labels.AddEntry(
       //       hist_Bu2Dst0h_WN.get(),
@@ -1018,16 +1018,16 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
         "l");
     if (config.simpleFit() == false) {
       // if (neutral == Neutral::gamma) {
-        labels.AddEntry(hist_Bu2Dst0h_D0gamma_WN.get(),
-                        ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters,
-                                         charge, false)
-                            .c_str(),
-                        "l");
-        labels.AddEntry(
-            hist_Bu2Dst0h_D0pi0_WN.get(),
-            ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
-                .c_str(),
-            "l");
+      labels.AddEntry(
+          hist_Bu2Dst0h_D0pi0_WN.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
+              .c_str(),
+          "l");
+      labels.AddEntry(
+          hist_Bu2Dst0h_D0gamma_WN.get(),
+          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters, charge, false)
+              .c_str(),
+          "l");
       // } else {
       //   labels.AddEntry(
       //       hist_Bu2Dst0h_WN.get(),
@@ -1362,7 +1362,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         }
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
         // pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_WN().GetName());
         if (bachelor == Bachelor::k) {
           pdfCharVec.emplace_back(
