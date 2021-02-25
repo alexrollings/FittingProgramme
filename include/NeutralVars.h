@@ -18,7 +18,7 @@ double ReadBkgFracs(Mode mode, ReturnType returnType) {
       EnumToString(neutral) + ".txt";
   std::string paramName = EnumToString(mode);
   double returnVal;
-  std::string errorStr = "ReadBkgFracs: returnVal = type = val/std\n";
+  std::string errorStr = "ReadBkgFracs: return type = val/std\n";
   ReadFromFile(returnType, paramName, returnVal, txtFileName, errorStr);
   return returnVal;
 }
@@ -26,34 +26,15 @@ double ReadBkgFracs(Mode mode, ReturnType returnType) {
 template <Neutral neutral, Bachelor bachelor>
 double ReadPdfFracs(const char* paramName, ReturnType returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/pdf_fracs_" +
+      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
+      "pdf_fracs_" +
       EnumToString(neutral) + ".txt";
   std::stringstream paramLabel;
   paramLabel << paramName << "_" << EnumToString(bachelor);
-  if (!fexists(txtFileName)) {
-    std::cerr
-        << "!!!!!!!!!!\nReadPdfFracs: " << txtFileName
-        << " doesn't exist: setting frac to 1.0 and error to 0.0.\n!!!!!!!!!!";
-    if (returnType == ReturnType::val) {
-      return 1.0;
-    } else {
-      return 0.0;
-    }
-  }
-  std::ifstream inFile(txtFileName);
-  std::string line;
-  // Loop over lines in txt file
-  while (std::getline(inFile, line)) {
-    // Separate label and value (white space)
-    std::vector<std::string> lineVec = SplitLine(line);
-    if (lineVec[0] == paramLabel.str()) {
-      if (returnType == ReturnType::val) {
-        return std::stod(lineVec[1]);
-      } else if (returnType == ReturnType::std) {
-        return std::stod(lineVec[2]);
-      }
-    }
-  }
+  double returnVal;
+  std::string errorStr = "ReadPdfFracs: return type = val/std\n";
+  ReadFromFile(returnType, paramLabel.str(), returnVal, txtFileName, errorStr);
+  return returnVal;
 }
 
 // Templated classes/functions mean that the compiler will automatically create
