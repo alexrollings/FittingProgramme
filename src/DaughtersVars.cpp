@@ -15,15 +15,21 @@ template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
       R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+          "R_Dst0KDst0pi_Bu2Dst0h_", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           0, 2)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
-          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-          0, 2)),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
+      //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+      //     0, 2)),
+      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+      //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
+      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+      //     0, 2)),
       // R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFloating(
       //     "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi,
       //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
@@ -32,7 +38,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       // R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi, 0.08, 0,
       //     Systematic::NA, Sign::same)),
-      R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
           "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.0774, 0.0066,
