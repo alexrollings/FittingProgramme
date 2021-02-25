@@ -694,8 +694,24 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
                   uniqueId_)
                   .a_Bu2Dst0h_D0pi0())),
-      N_split_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_split_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_split_Bu2Dst0h_D0gamma_WN_(
+          Make_N_split<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_split_Bu2Dst0h_D0gamma_WN_",
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .N_tot_Bu2Dst0h_D0gamma_WN(),
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .a_Bu2Dst0h_D0gamma())),
+      N_split_Bu2Dst0h_D0pi0_WN_(
+          Make_N_split<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_split_Bu2Dst0h_D0pi0_WN_",
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .N_tot_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+                  uniqueId_)
+                  .a_Bu2Dst0h_D0pi0())),
       N_split_Bu2Dst0h_WN_(nullptr),
       N_split_Bd2Dsth_(Make_N_split<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_split_Bd2Dsth_",
@@ -735,8 +751,13 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bu2Dst0h_D0pi0_(
           Make_N_trueId<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_trueId_Bu2Dst0h_D0pi0_", *N_split_Bu2Dst0h_D0pi0_)),
-      N_trueId_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_trueId_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_trueId_Bu2Dst0h_D0gamma_WN_(
+          Make_N_trueId<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu2Dst0h_D0gamma_WN_",
+              *N_split_Bu2Dst0h_D0gamma_WN_)),
+      N_trueId_Bu2Dst0h_D0pi0_WN_(
+          Make_N_trueId<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu2Dst0h_D0pi0_WN_", *N_split_Bu2Dst0h_D0pi0_WN_)),
       N_trueId_Bu2Dst0h_WN_(nullptr),
       N_trueId_Bd2Dsth_(Make_N_trueId<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bd2Dsth_", *N_split_Bd2Dsth_)),
@@ -763,8 +784,18 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               *N_trueId_Bu2Dst0h_D0pi0_,
               NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                   .deltaEffBu2Dst0h_D0pi0())),
-      N_trueId_Delta_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_trueId_Delta_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_trueId_Delta_Bu2Dst0h_D0gamma_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_WN_",
+              *N_trueId_Bu2Dst0h_D0gamma_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBu2Dst0h_D0gamma_WN())),
+      N_trueId_Delta_Bu2Dst0h_D0pi0_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0pi0_WN_",
+              *N_trueId_Bu2Dst0h_D0pi0_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .deltaEffBu2Dst0h_D0pi0_WN())),
       N_trueId_Delta_Bu2Dst0h_WN_(nullptr),
       N_trueId_Delta_Bd2Dsth_(Make_N_1D<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Delta_Bd2Dsth_", *N_trueId_Bd2Dsth_,
@@ -798,8 +829,18 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
               *N_trueId_Bu2Dst0h_D0pi0_,
               NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
                   .buEffBu2Dst0h_D0pi0())),
-      N_trueId_Bu_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_trueId_Bu_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_trueId_Bu_Bu2Dst0h_D0gamma_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_WN_",
+              *N_trueId_Bu2Dst0h_D0gamma_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0gamma_WN())),
+      N_trueId_Bu_Bu2Dst0h_D0pi0_WN_(
+          Make_N_1D<neutral, bachelor, daughters, charge>(
+              uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_WN_",
+              *N_trueId_Bu2Dst0h_D0pi0_WN_,
+              NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
+                  .buEffBu2Dst0h_D0pi0_WN())),
       N_trueId_Bu_Bu2Dst0h_WN_(nullptr),
       N_trueId_Bu_Bd2Dsth_(Make_N_1D<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bu_Bd2Dsth_", *N_trueId_Bd2Dsth_,
@@ -862,58 +903,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_misId_BuPartial_Bd2Dsth_(nullptr),
       N_misId_BuPartial_Bu2D0hst_(nullptr),
       N_misId_BuPartial_Bu2Dst0hst_(nullptr) {
-  if (neutral == Neutral::gamma) {
-    N_split_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_split<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_split_Bu2Dst0h_D0gamma_WN_",
-            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
-                uniqueId_)
-                .N_tot_Bu2Dst0h_D0gamma_WN(),
-            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
-                uniqueId_)
-                .a_Bu2Dst0h_D0gamma()));
-    N_split_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_split<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_split_Bu2Dst0h_D0pi0_WN_",
-            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
-                uniqueId_)
-                .N_tot_Bu2Dst0h_D0pi0_WN(),
-            NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
-                uniqueId_)
-                .a_Bu2Dst0h_D0pi0()));
-    N_trueId_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_trueId<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu2Dst0h_D0gamma_WN_",
-            *N_split_Bu2Dst0h_D0gamma_WN_));
-    N_trueId_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_trueId<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu2Dst0h_D0pi0_WN_",
-            *N_split_Bu2Dst0h_D0pi0_WN_));
-    N_trueId_Bu_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0gamma_WN_",
-            *N_trueId_Bu2Dst0h_D0gamma_WN_,
-            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-                .buEffBu2Dst0h_D0gamma_WN()));
-    N_trueId_Bu_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Bu_Bu2Dst0h_D0pi0_WN_",
-            *N_trueId_Bu2Dst0h_D0pi0_WN_,
-            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-                .buEffBu2Dst0h_D0pi0_WN()));
-    N_trueId_Delta_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_WN_",
-            *N_trueId_Bu2Dst0h_D0gamma_WN_,
-            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-                .deltaEffBu2Dst0h_D0gamma_WN()));
-    N_trueId_Delta_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0pi0_WN_",
-            *N_trueId_Bu2Dst0h_D0pi0_WN_,
-            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_)
-                .deltaEffBu2Dst0h_D0pi0_WN()));
-  } else {
+  if (neutral == Neutral::pi0) {
     N_split_Bu2Dst0h_WN_ = std::unique_ptr<RooFormulaVar>(
         Make_N_split<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_split_Bu2Dst0h_WN_",
@@ -1228,6 +1218,20 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   .orEffMisId_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0pi0()));
+      N_misId_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Bu2Dst0h_D0pi0_WN_",
+              Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
+                  uniqueId_)
+                  .N_split_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .mcEffMisId_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .mcEff_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .orEffMisId_Bu2Dst0h_D0pi0_WN(),
+              NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
+                  .orEffBu2Dst0h_D0pi0_WN()));
       if (_neutral == Neutral::gamma) {
         N_misId_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
             Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
@@ -1243,20 +1247,6 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     .orEffMisId_Bu2Dst0h_D0gamma_WN(),
                 NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                     .orEffBu2Dst0h_D0gamma_WN()));
-        N_misId_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-            Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
-                uniqueId_, "N_misId_Bu2Dst0h_D0pi0_WN_",
-                Yields<_neutral, trueBachelor, _daughters, _charge>::Get(
-                    uniqueId_)
-                    .N_split_Bu2Dst0h_D0pi0_WN(),
-                NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                    .mcEffMisId_Bu2Dst0h_D0pi0_WN(),
-                NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
-                    .mcEff_Bu2Dst0h_D0pi0_WN(),
-                NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                    .orEffMisId_Bu2Dst0h_D0pi0_WN(),
-                NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
-                    .orEffBu2Dst0h_D0pi0_WN()));
       } else {
         N_misId_Bu2Dst0h_WN_ = std::unique_ptr<RooFormulaVar>(
             Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
@@ -1305,7 +1295,6 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                   .orEffMisId_Bu2Dst0h_D0pi0(),
               NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                   .orEffBu2Dst0h_D0pi0()));
-      if (_neutral == Neutral::gamma) {
         N_misId_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
             Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
                 uniqueId_, "N_misId_Bu2Dst0h_D0gamma_WN_",
@@ -1334,7 +1323,7 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
                     .orEffMisId_Bu2Dst0h_D0pi0_WN(),
                 NeutralBachelorVars<_neutral, trueBachelor>::Get(uniqueId_)
                     .orEffBu2Dst0h_D0pi0_WN()));
-      } else {
+      if (_neutral == Neutral::pi0) {
         N_misId_Bu2Dst0h_WN_ = std::unique_ptr<RooFormulaVar>(
             Make_N_misId<_neutral, _bachelor, _daughters, _charge>(
                 uniqueId_, "N_misId_Bu2Dst0h_WN_",
@@ -1406,19 +1395,20 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
           uniqueId_, "N_misId_Delta_Bu2Dst0h_D0pi0_", *N_misId_Bu2Dst0h_D0pi0_,
           NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
               .deltaEffMisId_Bu2Dst0h_D0pi0()));
-  if (_neutral == Neutral::gamma) {
-    N_misId_Delta_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
-            uniqueId_, "N_misId_Delta_Bu2Dst0h_D0gamma_WN_",
-            *N_misId_Bu2Dst0h_D0gamma_WN_,
-            NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                .deltaEffMisId_Bu2Dst0h_D0gamma_WN()));
     N_misId_Delta_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
             uniqueId_, "N_misId_Delta_Bu2Dst0h_D0pi0_WN_",
             *N_misId_Bu2Dst0h_D0pi0_WN_,
             NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                 .deltaEffMisId_Bu2Dst0h_D0pi0_WN()));
+    if (_neutral == Neutral::gamma ||
+        (_neutral == Neutral::pi0 && _bachelor == Bachelor::k)) {
+      N_misId_Delta_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
+          Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+              uniqueId_, "N_misId_Delta_Bu2Dst0h_D0gamma_WN_",
+              *N_misId_Bu2Dst0h_D0gamma_WN_,
+              NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+                  .deltaEffMisId_Bu2Dst0h_D0gamma_WN()));
   } else {
     N_misId_Delta_Bu2Dst0h_WN_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
@@ -1454,19 +1444,20 @@ void Yields<_neutral, _bachelor, _daughters, _charge>::AssignMisIdYields() {
           uniqueId_, "N_misId_Bu_Bu2Dst0h_D0pi0_", *N_misId_Bu2Dst0h_D0pi0_,
           NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
               .buEffMisId_Bu2Dst0h_D0pi0()));
-  if (_neutral == Neutral::gamma) {
+  N_misId_Bu_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
+      Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
+          uniqueId_, "N_misId_Bu_Bu2Dst0h_D0pi0_WN_",
+          *N_misId_Bu2Dst0h_D0pi0_WN_,
+          NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
+              .buEffMisId_Bu2Dst0h_D0pi0_WN()));
+  if (_neutral == Neutral::gamma ||
+      (_neutral == Neutral::pi0 && _bachelor == Bachelor::k)) {
     N_misId_Bu_Bu2Dst0h_D0gamma_WN_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
             uniqueId_, "N_misId_Bu_Bu2Dst0h_D0gamma_WN_",
             *N_misId_Bu2Dst0h_D0gamma_WN_,
             NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
                 .buEffMisId_Bu2Dst0h_D0gamma_WN()));
-    N_misId_Bu_Bu2Dst0h_D0pi0_WN_ = std::unique_ptr<RooFormulaVar>(
-        Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
-            uniqueId_, "N_misId_Bu_Bu2Dst0h_D0pi0_WN_",
-            *N_misId_Bu2Dst0h_D0pi0_WN_,
-            NeutralBachelorVars<_neutral, _bachelor>::Get(uniqueId_)
-                .buEffMisId_Bu2Dst0h_D0pi0_WN()));
   } else {
     N_misId_Bu_Bu2Dst0h_WN_ = std::unique_ptr<RooFormulaVar>(
         Make_N_1D<_neutral, _bachelor, _daughters, _charge>(
