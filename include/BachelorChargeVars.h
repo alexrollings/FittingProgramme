@@ -95,9 +95,16 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     min = -1.;
   }
   if (Configuration::Get().blindFit() == true) {
-    R_piK_Bu2Dst0h_D0gamma_Blind_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_,
-                                     bachelor, charge, R_piK_init, min, 1));
+    if (Configuration::Get().neutral() == Neutral::gamma) {
+      R_piK_Bu2Dst0h_D0gamma_Blind_ =
+          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+              "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, bachelor, charge,
+              R_piK_init, min, 1));
+      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
+          ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
+              .c_str(),
+          R_piK_init * 0.3, *R_piK_Bu2Dst0h_D0gamma_Blind_));
+    }
     if (bachelor == Bachelor::k && charge == Charge::plus) {
       R_piK_Bu2Dst0h_D0pi0_Blind_ = std::shared_ptr<RooRealVar>(
           Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_,
@@ -107,18 +114,16 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
           Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0_Blind", uniqueId_,
                                        bachelor, charge, R_piK_init, min, 1));
     }
-    R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
-        ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
-            .c_str(),
-        R_piK_init * 0.3, *R_piK_Bu2Dst0h_D0gamma_Blind_));
     R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_piK_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, bachelor, charge))
             .c_str(),
         R_piK_init * 0.3, *R_piK_Bu2Dst0h_D0pi0_Blind_));
   } else {
-    R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
-                                     bachelor, charge, R_piK_init, min, 1));
+    if (Configuration::Get().neutral() == Neutral::gamma) {
+      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+          Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
+                                       bachelor, charge, R_piK_init, min, 1));
+    }
     if ((bachelor == Bachelor::k && charge == Charge::plus) ||
         (bachelor == Bachelor::pi && charge == Charge::minus)) {
       R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
@@ -129,6 +134,19 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
           Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
                                        bachelor, charge, R_piK_init, min, 1));
     }
+  }
+  // Fix Bu2Dst0h_D0gamma physics observables in π0 fit
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    R_piK_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "R_piK_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
+            ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
+                             "_" + EnumToString(charge)).c_str(),
+                         ReturnType::val),
+            ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
+                             "_" + EnumToString(charge)).c_str(),
+                         ReturnType::std),
+            Systematic::NA, Sign::same));
   }
   if (bachelor == Bachelor::pi) {
     R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
