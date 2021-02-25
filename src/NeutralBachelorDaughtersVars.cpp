@@ -1627,7 +1627,10 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
           DaughtersVars<Daughters::kk>::Get(uniqueId)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0())),
       N_tot_Bu2Dst0h_D0gamma_WN_(nullptr),
-      N_tot_Bu2Dst0h_D0pi0_WN_(nullptr),
+      N_tot_Bu2Dst0h_D0pi0_WN_(Make_N_WN<_neutral, Bachelor::k, Daughters::kk>(
+          uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
+          NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
+              .bkgFrac_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bu2Dst0h_WN_(nullptr),
       N_tot_Bd2Dsth_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
           uniqueId, "N_tot_Bd2Dsth_",
@@ -1700,11 +1703,6 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_", *N_tot_Bu2Dst0h_D0gamma_,
             NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                 .bkgFrac_Bu2Dst0h_D0gamma_WN()));
-    N_tot_Bu2Dst0h_D0pi0_WN_ = std::shared_ptr<RooFormulaVar>(
-        Make_N_WN<_neutral, Bachelor::k, Daughters::kk>(
-            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_", *N_tot_Bu2Dst0h_D0pi0_,
-            NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
-                .bkgFrac_Bu2Dst0h_D0pi0_WN()));
     pdfBu_Bu2D0hst_ = NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
                           .pdfBu_Bu2D0hst_GetPointer();
     pdfDelta_Bu2D0hst_ =
@@ -1713,6 +1711,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
         NeutralBachelorVars<_neutral, Bachelor::k>::Get(uniqueId)
             .pdfBu_Bu2Dst0hst_GetPointer();
   } else {
+    N_tot_Bu2Dst0h_D0gamma_WN_ =
+        std::shared_ptr<RooFormulaVar>(Make_N_tot_k_CP<_neutral, Daughters::kk>(
+            uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
+            NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                         Daughters::kk>::Get(uniqueId)
+                .N_tot_Bu2Dst0h_D0gamma_WN(),
+            DaughtersVars<Daughters::kk>::Get(uniqueId)
+                .R_Dst0KDst0pi_Bu2Dst0h_D0gamma()));
     N_tot_Bu2Dst0h_WN_ =
         std::shared_ptr<RooFormulaVar>(Make_N_tot_k_CP<_neutral, Daughters::kk>(
             uniqueId, "N_tot_Bu2Dst0h_WN_",
