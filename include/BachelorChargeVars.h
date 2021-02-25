@@ -139,12 +139,14 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
   if (Configuration::Get().neutral() == Neutral::pi0) {
     R_piK_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-            "R_piK_Bu2Dst0h_D0gamma", uniqueId_, Neutral::pi0,
+            "R_piK_Bu2Dst0h_D0gamma", uniqueId_, bachelor, charge,
             ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
-                             "_" + EnumToString(charge)).c_str(),
+                          "_" + EnumToString(charge))
+                             .c_str(),
                          ReturnType::val),
             ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
-                             "_" + EnumToString(charge)).c_str(),
+                          "_" + EnumToString(charge))
+                             .c_str(),
                          ReturnType::std),
             Systematic::NA, Sign::same));
   }
