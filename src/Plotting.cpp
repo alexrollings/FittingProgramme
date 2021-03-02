@@ -184,10 +184,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\t ";
       if (b == Bachelor::pi) {
         outfile << "\\cellcolor{blue!25}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, c, true);
       } else {
         outfile << "\\cellcolor{orange!50}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -251,10 +251,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\t ";
     if (b == Bachelor::pi) {
       outfile << "\\cellcolor{blue!25}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, c, true);
     } else {
       outfile << "\\cellcolor{orange!50}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, c, true);
     }
     outfile << " & ";
     outfile << "$"
@@ -310,10 +310,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\t ";
       if (b == Bachelor::pi) {
         outfile << "\\cellcolor{green!35}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, c, true);
       } else {
         outfile << "\\cellcolor{green!35}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -373,10 +373,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\t ";
       if (b == Bachelor::pi) {
         outfile << "\\cellcolor{green!35}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, c, true);
       } else {
         outfile << "\\cellcolor{green!35}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -438,10 +438,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\t ";
       if (b == Bachelor::pi) {
         outfile << "\\cellcolor{blue!25}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, c, true);
       } else {
         outfile << "\\cellcolor{orange!50}"
-                << ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, d, c, true);
+                << ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -480,10 +480,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\t ";
     if (b == Bachelor::pi) {
       outfile << "\\cellcolor{blue!25}"
-              << ReturnLaTeXLabel(Mode::Bd2Dstpi, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bd2Dstpi, c, true);
     } else {
       outfile << "\\cellcolor{pink}"
-              << ReturnLaTeXLabel(Mode::Bd2DstK, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bd2DstK, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBd2Dsth().getVal(), 3)
@@ -528,10 +528,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\t ";
     if (b == Bachelor::pi) {
       outfile << "\\cellcolor{green!35}"
-              << ReturnLaTeXLabel(Mode::Bu2D0rho, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2D0rho, c, true);
     } else {
       outfile << "\\cellcolor{orange!50}"
-              << ReturnLaTeXLabel(Mode::Bu2D0Kst, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2D0Kst, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBu2D0hst().getVal(), 3)
@@ -577,10 +577,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
     outfile << "\\\\ \\hline\n";
     if (b == Bachelor::pi) {
       outfile << "\\cellcolor{green!35}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0rho, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2Dst0rho, c, true);
     } else {
       outfile << "\\cellcolor{orange!50}"
-              << ReturnLaTeXLabel(Mode::Bu2Dst0Kst, d, c, true);
+              << ReturnLaTeXLabel(Mode::Bu2Dst0Kst, c, true);
     }
     outfile << " & ";
     outfile << "$" << to_string_with_precision(p->orEffBu2Dst0hst().getVal(), 3)
@@ -630,10 +630,10 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
       outfile << "\t ";
       if (b == Bachelor::pi) {
         outfile << "\\cellcolor{blue!25}"
-                << ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, d, c, true);
+                << ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, c, true);
       } else {
         outfile << "\\cellcolor{pink}"
-                << ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, d, c, true);
+                << ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, c, true);
       }
       outfile << " & ";
       outfile << "$"
@@ -712,9 +712,226 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   outfile << "\\end{document}\n";
 }
 
+std::map<std::string, Color_t> MakeColorMap(Configuration &config) {
+  std::map<std::string, Color_t> colorMap;
+
+  colorMap["Bu2Dst0h_D0gamma"] = kGreen - 10;
+  colorMap["Bu2Dst0h_D0pi0"] = kAzure + 7;
+  if (config.simpleFit() == false) {
+    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_D0pi0_WN"] = kAzure + 3;
+    colorMap["Bu2Dst0h_WN"] = kAzure + 3;
+    colorMap["Bd2Dsth"] = kPink + 1;
+    colorMap["Bu2D0hst"] = kOrange;
+  } else {
+    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
+    colorMap["Bu2Dst0h_WN"] = kBlue - 6;
+    colorMap["Bd2Dsth"] = kBlue - 6;
+    colorMap["Bu2D0hst"] = kBlue - 6;
+  }
+  colorMap["Bu2Dst0hst"] = kViolet + 2;
+  colorMap["Lb2Omegach_Lcpi0"] = kOrange + 2;
+  colorMap["Bs2Dst0Kst0"] = kViolet - 9;
+  colorMap["Bs2D0Kst0"] = kOrange + 3;
+  colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
+  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
+  colorMap["misId_Bu2Dst0h_WN"] = kGray;
+  colorMap["misId_Bd2Dsth"] = kGray;
+  colorMap["misId_Bu2D0hst"] = kGray;
+  colorMap["misId_Bu2Dst0hst"] = kGray;
+  colorMap["Bu2Dst0h_D0pi0_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0gamma_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0pi0_WN_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0h_D0gamma_WN_D02pik"] = kCyan + 3;
+
+  return colorMap;
+}
+
+void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
+                std::string const &outputDir) {
+  SetStyle();
+  // ------------- Draw Legends -------------- //
+
+  TLegend labels(0.2, 0.9, 0.3, 0.9);
+
+  // TLegend labels(0.14, 0.3, 0.28, 0.9);
+  // if (config.runADS() == true && bachelor == Bachelor::k) {
+  //   labels.SetY1(0.2);
+  // }
+  // if (config.simpleFit() == true) {
+  //   if (config.runADS() == true && bachelor == Bachelor::k) {
+  //     labels.SetY1(0.4);
+  //   } else {
+  //     labels.SetY1(0.5);
+  //   }
+  // }
+  labels.SetLineColor(kWhite);
+
+  std::string oppCharge = "#mp";
+  // if (charge == Charge::plus) {
+  //   oppCharge = "-";
+  // } else if (charge == Charge::minus) {
+  //   oppCharge = "+";
+  // } else {
+  //   oppCharge = "#mp";
+  // }
+
+  auto hist_Bu2Dst0h_D0gamma = std::make_unique<TH1D>(
+      "hist_Bu2Dst0h_D0gamma", "hist_Bu2Dst0h_D0gamma", 1, 0, 1);
+  hist_Bu2Dst0h_D0gamma->SetLineColor(colorMap["Bu2Dst0h_D0gamma"]);
+  hist_Bu2Dst0h_D0gamma->SetLineWidth(5);
+
+  auto hist_Bu2Dst0h_D0pi0 = std::make_unique<TH1D>(
+      "hist_Bu2Dst0h_D0pi0", "hist_Bu2Dst0h_D0pi0", 1, 0, 1);
+  hist_Bu2Dst0h_D0pi0->SetLineColor(colorMap["Bu2Dst0h_D0pi0"]);
+  hist_Bu2Dst0h_D0pi0->SetLineWidth(5);
+
+  auto hist_Bu2Dst0h_D0gamma_WN = std::make_unique<TH1D>(
+      "hist_Bu2Dst0h_D0gamma_WN", "hist_Bu2Dst0h_D0gamma_WN", 1, 0, 1);
+  hist_Bu2Dst0h_D0gamma_WN->SetLineColor(colorMap["Bu2Dst0h_D0gamma_WN"]);
+  hist_Bu2Dst0h_D0gamma_WN->SetLineWidth(5);
+
+  auto hist_Bu2Dst0h_D0pi0_WN = std::make_unique<TH1D>(
+      "hist_Bu2Dst0h_D0pi0_WN", "hist_Bu2Dst0h_D0pi0_WN", 1, 0, 1);
+  hist_Bu2Dst0h_D0pi0_WN->SetLineColor(colorMap["Bu2Dst0h_D0pi0_WN"]);
+  hist_Bu2Dst0h_D0pi0_WN->SetLineWidth(5);
+
+  auto hist_Bu2Dst0h_WN =
+      std::make_unique<TH1D>("hist_Bu2Dst0h_WN", "hist_Bu2Dst0h_WN", 1, 0, 1);
+  hist_Bu2Dst0h_WN->SetLineColor(colorMap["Bu2Dst0h_WN"]);
+  hist_Bu2Dst0h_WN->SetLineWidth(5);
+
+  auto hist_Bu2D0hst =
+      std::make_unique<TH1D>("hist_Bu2D0hst", "hist_Bu2D0hst", 1, 0, 1);
+  hist_Bu2D0hst->SetLineColor(colorMap["Bu2D0hst"]);
+  hist_Bu2D0hst->SetLineWidth(5);
+
+  auto hist_Bd2Dsth =
+      std::make_unique<TH1D>("hist_Bd2Dsth", "hist_Bd2Dsth", 1, 0, 1);
+  hist_Bd2Dsth->SetLineColor(colorMap["Bd2Dsth"]);
+  hist_Bd2Dsth->SetLineWidth(5);
+
+  auto hist_Bu2Dst0hst =
+      std::make_unique<TH1D>("hist_Bu2Dst0hst", "hist_Bu2Dst0hst", 1, 0, 1);
+  hist_Bu2Dst0hst->SetLineColor(colorMap["Bu2Dst0hst"]);
+  hist_Bu2Dst0hst->SetLineWidth(5);
+
+  auto hist_Lb2Omegach_Lcpi0 = std::make_unique<TH1D>(
+      "hist_Lb2Omegach_Lcpi0", "hist_Lb2Omegach_Lcpi0", 1, 0, 1);
+  hist_Lb2Omegach_Lcpi0->SetLineColor(colorMap["Lb2Omegach_Lcpi0"]);
+  hist_Lb2Omegach_Lcpi0->SetLineWidth(5);
+
+  auto hist_Bs2D0Kst0 =
+      std::make_unique<TH1D>("hist_Bs2D0Kst0", "hist_Bs2D0Kst0", 1, 0, 1);
+  hist_Bs2D0Kst0->SetLineColor(colorMap["Bs2D0Kst0"]);
+  hist_Bs2D0Kst0->SetLineWidth(5);
+
+  auto hist_Bs2Dst0Kst0 =
+      std::make_unique<TH1D>("hist_Bs2Dst0Kst0", "hist_Bs2Dst0Kst0", 1, 0, 1);
+  hist_Bs2Dst0Kst0->SetLineColor(colorMap["Bs2Dst0Kst0"]);
+  hist_Bs2Dst0Kst0->SetLineWidth(5);
+
+  auto hist_MisID = std::make_unique<TH1D>("hist_MisID", "hist_MisID", 1, 0, 1);
+  hist_MisID->SetLineColor(kGray);
+  hist_MisID->SetLineWidth(5);
+
+  auto hist_D02pik =
+      std::make_unique<TH1D>("hist_D02pik", "hist_D02pik", 1, 0, 1);
+  hist_D02pik->SetLineColor(kCyan + 3);
+  hist_D02pik->SetLineWidth(5);
+
+  if (config.neutral() == Neutral::gamma) {
+    labels.AddEntry(
+        hist_Bu2Dst0h_D0gamma.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0gamma, Charge::total, false).c_str(),
+        "l");
+  }
+  labels.AddEntry(
+      hist_Bu2Dst0h_D0pi0.get(),
+      ReturnLaTeXLabel(Mode::Bu2Dst0h_D0pi0, Charge::total, false).c_str(),
+      "l");
+  if (config.simpleFit() == false) {
+    // if (config.neutral() == Neutral::gamma) {
+    labels.AddEntry(
+        hist_Bu2Dst0h_D0pi0_WN.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0pi0_WN, Charge::total, false)
+            .c_str(),
+        "l");
+    labels.AddEntry(
+        hist_Bu2Dst0h_D0gamma_WN.get(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0gamma_WN, Charge::total, false)
+            .c_str(),
+        "l");
+    // } else {
+    //   labels.AddEntry(
+    //       hist_Bu2Dst0h_WN.get(),
+    //       ReturnLaTeXLabel(Mode::Bu2Dst0h_WN,
+    //       Charge::total, false)
+    //           .c_str(),
+    //       "l");
+    // }
+    labels.AddEntry(
+        hist_Bu2D0hst.get(),
+        ReturnLaTeXLabel(Mode::Bu2D0hst, Charge::total, false).c_str(), "l");
+    labels.AddEntry(
+        hist_Bd2Dsth.get(),
+        ReturnLaTeXLabel(Mode::Bd2Dsth, Charge::total, false).c_str(), "l");
+  } else {
+    labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
+  }
+  labels.AddEntry(
+      hist_Bu2Dst0hst.get(),
+      ReturnLaTeXLabel(Mode::Bu2Dst0hst, Charge::total, false).c_str(), "l");
+  labels.AddEntry(
+      hist_Lb2Omegach_Lcpi0.get(),
+      ReturnLaTeXLabel(Mode::Lb2Omegach_Lcpi0, Charge::total, false).c_str(),
+      "l");
+  if (config.runADS() == true) {
+    labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
+    labels.AddEntry(
+        hist_Bs2Dst0Kst0.get(),
+        ReturnLaTeXLabel(Mode::Bs2Dst0Kst0, Charge::total, false).c_str(), "l");
+    labels.AddEntry(
+        hist_Bs2D0Kst0.get(),
+        ReturnLaTeXLabel(Mode::Bs2D0Kst0, Charge::total, false).c_str(), "l");
+    labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
+  }
+  labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
+
+  // Loop over entries in legend and set size
+  TList *labelList = labels.GetListOfPrimitives();
+  if (labelList != nullptr) {
+    int nLabels = labelList->GetSize();
+    for (int i = 0; i < nLabels; ++i) {
+      TObject *entryObj = labelList->At(i);
+      if (entryObj != nullptr) {
+        auto entry = dynamic_cast<TLegendEntry *>(entryObj);
+        if (entry != nullptr) {
+          entry->SetTextSize(0.04);
+        } else {
+          throw std::runtime_error(
+              "Could not cast entry from TObject to TLegendEntry.");
+        }
+      } else {
+        throw std::runtime_error(
+            "Could not extract iter from labelList in TLegend.");
+      }
+    }
+  }
+  TCanvas canvas("LegendCanvas", "", 1000, 800);
+  TH1D tmpHist("", "", 1, 0, 1);
+  // tmpHist.Draw();
+  labels.Draw();
+  canvas.SaveAs((outputDir + "/plots/legend_" + EnumToString(config.neutral()) + ".pdf").c_str());
+}
+
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
+                std::map<std::string, Color_t> &colorMap,
                 std::string const &outputDir, RooFitResult *result,
                 std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   SetStyle();
@@ -792,313 +1009,15 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     }
   }
 
-  // ------------- Draw Legends -------------- //
-  std::map<std::string, Color_t> colorMap;
-
-  colorMap["Bu2Dst0h_D0gamma"] = kGreen - 10;
-  colorMap["Bu2Dst0h_D0pi0"] = kAzure + 7;
-  if (config.simpleFit() == false) {
-    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_D0pi0_WN"] = kAzure + 3;
-    colorMap["Bu2Dst0h_WN"] = kAzure + 3;
-    colorMap["Bd2Dsth"] = kPink + 1;
-    colorMap["Bu2D0hst"] = kOrange;
-  } else {
-    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_WN"] = kBlue - 6;
-    colorMap["Bd2Dsth"] = kBlue - 6;
-    colorMap["Bu2D0hst"] = kBlue - 6;
-  }
-  colorMap["Bu2Dst0hst"] = kViolet + 2;
-  colorMap["Lb2Omegach_Lcpi0"] = kOrange + 2;
-  colorMap["Bs2Dst0Kst0"] = kViolet - 9;
-  colorMap["Bs2D0Kst0"] = kOrange + 3;
-  colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
-  colorMap["misId_Bu2Dst0h_WN"] = kGray;
-  colorMap["misId_Bd2Dsth"] = kGray;
-  colorMap["misId_Bu2D0hst"] = kGray;
-  colorMap["misId_Bu2Dst0hst"] = kGray;
-  colorMap["Bu2Dst0h_D0pi0_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0gamma_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0pi0_WN_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0gamma_WN_D02pik"] = kCyan + 3;
-
-  TLegend labels(0.14, 0.3, 0.28, 0.9);
-  if (config.runADS() == true && bachelor == Bachelor::k) {
-    labels.SetY1(0.2);
-  }
-  if (config.simpleFit() == true) {
-    if (config.runADS() == true && bachelor == Bachelor::k) {
-      labels.SetY1(0.4);
-    } else {
-      labels.SetY1(0.5);
-    }
-  }
-  labels.SetLineColor(kWhite);
-
-  std::string oppCharge;
-  if (charge == Charge::plus) {
-    oppCharge = "-";
-  } else if (charge == Charge::minus) {
-    oppCharge = "+";
-  } else {
-    oppCharge = "#mp";
-  }
-
-  auto hist_Bu2Dst0h_D0gamma = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0h_D0gamma" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0h_D0gamma", 1, 0, 1);
-  hist_Bu2Dst0h_D0gamma->SetLineColor(colorMap["Bu2Dst0h_D0gamma"]);
-  hist_Bu2Dst0h_D0gamma->SetLineWidth(5);
-
-  auto hist_Bu2Dst0h_D0pi0 = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0h_D0pi0" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0h_D0pi0", 1, 0, 1);
-  hist_Bu2Dst0h_D0pi0->SetLineColor(colorMap["Bu2Dst0h_D0pi0"]);
-  hist_Bu2Dst0h_D0pi0->SetLineWidth(5);
-
-  auto hist_Bu2Dst0h_D0gamma_WN = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0h_D0gamma_WN" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0h_D0gamma_WN", 1, 0, 1);
-  hist_Bu2Dst0h_D0gamma_WN->SetLineColor(colorMap["Bu2Dst0h_D0gamma_WN"]);
-  hist_Bu2Dst0h_D0gamma_WN->SetLineWidth(5);
-
-  auto hist_Bu2Dst0h_D0pi0_WN = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0h_D0pi0_WN" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0h_D0pi0_WN", 1, 0, 1);
-  hist_Bu2Dst0h_D0pi0_WN->SetLineColor(colorMap["Bu2Dst0h_D0pi0_WN"]);
-  hist_Bu2Dst0h_D0pi0_WN->SetLineWidth(5);
-
-  auto hist_Bu2Dst0h_WN = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0h_WN" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0h_WN", 1, 0, 1);
-  hist_Bu2Dst0h_WN->SetLineColor(colorMap["Bu2Dst0h_WN"]);
-  hist_Bu2Dst0h_WN->SetLineWidth(5);
-
-  auto hist_Bu2D0hst = std::make_unique<TH1D>(
-      ("hist_Bu2D0hst" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2D0hst", 1, 0, 1);
-  hist_Bu2D0hst->SetLineColor(colorMap["Bu2D0hst"]);
-  hist_Bu2D0hst->SetLineWidth(5);
-
-  auto hist_Bd2Dsth = std::make_unique<TH1D>(
-      ("hist_Bd2Dsth" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bd2Dsth", 1, 0, 1);
-  hist_Bd2Dsth->SetLineColor(colorMap["Bd2Dsth"]);
-  hist_Bd2Dsth->SetLineWidth(5);
-
-  auto hist_Bu2Dst0hst = std::make_unique<TH1D>(
-      ("hist_Bu2Dst0hst" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bu2Dst0hst", 1, 0, 1);
-  hist_Bu2Dst0hst->SetLineColor(colorMap["Bu2Dst0hst"]);
-  hist_Bu2Dst0hst->SetLineWidth(5);
-
-  auto hist_Lb2Omegach_Lcpi0 = std::make_unique<TH1D>(
-      ("hist_Lb2Omegach_Lcpi0" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Lb2Omegach_Lcpi0", 1, 0, 1);
-  hist_Lb2Omegach_Lcpi0->SetLineColor(colorMap["Lb2Omegach_Lcpi0"]);
-  hist_Lb2Omegach_Lcpi0->SetLineWidth(5);
-
-  auto hist_Bs2D0Kst0 = std::make_unique<TH1D>(
-      ("hist_Bs2D0Kst0" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bs2D0Kst0", 1, 0, 1);
-  hist_Bs2D0Kst0->SetLineColor(colorMap["Bs2D0Kst0"]);
-  hist_Bs2D0Kst0->SetLineWidth(5);
-
-  auto hist_Bs2Dst0Kst0 = std::make_unique<TH1D>(
-      ("hist_Bs2Dst0Kst0" +
-       ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_Bs2Dst0Kst0", 1, 0, 1);
-  hist_Bs2Dst0Kst0->SetLineColor(colorMap["Bs2Dst0Kst0"]);
-  hist_Bs2Dst0Kst0->SetLineWidth(5);
-
-  auto hist_MisID = std::make_unique<TH1D>(
-      ("hist_MisID" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_MisID", 1, 0, 1);
-  hist_MisID->SetLineColor(kGray);
-  hist_MisID->SetLineWidth(5);
-
-  auto hist_D02pik = std::make_unique<TH1D>(
-      ("hist_D02pik" + ComposeName(id, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "hist_D02pik", 1, 0, 1);
-  hist_D02pik->SetLineColor(kCyan + 3);
-  hist_D02pik->SetLineWidth(5);
-
-  if (bachelor == Bachelor::pi) {
-    if (neutral == Neutral::gamma) {
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma, daughters, charge, false)
-              .c_str(),
-          "l");
-    }
-    labels.AddEntry(
-        hist_Bu2Dst0h_D0pi0.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0, daughters, charge, false)
-            .c_str(),
-        "l");
-    if (config.simpleFit() == false) {
-      // if (neutral == Neutral::gamma) {
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0pi0_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0pi0_WN, daughters, charge, false)
-              .c_str(),
-          "l");
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0pi_D0gamma_WN, daughters, charge, false)
-              .c_str(),
-          "l");
-      // } else {
-      //   labels.AddEntry(
-      //       hist_Bu2Dst0h_WN.get(),
-      //       ReturnLaTeXLabel(Mode::Bu2Dst0pi_WN, daughters, charge, false)
-      //           .c_str(),
-      //       "l");
-      // }
-      labels.AddEntry(
-          hist_Bu2D0hst.get(),
-          ReturnLaTeXLabel(Mode::Bu2D0rho, daughters, charge, false).c_str(),
-          "l");
-      labels.AddEntry(
-          hist_Bd2Dsth.get(),
-          ReturnLaTeXLabel(Mode::Bd2Dstpi, daughters, charge, false).c_str(),
-          "l");
-    } else {
-      labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
-    }
-    labels.AddEntry(
-        hist_Bu2Dst0hst.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0rho, daughters, charge, false).c_str(),
-        "l");
-    labels.AddEntry(
-        hist_Lb2Omegach_Lcpi0.get(),
-        ReturnLaTeXLabel(Mode::Lb2Omegacpi_Lcpi0, daughters, charge, false)
-            .c_str(),
-        "l");
-    if (config.runADS() == true) {
-      labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
-    }
-  } else {
-    if (neutral == Neutral::gamma) {
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma, daughters, charge, false)
-              .c_str(),
-          "l");
-    }
-    labels.AddEntry(
-        hist_Bu2Dst0h_D0pi0.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0, daughters, charge, false)
-            .c_str(),
-        "l");
-    if (config.simpleFit() == false) {
-      // if (neutral == Neutral::gamma) {
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0pi0_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0pi0_WN, daughters, charge, false)
-              .c_str(),
-          "l");
-      labels.AddEntry(
-          hist_Bu2Dst0h_D0gamma_WN.get(),
-          ReturnLaTeXLabel(Mode::Bu2Dst0K_D0gamma_WN, daughters, charge, false)
-              .c_str(),
-          "l");
-      // } else {
-      //   labels.AddEntry(
-      //       hist_Bu2Dst0h_WN.get(),
-      //       ReturnLaTeXLabel(Mode::Bu2Dst0K_WN, daughters, charge, false)
-      //           .c_str(),
-      //       "l");
-      // }
-      labels.AddEntry(
-          hist_Bu2D0hst.get(),
-          ReturnLaTeXLabel(Mode::Bu2D0Kst, daughters, charge, false).c_str(),
-          "l");
-      labels.AddEntry(
-          hist_Bd2Dsth.get(),
-          ReturnLaTeXLabel(Mode::Bd2DstK, daughters, charge, false).c_str(),
-          "l");
-    } else {
-      labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
-    }
-    labels.AddEntry(
-        hist_Bu2Dst0hst.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0Kst, daughters, charge, false).c_str(),
-        "l");
-    labels.AddEntry(
-        hist_Lb2Omegach_Lcpi0.get(),
-        ReturnLaTeXLabel(Mode::Lb2OmegacK_Lcpi0, daughters, charge, false)
-            .c_str(),
-        "l");
-    if (config.runADS() == true) {
-      labels.AddEntry(
-          hist_Bs2Dst0Kst0.get(),
-          ReturnLaTeXLabel(Mode::Bs2Dst0Kst0, daughters, charge, false).c_str(),
-          "l");
-      labels.AddEntry(
-          hist_Bs2D0Kst0.get(),
-          ReturnLaTeXLabel(Mode::Bs2D0Kst0, daughters, charge, false).c_str(),
-          "l");
-      labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
-    }
-  }
-  labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
-
-  // Loop over entries in legend and set size
-  TList *labelList = labels.GetListOfPrimitives();
-  if (labelList != nullptr) {
-    int nLabels = labelList->GetSize();
-    for (int i = 0; i < nLabels; ++i) {
-      TObject *entryObj = labelList->At(i);
-      if (entryObj != nullptr) {
-        auto entry = dynamic_cast<TLegendEntry *>(entryObj);
-        if (entry != nullptr) {
-          entry->SetTextSize(0.04);
-        } else {
-          throw std::runtime_error(
-              "Could not cast entry from TObject to TLegendEntry.");
-        }
-      } else {
-        throw std::runtime_error(
-            "Could not extract iter from labelList in TLegend.");
-      }
-    }
-  }
-
   PlotComponent(Mass::buDelta, config.buDeltaMass(), pdf, fullDataSet, simPdf,
-                legend, labels, outputDir, config, colorMap, yMaxMap);
+                legend, outputDir, config, colorMap, yMaxMap);
   if (config.fitBuPartial() == true) {
     PlotComponent(Mass::buDeltaPartial, config.buDeltaMass(), pdf, fullDataSet,
-                  simPdf, legend, labels, outputDir, config, colorMap, yMaxMap);
+                  simPdf, legend, outputDir, config, colorMap, yMaxMap);
   }
   if (config.fit1D() == false) {
     PlotComponent(Mass::delta, config.deltaMass(), pdf, fullDataSet, simPdf,
-                  legend, labels, outputDir, config, colorMap, yMaxMap);
+                  legend, outputDir, config, colorMap, yMaxMap);
   }
 }
 
@@ -1221,8 +1140,8 @@ void PlotCorrelations(RooFitResult *result, std::string const &outputDir,
 // bu and delta mass
 void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                   TLegend &legend, TLegend &labels,
-                   std::string const &outputDir, Configuration &config,
+                   TLegend &legend, std::string const &outputDir,
+                   Configuration &config,
                    std::map<std::string, Color_t> &colorMap,
                    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
@@ -1606,9 +1525,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   }
   legend.Draw("same");
 
-  if (mass == Mass::buDelta && daughters == Daughters::kpi) {
-    labels.Draw("same");
-  }
+  // if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+  //   labels.Draw("same");
+  // }
   // Stores max values for kpi, to set in pik
   if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
     yMaxMap[neutral][mass] = frame->GetMaximum();

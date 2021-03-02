@@ -59,8 +59,10 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
     if (id == 1) {
       auto pdfs = p.second;
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
+        std::map<std::string, Color_t> colorMap = MakeColorMap(config);
+        PlotLegend(config, colorMap, outputDir);
       for (auto &p : pdfs) {
-        Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, outputDir,
+        Plotting1D(id, *p, config, *toyAbsData, *simPdfToFit, colorMap, outputDir,
                    toyFitResult.get(), yMaxMap);
       }
       if (config.noFit() == false) {

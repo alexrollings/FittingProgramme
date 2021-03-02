@@ -29,36 +29,46 @@ enum class Mode {
   Bs2D0Kst0,
   Bd2Dstpi,
   Bd2DstK,
+  Bd2Dsth,
   Bu2D0pi,
   Bu2D0K,
+  Bu2D0h,
   Bu2D0rho,
   Bu2D0Kst,
+  Bu2D0hst,
   Bu2Dst0rho_D0gamma,
   Bu2Dst0rho_D0pi0,
   Bu2Dst0rho,
+  Bu2Dst0hst,
   Bu2Dst0Kst_D0gamma,
   Bu2Dst0Kst_D0pi0,
   Bu2Dst0Kst,
   Bu2Dst0pi_D0gamma,
   Bu2Dst0K_D0gamma,
+  Bu2Dst0h_D0gamma,
   Bu2Dst0pi_D0gamma_D02pik,
   Bu2Dst0K_D0gamma_D02pik,
   Bu2Dst0pi_D0gamma_WN_D02pik,
   Bu2Dst0K_D0gamma_WN_D02pik,
   Bu2Dst0pi_D0gamma_WN,
   Bu2Dst0K_D0gamma_WN,
+  Bu2Dst0h_D0gamma_WN,
   Bu2Dst0pi_D0pi0,
   Bu2Dst0K_D0pi0,
+  Bu2Dst0h_D0pi0,
   Bu2Dst0pi_D0pi0_D02pik,
   Bu2Dst0K_D0pi0_D02pik,
   Bu2Dst0pi_D0pi0_WN_D02pik,
   Bu2Dst0K_D0pi0_WN_D02pik,
   Bu2Dst0pi_D0pi0_WN,
   Bu2Dst0K_D0pi0_WN,
+  Bu2Dst0h_D0pi0_WN,
   Bu2Dst0pi_WN,
   Bu2Dst0K_WN,
+  Bu2Dst0h_WN,
   Lb2Omegacpi_Lcpi0,
-  Lb2OmegacK_Lcpi0
+  Lb2OmegacK_Lcpi0,
+  Lb2Omegach_Lcpi0
 };
 // Gamma only: BuPartial, crossFeedBu, gamma
 // Pi0 only: Bu2Dst0h_D0pi0_PdfBu_ (crossFeed not added)
@@ -366,7 +376,7 @@ std::string ComposeName(int uniqueId, Neutral neutral);
 std::string ComposeName(int uniqueId, Neutral neutral, Charge charge);
 std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
 
-std::string ReturnLaTeXLabel(Mode, Daughters, Charge, bool);
+std::string ReturnLaTeXLabel(Mode, Charge, bool);
 
 bool fexists(std::string const &filename);
 std::vector<std::string> SplitLine(std::string const &str);
