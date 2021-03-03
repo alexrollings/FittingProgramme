@@ -44,18 +44,18 @@
 void SetStyle();
 void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
                  std::string &outputDir, std::unique_ptr<RooFitResult> &result);
-std::map<std::string, Color_t> MakeColorMap(Configuration &config);
-void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
+std::map<std::string, Int_t> MakeColorMap(Configuration &config);
+void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
                 std::string const &outputDir);
 void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    TLegend &legend, std::string const &outputDir,
                    Configuration &config,
-                   std::map<std::string, Color_t> &colorMap,
+                   std::map<std::string, Int_t> &colorMap,
                    std::map<Neutral, std::map<Mass, double> > &yMaxMap);
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::map<std::string, Color_t> &colorMap,
+                std::map<std::string, Int_t> &colorMap,
                 std::string const &outputDir, RooFitResult *result,
                 std::map<Neutral, std::map<Mass, double> > &yMaxMap);
 void Plotting2D(RooDataSet &dataSet, int const id, PdfBase &pdf,

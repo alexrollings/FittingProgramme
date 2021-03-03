@@ -1971,37 +1971,39 @@ std::string ReturnLaTeXLabel(Mode mode, Charge charge,
     }
   } else if (mode == Mode::Bu2Dst0h_D0gamma_WN) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
+      return "Mis-reconstructed #font[12]{B^{" + chargeLabel +
              "}#rightarrow (D^{*0} #rightarrow D^{0}#gamma) h^{" +
-             chargeLabel + "}} WN";
+             chargeLabel + "}}";
     } else {
-      return "$B^{" + chargeLabel +
+      return "Mis-reconstructed $B^{" + chargeLabel +
              "}\\rightarrow (D^{*0} \\rightarrow D^{0}\\gamma) h^{" +
-             chargeLabel + "}$ WN";
+             chargeLabel + "}$";
     }
   } else if (mode == Mode::Bu2Dst0h_D0pi0_WN) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel +
+      return "Mis-reconstructed #font[12]{B^{" + chargeLabel +
              "}#rightarrow (D^{*0}#rightarrow D^{0}#pi^{0}) h^{" +
-             chargeLabel + "}} WN";
+             chargeLabel + "}}";
     } else {
-      return "$B^{" + chargeLabel +
+      return "Mis-reconstructed $B^{" + chargeLabel +
              "}\\rightarrow (D^{*0} \\rightarrow D^{0}\\pi^{0}) h^{" +
-             chargeLabel + "}$ WN";
+             chargeLabel + "}$";
     }
   } else if (mode == Mode::Bu2Dst0h_WN) {
     if (isTex == false) {
-      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}h^{" +
-             chargeLabel + "}} WN";
+      return "Mis-reconstructed #font[12]{B^{" + chargeLabel + "}#rightarrow D^{*0}h^{" +
+             chargeLabel + "}}";
     } else {
-      return "$B^{" + chargeLabel + "}\\rightarrow D^{*0}h^{" + chargeLabel +
-             "}$ WN";
+      return "Mis-reconstructed $B^{" + chargeLabel + "}\\rightarrow D^{*0}h^{" + chargeLabel +
+             "}$";
     }
   } else if (mode == Mode::Bu2D0hst) {
     if (isTex == false) {
-      return "#font[12]{B #rightarrow D h^{" + chargeLabel + "}#pi";
+      return "#font[12]{B^{" + chargeLabel + "}#rightarrow D h^{" +
+             chargeLabel + "}#pi}";
     } else {
-      return "$B \\rightarrow D h^{" + chargeLabel + "}\\pi$";
+      return "$B^{" + chargeLabel + "} \\rightarrow D h^{" + chargeLabel +
+             "}\\pi$";
     }
   } else if (mode == Mode::Bd2Dsth) {
     if (isTex == false) {

@@ -788,7 +788,7 @@ int main(int argc, char **argv) {
       std::map<Neutral, std::map<Mass, double> > yMaxMap;
       // LaTeXYields(config, pdfs, outputDir, dataFitResult);
       if (config.runSystematics() == false) {
-        std::map<std::string, Color_t> colorMap = MakeColorMap(config);
+        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
         PlotLegend(config, colorMap, outputDir);
         for (auto &p : pdfs) {
           Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,

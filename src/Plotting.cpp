@@ -712,50 +712,52 @@ void LaTeXYields(Configuration &config, std::vector<PdfBase *> &pdfs,
   outfile << "\\end{document}\n";
 }
 
-std::map<std::string, Color_t> MakeColorMap(Configuration &config) {
-  std::map<std::string, Color_t> colorMap;
+std::map<std::string, Int_t> MakeColorMap(Configuration &config) {
+  std::map<std::string, Int_t> colorMap;
 
-  colorMap["Bu2Dst0h_D0gamma"] = kGreen - 10;
-  colorMap["Bu2Dst0h_D0pi0"] = kAzure + 7;
+  colorMap["Bu2Dst0h_D0gamma"] = TColor::GetColor("#abd9e9");
+  colorMap["Bu2Dst0h_D0pi0"] = TColor::GetColor("#4575b4");
   if (config.simpleFit() == false) {
-    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_D0pi0_WN"] = kAzure + 3;
-    colorMap["Bu2Dst0h_WN"] = kAzure + 3;
-    colorMap["Bd2Dsth"] = kPink + 1;
-    colorMap["Bu2D0hst"] = kOrange;
+    colorMap["Bu2Dst0h_D0gamma_WN"] = TColor::GetColor("#BDDA8B");
+    colorMap["Bu2Dst0h_D0pi0_WN"] = TColor::GetColor("#009e73");
+    colorMap["Bu2Dst0h_WN"] = TColor::GetColor("#009e73");
+    colorMap["Bd2Dsth"] = TColor::GetColor("#a50026");
+    colorMap["Bu2D0hst"] = TColor::GetColor("#fdae61");
   } else {
-    colorMap["Bu2Dst0h_D0gamma_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_D0pi0_WN"] = kBlue - 6;
-    colorMap["Bu2Dst0h_WN"] = kBlue - 6;
-    colorMap["Bd2Dsth"] = kBlue - 6;
-    colorMap["Bu2D0hst"] = kBlue - 6;
+    colorMap["Bu2Dst0h_D0gamma_WN"] = TColor::GetColor("#a50026");
+    colorMap["Bu2Dst0h_D0pi0_WN"] = TColor::GetColor("#a50026");
+    colorMap["Bu2Dst0h_WN"] = TColor::GetColor("#a50026");
+    colorMap["Bd2Dsth"] = TColor::GetColor("#a50026");
+    colorMap["Bu2D0hst"] = TColor::GetColor("#a50026");
   }
-  colorMap["Bu2Dst0hst"] = kViolet + 2;
-  colorMap["Lb2Omegach_Lcpi0"] = kOrange + 2;
-  colorMap["Bs2Dst0Kst0"] = kViolet - 9;
-  colorMap["Bs2D0Kst0"] = kOrange + 3;
-  colorMap["misId_Bu2Dst0h_D0gamma"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0pi0"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = kGray;
-  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = kGray;
-  colorMap["misId_Bu2Dst0h_WN"] = kGray;
-  colorMap["misId_Bd2Dsth"] = kGray;
-  colorMap["misId_Bu2D0hst"] = kGray;
-  colorMap["misId_Bu2Dst0hst"] = kGray;
-  colorMap["Bu2Dst0h_D0pi0_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0gamma_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0pi0_WN_D02pik"] = kCyan + 3;
-  colorMap["Bu2Dst0h_D0gamma_WN_D02pik"] = kCyan + 3;
+  colorMap["Bu2Dst0hst"] = TColor::GetColor("#f46d43");
+  colorMap["Lb2Omegach_Lcpi0"] = TColor::GetColor("#e0f3f8");
+  colorMap["Bs2Dst0Kst0"] = TColor::GetColor("#ffffbf");
+  colorMap["Bs2D0Kst0"] = TColor::GetColor("#fee090");
+  colorMap["MisID"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0h_D0gamma"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0h_D0pi0"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0h_D0gamma_WN"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0h_D0pi0_WN"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0h_WN"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bd2Dsth"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2D0hst"] = TColor::GetColor("#cccccc");
+  colorMap["misId_Bu2Dst0hst"] = TColor::GetColor("#cccccc");
+  colorMap["Crossfeed"] = TColor::GetColor("#474642");
+  colorMap["Bu2Dst0h_D0pi0_D02pik"] = TColor::GetColor("#474642");
+  colorMap["Bu2Dst0h_D0gamma_D02pik"] = TColor::GetColor("#474642");
+  colorMap["Bu2Dst0h_D0pi0_WN_D02pik"] = TColor::GetColor("#474642");
+  colorMap["Bu2Dst0h_D0gamma_WN_D02pik"] = TColor::GetColor("#474642");
 
   return colorMap;
 }
 
-void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
+void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
                 std::string const &outputDir) {
   SetStyle();
   // ------------- Draw Legends -------------- //
 
-  TLegend labels(0.2, 0.9, 0.3, 0.9);
+  TLegend labels(0, 0, 1, 1);
 
   // TLegend labels(0.14, 0.3, 0.28, 0.9);
   // if (config.runADS() == true && bachelor == Bachelor::k) {
@@ -782,89 +784,92 @@ void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
   auto hist_Bu2Dst0h_D0gamma = std::make_unique<TH1D>(
       "hist_Bu2Dst0h_D0gamma", "hist_Bu2Dst0h_D0gamma", 1, 0, 1);
   hist_Bu2Dst0h_D0gamma->SetLineColor(colorMap["Bu2Dst0h_D0gamma"]);
-  hist_Bu2Dst0h_D0gamma->SetLineWidth(5);
+  hist_Bu2Dst0h_D0gamma->SetLineWidth(20);
 
   auto hist_Bu2Dst0h_D0pi0 = std::make_unique<TH1D>(
       "hist_Bu2Dst0h_D0pi0", "hist_Bu2Dst0h_D0pi0", 1, 0, 1);
   hist_Bu2Dst0h_D0pi0->SetLineColor(colorMap["Bu2Dst0h_D0pi0"]);
-  hist_Bu2Dst0h_D0pi0->SetLineWidth(5);
+  hist_Bu2Dst0h_D0pi0->SetLineWidth(20);
 
   auto hist_Bu2Dst0h_D0gamma_WN = std::make_unique<TH1D>(
       "hist_Bu2Dst0h_D0gamma_WN", "hist_Bu2Dst0h_D0gamma_WN", 1, 0, 1);
   hist_Bu2Dst0h_D0gamma_WN->SetLineColor(colorMap["Bu2Dst0h_D0gamma_WN"]);
-  hist_Bu2Dst0h_D0gamma_WN->SetLineWidth(5);
+  hist_Bu2Dst0h_D0gamma_WN->SetLineWidth(20);
 
   auto hist_Bu2Dst0h_D0pi0_WN = std::make_unique<TH1D>(
       "hist_Bu2Dst0h_D0pi0_WN", "hist_Bu2Dst0h_D0pi0_WN", 1, 0, 1);
   hist_Bu2Dst0h_D0pi0_WN->SetLineColor(colorMap["Bu2Dst0h_D0pi0_WN"]);
-  hist_Bu2Dst0h_D0pi0_WN->SetLineWidth(5);
+  hist_Bu2Dst0h_D0pi0_WN->SetLineWidth(20);
 
   auto hist_Bu2Dst0h_WN =
       std::make_unique<TH1D>("hist_Bu2Dst0h_WN", "hist_Bu2Dst0h_WN", 1, 0, 1);
   hist_Bu2Dst0h_WN->SetLineColor(colorMap["Bu2Dst0h_WN"]);
-  hist_Bu2Dst0h_WN->SetLineWidth(5);
+  hist_Bu2Dst0h_WN->SetLineWidth(20);
 
   auto hist_Bu2D0hst =
       std::make_unique<TH1D>("hist_Bu2D0hst", "hist_Bu2D0hst", 1, 0, 1);
   hist_Bu2D0hst->SetLineColor(colorMap["Bu2D0hst"]);
-  hist_Bu2D0hst->SetLineWidth(5);
+  hist_Bu2D0hst->SetLineWidth(20);
 
   auto hist_Bd2Dsth =
       std::make_unique<TH1D>("hist_Bd2Dsth", "hist_Bd2Dsth", 1, 0, 1);
   hist_Bd2Dsth->SetLineColor(colorMap["Bd2Dsth"]);
-  hist_Bd2Dsth->SetLineWidth(5);
+  hist_Bd2Dsth->SetLineWidth(20);
 
   auto hist_Bu2Dst0hst =
       std::make_unique<TH1D>("hist_Bu2Dst0hst", "hist_Bu2Dst0hst", 1, 0, 1);
   hist_Bu2Dst0hst->SetLineColor(colorMap["Bu2Dst0hst"]);
-  hist_Bu2Dst0hst->SetLineWidth(5);
+  hist_Bu2Dst0hst->SetLineWidth(20);
 
   auto hist_Lb2Omegach_Lcpi0 = std::make_unique<TH1D>(
       "hist_Lb2Omegach_Lcpi0", "hist_Lb2Omegach_Lcpi0", 1, 0, 1);
   hist_Lb2Omegach_Lcpi0->SetLineColor(colorMap["Lb2Omegach_Lcpi0"]);
-  hist_Lb2Omegach_Lcpi0->SetLineWidth(5);
+  hist_Lb2Omegach_Lcpi0->SetLineWidth(20);
 
   auto hist_Bs2D0Kst0 =
       std::make_unique<TH1D>("hist_Bs2D0Kst0", "hist_Bs2D0Kst0", 1, 0, 1);
   hist_Bs2D0Kst0->SetLineColor(colorMap["Bs2D0Kst0"]);
-  hist_Bs2D0Kst0->SetLineWidth(5);
+  hist_Bs2D0Kst0->SetLineWidth(20);
 
   auto hist_Bs2Dst0Kst0 =
       std::make_unique<TH1D>("hist_Bs2Dst0Kst0", "hist_Bs2Dst0Kst0", 1, 0, 1);
   hist_Bs2Dst0Kst0->SetLineColor(colorMap["Bs2Dst0Kst0"]);
-  hist_Bs2Dst0Kst0->SetLineWidth(5);
+  hist_Bs2Dst0Kst0->SetLineWidth(20);
 
   auto hist_MisID = std::make_unique<TH1D>("hist_MisID", "hist_MisID", 1, 0, 1);
-  hist_MisID->SetLineColor(kGray);
-  hist_MisID->SetLineWidth(5);
+  hist_MisID->SetLineColor(colorMap["MisID"]);
+  hist_MisID->SetLineWidth(20);
 
   auto hist_D02pik =
       std::make_unique<TH1D>("hist_D02pik", "hist_D02pik", 1, 0, 1);
-  hist_D02pik->SetLineColor(kCyan + 3);
-  hist_D02pik->SetLineWidth(5);
+  hist_D02pik->SetLineColor(colorMap["Crossfeed"]);
+  hist_D02pik->SetLineWidth(20);
 
-  if (config.neutral() == Neutral::gamma) {
-    labels.AddEntry(
-        hist_Bu2Dst0h_D0gamma.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0gamma, Charge::total, false).c_str(),
-        "l");
-  }
   labels.AddEntry(
       hist_Bu2Dst0h_D0pi0.get(),
       ReturnLaTeXLabel(Mode::Bu2Dst0h_D0pi0, Charge::total, false).c_str(),
       "l");
+  // " ", "l");
+  // if (config.neutral() == Neutral::gamma) {
+  labels.AddEntry(
+      hist_Bu2Dst0h_D0gamma.get(),
+      ReturnLaTeXLabel(Mode::Bu2Dst0h_D0gamma, Charge::total, false).c_str(),
+      "l");
+  // " ", "l");
+  // }
   if (config.simpleFit() == false) {
     // if (config.neutral() == Neutral::gamma) {
     labels.AddEntry(
         hist_Bu2Dst0h_D0pi0_WN.get(),
-        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0pi0_WN, Charge::total, false)
-            .c_str(),
+        ReturnLaTeXLabel(Mode::Bu2Dst0h_D0pi0_WN, Charge::total, false).c_str(),
         "l");
+    // " ", "l");
     labels.AddEntry(
         hist_Bu2Dst0h_D0gamma_WN.get(),
         ReturnLaTeXLabel(Mode::Bu2Dst0h_D0gamma_WN, Charge::total, false)
             .c_str(),
         "l");
+    // " ", "l");
     // } else {
     //   labels.AddEntry(
     //       hist_Bu2Dst0h_WN.get(),
@@ -875,31 +880,38 @@ void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
     // }
     labels.AddEntry(
         hist_Bu2D0hst.get(),
+        // " ", "l");
         ReturnLaTeXLabel(Mode::Bu2D0hst, Charge::total, false).c_str(), "l");
     labels.AddEntry(
         hist_Bd2Dsth.get(),
         ReturnLaTeXLabel(Mode::Bd2Dsth, Charge::total, false).c_str(), "l");
+    // " ", "l");
   } else {
     labels.AddEntry(hist_Bu2Dst0h_WN.get(), "Mis-Reconstructed", "l");
   }
   labels.AddEntry(
       hist_Bu2Dst0hst.get(),
       ReturnLaTeXLabel(Mode::Bu2Dst0hst, Charge::total, false).c_str(), "l");
+  // " ", "l");
   labels.AddEntry(
       hist_Lb2Omegach_Lcpi0.get(),
       ReturnLaTeXLabel(Mode::Lb2Omegach_Lcpi0, Charge::total, false).c_str(),
       "l");
-  if (config.runADS() == true) {
-    labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
-    labels.AddEntry(
-        hist_Bs2Dst0Kst0.get(),
-        ReturnLaTeXLabel(Mode::Bs2Dst0Kst0, Charge::total, false).c_str(), "l");
-    labels.AddEntry(
-        hist_Bs2D0Kst0.get(),
-        ReturnLaTeXLabel(Mode::Bs2D0Kst0, Charge::total, false).c_str(), "l");
-    labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
-  }
+  // " ", "l");
+  // if (config.runADS() == true) {
+  labels.AddEntry(
+      hist_Bs2Dst0Kst0.get(),
+      ReturnLaTeXLabel(Mode::Bs2Dst0Kst0, Charge::total, false).c_str(), "l");
+  // " ", "l");
+  labels.AddEntry(
+      hist_Bs2D0Kst0.get(),
+      ReturnLaTeXLabel(Mode::Bs2D0Kst0, Charge::total, false).c_str(), "l");
+  // " ", "l");
+  labels.AddEntry(hist_D02pik.get(), "Crossfeed", "l");
+  // labels.AddEntry(hist_D02pik.get(), " ", "l");
+  // }
   labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
+  // labels.AddEntry(hist_MisID.get(), " ", "l");
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
@@ -911,6 +923,7 @@ void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
         auto entry = dynamic_cast<TLegendEntry *>(entryObj);
         if (entry != nullptr) {
           entry->SetTextSize(0.04);
+          // entry->SetTextColor(kWhite);
         } else {
           throw std::runtime_error(
               "Could not cast entry from TObject to TLegendEntry.");
@@ -921,7 +934,7 @@ void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
       }
     }
   }
-  TCanvas canvas("LegendCanvas", "", 1000, 800);
+  TCanvas canvas("LegendCanvas", "", 80, 150);
   TH1D tmpHist("", "", 1, 0, 1);
   // tmpHist.Draw();
   labels.Draw();
@@ -931,7 +944,7 @@ void PlotLegend(Configuration &config, std::map<std::string, Color_t> &colorMap,
 // Plot projections
 void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
                 RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
-                std::map<std::string, Color_t> &colorMap,
+                std::map<std::string, Int_t> &colorMap,
                 std::string const &outputDir, RooFitResult *result,
                 std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   SetStyle();
@@ -1142,7 +1155,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    RooAbsData const &fullDataSet, RooSimultaneous const &simPdf,
                    TLegend &legend, std::string const &outputDir,
                    Configuration &config,
-                   std::map<std::string, Color_t> &colorMap,
+                   std::map<std::string, Int_t> &colorMap,
                    std::map<Neutral, std::map<Mass, double> > &yMaxMap) {
   Bachelor bachelor = pdf.bachelor();
   Daughters daughters = pdf.daughters();
@@ -1168,7 +1181,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                                    daughters, charge)
                                     .c_str()),
                   RooFit::ProjWData(config.fitting, fullDataSet),
-                  RooFit::LineColor(kBlue));
+                  RooFit::LineColor(kBlack));
   }
 
   // Everything to be plotted has to be declared outside of a loop, in the
@@ -1416,7 +1429,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                                    daughters, charge)
                                     .c_str()),
                   RooFit::ProjWData(config.fitting, fullDataSet),
-                  RooFit::LineColor(kBlue));
+                  RooFit::LineColor(kBlack));
   }
 
   fullDataSet.plotOn(frame.get(),
