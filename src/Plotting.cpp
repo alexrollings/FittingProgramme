@@ -6,16 +6,16 @@ void SetStyle() {
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
   gStyle->SetStatFontSize(0.04);
-  gStyle->SetTitleSize(0.04, "XY");
-  gStyle->SetLabelSize(0.04, "XY");
+  gStyle->SetTitleSize(0.05, "XY");
+  gStyle->SetLabelSize(0.045, "XY");
   gStyle->SetLegendFont(132);
   gStyle->SetLegendTextSize(0.05);
-  gStyle->SetTitleOffset(1.0, "X");
+  gStyle->SetTitleOffset(0.95, "X");
   gStyle->SetTitleOffset(1.2, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.1);
-  gStyle->SetPadLeftMargin(0.11);
+  gStyle->SetPadBottomMargin(0.11);
+  gStyle->SetPadLeftMargin(0.12);
 }
 
 std::string to_string_with_precision(double value, int precision) {
@@ -961,7 +961,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
   blankHist->SetLineColor(kWhite);
   blankHist->SetLineWidth(2);
 
-  TLegend legend(0.72, 0.75, 0.9, 0.85);
+  TLegend legend(0.71, 0.75, 0.89, 0.85);
 
   std::string legendString_1 = "#font[22]{LHCb}";
   std::string legendString_2 = "#font[12]{preliminary}";
@@ -998,7 +998,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     if (entryObj1 != nullptr) {
       auto entry1 = dynamic_cast<TLegendEntry *>(entryObj1);
       if (entry1 != nullptr) {
-        entry1->SetTextSize(0.035);
+        entry1->SetTextSize(0.04);
       } else {
         throw std::runtime_error(
             "Could not cast entry1 from TObject to TLegendEntry.");
@@ -1011,7 +1011,7 @@ void Plotting1D(int const id, PdfBase &pdf, Configuration &config,
     if (entryObj2 != nullptr) {
       auto entry2 = dynamic_cast<TLegendEntry *>(entryObj2);
       if (entry2 != nullptr) {
-        entry2->SetTextSize(0.045);
+        entry2->SetTextSize(0.05);
       } else {
         throw std::runtime_error(
             "Could not cast entry2 from TObject to TLegendEntry.");
@@ -1196,9 +1196,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   pullFrame->GetYaxis()->CenterTitle();
   pullFrame->SetLabelFont(132, "XY");
   pullFrame->SetTitleFont(132, "XY");
-  pullFrame->SetTitleSize(0.15, "Y");
-  pullFrame->SetTitleOffset(0.32, "Y");
-  pullFrame->SetLabelSize(0.15, "XY");
+  pullFrame->SetTitleSize(0.20, "Y");
+  pullFrame->SetTitleOffset(0.28, "Y");
+  pullFrame->SetLabelSize(0.18, "XY");
   pullFrame->SetLabelOffset(0.02, "Y");
   pullFrame->SetLabelOffset(50, "X");
   pullFrame->GetYaxis()->SetNdivisions(6);
@@ -1515,8 +1515,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     blindMax = 5400;
   }
 
+  frame->SetMinimum(0.001);
   if (daughters == Daughters::pik && config.blindFit() == true) {
-    frame->SetMinimum(0.001);
     if (bachelor == Bachelor::pi) {
       // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
       frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
