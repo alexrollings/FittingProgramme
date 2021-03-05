@@ -377,6 +377,7 @@ std::string ComposeName(int uniqueId, Neutral neutral, Charge charge);
 std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
 
 std::string ReturnLaTeXLabel(Mode, Charge, bool);
+std::string ReturnLaTeXLabel(std::string paramStr);
 
 std::string to_string_with_precision(double value, int precision);
 bool fexists(std::string const &filename);

@@ -39,12 +39,6 @@ std::vector<std::string> SplitByComma(std::string const &str) {
   return stringVector;
 }
 
-std::string to_string_with_precision(double value) {
-  std::ostringstream out;
-  out << std::setprecision(3) << value;
-  return out.str();
-}
-
 RooArgList ReturnInitPars(bool dataToy,
                           std::vector<RooFitResult> &dataResultVec,
                           std::vector<RooFitResult> &resultVec, double it) {
@@ -55,6 +49,22 @@ RooArgList ReturnInitPars(bool dataToy,
     RooArgList initialPars = resultVec[it].floatParsInit();
     return initialPars;
   }
+}
+
+void SetStyle() {
+  gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLabelFont(132, "XYZ");
+  gStyle->SetStatFont(132);
+  gStyle->SetStatFontSize(0.04);
+  gStyle->SetTitleSize(0.055, "Y");
+  gStyle->SetTitleSize(0.06, "X");
+  gStyle->SetLabelSize(0.045, "XY");
+  gStyle->SetTitleOffset(0.9, "X");
+  gStyle->SetTitleOffset(0.95, "Y");
+  gStyle->SetPadTopMargin(0.03);
+  gStyle->SetPadRightMargin(0.03);
+  gStyle->SetPadBottomMargin(0.13);
+  gStyle->SetPadLeftMargin(0.12);
 }
 
 int main(int argc, char *argv[]) {
@@ -436,6 +446,9 @@ int main(int argc, char *argv[]) {
   }
   outputFile.cd();
   tree.Write();
+
+  SetStyle();
+
   // Loop over params, create histogram for each and fill with values from
   // result
   for (double i = 0; i < nParams; ++i) {
@@ -521,38 +534,42 @@ int main(int argc, char *argv[]) {
                          pull.getMax() - pull.getMin());
     RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
                          pullSigma);
+
     auto pullResult =
         std::unique_ptr<RooFitResult>(pullGaus.fitTo(pullDH, RooFit::Save()));
     pullResult->Print("v");
     pullResult->SetName(("Result_Pull_" + paramName).c_str());
     pullResult->Write();
     std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
-    pullFrame->GetXaxis()->SetTitle((paramName + " Pull").c_str());
+    pullFrame->GetXaxis()->SetTitle((ReturnLaTeXLabel(paramName) + " pull").c_str());
+    std::stringstream yLabel;
+    yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
+    pullFrame->GetYaxis()->SetTitle(yLabel.str().c_str());
     pullDH.plotOn(pullFrame.get());
-    pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed),
-                    RooFit::LineWidth(2));
+    pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed+1),
+                    RooFit::LineWidth(3));
     pullDH.plotOn(pullFrame.get());
     pullFrame->Draw();
 
     auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
     blankHist->SetLineColor(kWhite);
-    TLegend pullLegend(0.6, 0.78, 0.88, 0.88);
-    if (config.blindFit() == false) {
-      pullLegend.SetX1(0.5);
-      pullLegend.SetX2(0.85);
-    }
-    pullLegend.SetTextSize(0.03);
+    TLegend pullLegend(0.59, 0.84, 0.95, 0.965);
+    // if (config.blindFit() == false) {
+    //   pullLegend.SetX1(0.5);
+    //   pullLegend.SetX2(0.85);
+    // }
+    pullLegend.SetTextSize(0.045);
     pullLegend.SetLineColor(kWhite);
-    std::stringstream pullMeanString, pullSigmaString;
-    pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal());
+    std::ostringstream pullMeanString, pullSigmaString;
+    pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal(), 3);
     pullMeanString << " #pm "
                    << to_string_with_precision(
-                          pullMean.getPropagatedError(*pullResult.get()));
+                          pullMean.getPropagatedError(*pullResult.get()), 3);
     pullSigmaString << "#sigma = "
-                    << to_string_with_precision(pullSigma.getVal());
+                    << to_string_with_precision(pullSigma.getVal(), 3);
     pullSigmaString << " #pm "
                     << to_string_with_precision(
-                           pullSigma.getPropagatedError(*pullResult.get()));
+                           pullSigma.getPropagatedError(*pullResult.get()), 3);
     pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");

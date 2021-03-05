@@ -1938,8 +1938,76 @@ std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters) {
          std::to_string(uniqueId);
 }
 
-std::string ReturnLaTeXLabel(Mode mode, Charge charge,
-                             bool isTex) {
+std::string ReturnLaTeXLabel(std::string paramStr) {
+  if (paramStr == "R_Dst0KDst0pi_Bu2Dst0h_kpi") {
+    return "#font[12]{R^{K#pi,#pi^{0}/#gamma}_{K/#pi}}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi") {
+    return "#font[12]{N((D^{*}#rightarrow #left[K#pi#right]_{D}#gamma)#pi^{#pm}})";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk") {
+          return "#font[12]{N((D^{*}#rightarrow #left[KK#right]_{D}#gamma)#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_pipi") {
+          return "#font[12]{N((D^{*}#rightarrow #left[#pi#pi#right]_{D}#gamma)#pi^{#pm})}";
+  } else if (paramStr == "R_CP_Bu2Dst0h_D0gamma_Blind") {
+          return "#font[12]{R^{CP,#gamma}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_pi_total") {
+          return "#font[12]{R^{#pi K,#gamma}_{#pi^{#pm}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_k_total") {
+          return "#font[12]{R^{#pi K,#gamma}_{K^{#pm}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_pi_plus") {
+          return "#font[12]{R^{#pi K,#gamma}_{#pi^{+}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_k_plus") {
+          return "#font[12]{R^{#pi K,#gamma}_{K^{+}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_pi_minus") {
+          return "#font[12]{R^{#pi K,#gamma}_{#pi^{-}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_k_minus") {
+          return "#font[12]{R^{#pi K,#gamma}_{K^{-}}}";
+  } else if (paramStr == "A_Bu2Dst0h_D0gamma_gamma_k_kpi") {
+          return "#font[12]{A^{K#pi,#gamma}_{K}}";
+  } else if (paramStr == "A_Bu2Dst0h_D0pi0_gamma_k_kpi") {
+          return "#font[12]{A^{K#pi,#pi^{0}}_{K}}";
+  } else if (paramStr == "A_CP_Bu2Dst0h_D0gamma_Blind_pi") {
+          return "#font[12]{A^{CP,#gamma}_{#pi}}";
+  } else if (paramStr == "A_CP_Bu2Dst0h_D0gamma_Blind_k") {
+          return "#font[12]{A^{CP,#gamma}_{K}}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi") {
+          return "#font[12]{N((D^{*}#rightarrow #left[K#pi#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk") {
+          return "#font[12]{N((D^{*}#rightarrow #left[KK#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_gamma_pi_pipi") {
+          return "#font[12]{N((D^{*}#rightarrow #left[#pi#pi#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi") {
+          return "#font[12]{N((D^{*}#rightarrow #left[K#pi#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk") {
+          return "#font[12]{N((D^{*}#rightarrow #left[KK#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi") {
+          return "#font[12]{N((D^{*}#rightarrow #left[#pi#pi#right]_{D}#pi^{0})#pi^{#pm})}";
+  } else if (paramStr == "R_CP_Bu2Dst0h_D0pi0_Blind") {
+          return "#font[12]{R^{CP,#pi^{0}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_pi_total") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{#pi^{#pm}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{K^{#pm}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{#pi^{+}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{K^{+}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{#pi^{-}}}";
+  } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_k_minus") {
+          return "#font[12]{R^{#pi K,#pi^{0}}_{K^{-}}}";
+  } else if (paramStr == "A_Bu2Dst0h_D0pi0_pi0_k_kpi") {
+          return "#font[12]{A^{K#pi,#pi^{0}}_{K}}";
+  } else if (paramStr == "A_CP_Bu2Dst0h_D0pi0_Blind_pi") {
+          return "#font[12]{A^{CP,#pi^{0}}_{#pi}}";
+  } else if (paramStr == "A_CP_Bu2Dst0h_D0pi0_Blind_k") {
+          return "#font[12]{A^{CP,#pi^{0}}_{K}}";
+  } else {
+    std::cout << "No LaTeX label defined for " << paramStr << "\n";
+    return paramStr;
+  }
+}
+
+std::string ReturnLaTeXLabel(Mode mode, Charge charge, bool isTex) {
   std::string oppCharge;
   if (charge == Charge::plus) {
     oppCharge = "-";
@@ -1959,8 +2027,8 @@ std::string ReturnLaTeXLabel(Mode mode, Charge charge,
   if (mode == Mode::Bu2Dst0h_D0gamma) {
     if (isTex == false) {
       return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow (D^{*0} #rightarrow D^{0}#gamma) h^{" +
-             chargeLabel + "}}";
+             "}#rightarrow (D^{*0} #rightarrow D^{0}#gamma) h^{" + chargeLabel +
+             "}}";
     } else {
       return "$B^{" + chargeLabel +
              "}\\rightarrow (D^{*0} \\rightarrow D^{0}\\gamma) h^{" +
@@ -1969,8 +2037,8 @@ std::string ReturnLaTeXLabel(Mode mode, Charge charge,
   } else if (mode == Mode::Bu2Dst0h_D0pi0) {
     if (isTex == false) {
       return "#font[12]{B^{" + chargeLabel +
-             "}#rightarrow (D^{*0}#rightarrow D^{0}#pi^{0}) h^{" +
-             chargeLabel + "}}";
+             "}#rightarrow (D^{*0}#rightarrow D^{0}#pi^{0}) h^{" + chargeLabel +
+             "}}";
     } else {
       return "$B^{" + chargeLabel +
              "}\\rightarrow (D^{*0} \\rightarrow D^{0}\\pi^{0}) h^{" +
