@@ -378,6 +378,7 @@ std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters);
 
 std::string ReturnLaTeXLabel(Mode, Charge, bool);
 
+std::string to_string_with_precision(double value, int precision);
 bool fexists(std::string const &filename);
 std::vector<std::string> SplitLine(std::string const &str);
 enum class ReturnType { val, std, stdL, stdH };

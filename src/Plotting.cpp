@@ -18,12 +18,6 @@ void SetStyle() {
   gStyle->SetPadLeftMargin(0.12);
 }
 
-std::string to_string_with_precision(double value, int precision) {
-  std::ostringstream out;
-  out << std::fixed << std::setprecision(precision) << value;
-  return out.str();
-}
-
 void FormatLaTeX(std::string &str) {
   std::replace(str.begin(), str.end(), '#', '\\');
   str = "$" + str + "$";
