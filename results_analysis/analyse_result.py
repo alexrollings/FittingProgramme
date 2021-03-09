@@ -108,7 +108,7 @@ if __name__ == '__main__':
   for obs in observables:
     for p in data_result.floatParsFinal():
       par_name = p.GetName()
-      m0 = re.match(obs + '(_[A-Za-z][0-9])+', par_name)
+      m0 = re.match(obs + '(_[A-Za-z0-9]+)+', par_name)
       if m0:
         m1 = re.match('\S+Blind\S+', par_name)
         if m1:
@@ -185,8 +185,16 @@ if __name__ == '__main__':
             fit_status[syst_label]['Converged'] += 1
             # If fit has good quality, save systematic results in syst_dict
             for par in syst_dict:
-              if par in json_dict[syst_label][seed]:
-                val = json_dict[syst_label][seed][par]
+              # REMOVE AFTER SYST RE-RUN #
+              if par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'gamma':
+                par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi'
+              elif par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'pi0':
+                par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi'
+              else:
+                par_stored = par
+              ############################
+              if par_stored in json_dict[syst_label][seed]:
+                val = json_dict[syst_label][seed][par_stored]
                 if syst_label not in syst_dict[par]:
                   syst_dict[par][syst_label] = [val]
                 else:
@@ -410,22 +418,28 @@ if __name__ == '__main__':
       f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_{charge}_{neutral}.tex',
       'w')
   row_arr = []
-  for par, val_errs in fit_result.items():
-    val = val_errs['Value']
-    stat = val_errs['Statistical Error']
+  sorted_pars = sorted(fit_result.keys(), key=lambda x:x.lower())
+  for par in sorted_pars:
+    val = fit_result[par]['Value']
+    stat = fit_result[par]['Statistical Error']
     if par[0] == 'N':
       continue
       # results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
     if eval_systs == True:
-      syst = val_errs['Systematic Error']
-      syst_str = f'&&&\\pm {syst:.4f} \\\\\n'
+      syst = fit_result[par]['Systematic Error']
+      syst_str = f'& &\\pm {syst:.4f} \\\\\n'
     else:
       syst_str = '\\\\\n'
     if val == 0:
-      val_str = 'X'
+      val_str = ''
+      extra = ''
     else:
-      val_str = '{val:.4f}'
-    results_str = f' &= {val:.4f} &&\\pm {stat:.4f} {syst_str}'
+      if val > 0:
+        extra = '\\textcolor{white}{-}'
+      else:
+        extra = ''
+      val_str = f'{val:.4f}'
+    results_str = f' &= {extra}{val_str} &&\\pm {stat:.4f} {syst_str}'
     # Need to remove $$ at either end of string as going into align env
     row_arr.append(return_label(par)[1:-1] + results_str)
 
