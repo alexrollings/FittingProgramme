@@ -74,6 +74,20 @@ def return_label(observable_string):
           '$R^{\\pi K,\\gamma}_{\\pi^{-}}$',
       'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus':
           '$R^{\\pi K,\\gamma}_{K^{-}}$',
+      'R_CP_Bu2Dst0h_D0gamma':
+          '$R^{CP,\\gamma}$',
+      'R_piK_Bu2Dst0h_D0gamma_pi_total':
+          '$R^{\\pi K,\\gamma}_{\\pi^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0gamma_k_total':
+          '$R^{\\pi K,\\gamma}_{K^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0gamma_pi_plus':
+          '$R^{\\pi K,\\gamma}_{\\pi^{+}}$',
+      'R_piK_Bu2Dst0h_D0gamma_k_plus':
+          '$R^{\\pi K,\\gamma}_{K^{+}}$',
+      'R_piK_Bu2Dst0h_D0gamma_pi_minus':
+          '$R^{\\pi K,\\gamma}_{\\pi^{-}}$',
+      'R_piK_Bu2Dst0h_D0gamma_k_minus':
+          '$R^{\\pi K,\\gamma}_{K^{-}}$',
       'A_Bu2Dst0h_D0gamma_gamma_k_kpi':
           '$A^{K\\pi,\\gamma}_{K}$',
       'A_Bu2Dst0h_D0pi0_gamma_k_kpi':
@@ -81,6 +95,10 @@ def return_label(observable_string):
       'A_CP_Bu2Dst0h_D0gamma_Blind_pi':
           '$A^{CP,\\gamma}_{\\pi}$',
       'A_CP_Bu2Dst0h_D0gamma_Blind_k':
+          '$A^{CP,\\gamma}_{K}$',
+      'A_CP_Bu2Dst0h_D0gamma_pi':
+          '$A^{CP,\\gamma}_{\\pi}$',
+      'A_CP_Bu2Dst0h_D0gamma_k':
           '$A^{CP,\\gamma}_{K}$',
       'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi':
           '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\pi^{0})\\pi^{\\pm}}$',
@@ -108,6 +126,20 @@ def return_label(observable_string):
           '$R^{\\pi K,\\pi^{0}}_{\\pi^{-}}$',
       'R_piK_Bu2Dst0h_D0pi0_Blind_k_minus':
           '$R^{\\pi K,\\pi^{0}}_{K^{-}}$',
+      'R_CP_Bu2Dst0h_D0pi0':
+          '$R^{CP,\\pi^{0}}$',
+      'R_piK_Bu2Dst0h_D0pi0_pi_total':
+          '$R^{\\pi K,\\pi^{0}}_{\\pi^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_k_total':
+          '$R^{\\pi K,\\pi^{0}}_{K^{\\pm}}$',
+      'R_piK_Bu2Dst0h_D0pi0_pi_plus':
+          '$R^{\\pi K,\\pi^{0}}_{\\pi^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_k_plus':
+          '$R^{\\pi K,\\pi^{0}}_{K^{+}}$',
+      'R_piK_Bu2Dst0h_D0pi0_pi_minus':
+          '$R^{\\pi K,\\pi^{0}}_{\\pi^{-}}$',
+      'R_piK_Bu2Dst0h_D0pi0_k_minus':
+          '$R^{\\pi K,\\pi^{0}}_{K^{-}}$',
       'A_Bu2Dst0h_D0pi0_pi0_k_kpi':
           '$A^{K\\pi,\\pi^{0}}_{K}$',
       'A_Bu2Dst0h_D0pi0_pi0_k_kpi':
@@ -115,6 +147,10 @@ def return_label(observable_string):
       'A_CP_Bu2Dst0h_D0pi0_Blind_pi':
           '$A^{CP,\\pi^{0}}_{\\pi}$',
       'A_CP_Bu2Dst0h_D0pi0_Blind_k':
+          '$A^{CP,\\pi^{0}}_{K}$',
+      'A_CP_Bu2Dst0h_D0pi0_pi':
+          '$A^{CP,\\pi^{0}}_{\\pi}$',
+      'A_CP_Bu2Dst0h_D0pi0_k':
           '$A^{CP,\\pi^{0}}_{K}$',
   }
   if observable_string in labels:
