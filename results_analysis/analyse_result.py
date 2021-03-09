@@ -73,7 +73,6 @@ if __name__ == '__main__':
   # Observables we are interested have this stem (match with regex)
   observables = [
       'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-      # 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
   ]
 
@@ -416,7 +415,7 @@ if __name__ == '__main__':
     stat = val_errs['Statistical Error']
     if eval_systs == True:
       syst = val_errs['Systematic Error']
-      syst_str = '&\\pm {syst:.4f} \\\\\n'
+      syst_str = '&&&\\pm {syst:.4f} \\\\\n'
     else:
       syst_str = '\\\\\n'
     if val == 0:
@@ -427,8 +426,9 @@ if __name__ == '__main__':
       continue
       # results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
     else:
-      results_str = f' &= {val:.4f} &\\pm {stat:.4f} {syst_str}'
-    row_arr.append(return_label(par) + results_str)
+      results_str = f' &= {val:.4f} &&\\pm {stat:.4f} {syst_str}'
+    # Need to remove $$ at either end of string as going into align env
+    row_arr.append(return_label(par)[1:-1] + results_str)
 
   for row in row_arr:
     results_file.write(row)
