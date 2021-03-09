@@ -413,20 +413,19 @@ if __name__ == '__main__':
   for par, val_errs in fit_result.items():
     val = val_errs['Value']
     stat = val_errs['Statistical Error']
+    if par[0] == 'N':
+      continue
+      # results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
     if eval_systs == True:
       syst = val_errs['Systematic Error']
-      syst_str = '&&&\\pm {syst:.4f} \\\\\n'
+      syst_str = f'&&&\\pm {syst:.4f} \\\\\n'
     else:
       syst_str = '\\\\\n'
     if val == 0:
       val_str = 'X'
     else:
       val_str = '{val:.4f}'
-    if par[0] == 'N':
-      continue
-      # results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
-    else:
-      results_str = f' &= {val:.4f} &&\\pm {stat:.4f} {syst_str}'
+    results_str = f' &= {val:.4f} &&\\pm {stat:.4f} {syst_str}'
     # Need to remove $$ at either end of string as going into align env
     row_arr.append(return_label(par)[1:-1] + results_str)
 
