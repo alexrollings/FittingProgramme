@@ -6,6 +6,8 @@ from useful_functions import return_label
 from useful_functions import return_group
 import json
 import operator
+from uncertainties import ufloat
+
 
 def PrintFitStatus(fit_status):
   for syst_label, status in fit_status.items():
@@ -21,31 +23,26 @@ def PrintFitStatus(fit_status):
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument(
-      '-r',
-      '--result',
-      type=str,
-      help='Data fit result',
-      required=True)
-  parser.add_argument(
-      '-p',
-      '--pull_fname',
-      type=str,
-      help=
-      'Pull results from 2D toys',
-      required=True)
-  parser.add_argument(
-      '-s',
-      '--syst_dir',
-      type=str,
-      help='Directory where json systematic is stored',
-      required=False)
+  parser.add_argument('-r',
+                      '--result',
+                      type=str,
+                      help='Data fit result',
+                      required=True)
+  parser.add_argument('-p',
+                      '--pull_fname',
+                      type=str,
+                      help='Pull results from 2D toys',
+                      required=True)
+  parser.add_argument('-s',
+                      '--syst_dir',
+                      type=str,
+                      help='Directory where json systematic is stored',
+                      required=False)
   parser.add_argument(
       '-e',
       '--error_fname',
       type=str,
-      help=
-      'File where systematics from error correction are stored',
+      help='File where systematics from error correction are stored',
       required=False)
   parser.add_argument('-n',
                       '--neutral',
@@ -57,13 +54,23 @@ if __name__ == '__main__':
                       type=str,
                       help='Charge: split/total',
                       required=True)
+  parser.add_argument('--blind',
+                      dest='blind',
+                      action='store_true',
+                      required=False)
   args = parser.parse_args()
   result = args.result
   syst_dir = args.syst_dir
   pull_fname = args.pull_fname
+  error_fname = args.error_fname
   neutral = args.neutral
   charge = args.charge
-  error_fname = args.error_fname
+  blind = args.blind
+
+  if blind == True:
+    blindStr = '_Blind'
+  else:
+    blindStr = ''
 
   if neutral == 'pi0':
     box_str = '138_148_5220_5330'
@@ -71,9 +78,10 @@ if __name__ == '__main__':
     box_str = '60_105_125_170_5240_5320'
 
   # Observables we are interested have this stem (match with regex)
+  # Include BR in order to calc gamma π0 FAV yield
   observables = [
       'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
+      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h', 'BR_pi02gamma_eff'
   ]
 
   # Dict to hold fit result and calculated errors of observables
@@ -89,7 +97,7 @@ if __name__ == '__main__':
       sys.exit(f'{syst_dir} does not exist')
     eval_systs = True
 
-  n_params = {'N' : 0, 'R': 0, 'A': 0}
+  n_params = {'N': 0, 'R': 0, 'A': 0}
   # Extract data fit result (make not of box dimn for 2d toy pulls)
   # Extract value and fit error of each observable of interest
   if not os.path.isfile(result):
@@ -110,18 +118,19 @@ if __name__ == '__main__':
       par_name = p.GetName()
       m0 = re.match(obs + '(_[A-Za-z0-9]+)+', par_name)
       if m0:
-        m1 = re.match('\S+Blind\S+', par_name)
-        if m1:
-          value = 0
-        else:
-          value = p.getVal()
+        # m1 = re.match('\S+Blind\S+', par_name)
+        # if m1:
+        #   value = 0
+        # else:
+        value = p.getVal()
         fit_result[par_name[:-2]] = {
             'Value': value,
             'Statistical Error': p.getError()
         }
-        n_params[par_name[0]] += 1
+        if par_name[0] != 'B':
+          n_params[par_name[0]] += 1
         # No systematics for yields
-        if obs != 'N_tot_Bu2Dst0h':
+        if obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff':
           syst_dict[par_name[:-2]] = {}
           group_dict[par_name[:-2]] = {}
 
@@ -136,7 +145,9 @@ if __name__ == '__main__':
         blind_par = m.group(1) + '_Blind' + m.group(2)
         pull_result = pull_file.Get(f'Result_Pull_{blind_par}')
         if pull_result == None:
-          print(f'Could not extract  Result_Pull_{k} or Result_Pull_{blind_par} from {pull_fname}')
+          print(
+              f'Could not extract  Result_Pull_{k} or Result_Pull_{blind_par} from {pull_fname}'
+          )
           continue
       else:
         continue
@@ -171,7 +182,13 @@ if __name__ == '__main__':
       for syst_label in json_dict:
         if syst_label == 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0':
           continue
-        fit_status[syst_label] = {'Total': 0, 'Converged' : 0, 'MINOS' : 0, 'FPD' : 0, 'Unconverged' : 0}
+        fit_status[syst_label] = {
+            'Total': 0,
+            'Converged': 0,
+            'MINOS': 0,
+            'FPD': 0,
+            'Unconverged': 0
+        }
         for seed in json_dict[syst_label]:
           covQual = json_dict[syst_label][seed]['covQual']
           fitStatus = json_dict[syst_label][seed]['fitStatus']
@@ -202,7 +219,9 @@ if __name__ == '__main__':
               else:
                 sys.exit(f'{par} not in json_dict')
           else:
-            print(f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}')
+            print(
+                f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}'
+            )
           fit_status[syst_label]['Total'] += 1
       # Save formatted systs and fot results to file
       with open(json_fname_format, 'w') as json_file_format:
@@ -236,14 +255,15 @@ if __name__ == '__main__':
     for p, v in group_dict.items():
       v[g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
       total_syst_dict[p] = {}
-      total_syst_dict[p][g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
+      total_syst_dict[p][
+          g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
 
     # Calculate individual systematic errors from std dev of arrays in syst_dict
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
     # Dict to store dominant syst labels
     max_systs = {}
     for par, syst_arr in syst_dict.items():
-      max_systs[par] = {'label' : None, 'group' : None }
+      max_systs[par] = {'label': None, 'group': None}
       n_syst = len(syst_arr)
       tot_syst = 0
       for syst_label, arr in syst_arr.items():
@@ -269,13 +289,13 @@ if __name__ == '__main__':
                                     key=operator.itemgetter(1))[0]
 
     # Separate tables for yields, ratios and asymmetries
-    title_str = { 'N' : '', 'R' : '' , 'A': ''}
-    row_arr = { 'N' : [], 'R' : [], 'A': []}
-    i = { 'N': 0, 'R': 0, 'A': 0}
+    title_str = {'N': '', 'R': '', 'A': ''}
+    row_arr = {'N': [], 'R': [], 'A': []}
+    i = {'N': 0, 'R': 0, 'A': 0}
     for par, syst in total_syst_dict.items():
       key = par[0]
       title_str[key] = title_str[key] + ' & ' + return_label(par)
-      j = { 'N': 0, 'R': 0, 'A': 0}
+      j = {'N': 0, 'R': 0, 'A': 0}
       for s_label in sorted(syst):
         if i[key] == 0:
           # Replace _ with \_ in LaTeX
@@ -299,11 +319,12 @@ if __name__ == '__main__':
       frac = syst_err / stat_err
       tot_str = f' & ${syst_err:.4f}$'
       frac_str = f' & ${frac:.4f}$'
-      row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + tot_str
-      row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + frac_str
+      row_arr[key][j[key] + 1] = row_arr[key][j[key] + 1] + tot_str
+      row_arr[key][j[key] + 2] = row_arr[key][j[key] + 2] + frac_str
       if i[key] == (n_params[key] - 1):
-        row_arr[key][j[key]+1] = row_arr[key][j[key]+1] + ' \\\\ \\hline\n'
-        row_arr[key][j[key]+2] = row_arr[key][j[key]+2] + ' \\\\ \\hline\\hline\n'
+        row_arr[key][j[key] + 1] = row_arr[key][j[key] + 1] + ' \\\\ \\hline\n'
+        row_arr[key][j[key] +
+                     2] = row_arr[key][j[key] + 2] + ' \\\\ \\hline\\hline\n'
       i[key] += 1
 
     title_str['N'] = title_str['N'] + ' \\\\ \\hline\n'
@@ -334,7 +355,8 @@ if __name__ == '__main__':
       tex_file.write('\\begin{table}[t]\n')
       tex_file.write('\\centering\n')
       tex_file.write('\\footnotesize\n')
-      tex_file.write('\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+      tex_file.write(
+          '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
       tex_file.write('\\begin{tabular}{' + 'l' * (n_params['R'] + 2) + '}\n')
       tex_file.write('\\hline\\hline\n')
       tex_file.write(title_str['R'])
@@ -347,7 +369,8 @@ if __name__ == '__main__':
       tex_file.write('\\begin{table}[t]\n')
       tex_file.write('\\centering\n')
       tex_file.write('\\footnotesize\n')
-      tex_file.write('\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+      tex_file.write(
+          '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
       tex_file.write('\\begin{tabular}{' + 'l' * (n_params['A'] + 2) + '}\n')
       tex_file.write('\\hline\\hline\n')
       tex_file.write(title_str['A'])
@@ -388,11 +411,11 @@ if __name__ == '__main__':
           frac = syst_err / stat_err
           tot_str = f' & ${syst_err:.4f}$'
           frac_str = f' & ${frac:.4f}$'
-          row_arr[j+1] = row_arr[j+1] + tot_str
-          row_arr[j+2] = row_arr[j+2] + frac_str
+          row_arr[j + 1] = row_arr[j + 1] + tot_str
+          row_arr[j + 2] = row_arr[j + 2] + frac_str
           if i == (n_params[l] - 1):
-            row_arr[j+1] = row_arr[j+1] + ' \\\\ \\hline\n'
-            row_arr[j+2] = row_arr[j+2] + ' \\\\ \\hline\\hline\n'
+            row_arr[j + 1] = row_arr[j + 1] + ' \\\\ \\hline\n'
+            row_arr[j + 2] = row_arr[j + 2] + ' \\\\ \\hline\\hline\n'
           i += 1
 
       title_str = title_str + ' \\\\ \\hline\n'
@@ -402,7 +425,7 @@ if __name__ == '__main__':
         tex_file.write('\\centering\n')
         tex_file.write('\\small\n')
         tex_file.write('\\begin{adjustbox}{max width=\\textwidth}\n')
-        tex_file.write('\\begin{tabular}{' + 'l'*(n_params[l]+2) + '}\n')
+        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[l] + 2) + '}\n')
         tex_file.write('\\hline\\hline\n')
         tex_file.write(title_str)
         for row in row_arr:
@@ -413,12 +436,13 @@ if __name__ == '__main__':
     tex_file.write('\\end{document}')
     tex_file.close()
 
-
-  results_file = open(
+  result_file = open(
       f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_{charge}_{neutral}.tex',
       'w')
   row_arr = []
-  sorted_pars = sorted(fit_result.keys(), key=lambda x:x.lower())
+  sorted_pars = sorted(fit_result.keys(), key=lambda x: x.lower())
+  if 'BR_pi02gamma_eff_gamma' in sorted_pars:
+    sorted_pars.remove('BR_pi02gamma_eff_gamma')
   for par in sorted_pars:
     val = fit_result[par]['Value']
     stat = fit_result[par]['Statistical Error']
@@ -444,4 +468,107 @@ if __name__ == '__main__':
     row_arr.append(return_label(par)[1:-1] + results_str)
 
   for row in row_arr:
-    results_file.write(row)
+    result_file.write(row)
+
+  yields_file = open(
+      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Yields_{charge}_{neutral}.tex',
+      'w')
+  yields_file.write('\\begin{tabular}{lll}\n')
+  yields_file.write('Decay & \\D mode & Yield \\\\ \n')
+  yields_file.write('\\hline\n')
+  yield_dict = {}
+
+  if neutral == 'pi0':
+    true_neutral = ['pi0']
+  else:
+    true_neutral = ['gamma', 'pi0']
+
+  for n in true_neutral:
+    yield_dict[n] = {'pi' : {}, 'k' : {} }
+    daughters = ['kpi', 'kk', 'pipi']
+    b = 'pi'
+
+    if n == 'pi0' and neutral == 'gamma':
+      N_gamma_name = f'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi'
+      N_gamma = ufloat(fit_result[N_gamma_name]['Value'],
+                       fit_result[N_gamma_name]['Statistical Error'])
+      BR_name = 'BR_pi02gamma_eff_gamma'
+      BR = ufloat(fit_result[BR_name]['Value'],
+                  fit_result[BR_name]['Statistical Error'])
+      N_pi0 = N_gamma * BR
+      fit_result['N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi'] = {
+          'Value': N_pi0.n,
+          'Statistical Error': N_pi0.s
+      }
+
+    for d in daughters:
+      N_pi = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_{b}_{d}'
+      val = fit_result[N_pi]['Value']
+      stat = fit_result[N_pi]['Statistical Error']
+      exp = math.sqrt(val)
+      daughters_label = return_label(d)
+      if d == 'kpi':
+        decay_label = '\\multirow{2}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
+      else:
+        decay_label = ''
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & {val:.0f} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+
+    b = 'k'
+    R_K_pi_name = f'R_Dst0KDst0pi_Bu2Dst0h_kpi'
+    R_K_pi = ufloat(fit_result[R_K_pi_name]['Value'], fit_result[R_K_pi_name]['Statistical Error'])
+    for d in daughters:
+      N_pi_name = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_pi_{d}'
+      N_pi = ufloat(fit_result[N_pi_name]['Value'], fit_result[N_pi_name]['Statistical Error'])
+      if d == 'kpi':
+        decay_label = '\\multirow{2}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
+        R = R_K_pi
+      else:
+        decay_label = ''
+        R_CP_name = f'R_CP_Bu2Dst0h_D0{n}{blindStr}'
+        R_CP = ufloat(fit_result[R_CP_name]['Value'], fit_result[R_CP_name]['Statistical Error'])
+        R = R_K_pi * R_CP
+      N_K = N_pi * R
+      val = N_K.n
+      stat = N_K.s
+      exp = math.sqrt(val)
+      if d == 'kpi':
+        N_K_kpi = ufloat(val, stat)
+      if blind == True and d != 'kpi':
+        valStr = 'X'
+      else:
+        valStr = f'{val:.0f}'
+      daughters_label = return_label(d)
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & {valStr} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+
+    bachelor = ['pi', 'k']
+    for b in bachelor:
+      if charge == 'total':
+        R_piK_name = f'R_piK_Bu2Dst0h_D0{n}{blindStr}_{b}_total'
+        R_piK = ufloat(fit_result[R_piK_name]['Value'], fit_result[R_piK_name]['Statistical Error'])
+      else:
+        R_piK_plus_name = f'R_piK_Bu2Dst0h_D0{n}{blindStr}_{b}_plus'
+        R_piK_plus = ufloat(fit_result[R_piK_plus_name]['Value'], fit_result[R_piK_plus_name]['Statistical Error'])
+        R_piK_minus_name = f'R_piK_Bu2Dst0h_D0{n}{blindStr}_{b}_minus'
+        R_piK_minus = ufloat(fit_result[R_piK_minus_name]['Value'], fit_result[R_piK_minus_name]['Statistical Error'])
+        R_piK = (R_piK_plus + R_piK_minus) / 2
+      if b == 'pi':
+        N_kpi_name = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_{b}_kpi'
+        N_kpi = ufloat(fit_result[N_kpi_name]['Value'], fit_result[N_kpi_name]['Statistical Error'])
+      else:
+        N_kpi = N_K_kpi
+      N_pik = N_kpi * R_piK
+      val = N_pik.n
+      stat = N_pik.s
+      exp = math.sqrt(val)
+      if blind == True:
+        valStr = 'X'
+      else:
+        valStr = f'{val:.0f}'
+      daughters_label = return_label('pik')
+      yield_dict[n][b]['pik'] = f' & {daughters_label} & {valStr} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+
+  for n in true_neutral:
+    for b in ['pi', 'k']:
+      for d in ['kpi', 'kk', 'pipi', 'pik']:
+        yields_file.write(yield_dict[n][b][d])
+  yields_file.write('\\end{tabular}\n')
