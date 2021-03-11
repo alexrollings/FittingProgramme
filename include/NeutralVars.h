@@ -903,7 +903,12 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_sigmaBu_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a1Bu_;
   std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n1Bu_;
-  RooCBShape pdfBu_Bs2Dst0Kst0_D0gamma_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_a2Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_n2Bu_;
+  std::shared_ptr<RooRealVar> Bs2Dst0Kst0_D0gamma_fracPdf1Bu_;
+  RooCBShape pdf1Bu_Bs2Dst0Kst0_D0gamma_;
+  RooCBShape pdf2Bu_Bs2Dst0Kst0_D0gamma_;
+  RooAddPdf pdfBu_Bs2Dst0Kst0_D0gamma_;
   std::shared_ptr<RooRealVar> mcEff_Bs2Dst0Kst0_D0gamma_;
   std::shared_ptr<RooRealVar> orEffBs2Dst0Kst0_D0gamma_;
   std::shared_ptr<RooRealVar> deltaEffBs2Dst0Kst0_D0gamma_;

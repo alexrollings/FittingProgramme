@@ -921,13 +921,40 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Params::Get().CreateFixed("Bs2Dst0Kst0_D0gamma_n1Bu", uniqueId_,
                                     Neutral::gamma, Mode::Bs2Dst0Kst0_D0gamma,
                                     Systematic::Bs2Dst0Kst0_PdfBu, Sign::none)),
-      pdfBu_Bs2Dst0Kst0_D0gamma_(
-          ("pdfBu_Bs2Dst0Kst0_D0gamma_" +
+      Bs2Dst0Kst0_D0gamma_a2Bu_(
+          Params::Get().CreateFixed("Bs2Dst0Kst0_D0gamma_a2Bu", uniqueId_,
+                                    Neutral::gamma, Mode::Bs2Dst0Kst0_D0gamma,
+                                    Systematic::Bs2Dst0Kst0_PdfBu, Sign::none)),
+      Bs2Dst0Kst0_D0gamma_n2Bu_(
+          Params::Get().CreateFixed("Bs2Dst0Kst0_D0gamma_n2Bu", uniqueId_,
+                                    Neutral::gamma, Mode::Bs2Dst0Kst0_D0gamma,
+                                    Systematic::Bs2Dst0Kst0_PdfBu, Sign::none)),
+      Bs2Dst0Kst0_D0gamma_fracPdf1Bu_(
+          Params::Get().CreateFixed("Bs2Dst0Kst0_D0gamma_fracPdf1Bu", uniqueId_,
+                                    Neutral::gamma, Mode::Bs2Dst0Kst0_D0gamma,
+                                    Systematic::Bs2Dst0Kst0_PdfBu, Sign::none)),
+      pdf1Bu_Bs2Dst0Kst0_D0gamma_(
+          ("pdf1Bu_Bs2Dst0Kst0_D0gamma_" +
            ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "", Configuration::Get().buDeltaMass(), *Bs2Dst0Kst0_D0gamma_meanBu_,
           *Bs2Dst0Kst0_D0gamma_sigmaBu_, *Bs2Dst0Kst0_D0gamma_a1Bu_,
           *Bs2Dst0Kst0_D0gamma_n1Bu_),
+      pdf2Bu_Bs2Dst0Kst0_D0gamma_(
+          ("pdf2Bu_Bs2Dst0Kst0_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(), *Bs2Dst0Kst0_D0gamma_meanBu_,
+          *Bs2Dst0Kst0_D0gamma_sigmaBu_, *Bs2Dst0Kst0_D0gamma_a2Bu_,
+          *Bs2Dst0Kst0_D0gamma_n2Bu_),
+      pdfBu_Bs2Dst0Kst0_D0gamma_(
+          ("pdfBu_Bs2Dst0Kst0_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "",
+          RooArgList(pdf1Bu_Bs2Dst0Kst0_D0gamma_,
+                     pdf2Bu_Bs2Dst0Kst0_D0gamma_),
+          *Bs2Dst0Kst0_D0gamma_fracPdf1Bu_),
       mcEff_Bs2Dst0Kst0_D0gamma_(Params::Get().CreateFixed(
           "mcEff_Bs2Dst0Kst0_D0gamma", uniqueId_, Neutral::gamma,
           ReturnMCEffs(Mode::Bs2Dst0Kst0_D0gamma, Neutral::gamma, Bachelor::k,
