@@ -474,7 +474,7 @@ class NeutralVars {
   RooCBShape &pdfBu_Bs2D0Kst0() {
     return pdfBu_Bs2D0Kst0_;
   }
-  RooCBShape &pdfBuPartial_Bs2D0Kst0() {
+  RooAddPdf &pdfBuPartial_Bs2D0Kst0() {
     return pdfBuPartial_Bs2D0Kst0_;
   }
   // Box effs for Bs --> no π MC, only K
@@ -855,11 +855,18 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bs2D0Kst0_a1Bu_;
   std::shared_ptr<RooRealVar> Bs2D0Kst0_n1Bu_;
   RooCBShape pdfBu_Bs2D0Kst0_;
-  std::shared_ptr<RooRealVar> Bs2D0Kst0_meanBuPartial_;
-  std::shared_ptr<RooRealVar> Bs2D0Kst0_sigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kst0_mean1BuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kst0_meanOffset21BuPartial_;
+  RooFormulaVar Bs2D0Kst0_mean2BuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kst0_sigma1BuPartial_;
+  std::shared_ptr<RooRealVar> Bs2D0Kst0_sigmaRatio21BuPartial_;
+  RooFormulaVar Bs2D0Kst0_sigma2BuPartial_;
   std::shared_ptr<RooRealVar> Bs2D0Kst0_a1BuPartial_;
   std::shared_ptr<RooRealVar> Bs2D0Kst0_n1BuPartial_;
-  RooCBShape pdfBuPartial_Bs2D0Kst0_;
+  std::shared_ptr<RooRealVar> Bs2D0Kst0_fracPdf1BuPartial_;
+  RooCBShape pdf1BuPartial_Bs2D0Kst0_;
+  RooGaussian pdf2BuPartial_Bs2D0Kst0_;
+  RooAddPdf pdfBuPartial_Bs2D0Kst0_;
   std::shared_ptr<RooRealVar> mcEff_Bs2D0Kst0_;
   std::shared_ptr<RooRealVar> orEffBs2D0Kst0_;
   std::shared_ptr<RooRealVar> deltaEffBs2D0Kst0_;
