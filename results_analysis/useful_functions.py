@@ -50,8 +50,24 @@ def neutral_label(n_str):
   else:
     return "\\pi^{0}"
 
-def return_label(observable_string):
+def return_label(string):
   labels = {
+      'Bu2Dst0pi_D0pi0':
+          '$\\Bpm\\ra(\\D\\piz)_{\\Dstar}\\pipm$',
+      'Bu2Dst0pi_D0gamma':
+          '$\\Bpm\\ra(\\D\\gamma)_{\\Dstar}\\pipm$',
+      'Bu2Dst0k_D0pi0':
+          '$\\Bpm\\ra(\\D\\piz)_{\\Dstar}\\Kpm$',
+      'Bu2Dst0k_D0gamma':
+          '$\\Bpm\\ra(\\D\\gamma)_{\\Dstar}\\Kpm$',
+      'kpi':
+          '$\\kaon\\pion$',
+      'kk':
+          '$\\kaon\\kaon$',
+      'pipi':
+          '$\\pion\\pion$',
+      'pik':
+          '$\\pion\\kaon$',
       'R_Dst0KDst0pi_Bu2Dst0h_kpi':
           '$R^{K\\pi}_{K/\\pi}$',
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi':
@@ -63,9 +79,9 @@ def return_label(observable_string):
       'R_CP_Bu2Dst0h_D0gamma_Blind':
           '$R^{CP,\\gamma}$',
       'R_piK_Bu2Dst0h_D0gamma_Blind_pi_total':
-          '$R^{\\pi K,\\gamma}_{\\pi^{\\pm}}$',
+          '$R^{\\pi K,\\gamma}_{\\pi}$',
       'R_piK_Bu2Dst0h_D0gamma_Blind_k_total':
-          '$R^{\\pi K,\\gamma}_{K^{\\pm}}$',
+          '$R^{\\pi K,\\gamma}_{K}$',
       'R_piK_Bu2Dst0h_D0gamma_Blind_pi_plus':
           '$R^{\\pi K,\\gamma}_{\\pi^{+}}$',
       'R_piK_Bu2Dst0h_D0gamma_Blind_k_plus':
@@ -77,9 +93,9 @@ def return_label(observable_string):
       'R_CP_Bu2Dst0h_D0gamma':
           '$R^{CP,\\gamma}$',
       'R_piK_Bu2Dst0h_D0gamma_pi_total':
-          '$R^{\\pi K,\\gamma}_{\\pi^{\\pm}}$',
+          '$R^{\\pi K,\\gamma}_{\\pi}$',
       'R_piK_Bu2Dst0h_D0gamma_k_total':
-          '$R^{\\pi K,\\gamma}_{K^{\\pm}}$',
+          '$R^{\\pi K,\\gamma}_{K}$',
       'R_piK_Bu2Dst0h_D0gamma_pi_plus':
           '$R^{\\pi K,\\gamma}_{\\pi^{+}}$',
       'R_piK_Bu2Dst0h_D0gamma_k_plus':
@@ -115,9 +131,9 @@ def return_label(observable_string):
       'R_CP_Bu2Dst0h_D0pi0_Blind':
           '$R^{CP,\\pi^{0}}$',
       'R_piK_Bu2Dst0h_D0pi0_Blind_pi_total':
-          '$R^{\\pi K,\\pi^{0}}_{\\pi^{\\pm}}$',
+          '$R^{\\pi K,\\pi^{0}}_{\\pi}$',
       'R_piK_Bu2Dst0h_D0pi0_Blind_k_total':
-          '$R^{\\pi K,\\pi^{0}}_{K^{\\pm}}$',
+          '$R^{\\pi K,\\pi^{0}}_{K}$',
       'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus':
           '$R^{\\pi K,\\pi^{0}}_{\\pi^{+}}$',
       'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus':
@@ -129,9 +145,9 @@ def return_label(observable_string):
       'R_CP_Bu2Dst0h_D0pi0':
           '$R^{CP,\\pi^{0}}$',
       'R_piK_Bu2Dst0h_D0pi0_pi_total':
-          '$R^{\\pi K,\\pi^{0}}_{\\pi^{\\pm}}$',
+          '$R^{\\pi K,\\pi^{0}}_{\\pi}$',
       'R_piK_Bu2Dst0h_D0pi0_k_total':
-          '$R^{\\pi K,\\pi^{0}}_{K^{\\pm}}$',
+          '$R^{\\pi K,\\pi^{0}}_{K}$',
       'R_piK_Bu2Dst0h_D0pi0_pi_plus':
           '$R^{\\pi K,\\pi^{0}}_{\\pi^{+}}$',
       'R_piK_Bu2Dst0h_D0pi0_k_plus':
@@ -153,12 +169,12 @@ def return_label(observable_string):
       'A_CP_Bu2Dst0h_D0pi0_k':
           '$A^{CP,\\pi^{0}}_{K}$',
   }
-  if observable_string in labels:
-    l = labels[observable_string]
+  if string in labels:
+    l = labels[string]
     return l
   else:
-    print("ERROR: label does not exist for " + observable_string)
-    return observable_string
+    print("ERROR: label does not exist for " + string)
+    return string
 
 # def get_systematic_label(s_str):
 #   d = {'pi0DeltaTails' : '$\\pi^{0}$ signal PDF: $\\delta_{M}$ tails',

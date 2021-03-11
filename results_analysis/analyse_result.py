@@ -508,10 +508,10 @@ if __name__ == '__main__':
       exp = math.sqrt(val)
       daughters_label = return_label(d)
       if d == 'kpi':
-        decay_label = '\\multirow{2}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
+        decay_label = '\\multirow{4}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
       else:
         decay_label = ''
-      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & {val:.0f} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${val:.0f} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
 
     b = 'k'
     R_K_pi_name = f'R_Dst0KDst0pi_Bu2Dst0h_kpi'
@@ -520,7 +520,7 @@ if __name__ == '__main__':
       N_pi_name = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_pi_{d}'
       N_pi = ufloat(fit_result[N_pi_name]['Value'], fit_result[N_pi_name]['Statistical Error'])
       if d == 'kpi':
-        decay_label = '\\multirow{2}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
+        decay_label = '\\multirow{4}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
         R = R_K_pi
       else:
         decay_label = ''
@@ -538,7 +538,7 @@ if __name__ == '__main__':
       else:
         valStr = f'{val:.0f}'
       daughters_label = return_label(d)
-      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & {valStr} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
 
     bachelor = ['pi', 'k']
     for b in bachelor:
@@ -565,7 +565,10 @@ if __name__ == '__main__':
       else:
         valStr = f'{val:.0f}'
       daughters_label = return_label('pik')
-      yield_dict[n][b]['pik'] = f' & {daughters_label} & {valStr} \\pm {stat:.0f} ({exp:.0f}) \\\\\n'
+      if n == 'pi0' and b == 'k':
+        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+      else:
+        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\ \\hline\n'
 
   for n in true_neutral:
     for b in ['pi', 'k']:

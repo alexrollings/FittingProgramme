@@ -169,10 +169,10 @@ if __name__ == '__main__':
   if not os.path.isdir(input_dir):
     sys.exit(input_dir + ' is not a directory')
   list_file = open(filename, 'w+')
-  # i = 0
+  i = 0
   for root_file in os.listdir(input_dir):
-    # if i > 1000:
-    #   break;
+    if i > 2500:
+      break;
     if dim == '1D':
       if fit_bu_partial == False:
         pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
@@ -189,7 +189,7 @@ if __name__ == '__main__':
         pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
                                  delta_low, delta_high, delta_partial_low,
                                  delta_partial_high, bu_low, bu_high)
-    # i = i + 1
+    i = i + 1
     # pass_filename(input_dir + '/' + root_file, list_file)
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
