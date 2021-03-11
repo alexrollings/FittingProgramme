@@ -401,8 +401,9 @@ void RunToys2DData(TFile &outputFile,
   //     Plotting2D(toyDataSet, id, *p, config, outputDir, toyLabel);
   //   }
   //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
+  //   std::map<std::string, Int_t> colorMap = MakeColorMap(config);
   //   for (auto &p : pdfs) {
-  //     Plotting1D(id, *p, config, *toyAbsData, *simPdf, outputDir,
+  //     Plotting1D(id, *p, config, *toyAbsData, *simPdf, colorMap, outputDir,
   //                toyFitResult.get(), yMaxMap);
   //   }
   //   if (config.noFit() == false) {
