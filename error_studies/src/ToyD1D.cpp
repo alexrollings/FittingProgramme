@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
   int bhArg = 5330;
   int dlArg = 138;
   int dhArg = 148;
+  int nToys = 0;
   {
     ParseArguments args(argc, argv);
     if (args("F")) {
@@ -44,6 +45,9 @@ int main(int argc, char **argv) {
       std::cout << "Fitting signal MC only.\n";
       signalOnlyArg = true;
     }
+    if (args("nToys", nToys)) {
+      std::cout << nToys << " toys being run.\n";
+    }
     if (!args("dl", dlArg)) {
       std::cout << "Using default lower box limit for m(Delta):" + std::to_string(dlArg) + ".\n";
     }
@@ -61,6 +65,10 @@ int main(int argc, char **argv) {
   Configuration config(dlArg, dhArg, blArg, bhArg);
   config.fit1D = fit1DArg;
   config.signalOnly = signalOnlyArg;
+  if (config.fit1D == true) {
+    nToys = 0;
+    std::cout << "Setting nToys to 0: cannot run D1D toys with 1D PDF.\n";
+  }
 
   Mode sigMode = Mode::Bu2Dst0pi_D0pi0;
   RooDataSet *sigDataset = nullptr;
