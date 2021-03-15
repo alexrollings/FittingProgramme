@@ -155,18 +155,14 @@ int main(int argc, char **argv) {
 
   std::string foutName = EnumToString(sigMode);
   if (config.fit1D == false) {
-    auto pdfToFit = std::unique_ptr<RooSimultaneous>(
-        new RooSimultaneous("pdfToFit", "pdfToFit", config.fitting));
-    pdfToFit->addPdf(*model.buAddPdf, EnumToString(Mass::bu).c_str());
-    pdfToFit->addPdf(*model.deltaAddPdf, EnumToString(Mass::delta).c_str());
     if (fitBool == true) {
       fitResult = std::unique_ptr<RooFitResult>(
-          pdfToFit->fitTo(*fullDataSet.get(), RooFit::Save(),
+          model.simPdf->fitTo(*fullDataSet.get(), RooFit::Save(),
                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                           RooFit::Offset(true)));
 
     }
-    PlotOnCanvas(pdfToFit.get(), config, fullDataSet, fitBool, plotAll, foutName);
+    PlotOnCanvas(model.simPdf.get(), config, fullDataSet, fitBool, plotAll, foutName);
   } else {
     fitResult = std::unique_ptr<RooFitResult>(
         model.buAddPdf->fitTo(*fullDataSet.get(), RooFit::Save(), RooFit::Strategy(2),

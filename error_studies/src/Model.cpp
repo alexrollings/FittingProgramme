@@ -63,7 +63,8 @@ Model::Model(Configuration &config, int _uniqueId)
       deltaFunctions(("deltaFunctions_" + std::to_string(uniqueId)).c_str()),
       deltaYields(("deltaYields_" + std::to_string(uniqueId)).c_str()),
       buAddPdf(nullptr),
-      deltaAddPdf(nullptr) {
+      deltaAddPdf(nullptr),
+      simPdf(nullptr) {
   if (config.fit1D == false) {
     N_Bu = std::unique_ptr<RooFormulaVar>(
         new RooFormulaVar(("N_Bu_" + std::to_string(uniqueId)).c_str(), "@0*@1",
@@ -91,6 +92,13 @@ Model::Model(Configuration &config, int _uniqueId)
   deltaAddPdf = std::unique_ptr<RooAddPdf>(
       new RooAddPdf(("deltaAddPdf_" + std::to_string(uniqueId)).c_str(), "",
                     deltaFunctions, deltaYields));
+
+  if (config.fit1D == false) {
+    simPdf = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
+        ("simPdf_" + std::to_string(uniqueId)).c_str(), "", config.fitting));
+    simPdf->addPdf(*buAddPdf, EnumToString(Mass::bu).c_str());
+    simPdf->addPdf(*deltaAddPdf, EnumToString(Mass::delta).c_str());
+  }
 }
 
 // 136 160

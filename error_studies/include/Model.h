@@ -73,4 +73,6 @@ class Model {
   std::unique_ptr<RooAddPdf> buAddPdf;
   std::unique_ptr<RooAddPdf> deltaAddPdf;
 
+  std::unique_ptr<RooSimultaneous> simPdf;
+
 };
