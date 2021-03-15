@@ -40,6 +40,7 @@ void PlotComponent(RooAbsPdf *totPdf, Configuration &config,
                    bool plotAll);
 void PlotOnCanvas(RooAbsPdf *totPdf, Configuration &config,
                   std::unique_ptr<RooDataSet> &fullDataSet, bool fitBool,
-                  bool plotAll, std::string const &foutName);
+                  bool plotAll, std::string const &foutName,
+                  std::string const &label);
 void SaveResult(std::unique_ptr<RooFitResult> &fitResult,
                 Configuration &config, std::string const &foutName);

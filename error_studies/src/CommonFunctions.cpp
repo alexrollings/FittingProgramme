@@ -325,7 +325,7 @@ void PlotComponent(RooAbsPdf *totPdf, Configuration &config,
 
 void PlotOnCanvas(RooAbsPdf *totPdf, Configuration &config,
                   std::unique_ptr<RooDataSet> &fullDataSet, bool fitBool,
-                  bool plotAll, std::string const &foutName) {
+                  bool plotAll, std::string const &foutName, std::string const &label) {
   // Declare in config and initialise AFTER mass ranges have been set in order
   // to plot over correct range
   std::unique_ptr<RooPlot> buFrame =
@@ -413,9 +413,9 @@ void PlotOnCanvas(RooAbsPdf *totPdf, Configuration &config,
     deltaDownLine.Draw();
   }
 
-  canvas.SaveAs(
-      (config.outputDir + "/plots/1D/" + foutName + "_" + config.ReturnBoxStr() + ".eps")
-          .c_str());
+  canvas.SaveAs((config.outputDir + "/plots/1D/" + foutName + "_" +
+                 config.ReturnBoxStr() + "_" + label + ".eps")
+                    .c_str());
 }
 
 void SaveResult(std::unique_ptr<RooFitResult> &fitResult, Configuration &config, std::string const &foutName) {

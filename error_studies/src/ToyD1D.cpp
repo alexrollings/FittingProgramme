@@ -170,12 +170,14 @@ int main(int argc, char **argv) {
                           RooFit::Offset(true)));
 
     }
-    // PlotOnCanvas(model.simPdf.get(), config, fullDataSet, fitBool, plotAll, foutName);
+    std::string label = "data";
+    PlotOnCanvas(model.simPdf.get(), config, fullDataSet, fitBool, plotAll, foutName, label);
   } else {
     fitResult = std::unique_ptr<RooFitResult>(
         model.buAddPdf->fitTo(*fullDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
                         RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
-    // PlotOnCanvas(model.buAddPdf.get(), config, fullDataSet, fitBool, plotAll, foutName);
+    std::string label = "data";
+    PlotOnCanvas(model.buAddPdf.get(), config, fullDataSet, fitBool, plotAll, foutName, label);
   }
 
   for (int id = 1; id < nToys + 1; ++id) {
@@ -195,72 +197,31 @@ int main(int argc, char **argv) {
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
 
-    RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgset,
-                          RooFit::Index(config.fitting),
-                          RooFit::Import(mapFittingToy));
-    toyDataSet.Print();
-    //
-    //   auto toyDataHist = std::unique_ptr<RooDataHist>(
-    //       toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
-    //   if (toyDataHist == nullptr) {
-    //     throw std::runtime_error("Could not extact binned dataSet.");
-    //   }
-    //   auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
-    //   if (toyAbsData == nullptr) {
-    //     throw std::runtime_error("Could not cast to RooAbsData.");
-    //   }
-    //
-    //   std::shared_ptr<RooFitResult> toyFitResult;
-    //   if (config.noFit() == false) {
-    //     toyFitResult = std::shared_ptr<RooFitResult>(
-    //         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE),
-    //         RooFit::Save(),
-    //                       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-    //                       RooFit::Offset(true),
-    //                       RooFit::NumCPU(config.nCPU())));
-    //     // toyFitResult->SetName(("ToyResult_" +
-    //     std::to_string(id)).c_str()); toyFitResult->SetName("ToyResult");
-    //   }
-    //
-    //   RooDataSet dataSet("dataSet", "dataSet", config.fittingArgSet(),
-    //                      RooFit::Index(config.fitting),
-    //                      RooFit::Import(mapFittingDataSet));
-    //
-    //   std::cout << "\n\n\n";
-    //   toyDataSet.Print();
-    //   dataSet.Print();
-    //   std::cout << "\n\n\n";
-    //
-    //   // if (id == 1) {
-    //   //   for (auto &p : pdfs) {
-    //   //     std::string toyLabel = "toy";
-    //   //     std::string dataLabel = "data";
-    //   //     Plotting2D(dataSet, id, *p, config, config.outputDir,
-    //   dataLabel);
-    //   //     Plotting2D(toyDataSet, id, *p, config, config.outputDir,
-    //   toyLabel);
-    //   //   }
-    //   //   std::map<Neutral, std::map<Mass, double> > yMaxMap;
-    //   //   std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-    //   //   for (auto &p : pdfs) {
-    //   //     Plotting1D(id, *p, config, *toyAbsData, *simPdf, colorMap,
-    //   //     config.outputDir,
-    //   //                toyFitResult.get(), yMaxMap);
-    //   //   }
-    //   //   if (config.noFit() == false) {
-    //   //     PlotCorrelations(toyFitResult.get(), config.outputDir, config);
-    //   //   }
-    //   // }
-    //   if (config.noFit() == false) {
-    //     // to make a unique result each time
-    //     toyFitResult->Print("v");
-    //     outputFile.cd();
-    //     toyFitResult->Write();
-    //     fitResult->Write();
-    //     outputFile.Close();
-    //     std::cout << toyFitResult->GetName() << " has been saved to file "
-    //               << outputFile.GetName() << "\n";
-    //   }
+    auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
+        ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
+        config.fittingArgset, RooFit::Index(config.fitting),
+        RooFit::Import(mapFittingToy)));
+    toyDataSet->Print();
+
+    std::shared_ptr<RooFitResult> toyFitResult;
+    toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
+        *toyDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
+        RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
+    // RooFit::Extended(kTRUE)
+    toyFitResult->SetName("ToyResult");
+
+    fitResult->Print("v");
+    toyFitResult->Print("v");
+    std::string label = "toy";
+    PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
+                 foutName, label);
+
+    // outputFile.cd();
+    // toyFitResult->Write();
+    // fitResult->Write();
+    // outputFile.Close();
+    // std::cout << toyFitResult->GetName() << " has been saved to file "
+    //           << outputFile.GetName() << "\n";
   }
   // fitResult->Print();
   // SaveResult(fitResult, config, foutName);
