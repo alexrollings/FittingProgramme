@@ -192,8 +192,8 @@ int main(int argc, char **argv) {
 
     Plotting2D(config, *genDataSet, *fullDataSet);
 
-    //   std::map<std::string, RooDataSet *> mapFittingToy =
-    //       MakeMapFittingDataSet(*p, mapDataLabelToy, mapFittingToy, config);
+    std::map<std::string, RooDataSet *> mapFittingToy;
+    MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
     //
     //   RooDataSet toyDataSet("toyDataSet", "toyDataSet",
     //   config.fittingArgSet(),
