@@ -54,8 +54,11 @@ class Model {
   std::unique_ptr<RooAbsReal> N_Bu;
   RooFormulaVar N_Delta;
 
-  // RooArgList buFunctions;
-  // RooArgList buYields;
-  // RooArgList deltaFunctions;
-  // RooArgList deltaYields;
+  RooArgList buFunctions;
+  RooArgList buYields;
+  RooArgList deltaFunctions;
+  RooArgList deltaYields;
+
+  std::unique_ptr<RooAddPdf> buAddPdf;
+  std::unique_ptr<RooAddPdf> deltaAddPdf;
 };

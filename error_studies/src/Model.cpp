@@ -42,15 +42,25 @@ Model::Model(Configuration &config, int _uniqueId)
           ReturnBoxEff(Mode::Bu2Dst0pi_D0pi0, config, Efficiency::deltaEff)),
       N_Bu(nullptr),
       N_Delta(("N_Delta_" + std::to_string(uniqueId)).c_str(), "@0*@1",
-              RooArgList(N_tot, eff_Delta)) {
+              RooArgList(N_tot, eff_Delta)),
+      buFunctions(("buFunctions_" + std::to_string(uniqueId)).c_str()),
+      buYields(("buYields_" + std::to_string(uniqueId)).c_str()),
+      deltaFunctions(("deltaFunctions_" + std::to_string(uniqueId)).c_str()),
+      deltaYields(("deltaYields_" + std::to_string(uniqueId)).c_str()),
+      buAddPdf(nullptr),
+      deltaAddPdf(nullptr) {
   if (config.fit1D == false) {
     N_Bu = std::unique_ptr<RooFormulaVar>(
         new RooFormulaVar(("N_Bu_" + std::to_string(uniqueId)).c_str(), "@0*@1",
-                       RooArgList(N_tot, eff_Bu)));
+                          RooArgList(N_tot, eff_Bu)));
   } else {
     N_Bu = std::unique_ptr<RooRealVar>(new RooRealVar(
         ("N_Bu_" + std::to_string(uniqueId)).c_str(), "", 10000, 0, 50000));
   }
+  buFunctions.add(buPdf);
+  buYields.add(*N_Bu);
+  deltaFunctions.add(deltaPdf);
+  deltaYields.add(N_Delta);
 }
 
 // 136 160

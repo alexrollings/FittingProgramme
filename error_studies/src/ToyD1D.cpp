@@ -155,29 +155,25 @@ int main(int argc, char **argv) {
   int id = 0;
   Model model(config, id);
 
-  RooArgList functionsBu;
-  functionsBu.add(model.buPdf);
-  RooArgList functionsDelta;
-  functionsDelta.add(model.deltaPdf);
   if (signalOnly == false) {
-    functionsBu.add(buBkgPdf);
-    functionsDelta.add(deltaBkgPdf);
+    model.buFunctions.add(buBkgPdf);
+    model.deltaFunctions.add(deltaBkgPdf);
   }
 
   RooRealVar N_Bu_Bkg("N_Bu_Bkg", "", N_Bkg, 0, 50000);
   RooRealVar N_Delta_Bkg("N_Delta_Bkg", "", N_Bkg, 0, 50000);
 
-  RooArgList yieldsBu;
-  yieldsBu.add(*model.N_Bu);
-  RooArgList yieldsDelta;
-  yieldsDelta.add(model.N_Delta);
   if (signalOnly == false) {
-    yieldsBu.add(N_Bu_Bkg);
-    yieldsDelta.add(N_Delta_Bkg);
+    model.buYields.add(N_Bu_Bkg);
+    model.deltaYields.add(N_Delta_Bkg);
   }
 
-  RooAddPdf buAddPdf("buAddPdf", "", functionsBu, yieldsBu);
-  RooAddPdf deltaAddPdf("deltaAddPdf", "", functionsDelta, yieldsDelta);
+  model.buAddPdf = std::unique_ptr<RooAddPdf>(
+      new RooAddPdf(("buAddPdf_" + std::to_string(id)).c_str(), "",
+                     model.buFunctions, model.buYields));
+  model.deltaAddPdf = std::unique_ptr<RooAddPdf>(
+      new RooAddPdf(("deltaAddPdf_" + std::to_string(id)).c_str(), "",
+                     model.deltaFunctions, model.deltaYields));
 
   std::unique_ptr<RooFitResult> fitResult = nullptr;
   std::vector<RooAbsPdf *> buPdfs;
@@ -187,8 +183,8 @@ int main(int argc, char **argv) {
   if (config.fit1D == false) {
     auto pdfToFit = std::unique_ptr<RooSimultaneous>(
         new RooSimultaneous("pdfToFit", "pdfToFit", config.fitting));
-    pdfToFit->addPdf(buAddPdf, EnumToString(Mass::bu).c_str());
-    pdfToFit->addPdf(deltaAddPdf, EnumToString(Mass::delta).c_str());
+    pdfToFit->addPdf(*model.buAddPdf, EnumToString(Mass::bu).c_str());
+    pdfToFit->addPdf(*model.deltaAddPdf, EnumToString(Mass::delta).c_str());
     if (fitBool == true) {
       fitResult = std::unique_ptr<RooFitResult>(
           pdfToFit->fitTo(*fullDataSet.get(), RooFit::Save(),
@@ -199,9 +195,9 @@ int main(int argc, char **argv) {
     PlotOnCanvas(pdfToFit.get(), config, fullDataSet, fitBool, plotAll, foutName);
   } else {
     fitResult = std::unique_ptr<RooFitResult>(
-        buAddPdf.fitTo(*fullDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
+        model.buAddPdf->fitTo(*fullDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
                         RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
-    PlotOnCanvas(&buAddPdf, config, fullDataSet, fitBool, plotAll, foutName);
+    PlotOnCanvas(model.buAddPdf.get(), config, fullDataSet, fitBool, plotAll, foutName);
   }
   fitResult->Print();
   SaveResult(fitResult, config, foutName);
