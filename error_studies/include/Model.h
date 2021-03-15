@@ -4,8 +4,11 @@
 #include <sstream>
 
 #include "RooArgSet.h"
+#include "RooArgList.h"
 #include "RooCategory.h"
 #include "RooRealVar.h"
+#include "RooFormulaVar.h"
+#include "RooAbsReal.h"
 #include "RooAbsPdf.h"
 #include "RooAddPdf.h"
 #include "RooCBShape.h"
@@ -14,6 +17,7 @@
 #include "RooSimultaneous.h"
 
 #include <Configuration.h>
+#include <CommonFunctions.h>
 
 // Class to hold a bunch of variables that are passed around
 class Model {
@@ -43,4 +47,15 @@ class Model {
   RooCBShape deltaPdf1;
   RooCBShape deltaPdf2;
   RooAddPdf deltaPdf;
+
+  RooRealVar N_tot;
+  RooRealVar eff_Bu;
+  RooRealVar eff_Delta;
+  std::unique_ptr<RooAbsReal> N_Bu;
+  RooFormulaVar N_Delta;
+
+  // RooArgList buFunctions;
+  // RooArgList buYields;
+  // RooArgList deltaFunctions;
+  // RooArgList deltaYields;
 };

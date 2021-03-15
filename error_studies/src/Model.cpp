@@ -33,4 +33,61 @@ Model::Model(Configuration &config, int _uniqueId)
       deltaPdf2(("deltaPdf2_" + std::to_string(uniqueId)).c_str(), "",
                 config.deltaMass, deltaMean, deltaSigma, deltaA2, deltaN2),
       deltaPdf(("deltaPdf_" + std::to_string(uniqueId)).c_str(), "",
-               RooArgSet(deltaPdf1, deltaPdf2), deltaFrac) {}
+               RooArgSet(deltaPdf1, deltaPdf2), deltaFrac),
+      N_tot(("N_tot_" + std::to_string(uniqueId)).c_str(), "", 10000, 0, 50000),
+      eff_Bu(("eff_Bu_" + std::to_string(uniqueId)).c_str(), "",
+             ReturnBoxEff(Mode::Bu2Dst0pi_D0pi0, config, Efficiency::buEff)),
+      eff_Delta(
+          ("eff_Delta_" + std::to_string(uniqueId)).c_str(), "",
+          ReturnBoxEff(Mode::Bu2Dst0pi_D0pi0, config, Efficiency::deltaEff)),
+      N_Bu(nullptr),
+      N_Delta(("N_Delta_" + std::to_string(uniqueId)).c_str(), "@0*@1",
+              RooArgList(N_tot, eff_Delta)) {
+  if (config.fit1D == false) {
+    N_Bu = std::unique_ptr<RooFormulaVar>(
+        new RooFormulaVar(("N_Bu_" + std::to_string(uniqueId)).c_str(), "@0*@1",
+                       RooArgList(N_tot, eff_Bu)));
+  } else {
+    N_Bu = std::unique_ptr<RooRealVar>(new RooRealVar(
+        ("N_Bu_" + std::to_string(uniqueId)).c_str(), "", 10000, 0, 50000));
+  }
+}
+
+// 136 160
+// RooRealVar buMean("Bu2Dst0h_D0pi0_mean1Bu", "", 5.2730e+03);
+// RooRealVar buSigma("Bu2Dst0h_D0pi0_sigma1Bu", "", 2.2931e+01);
+// RooRealVar buA1("Bu2Dst0h_D0pi0_a1Bu", "", 9.1003e-01);
+// RooRealVar buN1("Bu2Dst0h_D0pi0_n1Bu", "", 10);
+// RooRealVar buA2("Bu2Dst0h_D0pi0_a2Bu", "", -2.2424e+00);
+// RooRealVar buN2("Bu2Dst0h_D0pi0_n2Bu", "", 10);
+// RooRealVar buFrac("Bu2Dst0h_D0pi0_fracPdf1Bu", "buFraction of component 1
+// in bu PDF", 9.5717e-02);
+//
+// 5170 5370
+// RooRealVar deltaMean("Bu2Dst0h_D0pi0_meanDelta", "", 1.4241e+02);
+// RooRealVar deltaSigma("Bu2Dst0h_D0pi0_sigmaDelta", "", 1.6230e+00);
+// RooRealVar deltaA1("Bu2Dst0h_D0pi0_a1Delta", "", 7.5392e-01);
+// RooRealVar deltaN1("Bu2Dst0h_D0pi0_n1Delta", "", 10);
+// RooRealVar deltaA2("Bu2Dst0h_D0pi0_a2Delta", "", -6.1887e-01);
+// RooRealVar deltaN2("Bu2Dst0h_D0pi0_n2Delta", "", 10);
+// RooRealVar deltaFrac("Bu2Dst0h_D0pi0_fracPdf1Delta", "deltaFraction of
+// component 1 in delta PDF", 2.1771e-01);
+
+// 5170 5220
+// RooRealVar deltaMean("Bu2Dst0h_D0pi0_meanDelta", "", 1.4287e+02);
+// RooRealVar deltaSigma("Bu2Dst0h_D0pi0_sigmaDelta", "", 2.1217e+00);
+// RooRealVar deltaA1("Bu2Dst0h_D0pi0_a1Delta", "", 4.1785e+00);
+// RooRealVar deltaN1("Bu2Dst0h_D0pi0_n1Delta", "", 10);
+// RooRealVar deltaA2("Bu2Dst0h_D0pi0_a2Delta", "", -3.8947e+00);
+// RooRealVar deltaN2("Bu2Dst0h_D0pi0_n2Delta", "", 10);
+// RooRealVar deltaFrac("Bu2Dst0h_D0pi0_fracPdf1Delta", "deltaFraction of
+// component 1 in delta PDF", 4.6238e-01);
+
+// RooCBShape deltaPdf1("deltaPdf1", "", config.deltaMass, deltaMean,
+// deltaSigma,
+//                      deltaA1, deltaN1);
+// RooCBShape deltaPdf2("deltaPdf2", "", config.deltaMass, deltaMean,
+// deltaSigma,
+//                      deltaA2, deltaN2);
+// RooAddPdf deltaPdf("deltaPdf", "", RooArgSet(deltaPdf1, deltaPdf2),
+//                    deltaFrac);
