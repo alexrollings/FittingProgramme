@@ -32,7 +32,7 @@ void Plotting2D(Configuration &config, RooDataSet &toyDS,
   toyHist2d->SetStats(0);
   toyHist2d->Draw("colz");
   canvasToy.Update();
-  canvasToy.SaveAs((config.outputDir + "/plots/1D/2dToy.pdf").c_str());
+  canvasToy.SaveAs((config.outputDir + "/plots/1D/2dToy.eps").c_str());
 
   auto dataHist = std::unique_ptr<RooDataHist>(
       dataDS.binnedClone("dataDataHist", "dataDataHist"));
@@ -57,7 +57,7 @@ void Plotting2D(Configuration &config, RooDataSet &toyDS,
   dataHist2d->SetStats(0);
   dataHist2d->Draw("colz");
   canvasData.Update();
-  canvasData.SaveAs((config.outputDir + "/plots/1D/2dData.pdf").c_str());
+  canvasData.SaveAs((config.outputDir + "/plots/1D/2dData.eps").c_str());
 
   gStyle->SetTitleOffset(1.2, "Z");
   // Make a histogram with the Poisson stats in each data bin
@@ -93,7 +93,7 @@ void Plotting2D(Configuration &config, RooDataSet &toyDS,
   resDataHist2dToy->SetStats(0);
   resDataHist2dToy->Draw("colz");
   canvasResData.Update();
-  canvasResData.SaveAs((config.outputDir + "/toys/2dResidualsDataToyPi0.pdf").c_str());
+  canvasResData.SaveAs((config.outputDir + "/toys/2dResiduals.eps").c_str());
 }
 
 // void RunToys2DData(TFile &outputFile,
