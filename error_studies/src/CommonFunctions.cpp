@@ -3,8 +3,6 @@
 #include <algorithm>
 #include <regex>
 
-std::string outputDir = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/error_studies/";
-
 bool fexists(std::string const &filename) {
   std::ifstream infile(filename.c_str());
   return infile.is_open();
@@ -416,14 +414,14 @@ void PlotOnCanvas(RooAbsPdf *totPdf, Configuration &config,
   }
 
   canvas.SaveAs(
-      (outputDir + "/plots/" + foutName + "_" + config.ReturnBoxStr() + ".eps")
+      (config.outputDir + "/plots/1D/" + foutName + "_" + config.ReturnBoxStr() + ".eps")
           .c_str());
 }
 
 void SaveResult(std::unique_ptr<RooFitResult> &fitResult, Configuration &config, std::string const &foutName) {
   fitResult->SetName("FitResult");
   TFile rFile(
-      (outputDir + "/results/" + foutName + "_" + config.ReturnBoxStr() + ".root").c_str(),
+      (config.outputDir + "/results/" + foutName + "_" + config.ReturnBoxStr() + ".root").c_str(),
       "recreate");
   fitResult->Write();
   rFile.Close();

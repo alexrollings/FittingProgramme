@@ -18,6 +18,7 @@ Configuration::Configuration(int _deltaBoxLow, int _deltaBoxHigh, int _buBoxLow,
       deltaMass("Delta_M", "m(#Delta)", deltaRangeLow, deltaRangeHigh,
                 "MeV/c^{2}"),
       fittingArgset(buMass, deltaMass, fitting),
+      outputDir("/home/rollings/Bu2Dst0h_2d/FittingProgramme/error_studies/"),
       cutString() {
 
   fitting.defineType(EnumToString(Mass::bu).c_str());

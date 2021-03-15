@@ -39,6 +39,7 @@ class Configuration {
   RooRealVar deltaMass;
   RooArgSet variableArgset;
   RooArgSet fittingArgset;
+  std::string outputDir;
   std::string cutString;
 
   std::string ReturnBoxStr();
