@@ -97,7 +97,7 @@ void Plotting2D(Configuration &config, RooDataSet &toyDS,
 }
 
 void GenerateToyFromData(std::unique_ptr<RooDataSet> &dataSet,
-                         std::unique_ptr<RooDataSet> &toyDataSet, int const id,
+                         std::unique_ptr<RooDataSet> &genDataSet, int const id,
                          Configuration &config) {
   auto dataHist = std::unique_ptr<RooDataHist>(dataSet->binnedClone(
       ("dataHist_" + std::to_string(id)).c_str(), "dataHist"));
@@ -106,6 +106,7 @@ void GenerateToyFromData(std::unique_ptr<RooDataSet> &dataSet,
   }
   RooHistPdf histPdf(("histPdf_" + std::to_string(id)).c_str(), "",
                      config.fittingArgset, *dataHist.get(), 2);
-  toyDataSet = std::unique_ptr<RooDataSet>(
+  genDataSet = std::unique_ptr<RooDataSet>(
       histPdf.generate(config.fittingArgset, dataSet->numEntries()));
+  genDataSet->SetName(("genDataSet_" + std::to_string(id)).c_str());
 }
