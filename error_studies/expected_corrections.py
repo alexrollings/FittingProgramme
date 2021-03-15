@@ -12,7 +12,7 @@ N_k_pik = ufloat(N_k_kpi.n*0.015, sq(N_k_kpi.n*0.015))
 
 R_DK_Dpi = N_k_kpi / N_pi_kpi
 print(R_DK_Dpi)
-R_CP = (N_k_kk / N_pi_kk) * (1 / R_DK_Dpi)
+R_CP = (N_k_kk / N_pi_kk) * (N_pi_kpi / N_k_kpi)
 print(R_CP)
 R_pi_piK = N_pi_pik / N_pi_kpi
 print(R_pi_piK)
@@ -30,7 +30,7 @@ N_k_pik = ufloat(N_k_kpi.n*0.015, sq(N_k_kpi.n*0.015)/sq(2))
 
 R_DK_Dpi_corr = N_k_kpi / N_pi_kpi
 print(R_DK_Dpi)
-R_CP_corr = (N_k_kk / N_pi_kk) * (1 / R_DK_Dpi)
+R_CP_corr = (N_k_kk / N_pi_kk) * (N_pi_kpi / N_k_kpi)
 print(R_CP)
 R_pi_piK_corr = N_pi_pik / N_pi_kpi
 print(R_pi_piK)
