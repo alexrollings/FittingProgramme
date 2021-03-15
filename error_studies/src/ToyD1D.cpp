@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
   }
 
   Mode sigMode = Mode::Bu2Dst0pi_D0pi0;
-  RooDataSet *sigDataset = nullptr;
+  RooDataSet *sigDataSet = nullptr;
   std::string sigFname = "/data/lhcb/users/rollings/mc_roodatasets/pi0_" +
                         EnumToString(sigMode) + "_pi.root";
   if (!fexists(sigFname) || remakeDS == true) {
@@ -89,20 +89,20 @@ int main(int argc, char **argv) {
     } catch (std::exception &ex) {
       std::cout << "Could net GetEntry(0) from chain: " << ex.what() << "!\n";
     }
-    sigDataset =
-        new RooDataSet("sigDataset", "sigDataset", &chain, config.variableArgset);
+    sigDataSet =
+        new RooDataSet("sigDataSet", "sigDataSet", &chain, config.variableArgset);
     TFile dsFile(sigFname.c_str(), "RECREATE");
-    sigDataset->Write("dataset");
+    sigDataSet->Write("dataset");
     dsFile.Close();
   } else {
     std::cout << sigFname << " exists.\n";
     TFile dsFile(sigFname.c_str(), "READ");
-    gDirectory->GetObject("dataset", sigDataset);
-    if (sigDataset == nullptr) {
-      throw std::runtime_error("Dataset does not exist.\n");
+    gDirectory->GetObject("dataset", sigDataSet);
+    if (sigDataSet == nullptr) {
+      throw std::runtime_error("DataSet does not exist.\n");
     } else {
       std::cout << "dataset extracted: \n";
-      sigDataset->Print();
+      sigDataSet->Print();
     }
   }
 
@@ -133,29 +133,29 @@ int main(int argc, char **argv) {
 
   std::unique_ptr<RooDataSet> fullDataSet = nullptr;
   std::map<std::string, RooDataSet *> mapFittingDataSet;
+  std::unique_ptr<RooDataSet> reducedDataSet = nullptr;
 
   if (config.fit1D == false) {
     if (config.signalOnly == false) {
-      sigDataset->append(*genData);
+      sigDataSet->append(*genData);
     }
-    RooDataSet *reducedDataset = nullptr;
-    if (sigDataset != nullptr) {
-      reducedDataset = dynamic_cast<RooDataSet *>(
-          sigDataset->reduce(config.fittingArgset, config.cutString.c_str()));
+    if (sigDataSet != nullptr) {
+      reducedDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+          sigDataSet->reduce(config.fittingArgset, config.cutString.c_str())));
     } else {
-      throw std::runtime_error("Dataset was not loaded.\n");
+      throw std::runtime_error("DataSet was not loaded.\n");
     }
-    MakeMapFittingDataSet(config, *reducedDataset, mapFittingDataSet);
+    MakeMapFittingDataSet(config, *reducedDataSet, mapFittingDataSet);
     fullDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
         "fullDataSet", "fullDataSet", config.fittingArgset,
         RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
   } else {
     if (config.signalOnly == false) {
-      sigDataset->append(*genData);
+      sigDataSet->append(*genData);
     }
     std::cout << config.cutString << std::endl;
     fullDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-        sigDataset->reduce(config.buMass, config.cutString.c_str())));
+        sigDataSet->reduce(config.buMass, config.cutString.c_str())));
   }
   fullDataSet->Print();
 
@@ -185,20 +185,20 @@ int main(int argc, char **argv) {
     Model toyModel(config, id);
 
     std::unique_ptr<RooDataSet> genDataSet;
-    GenerateToyFromData(fullDataSet, genDataSet, id, config);
+    GenerateToyFromData(reducedDataSet, genDataSet, id, config);
     if (genDataSet == nullptr) {
       throw std::runtime_error("\ngenDataSet returns nullptr\n");
     }
 
-    Plotting2D(config, *genDataSet, *fullDataSet);
+    Plotting2D(config, *genDataSet, *reducedDataSet);
 
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
-    //
-    //   RooDataSet toyDataSet("toyDataSet", "toyDataSet",
-    //   config.fittingArgSet(),
-    //                         RooFit::Index(config.fitting),
-    //                         RooFit::Import(mapFittingToy));
+
+    RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgset,
+                          RooFit::Index(config.fitting),
+                          RooFit::Import(mapFittingToy));
+    toyDataSet.Print();
     //
     //   auto toyDataHist = std::unique_ptr<RooDataHist>(
     //       toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
