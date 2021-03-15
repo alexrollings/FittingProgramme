@@ -15,6 +15,7 @@
 #include "RooExponential.h"
 #include "RooGaussian.h"
 #include "RooSimultaneous.h"
+#include "RooProdPdf.h"
 
 #include <Configuration.h>
 #include <CommonFunctions.h>
@@ -53,6 +54,12 @@ class Model {
   RooRealVar eff_Delta;
   std::unique_ptr<RooAbsReal> N_Bu;
   RooFormulaVar N_Delta;
+
+  RooRealVar buLambda;
+  RooExponential buBkgPdf;
+  RooRealVar deltaLambda;
+  RooExponential deltaBkgPdf;
+  RooProdPdf bkgPdf;
 
   RooArgList buFunctions;
   RooArgList buYields;

@@ -43,6 +43,16 @@ Model::Model(Configuration &config, int _uniqueId)
       N_Bu(nullptr),
       N_Delta(("N_Delta_" + std::to_string(uniqueId)).c_str(), "@0*@1",
               RooArgList(N_tot, eff_Delta)),
+      buLambda(("buLambda_" + std::to_string(uniqueId)).c_str(), "", -0.005, -1,
+               1),
+      buBkgPdf(("buBkgPdf_" + std::to_string(uniqueId)).c_str(), "",
+               config.buMass, buLambda),
+      deltaLambda(("deltaLambda_" + std::to_string(uniqueId)).c_str(), "", 0.05,
+                  -1, 1),
+      deltaBkgPdf(("deltaBkgPdf_" + std::to_string(uniqueId)).c_str(), "",
+                  config.deltaMass, deltaLambda),
+      bkgPdf(("bkgPdf_" + std::to_string(uniqueId)).c_str(), "",
+             RooArgSet(buBkgPdf, deltaBkgPdf)),
       buFunctions(("buFunctions_" + std::to_string(uniqueId)).c_str()),
       buYields(("buYields_" + std::to_string(uniqueId)).c_str()),
       deltaFunctions(("deltaFunctions_" + std::to_string(uniqueId)).c_str()),
@@ -58,8 +68,13 @@ Model::Model(Configuration &config, int _uniqueId)
         ("N_Bu_" + std::to_string(uniqueId)).c_str(), "", 10000, 0, 50000));
   }
   buFunctions.add(buPdf);
-  buYields.add(*N_Bu);
   deltaFunctions.add(deltaPdf);
+  if (config.signalOnly == false) {
+    buFunctions.add(buBkgPdf);
+    deltaFunctions.add(deltaBkgPdf);
+  }
+
+  buYields.add(*N_Bu);
   deltaYields.add(N_Delta);
 }
 

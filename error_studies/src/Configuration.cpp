@@ -2,6 +2,7 @@
 
 Configuration::Configuration(int _deltaBoxLow, int _deltaBoxHigh, int _buBoxLow, int _buBoxHigh)
     : fit1D(false),
+      signalOnly(false),
       buBoxLow(_buBoxLow),
       buBoxHigh(_buBoxHigh),
       deltaBoxLow(_deltaBoxLow),

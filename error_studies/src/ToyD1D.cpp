@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   bool fitBool = true;
   bool plotAll = false;
   bool fit1DArg = false;
-  bool signalOnly = false;
+  bool signalOnlyArg = false;
   int blArg = 5220;
   int bhArg = 5330;
   int dlArg = 138;
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     }
     if (args("sig")) {
       std::cout << "Fitting signal MC only.\n";
-      signalOnly = true;
+      signalOnlyArg = true;
     }
     if (!args("dl", dlArg)) {
       std::cout << "Using default lower box limit for m(Delta):" + std::to_string(dlArg) + ".\n";
@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
 
   Configuration config(dlArg, dhArg, blArg, bhArg);
   config.fit1D = fit1DArg;
+  config.signalOnly = signalOnlyArg;
 
   Mode sigMode = Mode::Bu2Dst0pi_D0pi0;
   RooDataSet *sigDataset = nullptr;
@@ -109,25 +110,21 @@ int main(int argc, char **argv) {
   config.deltaMass.setMin(config.deltaRangeLow);
   config.deltaMass.setMax(config.deltaRangeHigh);
 
-  RooRealVar buLambda("buLambda", "", -0.005, -1, 1);
-  RooExponential buBkgPdf("buBkgPfg", "", config.buMass, buLambda);
-
-  RooRealVar deltaLambda("deltaLambda", "", 0.05, -1, 1);
-  RooExponential deltaBkgPdf("deltaBkgPfg", "", config.deltaMass, deltaLambda);
+  int id = 0;
+  Model model(config, id);
 
   double N_Bkg = 5000;
-  RooProdPdf bkgPdf("bkgPdf", "", RooArgSet(buBkgPdf, deltaBkgPdf));  
-  RooDataSet *gen2DBkgData = bkgPdf.generate(
+  RooDataSet *gen2DBkgData = model.bkgPdf.generate(
       RooArgSet(config.buMass, config.deltaMass), N_Bkg);
   gen2DBkgData->Print();
 
-  RooDataSet *gen1DBkgData = bkgPdf.generate(RooArgSet(config.buMass), N_Bkg);
+  RooDataSet *gen1DBkgData = model.bkgPdf.generate(RooArgSet(config.buMass), N_Bkg);
   gen1DBkgData->Print();
 
   std::unique_ptr<RooDataSet> fullDataSet = nullptr;
 
   if (config.fit1D == false) {
-    if (signalOnly == false) {
+    if (config.signalOnly == false) {
       sigDataset->append(*gen2DBkgData);
     }
     RooDataSet *reducedDataset = nullptr;
@@ -143,7 +140,7 @@ int main(int argc, char **argv) {
         "fullDataSet", "fullDataSet", config.fittingArgset,
         RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
   } else {
-    if (signalOnly == false) {
+    if (config.signalOnly == false) {
       sigDataset->append(*gen1DBkgData);
     }
     std::cout << config.cutString << std::endl;
@@ -152,18 +149,10 @@ int main(int argc, char **argv) {
   }
   fullDataSet->Print();
 
-  int id = 0;
-  Model model(config, id);
-
-  if (signalOnly == false) {
-    model.buFunctions.add(buBkgPdf);
-    model.deltaFunctions.add(deltaBkgPdf);
-  }
-
   RooRealVar N_Bu_Bkg("N_Bu_Bkg", "", N_Bkg, 0, 50000);
   RooRealVar N_Delta_Bkg("N_Delta_Bkg", "", N_Bkg, 0, 50000);
 
-  if (signalOnly == false) {
+  if (config.signalOnly == false) {
     model.buYields.add(N_Bu_Bkg);
     model.deltaYields.add(N_Delta_Bkg);
   }

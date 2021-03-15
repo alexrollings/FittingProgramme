@@ -23,6 +23,7 @@ class Configuration {
   Configuration(int, int, int, int);
 
   bool fit1D;
+  bool signalOnly;
   int buBoxLow;
   int buBoxHigh;
   int deltaBins;
