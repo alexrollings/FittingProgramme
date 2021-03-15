@@ -152,8 +152,6 @@ int main(int argc, char **argv) {
   fullDataSet->Print();
 
   std::unique_ptr<RooFitResult> fitResult = nullptr;
-  std::vector<RooAbsPdf *> buPdfs;
-  std::vector<RooAbsPdf *> deltaPdfs;
 
   std::string foutName = EnumToString(sigMode);
   if (config.fit1D == false) {
