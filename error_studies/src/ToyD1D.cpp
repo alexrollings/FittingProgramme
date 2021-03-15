@@ -1,9 +1,11 @@
 #include "RooAbsBinning.h"
 #include "RooDataHist.h"
+#include "RooRandom.h"
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 
 #include "CommonFunctions.h"
 #include "Configuration.h"
@@ -23,6 +25,7 @@ int main(int argc, char **argv) {
   int dlArg = 138;
   int dhArg = 148;
   int nToys = 0;
+  std::string pathArg = "/home/rollings/Bu2Dst0h_2d/FittingProgramme/error_studies/";
   {
     ParseArguments args(argc, argv);
     if (args("F")) {
@@ -45,6 +48,9 @@ int main(int argc, char **argv) {
       std::cout << "Fitting signal MC only.\n";
       signalOnlyArg = true;
     }
+    if (!args("outputDir", pathArg)) {
+      std::cout << "Using default output directory" << pathArg << "\n";
+    }
     if (args("nToys", nToys)) {
       std::cout << nToys << " toys being run.\n";
     }
@@ -63,6 +69,7 @@ int main(int argc, char **argv) {
   }
 
   Configuration config(dlArg, dhArg, blArg, bhArg);
+  config.outputDir = pathArg;
   config.fit1D = fit1DArg;
   config.signalOnly = signalOnlyArg;
   if (config.fit1D == true) {
@@ -141,7 +148,7 @@ int main(int argc, char **argv) {
     }
     if (sigDataSet != nullptr) {
       reducedDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-          sigDataSet->reduce(config.fittingArgset, config.cutString.c_str())));
+          sigDataSet->reduce(config.fittingArgset)));
     } else {
       throw std::runtime_error("DataSet was not loaded.\n");
     }
@@ -184,15 +191,30 @@ int main(int argc, char **argv) {
     std::cout << "\n\n -------------------------- Running toy #" << id
               << " -------------------------- \n\n";
 
+    std::random_device rd;
+    std::default_random_engine rng(rd());
+    std::uniform_int_distribution<UInt_t> dist;
+    // UInt_t seed = dist(rng);
+    UInt_t seed = 0x422d71a;
+    RooRandom::randomGenerator()->SetSeed(seed);
+
     Model toyModel(config, id);
 
+    std::unique_ptr<RooDataSet> dataToGenerate;
+    if (sigDataSet != nullptr) {
+      dataToGenerate = std::unique_ptr<RooDataSet>(
+          dynamic_cast<RooDataSet *>(sigDataSet->reduce(config.fittingArgset)));
+    } else {
+      throw std::runtime_error("Could not reduce sigDataSet.\n");
+    }
+
     std::unique_ptr<RooDataSet> genDataSet;
-    GenerateToyFromData(reducedDataSet, genDataSet, id, config);
+    GenerateToyFromData(dataToGenerate, genDataSet, id, config);
     if (genDataSet == nullptr) {
       throw std::runtime_error("\ngenDataSet returns nullptr\n");
     }
 
-    Plotting2D(config, *genDataSet, *reducedDataSet);
+    Plotting2D(config, *genDataSet, *dataToGenerate);
 
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
@@ -203,28 +225,38 @@ int main(int argc, char **argv) {
         RooFit::Import(mapFittingToy)));
     toyDataSet->Print();
 
-    std::shared_ptr<RooFitResult> toyFitResult;
-    toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
-        *toyDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
-        RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
-    // RooFit::Extended(kTRUE)
-    toyFitResult->SetName("ToyResult");
-
-    fitResult->Print("v");
-    toyFitResult->Print("v");
     std::string label = "toy";
     PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
                  foutName, label);
 
-    // outputFile.cd();
-    // toyFitResult->Write();
-    // fitResult->Write();
-    // outputFile.Close();
-    // std::cout << toyFitResult->GetName() << " has been saved to file "
-    //           << outputFile.GetName() << "\n";
-  }
-  // fitResult->Print();
-  // SaveResult(fitResult, config, foutName);
+    std::shared_ptr<RooFitResult> toyFitResult;
+    if (fitBool == true) {
+      toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
+          *toyDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
+          RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
+      // RooFit::Extended(kTRUE)
+      toyFitResult->SetName("ToyResult");
+      fitResult->Print("v");
+      toyFitResult->Print("v");
+    }
 
+    // std::string label = "toy";
+    // PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
+    //              foutName, label);
+
+    if (fitBool == true) {
+      std::stringstream filename;
+      filename << config.outputDir << "/results/Result2D_"
+               << config.ReturnBoxStr() << "_" << std::hex << seed << ".root";
+      TFile toyResultFile(filename.str().c_str(), "recreate");
+
+      toyResultFile.cd();
+      toyFitResult->Write();
+      fitResult->Write();
+      toyResultFile.Close();
+      std::cout << toyFitResult->GetName() << " has been saved to file "
+                << toyResultFile.GetName() << "\n";
+    }
+  }
   return 0;
 }

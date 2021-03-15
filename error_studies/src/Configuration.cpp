@@ -18,21 +18,18 @@ Configuration::Configuration(int _deltaBoxLow, int _deltaBoxHigh, int _buBoxLow,
       deltaMass("Delta_M", "m(#Delta)", deltaRangeLow, deltaRangeHigh,
                 "MeV/c^{2}"),
       fittingArgset(buMass, deltaMass, fitting),
-      outputDir("/home/rollings/Bu2Dst0h_2d/FittingProgramme/error_studies/"),
+      outputDir(),
       cutString() {
 
   fitting.defineType(EnumToString(Mass::bu).c_str());
   fitting.defineType(EnumToString(Mass::delta).c_str());
 
-  if (fit1D == false) {
-    cutString = "((Bu_Delta_M>" +
-                std::to_string(buBoxLow) + "&&Bu_Delta_M<" +
-                std::to_string(buBoxHigh) + ")||(Delta_M>" +
-                std::to_string(deltaBoxLow) + "&&Delta_M<" +
-                std::to_string(deltaBoxHigh) + "))";
-  } else {
-    cutString = "(Delta_M>" +
-                std::to_string(deltaBoxLow) + "&&Delta_M<" +
+  // cutString = "((Bu_Delta_M>" + std::to_string(buBoxLow) + "&&Bu_Delta_M<" +
+  //             std::to_string(buBoxHigh) + ")||(Delta_M>" +
+  //             std::to_string(deltaBoxLow) + "&&Delta_M<" +
+  //             std::to_string(deltaBoxHigh) + "))";
+  if (fit1D == true) {
+    cutString = "(Delta_M>" + std::to_string(deltaBoxLow) + "&&Delta_M<" +
                 std::to_string(deltaBoxHigh) + "))";
   }
 }
