@@ -53,6 +53,11 @@ Model::Model(Configuration &config, int _uniqueId)
                   config.deltaMass, deltaLambda),
       bkgPdf(("bkgPdf_" + std::to_string(uniqueId)).c_str(), "",
              RooArgSet(buBkgPdf, deltaBkgPdf)),
+      N_Bkg(5000),
+      N_Bu_Bkg(("N_Bu_Bkg_" + std::to_string(uniqueId)).c_str(), "",
+                           N_Bkg, 0, 50000),
+      N_Delta_Bkg(("N_Delta_Bkg_" + std::to_string(uniqueId)).c_str(), "",
+                  N_Bkg, 0, 50000),
       buFunctions(("buFunctions_" + std::to_string(uniqueId)).c_str()),
       buYields(("buYields_" + std::to_string(uniqueId)).c_str()),
       deltaFunctions(("deltaFunctions_" + std::to_string(uniqueId)).c_str()),
@@ -76,6 +81,16 @@ Model::Model(Configuration &config, int _uniqueId)
 
   buYields.add(*N_Bu);
   deltaYields.add(N_Delta);
+  if (config.signalOnly == false) {
+    buYields.add(N_Bu_Bkg);
+    deltaYields.add(N_Delta_Bkg);
+  }
+
+  buAddPdf = std::unique_ptr<RooAddPdf>(new RooAddPdf(
+      ("buAddPdf_" + std::to_string(uniqueId)).c_str(), "", buFunctions, buYields));
+  deltaAddPdf = std::unique_ptr<RooAddPdf>(
+      new RooAddPdf(("deltaAddPdf_" + std::to_string(uniqueId)).c_str(), "",
+                    deltaFunctions, deltaYields));
 }
 
 // 136 160

@@ -1,6 +1,5 @@
 #include "RooAbsBinning.h"
 #include "RooDataHist.h"
-#include "RooProdPdf.h"
 
 #include <iostream>
 #include <string>
@@ -113,19 +112,22 @@ int main(int argc, char **argv) {
   int id = 0;
   Model model(config, id);
 
-  double N_Bkg = 5000;
-  RooDataSet *gen2DBkgData = model.bkgPdf.generate(
-      RooArgSet(config.buMass, config.deltaMass), N_Bkg);
-  gen2DBkgData->Print();
-
-  RooDataSet *gen1DBkgData = model.bkgPdf.generate(RooArgSet(config.buMass), N_Bkg);
-  gen1DBkgData->Print();
+  RooDataSet *genData;
+  if (config.fit1D == false) {
+    genData =
+        model.bkgPdf.generate(RooArgSet(config.buMass, config.deltaMass),
+                              model.N_Bkg);
+  } else {
+    genData = model.buBkgPdf.generate(RooArgSet(config.buMass),
+                                      model.N_Bkg);
+  }
+  genData->Print();
 
   std::unique_ptr<RooDataSet> fullDataSet = nullptr;
 
   if (config.fit1D == false) {
     if (config.signalOnly == false) {
-      sigDataset->append(*gen2DBkgData);
+      sigDataset->append(*genData);
     }
     RooDataSet *reducedDataset = nullptr;
     if (sigDataset != nullptr) {
@@ -141,28 +143,13 @@ int main(int argc, char **argv) {
         RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
   } else {
     if (config.signalOnly == false) {
-      sigDataset->append(*gen1DBkgData);
+      sigDataset->append(*genData);
     }
     std::cout << config.cutString << std::endl;
     fullDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
         sigDataset->reduce(config.buMass, config.cutString.c_str())));
   }
   fullDataSet->Print();
-
-  RooRealVar N_Bu_Bkg("N_Bu_Bkg", "", N_Bkg, 0, 50000);
-  RooRealVar N_Delta_Bkg("N_Delta_Bkg", "", N_Bkg, 0, 50000);
-
-  if (config.signalOnly == false) {
-    model.buYields.add(N_Bu_Bkg);
-    model.deltaYields.add(N_Delta_Bkg);
-  }
-
-  model.buAddPdf = std::unique_ptr<RooAddPdf>(
-      new RooAddPdf(("buAddPdf_" + std::to_string(id)).c_str(), "",
-                     model.buFunctions, model.buYields));
-  model.deltaAddPdf = std::unique_ptr<RooAddPdf>(
-      new RooAddPdf(("deltaAddPdf_" + std::to_string(id)).c_str(), "",
-                     model.deltaFunctions, model.deltaYields));
 
   std::unique_ptr<RooFitResult> fitResult = nullptr;
   std::vector<RooAbsPdf *> buPdfs;

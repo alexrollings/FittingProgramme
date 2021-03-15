@@ -61,6 +61,10 @@ class Model {
   RooExponential deltaBkgPdf;
   RooProdPdf bkgPdf;
 
+  double N_Bkg;
+  RooRealVar N_Bu_Bkg;
+  RooRealVar N_Delta_Bkg;
+
   RooArgList buFunctions;
   RooArgList buYields;
   RooArgList deltaFunctions;
@@ -68,4 +72,5 @@ class Model {
 
   std::unique_ptr<RooAddPdf> buAddPdf;
   std::unique_ptr<RooAddPdf> deltaAddPdf;
+
 };
