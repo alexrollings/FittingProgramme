@@ -19,7 +19,7 @@ set(FITMC_LIBS ${ROOT_LIBRARIES} RooFitCore RooFit MathMore Minuit Foam TreePlay
 #Removed MathMore
 
 #Define source code. Add list of files
-set(FITMC_SRC src/ParseArguments.cpp src/Configuration.cpp src/CommonFunctions.cpp src/ToyFunctions)
+set(FITMC_SRC src/ParseArguments.cpp src/Configuration.cpp src/CommonFunctions.cpp src/ToyFunctions src/Model)
 add_library(runsrc ${FITMC_SRC})
 set(FITMC_LIBS ${FITMC_LIBS} runsrc)
 
