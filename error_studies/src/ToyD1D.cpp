@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
       std::cout << "Could net GetEntry(0) from chain: " << ex.what() << "!\n";
     }
     sigDataSet =
-        new RooDataSet("sigDataSet", "sigDataSet", &chain, config.varArgSet);
+        new RooDataSet("sigDataSet", "sigDataSet", &chain, config.fittingArgSet);
     TFile dsFile(sigFname.c_str(), "RECREATE");
     sigDataSet->Write("dataset");
     dsFile.Close();
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
     }
     if (sigDataSet != nullptr) {
       reducedDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-          sigDataSet->reduce(config.varArgSet)));
+          sigDataSet->reduce(config.fittingArgSet)));
     } else {
       throw std::runtime_error("DataSet was not loaded.\n");
     }
@@ -174,7 +174,7 @@ int main(int argc, char **argv) {
       fitResult = std::unique_ptr<RooFitResult>(
           model.simPdf->fitTo(*fullDataSet.get(), RooFit::Save(),
                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                          RooFit::Offset(true)));
+                          RooFit::Offset(true), RooFit::Extended(true)));
 
     }
     std::string label = "data";
@@ -209,7 +209,7 @@ int main(int argc, char **argv) {
     std::unique_ptr<RooDataSet> dataToGenerate;
     if (sigDataSet != nullptr) {
       dataToGenerate = std::unique_ptr<RooDataSet>(
-          dynamic_cast<RooDataSet *>(sigDataSet->reduce(config.varArgSet)));
+          dynamic_cast<RooDataSet *>(sigDataSet->reduce(config.fittingArgSet)));
     } else {
       throw std::runtime_error("Could not reduce sigDataSet.\n");
     }
@@ -237,8 +237,8 @@ int main(int argc, char **argv) {
     if (fitBool == true) {
       toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
           *toyDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
-          RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
-      // RooFit::Extended(kTRUE)
+          RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
+          RooFit::Extended(true)));
       toyFitResult->SetName("ToyResult");
       fitResult->Print();
       toyFitResult->Print();

@@ -105,8 +105,8 @@ void GenerateToyFromData(std::unique_ptr<RooDataSet> &dataSet,
     throw std::runtime_error("Could not extact binned dataSet.");
   }
   RooHistPdf histPdf(("histPdf_" + std::to_string(id)).c_str(), "",
-                     config.varArgSet, *dataHist.get(), 2);
+                     config.fittingArgSet, *dataHist.get(), 2);
   genDataSet = std::unique_ptr<RooDataSet>(
-      histPdf.generate(config.varArgSet, dataSet->numEntries()));
+      histPdf.generate(config.fittingArgSet, dataSet->numEntries()));
   genDataSet->SetName(("genDataSet_" + std::to_string(id)).c_str());
 }
