@@ -153,9 +153,17 @@ int main(int argc, char **argv) {
       throw std::runtime_error("DataSet was not loaded.\n");
     }
     MakeMapFittingDataSet(config, *reducedDataSet, mapFittingDataSet);
+    // fullDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
+    //     "fullDataSet", "fullDataSet", config.fittingArgSet,
+    //     RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
     fullDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
-        "fullDataSet", "fullDataSet", config.fittingArgSet,
-        RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
+        "fullDataSet", "fullDataSet",
+        RooArgSet(config.buMass, config.deltaMass),
+        RooFit::Index(config.fitting),
+        RooFit::Import(EnumToString(Mass::bu).c_str(),
+                       *mapFittingDataSet[EnumToString(Mass::bu)]),
+        RooFit::Import(EnumToString(Mass::delta).c_str(),
+                       *mapFittingDataSet[EnumToString(Mass::delta)])));
   } else {
     if (config.signalOnly == false) {
       sigDataSet->append(*genData);
@@ -227,10 +235,18 @@ int main(int argc, char **argv) {
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
 
+    // auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
+    //     ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
+    //     config.fittingArgSet, RooFit::Index(config.fitting),
+    //     RooFit::Import(mapFittingToy)));
     auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
         ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
-        config.fittingArgSet, RooFit::Index(config.fitting),
-        RooFit::Import(mapFittingToy)));
+        RooArgSet(config.buMass, config.deltaMass),
+        RooFit::Index(config.fitting),
+        RooFit::Import(EnumToString(Mass::bu).c_str(),
+                       *mapFittingToy[EnumToString(Mass::bu)]),
+        RooFit::Import(EnumToString(Mass::delta).c_str(),
+                       *mapFittingToy[EnumToString(Mass::delta)])));
     toyDataSet->Print();
 
     std::shared_ptr<RooFitResult> toyFitResult;
