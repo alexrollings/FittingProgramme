@@ -194,8 +194,8 @@ int main(int argc, char **argv) {
     std::random_device rd;
     std::default_random_engine rng(rd());
     std::uniform_int_distribution<UInt_t> dist;
-    // UInt_t seed = dist(rng);
-    UInt_t seed = 0x422d71a;
+    UInt_t seed = dist(rng);
+    // UInt_t seed = 0x422d71a;
     RooRandom::randomGenerator()->SetSeed(seed);
 
     Model toyModel(config, id);
@@ -214,7 +214,9 @@ int main(int argc, char **argv) {
       throw std::runtime_error("\ngenDataSet returns nullptr\n");
     }
 
-    Plotting2D(config, *genDataSet, *dataToGenerate);
+    if (id == 1) {
+      Plotting2D(config, *genDataSet, *dataToGenerate);
+    }
 
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
@@ -242,10 +244,6 @@ int main(int argc, char **argv) {
         RooFit::Import(mapFittingToy)));
     toyDataSet->Print();
 
-    std::string label = "toy";
-    PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
-                 foutName, label);
-
     std::shared_ptr<RooFitResult> toyFitResult;
     if (fitBool == true) {
       toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
@@ -257,9 +255,11 @@ int main(int argc, char **argv) {
       toyFitResult->Print("v");
     }
 
-    // std::string label = "toy";
-    // PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
-    //              foutName, label);
+    if (id == 1) {
+      std::string label = "toy";
+      PlotOnCanvas(toyModel.simPdf.get(), config, toyDataSet, fitBool, plotAll,
+                   foutName, label);
+    }
 
     if (fitBool == true) {
       std::stringstream filename;
