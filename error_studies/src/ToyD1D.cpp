@@ -187,6 +187,8 @@ int main(int argc, char **argv) {
     PlotOnCanvas(model.buAddPdf.get(), config, fullDataSet, fitBool, plotAll, foutName, label);
   }
 
+  fitResult->SetName("DataFitResult");
+
   if (nToys == 0) {
     fitResult->Print("v");
   }
