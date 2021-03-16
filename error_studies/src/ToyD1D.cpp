@@ -187,6 +187,10 @@ int main(int argc, char **argv) {
     PlotOnCanvas(model.buAddPdf.get(), config, fullDataSet, fitBool, plotAll, foutName, label);
   }
 
+  if (nToys == 0) {
+    fitResult->Print("v");
+  }
+
   for (int id = 1; id < nToys + 1; ++id) {
     std::cout << "\n\n -------------------------- Running toy #" << id
               << " -------------------------- \n\n";

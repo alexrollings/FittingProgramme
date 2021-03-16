@@ -5,9 +5,9 @@ Model::Model(Configuration &config, int _uniqueId)
       buMean(("buMean_" + std::to_string(uniqueId)).c_str(), "", 5.2819e+03,
              5250, 5290),
       buSigma(("buSigma_" + std::to_string(uniqueId)).c_str(), "", 20, 10, 50),
-      buA1(("buA1_" + std::to_string(uniqueId)).c_str(), "", 1, 0, 5),
+      buA1(("buA1_" + std::to_string(uniqueId)).c_str(), "", 3.2708e+00), //1, 0, 5),
       buN1(("buN1_" + std::to_string(uniqueId)).c_str(), "", 10),
-      buA2(("buA2_" + std::to_string(uniqueId)).c_str(), "", -1, -5, -0.00001),
+      buA2(("buA2_" + std::to_string(uniqueId)).c_str(), "", -1.2699e+00), //-1, -5, -0.00001),
       buN2(("buN2_" + std::to_string(uniqueId)).c_str(), "", 10),
       buFrac(("buFrac_" + std::to_string(uniqueId)).c_str(), "", 2.0967e-01, 0,
              1),
@@ -23,8 +23,7 @@ Model::Model(Configuration &config, int _uniqueId)
                  10),
       deltaA1(("deltaA1_" + std::to_string(uniqueId)).c_str(), "", 1, 0, 5),
       deltaN1(("deltaN1_" + std::to_string(uniqueId)).c_str(), "", 10),
-      deltaA2(("deltaA2_" + std::to_string(uniqueId)).c_str(), "", -1, -5,
-              -0.00001),
+      deltaA2(("deltaA2_" + std::to_string(uniqueId)).c_str(), "", -0.618889), //-1, -5, -0.00001),
       deltaN2(("deltaN2_" + std::to_string(uniqueId)).c_str(), "", 10),
       deltaFrac(("deltaFrac_" + std::to_string(uniqueId)).c_str(), "", 0.5, 0,
                 1),
@@ -63,7 +62,7 @@ Model::Model(Configuration &config, int _uniqueId)
                   config.deltaMass, deltaBkgThreshold, deltaBkgC, deltaBkgA, deltaBkgB),
       bkgPdf(("bkgPdf_" + std::to_string(uniqueId)).c_str(), "",
              RooArgSet(buBkgPdf, deltaBkgPdf)),
-      N_Bkg(5000),
+      N_Bkg(8000),
       N_Bu_Bkg(("N_Bu_Bkg_" + std::to_string(uniqueId)).c_str(), "",
                            N_Bkg, 0, 50000),
       N_Delta_Bkg(("N_Delta_Bkg_" + std::to_string(uniqueId)).c_str(), "",
@@ -99,11 +98,11 @@ Model::Model(Configuration &config, int _uniqueId)
 
   buAddPdf = std::unique_ptr<RooAddPdf>(new RooAddPdf(
       ("buAddPdf_" + std::to_string(uniqueId)).c_str(), "", buFunctions, buYields));
-  deltaAddPdf = std::unique_ptr<RooAddPdf>(
-      new RooAddPdf(("deltaAddPdf_" + std::to_string(uniqueId)).c_str(), "",
-                    deltaFunctions, deltaYields));
 
   if (config.fit1D == false) {
+    deltaAddPdf = std::unique_ptr<RooAddPdf>(
+        new RooAddPdf(("deltaAddPdf_" + std::to_string(uniqueId)).c_str(), "",
+                      deltaFunctions, deltaYields));
     simPdf = std::unique_ptr<RooSimultaneous>(new RooSimultaneous(
         ("simPdf_" + std::to_string(uniqueId)).c_str(), "", config.fitting));
     simPdf->addPdf(*buAddPdf, EnumToString(Mass::bu).c_str());
