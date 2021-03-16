@@ -221,23 +221,6 @@ int main(int argc, char **argv) {
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
 
-    TCanvas canvas("canvas", "canvas", 4200, 2000);
-    canvas.Divide(2, 1);
-    std::unique_ptr<RooPlot> buFrame =
-        std::unique_ptr<RooPlot>(config.buMass.frame(RooFit::Title(" ")));
-    mapFittingToy[EnumToString(Mass::bu)]->plotOn(buFrame.get());
-    mapFittingToy[EnumToString(Mass::bu)]->Print();
-    canvas.cd(1);
-    buFrame->Draw();
-    std::unique_ptr<RooPlot> deltaFrame =
-        std::unique_ptr<RooPlot>(config.deltaMass.frame(RooFit::Title(" ")));
-    mapFittingToy[EnumToString(Mass::delta)]->plotOn(deltaFrame.get());
-    mapFittingToy[EnumToString(Mass::delta)]->Print();
-    canvas.cd(2);
-    deltaFrame->Draw();
-    canvas.SaveAs((config.outputDir + "/plots/1D/toy_projections.eps")
-                      .c_str());
-
     auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
         ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
         config.fittingArgSet, RooFit::Index(config.fitting),
@@ -251,8 +234,8 @@ int main(int argc, char **argv) {
           RooFit::Minimizer("Minuit2"), RooFit::Offset(true)));
       // RooFit::Extended(kTRUE)
       toyFitResult->SetName("ToyResult");
-      fitResult->Print("v");
-      toyFitResult->Print("v");
+      fitResult->Print();
+      toyFitResult->Print();
     }
 
     if (id == 1) {

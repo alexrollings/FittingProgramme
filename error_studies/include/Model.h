@@ -14,6 +14,7 @@
 #include "RooCBShape.h"
 #include "RooExponential.h"
 #include "RooGaussian.h"
+#include "RooDstD0BG.h"
 #include "RooSimultaneous.h"
 #include "RooProdPdf.h"
 
@@ -55,10 +56,20 @@ class Model {
   std::unique_ptr<RooAbsReal> N_Bu;
   RooFormulaVar N_Delta;
 
-  RooRealVar buLambda;
-  RooExponential buBkgPdf;
-  RooRealVar deltaLambda;
-  RooExponential deltaBkgPdf;
+  // RooRealVar buLambda;
+  // RooExponential buBkgPdf;
+  // RooRealVar deltaLambda;
+  // RooExponential deltaBkgPdf;
+
+  RooRealVar buBkgMean;
+  RooRealVar buBkgSigma;
+  RooGaussian buBkgPdf;
+  RooRealVar deltaBkgThreshold;
+  RooRealVar deltaBkgC;
+  RooRealVar deltaBkgA;
+  RooRealVar deltaBkgB;
+  RooDstD0BG deltaBkgPdf;
+
   RooProdPdf bkgPdf;
 
   double N_Bkg;
