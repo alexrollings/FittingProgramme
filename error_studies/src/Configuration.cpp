@@ -17,7 +17,8 @@ Configuration::Configuration(int _deltaBoxLow, int _deltaBoxHigh, int _buBoxLow,
       buMass("Bu_Delta_M", "m(B)", buRangeLow, buRangeHigh, "MeV/c^{2}"),
       deltaMass("Delta_M", "m(#Delta)", deltaRangeLow, deltaRangeHigh,
                 "MeV/c^{2}"),
-      fittingArgset(buMass, deltaMass, fitting),
+      fittingArgSet(buMass, deltaMass, fitting),
+      varArgSet(buMass, deltaMass),
       outputDir(),
       cutString() {
 

@@ -61,44 +61,6 @@ void SetupTChain(Configuration &config, TChain &chain,
   }
 }
 
-void MakeCombDataSet(Configuration &config, RooDataSet &dataset,
-                     RooDataSet &combData) {
-  RooDataSet *buDataSet = nullptr;
-  buDataSet = dynamic_cast<RooDataSet *>(
-      dataset.reduce(("Delta_M>" + std::to_string(config.deltaBoxLow) +
-                      "&&Delta_M<" + std::to_string(config.deltaBoxHigh))
-                         .c_str()));
-  if (buDataSet == nullptr) {
-    throw std::runtime_error("Could not reduce bu data with box cuts.");
-  }
-  TH1 *histBu = buDataSet->createHistogram(
-      "histBu", config.buMass,
-      RooFit::Binning(config.buBins, config.buRangeLow, config.buRangeHigh));
-  config.fitting.setLabel(EnumToString(Mass::bu).c_str());
-  for (int i = 1; i <= histBu->GetNbinsX() + 1; ++i) {
-    config.buMass.setVal(histBu->GetBinCenter(i));
-    combData.add(config.fittingArgset, histBu->GetBinContent(i));
-  }
-
-  RooDataSet *deltaDataSet = nullptr;
-  deltaDataSet = dynamic_cast<RooDataSet *>(
-      dataset.reduce(("Bu_Delta_M>" + std::to_string(config.buBoxLow) +
-                      "&&Bu_Delta_M<" + std::to_string(config.buBoxHigh))
-                         .c_str()));
-  if (deltaDataSet == nullptr) {
-    throw std::runtime_error("Could not reduce delta data with box cuts.");
-  }
-  TH1 *histDelta = deltaDataSet->createHistogram(
-      "histDelta", config.deltaMass,
-      RooFit::Binning(config.deltaBins, config.deltaRangeLow,
-                      config.deltaRangeHigh));
-  config.fitting.setLabel(EnumToString(Mass::delta).c_str());
-  for (int i = 1; i <= histDelta->GetNbinsX() + 1; ++i) {
-    config.deltaMass.setVal(histDelta->GetBinCenter(i));
-    combData.add(config.fittingArgset, histDelta->GetBinContent(i));
-  }
-}
-
 void MakeMapFittingDataSet(
     Configuration &config, RooDataSet &dataset,
     std::map<std::string, RooDataSet *> &mapFittingDataSet) {
@@ -110,6 +72,7 @@ void MakeMapFittingDataSet(
   if (buDataSet == nullptr) {
     throw std::runtime_error("Could not reduce bu data with box cuts.");
   }
+  buDataSet->SetName((EnumToString(Mass::bu) + "_DS").c_str());
   buDataSet->Print();
   mapFittingDataSet.insert(std::make_pair(EnumToString(Mass::bu), buDataSet));
   std::cout << "Appended dataSet to category " + EnumToString(Mass::bu) + "\n";
@@ -121,11 +84,13 @@ void MakeMapFittingDataSet(
   if (deltaDataSet == nullptr) {
     throw std::runtime_error("Could not reduce delta data with box cuts.");
   }
+  deltaDataSet->SetName((EnumToString(Mass::delta) + "_DS").c_str());
   deltaDataSet->Print();
   mapFittingDataSet.insert(
       std::make_pair(EnumToString(Mass::delta), deltaDataSet));
   std::cout << "Appended dataSet to category " + EnumToString(Mass::delta) +
                    "\n";
+
 }
 
 std::vector<std::string> SplitLine(std::string const &str) {

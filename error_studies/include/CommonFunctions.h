@@ -29,8 +29,6 @@ void SetupTChain(Configuration &config, TChain &chain,
 void MakeMapFittingDataSet(
     Configuration &config, RooDataSet &dataset,
     std::map<std::string, RooDataSet *> &mapFittingDataSet);
-void MakeCombDataSet(Configuration &config, RooDataSet &dataset,
-                     RooDataSet &combData);
 void CalcBinomialErr(double eff, double nInit, double &err);
 double ReturnBoxEff(Mode mode, Configuration &config, Efficiency eff);
 void PlotComponent(RooAbsPdf *totPdf, Configuration &config,

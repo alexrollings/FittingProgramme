@@ -37,8 +37,8 @@ class Configuration {
   RooCategory fitting;
   RooRealVar buMass;
   RooRealVar deltaMass;
-  RooArgSet variableArgset;
-  RooArgSet fittingArgset;
+  RooArgSet fittingArgSet;
+  RooArgSet varArgSet;
   std::string outputDir;
   std::string cutString;
 

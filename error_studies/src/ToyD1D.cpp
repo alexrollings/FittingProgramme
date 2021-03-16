@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
       std::cout << "Could net GetEntry(0) from chain: " << ex.what() << "!\n";
     }
     sigDataSet =
-        new RooDataSet("sigDataSet", "sigDataSet", &chain, config.variableArgset);
+        new RooDataSet("sigDataSet", "sigDataSet", &chain, config.varArgSet);
     TFile dsFile(sigFname.c_str(), "RECREATE");
     sigDataSet->Write("dataset");
     dsFile.Close();
@@ -148,13 +148,13 @@ int main(int argc, char **argv) {
     }
     if (sigDataSet != nullptr) {
       reducedDataSet = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
-          sigDataSet->reduce(config.fittingArgset)));
+          sigDataSet->reduce(config.varArgSet)));
     } else {
       throw std::runtime_error("DataSet was not loaded.\n");
     }
     MakeMapFittingDataSet(config, *reducedDataSet, mapFittingDataSet);
     fullDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
-        "fullDataSet", "fullDataSet", config.fittingArgset,
+        "fullDataSet", "fullDataSet", config.fittingArgSet,
         RooFit::Index(config.fitting), RooFit::Import(mapFittingDataSet)));
   } else {
     if (config.signalOnly == false) {
@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
     std::unique_ptr<RooDataSet> dataToGenerate;
     if (sigDataSet != nullptr) {
       dataToGenerate = std::unique_ptr<RooDataSet>(
-          dynamic_cast<RooDataSet *>(sigDataSet->reduce(config.fittingArgset)));
+          dynamic_cast<RooDataSet *>(sigDataSet->reduce(config.varArgSet)));
     } else {
       throw std::runtime_error("Could not reduce sigDataSet.\n");
     }
@@ -219,9 +219,26 @@ int main(int argc, char **argv) {
     std::map<std::string, RooDataSet *> mapFittingToy;
     MakeMapFittingDataSet(config, *genDataSet.get(), mapFittingToy);
 
+    TCanvas canvas("canvas", "canvas", 4200, 2000);
+    canvas.Divide(2, 1);
+    std::unique_ptr<RooPlot> buFrame =
+        std::unique_ptr<RooPlot>(config.buMass.frame(RooFit::Title(" ")));
+    mapFittingToy[EnumToString(Mass::bu)]->plotOn(buFrame.get());
+    mapFittingToy[EnumToString(Mass::bu)]->Print();
+    canvas.cd(1);
+    buFrame->Draw();
+    std::unique_ptr<RooPlot> deltaFrame =
+        std::unique_ptr<RooPlot>(config.deltaMass.frame(RooFit::Title(" ")));
+    mapFittingToy[EnumToString(Mass::delta)]->plotOn(deltaFrame.get());
+    mapFittingToy[EnumToString(Mass::delta)]->Print();
+    canvas.cd(2);
+    deltaFrame->Draw();
+    canvas.SaveAs((config.outputDir + "/plots/1D/toy_projections.eps")
+                      .c_str());
+
     auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
         ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
-        config.fittingArgset, RooFit::Index(config.fitting),
+        config.fittingArgSet, RooFit::Index(config.fitting),
         RooFit::Import(mapFittingToy)));
     toyDataSet->Print();
 
