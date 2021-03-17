@@ -225,7 +225,8 @@ int main(int argc, char **argv) {
     }
 
     std::unique_ptr<RooDataSet> genDataSet;
-    GenerateToyFromData(dataToGenerate, genDataSet, id, config);
+    // GenerateToyFromData(dataToGenerate, genDataSet, id, config);
+    GenerateToyFromPdf(model, genDataSet, id, config);
     if (genDataSet == nullptr) {
       throw std::runtime_error("\ngenDataSet returns nullptr\n");
     }
