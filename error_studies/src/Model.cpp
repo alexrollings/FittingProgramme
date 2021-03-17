@@ -75,7 +75,8 @@ Model::Model(Configuration &config, int _uniqueId)
                 config.deltaMass, deltaMean, deltaSigma, deltaA2, deltaN2),
       deltaPdf(("deltaPdf_" + std::to_string(uniqueId)).c_str(), "",
                RooArgSet(deltaPdf1, deltaPdf2), deltaFrac),
-      N_tot(("N_tot_" + std::to_string(uniqueId)).c_str(), "", 15000, 0, 50000),
+      N_Sig(15000),
+      N_tot(("N_tot_" + std::to_string(uniqueId)).c_str(), "", N_Sig, 0, 50000),
       eff_Bu(("eff_Bu_" + std::to_string(uniqueId)).c_str(), "",
              ReturnBoxEff(Mode::Bu2Dst0pi_D0pi0, config, Efficiency::buEff)),
       eff_Delta(
