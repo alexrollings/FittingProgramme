@@ -50,6 +50,7 @@ class Model {
   RooCBShape deltaPdf2;
   RooAddPdf deltaPdf;
 
+  double N_Sig;
   RooRealVar N_tot;
   RooRealVar eff_Bu;
   RooRealVar eff_Delta;
@@ -70,8 +71,6 @@ class Model {
   RooRealVar deltaBkgB;
   RooDstD0BG deltaBkgPdf;
 
-  RooProdPdf bkgPdf;
-
   double N_Bkg;
   RooRealVar N_Bu_Bkg;
   RooRealVar N_Delta_Bkg;
@@ -86,4 +85,14 @@ class Model {
 
   std::unique_ptr<RooSimultaneous> simPdf;
 
+  RooProdPdf sigPdf2D;
+  RooRealVar N_Sig2D;
+
+  RooProdPdf bkgPdf2D;
+  RooRealVar N_Bkg2D;
+
+  RooArgList functions2D;
+  RooArgList yields2D;
+
+  std::unique_ptr<RooAddPdf> pdf2D;
 };

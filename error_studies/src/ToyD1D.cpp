@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
   RooDataSet *genData;
   if (config.fit1D == false) {
     genData =
-        model.bkgPdf.generate(RooArgSet(config.buMass, config.deltaMass),
+        model.bkgPdf2D.generate(RooArgSet(config.buMass, config.deltaMass),
                               model.N_Bkg);
   } else {
     genData = model.buBkgPdf.generate(RooArgSet(config.buMass),
