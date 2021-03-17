@@ -69,6 +69,7 @@ void MakeMapFittingDataSet(
       dataset.reduce(("Delta_M>" + std::to_string(config.deltaBoxLow) +
                       "&&Delta_M<" + std::to_string(config.deltaBoxHigh))
                          .c_str()));
+  buDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(config.buMass));
   if (buDataSet == nullptr) {
     throw std::runtime_error("Could not reduce bu data with box cuts.");
   }
@@ -81,6 +82,7 @@ void MakeMapFittingDataSet(
       dataset.reduce(("Bu_Delta_M>" + std::to_string(config.buBoxLow) +
                       "&&Bu_Delta_M<" + std::to_string(config.buBoxHigh))
                          .c_str()));
+  deltaDataSet = dynamic_cast<RooDataSet *>(dataset.reduce(config.deltaMass));
   if (deltaDataSet == nullptr) {
     throw std::runtime_error("Could not reduce delta data with box cuts.");
   }
