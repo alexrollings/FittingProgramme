@@ -110,3 +110,10 @@ void GenerateToyFromData(std::unique_ptr<RooDataSet> &dataSet,
       histPdf.generate(config.fittingArgSet, dataSet->numEntries()));
   genDataSet->SetName(("genDataSet_" + std::to_string(id)).c_str());
 }
+
+void GenerateToyFromPdf(Model &model, std::unique_ptr<RooDataSet> &genDataSet,
+                        int const id, Configuration &config) {
+  genDataSet = std::unique_ptr<RooDataSet>(
+      model.pdf2D->generate(config.fittingArgSet, (model.N_Sig2D.getVal() + model.N_Bkg2D.getVal())));
+  genDataSet->SetName(("genDataSet_" + std::to_string(id)).c_str());
+}

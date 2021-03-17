@@ -13,8 +13,11 @@
 #include "TH2.h"
 
 #include "Configuration.h"
+#include "Model.h"
 
 void Plotting2D(Configuration &config, RooDataSet &toyDS, RooDataSet &dataDS);
 void GenerateToyFromData(std::unique_ptr<RooDataSet> &dataSet,
                          std::unique_ptr<RooDataSet> &toyDataSet, int const id,
                          Configuration &config);
+void GenerateToyFromPdf(Model &model, std::unique_ptr<RooDataSet> &genDataSet,
+                        int const id, Configuration &config);
