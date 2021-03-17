@@ -173,6 +173,8 @@ int main(int argc, char **argv) {
         sigDataSet->reduce(config.buMass, config.cutString.c_str())));
   }
   fullDataSet->Print();
+  auto fullDataHist = std::unique_ptr<RooDataHist>(
+      fullDataSet->binnedClone("fullDataHist", "fullDataHist"));
 
   std::unique_ptr<RooFitResult> fitResult = nullptr;
 
@@ -180,7 +182,7 @@ int main(int argc, char **argv) {
   if (config.fit1D == false) {
     if (fitBool == true) {
       fitResult = std::unique_ptr<RooFitResult>(
-          model.simPdf->fitTo(*fullDataSet.get(), RooFit::Save(),
+          model.simPdf->fitTo(*fullDataHist.get(), RooFit::Save(),
                           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                           RooFit::Offset(true), RooFit::Extended(true)));
 
@@ -209,7 +211,7 @@ int main(int argc, char **argv) {
     std::default_random_engine rng(rd());
     std::uniform_int_distribution<UInt_t> dist;
     UInt_t seed = dist(rng);
-    // UInt_t seed = 0x422d71a;
+    // UInt_t seed = 0xa1c93ad5;
     RooRandom::randomGenerator()->SetSeed(seed);
 
     Model toyModel(config, id);
@@ -239,6 +241,7 @@ int main(int argc, char **argv) {
     //     ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
     //     config.fittingArgSet, RooFit::Index(config.fitting),
     //     RooFit::Import(mapFittingToy)));
+    //     NO DIFFERENCE
     auto toyDataSet = std::unique_ptr<RooDataSet>(new RooDataSet(
         ("toyDataSet_" + std::to_string(id)).c_str(), "toyDataSet",
         RooArgSet(config.buMass, config.deltaMass),
@@ -248,11 +251,13 @@ int main(int argc, char **argv) {
         RooFit::Import(EnumToString(Mass::delta).c_str(),
                        *mapFittingToy[EnumToString(Mass::delta)])));
     toyDataSet->Print();
+    auto toyDataHist = std::unique_ptr<RooDataHist>(toyDataSet->binnedClone(
+        ("toyDataHist_" + std::to_string(id)).c_str(), "toyDataHist"));
 
     std::shared_ptr<RooFitResult> toyFitResult;
     if (fitBool == true) {
       toyFitResult = std::shared_ptr<RooFitResult>(toyModel.simPdf->fitTo(
-          *toyDataSet.get(), RooFit::Save(), RooFit::Strategy(2),
+          *toyDataHist.get(), RooFit::Save(), RooFit::Strategy(2),
           RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
           RooFit::Extended(true)));
       toyFitResult->SetName("ToyResult");
