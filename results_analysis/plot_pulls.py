@@ -141,10 +141,10 @@ if __name__ == '__main__':
       delta_low = "125"
     if delta_high == None:
       delta_high = "170"
-    if delta_partial_low == None:
-      delta_partial_low = "60"
-    if delta_partial_high == None:
-      delta_partial_high = "105"
+    # if delta_partial_low == None:
+    #   delta_partial_low = "60"
+    # if delta_partial_high == None:
+    #   delta_partial_high = "105"
     if bu_low == None:
       bu_low = "5240"
     if bu_high == None:
@@ -171,8 +171,8 @@ if __name__ == '__main__':
   list_file = open(filename, 'w+')
   i = 0
   for root_file in os.listdir(input_dir):
-    if i > 2500:
-      break;
+    # if i > 2500:
+    #   break;
     if dim == '1D':
       if fit_bu_partial == False:
         pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,

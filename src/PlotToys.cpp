@@ -91,7 +91,8 @@ int main(int argc, char *argv[]) {
     }
 
     if (config.neutral() == Neutral::gamma) {
-      if (args("buPartial")) {
+      if (!args("buPartial")) {
+      } else {
         config.fitBuPartial() = true;
       }
     }
@@ -230,13 +231,11 @@ int main(int argc, char *argv[]) {
           //                          filename);
           continue;
         } else {
-          resultVec.emplace_back(*result.get());
           dataResultVec.emplace_back(*dataResult.get());
-          rndmVec.emplace_back(rndm);
-          // std::cout << "Extracted Result from " << filename << "\n";
         }
-        // std::cout << "Extracted Result from " << filename << "\n";
       }
+      resultVec.emplace_back(*result.get());
+      rndmVec.emplace_back(rndm);
     }
   }
 
