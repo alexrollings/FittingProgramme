@@ -268,7 +268,7 @@ void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir) {
 
 void GenerateToys(std::string const &outputDir, int nToys) {
   int bu_low = 5050;
-  int bu_high = 5800;
+  int bu_high = 5500;
   int delta_low = 60;  // 134;
   int delta_high = 210;
 
@@ -356,19 +356,23 @@ void GenerateToys(std::string const &outputDir, int nToys) {
 
     // ---------------------------- Background ----------------------------
 
-    RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01);//, -0.1, 0.1);
-    RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
+    // RooRealVar lambdaDeltaBkg("lambdaDeltaBkg", "", 0.01);//, -0.1, 0.1);
+    // RooExponential pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, lambdaDeltaBkg);
 
-    // RooRealVar thresholdDeltaBkg("thresholdDeltaBkg", "", 4.7048e+01);
-    // RooRealVar cDeltaBkg("cDeltaBkg", "", 6.2583e+01);
-    // RooRealVar aDeltaBkg("aDeltaBkg", "", 8.1939e-01);
-    // RooRealVar bDeltaBkg("bDeltaBkg", "", -7.9655e-01);
-    // RooDstD0BG pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, thresholdDeltaBkg,
-    //                        cDeltaBkg, aDeltaBkg, bDeltaBkg);
+    RooRealVar thresholdDeltaBkg("thresholdDeltaBkg", "", 5.8300e+01);
+    RooRealVar cDeltaBkg("cDeltaBkg", "", 8.3605e+01);
+    RooRealVar aDeltaBkg("aDeltaBkg", "", 2.2537e-01);
+    RooRealVar bDeltaBkg("bDeltaBkg", "", -3.5935e-01);
+    RooDstD0BG pdfDeltaBkg("pdfDeltaBkg", "", deltaMass, thresholdDeltaBkg,
+                           cDeltaBkg, aDeltaBkg, bDeltaBkg);
     // ---------------------------- π/K shared PDFs: Bu
     // ----------------------------
-    RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005);//, -0.1, 0.1);
-    RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
+    // RooRealVar lambdaBuBkg("lambdaBuBkg", "", -0.005);//, -0.1, 0.1);
+    // RooExponential pdfBuBkg("pdfBuBkg", "", buMass, lambdaBuBkg);
+
+    RooRealVar meanBuBkg("meanBuBkg", "", 5.2499e+03);
+    RooRealVar sigmaBuBkg("sigmaBuBkg", "", 7.9054e+01);
+    RooGaussian pdfBuBkg("pdfBuBkg", "", buMass, meanBuBkg, sigmaBuBkg);
 
     // RooRealVar a0Mean1BuBkg("a0Mean1BuBkg", "",
     //                         5.1083e+03);  //, 4500, 5500);
