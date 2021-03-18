@@ -9,7 +9,13 @@ from scipy import stats
 from uncertainties import unumpy, ufloat
 from uncertainties.umath import *
 
-path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
+def find_nearest(array, value):
+  array = np.asarray(array)
+  idx = (np.abs(array - value)).argmin()
+  return idx
+
+# path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
+path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/2c4acd4/results/'
 
 bu_low = 5150
 bu_high = []
@@ -48,6 +54,7 @@ branch_names = [
 ]
 # Array to store efficiencies in
 box_eff = []
+box_eff_vals = []
 or_eff = []
 # n_mc needed to calculate error on efficiencies
 
@@ -77,16 +84,28 @@ for i in range(0, len(file_list)):
   # Error on boxEff and orEff are binomial = 1/N(sqrt(Np(1-p))) = 1/N_mcsqrt(N_mc*eff(1-eff))
   or_eff.append(ufloat(eff_tree[0][0], eff_tree[0][1]))
   box_eff.append(ufloat(eff_tree[0][2], eff_tree[0][3]))
+  box_eff_vals.append(eff_tree[0][2])
+
+halfway_idx = find_nearest(box_eff_vals, 0.5)
+halfway_pull = signal_yield_pull_widths[halfway_idx]
 
 shared_yield = np.array(np.divide(np.multiply(signal_yield[0], box_eff),
                                   or_eff),
                         dtype=object)
-frac_shared_yield = np.divide(shared_yield, signal_yield)
+
+halfway_fn = (math.sqrt(2) /
+                 signal_yield[halfway_idx].n) * shared_yield[halfway_idx].n + (
+                     signal_yield[halfway_idx].n -
+                     shared_yield[halfway_idx].n) / signal_yield[halfway_idx].n
+
+# align linear fn with pulls at mid-point
+align_shift = halfway_pull - halfway_fn
 
 linear_err_fn = (np.multiply(
     np.divide(np.ones(len(file_list)) * math.sqrt(2), signal_yield),
     shared_yield) + np.divide(
-        (signal_yield - shared_yield), signal_yield)) * initial_width
+        (signal_yield - shared_yield), signal_yield)) + align_shift
+
 # # sqrt from unumpy as can handle uncertainty types
 # quadratic_err_fn = unumpy.sqrt(
 #     np.square(
@@ -101,9 +120,9 @@ linear_err_fn = (np.multiply(
 fig = plt.figure()
 # plt.errorbar(unumpy.nominal_values(frac_shared_yield), unumpy.nominal_values(quadratic_err_fn), xerr=unumpy.std_devs(frac_shared_yield), yerr=unumpy.std_devs(quadratic_err_fn), label='$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\sqrt{(\\frac{N_{Box}\sqrt{2}}{N_{T}})^{2}+(\\frac{N_{T}-N_{Box}}{N_{T}})^{2}}$')
 plt.errorbar(
-    unumpy.nominal_values(frac_shared_yield),
+    unumpy.nominal_values(box_eff),
     unumpy.nominal_values(linear_err_fn),
-    xerr=unumpy.std_devs(frac_shared_yield),
+    xerr=unumpy.std_devs(box_eff),
     yerr=unumpy.std_devs(linear_err_fn),
     label=
     '$\\frac{\sigma_{N_{T}}}{\sigma_{fit}}=\\frac{N_{Box}\sqrt{2}}{N_{T}}+\\frac{N_{T}-N_{Box}}{N_{T}}$'
