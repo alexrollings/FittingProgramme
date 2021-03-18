@@ -329,7 +329,8 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
     outFile << "deltaCutEffErr " + std::to_string(deltaCutEffErr) + "\n";
 
-    if (Configuration::Get().neutral() == Neutral::gamma) {
+    if (Configuration::Get().neutral() == Neutral::gamma &&
+        Configuration::Get().fitBuPartial() == true) {
       double nDeltaPartialCut =
           chain.GetEntries((cutStr + "&&" + orString + "&&Delta_M>" +
                             dplString + "&&Delta_M<" + dphString)
