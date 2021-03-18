@@ -51,9 +51,10 @@ class Model {
   RooAddPdf deltaPdf;
 
   double N_Sig;
-  RooRealVar N_tot;
   RooRealVar eff_Bu;
   RooRealVar eff_Delta;
+  RooRealVar eff_Or;
+  RooRealVar N_tot;
   std::unique_ptr<RooAbsReal> N_Bu;
   RooFormulaVar N_Delta;
 
@@ -72,8 +73,11 @@ class Model {
   RooDstD0BG deltaBkgPdf;
 
   double N_Bkg;
-  RooRealVar N_Bu_Bkg;
-  RooRealVar N_Delta_Bkg;
+  RooRealVar N_tot_Bkg;
+  RooRealVar eff_Bu_Bkg;
+  RooRealVar eff_Delta_Bkg;
+  std::unique_ptr<RooAbsReal> N_Bu_Bkg;
+  RooFormulaVar N_Delta_Bkg;
 
   RooArgList buFunctions;
   RooArgList buYields;

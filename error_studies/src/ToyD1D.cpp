@@ -262,8 +262,8 @@ int main(int argc, char **argv) {
           RooFit::Minimizer("Minuit2"), RooFit::Offset(true),
           RooFit::Extended(true)));
       toyFitResult->SetName("ToyResult");
-      fitResult->Print();
-      toyFitResult->Print();
+      fitResult->Print("v");
+      toyFitResult->Print("v");
     }
 
     if (id == 1) {
