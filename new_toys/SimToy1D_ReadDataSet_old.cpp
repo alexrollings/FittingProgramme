@@ -56,6 +56,8 @@ std::string EnumToString(Variable variable) {
     case Variable::delta:
       return "delta";
       break;
+    default:
+      return "";
   }
 }
 
@@ -81,6 +83,8 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bu2Dst0rho_D0pi0:
       return "Bu2Dst0rho_D0pi0";
+    default:
+      return "";
   }
 }
 
@@ -518,6 +522,9 @@ void FitToys(std::vector<std::string> const &filenames,
     sigmaDeltaVal = 5.1589e+00;
   } else {
     std::cout << "No value set for a2DeltaVal, using default";
+    a2DeltaVal = -1;
+    meanDeltaVal = 140;
+    sigmaDeltaVal = 8;
   }
 
   ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
@@ -794,17 +801,18 @@ void FitToys(std::vector<std::string> const &filenames,
       //      (1 - yieldSharedBkg.getVal() / yieldTotBkg.getVal()));
       // std::cout << "yieldTotBkg = " << yieldTotBkg.getVal() << " ± "
       //           << errYieldTotBkg << "\n";
-      std::regex rexp(".+_([0-9].[0-9]+).root");
+      std::regex rexp("DataFile_([A-Za-z0-9]+).root");
       std::smatch match;
       std::regex_search(filenames[i], match, rexp);
-      std::string rndm = match[1];
+      std::string seed = match[1];
       TFile outputFile(
-          (outputDir + "/Result_" + rndm + "_" + box_delta_low + "_" +
+          (outputDir + "/results/Result_" + seed + "_" + box_delta_low + "_" +
            box_delta_high + "_" + box_bu_low + "_" + box_bu_high + ".root")
               .c_str(),
           "recreate");
       outputFile.cd();
-      result->SetName(("Result_" + rndm).c_str());
+      // result->SetName(("Result_" + rndm).c_str());
+      result->SetName("ToyResult");
       result->Write();
       // Don't save corrected error for now - see if we can get error from pulls
       // TTree tree("tree", "");

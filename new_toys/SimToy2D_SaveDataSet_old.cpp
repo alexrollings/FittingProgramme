@@ -35,6 +35,8 @@
 #include "TStyle.h"
 #include "TTreeReader.h"
 
+#include <random>
+
 enum class Variable { bu, delta };
 
 std::string EnumToString(Variable variable) {
@@ -45,6 +47,8 @@ std::string EnumToString(Variable variable) {
     case Variable::delta:
       return "delta";
       break;
+    default:
+      return "";
   }
 }
 
@@ -281,8 +285,14 @@ void GenerateToys(std::string const &outputDir, int nToys) {
   deltaMass.setBins(delta_nbins);
 
   for (int i = 0; i < nToys; i++) {
-    RooRandom::randomGenerator()->SetSeed(0);
-    TRandom3 random(0);
+    // RooRandom::randomGenerator()->SetSeed(0);
+    // TRandom3 random(0);
+    std::random_device rd;
+    std::default_random_engine rng(rd());
+    std::uniform_int_distribution<UInt_t> dist;
+    UInt_t seed = dist(rng);
+    // UInt_t seed = 0xa1c93ad5;
+    RooRandom::randomGenerator()->SetSeed(seed);
 
     // ---------------------------- PDFs ----------------------------
     //
@@ -446,16 +456,20 @@ void GenerateToys(std::string const &outputDir, int nToys) {
     std::cout << "Generated!" << std::endl;
     toyDataSet->Print();
 
-    double randomTag = random.Rndm();
-    TFile dsFile(
-        (outputDir + "/DataFile_" + std::to_string(randomTag) + ".root").c_str(),
-        "RECREATE");
+    // double randomTag = random.Rndm();
+    // TFile dsFile(
+    //     (outputDir + "/DataFile_" + std::to_string(randomTag) +
+    //     ".root").c_str(), "RECREATE");
+    std::stringstream filename;
+    filename << outputDir << "/datasets/DataFile_" << std::hex << seed
+             << ".root";
+    TFile dsFile(filename.str().c_str(), "recreate");
     toyDataSet->Write("toyDataSet");
     dsFile.Close();
-    std::cout << "Saved " << randomTag<< " dataset\n"; 
+    // std::cout << "Saved " << randomTag<< " dataset\n"; 
 
-    // auto toyDataHist = std::unique_ptr<RooDataHist>(
-    //     toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+    auto toyDataHist = std::unique_ptr<RooDataHist>(
+        toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
     // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     // meanDeltaSignal.setVal(142);
@@ -475,7 +489,9 @@ void GenerateToys(std::string const &outputDir, int nToys) {
     // PlotComponent(Variable::delta, deltaMass, toyDataHist.get(), pdf, pdfSignal,
     //               pdfBkg, outputDir);
     // std::cout << "Plotting in 2D\n";
-    // Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
+    if (i == 0) {
+      Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
+    }
     // std::cout << "Plotting correlation matrix\n";
     // PlotCorrMatrix(result.get(), outputDir);
     //

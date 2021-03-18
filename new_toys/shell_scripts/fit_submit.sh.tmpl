@@ -1,0 +1,9 @@
+executable = fit_${DL}_${DH}_${BL}_${BH}_${nJob}.sh
+universe = vanilla
+output = output/fit_${DL}_${DH}_${BL}_${BH}_${nJob}.output.${CLUSTERID}
+error = error/fit_${DL}_${DH}_${BL}_${BH}_${nJob}.error.${CLUSTERID}
+log = log/fit_${DL}_${DH}_${BL}_${BH}_${nJob}.log.${CLUSTERID}
+notification = never
+getenv = true
+request_memory = 1 GB
+queue 1

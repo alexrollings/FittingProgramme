@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source /home/rollings/.zshrc.local
+source_root
+
+mkdir /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/SimToy2D_SaveDataSet_old.cpp /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}/SimToy2D_SaveDataSet_old.cpp
+cd /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}
+
+c++ -std=c++11 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` SimToy2D_SaveDataSet_old.cpp -o SimToy2D_SaveDataSet_old
+
+./SimToy2D_SaveDataSet_old ${PATH} ${NTOYS}
+cd /data/lhcb/users/rollings/fitting_scripts/
+rm -rf job_generate_${nJob}

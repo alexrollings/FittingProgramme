@@ -1,0 +1,9 @@
+executable = generate_${nJob}.sh
+universe = vanilla
+output = output/generate_${nJob}.output.${CLUSTERID}
+error = error/generate_${nJob}.error.${CLUSTERID}
+log = log/generate_${nJob}.log.${CLUSTERID}
+notification = never
+getenv = true
+request_memory = 1 GB
+queue 1

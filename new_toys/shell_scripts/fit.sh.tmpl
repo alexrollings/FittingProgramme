@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -l cput=01:59:59 
+
+source /home/rollings/.zshrc.local
+source_root
+
+mkdir /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
+cd /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
+
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/SimToy1D_ReadDataSet_old.cpp /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}/SimToy1D_ReadDataSet_old.cpp 
+
+c++ -std=c++11 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` SimToy1D_ReadDataSet_old.cpp -o SimToy1D_ReadDataSet_old
+
+./SimToy1D_ReadDataSet_old ${DATASETS} ${PATH} ${DL} ${DH} ${BL} ${BH} 
+cd /data/lhcb/users/rollings/fitting_scripts/
+rm -rf job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
