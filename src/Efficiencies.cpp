@@ -208,6 +208,10 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     effStr = "orEff";
   } else if (eff == Efficiency::orEffErr) {
     effStr = "orEffErr";
+  } else if (eff == Efficiency::boxEff) {
+    effStr = "boxEff";
+  } else if (eff == Efficiency::boxEffErr) {
+    effStr = "boxEffErr";
   } else {
     throw std::runtime_error("Efficiency not recognised.\n");
   }
@@ -262,15 +266,21 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
               std::to_string(Configuration::Get().deltaMass().getMin());
 
 
-    std::string orString;
+    std::string orString, boxString;
     if (Configuration::Get().fitBuPartial() == false) {
       orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
                  ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 "))";
+      boxString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")&&(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
                  "))";
     } else {
       orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
                  ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
                  ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
+      boxString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                 ")&&(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                 ")&&(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
     }
     if (misId == true && bachelor == Bachelor::pi) {
       cutStr += "&&bach_PIDK_corr<12";
@@ -280,6 +290,8 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     std::cout << "nInitial = " << nInitial << "\n";
     double nOr = chain.GetEntries((cutStr + "&&" + orString).c_str());
     std::cout << "nOr = " << nOr << "\n";
+    double nBox = chain.GetEntries((cutStr + "&&" + boxString).c_str());
+    std::cout << "nBox = " << nOr << "\n";
     double nBuCut =
         chain.GetEntries((cutStr + "&&" + orString + "&&Bu_Delta_M>" +
                           blString + "&&Bu_Delta_M<" + bhString)
@@ -292,14 +304,17 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     std::cout << "nDeltaCut = " << nDeltaCut << "\n";
 
     double orEff = nOr / nInitial;
+    double boxEff = nBox / nOr;
     double buCutEff = nBuCut / nOr;
     double deltaCutEff = nDeltaCut / nOr;
 
     double orEffErr;
+    double boxEffErr;
     double buCutEffErr;
     double deltaCutEffErr;
 
     CalcBinomialErr(orEff, nInitial, orEffErr);
+    CalcBinomialErr(boxEff, nOr, boxEffErr);
     CalcBinomialErr(buCutEff, nOr, buCutEffErr);
     CalcBinomialErr(deltaCutEff, nOr, deltaCutEffErr);
 
@@ -307,6 +322,8 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
     outFile.open(txtFileName);
     outFile << "orEff " + std::to_string(orEff) + "\n";
     outFile << "orEffErr " + std::to_string(orEffErr) + "\n";
+    outFile << "boxEff " + std::to_string(boxEff) + "\n";
+    outFile << "boxEffErr " + std::to_string(boxEffErr) + "\n";
     outFile << "buCutEff " + std::to_string(buCutEff) + "\n";
     outFile << "buCutEffErr " + std::to_string(buCutEffErr) + "\n";
     outFile << "deltaCutEff " + std::to_string(deltaCutEff) + "\n";
@@ -342,8 +359,12 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
       return deltaCutEffErr;
     } else if (eff == Efficiency::orEff) {
       return orEff;
-    } else {
+    } else if (eff == Efficiency::orEffErr) {
       return orEffErr;
+    } else if (eff == Efficiency::boxEff) {
+      return boxEff;
+    } else {
+      return boxEffErr;
     }
 
   } else {
@@ -367,18 +388,43 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
 void SaveEffToTree(Configuration &config, TFile &outputFile, TTree &tree,
                    Mode mode) {
   outputFile.cd();
+  double orEff = ReturnBoxEffs(mode, Bachelor::pi, Efficiency::orEff, false);
+  double orEffErr = ReturnBoxEffs(mode, Bachelor::pi, Efficiency::orEffErr, false);
+  double boxEff =
+      ReturnBoxEffs(mode, Bachelor::pi, Efficiency::boxEff, false);
+  double boxEffErr =
+      ReturnBoxEffs(mode, Bachelor::pi, Efficiency::boxEffErr, false);
   double buEff = ReturnBoxEffs(mode, Bachelor::pi, Efficiency::buEff, false);
+  double buEffErr = ReturnBoxEffs(mode, Bachelor::pi, Efficiency::buEffErr, false);
   double deltaEff =
       ReturnBoxEffs(mode, Bachelor::pi, Efficiency::deltaEff, false);
+  double deltaEffErr =
+      ReturnBoxEffs(mode, Bachelor::pi, Efficiency::deltaEffErr, false);
+  tree.Branch(("orEff_" + EnumToString(mode)).c_str(), &orEff,
+              ("orEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("orEffErr_" + EnumToString(mode)).c_str(), &orEffErr,
+              ("orEffErr_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEff_" + EnumToString(mode)).c_str(), &boxEff,
+              ("boxEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("boxEffErr_" + EnumToString(mode)).c_str(), &boxEffErr,
+              ("boxEffErr_" + EnumToString(mode) + "/D").c_str());
   tree.Branch(("buEff_" + EnumToString(mode)).c_str(), &buEff,
               ("buEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("buEffErr_" + EnumToString(mode)).c_str(), &buEffErr,
+              ("buEffErr_" + EnumToString(mode) + "/D").c_str());
   tree.Branch(("deltaEff_" + EnumToString(mode)).c_str(), &deltaEff,
               ("deltaEff_" + EnumToString(mode) + "/D").c_str());
+  tree.Branch(("deltaEffErr_" + EnumToString(mode)).c_str(), &deltaEffErr,
+              ("deltaEffErr_" + EnumToString(mode) + "/D").c_str());
   if (config.fitBuPartial() == true) {
     double buPartialEff =
         ReturnBoxEffs(mode, Bachelor::pi, Efficiency::buPartialEff, false);
+    double buPartialEffErr =
+        ReturnBoxEffs(mode, Bachelor::pi, Efficiency::buPartialEffErr, false);
     tree.Branch(("buPartialEff_" + EnumToString(mode)).c_str(), &buPartialEff,
                 ("buPartialEff_" + EnumToString(mode) + "/D").c_str());
+    tree.Branch(("buPartialEffErr_" + EnumToString(mode)).c_str(), &buPartialEffErr,
+                ("buPartialEffErr_" + EnumToString(mode) + "/D").c_str());
   }
   tree.Fill();
 }

@@ -12,6 +12,8 @@ enum class Efficiency {
   buPartialEffErr,
   orEff,
   orEffErr,
+  boxEff,
+  boxEffErr,
   mcEff,
   mcEffErr
 };
