@@ -806,8 +806,8 @@ void FitToys(std::vector<std::string> const &filenames,
       std::regex_search(filenames[i], match, rexp);
       std::string seed = match[1];
       TFile outputFile(
-          (outputDir + "/results/Result_" + seed + "_" + box_delta_low + "_" +
-           box_delta_high + "_" + box_bu_low + "_" + box_bu_high + ".root")
+          (outputDir + "/results/ResultD1D_" + box_delta_low + "_" +
+           box_delta_high + "_" + box_bu_low + "_" + box_bu_high + "_" + seed + ".root")
               .c_str(),
           "recreate");
       outputFile.cd();

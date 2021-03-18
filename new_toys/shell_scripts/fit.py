@@ -79,10 +79,10 @@ if __name__ == "__main__":
   for f in os.listdir(input_dir):
     m = re.search('DataFile_[A-Za-z0-9]+\.root', f)
     if m:
-      datasets.append(f)
+      datasets.append(os.path.join(input_dir, f))
 
   n_ds = len(datasets)
-  n_ds_per_job = math.ceil(n_ds / n_jobs)
+  n_ds_per_job = int(math.ceil(n_ds / n_jobs))
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/'
   for i in range(0, n_jobs):
