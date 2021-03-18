@@ -207,26 +207,26 @@ void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
 
   double nInitial = chain.GetEntries(
       "BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-      "DTF_D0<5800");
+      "DTF_D0<5500");
   double nDeltaWindow =
       chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
-                        "DTF_D0>5050&&Bu_M_DTF_D0<5800&&Delta_M>" +
+                        "DTF_D0>5050&&Bu_M_DTF_D0<5500&&Delta_M>" +
                         box_delta_low + "&&Delta_M<" + box_delta_high)
                            .c_str());
   double nBuWindow =
       chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
-                        "DTF_D0>5050&&Bu_M_DTF_D0<5800&&Bu_Delta_M>" +
+                        "DTF_D0>5050&&Bu_M_DTF_D0<5500&&Bu_Delta_M>" +
                         box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
                            .c_str());
   double nBox = chain.GetEntries(
       ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5800&&Delta_M>" +
+       "DTF_D0<5500&&Delta_M>" +
        box_delta_low + "&&Delta_M<" + box_delta_high + "&&Bu_Delta_M>" +
        box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
           .c_str());
   double nOr = chain.GetEntries(
       ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5800&&((Delta_M>" +
+       "DTF_D0<5500&&((Delta_M>" +
        box_delta_low + "&&Delta_M<" + box_delta_high + ")||(Bu_Delta_M>" +
        box_bu_low + "&&Bu_Delta_M<" + box_bu_high + "))")
           .c_str());
@@ -423,7 +423,7 @@ void FitToys(std::vector<std::string> const &filenames,
              std::string const &box_delta_high, std::string const &box_bu_low,
              std::string const &box_bu_high) {
   int bu_low = 5050;
-  int bu_high = 5800;
+  int bu_high = 5500;
   int delta_low = 60;  // 134;
   int delta_high = 210;
 
@@ -618,29 +618,36 @@ void FitToys(std::vector<std::string> const &filenames,
 
       // ---------------------------- Background ----------------------------
       //
-      RooRealVar lambdaDeltaBkg(("lambdaDeltaBkg_" + std::to_string(i)).c_str(),
-                                "", 0.01);//, -0.1, 0.1);
-      RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(),
-                                 "", deltaMass, lambdaDeltaBkg);
+      // RooRealVar lambdaDeltaBkg(("lambdaDeltaBkg_" + std::to_string(i)).c_str(),
+      //                           "", 0.01);//, -0.1, 0.1);
+      // RooExponential pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(),
+      //                            "", deltaMass, lambdaDeltaBkg);
 
-      // RooRealVar thresholdDeltaBkg(("thresholdDeltaBkg_" +
-      // std::to_string(i)).c_str(), "", 4.7048e+01);
-      // RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
-      // 6.2583e+01);
-      // RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
-      // 8.1939e-01);
-      // RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
-      // -7.9655e-01);
-      // RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(),
-      // "", deltaMass, thresholdDeltaBkg,
-      //                        cDeltaBkg, aDeltaBkg, bDeltaBkg);
+      RooRealVar thresholdDeltaBkg(
+          ("thresholdDeltaBkg_" + std::to_string(i)).c_str(), "", 5.8300e+01);
+      RooRealVar cDeltaBkg(("cDeltaBkg_" + std::to_string(i)).c_str(), "",
+                           8.3605e+01);
+      RooRealVar aDeltaBkg(("aDeltaBkg_" + std::to_string(i)).c_str(), "",
+                           2.2537e-01);
+      RooRealVar bDeltaBkg(("bDeltaBkg_" + std::to_string(i)).c_str(), "",
+                           -3.5935e-01);
+      RooDstD0BG pdfDeltaBkg(("pdfDeltaBkg_" + std::to_string(i)).c_str(), "",
+                             deltaMass, thresholdDeltaBkg, cDeltaBkg, aDeltaBkg,
+                             bDeltaBkg);
 
       // ---------------------------- π/K shared PDFs: Bu
       // ----------------------------
-      RooRealVar lambdaBuBkg(("lambdaBuBkg_" + std::to_string(i)).c_str(), "",
-                             -0.005);//, -0.1, 0.1);
-      RooExponential pdfBuBkg(("pdfBuBkg_" + std::to_string(i)).c_str(), "",
-                              buMass, lambdaBuBkg);
+      // RooRealVar lambdaBuBkg(("lambdaBuBkg_" + std::to_string(i)).c_str(),
+      // "",
+      //                        -0.005);//, -0.1, 0.1);
+      // RooExponential pdfBuBkg(("pdfBuBkg_" + std::to_string(i)).c_str(), "",
+      //                         buMass, lambdaBuBkg);
+      RooRealVar meanBuBkg(("meanBuBkg_" + std::to_string(i)).c_str(), "",
+                           5.2499e+03);
+      RooRealVar sigmaBuBkg(("sigmaBuBkg_" + std::to_string(i)).c_str(), "",
+                            7.9054e+01);
+      RooGaussian pdfBuBkg(("pdfBuBkg_" + std::to_string(i)).c_str(), "",
+                           buMass, meanBuBkg, sigmaBuBkg);
       // // ---------------------------- Mean ----------------------------
       // RooRealVar mean1BuBkg(("mean1BuBkg_" + std::to_string(i)).c_str(), "",
       // 5.3544e+03, 5300, 5400);
