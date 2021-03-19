@@ -5,11 +5,12 @@ source /home/rollings/.zshrc.local
 source_root
 
 mkdir /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/SimToy1D_ReadDataSet_old.cpp /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}/SimToy1D_ReadDataSet_old.cpp 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/CommonFunctions.h /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}/CommonFunctions.h
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/CommonFunctions.cpp /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}/CommonFunctions.cpp
 cd /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/SimToy1D_ReadDataSet_old.cpp /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}/SimToy1D_ReadDataSet_old.cpp 
-
-c++ -std=c++11 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` SimToy1D_ReadDataSet_old.cpp -o SimToy1D_ReadDataSet_old
+c++ -std=c++14 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` CommonFunctions.cpp SimToy1D_ReadDataSet_old.cpp -o SimToy1D_ReadDataSet_old -lstdc++fs 
 
 ./SimToy1D_ReadDataSet_old ${DATASETS} ${PATH} ${DL} ${DH} ${BL} ${BH} 
 cd /data/lhcb/users/rollings/fitting_scripts/
