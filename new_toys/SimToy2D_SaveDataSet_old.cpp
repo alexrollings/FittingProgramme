@@ -246,46 +246,44 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
     // ---------------------------- Generate toy dataSets for bu and delta
     // spearately: save them
     // ----------------------------
-    // RooDataSet *buDataSet = pdf.generate(RooArgSet(buMass), nEvtsPerToy);
-    // std::cout << "Generated!" << std::endl;
-    // buDataSet->SetName("buDataSet");
-    // buDataSet->Print();
-    //
-    // TFile buFile((outputDir + "buDataFile.root").c_str(), "RECREATE");
-    // buDataSet->Write("buDataSet");
-    // buFile.Close();
-    //
-    // RooDataSet *deltaDataSet = pdf.generate(RooArgSet(deltaMass),
-    // nEvtsPerToy); std::cout << "Generated!" << std::endl;
-    // deltaDataSet->SetName("deltaDataSet");
-    // deltaDataSet->Print();
-    //
-    // TFile deltaFile((outputDir + "deltaDataFile.root").c_str(),
-    // "RECREATE"); deltaDataSet->Write("deltaDataSet"); deltaFile.Close();
 
-    // ---------------------------- Generate toy dataSet: CAN'T generate bu
-    // and delta separately as doesn't generate whole 2D phase space
-    // ----------------------------
-    RooDataSet *toyDataSet =
-        pdf.generate(RooArgSet(buMass, deltaMass), nEvtsPerToy);
-    std::cout << "Generated!" << std::endl;
-    toyDataSet->Print();
-
-    // double randomTag = random.Rndm();
-    // TFile dsFile(
-    //     (outputDir + "/DataFile_" + std::to_string(randomTag) +
-    //     ".root").c_str(), "RECREATE");
     std::stringstream filename;
     filename << outputDir << "/datasets/DataFile_" << std::hex << seed
              << ".root";
     TFile dsFile(filename.str().c_str(), "recreate");
-    toyDataSet->Write("dataset");
-    toyDataSet->Print();
-    dsFile.Close();
-    // std::cout << "Saved " << randomTag<< " dataSet\n";
 
-    auto toyDataHist = std::unique_ptr<RooDataHist>(
-        toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
+    RooDataSet *buDataSet = pdf.generate(RooArgSet(buMass), nEvtsPerToy);
+    std::cout << "Generated!" << std::endl;
+    buDataSet->SetName("buDataSet");
+    buDataSet->Write("buDataSet");
+    buDataSet->Print();
+
+    RooDataSet *deltaDataSet = pdf.generate(RooArgSet(deltaMass), nEvtsPerToy);
+    std::cout << "Generated!" << std::endl;
+    deltaDataSet->SetName("deltaDataSet");
+    deltaDataSet->Write("deltaDataSet");
+    deltaDataSet->Print();
+    dsFile.Close();
+
+    // ---------------------------- Generate toy dataSet: CAN'T generate bu
+    // and delta separately as doesn't generate whole 2D phase space
+    // ----------------------------
+    // RooDataSet *toyDataSet =
+    //     pdf.generate(RooArgSet(buMass, deltaMass), nEvtsPerToy);
+    // std::cout << "Generated!" << std::endl;
+    // toyDataSet->Print();
+
+    // std::stringstream filename;
+    // filename << outputDir << "/datasets/DataFile_" << std::hex << seed
+    //          << ".root";
+    // TFile dsFile(filename.str().c_str(), "recreate");
+    // toyDataSet->Write("dataset");
+    // toyDataSet->Print();
+    // dsFile.Close();
+    // // std::cout << "Saved " << randomTag<< " dataSet\n";
+    //
+    // auto toyDataHist = std::unique_ptr<RooDataHist>(
+    //     toyDataSet->binnedClone("toyDataHist", "toyDataHist"));
     // auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
 
     // meanDeltaSignal.setVal(142);
@@ -308,9 +306,9 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
     // pdfSignal,
     //               pdfBkg, outputDir);
     // std::cout << "Plotting in 2D\n";
-    if (i == 0) {
-      Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
-    }
+    // if (i == 0) {
+    //   Plotting2D(buMass, deltaMass, toyDataHist.get(), pdf, outputDir);
+    // }
     // std::cout << "Plotting correlation matrix\n";
     // PlotCorrMatrix(result.get(), outputDir);
     //

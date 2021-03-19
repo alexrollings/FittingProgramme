@@ -39,48 +39,85 @@ std::vector<std::string> SplitByComma(std::string const &str) {
 }
 
 RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
-                                 RooRealVar &deltaMass, RooCategory &fitting,
-                                 std::string const &box_bu_low,
-                                 std::string const &box_bu_high,
-                                 std::string const &box_delta_low,
-                                 std::string const &box_delta_high, double &nBu,
-                                 double &nDelta) {
-  RooDataSet *inputDataSet;
+                          RooRealVar &deltaMass, RooCategory &fitting,
+                          std::string const &box_bu_low,
+                          std::string const &box_bu_high,
+                          std::string const &box_delta_low,
+                          std::string const &box_delta_high, double &nBu,
+                          double &nDelta, bool dsCombined) {
   TFile in(input.c_str(), "READ");
-  gDirectory->GetObject("dataset", inputDataSet);
-  if (inputDataSet == nullptr) {
-    throw std::runtime_error("Data set does not exist.");
-  } else {
-    std::cout << "inputDataSet extracted... \n";
-    inputDataSet->Print();
-  }
+  std::unique_ptr<RooDataSet> dataBu;
+  std::unique_ptr<RooDataSet> dataDelta;
+  if (dsCombined == true) {
+    RooDataSet *inputDataSet;
+    gDirectory->GetObject("dataset", inputDataSet);
+    if (inputDataSet == nullptr) {
+      throw std::runtime_error("Data set does not exist.");
+    } else {
+      std::cout << "inputDataSet extracted... \n";
+      inputDataSet->Print();
+    }
 
-  auto dataBu_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
-              .c_str())));
-  if (dataBu_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with delta mass.");
-  }
-  auto dataBu = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
-  if (dataBu.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
+    auto dataBu_tmp = std::unique_ptr<RooDataSet>(
+        dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+            ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+                .c_str())));
+    if (dataBu_tmp.get() == nullptr) {
+      throw std::runtime_error(
+          "Could not reduce inputDataSet with delta mass.");
+    }
+    dataBu = std::unique_ptr<RooDataSet>(
+        dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass))));
+    if (dataBu.get() == nullptr) {
+      throw std::runtime_error("Could not reduce inputDataSet to Bu mass.");
+    }
+
+    auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
+        dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+            ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+                .c_str())));
+    if (dataDelta_tmp.get() == nullptr) {
+      throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
+    }
+    dataDelta = std::unique_ptr<RooDataSet>(dynamic_cast<RooDataSet *>(
+        dataDelta_tmp->reduce(RooArgSet(deltaMass))));
+    if (dataDelta.get() == nullptr) {
+      throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
+    }
+  } else {
+    RooDataSet *dataBu_tmp;
+    gDirectory->GetObject("buDataSet", dataBu_tmp);
+    if (dataBu_tmp == nullptr) {
+      throw std::runtime_error("Data set does not exist.");
+    } else {
+      std::cout << "dataBu extracted... \n";
+      dataBu_tmp->Print();
+    }
+    dataBu = std::unique_ptr<RooDataSet>(
+        dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(
+            ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
+                .c_str())));
+    if (dataBu.get() == nullptr) {
+      throw std::runtime_error("Could not reduce buDataSet with delta mass.");
+    }
+    RooDataSet *dataDelta_tmp;
+    gDirectory->GetObject("deltaDataSet", dataDelta_tmp);
+    if (dataDelta_tmp == nullptr) {
+      throw std::runtime_error("Data set does not exist.");
+    } else {
+      std::cout << "dataDelta extracted... \n";
+      dataDelta_tmp->Print();
+    }
+    dataDelta = std::unique_ptr<RooDataSet>(
+        dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(
+            ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
+                .c_str())));
+    if (dataDelta.get() == nullptr) {
+      throw std::runtime_error(
+          "Could not reduce deltaDataSet with delta mass.");
+    }
   }
   nBu = dataBu->numEntries();
-
-  auto dataDelta_tmp = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-          ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-              .c_str())));
-  if (dataDelta_tmp.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet with bu mass.");
-  }
-  auto dataDelta = std::unique_ptr<RooDataSet>(
-      dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass))));
-  if (dataDelta.get() == nullptr) {
-    throw std::runtime_error("Could not reduce inputDataSet to Delta mass.");
-  }
   nDelta = dataDelta->numEntries();
 
   RooDataSet combData("combData", "", RooArgSet(buMass, deltaMass),
@@ -93,7 +130,7 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
 void FitToys(std::vector<std::string> const &filenames,
              std::string const &outputDir, std::string const &box_delta_low,
              std::string const &box_delta_high, std::string const &box_bu_low,
-             std::string const &box_bu_high) {
+             std::string const &box_bu_high, bool dsCombined) {
   int bu_low = 5050;
   int bu_high = 5500;
   int delta_low = 60;  // 134;
@@ -210,37 +247,17 @@ void FitToys(std::vector<std::string> const &filenames,
     sigmaDeltaVal = 8;
   }
 
-  int id = 0;
-  std::string dsFname =
-      "/data/lhcb/users/rollings/toy_studies_old/mc_datasets/"
-      "Bu2Dst0pi_D0gamma.root";
-  if (!fexists(dsFname)) {
-      throw std::runtime_error(dsFname + " does not exist.\n");
-  }
-  double nBu, nDelta;
-  // ---------------------------- Read in toy dataset
-  // ----------------------------
-  RooDataSet mcData =
-      ExtractDataSet(dsFname, buMass, deltaMass, fitting, box_bu_low,
-                     box_bu_high, box_delta_low, box_delta_high, nBu, nDelta);
-  mcData.Print();
-  double nSig = mcData.numEntries();
-
-  auto mcDataHist = std::unique_ptr<RooDataHist>(mcData.binnedClone(
-      ("mcDataHist_" + std::to_string(id)).c_str(), "mcDataHist"));
-  auto mcAbsData = dynamic_cast<RooAbsData *>(mcDataHist.get());
-  mcAbsData->SetName(("mcAbsData_" + std::to_string(id)).c_str());
-
   // Loop over data files and perform 1D fit to each dataset
   for (unsigned int i = 0; i < filenames.size(); ++i) {
     if (!fexists(filenames[i])) {
       std::cerr << filenames[i] << " does not exist.\n";
     } else {
+      double nBu, nDelta;
       // ---------------------------- Read in toy dataset
       // ----------------------------
       RooDataSet combData = ExtractDataSet(
           filenames[i], buMass, deltaMass, fitting, box_bu_low, box_bu_high,
-          box_delta_low, box_delta_high, nBu, nDelta);
+          box_delta_low, box_delta_high, nBu, nDelta, dsCombined);
       combData.Print();
 
       auto toyDataHist = std::unique_ptr<RooDataHist>(combData.binnedClone(
@@ -382,6 +399,7 @@ void FitToys(std::vector<std::string> const &filenames,
       // RooArgSet(pdfBuBkg1, pdfBuBkg2),
       //                    fracPdf1BuBkg);
 
+      double nSig = 43374;
       RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
                                 "", nSig * orEffSignal.getVal(), 0, 100000);
       // ---------------------------- Yields ----------------------------
@@ -539,7 +557,8 @@ int main(int argc, char *argv[]) {
   if (argc < 7) {
     std::cerr << "Enter input file vector, output directory and box limits: "
                  "delta_low, "
-                 "delta_high, bu_low, bu_high\n";
+                 "delta_high, bu_low, bu_high, optional 1D flag to fit "
+                 "separate bu and delta mass datasets\n";
     return 1;
   }
 
@@ -555,8 +574,16 @@ int main(int argc, char *argv[]) {
   std::string box_bu_low = argv[5];
   std::string box_bu_high = argv[6];
 
+  bool dsCombined = true;
+  if (argc == 8) {
+    std::string dsOptStr = argv[7];
+    if (dsOptStr == "1D") {
+      dsCombined = false;
+    }
+  }
+
   FitToys(filenames, outputDir, box_delta_low, box_delta_high, box_bu_low,
-          box_bu_high);
+          box_bu_high, dsCombined);
 
   return 0;
 }
