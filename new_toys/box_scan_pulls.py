@@ -14,8 +14,8 @@ def find_nearest(array, value):
   idx = (np.abs(array - value)).argmin()
   return idx
 
-# path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
-path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/2c4acd4/results/'
+path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
+# path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/2c4acd4/results/'
 
 bu_low = 5150
 bu_high = []
@@ -42,6 +42,7 @@ os.chdir(path)
 
 # Array to store pull widths and error on width
 signal_yield_pull_widths = []
+signal_yield_err = []
 # Array to store mean total signal yield and std dev
 signal_yield = []
 
@@ -76,6 +77,9 @@ for i in range(0, len(file_list)):
   signal_yield_pull_widths.append(
       ufloat(pars_yield_pull_widths[1].getVal(),
              pars_yield_pull_widths[1].getError()))
+  signal_yield_err.append(
+      ufloat(pars_yield_err[0].getVal(),
+             pars_yield_err[1].getVal()))
   signal_yield.append(
       ufloat(pars_yield[0].getVal(), pars_yield_err[0].getVal()))
 
@@ -136,3 +140,12 @@ plt.legend(loc='upper left')
 plt.xlabel('$\\epsilon_{Box}$')
 plt.ylabel('$\\sigma_{\\mathcal{P}}$')
 fig.savefig(path + "/box_scan.pdf")
+
+plt.clf()
+plt.errorbar(unumpy.nominal_values(box_eff),
+             unumpy.nominal_values(signal_yield_err),
+             xerr=unumpy.std_devs(box_eff),
+             yerr=unumpy.std_devs(signal_yield_err))
+plt.xlabel('$\\epsilon_{Box}$')
+plt.ylabel('$\\sigma_{N_{T}}$')
+fig.savefig(path + "/error_scan.pdf")
