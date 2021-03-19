@@ -31,6 +31,11 @@ if __name__ == "__main__":
                       type=str,
                       help='Directory where results should be stored',
                       required=True)
+  parser.add_argument('-g',
+                      '--gen',
+                      type=str,
+                      help='Generate from pdf/MC -g=pdf/mc',
+                      required=True)
   parser.add_argument('-t',
                       '--n_toys',
                       type=int,
@@ -44,8 +49,16 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   output_dir = args.output_dir
+  gen = args.gen
   n_toys = args.n_toys
   n_jobs = args.n_jobs
+
+  if gen == 'pdf':
+    print('Generating datasets from 2D PDF')
+  elif gen == 'mc':
+    print('Generating datasets from MC')
+  else:
+    sys.exit('--gen = pdf/mc')
 
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
@@ -56,6 +69,7 @@ if __name__ == "__main__":
     scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/generate_' + str(i) + ".sh"
     substitutions = {
         "nJob": i,
+        "GEN": gen,
         "PATH": output_dir,
         "NTOYS": n_toys
     }
