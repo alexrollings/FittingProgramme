@@ -46,11 +46,11 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
   buMass.setBins(bu_nbins);
   deltaMass.setBins(delta_nbins);
 
-  RooDataSet *dataSet = nullptr;
+  RooDataSet *dataset = nullptr;
   std::string dsFname = "/data/lhcb/users/rollings/toy_studies_old/mc_datasets/Bu2Dst0pi_D0gamma.root";
 
   if (!fexists(dsFname)) {
-    std::cerr << "Making dataSet: " << dsFname << ".\n";
+    std::cerr << "Making dataset: " << dsFname << ".\n";
     std::vector<std::string> input;
     AppendFiles(input);
     if (input.size() == 0) {
@@ -64,24 +64,24 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
     } catch (std::exception &ex) {
       std::cout << "Could not GetEntry(0) from chain: " << ex.what() << "!\n";
     }
-    dataSet = new RooDataSet("dataset", "dataset", &chain,
+    dataset = new RooDataSet("dataset", "dataset", &chain,
                              RooArgSet(buMass, deltaMass));
     TFile dsFile(dsFname.c_str(), "RECREATE");
-    dataSet->Write("dataSet");
+    dataset->Write("dataset");
     dsFile.Close();
   } else {
     std::cout << dsFname << " exists.\n";
     TFile dsFile(dsFname.c_str(), "READ");
-    gDirectory->GetObject("dataset", dataSet);
-    if (dataSet == nullptr) {
+    gDirectory->GetObject("dataset", dataset);
+    if (dataset == nullptr) {
       throw std::runtime_error("dataset does not exist.\n");
     } else {
-      std::cout << "dataSet extracted: \n";
-      dataSet->Print();
+      std::cout << "dataset extracted: \n";
+      dataset->Print();
     }
   }
 
-  RooDataHist* dataHist = dataSet->binnedClone("dataHist", "dataHist");
+  RooDataHist* dataHist = dataset->binnedClone("dataHist", "dataHist");
   RooHistPdf histPdf("histPdf", "histPdf", RooArgSet(buMass, deltaMass),
                      *dataHist, 2);
 
@@ -207,7 +207,7 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
   if (dataType == "pdf") {
     nSig = 40000.0;
   } else {
-    nSig = dataSet->numEntries();
+    nSig = dataset->numEntries();
   }
   // ---------------------------- Yields ----------------------------
   RooRealVar yieldSignal("yieldSignal", "", nSig, -1000000, 1000000);
@@ -231,7 +231,7 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
   RooAddPdf pdf("pdf", "", functions, yields);
 
   double nEvtsPerToy = yieldSignal.getVal() + yieldBkg.getVal();
-  std::cout << "Generating toy dataSet..." << std::endl;
+  std::cout << "Generating toy dataset..." << std::endl;
 
   for (int i = 0; i < nToys; i++) {
     // RooRandom::randomGenerator()->SetSeed(0);
@@ -279,7 +279,7 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
     filename << outputDir << "/datasets/DataFile_" << std::hex << seed
              << ".root";
     TFile dsFile(filename.str().c_str(), "recreate");
-    toyDataSet->Write("toyDataSet");
+    toyDataSet->Write("dataset");
     toyDataSet->Print();
     dsFile.Close();
     // std::cout << "Saved " << randomTag<< " dataSet\n";
