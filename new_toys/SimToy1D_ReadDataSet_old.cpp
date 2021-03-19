@@ -88,7 +88,7 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
     RooDataSet *dataBu_tmp;
     gDirectory->GetObject("buDataSet", dataBu_tmp);
     if (dataBu_tmp == nullptr) {
-      throw std::runtime_error("Data set does not exist.");
+      throw std::runtime_error("buDataSet does not exist.");
     } else {
       std::cout << "dataBu extracted... \n";
       dataBu_tmp->Print();
@@ -96,14 +96,14 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
     dataBu = std::unique_ptr<RooDataSet>(
         dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(
             ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
-                .c_str())));
+                .c_str(), RooArgSet(buMass))));
     if (dataBu.get() == nullptr) {
       throw std::runtime_error("Could not reduce buDataSet with delta mass.");
     }
     RooDataSet *dataDelta_tmp;
     gDirectory->GetObject("deltaDataSet", dataDelta_tmp);
     if (dataDelta_tmp == nullptr) {
-      throw std::runtime_error("Data set does not exist.");
+      throw std::runtime_error("deltaDataSet does not exist.");
     } else {
       std::cout << "dataDelta extracted... \n";
       dataDelta_tmp->Print();
@@ -111,7 +111,7 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
     dataDelta = std::unique_ptr<RooDataSet>(
         dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(
             ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-                .c_str())));
+                .c_str(), RooArgSet(deltaMass))));
     if (dataDelta.get() == nullptr) {
       throw std::runtime_error(
           "Could not reduce deltaDataSet with delta mass.");
@@ -579,6 +579,7 @@ int main(int argc, char *argv[]) {
     std::string dsOptStr = argv[7];
     if (dsOptStr == "1D") {
       dsCombined = false;
+      std::cout << "Reading in separate datasets\n";
     }
   }
 

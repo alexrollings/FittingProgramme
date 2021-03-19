@@ -252,13 +252,13 @@ void GenerateToys(std::string const &outputDir, int nToys, std::string const &da
              << ".root";
     TFile dsFile(filename.str().c_str(), "recreate");
 
-    RooDataSet *buDataSet = pdf.generate(RooArgSet(buMass), nEvtsPerToy);
+    RooDataSet *buDataSet = pdf.generate(RooArgSet(buMass, deltaMass), nEvtsPerToy);
     std::cout << "Generated!" << std::endl;
     buDataSet->SetName("buDataSet");
     buDataSet->Write("buDataSet");
     buDataSet->Print();
 
-    RooDataSet *deltaDataSet = pdf.generate(RooArgSet(deltaMass), nEvtsPerToy);
+    RooDataSet *deltaDataSet = pdf.generate(RooArgSet(deltaMass, buMass), nEvtsPerToy);
     std::cout << "Generated!" << std::endl;
     deltaDataSet->SetName("deltaDataSet");
     deltaDataSet->Write("deltaDataSet");
