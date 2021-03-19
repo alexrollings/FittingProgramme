@@ -38,7 +38,7 @@ std::vector<std::string> SplitByComma(std::string const &str) {
   return stringVector;
 }
 
-RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
+RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
                                  RooRealVar &deltaMass, RooCategory &fitting,
                                  std::string const &box_bu_low,
                                  std::string const &box_bu_high,
@@ -47,7 +47,7 @@ RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
                                  double &nDelta) {
   RooDataSet *inputDataSet;
   TFile in(input.c_str(), "READ");
-  gDirectory->GetObject("toyDataSet", inputDataSet);
+  gDirectory->GetObject("dataset", inputDataSet);
   if (inputDataSet == nullptr) {
     throw std::runtime_error("Data set does not exist.");
   } else {
@@ -210,15 +210,35 @@ void FitToys(std::vector<std::string> const &filenames,
     sigmaDeltaVal = 8;
   }
 
+  int id = 0;
+  std::string dsFname =
+      "/data/lhcb/users/rollings/toy_studies_old/mc_datasets/"
+      "Bu2Dst0pi_D0gamma.root";
+  if (!fexists(dsFname)) {
+      throw std::runtime_error(dsFname + " does not exist.\n");
+  }
+  double nBu, nDelta;
+  // ---------------------------- Read in toy dataset
+  // ----------------------------
+  RooDataSet mcData =
+      ExtractDataSet(dsFname, buMass, deltaMass, fitting, box_bu_low,
+                     box_bu_high, box_delta_low, box_delta_high, nBu, nDelta);
+  mcData.Print();
+  double nSig = mcData.numEntries();
+
+  auto mcDataHist = std::unique_ptr<RooDataHist>(mcData.binnedClone(
+      ("mcDataHist_" + std::to_string(id)).c_str(), "mcDataHist"));
+  auto mcAbsData = dynamic_cast<RooAbsData *>(mcDataHist.get());
+  mcAbsData->SetName(("mcAbsData_" + std::to_string(id)).c_str());
+
   // Loop over data files and perform 1D fit to each dataset
   for (unsigned int i = 0; i < filenames.size(); ++i) {
     if (!fexists(filenames[i])) {
       std::cerr << filenames[i] << " does not exist.\n";
     } else {
-      double nBu, nDelta;
       // ---------------------------- Read in toy dataset
       // ----------------------------
-      RooDataSet combData = ExtractDataSetFromToy(
+      RooDataSet combData = ExtractDataSet(
           filenames[i], buMass, deltaMass, fitting, box_bu_low, box_bu_high,
           box_delta_low, box_delta_high, nBu, nDelta);
       combData.Print();
@@ -363,7 +383,7 @@ void FitToys(std::vector<std::string> const &filenames,
       //                    fracPdf1BuBkg);
 
       RooRealVar yieldTotSignal(("yieldTotSignal_" + std::to_string(i)).c_str(),
-                                "", 40000 * orEffSignal.getVal(), 0, 100000);
+                                "", nSig * orEffSignal.getVal(), 0, 100000);
       // ---------------------------- Yields ----------------------------
 
       RooFormulaVar yieldBuSignal(
@@ -377,8 +397,8 @@ void FitToys(std::vector<std::string> const &filenames,
           RooArgList(boxEffSignal, orEffSignal, yieldTotSignal));
 
       // Temporary solution to calculate bkg efficiencies
-      double nBuBkg = nBu - 40000 * deltaCutEffSignal.getVal();
-      double nDeltaBkg = nDelta - 40000 * buCutEffSignal.getVal();
+      double nBuBkg = nBu - nSig * deltaCutEffSignal.getVal();
+      double nDeltaBkg = nDelta - nSig * buCutEffSignal.getVal();
 
       RooRealVar yieldBuBkg(("yieldBuBkg_" + std::to_string(i)).c_str(), "",
                             nBuBkg, 0, 100000);
