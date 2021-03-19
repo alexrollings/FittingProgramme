@@ -94,9 +94,9 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
       dataBu_tmp->Print();
     }
     dataBu = std::unique_ptr<RooDataSet>(
-        dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(
+        dynamic_cast<RooDataSet *>(dataBu_tmp->reduce(RooArgSet(buMass), 
             ("Delta_M>" + box_delta_low + "&&Delta_M<" + box_delta_high)
-                .c_str(), RooArgSet(buMass))));
+                .c_str())));
     if (dataBu.get() == nullptr) {
       throw std::runtime_error("Could not reduce buDataSet with delta mass.");
     }
@@ -109,9 +109,9 @@ RooDataSet ExtractDataSet(std::string const &input, RooRealVar &buMass,
       dataDelta_tmp->Print();
     }
     dataDelta = std::unique_ptr<RooDataSet>(
-        dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(
+        dynamic_cast<RooDataSet *>(dataDelta_tmp->reduce(RooArgSet(deltaMass), 
             ("Bu_Delta_M>" + box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-                .c_str(), RooArgSet(deltaMass))));
+                .c_str())));
     if (dataDelta.get() == nullptr) {
       throw std::runtime_error(
           "Could not reduce deltaDataSet with delta mass.");
