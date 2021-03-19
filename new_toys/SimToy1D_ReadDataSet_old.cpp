@@ -14,79 +14,17 @@
 #include "RooDataSet.h"
 #include "RooDstD0BG.h"
 #include "RooExponential.h"
-#include "RooFitResult.h"
 #include "RooGaussian.h"
 #include "RooHist.h"
-#include "RooPlot.h"
 #include "RooPlotable.h"
 #include "RooPolyVar.h"
 #include "RooProdPdf.h"
 #include "RooRandom.h"
-#include "RooRealVar.h"
-#include "RooSimultaneous.h"
 #include "RooTreeData.h"
 #include "TApplication.h"
-#include "TAxis.h"
-#include "TCanvas.h"
-#include "TChain.h"
-#include "TFile.h"
-#include "TH2.h"
-#include "TLine.h"
-#include "TPad.h"
 #include "TRandom3.h"
-#include "TStyle.h"
-#include "TTreeReader.h"
 
-enum class Variable { bu, delta };
-enum class Mode {
-  Bd2Dstpi,
-  Bu2D0pi,
-  Bu2D0rho,
-  Bu2Dst0pi_D0gamma,
-  Bu2Dst0pi_D0pi0,
-  Bu2Dst0rho_D0gamma,
-  Bu2Dst0rho_D0pi0
-};
-
-std::string EnumToString(Variable variable) {
-  switch (variable) {
-    case Variable::bu:
-      return "bu";
-      break;
-    case Variable::delta:
-      return "delta";
-      break;
-    default:
-      return "";
-  }
-}
-
-std::string EnumToString(Mode mode) {
-  switch (mode) {
-    case Mode::Bd2Dstpi:
-      return "Bd2Dstpi";
-      break;
-    case Mode::Bu2D0pi:
-      return "Bu2D0pi";
-      break;
-    case Mode::Bu2D0rho:
-      return "Bu2D0rho";
-      break;
-    case Mode::Bu2Dst0pi_D0gamma:
-      return "Bu2Dst0pi_D0gamma";
-      break;
-    case Mode::Bu2Dst0pi_D0pi0:
-      return "Bu2Dst0pi_D0pi0";
-      break;
-    case Mode::Bu2Dst0rho_D0gamma:
-      return "Bu2Dst0rho_D0gamma";
-      break;
-    case Mode::Bu2Dst0rho_D0pi0:
-      return "Bu2Dst0rho_D0pi0";
-    default:
-      return "";
-  }
-}
+#include "CommonFunctions.h" 
 
 std::vector<std::string> SplitByComma(std::string const &str) {
   std::stringstream ss;
@@ -98,272 +36,6 @@ std::vector<std::string> SplitByComma(std::string const &str) {
     stringVector.emplace_back(tempString);
   }
   return stringVector;
-}
-
-bool file_exists(const std::string &name) {
-  std::ifstream infile(name);
-  return infile.good();
-}
-
-void ExtractBoxEfficiencies(Mode mode, std::string const &box_delta_low,
-                            std::string const &box_delta_high,
-                            std::string const &box_bu_low,
-                            std::string const &box_bu_high, RooRealVar &boxEff,
-                            RooRealVar &deltaCutEff, RooRealVar &buCutEff,
-                            RooRealVar &orEff) {
-  std::string inputfile_1(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2011_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2011_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_2(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2011_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2011_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_3(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2012_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2012_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_4(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2012_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2012_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_5(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2015_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_6(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2015_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_7(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2016_MagUp/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string inputfile_8(
-      "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-      "_2016_MagDown/"
-      "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" +
-      EnumToString(mode) + "_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-  std::string ttree("BtoDstar0h3_h1h2gammaTuple");
-
-  TChain chain(ttree.c_str());
-
-  chain.Add(inputfile_1.c_str());
-  chain.Add(inputfile_2.c_str());
-  chain.Add(inputfile_3.c_str());
-  chain.Add(inputfile_4.c_str());
-  chain.Add(inputfile_5.c_str());
-  chain.Add(inputfile_6.c_str());
-  chain.Add(inputfile_7.c_str());
-  chain.Add(inputfile_8.c_str());
-
-  if (mode != Mode::Bu2Dst0pi_D0pi0 && mode != Mode::Bu2Dst0pi_D0gamma) {
-    std::string inputfile_9(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_2015_MagUp/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) + "_2015_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_10(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2015_MagDown/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2015_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_11(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2016_MagUp/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2016_MagUp_BDT1_BDT2_PID_buDelta_TM.root");
-    std::string inputfile_12(
-        "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/" + EnumToString(mode) +
-        "_ReDecay_2016_MagDown/"
-        "gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-        "cross_feed_removed/" +
-        EnumToString(mode) +
-        "_ReDecay_2016_MagDown_BDT1_BDT2_PID_buDelta_TM.root");
-    chain.Add(inputfile_9.c_str());
-    chain.Add(inputfile_10.c_str());
-    chain.Add(inputfile_11.c_str());
-    chain.Add(inputfile_12.c_str());
-  }
-
-  chain.GetEntry(0);
-
-  TTreeReader reader(&chain);
-
-  TTreeReaderValue<double> Bu_Delta_M(reader, "Bu_Delta_M");
-  TTreeReaderValue<double> Delta_M(reader, "Delta_M");
-
-  double nInitial = chain.GetEntries(
-      "BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-      "DTF_D0<5500");
-  double nDeltaWindow =
-      chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
-                        "DTF_D0>5050&&Bu_M_DTF_D0<5500&&Delta_M>" +
-                        box_delta_low + "&&Delta_M<" + box_delta_high)
-                           .c_str());
-  double nBuWindow =
-      chain.GetEntries(("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_"
-                        "DTF_D0>5050&&Bu_M_DTF_D0<5500&&Bu_Delta_M>" +
-                        box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-                           .c_str());
-  double nBox = chain.GetEntries(
-      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5500&&Delta_M>" +
-       box_delta_low + "&&Delta_M<" + box_delta_high + "&&Bu_Delta_M>" +
-       box_bu_low + "&&Bu_Delta_M<" + box_bu_high)
-          .c_str());
-  double nOr = chain.GetEntries(
-      ("BDT1>0.05&&BDT2>0.05&&Delta_M>50&&Delta_M<210&&Bu_M_DTF_D0>5050&&Bu_M_"
-       "DTF_D0<5500&&((Delta_M>" +
-       box_delta_low + "&&Delta_M<" + box_delta_high + ")||(Bu_Delta_M>" +
-       box_bu_low + "&&Bu_Delta_M<" + box_bu_high + "))")
-          .c_str());
-
-  deltaCutEff.setVal(nDeltaWindow / nInitial);
-  buCutEff.setVal(nBuWindow / nInitial);
-  boxEff.setVal(nBox / nInitial);
-  orEff.setVal(nOr / nInitial);
-
-  std::cout << "Set efficiencies :\n"
-            << "\tDelta Window =\t" << nDeltaWindow / nInitial
-            << "\tBu Window =\t" << nBuWindow / nInitial << "\tBox =\t"
-            << nBox / nInitial << "\n"
-            << "\tDelta OR Bu =\t" << nOr / nInitial << "\n";
-}
-
-void PlotComponent(Variable variable, RooRealVar &var, RooDataHist *dataHist,
-                   RooSimultaneous &simPdf, RooCategory &fitting,
-                   RooAddPdf &sig, RooAbsPdf &bkg, std::string const &outputDir,
-                   std::string const &box_bu_low,
-                   std::string const &box_bu_high,
-                   std::string const &box_delta_low,
-                   std::string const &box_delta_high) {
-  gStyle->SetTitleFont(132, "XYZ");
-  gStyle->SetLabelFont(132, "XYZ");
-  gStyle->SetStatFont(132);
-  gStyle->SetStatFontSize(0.02);
-  gStyle->SetTitleSize(0.08, "Z");
-  gStyle->SetTitleSize(0.035, "XY");
-  gStyle->SetLabelSize(0.03, "XY");
-  gStyle->SetTitleOffset(1, "X");
-  gStyle->SetTitleOffset(1.5, "Y");
-  gStyle->SetTitleOffset(0.95, "Z");
-  gStyle->SetPadTopMargin(0.1);
-  gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.1);
-  gStyle->SetPadLeftMargin(0.12);
-
-  std::string title;
-  switch (variable) {
-    case Variable::bu:
-      title = "m[D^{*0}#pi] - m[D^{*0}]";
-      break;
-    case Variable::delta:
-      title = "m[D^{*0}] - m[D^{0}]";
-      break;
-  }
-
-  auto frame =
-      std::unique_ptr<RooPlot>(var.frame(RooFit::Title(title.c_str())));
-
-  RooHist *pullHist = nullptr;
-  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
-
-  dataHist->plotOn(
-      frame.get(),
-      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
-  simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::LineColor(kBlue));
-  pullHist = frame->RooPlot::pullHist();
-  simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(sig.GetName()),
-      RooFit::LineColor(kBlue), RooFit::LineStyle(kDashed));
-  simPdf.plotOn(
-      frame.get(), RooFit::Slice(fitting, EnumToString(variable).c_str()),
-      RooFit::ProjWData(fitting, *dataHist), RooFit::Components(bkg.GetName()),
-      RooFit::LineColor(kRed), RooFit::LineStyle(kDashed));
-
-  dataHist->plotOn(
-      frame.get(),
-      RooFit::Cut(("fitting==fitting::" + EnumToString(variable)).c_str()));
-
-  if (pullHist != 0) {
-    pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + EnumToString(variable)).c_str());
-    pullFrame->SetTitle("");
-  }
-
-  TCanvas canvas(("canvas_" + EnumToString(variable)).c_str(), "", 1200, 1000);
-
-  TPad pad1(("pad1_" + EnumToString(variable)).c_str(), "", 0.0, 0.14, 1.0, 1.0,
-            kWhite);
-  pad1.Draw();
-
-  TPad pad2(("pad2_" + EnumToString(variable)).c_str(), "", 0.0, 0.05, 1.0,
-            0.15, kWhite);
-  pad2.Draw();
-
-  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kRed);
-  zeroLine.SetLineStyle(kDashed);
-
-  canvas.cd();
-  pad2.cd();
-  pullFrame->SetYTitle(" ");
-  pullFrame->SetXTitle(" ");
-  pullFrame->SetLabelSize(0.2, "Y");
-  pullFrame->SetLabelFont(132, "XY");
-  pullFrame->SetLabelOffset(100, "X");
-  pullFrame->SetTitleOffset(100, "X");
-  pullFrame->Draw();
-  zeroLine.Draw("same");
-
-  canvas.cd();
-  pad1.cd();
-  frame->Draw();
-  canvas.Update();
-  canvas.SaveAs((outputDir + "/1d_plots/" + EnumToString(variable) + "_" +
-                 box_delta_low + "_" + box_delta_high + "_" + box_bu_low + "_" +
-                 box_bu_high + ".pdf")
-                    .c_str());
-}
-
-void PlotCorrMatrix(RooFitResult *result, std::string const &outputDir,
-                    std::string const &box_bu_low,
-                    std::string const &box_bu_high,
-                    std::string const &box_delta_low,
-                    std::string const &box_delta_high) {
-  TCanvas corrCanvas("corrCanvas", "corrCanvas", 1200, 900);
-  TH2 *corrHist = result->correlationHist();
-  corrHist->SetStats(0);
-  corrHist->SetTitle(" ");
-  corrCanvas.cd();
-  gPad->SetLeftMargin(0.2);
-  gPad->SetRightMargin(0.1);
-  gPad->SetBottomMargin(0.15);
-  gPad->SetTopMargin(0.05);
-  corrHist->SetLabelSize(0.04, "XY");
-  corrHist->SetLabelSize(0.02, "Z");
-  corrHist->Draw("colz");
-  corrCanvas.Update();
-  corrCanvas.SaveAs((outputDir + "/1d_plots/CorrelationMatrix.pdf" + "_" +
-                     box_delta_low + "_" + box_delta_high + "_" + box_bu_low +
-                     "_" + box_bu_high + ".pdf")
-                        .c_str());
 }
 
 RooDataSet ExtractDataSetFromToy(std::string const &input, RooRealVar &buMass,
@@ -425,7 +97,7 @@ void FitToys(std::vector<std::string> const &filenames,
   int bu_low = 5050;
   int bu_high = 5500;
   int delta_low = 60;  // 134;
-  int delta_high = 210;
+  int delta_high = 190;
 
   int bu_nbins = (bu_high - bu_low) / 10;
   int delta_nbins = (delta_high - delta_low) / 2;
@@ -446,11 +118,22 @@ void FitToys(std::vector<std::string> const &filenames,
 
   // ---------------------------- Efficiencies ----------------------------
   // Outside of loop as all datasets have same box dimensions
-  RooRealVar orEffSignal("orEffSignal", "", 1);
-  RooRealVar boxEffSignal("boxEffSignal", "", 1);
-  RooRealVar deltaCutEffSignal("deltaCutEffSignal", "", 1);
-  RooRealVar buCutEffSignal("buCutEffSignal", "", 1);
-  
+  RooRealVar orEffSignal("orEffSignal", "",
+                         ReturnBoxEff(Efficiency::orEff, box_delta_low,
+                                      box_delta_high, box_bu_low, box_bu_high));
+  RooRealVar boxEffSignal(
+      "boxEffSignal", "",
+      ReturnBoxEff(Efficiency::boxEff, box_delta_low, box_delta_high,
+                   box_bu_low, box_bu_high));
+  RooRealVar deltaCutEffSignal(
+      "deltaCutEffSignal", "",
+      ReturnBoxEff(Efficiency::deltaCutEff, box_delta_low, box_delta_high,
+                   box_bu_low, box_bu_high));
+  RooRealVar buCutEffSignal(
+      "buCutEffSignal", "",
+      ReturnBoxEff(Efficiency::buCutEff, box_delta_low, box_delta_high,
+                   box_bu_low, box_bu_high));
+
   double a2DeltaVal, meanDeltaVal, sigmaDeltaVal;
   if (std::stoi(box_bu_high) == 5360) {
     a2DeltaVal = -7.2190e-01;
@@ -527,13 +210,9 @@ void FitToys(std::vector<std::string> const &filenames,
     sigmaDeltaVal = 8;
   }
 
-  ExtractBoxEfficiencies(Mode::Bu2Dst0pi_D0gamma, box_delta_low, box_delta_high,
-                         box_bu_low, box_bu_high, boxEffSignal,
-                         deltaCutEffSignal, buCutEffSignal, orEffSignal);
-
   // Loop over data files and perform 1D fit to each dataset
   for (unsigned int i = 0; i < filenames.size(); ++i) {
-    if (!file_exists(filenames[i])) {
+    if (!fexists(filenames[i])) {
       std::cerr << filenames[i] << " does not exist.\n";
     } else {
       double nBu, nDelta;
