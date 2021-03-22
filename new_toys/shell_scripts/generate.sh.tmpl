@@ -5,9 +5,11 @@ source_root
 
 mkdir /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/SimToy2D_SaveDataSet_old.cpp /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}/SimToy2D_SaveDataSet_old.cpp
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/CommonFunctions.h /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}/CommonFunctions.h
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/CommonFunctions.cpp /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}/CommonFunctions.cpp
 cd /data/lhcb/users/rollings/fitting_scripts/job_generate_${nJob}
 
-c++ -std=c++11 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` SimToy2D_SaveDataSet_old.cpp -o SimToy2D_SaveDataSet_old
+c++ -std=c++14 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` CommonFunctions.cpp SimToy2D_SaveDataSet_old.cpp -o SimToy2D_SaveDataSet_old -lstdc++fs 
 
 ./SimToy2D_SaveDataSet_old ${PATH} ${NTOYS} ${GEN}
 cd /data/lhcb/users/rollings/fitting_scripts/

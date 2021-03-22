@@ -14,8 +14,10 @@ def find_nearest(array, value):
   idx = (np.abs(array - value)).argmin()
   return idx
 
-path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
+# path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/68a3b7e/results/'
 # path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/2c4acd4/results/'
+# path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/1b7aea2/results/'
+path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/new_toys/pulls/42f42b3/results/'
 
 bu_low = 5150
 bu_high = []

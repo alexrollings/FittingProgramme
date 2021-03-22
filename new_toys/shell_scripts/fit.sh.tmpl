@@ -12,6 +12,6 @@ cd /data/lhcb/users/rollings/fitting_scripts/job_fit_${DL}_${DH}_${BL}_${BH}_${n
 
 c++ -std=c++14 -O3 -march=native -Wall -Wextra -lTreePlayer -lFoam -lXMLIO -lRooFitCore -lRooFit -lMinuit `root-config --cflags --libs` CommonFunctions.cpp SimToy1D_ReadDataSet_old.cpp -o SimToy1D_ReadDataSet_old -lstdc++fs 
 
-./SimToy1D_ReadDataSet_old ${DATASETS} ${PATH} ${DL} ${DH} ${BL} ${BH} 
+./SimToy1D_ReadDataSet_old ${DATASETS} ${PATH} ${DL} ${DH} ${BL} ${BH} 1D
 cd /data/lhcb/users/rollings/fitting_scripts/
 rm -rf job_fit_${DL}_${DH}_${BL}_${BH}_${nJob}
