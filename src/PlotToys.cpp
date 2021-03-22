@@ -575,35 +575,35 @@ int main(int argc, char *argv[]) {
 
     // // Initialise frame and legend outside of if satement so that pointer exists
     // // outside scope (or not plotted)
-    // RooRealVar val(("val_" + paramName).c_str(), "",
-    //                valHist.GetXaxis()->GetXmin(),
-    //                valHist.GetXaxis()->GetXmax());
+    RooRealVar val(("val_" + paramName).c_str(), "",
+                   valHist.GetXaxis()->GetXmin(),
+                   valHist.GetXaxis()->GetXmax());
     // std::unique_ptr<RooPlot> valFrame(val.frame(RooFit::Title(" ")));
     // TLegend valLegend(0.5, 0.78, 0.85, 0.88);
     //
-    // RooRealVar err(("err_" + paramName).c_str(), "",
-    //                errHist.GetXaxis()->GetXmin(),
-    //                errHist.GetXaxis()->GetXmax());
+    RooRealVar err(("err_" + paramName).c_str(), "",
+                   errHist.GetXaxis()->GetXmin(),
+                   errHist.GetXaxis()->GetXmax());
     // std::unique_ptr<RooPlot> errFrame(err.frame(RooFit::Title(" ")));
     // TLegend errLegend(0.5, 0.78, 0.85, 0.88);
     //
   //   if (toys2D == true || config.blindFit() == false) {
   //     std::cout << "VAL AND ERR TOO\n";
-  //     RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
-  //                       RooFit::Import(valHist));
-  //     RooRealVar valMean(("valMean_" + paramName).c_str(), "",
-  //                        val.getMin() - (val.getMax() - val.getMin()),
-  //                        val.getMax() + (val.getMax() - val.getMin()));
-  //     RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
-  //                         (val.getMax() - val.getMin()) / 5, 0,
-  //                         val.getMax() - val.getMin());
-  //     RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
-  //                         valSigma);
-  //     auto valResult =
-  //         std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
-  //     valResult->Print("v");
-  //     valResult->SetName(("Result_Val_" + paramName).c_str());
-  //     valResult->Write();
+      RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
+                        RooFit::Import(valHist));
+      RooRealVar valMean(("valMean_" + paramName).c_str(), "",
+                         val.getMin() - (val.getMax() - val.getMin()),
+                         val.getMax() + (val.getMax() - val.getMin()));
+      RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
+                          (val.getMax() - val.getMin()) / 5, 0,
+                          val.getMax() - val.getMin());
+      RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
+                          valSigma);
+      auto valResult =
+          std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
+      valResult->Print("v");
+      valResult->SetName(("Result_Val_" + paramName).c_str());
+      valResult->Write();
   //     valFrame->GetXaxis()->SetTitle(paramName.c_str());
   //     valDH.plotOn(valFrame.get());
   //     valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed),
@@ -628,21 +628,21 @@ int main(int argc, char *argv[]) {
   //     valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
   //     valLegend.Draw("same");
   //
-  //     RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
-  //                       RooFit::Import(errHist));
-  //     RooRealVar errMean(("errMean_" + paramName).c_str(), "",
-  //                        err.getMin() + (err.getMax() - err.getMin()) / 2,
-  //                        err.getMin(), err.getMax());
-  //     RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
-  //                         (err.getMax() - err.getMin()) / 5, 0,
-  //                         err.getMax() - err.getMin());
-  //     RooGaussian errGaus(("errGauss_" + paramName).c_str(), "", err, errMean,
-  //                         errSigma);
-  //     auto errResult =
-  //         std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
-  //     errResult->Print("v");
-  //     errResult->SetName(("Result_Err_" + paramName).c_str());
-  //     errResult->Write();
+      RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
+                        RooFit::Import(errHist));
+      RooRealVar errMean(("errMean_" + paramName).c_str(), "",
+                         err.getMin() + (err.getMax() - err.getMin()) / 2,
+                         err.getMin(), err.getMax());
+      RooRealVar errSigma(("errSigma_" + paramName).c_str(), "",
+                          (err.getMax() - err.getMin()) / 5, 0,
+                          err.getMax() - err.getMin());
+      RooGaussian errGaus(("errGauss_" + paramName).c_str(), "", err, errMean,
+                          errSigma);
+      auto errResult =
+          std::unique_ptr<RooFitResult>(errGaus.fitTo(errDH, RooFit::Save()));
+      errResult->Print("v");
+      errResult->SetName(("Result_Err_" + paramName).c_str());
+      errResult->Write();
   //     errFrame->GetXaxis()->SetTitle((paramName + " Error").c_str());
   //     errDH.plotOn(errFrame.get());
   //     errGaus.plotOn(errFrame.get(), RooFit::LineColor(kRed),
