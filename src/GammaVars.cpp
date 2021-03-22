@@ -782,13 +782,13 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bs2D0Kst0_fracPdf1BuPartial", uniqueId_, Neutral::gamma, Mode::Bs2D0Kst0,
           Systematic::Bs2D0Kst0_PdfBuPartial, Sign::same)),
       pdf1BuPartial_Bs2D0Kst0_(
-          ("pdfBuPartial_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
+          ("pdf1BuPartial_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "", Configuration::Get().buDeltaMass(), *Bs2D0Kst0_mean1BuPartial_,
           *Bs2D0Kst0_sigma1BuPartial_, *Bs2D0Kst0_a1BuPartial_,
           *Bs2D0Kst0_n1BuPartial_),
       pdf2BuPartial_Bs2D0Kst0_(
-          ("pdfBuPartial_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
+          ("pdf2BuPartial_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
           "", Configuration::Get().buDeltaMass(), Bs2D0Kst0_mean2BuPartial_,
           Bs2D0Kst0_sigma2BuPartial_),
