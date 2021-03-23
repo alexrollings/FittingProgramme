@@ -1910,6 +1910,7 @@ void Generate1DToyFromData(
   buDeltaToy->SetName(
       ("buDeltaToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
           .c_str());
+  buDeltaToy->Print();
   if (mapFittingToy.find(ComposeFittingName(Mass::buDelta, neutral, bachelor,
                                             daughters, charge)) ==
       mapFittingToy.end()) {
@@ -2013,6 +2014,7 @@ void Generate1DToyFromData(
     deltaToy->SetName(
         ("deltaToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
             .c_str());
+    deltaToy->Print();
     if (mapFittingToy.find(ComposeFittingName(Mass::delta, neutral, bachelor,
                                               daughters, charge)) ==
         mapFittingToy.end()) {
