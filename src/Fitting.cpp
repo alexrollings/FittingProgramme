@@ -215,6 +215,7 @@ int main(int argc, char **argv) {
   bool pdfD1D = false;
   bool pdf2D = false;
   bool data2D = false;
+  bool data1D = false;
   Configuration &config = Configuration::Get();
 
   // By letting the ParseArguments object go out of scope it will print a
@@ -278,9 +279,11 @@ int main(int argc, char **argv) {
                 << chargeArg << ">\n";
       std::cout << "    -toys=<# toys>"
                 << "\n";
-      std::cout << "    -pdfD1D, to run D1D toys generated from D1D PDF"
-                << "    -pdf2D, to run 2D toys generated from 2D PDF"
+      std::cout << "    -pdfD1D, to run D1D toys generated from D1D PDF\n"
+                << "    -pdf2D, to run 2D toys generated from 2D PDF\n"
                 << "    -data2D, to run 2D toys generated from RooHistPdf of "
+                   "data\n"
+                << "    -data1D, to run independent 1D toys generated from RooHistPdf of "
                    "data.\n";
       std::cout
           << "    -systematic=<choice, default: None>"
@@ -308,9 +311,12 @@ int main(int argc, char **argv) {
         } else if (args("data2D")) {
           data2D = true;
           std::cout << "Toys generated from 2D data.\n";
+        } else if (args("data1D")) {
+          data1D = true;
+          std::cout << "Toys generated from independent 1D data.\n";
         } else {
           std::cerr
-              << "Must specify type of toy to run: pdfD1D, pdf2D, data2D\n";
+              << "Must specify type of toy to run: pdfD1D, pdf2D, data2D, data1D\n";
           return 1;
         }
       }
@@ -771,6 +777,9 @@ int main(int argc, char **argv) {
                         daughtersVec, chargeVec, outputDir, id);
         } else if (data2D == true) {
           RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
+                        config, daughtersVec, chargeVec, outputDir, id);
+        } else if (data1D == true) {
+          RunToys1DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
                         config, daughtersVec, chargeVec, outputDir, id);
         } else {
           RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
