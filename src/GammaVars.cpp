@@ -1639,6 +1639,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, ReturnType::val),
           ReadBkgFracs<Neutral::gamma>(Mode::Bu2D0rho, ReturnType::std),
           Systematic::Bu2D0hst_BkgFrac, Sign::same)),
+      cpFrac_Bu2D0hst_(Params::Get().CreateFloating(
+          "cpFrac_Bu2D0hst", uniqueId_, Neutral::gamma, 2, 0, 5)),
       // bkgFracFAV_Bu2Dst0hst_(Params::Get().CreateFixed(
       //     "bkgFracFAV_Bu2Dst0hst", uniqueId_, Neutral::gamma,
       //     ReadBkgFracs<Neutral::gamma>(Mode::Bu2Dst0rho, ReturnType::val),
