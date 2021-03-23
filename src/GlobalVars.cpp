@@ -222,8 +222,14 @@ GlobalVars::GlobalVars(int uniqueId)
   // R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
   //     "R_CP_Bu2D0hst", uniqueId_, 1.21, 0.07, Systematic::R_CP_Bu2D0hst, Sign::same));
   // //     Donal's calculation from hadronic parameters - consistent within 3 sigma
-  R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-      "R_CP_Bu2D0hst", uniqueId_, 1.04, 0.06, Systematic::R_CP_Bu2D0hst, Sign::same));
+  if (Configuration::Get().neutral() == Neutral::gamma) {
+    R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFixed("R_CP_Bu2D0hst", uniqueId_, 1.04, 0.06,
+                                  Systematic::R_CP_Bu2D0hst, Sign::same));
+  } else {
+    R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, -2, 10));
+  }
   double min = 0.;
   double max = 20.;
   // double max = 15.;
