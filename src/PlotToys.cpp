@@ -310,6 +310,7 @@ int main(int argc, char *argv[]) {
           std::cout << "initPar returns nullptr: skip result " << rndmVec[j] <<  "\n";
           continue;
         }
+        std::string fullName = initPar->GetName();
         // std::cout << "Full parameter name = " << fullName << "\n";
         std::regex rexp("([A-Za-z0-9_]+)_[0-9]+");
         std::smatch match;
