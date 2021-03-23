@@ -64,7 +64,7 @@ if __name__ == "__main__":
   parser.add_argument('-g',
                       '--gen',
                       type=str,
-                      help='-d=pdfD1D, pdf2D,data2D',
+                      help='-d=pdfD1D, pdf2D, data2D, data1D',
                       required=True)
   parser.add_argument(
       '-i',
@@ -147,8 +147,10 @@ if __name__ == "__main__":
     print("Running toys generated from 2D PDF")
   elif gen == "data2D":
     print("Running toys generated from 2D data")
+  elif gen == "data1D":
+    print("Running toys generated from 1D data")
   else:
-    sys.exit("-gen=pdfD1D/pdf2D/data2D")
+    sys.exit("-gen=pdfD1D/pdf2D/data2D/data1D")
 
   if neutral != "pi0" and neutral != "gamma":
     sys.exit("Specify neutral: -n=pi0/gamma")
