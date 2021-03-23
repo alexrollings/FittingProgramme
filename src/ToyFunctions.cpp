@@ -347,8 +347,7 @@ void RunToys2DData(TFile &outputFile,
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 
   for (auto &p : pdfs) {
-    GenerateToyFromData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config,
-                        outputDir);
+    GenerateToyFromData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config);
   }
 
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
@@ -410,6 +409,76 @@ void RunToys2DData(TFile &outputFile,
   //     PlotCorrelations(toyFitResult.get(), outputDir, config);
   //   }
   // }
+  if (config.noFit() == false) {
+    // to make a unique result each time
+    toyFitResult->Print("v");
+    outputFile.cd();
+    toyFitResult->Write();
+    dataFitResult->Write();
+    outputFile.Close();
+    std::cout << toyFitResult->GetName() << " has been saved to file "
+              << outputFile.GetName() << "\n";
+  }
+}
+
+void RunToys1DData(TFile &outputFile,
+                   std::unique_ptr<RooFitResult> &dataFitResult,
+                   std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+                   Configuration &config,
+                   std::vector<Daughters> const &daughtersVec,
+                   std::vector<Charge> const &chargeVec,
+                   std::string const &outputDir, int id) {
+  std::cout << "\n\n -------------------------- Running toy #" << id
+            << " -------------------------- \n\n";
+  auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+  auto pdfs = p.second;
+
+  auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+
+  std::map<std::string, RooDataSet *> mapFittingToy;
+  for (auto &p : pdfs) {
+    Generate1DToyFromData(mapDataLabelDataSet, mapFittingToy, id, *p, config);
+  }
+
+  RooDataSet toyDataSet("toyDataSet", "toyDataSet", config.fittingArgSet(),
+                        RooFit::Index(config.fitting),
+                        RooFit::Import(mapFittingToy));
+
+  auto toyDataHist = std::unique_ptr<RooDataHist>(
+      toyDataSet.binnedClone("toyDataHist", "toyDataHist"));
+  if (toyDataHist == nullptr) {
+    throw std::runtime_error("Could not extact binned dataSet.");
+  }
+  auto toyAbsData = dynamic_cast<RooAbsData *>(toyDataHist.get());
+  if (toyAbsData == nullptr) {
+    throw std::runtime_error("Could not cast to RooAbsData.");
+  }
+
+  std::shared_ptr<RooFitResult> toyFitResult;
+  if (config.noFit() == false) {
+    toyFitResult = std::shared_ptr<RooFitResult>(
+        simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                      RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+                      RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+    // toyFitResult->SetName(("ToyResult_" + std::to_string(id)).c_str());
+    toyFitResult->SetName("ToyResult");
+  }
+
+  std::cout << "\n\n\n";
+  toyDataSet.Print();
+  std::cout << "\n\n\n";
+
+  if (id == 1) {
+    std::map<Neutral, std::map<Mass, double> > yMaxMap;
+    std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+    for (auto &p : pdfs) {
+      Plotting1D(id, *p, config, *toyAbsData, *simPdf, colorMap, outputDir,
+                 toyFitResult.get(), yMaxMap);
+    }
+    if (config.noFit() == false) {
+      PlotCorrelations(toyFitResult.get(), outputDir, config);
+    }
+  }
   if (config.noFit() == false) {
     // to make a unique result each time
     toyFitResult->Print("v");
@@ -1742,7 +1811,7 @@ void GenerateToyFromPi0Pdf(
 void GenerateToyFromData(
     std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
     std::map<std::string, RooDataSet *> &mapDataLabelToy, int const id,
-    PdfBase &pdf, Configuration &config, std::string const &outputDir) {
+    PdfBase &pdf, Configuration &config) {
   gStyle->SetTitleSize(0.03, "XYZ");
   gStyle->SetLabelSize(1.025, "XYZ");
   gStyle->SetTitleOffset(1, "X");
@@ -1792,5 +1861,176 @@ void GenerateToyFromData(
                      ComposeDataLabelName(neutral, bachelor, daughters,
                                           charge) +
                      "\n";
+  }
+}
+
+void Generate1DToyFromData(
+    std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+    std::map<std::string, RooDataSet *> &mapFittingToy, int const id,
+    PdfBase &pdf, Configuration &config) {
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(1.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.5, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+  Charge charge = pdf.charge();
+
+  RooDataSet *buDeltaDataSet = nullptr;
+  buDeltaDataSet = dynamic_cast<RooDataSet *>(
+      mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters, charge)]->reduce(
+          config.buDeltaMass(),
+          ("Delta_M>" + std::to_string(config.deltaLow()) + "&&Delta_M<" +
+           std::to_string(config.deltaHigh()))
+              .c_str()));
+  if (buDeltaDataSet == nullptr) {
+    throw std::runtime_error("Could not reduce buDelta data.");
+  }
+  auto buDeltaDataHist =
+      std::unique_ptr<RooDataHist>(buDeltaDataSet->binnedClone(
+          ("buDeltaDataHist_" +
+           ComposeName(id, neutral, bachelor, daughters, charge))
+              .c_str(),
+          "buDeltaDataHist"));
+  if (buDeltaDataHist == nullptr) {
+    throw std::runtime_error(
+        "Could not extact binned datahist from buDelta data.");
+  }
+  RooHistPdf buDeltaHistPdf(
+      ("buDeltaHistPdf_" +
+       ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str(),
+      "", config.buDeltaMass(), *buDeltaDataHist.get(), 1);
+  auto buDeltaToy =
+      buDeltaHistPdf.generate(config.buDeltaMass(), buDeltaDataSet->numEntries());
+  buDeltaToy->SetName(
+      ("buDeltaToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+          .c_str());
+  if (mapFittingToy.find(ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                            daughters, charge)) ==
+      mapFittingToy.end()) {
+    mapFittingToy.insert(std::make_pair(
+        ComposeFittingName(Mass::buDelta, neutral, bachelor, daughters, charge),
+        buDeltaToy));
+    std::cout << "Created key-value pair for category " +
+                     ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                        daughters, charge) +
+                     " and corresponding dataSet\n";
+  } else {
+    mapFittingToy[ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                     daughters, charge)]
+        ->append(*buDeltaToy);
+    std::cout << "Appended dataSet to category " +
+                     ComposeFittingName(Mass::buDelta, neutral, bachelor,
+                                        daughters, charge) +
+                     "\n";
+  }
+  if (config.fitBuPartial() == true) {
+    RooDataSet *buDeltaPartialDataSet = nullptr;
+    buDeltaPartialDataSet = dynamic_cast<RooDataSet *>(
+        mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters, charge)]->reduce(
+            config.buDeltaMass(),
+            ("Delta_M>" + std::to_string(config.deltaPartialLow()) +
+             "&&Delta_M<" + std::to_string(config.deltaPartialHigh()))
+                .c_str()));
+    if (buDeltaPartialDataSet == nullptr) {
+      throw std::runtime_error("Could not reduce buDeltaPartial data.");
+    }
+    auto buDeltaPartialDataHist =
+        std::unique_ptr<RooDataHist>(buDeltaPartialDataSet->binnedClone(
+            ("buDeltaPartialDataHist_" +
+             ComposeName(id, neutral, bachelor, daughters, charge))
+                .c_str(),
+            "buDeltaPartialDataHist"));
+    if (buDeltaPartialDataHist == nullptr) {
+      throw std::runtime_error(
+          "Could not extact binned datahist from buDeltaPartial data.");
+    }
+    RooHistPdf buDeltaPartialHistPdf(
+        ("buDeltaPartialHistPdf_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", config.buDeltaMass(), *buDeltaPartialDataHist.get(), 1);
+    auto buDeltaPartialToy = buDeltaPartialHistPdf.generate(
+        config.buDeltaMass(), buDeltaPartialDataSet->numEntries());
+    buDeltaPartialToy->SetName(
+        ("buDeltaPartialToy_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str());
+    if (mapFittingToy.find(ComposeFittingName(Mass::buDeltaPartial, neutral,
+                                              bachelor, daughters, charge)) ==
+        mapFittingToy.end()) {
+      mapFittingToy.insert(
+          std::make_pair(ComposeFittingName(Mass::buDeltaPartial, neutral,
+                                            bachelor, daughters, charge),
+                         buDeltaPartialToy));
+      std::cout << "Created key-value pair for category " +
+                       ComposeFittingName(Mass::buDeltaPartial, neutral,
+                                          bachelor, daughters, charge) +
+                       " and corresponding dataSet\n";
+    } else {
+      mapFittingToy[ComposeFittingName(Mass::buDeltaPartial, neutral, bachelor,
+                                       daughters, charge)]
+          ->append(*buDeltaPartialToy);
+      std::cout << "Appended dataSet to category " +
+                       ComposeFittingName(Mass::buDeltaPartial, neutral,
+                                          bachelor, daughters, charge) +
+                       "\n";
+    }
+  }
+  if (config.fit1D() == false) {
+    RooDataSet *deltaDataSet = nullptr;
+    deltaDataSet = dynamic_cast<RooDataSet *>(
+        mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
+                                                 charge)]
+            ->reduce(config.deltaMass(),
+                     ("Bu_Delta_M>" + std::to_string(config.buDeltaLow()) +
+                      "&&Bu_Delta_M<" + std::to_string(config.buDeltaHigh()))
+                         .c_str()));
+    if (deltaDataSet == nullptr) {
+      throw std::runtime_error("Could not reduce delta data.");
+    }
+    auto deltaDataHist = std::unique_ptr<RooDataHist>(deltaDataSet->binnedClone(
+        ("deltaDataHist_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "deltaDataHist"));
+    if (deltaDataHist == nullptr) {
+      throw std::runtime_error(
+          "Could not extact binned datahist from delta data.");
+    }
+    RooHistPdf deltaHistPdf(
+        ("deltaHistPdf_" +
+         ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "", config.deltaMass(), *deltaDataHist.get(), 1);
+    auto deltaToy =
+        deltaHistPdf.generate(config.deltaMass(), deltaDataSet->numEntries());
+    deltaToy->SetName(
+        ("deltaToy_" + ComposeName(id, neutral, bachelor, daughters, charge))
+            .c_str());
+    if (mapFittingToy.find(ComposeFittingName(Mass::delta, neutral, bachelor,
+                                              daughters, charge)) ==
+        mapFittingToy.end()) {
+      mapFittingToy.insert(std::make_pair(
+          ComposeFittingName(Mass::delta, neutral, bachelor, daughters, charge),
+          deltaToy));
+      std::cout << "Created key-value pair for category " +
+                       ComposeFittingName(Mass::delta, neutral, bachelor,
+                                          daughters, charge) +
+                       " and corresponding dataSet\n";
+    } else {
+      mapFittingToy[ComposeFittingName(Mass::delta, neutral, bachelor,
+                                       daughters, charge)]
+          ->append(*deltaToy);
+      std::cout << "Appended dataSet to category " +
+                       ComposeFittingName(Mass::delta, neutral, bachelor,
+                                          daughters, charge) +
+                       "\n";
+    }
   }
 }
