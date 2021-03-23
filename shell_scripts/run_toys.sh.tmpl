@@ -1,16 +1,16 @@
 #!/bin/bash
 #PBS -l cput=01:59:59 
-#PBS -N RUNTOYS_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
+#PBS -N RUNTOYS_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
 
 source /home/rollings/.zshrc.local
 source_root
 
-mkdir /data/lhcb/users/rollings/fitting_scripts/job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
-cd /data/lhcb/users/rollings/fitting_scripts/job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
+mkdir /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
+cd /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
+cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
 
 mkdir src
 cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
@@ -24,4 +24,4 @@ make
 ./Fitting -inputDir=${INPUT} -outputDir=${PATH} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -toys=${NTOYS} -${GEN} -nCPU=1
 
 cd /data/lhcb/users/rollings/fitting_scripts/
-rm -rf job_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
+rm -rf job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}

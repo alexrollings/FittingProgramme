@@ -102,9 +102,15 @@ if __name__ == "__main__":
                       type=str,
                       help='Upper bu mass range',
                       required=False)
+  parser.add_argument('-com',
+                      '--commit',
+                      type=str,
+                      help='git commit label',
+                      required=True)
   args = parser.parse_args()
 
   queue = args.queue
+  commit = args.commit
   neutral = args.neutral
   daughters = args.daughters
   charge = args.charge
@@ -183,12 +189,13 @@ if __name__ == "__main__":
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
     templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
-    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
         i) + ".sh"
     substitutions = {
         "nJob": i,
         "INPUT": input_dir,
         "PATH": output_dir,
+        "COMMIT": commit,
         "GEN": gen,
         "NEUTRAL": neutral,
         "DAUGHTERS": daughters,
@@ -207,11 +214,12 @@ if __name__ == "__main__":
     else:
       run_process(["chmod", "+x", scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
           i) + ".submit"
       submitSubs = {
           "nJob": i,
           "GEN": gen,
+          "COMMIT": commit,
           "NEUTRAL": neutral,
           "DAUGHTERS": daughters,
           "CHARGE": charge,
