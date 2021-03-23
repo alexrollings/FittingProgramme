@@ -305,7 +305,11 @@ int main(int argc, char *argv[]) {
       RooArgList finalPars = resultVec[j].floatParsFinal();
       // Loop over each parameter in result
       for (double i = 0; i < nParams; ++i) {
-        std::string fullName = initialPars.at(i)->GetName();
+        RooAbsArg* initPar = initialPars.at(i);
+        if (initPar == nullptr) {
+          std::cout << "initPar returns nullptr: skip result " << rndmVec[j] <<  "\n";
+          continue;
+        }
         // std::cout << "Full parameter name = " << fullName << "\n";
         std::regex rexp("([A-Za-z0-9_]+)_[0-9]+");
         std::smatch match;
