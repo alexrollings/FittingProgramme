@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 #include <iomanip> 
+#include <experimental/filesystem>
+#include <regex>
 #include "TChain.h"
 #include "TFile.h"
 
@@ -40,56 +42,90 @@ std::string to_string_with_precision(double value) {
   return out.str();
 }
 
-void GetBoxEffs(Neutral neutral, Variable variable) {
-  std::string ttree, cutString;
-  std::vector<std::string> input;
-  std::vector<std::string> years = {"2011", "2012", "2015", "2016"};
-  std::vector<std::string> polarities = {"Up", "Down"};
-  std::string path = "/data/lhcb/users/rollings/Bu2Dst0h_mc_new/";
+bool fexists(std::string const &filename) {
+  std::ifstream infile(filename.c_str());
+  return infile.is_open();
+}
 
-  if (neutral == Neutral::pi0) {
-    ttree = "BtoDstar0h3_h1h2pi0RTuple";
-    cutString =
-        "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>136&&Delta_M<190&&BDT1>0.05&"
-        "&BDT2>0.05&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2";
-    for (auto &y : years) {
-      for (auto &p : polarities) {
-        input.emplace_back(path + "Bu2Dst0pi_D0pi0_" + y + "_Mag" + p +
-                           "/pi0/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-                           "Bu2Dst0pi_D0pi0_" +
-                           y + "_Mag" + p + "_BDT1_BDT2_PID_TM.root");
-      }
-    }
+void AppendFiles(Neutral neutral,
+                 std::vector<std::string> &input) {
+  namespace fs = std::experimental::filesystem;
+  std::string mode;
+  if (neutral == Neutral::gamma) {
+    mode = "Bu2Dst0pi_D0gamma";
   } else {
-    ttree = "BtoDstar0h3_h1h2gammaTuple";
-    cutString =
-        "Bu_Delta_M>4900&&Bu_Delta_M<5800&&Delta_M>60&&Delta_M<190&&BDT1>0.05&"
-        "&BDT2>0.05&&D0h_M>4900&&D0_FD_ZSIG>2";
-    for (auto &y : years) {
-      for (auto &p : polarities) {
-        if (neutral == Neutral::gamma) {
-          input.emplace_back(
-              path + "Bu2Dst0pi_D0gamma_" + y + "_Mag" + p +
-              "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-              "cross_feed_removed/Bu2Dst0pi_D0gamma_" +
-              y + "_Mag" + p + "_BDT1_BDT2_PID_TM.root");
-        } else {
-          input.emplace_back(
-              path + "Bu2Dst0pi_D0pi0_" + y + "_Mag" + p +
-              "/gamma/bach_pi/tmva_stage1/tmva_stage2_loose/to_fit/"
-              "cross_feed_removed/Bu2Dst0pi_D0pi0_" +
-              y + "_Mag" + p + "_BDT1_BDT2_PID_TM.root");
-        }
+    mode = "Bu2Dst0pi_D0pi0";
+  }
+  std::regex re("\\/data\\/lhcb\\/users\\/rollings\\/Bu2Dst0h_mc_new_3\\/" +
+                mode + "((_201[0-9]|_ReDecay).*)");
+  std::string treeDir("/data/lhcb/users/rollings/Bu2Dst0h_mc_new_3/");
+  for (auto &p : fs::directory_iterator(treeDir)) {
+    std::smatch sm;
+    std::stringstream pathStream;
+    pathStream << p;
+    std::string pathStr(pathStream.str());
+    pathStr.erase(std::remove(pathStr.begin(), pathStr.end(), '"'),
+                  pathStr.end());
+    if (std::regex_match(pathStr, sm, re)) {
+      if (neutral == Neutral::pi0) {
+        input.emplace_back(treeDir + mode + sm[1].str() + "/pi0/bach_pi" +
+                           "/tmva_stage1/tmva_stage2_loose/to_fit/" + mode +
+                           sm[1].str() +
+                           "_TM_Triggers_BDT1_BDT2_MERemoved_Fit.root");
+      } else {
+        input.emplace_back(
+            treeDir + mode + sm[1].str() + "/gamma/bach_pi" +
+            "/tmva_stage1/tmva_stage2_loose/to_fit/cross_feed_removed/" + mode +
+            sm[1].str() + "_TM_Triggers_BDT1_BDT2_MERemoved_Fit.root");
       }
     }
   }
+}
 
-  TChain chain(ttree.c_str());
-  for (auto &i : input) {
-    chain.Add(i.c_str());
+void SetupTChain(Neutral neutral, TChain &chain,
+                 std::vector<std::string> const &input) {
+  std::string tree;
+  if (neutral == Neutral::pi0) {
+    tree = "BtoDstar0h3_h1h2pi0RTuple";
+  } else {
+    tree = "BtoDstar0h3_h1h2gammaTuple";
+  }
+  try {
+    chain.SetName(tree.c_str());
+    std::cout << "Initialised TChain\n";
+  } catch (std::exception &ex) {
+    std::cout << "Could not set chain name : " << ex.what() << "!\n";
+  }
+  for (auto &f : input) {
+    if (!fexists(f)) {
+      throw std::logic_error(f + " does not exist\n");
+    }
+    try {
+      chain.Add(f.c_str());
+      std::cout << "Extracted TTree from " << f << "\n";
+    } catch (std::exception &ex) {
+      std::cout << "Failed to pass " << f << " to chain: " << ex.what()
+                << "!\n";
+    }
+  }
+}
+
+void GetBoxEffs(Neutral neutral, Variable variable) {
+  std::vector<std::string> input;
+  AppendFiles(neutral, input);
+  if (input.size() == 0) {
+    throw std::runtime_error("No input files found\n");
+  }
+  TChain chain("");
+  SetupTChain(neutral, chain, input);
+  std::cout << "Returned TChain\n";
+  try {
+    chain.GetEntry(0);
+  } catch (std::exception &ex) {
+    std::cout << "Could net GetEntry(0) from chain: " << ex.what() << "!\n";
   }
 
-  double initEntries = chain.GetEntries(cutString.c_str());
+  double initEntries = chain.GetEntries();
 
   std::string filename =
       EnumToString(neutral) + "_" + EnumToString(variable) + "_effs.txt";
@@ -131,7 +167,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
       std::string dL = to_string_with_precision(deltaLow);
       txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                      std::to_string(
-                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                         chain.GetEntries(("Bu_Delta_M>" + bL +
                                            "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                            dL + "&&Delta_M<" +
                                            dH).c_str()) /
@@ -149,7 +185,7 @@ void GetBoxEffs(Neutral neutral, Variable variable) {
       std::string bL = to_string_with_precision(buLow);
       txtFile << bL + " " + bH + " " + dL + " " + dH + ":" +
                      std::to_string(
-                         chain.GetEntries((cutString + "&&Bu_Delta_M>" + bL +
+                         chain.GetEntries(("Bu_Delta_M>" + bL +
                                            "&&Bu_Delta_M<" + bH + "&&Delta_M>" +
                                            dL + "&&Delta_M<" +
                                            dH).c_str()) /
