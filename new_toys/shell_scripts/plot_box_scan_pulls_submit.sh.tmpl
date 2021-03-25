@@ -1,0 +1,8 @@
+executable = plot_box_scan_pulls_${DL}_${DH}_${BL}_${BH}.sh
+universe = vanilla
+output = output/plot_box_scan_pulls_${DL}_${DH}_${BL}_${BH}.output.${CLUSTERID}
+error = error/plot_box_scan_pulls_${DL}_${DH}_${BL}_${BH}.error.${CLUSTERID}
+log = log/plot_box_scan_pulls_${DL}_${DH}_${BL}_${BH}.log.${CLUSTERID}
+notification = never
+request_memory = 0.5 GB
+queue 1
