@@ -172,71 +172,71 @@ void FitToys(std::vector<std::string> const &filenames,
                    box_bu_low, box_bu_high));
 
   double a2DeltaVal, meanDeltaVal, sigmaDeltaVal;
-  if (std::stoi(box_bu_high) == 5360) {
+  if (std::stoi(box_bu_high) >= 5355) {
     a2DeltaVal = -7.2190e-01;
     meanDeltaVal = 1.4277e+02;
     sigmaDeltaVal = 8.7264e+00;
-  } else if (std::stoi(box_bu_high) == 5350) {
+  } else if (std::stoi(box_bu_high) >= 5345 && std::stoi(box_bu_high) < 5355) {
     a2DeltaVal = -7.2698e-01;
     meanDeltaVal = 1.4276e+02;
     sigmaDeltaVal = 8.7195e+00;
-  } else if (std::stoi(box_bu_high) == 5340) {
+  } else if (std::stoi(box_bu_high) >= 5335 && std::stoi(box_bu_high) < 5345) {
     a2DeltaVal = -7.3603e-01;
     meanDeltaVal = 1.4275e+02;
     sigmaDeltaVal = 8.6937e+00;
-  } else if (std::stoi(box_bu_high) == 5330) {
+  } else if (std::stoi(box_bu_high) >= 5325 && std::stoi(box_bu_high) < 5335) {
     a2DeltaVal = -7.5835e-01;
     meanDeltaVal = 1.4275e+02;
     sigmaDeltaVal = 8.6786e+00;
-  } else if (std::stoi(box_bu_high) == 5320) {
+  } else if (std::stoi(box_bu_high) >= 5315 && std::stoi(box_bu_high) < 5325) {
     a2DeltaVal = -7.8634e-01;
     meanDeltaVal = 1.4266e+02;
     sigmaDeltaVal = 8.6644e+00;
-  } else if (std::stoi(box_bu_high) == 5310) {
+  } else if (std::stoi(box_bu_high) >= 5305 && std::stoi(box_bu_high) < 5315) {
     a2DeltaVal = -8.2444e-01;
     meanDeltaVal = 1.4250e+02;
     sigmaDeltaVal = 8.6223e+00;
-  } else if (std::stoi(box_bu_high) == 5300) {
+  } else if (std::stoi(box_bu_high) >= 5295 && std::stoi(box_bu_high) < 5305) {
     a2DeltaVal = -8.5594e-01;
     meanDeltaVal = 1.4215e+02;
     sigmaDeltaVal = 8.5430e+00;
-  } else if (std::stoi(box_bu_high) == 5290) {
+  } else if (std::stoi(box_bu_high) >= 5285 && std::stoi(box_bu_high) < 5295) {
     a2DeltaVal = -8.9696e-01;
     meanDeltaVal = 1.4168e+02;
     sigmaDeltaVal = 8.4596e+00;
-  } else if (std::stoi(box_bu_high) == 5280) {
+  } else if (std::stoi(box_bu_high) >= 5275 && std::stoi(box_bu_high) < 5285) {
     a2DeltaVal = -8.9336e-01;
     meanDeltaVal = 1.4089e+02;
     sigmaDeltaVal = 8.3475e+00;
-  } else if (std::stoi(box_bu_high) == 5270) {
+  } else if (std::stoi(box_bu_high) >= 5265 && std::stoi(box_bu_high) < 5275) {
     a2DeltaVal = -9.0617e-01;
     meanDeltaVal = 1.4007e+02;
     sigmaDeltaVal = 8.4106e+00;
-  } else if (std::stoi(box_bu_high) == 5260) {
+  } else if (std::stoi(box_bu_high) >= 5255 && std::stoi(box_bu_high) < 5265) {
     a2DeltaVal = -9.3522e-01;
     meanDeltaVal = 1.3950e+02;
     sigmaDeltaVal = 8.3672e+00;
-  } else if (std::stoi(box_bu_high) == 5250) {
+  } else if (std::stoi(box_bu_high) >= 5245 && std::stoi(box_bu_high) < 5255) {
     a2DeltaVal = -8.2290e-01;
     meanDeltaVal = 1.3874e+02;
     sigmaDeltaVal = 8.1266e+00;
-  } else if (std::stoi(box_bu_high) == 5240) {
+  } else if (std::stoi(box_bu_high) >= 5235 && std::stoi(box_bu_high) < 5245) {
     a2DeltaVal = -5.0851e-01;
     meanDeltaVal = 1.3771e+02;
     sigmaDeltaVal = 7.8642e+00;
-  } else if (std::stoi(box_bu_high) == 5230) {
+  } else if (std::stoi(box_bu_high) >= 5225 && std::stoi(box_bu_high) < 5235) {
     a2DeltaVal = -1.9972e-01;
     meanDeltaVal = 1.3651e+02;
     sigmaDeltaVal = 6.8620e+00;
-  } else if (std::stoi(box_bu_high) == 5220) {
+  } else if (std::stoi(box_bu_high) >= 5215 && std::stoi(box_bu_high) < 5225) {
     a2DeltaVal = -2.7735e-02;
     meanDeltaVal = 1.3730e+02;
     sigmaDeltaVal = 6.3788e+00;
-  } else if (std::stoi(box_bu_high) == 5210) {
+  } else if (std::stoi(box_bu_high) >= 5205 && std::stoi(box_bu_high) < 5215) {
     a2DeltaVal = -2.6097e-03;
     meanDeltaVal = 1.4209e+02;
     sigmaDeltaVal = 5.5830e+00;
-  } else if (std::stoi(box_bu_high) == 5200) {
+  } else if (std::stoi(box_bu_high) < 5205) {
     a2DeltaVal = -1.0712e-03;
     meanDeltaVal = 1.4308e+02;
     sigmaDeltaVal = 5.1589e+00;
