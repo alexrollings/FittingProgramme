@@ -278,9 +278,11 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
       orString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
                  ")||(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
                  ")||(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
-      boxString = "((Delta_M>" + dlString + "&&Delta_M<" + dhString +
-                 ")&&(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
-                 ")&&(Delta_M>" + dplString + "&&Delta_M<" + dphString + "))";
+      boxString = "((Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                  ")&&(Delta_M>" + dplString + "&&Delta_M<" + dphString +
+                  "))||((Delta_M>" + dlString + "&&Delta_M<" + dhString +
+                  ")&&(Bu_Delta_M>" + blString + "&&Bu_Delta_M<" + bhString +
+                  "))";
     }
     if (misId == true && bachelor == Bachelor::pi) {
       cutStr += "&&bach_PIDK_corr<12";
