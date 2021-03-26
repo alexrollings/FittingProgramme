@@ -125,74 +125,64 @@ if __name__ == '__main__':
     # Name of branches in tree (box and or effs)
     branch_names = [
         'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
-        'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0'
+        'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
+        'buEff_Bu2Dst0pi_D0pi0', 'buEffErr_Bu2Dst0pi_D0pi0',
+        'deltaEff_Bu2Dst0pi_D0pi0', 'deltaEffErr_Bu2Dst0pi_D0pi0',
     ]
     observables = [
-        'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kpi', 'N_tot_Bu2Dst0h_D0pi0_pi0_pi_kk',
-        'N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi', 'R_CP_Bu2Dst0h_D0pi0_Blind_pi0_kk',
-        'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_pi0_kpi',
+        'R_CP_Bu2Dst0h_D0pi0_Blind',
+        'R_Dst0KDst0pi_Bu2Dst0h',
         'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi',
-        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi', 'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kk',
-        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kk',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_total',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_total'
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_minus',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_minus',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_k_pik_plus',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_pi0_pi_pik_plus'
+        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi', 'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
+        'A_CP_Bu2Dst0h_D0pi0_Blind_k',
+        'R_piK_Bu2Dst0h_D0pi0_Blind_pi_total',
+        'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus'
+        'R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus',
+        'R_piK_Bu2Dst0h_D0pi0_Blind_k_total',
+        'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus'
+        'R_piK_Bu2Dst0h_D0pi0_Blind_k_minus'
     ]
-  elif neutral == 'partial':
-    branch_names = [
-        'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
-        'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
-        'boxPartialEff_Bu2Dst0pi_D0pi0', 'boxPartialEffErr_Bu2Dst0pi_D0pi0',
-        'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
-        'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
-        'boxPartialEff_Bu2Dst0pi_D0gamma', 'boxPartialEffErr_Bu2Dst0pi_D0gamma'
-    ]
-    observables = [
-        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi',
-        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kk',
-        'N_tot_Bu2Dst0h_D0pi0_gamma_pi_pipi',
-        'R_CP_Bu2Dst0h_D0pi0_Blind_gamma_kk',
-        'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_gamma_kpi',
-        'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi',
-        'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi',
-        'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kk',
-        'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kk',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_total',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_total',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_minus',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_minus'
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_k_pik_plus',
-        'R_ADS_Bu2Dst0h_D0pi0_Blind_gamma_pi_pik_plus']
   else:
-    #Bug in name of Partial (Partal)
     branch_names = [
         'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
         'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
-        'boxPartalEff_Bu2Dst0pi_D0pi0', 'boxPartalEffErr_Bu2Dst0pi_D0pi0',
+        'buEff_Bu2Dst0pi_D0pi0', 'buEffErr_Bu2Dst0pi_D0pi0',
+        'deltaEff_Bu2Dst0pi_D0pi0', 'deltaEffErr_Bu2Dst0pi_D0pi0',
+        'buPartialEff_Bu2Dst0pi_D0pi0', 'buPartialEffErr_Bu2Dst0pi_D0pi0',
         'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
         'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
-        'boxPartalEff_Bu2Dst0pi_D0gamma', 'boxPartalEffErr_Bu2Dst0pi_D0gamma'
+        'buEff_Bu2Dst0pi_D0gamma', 'buEffErr_Bu2Dst0pi_D0gamma',
+        'deltaEff_Bu2Dst0pi_D0gamma', 'deltaEffErr_Bu2Dst0pi_D0gamma',
+        'buPartialEff_Bu2Dst0pi_D0gamma', 'buPartialEffErr_Bu2Dst0pi_D0gamma',
     ]
-    observables = [
-        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi',
-        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk',
-        'N_tot_Bu2Dst0h_D0gamma_gamma_pi_pipi',
-        'R_CP_Bu2Dst0h_D0gamma_Blind_gamma_kk',
-        'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_gamma_kpi',
-        'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kpi',
-        'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kpi',
-        'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kk',
-        'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kk',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_total',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_total',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_minus',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_minus',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_k_pik_plus',
-        'R_ADS_Bu2Dst0h_D0gamma_Blind_gamma_pi_pik_plus'
-    ]
+    if neutral == 'partial':
+      observables = [
+          'R_CP_Bu2Dst0h_D0pi0_Blind',
+          'R_Dst0KDst0pi_Bu2Dst0h',
+          'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi',
+          'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi', 'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
+          'A_CP_Bu2Dst0h_D0pi0_Blind_k',
+          'R_piK_Bu2Dst0h_D0pi0_Blind_pi_total',
+          'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus'
+          'R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus',
+          'R_piK_Bu2Dst0h_D0pi0_Blind_k_total',
+          'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus'
+          'R_piK_Bu2Dst0h_D0pi0_Blind_k_minus'
+          ]
+    else:
+      observables = [
+          'R_CP_Bu2Dst0h_D0gamma_Blind',
+          'R_Dst0KDst0pi_Bu2Dst0h',
+          'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kpi',
+          'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kpi', 'A_CP_Bu2Dst0h_D0gamma_Blind_pi',
+          'A_CP_Bu2Dst0h_D0gamma_Blind_k',
+          'R_piK_Bu2Dst0h_D0gamma_Blind_pi_total',
+          'R_piK_Bu2Dst0h_D0gamma_Blind_pi_plus'
+          'R_piK_Bu2Dst0h_D0gamma_Blind_pi_minus',
+          'R_piK_Bu2Dst0h_D0gamma_Blind_k_total',
+          'R_piK_Bu2Dst0h_D0gamma_Blind_k_plus'
+          'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus'
+      ]
   if param is not None:
     observables = [param]
 
