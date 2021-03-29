@@ -61,15 +61,18 @@ if __name__ == '__main__':
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   if neutral == 'pi0':
-    txt_fname = f'{home_path}results_analysis/box_scans/syst_pi0.txt'
+    txt_fname = f'{home_path}results_analysis/box_scans_new/syst_pi0.txt'
   else:
-    txt_fname = f'{home_path}results_analysis/box_scans/syst_gamma.txt'
+    txt_fname = f'{home_path}results_analysis/box_scans_new/syst_gamma.txt'
 
   if remake is True and os.path.exists(txt_fname):
     os.remove(txt_fname)
 
   file_list = []
 
+  n = neutral
+  if neutral == 'partial' and var == 'buDelta':
+    neutral = 'gamma'
   limits_fname = home_path + 'shell_scripts/box_effs/' + neutral + '_' + var + '_box_limits_new.txt'
   lines = [
       l.rstrip('\n') for l in open(limits_fname)
@@ -104,6 +107,7 @@ if __name__ == '__main__':
             'Result_' + box_string + '.root', filename)
         if m:
           file_list.append(filename)
+  neutral = n
 
   if len(file_list) == 0:
     sys.exit('No files recognised')
@@ -131,15 +135,16 @@ if __name__ == '__main__':
     ]
     observables = [
         'R_CP_Bu2Dst0h_D0pi0_Blind',
-        'R_Dst0KDst0pi_Bu2Dst0h',
-        'A_Bu2Dst0h_D0pi0_Blind_pi0_pi_kpi',
-        'A_Bu2Dst0h_D0pi0_Blind_pi0_k_kpi', 'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
+        'R_Dst0KDst0pi_Bu2Dst0h_kpi',
+        'A_Bu2Dst0h_D0pi0_pi0_pi_kpi',
+        'A_Bu2Dst0h_D0pi0_pi0_k_kpi',
+        'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
         'A_CP_Bu2Dst0h_D0pi0_Blind_k',
         'R_piK_Bu2Dst0h_D0pi0_Blind_pi_total',
-        'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus'
+        'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus',
         'R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus',
         'R_piK_Bu2Dst0h_D0pi0_Blind_k_total',
-        'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus'
+        'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus',
         'R_piK_Bu2Dst0h_D0pi0_Blind_k_minus'
     ]
   else:
@@ -158,29 +163,31 @@ if __name__ == '__main__':
     if neutral == 'partial':
       observables = [
           'R_CP_Bu2Dst0h_D0pi0_Blind',
-          'R_Dst0KDst0pi_Bu2Dst0h',
-          'A_Bu2Dst0h_D0pi0_Blind_gamma_pi_kpi',
-          'A_Bu2Dst0h_D0pi0_Blind_gamma_k_kpi', 'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
+          'R_Dst0KDst0pi_Bu2Dst0h_kpi',
+          'A_Bu2Dst0h_D0pi0_gamma_pi_kpi',
+          'A_Bu2Dst0h_D0pi0_gamma_k_kpi',
+          'A_CP_Bu2Dst0h_D0pi0_Blind_pi',
           'A_CP_Bu2Dst0h_D0pi0_Blind_k',
           'R_piK_Bu2Dst0h_D0pi0_Blind_pi_total',
-          'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus'
+          'R_piK_Bu2Dst0h_D0pi0_Blind_pi_plus',
           'R_piK_Bu2Dst0h_D0pi0_Blind_pi_minus',
           'R_piK_Bu2Dst0h_D0pi0_Blind_k_total',
-          'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus'
+          'R_piK_Bu2Dst0h_D0pi0_Blind_k_plus',
           'R_piK_Bu2Dst0h_D0pi0_Blind_k_minus'
           ]
     else:
       observables = [
           'R_CP_Bu2Dst0h_D0gamma_Blind',
-          'R_Dst0KDst0pi_Bu2Dst0h',
-          'A_Bu2Dst0h_D0gamma_Blind_gamma_pi_kpi',
-          'A_Bu2Dst0h_D0gamma_Blind_gamma_k_kpi', 'A_CP_Bu2Dst0h_D0gamma_Blind_pi',
+          'R_Dst0KDst0pi_Bu2Dst0h_kpi',
+          'A_Bu2Dst0h_D0gamma_gamma_pi_kpi',
+          'A_Bu2Dst0h_D0gamma_gamma_k_kpi',
+          'A_CP_Bu2Dst0h_D0gamma_Blind_pi',
           'A_CP_Bu2Dst0h_D0gamma_Blind_k',
           'R_piK_Bu2Dst0h_D0gamma_Blind_pi_total',
-          'R_piK_Bu2Dst0h_D0gamma_Blind_pi_plus'
+          'R_piK_Bu2Dst0h_D0gamma_Blind_pi_plus',
           'R_piK_Bu2Dst0h_D0gamma_Blind_pi_minus',
           'R_piK_Bu2Dst0h_D0gamma_Blind_k_total',
-          'R_piK_Bu2Dst0h_D0gamma_Blind_k_plus'
+          'R_piK_Bu2Dst0h_D0gamma_Blind_k_plus',
           'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus'
       ]
   if param is not None:
@@ -195,7 +202,7 @@ if __name__ == '__main__':
     # Array to store mean parameter error and std dev
     par_err_arr = []
     # Array to store mean total signal yield and error
-    signal_yield_arr = []
+    # signal_yield_arr = []
 
     # Array to store efficiencies in
     box_eff = []
@@ -210,22 +217,22 @@ if __name__ == '__main__':
       if isinstance(result_par_pull_widths, RooFitResult):
         result_par_val = tf.Get('Result_Val_' + obs)
         result_par_err = tf.Get('Result_Err_' + obs)
-        result_signal_yield = tf.Get('Result_Val_N_tot_' + sig_decay)
-        result_signal_yield_err = tf.Get('Result_Err_N_tot_' +
-                                         sig_decay)
+        # result_signal_yield = tf.Get('Result_Val_N_tot_' + sig_decay)
+        # result_signal_yield_err = tf.Get('Result_Err_N_tot_' +
+        #                                  sig_decay)
         # Final values of fit to pulls
         par_pull_widths = result_par_pull_widths.floatParsFinal()
         par_val = result_par_val.floatParsFinal()
         par_err = result_par_err.floatParsFinal()
-        signal_yield = result_signal_yield.floatParsFinal()
-        signal_yield_err = result_signal_yield_err.floatParsFinal()
+        # signal_yield = result_signal_yield.floatParsFinal()
+        # signal_yield_err = result_signal_yield_err.floatParsFinal()
         # Save value and error of width for each box dimn
         par_pull_widths_arr.append(
             ufloat(par_pull_widths[1].getVal(), par_pull_widths[1].getError()))
         par_val_arr.append(ufloat(par_val[0].getVal(), par_err[0].getVal()))
         par_err_arr.append(ufloat(par_err[0].getVal(), par_err[1].getVal()))
-        signal_yield_arr.append(
-            ufloat(signal_yield[0].getVal(), signal_yield_err[0].getVal()))
+        # signal_yield_arr.append(
+        #     ufloat(signal_yield[0].getVal(), signal_yield_err[0].getVal()))
 
         # 2D array with row element eff_tree[0] - orEff = first column, boxEff = second
         eff_tree = r_np.root2array(f, 'tree', branch_names)
@@ -239,17 +246,17 @@ if __name__ == '__main__':
         elif neutral == 'gamma':
           or_eff.append(
               ufloat(
-                  eff_tree[0][6], eff_tree[0][7]))
+                  eff_tree[0][10], eff_tree[0][11]))
           box_eff.append(
               ufloat(
-                  eff_tree[0][8], eff_tree[0][9]))
+                  eff_tree[0][12], eff_tree[0][13]))
         else:
           or_eff.append(
               ufloat(
                   eff_tree[0][0], eff_tree[0][1]))
           box_eff.append(
               ufloat(
-                  eff_tree[0][4], eff_tree[0][5]))
+                  eff_tree[0][2], eff_tree[0][3]))
 
         if box_fit != None:
           m = re.search(
@@ -259,9 +266,9 @@ if __name__ == '__main__':
             if neutral == 'pi0':
               fit_box_eff = eff_tree[0][2]
             elif neutral == 'gamma':
-              fit_box_eff = eff_tree[0][8]
+              fit_box_eff = eff_tree[0][12]
             else:
-              fit_box_eff = eff_tree[0][4]
+              fit_box_eff = eff_tree[0][2]
 
       else:
         # print(f'Skipping {obs} as not contained in {f}')
@@ -304,14 +311,16 @@ if __name__ == '__main__':
     min_eff = fit_box_eff - 0.02
     max_eff = fit_box_eff + 0.02
 
-    shared_yield = np.array(np.divide(
-        np.multiply(signal_yield_arr[0], box_eff), or_eff),
-                            dtype=object)
-    frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
+    # shared_yield = np.array(np.divide(
+    #     np.multiply(signal_yield_arr[0], box_eff), or_eff),
+    #                         dtype=object)
+    # frac_shared_yield = np.divide(shared_yield, signal_yield_arr)
 
     perc_err_arr = np.divide(par_err_arr, par_val_arr)*100
 
-    fig = plt.figure()
+    # fig = plt.figure()
+    fig, ax = plt.subplots()
+    ax.tick_params(axis='both', which='major', labelsize=13)
     plt.errorbar(unumpy.nominal_values(box_eff),
                  unumpy.nominal_values(par_pull_widths_arr),
                  xerr=unumpy.std_devs(box_eff),
@@ -320,32 +329,31 @@ if __name__ == '__main__':
                  label='Pseudo-experiments')
     if box_fit != None:
       plt.axvline(x=fit_box_eff, color='tab:red', linestyle='dotted')
-      plt.axvline(x=min_eff, color='tab:purple', linestyle='dotted')
-      plt.axvline(x=max_eff, color='tab:purple', linestyle='dotted')
-    plt.xlabel('$\epsilon_{Box}$')
-    plt.ylim(1.0, 1.4)
-    plt.ylabel('Pull Width')
-    plt.title(return_label(obs))
+      # plt.axvline(x=min_eff, color='tab:purple', linestyle='dotted')
+      # plt.axvline(x=max_eff, color='tab:purple', linestyle='dotted')
+    plt.xlabel('$\epsilon_{Box}$', fontsize=15)
+    plt.ylim(1.0, 1.5)
+    plt.ylabel('Pull $\sigma$', fontsize=15)
+    plt.title(return_label(obs), fontsize=15)
     fig.savefig(
-        '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
-        + obs + '_pull_width_' + neutral + '_' + var + '.pdf')
+        '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans_new/'
+        + neutral + '_box_yield_vs_' + obs + '_pull_width_' + var + '.png')
     plt.clf()
-    plt.errorbar(
-        unumpy.nominal_values(box_eff),
-        unumpy.nominal_values(perc_err_arr),
-        xerr=unumpy.std_devs(box_eff),
-        yerr=unumpy.std_devs(perc_err_arr),
-        color='black',
-        ecolor='lightgray',
-        label='Pseudo-experiments')
+    plt.errorbar(unumpy.nominal_values(box_eff),
+                 unumpy.nominal_values(perc_err_arr),
+                 xerr=unumpy.std_devs(box_eff),
+                 yerr=unumpy.std_devs(perc_err_arr),
+                 color='black',
+                 ecolor='lightgray',
+                 label='Pseudo-experiments')
     if box_fit != None:
       plt.axvline(x=fit_box_eff, color='r', linestyle='dotted')
-    plt.xlabel('$\epsilon_{Box}$')
-    plt.ylabel('% Error')
-    plt.title(return_label(obs))
+    plt.xlabel('$\epsilon_{Box}$', fontsize=15)
+    plt.ylabel('% Error', fontsize=15)
+    plt.title(return_label(obs), fontsize=15)
     fig.savefig(
-        '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans/box_yield_vs_'
-        + obs + '_err_' + neutral + '_' + var + '.pdf')
+        '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/box_scans_new/'
+        + neutral + '_box_yield_vs_' + obs + '_err_' + var + '.png')
     plt.close()
 
   txt_file.close()

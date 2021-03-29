@@ -141,10 +141,10 @@ if __name__ == '__main__':
       delta_low = "125"
     if delta_high == None:
       delta_high = "170"
-    # if delta_partial_low == None:
-    #   delta_partial_low = "60"
-    # if delta_partial_high == None:
-    #   delta_partial_high = "105"
+    if delta_partial_low == None:
+      delta_partial_low = "60"
+    if delta_partial_high == None:
+      delta_partial_high = "105"
     if bu_low == None:
       bu_low = "5240"
     if bu_high == None:

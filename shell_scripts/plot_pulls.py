@@ -109,8 +109,8 @@ if __name__ == "__main__":
       else:
         n = neutral
       substitutions = {
-          "INPUT": input_dir + '/' + var + '/results/',
-          "OUTPUT": output_dir + '/' + neutral + '/' + var,
+          "INPUT": input_dir,
+          "OUTPUT": output_dir,
           "NEUTRAL": neutral,
           "N": n,
           "DL": delta_low,
