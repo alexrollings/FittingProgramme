@@ -196,9 +196,9 @@ if __name__ == '__main__':
         'R_CP_Bu2Dst0h_D0gamma',
         'A_CP_Bu2Dst0h_D0gamma',
         'R_piK_Bu2Dst0h_D0gamma',
-        'A_Bu2Dst0h_D0gamma_K_Kpi',
+        'A_K_Kpi_Bu2Dst0h_D0gamma',
         'R_ADS_Bu2Dst0hst',
-        'A_Bu2Dst0hst_K_piK',
+        'A_K_piK_Bu2Dst0hst',
     ]
     if delta_low == None:
       delta_low = '138'
@@ -300,7 +300,7 @@ if __name__ == '__main__':
         'kBF_D02kk',
         'kBF_D02pipi',
         'R_ADS_Bu2Dst0hst',
-        'A_Bu2Dst0hst_K_piK',
+        'A_K_piK_Bu2Dst0hst',
     ]
     if delta_low == None:
       delta_low = '125'
