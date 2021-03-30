@@ -1,4 +1,5 @@
 #include "Params.h"
+#include <random>
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
                              RooAbsReal &paramToBlind) {
@@ -26,68 +27,59 @@ void FixedParameter::Randomise(TRandom3 &random) {
   std::cout << name_ << "\n";
   std::cout << std_pos_ << "\n";
   std::cout << std_neg_ << "\n";
-  double shifted_value_;
+  double shifted_value;
   std::smatch match;
   static const std::regex pattern("\\S+Eff\\S+");
   if (std::regex_match(name_, match, pattern)) {
     std::cout << "0 < Efficiency < 1\n";
-    // std::cout << shifted_value_ << "\n";
-    while (shifted_value_ > 1 || shifted_value_ < 0) {
+    // std::cout << shifted_value << "\n";
+    while (shifted_value > 1 || shifted_value < 0) {
       RooRandom::randomGenerator()->SetSeed(0);
       TRandom3 random(0);
       if (std_pos_ == std_neg_) {
-      shifted_value_ = random.Gaus(mean_, std_pos_);
+        shifted_value = random.Gaus(mean_, std_pos_);
       } else {
         throw std::runtime_error(
-            "Params.cpp FixedParameter::Randomise: no implementation for asymmetric errors of "
+            "Params.cpp FixedParameter::Randomise: no implementation for "
+            "asymmetric errors of "
             "efficiencies");
       }
     }
-    // std::cout << shifted_value_ << "\n";
+    // std::cout << shifted_value << "\n";
   } else {
-    int rand_sign_;
-    if (sign_ == Sign::positive) {
-      rand_sign_ = 1;
-    } else if (sign_ == Sign::negative) {
-      rand_sign_ = -1;
-    } else if (sign_ == Sign::same) {
-      if (mean_ < 0) {
-        rand_sign_ = -1;
-      } else {
-        rand_sign_ = 1;
-      }
-    } else {  // Sign::none
-      // Randomly choose +ve/-ve shift
-      double tmp_ = random.Gaus(0, 1);
-      if (tmp_ < 0) {
-        rand_sign_ = -1;
-      } else {
-        rand_sign_ = 1;
-      }
-    }
-    std::cout << rand_sign_ << "\n";
-    double std_;
-    // If std_pos_ = std_neg_, doesn't matter. If not, choosed correct one
-    if (rand_sign_ == 1) {
-      std_ = std_pos_;
+    // Randomly choose +ve/-ve shift
+    int shift_dir;
+    double tmp = random.Gaus(0, 1);
+    double std;
+    if (tmp < 0) {
+      // If std_pos_ = std_neg_, doesn't matter. If not, choosed correct one
+      shift_dir = -1;
+      std = std_neg_;
     } else {
-      std_ = std_neg_;
+      shift_dir = 1;
+      std = std_pos_;
     }
-    std::cout << std_ << "\n";
-    shifted_value_ = random.Gaus(mean_, std_);
-    // If random sign and shifted value are not the same sign, pick again
-    if (rand_sign_ * shifted_value_ < 0) {
-      while (rand_sign_ * shifted_value_ < 0) {
-        RooRandom::randomGenerator()->SetSeed(0);
-        TRandom3 random(0);
-        shifted_value_ = random.Gaus(mean_, std_);
-      }
+    std::cout << shift_dir << "\n";
+    std::cout << std << "\n";
+    shifted_value = random.Gaus(mean_, std);
+    // If shift_dir > 0, mean < shifted_value
+    // If shift_dir < 0, mean > shifted_value
+    while (((mean_ - shifted_value) * shift_dir > 0) &&
+           (sign_ == Sign::same && (mean_ * shifted_value < 0))) {
+      std::random_device rd;
+      std::default_random_engine rng(rd());
+      std::uniform_int_distribution<UInt_t> dist;
+      UInt_t seed = dist(rng);
+      // UInt_t seed = 0xbabe652;
+      RooRandom::randomGenerator()->SetSeed(seed);
+      TRandom3 random(seed);
+      shifted_value = random.Gaus(mean_, std);
     }
   }
-  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value_
+  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value
             << "\n";
   std::cout << "--------------------------------------------------------------\n\n";
-  roo_variable_->setVal(shifted_value_);
+  roo_variable_->setVal(shifted_value);
 }
 
 double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
