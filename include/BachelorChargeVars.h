@@ -149,7 +149,11 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
             ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
                           "_" + EnumToString(charge))
                              .c_str(),
-                         ReturnType::std),
+                         ReturnType::stdL),
+            ReadGammaObs(("R_piK_Bu2Dst0h_D0gamma_" + EnumToString(bachelor) +
+                          "_" + EnumToString(charge))
+                             .c_str(),
+                         ReturnType::stdH),
             Systematic::R_piK_Bu2Dst0h_D0gamma, Sign::same));
   }
   if (bachelor == Bachelor::pi) {

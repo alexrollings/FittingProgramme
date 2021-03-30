@@ -1275,8 +1275,12 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
         ReadGammaObs(("A_Bu2Dst0h_D0gamma_" + EnumToString(Bachelor::k) + "_" +
                       EnumToString(Daughters::kpi))
                          .c_str(),
-                     ReturnType::std),
-        Systematic::A_Bu2Dst0h_D0gamma_K_Kpi, Sign::same));
+                     ReturnType::stdL),
+        ReadGammaObs(("A_Bu2Dst0h_D0gamma_" + EnumToString(Bachelor::k) + "_" +
+                      EnumToString(Daughters::kpi))
+                         .c_str(),
+                     ReturnType::stdH),
+        Systematic::A_K_Kpi_Bu2Dst0h_D0gamma, Sign::same));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",

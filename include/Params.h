@@ -141,6 +141,17 @@ class Params {
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
   }
 
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Bachelor bachelor, double mean,
+                                          double std_pos, double std_neg,
+                                          Systematic systematic, Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(bachelor), "", "");
+    auto var_name = name + "_" + ComposeName(uniqueId, bachelor);
+    return ConstructFixedParameter(key, var_name, mean, std_pos, std_neg,
+                                   systematic, sign);
+  }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Bachelor bachelor, Charge charge, double mean,
@@ -151,6 +162,17 @@ class Params {
                                EnumToString(bachelor), EnumToString(charge), "");
     auto var_name = name + "_" + ComposeName(uniqueId, bachelor, charge);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Bachelor bachelor, Charge charge, double mean,
+                                          double std_pos, double std_neg, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId),
+                               EnumToString(bachelor), EnumToString(charge), "");
+    auto var_name = name + "_" + ComposeName(uniqueId, bachelor, charge);
+    return ConstructFixedParameter(key, var_name, mean, std_pos, std_neg, systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,

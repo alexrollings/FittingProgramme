@@ -65,7 +65,10 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                 ReturnType::val),
             ReadGammaObs(
                 ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
-                ReturnType::std),
+                ReturnType::stdL),
+            ReadGammaObs(
+                ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
+                ReturnType::stdH),
             Systematic::A_CP_Bu2Dst0h_D0gamma, Sign::same));
   }
   A_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
