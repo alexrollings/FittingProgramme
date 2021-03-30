@@ -17,7 +17,7 @@
 // RooRealVar var();
 // Enum to ensure parameter > / < 0 when randomising (e.g. tail or widths in
 // fit)
-enum class Sign { positive, negative, same, none };
+enum class Sign { same, none };
 enum class Param { val, err };
 
 class FixedParameter {
@@ -28,6 +28,7 @@ class FixedParameter {
         mean_(mean),
         std_pos_(std),
         std_neg_(std),
+        sym_(true),
         systematic_(systematic),
         sign_(sign),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
@@ -38,6 +39,8 @@ class FixedParameter {
         mean_(mean),
         std_pos_(std_pos),
         std_neg_(std_neg),
+        // if +ve and -ve erros given, set symmetric bool to false
+        sym_(false),
         systematic_(systematic),
         sign_(sign),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
@@ -53,12 +56,14 @@ class FixedParameter {
   double mean() const { return mean_; }
   double std_pos() const { return std_pos_; }
   double std_neg() const { return std_neg_; }
+  bool sym() { return sym_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
   void Randomise(TRandom3 &random);
 
  private:
   double mean_, std_pos_, std_neg_;
+  bool sym_;
   std::string const name_;
   Systematic systematic_;
   Sign sign_;
@@ -88,6 +93,17 @@ class Params {
     auto key = std::make_tuple(name, std::to_string(uniqueId), "", "", "");
     auto var_name = name + "_" + std::to_string(uniqueId);
     return ConstructFixedParameter(key, var_name, mean, std, systematic, sign);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          double mean, double std_pos,
+                                          double std_neg, Systematic systematic,
+                                          Sign sign) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key = std::make_tuple(name, std::to_string(uniqueId), "", "", "");
+    auto var_name = name + "_" + std::to_string(uniqueId);
+    return ConstructFixedParameter(key, var_name, mean, std_pos, std_neg,
+                                   systematic, sign);
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,

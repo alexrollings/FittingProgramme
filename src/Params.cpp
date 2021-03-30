@@ -24,33 +24,39 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
 void FixedParameter::Randomise(TRandom3 &random) {
   std::cout << "\n\n--------------------------------------------------------------\n";
   std::cout << "FixedParameter::Randomise\n";
-  std::cout << name_ << "\n";
-  std::cout << std_pos_ << "\n";
-  std::cout << std_neg_ << "\n";
-  double shifted_value;
+  double shifted_value, std;
   std::smatch match;
   static const std::regex pattern("\\S+Eff\\S+");
   if (std::regex_match(name_, match, pattern)) {
     std::cout << "0 < Efficiency < 1\n";
-    // std::cout << shifted_value << "\n";
-    while (shifted_value > 1 || shifted_value < 0) {
-      RooRandom::randomGenerator()->SetSeed(0);
-      TRandom3 random(0);
-      if (std_pos_ == std_neg_) {
-        shifted_value = random.Gaus(mean_, std_pos_);
-      } else {
-        throw std::runtime_error(
-            "Params.cpp FixedParameter::Randomise: no implementation for "
-            "asymmetric errors of "
-            "efficiencies");
-      }
+    if (std_pos_ == std_neg_) {
+      std = std_pos_;
+      std::cout << "std = " << std << "\n";
+    } else {
+      throw std::runtime_error(
+          "Params.cpp FixedParameter::Randomise: no implementation for "
+          "asymmetric errors of "
+          "efficiencies");
     }
-    // std::cout << shifted_value << "\n";
+    shifted_value = random.Gaus(mean_, std);
+    std::cout << "First choice: " << shifted_value << "\n";
+    while (shifted_value > 1 || shifted_value < 0) {
+      std::random_device rd;
+      std::default_random_engine rng(rd());
+      std::uniform_int_distribution<UInt_t> dist;
+      UInt_t seed = dist(rng);
+      // UInt_t seed = 0xbabe652;
+      RooRandom::randomGenerator()->SetSeed(seed);
+      TRandom3 random(seed);
+      shifted_value = random.Gaus(mean_, std);
+      std::cout << "Try again: " << shifted_value << "\n";
+    }
   } else {
     // Randomly choose +ve/-ve shift
     int shift_dir;
     double tmp = random.Gaus(0, 1);
-    double std;
+    std::cout << "std_pos_ = " << std_pos_ << "\n";
+    std::cout << "std_neg_ = " << std_neg_ << "\n";
     if (tmp < 0) {
       // If std_pos_ = std_neg_, doesn't matter. If not, choosed correct one
       shift_dir = -1;
@@ -59,12 +65,13 @@ void FixedParameter::Randomise(TRandom3 &random) {
       shift_dir = 1;
       std = std_pos_;
     }
-    std::cout << shift_dir << "\n";
-    std::cout << std << "\n";
+    std::cout << "shift dir (+1/-1) = " << shift_dir << "\n";
+    std::cout << "std = " << std << "\n";
     shifted_value = random.Gaus(mean_, std);
     // If shift_dir > 0, mean < shifted_value
     // If shift_dir < 0, mean > shifted_value
-    while (((mean_ - shifted_value) * shift_dir > 0) &&
+    std::cout << "First choice: " << shifted_value << "\n";
+    while ((sym_ == false && ((mean_ - shifted_value) * shift_dir > 0)) ||
            (sign_ == Sign::same && (mean_ * shifted_value < 0))) {
       std::random_device rd;
       std::default_random_engine rng(rd());
@@ -74,6 +81,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
       RooRandom::randomGenerator()->SetSeed(seed);
       TRandom3 random(seed);
       shifted_value = random.Gaus(mean_, std);
+      std::cout << "Try again: " << shifted_value << "\n";
     }
   }
   std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value
