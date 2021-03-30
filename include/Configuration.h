@@ -176,6 +176,7 @@ enum class Systematic {
   kBF_D02pipi,
   R_CP_Bu2Dst0h_D0gamma,
   A_CP_Bu2Dst0h_D0gamma,
+  R_piK_Bu2Dst0h_D0gamma,
   R_ADS_Bu2Dst0hst,
   // DON'T RUN BELOW
   // A_CP_pi_Lb2Omegach_Lcpi0,

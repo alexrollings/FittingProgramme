@@ -150,7 +150,7 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
                           "_" + EnumToString(charge))
                              .c_str(),
                          ReturnType::std),
-            Systematic::NA, Sign::same));
+            Systematic::R_piK_Bu2Dst0h_D0gamma, Sign::same));
   }
   if (bachelor == Bachelor::pi) {
     R_piK_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
