@@ -466,7 +466,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       //                                  Bachelor::pi, Daughters::pik, 0, -1, 1));
       A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
           "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi, Daughters::pik, 0,
-          0.0008, Systematic::NA, Sign::none));
+          0.0008, Systematic::A_pi_Kpi_Bu2D0hst, Sign::none));
       // A_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(
       //     Params::Get().CreateFloating("A_Bu2Dst0hst", uniqueId, _neutral,
       //                                  Bachelor::pi, Daughters::pik, 0, -1,
@@ -1276,7 +1276,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
                       EnumToString(Daughters::kpi))
                          .c_str(),
                      ReturnType::std),
-        Systematic::NA, Sign::same));
+        Systematic::A_Bu2Dst0h_D0gamma_K_Kpi, Sign::same));
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
@@ -1508,7 +1508,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
     // }
     A_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_ADS_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k, Daughters::pik,
-        0.0, 0.5, Systematic::NA, Sign::none));
+        0.0, 0.5, Systematic::A_K_piK_Bu2Dst0hst, Sign::none));
     a_Bu2Dst0hst_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
         ("a_Bu2Dst0hst_" +
          ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))

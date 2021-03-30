@@ -620,6 +620,18 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::kBF_Bu2Dst0rho;
   } else if (systematic == "kBF_Bu2Dst0Kst") {
     return Systematic::kBF_Bu2Dst0Kst;
+  } else if (systematic == "R_CP_Bu2Dst0h_D0gamma") {
+    return Systematic::R_CP_Bu2Dst0h_D0gamma;
+  } else if (systematic == "A_CP_Bu2Dst0h_D0gamma") {
+    return Systematic::A_CP_Bu2Dst0h_D0gamma;
+  } else if (systematic == "R_piK_Bu2Dst0h_D0gamma") {
+    return Systematic::R_piK_Bu2Dst0h_D0gamma;
+  } else if (systematic == "A_Bu2Dst0h_D0gamma_K_Kpi") {
+    return Systematic::A_Bu2Dst0h_D0gamma_K_Kpi;
+  } else if (systematic == "R_ADS_Bu2Dst0hst") {
+    return Systematic::R_ADS_Bu2Dst0hst;
+  } else if (systematic == "A_K_piK_Bu2Dst0hst") {
+    return Systematic::A_K_piK_Bu2Dst0hst;
   }
   throw std::invalid_argument("Invalid systematic passed to StringToEnum");
 }
@@ -844,6 +856,18 @@ std::string EnumToString(Systematic systematic) {
       return "kBF_Bu2Dst0rho";
     case Systematic::kBF_Bu2Dst0Kst:
       return "kBF_Bu2Dst0Kst";
+    case Systematic::R_CP_Bu2Dst0h_D0gamma:
+      return "R_CP_Bu2Dst0h_D0gamma";
+    case Systematic::A_CP_Bu2Dst0h_D0gamma:
+      return "A_CP_Bu2Dst0h_D0gamma";
+    case Systematic::R_piK_Bu2Dst0h_D0gamma:
+      return "R_piK_Bu2Dst0h_D0gamma";
+    case Systematic::A_Bu2Dst0h_D0gamma_K_Kpi:
+      return "A_Bu2Dst0h_D0gamma_K_Kpi";
+    case Systematic::R_ADS_Bu2Dst0hst:
+      return "R_ADS_Bu2Dst0hst";
+    case Systematic::A_K_piK_Bu2Dst0hst:
+      return "A_K_piK_Bu2Dst0hst";
   }
 }
 
