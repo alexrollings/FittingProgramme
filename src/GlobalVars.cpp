@@ -212,7 +212,7 @@ GlobalVars::GlobalVars(int uniqueId)
             "R_CP_Bu2Dst0h_D0gamma", uniqueId_,
             ReadGammaObs("R_CP_Bu2Dst0h_D0gamma", ReturnType::val),
             ReadGammaObs("R_CP_Bu2Dst0h_D0gamma", ReturnType::std),
-            Systematic::NA, Sign::same));
+            Systematic::R_CP_Bu2Dst0h_D0gamma, Sign::same));
     }
   R_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(
       Params::Get().CreateFloating("R_CP_Bu2Dst0h_WN", uniqueId_, 1, -2, 2));
