@@ -622,8 +622,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::kBF_Bu2Dst0Kst;
   } else if (systematic == "R_CP_Bu2Dst0h_D0gamma") {
     return Systematic::R_CP_Bu2Dst0h_D0gamma;
-  } else if (systematic == "A_CP_Bu2Dst0h_D0gamma") {
-    return Systematic::A_CP_Bu2Dst0h_D0gamma;
+  } else if (systematic == "A_CP_pi_Bu2Dst0h_D0gamma") {
+    return Systematic::A_CP_pi_Bu2Dst0h_D0gamma;
+  } else if (systematic == "A_CP_K_Bu2Dst0h_D0gamma") {
+    return Systematic::A_CP_K_Bu2Dst0h_D0gamma;
   } else if (systematic == "R_piK_Bu2Dst0h_D0gamma") {
     return Systematic::R_piK_Bu2Dst0h_D0gamma;
   } else if (systematic == "A_K_Kpi_Bu2Dst0h_D0gamma") {
@@ -858,8 +860,10 @@ std::string EnumToString(Systematic systematic) {
       return "kBF_Bu2Dst0Kst";
     case Systematic::R_CP_Bu2Dst0h_D0gamma:
       return "R_CP_Bu2Dst0h_D0gamma";
-    case Systematic::A_CP_Bu2Dst0h_D0gamma:
-      return "A_CP_Bu2Dst0h_D0gamma";
+    case Systematic::A_CP_pi_Bu2Dst0h_D0gamma:
+      return "A_CP_pi_Bu2Dst0h_D0gamma";
+    case Systematic::A_CP_K_Bu2Dst0h_D0gamma:
+      return "A_CP_K_Bu2Dst0h_D0gamma";
     case Systematic::R_piK_Bu2Dst0h_D0gamma:
       return "R_piK_Bu2Dst0h_D0gamma";
     case Systematic::A_K_Kpi_Bu2Dst0h_D0gamma:

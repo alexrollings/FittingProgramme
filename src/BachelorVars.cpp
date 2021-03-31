@@ -57,6 +57,12 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
                                      _bachelor, k_A_CP_Bu2Dst0h_D0pi0_, -1, 1));
   }
   if (Configuration::Get().neutral() == Neutral::pi0) {
+    Systematic systematic;
+    if (_bachelor == Bachelor::pi) {
+      systematic = Systematic::A_CP_pi_Bu2Dst0h_D0gamma;
+    } else {
+      systematic = Systematic::A_CP_K_Bu2Dst0h_D0gamma;
+    }
     A_CP_Bu2Dst0h_D0gamma_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
             "A_CP_Bu2Dst0h_D0gamma", uniqueId_, _bachelor,
@@ -69,7 +75,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
             ReadGammaObs(
                 ("A_CP_Bu2Dst0h_D0gamma_" + EnumToString(_bachelor)).c_str(),
                 ReturnType::stdH),
-            Systematic::A_CP_Bu2Dst0h_D0gamma, Sign::same));
+            systematic, Sign::same));
   }
   A_CP_Bu2Dst0h_WN_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
       "A_CP_Bu2Dst0h_WN", uniqueId_, _bachelor, 0, -1, 1));
