@@ -136,8 +136,6 @@ enum class Systematic {
   boxEffs_Bu2Dst0h_D0pi0,
   boxEffs_Bu2Dst0h_D0gamma,
   boxEffs_Bkg,
-  boxEffs_Bs2Dst0Kst0,
-  boxEffs_Bs2D0Kst0,
   boxEffs_D02pik,
   boxEffs_Bu2Dst0h_D0pi0_misId,
   boxEffs_Bu2Dst0h_D0gamma_misId,
