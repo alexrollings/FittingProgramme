@@ -7,6 +7,9 @@ from useful_functions import return_group
 import json
 import operator
 from uncertainties import ufloat
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 def PrintFitStatus(fit_status):
@@ -203,15 +206,17 @@ if __name__ == '__main__':
             # If fit has good quality, save systematic results in syst_dict
             for par in syst_dict:
               # REMOVE AFTER SYST RE-RUN #
-              if par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'gamma':
-                par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi'
-              elif par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'pi0':
-                par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi'
-              else:
-                par_stored = par
+              # if par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'gamma':
+              #   par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi'
+              # elif par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'pi0':
+              #   par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi'
+              # else:
+              #   par_stored = par
               ############################
-              if par_stored in json_dict[syst_label][seed]:
-                val = json_dict[syst_label][seed][par_stored]
+              # if par_stored in json_dict[syst_label][seed]:
+              #   val = json_dict[syst_label][seed][par_stored]
+              if par in json_dict[syst_label][seed]:
+                val = json_dict[syst_label][seed][par]
                 if syst_label not in syst_dict[par]:
                   syst_dict[par][syst_label] = [val]
                 else:
@@ -268,6 +273,16 @@ if __name__ == '__main__':
       tot_syst = 0
       for syst_label, arr in syst_arr.items():
         np_arr = np.asarray(arr, dtype=np.float32)
+        if syst_label == 'A_Kpi':
+          fig, ax = plt.subplots()
+          plt.hist(np_arr, bins='auto')
+          plt.xlabel(' ')
+          ax.axes.get_yaxis().set_visible(False)
+          plt.title(return_label(par))
+          plt.savefig(syst_dir + '/histograms/' + par + '_' + syst_label +
+                      '.png',
+                      format='png')
+          plt.clf()
         std = np.std(np_arr)
         total_syst_dict[par][syst_label] = std
         tot_syst += std**2
@@ -332,7 +347,7 @@ if __name__ == '__main__':
     title_str['A'] = title_str['A'] + ' \\\\ \\hline\n'
 
     tex_file = open(
-        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Sytematics_{neutral}.tex',
+        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Sytematics_{neutral}_new.tex',
         'w')
     tex_file.write('\\documentclass[12pt, portrait]{article}\n')
     tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
