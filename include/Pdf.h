@@ -32,6 +32,9 @@ class PdfBase {
   virtual RooRealVar &bkgFracGlobal_WN() const = 0;
   virtual RooFormulaVar &Bs2Dst0Kst0_fracD0pi0_Delta() const = 0;
 
+  virtual RooAbsReal &R_piK_Bu2Dst0h_D0gamma() const = 0;
+  virtual RooAbsReal &R_piK_Bu2Dst0h_D0pi0() const = 0;
+
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0pi0() const = 0;
   virtual RooAbsReal &N_tot_Bu2Dst0h_D0gamma_WN() const = 0;
@@ -326,6 +329,15 @@ class Pdf : public PdfBase {
   virtual void AssignMisIdYields() {
     Yields<_neutral, _bachelor, _daughters, _charge>::Get(uniqueId_)
         .AssignMisIdYields();
+  }
+
+  virtual RooAbsReal &R_piK_Bu2Dst0h_D0gamma() const {
+    return BachelorChargeVars<_bachelor, _charge>::Get(uniqueId_)
+        .R_piK_Bu2Dst0h_D0gamma();
+  }
+  virtual RooAbsReal &R_piK_Bu2Dst0h_D0pi0() const {
+    return BachelorChargeVars<_bachelor, _charge>::Get(uniqueId_)
+        .R_piK_Bu2Dst0h_D0pi0();
   }
 
   virtual RooRealVar &bkgFracGlobal_WN() const {
