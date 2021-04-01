@@ -668,8 +668,13 @@ int main(int argc, char **argv) {
     pdfs = p.second;
     // Apply box cuts and split PDF into mass categories too
     std::map<std::string, RooDataSet *> mapFittingDataSet;
+    RooArgSet asymArgSet;
     for (auto &p : pdfs) {
       MakeMapFittingDataSet(*p, mapDataLabelDataSet, mapFittingDataSet, config);
+      asymArgSet.add(p->R_piK_Bu2Dst0h_D0pi0());
+      if (config.neutral() == Neutral::gamma) {
+        asymArgSet.add(p->R_piK_Bu2Dst0h_D0gamma());
+      }
     }
 
     RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
@@ -693,8 +698,8 @@ int main(int argc, char **argv) {
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-                        // RooFit::Minos(kTRUE)));
+                        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+                        RooFit::Minos(kTRUE)));
       // if (config.neutral() == Neutral::pi0) {
       //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
       //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
