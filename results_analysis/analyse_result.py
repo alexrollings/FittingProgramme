@@ -61,6 +61,10 @@ if __name__ == '__main__':
                       dest='blind',
                       action='store_true',
                       required=False)
+  parser.add_argument('--remake',
+                      dest='remake',
+                      action='store_true',
+                      required=False)
   args = parser.parse_args()
   result = args.result
   syst_dir = args.syst_dir
@@ -69,6 +73,7 @@ if __name__ == '__main__':
   neutral = args.neutral
   charge = args.charge
   blind = args.blind
+  remake = args.remake
 
   if blind == True:
     blindStr = '_Blind'
@@ -161,7 +166,7 @@ if __name__ == '__main__':
   if eval_systs == True:
     # If json already exists for formatted systs, load this
     json_fname_format = f'{syst_dir}/systematics_{neutral}_format.json'
-    if os.path.exists(json_fname_format):
+    if os.path.exists(json_fname_format) and remake == False:
       with open(json_fname_format, 'r') as json_file_format:
         syst_dict = json.load(json_file_format)
         status_fname = f'{syst_dir}/systematics_{neutral}_status.json'
@@ -197,6 +202,8 @@ if __name__ == '__main__':
           fitStatus = json_dict[syst_label][seed]['fitStatus']
           if covQual < 2:
             fit_status[syst_label]['Unconverged'] += 1
+            # if syst_label == 'Bs2D0Kst0_PdfBu':
+              # print(seed)
           elif covQual < 3:
             fit_status[syst_label]['FPD'] += 1
           elif fitStatus != 0:
@@ -273,7 +280,13 @@ if __name__ == '__main__':
       tot_syst = 0
       for syst_label, arr in syst_arr.items():
         np_arr = np.asarray(arr, dtype=np.float32)
-        if syst_label == 'A_Kpi':
+        val = fit_result[par]['Value']
+        stat = fit_result[par]['Statistical Error']
+        up = val + 3 * stat
+        down = val - 3 * stat
+        np_arr = np_arr[np_arr > down]
+        np_arr = np_arr[np_arr < up]
+        if syst_label == 'Bs2D0Kst0_PdfDelta':
           fig, ax = plt.subplots()
           plt.hist(np_arr, bins='auto')
           plt.xlabel(' ')
@@ -526,7 +539,8 @@ if __name__ == '__main__':
         decay_label = '\\multirow{4}{*}{' + return_label(f'Bu2Dst0{b}_D0{n}') + '}'
       else:
         decay_label = ''
-      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${val:.0f} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+      # yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${val:.0f} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${val:.0f} \\pm {stat:.0f}$ \\\\\n'
 
     b = 'k'
     R_K_pi_name = f'R_Dst0KDst0pi_Bu2Dst0h_kpi'
@@ -553,7 +567,8 @@ if __name__ == '__main__':
       else:
         valStr = f'{val:.0f}'
       daughters_label = return_label(d)
-      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+      # yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+      yield_dict[n][b][d] = f'{decay_label} & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\\n'
 
     bachelor = ['pi', 'k']
     for b in bachelor:
@@ -581,9 +596,11 @@ if __name__ == '__main__':
         valStr = f'{val:.0f}'
       daughters_label = return_label('pik')
       if n == 'pi0' and b == 'k':
-        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+        # yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\\n'
+        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\\n'
       else:
-        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\ \\hline\n'
+        # yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f} ({exp:.0f})$ \\\\ \\hline\n'
+        yield_dict[n][b]['pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\ \\hline\n'
 
   for n in true_neutral:
     for b in ['pi', 'k']:
