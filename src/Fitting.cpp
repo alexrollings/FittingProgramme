@@ -687,10 +687,14 @@ int main(int argc, char **argv) {
     }
 
     if (config.noFit() == false) {
+      // Strategy(2) requires evaluation of hessian at every step: can set
+      // strategy 0 then call MINOS after to calculate correct errors
       dataFitResult = std::unique_ptr<RooFitResult>(
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+                        // RooFit::Minos(kTRUE)));
       // if (config.neutral() == Neutral::pi0) {
       //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
       //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
