@@ -283,11 +283,11 @@ int main(int argc, char **argv) {
                 << "    -pdf2D, to run 2D toys generated from 2D PDF\n"
                 << "    -data2D, to run 2D toys generated from RooHistPdf of "
                    "data\n"
-                << "    -data1D, to run independent 1D toys generated from RooHistPdf of "
+                << "    -data1D, to run independent 1D toys generated from "
+                   "RooHistPdf of "
                    "data.\n";
-      std::cout
-          << "    -systematic=<choice, default: None>"
-          << "\n";
+      std::cout << "    -systematic=<choice, default: None>"
+                << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
       std::cout << " ----------------------------------------------------------"
@@ -315,8 +315,8 @@ int main(int argc, char **argv) {
           data1D = true;
           std::cout << "Toys generated from independent 1D data.\n";
         } else {
-          std::cerr
-              << "Must specify type of toy to run: pdfD1D, pdf2D, data2D, data1D\n";
+          std::cerr << "Must specify type of toy to run: pdfD1D, pdf2D, "
+                       "data2D, data1D\n";
           return 1;
         }
       }
@@ -347,7 +347,7 @@ int main(int argc, char **argv) {
         config.simpleFit() = true;
       }
       if (args("nCPU", nCPUArg)) {
-        std::cout << "Setting nCPU to " << nCPUArg << "\n"; 
+        std::cout << "Setting nCPU to " << nCPUArg << "\n";
         config.nCPU_ = nCPUArg;
       }
       // Year
@@ -429,8 +429,7 @@ int main(int argc, char **argv) {
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
-          std::cerr
-              << "systematic assignment failed, please specify.\n";
+          std::cerr << "systematic assignment failed, please specify.\n";
           return 1;
         }
         if (!args("nSyst", nSystArg)) {
@@ -500,9 +499,10 @@ int main(int argc, char **argv) {
   }
 
   if (inputDir != "" &&
-      (chargeVec.size() > 1 && daughtersVec.size() > 1 && config.blindFit() == false &&
-       config.noFit() == false)) {
-    std::cerr << "\n\n !!!!!! Cannot run unblinded split by charge fit for signal modes "
+      (chargeVec.size() > 1 && daughtersVec.size() > 1 &&
+       config.blindFit() == false && config.noFit() == false)) {
+    std::cerr << "\n\n !!!!!! Cannot run unblinded split by charge fit for "
+                 "signal modes "
                  "!!!!!! \n\n";
     return 1;
   }
@@ -691,15 +691,15 @@ int main(int argc, char **argv) {
       throw std::runtime_error("Could not cast to RooAbsData.");
     }
 
-    if (config.noFit() == false) {
+    if (config.noFit() == false && config.runSystematics() == false) {
       // Strategy(2) requires evaluation of hessian at every step: can set
       // strategy 0 then call MINOS after to calculate correct errors
       dataFitResult = std::unique_ptr<RooFitResult>(
           simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
                         RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-                        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-                        RooFit::Minos(kTRUE)));
+                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+      // RooFit::Minos(kTRUE)));
       // if (config.neutral() == Neutral::pi0) {
       //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
       //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
@@ -737,8 +737,8 @@ int main(int argc, char **argv) {
         std::random_device rd;
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
-        UInt_t seed = dist(rng);
-        // UInt_t seed = 0xbabe652;
+        // UInt_t seed = dist(rng);
+        UInt_t seed = 0xe5936d8c;
         RooRandom::randomGenerator()->SetSeed(seed);
         TRandom3 random(seed);
         Params::Get().RandomiseParameters(systematicVec.begin(),
@@ -747,7 +747,7 @@ int main(int argc, char **argv) {
         // auto pdfs = systPair.second;
         auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
             *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-            RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+            RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
             RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
         systResult->SetName("SystResult");
         std::stringstream filename;
@@ -812,28 +812,31 @@ int main(int argc, char **argv) {
           Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
                      dataFitResult.get(), yMaxMap);
         }
-      }
-
-      if (config.noFit() == false) {
-        dataFitResult->Print("v");
-        // for (auto &p : pdfs) {
-        //   if (p->daughters() == Daughters::kpi) {
-        //     if (config.neutral() == Neutral::pi0) {
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
-        //     } else {
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() << "\n";
-        //     }
-        //   }
+        if (config.noFit() == false) {
+          dataFitResult->Print("v");
+          // for (auto &p : pdfs) {
+          //   if (p->daughters() == Daughters::kpi) {
+          //     if (config.neutral() == Neutral::pi0) {
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+          //     } else {
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " =
+          //       "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() <<
+          //                 "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " =
+          //       "
+          //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << "
+          //       = "
+          //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() <<
+          //                 "\n";
+          //     }
+          //   }
           // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
           //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
           // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
@@ -844,44 +847,50 @@ int main(int argc, char **argv) {
           //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
           // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
           //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
-        //             << p->N_tot_Bu2D0hst().getVal() << "\n";
+          //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
+          //             << p->N_tot_Bu2D0hst().getVal() << "\n";
           // if (p->daughters() == Daughters::pik) {
           //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_D02pik().GetName() << " = "
           //             << p->N_tot_Bu2Dst0h_D0pi0_D02pik().getVal() << "\n";
-          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " = "
-          //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() << "\n";
+          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " =
+          //   "
+          //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() <<
+          //             "\n";
           //   if (p->neutral() == Neutral::gamma) {
-          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << " = "
-          //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() << "\n";
+          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << "
+          //     = "
+          //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() <<
+          //               "\n";
           //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().GetName()
           //               << " = "
           //               << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().getVal()
           //               << "\n";
           //   }
           // }
-        // }
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
-        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
-        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-        PlotCorrelations(dataFitResult.get(), outputDir, config);
-        // Save RFR of data and efficiencies to calculate observables with
-        // corrected errors
-        TFile outputFile((outputDir + "/results/DataResult_" +
-                          config.ReturnBoxString() + ".root")
-                             .c_str(),
-                         "recreate");
-        dataFitResult->Write();
-        TTree tree("tree", "");
-        if (config.neutral() == Neutral::pi0 || config.fitBuPartial() == true) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+          // }
+          // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
+          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+          // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
+          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+          PlotCorrelations(dataFitResult.get(), outputDir, config);
+          // Save RFR of data and efficiencies to calculate observables with
+          // corrected errors
+          TFile outputFile((outputDir + "/results/DataResult_" +
+                            config.ReturnBoxString() + ".root")
+                               .c_str(),
+                           "recreate");
+          dataFitResult->Write();
+          TTree tree("tree", "");
+          if (config.neutral() == Neutral::pi0 ||
+              config.fitBuPartial() == true) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+          }
+          if (config.neutral() == Neutral::gamma) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+          }
+          outputFile.cd();
+          tree.Write();
         }
-        if (config.neutral() == Neutral::gamma) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-        }
-        outputFile.cd();
-        tree.Write();
       }
     }
   } else {
