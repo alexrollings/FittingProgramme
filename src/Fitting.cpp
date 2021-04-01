@@ -737,8 +737,8 @@ int main(int argc, char **argv) {
         std::random_device rd;
         std::default_random_engine rng(rd());
         std::uniform_int_distribution<UInt_t> dist;
-        // UInt_t seed = dist(rng);
-        UInt_t seed = 0xe5936d8c;
+        UInt_t seed = dist(rng);
+        // UInt_t seed = 0xe5936d8c;
         RooRandom::randomGenerator()->SetSeed(seed);
         TRandom3 random(seed);
         Params::Get().RandomiseParameters(systematicVec.begin(),
