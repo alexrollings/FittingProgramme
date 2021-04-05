@@ -1,9 +1,10 @@
 import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import numpy as np
+from scipy import stats
 import argparse
 from useful_functions import return_label
-from useful_functions import return_group
+from useful_functions import return_group_breakdown, return_final_group
 import json
 import operator
 from uncertainties import ufloat
@@ -41,12 +42,6 @@ if __name__ == '__main__':
                       type=str,
                       help='Directory where json systematic is stored',
                       required=False)
-  parser.add_argument(
-      '-e',
-      '--error_fname',
-      type=str,
-      help='File where systematics from error correction are stored',
-      required=False)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -69,7 +64,6 @@ if __name__ == '__main__':
   result = args.result
   syst_dir = args.syst_dir
   pull_fname = args.pull_fname
-  error_fname = args.error_fname
   neutral = args.neutral
   charge = args.charge
   blind = args.blind
@@ -97,7 +91,7 @@ if __name__ == '__main__':
   # Dict to store values of observables from each systematic category
   syst_dict = {}
   # Dict to store systematic errors for grouped categories
-  group_dict = {}
+  group_dict = {'final' : {}, 'breakdown' : {}}
 
   eval_systs = False
   if charge != 'total' and syst_dir != None:
@@ -140,17 +134,19 @@ if __name__ == '__main__':
         # No systematics for yields
         if obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff':
           syst_dict[par_name[:-2]] = {}
-          group_dict[par_name[:-2]] = {}
+          for g in group_dict:
+            group_dict[g][par_name[:-2]] = {}
 
   # File where 2D pull results are stored
   pull_file = TFile(pull_fname)
+  pull_widths = {}
   # Extract pull result for vars stored in fit_result dict and correct stat error with pull width
   for k, v in fit_result.items():
     pull_result = pull_file.Get(f'Result_Pull_{k}')
     if pull_result == None:
-      m = re.match('(\S+_Bu2Dst0h_D0[A-Za-z0-9]+)(_\S+|$)', k)
+      m = re.match('(\S+_Bu2Dst0h_D0(pi0|gamma))(_\S+|$)', k)
       if m:
-        blind_par = m.group(1) + '_Blind' + m.group(2)
+        blind_par = m.group(1) + '_Blind' + m.group(3)
         pull_result = pull_file.Get(f'Result_Pull_{blind_par}')
         if pull_result == None:
           print(
@@ -162,6 +158,37 @@ if __name__ == '__main__':
     pull_pars = pull_result.floatParsFinal()
     pull_width = pull_pars[1].getVal()
     v['Statistical Error'] = v['Statistical Error'] * pull_width
+    m = re.match('\S+_D0(pi0|gamma)(_\S+|$)', k)
+    if m:
+      n = [m.group(1)]
+    elif k == 'R_Dst0KDst0pi_Bu2Dst0h_kpi':
+      n = ['gamma', 'pi0']
+    elif k == 'BR_pi02gamma_eff_gamma':
+      n = ['pi0']
+    else:
+      sys.exit(k + ' doesn\'t match neutral regex')
+    for neut in n:
+      if neut not in pull_widths:
+        pull_widths[neut] = [pull_width]
+      else:
+        pull_widths[neut].append(pull_width)
+
+  # Systematic on error correction = RMS of all pull widths
+  total_syst_dict = {}
+  g_err_corr = 'Statistical Error Correction'
+  for n, arr in pull_widths.items():
+    np_widths = np.array(arr)
+    rms = np.std(np_widths)
+    print(rms)
+    for g in group_dict:
+      for p, v in group_dict[g].items():
+        m = re.match(f'\S+_D0({n})(_\S+|$)', p)
+        if m or p == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' or (p == 'BR_pi02gamma_eff_gamma' and n == 'pi0'):
+          v[g_err_corr] = rms * fit_result[p]['Statistical Error']
+          total_syst_dict[p] = {}
+          total_syst_dict[p][
+              g_err_corr] = rms * fit_result[p]['Statistical Error']
+
 
   if eval_systs == True:
     # If json already exists for formatted systs, load this
@@ -243,33 +270,6 @@ if __name__ == '__main__':
         json.dump(fit_status, status_file)
       PrintFitStatus(fit_status)
 
-    total_syst_dict = {}
-    g_err_corr = 'Stat. Error Correction'
-    # # Syst error from error correction: read in from file
-    # if error_fname != None:
-    #   if os.path.exists(error_fname):
-    #     with open(error_fname) as f:
-    #       error_dict = dict(line.strip().split(',') for line in f)
-    #     # print(error_dict)
-    #     for p, v in group_dict.items():
-    #       total_syst_dict[p] = {}
-    #       if p in error_dict:
-    #         v[g_err_corr] = float(error_dict[p]) * fit_result[p]['Statistical Error']
-    #         total_syst_dict[p][g_err_corr] = float(error_dict[p]) * fit_result[p]['Statistical Error']
-    #       else:
-    #         v[g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
-    #         total_syst_dict[p][g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
-    #   else:
-    #     print('No error file: calculating systematics with error correction')
-    # If don't have box scan results yet, use 0.015 as placeholder (average RMS)
-    # else:
-    # Use average RMS as systematic for stat error correction
-    for p, v in group_dict.items():
-      v[g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
-      total_syst_dict[p] = {}
-      total_syst_dict[p][
-          g_err_corr] = 0.015 * fit_result[p]['Statistical Error']
-
     # Calculate individual systematic errors from std dev of arrays in syst_dict
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
     # Dict to store dominant syst labels
@@ -280,40 +280,67 @@ if __name__ == '__main__':
       tot_syst = 0
       for syst_label, arr in syst_arr.items():
         np_arr = np.asarray(arr, dtype=np.float32)
-        val = fit_result[par]['Value']
-        stat = fit_result[par]['Statistical Error']
-        up = val + 3 * stat
-        down = val - 3 * stat
-        np_arr = np_arr[np_arr > down]
-        np_arr = np_arr[np_arr < up]
         if syst_label == 'Bs2D0Kst0_PdfDelta':
+          t_df, t_m, t_s = stats.t.fit(np_arr)
+          # print(par + ' v=' + str(t_df) + ' m=' + str(t_m) + ' s=' + str(t_s))
+          # print(par + ' val=' + str(val) + ' std=' + str(stat))
+          # print(par + ' ' + str((val-t_m)*100/val) + ' ' + str((t_s-stat)*100/stat))
+          # init = len(np_arr)
+          # up = t_m + 5 * t_s
+          # down = t_m - 5 * t_s
+          # np_arr = np_arr[np_arr > down]
+          # np_arr = np_arr[np_arr < up]
+          # final = len(np_arr)
+          # print(par)
+          # print((init - final)*100 / init)
           fig, ax = plt.subplots()
-          plt.hist(np_arr, bins='auto')
-          plt.xlabel(' ')
           ax.axes.get_yaxis().set_visible(False)
+          # b = 10
+          plt.hist(np_arr, bins='auto', density=True)
+          # ax.axes.set_xlim([up, down])
+          up, down = ax.axes.get_xlim()
+          x = np.linspace(down, up, 50)
+          t_distn = stats.t.pdf(x, t_df, t_m, t_s)
+          plt.plot(x, t_distn)
+          plt.xlabel(' ')
           plt.title(return_label(par))
           plt.savefig(syst_dir + '/histograms/' + par + '_' + syst_label +
                       '.png',
                       format='png')
           plt.clf()
+        val = fit_result[par]['Value']
+        stat = fit_result[par]['Statistical Error']
+        init = len(np_arr)
+        up = val + 3 * stat
+        down = val - 3 * stat
+        np_arr = np_arr[np_arr > down]
+        np_arr = np_arr[np_arr < up]
+        final = len(np_arr)
+        if syst_label == 'Bs2D0Kst0_PdfDelta':
+          print(par)
+          print((init - final)*100 / init)
         std = np.std(np_arr)
         total_syst_dict[par][syst_label] = std
         tot_syst += std**2
         # Grouping errors
-        group = return_group(syst_label)
-        if group in group_dict[par]:
-          group_dict[par][group] += std**2
-        else:
-          group_dict[par][group] = std**2
-      tot_syst += group_dict[par][g_err_corr]**2
+        group = {'final': return_final_group(syst_label), 'breakdown': return_group_breakdown(syst_label)}
+        for g in group_dict:
+          if group[g] in group_dict[g][par]:
+            group_dict[g][par][group[g]] += std**2
+          else:
+            group_dict[g][par][group[g]] = std**2
+      # Could calculate final syst from either group
+      tot_syst += group_dict['final'][par][g_err_corr]**2
       fit_result[par]['Systematic Error'] = tot_syst**0.5
       max_systs[par]['label'] = max(total_syst_dict[par].items(),
                                     key=operator.itemgetter(1))[0]
-      for k, v in group_dict[par].items():
-        if k != g_err_corr:
-          # Sqrt sum in quadrature of individual errs
-          group_dict[par][k] = v**0.5
-      max_systs[par]['group'] = max(group_dict[par].items(),
+      for g in group_dict:
+        for k, v in group_dict[g][par].items():
+          if k != g_err_corr:
+            # Sqrt sum in quadrature of individual errs
+            group_dict[g][par][k] = v**0.5
+      # Calculate max systs in breakdown
+      max_systs[par]['group'] = max(group_dict['breakdown'][par].items(),
                                     key=operator.itemgetter(1))[0]
 
     # Separate tables for yields, ratios and asymmetries
@@ -413,7 +440,7 @@ if __name__ == '__main__':
       title_str = ''
       row_arr = []
       i = 0
-      for par, g_err in group_dict.items():
+      for par, g_err in group_dict['breakdown'].items():
         if par[0] == l:
           title_str = title_str + ' & ' + return_label(par)
           j = 0
