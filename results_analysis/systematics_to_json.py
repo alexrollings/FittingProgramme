@@ -36,7 +36,8 @@ if __name__ == '__main__':
   # obs_match we are interested have this stem (match with regex)
   observables = [
       'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
+      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h',
+      'BR_pi02gamma_eff'
   ]
 
   if os.path.isdir(input_dir):
@@ -47,7 +48,7 @@ if __name__ == '__main__':
         json_dict = json.load(json_file)
     # If not, create empty dict
     else:
-        json_dict = {}
+      json_dict = {}
   else:
     sys.exit(input_dir + ' does not exist.')
 
@@ -61,7 +62,7 @@ if __name__ == '__main__':
       file_count = file_count + 1
       m = re.search(
           f'SystResult_{box_str}((?:_[0-9A-Za-z]+)+)_([a-z0-9]+).root', f)
-          # 'SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_[a-z0-9]+.root', f)
+      # 'SystResult(?:_[0-9]+){4,6}((?:_[0-9A-Za-z]+)+)_[a-z0-9]+.root', f)
       if m:
         syst_label = m.group(1)[1:]
         seed = m.group(2)
@@ -100,5 +101,3 @@ if __name__ == '__main__':
     SaveToFile(json_fname, json_dict)
   else:
     sys.exit(input_dir + ' does not exist.')
-
-

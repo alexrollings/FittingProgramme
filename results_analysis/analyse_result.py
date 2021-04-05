@@ -162,7 +162,10 @@ if __name__ == '__main__':
     if m:
       n = [m.group(1)]
     elif k == 'R_Dst0KDst0pi_Bu2Dst0h_kpi':
-      n = ['gamma', 'pi0']
+      if neutral == 'gamma':
+        n = ['pi0', 'gamma']
+      else:
+        n = ['pi0']
     elif k == 'BR_pi02gamma_eff_gamma':
       n = ['pi0']
     else:
@@ -182,6 +185,8 @@ if __name__ == '__main__':
     print(rms)
     for g in group_dict:
       for p, v in group_dict[g].items():
+        if p == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'gamma' and n == 'pi0':
+          continue
         m = re.match(f'\S+_D0({n})(_\S+|$)', p)
         if m or p == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' or (p == 'BR_pi02gamma_eff_gamma' and n == 'pi0'):
           v[g_err_corr] = rms * fit_result[p]['Statistical Error']
@@ -230,7 +235,7 @@ if __name__ == '__main__':
           if covQual < 2:
             fit_status[syst_label]['Unconverged'] += 1
             # if syst_label == 'Bs2D0Kst0_PdfBu':
-              # print(seed)
+            # print(seed)
           elif covQual < 3:
             fit_status[syst_label]['FPD'] += 1
           elif fitStatus != 0:
@@ -273,6 +278,7 @@ if __name__ == '__main__':
     # Calculate individual systematic errors from std dev of arrays in syst_dict
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
     # Dict to store dominant syst labels
+    final_groups = []
     max_systs = {}
     for par, syst_arr in syst_dict.items():
       max_systs[par] = {'label': None, 'group': None}
@@ -329,6 +335,8 @@ if __name__ == '__main__':
             group_dict[g][par][group[g]] += std**2
           else:
             group_dict[g][par][group[g]] = std**2
+        if group['final'] not in final_groups:
+          final_groups.append(group['final'])
       # Could calculate final syst from either group
       tot_syst += group_dict['final'][par][g_err_corr]**2
       fit_result[par]['Systematic Error'] = tot_syst**0.5
@@ -387,7 +395,7 @@ if __name__ == '__main__':
     title_str['A'] = title_str['A'] + ' \\\\ \\hline\n'
 
     tex_file = open(
-        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Sytematics_{neutral}_new.tex',
+        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_{neutral}_new.tex',
         'w')
     tex_file.write('\\documentclass[12pt, portrait]{article}\n')
     tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
@@ -435,6 +443,9 @@ if __name__ == '__main__':
       tex_file.write('\\end{adjustbox}\n')
       tex_file.write('\\end{table}\n')
 
+    tex_file.write('\\end{document}')
+    tex_file.close()
+
     letter = ['R', 'A']
     for l in letter:
       title_str = ''
@@ -476,20 +487,62 @@ if __name__ == '__main__':
       title_str = title_str + ' \\\\ \\hline\n'
 
       if n_params[l] > 0:
-        tex_file.write('\\begin{table}[t]\n')
-        tex_file.write('\\centering\n')
-        tex_file.write('\\small\n')
-        tex_file.write('\\begin{adjustbox}{max width=\\textwidth}\n')
-        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[l] + 2) + '}\n')
-        tex_file.write('\\hline\\hline\n')
-        tex_file.write(title_str)
+        syst_file_1 = open(
+            f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_breakdown_{l}_{neutral}.tex',
+            'w')
+        # syst_file_1.write('\\begin{table}[t]\n')
+        # syst_file_1.write('\\centering\n')
+        # syst_file_1.write('\\small\n')
+        # syst_file_1.write('\\begin{adjustbox}{max width=\\textwidth}\n')
+        syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[l] + 2) + '}\n')
+        syst_file_1.write('\\hline\\hline\n')
+        syst_file_1.write(title_str)
         for row in row_arr:
-          tex_file.write(row)
-        tex_file.write('\\end{tabular}\n')
-        tex_file.write('\\end{adjustbox}\n')
-        tex_file.write('\\end{table}\n')
-    tex_file.write('\\end{document}')
-    tex_file.close()
+          syst_file_1.write(row)
+        syst_file_1.write('\\end{tabular}\n')
+        # syst_file_1.write('\\end{adjustbox}\n')
+        # syst_file_1.write('\\end{table}\n')
+        syst_file_1.close()
+
+    title_str = 'Observable'
+    for group in sorted(final_groups):
+      title_str = title_str + ' & ' + group
+    title_str = title_str + ' & ' + return_final_group(g_err_corr) + ' & Total \\\\ \\hline\n'
+    row_arr = []
+    i = 0
+    for par, g_err in group_dict['final'].items():
+      stat_err = fit_result[par]['Statistical Error']
+      row_arr.append(return_label(par))
+      for group in sorted(final_groups):
+        err = (g_err[group]/stat_err)*100
+        err_str = f' & ${err:.2f}$'
+        row_arr[i] = row_arr[i] + err_str
+      err = (g_err[g_err_corr]/stat_err)*100
+      err_str = f' & ${err:.2f}$'
+      row_arr[i] = row_arr[i] + err_str
+      syst_err = fit_result[par]['Systematic Error']
+      err = (syst_err/stat_err)*100
+      err_str = f' & ${err:.2f}$'
+      row_arr[i] = row_arr[i] + err_str + ' \\\\\n'
+      i = i + 1
+
+    syst_file_2 = open(
+        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_summary_{neutral}.tex',
+        'w')
+    # syst_file_2.write('\\begin{table}[t]\n')
+    # syst_file_2.write('\\centering\n')
+    # syst_file_2.write('\\small\n')
+    # syst_file_2.write('\\begin{adjustbox}{max width=\\textwidth}\n')
+    syst_file_2.write('\\begin{tabular}{' + 'l' * (len(final_groups) + 3) + '}\n')
+    syst_file_2.write('\\hline\\hline\n')
+    syst_file_2.write(title_str)
+    for row in row_arr:
+      syst_file_2.write(row)
+    syst_file_2.write('\\hline\\hline\n')
+    syst_file_2.write('\\end{tabular}\n')
+    # syst_file_2.write('\\end{adjustbox}\n')
+    # syst_file_2.write('\\end{table}\n')
+    syst_file_2.close()
 
   result_file = open(
       f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_{charge}_{neutral}.tex',
