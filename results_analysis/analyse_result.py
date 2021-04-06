@@ -490,17 +490,28 @@ if __name__ == '__main__':
         syst_file_1 = open(
             f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_breakdown_{l}_{neutral}.tex',
             'w')
+        # syst_file_1.write('\\usepackage{tabularx}\n')
         # syst_file_1.write('\\begin{table}[t]\n')
         # syst_file_1.write('\\centering\n')
         # syst_file_1.write('\\small\n')
-        # syst_file_1.write('\\begin{adjustbox}{max width=\\textwidth}\n')
-        syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[l] + 2) + '}\n')
+        if (neutral == 'pi0' and l == 'R') or (neutral == 'gamma' and l == 'A'):
+          syst_file_1.write('\\begin{tabularx}{\\textwidth}{X' + 'l' * (n_params[l]) + '}\n')
+        elif neutral == 'gamma' and l == 'R':
+          syst_file_1.write('\\resizebox{.82\\paperheight}{!}{\n')
+          syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[l] + 1) + '}\n')
+        else:
+          syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[l] + 1) + '}\n')
         syst_file_1.write('\\hline\\hline\n')
         syst_file_1.write(title_str)
         for row in row_arr:
           syst_file_1.write(row)
-        syst_file_1.write('\\end{tabular}\n')
-        # syst_file_1.write('\\end{adjustbox}\n')
+        if (neutral == 'pi0' and l == 'R') or (neutral == 'gamma' and l == 'A'):
+          syst_file_1.write('\\end{tabularx}\n')
+        elif neutral == 'gamma' and l == 'R':
+          syst_file_1.write('\\end{tabular}\n')
+          syst_file_1.write('}\n')
+        else:
+          syst_file_1.write('\\end{tabular}\n')
         # syst_file_1.write('\\end{table}\n')
         syst_file_1.close()
 
@@ -562,7 +573,8 @@ if __name__ == '__main__':
       syst_str = f'& &\\pm {syst:.4f} \\\\\n'
     else:
       syst_str = '\\\\\n'
-    if val == 0:
+    m1 = re.match('\S+Blind\S+', par)
+    if m1:
       val_str = ''
       extra = ''
     else:

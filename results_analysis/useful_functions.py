@@ -4,8 +4,8 @@ def return_group_breakdown(syst):
   re_group_dict = {
       'Bu2Dst0h_D0pi0_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\pi^{0})h^{\\pm}$ PDFs',
       'Bu2Dst0h_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
-      'Bu2Dst0h_D0pi0_WN\S+': 'Mis-reconstructed $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
-      'Bu2Dst0h_D0gamma_WN\S+': 'Mis-reconstructed $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
+      'Bu2Dst0h_D0pi0_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
+      'Bu2Dst0h_D0gamma_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
       'Bd2Dsth_Pdf\S+': '$B^{0}\\rightarrow D^{*\\mp}h^{\\pm}$ PDFs',
       'Bu2D0hst_Pdf\S+': '$B^{\\pm}\\rightarrow Dh^{\\pm}\\pi$ PDFs',
       'Bu2Dst0hst_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
