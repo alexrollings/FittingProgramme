@@ -1,6 +1,7 @@
 import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import numpy as np
+import root_numpy as r_np
 from scipy import stats
 import argparse
 from useful_functions import return_label
@@ -615,7 +616,30 @@ if __name__ == '__main__':
       BR_name = 'BR_pi02gamma_eff_gamma'
       BR = ufloat(fit_result[BR_name]['Value'],
                   fit_result[BR_name]['Statistical Error'])
-      N_pi0 = N_gamma * BR
+      branch_names = [
+          'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
+          'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
+          'buEff_Bu2Dst0pi_D0pi0', 'buEffErr_Bu2Dst0pi_D0pi0',
+          'deltaEff_Bu2Dst0pi_D0pi0', 'deltaEffErr_Bu2Dst0pi_D0pi0',
+          'buPartialEff_Bu2Dst0pi_D0pi0', 'buPartialEffErr_Bu2Dst0pi_D0pi0',
+          'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
+          'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
+          'buEff_Bu2Dst0pi_D0gamma', 'buEffErr_Bu2Dst0pi_D0gamma',
+          'deltaEff_Bu2Dst0pi_D0gamma', 'deltaEffErr_Bu2Dst0pi_D0gamma',
+          'buPartialEff_Bu2Dst0pi_D0gamma', 'buPartialEffErr_Bu2Dst0pi_D0gamma',
+          'N_tot_Bu2Dst0pi_D0pi0_D02kpi_val', 'N_tot_Bu2Dst0pi_D0pi0_D02kpi_err'
+      ]
+      tree = r_np.root2array(result, 'tree', branch_names)
+      pull_result = pull_file.Get(f'Result_Pull_{BR_name}')
+      if pull_result == None:
+        print(
+            f'Could not extract  Result_Pull_{BR_name}'
+        )
+        pull_width = 1
+      else:
+        pull_pars = pull_result.floatParsFinal()
+        pull_width = pull_pars[1].getVal()
+      N_pi0 = ufloat(tree[0][20], tree[0][21] * pull_width)
       fit_result['N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi'] = {
           'Value': N_pi0.n,
           'Statistical Error': N_pi0.s
