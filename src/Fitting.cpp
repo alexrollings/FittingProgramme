@@ -694,12 +694,12 @@ int main(int argc, char **argv) {
     if (config.noFit() == false && config.runSystematics() == false) {
       // Strategy(2) requires evaluation of hessian at every step: can set
       // strategy 0 then call MINOS after to calculate correct errors
-      dataFitResult = std::unique_ptr<RooFitResult>(
-          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-      // RooFit::Minos(kTRUE)));
+      dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          RooFit::Minos(kTRUE)));
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
       // if (config.neutral() == Neutral::pi0) {
       //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
       //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
@@ -887,6 +887,21 @@ int main(int argc, char **argv) {
           }
           if (config.neutral() == Neutral::gamma) {
             SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_val =
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kpi>::Get(id)
+                    .N_tot_Bu2Dst0h_D0pi0().getVal();
+            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_err =
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kpi>::Get(id)
+                    .N_tot_Bu2Dst0h_D0pi0()
+                    .getPropagatedError(*dataFitResult);
+            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_val",
+                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_val,
+                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_val/D");
+            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_err",
+                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_err,
+                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_err/D");
           }
           outputFile.cd();
           tree.Write();
