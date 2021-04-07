@@ -573,7 +573,7 @@ if __name__ == '__main__':
       syst_str = f'& &\\pm {syst:.4f} \\\\\n'
     else:
       syst_str = '\\\\\n'
-    m1 = re.match('\S+Blind\S+', par)
+    m1 = re.match('\S+Blind(\S+|$)', par)
     if m1:
       val_str = ''
       extra = ''
