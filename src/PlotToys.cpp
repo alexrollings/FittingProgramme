@@ -414,7 +414,7 @@ int main(int argc, char *argv[]) {
         valMap[paramName].emplace_back(finalVal);
         errMap[paramName].emplace_back(finalErr);
         pullMap[paramName].emplace_back(std::make_pair(rndmVec[j], pull));
-        // std::cout << initialPars.at(i)->GetName()
+        // std::cout << initilPars.at(i)->GetName()
         //           << "\tInital Val = " << initialVal
         //           << "\tFinal Val = " << finalVal << "\tErr = " << finalErr
         //           << "\tPull = " << pull << "\n";
@@ -560,6 +560,12 @@ int main(int argc, char *argv[]) {
     std::stringstream yLabel;
     yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
     pullFrame->GetYaxis()->SetTitle(yLabel.str().c_str());
+    if (toys2D == true) {
+      pullFrame->SetLabelOffset(50, "X");
+      pullFrame->GetXaxis()->SetTickLength(0.);
+      pullFrame->GetXaxis()->SetRangeUser(pullMean.getVal() - 6,
+                                          pullMean.getVal() + 6);
+    }
     pullDH.plotOn(pullFrame.get());
     pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed+1),
                     RooFit::LineWidth(3));
@@ -585,7 +591,11 @@ int main(int argc, char *argv[]) {
     pullSigmaString << " #pm "
                     << to_string_with_precision(
                            pullSigma.getPropagatedError(*pullResult.get()), 3);
-    pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
+    if (toys2D == false) {
+      pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
+    } else {
+      pullLegend.SetY1(0.9);
+    }
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
 
