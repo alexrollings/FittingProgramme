@@ -381,8 +381,19 @@ int main(int argc, char *argv[]) {
 
         double initialVal = initialRealVar->getVal();
         double finalVal = finalRealVar->getVal();
-        double finalErr = finalRealVar->getError();
-        double pull = (finalVal - initialVal) / finalErr;
+        double finalErr, pull;
+        if (finalRealVar->hasAsymError()) {
+          if (finalVal <= initialVal) {
+            finalErr = finalRealVar->getErrorHi();
+            pull = (finalVal - initialVal) / finalErr;
+          } else {
+            finalErr = finalRealVar->getErrorLo();
+            pull = (initialVal - finalVal) / finalErr;
+          }
+        } else {
+          finalErr = finalRealVar->getError();
+          pull = (finalVal - initialVal) / finalErr;
+        }
         // if (i == 0) {
         //   if (initialVal == finalVal) {
         //     std::cout << "initVal == finalVal for result " << rndmVec[j]
