@@ -372,7 +372,7 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
 
   } else {
     //   // If exists, read in from txt file
-    std::cout << txtFileName << " exists.\n";
+    // std::cout << txtFileName << " exists.\n";
     std::ifstream inFile(txtFileName);
     std::string line;
     // Loop over lines in txt file
@@ -380,7 +380,7 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
       // Separate label and value (white space)
       std::vector<std::string> lineVec = SplitLine(line);
       if (lineVec[0] == effStr) {
-        std::cout << std::stod(lineVec[1]) << "\n";
+        // std::cout << std::stod(lineVec[1]) << "\n";
         return std::stod(lineVec[1]);
       }
     }

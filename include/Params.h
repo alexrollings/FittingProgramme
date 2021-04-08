@@ -340,7 +340,7 @@ class Params {
     auto key = std::make_tuple(name, std::to_string(uniqueId),
                                EnumToString(neutral), "", "");
     auto var_name = name + "_" + ComposeName(uniqueId, neutral);
-    std::cout << EnumToString(mode) << "\n";
+    // std::cout << EnumToString(mode) << "\n";
     // Use pi bachelor if no bach specified
     double start;
     if (mode == Mode::Bs2D0Kst0 || mode == Mode::Bs2Dst0Kst0_D0pi0 ||
