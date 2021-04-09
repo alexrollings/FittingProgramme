@@ -1,4 +1,4 @@
-import os, argparse, re
+import os, argparse, re, json
 from ROOT import TFile, RooFitResult
 from useful_functions import return_label
 
@@ -30,6 +30,7 @@ if __name__ == '__main__':
   result = tf.Get("DataFitResult")
   all_pars = result.floatParsFinal()
   pars = []
+  stat_dict = {}
   for idx in range(0, len(all_pars)):
     par_name = all_pars[idx].GetName()
     for obs in observables:
@@ -68,6 +69,7 @@ if __name__ == '__main__':
         #   f_tex.write(' & \\colorbox{pink}{$%.3f$} ' % corr)
         # else:
         f_tex.write(' & $%.2f$ ' % corr)
+        stat_dict[p1.GetName()[:-2] + ',' + p2.GetName()[:-2]] = corr
       else:
         f_tex.write(' &  ')
     f_tex.write('\\\\ \n')
@@ -75,3 +77,7 @@ if __name__ == '__main__':
   # f_tex.write('}\n')
   # f_tex.write('\\end{table}\n')
   # f_tex.write('\\end{document}\n')
+
+  json_fname_stat = f'json/stat_{neutral}.json'
+  with open(json_fname_stat, 'w') as json_file_stat:
+    json.dump(stat_dict, json_file_stat)
