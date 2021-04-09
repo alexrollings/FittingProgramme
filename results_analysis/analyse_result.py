@@ -245,22 +245,12 @@ if __name__ == '__main__':
             fit_status[syst_label]['Converged'] += 1
             # If fit has good quality, save systematic results in syst_dict
             for par in syst_dict:
-              # REMOVE AFTER SYST RE-RUN #
-              # if par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'gamma':
-              #   par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi'
-              # elif par == 'R_Dst0KDst0pi_Bu2Dst0h_kpi' and neutral == 'pi0':
-              #   par_stored = 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi'
-              # else:
-              #   par_stored = par
-              ############################
-              # if par_stored in json_dict[syst_label][seed]:
-              #   val = json_dict[syst_label][seed][par_stored]
               if par in json_dict[syst_label][seed]:
                 val = json_dict[syst_label][seed][par]
                 if syst_label not in syst_dict[par]:
-                  syst_dict[par][syst_label] = [val]
+                  syst_dict[par][syst_label] = [[val, seed]]
                 else:
-                  syst_dict[par][syst_label].append(val)
+                  syst_dict[par][syst_label].append([val, seed])
               else:
                 sys.exit(f'{par} not in json_dict')
           else:
@@ -286,7 +276,20 @@ if __name__ == '__main__':
       n_syst = len(syst_arr)
       tot_syst = 0
       for syst_label, arr in syst_arr.items():
-        np_arr = np.asarray(arr, dtype=np.float32)
+        arr2d = np.array(arr)
+        np_arr = np.asarray(arr2d[0:, 0], dtype=np.float32)
+        seed_arr = arr2d[0:, 1]
+        val = fit_result[par]['Value']
+        stat = fit_result[par]['Statistical Error']
+        init = len(np_arr)
+        up = val + 3 * stat
+        down = val - 3 * stat
+        idxs_down = np.where(np_arr < down)
+        idxs_up = np.where(np_arr > up)
+        np_arr = np_arr[np_arr > down]
+        np_arr = np_arr[np_arr < up]
+        final = len(np_arr)
+        # if syst_label == 'Bu2D0hst_PdfBu':
         if syst_label == 'Bs2D0Kst0_PdfDelta':
           t_df, t_m, t_s = stats.t.fit(np_arr)
           # print(par + ' v=' + str(t_df) + ' m=' + str(t_m) + ' s=' + str(t_s))
@@ -315,17 +318,12 @@ if __name__ == '__main__':
                       '.png',
                       format='png')
           plt.clf()
-        val = fit_result[par]['Value']
-        stat = fit_result[par]['Statistical Error']
-        init = len(np_arr)
-        up = val + 3 * stat
-        down = val - 3 * stat
-        np_arr = np_arr[np_arr > down]
-        np_arr = np_arr[np_arr < up]
-        final = len(np_arr)
-        if syst_label == 'Bs2D0Kst0_PdfDelta':
-          print(par)
-          print((init - final)*100 / init)
+        # if syst_label == 'Bs2D0Kst0_PdfDelta' and par == 'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus':
+        #   print(idxs_up)
+        #   for idx in idxs_up:
+        #     print(seed_arr[idx])
+        #   print(par)
+        #   print((init - final)*100 / init)
         std = np.std(np_arr)
         total_syst_dict[par][syst_label] = std
         tot_syst += std**2
@@ -723,3 +721,9 @@ if __name__ == '__main__':
       for d in ['kpi', 'kk', 'pipi', 'pik']:
         yields_file.write(yield_dict[n][b][d])
   yields_file.write('\\end{tabular}\n')
+
+
+  if charge == 'split':
+    json_fname_result = f'json/result_{neutral}.json'
+    with open(json_fname_result, 'w') as json_file_result:
+      json.dump(fit_result, json_file_result)
