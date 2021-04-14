@@ -23,9 +23,15 @@ if __name__ == '__main__':
                       type=str,
                       help='Generated: 2D/D1D',
                       required=True)
+  parser.add_argument('-c',
+                      '--charge',
+                      type=str,
+                      help='Charge: split/total',
+                      required=True)
   args = parser.parse_args()
   pull_fname = args.pull_fname
   neutral = args.neutral
+  charge = args.charge
   gen = args.gen
 
   # Observables we are interested have this stem (match with regex)
@@ -54,7 +60,7 @@ if __name__ == '__main__':
           sigma = ufloat(pars[1].getVal(), pars[1].getError())
           pull_dict[m.group(1)] = { 'mean' : mean, 'sigma' : sigma }
 
-  fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/pulls_{gen}_{neutral}.tex'
+  fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/pulls_{gen}_{neutral}_{charge}.tex'
   with open(fname, 'w') as f:
     # f.write('\\documentclass[12pt, portrait]{article}\n')
     # f.write('\\usepackage[margin=0.1in]{geometry}\n')
