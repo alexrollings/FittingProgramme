@@ -159,19 +159,19 @@ if __name__ == '__main__':
     if bu_high == None:
       bu_high = "5330"
 
-  current_dir = os.getcwd()
+  # current_dir = os.getcwd()
   fit_bu_partial = False
-  filename = current_dir + '/list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
+  filename = input_dir + '/list_file_' + neutral + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
   if neutral == 'gamma' and delta_partial_low != None and delta_partial_high != None:
     fit_bu_partial = True
-    filename = current_dir + '/list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
+    filename = input_dir + '/list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
 
   if not os.path.isdir(input_dir):
     sys.exit(input_dir + ' is not a directory')
   list_file = open(filename, 'w+')
   i = 0
   for root_file in os.listdir(input_dir):
-    # if i > 2500:
+    # if i > 500:
     #   break;
     if dim == '1D':
       if fit_bu_partial == False:
