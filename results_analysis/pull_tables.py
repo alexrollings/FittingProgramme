@@ -79,11 +79,15 @@ if __name__ == '__main__':
     for k, v in pull_dict.items():
       par = return_label(k)
       sigma = pull_dict[k]['sigma']
+      mean = pull_dict[k]['mean']
       if mean.n > 0:
         extra = '\\textcolor{white}{-}'
       else:
         extra = ''
-      f.write(f'{par} & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
+      if gen == 'D1D':
+        f.write(f'{par} & ${extra}{mean.n:.2f} \\pm {mean.s:.2f}$ & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
+      else:
+        f.write(f'{par} & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
     f.write('\\end{tabular} \n')
     # f.write('\\end{table}\n')
     # f.write('\\end{document}\n')
