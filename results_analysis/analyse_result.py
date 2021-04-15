@@ -138,6 +138,37 @@ if __name__ == '__main__':
           for g in group_dict:
             group_dict[g][par_name[:-2]] = {}
 
+  raw_file = open(
+      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_raw_{charge}_{neutral}.tex',
+      'w')
+  row_arr = []
+  sorted_pars = sorted(fit_result.keys(), key=lambda x: x.lower())
+  if 'BR_pi02gamma_eff_gamma' in sorted_pars:
+    sorted_pars.remove('BR_pi02gamma_eff_gamma')
+  for par in sorted_pars:
+    val = fit_result[par]['Value']
+    stat = fit_result[par]['Statistical Error']
+    if par[0] == 'N':
+      continue
+      # results_str = f' & {val:.0f} & {stat:.0f} & - \\\\\n'
+    m1 = re.match('\S+Blind(\S+|$)', par)
+    if m1:
+      val_str = ''
+      extra = ''
+    else:
+      if val > 0:
+        extra = '\\textcolor{white}{-}'
+      else:
+        extra = ''
+      val_str = f'{val:.4f}'
+    results_str = f' &= {extra}{val_str} &&\\pm {stat:.4f} \\\\ \n'
+    # Need to remove $$ at either end of string as going into align env
+    row_arr.append(return_label(par)[1:-1] + results_str)
+
+  for row in row_arr:
+    raw_file.write(row)
+  raw_file.close()
+
   # File where 2D pull results are stored
   pull_file = TFile(pull_fname)
   pull_widths = {}
@@ -516,8 +547,8 @@ if __name__ == '__main__':
 
     title_str = 'Observable'
     for group in sorted(final_groups):
-      title_str = title_str + ' & ' + group
-    title_str = title_str + ' & ' + return_final_group(g_err_corr) + ' & Total \\\\ \\hline\n'
+      title_str = title_str + ' & {' + group + '}'
+    title_str = title_str + ' & {' + return_final_group(g_err_corr) + '} & {Total} \\\\ \\hline\n'
     row_arr = []
     i = 0
     for par, g_err in group_dict['final'].items():
@@ -525,14 +556,14 @@ if __name__ == '__main__':
       row_arr.append(return_label(par))
       for group in sorted(final_groups):
         err = (g_err[group]/stat_err)*100
-        err_str = f' & ${err:.2f}$'
+        err_str = f' & {err:.2f}'
         row_arr[i] = row_arr[i] + err_str
       err = (g_err[g_err_corr]/stat_err)*100
-      err_str = f' & ${err:.2f}$'
+      err_str = f' & {err:.2f}'
       row_arr[i] = row_arr[i] + err_str
       syst_err = fit_result[par]['Systematic Error']
       err = (syst_err/stat_err)*100
-      err_str = f' & ${err:.2f}$'
+      err_str = f' & {err:.2f}'
       row_arr[i] = row_arr[i] + err_str + ' \\\\\n'
       i = i + 1
 
@@ -543,7 +574,7 @@ if __name__ == '__main__':
     # syst_file_2.write('\\centering\n')
     # syst_file_2.write('\\small\n')
     # syst_file_2.write('\\begin{adjustbox}{max width=\\textwidth}\n')
-    syst_file_2.write('\\begin{tabular}{' + 'l' * (len(final_groups) + 3) + '}\n')
+    syst_file_2.write('\\begin{tabular}{l *{' + str(len(final_groups) + 2) + '}{S[table-format=2.2]}}\n')
     syst_file_2.write('\\hline\\hline\n')
     syst_file_2.write(title_str)
     for row in row_arr:
