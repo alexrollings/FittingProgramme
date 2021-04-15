@@ -497,7 +497,7 @@ int main(int argc, char *argv[]) {
     //               // round(resultVec.size()/10),
     //               pullMinMap[paramName] - pullRange / 5, pullMaxMap[paramName] +
     //               pullRange / 5);
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -10, 10);
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
@@ -555,17 +555,28 @@ int main(int argc, char *argv[]) {
     pullResult->Print("v");
     pullResult->SetName(("Result_Pull_" + paramName).c_str());
     pullResult->Write();
-    std::unique_ptr<RooPlot> pullFrame(pull.frame(RooFit::Title(" ")));
+
+    std::unique_ptr<RooPlot> pullFrame;
+    if (toys2D == true) {
+      Double_t xMin = pullMean.getVal() - 6.0;
+      Double_t xMax = pullMean.getVal() + 6.0;
+      pullFrame = std::unique_ptr<RooPlot>(pull.frame(xMin, xMax, pullHist.GetNbinsX()));
+      pullFrame->SetTitle(" ");
+      pullFrame->SetLabelOffset(50, "X");
+      pullFrame->GetXaxis()->SetTickLength(0.);
+      // std::cout << "Attempt: \tSet min: " << xMin << "\t"
+      //           << "Set max: " << xMax << "\n";
+      // double x_min = pullFrame->GetXaxis()->GetXmin();
+      // double x_max = pullFrame->GetXaxis()->GetXmax();
+      // std::cout << "Actual: \tSet min: " << x_min << "\t"
+      //           << "Set max: " << x_max << "\n";
+    } else {
+      pullFrame = std::unique_ptr<RooPlot>(pull.frame(RooFit::Title(" ")));
+    }
     pullFrame->GetXaxis()->SetTitle((ReturnLaTeXLabel(paramName) + " pull").c_str());
     std::stringstream yLabel;
     yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
     pullFrame->GetYaxis()->SetTitle(yLabel.str().c_str());
-    if (toys2D == true) {
-      pullFrame->SetLabelOffset(50, "X");
-      pullFrame->GetXaxis()->SetTickLength(0.);
-      pullFrame->GetXaxis()->SetRangeUser(pullMean.getVal() - 6,
-                                          pullMean.getVal() + 6);
-    }
     pullDH.plotOn(pullFrame.get());
     pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed+1),
                     RooFit::LineWidth(3));
