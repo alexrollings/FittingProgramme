@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
   path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/'
 
-  json_fname_result = f'{path}json/result_{neutral}.json'
+  json_fname_result = f'{path}json/result_{split}_{neutral}.json'
   if os.path.exists(json_fname_result):
     with open(json_fname_result, 'r') as json_file_result:
       result = json.load(json_file_result)
@@ -95,17 +95,17 @@ if __name__ == '__main__':
 
 
   f_tex = open(f'{path}/gammadini/gammadini_{neutral}.tex', 'w+')
-  f_tex.write('// -------- Load the central values of the measurements and thier covariance matrix ----------\n')
+  f_tex.write('// -------- Load the central values of the measurements and their covariance matrix ----------\n')
   for k in ['Value', 'Statistical Error', 'Systematic Error']:
     for p in ordered_params:
       label = convert_param_names(neutral, p, blind)
       num = result[p][k]
       if k == 'Value':
-        f_tex.write(f'observedCentralValues(Index[\"{label}\"])\t={num:.4f}\n')
+        f_tex.write(f'observedCentralValues(Index[\"{label}\"])\t={num:.4f};\n')
       elif k == 'Statistical Error':
-        f_tex.write(f'statErrorValues(Index[\"{label}\"])\t={num:.1}\n')
+        f_tex.write(f'statErrorValues(Index[\"{label}\"])\t={num:.1};\n')
       elif k == 'Systematic Error':
-        f_tex.write(f'systErrorValues(Index[\"{label}\"])\t={num:.1}\n')
+        f_tex.write(f'systErrorValues(Index[\"{label}\"])\t={num:.1};\n')
     f_tex.write('\n')
 
   f_tex.write('\n')

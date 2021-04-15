@@ -754,7 +754,6 @@ if __name__ == '__main__':
   yields_file.write('\\end{tabular}\n')
 
 
-  if charge == 'split':
-    json_fname_result = f'json/result_{neutral}.json'
-    with open(json_fname_result, 'w') as json_file_result:
-      json.dump(fit_result, json_file_result)
+  json_fname_result = f'json/result_{charge}_{neutral}.json'
+  with open(json_fname_result, 'w') as json_file_result:
+    json.dump(fit_result, json_file_result)
