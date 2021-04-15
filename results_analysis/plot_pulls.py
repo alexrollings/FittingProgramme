@@ -103,6 +103,10 @@ if __name__ == '__main__':
                       type=str,
                       help='Upper bu mass range',
                       required=False)
+  parser.add_argument('--remake',
+                      dest='remake',
+                      action='store_true',
+                      required=False)
   args = parser.parse_args()
 
   input_dir = args.input_dir
@@ -116,6 +120,7 @@ if __name__ == '__main__':
   bu_low = args.bu_low
   bu_high = args.bu_high
   dim = args.dim
+  remake = args.remake
 
   if dim == 'D1D':
     print('Analysing results from D1D toys')
@@ -166,30 +171,34 @@ if __name__ == '__main__':
     fit_bu_partial = True
     filename = input_dir + '/list_file_' + neutral + '_' + delta_partial_low + '_' + delta_partial_high + '_' + delta_low + '_' + delta_high + '_' + bu_low + '_' + bu_high + '.txt'
 
-  if not os.path.isdir(input_dir):
-    sys.exit(input_dir + ' is not a directory')
-  list_file = open(filename, 'w+')
-  i = 0
-  for root_file in os.listdir(input_dir):
-    # if i > 500:
-    #   break;
-    if dim == '1D':
-      if fit_bu_partial == False:
-        pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
-                      delta_high)
+  if (os.path.isfile(filename) and remake == False):
+    print('Reading from' + filename)
+    list_file = open(filename, 'r')
+  else:
+    if not os.path.isdir(input_dir):
+      sys.exit(input_dir + ' is not a directory')
+    list_file = open(filename, 'w+')
+    i = 0
+    for root_file in os.listdir(input_dir):
+      # if i > 100:
+      #   break;
+      if dim == '1D':
+        if fit_bu_partial == False:
+          pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
+                        delta_high)
+        else:
+          pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
+                                   delta_low, delta_high, delta_partial_low,
+                                   delta_partial_high)
       else:
-        pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
-                                 delta_low, delta_high, delta_partial_low,
-                                 delta_partial_high)
-    else:
-      if fit_bu_partial == False:
-        pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
-                      delta_high, bu_low, bu_high)
-      else:
-        pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
-                                 delta_low, delta_high, delta_partial_low,
-                                 delta_partial_high, bu_low, bu_high)
-    i = i + 1
+        if fit_bu_partial == False:
+          pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
+                        delta_high, bu_low, bu_high)
+        else:
+          pass_filename_bu_partial(input_dir + '/' + root_file, list_file, dim,
+                                   delta_low, delta_high, delta_partial_low,
+                                   delta_partial_high, bu_low, bu_high)
+      i = i + 1
     # pass_filename(input_dir + '/' + root_file, list_file)
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
