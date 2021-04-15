@@ -37,7 +37,6 @@ if os.path.exists(json_fname_result_gamma):
   with open(json_fname_result_gamma, 'r') as json_file_result_gamma:
     result_gamma = json.load(json_file_result_gamma)
 
-
 #World average inputs (average the upper and lower errors)
 phi3_av_err = (4.6 + 5.3)*0.5
 phi3_val_err = ufloat(math.radians(71.1),math.radians(phi3_av_err))
@@ -62,12 +61,6 @@ rD = np.random.normal(rD_val_err.n, rD_val_err.s, 10000)
 dD_av_err = (8.6 + 10.2)*0.5
 dD_val_err = ufloat(math.radians(192.1),math.radians(dD_av_err))
 dD = np.random.normal(dD_val_err.n, dD_val_err.s, 10000)
-
-BF_B2Dstpi = np.random.normal(4.90e-03, 0.17e-03, 10000)
-BF_B2DstK_av_err = (0.31e-04 + 0.28e-04)*0.5
-BF_B2DstK = np.random.normal(3.97e-04, BF_B2DstK_av_err, 10000)
-
-R_DstKDstpi = BF_B2DstK / BF_B2Dstpi
 
 #Calculate observables
 #Rates
