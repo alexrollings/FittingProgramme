@@ -80,7 +80,7 @@ Configuration::Configuration()
   buMass_.setUnit(kMassUnit);
 
   buDeltaMass_.SetName("Bu_Delta_M");
-  buDeltaMass_.SetTitle("m(B)");
+  buDeltaMass_.SetTitle("m(D^{*}h)");
   buDeltaMass_.setMax(5500);
   // buDeltaMass_.setMax(5600);
   buDeltaMass_.setMin(5050);
@@ -92,7 +92,7 @@ Configuration::Configuration()
   buDeltaMass_.setUnit(kMassUnit);
 
   deltaMass_.SetName("Delta_M");
-  deltaMass_.SetTitle("m(#Delta)");
+  deltaMass_.SetTitle("m(D^{*0}) - m(D^{0})");
   deltaMass_.setMax(190);
   deltaMass_.setMin(60);
   deltaMass_.setBins(65);

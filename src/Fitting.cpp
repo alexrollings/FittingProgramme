@@ -513,6 +513,7 @@ int main(int argc, char **argv) {
     config.buDeltaMass().setBins(40);
     config.deltaMass().setMin(136);
     config.deltaMass().setBins(54);
+    config.deltaMass().SetTitle("m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG}");
   }
 
   // Define categories AFTER neutral and SplitByCharge have been set in
@@ -697,9 +698,9 @@ int main(int argc, char **argv) {
       dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
           *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-          // RooFit::Minos(kTRUE)));
-          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          RooFit::Minos(kTRUE)));
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
       // if (config.neutral() == Neutral::pi0) {
       //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
       //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
