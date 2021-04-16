@@ -22,7 +22,7 @@ from uncertainties import ufloat
 import matplotlib
 matplotlib.use('Agg')
 
-rc('font',**{'family':'serif','serif':['Roman']})
+rc('font',**{'family': 'serif','serif': ['Roman']})
 rc('text', usetex=True)
 
 
@@ -100,15 +100,28 @@ exp['R_piK_Bu2Dst0h_D0gamma_k_total'] = (R_gamma_DK_pik_minus + R_gamma_DK_pik_p
 part_reco = {}
 part_reco['R_CP_Bu2Dst0h_D0pi0']  = {'Value' : 1.051, 'Error' : 0.050}
 part_reco['R_CP_Bu2Dst0h_D0gamma']  = {'Value' : 0.952, 'Error' : 0.127}
-
 part_reco['R_piK_Bu2Dst0h_D0pi0_k_total'] = {'Value' : 0.0118, 'Error' : 0.0035}
 part_reco['R_piK_Bu2Dst0h_D0gamma_k_total'] = {'Value' : 0.0163, 'Error' : 0.0373}
 
 pars = ['R_CP_Bu2Dst0h_D0pi0', 'R_CP_Bu2Dst0h_D0gamma', 'R_piK_Bu2Dst0h_D0pi0_k_total', 'R_piK_Bu2Dst0h_D0gamma_k_total']
 
+# Scale stat error to include syst
+syst = {
+    'R_CP': {
+        'gamma': 1.31,
+        'partial': 1.41,
+        'pi0': 1.21
+    },
+    'R_piK': {
+        'gamma': 1.39,
+        'partial': 1.35,
+        'pi0': 1.36
+    }
+}
+
 for p in pars:
   #fig,ax = plt.subplots(figsize=(7,2.5))
-  fig = plt.figure(figsize=(8,6))
+  fig, ax = plt.subplots(figsize=(8,6))
 
   part_reco_val = part_reco[p]['Value']
   part_reco_err = part_reco[p]['Error']
@@ -118,14 +131,25 @@ for p in pars:
   #Fit result
   if p in result_gamma:
     # plt.errorbar(result_gamma[p]['Value'],1.0,xerr=np.sqrt(result_gamma[p]['Statistical Error']**2 + result_gamma[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
+    syst_corr = 1
+    for k in syst:
+      if k in p:
+        if 'pi0' in p:
+          syst_corr = syst[k]['partial']
+        else:
+          syst_corr = syst[k]['gamma']
     gamma_val = result_gamma[p]['Value']
-    gamma_err = result_gamma[p]['Statistical Error']
-    plt.errorbar(result_gamma[p]['Value'],4.0,xerr=result_gamma[p]['Statistical Error'],fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
+    gamma_err = result_gamma[p]['Statistical Error'] * syst_corr
+    plt.errorbar(gamma_val,4.0,xerr=gamma_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
   if p in result_pi0:
     # plt.errorbar(result_pi0[p]['Value'],1.0,xerr=np.sqrt(result_pi0[p]['Statistical Error']**2 + result_pi0[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
+    syst_corr = 1
+    for k in syst:
+      if k in p:
+        syst_corr = syst[k]['pi0']
     pi0_val = result_pi0[p]['Value']
-    pi0_err = result_pi0[p]['Statistical Error']
-    plt.errorbar(result_pi0[p]['Value'],6.0,xerr=result_pi0[p]['Statistical Error'],fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
+    pi0_err = result_pi0[p]['Statistical Error'] * syst_corr
+    plt.errorbar(pi0_val,6.0,xerr=pi0_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
   else:
     p_gamma = True
 
@@ -141,30 +165,33 @@ for p in pars:
   low6 = exp_mu - 6*exp_sigma
   high6 = exp_mu + 6*exp_sigma
 
-  plt.axvline(x=exp_mu,color='blue',linestyle='--',label='Expected')
-  plt.axvspan(low, high, color='royalblue',label='68\% C.L.')
-  plt.axvspan(high, high2, color='lightskyblue')
-  plt.axvspan(low2, low, color='lightskyblue',label='95\% C.L.')
+  plt.axvline(x=exp_mu,color='black',linestyle='--',label='Expected')
+  plt.axvspan(low, high, color='#4575b4',label='68\% C.L.')
+  plt.axvspan(high, high2, color='#91bfdb')
+  plt.axvspan(low2, low, color='#91bfdb',label='95\% C.L.')
 
   plt.tick_params(axis='both', which='major', labelsize=18)
 
   span = high6 - low6
   plt.xlim(low6,high6 + span/2)
 
-  plt.text(high5,2.4,"\\textbf{LHCb}",fontsize=18)
+  plt.text(high5,2.4,"PR Analysis",fontsize=18)
   if 'R_CP' in p:
     plt.text(high5,2.0,f"{part_reco_val:.3f} $\\pm$ {part_reco_err:.3f}",fontsize=18)
   else:
     plt.text(high5,2.0,f"{part_reco_val:.4f} $\\pm$ {part_reco_err:.4f}",fontsize=18)
-  plt.text(high5,1.6,f"[LHCb-PAPER-2021-001]",fontsize=18)
+  plt.text(high5,1.5,f"[LHCb-PAPER-2021-001]",fontsize=18)
   if p in result_gamma:
-    plt.text(high5,4.2,"$D^{*}\\rightarrow D\\gamma$ mass fit",fontsize=18)
+    if 'pi0' in p:
+      plt.text(high5,4.2,"$D^{*}\\rightarrow D[\\gamma]_{\\pi^{0}}$",fontsize=18)
+    else:
+      plt.text(high5,4.2,"$D^{*}\\rightarrow D\\gamma$",fontsize=18)
     if 'R_CP' in p:
       plt.text(high5,3.8,f"{gamma_val:.3f} $\\pm$ {gamma_err:.3f}",fontsize=18)
     else:
       plt.text(high5,3.8,f"{gamma_val:.4f} $\\pm$ {gamma_err:.4f}",fontsize=18)
   if p in result_pi0:
-    plt.text(high5,6.2,"$D^{*}\\rightarrow D\\pi^{0}$ mass fit",fontsize=18)
+    plt.text(high5,6.2,"$D^{*}\\rightarrow D\\pi^{0}$",fontsize=18)
     if 'R_CP' in p:
       plt.text(high5,5.8,f"{pi0_val:.3f} $\\pm$ {pi0_err:.3f}",fontsize=18)
     else:
@@ -172,9 +199,10 @@ for p in pars:
 
 
   if p_gamma == True:
-    plt.ylim(0.0,6.0)
-  else:
-    plt.ylim(0.0,8.0)
+    plt.legend(loc=(0.6, 0.7), fontsize=18,frameon=False)
+  #   plt.ylim(0.0,6.0)
+  # else:
+  plt.ylim(0.0,8.0)
 
   plt.xlabel(return_label(p),fontsize=25,labelpad=10)
 
@@ -186,4 +214,3 @@ for p in pars:
 
   fig.savefig('result_comparisons/Exp_vs_Obs_%s.pdf' % p)
   fig.savefig('result_comparisons/Exp_vs_Obs_%s.eps' % p, format='eps')
-
