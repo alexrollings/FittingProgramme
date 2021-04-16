@@ -10,11 +10,11 @@ void SetStyle() {
   gStyle->SetLabelSize(0.045, "XY");
   gStyle->SetLegendFont(132);
   gStyle->SetLegendTextSize(0.05);
-  gStyle->SetTitleOffset(0.95, "X");
+  gStyle->SetTitleOffset(1.05, "X");
   gStyle->SetTitleOffset(1.2, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.11);
+  gStyle->SetPadBottomMargin(0.12);
   gStyle->SetPadLeftMargin(0.12);
 }
 
@@ -1433,9 +1433,13 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                      .c_str()));
 
   if (mass == Mass::delta) {
-    frame->SetXTitle("m(#Delta) (MeV/c^{2})");
+    if (config.neutral() == Neutral::gamma) {
+      frame->SetXTitle("m(D^{*0}) - m(D^{0}) (MeV/c^{2})");
+    } else {
+      frame->SetXTitle("m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG} (MeV/c^{2})");
+    }
   } else {
-    frame->SetXTitle("m(B) (MeV/c^{2})");
+    frame->SetXTitle("m(D^{*0}h) (MeV/c^{2})");
   }
 
   // --------------- plot onto canvas ---------------------
