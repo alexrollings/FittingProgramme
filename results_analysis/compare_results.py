@@ -1,22 +1,10 @@
 import glob, os, sys
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
 from matplotlib import rc
-import scipy
-import re
-from matplotlib.ticker import FormatStrFormatter
-from scipy.stats.stats import pearsonr
-from scipy.stats import norm
 import random
 import math
-import uncertainties as u
-import scipy.special as scsp
-from scipy.stats import chi2 as Chi2
 import json
-import pickle
-import pandas as pd
-from collections import OrderedDict
 from useful_functions import return_label
 from uncertainties import ufloat
 import matplotlib
@@ -25,7 +13,7 @@ matplotlib.use('Agg')
 rc('font',**{'family': 'serif','serif': ['Roman']})
 rc('text', usetex=True)
 
-
+# Fit results saved in json
 path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/'
 json_fname_result_pi0 = f'{path}json/result_total_pi0.json'
 if os.path.exists(json_fname_result_pi0):
@@ -37,20 +25,26 @@ if os.path.exists(json_fname_result_gamma):
   with open(json_fname_result_gamma, 'r') as json_file_result_gamma:
     result_gamma = json.load(json_file_result_gamma)
 
-#World average inputs (average the upper and lower errors)
-phi3_av_err = (4.6 + 5.3)*0.5
-phi3_val_err = ufloat(math.radians(71.1),math.radians(phi3_av_err))
+# LHCb combination
+# phi3_av_err = (4.6 + 5.3)*0.5
+# phi3_val_err = ufloat(math.radians(71.1),math.radians(phi3_av_err))
+phi3_val_err = ufloat(math.radians(67),math.radians(4))
 phi3 = np.random.normal(phi3_val_err.n, phi3_val_err.s, 10000)
 
+# No assumptions in D*π mode
 # B- -> D*0 π-
 rB_Dpi = np.random.uniform(0.0, 0.02, 10000)
 dB_Dpi = np.random.uniform(math.radians(0.0), math.radians(180.0), 10000)
 
 # B- -> D*0 K-
-rB_DK = np.random.uniform(0.0, 0.2, 10000)
-dB_DK_av_err = (18 + 10)*0.5
-dB_DK_val_err = ufloat(math.radians(314.0),math.radians(dB_DK_av_err))
-dB_DK = np.random.normal(dB_DK_val_err.n, dB_DK_val_err.s, 10000)
+# rB_DK = np.random.uniform(0.0, 0.2, 10000)
+# dB_DK_av_err = (18 + 10)*0.5
+# dB_DK_val_err = ufloat(math.radians(314.0),math.radians(dB_DK_av_err))
+# dB_DK = np.random.normal(dB_DK_val_err.n, dB_DK_val_err.s, 10000)
+
+# B factory GGSZ
+rB_DK = np.random.normal(0.135, 0.034, 10000)
+dB_DK = np.random.normal(304, 17, 10000)
 
 # FAV: D0 -> K-π+
 rD_val = np.sqrt(0.00344)
@@ -97,30 +91,52 @@ exp['R_CP_Bu2Dst0h_D0gamma'] = ((gamma_DK_hh_minus + gamma_DK_hh_plus)/(gamma_Dp
 exp['R_piK_Bu2Dst0h_D0pi0_k_total'] = (R_pi0_DK_pik_minus + R_pi0_DK_pik_plus) / 2
 exp['R_piK_Bu2Dst0h_D0gamma_k_total'] = (R_gamma_DK_pik_minus + R_gamma_DK_pik_plus) / 2
 
+# Part-reco results
 part_reco = {}
-part_reco['R_CP_Bu2Dst0h_D0pi0']  = {'Value' : 1.051, 'Error' : 0.050}
-part_reco['R_CP_Bu2Dst0h_D0gamma']  = {'Value' : 0.952, 'Error' : 0.127}
+part_reco['R_CP_Bu2Dst0h_D0pi0']  = {'Value' : 1.051, 'Error' : 0.036}
+part_reco['R_CP_Bu2Dst0h_D0gamma']  = {'Value' : 0.952, 'Error' : 0.090}
 part_reco['R_piK_Bu2Dst0h_D0pi0_k_total'] = {'Value' : 0.0118, 'Error' : 0.0035}
 part_reco['R_piK_Bu2Dst0h_D0gamma_k_total'] = {'Value' : 0.0163, 'Error' : 0.0373}
+
+# Results from GLW/ADS B->D*h from B-factories
+# babar = {}
+# babar['R_CP_Bu2Dst0h_D0pi0']  = ufloat(1.31, 0.13)
+# babar['R_CP_Bu2Dst0h_D0gamma']  = ufloat(1.09, 0.13)
+# babar['R_piK_Bu2Dst0h_D0pi0_k_total'] = ufloat(0.013, 0.016)
+# babar['R_piK_Bu2Dst0h_D0gamma_k_total'] = ufloat(0.018, 0.010)
+#
+# belle = {}
+# belle['R_CP_Bu2Dst0h_D0pi0']  = ufloat(1.41, 0.25)
+# belle['R_CP_Bu2Dst0h_D0gamma']  = ufloat(1.15, 0.33)
+#
+# b_factory = {}
+# for p in ['R_CP_Bu2Dst0h_D0pi0', 'R_CP_Bu2Dst0h_D0gamma']:
+#   b_factory[p] = ufloat(
+#       (babar[p].n / babar[p].s**2 + belle[p].n / belle[p].s**2) /
+#       (1 / babar[p].s**2 + 1 / belle[p].s**2),
+#       math.sqrt((1 / babar[p].s**2 + 1 / belle[p].s**2)**(-1)))
+# b_factory['R_piK_Bu2Dst0h_D0pi0_k_total'] = babar['R_piK_Bu2Dst0h_D0pi0_k_total']
+# b_factory['R_piK_Bu2Dst0h_D0gamma_k_total'] = babar['R_piK_Bu2Dst0h_D0gamma_k_total']
+#
+# print(b_factory)
 
 pars = ['R_CP_Bu2Dst0h_D0pi0', 'R_CP_Bu2Dst0h_D0gamma', 'R_piK_Bu2Dst0h_D0pi0_k_total', 'R_piK_Bu2Dst0h_D0gamma_k_total']
 
 # Scale stat error to include syst
 syst = {
     'R_CP': {
-        'gamma': 1.31,
-        'partial': 1.41,
-        'pi0': 1.21
+        'gamma': 1.05,
+        'partial': 1.08,
+        'pi0': 1.02
     },
     'R_piK': {
-        'gamma': 1.39,
-        'partial': 1.35,
-        'pi0': 1.36
+        'gamma': 1.05,
+        'partial': 1.05,
+        'pi0': 1.03
     }
 }
 
 for p in pars:
-  #fig,ax = plt.subplots(figsize=(7,2.5))
   fig, ax = plt.subplots(figsize=(8,6))
 
   part_reco_val = part_reco[p]['Value']
@@ -153,9 +169,11 @@ for p in pars:
   else:
     p_gamma = True
 
-  #World average expectation
+  # Belle expectations
   exp_mu = np.mean(exp[p])
   exp_sigma = np.std(exp[p])
+  # exp_mu = b_factory[p].n
+  # exp_sigma = b_factory[p].s
   low = exp_mu - exp_sigma
   high = exp_mu + exp_sigma
   low2 = exp_mu - 2*exp_sigma
@@ -180,7 +198,7 @@ for p in pars:
     plt.text(high5,2.0,f"{part_reco_val:.3f} $\\pm$ {part_reco_err:.3f}",fontsize=18)
   else:
     plt.text(high5,2.0,f"{part_reco_val:.4f} $\\pm$ {part_reco_err:.4f}",fontsize=18)
-  plt.text(high5,1.5,f"[LHCb-PAPER-2021-001]",fontsize=18)
+  plt.text(high5,1.5,f"[LHCb-PAPER-2020-036]",fontsize=18)
   if p in result_gamma:
     if 'pi0' in p:
       plt.text(high5,4.2,"$D^{*}\\rightarrow D[\\gamma]_{\\pi^{0}}$",fontsize=18)
@@ -199,17 +217,12 @@ for p in pars:
 
 
   if p_gamma == True:
-    plt.legend(loc=(0.6, 0.7), fontsize=18,frameon=False)
-  #   plt.ylim(0.0,6.0)
-  # else:
+    plt.text(high5, 7.2,'$B$-factories GGSZ analyses:',fontsize=18)
+    plt.legend(loc=(0.6, 0.65), fontsize=18,frameon=False)
+
   plt.ylim(0.0,8.0)
-
   plt.xlabel(return_label(p),fontsize=25,labelpad=10)
-
   plt.gca().axes.get_yaxis().set_visible(False)
-
-  #plt.xaxis.labelpad = 10
-
   plt.tight_layout()
 
   fig.savefig('result_comparisons/Exp_vs_Obs_%s.pdf' % p)
