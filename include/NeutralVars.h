@@ -13,8 +13,7 @@
 template <Neutral neutral>
 double ReadBkgFracs(Mode mode, ReturnType returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
-      "bkgFracs_" +
+      Configuration::Get().inputDir + "/fixed_rates/bkgFracs_" +
       EnumToString(neutral) + ".txt";
   std::string paramName = EnumToString(mode);
   double returnVal;
@@ -26,8 +25,7 @@ double ReadBkgFracs(Mode mode, ReturnType returnType) {
 template <Neutral neutral, Bachelor bachelor>
 double ReadPdfFracs(const char* paramName, ReturnType returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
-      "pdf_fracs_" +
+      Configuration::Get().inputDir + "/fixed_rates/pdf_fracs_" +
       EnumToString(neutral) + ".txt";
   std::stringstream paramLabel;
   paramLabel << paramName << "_" << EnumToString(bachelor);

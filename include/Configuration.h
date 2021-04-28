@@ -264,6 +264,8 @@ class Configuration {
     }
   }
 
+  std::string inputDir;
+
   bool &fit1D() { return fit1D_; }
   bool &runToy() { return runToy_; }
   bool &splitByCharge() { return splitByCharge_; }

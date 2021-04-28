@@ -41,6 +41,7 @@ Configuration::Configuration()
           "Bu_Delta_M>5050&&Bu_Delta_M<5450&&Delta_M>60&&Delta_M<190&&BDT1>0."
           "05&&BDT2>0&&Pi0_M<165&&Pi0_M>125&&D0h_M>4900&&D0_FD_ZSIG>2&&D0h_"
           "M<5200"),
+      inputDir(""),
       fit1D_(false),
       runToy_(false),
       splitByCharge_(false),
@@ -309,8 +310,7 @@ void ReadFromFile(ReturnType returnType, std::string const &paramName,
 
 double ReadGammaObs(const char *paramName, ReturnType returnType) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/"
-      "gamma_obs.txt";
+      Configuration::Get().inputDir + "/fixed_rates/gamma_obs.txt";
   double returnVal;
   std::string errorStr =
       "ReadGammaObs: return type = val/stdL/stdH (asymmetric errors)\n";

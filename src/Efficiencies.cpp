@@ -9,7 +9,7 @@
 double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
                     Efficiency eff) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt_new/effs_" +
+      Configuration::Get().inputDir + "/efficiencies/mcEffs_" +
       EnumToString(mode) + ".txt";
   if (!fexists(txtFileName)) {
     std::cerr
@@ -179,12 +179,12 @@ double ReturnBoxEffs(Mode mode, Bachelor bachelor, Efficiency eff, bool misId) {
   }
   std::string txtFileName;
   if (misId == true) {
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+    txtFileName = Configuration::Get().inputDir + "/efficiencies/boxEffs_" +
                   EnumToString(Configuration::Get().neutral()) + "_misId_" +
                   EnumToString(mode) + "_as_" + EnumToString(bachelor) + "_" +
                   Configuration::Get().ReturnBoxString() + ".txt";
   } else {
-    txtFileName = "/data/lhcb/users/rollings/txt_efficiencies/" +
+    txtFileName = Configuration::Get().inputDir + "/efficiencies/boxEffs_" +
                   EnumToString(Configuration::Get().neutral()) + "_" +
                   EnumToString(mode) + "_" +
                   Configuration::Get().ReturnBoxString() + ".txt";

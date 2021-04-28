@@ -199,7 +199,6 @@ std::vector<Enum> ExtractEnumList(std::string const &s, char delim = ',') {
 }
 
 int main(int argc, char **argv) {
-  std::string inputDir = "";
   std::string outputDir;
   std::vector<Year> yearVec;
   std::vector<Polarity> polarityVec;
@@ -233,6 +232,7 @@ int main(int argc, char **argv) {
     std::string daughtersArg("kpi,kk,pipi,pik");
     std::string chargeArg("total");
     std::string systematicArg("");
+    std::string inputArg("");
     int toysArg = 0;
     int nSystArg = 0;
     int nCPUArg;
@@ -251,8 +251,7 @@ int main(int argc, char **argv) {
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "Type ./Fitting \n"
-                << "-inputDir=<RooDataSets directory name> if fitting to data "
-                   "or toy generated from data \n"
+                << "-inputDir=<Input directory name (where roodatasets, efficiencies, mc fit results are stored)> \n"
                 << "-outputDir=<output directory> \n";
       std::cout << "Give box dimensions:\n"
                 << "    -dl=#, -dh=#, -bl=#, -bh=# (-dpl=#, -dph=# for gamma "
@@ -321,9 +320,11 @@ int main(int argc, char **argv) {
         }
       }
 
-      if (!args("inputDir", inputDir) && nToys == 0) {
-        std::cerr << "Data directory must be specified (-inputDir=<path>).\n";
+      if (!args("inputDir", inputArg)) {
+        std::cerr << "Input directory must be specified (-inputDir=<path>).\n";
         return 1;
+      } else {
+        config.inputDir = inputArg;
       }
 
       if (!args("outputDir", outputDir)) {
@@ -498,9 +499,8 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (inputDir != "" &&
-      (chargeVec.size() > 1 && daughtersVec.size() > 1 &&
-       config.blindFit() == false && config.noFit() == false)) {
+  if (chargeVec.size() > 1 && daughtersVec.size() > 1 &&
+       config.blindFit() == false && config.noFit() == false) {
     std::cerr << "\n\n !!!!!! Cannot run unblinded split by charge fit for "
                  "signal modes "
                  "!!!!!! \n\n";
@@ -526,134 +526,133 @@ int main(int argc, char **argv) {
   std::vector<PdfBase *> pdfs;
   std::unique_ptr<RooFitResult> dataFitResult;
 
-  if (inputDir != "") {
-    std::map<std::string, RooDataSet *> mapDataLabelDataSet;
+  // if (inputDir != "") {
+  std::map<std::string, RooDataSet *> mapDataLabelDataSet;
 
-    // Add up lumi in order to convert into string to go on plots
-    // double lumi = 0;
-    // double lumiErr = 0;
+  // Add up lumi in order to convert into string to go on plots
+  // double lumi = 0;
+  // double lumiErr = 0;
 
-    // Loop over all options in
-    // order to extract correct roodataSets.
-    for (auto &y : yearVec) {
-      std::string dPidCut;
-      if (y == Year::y2011 or y == Year::y2012) {
-        dPidCut = "2";
-      } else {
-        dPidCut = "1";
-      }
-      // if (y == Year::y2011) {
-      //   lumi += 0.98;
-      //   lumiErr += 0.02;
-      // } else if (y == Year::y2012) {
-      //   lumi += 1.99;
-      //   lumiErr += 0.02;
-      // } else if (y == Year::y2015) {
-      //   lumi += 0.28;
-      //   lumiErr += 0.01;
-      // } else if (y == Year::y2016) {
-      //   lumi += 1.65;
-      // } else if (y == Year::y2017) {
-      //   lumi += 1.7;
-      // } else if (y == Year::y2018) {
-      //   lumi += 2.19;
-      // }
-      for (auto &p : polarityVec) {
-        for (auto &b : bachelorVec) {
-          for (auto &d : daughtersVec) {
-            for (auto &c : chargeVec) {
-              std::string dsFile =
-                  inputDir + "/" +
-                  ComposeFilename(y, p, b, config.neutral(), d, c) + ".root";
-              std::cout << "Extracting RooDataSet from file: \n";
+  // Loop over all options in
+  // order to extract correct roodataSets.
+  for (auto &y : yearVec) {
+    std::string dPidCut;
+    if (y == Year::y2011 or y == Year::y2012) {
+      dPidCut = "2";
+    } else {
+      dPidCut = "1";
+    }
+    // if (y == Year::y2011) {
+    //   lumi += 0.98;
+    //   lumiErr += 0.02;
+    // } else if (y == Year::y2012) {
+    //   lumi += 1.99;
+    //   lumiErr += 0.02;
+    // } else if (y == Year::y2015) {
+    //   lumi += 0.28;
+    //   lumiErr += 0.01;
+    // } else if (y == Year::y2016) {
+    //   lumi += 1.65;
+    // } else if (y == Year::y2017) {
+    //   lumi += 1.7;
+    // } else if (y == Year::y2018) {
+    //   lumi += 2.19;
+    // }
+    for (auto &p : polarityVec) {
+      for (auto &b : bachelorVec) {
+        for (auto &d : daughtersVec) {
+          for (auto &c : chargeVec) {
+            std::string dsFile =
+                config.inputDir + "/roodatasets/" +
+                ComposeFilename(y, p, b, config.neutral(), d, c) + ".root";
+            std::cout << "Extracting RooDataSet from file: \n";
 
-              if (!fexists(dsFile)) {
-                std::cerr << dsFile << " does not exist.\n";
-                return 1;
+            if (!fexists(dsFile)) {
+              std::cerr << dsFile << " does not exist.\n";
+              return 1;
+            } else {
+              std::cout << dsFile << " exists.\n";
+              TFile in(dsFile.c_str(), "READ");
+              RooDataSet *inputDataSet;
+              gDirectory->GetObject("inputDataSet", inputDataSet);
+              if (inputDataSet == nullptr) {
+                throw std::runtime_error("Data set does not exist.\n");
               } else {
-                std::cout << dsFile << " exists.\n";
-                TFile in(dsFile.c_str(), "READ");
-                RooDataSet *inputDataSet;
-                gDirectory->GetObject("inputDataSet", inputDataSet);
-                if (inputDataSet == nullptr) {
-                  throw std::runtime_error("Data set does not exist.\n");
+                std::cout << "inputDataSet extracted: \n";
+                inputDataSet->Print();
+                RooDataSet *reducedInputDataSet_n =
+                    dynamic_cast<RooDataSet *>(inputDataSet->reduce(
+                        config.ReturnCutString().c_str()));
+                if (reducedInputDataSet_n == nullptr) {
+                  throw std::runtime_error(
+                      "Could not reduce input w/ neutral cuts dataSet.\n");
+                }
+                RooDataSet *reducedInputDataSet_b = nullptr;
+                if (b == Bachelor::pi) {
+                  reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
+                      reducedInputDataSet_n->reduce("bach_PIDK<12"));
                 } else {
-                  std::cout << "inputDataSet extracted: \n";
-                  inputDataSet->Print();
-                  RooDataSet *reducedInputDataSet_n =
-                      dynamic_cast<RooDataSet *>(inputDataSet->reduce(
-                          config.ReturnCutString().c_str()));
-                  if (reducedInputDataSet_n == nullptr) {
-                    throw std::runtime_error(
-                        "Could not reduce input w/ neutral cuts dataSet.\n");
-                  }
-                  RooDataSet *reducedInputDataSet_b = nullptr;
-                  if (b == Bachelor::pi) {
-                    reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_n->reduce("bach_PIDK<12"));
-                  } else {
-                    reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_n->reduce("bach_PIDK>12"));
-                  }
-                  if (reducedInputDataSet_b == nullptr) {
-                    throw std::runtime_error(
-                        "Could not reduce input dataSet w/ bachelor cuts.\n");
-                  }
-                  RooDataSet *reducedInputDataSet_d = nullptr;
-                  if (d == Daughters::kpi || d == Daughters::pik) {
-                    reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_b->reduce(
-                            config.fittingArgSet(),
-                            ("((abs(h1_D_ID)==211&&h1_D_PIDK<-" + dPidCut +
-                             ")&&(abs(h2_D_ID)=="
-                             "321&&h2_D_PIDK>" +
-                             dPidCut +
-                             "))||((abs(h1_D_ID)"
-                             "==321&&h1_D_PIDK>" +
-                             dPidCut +
-                             ")&&(abs(h2_D_ID)==211&&h2_D_"
-                             "PIDK<-" +
-                             dPidCut + "))")
-                                .c_str()));
-                  } else if (d == Daughters::kk) {
-                    reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_b->reduce(
-                            config.fittingArgSet(),
-                            ("h1_D_PIDK>" + dPidCut + "&&h2_D_PIDK>" + dPidCut)
-                                .c_str()));
-                  } else {
-                    reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
-                        reducedInputDataSet_b->reduce(
-                            config.fittingArgSet(), ("h1_D_PIDK<-" + dPidCut +
-                                                     "&&h2_D_PIDK<-" + dPidCut)
-                                                        .c_str()));
-                  }
-                  if (reducedInputDataSet_d == nullptr) {
-                    throw std::runtime_error(
-                        "Could not reduce input dataSet w/ daughter cuts.\n");
-                  }
-                  // Need to append each year, polarity to dataSet at each key
-                  // in map, as key labelled by config.neutral(), b, d, c and
-                  // must be unique.
-                  if (mapDataLabelDataSet.find(
-                          ComposeDataLabelName(config.neutral(), b, d, c)) ==
-                      mapDataLabelDataSet.end()) {
-                    mapDataLabelDataSet.insert(std::make_pair(
-                        ComposeDataLabelName(config.neutral(), b, d, c),
-                        reducedInputDataSet_d));
-                    std::cout
-                        << "Created key-value pair for category " +
-                               ComposeDataLabelName(config.neutral(), b, d, c) +
-                               " and corresponding dataSet\n";
-                  } else {
-                    mapDataLabelDataSet[ComposeDataLabelName(config.neutral(),
-                                                             b, d, c)]
-                        ->append(*reducedInputDataSet_d);
-                    std::cout
-                        << "Appended dataSet to category " +
-                               ComposeDataLabelName(config.neutral(), b, d, c) +
-                               "\n";
-                  }
+                  reducedInputDataSet_b = dynamic_cast<RooDataSet *>(
+                      reducedInputDataSet_n->reduce("bach_PIDK>12"));
+                }
+                if (reducedInputDataSet_b == nullptr) {
+                  throw std::runtime_error(
+                      "Could not reduce input dataSet w/ bachelor cuts.\n");
+                }
+                RooDataSet *reducedInputDataSet_d = nullptr;
+                if (d == Daughters::kpi || d == Daughters::pik) {
+                  reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                      reducedInputDataSet_b->reduce(
+                          config.fittingArgSet(),
+                          ("((abs(h1_D_ID)==211&&h1_D_PIDK<-" + dPidCut +
+                           ")&&(abs(h2_D_ID)=="
+                           "321&&h2_D_PIDK>" +
+                           dPidCut +
+                           "))||((abs(h1_D_ID)"
+                           "==321&&h1_D_PIDK>" +
+                           dPidCut +
+                           ")&&(abs(h2_D_ID)==211&&h2_D_"
+                           "PIDK<-" +
+                           dPidCut + "))")
+                              .c_str()));
+                } else if (d == Daughters::kk) {
+                  reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                      reducedInputDataSet_b->reduce(
+                          config.fittingArgSet(),
+                          ("h1_D_PIDK>" + dPidCut + "&&h2_D_PIDK>" + dPidCut)
+                              .c_str()));
+                } else {
+                  reducedInputDataSet_d = dynamic_cast<RooDataSet *>(
+                      reducedInputDataSet_b->reduce(
+                          config.fittingArgSet(), ("h1_D_PIDK<-" + dPidCut +
+                                                   "&&h2_D_PIDK<-" + dPidCut)
+                                                      .c_str()));
+                }
+                if (reducedInputDataSet_d == nullptr) {
+                  throw std::runtime_error(
+                      "Could not reduce input dataSet w/ daughter cuts.\n");
+                }
+                // Need to append each year, polarity to dataSet at each key
+                // in map, as key labelled by config.neutral(), b, d, c and
+                // must be unique.
+                if (mapDataLabelDataSet.find(
+                        ComposeDataLabelName(config.neutral(), b, d, c)) ==
+                    mapDataLabelDataSet.end()) {
+                  mapDataLabelDataSet.insert(std::make_pair(
+                      ComposeDataLabelName(config.neutral(), b, d, c),
+                      reducedInputDataSet_d));
+                  std::cout
+                      << "Created key-value pair for category " +
+                             ComposeDataLabelName(config.neutral(), b, d, c) +
+                             " and corresponding dataSet\n";
+                } else {
+                  mapDataLabelDataSet[ComposeDataLabelName(config.neutral(),
+                                                           b, d, c)]
+                      ->append(*reducedInputDataSet_d);
+                  std::cout
+                      << "Appended dataSet to category " +
+                             ComposeDataLabelName(config.neutral(), b, d, c) +
+                             "\n";
                 }
               }
             }
@@ -661,265 +660,266 @@ int main(int argc, char **argv) {
         }
       }
     }
-
-    // id = 0 for data fit
-    int id = 0;
-    auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
-    simPdf = std::unique_ptr<RooSimultaneous>(p.first);
-    pdfs = p.second;
-    // Apply box cuts and split PDF into mass categories too
-    std::map<std::string, RooDataSet *> mapFittingDataSet;
-    RooArgSet asymArgSet;
-    for (auto &p : pdfs) {
-      MakeMapFittingDataSet(*p, mapDataLabelDataSet, mapFittingDataSet, config);
-      asymArgSet.add(p->R_piK_Bu2Dst0h_D0pi0());
-      if (config.neutral() == Neutral::gamma) {
-        asymArgSet.add(p->R_piK_Bu2Dst0h_D0gamma());
-      }
-    }
-
-    RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
-                           RooFit::Index(config.fitting),
-                           RooFit::Import(mapFittingDataSet));
-
-    auto fullDataHist = std::unique_ptr<RooDataHist>(
-        fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
-    if (fullDataHist == nullptr) {
-      throw std::runtime_error("Could not extact binned dataSet.");
-    }
-    auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
-    if (fullAbsData == nullptr) {
-      throw std::runtime_error("Could not cast to RooAbsData.");
-    }
-
-    if (config.noFit() == false && config.runSystematics() == false) {
-      // Strategy(2) requires evaluation of hessian at every step: can set
-      // strategy 0 then call MINOS after to calculate correct errors
-      dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-          RooFit::Minos(kTRUE)));
-          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-      // if (config.neutral() == Neutral::pi0) {
-      //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-      //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-      //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-      //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-      //       RooFit::ExternalConstraints(
-      //           NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
-      // } else {
-      //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-      //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-      //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-      //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-      //       RooFit::ExternalConstraints(
-      //           NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
-      // }
-      dataFitResult->SetName("DataFitResult");
-    }
-
-    // Have to shift params after creating simPdf
-    if (config.runSystematics() == true) {
-      std::string systString;
-      for (unsigned int i = 0; i < systematicVec.size(); ++i) {
-        systString += EnumToString(systematicVec[i]);
-        if (i < systematicVec.size() - 1) {
-          systString += "_";
-        }
-      }
-      std::string paramFile =
-          outputDir + "/results/ParameterInfo_" + systString + ".csv";
-      Params::Get().WriteFixedParametersToFile(paramFile, systematicVec);
-      for (int s = 1; s < nSyst + 1; ++s) {
-        std::cout << "Running systematic " << s << "...\n";
-        auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
-        std::cout << "RandomiseParameters:\n";
-        std::random_device rd;
-        std::default_random_engine rng(rd());
-        std::uniform_int_distribution<UInt_t> dist;
-        UInt_t seed = dist(rng);
-        // UInt_t seed = 0xe5936d8c;
-        RooRandom::randomGenerator()->SetSeed(seed);
-        TRandom3 random(seed);
-        Params::Get().RandomiseParameters(systematicVec.begin(),
-                                          systematicVec.end(), random);
-        auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
-        // auto pdfs = systPair.second;
-        auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
-            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-            RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
-            RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
-        systResult->SetName("SystResult");
-        std::stringstream filename;
-        filename << outputDir << "/results/SystResult_"
-                 << config.ReturnBoxString() << "_" << systString << "_"
-                 << std::hex << seed << ".root";
-        TFile systResultFile(filename.str().c_str(), "recreate");
-        systResult->Write();
-        systResult->Print("v");
-        systResultFile.Close();
-      }
-    }
-
-    if (config.runToy() == true) {
-      // start at id = 1 to reserve 0 for data fit
-      for (int id = 1; id < nToys + 1; ++id) {
-        std::random_device rd;
-        std::default_random_engine rng(rd());
-        std::uniform_int_distribution<UInt_t> dist;
-        UInt_t seed = dist(rng);
-        // UInt_t seed = 0x422d71a;
-        RooRandom::randomGenerator()->SetSeed(seed);
-        std::stringstream filename;
-        if (config.runToy() == true && pdfD1D == true) {
-          filename << outputDir << "/results/ResultD1D_"
-                   << config.ReturnBoxString() << "_" << std::hex << seed
-                   << ".root";
-        } else {
-          filename << outputDir << "/results/Result2D_"
-                   << config.ReturnBoxString() << "_" << std::hex << seed
-                   << ".root";
-        }
-        TFile toyResultFile(filename.str().c_str(), "recreate");
-        if (config.runToy() == true && pdfD1D == true) {
-          RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
-                        daughtersVec, chargeVec, outputDir, id);
-        } else if (data2D == true) {
-          RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
-                        config, daughtersVec, chargeVec, outputDir, id);
-        } else if (data1D == true) {
-          RunToys1DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
-                        config, daughtersVec, chargeVec, outputDir, id);
-        } else {
-          RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
-                       dataFitResult, config, outputDir, daughtersVec,
-                       chargeVec, id);
-        }
-        toyResultFile.Close();
-      }
-      //   dataFitResult->Print();
-    } else {
-      // Loop over daughters again to plot correct PDFs
-
-      // Whilst blinding is in place, we need to store y-axis max for FAV
-      // mode, to set y-axis max in ADS mode
-      std::map<Neutral, std::map<Mass, double> > yMaxMap;
-      // LaTeXYields(config, pdfs, outputDir, dataFitResult);
-      if (config.runSystematics() == false) {
-        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-        PlotLegend(config, colorMap, outputDir);
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-                     dataFitResult.get(), yMaxMap);
-        }
-        if (config.noFit() == false) {
-          dataFitResult->Print("v");
-          // for (auto &p : pdfs) {
-          //   if (p->daughters() == Daughters::kpi) {
-          //     if (config.neutral() == Neutral::pi0) {
-          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
-          //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
-          //     } else {
-          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " =
-          //       "
-          //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() <<
-          //                 "\n";
-          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " =
-          //       "
-          //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << "
-          //       = "
-          //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() <<
-          //                 "\n";
-          //     }
-          //   }
-          // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-          //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
-          //           << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-          // std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
-          //           << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
-          // std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
-          //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
-          //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-          //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
-          //             << p->N_tot_Bu2D0hst().getVal() << "\n";
-          // if (p->daughters() == Daughters::pik) {
-          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_D02pik().GetName() << " = "
-          //             << p->N_tot_Bu2Dst0h_D0pi0_D02pik().getVal() << "\n";
-          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " =
-          //   "
-          //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() <<
-          //             "\n";
-          //   if (p->neutral() == Neutral::gamma) {
-          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << "
-          //     = "
-          //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() <<
-          //               "\n";
-          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().GetName()
-          //               << " = "
-          //               << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().getVal()
-          //               << "\n";
-          //   }
-          // }
-          // }
-          // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
-          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-          // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
-          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-          PlotCorrelations(dataFitResult.get(), outputDir, config);
-          // Save RFR of data and efficiencies to calculate observables with
-          // corrected errors
-          TFile outputFile((outputDir + "/results/DataResult_" +
-                            config.ReturnBoxString() + ".root")
-                               .c_str(),
-                           "recreate");
-          dataFitResult->Write();
-          TTree tree("tree", "");
-          if (config.neutral() == Neutral::pi0 ||
-              config.fitBuPartial() == true) {
-            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
-          }
-          if (config.neutral() == Neutral::gamma) {
-            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_val =
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::kpi>::Get(id)
-                    .N_tot_Bu2Dst0h_D0pi0().getVal();
-            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_err =
-                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                             Daughters::kpi>::Get(id)
-                    .N_tot_Bu2Dst0h_D0pi0()
-                    .getPropagatedError(*dataFitResult);
-            std::cout << N_tot_Bu2Dst0pi_D0pi0_D02kpi_val
-                      << " " << N_tot_Bu2Dst0pi_D0pi0_D02kpi_err << "\n";
-            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_val",
-                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_val,
-                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_val/D");
-            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_err",
-                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_err,
-                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_err/D");
-            tree.Fill();
-          }
-          outputFile.cd();
-          tree.Write();
-        }
-      }
-    }
-  } else {
-    if (config.runToy() == false) {
-      throw std::runtime_error("Must specify input directory to run data fit.");
-      return 1;
-    }
-    std::cout << "Fitting using D1D method, starting from model PDF\n";
-    ToyTestD1D(simPdf, dataFitResult, config, daughtersVec, chargeVec,
-               outputDir, nToys);
   }
+
+  // id = 0 for data fit
+  int id = 0;
+  auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
+  simPdf = std::unique_ptr<RooSimultaneous>(p.first);
+  pdfs = p.second;
+  // Apply box cuts and split PDF into mass categories too
+  std::map<std::string, RooDataSet *> mapFittingDataSet;
+  RooArgSet asymArgSet;
+  for (auto &p : pdfs) {
+    MakeMapFittingDataSet(*p, mapDataLabelDataSet, mapFittingDataSet, config);
+    asymArgSet.add(p->R_piK_Bu2Dst0h_D0pi0());
+    if (config.neutral() == Neutral::gamma) {
+      asymArgSet.add(p->R_piK_Bu2Dst0h_D0gamma());
+    }
+  }
+
+  RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
+                         RooFit::Index(config.fitting),
+                         RooFit::Import(mapFittingDataSet));
+
+  auto fullDataHist = std::unique_ptr<RooDataHist>(
+      fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
+  if (fullDataHist == nullptr) {
+    throw std::runtime_error("Could not extact binned dataSet.");
+  }
+  auto fullAbsData = dynamic_cast<RooAbsData *>(fullDataHist.get());
+  if (fullAbsData == nullptr) {
+    throw std::runtime_error("Could not cast to RooAbsData.");
+  }
+
+  if (config.noFit() == false && config.runSystematics() == false) {
+    // Strategy(2) requires evaluation of hessian at every step: can set
+    // strategy 0 then call MINOS after to calculate correct errors
+    dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+        *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+        RooFit::Minos(kTRUE)));
+        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+    // if (config.neutral() == Neutral::pi0) {
+    //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+    //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+    //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+    //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+    //       RooFit::ExternalConstraints(
+    //           NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
+    // } else {
+    //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+    //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+    //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+    //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
+    //       RooFit::ExternalConstraints(
+    //           NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
+    // }
+    dataFitResult->SetName("DataFitResult");
+  }
+
+  // Have to shift params after creating simPdf
+  if (config.runSystematics() == true) {
+    std::string systString;
+    for (unsigned int i = 0; i < systematicVec.size(); ++i) {
+      systString += EnumToString(systematicVec[i]);
+      if (i < systematicVec.size() - 1) {
+        systString += "_";
+      }
+    }
+    std::string paramFile =
+        outputDir + "/results/ParameterInfo_" + systString + ".csv";
+    Params::Get().WriteFixedParametersToFile(paramFile, systematicVec);
+    for (int s = 1; s < nSyst + 1; ++s) {
+      std::cout << "Running systematic " << s << "...\n";
+      auto systPair = MakeSimultaneousPdf(s, config, daughtersVec, chargeVec);
+      std::cout << "RandomiseParameters:\n";
+      std::random_device rd;
+      std::default_random_engine rng(rd());
+      std::uniform_int_distribution<UInt_t> dist;
+      UInt_t seed = dist(rng);
+      // UInt_t seed = 0xe5936d8c;
+      RooRandom::randomGenerator()->SetSeed(seed);
+      TRandom3 random(seed);
+      Params::Get().RandomiseParameters(systematicVec.begin(),
+                                        systematicVec.end(), random);
+      auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
+      // auto pdfs = systPair.second;
+      auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
+          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+          RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+          RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+      systResult->SetName("SystResult");
+      std::stringstream filename;
+      filename << outputDir << "/results/SystResult_"
+               << config.ReturnBoxString() << "_" << systString << "_"
+               << std::hex << seed << ".root";
+      TFile systResultFile(filename.str().c_str(), "recreate");
+      systResult->Write();
+      systResult->Print("v");
+      systResultFile.Close();
+    }
+  }
+
+  if (config.runToy() == true) {
+    // start at id = 1 to reserve 0 for data fit
+    for (int id = 1; id < nToys + 1; ++id) {
+      std::random_device rd;
+      std::default_random_engine rng(rd());
+      std::uniform_int_distribution<UInt_t> dist;
+      UInt_t seed = dist(rng);
+      // UInt_t seed = 0x422d71a;
+      RooRandom::randomGenerator()->SetSeed(seed);
+      std::stringstream filename;
+      if (config.runToy() == true && pdfD1D == true) {
+        filename << outputDir << "/results/ResultD1D_"
+                 << config.ReturnBoxString() << "_" << std::hex << seed
+                 << ".root";
+      } else {
+        filename << outputDir << "/results/Result2D_"
+                 << config.ReturnBoxString() << "_" << std::hex << seed
+                 << ".root";
+      }
+      TFile toyResultFile(filename.str().c_str(), "recreate");
+      if (config.runToy() == true && pdfD1D == true) {
+        RunToysD1DPdf(simPdf, toyResultFile, config, dataFitResult,
+                      daughtersVec, chargeVec, outputDir, id);
+      } else if (data2D == true) {
+        RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
+                      config, daughtersVec, chargeVec, outputDir, id);
+      } else if (data1D == true) {
+        RunToys1DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
+                      config, daughtersVec, chargeVec, outputDir, id);
+      } else {
+        RunToys2DPdf(pdfs, mapDataLabelDataSet, simPdf, toyResultFile,
+                     dataFitResult, config, outputDir, daughtersVec,
+                     chargeVec, id);
+      }
+      toyResultFile.Close();
+    }
+    //   dataFitResult->Print();
+  } else {
+    // Loop over daughters again to plot correct PDFs
+
+    // Whilst blinding is in place, we need to store y-axis max for FAV
+    // mode, to set y-axis max in ADS mode
+    std::map<Neutral, std::map<Mass, double> > yMaxMap;
+    // LaTeXYields(config, pdfs, outputDir, dataFitResult);
+    if (config.runSystematics() == false) {
+      std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+      PlotLegend(config, colorMap, outputDir);
+      for (auto &p : pdfs) {
+        Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+                   dataFitResult.get(), yMaxMap);
+      }
+      if (config.noFit() == false) {
+        dataFitResult->Print("v");
+        // for (auto &p : pdfs) {
+        //   if (p->daughters() == Daughters::kpi) {
+        //     if (config.neutral() == Neutral::pi0) {
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+        //     } else {
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " =
+        //       "
+        //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() <<
+        //                 "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " =
+        //       "
+        //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << "
+        //       = "
+        //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() <<
+        //                 "\n";
+        //     }
+        //   }
+        // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
+        //           << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+        // std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
+        //           << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
+        // std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+        //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+        // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
+        //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+        //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
+        //             << p->N_tot_Bu2D0hst().getVal() << "\n";
+        // if (p->daughters() == Daughters::pik) {
+        //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_D02pik().GetName() << " = "
+        //             << p->N_tot_Bu2Dst0h_D0pi0_D02pik().getVal() << "\n";
+        //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " =
+        //   "
+        //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() <<
+        //             "\n";
+        //   if (p->neutral() == Neutral::gamma) {
+        //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << "
+        //     = "
+        //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() <<
+        //               "\n";
+        //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().GetName()
+        //               << " = "
+        //               << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().getVal()
+        //               << "\n";
+        //   }
+        // }
+        // }
+        // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
+        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+        // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
+        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+        PlotCorrelations(dataFitResult.get(), outputDir, config);
+        // Save RFR of data and efficiencies to calculate observables with
+        // corrected errors
+        TFile outputFile((outputDir + "/results/DataResult_" +
+                          config.ReturnBoxString() + ".root")
+                             .c_str(),
+                         "recreate");
+        dataFitResult->Write();
+        TTree tree("tree", "");
+        if (config.neutral() == Neutral::pi0 ||
+            config.fitBuPartial() == true) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+        }
+        if (config.neutral() == Neutral::gamma) {
+          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+          double N_tot_Bu2Dst0pi_D0pi0_D02kpi_val =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>::Get(id)
+                  .N_tot_Bu2Dst0h_D0pi0().getVal();
+          double N_tot_Bu2Dst0pi_D0pi0_D02kpi_err =
+              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                           Daughters::kpi>::Get(id)
+                  .N_tot_Bu2Dst0h_D0pi0()
+                  .getPropagatedError(*dataFitResult);
+          std::cout << N_tot_Bu2Dst0pi_D0pi0_D02kpi_val
+                    << " " << N_tot_Bu2Dst0pi_D0pi0_D02kpi_err << "\n";
+          tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_val",
+                      &N_tot_Bu2Dst0pi_D0pi0_D02kpi_val,
+                      "N_tot_Bu2Dst0pi_D0pi0_D02kpi_val/D");
+          tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_err",
+                      &N_tot_Bu2Dst0pi_D0pi0_D02kpi_err,
+                      "N_tot_Bu2Dst0pi_D0pi0_D02kpi_err/D");
+          tree.Fill();
+        }
+        outputFile.cd();
+        tree.Write();
+      }
+    }
+  }
+  // } else {
+  //   if (config.runToy() == false) {
+  //     throw std::runtime_error("Must specify input directory to run data fit.");
+  //     return 1;
+  //   }
+  //   std::cout << "Fitting using D1D method, starting from model PDF\n";
+  //   ToyTestD1D(simPdf, dataFitResult, config, daughtersVec, chargeVec,
+  //              outputDir, nToys);
+  // }
   return 0;
 }
