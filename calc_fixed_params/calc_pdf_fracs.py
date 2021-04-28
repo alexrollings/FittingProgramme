@@ -598,6 +598,6 @@ if __name__ == '__main__':
              box_effs_dict['Bu2Dst0Kst_D0gamma']['pi']['deltaPartialCut'] *
              box_effs_dict['Bu2Dst0Kst_D0gamma']['pi']['or']))
 
-  f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/pdf_fracs_{neutral}.txt', 'w+')
+  f_out = open(f'/data/lhcb/users/rollings/data_fit/fixed_rates/pdf_fracs_{neutral}.txt', 'w+')
   for name, frac in frac_dict.items():
     f_out.write(f'{name} {frac.nominal_value} {frac.std_dev}\n')

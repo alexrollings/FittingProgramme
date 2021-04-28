@@ -1,4 +1,4 @@
-from uncertainties import unumpy, ufloat
+/data/lhcb/users/rollings/data_fit/fixed_ratesfrom uncertainties import unumpy, ufloat
 import math
 import argparse
 
@@ -128,6 +128,6 @@ if __name__ == '__main__':
   ) / (mc_effs_dict['Bs2D0Kst0'] * or_effs_dict['Bs2D0Kst0'])
 
 
-  f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/bkgFracs_{neutral}.txt', 'w+')
+  f_out = open(f'/data/lhcb/users/rollings/data_fit/fixed_rates/bkgFracs_{neutral}.txt', 'w+')
   for mode, frac in frac_dict.items():
     f_out.write(f'{mode} {frac.nominal_value} {frac.std_dev}\n')

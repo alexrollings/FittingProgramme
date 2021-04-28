@@ -287,6 +287,6 @@ print('A_gamma_DK_pik = '  + str(median) + '\tmin = ' + str(min_bin) + '\tmax = 
 obs_dict['A_Bu2Dst0h_D0gamma_k_pik'] = [median, (median - min_bin)/3, (max_bin - median)/3]
 plt.clf()
 
-f_out = open(f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/calc_fixed_params/gamma_obs.txt', 'w+')
+f_out = open(f'/data/lhcb/users/rollings/data_fit/fixed_rates/gamma_obs.txt', 'w+')
 for par, arr in obs_dict.items():
   f_out.write(f'{par} {arr[0]} {arr[1]} {arr[2]}\n')
