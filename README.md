@@ -82,7 +82,9 @@ If running systematics, must pass:
   -systematic=<choice of category, default: None>
   -nSyst=<# data fits to run for given category>
 ~~~
+
 ## Running the fit to data 
+
 To run the split by charge blinded fit to the full $`D^{*}\rightarrow D\pi^{0}`$ dataset, execute:
 ~~~ 
 ./Fitting -inputDir=/eos/lhcb/wg/b2oc/AD-SGLW_Bu2Dst0h_FullReco_Run12/roodatasets/ -outputDir=<output path> -daughters=kpi,kk,pipi,pik -neutral=pi0 -charge=plus,minus -bl=5220 -bh=5330 -dl=138 -dh=148
@@ -91,3 +93,15 @@ To run the split by charge blinded fit to the full $`D^{*}\rightarrow D\gamma`$ 
 ~~~ 
 ./Fitting -inputDir=/eos/lhcb/wg/b2oc/AD-SGLW_Bu2Dst0h_FullReco_Run12/roodatasets/ -outputDir=<output path> -daughters=kpi,kk,pipi,pik -neutral=gamma -charge=plus,minus -bl=5240 -bh=5320 -dl=125 -dh=170 -dpl=60 -dph=105
 ~~~
+
+## Running pseudo-experiments
+
+In order to evaluate the statistical errors, corrected for double counting of events, pseudo-experiments must be run where 
+toy datasets 
+are generated from 2D RooHistPdfs of the data. ~2500 experiments should be run to get a reliable correction. To execute this, 
+run the commands above as if running the fit to data, but add the options `-toys=<# to run> -data2D`.
+
+In order to test fit bias and stability, pseudo-experiments should be run where the toy datasets are generated from 
+the data fit model. ~2500 experiments should be run. To execute this, run the commands above as if running the fit to data, but add the options `-toys=<# to run> -pdfD1D`
+
+ 
