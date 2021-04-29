@@ -70,6 +70,10 @@ if __name__ == '__main__':
   blind = args.blind
   remake = args.remake
 
+  tex_path = os.path.join(os.getcwd(), 'tex/')
+  if not os.path.exists(tex_path):
+    os.mkdir(tex_path)
+
   if blind == True:
     blindStr = '_Blind'
   else:
@@ -109,7 +113,7 @@ if __name__ == '__main__':
   data_result = data_file.Get('DataFitResult')
   if data_result == None:
     sys.exit(f'{data_file} does not contain DataFitResult')
-  edm_fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/EDM_{charge}_{neutral}.tex'
+  edm_fname = f'{tex_path}/EDM_{charge}_{neutral}.tex'
   with open(edm_fname, 'w') as f_edm:
     edm_val = data_result.edm()
     edm_str = f'{edm_val:.2e}'
@@ -139,7 +143,7 @@ if __name__ == '__main__':
             group_dict[g][par_name[:-2]] = {}
 
   raw_file = open(
-      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_raw_{charge}_{neutral}.tex',
+      f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
       'w')
   row_arr = []
   sorted_pars = sorted(fit_result.keys(), key=lambda x: x.lower())
@@ -425,7 +429,7 @@ if __name__ == '__main__':
     title_str['A'] = title_str['A'] + ' \\\\ \\hline\n'
 
     tex_file = open(
-        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_{neutral}_new.tex',
+        f'{tex_path}/Systematics_{neutral}_new.tex',
         'w')
     tex_file.write('\\documentclass[12pt, portrait]{article}\n')
     tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
@@ -518,7 +522,7 @@ if __name__ == '__main__':
 
       if n_params[l] > 0:
         syst_file_1 = open(
-            f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_breakdown_{l}_{neutral}.tex',
+            f'{tex_path}/Systematics_breakdown_{l}_{neutral}.tex',
             'w')
         # syst_file_1.write('\\usepackage{tabularx}\n')
         # syst_file_1.write('\\begin{table}[t]\n')
@@ -568,7 +572,7 @@ if __name__ == '__main__':
       i = i + 1
 
     syst_file_2 = open(
-        f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Systematics_summary_{neutral}.tex',
+        f'{tex_path}/Systematics_summary_{neutral}.tex',
         'w')
     # syst_file_2.write('\\begin{table}[t]\n')
     # syst_file_2.write('\\centering\n')
@@ -586,7 +590,7 @@ if __name__ == '__main__':
     syst_file_2.close()
 
   result_file = open(
-      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Result_{charge}_{neutral}.tex',
+      f'{tex_path}/Result_{charge}_{neutral}.tex',
       'w')
   row_arr = []
   sorted_pars = sorted(fit_result.keys(), key=lambda x: x.lower())
@@ -621,7 +625,7 @@ if __name__ == '__main__':
     result_file.write(row)
 
   yields_file = open(
-      f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/Yields_{charge}_{neutral}.tex',
+      f'{tex_path}/Yields_{charge}_{neutral}.tex',
       'w')
   yields_file.write('\\begin{tabular}{lll}\n')
   yields_file.write('Decay & \\D mode & Yield \\\\ \n')
