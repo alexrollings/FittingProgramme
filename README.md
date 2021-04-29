@@ -81,7 +81,7 @@ And a toy generation method specified:
   -data2D: to run 2D toys generated from RooHistPdf of data
 If running systematics, the following arguments must also be passed:
   -systematic=<choice of category, default: None>
-  -nSyst=<# data fits to run for given category>
+  -nSyst=<# of data fits to run for given category>
 ~~~
 
 ### Running the fit to data 
