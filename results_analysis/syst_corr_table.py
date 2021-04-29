@@ -18,6 +18,10 @@ if __name__ == '__main__':
                       required=True)
   args = parser.parse_args()
 
+  tex_path = os.path.join(os.getcwd(), 'tex/')
+  if not os.path.exists(tex_path):
+    os.mkdir(tex_path)
+
   neutral = args.neutral
   syst_dir = args.syst_dir
 
@@ -39,7 +43,7 @@ if __name__ == '__main__':
       np_arr = np.asarray(arr2d[0:, 0], dtype=np.float32)
       par_dict[par] = par_dict[par] + np_arr.tolist()
 
-  f_tex = open(f'tex_new/syst_correlations_{neutral}.tex', 'w+')
+  f_tex = open(f'{tex_path}/syst_correlations_{neutral}.tex', 'w+')
   # f_tex.write('\\documentclass[12pt, landscape]{article}\n')
   # f_tex.write('\\usepackage[margin=0.1in]{geometry}\n')
   # f_tex.write('\\usepackage{mathtools}\n')

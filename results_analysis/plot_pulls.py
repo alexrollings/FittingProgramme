@@ -202,14 +202,17 @@ if __name__ == '__main__':
     # pass_filename(input_dir + '/' + root_file, list_file)
   if not os.path.exists(output_dir):
     os.mkdir(output_dir)
-  # results_dir = output_dir + '/results'
-  # if not os.path.exists(results_dir):
-  #     os.mkdir(results_dir)
+    os.mkdir(output_dir)
+  results_dir = output_dir + '/results'
+  if not os.path.exists(results_dir):
+      os.mkdir(results_dir)
   plots_dir = output_dir + '/plots'
   if not os.path.exists(plots_dir):
     os.mkdir(plots_dir)
   # print('./PlotToys ' + ','.join(list_file))
-  os.chdir('/home/rollings/Bu2Dst0h_2d/FittingProgramme/build/')
+  home_path = os.getcwd()
+  os.chdir('os.getcwd()')
+  os.chdir('../build')
   if list_file.read(1) != None:
     if dim == '1D':
       if fit_bu_partial == False:
