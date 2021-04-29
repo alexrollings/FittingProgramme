@@ -141,3 +141,16 @@ carried out, by running the following script in the `results_analysis` sub-direc
 python systematics_to_json.py -n=<pi0/gamma> -i=<input directory (identical to output directory passed when running the systematics fit)>
 ~~~
 
+### Correlation matrices
+
+The statistical correlation matrix for observables can be created in LaTeX format by running the following script 
+in the `results_analysis` sub-directory:
+~~~
+python stat_corr_table.py -f=<file containing RooFitReuslt of fit to data> -n=<pi0/gamma>
+~~~
+
+The systematics correlation matrix for observables can be created in LaTeX format by running the following script 
+in the `results_analysis` sub-directory:
+~~~
+python syst_corr_table.py -s=<directory where systematics json is stored> -n=<pi0/gamma>
+~~~
