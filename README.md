@@ -105,9 +105,8 @@ toy datasets are generated from 2D RooHistPdfs of the data. The raw RooFit error
 the widths of the 2D pull distributions. ~2500 experiments should be run to get reliable corrections. To execute this, 
 run the commands above as if running the fit to data, but add the options `-toys=<# to run> -data2D`.
 
-The `PlotToys` executable can be used fit to the pull distributions of all floating fit parameters to evaluate the 
-means and widths. This can be called with the `plot_pulls.py` script in the `results_analysis` sub-directory. 
-Example execution:
+The `PlotToys` executable can be used to fit to the pull distributions of all floating fit parameters to evaluate the 
+means and widths. This can be called with the `plot_pulls.py` script in the `results_analysis` sub-directory:
 ~~~
 python plot_pulls.py -i=<directory where RooFitResults from pseudo-experiments are stored> -o=<directory where 
 output plots and results should be created> -t=data -d=<2D/D1D> -n=<pi0/gamma>
