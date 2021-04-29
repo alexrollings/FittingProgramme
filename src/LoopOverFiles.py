@@ -9,7 +9,7 @@
 import os, re, subprocess, sys
 #re = regular expressions
 
-def pass_filename(filename):
+def pass_filename(filename, outPath):
 
   # m = re.search("/([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_([^_/]+)_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+_[a-zA-Z0-9_]+.root", filename)
   #regex says if not an "_" or a "/", it is a group
@@ -55,10 +55,12 @@ def pass_filename(filename):
       sys.exit("D0 Daughters must be: kpi, kk, pipi or pik")
 
     # print(filename, year, polarity, bachelor, neutral, daughters)
-    subprocess.call(["../build/./SaveRooDataSets", filename, year, polarity, bachelor, neutral, daughters])
+    subprocess.call(["../build/./SaveRooDataSets", filename, outPath, year, polarity, bachelor, neutral, daughters])
 
+if not os.path.isdir(sys.argv[2]):
+  os.mkdir(sys.argv[2])
 if os.path.isdir(sys.argv[1]):
   for filename in os.listdir(sys.argv[1]):
-    pass_filename(sys.argv[1]+"/"+filename)
+    pass_filename(sys.argv[1]+"/"+filename, sys.argv[2])
 else:
-  pass_filename(sys.argv[1])
+  pass_filename(sys.argv[1], sys.argv[2])

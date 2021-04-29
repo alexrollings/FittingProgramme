@@ -14,9 +14,7 @@
 
 #include "Configuration.h"
 
-std::string dsPath("/data/lhcb/users/rollings/roodatasets/d1d_fit_new_2/");
-
-void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
+void SaveRooDataSet(std::string const &path, std::string const &dsPath, Year year, Polarity polarity,
                     Bachelor bachelor, Neutral neutral, Daughters daughters) {
   // using namespace RooFit;
 
@@ -131,13 +129,14 @@ void SaveRooDataSet(std::string const &path, Year year, Polarity polarity,
 
 int main(int argc, char **argv) {
   std::string path = argv[1];
-  Year year = StringToEnum<Year>(argv[2]);
-  Polarity polarity = StringToEnum<Polarity>(argv[3]);
-  Bachelor bachelor = StringToEnum<Bachelor>(argv[4]);
-  Neutral neutral = StringToEnum<Neutral>(argv[5]);
-  Daughters daughters = StringToEnum<Daughters>(argv[6]);
+  std::string dsPath = argv[2];
+  Year year = StringToEnum<Year>(argv[3]);
+  Polarity polarity = StringToEnum<Polarity>(argv[4]);
+  Bachelor bachelor = StringToEnum<Bachelor>(argv[5]);
+  Neutral neutral = StringToEnum<Neutral>(argv[6]);
+  Daughters daughters = StringToEnum<Daughters>(argv[7]);
 
-  SaveRooDataSet(path, year, polarity, bachelor, neutral, daughters);
+  SaveRooDataSet(path, dsPath, year, polarity, bachelor, neutral, daughters);
   return 0;
 }
 
