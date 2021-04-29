@@ -53,12 +53,12 @@ to display this in the shell):
 ~~~
 -inputDir=<input directory name (where roodatasets, efficiencies, mc fit results are stored)>
 -outputDir=<output directory (where the plots are saved in the `plots` sub-directory and results in the `results` sub-directory, therefore these should also be created)>
-Pass box dimensions. Working points for D^{*}\rightarrow D\gamma (D^{*}\rightarrow D\pi^{0}) mode given below:
+Pass box dimensions. Working points for Dgamma (Dπ0) mode given below:
   -dl=125(138) 
   -dh=170(148)
   -bl=5240(5220)
   -bh=5320(5330)
-The D\gamma mode has a second B mass slice:
+The Dgamma mode has a second B mass slice:
   -dpl=60
   -dph=105
 Followed by the possible options (to specify multiple choices per option, pass them separated by commas):
