@@ -53,31 +53,34 @@ to display this in the shell):
 ~~~
 -inputDir=<input directory name (where roodatasets, efficiencies, mc fit results are stored)>
 -outputDir=<output directory (where the plots are saved in the `plots` sub-directory and results in the `results` sub-directory, therefore these should also be created)>
-Pass box dimensions. Working points for $`D^{*}\rightarrow D\gamma`$ ($`D^{*}\rightarrow D\pi^{0}`$) mode given below:
+Pass box dimensions. Working points for D^{*}\rightarrow D\gamma (D^{*}\rightarrow D\pi^{0}) mode given below:
   -dl=125(138) 
   -dh=170(148)
   -bl=5240(5220)
   -bh=5320(5330)
-The $`D\gamma`$ mode has a second $`B`$ mass slice:
+The D\gamma mode has a second B mass slice:
   -dpl=60
   -dph=105
 Followed by the possible options (to specify multiple choices per option, pass them separated by commas):
-  -1D, to only git to $`B`$ mass: default fit is double 1D
-  -noFit, default is to fit PDF to data
-  -simple, to plot all mis-reconstructed components as one color
-  -unblind, default is blinded
+  -1D: to only git to B mass: default fit is double 1D
+  -noFit: default is to fit PDF to data
+  -simple: to plot all mis-reconstructed components as one color
+  -unblind: default fit is when split by charge blinded
   -year=<choice {2011,2012,2015,2016,2017,2018} default: 2011,2012,2015,2016,2017,2018>
   -polarity=<choice {up,down} default: up,down>
   -neutral=<choice {pi0/gamma} default: gamma>
   -daughters=<choice {kpi,kk,pipi,pik} default: kpi,kk,pipi,pik>
   -charge=<choice {plus,minus/total} default: total>
+If running toys, must pass:
   -toys=<# of toys to run>
+And one of the following generation methods:
   -pdfD1D, to run D1D toys generated from D1D PDF
   -pdf2D, to run 2D toys generated from 2D PDF
   -data2D, to run 2D toys generated from RooHistPdf of data
   -data1D, to run independent 1D toys generated from RooHistPdf of data.
+If running systematics, must pass:
   -systematic=<choice of category, default: None>
-  -nSyst=<# data fits to run for systematic studies>
+  -nSyst=<# data fits to run for given category>
 ~~~
 ## Running the fit to data 
 To run the split by charge blinded fit to the full $`D^{*}\rightarrow D\pi^{0}`$ dataset, execute:
