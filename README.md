@@ -13,7 +13,7 @@ All necessary inputs to the fit are stored at the following EOS location:
 
 which houses the following sub-directories:
 
-- `data_tuples` - contains the analysis nTuples with offline selections applied (apart from those specified in the fitting code). The root files are labelled by year, polarity and decay and mode.
+- `data_tuples` - contains the analysis nTuples with offline selections applied (apart from those specified in the fitting code). The root files are labelled by year, polarity and decay mode.
 - `roodatasets` - contains roodatasets of the above nTuples, split by $`B`$ charge, to be read into the fit.
 - `mc_roofit_results` - contains RooFit results of fits to MC, from which the value and error of fixed PDF parameters are read in.
 - `efficiencies` - contains text files of MC selection efficiencies used to correct raw yields, and box efficiencies used to split the total yield for each component into each mass sample.
@@ -21,7 +21,7 @@ which houses the following sub-directories:
 
 ## Compiling executables 
 
-Source the CERN ROOT environment: 
+Source the ROOT environment: 
 ~~~
 source /cvmfs/lhcb.cern.ch/lib/lcg/releases/LCG_88/ROOT/6.08.06/x86_64-slc6-gcc62-opt/bin/thisroot.sh
 ~~~
@@ -43,7 +43,8 @@ Navigate into the `src` directory and run the following command (requires Python
 ~~~
 python LoopOverFiles.py <nTuple directory/filename> <output roodataset directory>
 ~~~
-If a single root file is passed as an argument to the script, this will be converted into roodatasets split by $`B`$ charge. If a directory is passed, all files 
+This passes files to the SaveRooDataSets executablbe in `build`, whivh converts nTuple into roodatasets split by $`B`$ charge.
+It is possible to pass a single root file or a directory containing multiple root diles, in which case all files 
 in the directory will be converted. The directories that should be passed are stored at the EOS location as described above.
 
 ## Data fit
@@ -64,23 +65,21 @@ The Dgamma mode has a second B mass slice:
   -dpl=60
   -dph=105
 Followed by the possible options (to specify multiple choices per option, pass them separated by commas):
-  -1D: to only git to B mass: default fit is double 1D
+  -1D: to only fit to B mass: default fit is double 1D
   -noFit: default is to fit PDF to data
   -simple: to plot all mis-reconstructed components as one color
-  -unblind: default fit is when split by charge blinded
+  -unblind: default fit is blinded when split by charge 
   -year=<choice {2011,2012,2015,2016,2017,2018} default: 2011,2012,2015,2016,2017,2018>
   -polarity=<choice {up,down} default: up,down>
   -neutral=<choice {pi0/gamma} default: gamma>
   -daughters=<choice {kpi,kk,pipi,pik} default: kpi,kk,pipi,pik>
   -charge=<choice {plus,minus/total} default: total>
-If running toys, must pass:
+If running toys, the following argument must also be passed:
   -toys=<# of toys to run>
-And one of the following generation methods:
-  -pdfD1D, to run D1D toys generated from D1D PDF
-  -pdf2D, to run 2D toys generated from 2D PDF
-  -data2D, to run 2D toys generated from RooHistPdf of data
-  -data1D, to run independent 1D toys generated from RooHistPdf of data.
-If running systematics, must pass:
+And a toy generation method specified:
+  -pdfD1D: to run D1D toys generated from D1D PDF
+  -data2D: to run 2D toys generated from RooHistPdf of data
+If running systematics, the following arguments must also be passed:
   -systematic=<choice of category, default: None>
   -nSyst=<# data fits to run for given category>
 ~~~
@@ -102,15 +101,16 @@ In order to test fit bias and stability, pseudo-experiments should be run where 
 the data fit model. To execute this, run the commands above as if running the fit to data, but add the options `-toys=<# to run> -pdfD1D`
 
 In order to evaluate the statistical errors, corrected for double counting of events, pseudo-experiments must be run where 
-toy datasets 
-are generated from 2D RooHistPdfs of the data. ~2500 experiments should be run to get a reliable correction. To execute this, 
+toy datasets are generated from 2D RooHistPdfs of the data. The raw RooFit errors from the data fit are then multiplied by 
+the widths of the 2D pull distributions. ~2500 experiments should be run to get reliable corrections. To execute this, 
 run the commands above as if running the fit to data, but add the options `-toys=<# to run> -data2D`.
 
-The `PlotToys` executable can be used to plot the pull distributions of all floating fit parameters. This can be called 
-with the `plot_pulls.py` script in the `results_analysis` sub-directory. Example execution:
+The `PlotToys` executable can be used fit to the pull distributions of all floating fit parameters to evaluate the 
+means and widths. This can be called with the `plot_pulls.py` script in the `results_analysis` sub-directory. 
+Example execution:
 ~~~
 python plot_pulls.py -i=<directory where RooFitResults from pseudo-experiments are stored> -o=<directory where 
-output plots and results should be created> -t=data -d=2D -n=pi0
+output plots and results should be created> -t=data -d=<2D/D1D> -n=<pi0/gamma>
 ~~~ 
 The `-t=data` argument implies that the final result of the data fit should be used as the initial values of the 
 observables in pull calculations. The dimension flag has options: `-d=2D/D1D`. The neutral flag has options: `-n=pi0/gamma`.
@@ -118,19 +118,19 @@ observables in pull calculations. The dimension flag has options: `-d=2D/D1D`. T
 ### Evaluating systematic uncertainties
 
 In order to evaluate systematic uncertainties, run the command as if running the fit to data but with additional 
-arguments `-systematic=<systematic category> -nSyst=<number of fits to run with systematic variation for given vategory>`.
+arguments `-systematic=<systematic category> -nSyst=<number of fits to run with systematic variation for given category>`.
 Systematic categories that should be run for each data fit are listed in `shell_scripts/run_systematics.py`. 
 This is a python script that generates submission scripts, from templates, to run systematic studies on the 
 Oxford Particle Physics condor system. These should be edited for use on a different cluster.
 
-### Producing the final result
+### Final results
 
 In order to calculate the final results, the `analyse_result.py` script in the `results_analysis` sub-directory can 
 be used. To run, this requires Python v3 and the NumPy and Uncertainties packages:
 ~~~
 python analyse_result.py -r=<file storing RooFitResult from the fit to data> -p=<file storing RooFitResults of 
 fits to observable pull distributions from 2D toys> -s=<optional directory to systematics json file (see below)>
-=n=<pi0/gamma> -c=<split/total> --blind
+-n=<pi0/gamma> -c=<split/total> --blind
 ~~~
 Where the inclusion of systematics and the specification of a blinded result are optional. This generates tex files 
 containing tabulated results in LaTeX  format in the `tex` sub-directory.
