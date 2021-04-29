@@ -8,7 +8,7 @@ the 2-body final states $`D \rightarrow K\pi, KK, \pi\pi, \pi K`$.
 All necessary inputs to the fit are stored at the following EOS location:
 
 ~~~
-/eos/lhcb/wg/b2oc/AD-SGLW_Bu2Dst0h_FullReco_Run12
+/eos/lhcb/wg/b2oc/ADS-GLW_Bu2Dst0h_FullReco_Run12
 ~~~
 
 which houses the following sub-directories:
