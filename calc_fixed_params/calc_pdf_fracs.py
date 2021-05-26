@@ -27,7 +27,7 @@ if __name__ == '__main__':
   }
 
   for mode in mc_effs_dict:
-    f_effs = open(f'/home/rollings/Bu2Dst0h_scripts/mc_efficiencies/txt_new/effs_{mode}.txt', 'r')
+    f_effs = open(f'/data/lhcb/users/rollings/data_fit/efficiencies/mcEffs_{mode}.txt', 'r')
     for line in f_effs:
       arr = line.rstrip('\n').split(' ')
       if arr[0] == neutral:
@@ -133,20 +133,20 @@ if __name__ == '__main__':
       if (bachelor == 'k' and 'K' in mode) or (bachelor == 'pi' and 'K' not in mode):
         if neutral == 'gamma':
           f_effs = open(
-              f'/data/lhcb/users/rollings/txt_efficiencies/gamma_{mode}_60_105_125_170_5240_5320.txt',
+              f'/data/lhcb/users/rollings/data_fit/efficiencies/boxEffs_gamma_{mode}_60_105_125_170_5240_5320.txt',
               'r')
         else:
           f_effs = open(
-              f'/data/lhcb/users/rollings/txt_efficiencies/pi0_{mode}_138_148_5220_5330.txt',
+              f'/data/lhcb/users/rollings/data_fit/efficiencies/boxEffs_pi0_{mode}_138_148_5220_5330.txt',
               'r')
       else:
         if neutral == 'gamma':
           f_effs = open(
-              f'/data/lhcb/users/rollings/txt_efficiencies/gamma_misId_{mode}_as_{bachelor}_60_105_125_170_5240_5320.txt',
+              f'/data/lhcb/users/rollings/data_fit/efficiencies/boxEffs_gamma_misId_{mode}_as_{bachelor}_60_105_125_170_5240_5320.txt',
               'r')
         else:
           f_effs = open(
-              f'/data/lhcb/users/rollings/txt_efficiencies/pi0_misId_{mode}_as_{bachelor}_138_148_5220_5330.txt',
+              f'/data/lhcb/users/rollings/data_fit/efficiencies/boxEffs_pi0_misId_{mode}_as_{bachelor}_138_148_5220_5330.txt',
               'r')
       line_arr = []
       for line in f_effs:
