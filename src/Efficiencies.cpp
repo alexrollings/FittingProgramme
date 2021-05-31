@@ -129,7 +129,7 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
           mode == Mode::Bu2Dst0K_D0gamma_WN_D02pik ||
           mode == Mode::Bu2Dst0K_D0pi0_WN_D02pik ||
           mode == Mode::Lb2Omegacpi_Lcpi0) {
-        fName = dir + decay + path + decay + "_TM_Triggers_BDT1_BDT2.root";
+        fName = dir + decay + path + decay + "_TM_newTriggers_BDT1_BDT2.root";
       } else {
         if ((misId == true && bachelor == Bachelor::pi) ||
             mode == Mode::Bu2Dst0pi_D0pi0 || mode == Mode::Bu2Dst0K_D0pi0 ||
@@ -139,10 +139,10 @@ void ExtractChain(Mode mode, Bachelor bachelor, TChain &chain, bool misId) {
             mode == Mode::Bu2Dst0pi_D0gamma_WN ||
             mode == Mode::Bu2Dst0K_D0gamma_WN) {
           fName = dir + decay + path + decay +
-                  "_PID_TM_Triggers_BDT1_BDT2_MERemoved.root";
+                  "_PID_TM_newTriggers_BDT1_BDT2_MERemoved.root";
         } else {
           fName = dir + decay + path + decay +
-                  "_TM_Triggers_BDT1_BDT2_MERemoved.root";
+                  "_TM_newTriggers_BDT1_BDT2_MERemoved.root";
         }
       }
       if (fexists(fName)) {

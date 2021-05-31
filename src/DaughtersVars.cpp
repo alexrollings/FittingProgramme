@@ -19,11 +19,9 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           0, 2)),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-      //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
-      //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
-      //     0, 2)),
+      //     7.2658e-02, 0., Systematic::NA, Sign::same)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
@@ -44,14 +42,18 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.0774, 0.0066,
           Systematic::R_Dst0KDst0pi_Bd2Dsth, Sign::same)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
-      R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0, 2)),
+      // R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
+      //     "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.047, 0, 2)),
+      R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFixed(
+          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 4.1080e-02,
+          5.34e-03, Systematic::NA, Sign::same)),
       // Float as only pick up on part of D*rho phase space - R slightly lower
       R_Dst0KDst0pi_Bu2Dst0hst_(Params::Get().CreateFloating(
           "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           -1, 1)),
+      // 1.7676e-02
       R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
 
 template <>
