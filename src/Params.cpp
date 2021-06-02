@@ -131,8 +131,8 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
       // std::cout << fname << "\n";
       // fitResult->Print();
       throw std::runtime_error("Cannot find parameter " + parNameToRead +
-                               " in fit result for bachelor " +
-                               EnumToString(bachelor));
+                               " in fit result: " +
+                               fname);
     } 
   }
   RooRealVar *realVar = dynamic_cast<RooRealVar *>(absArg);
