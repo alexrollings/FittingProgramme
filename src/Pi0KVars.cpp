@@ -372,7 +372,10 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0gamma_WN_a1Bu(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_)
               .Bu2Dst0h_D0gamma_WN_n1Bu())),
-      Bu2Dst0h_D0gamma_WN_sigmaBuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_sigma1BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_sigma2BuPartial_(),
+      pdf1BuPartial_Bu2Dst0h_D0gamma_WN_(),
+      pdf2BuPartial_Bu2Dst0h_D0gamma_WN_(),
       pdfBuPartial_Bu2Dst0h_D0gamma_WN_(),
       // -------------------- Mis-ID ------------------- //
       misId_Bu2Dst0h_D0gamma_WN_thresholdDelta_(nullptr),

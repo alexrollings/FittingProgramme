@@ -227,8 +227,14 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::Bu2Dst0h_D0gamma_WN_PdfBu,
           Sign::same)),
       Bu2Dst0h_D0gamma_WN_fracPdf1Bu_(nullptr),
-      Bu2Dst0h_D0gamma_WN_meanBuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_mean1BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_meanOffset21BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_mean2BuPartial_(),
       Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_sigmaRatio21BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_a1BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_n1BuPartial_(nullptr),
+      Bu2Dst0h_D0gamma_WN_fracPdf1BuPartial_(nullptr),
       // -------------------- Bu2Dst0h_WN -------------------- //
       Bu2Dst0h_WN_floatingFracD0pi0_(Params::Get().CreateFloating(
           "Bu2Dst0h_WN_floatingFracD0pi0", uniqueId_, Neutral::pi0, 1, 0, 5)),

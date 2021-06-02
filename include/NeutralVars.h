@@ -195,11 +195,25 @@ class NeutralVars {
   RooRealVar &Bu2Dst0h_D0gamma_WN_fracPdf1Bu() {
     return *Bu2Dst0h_D0gamma_WN_fracPdf1Bu_;
   }
-  RooRealVar &Bu2Dst0h_D0gamma_WN_meanBuPartial() {
-    return *Bu2Dst0h_D0gamma_WN_meanBuPartial_;
+  RooRealVar &Bu2Dst0h_D0gamma_WN_mean1BuPartial() {
+    return *Bu2Dst0h_D0gamma_WN_mean1BuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0gamma_WN_meanOffset21BuPartial() {
+    return *Bu2Dst0h_D0gamma_WN_meanOffset21BuPartial_;
+  }
+  RooFormulaVar &Bu2Dst0h_D0gamma_WN_mean2BuPartial() {
+    return Bu2Dst0h_D0gamma_WN_mean2BuPartial_;
   }
   RooRealVar &Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial() {
     return *Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0gamma_WN_sigmaRatio21BuPartial() {
+    return *Bu2Dst0h_D0gamma_WN_sigmaRatio21BuPartial_;
+  }
+  RooRealVar &Bu2Dst0h_D0gamma_WN_a1BuPartial() { return *Bu2Dst0h_D0gamma_WN_a1BuPartial_; }
+  RooRealVar &Bu2Dst0h_D0gamma_WN_n1BuPartial() { return *Bu2Dst0h_D0gamma_WN_n1BuPartial_; }
+  RooRealVar &Bu2Dst0h_D0gamma_WN_fracPdf1BuPartial() {
+    return *Bu2Dst0h_D0gamma_WN_fracPdf1BuPartial_;
   }
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   RooRealVar &Bu2Dst0h_D0pi0_WN_thresholdDelta() {
@@ -728,8 +742,14 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_a1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_n1Bu_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_fracPdf1Bu_;
-  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_meanBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_mean1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_meanOffset21BuPartial_;
+  RooFormulaVar Bu2Dst0h_D0gamma_WN_mean2BuPartial_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_KpiSigmaBuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_sigmaRatio21BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_a1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_n1BuPartial_;
+  std::shared_ptr<RooRealVar> Bu2Dst0h_D0gamma_WN_fracPdf1BuPartial_;
   // -------------------- Bu2Dst0h_D0pi0_WN -------------------- //
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_thresholdDelta_;
   std::shared_ptr<RooRealVar> Bu2Dst0h_D0pi0_WN_cDelta_;

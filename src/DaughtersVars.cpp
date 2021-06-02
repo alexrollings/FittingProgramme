@@ -21,7 +21,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           0, 2)),
       // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-      //     7.2658e-02, 0., Systematic::NA, Sign::same)),
+      //     8.1e-02, 0., Systematic::NA, Sign::same)),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
       // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
