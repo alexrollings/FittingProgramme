@@ -422,7 +422,7 @@ class Yields {
     return *N_trueId_Delta_Bu2Dst0h_D0gamma_WN_D02pik_;
   }
   RooFormulaVar &N_trueId_Delta_comb() {
-    return N_trueId_Delta_comb_;
+    return *N_trueId_Delta_comb_;
   }
 
   RooFormulaVar &N_trueId_Bu_Bu2Dst0h_D0gamma() {
@@ -459,7 +459,7 @@ class Yields {
     return *N_trueId_Bu_Bu2Dst0h_D0gamma_WN_D02pik_;
   }
   RooFormulaVar &N_trueId_Bu_comb() {
-    return N_trueId_Bu_comb_;
+    return *N_trueId_Bu_comb_;
   }
 
   RooFormulaVar &N_trueId_BuPartial_Bu2Dst0h_D0gamma() {
@@ -499,7 +499,7 @@ class Yields {
     return *N_trueId_BuPartial_Bu2Dst0h_D0pi0_WN_D02pik_;
   }
   RooFormulaVar &N_trueId_BuPartial_comb() {
-    return N_trueId_BuPartial_comb_;
+    return *N_trueId_BuPartial_comb_;
   }
 
   RooFormulaVar &N_misId_Delta_Bu2Dst0h_D0gamma() {
