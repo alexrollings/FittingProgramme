@@ -1811,5 +1811,36 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           // "@0",
           RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
                      *buPartialEffBs2Dst0Kst0_D0pi0_,
-                     buPartialEffBs2Dst0Kst0_WN_)) {}
-// RooArgList(*buPartialEffBs2Dst0Kst0_D0pi0_)) {}
+                     buPartialEffBs2Dst0Kst0_WN_)),
+// RooArgList(*buPartialEffBs2Dst0Kst0_D0pi0_)),
+      // -------------------- Combinatorial -------------------- //
+      comb_lambdaBu_(Params::Get().CreateFloating(
+          "comb_lambdaBu", uniqueId_, Neutral::gamma, -0.0001, -1, 1)),
+      pdfBu_comb_(
+          ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
+          Configuration::Get().buMass(), *comb_lambdaBu_),
+      comb_thresholdDelta_(Params::Get().CreateFixed(
+          "comb_thresholdDelta", uniqueId_, Neutral::gamma,
+          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::comb_PdfDelta, Sign::same)),
+      // comb_aDelta_(Params::Get().CreateFixed(
+      //     "comb_aDelta", uniqueId_, Neutral::gamma, Mode::Bu2Dst0pi_D0gamma_WN,
+      //     Systematic::comb_PdfDelta, Sign::none)),
+      comb_aDelta_(
+          Params::Get().CreateFloating("comb_aDelta", uniqueId_, Neutral::gamma,
+                                       Mode::Bu2Dst0pi_D0gamma_WN, -5, 5)),
+      comb_bDelta_(Params::Get().CreateFixed(
+          "comb_bDelta", uniqueId_, Neutral::gamma, Mode::Bu2Dst0pi_D0gamma_WN,
+          Systematic::comb_PdfDelta, Sign::none)),
+      comb_cDelta_(Params::Get().CreateFixed(
+          "comb_cDelta", uniqueId_, Neutral::gamma, Mode::Bu2Dst0pi_D0gamma_WN,
+          Systematic::comb_PdfDelta, Sign::same)),
+      pdfDelta_comb_(
+          ("pdfDelta_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
+          Configuration::Get().deltaMass(), *comb_thresholdDelta_,
+          *comb_cDelta_, *comb_aDelta_, *comb_bDelta_),
+      buEff_comb_(
+          ("buEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
+          0.5, 0, 1),
+      deltaEff_comb_(
+          ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
+          "1-@0", RooArgSet(buEff_comb_)) {}
