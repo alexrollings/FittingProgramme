@@ -1119,19 +1119,18 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           Configuration::Get().buMass(), *comb_lambdaBu_),
       pdfBuPartial_comb_(),
       comb_thresholdDelta_(Params::Get().CreateFixed(
-          "comb_thresholdDelta", uniqueId_, Neutral::pi0,
-          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::comb_PdfDelta, Sign::same)),
+          "comb_thresholdDelta", uniqueId_, Neutral::pi0, 1.3330e+02, 3.84e-01,
+          Systematic::comb_PdfDelta, Sign::same)),
       // comb_aDelta_(Params::Get().CreateFixed(
-      //     "comb_aDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+      //     "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, 5.62e-01,
       //     Systematic::comb_PdfDelta, Sign::none)),
-      comb_aDelta_(
-          Params::Get().CreateFloating("comb_aDelta", uniqueId_, Neutral::pi0,
-                                       Mode::Bu2Dst0pi_D0pi0_WN, -5, 5)),
+      comb_aDelta_(Params::Get().CreateFloating(
+          "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, -10, 10)),
       comb_bDelta_(Params::Get().CreateFixed(
-          "comb_bDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+          "comb_bDelta", uniqueId_, Neutral::pi0, 3.7473e-01, 4.48e-02,
           Systematic::comb_PdfDelta, Sign::none)),
       comb_cDelta_(Params::Get().CreateFixed(
-          "comb_cDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+          "comb_cDelta", uniqueId_, Neutral::pi0, 1.1119e+01, 0.0,
           Systematic::comb_PdfDelta, Sign::same)),
       pdfDelta_comb_(
           ("pdfDelta_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",

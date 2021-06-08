@@ -1822,23 +1822,23 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
           Configuration::Get().buMass(), *comb_lambdaBu_),
       pdfBuPartial_comb_(
-          ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          Configuration::Get().buMass(), *comb_lambdaBu_),
+          ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().buMass(), *comb_lambdaBu_),
       comb_thresholdDelta_(Params::Get().CreateFixed(
-          "comb_thresholdDelta", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0gamma_WN, Systematic::comb_PdfDelta, Sign::same)),
+          "comb_thresholdDelta", uniqueId_, Neutral::gamma, 5.4357e+01,
+          2.82e+00, Systematic::comb_PdfDelta, Sign::same)),
       // comb_aDelta_(Params::Get().CreateFixed(
       //     "comb_aDelta", uniqueId_, Neutral::gamma,
-      //     Mode::Bu2Dst0pi_D0gamma_WN, Systematic::comb_PdfDelta,
+      //     5.0097e-01, 2.62e-02, Systematic::comb_PdfDelta,
       //     Sign::none)),
-      comb_aDelta_(
-          Params::Get().CreateFloating("comb_aDelta", uniqueId_, Neutral::gamma,
-                                       Mode::Bu2Dst0pi_D0gamma_WN, -5, 5)),
+      comb_aDelta_(Params::Get().CreateFloating(
+          "comb_aDelta", uniqueId_, Neutral::gamma, 5.0097e-01, -5, 5)),
       comb_bDelta_(Params::Get().CreateFixed(
-          "comb_bDelta", uniqueId_, Neutral::gamma, Mode::Bu2Dst0pi_D0gamma_WN,
+          "comb_bDelta", uniqueId_, Neutral::gamma, 5.0097e-01, 2.62e-02,
           Systematic::comb_PdfDelta, Sign::none)),
       comb_cDelta_(Params::Get().CreateFixed(
-          "comb_cDelta", uniqueId_, Neutral::gamma, Mode::Bu2Dst0pi_D0gamma_WN,
+          "comb_cDelta", uniqueId_, Neutral::gamma, 8.2013e+01, 6.34e+00,
           Systematic::comb_PdfDelta, Sign::same)),
       pdfDelta_comb_(
           ("pdfDelta_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(),
