@@ -155,9 +155,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
       //     Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
       Bu2Dst0h_D0pi0_WN_KpiSigmaBu_(Params::Get().CreateFixed(
-          "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_,
-          Neutral::pi0, 1.0423e+00, 8.70e-02,
-          Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
+          "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0423e+00,
+          8.70e-02, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
       // Bu2Dst0h_D0pi0_WN_KpiSigmaBu_(Params::Get().CreateFloating(
       //     "Bu2Dst0h_D0pi0_WN_KpiSigmaBu", uniqueId_, Neutral::pi0, 0.95, 0.8,
       //     1.1)),
@@ -1111,4 +1110,35 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "@2*(1-@0*@1)+@3*@0*@1",
           RooArgList(*Bs2Dst0Kst0_fracWN_, *bkgFracGlobal_WN_,
                      *deltaEffBs2Dst0Kst0_D0pi0_, deltaEffBs2Dst0Kst0_WN_)),
-      buPartialEffBs2Dst0Kst0_() {}
+      buPartialEffBs2Dst0Kst0_(),
+      // -------------------- Combinatorial -------------------- //
+      comb_lambdaBu_(Params::Get().CreateFloating(
+          "comb_lambdaBu", uniqueId_, Neutral::pi0, -0.0001, -1, 1)),
+      pdfBu_comb_(
+          ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
+          Configuration::Get().buMass(), *comb_lambdaBu_),
+      comb_thresholdDelta_(Params::Get().CreateFixed(
+          "comb_thresholdDelta", uniqueId_, Neutral::pi0,
+          Mode::Bu2Dst0pi_D0pi0_WN, Systematic::comb_PdfDelta, Sign::same)),
+      // comb_aDelta_(Params::Get().CreateFixed(
+      //     "comb_aDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+      //     Systematic::comb_PdfDelta, Sign::none)),
+      comb_aDelta_(
+          Params::Get().CreateFloating("comb_aDelta", uniqueId_, Neutral::pi0,
+                                       Mode::Bu2Dst0pi_D0pi0_WN, -5, 5)),
+      comb_bDelta_(Params::Get().CreateFixed(
+          "comb_bDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+          Systematic::comb_PdfDelta, Sign::none)),
+      comb_cDelta_(Params::Get().CreateFixed(
+          "comb_cDelta", uniqueId_, Neutral::pi0, Mode::Bu2Dst0pi_D0pi0_WN,
+          Systematic::comb_PdfDelta, Sign::same)),
+      pdfDelta_comb_(
+          ("pdfDelta_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
+          Configuration::Get().deltaMass(), *comb_thresholdDelta_,
+          *comb_cDelta_, *comb_aDelta_, *comb_bDelta_),
+      buEff_comb_(
+          ("buEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
+          0.5, 0, 1),
+      deltaEff_comb_(
+          ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
+          "1-@0", RooArgSet(buEff_comb_)) {}
