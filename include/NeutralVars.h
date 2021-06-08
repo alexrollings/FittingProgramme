@@ -675,6 +675,9 @@ class NeutralVars {
   RooExponential &pdfBu_comb() {
     return pdfBu_comb_;
   }
+  RooExponential &pdfBuPartial_comb() {
+    return pdfBuPartial_comb_;
+  }
   RooDstD0BG &pdfDelta_comb() {
     return pdfDelta_comb_;
   }
@@ -1093,6 +1096,7 @@ class NeutralVars {
   // -------------------- Combinatorial -------------------- //
   std::shared_ptr<RooRealVar> comb_lambdaBu_;
   RooExponential pdfBu_comb_;
+  RooExponential pdfBuPartial_comb_;
   std::shared_ptr<RooRealVar> comb_thresholdDelta_;
   std::shared_ptr<RooRealVar> comb_aDelta_;
   std::shared_ptr<RooRealVar> comb_bDelta_;

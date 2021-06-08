@@ -1117,6 +1117,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
           Configuration::Get().buMass(), *comb_lambdaBu_),
+      pdfBuPartial_comb_(),
       comb_thresholdDelta_(Params::Get().CreateFixed(
           "comb_thresholdDelta", uniqueId_, Neutral::pi0,
           Mode::Bu2Dst0pi_D0pi0_WN, Systematic::comb_PdfDelta, Sign::same)),
@@ -1139,6 +1140,6 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       buEff_comb_(
           ("buEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
           0.5, 0, 1),
-      deltaEff_comb_(
+      deltaEff_comb_(new RooFormulaVar(
           ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
-          "1-@0", RooArgSet(buEff_comb_)) {}
+          "1-@0", RooArgSet(buEff_comb_))) {}

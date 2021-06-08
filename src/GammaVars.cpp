@@ -1821,6 +1821,9 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
           Configuration::Get().buMass(), *comb_lambdaBu_),
+      pdfBuPartial_comb_(
+          ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
+          Configuration::Get().buMass(), *comb_lambdaBu_),
       comb_thresholdDelta_(Params::Get().CreateFixed(
           "comb_thresholdDelta", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0pi_D0gamma_WN, Systematic::comb_PdfDelta, Sign::same)),
