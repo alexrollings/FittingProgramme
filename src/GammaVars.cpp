@@ -1843,4 +1843,4 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           0.5, 0, 1),
       deltaEff_comb_(
           ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          "1-@0", RooArgSet(buEff_comb_)) {}
+          "1-2*@0", RooArgSet(buEff_comb_)) {}
