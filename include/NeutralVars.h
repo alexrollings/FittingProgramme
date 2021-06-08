@@ -6,6 +6,7 @@
 #include "RooCBShape.h"
 #include "RooDstD0BG.h"
 #include "RooGaussian.h"
+#include "RooExponential.h"
 #include "RooFormulaVar.h"
 #include "RooRealVar.h"
 #include "TChain.h"
@@ -670,6 +671,19 @@ class NeutralVars {
   RooRealVar &BR_pi02gamma_eff() {
     return *BR_pi02gamma_eff_;
   }
+  // -------------------- Combinatorial -------------------- //
+  RooExponential &pdfBu_comb() {
+    return pdfBu_comb_;
+  }
+  RooDstD0BG &pdfDelta_comb() {
+    return pdfDelta_comb_;
+  }
+  RooRealVar &buEff_comb() {
+    return buEff_comb_;
+  }
+  RooFormulaVar &deltaEff_comb() {
+    return deltaEff_comb_;
+  }
 
 
  private:
@@ -1076,6 +1090,16 @@ class NeutralVars {
   RooFormulaVar buEffBs2Dst0Kst0_;
   RooFormulaVar deltaEffBs2Dst0Kst0_;
   RooFormulaVar buPartialEffBs2Dst0Kst0_;
+  // -------------------- Combinatorial -------------------- //
+  std::shared_ptr<RooRealVar> comb_lambdaBu_;
+  RooExponential pdfBu_comb_;
+  std::shared_ptr<RooRealVar> comb_thresholdDelta_;
+  std::shared_ptr<RooRealVar> comb_aDelta_;
+  std::shared_ptr<RooRealVar> comb_bDelta_;
+  std::shared_ptr<RooRealVar> comb_cDelta_;
+  RooDstD0BG pdfDelta_comb_;
+  RooRealVar buEff_comb_;
+  RooFormulaVar deltaEff_comb_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
