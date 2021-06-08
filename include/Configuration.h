@@ -133,6 +133,7 @@ enum class Systematic {
   Bu2Dst0h_WN_misId_Pdfs,
   Bkg_misId_Pdfs,
   D02pik_Pdfs,
+  comb_PdfDelta,
   boxEffs_Bu2Dst0h_D0pi0,
   boxEffs_Bu2Dst0h_D0gamma,
   boxEffs_Bkg,

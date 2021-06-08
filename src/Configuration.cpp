@@ -522,6 +522,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bkg_misId_Pdfs;
   } else if (systematic == "D02pik_Pdfs") {
     return Systematic::D02pik_Pdfs;
+  } else if (systematic == "comb_PdfDelta") {
+    return Systematic::comb_PdfDelta;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0pi0") {
     return Systematic::boxEffs_Bu2Dst0h_D0pi0;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0gamma") {
@@ -756,6 +758,8 @@ std::string EnumToString(Systematic systematic) {
       return "Bkg_misId_Pdfs";
     case Systematic::D02pik_Pdfs:
       return "D02pik_Pdfs";
+    case Systematic::comb_PdfDelta:
+      return "comb_PdfDelta";
     case Systematic::boxEffs_Bu2Dst0h_D0pi0:
       return "boxEffs_Bu2Dst0h_D0pi0";
     case Systematic::boxEffs_Bu2Dst0h_D0gamma:
