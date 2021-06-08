@@ -682,7 +682,7 @@ class NeutralVars {
     return buEff_comb_;
   }
   RooFormulaVar &deltaEff_comb() {
-    return deltaEff_comb_;
+    return *deltaEff_comb_;
   }
 
 
@@ -1099,7 +1099,7 @@ class NeutralVars {
   std::shared_ptr<RooRealVar> comb_cDelta_;
   RooDstD0BG pdfDelta_comb_;
   RooRealVar buEff_comb_;
-  RooFormulaVar deltaEff_comb_;
+  std::unique_ptr<RooFormulaVar> deltaEff_comb_;
 };
 
 // When we DO need to specialize certain cases, we can still do that (see
