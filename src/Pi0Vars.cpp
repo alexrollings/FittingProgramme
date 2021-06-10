@@ -1113,19 +1113,19 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       buPartialEffBs2Dst0Kst0_(),
       // -------------------- Combinatorial -------------------- //
       comb_lambdaBu_(Params::Get().CreateFloating(
-          "comb_lambdaBu", uniqueId_, Neutral::pi0, -0.0001, -1, 1)),
+          "comb_lambdaBu", uniqueId_, Neutral::pi0, -0.002, -0.1, -1e-10)),
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
-          Configuration::Get().buMass(), *comb_lambdaBu_),
+          Configuration::Get().buDeltaMass(), *comb_lambdaBu_),
       pdfBuPartial_comb_(),
       comb_thresholdDelta_(Params::Get().CreateFixed(
           "comb_thresholdDelta", uniqueId_, Neutral::pi0, 1.3330e+02, 3.84e-01,
           Systematic::comb_PdfDelta, Sign::same)),
-      // comb_aDelta_(Params::Get().CreateFixed(
-      //     "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, 5.62e-01,
-      //     Systematic::comb_PdfDelta, Sign::none)),
-      comb_aDelta_(Params::Get().CreateFloating(
-          "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, -10, 10)),
+      comb_aDelta_(Params::Get().CreateFixed(
+          "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, 5.62e-01,
+          Systematic::comb_PdfDelta, Sign::none)),
+      // comb_aDelta_(Params::Get().CreateFloating(
+      //     "comb_aDelta", uniqueId_, Neutral::pi0, -5.7209e+00, -10, 10)),
       comb_bDelta_(Params::Get().CreateFixed(
           "comb_bDelta", uniqueId_, Neutral::pi0, 3.7473e-01, 4.48e-02,
           Systematic::comb_PdfDelta, Sign::none)),
@@ -1138,7 +1138,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           *comb_cDelta_, *comb_aDelta_, *comb_bDelta_),
       buEff_comb_(
           ("buEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
-          0.5, 0, 1),
+          0.2, 0, 1),
       deltaEff_comb_(new RooFormulaVar(
           ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
           "1-@0", RooArgSet(buEff_comb_))) {}
