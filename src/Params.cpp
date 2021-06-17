@@ -115,7 +115,7 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
                       bachStr;
   if ((mode == Mode::Bu2D0rho && bachelor == Bachelor::pi) ||
-      (mode == Mode::Bu2D0Kst && bachelor == Bachelor::K)) {
+      (mode == Mode::Bu2D0Kst && bachelor == Bachelor::k)) {
     fname += "_weights";
   }
   fname += ".root";
