@@ -115,7 +115,7 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
       Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
       bachStr;
-  if (mode == Mode::Bu2D0rho) {
+  if (mode == Mode::Bu2D0rho && bachelor == Bachelor::pi) {
     fname += "_weights";
   }
   fname += ".root";
