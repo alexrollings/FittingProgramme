@@ -114,7 +114,11 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   std::string fname =
       Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
       EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
-      bachStr + ".root";
+      bachStr;
+  if (mode == Mode::Bu2D0rho) {
+    fname += "_weights";
+  }
+  fname += ".root";
   auto file = std::unique_ptr<TFile>(TFile::Open(fname.c_str()));
   if (file == nullptr) {
     throw std::runtime_error(fname + " does not exist\n");

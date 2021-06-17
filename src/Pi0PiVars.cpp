@@ -470,12 +470,12 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       misId_Bd2Dsth_n1BuPartial_(nullptr),
       pdfBuPartial_misId_Bd2Dsth_(),
       // -------------------- Bu2D0hst -------------------- //
-      // Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
-      //     "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
-      //     Mode::Bu2D0rho, Systematic::Bu2D0hst_PdfBu, Sign::same)),
       Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          8.0894e+01, 3.47e+00, Systematic::Bu2D0hst_PdfBu, Sign::same)),
+          Mode::Bu2D0rho, Systematic::Bu2D0hst_PdfBu, Sign::same)),
+      // Bu2D0hst_sigma1Bu_(Params::Get().CreateFixed(
+      //     "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
+      //     8.0894e+01, 3.47e+00, Systematic::Bu2D0hst_PdfBu, Sign::same)),
       // Bu2D0hst_sigma1Bu_(Params::Get().CreateFloating(
       //     "Bu2D0hst_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
       //     Mode::Bu2D0rho, 65, 95)),
