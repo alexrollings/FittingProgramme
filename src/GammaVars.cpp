@@ -580,10 +580,17 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                                    "", Configuration::Get().deltaMass(),
                                    *Bu2Dst0hst_D0gamma_meanDelta_,
                                    *Bu2Dst0hst_D0gamma_sigmaDelta_),
+      // Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFixed(
+      //     "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+      //     Sign::same)),
+      // Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFloating(
+      //     "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
+      //     Mode::Bu2Dst0rho_D0gamma, 5100, 5130)),
       Bu2Dst0hst_D0gamma_mean1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_mean1Bu", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
-          Sign::same)),
+          5.1037e+03, 20, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+          Sign::same)), // 1.76e+00
       Bu2Dst0hst_D0gamma_meanOffset21Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_meanOffset21Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
@@ -618,10 +625,17 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           "Bu2Dst0hst_D0gamma_n2Bu", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
           Sign::same)),
+      // Bu2Dst0hst_D0gamma_fracPdf1Bu_(Params::Get().CreateFixed(
+      //     "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId, Neutral::gamma,
+      //     Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+      //     Sign::same)),
+      // Bu2Dst0hst_D0gamma_fracPdf1Bu_(Params::Get().CreateFloating(
+      //     "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId, Neutral::gamma,
+      //     Mode::Bu2Dst0rho_D0gamma, 0, 1)),
       Bu2Dst0hst_D0gamma_fracPdf1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_fracPdf1Bu", uniqueId, Neutral::gamma,
-          Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
-          Sign::same)),
+          5.7343e-01, 0.2, Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+          Sign::same)), //2.63e-02
       Bu2Dst0hst_D0gamma_meanBuPartial_(Params::Get().CreateFixed(
           "Bu2Dst0hst_D0gamma_meanBuPartial", uniqueId_, Neutral::gamma,
           Mode::Bu2Dst0rho_D0gamma, Systematic::Bu2Dst0hst_D0gamma_PdfBuPartial,
