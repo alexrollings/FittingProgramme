@@ -662,12 +662,6 @@ class NeutralBachelorDaughtersVars {
   RooAbsReal &N_tot_Bs2Dst0Kst0() { return *impl_.N_tot_Bs2Dst0Kst0_; }
   RooAbsReal &N_tot_Bs2D0Kst0() { return *impl_.N_tot_Bs2D0Kst0_; }
 
-  std::shared_ptr<RooRealVar> &Bu2D0hst_mean1Bu_GetPointer() {
-    return impl_.Bu2D0hst_mean1Bu_;
-  }
-  std::shared_ptr<RooRealVar> &Bu2D0hst_sigma1Bu_GetPointer() {
-    return impl_.Bu2D0hst_sigma1Bu_;
-  }
   RooCBShape &pdf1Bu_Bu2D0hst() { return *impl_.pdf1Bu_Bu2D0hst_; }
   RooGaussian &pdf2Bu_Bu2D0hst() { return *impl_.pdf2Bu_Bu2D0hst_; }
   RooAbsPdf &pdfBu_Bu2D0hst() { return *impl_.pdfBu_Bu2D0hst_; }
