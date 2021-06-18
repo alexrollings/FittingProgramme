@@ -236,6 +236,9 @@ class NeutralBachelorVars {
   RooRealVar &buEffBu2Dst0h_D0gamma() {
     return *buEffBu2Dst0h_D0gamma_;
   }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_GetPointer() {
+    return buEffBu2Dst0h_D0gamma_;
+  }
   RooRealVar &buEffBu2Dst0h_D0pi0() {
     return *buEffBu2Dst0h_D0pi0_;
   }
@@ -245,8 +248,14 @@ class NeutralBachelorVars {
   RooRealVar &buEffBu2Dst0h_D0gamma_WN() {
     return *buEffBu2Dst0h_D0gamma_WN_;
   }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return buEffBu2Dst0h_D0gamma_WN_;
+  }
   RooRealVar &buEffBu2Dst0h_D0pi0_WN() {
     return *buEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return buEffBu2Dst0h_D0pi0_WN_;
   }
   RooRealVar &buEffBd2Dsth() {
     return *buEffBd2Dsth_;
@@ -293,11 +302,20 @@ class NeutralBachelorVars {
   RooRealVar &buPartialEffBu2Dst0h_D0pi0() {
     return *buPartialEffBu2Dst0h_D0pi0_;
   }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_GetPointer() {
+    return buPartialEffBu2Dst0h_D0pi0_;
+  }
   RooRealVar &buPartialEffBu2Dst0h_D0gamma_WN() {
     return *buPartialEffBu2Dst0h_D0gamma_WN_;
   }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return buPartialEffBu2Dst0h_D0gamma_WN_;
+  }
   RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() {
     return *buPartialEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return buPartialEffBu2Dst0h_D0pi0_WN_;
   }
   RooRealVar &buPartialEffBd2Dsth() {
     return *buPartialEffBd2Dsth_;
