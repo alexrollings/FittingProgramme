@@ -59,6 +59,7 @@ class FixedParameter {
   bool sym() { return sym_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
+  void AdjustBoxEffErr();
   void Randomise(TRandom3 &random);
 
  private:

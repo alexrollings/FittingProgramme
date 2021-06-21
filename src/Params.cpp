@@ -21,6 +21,28 @@ RooFormulaVar *MakeLittleAsym(const char *name, RooAbsReal &bigAsym) {
   return new RooFormulaVar(name, "", "(1+@0)/(1-@0)", RooArgSet(bigAsym));
 }
 
+void FixedParameter::AdjustBoxEffErr() {
+  // Efficiencies have symmetric errors
+  std::smatch effMatch;
+  static const std::regex effRgx("(or|delta|bu|buPartial)Eff\\S+");
+  if (std::regex_match(name_, effMatch, effRgx)) {
+    double std_tmp = std_pos_;
+    double scale = 0.03;
+    std::smatch modeMatch;
+    static const std::regex modeRgx(
+        "deltaEff(Bu2D0hst|Bu2Dst0hst|Bs2D0Kst0|Bs2Dst0Kst0)\\S+");
+    if (std::regex_match(name_, modeMatch, modeRgx)) {
+      scale = 0.1;
+    }
+    std::cout << mean_ << "\n";
+    if (std_tmp < mean_ * scale) {
+      std_tmp = mean_ * scale;
+    }
+    std_pos_ = std_tmp;
+    std_neg_ = std_tmp;
+  }
+}
+
 void FixedParameter::Randomise(TRandom3 &random) {
   std::cout << "\n\n--------------------------------------------------------------\n";
   std::cout << "FixedParameter::Randomise\n";
@@ -29,6 +51,7 @@ void FixedParameter::Randomise(TRandom3 &random) {
   static const std::regex pattern("\\S+Eff\\S+");
   if (std::regex_match(name_, match, pattern)) {
     std::cout << "0 < Efficiency < 1\n";
+    AdjustBoxEffErr();
     if (std_pos_ == std_neg_) {
       std = std_pos_;
       std::cout << "std = " << std << "\n";
