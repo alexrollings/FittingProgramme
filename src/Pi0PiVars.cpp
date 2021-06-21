@@ -713,21 +713,21 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       buEffBu2D0hst_(Params::Get().CreateFixed(
           "buEffBu2D0hst_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::buEff, false),
-          0.1*ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::buEffErr, false),
           Systematic::boxEffs_Bkg, Sign::same)),
       buEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
           "buEffBu2Dst0hst_D0gamma_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0rho_D0gamma, Bachelor::pi,
                         Efficiency::buEff, false),
-          0.1*ReturnBoxEffs(Mode::Bu2Dst0rho_D0gamma, Bachelor::pi,
-                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0rho_D0gamma, Bachelor::pi,
+                        Efficiency::buEffErr, false),
           Systematic::boxEffs_Bkg, Sign::same)),
       buEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
           "buEffBu2Dst0hst_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi, Efficiency::buEff,
                         false),
-          0.1*ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
-                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0rho_D0pi0, Bachelor::pi,
+                        Efficiency::buEffErr, false),
           Systematic::boxEffs_Bkg, Sign::same)),
       deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
