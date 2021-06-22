@@ -827,10 +827,10 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       Bs2D0Kst0_n1Bu_(Params::Get().CreateFixed(
           "Bs2D0Kst0_n1Bu", uniqueId_, Neutral::gamma, Mode::Bs2D0Kst0,
           Systematic::Bs2D0Kst0_PdfBu, Sign::same)),
-      pdfBu_Bs2D0Kst0_(
+      pdfBu_Bs2D0Kst0_(new RooCBShape(
           ("pdfBu_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(),
           "", Configuration::Get().buDeltaMass(), *Bs2D0Kst0_meanBu_,
-          *Bs2D0Kst0_sigmaBu_, *Bs2D0Kst0_a1Bu_, *Bs2D0Kst0_n1Bu_),
+          *Bs2D0Kst0_sigmaBu_, *Bs2D0Kst0_a1Bu_, *Bs2D0Kst0_n1Bu_)),
       Bs2D0Kst0_mean1BuPartial_(Params::Get().CreateFixed(
           "Bs2D0Kst0_mean1BuPartial", uniqueId_, Neutral::gamma,
           Mode::Bs2D0Kst0, Systematic::Bs2D0Kst0_PdfBuPartial, Sign::same)),

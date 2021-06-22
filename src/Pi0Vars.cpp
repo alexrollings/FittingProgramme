@@ -464,16 +464,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2D0Kst0_sigmaBu_(Params::Get().CreateFixed(
           "Bs2D0Kst0_sigmaBu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kst0,
           Systematic::Bs2D0Kst0_PdfBu, Sign::same)),
-      Bs2D0Kst0_a1Bu_(Params::Get().CreateFixed(
-          "Bs2D0Kst0_a1Bu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kst0,
-          Systematic::Bs2D0Kst0_PdfBu, Sign::none)),
-      Bs2D0Kst0_n1Bu_(Params::Get().CreateFixed(
-          "Bs2D0Kst0_n1Bu", uniqueId_, Neutral::pi0, Mode::Bs2D0Kst0,
-          Systematic::Bs2D0Kst0_PdfBu, Sign::same)),
-      pdfBu_Bs2D0Kst0_(
+      Bs2D0Kst0_a1Bu_(nullptr),
+      Bs2D0Kst0_n1Bu_(nullptr),
+      pdfBu_Bs2D0Kst0_(new RooGaussian(
           ("pdfBu_Bs2D0Kst0_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().buDeltaMass(), *Bs2D0Kst0_meanBu_,
-          *Bs2D0Kst0_sigmaBu_, *Bs2D0Kst0_a1Bu_, *Bs2D0Kst0_n1Bu_),
+          *Bs2D0Kst0_sigmaBu_)),
       Bs2D0Kst0_mean1BuPartial_(nullptr),
       Bs2D0Kst0_meanOffset21BuPartial_(nullptr),
       Bs2D0Kst0_mean2BuPartial_(),
