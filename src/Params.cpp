@@ -30,7 +30,7 @@ void FixedParameter::AdjustBoxEffErr() {
     double scale = 0.03;
     std::smatch modeMatch;
     static const std::regex modeRgx(
-        "deltaEff(Bu2D0hst|Bu2Dst0hst|Bs2D0Kst0|Bs2Dst0Kst0)\\S+");
+        "deltaEff(Bu2D0hst|Bu2Dst0hst|Bs2Dst0Kst0)\\S+");
     if (std::regex_match(name_, modeMatch, modeRgx)) {
       scale = 0.1;
     }
