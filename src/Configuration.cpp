@@ -331,6 +331,16 @@ Mode StringToEnum<Mode>(std::string const &mode) {
     return Mode::Bs2Dst0Kst0_D0pi0_WN;
   } else if (mode == "Bs2Dst0Kst0_D0gamma_WN") {
     return Mode::Bs2Dst0Kst0_D0gamma_WN;
+  } else if (mode == "Bs2Dst0Kpi") {
+    return Mode::Bs2Dst0Kpi;
+  } else if (mode == "Bs2Dst0Kpi_D0pi0") {
+    return Mode::Bs2Dst0Kpi_D0pi0;
+  } else if (mode == "Bs2Dst0Kpi_D0gamma") {
+    return Mode::Bs2Dst0Kpi_D0gamma;
+  } else if (mode == "Bs2Dst0Kpi_D0pi0_WN") {
+    return Mode::Bs2Dst0Kpi_D0pi0_WN;
+  } else if (mode == "Bs2Dst0Kpi_D0gamma_WN") {
+    return Mode::Bs2Dst0Kpi_D0gamma_WN;
   } else if (mode == "Bs2D0Kst0") {
     return Mode::Bs2D0Kst0;
   } else if (mode == "Bd2Dstpi") {
@@ -1054,6 +1064,21 @@ std::string EnumToString(Mode mode) {
       break;
     case Mode::Bs2Dst0Kst0_D0pi0_WN:
       return "Bs2Dst0Kst0_D0pi0_WN";
+      break;
+    case Mode::Bs2Dst0Kpi:
+      return "Bs2Dst0Kpi";
+      break;
+    case Mode::Bs2Dst0Kpi_D0gamma:
+      return "Bs2Dst0Kpi_D0gamma";
+      break;
+    case Mode::Bs2Dst0Kpi_D0pi0:
+      return "Bs2Dst0Kpi_D0pi0";
+      break;
+    case Mode::Bs2Dst0Kpi_D0gamma_WN:
+      return "Bs2Dst0Kpi_D0gamma_WN";
+      break;
+    case Mode::Bs2Dst0Kpi_D0pi0_WN:
+      return "Bs2Dst0Kpi_D0pi0_WN";
       break;
     case Mode::Bd2Dstpi:
       return "Bd2Dstpi";
