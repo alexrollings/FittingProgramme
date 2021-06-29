@@ -134,9 +134,15 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
   if (bachelor == Bachelor::k) {
     bachStr = "K";
   }
-  std::string fname = Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
-                      EnumToString(neutral) + "_" + EnumToString(mode) + "_" +
-                      bachStr;
+  std::string fname;
+  if (mode == Mode::Bs2Dst0Kst0_D0pi0 || mode == Mode::Bs2Dst0Kst0_D0gamma) {
+    fname = Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
+            EnumToString(neutral) + "_" + EnumToString(mode) + "_" + bachStr +
+            "_" + to_string_with_precision(Configuration::Get().fracKst0(), 1);
+  } else {
+    fname = Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
+            EnumToString(neutral) + "_" + EnumToString(mode) + "_" + bachStr;
+  }
   if ((mode == Mode::Bu2D0rho && bachelor == Bachelor::pi) ||
       (mode == Mode::Bu2D0Kst && bachelor == Bachelor::k)) {
     fname += "_weights";
