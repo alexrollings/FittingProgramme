@@ -508,10 +508,10 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bs2Dst0Kst0_Frac;
   } else if (systematic == "Bs2Dst0Kst0_PdfDelta") {
     return Systematic::Bs2Dst0Kst0_PdfDelta;
-  } else if (systematic == "Bs2Dst0Kst0_PdfBu") {
-    return Systematic::Bs2Dst0Kst0_PdfBu;
-  } else if (systematic == "Bs2Dst0Kst0_PdfBuPartial") {
-    return Systematic::Bs2Dst0Kst0_PdfBuPartial;
+  } else if (systematic == "Bs2Dst0Kst0") {
+    return Systematic::Bs2Dst0Kst0;
+  } else if (systematic == "Bs2Dst0Kst0_WN") {
+    return Systematic::Bs2Dst0Kst0_WN;
   } else if (systematic == "Bs2D0Kst0_PdfDelta") {
     return Systematic::Bs2D0Kst0_PdfDelta;
   } else if (systematic == "Bs2D0Kst0_PdfBu") {
@@ -744,10 +744,10 @@ std::string EnumToString(Systematic systematic) {
       return "Bs2Dst0Kst0_Frac";
     case Systematic::Bs2Dst0Kst0_PdfDelta:
       return "Bs2Dst0Kst0_PdfDelta";
-    case Systematic::Bs2Dst0Kst0_PdfBu:
-      return "Bs2Dst0Kst0_PdfBu";
-    case Systematic::Bs2Dst0Kst0_PdfBuPartial:
-      return "Bs2Dst0Kst0_PdfBuPartial";
+    case Systematic::Bs2Dst0Kst0:
+      return "Bs2Dst0Kst0";
+    case Systematic::Bs2Dst0Kst0_WN:
+      return "Bs2Dst0Kst0_WN";
     case Systematic::Bs2D0Kst0_PdfDelta:
       return "Bs2D0Kst0_PdfDelta";
     case Systematic::Bs2D0Kst0_PdfBu:
