@@ -578,6 +578,11 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bs2Dst0Kst0_D0pi0_sigmaBuPartial_(nullptr),
       Bs2Dst0Kst0_D0pi0_a1BuPartial_(nullptr),
       Bs2Dst0Kst0_D0pi0_n1BuPartial_(nullptr),
+      Bs2Dst0Kst0_D0pi0_a2BuPartial_(nullptr),
+      Bs2Dst0Kst0_D0pi0_n2BuPartial_(nullptr),
+      pdf1BuPartial_Bs2Dst0Kst0_D0pi0_(),
+      pdf2BuPartial_Bs2Dst0Kst0_D0pi0_(),
+      Bs2Dst0Kst0_D0pi0_fracPdf1BuPartial_(nullptr),
       pdfBuPartial_Bs2Dst0Kst0_D0pi0_(),
       mcEff_Bs2Dst0Kst0_D0pi0_(Params::Get().CreateFixed(
           "mcEff_Bs2Dst0Kst0_D0pi0", uniqueId_, Neutral::pi0,
