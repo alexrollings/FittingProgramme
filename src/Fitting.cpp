@@ -349,7 +349,7 @@ int main(int argc, char **argv) {
       }
       if (args("nCPU", nCPUArg)) {
         std::cout << "Setting nCPU to " << nCPUArg << "\n";
-        config.nCPU_ = nCPUArg;
+        config.SetNCPU(nCPUArg);
       }
       // Year
       // args matches "year" to string given in command line and assigns
@@ -426,12 +426,26 @@ int main(int argc, char **argv) {
       } else {
         std::cout << "Running systematics.\n";
         config.runSystematics() = true;
-        config.nCPU_ = 1;
+        config.SetNCPU(1);
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
           std::cerr << "systematic assignment failed, please specify.\n";
           return 1;
+        }
+        if (std::find(systematicVec.begin(), systematicVec.end(),
+                      Systematic::Bs2Dst0Kst0) != systematicVec.end()) {
+          config.runBsSystematic() = true;
+          float fracKst0Arg;
+          if (!args("fracKst0", fracKst0Arg)) {
+            std::cerr
+                << "Must pass -fracKst0=<float> to run Bs2Dst0Kst0 systematic.\n";
+            return 1;
+          } else {
+            config.SetFracKst0(fracKst0Arg);
+          }
+          config.runSystematics() = false;
+          std::cout << "Running systematics for Bs2Dst0Kst0: only run this!\n";
         }
         if (!args("nSyst", nSystArg)) {
           std::cout << "Running 1 systematic fit.\n";

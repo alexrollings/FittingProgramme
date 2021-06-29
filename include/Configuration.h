@@ -283,19 +283,12 @@ class Configuration {
   bool &plotToys() { return plotToys_; }
   bool &simpleFit() { return simpleFit_; }
   int nCPU() { return nCPU_; }
+  void SetNCPU(int val) { nCPU_ = val; }
+    
+  bool &runBsSystematic() {  return runBsSystematic_; }
+  float fracKst0() { return fracKst0_; }
+  void SetFracKst0(float val) { fracKst0_ = val; }
 
-  // Want to set in Fitting
-  bool fit1D_;
-  bool runToy_;
-  bool splitByCharge_;
-  bool noFit_;
-  bool fitBuPartial_;
-  bool blindFit_;
-  bool runSystematics_;
-  bool runADS_;
-  bool plotToys_;
-  bool simpleFit_;
-  int nCPU_;
 
  private:
   Configuration();
@@ -340,6 +333,22 @@ class Configuration {
   float deltaPartialHigh_;
   std::string gammaCutString_;
   std::string pi0CutString_;
+
+  // Want to set in Fitting
+  bool fit1D_;
+  bool runToy_;
+  bool splitByCharge_;
+  bool noFit_;
+  bool fitBuPartial_;
+  bool blindFit_;
+  bool runSystematics_;
+  bool runADS_;
+  bool plotToys_;
+  bool simpleFit_;
+  int nCPU_;
+
+  bool runBsSystematic_;
+  float fracKst0_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
@@ -386,6 +395,7 @@ std::string ReturnLaTeXLabel(Mode, Charge, bool);
 std::string ReturnLaTeXLabel(std::string paramStr);
 
 std::string to_string_with_precision(double value, int precision);
+std::string to_string_with_precision(float value, int precision);
 bool fexists(std::string const &filename);
 std::vector<std::string> SplitLine(std::string const &str);
 enum class ReturnType { val, std, stdL, stdH };

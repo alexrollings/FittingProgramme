@@ -52,7 +52,9 @@ Configuration::Configuration()
       runADS_(false),
       plotToys_(false),
       simpleFit_(false),
-      nCPU_(4) {
+      nCPU_(4),
+      runBsSystematic_(false),
+      fracKst0_(0.8) {
   // k_A_CP_Bu2Dst0K_D0pi0_D02kpi(),
   // k_A_CP_Bu2Dst0K_D0gamma_D02kpi(),
   // k_A_CP_Bu2Dst0K_D0pi0_D02hh(),
@@ -254,6 +256,11 @@ std::string to_string_with_precision(double value, int precision) {
   return out.str();
 }
 
+std::string to_string_with_precision(float value, int precision) {
+  std::ostringstream out;
+  out << std::fixed << std::setprecision(precision) << value;
+  return out.str();
+}
 
 bool fexists(const std::string &name) {
   std::ifstream infile(name);
