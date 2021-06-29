@@ -286,8 +286,8 @@ class Configuration {
   void SetNCPU(int val) { nCPU_ = val; }
     
   bool &runBsSystematic() {  return runBsSystematic_; }
-  float fracKst0() { return fracKst0_; }
-  void SetFracKst0(float val) { fracKst0_ = val; }
+  double fracKst0() { return fracKst0_; }
+  void SetFracKst0(double val) { fracKst0_ = val; }
 
 
  private:
@@ -348,7 +348,7 @@ class Configuration {
   int nCPU_;
 
   bool runBsSystematic_;
-  float fracKst0_;
+  double fracKst0_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);

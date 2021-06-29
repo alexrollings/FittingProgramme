@@ -256,12 +256,6 @@ std::string to_string_with_precision(double value, int precision) {
   return out.str();
 }
 
-std::string to_string_with_precision(float value, int precision) {
-  std::ostringstream out;
-  out << std::fixed << std::setprecision(precision) << value;
-  return out.str();
-}
-
 bool fexists(const std::string &name) {
   std::ifstream infile(name);
   return infile.good();
