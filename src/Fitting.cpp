@@ -442,10 +442,13 @@ int main(int argc, char **argv) {
                 << "Must pass -fracKst0=<float> to run Bs2Dst0Kst0 systematic.\n";
             return 1;
           } else {
-            config.SetFracKst0(fracKst0Arg);
+            double fracKst0Double = round((double)fracKst0Arg * 10)/10;
+            config.SetFracKst0(fracKst0Double);
           }
           config.runSystematics() = false;
-          std::cout << "Running systematics for Bs2Dst0Kst0: only run this!\n";
+          std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
+                       "with fracKst0 = "
+                    << config.fracKst0() << "\n";
         }
         if (!args("nSyst", nSystArg)) {
           std::cout << "Running 1 systematic fit.\n";
