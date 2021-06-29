@@ -712,9 +712,13 @@ int main(int argc, char **argv) {
   if (config.noFit() == false && config.runSystematics() == false) {
     // Strategy(2) requires evaluation of hessian at every step: can set
     // strategy 0 then call MINOS after to calculate correct errors
+    int nStrat = 2;
+    if (config.runBsSystematic() == true) {
+      nStrat = 1;
+    }
     dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
         *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
+        RooFit::Strategy(nStrat), RooFit::Minimizer("Minuit2"),
         // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
         // RooFit::Minos(kTRUE)));
         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
@@ -896,10 +900,18 @@ int main(int argc, char **argv) {
         PlotCorrelations(dataFitResult.get(), outputDir, config);
         // Save RFR of data and efficiencies to calculate observables with
         // corrected errors
-        TFile outputFile((outputDir + "/results/DataResult_" +
-                          config.ReturnBoxString() + ".root")
-                             .c_str(),
-                         "recreate");
+        std::string outFname;
+        if (config.runBsSystematic() == true) {
+          outFname = outputDir + "/results/SystResult_" +
+                     config.ReturnBoxString() + "_" +
+                     EnumToString(Systematic::Bs2Dst0Kst0) + "_" +
+                     to_string_with_precision(config.fracKst0(), 1) + ".root";
+          dataFitResult->SetName("SystResult");
+        } else {
+          outFname = outputDir + "/results/DataResult_" +
+                     config.ReturnBoxString() + ".root";
+        }
+        TFile outputFile(outFname.c_str(), "recreate");
         dataFitResult->Write();
         TTree tree("tree", "");
         if (config.neutral() == Neutral::pi0 ||
