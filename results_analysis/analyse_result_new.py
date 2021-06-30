@@ -29,9 +29,9 @@ def PrintFitStatus(fit_status):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-r',
-                      '--result',
+                      '--result_dir',
                       type=str,
-                      help='Data fit result',
+                      help='Directory where data fit result and Bs systematics are stored (if running systematics)',
                       required=True)
   parser.add_argument('-p',
                       '--pull_fname',
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                       action='store_true',
                       required=False)
   args = parser.parse_args()
-  result = args.result
+  result_dir = args.result_dir
   syst_dir = args.syst_dir
   pull_fname = args.pull_fname
   neutral = args.neutral
@@ -83,6 +83,7 @@ if __name__ == '__main__':
     box_str = '138_148_5220_5330'
   else:
     box_str = '60_105_125_170_5240_5320'
+  result = f'{result_dir}/DataResult_{box_str}.root'
 
   # Observables we are interested have this stem (match with regex)
   # Include BR in order to calc gamma π0 FAV yield
@@ -230,8 +231,59 @@ if __name__ == '__main__':
           total_syst_dict[p][
               g_err_corr] = rms * fit_result[p]['Statistical Error']
 
-
+  final_groups = []
+  max_systs = {}
   if eval_systs == True:
+    g_err_Bs = 'Bs Systematic'
+    fracs = ['0.7', '0.9']
+    systBs_dict = {}
+    eval_Bs_syst = False
+    for frac in fracs:
+      result_Bs = f'{result_dir}/SystResult_{box_str}_Bs2Dst0Kst0_{frac}.root'
+      if not os.path.isfile(result_Bs):
+        print(f'{result_Bs} does not exist')
+        continue
+      Bs_file = TFile(result_Bs)
+      Bs_result = Bs_file.Get('SystResult')
+      if Bs_result == None:
+        print(f'{Bs_file} does not contain SystResult')
+        continue
+      covQual = Bs_result.covQual()
+      fitStatus = Bs_result.status()
+      if covQual < 2:
+        print(f'{Bs_file} SystResult unconverged')
+        continue
+      elif covQual < 3:
+        print(f'{Bs_file} SystResult FPD')
+        continue
+      elif fitStatus != 0:
+        print(f'{Bs_file} SystResult has MINOS errors')
+        continue
+      elif (covQual >= 3 and fitStatus == 0):
+        eval_Bs_syst = True
+        for par in Bs_result.floatParsFinal():
+          par_name = par.GetName()[:-2]
+          if par_name in fit_result:
+            par_Bs = par.getVal()
+            par_og = fit_result[par_name]['Value']
+            if par_name in systBs_dict:
+              systBs_dict[par_name][frac] = abs(par_Bs - par_og)
+            else:
+              systBs_dict[par_name] = { frac : abs(par_Bs - par_og) }
+
+    if eval_Bs_syst == True:
+      group = {'final': return_final_group(g_err_Bs), 'breakdown': return_group_breakdown(g_err_Bs)}
+      if return_final_group(g_err_Bs) not in final_groups:
+        final_groups.append(return_final_group(g_err_Bs))
+      for g in group_dict:
+        for p, v in group_dict[g].items():
+          systBs = 0.
+          for f in fracs:
+            if systBs_dict[p][f] > systBs:
+              systBs = systBs_dict[p][f]
+          v[group[g]] = systBs**2
+          total_syst_dict[p][g_err_Bs] = systBs
+
     # If json already exists for formatted systs, load this
     json_fname_format = f'{syst_dir}/systematics_{neutral}_format.json'
     if os.path.exists(json_fname_format) and remake == False:
@@ -304,12 +356,9 @@ if __name__ == '__main__':
     # Calculate individual systematic errors from std dev of arrays in syst_dict
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
     # Dict to store dominant syst labels
-    final_groups = []
-    max_systs = {}
     for par, syst_arr in syst_dict.items():
       max_systs[par] = {'label': None, 'group': None}
       n_syst = len(syst_arr)
-      tot_syst = 0
       for syst_label, arr in syst_arr.items():
         arr2d = np.array(arr)
         np_arr = np.asarray(arr2d[0:, 0], dtype=np.float32)
@@ -365,7 +414,6 @@ if __name__ == '__main__':
         # #   print((init - final)*100 / init)
         std = np.std(np_arr)
         total_syst_dict[par][syst_label] = std
-        tot_syst += std**2
         # Grouping errors
         group = {'final': return_final_group(syst_label), 'breakdown': return_group_breakdown(syst_label)}
         for g in group_dict:
@@ -375,9 +423,6 @@ if __name__ == '__main__':
             group_dict[g][par][group[g]] = std**2
         if group['final'] not in final_groups:
           final_groups.append(group['final'])
-      # Could calculate final syst from either group
-      tot_syst += group_dict['final'][par][g_err_corr]**2
-      fit_result[par]['Systematic Error'] = tot_syst**0.5
       max_systs[par]['label'] = max(total_syst_dict[par].items(),
                                     key=operator.itemgetter(1))[0]
       for g in group_dict:
@@ -388,7 +433,15 @@ if __name__ == '__main__':
       # Calculate max systs in breakdown
       max_systs[par]['group'] = max(group_dict['breakdown'][par].items(),
                                     key=operator.itemgetter(1))[0]
-    print(final_groups)
+
+    for p in group_dict['final']:
+      tot_syst = 0
+      for f in final_groups:
+        # print(f)
+        # print(group_dict['final'][p][f])
+        tot_syst += group_dict['final'][p][f]**2
+        # print(tot_syst)
+      fit_result[p]['Systematic Error'] = tot_syst**0.5
 
     # Separate tables for yields, ratios and asymmetries
     title_str = {'N': '', 'R': '', 'A': ''}
@@ -557,7 +610,8 @@ if __name__ == '__main__':
     title_str = 'Observable'
     for group in sorted(final_groups):
       title_str = title_str + ' & {' + group + '}'
-    title_str = title_str + ' & {' + return_final_group(g_err_corr) + '} & {Total} \\\\ \\hline\n'
+    title_str = title_str + ' & {' + return_final_group(
+            g_err_corr) + ' & {Total} \\\\ \\hline\n'
     row_arr = []
     i = 0
     for par, g_err in group_dict['final'].items():
@@ -567,6 +621,9 @@ if __name__ == '__main__':
         err = (g_err[group]/stat_err)*100
         err_str = f' & {err:.2f}'
         row_arr[i] = row_arr[i] + err_str
+      # err = (g_err[g_err_Bs]/stat_err)*100
+      # err_str = f' & {err:.2f}'
+      # row_arr[i] = row_arr[i] + err_str
       err = (g_err[g_err_corr]/stat_err)*100
       err_str = f' & {err:.2f}'
       row_arr[i] = row_arr[i] + err_str
