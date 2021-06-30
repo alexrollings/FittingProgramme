@@ -316,49 +316,53 @@ if __name__ == '__main__':
         seed_arr = arr2d[0:, 1]
         val = fit_result[par]['Value']
         stat = fit_result[par]['Statistical Error']
-        init = len(np_arr)
+        # init = len(np_arr)
         up = val + 3 * stat
         down = val - 3 * stat
-        idxs_down = np.where(np_arr < down)
-        idxs_up = np.where(np_arr > up)
-        np_arr = np_arr[np_arr > down]
-        np_arr = np_arr[np_arr < up]
-        final = len(np_arr)
-        # if syst_label == 'Bu2D0hst_PdfBu':
-        if syst_label == 'Bs2D0Kst0_PdfDelta':
-          t_df, t_m, t_s = stats.t.fit(np_arr)
-          # print(par + ' v=' + str(t_df) + ' m=' + str(t_m) + ' s=' + str(t_s))
-          # print(par + ' val=' + str(val) + ' std=' + str(stat))
-          # print(par + ' ' + str((val-t_m)*100/val) + ' ' + str((t_s-stat)*100/stat))
-          # init = len(np_arr)
-          # up = t_m + 5 * t_s
-          # down = t_m - 5 * t_s
-          # np_arr = np_arr[np_arr > down]
-          # np_arr = np_arr[np_arr < up]
-          # final = len(np_arr)
-          # print(par)
-          # print((init - final)*100 / init)
-          fig, ax = plt.subplots()
-          ax.axes.get_yaxis().set_visible(False)
-          # b = 10
-          plt.hist(np_arr, bins='auto', density=True)
-          # ax.axes.set_xlim([up, down])
-          up, down = ax.axes.get_xlim()
-          x = np.linspace(down, up, 50)
-          t_distn = stats.t.pdf(x, t_df, t_m, t_s)
-          plt.plot(x, t_distn)
-          plt.xlabel(' ')
-          plt.title(return_label(par))
-          plt.savefig(syst_dir + '/histograms/' + par + '_' + syst_label +
-                      '.png',
-                      format='png')
-          plt.clf()
-        # if syst_label == 'Bs2D0Kst0_PdfDelta' and par == 'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus':
-        #   print(idxs_up)
-        #   for idx in idxs_up:
-        #     print(seed_arr[idx])
-        #   print(par)
-        #   print((init - final)*100 / init)
+        # idxs_down = np.where(np_arr < down)
+        # idxs_up = np.where(np_arr > up)
+        # FOR NOW: CENTRAL VAL HAS CHANGED
+        if par != 'R_Dst0KDst0pi_Bu2Dst0h_kpi':
+          np_arr = np_arr[np_arr > down]
+          np_arr = np_arr[np_arr < up]
+        if len(np_arr) == 0:
+          print('ERROR: z-score removed all entries of systematic')
+        # final = len(np_arr)
+        # # if syst_label == 'Bu2D0hst_PdfBu':
+        # if syst_label == 'Bs2D0Kst0_PdfDelta':
+        #   t_df, t_m, t_s = stats.t.fit(np_arr)
+        #   # print(par + ' v=' + str(t_df) + ' m=' + str(t_m) + ' s=' + str(t_s))
+        #   # print(par + ' val=' + str(val) + ' std=' + str(stat))
+        #   # print(par + ' ' + str((val-t_m)*100/val) + ' ' + str((t_s-stat)*100/stat))
+        #   # init = len(np_arr)
+        #   # up = t_m + 5 * t_s
+        #   # down = t_m - 5 * t_s
+        #   # np_arr = np_arr[np_arr > down]
+        #   # np_arr = np_arr[np_arr < up]
+        #   # final = len(np_arr)
+        #   # print(par)
+        #   # print((init - final)*100 / init)
+        #   fig, ax = plt.subplots()
+        #   ax.axes.get_yaxis().set_visible(False)
+        #   # b = 10
+        #   plt.hist(np_arr, bins='auto', density=True)
+        #   # ax.axes.set_xlim([up, down])
+        #   up, down = ax.axes.get_xlim()
+        #   x = np.linspace(down, up, 50)
+        #   t_distn = stats.t.pdf(x, t_df, t_m, t_s)
+        #   plt.plot(x, t_distn)
+        #   plt.xlabel(' ')
+        #   plt.title(return_label(par))
+        #   plt.savefig(syst_dir + '/histograms/' + par + '_' + syst_label +
+        #               '.png',
+        #               format='png')
+        #   plt.clf()
+        # # if syst_label == 'Bs2D0Kst0_PdfDelta' and par == 'R_piK_Bu2Dst0h_D0gamma_Blind_k_minus':
+        # #   print(idxs_up)
+        # #   for idx in idxs_up:
+        # #     print(seed_arr[idx])
+        # #   print(par)
+        # #   print((init - final)*100 / init)
         std = np.std(np_arr)
         total_syst_dict[par][syst_label] = std
         tot_syst += std**2
