@@ -713,7 +713,7 @@ int main(int argc, char **argv) {
     // Strategy(2) requires evaluation of hessian at every step: can set
     // strategy 0 then call MINOS after to calculate correct errors
     int nStrat = 2;
-    if (config.runBsSystematic() == true) {
+    if (config.runBsSystematic() == true && config.splitByCharge() == false) {
       nStrat = 1;
     }
     dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
