@@ -2052,28 +2052,4 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
         ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
         "1-@0", RooArgSet(buEff_comb_)));
   }
-  orEffBs2Dst0Kst0_res_D0gamma_->Print();
-  orEffBs2Dst0Kst0_D0gamma_.Print();
-
-  buEffBs2Dst0Kst0_res_D0gamma_->Print();
-  buEffBs2Dst0Kst0_D0gamma_.Print();
-
-  buPartialEffBs2Dst0Kst0_res_D0gamma_->Print();
-  buPartialEffBs2Dst0Kst0_D0gamma_.Print();
-
-  deltaEffBs2Dst0Kst0_res_D0gamma_->Print();
-  deltaEffBs2Dst0Kst0_D0gamma_.Print();
-
-  orEffBs2Dst0Kst0_res_D0pi0_->Print();
-  orEffBs2Dst0Kst0_D0pi0_.Print();
-
-  buEffBs2Dst0Kst0_res_D0pi0_->Print();
-  buEffBs2Dst0Kst0_D0pi0_.Print();
-
-  buPartialEffBs2Dst0Kst0_res_D0pi0_->Print();
-  buPartialEffBs2Dst0Kst0_D0pi0_.Print();
-
-  deltaEffBs2Dst0Kst0_res_D0pi0_->Print();
-  deltaEffBs2Dst0Kst0_D0pi0_.Print();
-
 }
