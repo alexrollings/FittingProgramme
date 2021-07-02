@@ -714,6 +714,7 @@ int main(int argc, char **argv) {
     // strategy 0 then call MINOS after to calculate correct errors
     int nStrat = 2;
     if (config.runBsSystematic() == true && config.splitByCharge() == false) {
+      std::cout << "Strategy 1\n";
       nStrat = 1;
     }
     dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
