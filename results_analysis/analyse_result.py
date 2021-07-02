@@ -388,7 +388,6 @@ if __name__ == '__main__':
       # Calculate max systs in breakdown
       max_systs[par]['group'] = max(group_dict['breakdown'][par].items(),
                                     key=operator.itemgetter(1))[0]
-    print(final_groups)
 
     # Separate tables for yields, ratios and asymmetries
     title_str = {'N': '', 'R': '', 'A': ''}

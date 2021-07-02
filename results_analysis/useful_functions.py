@@ -35,7 +35,8 @@ def return_group_breakdown(syst):
       '\S+_Bu2Dst0h_D0gamma': 'Fixed $CP$ parameters',
       # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': 'Branching fractions',
-      'kBF_D0\S+': 'Branching fractions'
+      'kBF_D0\S+': 'Branching fractions',
+      'Bs Systematic': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs'
   }
   match = False
   for k, v in re_group_dict.items():
@@ -82,7 +83,8 @@ def return_final_group(syst):
       # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': '$Rates$',
       'kBF_D0\S+': '$Rates$',
-      'Statistical Error Correction': '$Corr$'
+      'Statistical Error Correction': '$Corr$',
+      'Bs Systematic': '$PDFs$'
   }
   match = False
   for k, v in re_group_dict.items():
