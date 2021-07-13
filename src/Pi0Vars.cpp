@@ -596,24 +596,25 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     ReturnMCEffs(Mode::Bs2Dst0Kst0_D0pi0, Neutral::pi0, Bachelor::k,
       //                  Efficiency::mcEffErr),
       //     Systematic::NA, Sign::same)),
+      //     Shift effs slightly to avoid local issues: WAY within errors
       orEffBs2Dst0Kst0_res_D0pi0_(Params::Get().CreateFixed(
           "orEffBs2Dst0Kst0_res_D0pi0_", uniqueId_, Neutral::pi0,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k, Efficiency::orEff,
-                        false),
+                        false)+0.001,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k,
                         Efficiency::orEffErr, false),
           Systematic::NA, Sign::same)),
       deltaEffBs2Dst0Kst0_res_D0pi0_(Params::Get().CreateFixed(
           "deltaEffBs2Dst0Kst0_res_D0pi0_", uniqueId_, Neutral::pi0,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k,
-                        Efficiency::deltaEff, false),
+                        Efficiency::deltaEff, false)+0.001,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k,
                         Efficiency::deltaEffErr, false),
           Systematic::NA, Sign::same)),
       buEffBs2Dst0Kst0_res_D0pi0_(Params::Get().CreateFixed(
           "buEffBs2Dst0Kst0_res_D0pi0_", uniqueId_, Neutral::pi0,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k, Efficiency::buEff,
-                        false),
+                        false)+0.001,
           ReturnBoxEffs(Mode::Bs2Dst0Kst0_D0pi0, Bachelor::k,
                         Efficiency::buEffErr, false),
           Systematic::NA, Sign::same)),
