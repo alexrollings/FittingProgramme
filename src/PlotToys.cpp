@@ -70,6 +70,8 @@ void SetStyle() {
 int main(int argc, char *argv[]) {
   Configuration &config = Configuration::Get();
   config.plotToys() = true;
+  // For efficiencies
+  config.inputDir = "/data/lhcb/users/rollings/data_fit/";
   std::string outputDir;
   std::vector<std::string> resultFiles;
   bool dataToy;
