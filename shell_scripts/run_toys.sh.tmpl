@@ -8,20 +8,25 @@ source_root
 mkdir /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
 cd /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
+#cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeMacroParseArguments.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeMacroParseArguments.cmake 
+#cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/FindROOT.cmake /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/FindROOT.cmake 
+#cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/CMakeLists.txt /data/lhcb/users/rollings/fitting_scripts/job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}/CMakeLists.txt 
 
-mkdir src
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
-mkdir include
-cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
+#mkdir src
+#cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/src/*.cpp src/
+#mkdir include
+#cp /home/rollings/Bu2Dst0h_2d/FittingProgramme/include/*.h include/
+
+git clone https://github.com/alexrollings/FittingProgramme.git
+cd FittingProgramme
+git checkout ${COMMIT}
+git cherry-pick ff276f8149006d34edb461950370860a9b4e14f7
 
 mkdir build
 cd build
 cmake ../
-make
-./Fitting -inputDir=${INPUT} -outputDir=${PATH} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -toys=${NTOYS} -${GEN} -nCPU=1
+make -j4
+./Fitting -inputDir=${INPUT} -outputDir=${PATH} -neutral=${NEUTRAL} -daughters=${DAUGHTERS} -charge=${CHARGE} -bl=${BL} -bh=${BH} -dl=${DL} -dh=${DH} -dpl=${DPL} -dph=${DPH} -toys=${NTOYS} -${GEN} -nCPU=4
 
 cd /data/lhcb/users/rollings/fitting_scripts/
 rm -rf job_${COMMIT}_${GEN}_${NEUTRAL}_${DAUGHTERS}_${CHARGE}_${DL}_${DH}_${DPL}_${DPH}_${BL}_${BH}_${nJob}
