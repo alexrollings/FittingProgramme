@@ -3,8 +3,6 @@
 import os, re, subprocess, sys, argparse
 from string import Template
 import subprocess as sp
-from shutil import copyfile
-from distutils.dir_util import copy_tree
 
 
 def run_process(command):
@@ -176,11 +174,12 @@ if __name__ == '__main__':
     new_dir = os.path.join(path, d)
     if not os.path.exists(new_dir):
       os.mkdir(new_dir)
-  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
 
-  # if not os.path.exists(output_dir):
-  #   os.mkdir(output_dir)
-  #
+  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
+  results_dir = os.path.join(output_dir, 'results')
+  for filename in os.listdir(results_dir):
+    os.remove(os.path.join(results_dir, filename))
+
   if neutral == 'pi0':
     if delta_low == None:
       delta_low = '138'

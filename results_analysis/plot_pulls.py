@@ -67,7 +67,7 @@ if __name__ == '__main__':
                       type=str,
                       help='git commit label',
                       required=True)
-  parser.add_argument('-d', '--dim', type=str, help='Dimension', required=True)
+  parser.add_argument('-dim', '--dim', type=str, help='Dimension', required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -176,8 +176,9 @@ if __name__ == '__main__':
   d_arr = daughters.split(',')
   d_str = d_arr[-1]
 
-  input_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
-  path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results/new_data/toys/'
+  in_path = '/data/lhcb/users/rollings/roofit_results_new/'
+  input_dir = in_path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
+  out_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results/new_data/toys/'
   sub_dirs = [
       g_str, g_str + '/' + commit, g_str + '/' + commit + '/' + d_str + c_str,
       g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral,
@@ -185,10 +186,12 @@ if __name__ == '__main__':
       g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/plots/'
   ]
   for d in sub_dirs:
-    new_dir = os.path.join(path, d)
+    new_dir = os.path.join(out_path, d)
     if not os.path.exists(new_dir):
       os.mkdir(new_dir)
-  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
+  output_dir = out_path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
+  print(input_dir)
+  print(output_dir)
 
   if neutral == "gamma":
     if delta_low == None:
