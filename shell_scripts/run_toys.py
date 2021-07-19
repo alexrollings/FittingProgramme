@@ -14,17 +14,17 @@ def run_process(command):
 
 
 def make_shell_script(templatePath, scriptPath, substitutions):
-  with open(templatePath, "r") as templateFile:
+  with open(templatePath, 'r') as templateFile:
     scriptTemplate = Template(templateFile.read())
     # Define each variable required by the template
     # Substitute into the string
     scriptString = scriptTemplate.substitute(substitutions)
     # Write to an output file
-    with open(scriptPath, "w") as scriptFile:
+    with open(scriptPath, 'w') as scriptFile:
       scriptFile.write(scriptString)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-q',
                       '--queue',
@@ -46,11 +46,11 @@ if __name__ == "__main__":
                       type=str,
                       help='charge = total/plus,minus',
                       required=True)
-  parser.add_argument('-o',
-                      '--output_dir',
-                      type=str,
-                      help='Directory where results should be stored',
-                      required=True)
+  # parser.add_argument('-o',
+  #                     '--output_dir',
+  #                     type=str,
+  #                     help='Directory where results should be stored',
+  #                     required=True)
   parser.add_argument('-t',
                       '--n_toys',
                       type=int,
@@ -114,7 +114,7 @@ if __name__ == "__main__":
   neutral = args.neutral
   daughters = args.daughters
   charge = args.charge
-  output_dir = args.output_dir
+  # output_dir = args.output_dir
   n_toys = args.n_toys
   n_jobs = args.n_jobs
   gen = args.gen
@@ -127,112 +127,132 @@ if __name__ == "__main__":
   bu_low = args.bu_low
   bu_high = args.bu_high
 
-  if queue == "batch":
-    print("Running toys on batch")
-  elif queue == "condor":
-    print("Running toys on condor")
+  if queue == 'batch':
+    print('Running toys on batch')
+  elif queue == 'condor':
+    print('Running toys on condor')
   else:
-    sys.exit("--queue=batch/condor")
+    sys.exit('--queue=batch/condor')
 
-  if charge == "total":
-    print("Running toys summed over charge")
-  elif charge == "plus,minus":
-    print("Running toys split by charge")
+  if charge == 'total':
+    print('Running toys summed over charge')
+    c_str = ''
+  elif charge == 'plus,minus':
+    print('Running toys split by charge')
+    c_str = '_split'
   else:
-    sys.exit("--charge=total/plus,minus")
+    sys.exit('--charge=total/plus,minus')
 
-  if gen == "pdfD1D":
-    print("Running toys generated from D1D PDF")
-  elif gen == "pdf2D":
-    print("Running toys generated from 2D PDF")
-  elif gen == "data2D":
-    print("Running toys generated from 2D data")
-  elif gen == "data1D":
-    print("Running toys generated from 1D data")
+  if gen == 'pdfD1D':
+    print('Running toys generated from D1D PDF')
+    g_str = 'd1d_pdf'
+  elif gen == 'pdf2D':
+    print('Running toys generated from 2D PDF')
+    g_str = '2d_pdf'
+  elif gen == 'data2D':
+    print('Running toys generated from 2D data')
+    g_str = '2d_data'
+  elif gen == 'data1D':
+    print('Running toys generated from 1D data')
+    g_str = '1d_data'
   else:
-    sys.exit("-gen=pdfD1D/pdf2D/data2D/data1D")
+    sys.exit('-gen=pdfD1D/pdf2D/data2D/data1D')
 
-  if neutral != "pi0" and neutral != "gamma":
-    sys.exit("Specify neutral: -n=pi0/gamma")
+  if neutral != 'pi0' and neutral != 'gamma':
+    sys.exit('Specify neutral: -n=pi0/gamma')
 
-  if daughters != "kpi" and daughters != "kpi,kk" and daughters != "kpi,kk,pipi" and daughters != "kpi,kk,pipi,pik":
-    sys.exit("Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik")
+  if daughters != 'kpi' and daughters != 'kpi,kk' and daughters != 'kpi,kk,pipi' and daughters != 'kpi,kk,pipi,pik':
+    sys.exit('Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik')
+  d_arr = daughters.split(',')
+  d_str = d_arr[-1]
 
-  if not os.path.exists(output_dir):
-    os.mkdir(output_dir)
+  path = '/data/lhcb/users/rollings/roofit_results_new/'
+  sub_dirs = [
+      g_str, g_str + '/' + commit, g_str + '/' + commit + '/' + d_str + c_str,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
+  ]
+  for d in sub_dirs:
+    new_dir = os.path.join(path, d)
+    if not os.path.exists(new_dir):
+      os.mkdir(new_dir)
+  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
 
+  # if not os.path.exists(output_dir):
+  #   os.mkdir(output_dir)
+  #
   if neutral == 'pi0':
     if delta_low == None:
-      delta_low = "138"
+      delta_low = '138'
     if delta_high == None:
-      delta_high = "148"
+      delta_high = '148'
     if bu_low == None:
-      bu_low = "5220"
+      bu_low = '5220'
     if bu_high == None:
-      bu_high = "5330"
+      bu_high = '5330'
     if delta_partial_low == None:
-      delta_partial_low = "0"
+      delta_partial_low = '0'
     if delta_partial_high == None:
-      delta_partial_high = "0"
-  elif neutral == "gamma":
+      delta_partial_high = '0'
+  elif neutral == 'gamma':
     if delta_low == None:
-      delta_low = "125"
+      delta_low = '125'
     if delta_high == None:
-      delta_high = "170"
+      delta_high = '170'
     if bu_low == None:
-      bu_low = "5240"
+      bu_low = '5240'
     if bu_high == None:
-      bu_high = "5320"
+      bu_high = '5320'
     if delta_partial_low == None:
-      delta_partial_low = "60"
+      delta_partial_low = '60'
     if delta_partial_high == None:
-      delta_partial_high = "105"
+      delta_partial_high = '105'
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for i in range(0, n_jobs):
     templatePath = home_path + 'shell_scripts/run_toys.sh.tmpl'
-    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-        i) + ".sh"
+    scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + '_' + delta_low + '_' + delta_high + '_' + delta_partial_low + '_' + delta_partial_high + '_' + bu_low + '_' + bu_high + '_' + str(
+        i) + '.sh'
     substitutions = {
-        "nJob": i,
-        "INPUT": input_dir,
-        "PATH": output_dir,
-        "COMMIT": commit,
-        "GEN": gen,
-        "NEUTRAL": neutral,
-        "DAUGHTERS": daughters,
-        "CHARGE": charge,
-        "NTOYS": n_toys,
-        "DL": delta_low,
-        "DH": delta_high,
-        "DPL": delta_partial_low,
-        "DPH": delta_partial_high,
-        "BL": bu_low,
-        "BH": bu_high,
+        'nJob': i,
+        'INPUT': input_dir,
+        'PATH': output_dir,
+        'COMMIT': commit,
+        'GEN': gen,
+        'NEUTRAL': neutral,
+        'DAUGHTERS': daughters,
+        'CHARGE': charge,
+        'NTOYS': n_toys,
+        'DL': delta_low,
+        'DH': delta_high,
+        'DPL': delta_partial_low,
+        'DPH': delta_partial_high,
+        'BL': bu_low,
+        'BH': bu_high,
     }
     make_shell_script(templatePath, scriptPath, substitutions)
     if queue == 'batch':
-      run_process(["qsub", scriptPath])
+      run_process(['qsub', scriptPath])
     else:
-      run_process(["chmod", "+x", scriptPath])
+      run_process(['chmod', '+x', scriptPath])
       submitTemplate = home_path + 'shell_scripts/run_toys_submit.sh.tmpl'
-      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + "_" + delta_low + "_" + delta_high + "_" + delta_partial_low + "_" + delta_partial_high + "_" + bu_low + "_" + bu_high + "_" + str(
-          i) + ".submit"
+      submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_toys_' + commit + '_' + gen + '_' + neutral + '_' + daughters + '_' + charge + '_' + delta_low + '_' + delta_high + '_' + delta_partial_low + '_' + delta_partial_high + '_' + bu_low + '_' + bu_high + '_' + str(
+          i) + '.submit'
       submitSubs = {
-          "nJob": i,
-          "GEN": gen,
-          "COMMIT": commit,
-          "NEUTRAL": neutral,
-          "DAUGHTERS": daughters,
-          "CHARGE": charge,
-          "NTOYS": n_toys,
-          "DL": delta_low,
-          "DH": delta_high,
-          "DPL": delta_partial_low,
-          "DPH": delta_partial_high,
-          "BL": bu_low,
-          "BH": bu_high,
-          "CLUSTERID": '$(ClusterId)'
+          'nJob': i,
+          'GEN': gen,
+          'COMMIT': commit,
+          'NEUTRAL': neutral,
+          'DAUGHTERS': daughters,
+          'CHARGE': charge,
+          'NTOYS': n_toys,
+          'DL': delta_low,
+          'DH': delta_high,
+          'DPL': delta_partial_low,
+          'DPH': delta_partial_high,
+          'BL': bu_low,
+          'BH': bu_high,
+          'CLUSTERID': '$(ClusterId)'
       }
       make_shell_script(submitTemplate, submitScript, submitSubs)
-      run_process(["condor_submit", submitScript])
+      run_process(['condor_submit', submitScript])

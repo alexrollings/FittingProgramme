@@ -51,22 +51,37 @@ def pass_filename_bu_partial(root_file,
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('-i',
-                      '--input_dir',
+  # parser.add_argument('-i',
+  #                     '--input_dir',
+  #                     type=str,
+  #                     help='Directory where results are stored',
+  #                     required=True)
+  # parser.add_argument(
+  #     '-o',
+  #     '--output_dir',
+  #     type=str,
+  #     help='Directory where folder for PDFs and results should be created',
+  #     required=True)
+  parser.add_argument('-com',
+                      '--commit',
                       type=str,
-                      help='Directory where results are stored',
+                      help='git commit label',
                       required=True)
-  parser.add_argument(
-      '-o',
-      '--output_dir',
-      type=str,
-      help='Directory where folder for PDFs and results should be created',
-      required=True)
   parser.add_argument('-d', '--dim', type=str, help='Dimension', required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
                       help='Neutral',
+                      required=True)
+  parser.add_argument('-c',
+                      '--charge',
+                      type=str,
+                      help='charge',
+                      required=True)
+  parser.add_argument('-d',
+                      '--daughters',
+                      type=str,
+                      help='daughters',
                       required=True)
   parser.add_argument('-t',
                       '--toy_init',
@@ -109,9 +124,12 @@ if __name__ == '__main__':
                       required=False)
   args = parser.parse_args()
 
-  input_dir = args.input_dir
-  output_dir = args.output_dir
+  # input_dir = args.input_dir
+  # output_dir = args.output_dir
+  commit = args.commit
   neutral = args.neutral
+  charge = args.charge
+  daughters = args.daughters
   toy_init = args.toy_init
   delta_low = args.delta_low
   delta_high = args.delta_high
@@ -122,12 +140,24 @@ if __name__ == '__main__':
   dim = args.dim
   remake = args.remake
 
+  if charge == 'total':
+    print('Running toys summed over charge')
+    c_str = ''
+  elif charge == 'plus,minus':
+    print('Running toys split by charge')
+    c_str = '_split'
+  else:
+    sys.exit('--charge=total/plus,minus')
+
   if dim == 'D1D':
     print('Analysing results from D1D toys')
+    g_str = 'd1d_pdf'
   elif dim == '2D':
     print('Analysing results from 2D toys')
+    g_str = '2d_data'
   elif dim == '1D':
     print('Analysing results from 1D toys')
+    g_str = '1d_pdf'
   else:
     sys.exit('Set -d=1D/D1D/2D')
 
@@ -140,6 +170,25 @@ if __name__ == '__main__':
 
   if neutral != 'pi0' and neutral != 'gamma':
     sys.exit('Specify neutral: -n=pi0/gamma')
+
+  if daughters != 'kpi' and daughters != 'kpi,kk' and daughters != 'kpi,kk,pipi' and daughters != 'kpi,kk,pipi,pik':
+    sys.exit('Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik')
+  d_arr = daughters.split(',')
+  d_str = d_arr[-1]
+
+  input_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
+  path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results/new_data/toys/'
+  sub_dirs = [
+      g_str, g_str + '/' + commit, g_str + '/' + commit + '/' + d_str + c_str,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/',
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/plots/'
+  ]
+  for d in sub_dirs:
+    new_dir = os.path.join(path, d)
+    if not os.path.exists(new_dir):
+      os.mkdir(new_dir)
+  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
 
   if neutral == "gamma":
     if delta_low == None:
@@ -211,7 +260,7 @@ if __name__ == '__main__':
     os.mkdir(plots_dir)
   # print('./PlotToys ' + ','.join(list_file))
   home_path = os.getcwd()
-  os.chdir('os.getcwd()')
+  os.chdir(home_path)
   os.chdir('../build')
   if list_file.read(1) != None:
     if dim == '1D':

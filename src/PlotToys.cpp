@@ -499,7 +499,8 @@ int main(int argc, char *argv[]) {
     //               // round(resultVec.size()/10),
     //               pullMinMap[paramName] - pullRange / 5, pullMaxMap[paramName] +
     //               pullRange / 5);
-    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -10, 10);
+    // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -10, 10);
+    TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
