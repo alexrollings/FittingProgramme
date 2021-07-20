@@ -236,6 +236,12 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   //       // "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.06,
   //       Systematic::A_CP_K_Bu2D0hst, Sign::none));
   // }
+  if (Configuration::Get().neutral() == Neutral::gamma) {
+    A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.09,
+        // "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.06,
+        Systematic::A_CP_K_Bu2D0hst, Sign::none));
+  }
   A_CP_Bu2D0hst_ =
       std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
           "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
