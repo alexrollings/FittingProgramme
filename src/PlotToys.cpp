@@ -501,6 +501,9 @@ int main(int argc, char *argv[]) {
     //               pullRange / 5);
     // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -10, 10);
     TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
+    if (toys2D == true) {
+      pullHist.GetXaxis()->SetLimits(-10, 10);
+    }
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 

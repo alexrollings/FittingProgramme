@@ -177,8 +177,8 @@ if __name__ == '__main__':
 
   output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
   results_dir = os.path.join(output_dir, 'results')
-  for filename in os.listdir(results_dir):
-    os.remove(os.path.join(results_dir, filename))
+  # for filename in os.listdir(results_dir):
+  #   os.remove(os.path.join(results_dir, filename))
 
   if neutral == 'pi0':
     if delta_low == None:

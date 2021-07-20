@@ -130,5 +130,6 @@ if __name__ == '__main__':
 
 
   f_out = open(f'/data/lhcb/users/rollings/data_fit/fixed_rates/bkgFracs_{neutral}.txt', 'w+')
+  # f_out = open(f'/data/lhcb/users/rollings/data_fit_bkgFrac/fixed_rates/bkgFracs_{neutral}.txt', 'w+')
   for mode, frac in frac_dict.items():
     f_out.write(f'{mode} {frac.nominal_value} {frac.std_dev}\n')
