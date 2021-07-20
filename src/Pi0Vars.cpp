@@ -1162,15 +1162,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
           ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, ReturnType::val), 0, 5)),
       // Constrained relative to Bd2Dsth
-      // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
-      //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
-      // ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
-      //     0, 5)),
-      bkgFracFAV_Bu2D0hst_(Params::Get().CreateFixed(
+      bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
           "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
-          ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::std),
-          Systematic::Bu2D0hst_BkgFrac, Sign::same)),
+      ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
+          0, 5)),
+      // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFixed(
+      //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
+      //     ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::val),
+      //     ReadBkgFracs<Neutral::pi0>(Mode::Bu2D0rho, ReturnType::std),
+      //     Systematic::Bu2D0hst_BkgFrac, Sign::same)),
       cpFrac_Bu2D0hst_(Params::Get().CreateFloating(
           "cpFrac_Bu2D0hst", uniqueId_, Neutral::pi0, 2, 0, 5)),
       // bkgFracFAV_Bu2Dst0hst_(Params::Get().CreateFixed(
