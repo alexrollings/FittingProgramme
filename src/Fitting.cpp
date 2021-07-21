@@ -833,12 +833,12 @@ int main(int argc, char **argv) {
         if (config.noFit() == false) {
           dataFitResult->Print("v");
         }
-        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-        PlotLegend(config, colorMap, outputDir);
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-                     dataFitResult.get(), yMaxMap);
-        }
+        // std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+        // PlotLegend(config, colorMap, outputDir);
+        // for (auto &p : pdfs) {
+        //   Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+        //              dataFitResult.get(), yMaxMap);
+        // }
       }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
