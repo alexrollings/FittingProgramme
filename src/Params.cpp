@@ -143,11 +143,11 @@ double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
     fname = Configuration::Get().inputDir + "/mc_roofit_results/MC_" +
             EnumToString(neutral) + "_" + EnumToString(mode) + "_" + bachStr;
   }
-  // if ((mode == Mode::Bu2D0rho && bachelor == Bachelor::pi) ||
+  if ((mode == Mode::Bu2D0rho && bachelor == Bachelor::pi) ||
+      (mode == Mode::Bu2D0Kst && bachelor == Bachelor::k) ||
+      (mode == Mode::Bs2D0Kst0 && bachelor == Bachelor::k)) {
   //     (mode == Mode::Bu2D0Kst && bachelor == Bachelor::k)) {
-      // (mode == Mode::Bu2D0Kst && bachelor == Bachelor::k) ||
-      // (mode == Mode::Bs2D0Kst0 && bachelor == Bachelor::k)) {
-  if (mode == Mode::Bs2D0Kst0 && bachelor == Bachelor::k) {
+  // if (mode == Mode::Bs2D0Kst0 && bachelor == Bachelor::k) {
     fname += "_weights";
   }
   fname += ".root";
