@@ -229,7 +229,7 @@ GlobalVars::GlobalVars(int uniqueId)
                                   Systematic::R_CP_Bu2D0hst, Sign::same));
   } else {
     R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, 0, 10));
+        Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, -2, 10));
   }
   double min = 0.;
   double max = 20.;
