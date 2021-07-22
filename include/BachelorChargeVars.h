@@ -103,7 +103,7 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
       R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
           ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
               .c_str(),
-          R_piK_init * 0.3, *R_piK_Bu2Dst0h_D0gamma_Blind_));
+          R_piK_init * 0.1, *R_piK_Bu2Dst0h_D0gamma_Blind_));
     }
     if (Configuration::Get().neutral() == Neutral::gamma &&
         bachelor == Bachelor::k && charge == Charge::plus) {
@@ -118,7 +118,7 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
         ("R_piK_Bu2Dst0h_D0pi0_" + ComposeName(uniqueId_, bachelor, charge))
             .c_str(),
-        R_piK_init * 0.3, *R_piK_Bu2Dst0h_D0pi0_Blind_));
+        R_piK_init * 0.1, *R_piK_Bu2Dst0h_D0pi0_Blind_));
   } else {
     if (Configuration::Get().neutral() == Neutral::gamma) {
       R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
