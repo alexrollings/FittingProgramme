@@ -14,17 +14,18 @@ RooFormulaVar *Make_R_Dst0KDst0pi_CP(int uniqueId, const char *name,
 template <>
 DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2Dst0h", uniqueId_, Daughters::kpi,
+      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
           GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
           0, 2)),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
-      //     8.1e-02, 0., Systematic::NA, Sign::same)),
-      R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
-      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFloating(
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_D0pi0", uniqueId_, Daughters::kpi,
+      //     8.1e-02, 0., Systematic::NA, Sign::same)),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
+      //     "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
       //     GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
       //         GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
       //     0, 2)),
@@ -36,7 +37,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
       // R_Dst0KDst0pi_Bu2Dst0h_WN_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2Dst0h_WN", uniqueId_, Daughters::kpi, 0.08, 0,
       //     Systematic::NA, Sign::same)),
-      R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0gamma_),
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(R_Dst0KDst0pi_Bu2Dst0h_D0pi0_),
       //  Calculated from BFs using python uncertainties
       R_Dst0KDst0pi_Bd2Dsth_(Params::Get().CreateFixed(
           "R_Dst0KDst0pi_Bd2Dsth", uniqueId_, Daughters::kpi, 0.0774, 0.0066,
@@ -54,21 +55,34 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
               GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
           -1, 1)),
       // 1.7676e-02
-      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ = R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  } else {
+    R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+            "R_Dst0KDst0pi_Bu2Dst0h_D0gamma", uniqueId_, Daughters::kpi,
+            GlobalVars::Get(uniqueId_).kBF_Bu2Dst0K().getVal() /
+                GlobalVars::Get(uniqueId_).kBF_Bu2Dst0pi().getVal(),
+            0, 2));
+  }
+}
 
 template <>
 DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_",
-          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0gamma())),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
           uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0pi0())),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+      //     uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_",
+      //     DaughtersVars<Daughters::kpi>::Get(uniqueId_)
+      //         .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
+      //     GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0gamma())),
       R_Dst0KDst0pi_Bu2Dst0h_WN_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
           uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_WN_",
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
@@ -93,6 +107,18 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
       //     "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
       //     0, 2)) {}
       R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
+  // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
+  //     std::shared_ptr<RooFormulaVar>(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+  //         uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_",
+  //         DaughtersVars<Daughters::kpi>::Get(uniqueId_)
+  //             .R_Dst0KDst0pi_Bu2Dst0h_D0pi0(),
+  //         GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0pi0()));
+  R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+      std::shared_ptr<RooFormulaVar>(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_",
+          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
+              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
+          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0gamma()));
   if (Configuration::Get().neutral() == Neutral::pi0) {
     R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
         std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
@@ -109,29 +135,36 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
 template <>
 DaughtersVars<Daughters::pipi>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer()),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(
           DaughtersVars<Daughters::kk>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0h_WN_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0h_WN_GetPointer()),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
+      // R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(
+      //     DaughtersVars<Daughters::kk>::Get(uniqueId_)
+      //         .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer()),
+      R_Dst0KDst0pi_Bu2Dst0h_WN_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
+                                     .R_Dst0KDst0pi_Bu2Dst0h_WN_GetPointer()),
       R_Dst0KDst0pi_Bd2Dsth_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
                                  .R_Dst0KDst0pi_Bd2Dsth_GetPointer()),
       R_Dst0KDst0pi_Bu2D0hst_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
                                   .R_Dst0KDst0pi_Bu2D0hst_GetPointer()),
-      R_Dst0KDst0pi_Bu2Dst0hst_(
-          DaughtersVars<Daughters::kk>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst_GetPointer()),
-      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {}
+      R_Dst0KDst0pi_Bu2Dst0hst_(DaughtersVars<Daughters::kk>::Get(uniqueId_)
+                                    .R_Dst0KDst0pi_Bu2Dst0hst_GetPointer()),
+      R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(nullptr) {
+  // R_Dst0KDst0pi_Bu2Dst0h_D0pi0_ =
+  //     DaughtersVars<Daughters::kk>::Get(uniqueId_)
+  //         .R_Dst0KDst0pi_Bu2Dst0h_D0pi0_GetPointer();
+  R_Dst0KDst0pi_Bu2Dst0h_D0gamma_ =
+      DaughtersVars<Daughters::kk>::Get(uniqueId_)
+          .R_Dst0KDst0pi_Bu2Dst0h_D0gamma_GetPointer();
+      }
 
 template <>
 DaughtersVars<Daughters::pik>::DaughtersVars(int uniqueId)
     : uniqueId_(uniqueId),
-      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_D0pi0_(nullptr),
+      R_Dst0KDst0pi_Bu2Dst0h_D0gamma_(nullptr),
       R_Dst0KDst0pi_Bu2Dst0h_WN_(nullptr),
       R_Dst0KDst0pi_Bd2Dsth_(nullptr),
       R_Dst0KDst0pi_Bu2D0hst_(nullptr),

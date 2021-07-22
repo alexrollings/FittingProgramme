@@ -59,8 +59,8 @@ class DaughtersVars {
 
  private:
   int uniqueId_;
-  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0pi0_;
+  std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_D0gamma_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_Dst0KDst0pi_Bu2D0hst_;
