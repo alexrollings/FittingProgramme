@@ -179,9 +179,9 @@ enum class Systematic {
   A_K_Kpi_Bu2Dst0h_D0gamma,
   R_ADS_Bu2Dst0hst,
   A_K_piK_Bu2Dst0hst,
+  A_CP_K_Lb2Omegach_Lcpi0,
   // DON'T RUN BELOW
   // A_CP_pi_Lb2Omegach_Lcpi0,
-  // A_CP_K_Lb2Omegach_Lcpi0,
   A_pi_Kpi_Bu2Dst0h_WN,
   A_K_Kpi_Bu2Dst0h_WN,
   A_pi_Kpi_Bu2D0hst,

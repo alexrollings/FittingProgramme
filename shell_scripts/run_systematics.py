@@ -277,6 +277,7 @@ if __name__ == '__main__':
         'A_pi_Kpi_Bu2Dst0hst',
         'A_K_Kpi_Bu2Dst0hst',
         'A_K_piK_Bu2D0hst',
+        'A_CP_K_Lb2Omegach_Lcpi0',
         'A_Kpi',
         'A_pi',
         'Delta_A_CP',
