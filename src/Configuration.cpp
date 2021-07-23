@@ -1963,6 +1963,10 @@ std::string ComposeName(int uniqueId, Bachelor bachelor, Daughters daughters) {
 std::string ReturnLaTeXLabel(std::string paramStr) {
   if (paramStr == "R_Dst0KDst0pi_Bu2Dst0h_kpi") {
     return "#font[12]{R^{K#pi,#pi^{0}/#gamma}_{K/#pi}}";
+  } else if (paramStr == "R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi") {
+    return "#font[12]{R^{K#pi,#gamma}_{K/#pi}}";
+  } else if (paramStr == "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi") {
+    return "#font[12]{R^{K#pi,#pi^{0}}_{K/#pi}}";
   } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi") {
     return "#font[12]{N((D^{*}#rightarrow #left[K#pi#right]_{D}#gamma)#pi^{#pm}})";
   } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk") {
@@ -1970,6 +1974,8 @@ std::string ReturnLaTeXLabel(std::string paramStr) {
   } else if (paramStr == "N_tot_Bu2Dst0h_D0gamma_gamma_pi_pipi") {
           return "#font[12]{N((D^{*}#rightarrow #left[#pi#pi#right]_{D}#gamma)#pi^{#pm})}";
   } else if (paramStr == "R_CP_Bu2Dst0h_D0gamma_Blind") {
+          return "#font[12]{R^{CP,#gamma}}";
+  } else if (paramStr == "R_CP_Bu2Dst0h_D0gamma") {
           return "#font[12]{R^{CP,#gamma}}";
   } else if (paramStr == "R_piK_Bu2Dst0h_D0gamma_Blind_pi_total") {
           return "#font[12]{R^{#pi K,#gamma}_{#pi^{#pm}}}";
@@ -2004,6 +2010,8 @@ std::string ReturnLaTeXLabel(std::string paramStr) {
   } else if (paramStr == "N_tot_Bu2Dst0h_D0pi0_pi0_pi_pipi") {
           return "#font[12]{N((D^{*}#rightarrow #left[#pi#pi#right]_{D}#pi^{0})#pi^{#pm})}";
   } else if (paramStr == "R_CP_Bu2Dst0h_D0pi0_Blind") {
+          return "#font[12]{R^{CP,#pi^{0}}}";
+  } else if (paramStr == "R_CP_Bu2Dst0h_D0pi0") {
           return "#font[12]{R^{CP,#pi^{0}}}";
   } else if (paramStr == "R_piK_Bu2Dst0h_D0pi0_Blind_pi_total") {
           return "#font[12]{R^{#pi K,#pi^{0}}_{#pi^{#pm}}}";
