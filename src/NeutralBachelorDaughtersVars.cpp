@@ -1573,6 +1573,15 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
             uniqueId, "N_tot_Bs2D0Kst0_", *N_tot_Bu2Dst0h_D0pi0_,
             NeutralVars<_neutral>::Get(uniqueId).bkgFracADS_Bs2D0Kst0()));
+    // N_tot_Bs2D0Kst0_ = std::shared_ptr<RooRealVar>(new RooRealVar(
+    //     ("N_tot_Bs2D0Kst0_" +
+    //      ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+    //         .c_str(),
+    //     "",
+    //     N_tot_Bu2Dst0h_D0pi0_->getVal() * NeutralVars<_neutral>::Get(uniqueId)
+    //                                           .bkgFracADS_Bs2D0Kst0()
+    //                                           .getVal(),
+    //     0, 10000));
     N_tot_Bs2Dst0Kst0_ = std::shared_ptr<RooFormulaVar>(
         Make_N_BkgFrac<_neutral, Bachelor::k, Daughters::pik>(
             uniqueId, "N_tot_Bs2Dst0Kst0_", *N_tot_Bs2D0Kst0_,
