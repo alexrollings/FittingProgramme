@@ -1185,7 +1185,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           "bkgFracKK_Lb2Omegach_Lcpi0", uniqueId_, Neutral::pi0, 0.1, 0, 5)),
       bkgFracADS_Bs2D0Kst0_(Params::Get().CreateFloating(
           "bkgFracADS_Bs2D0Kst0", uniqueId_, Neutral::pi0,
-          ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::val), 0, 25)),
+          ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::val), 0, 15)),
       // bkgFracADS_Bs2D0Kst0_(Params::Get().CreateFixed(
       //     "bkgFracADS_Bs2D0Kst0", uniqueId_, Neutral::pi0,
       //     ReadBkgFracs<Neutral::pi0>(Mode::Bs2D0Kst0, ReturnType::val),
