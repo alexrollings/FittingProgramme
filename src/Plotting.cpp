@@ -912,8 +912,8 @@ void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
   // }
   labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
   // labels.AddEntry(hist_MisID.get(), " ", "l");
-  // labels.AddEntry(
-  //     hist_comb.get(), "Combinatorial", "l");
+  labels.AddEntry(
+      hist_comb.get(), "Combinatorial", "l");
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
@@ -1241,7 +1241,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
-        // pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
@@ -1278,7 +1278,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
-        // pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
       }
     } else if (mass == Mass::delta) {
       if (neutral == Neutral::pi0) {
@@ -1314,7 +1314,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
-        // pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
@@ -1353,7 +1353,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
-        // pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
       }
     } else {
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
@@ -1388,7 +1388,7 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         // pdfCharVec.emplace_back(
         //     pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
       }
-      // pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
     }
     // To pass to Components in plotOn, need string in the format
     // "pdf1,pdf2,pdf3"
