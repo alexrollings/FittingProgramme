@@ -580,11 +580,11 @@ class NeutralVars {
   RooRealVar &bkgFracADS_Bs2Dst0Kst0() { return *bkgFracADS_Bs2Dst0Kst0_; }
   RooRealVar &BR_pi02gamma_eff() { return *BR_pi02gamma_eff_; }
   // -------------------- Combinatorial -------------------- //
-  RooExponential &pdfBu_comb() { return pdfBu_comb_; }
-  RooExponential &pdfBuPartial_comb() { return pdfBuPartial_comb_; }
-  RooDstD0BG &pdfDelta_comb() { return pdfDelta_comb_; }
-  RooRealVar &buEff_comb() { return buEff_comb_; }
+  RooGaussian &pdfBu_comb() { return pdfBu_comb_; }
+  RooGaussian &pdfBuPartial_comb() { return pdfBuPartial_comb_; }
   RooFormulaVar &deltaEff_comb() { return *deltaEff_comb_; }
+  RooRealVar &buEff_comb() { return buEff_comb_; }
+  RooRealVar &buPartialEff_comb() { return buEff_comb_; }
 
  private:
   // Indicate if only used by one neutral
@@ -1018,15 +1018,20 @@ class NeutralVars {
   RooFormulaVar deltaEffBs2Dst0Kst0_;
   RooFormulaVar buPartialEffBs2Dst0Kst0_;
   // -------------------- Combinatorial -------------------- //
-  std::shared_ptr<RooRealVar> comb_lambdaBu_;
-  RooExponential pdfBu_comb_;
-  RooExponential pdfBuPartial_comb_;
-  std::shared_ptr<RooRealVar> comb_thresholdDelta_;
-  std::shared_ptr<RooRealVar> comb_aDelta_;
-  std::shared_ptr<RooRealVar> comb_bDelta_;
-  std::shared_ptr<RooRealVar> comb_cDelta_;
-  RooDstD0BG pdfDelta_comb_;
+  std::shared_ptr<RooRealVar> comb_meanBu_;
+  std::shared_ptr<RooRealVar> comb_sigmaBu_;
+  RooGaussian pdfBu_comb_;
+  std::shared_ptr<RooRealVar> comb_meanBuPartial_;
+  std::shared_ptr<RooRealVar> comb_sigmaBuPartial_;
+  RooGaussian pdfBuPartial_comb_;
+  // std::shared_ptr<RooRealVar> comb_thresholdDelta_;
+  // std::shared_ptr<RooRealVar> comb_aDelta_;
+  // std::shared_ptr<RooRealVar> comb_bDelta_;
+  // std::shared_ptr<RooRealVar> comb_cDelta_;
+  RooRealVar fracPdfPeak_D0pi0_comb_;
+  RooRealVar fracPdfPeak_D0gamma_comb_;
   RooRealVar buEff_comb_;
+  RooRealVar buPartialEff_comb_;
   std::unique_ptr<RooFormulaVar> deltaEff_comb_;
 };
 
