@@ -785,7 +785,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
           ("N_trueId_comb_" +
            ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
               .c_str(),
-          "", 10, 0, 1000),
+          "", 100, 0, 10000),
       N_trueId_Delta_Bu2Dst0h_D0gamma_(
           Make_N_1D<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_",
@@ -1175,7 +1175,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
     N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(
         (Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_comb_", N_trueId_comb_,
-            NeutralVars<neutral>::Get(uniqueId_).buEff_comb())));
+            NeutralVars<neutral>::Get(uniqueId_).buPartialEff_comb())));
     // N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
     //     ("N_trueId_BuPartial_comb_" +
     //      ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
