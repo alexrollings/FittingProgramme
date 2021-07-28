@@ -582,6 +582,8 @@ class NeutralVars {
   // -------------------- Combinatorial -------------------- //
   RooGaussian &pdfBu_comb() { return pdfBu_comb_; }
   RooGaussian &pdfBuPartial_comb() { return pdfBuPartial_comb_; }
+  RooRealVar &fracPdfPeak_D0pi0_comb() { return fracPdfPeak_D0pi0_comb_; }
+  RooRealVar &fracPdfPeak_D0gamma_comb() { return fracPdfPeak_D0gamma_comb_; }
   RooFormulaVar &deltaEff_comb() { return *deltaEff_comb_; }
   RooRealVar &buEff_comb() { return buEff_comb_; }
   RooRealVar &buPartialEff_comb() { return buEff_comb_; }

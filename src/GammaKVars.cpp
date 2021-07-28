@@ -2530,4 +2530,38 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
               .c_str(),
           "", RooArgList(pdfDelta_Bs2Dst0Kst0_WN_, pdfDelta_Bs2Dst0Kst0_comb_),
           NeutralVars<Neutral::gamma>::Get(uniqueId_)
-              .Bs2Dst0Kst0_floatingFracWN_Delta()) {}
+              .Bs2Dst0Kst0_floatingFracWN_Delta()),
+      // -------------------- Combinatorial -------------------- //
+      pdfDeltaFlat_comb_(("pdfDeltaFlat_comb_" +
+                          ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+                             .c_str(),
+                         "", Configuration::Get().deltaMass(),
+                         NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                             .Bu2Dst0h_D0pi0_WN_thresholdDelta(),
+                         NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                             .Bu2Dst0h_D0pi0_WN_cDelta(),
+                         *Bu2Dst0h_D0pi0_WN_aDelta_,
+                         *Bu2Dst0h_D0pi0_WN_bDelta_),
+      pdfDeltaPeak_D0pi0_comb_(
+          ("pdfDeltaPeak_D0pi0_comb_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
+      pdfDeltaPeak_D0gamma_comb_(
+          ("pdfDeltaPeak_D0gamma_comb_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+              .c_str(),
+          "",
+          RooArgList(pdf1Delta_Bu2Dst0h_D0gamma_, pdf2Delta_Bu2Dst0h_D0gamma_),
+          NeutralVars<Neutral::gamma>::Get(uniqueId_)
+              .Bu2Dst0h_D0gamma_fracPdf1Delta()),
+      pdfDelta_comb_(("pdfDelta_comb_" +
+                      ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+                         .c_str(),
+                     "", RooArgList(pdfDeltaPeak_D0pi0_comb_, pdfDeltaPeak_D0gamma_comb_, pdfDeltaFlat_comb_),
+                     RooArgList(NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                                    .fracPdfPeak_D0pi0_comb(),
+                                NeutralVars<Neutral::gamma>::Get(uniqueId_)
+                                    .fracPdfPeak_D0gamma_comb())) {}

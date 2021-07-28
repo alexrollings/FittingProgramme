@@ -1375,4 +1375,29 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Bs2Dst0Kst0_WN -------------------- //
       pdfDelta_Bs2Dst0Kst0_WN_(),
       // -------------------- Bs2Dst0Kst0 -------------------- //
-      pdfDelta_Bs2Dst0Kst0_() {}
+      pdfDelta_Bs2Dst0Kst0_(),
+      // -------------------- Combinatorial -------------------- //
+      pdfDeltaFlat_comb_(
+          ("pdfDeltaFlat_comb_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "", Configuration::Get().deltaMass(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_WN_thresholdDelta(),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_cDelta(),
+          *Bu2Dst0h_D0pi0_WN_aDelta_, *Bu2Dst0h_D0pi0_WN_bDelta_),
+      pdfDeltaPeak_D0pi0_comb_(
+          ("pdfDeltaPeak_D0pi0_comb_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "", RooArgList(pdf1Delta_Bu2Dst0h_D0pi0_, pdf2Delta_Bu2Dst0h_D0pi0_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .Bu2Dst0h_D0pi0_fracPdf1Delta()),
+      pdfDeltaPeak_D0gamma_comb_(),
+      pdfDelta_comb_(
+          ("pdfDelta_comb_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+              .c_str(),
+          "", RooArgList(pdfDeltaPeak_D0pi0_comb_, pdfDeltaFlat_comb_),
+          NeutralVars<Neutral::pi0>::Get(uniqueId_)
+              .fracPdfPeak_D0pi0_comb()) {}

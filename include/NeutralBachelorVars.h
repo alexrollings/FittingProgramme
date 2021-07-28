@@ -556,6 +556,8 @@ class NeutralBachelorVars {
   RooAddPdf &pdfDelta_Bs2Dst0Kst0() {
     return pdfDelta_Bs2Dst0Kst0_;
   }
+  // -------------------- Combinatorial -------------------- //
+  RooDstD0BG &pdfDelta_comb() { return pdfDelta_comb_; }
 
  private:
   int uniqueId_;
@@ -998,6 +1000,11 @@ class NeutralBachelorVars {
   RooAddPdf pdfDelta_Bs2Dst0Kst0_WN_;
   // -------------------- Bs2Dst0Kst0 -------------------- //
   RooAddPdf pdfDelta_Bs2Dst0Kst0_;
+  // -------------------- Combinatorial -------------------- //
+  RooDstD0BG pdfDeltaFlat_comb_;
+  RooAddPdf pdfDeltaPeak_D0pi0_comb_;
+  RooAddPdf pdfDeltaPeak_D0gamma_comb_;
+  RooAddPdf pdfDelta_comb_;
 };
 
 template <>
