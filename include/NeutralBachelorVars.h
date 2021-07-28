@@ -557,7 +557,7 @@ class NeutralBachelorVars {
     return pdfDelta_Bs2Dst0Kst0_;
   }
   // -------------------- Combinatorial -------------------- //
-  RooDstD0BG &pdfDelta_comb() { return pdfDelta_comb_; }
+  RooAddPdf &pdfDelta_comb() { return pdfDelta_comb_; }
 
  private:
   int uniqueId_;
