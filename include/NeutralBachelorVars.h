@@ -1008,6 +1008,7 @@ class NeutralBachelorVars {
   RooAddPdf pdfDeltaPeak_D0gamma_comb_;
   RooFormulaVar fracPdfPeak_D0pi0_comb_;
   RooAddPdf pdfDeltaPeak_comb_;
+  RooFormulaVar fracPdfFlat_comb_;
   RooAddPdf pdfDelta_comb_;
   RooFormulaVar buEff_comb_;
   RooFormulaVar buPartialEff_comb_;

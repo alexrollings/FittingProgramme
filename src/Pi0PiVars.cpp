@@ -1397,21 +1397,28 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
               .Bu2Dst0h_D0pi0_WN_thresholdDelta(),
           NeutralVars<Neutral::pi0>::Get(uniqueId_).Bu2Dst0h_D0pi0_WN_cDelta(),
           *Bu2Dst0h_D0pi0_WN_aDelta_, *Bu2Dst0h_D0pi0_WN_bDelta_),
-      pdfDelta_comb_(
-          ("pdfDelta_comb_" +
+      fracPdfFlat_comb_(
+          ("fracPdfFlat_comb_" +
            ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
-          "", RooArgList(pdfDeltaPeak_D0pi0_comb_, pdfDeltaFlat_comb_),
-          NeutralVars<Neutral::pi0>::Get(uniqueId_).fracPdfPeak_comb()),
+          "", "(@0*((@1+@2)/@3))/(1+(@0*((@1+@2)/@3)))",
+          RooArgList(
+              NeutralVars<Neutral::pi0>::Get(uniqueId_).bkgFracGlobal_WN(),
+              *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+              *mcEff_Bu2Dst0h_D0pi0_)),
+      pdfDelta_comb_(("pdfDelta_comb_" +
+                      ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
+                         .c_str(),
+                     "",
+                     RooArgList(pdfDeltaFlat_comb_, pdfDeltaPeak_D0pi0_comb_),
+                     fracPdfFlat_comb_),
       buEff_comb_(
           ("buEff_comb_" + ComposeName(uniqueId_, Neutral::pi0, Bachelor::pi))
               .c_str(),
           "@0*@2 + @1*(1-@2)",
-          RooArgList(
-              *buEffBu2Dst0h_D0pi0_, *buEffBu2Dst0h_D0pi0_WN_,
-              NeutralVars<Neutral::pi0>::Get(uniqueId_).fracPdfPeak_comb())),
+          RooArgList(*buEffBu2Dst0h_D0pi0_WN_, *buEffBu2Dst0h_D0pi0_,
+                     fracPdfFlat_comb_)),
       buPartialEff_comb_() {
-  std::cout << "EFFICIENCIES = \n";
-  buEff_comb_.Print();
-  buPartialEff_comb_.Print();
+  std::cout << "WN FRAC COMB = \n";
+  fracPdfFlat_comb_.Print();
 }

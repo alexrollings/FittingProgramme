@@ -582,7 +582,7 @@ class NeutralVars {
   // -------------------- Combinatorial -------------------- //
   RooGaussian &pdfBu_comb() { return pdfBu_comb_; }
   RooGaussian &pdfBuPartial_comb() { return pdfBuPartial_comb_; }
-  RooRealVar &fracPdfPeak_comb() { return *fracPdfPeak_comb_; }
+  // RooRealVar &fracPdfPeak_comb() { return *fracPdfPeak_comb_; }
   RooRealVar &deltaEff_comb() { return *deltaEff_comb_; }
 
  private:
@@ -1027,7 +1027,7 @@ class NeutralVars {
   // std::shared_ptr<RooRealVar> comb_aDelta_;
   // std::shared_ptr<RooRealVar> comb_bDelta_;
   // std::shared_ptr<RooRealVar> comb_cDelta_;
-  std::shared_ptr<RooRealVar> fracPdfPeak_comb_;
+  // std::shared_ptr<RooRealVar> fracPdfPeak_comb_;
   std::shared_ptr<RooRealVar> deltaEff_comb_;
 };
 

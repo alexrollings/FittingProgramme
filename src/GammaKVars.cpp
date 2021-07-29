@@ -2571,27 +2571,33 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                              .Bu2Dst0h_D0pi0_WN_cDelta(),
                          *Bu2Dst0h_D0pi0_WN_aDelta_,
                          *Bu2Dst0h_D0pi0_WN_bDelta_),
-      pdfDelta_comb_(
-          ("pdfDelta_comb_" +
+      fracPdfFlat_comb_(
+          ("fracPdfFlat_comb_" +
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
-          "", RooArgList(pdfDeltaPeak_comb_, pdfDeltaFlat_comb_),
-          NeutralVars<Neutral::gamma>::Get(uniqueId_).fracPdfPeak_comb()),
+          "", "(@0*((@1+@2)/(@3+@4)))/(1+(@0*((@1+@2)/(@3+@4))))",
+          RooArgList(
+              NeutralVars<Neutral::gamma>::Get(uniqueId_).bkgFracGlobal_WN(),
+              *mcEff_Bu2Dst0h_D0pi0_WN_, *mcEff_Bu2Dst0h_D0gamma_WN_,
+              *mcEff_Bu2Dst0h_D0pi0_, *mcEff_Bu2Dst0h_D0gamma_)),
+      pdfDelta_comb_(("pdfDelta_comb_" +
+                      ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+                         .c_str(),
+                     "", RooArgList(pdfDeltaFlat_comb_, pdfDeltaPeak_comb_),
+                     fracPdfFlat_comb_),
       buEff_comb_(
           ("buEff_comb_" + ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "@0*@2 + @1*(1-@2)",
-          RooArgList(
-              *buEffBu2Dst0h_D0gamma_, *buEffBu2Dst0h_D0pi0_WN_,
-              NeutralVars<Neutral::gamma>::Get(uniqueId_).fracPdfPeak_comb())),
+          RooArgList(*buEffBu2Dst0h_D0pi0_WN_, *buEffBu2Dst0h_D0gamma_,
+                     fracPdfFlat_comb_)),
       buPartialEff_comb_(
-          ("buPartialEff_comb_" + ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
+          ("buPartialEff_comb_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::k))
               .c_str(),
           "@0*@2 + @1*(1-@2)",
-          RooArgList(
-              *buPartialEffBu2Dst0h_D0pi0_, *buPartialEffBu2Dst0h_D0pi0_WN_,
-              NeutralVars<Neutral::gamma>::Get(uniqueId_).fracPdfPeak_comb())) {
-        std::cout << "EFFICIENCIES = \n";
-        buEff_comb_.Print();
-        buPartialEff_comb_.Print();
+          RooArgList(*buPartialEffBu2Dst0h_D0pi0_WN_,
+                     *buPartialEffBu2Dst0h_D0pi0_, fracPdfFlat_comb_)) {
+  std::cout << "WN FRAC COMB = \n";
+  fracPdfFlat_comb_.Print();
 }

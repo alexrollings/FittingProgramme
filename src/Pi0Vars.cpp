@@ -1281,15 +1281,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       comb_meanBuPartial_(),
       comb_sigmaBuPartial_(),
       pdfBuPartial_comb_(),
-      fracPdfPeak_comb_(Params::Get().CreateFloating(
-          "fracPdfPeak_comb", uniqueId_, Neutral::pi0, 0.5, 0, 1)),
+      // fracPdfPeak_comb_(Params::Get().CreateFloating(
+      //     "fracPdfPeak_comb", uniqueId_, Neutral::pi0, 0.5, -1, 1)),
       deltaEff_comb_(Params::Get().CreateFixed(
           "deltaEff_comb", uniqueId_, Neutral::pi0,
           (Configuration::Get().buDeltaHigh() -
            Configuration::Get().buDeltaLow()) /
               (Configuration::Get().buDeltaMass().getMax() -
                Configuration::Get().buDeltaMass().getMin()),
-          0, Systematic::NA, Sign::same)) {
-  std::cout << "EFFICIENCIES = \n";
-  deltaEff_comb_->Print();
-}
+          0, Systematic::NA, Sign::same)) {}
