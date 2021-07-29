@@ -558,6 +558,8 @@ class NeutralBachelorVars {
   }
   // -------------------- Combinatorial -------------------- //
   RooAddPdf &pdfDelta_comb() { return pdfDelta_comb_; }
+  RooFormulaVar &buEff_comb() { return buEff_comb_; }
+  RooFormulaVar &buPartialEff_comb() { return buEff_comb_; }
 
  private:
   int uniqueId_;
@@ -1004,7 +1006,11 @@ class NeutralBachelorVars {
   RooDstD0BG pdfDeltaFlat_comb_;
   RooAddPdf pdfDeltaPeak_D0pi0_comb_;
   RooAddPdf pdfDeltaPeak_D0gamma_comb_;
+  RooFormulaVar fracPdfPeak_D0pi0_comb_;
+  RooAddPdf pdfDeltaPeak_comb_;
   RooAddPdf pdfDelta_comb_;
+  RooFormulaVar buEff_comb_;
+  RooFormulaVar buPartialEff_comb_;
 };
 
 template <>
