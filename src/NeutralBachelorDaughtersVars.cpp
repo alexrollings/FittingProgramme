@@ -114,8 +114,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
     NeutralBachelorDaughtersVarsImpl(int uniqueId)
     : A_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
-          Daughters::kpi, 0, 0.0008, 0.0003, Systematic::A_pi_Kpi_Bu2Dst0h_D0gamma,
-          Sign::none)),
+          Daughters::kpi, 0, 0.0008, 0.0003,
+          Systematic::A_pi_Kpi_Bu2Dst0h_D0gamma, Sign::none)),
       A_Bu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "A_Bu2Dst0h_D0pi0", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
           0, 0.0003, 0.0008, Systematic::A_pi_Kpi_Bu2Dst0h_D0pi0, Sign::none)),
@@ -128,18 +128,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       // A_Bu2D0hst_(Params::Get().CreateFixed(
       //     "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
       //     0.0008, Systematic::A_pi_Kpi_Bu2D0hst, Sign::none)),
-      A_Bu2D0hst_(Params::Get().CreateFloating(
-          "A_Bu2D0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
-          -1, 1)),
+      A_Bu2D0hst_(Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
+                                               Bachelor::pi, Daughters::kpi, 0,
+                                               -1, 1)),
       A_Bu2Dst0hst_(Params::Get().CreateFixed(
           "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
           0.001, Systematic::A_pi_Kpi_Bu2Dst0hst, Sign::none)),
       // A_Bu2Dst0hst_(Params::Get().CreateFloating(
-      //     "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi, 0,
-      //     -1, 1)),
+      //     "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::pi, Daughters::kpi,
+      //     0, -1, 1)),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::pi, Daughters::kpi, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
@@ -173,6 +176,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       a_Lb2Omegach_Lcpi0_(nullptr),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kpi))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0gamma_(
           Make_N_Bu2Dst0pi_D0gamma_D02kpi<_neutral>(uniqueId)),
       // N_tot_Bu2Dst0h_D0pi0_(Make_N_Bu2Dst0pi_D0pi0_D02kpi<_neutral>(
@@ -191,6 +199,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::pi,
+                                               Daughters::kpi, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -310,6 +321,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       //     0.001, Systematic::A_pi_Kpi_Bu2Dst0hst, Sign::none)),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::pi, Daughters::pik, 0, -1,
+                                           1)),
       A_Lb2Omegach_Lcpi0_(nullptr),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(nullptr),
@@ -329,6 +343,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       a_Lb2Omegach_Lcpi0_(nullptr),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0gamma_(Make_N_tot_pik<_neutral, Bachelor::pi>(
           uniqueId, "N_tot_Bu2Dst0h_D0gamma_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -387,6 +406,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::pi,
+                                               Daughters::pik, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -690,6 +712,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           BachelorVars<Bachelor::pi>::Get(uniqueId).A_CP_Lb2Omegach_Lcpi0())),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::pi, Daughters::kk, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -727,6 +752,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
           *A_Lb2Omegach_Lcpi0_)),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
           "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
           Daughters::kk,
@@ -797,6 +827,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::pi,
+                                               Daughters::kk, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -906,6 +939,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::pi, Daughters::pipi, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
@@ -939,6 +975,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       a_Lb2Omegach_Lcpi0_(nullptr),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0gamma_(Params::Get().CreateFloating(
           "N_tot_Bu2Dst0h_D0gamma", uniqueId, _neutral, Bachelor::pi,
           Daughters::pipi,
@@ -1010,6 +1051,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::pi,
+                                               Daughters::pipi, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -1117,6 +1161,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::k, Daughters::kpi, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0pi0_" +
@@ -1142,6 +1189,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       a_Lb2Omegach_Lcpi0_(nullptr),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1228,6 +1280,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::k,
+                                               Daughters::kpi, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -1361,6 +1416,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       A_Bs2D0Kst0_(Params::Get().CreateFixed("A_Bs2D0Kst0", uniqueId, _neutral,
                                             Bachelor::k, Daughters::pik, 0, 0,
                                             Systematic::NA, Sign::none)),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::k, Daughters::pik, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(nullptr),
       a_Bu2Dst0h_WN_(nullptr),
@@ -1391,6 +1449,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
               .c_str(),
           *A_Bs2D0Kst0_)),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_pik<_neutral, Bachelor::k>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
@@ -1447,6 +1510,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::k,
+                                               Daughters::pik, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -1626,6 +1692,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       A_Bs2D0Kst0_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                                Daughters::pik>::Get(uniqueId)
                       .A_Bs2D0Kst0_GetPointer()),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::k, Daughters::kk, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
@@ -1671,6 +1740,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           *A_Bs2D0Kst0_)),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_k_CP<_neutral, Daughters::kk>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1724,6 +1798,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
               .R_Dst0KDst0pi_Lb2Omegach_Lcpi0())),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::k,
+                                               Daughters::kk, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -1824,6 +1901,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       A_Bs2D0Kst0_(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
                                                Daughters::pik>::Get(uniqueId)
                       .A_Bs2D0Kst0_GetPointer()),
+      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
+                                           Bachelor::k, Daughters::pipi, 0, -1,
+                                           1)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
@@ -1865,6 +1945,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
               .c_str(),
           *A_Bs2D0Kst0_)),
+      a_comb_(MakeLittleAsym(
+          ("a_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+              .c_str(),
+          *A_comb_)),
       N_tot_Bu2Dst0h_D0pi0_(Make_N_tot_k_CP<_neutral, Daughters::pipi>(
           uniqueId, "N_tot_Bu2Dst0h_D0pi0_",
           NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
@@ -1913,6 +1998,9 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+                                               _neutral, Bachelor::k,
+                                               Daughters::pipi, 100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
