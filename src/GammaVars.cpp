@@ -162,7 +162,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           Mode::Bu2Dst0pi_D0pi0, Systematic::Bu2Dst0h_D0pi0_PdfBu, Sign::same)),
       Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFloating(
           "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
-          Mode::Bu2Dst0pi_D0pi0, 5280, 5310)),
+          Mode::Bu2Dst0pi_D0pi0, 5270, 5310)),
       // Bu2Dst0h_D0pi0_mean1BuPartial_(Params::Get().CreateFixed(
       //     "Bu2Dst0h_D0pi0_mean1BuPartial", uniqueId_, Neutral::gamma,
       //     5.2983e+03, 2.18e-01, Systematic::Bu2Dst0h_D0pi0_PdfBuPartial_Mean,
