@@ -1407,21 +1407,20 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                            Bachelor::k, Daughters::pik, 0.0,
                                            0.0, Systematic::NA, Sign::none)),
       // HFLAV: A_ADS+, BF average of B+ and B0
-    // 50% extra uncertainty for non-K* contributions
+      // 50% extra uncertainty for non-K* contributions
       A_Bu2D0hst_(Params::Get().CreateFixed(
           "A_Bu2D0hst", uniqueId, _neutral, Bachelor::k, Daughters::pik, -0.69,
           0.50, Systematic::A_K_piK_Bu2D0hst, Sign::none)),
       A_Bu2Dst0hst_(nullptr),
       A_Lb2Omegach_Lcpi0_(nullptr),
       A_Bs2Dst0Kst0_(Params::Get().CreateFixed(
-          "A_Bs2Dst0Kst0", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0, 0,
-          Systematic::NA, Sign::none)),
+          "A_Bs2Dst0Kst0", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0,
+          0, Systematic::NA, Sign::none)),
       A_Bs2D0Kst0_(Params::Get().CreateFixed("A_Bs2D0Kst0", uniqueId, _neutral,
-                                            Bachelor::k, Daughters::pik, 0, 0,
-                                            Systematic::NA, Sign::none)),
-      A_comb_(Params::Get().CreateFloating("A_comb", uniqueId, _neutral,
-                                           Bachelor::k, Daughters::pik, 0, -1,
-                                           1)),
+                                             Bachelor::k, Daughters::pik, 0, 0,
+                                             Systematic::NA, Sign::none)),
+      A_comb_(Params::Get().CreateFloating(
+          "A_comb", uniqueId, _neutral, Bachelor::k, Daughters::pik, 0, -1, 1)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(nullptr),
       a_Bu2Dst0h_WN_(nullptr),
@@ -1504,18 +1503,31 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                        Daughters::kpi>::Get(uniqueId)
               .N_tot_Bu2Dst0h_D0pi0())),
       N_tot_Bu2Dst0h_D0pi0_WN_D02pik_(
-        Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
-            uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
-            NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
-                                         Daughters::kpi>::Get(uniqueId)
-                .N_tot_Bu2Dst0h_D0pi0_WN())),
+          Make_N_tot_FAVasSUP<_neutral, Bachelor::k>(
+              uniqueId, "N_tot_Bu2Dst0h_D0pi0_WN_D02pik_",
+              NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                           Daughters::kpi>::Get(uniqueId)
+                  .N_tot_Bu2Dst0h_D0pi0_WN())),
       N_tot_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
-      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
-                                               _neutral, Bachelor::k,
-                                               Daughters::pik, 100, 0, 10000)),
+      fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
+                                          Bachelor::pi, Daughters::kpi, 1.78,
+                                          0.18, Systematic::NA, Sign::same)),
+      N_tot_comb_(new RooFormulaVar(
+          ("N_tot_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+                                                  Daughters::kpi>::Get(uniqueId)
+                         .N_tot_comb(),
+                     *fracComb_))),
+      // N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+      // _neutral,
+      //                                          Bachelor::k, Daughters::pik,
+      //                                          100, 0, 10000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
