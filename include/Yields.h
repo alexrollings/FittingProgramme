@@ -885,14 +885,14 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bu_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_trueId_Bu_comb_(Make_N_1D<neutral, bachelor, daughters, charge>(
           uniqueId_, "N_trueId_Bu_comb_", N_trueId_comb_,
-          NeutralVars<neutral>::Get(uniqueId_).buEff_comb())),
+          NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buEff_comb())),
       // N_trueId_Bu_comb_(new RooFormulaVar(
       //     ("N_trueId_Bu_comb_" +
       //      ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
       //         .c_str(),
       //     "", "@0*@1",
       //     RooArgList(*N_trueId_Delta_comb_,
-      //                NeutralVars<neutral>::Get(uniqueId_).buEff_comb()))),
+      //                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buEff_comb()))),
       N_trueId_BuPartial_Bu2Dst0h_D0gamma_(nullptr),
       N_trueId_BuPartial_Bu2Dst0h_D0pi0_(nullptr),
       N_trueId_BuPartial_Bu2Dst0h_D0gamma_WN_(nullptr),
@@ -1175,14 +1175,14 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
     N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(
         (Make_N_1D<neutral, bachelor, daughters, charge>(
             uniqueId_, "N_trueId_BuPartial_comb_", N_trueId_comb_,
-            NeutralVars<neutral>::Get(uniqueId_).buPartialEff_comb())));
+            NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buPartialEff_comb())));
     // N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
     //     ("N_trueId_BuPartial_comb_" +
     //      ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
     //         .c_str(),
     //     "", "@0*@1",
     //     RooArgList(*N_trueId_Delta_comb_,
-    //                NeutralVars<neutral>::Get(uniqueId_).buEff_comb())));
+    //                NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buEff_comb())));
     if (daughters == Daughters::kk) {
       N_trueId_BuPartial_Lb2Omegach_Lcpi0_ = std::unique_ptr<RooFormulaVar>(
           Make_N_1D<neutral, bachelor, daughters, charge>(

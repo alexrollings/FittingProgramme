@@ -919,8 +919,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // -------------------- Bs2Dst0Kst0 -------------------- //
       fracKst0_Bs2Dst0Kpi_(Params::Get().CreateFixed(
           "fracKst0_Bs2Dst0Kpi", uniqueId_, Neutral::gamma,
-          Configuration::Get().fracKst0(), 0.1, Systematic::NA,
-          Sign::same)),
+          Configuration::Get().fracKst0(), 0.1, Systematic::NA, Sign::same)),
       // -------------------- Bs2Dst0Kst0_D0pi0 -------------------- //
       Bs2Dst0Kst0_D0pi0_a1Delta_(Params::Get().CreateFixed(
           "Bs2Dst0Kst0_D0pi0_a1Delta", uniqueId_, Neutral::gamma, 3.4363e-01,
@@ -1033,7 +1032,7 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       //                  Efficiency::mcEff),
       //     ReturnMCEffs(Mode::Bs2Dst0Kpi_D0pi0, Neutral::gamma, Bachelor::k,
       //                  Efficiency::mcEffErr),
-          // Systematic::NA, Sign::same)),
+      // Systematic::NA, Sign::same)),
       orEffBs2Dst0Kpi_D0pi0_(Params::Get().CreateFixed(
           "orEffBs2Dst0Kpi_D0pi0_", uniqueId_, Neutral::gamma,
           ReturnBoxEffs(Mode::Bs2Dst0Kpi_D0pi0, Bachelor::k, Efficiency::orEff,
@@ -1070,7 +1069,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                        Efficiency::mcEffErr),
           Systematic::mcEffs_Bkg, Sign::same)),
       // mcEff_Bs2Dst0Kst0_D0pi0_(
-      //     ("mcEff_Bs2Dst0Kst0_D0pi0_" + ComposeName(uniqueId_, Neutral::gamma))
+      //     ("mcEff_Bs2Dst0Kst0_D0pi0_" + ComposeName(uniqueId_,
+      //     Neutral::gamma))
       //         .c_str(),
       //     "", "(@0*@1)+((1-@0)*@2)",
       //     RooArgSet(*fracKst0_Bs2Dst0Kpi_, *mcEff_Bs2Dst0Kst0_res_D0pi0_,
@@ -1165,9 +1165,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
           *Bs2Dst0Kst0_D0gamma_fracPdf1Bu_),
       // mcEff_Bs2Dst0Kst0_res_D0gamma_(Params::Get().CreateFixed(
       //     "mcEff_Bs2Dst0Kst0_res_D0gamma", uniqueId_, Neutral::gamma,
-      //     ReturnMCEffs(Mode::Bs2Dst0Kst0_D0gamma, Neutral::gamma, Bachelor::k,
+      //     ReturnMCEffs(Mode::Bs2Dst0Kst0_D0gamma, Neutral::gamma,
+      //     Bachelor::k,
       //                  Efficiency::mcEff),
-      //     ReturnMCEffs(Mode::Bs2Dst0Kst0_D0gamma, Neutral::gamma, Bachelor::k,
+      //     ReturnMCEffs(Mode::Bs2Dst0Kst0_D0gamma, Neutral::gamma,
+      //     Bachelor::k,
       //                  Efficiency::mcEffErr),
       //     Systematic::NA, Sign::same)),
       orEffBs2Dst0Kst0_res_D0gamma_(Params::Get().CreateFixed(
@@ -2012,40 +2014,45 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
                      buPartialEffBs2Dst0Kst0_WN_)),
       // RooArgList(*buPartialEffBs2Dst0Kst0_D0pi0_)),
       // -------------------- Combinatorial -------------------- //
-      comb_meanBu_(Params::Get().CreateFloating(
-          "comb_meanBu", uniqueId_, Neutral::gamma, 5185, 5100, 5300)),
-      comb_sigmaBu_(Params::Get().CreateFloating(
-          "comb_sigmaBu", uniqueId_, Neutral::gamma, 200, 100, 400)),
+      // comb_meanBu_(Params::Get().CreateFloating(
+      //     "comb_meanBu", uniqueId_, Neutral::gamma, 5185, 5100, 5500)),
+      // comb_sigmaBu_(Params::Get().CreateFloating("comb_sigmaBu", uniqueId_,
+      //                                            Neutral::gamma, 200, 10,
+      //                                            400)),
+      comb_meanBu_(Params::Get().CreateFixed("comb_meanBu", uniqueId_,
+                                             Neutral::gamma, 5200, 0,
+                                             Systematic::NA, Sign::same)),
+      comb_sigmaBu_(Params::Get().CreateFixed("comb_sigmaBu", uniqueId_,
+                                              Neutral::gamma, 300, 0,
+                                              Systematic::NA, Sign::same)),
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
           Configuration::Get().buDeltaMass(), *comb_meanBu_, *comb_sigmaBu_),
-      comb_meanBuPartial_(Params::Get().CreateFloating(
-          "comb_meanBuPartial", uniqueId_, Neutral::gamma, 5185, 5100, 5300)),
-      comb_sigmaBuPartial_(Params::Get().CreateFloating(
-          "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 200, 100, 400)),
+      // comb_meanBuPartial_(Params::Get().CreateFloating(
+      //     "comb_meanBuPartial", uniqueId_, Neutral::gamma, 5185, 5100,
+      //     5500)),
+      // comb_sigmaBuPartial_(Params::Get().CreateFloating(
+      //     "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 200, 10, 400)),
+      comb_meanBuPartial_(Params::Get().CreateFixed(
+          "comb_meanBuPartial", uniqueId_, Neutral::gamma, 5200, 0,
+          Systematic::NA, Sign::same)),
+      comb_sigmaBuPartial_(Params::Get().CreateFixed(
+          "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 300, 0,
+          Systematic::NA, Sign::same)),
       pdfBuPartial_comb_(
-          ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          Configuration::Get().buDeltaMass(), *comb_meanBuPartial_, *comb_sigmaBuPartial_),
-      fracPdfPeak_D0pi0_comb_(
-          ("fracPdfPeak_D0pi0_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          0.3, 0, 1),
-      fracPdfPeak_D0gamma_comb_(
-          ("fracPdfPeak_D0gamma_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          0.3, 0, 1),
-      buEff_comb_(
-          ("buEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          0.2, 0, 1),
-      buPartialEff_comb_(
-          ("buPartialEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-          0.2, 0, 1),
-      deltaEff_comb_(nullptr) {
-  if (Configuration::Get().fitBuPartial() == true) {
-    deltaEff_comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-        "1-@0-@1", RooArgSet(buEff_comb_, buPartialEff_comb_)));
-  } else {
-    deltaEff_comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
-        ("deltaEff_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
-        "1-@0", RooArgSet(buEff_comb_)));
-  }
+          ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma))
+              .c_str(),
+          "", Configuration::Get().buDeltaMass(), *comb_meanBuPartial_,
+          *comb_sigmaBuPartial_),
+      fracPdfPeak_comb_(Params::Get().CreateFloating(
+          "fracPdfPeak_comb", uniqueId_, Neutral::gamma, 0.5, 0, 1)),
+      deltaEff_comb_(Params::Get().CreateFixed(
+          "deltaEff_comb", uniqueId_, Neutral::gamma,
+          (Configuration::Get().buDeltaHigh() -
+           Configuration::Get().buDeltaLow()) /
+              (Configuration::Get().buDeltaMass().getMax() -
+               Configuration::Get().buDeltaMass().getMin()),
+          0, Systematic::NA, Sign::same)) {
+  std::cout << "EFFICIENCIES = \n";
+  deltaEff_comb_->Print();
 }
