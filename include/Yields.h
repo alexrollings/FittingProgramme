@@ -329,6 +329,7 @@ class Yields {
   RooFormulaVar &N_split_Bu2Dst0h_D0gamma_WN_D02pik() {
     return *N_split_Bu2Dst0h_D0gamma_WN_D02pik_;
   }
+  RooFormulaVar &N_split_comb() { return *N_split_comb_; }
 
   RooFormulaVar &N_trueId_Bu2Dst0h_D0gamma() {
     return *N_trueId_Bu2Dst0h_D0gamma_;
@@ -579,6 +580,7 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0pi0_WN_D02pik_;
   std::unique_ptr<RooFormulaVar> N_split_Bu2Dst0h_D0gamma_WN_D02pik_;
+  std::unique_ptr<RooFormulaVar> N_split_comb_;
 
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_;
@@ -595,7 +597,7 @@ class Yields {
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0gamma_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0pi0_WN_D02pik_;
   std::unique_ptr<RooFormulaVar> N_trueId_Bu2Dst0h_D0gamma_WN_D02pik_;
-  RooRealVar N_trueId_comb_;
+  std::unique_ptr<RooFormulaVar> N_trueId_comb_;
 
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0gamma_;
   std::unique_ptr<RooFormulaVar> N_trueId_Delta_Bu2Dst0h_D0pi0_;
@@ -752,6 +754,14 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_split_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_split_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
       N_split_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
+      N_split_comb_(Make_N_split<neutral, bachelor, daughters, charge>(
+          uniqueId_, "N_split_comb_",
+          NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+              uniqueId_)
+              .N_tot_comb(),
+          NeutralBachelorDaughtersVars<neutral, bachelor, daughters>::Get(
+              uniqueId_)
+              .a_comb())),
       N_trueId_Bu2Dst0h_D0gamma_(
           Make_N_trueId<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_trueId_Bu2Dst0h_D0gamma_",
@@ -781,11 +791,8 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bu2Dst0h_D0gamma_D02pik_(nullptr),
       N_trueId_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
       N_trueId_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
-      N_trueId_comb_(
-          ("N_trueId_comb_" +
-           ComposeName(uniqueId_, neutral, bachelor, daughters, charge))
-              .c_str(),
-          "", 100, 0, 10000),
+      N_trueId_comb_(Make_N_trueId<neutral, bachelor, daughters, charge>(
+          uniqueId_, "N_trueId_comb_", *N_split_comb_)),
       N_trueId_Delta_Bu2Dst0h_D0gamma_(
           Make_N_1D<neutral, bachelor, daughters, charge>(
               uniqueId_, "N_trueId_Delta_Bu2Dst0h_D0gamma_",
@@ -832,7 +839,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Delta_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
       N_trueId_Delta_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_trueId_Delta_comb_(Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Delta_comb_", N_trueId_comb_,
+          uniqueId_, "N_trueId_Delta_comb_", *N_trueId_comb_,
           NeutralVars<neutral>::Get(uniqueId_).deltaEff_comb())),
       // N_trueId_Delta_comb_(new RooRealVar(
       //     ("N_trueId_Delta_comb_" +
@@ -884,7 +891,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
       N_trueId_Bu_Bu2Dst0h_D0pi0_WN_D02pik_(nullptr),
       N_trueId_Bu_Bu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       N_trueId_Bu_comb_(Make_N_1D<neutral, bachelor, daughters, charge>(
-          uniqueId_, "N_trueId_Bu_comb_", N_trueId_comb_,
+          uniqueId_, "N_trueId_Bu_comb_", *N_trueId_comb_,
           NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buEff_comb())),
       // N_trueId_Bu_comb_(new RooFormulaVar(
       //     ("N_trueId_Bu_comb_" +
@@ -1174,7 +1181,7 @@ Yields<neutral, bachelor, daughters, charge>::Yields(int uniqueId)
                 .buPartialEffBu2Dst0hst()));
     N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(
         (Make_N_1D<neutral, bachelor, daughters, charge>(
-            uniqueId_, "N_trueId_BuPartial_comb_", N_trueId_comb_,
+            uniqueId_, "N_trueId_BuPartial_comb_", *N_trueId_comb_,
             NeutralBachelorVars<neutral, bachelor>::Get(uniqueId_).buPartialEff_comb())));
     // N_trueId_BuPartial_comb_ = std::unique_ptr<RooFormulaVar>(new RooFormulaVar(
     //     ("N_trueId_BuPartial_comb_" +
