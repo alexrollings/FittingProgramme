@@ -96,10 +96,17 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
   }
   if (Configuration::Get().blindFit() == true) {
     if (Configuration::Get().neutral() == Neutral::gamma) {
-      R_piK_Bu2Dst0h_D0gamma_Blind_ =
-          std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, bachelor, charge,
-              R_piK_init, min, 1));
+      if (bachelor == Bachelor::k && charge == Charge::minus) {
+        R_piK_Bu2Dst0h_D0gamma_Blind_ =
+            std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+                "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, bachelor, charge,
+                R_piK_init, -1, 1));
+      } else {
+        R_piK_Bu2Dst0h_D0gamma_Blind_ =
+            std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+                "R_piK_Bu2Dst0h_D0gamma_Blind", uniqueId_, bachelor, charge,
+                R_piK_init, min, 1));
+      }
       R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooUnblindUniform>(MakeBlind(
           ("R_piK_Bu2Dst0h_D0gamma_" + ComposeName(uniqueId_, bachelor, charge))
               .c_str(),
@@ -121,9 +128,15 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
         R_piK_init * 0.1, *R_piK_Bu2Dst0h_D0pi0_Blind_));
   } else {
     if (Configuration::Get().neutral() == Neutral::gamma) {
-      R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
-          Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
-                                       bachelor, charge, R_piK_init, min, 1));
+      if (bachelor == Bachelor::k && charge == Charge::minus) {
+        R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+            Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
+                                         bachelor, charge, R_piK_init, -1, 1));
+      } else {
+        R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+            Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
+                                         bachelor, charge, R_piK_init, min, 1));
+      }
     }
     if (Configuration::Get().neutral() == Neutral::gamma &&
         ((bachelor == Bachelor::k && charge == Charge::plus) ||
