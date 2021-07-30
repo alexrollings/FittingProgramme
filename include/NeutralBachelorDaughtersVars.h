@@ -460,6 +460,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kk> {
   std::shared_ptr<RooAbsReal> N_tot_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2Dst0Kst0_;
   std::shared_ptr<RooAbsReal> N_tot_Bs2D0Kst0_;
+  std::shared_ptr<RooRealVar> fracComb_;
   std::shared_ptr<RooAbsReal> N_tot_comb_;
   std::shared_ptr<RooRealVar> Bu2D0hst_mean1Bu_;
   std::shared_ptr<RooFormulaVar> Bu2D0hst_mean2Bu_;
@@ -631,6 +632,9 @@ class NeutralBachelorDaughtersVars {
   }
   std::shared_ptr<RooAbsReal> A_Bs2D0Kst0_GetPointer() {
     return impl_.A_Bs2D0Kst0_;
+  }
+  std::shared_ptr<RooAbsReal> A_comb_GetPointer() {
+    return impl_.A_comb_;
   }
 
   RooAbsReal &A_Bu2Dst0h_D0gamma() { return *impl_.A_Bu2Dst0h_D0gamma_; }
