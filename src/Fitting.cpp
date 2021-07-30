@@ -289,6 +289,12 @@ int main(int argc, char **argv) {
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
+      std::cout << "    -BsSyst and fracKst0=<0.7/0.9> to run fit to evaluate "
+                   "Bs2Dst0Kst0 systematic"
+                << "\n";
+      std::cout << "    -CombSyst to run fit including combinatorial component "
+                   "to evaluate combinatorial systematic"
+                << "\n";
       std::cout << " ----------------------------------------------------------"
                    "------------------------------------------------\n";
       std::cout << "\n";
@@ -422,7 +428,7 @@ int main(int argc, char **argv) {
         config.splitByCharge() = true;
       }
 
-      if (args("BsSyst", systematicArg)) {
+      if (args("BsSyst")) {
         std::cout << "Running Bs systematic fit.\n";
         config.runBsSystematic() = true;
         float fracKst0Arg;
@@ -437,7 +443,7 @@ int main(int argc, char **argv) {
         std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
                      "with fracKst0 = "
                   << config.fracKst0() << "\n";
-      } else if (args("CombSyst", systematicArg)) {
+      } else if (args("CombSyst")) {
         std::cout << "Running combinatorial systematic fit.\n";
         config.runCombSystematic() = true;
       } else if (args("systematic", systematicArg)) {
