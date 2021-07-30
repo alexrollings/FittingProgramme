@@ -86,7 +86,7 @@ def return_final_group(syst):
       'kBF_D0\S+': '$Rates$',
       'Statistical Error Correction': '$Corr$',
       'Bs Systematic': '$PDFs$',
-      'Combinatorial Systematic' : '$PDFs$'
+      'Combinatorial Systematic' : '$Comb$'
   }
   match = False
   for k, v in re_group_dict.items():
