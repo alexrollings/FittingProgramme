@@ -421,34 +421,34 @@ int main(int argc, char **argv) {
       if (chargeVec.size() > 1) {
         config.splitByCharge() = true;
       }
-      if (!args("systematic", systematicArg)) {
-        std::cout << "NOT running systematics.\n";
-      } else {
+
+      if (args("BsSyst", systematicArg)) {
+        std::cout << "Running Bs systematic fit.\n";
+        config.runBsSystematic() = true;
+        float fracKst0Arg;
+        if (!args("fracKst0", fracKst0Arg)) {
+          std::cerr
+              << "Must pass -fracKst0=<float> to run Bs2Dst0Kst0 systematic.\n";
+          return 1;
+        } else {
+          double fracKst0Double = round((double)fracKst0Arg * 10) / 10;
+          config.SetFracKst0(fracKst0Double);
+        }
+        std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
+                     "with fracKst0 = "
+                  << config.fracKst0() << "\n";
+      } else if (args("CombSyst", systematicArg)) {
+        std::cout << "Running combinatorial systematic fit.\n";
+        config.runCombSystematic() = true;
+      } else if (args("systematic", systematicArg)) {
         std::cout << "Running systematics.\n";
         config.runSystematics() = true;
-        config.SetNCPU(1);
+        config.SetNCPU(4);
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
           std::cerr << "systematic assignment failed, please specify.\n";
           return 1;
-        }
-        if (std::find(systematicVec.begin(), systematicVec.end(),
-                      Systematic::Bs2Dst0Kst0) != systematicVec.end()) {
-          config.runBsSystematic() = true;
-          float fracKst0Arg;
-          if (!args("fracKst0", fracKst0Arg)) {
-            std::cerr
-                << "Must pass -fracKst0=<float> to run Bs2Dst0Kst0 systematic.\n";
-            return 1;
-          } else {
-            double fracKst0Double = round((double)fracKst0Arg * 10)/10;
-            config.SetFracKst0(fracKst0Double);
-          }
-          config.runSystematics() = false;
-          std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
-                       "with fracKst0 = "
-                    << config.fracKst0() << "\n";
         }
         if (!args("nSyst", nSystArg)) {
           std::cout << "Running 1 systematic fit.\n";
@@ -713,7 +713,8 @@ int main(int argc, char **argv) {
     // Strategy(2) requires evaluation of hessian at every step: can set
     // strategy 0 then call MINOS after to calculate correct errors
     int nStrat = 2;
-    if (config.runBsSystematic() == true && config.splitByCharge() == false) {
+    if ((config.runBsSystematic() == true && config.splitByCharge() == false) ||
+        config.runCombSystematic() == true) {
       std::cout << "Strategy 1\n";
       nStrat = 1;
     }
@@ -723,6 +724,7 @@ int main(int argc, char **argv) {
         // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
         // RooFit::Minos(kTRUE)));
         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+        // RooFit::NumCPU(config.nCPU())));
     // if (config.neutral() == Neutral::pi0) {
     //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
     //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
@@ -791,7 +793,7 @@ int main(int argc, char **argv) {
       std::default_random_engine rng(rd());
       std::uniform_int_distribution<UInt_t> dist;
       UInt_t seed = dist(rng);
-      // UInt_t seed = 0xb17c840b;
+      // UInt_t seed = 0xede22da4;
       RooRandom::randomGenerator()->SetSeed(seed);
       std::stringstream filename;
       if (config.runToy() == true && pdfD1D == true) {
@@ -829,16 +831,16 @@ int main(int argc, char **argv) {
     std::map<Neutral, std::map<Mass, double> > yMaxMap;
     // LaTeXYields(config, pdfs, outputDir, dataFitResult);
     if (config.runSystematics() == false) {
-      if (config.runBsSystematic() == false) {
+      if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
         if (config.noFit() == false) {
           dataFitResult->Print("v");
         }
-        // std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-        // PlotLegend(config, colorMap, outputDir);
-        // for (auto &p : pdfs) {
-        //   Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-        //              dataFitResult.get(), yMaxMap);
-        // }
+        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+        PlotLegend(config, colorMap, outputDir);
+        for (auto &p : pdfs) {
+          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+                     dataFitResult.get(), yMaxMap);
+        }
       }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
@@ -909,6 +911,10 @@ int main(int argc, char **argv) {
                      config.ReturnBoxString() + "_" +
                      EnumToString(Systematic::Bs2Dst0Kst0) + "_" +
                      to_string_with_precision(config.fracKst0(), 1) + ".root";
+          dataFitResult->SetName("SystResult");
+        } else if (config.runCombSystematic() == true) {
+          outFname = outputDir + "/results/SystResult_" +
+                     config.ReturnBoxString() + "_combinatorial.root";
           dataFitResult->SetName("SystResult");
         } else {
           outFname = outputDir + "/results/DataResult_" +
