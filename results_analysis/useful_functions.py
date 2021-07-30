@@ -36,7 +36,8 @@ def return_group_breakdown(syst):
       # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': 'Branching fractions',
       'kBF_D0\S+': 'Branching fractions',
-      'Bs Systematic': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs'
+      'Bs Systematic': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs',
+      'Combinatorial Systematic' : 'Combinatorial'
   }
   match = False
   for k, v in re_group_dict.items():
@@ -84,7 +85,8 @@ def return_final_group(syst):
       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': '$Rates$',
       'kBF_D0\S+': '$Rates$',
       'Statistical Error Correction': '$Corr$',
-      'Bs Systematic': '$PDFs$'
+      'Bs Systematic': '$PDFs$',
+      'Combinatorial Systematic' : '$PDFs$'
   }
   match = False
   for k, v in re_group_dict.items():
@@ -121,6 +123,10 @@ def return_label(string):
           '$\\pion\\kaon$',
       'R_Dst0KDst0pi_Bu2Dst0h_kpi':
           '$R^{K\\pi}_{K/\\pi}$',
+      'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi':
+          '$R^{K\\pi,\\gamma}_{K/\\pi}$',
+      'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
+          '$R^{K\\pi,\\pi^{0}}_{K/\\pi}$',
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi':
           '$N_{(D^{*}\\rightarrow \\left[K\\pi\\right]_{D}\\gamma)\\pi^{\\pm}}$',
       'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kk':
