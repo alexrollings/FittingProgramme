@@ -286,6 +286,7 @@ class Configuration {
   void SetNCPU(int val) { nCPU_ = val; }
     
   bool &runBsSystematic() {  return runBsSystematic_; }
+  bool &runCombSystematic() {  return runCombSystematic_; }
   double fracKst0() { return fracKst0_; }
   void SetFracKst0(double val) { fracKst0_ = val; }
 
@@ -348,6 +349,7 @@ class Configuration {
   int nCPU_;
 
   bool runBsSystematic_;
+  bool runCombSystematic_;
   double fracKst0_;
 };
 

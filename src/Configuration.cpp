@@ -54,6 +54,7 @@ Configuration::Configuration()
       simpleFit_(false),
       nCPU_(4),
       runBsSystematic_(false),
+      runCombSystematic_(false),
       fracKst0_(0.8) {
   // k_A_CP_Bu2Dst0K_D0pi0_D02kpi(),
   // k_A_CP_Bu2Dst0K_D0gamma_D02kpi(),
