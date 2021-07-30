@@ -31,7 +31,7 @@ if __name__ == '__main__':
   parser.add_argument('-r',
                       '--result_dir',
                       type=str,
-                      help='Directory where data fit result and Bs systematics are stored (if running systematics)',
+                      help='Directory where data fit result and Bs and combinatorial systematics are stored (if running systematics)',
                       required=True)
   parser.add_argument('-p',
                       '--pull_fname',
@@ -124,6 +124,7 @@ if __name__ == '__main__':
   for obs in observables:
     for p in data_result.floatParsFinal():
       par_name = p.GetName()
+      # par_name = par_name.replace("_Blind", "")
       m0 = re.match(obs + '(_[A-Za-z0-9]+)+', par_name)
       if m0:
         # m1 = re.match('\S+Blind\S+', par_name)
@@ -283,6 +284,56 @@ if __name__ == '__main__':
               systBs = systBs_dict[p][f]
           v[group[g]] = systBs**2
           total_syst_dict[p][g_err_Bs] = systBs
+
+    g_err_comb = 'Combinatorial Systematic'
+    syst_comb_dict = {}
+    eval_comb_syst = False
+    result_comb = f'{result_dir}/SystResult_{box_str}_combinatorial.root'
+    if os.path.isfile(result_comb):
+      comb_file = TFile(result_comb)
+      comb_result = comb_file.Get('SystResult')
+      if comb_result != None:
+        covQual = comb_result.covQual()
+        fitStatus = comb_result.status()
+        if covQual >= 3 and fitStatus == 0:
+          eval_comb_syst = True
+          n_pars = 0
+          av_syst = 0
+          for par in comb_result.floatParsFinal():
+            par_name = par.GetName()[:-2]
+            if par_name in fit_result:
+              if par_name[:5] != 'N_tot' and par_name[:2] != 'BR':
+                n_pars = n_pars + 1
+                par_comb = par.getVal()
+                par_og = fit_result[par_name]['Value']
+                par_shift = (par_comb - par_og)/par_og
+                av_syst = av_syst + abs(par_shift)
+          av_syst = av_syst / n_pars
+          for par in comb_result.floatParsFinal():
+            par_name = par.GetName()[:-2]
+            if par_name in fit_result:
+              par_og = fit_result[par_name]['Value']
+              if par_name in syst_comb_dict:
+                syst_comb_dict[par_name] = par_og * av_syst
+              else:
+                syst_comb_dict[par_name] = par_og * av_syst
+        else:
+          print(f'{comb_file} result did not converge accurately')
+      else:
+        print(f'{comb_file} does not contain SystResult')
+    else:
+      print(f'{result_comb} does not exist')
+
+    print(syst_comb_dict)
+
+    if eval_comb_syst == True:
+      group = {'final': return_final_group(g_err_comb), 'breakdown': return_group_breakdown(g_err_comb)}
+      if return_final_group(g_err_comb) not in final_groups:
+        final_groups.append(return_final_group(g_err_comb))
+      for g in group_dict:
+        for p, v in group_dict[g].items():
+          v[group[g]] = syst_comb_dict[p]**2
+          total_syst_dict[p][g_err_comb] = syst_comb_dict[p]
 
     # If json already exists for formatted systs, load this
     json_fname_format = f'{syst_dir}/systematics_{neutral}_format.json'
