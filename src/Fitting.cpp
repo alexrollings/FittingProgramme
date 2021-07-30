@@ -292,7 +292,7 @@ int main(int argc, char **argv) {
       std::cout << "    -BsSyst and fracKst0=<0.7/0.9> to run fit to evaluate "
                    "Bs2Dst0Kst0 systematic"
                 << "\n";
-      std::cout << "    -CombSyst to run fit including combinatorial component "
+      std::cout << "    -combSyst to run fit including combinatorial component "
                    "to evaluate combinatorial systematic"
                 << "\n";
       std::cout << " ----------------------------------------------------------"
@@ -443,7 +443,7 @@ int main(int argc, char **argv) {
         std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
                      "with fracKst0 = "
                   << config.fracKst0() << "\n";
-      } else if (args("CombSyst")) {
+      } else if (args("combSyst")) {
         std::cout << "Running combinatorial systematic fit.\n";
         config.runCombSystematic() = true;
       } else if (args("systematic", systematicArg)) {
@@ -841,12 +841,12 @@ int main(int argc, char **argv) {
         if (config.noFit() == false) {
           dataFitResult->Print("v");
         }
-        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-        PlotLegend(config, colorMap, outputDir);
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-                     dataFitResult.get(), yMaxMap);
-        }
+        // std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+        // PlotLegend(config, colorMap, outputDir);
+        // for (auto &p : pdfs) {
+        //   Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+        //              dataFitResult.get(), yMaxMap);
+        // }
       }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
