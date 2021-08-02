@@ -409,12 +409,24 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pik>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      // N_tot_comb_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+      //                                          Daughters::kpi>::Get(uniqueId)
+      //                 .N_tot_comb_GetPointer()),
+      fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
+                                          Bachelor::pi, Daughters::pik, 1.45,
+                                          0.10, Systematic::NA, Sign::same)),
+      N_tot_comb_(new RooFormulaVar(
+          ("N_tot_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pik))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                                  Daughters::kpi>::Get(uniqueId)
+                         .N_tot_comb(),
+                     *fracComb_))),
       // N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
       //                                          _neutral, Bachelor::pi,
       //                                          Daughters::pik, 100, 0, 10000)),
-      N_tot_comb_(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
-                                               Daughters::kpi>::Get(uniqueId)
-                      .N_tot_comb_GetPointer()),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -719,8 +731,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                           Bachelor::pi, Daughters::kk, 0, 0,
-                                           Systematic::NA, Sign::none)),
+                                        Bachelor::pi, Daughters::kk, 0, 0,
+                                        Systematic::NA, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
            ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
@@ -833,9 +845,25 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
-      N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
-                                               _neutral, Bachelor::pi,
-                                               Daughters::kk, 100, -1000, 1000)),
+      // fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::pi, Daughters::kk, 0.66,
+      //                                     0.06, Systematic::NA, Sign::same)),
+      fracComb_(Params::Get().CreateFloating("fracComb", uniqueId, _neutral,
+                                          Bachelor::pi, Daughters::kk, 0.66,
+                                          -10, 10)),
+      N_tot_comb_(new RooFormulaVar(
+          ("N_tot_comb_" +
+           ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::kk))
+              .c_str(),
+          "", "@0*@1",
+          RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+                                                  Daughters::kpi>::Get(uniqueId)
+                         .N_tot_comb(),
+                     *fracComb_))),
+      // N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
+      //                                          _neutral, Bachelor::pi,
+      //                                          Daughters::kk, 100, -1000,
+      //                                          1000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
@@ -1057,6 +1085,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      // fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::pi, Daughters::pipi, 0.86,
+      //                                     0.07, Systematic::NA, Sign::same)),
+      // fracComb_(Params::Get().CreateFloating("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::pi, Daughters::pipi, 0.86,
+      //                                     -10, 10)),
+      // N_tot_comb_(new RooFormulaVar(
+      //     ("N_tot_comb_" +
+      //      ComposeName(uniqueId, _neutral, Bachelor::pi, Daughters::pipi))
+      //         .c_str(),
+      //     "", "@0*@1",
+      //     RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::pi,
+      //                                             Daughters::kpi>::Get(uniqueId)
+      //                    .N_tot_comb(),
+      //                *fracComb_))),
       N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
                                                _neutral, Bachelor::pi,
                                                Daughters::pipi, 100, -1000, 1000)),
@@ -1287,8 +1330,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
       fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
-                                          Bachelor::k, Daughters::kpi, 0.205,
-                                          0.021, Systematic::NA, Sign::same)),
+                                          Bachelor::k, Daughters::kpi, 0.31,
+                                          0.04, Systematic::NA, Sign::same)),
+      // fracComb_(Params::Get().CreateFloating("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::k, Daughters::kpi, 0.31,
+      //                                     -5, 5)),
       N_tot_comb_(new RooFormulaVar(
           ("N_tot_comb_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
@@ -1529,8 +1575,8 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
       fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
-                                          Bachelor::pi, Daughters::kpi, 1.78,
-                                          0.18, Systematic::NA, Sign::same)),
+                                          Bachelor::k, Daughters::pik, 2.00,
+                                          0.22, Systematic::NA, Sign::same)),
       N_tot_comb_(new RooFormulaVar(
           ("N_tot_comb_" +
            ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pik))
@@ -1830,11 +1876,14 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
       fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
-                                          Bachelor::k, Daughters::kpi, 1.25,
-                                          0.20, Systematic::NA, Sign::same)),
+                                          Bachelor::k, Daughters::kk, 1.27,
+                                          0.21, Systematic::NA, Sign::same)),
+      // fracComb_(Params::Get().CreateFloating("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::k, Daughters::kk, 1.27,
+      //                                     -5, 5)),
       N_tot_comb_(new RooFormulaVar(
           ("N_tot_comb_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kk))
               .c_str(),
           "", "@0*@1",
           RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
@@ -2041,9 +2090,24 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
       N_tot_Lb2Omegach_Lcpi0_(nullptr),
       N_tot_Bs2Dst0Kst0_(nullptr),
       N_tot_Bs2D0Kst0_(nullptr),
+      // fracComb_(Params::Get().CreateFixed("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::k, Daughters::pipi, 0.95,
+      //                                     0.11, Systematic::NA, Sign::same)),
+      // fracComb_(Params::Get().CreateFloating("fracComb", uniqueId, _neutral,
+      //                                     Bachelor::k, Daughters::pipi, 0.95,
+      //                                     -5, 5)),
+      // N_tot_comb_(new RooFormulaVar(
+      //     ("N_tot_comb_" +
+      //      ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::pipi))
+      //         .c_str(),
+      //     "", "@0*@1",
+      //     RooArgList(NeutralBachelorDaughtersVars<_neutral, Bachelor::k,
+      //                                             Daughters::kpi>::Get(uniqueId)
+      //                    .N_tot_comb(),
+      //                *fracComb_))),
       N_tot_comb_(Params::Get().CreateFloating("N_tot_comb", uniqueId,
                                                _neutral, Bachelor::k,
-                                               Daughters::pipi, 100, -1000, 1000)),
+                                               Daughters::pipi, 50, -1000, 1000)),
       Bu2D0hst_mean1Bu_(nullptr),
       Bu2D0hst_mean2Bu_(nullptr),
       Bu2D0hst_sigma1Bu_(nullptr),
