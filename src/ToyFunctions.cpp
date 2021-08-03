@@ -52,7 +52,7 @@ void ToyTestD1D(std::unique_ptr<RooSimultaneous> &simPdf,
     if (config.noFit() == false) {
       toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-          RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+          RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
           // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
           // RooFit::Minos(kTRUE)));
@@ -132,7 +132,7 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
   if (config.noFit() == false) {
     toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-        RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
         // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
         // RooFit::Minos(kTRUE)));
@@ -267,7 +267,7 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
   if (config.noFit() == false) {
     toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
         *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-        RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+        RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
         // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
         // RooFit::Minos(kTRUE)));
@@ -383,7 +383,7 @@ void RunToys2DData(TFile &outputFile,
   if (config.noFit() == false) {
     toyFitResult = std::shared_ptr<RooFitResult>(
         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                      RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+                      RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                       RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
                       // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
                       // RooFit::Minos(kTRUE)));
@@ -466,7 +466,7 @@ void RunToys1DData(TFile &outputFile,
   if (config.noFit() == false) {
     toyFitResult = std::shared_ptr<RooFitResult>(
         simPdf->fitTo(*toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                      RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+                      RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
                       RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
                       // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
                       // RooFit::Minos(kTRUE)));
