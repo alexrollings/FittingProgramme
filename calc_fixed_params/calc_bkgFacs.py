@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
   frac_dict['Bu2D0rho'] = (
       (kBF_Bu2D0rho + kBF_Bd2D0rho0) / (kBF_Bd2Dstpi * kBF_Dst2D0pi)) * (
-          mc_effs_dict['Bu2D0rho'] * 0.3874 / mc_effs_dict['Bd2Dstpi']) * (
+          mc_effs_dict['Bu2D0rho'] * 0.9046 / mc_effs_dict['Bd2Dstpi']) * (
           # mc_effs_dict['Bu2D0rho'] / mc_effs_dict['Bd2Dstpi']) * (
               or_effs_dict['Bu2D0rho'] / or_effs_dict['Bd2Dstpi'])
 
