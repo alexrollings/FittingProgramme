@@ -279,6 +279,7 @@ int main(int argc, char *argv[]) {
   RooRealVar *finalRealVar = nullptr;
 
   std::cout << "Number of results saved = " << resultVec.size() << "\n";
+  std::vector<std::string> rndmStore;
 
   for (double j = 0; j < resultVec.size(); ++j) {
     // std::cout << "\nResult " << rndmVec[j] << "\n\n\n";
@@ -396,6 +397,13 @@ int main(int argc, char *argv[]) {
           finalErr = finalRealVar->getError();
           pull = (finalVal - initialVal) / finalErr;
         }
+        // if (((config.neutral() == Neutral::gamma &&
+        //       paramName == "R_piK_Bu2Dst0h_D0gamma_Blind_k_minus") ||
+        //      (config.neutral() == Neutral::pi0 &&
+        //       paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total")) &&
+        //     pull < -4) {
+        //   rndmStore.emplace_back(rndmVec[j]);
+        // }
         // if (i == 0) {
         //   if (initialVal == finalVal) {
         //     std::cout << "initVal == finalVal for result " << rndmVec[j]
@@ -556,8 +564,19 @@ int main(int argc, char *argv[]) {
     RooGaussian pullGaus(("pullGauss_" + paramName).c_str(), "", pull, pullMean,
                          pullSigma);
 
-    auto pullResult =
-        std::unique_ptr<RooFitResult>(pullGaus.fitTo(pullDH, RooFit::Save()));
+    std::unique_ptr<RooFitResult> pullResult;
+    pull.setRange("full", -6, 6);
+    if (config.neutral() == Neutral::pi0 &&
+        ((toys2D == true &&
+          paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total") ||
+         toys2D == false && paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus")) {
+      pull.setRange("fit", -2.8, 6);
+      pullResult = std::unique_ptr<RooFitResult>(
+          pullGaus.fitTo(pullDH, RooFit::Range("fit"), RooFit::Save()));
+    } else {
+      pullResult =
+          std::unique_ptr<RooFitResult>(pullGaus.fitTo(pullDH, RooFit::Save()));
+    }
     pullResult->Print("v");
     pullResult->SetName(("Result_Pull_" + paramName).c_str());
     pullResult->Write();
@@ -585,7 +604,7 @@ int main(int argc, char *argv[]) {
     pullFrame->GetYaxis()->SetTitle(yLabel.str().c_str());
     pullDH.plotOn(pullFrame.get());
     pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed+1),
-                    RooFit::LineWidth(3));
+                    RooFit::LineWidth(3), RooFit::Range("full"));
     pullDH.plotOn(pullFrame.get());
     pullFrame->Draw();
 
@@ -737,6 +756,9 @@ int main(int argc, char *argv[]) {
             << "# Forced positive definite: " << nFPD << "\n"
             << "MINOS problems: " << nMINOS / resultVec.size() * 100 << " %\n"
             << "# MINOS problems: " << nMINOS << "\n";
+  for (auto &seed : rndmStore) {
+    std::cout << seed << "\n";
+  }
 
   return 1;
 }
