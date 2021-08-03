@@ -719,8 +719,9 @@ int main(int argc, char **argv) {
     // Strategy(2) requires evaluation of hessian at every step: can set
     // strategy 0 then call MINOS after to calculate correct errors
     int nStrat = 2;
-    if ((config.runBsSystematic() == true && config.splitByCharge() == false) ||
-        config.runCombSystematic() == true) {
+    // if ((config.runBsSystematic() == true && config.splitByCharge() == false) ||
+    //     config.runCombSystematic() == true) {
+    if (config.runBsSystematic() == true && config.splitByCharge() == false) {
       std::cout << "Strategy 1\n";
       nStrat = 1;
     }
