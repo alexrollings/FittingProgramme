@@ -174,7 +174,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
     if (_bachelor == Bachelor::pi) {
       R_ADS_Bu2D0hst_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-              "R_ADS_Bu2D0hst", uniqueId_, _bachelor, start, -5, 5));
+              "R_ADS_Bu2D0hst", uniqueId_, _bachelor, 0.05, -5, 5));
       R_ADS_Bu2Dst0hst_ =
           std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
               "R_ADS_Bu2Dst0hst", uniqueId_, _bachelor, start, 0, 5));
