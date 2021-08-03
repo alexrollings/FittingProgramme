@@ -237,7 +237,7 @@ GlobalVars::GlobalVars(int uniqueId)
   double start = 4.5;
   if (Configuration::Get().neutral() == Neutral::pi0) {
     min = 0.;
-    max = 5.;
+    max = 10.;
     start = 2.7965e+00;
   }
   R_CP_Bu2Dst0hst_ =
