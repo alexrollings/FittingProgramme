@@ -92,7 +92,7 @@ GlobalVars::GlobalVars(int uniqueId)
           "kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
           Systematic::kBF_Bu2Dst0Kst, Sign::same)),
       pidEffMap_(),
-      extConstraints_(),
+      constraints_argSet_(),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),

@@ -59,7 +59,7 @@ class GlobalVars {
   RooRealVar &kBF_Bu2Dst0rho() { return *kBF_Bu2Dst0rho_; }
   RooRealVar &kBF_Bu2Dst0Kst() { return *kBF_Bu2Dst0Kst_; }
 
-  RooArgSet extConstraints() { return extConstraints_; }
+  RooArgSet constraints_argSet() { return constraints_argSet_; }
 
   // -------------------- CP Observables -------------------- //
   RooAbsReal &R_CP_Bu2Dst0h_D0gamma_Blind() {
@@ -109,7 +109,7 @@ class GlobalVars {
   std::shared_ptr<RooRealVar> kBF_Bu2Dst0rho_;
   std::shared_ptr<RooRealVar> kBF_Bu2Dst0Kst_;
 
-  RooArgSet extConstraints_;
+  RooArgSet constraints_argSet_;
 
   // -------------------- CP Observables -------------------- //
   std::shared_ptr<RooRealVar> R_CP_Bu2Dst0h_D0gamma_Blind_;
