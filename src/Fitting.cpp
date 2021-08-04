@@ -287,7 +287,7 @@ int main(int argc, char **argv) {
                 << "    -data1D, to run independent 1D toys generated from "
                    "RooHistPdf of "
                    "data.\n";
-      std::cout << "    -systematic=<choice, default: None>"
+      std::cout << "    -systematic=<systematic or group, default: None>"
                 << "\n";
       std::cout << "    -nSyst=<# data fits to run for systematic studies>"
                 << "\n";
