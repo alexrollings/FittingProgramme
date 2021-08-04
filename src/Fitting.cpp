@@ -206,6 +206,8 @@ int main(int argc, char **argv) {
   std::vector<Daughters> daughtersVec;
   std::vector<Charge> chargeVec;
   std::vector<Systematic> systematicVec;
+  std::vector<Group> groupVec;
+  bool runGroupedSysts = false;
   // Still want to load both charges:plus and minus, we just fit with
   // them differently
 
@@ -453,8 +455,14 @@ int main(int argc, char **argv) {
         try {
           systematicVec = ExtractEnumList<Systematic>(systematicArg);
         } catch (std::invalid_argument) {
-          std::cerr << "systematic assignment failed, please specify.\n";
-          return 1;
+          std::cout << "systematic assignment failed, trying group.\n";
+          try {
+            groupVec = ExtractEnumList<Group>(systematicArg);
+          } catch (std::invalid_argument) {
+            std::cerr << "group assignment also failed.\n";
+            return 1;
+          }
+          runGroupedSysts = true;
         }
         if (!args("nSyst", nSystArg)) {
           std::cout << "Running 1 systematic fit.\n";
@@ -755,10 +763,22 @@ int main(int argc, char **argv) {
   // Have to shift params after creating simPdf
   if (config.runSystematics() == true) {
     std::string systString;
-    for (unsigned int i = 0; i < systematicVec.size(); ++i) {
-      systString += EnumToString(systematicVec[i]);
-      if (i < systematicVec.size() - 1) {
-        systString += "_";
+    if (runGroupedSysts == false) {
+      for (unsigned int i = 0; i < systematicVec.size(); ++i) {
+        systString += EnumToString(systematicVec[i]);
+        if (i < systematicVec.size() - 1) {
+          systString += "_";
+        }
+      }
+    } else {
+      for (unsigned int i = 0; i < groupVec.size(); ++i) {
+        systString += EnumToString(groupVec[i]);
+        if (i < groupVec.size() - 1) {
+          systString += "_";
+        }
+        systematicVec.insert(systematicVec.end(),
+                             config.group_map()[groupVec[i]].begin(),
+                             config.group_map()[groupVec[i]].end());
       }
     }
     std::string paramFile =
