@@ -13,6 +13,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
       A_CP_Bu2Dst0h_WN_(nullptr),
       A_CP_Bd2Dsth_(nullptr),
       A_CP_Bu2D0hst_(nullptr),
+      A_CP_Bu2D0hst_gaus_(nullptr),
       A_CP_Bu2Dst0hst_(nullptr),
       A_CP_Lb2Omegach_Lcpi0_(nullptr),
       R_ADS_Bu2Dst0h_D0gamma_(nullptr),
@@ -245,9 +246,9 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   //       // "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.06,
   //       Systematic::A_CP_K_Bu2D0hst, Sign::none));
   // }
-  // if (Configuration::Get().neutral() == Neutral::gamma &&
-  //     _bachelor == Bachelor::k) {
-  if (_bachelor == Bachelor::k) {
+  if (Configuration::Get().neutral() == Neutral::gamma &&
+      _bachelor == Bachelor::k) {
+  // if (_bachelor == Bachelor::k) {
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.09,
         // "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0.06, 0.06,
@@ -255,6 +256,12 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
   } else {
     A_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
         "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
+    if (Configuration::Get().neutral() == Neutral::pi0 &&
+        _bachelor == Bachelor::k) {
+      A_CP_Bu2D0hst_gaus_ = std::unique_ptr<RooGaussian>(new RooGaussian(
+          ("A_CP_Bu2D0hst_gaus_" + ComposeName(uniqueId_, _bachelor)).c_str(), "",
+          *A_CP_Bu2D0hst_, RooFit::RooConst(0.06), RooFit::RooConst(0.09)));
+    }
   }
 }
 

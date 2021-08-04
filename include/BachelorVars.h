@@ -2,6 +2,7 @@
 #include "Configuration.h"
 #include "GlobalVars.h"
 #include "RooFormulaVar.h"
+#include "RooGaussian.h"
 #include "BachelorChargeVars.h"
 
 // Split by charge; only for pik
@@ -47,6 +48,7 @@ class BachelorVars {
   RooAbsReal &A_CP_Bu2Dst0h_WN() { return *A_CP_Bu2Dst0h_WN_; }
   RooAbsReal &A_CP_Bd2Dsth() { return *A_CP_Bd2Dsth_; }
   RooAbsReal &A_CP_Bu2D0hst() { return *A_CP_Bu2D0hst_; }
+  RooGaussian &A_CP_Bu2D0hst_gaus() { return *A_CP_Bu2D0hst_gaus; }
   RooAbsReal &A_CP_Bu2Dst0hst() { return *A_CP_Bu2Dst0hst_; }
   RooAbsReal &A_CP_Lb2Omegach_Lcpi0() { return *A_CP_Lb2Omegach_Lcpi0_; }
   RooFormulaVar &R_ADS_Bu2Dst0h_D0gamma() { return *R_ADS_Bu2Dst0h_D0gamma_; }
@@ -67,6 +69,7 @@ class BachelorVars {
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> A_CP_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2D0hst_;
+  std::unique_ptr<RooGaussian> A_CP_Bu2D0hst_gaus_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_CP_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;
