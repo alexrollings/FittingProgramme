@@ -533,11 +533,10 @@ class Params {
         .first->second;
   }
 
-  Params();
+  Params() = default;
   ~Params() = default;
   std::map<Key, ValueFixed> fixed_parameters_;
   std::map<Key, std::shared_ptr<ValueFloating>> floating_parameters_;
-  std::map<Group, std::vector<Systematic>> group_map_;
 };
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,

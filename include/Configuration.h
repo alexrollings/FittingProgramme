@@ -77,7 +77,6 @@ enum class Mode {
 };
 // Gamma only: BuPartial, crossFeedBu, gamma
 // Pi0 only: Bu2Dst0h_D0pi0_PdfBu_ (crossFeed not added)
-enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
 enum class Systematic {
   NA,
   Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi,
@@ -197,6 +196,7 @@ enum class Systematic {
   kBF_Bu2Dst0rho,
   kBF_Bu2Dst0Kst
 };
+enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
 
 // There is only a single instance of categories therefore we do not have to
 // pass it around any more
@@ -290,6 +290,8 @@ class Configuration {
   double fracKst0() { return fracKst0_; }
   void SetFracKst0(double val) { fracKst0_ = val; }
 
+  const std::map<Group, std::vector<Systematic>> &group_map(){
+      return group_map_; }
 
  private:
   Configuration();
@@ -351,6 +353,8 @@ class Configuration {
   bool runBsSystematic_;
   bool runCombSystematic_;
   double fracKst0_;
+
+  const std::map<Group, std::vector<Systematic>> group_map_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
