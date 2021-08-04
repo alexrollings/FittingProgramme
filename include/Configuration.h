@@ -290,7 +290,7 @@ class Configuration {
   double fracKst0() { return fracKst0_; }
   void SetFracKst0(double val) { fracKst0_ = val; }
 
-  const std::map<Group, std::vector<Systematic>> &group_map(){
+  std::map<Group, std::vector<Systematic>> &group_map(){
       return group_map_; }
 
  private:
@@ -354,7 +354,7 @@ class Configuration {
   bool runCombSystematic_;
   double fracKst0_;
 
-  const std::map<Group, std::vector<Systematic>> group_map_;
+  std::map<Group, std::vector<Systematic>> group_map_;
 };
 
 template <typename Enum> Enum StringToEnum(std::string const &);
