@@ -19,7 +19,6 @@
 // fit)
 enum class Sign { same, none };
 enum class Param { val, err };
-enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
 
 class FixedParameter {
  public:

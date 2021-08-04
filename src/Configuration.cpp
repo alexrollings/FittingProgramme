@@ -413,6 +413,22 @@ Mode StringToEnum<Mode>(std::string const &mode) {
   throw std::invalid_argument("Invalid mode passed to StringToEnum");
 }
 
+template <>
+Group StringToEnum<Group>(std::string const &group) {
+  if (group == "Pdfs") {
+    return Group::Pdfs;
+  } else if (group == "Effs") {
+    return Group::Effs;
+  } else if (group == "Rates") {
+    return Group::Rates;
+  } else if (group == "Asyms") {
+    return Group::Asyms;
+  } else if (group == "CPPars") {
+    return Group::CPPars;
+  }
+  throw std::invalid_argument("Invalid Group passed to StringToEnum");
+}
+
 // Need a template for this as each enum option is a different 'type'
 template <>
 Systematic StringToEnum<Systematic>(std::string const &systematic) {
@@ -534,8 +550,6 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::Bkg_misId_Pdfs;
   } else if (systematic == "D02pik_Pdfs") {
     return Systematic::D02pik_Pdfs;
-  } else if (systematic == "comb_PdfDelta") {
-    return Systematic::comb_PdfDelta;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0pi0") {
     return Systematic::boxEffs_Bu2Dst0h_D0pi0;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0gamma") {
@@ -648,6 +662,22 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::A_K_piK_Bu2Dst0hst;
   }
   throw std::invalid_argument("Invalid systematic passed to StringToEnum");
+}
+
+std::string EnumToString(Group group) {
+  if (group == Group::Pdfs) {
+    return "Pdfs";
+  } else if (group == Group::Effs) {
+    return "Effs";
+  } else if (group == Group::Rates) {
+    return "Rates";
+  } else if (group == Group::Asyms) {
+    return "Asyms";
+  } else if (group == Group::CPPars) {
+    return "CPPars";
+  }
+  throw std::invalid_argument(
+      "Group must take string: Pdfs, Effs, Rates, Asyms or CPPars");
 }
 
 std::string EnumToString(Systematic systematic) {
@@ -772,8 +802,6 @@ std::string EnumToString(Systematic systematic) {
       return "Bkg_misId_Pdfs";
     case Systematic::D02pik_Pdfs:
       return "D02pik_Pdfs";
-    case Systematic::comb_PdfDelta:
-      return "comb_PdfDelta";
     case Systematic::boxEffs_Bu2Dst0h_D0pi0:
       return "boxEffs_Bu2Dst0h_D0pi0";
     case Systematic::boxEffs_Bu2Dst0h_D0gamma:

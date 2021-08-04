@@ -77,6 +77,7 @@ enum class Mode {
 };
 // Gamma only: BuPartial, crossFeedBu, gamma
 // Pi0 only: Bu2Dst0h_D0pi0_PdfBu_ (crossFeed not added)
+enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
 enum class Systematic {
   NA,
   Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi,
@@ -138,7 +139,6 @@ enum class Systematic {
   Bu2Dst0h_WN_misId_Pdfs,
   Bkg_misId_Pdfs,
   D02pik_Pdfs,
-  comb_PdfDelta,
   boxEffs_Bu2Dst0h_D0pi0,
   boxEffs_Bu2Dst0h_D0gamma,
   boxEffs_Bkg,
@@ -355,7 +355,6 @@ class Configuration {
 
 template <typename Enum> Enum StringToEnum(std::string const &);
 
-std::string EnumToString(Systematic);
 std::string EnumToString(Polarity);
 std::string EnumToString(Daughters);
 std::string EnumToString(Bachelor);
@@ -364,6 +363,8 @@ std::string EnumToString(Neutral);
 std::string EnumToString(Charge);
 std::string EnumToString(Mass);
 std::string EnumToString(Mode);
+std::string EnumToString(Systematic);
+std::string EnumToString(Group);
 
 std::string EnumToLabel(Charge);
 std::string EnumToLabel(Daughters, Charge);
