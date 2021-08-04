@@ -19,6 +19,7 @@
 // fit)
 enum class Sign { same, none };
 enum class Param { val, err };
+enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
 
 class FixedParameter {
  public:
@@ -449,6 +450,7 @@ class Params {
                            Iterator const &systematic_end, TRandom3 &random) {
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
+        // HERE
         if (t.second.systematic() == *i) {
           std::cout
               << " \n\n -------------------------------------------- \n\n"
@@ -466,6 +468,7 @@ class Params {
     std::ofstream of(path);
     for (auto &t : fixed_parameters_) {
       for (auto s : systematicVec) {
+        // HERE
         if (t.second.systematic() == s) {
           if (t.second.std_pos() == t.second.std_neg()) {
             of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
@@ -531,10 +534,11 @@ class Params {
         .first->second;
   }
 
-  Params() = default;
+  Params();
   ~Params() = default;
   std::map<Key, ValueFixed> fixed_parameters_;
   std::map<Key, std::shared_ptr<ValueFloating>> floating_parameters_;
+  std::map<Group, std::vector<Systematic>> group_map_;
 };
 
 RooUnblindUniform *MakeBlind(const char *uniqueName, double range,
