@@ -397,13 +397,11 @@ int main(int argc, char *argv[]) {
           finalErr = finalRealVar->getError();
           pull = (finalVal - initialVal) / finalErr;
         }
-        // if (((config.neutral() == Neutral::gamma &&
-        //       paramName == "R_piK_Bu2Dst0h_D0gamma_Blind_k_minus") ||
-        //      (config.neutral() == Neutral::pi0 &&
-        //       paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total")) &&
-        //     pull < -4) {
-        //   rndmStore.emplace_back(rndmVec[j]);
-        // }
+        if ((config.neutral() == Neutral::pi0 &&
+             paramName == "R_Dst0KDst0pi_Bu2D0hst_kpi") &&
+            pull < -4) {
+          rndmStore.emplace_back(rndmVec[j]);
+        }
         // if (i == 0) {
         //   if (initialVal == finalVal) {
         //     std::cout << "initVal == finalVal for result " << rndmVec[j]
