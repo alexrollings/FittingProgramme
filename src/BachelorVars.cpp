@@ -258,7 +258,7 @@ BachelorVars<_bachelor>::BachelorVars(int uniqueId)
         "A_CP_Bu2D0hst", uniqueId_, _bachelor, 0, -1, 1));
     if (Configuration::Get().neutral() == Neutral::pi0 &&
         _bachelor == Bachelor::k) {
-      A_CP_Bu2D0hst_gaus_ = std::unique_ptr<RooGaussian>(new RooGaussian(
+      A_CP_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
           ("A_CP_Bu2D0hst_gaus_" + ComposeName(uniqueId_, _bachelor)).c_str(),
           "", *A_CP_Bu2D0hst_, RooFit::RooConst(0.06), RooFit::RooConst(0.09)));
       GlobalVars::Get(uniqueId_).constraints_argSet().add(*A_CP_Bu2D0hst_gaus_);

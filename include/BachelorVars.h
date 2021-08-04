@@ -69,7 +69,7 @@ class BachelorVars {
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> A_CP_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2D0hst_;
-  std::unique_ptr<RooGaussian> A_CP_Bu2D0hst_gaus_;
+  std::shared_ptr<RooGaussian> A_CP_Bu2D0hst_gaus_;
   std::shared_ptr<RooAbsReal> A_CP_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_CP_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooFormulaVar> R_ADS_Bu2Dst0h_D0gamma_;

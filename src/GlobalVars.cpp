@@ -67,17 +67,22 @@ GlobalVars::GlobalVars(int uniqueId)
       // kBF_Bd2Dstpi_(Params::Get().CreateFixed(
       //     "kBF_Bd2Dstpi", uniqueId_, 2.74e-03, 0.13e-03,
       //     Systematic::kBF_Bd2Dstpi, Sign::same)),
-      // kBF_Bd2DstK_(Params::Get().CreateFixed("kBF_Bd2DstK", uniqueId_, 2.12e-04,
-      //                                        0.15e-04, Systematic::kBF_Bd2DstK,
+      // kBF_Bd2DstK_(Params::Get().CreateFixed("kBF_Bd2DstK",
+      // uniqueId_, 2.12e-04,
+      //                                        0.15e-04,
+      //                                        Systematic::kBF_Bd2DstK,
       //                                        Sign::same)),
-      // kBF_Dst2D0pi_(Params::Get().CreateFixed("kBF_Dst2D0pi", uniqueId_, 0.677,
-      //                                         0.005, Systematic::kBF_Dst2D0pi,
+      // kBF_Dst2D0pi_(Params::Get().CreateFixed("kBF_Dst2D0pi", uniqueId_,
+      // 0.677,
+      //                                         0.005,
+      //                                         Systematic::kBF_Dst2D0pi,
       //                                         Sign::same)),
       // kBF_Bu2D0rho_(Params::Get().CreateFixed(
       //     "kBF_Bu2D0rho", uniqueId_, 1.34e-02, 0.18e-02,
       //     Systematic::kBF_Bu2D0rho, Sign::same)),
       // kBF_Bu2D0Kst_(
-      //     Params::Get().CreateFixed("kBF_Bu2D0Kst", uniqueId_, 5.3e-04, 0.4e-04,
+      //     Params::Get().CreateFixed("kBF_Bu2D0Kst", uniqueId_, 5.3e-04,
+      //     0.4e-04,
       //                               Systematic::kBF_Bu2D0Kst, Sign::same)),
       // kBF_Bd2D0rho0_(Params::Get().CreateFixed(
       //     "kBF_Bd2D0rho0", uniqueId_, 3.21e-04, 0.21e-04,
@@ -92,7 +97,8 @@ GlobalVars::GlobalVars(int uniqueId)
           "kBF_Bu2Dst0Kst", uniqueId_, 8.1e-04, 1.4e-04,
           Systematic::kBF_Bu2Dst0Kst, Sign::same)),
       pidEffMap_(),
-      constraints_argSet_(),
+      constraints_argSet_(new RooArgSet(
+          ("constraints_argSet_" + std::to_string(uniqueId_)).c_str())),
       // -------------------- CP Observables -------------------- //
       R_CP_Bu2Dst0h_D0gamma_Blind_(nullptr),
       R_CP_Bu2Dst0h_D0pi0_Blind_(nullptr),
@@ -116,7 +122,7 @@ GlobalVars::GlobalVars(int uniqueId)
   //                                   Charge::total))
   //             .c_str(),
   //         "0.5*(@0+@1)",
-  //         RooArgList(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
+  //         RooArgSet(*pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)],
   //                    *pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)])));
   // Total PID eff from MC effs, and systematic from gamma MC vs data difference
   // (higher stats)
