@@ -1,5 +1,6 @@
 #pragma once
 #include "RooFormulaVar.h"
+#include "RooGaussian.h"
 
 #include "Configuration.h"
 #include "Efficiencies.h"
@@ -121,6 +122,7 @@ class GlobalVars {
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> R_CP_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> R_CP_Bu2D0hst_gaus_;
   std::shared_ptr<RooAbsReal> R_CP_Bu2Dst0hst_;
 };
 
