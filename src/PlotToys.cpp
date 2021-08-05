@@ -398,8 +398,8 @@ int main(int argc, char *argv[]) {
           pull = (finalVal - initialVal) / finalErr;
         }
         if ((config.neutral() == Neutral::pi0 &&
-             paramName == "R_Dst0KDst0pi_Bu2D0hst_kpi") &&
-            pull < -4) {
+             paramName == "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi") &&
+            pull > 3) {
           rndmStore.emplace_back(rndmVec[j]);
         }
         // if (i == 0) {
