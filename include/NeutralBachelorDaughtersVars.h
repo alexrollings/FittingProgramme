@@ -373,6 +373,7 @@ struct NeutralBachelorDaughtersVarsImpl<neutral, Bachelor::k, Daughters::kpi> {
   std::shared_ptr<RooAbsReal> A_Bu2Dst0h_WN_;
   std::shared_ptr<RooAbsReal> A_Bd2Dsth_;
   std::shared_ptr<RooAbsReal> A_Bu2D0hst_;
+  std::shared_ptr<RooGaussian> A_Bu2D0hst_gaus_;
   std::shared_ptr<RooAbsReal> A_Bu2Dst0hst_;
   std::shared_ptr<RooAbsReal> A_Lb2Omegach_Lcpi0_;
   std::shared_ptr<RooAbsReal> A_Bs2Dst0Kst0_;
