@@ -237,10 +237,10 @@ GlobalVars::GlobalVars(int uniqueId)
   } else {
     R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
         Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, -2, 10));
-    R_CP_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
-        ("R_CP_Bu2D0hst_gaus_" + std::to_string(uniqueId_)).c_str(), "",
-        *R_CP_Bu2D0hst_, RooFit::RooConst(1.04), RooFit::RooConst(0.06)));
-    constraints_argSet_->add(*R_CP_Bu2D0hst_gaus_);
+    // R_CP_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+    //     ("R_CP_Bu2D0hst_gaus_" + std::to_string(uniqueId_)).c_str(), "",
+    //     *R_CP_Bu2D0hst_, RooFit::RooConst(1.04), RooFit::RooConst(0.06)));
+    // constraints_argSet_->add(*R_CP_Bu2D0hst_gaus_);
   }
   double min = 0.;
   double max = 20.;
