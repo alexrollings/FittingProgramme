@@ -462,6 +462,7 @@ int main(int argc, char **argv) {
             std::cerr << "group assignment also failed.\n";
             return 1;
           }
+          std::cout << "Running systematics for group(s) " << systematicArg << "\n";
           runGroupedSysts = true;
         }
         if (!args("nSyst", nSystArg)) {
@@ -780,6 +781,10 @@ int main(int argc, char **argv) {
                              config.group_map()[groupVec[i]].begin(),
                              config.group_map()[groupVec[i]].end());
       }
+    }
+    std::cout << "Running systematics for:\n";
+    for (auto &s : systematicVec) {
+      std::cout << "\t" << EnumToString(s) << "\n";
     }
     std::string paramFile =
         outputDir + "/results/ParameterInfo_" + systString + ".csv";
