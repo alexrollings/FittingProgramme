@@ -191,6 +191,11 @@ if __name__ == '__main__':
         'A_K_Kpi_Bu2Dst0h_D0gamma',
         'R_ADS_Bu2Dst0hst',
         'A_K_piK_Bu2Dst0hst',
+        'Pdfs',
+        'Effs',
+        'Asyms',
+        'Rates',
+        'CPPars'
     ]
     if delta_low == None:
       delta_low = '138'
@@ -290,6 +295,11 @@ if __name__ == '__main__':
         'kBF_D02pipi',
         'R_ADS_Bu2Dst0hst',
         'A_K_piK_Bu2Dst0hst',
+        'Pdfs',
+        'Effs',
+        'Asyms',
+        'Rates',
+        'CPPars'
     ]
     if delta_low == None:
       delta_low = '125'
