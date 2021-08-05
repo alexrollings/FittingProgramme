@@ -44,7 +44,7 @@ DaughtersVars<Daughters::kpi>::DaughtersVars(int uniqueId)
           Systematic::R_Dst0KDst0pi_Bd2Dsth, Sign::same)),
       //  Calculated average from BFs of B+ -> D0rho+ and B0 -> D0 rho0
       R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFloating(
-          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.02, -1, 2)),
+          "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.02, 0, 2)),
       // R_Dst0KDst0pi_Bu2D0hst_(Params::Get().CreateFixed(
       //     "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kpi, 0.02,
       //     5.34e-03, Systematic::NA, Sign::same)),
