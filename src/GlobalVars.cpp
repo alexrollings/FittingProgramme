@@ -236,7 +236,7 @@ GlobalVars::GlobalVars(int uniqueId)
                                   Systematic::R_CP_Bu2D0hst, Sign::same));
   } else {
     R_CP_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, -2, 10));
+        Params::Get().CreateFloating("R_CP_Bu2D0hst", uniqueId_, 1, 0, 10));
     // R_CP_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
     //     ("R_CP_Bu2D0hst_gaus_" + std::to_string(uniqueId_)).c_str(), "",
     //     *R_CP_Bu2D0hst_, RooFit::RooConst(1.04), RooFit::RooConst(0.06)));
