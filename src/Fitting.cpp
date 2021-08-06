@@ -804,10 +804,12 @@ int main(int argc, char **argv) {
                                         systematicVec.end(), random);
       auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
       // auto pdfs = systPair.second;
-      auto systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
-          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-          RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
-          RooFit::Offset(true), RooFit::NumCPU(config.nCPU())));
+      auto systResult = std::unique_ptr<RooFitResult>(
+          systPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                         RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+                         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+                         RooFit::ExternalConstraints(
+                             GlobalVars::Get(id).constraints_argSet())));
       systResult->SetName("SystResult");
       std::stringstream filename;
       filename << outputDir << "/results/SystResult_"
