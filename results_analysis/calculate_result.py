@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
@@ -23,6 +24,11 @@ if __name__ == '__main__':
                       type=str,
                       help='Directory where data fit result and Bs and combinatorial systematics are stored (if running systematics)',
                       required=True)
+  parser.add_argument('-p',
+                      '--pull_fname',
+                      type=str,
+                      help='Pull results from 2D toys',
+                      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -35,6 +41,7 @@ if __name__ == '__main__':
                       required=True)
   args = parser.parse_args()
   result_dir = args.result_dir
+  pull_fname = args.pull_fname
   neutral = args.neutral
   charge = args.charge
 
@@ -93,6 +100,7 @@ if __name__ == '__main__':
   df_result = pd.DataFrame.from_dict(dict_result)
   print(df_result)
 
+  # Save raw result to tex file
   raw_file = open(
       f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
       'w')
@@ -121,3 +129,48 @@ if __name__ == '__main__':
   for row in row_arr:
     raw_file.write(row)
   raw_file.close()
+
+  # File where 2D pull results are stored
+  pull_file = TFile(pull_fname)
+  pull_widths = {}
+  # Extract pull result for vars stored in fit_result dict and correct stat error with pull width
+  for par_name in sorted_pars:
+    pull_result = pull_file.Get(f'Result_Pull_{par_name}')
+    if pull_result == None:
+      m = re.match('(\S+_Bu2Dst0h_D0(pi0|gamma))(_\S+|$)', par_name)
+      if m:
+        blind_par_name = m.group(1) + '_Blind' + m.group(3)
+        pull_result = pull_file.Get(f'Result_Pull_{blind_par_name}')
+        if pull_result == None:
+          print(
+              f'Could not extract  Result_Pull_{k} or Result_Pull_{blind_par_name} from {pull_fname}'
+          )
+          continue
+      else:
+        continue
+    pull_pars = pull_result.floatParsFinal()
+    pull_width = pull_pars[1].getVal()
+    df_result[par]['Statistical Error'] = df_result[par]['Statistical Error'] * pull_width
+    m0 = re.match('\S+_D0(pi0|gamma)(_\S+|$)', par_name)
+    if m0:
+      n_arr = [m0.group(1)]
+    elif par_name == 'R_Dst0KDst0pi_Bu2Dst0h_kpi':
+      if neutral == 'gamma':
+        n_arr = ['pi0', 'gamma']
+      else:
+        n_arr = ['pi0']
+    elif par_name == 'BR_pi02gamma_eff_gamma':
+      n_arr = ['pi0']
+    else:
+      sys.exit(k + ' doesn\'t match neutral regex')
+    for n in n_arr:
+      if n not in pull_widths:
+        pull_widths[n] = [pull_width]
+      else:
+        pull_widths[n].append(pull_width)
+
+  # Systematic error on stat. correction is RMS of pull withs from 2D toys
+  for n, pulls in pull_widths.items():
+    np_pulls = np.array(pulls)
+    rms = np.std(np_pulls)
+    print(rms)
