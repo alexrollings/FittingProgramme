@@ -397,11 +397,11 @@ int main(int argc, char *argv[]) {
           finalErr = finalRealVar->getError();
           pull = (finalVal - initialVal) / finalErr;
         }
-        if ((config.neutral() == Neutral::pi0 &&
-             paramName == "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi") &&
-            pull > 3) {
-          rndmStore.emplace_back(rndmVec[j]);
-        }
+        // if ((config.neutral() == Neutral::pi0 &&
+        //      paramName == "R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi") &&
+        //     pull > 3) {
+        //   rndmStore.emplace_back(rndmVec[j]);
+        // }
         // if (i == 0) {
         //   if (initialVal == finalVal) {
         //     std::cout << "initVal == finalVal for result " << rndmVec[j]
@@ -566,9 +566,10 @@ int main(int argc, char *argv[]) {
     pull.setRange("full", -6, 6);
     if (config.neutral() == Neutral::pi0 &&
         ((toys2D == true &&
-          paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total") ||
+          (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total" ||
+           paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_minus")) ||
          toys2D == false && paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus")) {
-      pull.setRange("fit", -2.8, 6);
+      pull.setRange("fit", -3, 6);
       pullResult = std::unique_ptr<RooFitResult>(
           pullGaus.fitTo(pullDH, RooFit::Range("fit"), RooFit::Save()));
     } else {
