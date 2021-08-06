@@ -3,6 +3,7 @@ import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
 import json
+from useful_functions import return_label
 
 def PrintFitStatus(fit_status):
   for syst_label, status in fit_status.items():
@@ -76,9 +77,11 @@ if __name__ == '__main__':
       m0 = re.match(obs + '(_\S+)_[0-9]+', par_name)
       if m0:
         # Results labelled with different numbers
+        value = p.getVal()
+        if 'Blind' in par_name:
+          value = 0
         end = m0.group(1).replace('_Blind', '')
         par_name = obs + end
-        value = p.getVal()
         dict_result[par_name] = {
             'Value': value,
             'Statistical Error': p.getError()
@@ -87,7 +90,34 @@ if __name__ == '__main__':
         if obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff':
           dict_result[par_name]['Systematic Error'] = 0
 
-  df_result = pd.DataFrame.from_dict(dict_result, orient='index')
+  df_result = pd.DataFrame.from_dict(dict_result)
   print(df_result)
 
+  raw_file = open(
+      f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
+      'w')
+  row_arr = []
+  sorted_pars = sorted(dict_result.keys(), key=lambda x: x.lower())
+  if 'BR_pi02gamma_eff_gamma' in sorted_pars:
+    sorted_pars.remove('BR_pi02gamma_eff_gamma')
+  for par in sorted_pars:
+    val = df_result[par]['Value']
+    stat = df_result[par]['Statistical Error']
+    if par[0] == 'N':
+      continue
+    if val == 0:
+      val_str = ''
+      extra = ''
+    else:
+      if val > 0:
+        extra = '\\textcolor{white}{-}'
+      else:
+        extra = ''
+      val_str = f'{val:.4f}'
+    results_str = f' &= {extra}{val_str} &&\\pm {stat:.4f} \\\\ \n'
+    # Need to remove $$ at either end of string as going into align env
+    row_arr.append(return_label(par)[1:-1] + results_str)
 
+  for row in row_arr:
+    raw_file.write(row)
+  raw_file.close()
