@@ -99,10 +99,10 @@ if __name__ == '__main__':
   args = parser.parse_args()
 
   queue = args.queue
+  commit = args.commit
   neutral = args.neutral
   daughters = args.daughters
   charge = args.charge
-  output_dir = args.output_dir
   n_fits = args.n_fits
   n_jobs = args.n_jobs
   input_dir = args.input_dir
@@ -121,9 +121,11 @@ if __name__ == '__main__':
     sys.exit('--queue=batch/condor')
 
   if charge == 'total':
-    print('Running fits summed over charge')
+    print('Running toys summed over charge')
+    c_str = ''
   elif charge == 'plus,minus':
-    print('Running fits split by charge')
+    print('Running toys split by charge')
+    c_str = '_split'
   else:
     sys.exit('--charge=total/plus,minus')
 
@@ -320,19 +322,21 @@ if __name__ == '__main__':
 
   if daughters != 'kpi' and daughters != 'kpi,kk' and daughters != 'kpi,kk,pipi' and daughters != 'kpi,kk,pipi,pik':
     sys.exit('Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik')
+  d_arr = daughters.split(',')
+  d_str = d_arr[-1]
 
   path = '/data/lhcb/users/rollings/systematics/'
   sub_dirs = [
-      g_str, g_str + '/' + commit, g_str + '/' + commit + '/' + d_str + c_str,
-      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral,
-      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
+      commit, commit + '/' + d_str + c_str,
+      commit + '/' + d_str + c_str + '/' + neutral,
+      commit + '/' + d_str + c_str + '/' + neutral + '/results/'
   ]
   for d in sub_dirs:
     new_dir = os.path.join(path, d)
     if not os.path.exists(new_dir):
       os.mkdir(new_dir)
 
-  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
+  output_dir = path + '/' + commit + '/' + d_str + c_str + '/' + neutral
   results_dir = os.path.join(output_dir, 'results')
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
@@ -383,4 +387,4 @@ if __name__ == '__main__':
             'CLUSTERID': '$(ClusterId)'
         }
         make_shell_script(submitTemplate, submitScript, submitSubs)
-        run_process(['condor_submit', submitScript])
+        # run_process(['condor_submit', submitScript])
