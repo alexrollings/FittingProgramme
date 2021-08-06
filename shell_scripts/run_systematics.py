@@ -46,10 +46,10 @@ if __name__ == '__main__':
                       type=str,
                       help='charge = total/plus,minus',
                       required=True)
-  parser.add_argument('-o',
-                      '--output_dir',
+  parser.add_argument('-com',
+                      '--commit',
                       type=str,
-                      help='Directory where results should be stored',
+                      help='git commit label',
                       required=True)
   parser.add_argument('-f',
                       '--n_fits',
@@ -321,19 +321,31 @@ if __name__ == '__main__':
   if daughters != 'kpi' and daughters != 'kpi,kk' and daughters != 'kpi,kk,pipi' and daughters != 'kpi,kk,pipi,pik':
     sys.exit('Specify daughters: -d=kpi/kpi,kk/kpi,kk,pipi/kpi,kk,pipi,pik')
 
-  if not os.path.exists(output_dir):
-    os.mkdir(output_dir)
+  path = '/data/lhcb/users/rollings/systematics/'
+  sub_dirs = [
+      g_str, g_str + '/' + commit, g_str + '/' + commit + '/' + d_str + c_str,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral,
+      g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral + '/results/'
+  ]
+  for d in sub_dirs:
+    new_dir = os.path.join(path, d)
+    if not os.path.exists(new_dir):
+      os.mkdir(new_dir)
+
+  output_dir = path + '/' + g_str + '/' + commit + '/' + d_str + c_str + '/' + neutral
+  results_dir = os.path.join(output_dir, 'results')
 
   home_path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/'
   for s in systematics:
     for i in range(0, n_jobs):
       templatePath = home_path + 'shell_scripts/run_systematics.sh.tmpl'
-      scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_systematics_' + neutral + '_' + daughters + '_' + charge + '_' + s + '_' + str(
+      scriptPath = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_systematics_' + commit + '_' + neutral + '_' + daughters + '_' + charge + '_' + s + '_' + str(
           i) + '.sh'
       substitutions = {
           'nJob': i,
           'INPUT': input_dir,
           'PATH': output_dir,
+          'COMMIT': commit,
           'NEUTRAL': neutral,
           'DAUGHTERS': daughters,
           'CHARGE': charge,
@@ -352,10 +364,11 @@ if __name__ == '__main__':
       else:
         run_process(['chmod', '+x', scriptPath])
         submitTemplate = home_path + 'shell_scripts/run_systematics_submit.sh.tmpl'
-        submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_systematics_' + neutral + '_' + daughters + '_' + charge + '_' + s + '_' + str(
+        submitScript = '/data/lhcb/users/rollings/fitting_scripts/tmp/run_systematics_' + commit +'_' + neutral + '_' + daughters + '_' + charge + '_' + s + '_' + str(
             i) + '.submit'
         submitSubs = {
             'nJob': i,
+            'COMMIT': commit,
             'NEUTRAL': neutral,
             'DAUGHTERS': daughters,
             'CHARGE': charge,
