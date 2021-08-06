@@ -6,8 +6,8 @@ import argparse
 import json
 from useful_functions import return_label
 
-def PrintFitStatus(fit_status):
-  for syst_label, status in fit_status.items():
+def PrintFitStatus(dict_status):
+  for syst_label, status in dict_status.items():
     print(f'{syst_label}:\n')
     for status_label, tally in status.items():
       if status_label == 'Total':
@@ -24,11 +24,6 @@ if __name__ == '__main__':
                       type=str,
                       help='Directory where data fit result and Bs and combinatorial systematics are stored (if running systematics)',
                       required=True)
-  parser.add_argument('-p',
-                      '--pull_fname',
-                      type=str,
-                      help='Pull results from 2D toys',
-                      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -39,11 +34,22 @@ if __name__ == '__main__':
                       type=str,
                       help='Charge: split/total',
                       required=True)
+  parser.add_argument('-p',
+                      '--pull_fname',
+                      type=str,
+                      help='Pull results from 2D toys',
+                      required=True)
+  parser.add_argument('-s',
+                      '--syst_dir',
+                      type=str,
+                      help='Directory where json systematic is stored',
+                      required=False)
   args = parser.parse_args()
   result_dir = args.result_dir
-  pull_fname = args.pull_fname
   neutral = args.neutral
   charge = args.charge
+  pull_fname = args.pull_fname
+  syst_dir = args.syst_dir
 
   tex_path = os.path.join(os.getcwd(), 'tex/')
   if not os.path.exists(tex_path):
@@ -98,7 +104,7 @@ if __name__ == '__main__':
           dict_result[par_name]['Systematic Error'] = 0
 
   df_result = pd.DataFrame.from_dict(dict_result)
-  print(df_result)
+  # print(df_result)
 
   # Save raw result to tex file
   raw_file = open(
@@ -169,8 +175,68 @@ if __name__ == '__main__':
       else:
         pull_widths[n].append(pull_width)
 
-  # Systematic error on stat. correction is RMS of pull withs from 2D toys
-  for n, pulls in pull_widths.items():
-    np_pulls = np.array(pulls)
-    rms = np.std(np_pulls)
-    print(rms)
+  eval_systs = False
+  if charge != 'total' and syst_dir != None:
+    if not os.path.exists(syst_dir):
+      sys.exit(f'{syst_dir} does not exist')
+    eval_systs = True
+
+  if eval_systs == True:
+    # Load in systematics from json
+    json_fname = f'{syst_dir}/json/systematics_{neutral}.json'
+    if os.path.exists(json_fname):
+      with open(json_fname, 'r') as json_file:
+        json_dict = json.load(json_file)
+    else:
+      sys.exit(f'{json_fname} does not exist')
+
+    # df_syst = pd.json_normalize(json_dict)
+    # print(df_syst)
+
+    # Loop over json dict and sum up fit quality for each syst label
+    status_fname = f'{json_fname}.status'
+    if os.path.exists(status_fname):
+      with open(status_fname, 'r') as status_file:
+        dict_status = json.load(status_file)
+        # PrintFitStatus(dict_status)
+    else:
+      par_name = sorted_pars[0]
+      dict_status = {}
+      for syst_label in json_dict[par_name]:
+        dict_status[syst_label] = {
+            'Total': 0,
+            'Converged': 0,
+            'MINOS': 0,
+            'FPD': 0,
+            'Unconverged': 0
+        }
+        for seed in list(json_dict[par_name][syst_label]):
+          covQual = json_dict[par_name][syst_label][seed]['covQual']
+          fitStatus = json_dict[par_name][syst_label][seed]['fitStatus']
+          if covQual < 2:
+            dict_status[syst_label]['Unconverged'] += 1
+            json_dict[par_name][syst_label].pop(seed)
+          elif covQual < 3:
+            dict_status[syst_label]['FPD'] += 1
+            json_dict[par_name][syst_label].pop(seed)
+          elif fitStatus != 0:
+            dict_status[syst_label]['MINOS'] += 1
+            json_dict[par_name][syst_label].pop(seed)
+          elif (covQual >= 3 and fitStatus == 0):
+            dict_status[syst_label]['Converged'] += 1
+            json_dict[par_name][syst_label].pop(seed)
+          else:
+            print(
+                f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}'
+            )
+          dict_status[syst_label]['Total'] += 1
+      # Save fit status to file
+      with open(status_fname, 'w') as status_file:
+        json.dump(dict_status, status_file)
+      # PrintFitStatus(dict_status)
+    #
+    # # Systematic error on stat. correction is RMS of pull withs from 2D toys
+    # for n, pulls in pull_widths.items():
+    #   np_pulls = np.array(pulls)
+    #   rms = np.std(np_pulls)
+    #   print(rms)
