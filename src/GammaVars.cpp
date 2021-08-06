@@ -2019,12 +2019,12 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // comb_sigmaBu_(Params::Get().CreateFloating("comb_sigmaBu", uniqueId_,
       //                                            Neutral::gamma, 200, 10,
       //                                            400)),
-      comb_meanBu_(Params::Get().CreateFixed("comb_meanBu", uniqueId_,
-                                             Neutral::gamma, 5200, 0,
-                                             Systematic::NA, Sign::same)),
-      comb_sigmaBu_(Params::Get().CreateFixed("comb_sigmaBu", uniqueId_,
-                                              Neutral::gamma, 300, 0,
-                                              Systematic::NA, Sign::same)),
+      comb_meanBu_(Params::Get().CreateFixed(
+          "comb_meanBu", uniqueId_, Neutral::gamma, 5200, 50,
+          Systematic::Combinatorial, Sign::same)),
+      comb_sigmaBu_(Params::Get().CreateFixed(
+          "comb_sigmaBu", uniqueId_, Neutral::gamma, 300, 50,
+          Systematic::Combinatorial, Sign::same)),
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::gamma)).c_str(), "",
           Configuration::Get().buDeltaMass(), *comb_meanBu_, *comb_sigmaBu_),
@@ -2034,11 +2034,11 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
       // comb_sigmaBuPartial_(Params::Get().CreateFloating(
       //     "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 200, 10, 400)),
       comb_meanBuPartial_(Params::Get().CreateFixed(
-          "comb_meanBuPartial", uniqueId_, Neutral::gamma, 5200, 0,
-          Systematic::NA, Sign::same)),
+          "comb_meanBuPartial", uniqueId_, Neutral::gamma, 5200, 50,
+          Systematic::Combinatorial, Sign::same)),
       comb_sigmaBuPartial_(Params::Get().CreateFixed(
-          "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 300, 0,
-          Systematic::NA, Sign::same)),
+          "comb_sigmaBuPartial", uniqueId_, Neutral::gamma, 300, 50,
+          Systematic::Combinatorial, Sign::same)),
       pdfBuPartial_comb_(
           ("pdfBuPartial_comb_" + ComposeName(uniqueId_, Neutral::gamma))
               .c_str(),
@@ -2052,4 +2052,8 @@ NeutralVars<Neutral::gamma>::NeutralVars(int uniqueId)
            Configuration::Get().buDeltaLow()) /
               (Configuration::Get().buDeltaMass().getMax() -
                Configuration::Get().buDeltaMass().getMin()),
-          0, Systematic::NA, Sign::same)) {}
+          0.1 * ((Configuration::Get().buDeltaHigh() -
+                  Configuration::Get().buDeltaLow()) /
+                 (Configuration::Get().buDeltaMass().getMax() -
+                  Configuration::Get().buDeltaMass().getMin())),
+          Systematic::Combinatorial, Sign::same)) {}

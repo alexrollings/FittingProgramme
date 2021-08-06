@@ -1269,12 +1269,12 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       //     "comb_meanBu", uniqueId_, Neutral::pi0, 5185, 5100, 5350)),
       // comb_sigmaBu_(Params::Get().CreateFloating(
       //     "comb_sigmaBu", uniqueId_, Neutral::pi0, 200, 10, 500)),
-      comb_meanBu_(Params::Get().CreateFixed("comb_meanBu", uniqueId_,
-                                             Neutral::pi0, 5200, 0,
-                                             Systematic::NA, Sign::same)),
-      comb_sigmaBu_(Params::Get().CreateFixed("comb_sigmaBu", uniqueId_,
-                                              Neutral::pi0, 300, 0,
-                                              Systematic::NA, Sign::same)),
+      comb_meanBu_(Params::Get().CreateFixed(
+          "comb_meanBu", uniqueId_, Neutral::pi0, 5200, 50,
+          Systematic::Combinatorial, Sign::same)),
+      comb_sigmaBu_(Params::Get().CreateFixed(
+          "comb_sigmaBu", uniqueId_, Neutral::pi0, 300, 50,
+          Systematic::Combinatorial, Sign::same)),
       pdfBu_comb_(
           ("pdfBu_comb_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(), "",
           Configuration::Get().buDeltaMass(), *comb_meanBu_, *comb_sigmaBu_),
@@ -1289,4 +1289,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
            Configuration::Get().buDeltaLow()) /
               (Configuration::Get().buDeltaMass().getMax() -
                Configuration::Get().buDeltaMass().getMin()),
-          0, Systematic::NA, Sign::same)) {}
+          0.1 * ((Configuration::Get().buDeltaHigh() -
+                  Configuration::Get().buDeltaLow()) /
+                 (Configuration::Get().buDeltaMass().getMax() -
+                  Configuration::Get().buDeltaMass().getMin())),
+          Systematic::Combinatorial, Sign::same)) {}
