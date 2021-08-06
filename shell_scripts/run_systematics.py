@@ -129,6 +129,7 @@ if __name__ == '__main__':
 
   if neutral == 'pi0':
     systematics = [
+        # 'Combinatorial',
         'Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi',
         'Bu2Dst0h_D0pi0_PdfDelta_Tails',
         'Bu2Dst0h_D0pi0_PdfDelta_Frac',
@@ -207,6 +208,7 @@ if __name__ == '__main__':
       bu_high = '5330'
   elif neutral == 'gamma':
     systematics = [
+        # 'Combinatorial',
         'Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi',
         'Bu2Dst0h_D0pi0_PdfDelta_Tails',
         'Bu2Dst0h_D0pi0_PdfDelta_Frac',
