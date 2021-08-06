@@ -387,4 +387,4 @@ if __name__ == '__main__':
             'CLUSTERID': '$(ClusterId)'
         }
         make_shell_script(submitTemplate, submitScript, submitSubs)
-        # run_process(['condor_submit', submitScript])
+        run_process(['condor_submit', submitScript])
