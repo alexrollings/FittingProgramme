@@ -237,7 +237,7 @@ if __name__ == '__main__':
       for b in arr_breakdown:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.breakdown_label == b)]
         n_categories = len(df_tmp)
-        rms = value = df_tmp['std'].pow(2).sum() / n_categories
+        rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
         df_totals.loc[(df_totals.breakdown_label == b)
                       & (df_totals.par == par_name), 'breakdown_rms'] = rms
 
@@ -247,12 +247,11 @@ if __name__ == '__main__':
       for g in arr_group:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
         n_categories = len(df_tmp)
-        rms = value = df_tmp['std'].pow(2).sum() / n_categories
+        rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
         df_totals.loc[(df_totals.group_label == g)
                       & (df_totals.par == par_name), 'group_rms'] = rms
 
     print(df_totals)
-
 
     # #
     # # # Systematic error on stat. correction is RMS of pull withs from 2D toys
