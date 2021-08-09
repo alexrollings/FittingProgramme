@@ -734,14 +734,24 @@ int main(int argc, char **argv) {
       std::cout << "Strategy 1\n";
       nStrat = 1;
     }
-    dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-        *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-        RooFit::Strategy(nStrat), RooFit::Minimizer("Minuit2"),
-        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-        // RooFit::Minos(kTRUE)));
-        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-        RooFit::ExternalConstraints(GlobalVars::Get(id).constraints_argSet())));
+    if (config.neutral() == Neutral::pi0) {
+      dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
+          *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+          RooFit::Strategy(nStrat), RooFit::Minimizer("Minuit2"),
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          // RooFit::Minos(kTRUE)));
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          RooFit::ExternalConstraints(
+              GlobalVars::Get(id).constraints_argSet())));
+    } else {
+      dataFitResult = std::unique_ptr<RooFitResult>(
+          simPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+                        RooFit::Strategy(nStrat), RooFit::Minimizer("Minuit2"),
+                        // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+                        // RooFit::Minos(kTRUE)));
+                        RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+    }
     // RooFit::NumCPU(config.nCPU())));
     // if (config.neutral() == Neutral::pi0) {
     //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
@@ -804,12 +814,20 @@ int main(int argc, char **argv) {
                                         systematicVec.end(), random);
       auto systPdf = std::unique_ptr<RooSimultaneous>(systPair.first);
       // auto pdfs = systPair.second;
-      auto systResult = std::unique_ptr<RooFitResult>(
-          systPdf->fitTo(*fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-                         RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
-                         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-                         RooFit::ExternalConstraints(
-                             GlobalVars::Get(id).constraints_argSet())));
+      std::unique_ptr<RooFitResult> systResult;
+      if (config.neutral() == Neutral::pi0) {
+        systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
+            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+            RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+            RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+            RooFit::ExternalConstraints(
+                GlobalVars::Get(id).constraints_argSet())));
+      } else {
+        systResult = std::unique_ptr<RooFitResult>(systPdf->fitTo(
+            *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
+            RooFit::Strategy(1), RooFit::Minimizer("Minuit2"),
+            RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+      }
       systResult->SetName("SystResult");
       std::stringstream filename;
       filename << outputDir << "/results/SystResult_"
