@@ -2,11 +2,11 @@ import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import root_numpy as r_np
 import argparse
-import json
+import json, csv
 from shutil import copyfile
 
 
-def SaveToFile(fname, json_dict):
+def SaveToJson(fname, json_dict):
   with open(fname, 'w') as json_file:
     json.dump(json_dict, json_file)
   # Make back up file before overwriting again
@@ -43,9 +43,9 @@ if __name__ == '__main__':
   ]
 
   if os.path.isdir(input_dir):
-    if not os.path.isdir(os.path.join(input_dir, 'json')):
-      os.mkdir(os.path.join(input_dir, 'json'))
-    json_fname = f'{input_dir}/json/systematics_{neutral}.json'
+    if not os.path.isdir(os.path.join(input_dir, 'format')):
+      os.mkdir(os.path.join(input_dir, 'format'))
+    json_fname = f'{input_dir}/format/systematics_{neutral}.json'
     # If json file exists, load existing dict
     if os.path.exists(json_fname):
       with open(json_fname, 'r') as json_file:
@@ -56,11 +56,11 @@ if __name__ == '__main__':
   else:
     sys.exit(input_dir + ' does not exist.')
 
-  input_dir = input_dir + '/results/'
-  if os.path.isdir(input_dir):
+  results_dir = os.path.join(input_dir, 'results')
+  if os.path.isdir(results_dir):
     save_count = 0
     file_count = 0
-    files = os.listdir(input_dir)
+    files = os.listdir(results_dir)
     n_files = len(files)
     for f in files:
       file_count = file_count + 1
@@ -69,7 +69,7 @@ if __name__ == '__main__':
       if m:
         syst_label = m.group(1)[1:]
         seed = m.group(2)
-        syst_file = TFile(os.path.join(input_dir, f))
+        syst_file = TFile(os.path.join(results_dir, f))
         syst_result = syst_file.Get('SystResult')
         if isinstance(syst_result, RooFitResult):
           save_count = save_count + 1
@@ -96,13 +96,23 @@ if __name__ == '__main__':
           syst_file.Close()
           # Dump to json every 100 files
           if save_count % 100 == 0:
-            SaveToFile(json_fname, json_dict)
+            SaveToJson(json_fname, json_dict)
             print(f'Saved result {file_count} out of {n_files}')
-            if save_count == 1000:
-              sys.exit()
+            if save_count == 200:
+              break
         else:
           print(f'SystResult not found in {f}')
     print(f'Saved result final {file_count} out of {n_files}')
-    SaveToFile(json_fname, json_dict)
+    SaveToJson(json_fname, json_dict)
+    csv_fname = f'{input_dir}/format/systematics_{neutral}.csv'
+    with open(csv_fname, 'w', newline='') as csv_file:
+      csv_writer = csv.writer(csv_file)
+      # writerow takes an iterable argument - would split up string into chars. Create own iterable using split()
+      csv_writer.writerow("par,label,seed,val,cov,status".split(','))
+      for par_key, par_val in json_dict.items():
+        for label_key, label_val in par_val.items():
+          for seed_key, seed_val in label_val.items():
+            csv_writer.writerow(f"{par_key},{label_key},{seed_key},{seed_val['value']},{seed_val['covQual']},{seed_val['fitStatus']}".split(','))
+    print('Formatted to csv.')
   else:
     sys.exit(input_dir + ' does not exist.')
