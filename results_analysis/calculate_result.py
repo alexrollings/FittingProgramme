@@ -3,19 +3,23 @@ import numpy as np
 import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
-import json
+import json, csv
 from useful_functions import return_label
+from useful_functions import return_group_breakdown, return_final_group
 
-def PrintFitStatus(dict_status):
-  for syst_label, status in dict_status.items():
-    print(f'{syst_label}:\n')
-    for status_label, tally in status.items():
-      if status_label == 'Total':
-        print(f'\t{status_label} : {tally}')
-      else:
-        perc = (tally / status['Total']) * 100
-        print(f'\t{status_label} : {perc} %')
-    print('\n')
+def PrintFitStatus(df_syst, syst_pars, arr_labels):
+  par_name = syst_pars[0]
+  df_labels = df_syst[df_syst.par == par_name].drop(['par'], axis=1)
+  for l in arr_labels:
+    df_status = df_labels[df_labels.label==l]
+    n_Total = len(df_status)
+    n_unConverged = len(df_status.query('cov < 2'))
+    n_FPD = len(df_status.query('cov == 2'))
+    n_MINOS = len(df_status.query('cov > 2 & status != 0'))
+    n_Converged = len(df_status.query('cov > 2 & status == 0'))
+    print(
+        f'{l}:\n\tTotal:\t\t{n_Total}\n\tConverged:\t{n_Converged/n_Total*100}%\n\tUnconverged:\t{n_unConverged/n_Total*100}%\n\tFPD:\t\t{n_FPD/n_Total*100}%\n\tMINOS Errors:\t{n_MINOS/n_Total*100}\n'
+    )
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -183,60 +187,76 @@ if __name__ == '__main__':
 
   if eval_systs == True:
     # Load in systematics from json
-    json_fname = f'{syst_dir}/json/systematics_{neutral}.json'
-    if os.path.exists(json_fname):
-      with open(json_fname, 'r') as json_file:
-        json_dict = json.load(json_file)
+    csv_fname = f'{syst_dir}/format/systematics_{neutral}.csv'
+    if os.path.exists(csv_fname):
+      df_syst = pd.read_csv(csv_fname)
     else:
-      sys.exit(f'{json_fname} does not exist')
+      sys.exit(f'{csv_fname} does not exist')
 
-    # df_syst = pd.json_normalize(json_dict)
-    # print(df_syst)
+    arr_labels = df_syst['label'].unique()
+    syst_pars = [p for p in sorted_pars if "N_tot" not in p]
+    dict_list_totals = []
+    # PrintFitStatus(df_syst, syst_pars, arr_labels)
 
-    # Loop over json dict and sum up fit quality for each syst label
-    status_fname = f'{json_fname}.status'
-    if os.path.exists(status_fname):
-      with open(status_fname, 'r') as status_file:
-        dict_status = json.load(status_file)
-        # PrintFitStatus(dict_status)
-    else:
-      par_name = sorted_pars[0]
-      dict_status = {}
-      for syst_label in json_dict[par_name]:
-        dict_status[syst_label] = {
-            'Total': 0,
-            'Converged': 0,
-            'MINOS': 0,
-            'FPD': 0,
-            'Unconverged': 0
-        }
-        for seed in list(json_dict[par_name][syst_label]):
-          covQual = json_dict[par_name][syst_label][seed]['covQual']
-          fitStatus = json_dict[par_name][syst_label][seed]['fitStatus']
-          if covQual < 2:
-            dict_status[syst_label]['Unconverged'] += 1
-            json_dict[par_name][syst_label].pop(seed)
-          elif covQual < 3:
-            dict_status[syst_label]['FPD'] += 1
-            json_dict[par_name][syst_label].pop(seed)
-          elif fitStatus != 0:
-            dict_status[syst_label]['MINOS'] += 1
-            json_dict[par_name][syst_label].pop(seed)
-          elif (covQual >= 3 and fitStatus == 0):
-            dict_status[syst_label]['Converged'] += 1
-            json_dict[par_name][syst_label].pop(seed)
-          else:
-            print(
-                f'Unknown fit status:\nCovariance matrix quality = {covQual}\tFit status = {fitStatus}'
-            )
-          dict_status[syst_label]['Total'] += 1
-      # Save fit status to file
-      with open(status_fname, 'w') as status_file:
-        json.dump(dict_status, status_file)
-      # PrintFitStatus(dict_status)
-    #
-    # # Systematic error on stat. correction is RMS of pull withs from 2D toys
-    # for n, pulls in pull_widths.items():
-    #   np_pulls = np.array(pulls)
-    #   rms = np.std(np_pulls)
-    #   print(rms)
+    df_syst = df_syst.query('cov > 2 & status == 0')
+    df_syst.drop(['cov', 'status'], axis=1, inplace=True)
+
+    # Calculate individual systematic errors from std dev
+    # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
+    for par_name in syst_pars:
+      for label in arr_labels:
+        df_tmp = df_syst[(df_syst.par == par_name) & (df_syst.label == label)].drop(['par', 'label'], axis=1)
+        n_init = len(df_tmp)
+        central_value = df_result[par_name]['Value']
+        stat_error = df_result[par_name]['Statistical Error']
+        df_tmp.query(
+            f'val > {central_value-3*stat_error} & val < {central_value+3*stat_error}',
+            inplace=True)
+        n_final = len(df_tmp)
+        if n_final == 0:
+          # print(f'WARNING: Z-score removed all events for {par_name}, {label}')
+          continue
+        # elif n_init/n_final < 0.8:
+        #   print(f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}')
+        std = df_tmp['val'].std()
+        # Add columns for group and breakdown labels and values
+        dict_list_totals.append({
+            'par': par_name,
+            'label': label,
+            'std': std,
+            'breakdown_label': return_group_breakdown(label),
+            'breakdown_rms': np.nan,
+            'group_label': return_final_group(label),
+            'group_rms': np.nan
+        })
+
+    df_totals = pd.json_normalize(dict_list_totals)
+
+    arr_breakdown = df_totals['breakdown_label'].unique()
+    for par_name in syst_pars:
+      for b in arr_breakdown:
+        df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.breakdown_label == b)]
+        n_categories = len(df_tmp)
+        rms = value = df_tmp['std'].pow(2).sum() / n_categories
+        df_totals.loc[(df_totals.breakdown_label == b)
+                      & (df_totals.par == par_name), 'breakdown_rms'] = rms
+
+    arr_groups = df_totals['group_label'].unique()
+    arr_group = df_totals['group_label'].unique()
+    for par_name in syst_pars:
+      for g in arr_group:
+        df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
+        n_categories = len(df_tmp)
+        rms = value = df_tmp['std'].pow(2).sum() / n_categories
+        df_totals.loc[(df_totals.group_label == g)
+                      & (df_totals.par == par_name), 'group_rms'] = rms
+
+    print(df_totals)
+
+
+    # #
+    # # # Systematic error on stat. correction is RMS of pull withs from 2D toys
+    # # for n, pulls in pull_widths.items():
+    # #   np_pulls = np.array(pulls)
+    # #   rms = np.std(np_pulls)
+    # #   print(rms)
