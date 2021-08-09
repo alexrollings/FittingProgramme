@@ -42,6 +42,7 @@ if __name__ == '__main__':
       'BR_pi02gamma_eff'
   ]
 
+  # Read in as json first to make sure every entry is unique!
   if os.path.isdir(input_dir):
     if not os.path.isdir(os.path.join(input_dir, 'format')):
       os.mkdir(os.path.join(input_dir, 'format'))
