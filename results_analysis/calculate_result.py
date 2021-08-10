@@ -220,13 +220,15 @@ if __name__ == '__main__':
       for par_name in arr_syst_pars:
         m = re.match(f'\S+_D0{n}(_\S+|$)', par_name)
         if m:
+          stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+          error = rms * stat
           dict_list_totals.append({
               'par':
                   par_name,
               'label':
                   'Statistical Error Correction',
               'std':
-                  rms,
+                  error,
               'breakdown_label':
                   return_group_breakdown('Statistical Error Correction'),
               'breakdown_rms':
@@ -279,7 +281,7 @@ if __name__ == '__main__':
             'breakdown_rms': np.nan,
             'group_label': return_final_group(label),
             'group_rms': np.nan,
-            'total_syst': np.nan
+            # 'total_syst': np.nan
         })
 
     # Read in Bs systematic and add to dict_list_totals
@@ -322,7 +324,7 @@ if __name__ == '__main__':
               'breakdown_rms': np.nan,
               'group_label': return_final_group('Bs phase space'),
               'group_rms': np.nan,
-              'total_syst': np.nan
+              # 'total_syst': np.nan
           })
 
     # Read in combinatorial systematic and add to dict_list_totals
@@ -357,7 +359,7 @@ if __name__ == '__main__':
               'breakdown_rms': np.nan,
               'group_label': return_final_group('Combinatorial'),
               'group_rms': np.nan,
-              'total_syst': np.nan
+              # 'total_syst': np.nan
           })
 
     df_totals = pd.json_normalize(dict_list_totals)
@@ -382,8 +384,11 @@ if __name__ == '__main__':
 
     for par_name in arr_syst_pars:
       df_tmp = df_totals[(df_totals.par == par_name)]
+      print(par_name)
       n_categories = len(df_tmp)
       rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
-      df_totals.loc[(df_totals.par == par_name), 'total_syst'] = rms
+      print(rms)
+      df_result.loc[(df_result.par == par_name), 'syst'] = rms
 
-    # print(df_totals)
+    print(arr_syst_pars)
+    print(df_result)
