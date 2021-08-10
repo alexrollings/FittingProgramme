@@ -222,6 +222,7 @@ if __name__ == '__main__':
         m = re.match(f'\S+_D0{n}(_\S+|$)', par_name)
         if m:
           stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+          # Multiply by stat error to get absolute systematic
           error = rms * stat
           dict_list_totals.append({
               'par':
@@ -248,11 +249,11 @@ if __name__ == '__main__':
       df_syst = pd.read_csv(csv_fname)
     else:
       sys.exit(f'{csv_fname} does not exist')
+    arr_labels = df_syst['label'].unique()
     # PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
     df_syst = df_syst.query('cov > 2 & status == 0')
     df_syst.drop(['cov', 'status'], axis=1, inplace=True)
 
-    arr_labels = df_syst['label'].unique()
     group_labels = ['Pdfs', 'CPPars', 'Asyms', 'Effs', 'Rates']
     dict_list_groups = []
     # Calculate individual systematic errors from std dev
@@ -268,13 +269,13 @@ if __name__ == '__main__':
             inplace=True)
         n_final = len(df_tmp)
         if n_final == 0:
-          # print(f'WARNING: Z-score removed all events for {par_name}, {label}')
+          print(f'WARNING: Z-score removed all events for {par_name}, {label}')
           continue
-        # elif n_init/n_final < 0.8:
-        #   print(f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}')
+        elif n_init/n_final < 0.8:
+          print(f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}')
         std = df_tmp['val'].std()
         # Add columns for group and breakdown labels and values
-        if par_name in group_labels:
+        if label not in group_labels:
           dict_list_totals.append({
               'par': par_name,
               'label': label,
@@ -286,6 +287,7 @@ if __name__ == '__main__':
               # 'total_syst': np.nan
           })
         else:
+          # Save grouped systematic (varied together) to different dict and df for comparison
           dict_list_groups.append({
               'par': par_name,
               'label': label,
@@ -293,6 +295,7 @@ if __name__ == '__main__':
           })
 
     df_groups = pd.json_normalize(dict_list_groups)
+    # print(df_groups)
 
     # Read in Bs systematic and add to dict_list_totals
     dict_Bs_syst = {}
@@ -315,8 +318,10 @@ if __name__ == '__main__':
           par_name = par_name.replace('_Blind', '')
           if par_name in arr_syst_pars:
             par_Bs = par.getVal()
+            # Error is difference between central value of fit with Bs bkg change and default fit
             val = df_result[(df_result.par == par_name)]['val'].values[0]
             error = abs(par_Bs - val)
+            # Take largest error to be symmetric error
             if par_name in dict_Bs_syst:
               if error > dict_Bs_syst[par_name]:
                 dict_Bs_syst[par_name] = error
@@ -331,9 +336,9 @@ if __name__ == '__main__':
               'label': 'Bs phase space',
               'std': dict_Bs_syst[par_name],
               'breakdown_label': return_group_breakdown('Bs phase space'),
-              'breakdown_rms': np.nan,
+              'breakdown_total': np.nan,
               'group_label': return_final_group('Bs phase space'),
-              'group_rms': np.nan,
+              'group_total': np.nan,
               # 'total_syst': np.nan
           })
 
@@ -355,6 +360,7 @@ if __name__ == '__main__':
           if par_name in arr_syst_pars:
             par_comb = par.getVal()
             val = df_result[(df_result.par == par_name)]['val'].values[0]
+            # Error is difference between central value of combinatorial fit and that of default fit
             error = abs(par_comb - val)
             dict_comb_syst[par_name] = error
 
@@ -366,36 +372,38 @@ if __name__ == '__main__':
               'label': 'Combinatorial',
               'std': dict_comb_syst[par_name],
               'breakdown_label': return_group_breakdown('Combinatorial'),
-              'breakdown_rms': np.nan,
+              'breakdown_total': np.nan,
               'group_label': return_final_group('Combinatorial'),
-              'group_rms': np.nan,
+              'group_total': np.nan,
               # 'total_syst': np.nan
           })
 
     df_totals = pd.json_normalize(dict_list_totals)
 
+    # Calculate sum in quadrature of all errors for every label within a group (ar all for total) to get groups systematic
     arr_breakdown = df_totals['breakdown_label'].unique()
     for par_name in arr_syst_pars:
       for b in arr_breakdown:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.breakdown_label == b)]
-        n_categories = len(df_tmp)
-        rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
+        total = math.sqrt(df_tmp['std'].pow(2).sum())
         df_totals.loc[(df_totals.breakdown_label == b)
-                      & (df_totals.par == par_name), 'breakdown_rms'] = rms
+                      & (df_totals.par == par_name), 'breakdown_total'] = total
 
     arr_group = df_totals['group_label'].unique()
     for par_name in arr_syst_pars:
       for g in arr_group:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
-        n_categories = len(df_tmp)
-        rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
+        total = math.sqrt(df_tmp['std'].pow(2).sum())
         df_totals.loc[(df_totals.group_label == g)
-                      & (df_totals.par == par_name), 'group_rms'] = rms
+                      & (df_totals.par == par_name), 'group_total'] = total
 
     for par_name in arr_syst_pars:
       df_tmp = df_totals[(df_totals.par == par_name)]
-      n_categories = len(df_tmp)
-      rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
-      df_result.loc[(df_result.par == par_name), 'syst'] = rms
+      total = math.sqrt(df_tmp['std'].pow(2).sum())
+      df_result.loc[(df_result.par == par_name), 'syst'] = total
+
+    df_result['syst/stat'] = np.where(df_result['syst'] != np.nan,
+                                      df_result['syst'] / df_result['stat'],
+                                      np.nan)
 
     print(df_result)
