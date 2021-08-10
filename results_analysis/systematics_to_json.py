@@ -5,11 +5,13 @@ import argparse
 import json, csv
 from shutil import copyfile
 
+
 def SaveToFile(fname, json_dict):
   with open(fname, 'w') as json_file:
     json.dump(json_dict, json_file)
   # Make back up file before overwriting again
   copyfile(fname, fname + '.bak')
+
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -73,21 +75,25 @@ if __name__ == '__main__':
           json_dict.pop(syst_label)
           continue
         if seed not in json_dict[syst_label]:
-          syst_file = TFile(os.path.join(input_dir, f))
+          syst_file = TFile(os.path.join(results_dir, f))
           syst_result = syst_file.Get('SystResult')
           if isinstance(syst_result, RooFitResult):
             save_count = save_count + 1
             # Label each result with syst label and seed
             # Save covariance matrix quality and fit status
-            json_dict[syst_label][seed] = {'covQual' : syst_result.covQual(), 'fitStatus' : syst_result.status()}
+            json_dict[syst_label][seed] = {
+                'covQual': syst_result.covQual(),
+                'fitStatus': syst_result.status()
+            }
             # Save obs names and values
             for p in syst_result.floatParsFinal():
               for obs in observables:
                 par_name = p.GetName()
-                m = re.match(obs + '(_\S+)_[0-9]+', par_name)
-                if m:
+                m0 = re.match(obs + '(_\S+)_[0-9]+', par_name)
+                if m0:
                   # Results labelled with different numbers
-                  par_name = obs + m.group(1)
+                  end = m0.group(1).replace('_Blind', '')
+                  par_name = obs + end
                   json_dict[syst_label][seed][par_name] = p.getVal()
             syst_file.Close()
             # Dump to json every 100 files
