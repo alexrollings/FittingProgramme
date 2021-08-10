@@ -248,13 +248,13 @@ if __name__ == '__main__':
       df_syst = pd.read_csv(csv_fname)
     else:
       sys.exit(f'{csv_fname} does not exist')
-
-    arr_labels = df_syst['label'].unique()
     # PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
-
     df_syst = df_syst.query('cov > 2 & status == 0')
     df_syst.drop(['cov', 'status'], axis=1, inplace=True)
 
+    arr_labels = df_syst['label'].unique()
+    group_labels = ['Pdfs', 'CPPars', 'Asyms', 'Effs', 'Rates']
+    dict_list_groups = []
     # Calculate individual systematic errors from std dev
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
     for par_name in arr_syst_pars:
@@ -274,16 +274,23 @@ if __name__ == '__main__':
         #   print(f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}')
         std = df_tmp['val'].std()
         # Add columns for group and breakdown labels and values
-        dict_list_totals.append({
-            'par': par_name,
-            'label': label,
-            'std': std,
-            'breakdown_label': return_group_breakdown(label),
-            'breakdown_rms': np.nan,
-            'group_label': return_final_group(label),
-            'group_rms': np.nan,
-            # 'total_syst': np.nan
-        })
+        if par_name in group_labels:
+          dict_list_totals.append({
+              'par': par_name,
+              'label': label,
+              'std': std,
+              'breakdown_label': return_group_breakdown(label),
+              'breakdown_rms': np.nan,
+              'group_label': return_final_group(label),
+              'group_rms': np.nan,
+              # 'total_syst': np.nan
+          })
+        else:
+          dict_list_groups.append({
+              'par': par_name,
+              'label': label,
+              'std': std,
+          })
 
     # Read in Bs systematic and add to dict_list_totals
     dict_Bs_syst = {}
