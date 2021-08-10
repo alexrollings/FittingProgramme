@@ -136,14 +136,14 @@ if __name__ == '__main__':
         })
 
   df_result = pd.json_normalize(dict_list_result)
-  # print(df_result)
+  print(df_result)
 
   # Save raw result to tex file
   raw_file = open(
       f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
       'w')
   row_arr = []
-  arr_pars = df_result['par'].unique()
+  arr_pars = df_result['par'].unique().tolist()
   if 'BR_pi02gamma_eff_gamma' in arr_pars:
     arr_pars.remove('BR_pi02gamma_eff_gamma')
   for par_name in arr_pars:
@@ -247,10 +247,16 @@ if __name__ == '__main__':
     csv_fname = f'{syst_dir}/format/systematics_{neutral}.csv'
     if os.path.exists(csv_fname):
       df_syst = pd.read_csv(csv_fname)
+      # Remove any Bu2Dst0hst observables
+      patternKeep = "Bu2Dst0h_"
+      filter = df_syst['par'].str.contains(patternKeep)
+      df_syst = df_syst[filter]
+      # Remove blind string
+      df_syst.par.replace({"_Blind" : ""}, regex=True, inplace=True)
     else:
       sys.exit(f'{csv_fname} does not exist')
-    arr_labels = df_syst['label'].unique()
-    # PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
+    arr_labels = df_syst['label'].unique().tolist()
+    PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
     df_syst = df_syst.query('cov > 2 & status == 0')
     df_syst.drop(['cov', 'status'], axis=1, inplace=True)
 
@@ -381,7 +387,7 @@ if __name__ == '__main__':
     df_totals = pd.json_normalize(dict_list_totals)
 
     # Calculate sum in quadrature of all errors for every label within a group (ar all for total) to get groups systematic
-    arr_breakdown = df_totals['breakdown_label'].unique()
+    arr_breakdown = df_totals['breakdown_label'].unique().tolist()
     for par_name in arr_syst_pars:
       for b in arr_breakdown:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.breakdown_label == b)]
@@ -389,7 +395,7 @@ if __name__ == '__main__':
         df_totals.loc[(df_totals.breakdown_label == b)
                       & (df_totals.par == par_name), 'breakdown_total'] = total
 
-    arr_group = df_totals['group_label'].unique()
+    arr_group = df_totals['group_label'].unique().tolist()
     for par_name in arr_syst_pars:
       for g in arr_group:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
