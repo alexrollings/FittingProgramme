@@ -95,6 +95,7 @@ if __name__ == '__main__':
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h', 'BR_pi02gamma_eff'
   ]
 
+  blinded_pars = []
   dict_list_result = []
   # Extract data fit result (make not of box dimn for 2d toy pulls)
   # Extract value and fit error of each observable of interest
@@ -119,7 +120,7 @@ if __name__ == '__main__':
         # Results labelled with different numbers
         value = p.getVal()
         if 'Blind' in par_name:
-          value = 0
+          blinded_pars.append(par_name)
         end = m0.group(1).replace('_Blind', '')
         par_name = obs + end
         # No systematics for yields
@@ -151,7 +152,7 @@ if __name__ == '__main__':
     stat = df_result[(df_result.par == par_name)]['stat'].values[0]
     if par_name[0] == 'N':
       continue
-    if val == 0:
+    if par_name in blinded_pars:
       val_str = ''
       extra = ''
     else:
@@ -237,8 +238,8 @@ if __name__ == '__main__':
                   return_final_group('Statistical Error Correction'),
               'group_rms':
                   np.nan,
-              'total_syst':
-                  np.nan
+              # 'total_syst':
+              #     np.nan
           })
 
     # Load in systematics from json
@@ -384,11 +385,8 @@ if __name__ == '__main__':
 
     for par_name in arr_syst_pars:
       df_tmp = df_totals[(df_totals.par == par_name)]
-      print(par_name)
       n_categories = len(df_tmp)
       rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
-      print(rms)
       df_result.loc[(df_result.par == par_name), 'syst'] = rms
 
-    print(arr_syst_pars)
     print(df_result)
