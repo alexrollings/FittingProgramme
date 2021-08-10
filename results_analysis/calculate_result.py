@@ -7,8 +7,8 @@ import json, csv
 from useful_functions import return_label
 from useful_functions import return_group_breakdown, return_final_group
 
-def PrintFitStatus(df_syst, syst_pars, arr_labels):
-  par_name = syst_pars[0]
+def PrintFitStatus(df_syst, arr_syst_pars, arr_labels):
+  par_name = arr_syst_pars[0]
   df_labels = df_syst[df_syst.par == par_name].drop(['par'], axis=1)
   for l in arr_labels:
     df_status = df_labels[df_labels.label==l]
@@ -82,6 +82,12 @@ if __name__ == '__main__':
     box_str = '60_105_125_170_5240_5320'
   result = f'{result_dir}/DataResult_{box_str}.root'
 
+  eval_systs = False
+  if charge != 'total' and syst_dir != None:
+    if not os.path.exists(syst_dir):
+      sys.exit(f'{syst_dir} does not exist')
+    eval_systs = True
+
   # Observables we are interested have this stem (match with regex)
   # Include BR in order to calc gamma π0 FAV yield
   observables = [
@@ -89,7 +95,7 @@ if __name__ == '__main__':
       'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h', 'BR_pi02gamma_eff'
   ]
 
-  dict_result = {}
+  dict_list_result = []
   # Extract data fit result (make not of box dimn for 2d toy pulls)
   # Extract value and fit error of each observable of interest
   if not os.path.isfile(result):
@@ -116,15 +122,19 @@ if __name__ == '__main__':
           value = 0
         end = m0.group(1).replace('_Blind', '')
         par_name = obs + end
-        dict_result[par_name] = {
-            'Value': value,
-            'Statistical Error': p.getError()
-        }
         # No systematics for yields
         if obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff':
-          dict_result[par_name]['Systematic Error'] = np.nan
+          syst_error = 0.
+        else:
+          syst_error = np.nan
+        dict_list_result.append({
+            'par': par_name,
+            'val': value,
+            'stat': p.getError(),
+            'syst': syst_error
+        })
 
-  df_result = pd.DataFrame.from_dict(dict_result)
+  df_result = pd.json_normalize(dict_list_result)
   # print(df_result)
 
   # Save raw result to tex file
@@ -132,13 +142,14 @@ if __name__ == '__main__':
       f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
       'w')
   row_arr = []
-  sorted_pars = sorted(dict_result.keys(), key=lambda x: x.lower())
-  if 'BR_pi02gamma_eff_gamma' in sorted_pars:
-    sorted_pars.remove('BR_pi02gamma_eff_gamma')
-  for par in sorted_pars:
-    val = df_result[par]['Value']
-    stat = df_result[par]['Statistical Error']
-    if par[0] == 'N':
+  arr_pars = df_result['par'].unique()
+  if 'BR_pi02gamma_eff_gamma' in arr_pars:
+    arr_pars.remove('BR_pi02gamma_eff_gamma')
+  for par_name in arr_pars:
+    # To access value of DF - turn into 1x1 np array, then access first value
+    val = df_result[(df_result.par == par_name)]['val'].values[0]
+    stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+    if par_name[0] == 'N':
       continue
     if val == 0:
       val_str = ''
@@ -151,7 +162,7 @@ if __name__ == '__main__':
       val_str = f'{val:.4f}'
     results_str = f' &= {extra}{val_str} &&\\pm {stat:.4f} \\\\ \n'
     # Need to remove $$ at either end of string as going into align env
-    row_arr.append(return_label(par)[1:-1] + results_str)
+    row_arr.append(return_label(par_name)[1:-1] + results_str)
 
   for row in row_arr:
     raw_file.write(row)
@@ -159,9 +170,11 @@ if __name__ == '__main__':
 
   # File where 2D pull results are stored
   pull_file = TFile(pull_fname)
+  # Save pulls to dict labelled by neutral to calculate rms for syst on stat correction
   pull_widths = {}
-  # Extract pull result for vars stored in fit_result dict and correct stat error with pull width
-  for par_name in sorted_pars:
+  arr_syst_pars = [p for p in arr_pars if "N_tot" not in p]
+  # Extract pull results for params and correct stat error with pull width
+  for par_name in arr_pars:
     pull_result = pull_file.Get(f'Result_Pull_{par_name}')
     if pull_result == None:
       m = re.match('(\S+_Bu2Dst0h_D0(pi0|gamma))(_\S+|$)', par_name)
@@ -177,32 +190,55 @@ if __name__ == '__main__':
         continue
     pull_pars = pull_result.floatParsFinal()
     pull_width = pull_pars[1].getVal()
-    df_result[par]['Statistical Error'] = df_result[par]['Statistical Error'] * pull_width
-    m0 = re.match('\S+_D0(pi0|gamma)(_\S+|$)', par_name)
-    if m0:
-      n_arr = [m0.group(1)]
-    elif par_name == 'R_Dst0KDst0pi_Bu2Dst0h_kpi':
-      if neutral == 'gamma':
-        n_arr = ['pi0', 'gamma']
-      else:
-        n_arr = ['pi0']
-    elif par_name == 'BR_pi02gamma_eff_gamma':
-      n_arr = ['pi0']
-    else:
-      sys.exit(k + ' doesn\'t match neutral regex')
-    for n in n_arr:
-      if n not in pull_widths:
-        pull_widths[n] = [pull_width]
-      else:
-        pull_widths[n].append(pull_width)
+    # at allows you to access given element, but needs row, column location therefore first find index (row) for given par_name
+    par_idx = df_result.index[(df_result.par == par_name) == True].tolist()[0]
+    df_result.at[par_idx, 'stat'] = df_result[
+        (df_result.par == par_name)]['stat'].values[0] * pull_width
+    if eval_systs == True:
+      if par_name in arr_syst_pars:
+        m0 = re.match('\S+_D0(pi0|gamma)(_\S+|$)', par_name)
+        if m0:
+          n = m0.group(1)
+        else:
+          print(f'{par_name} doesn\'t match neutral regex')
+          continue
+        if n not in pull_widths:
+          pull_widths[n] = [pull_width]
+        else:
+          pull_widths[n].append(pull_width)
 
-  eval_systs = False
-  if charge != 'total' and syst_dir != None:
-    if not os.path.exists(syst_dir):
-      sys.exit(f'{syst_dir} does not exist')
-    eval_systs = True
+  # print(df_result)
 
   if eval_systs == True:
+    dict_list_totals = []
+
+    # Systematic error on stat. correction is RMS of pull withs from 2D toys
+    for n, pulls in pull_widths.items():
+      np_pulls = np.array(pulls)
+      rms = np.std(np_pulls)
+      # Add syst for parameter based on D*0 decay
+      for par_name in arr_syst_pars:
+        m = re.match(f'\S+_D0{n}(_\S+|$)', par_name)
+        if m:
+          dict_list_totals.append({
+              'par':
+                  par_name,
+              'label':
+                  'Statistical Error Correction',
+              'std':
+                  rms,
+              'breakdown_label':
+                  return_group_breakdown('Statistical Error Correction'),
+              'breakdown_rms':
+                  np.nan,
+              'group_label':
+                  return_final_group('Statistical Error Correction'),
+              'group_rms':
+                  np.nan,
+              'total_syst':
+                  np.nan
+          })
+
     # Load in systematics from json
     csv_fname = f'{syst_dir}/format/systematics_{neutral}.csv'
     if os.path.exists(csv_fname):
@@ -211,23 +247,21 @@ if __name__ == '__main__':
       sys.exit(f'{csv_fname} does not exist')
 
     arr_labels = df_syst['label'].unique()
-    syst_pars = [p for p in sorted_pars if "N_tot" not in p]
-    dict_list_totals = []
-    # PrintFitStatus(df_syst, syst_pars, arr_labels)
+    # PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
 
     df_syst = df_syst.query('cov > 2 & status == 0')
     df_syst.drop(['cov', 'status'], axis=1, inplace=True)
 
     # Calculate individual systematic errors from std dev
     # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
-    for par_name in syst_pars:
+    for par_name in arr_syst_pars:
       for label in arr_labels:
         df_tmp = df_syst[(df_syst.par == par_name) & (df_syst.label == label)].drop(['par', 'label'], axis=1)
         n_init = len(df_tmp)
-        central_value = df_result[par_name]['Value']
-        stat_error = df_result[par_name]['Statistical Error']
+        val = df_result[(df_result.par == par_name)]['val'].values[0]
+        stat = df_result[(df_result.par == par_name)]['stat'].values[0]
         df_tmp.query(
-            f'val > {central_value-3*stat_error} & val < {central_value+3*stat_error}',
+            f'val > {val-3*stat} & val < {val+3*stat}',
             inplace=True)
         n_final = len(df_tmp)
         if n_final == 0:
@@ -248,12 +282,6 @@ if __name__ == '__main__':
             'total_syst': np.nan
         })
 
-    # # Systematic error on stat. correction is RMS of pull withs from 2D toys
-    # for n, pulls in pull_widths.items():
-    #   np_pulls = np.array(pulls)
-    #   rms = np.std(np_pulls)
-    #   print(rms)
-
     # Read in Bs systematic and add to dict_list_totals
     dict_Bs_syst = {}
     eval_Bs_syst = False
@@ -273,10 +301,10 @@ if __name__ == '__main__':
         for par in Bs_result.floatParsFinal():
           par_name = par.GetName()[:-2]
           par_name = par_name.replace('_Blind', '')
-          if par_name in df_result:
+          if par_name in arr_syst_pars:
             par_Bs = par.getVal()
-            par_og = df_result[par_name]['Value']
-            error = abs(par_Bs - par_og)
+            val = df_result[(df_result.par == par_name)]['val'].values[0]
+            error = abs(par_Bs - val)
             if par_name in dict_Bs_syst:
               if error > dict_Bs_syst[par_name]:
                 dict_Bs_syst[par_name] = error
@@ -284,7 +312,7 @@ if __name__ == '__main__':
               dict_Bs_syst[par_name] = error
 
     if eval_Bs_syst == True:
-      for par_name in syst_pars:
+      for par_name in arr_syst_pars:
         if par_name in dict_Bs_syst:
           dict_list_totals.append({
               'par': par_name,
@@ -312,14 +340,14 @@ if __name__ == '__main__':
         for par in comb_result.floatParsFinal():
           par_name = par.GetName()[:-2]
           par_name = par_name.replace('_Blind', '')
-          if par_name in df_result:
+          if par_name in arr_syst_pars:
             par_comb = par.getVal()
-            par_og = df_result[par_name]['Value']
-            error = abs(par_comb - par_og)
+            val = df_result[(df_result.par == par_name)]['val'].values[0]
+            error = abs(par_comb - val)
             dict_comb_syst[par_name] = error
 
     if eval_comb_syst == True:
-      for par_name in syst_pars:
+      for par_name in arr_syst_pars:
         if par_name in dict_comb_syst:
           dict_list_totals.append({
               'par': par_name,
@@ -335,7 +363,7 @@ if __name__ == '__main__':
     df_totals = pd.json_normalize(dict_list_totals)
 
     arr_breakdown = df_totals['breakdown_label'].unique()
-    for par_name in syst_pars:
+    for par_name in arr_syst_pars:
       for b in arr_breakdown:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.breakdown_label == b)]
         n_categories = len(df_tmp)
@@ -344,7 +372,7 @@ if __name__ == '__main__':
                       & (df_totals.par == par_name), 'breakdown_rms'] = rms
 
     arr_group = df_totals['group_label'].unique()
-    for par_name in syst_pars:
+    for par_name in arr_syst_pars:
       for g in arr_group:
         df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
         n_categories = len(df_tmp)
@@ -352,11 +380,10 @@ if __name__ == '__main__':
         df_totals.loc[(df_totals.group_label == g)
                       & (df_totals.par == par_name), 'group_rms'] = rms
 
-    for par_name in syst_pars:
+    for par_name in arr_syst_pars:
       df_tmp = df_totals[(df_totals.par == par_name)]
       n_categories = len(df_tmp)
       rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
       df_totals.loc[(df_totals.par == par_name), 'total_syst'] = rms
 
-    print(df_totals)
-
+    # print(df_totals)
