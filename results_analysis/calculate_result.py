@@ -297,8 +297,42 @@ if __name__ == '__main__':
               'total_syst': np.nan
           })
 
+    # Read in combinatorial systematic and add to dict_list_totals
+    dict_comb_syst = {}
+    eval_comb_syst = False
+    fname_comb = f'{result_dir}/SystResult_{box_str}_combinatorial.root'
+    if not os.path.isfile(fname_comb):
+      print(f'{fname_comb} does not exist')
+    else:
+      comb_file = TFile(fname_comb)
+      comb_result = comb_file.Get('SystResult')
+      if ReturnResultQuality(comb_result, fname_comb):
+        eval_comb_syst = True
+      if eval_comb_syst == True:
+        for par in comb_result.floatParsFinal():
+          par_name = par.GetName()[:-2]
+          par_name = par_name.replace('_Blind', '')
+          if par_name in df_result:
+            par_comb = par.getVal()
+            par_og = df_result[par_name]['Value']
+            error = abs(par_comb - par_og)
+            dict_comb_syst[par_name] = error
+
+    if eval_comb_syst == True:
+      for par_name in syst_pars:
+        if par_name in dict_comb_syst:
+          dict_list_totals.append({
+              'par': par_name,
+              'label': 'Combinatorial',
+              'std': dict_comb_syst[par_name],
+              'breakdown_label': return_group_breakdown('Combinatorial'),
+              'breakdown_rms': np.nan,
+              'group_label': return_final_group('Combinatorial'),
+              'group_rms': np.nan,
+              'total_syst': np.nan
+          })
+
     df_totals = pd.json_normalize(dict_list_totals)
-    print(df_totals)
 
     arr_breakdown = df_totals['breakdown_label'].unique()
     for par_name in syst_pars:
@@ -324,4 +358,5 @@ if __name__ == '__main__':
       rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
       df_totals.loc[(df_totals.par == par_name), 'total_syst'] = rms
 
+    print(df_totals)
 
