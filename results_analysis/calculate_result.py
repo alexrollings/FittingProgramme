@@ -21,6 +21,23 @@ def PrintFitStatus(df_syst, syst_pars, arr_labels):
         f'{l}:\n\tTotal:\t\t{n_Total}\n\tConverged:\t{n_Converged/n_Total*100}%\n\tUnconverged:\t{n_unConverged/n_Total*100}%\n\tFPD:\t\t{n_FPD/n_Total*100}%\n\tMINOS Errors:\t{n_MINOS/n_Total*100}\n'
     )
 
+def ReturnResultQuality(result, fname):
+  if result == None:
+    print(f'{fname} does not contain SystResult')
+  covQual = result.covQual()
+  fitStatus = result.status()
+  if covQual < 2:
+    print(f'{fname} SystResult unconverged')
+    return False
+  elif covQual < 3:
+    print(f'{fname} SystResult FPD')
+    return False
+  elif fitStatus != 0:
+    print(f'{fname} SystResult has MINOS errors')
+    return False
+  elif (covQual >= 3 and fitStatus == 0):
+    return True
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-r',
@@ -79,8 +96,8 @@ if __name__ == '__main__':
     sys.exit(f'{result} does not exist')
   data_file = TFile(result)
   data_result = data_file.Get('DataFitResult')
-  if data_result == None:
-    sys.exit(f'{data_file} does not contain DataFitResult')
+  if not ReturnResultQuality(data_result, result):
+    sys.exit(f'{data_file} does not contain converged result')
   edm_fname = f'{tex_path}/EDM_{charge}_{neutral}.tex'
   with open(edm_fname, 'w') as f_edm:
     edm_val = data_result.edm()
@@ -105,7 +122,7 @@ if __name__ == '__main__':
         }
         # No systematics for yields
         if obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff':
-          dict_result[par_name]['Systematic Error'] = 0
+          dict_result[par_name]['Systematic Error'] = np.nan
 
   df_result = pd.DataFrame.from_dict(dict_result)
   # print(df_result)
@@ -227,10 +244,61 @@ if __name__ == '__main__':
             'breakdown_label': return_group_breakdown(label),
             'breakdown_rms': np.nan,
             'group_label': return_final_group(label),
-            'group_rms': np.nan
+            'group_rms': np.nan,
+            'total_syst': np.nan
         })
 
+    # # Systematic error on stat. correction is RMS of pull withs from 2D toys
+    # for n, pulls in pull_widths.items():
+    #   np_pulls = np.array(pulls)
+    #   rms = np.std(np_pulls)
+    #   print(rms)
+
+    # Read in Bs systematic and add to dict_list_totals
+    dict_Bs_syst = {}
+    eval_Bs_syst = False
+    fracs = ['0.7', '0.9']
+    for frac in fracs:
+      fname_Bs = f'{result_dir}/SystResult_{box_str}_Bs2Dst0Kst0_{frac}.root'
+      if not os.path.isfile(fname_Bs):
+        print(f'{fname_Bs} does not exist')
+        continue
+      Bs_file = TFile(fname_Bs)
+      Bs_result = Bs_file.Get('SystResult')
+      if ReturnResultQuality(Bs_result, fname_Bs):
+        eval_Bs_syst = True
+      else:
+        continue
+      if eval_Bs_syst == True:
+        for par in Bs_result.floatParsFinal():
+          par_name = par.GetName()[:-2]
+          par_name = par_name.replace('_Blind', '')
+          if par_name in df_result:
+            par_Bs = par.getVal()
+            par_og = df_result[par_name]['Value']
+            error = abs(par_Bs - par_og)
+            if par_name in dict_Bs_syst:
+              if error > dict_Bs_syst[par_name]:
+                dict_Bs_syst[par_name] = error
+            else:
+              dict_Bs_syst[par_name] = error
+
+    if eval_Bs_syst == True:
+      for par_name in syst_pars:
+        if par_name in dict_Bs_syst:
+          dict_list_totals.append({
+              'par': par_name,
+              'label': 'Bs phase space',
+              'std': dict_Bs_syst[par_name],
+              'breakdown_label': return_group_breakdown('Bs phase space'),
+              'breakdown_rms': np.nan,
+              'group_label': return_final_group('Bs phase space'),
+              'group_rms': np.nan,
+              'total_syst': np.nan
+          })
+
     df_totals = pd.json_normalize(dict_list_totals)
+    print(df_totals)
 
     arr_breakdown = df_totals['breakdown_label'].unique()
     for par_name in syst_pars:
@@ -241,7 +309,6 @@ if __name__ == '__main__':
         df_totals.loc[(df_totals.breakdown_label == b)
                       & (df_totals.par == par_name), 'breakdown_rms'] = rms
 
-    arr_groups = df_totals['group_label'].unique()
     arr_group = df_totals['group_label'].unique()
     for par_name in syst_pars:
       for g in arr_group:
@@ -251,11 +318,10 @@ if __name__ == '__main__':
         df_totals.loc[(df_totals.group_label == g)
                       & (df_totals.par == par_name), 'group_rms'] = rms
 
-    print(df_totals)
+    for par_name in syst_pars:
+      df_tmp = df_totals[(df_totals.par == par_name)]
+      n_categories = len(df_tmp)
+      rms = math.sqrt(df_tmp['std'].pow(2).sum() / n_categories)
+      df_totals.loc[(df_totals.par == par_name), 'total_syst'] = rms
 
-    # #
-    # # # Systematic error on stat. correction is RMS of pull withs from 2D toys
-    # # for n, pulls in pull_widths.items():
-    # #   np_pulls = np.array(pulls)
-    # #   rms = np.std(np_pulls)
-    # #   print(rms)
+
