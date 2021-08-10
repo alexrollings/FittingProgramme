@@ -1409,14 +1409,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuAddPdf() {
   PdfBase::yieldsBu_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Bu_Bu2Dst0hst());
-  // if (Configuration::Get().runCombSystematic() == true) {
+  if (Configuration::Get().runCombSystematic() == true) {
     PdfBase::functionsBu_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfBu_comb());
     PdfBase::yieldsBu_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_trueId_Bu_comb());
-  // }
+  }
   if (_daughters == Daughters::kk) {
     PdfBase::functionsBu_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
                                   .pdfBu_Lb2Omegach_Lcpi0());
@@ -1555,14 +1555,14 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateBuPartialAddPdf() {
   PdfBase::yieldsBuPartial_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_BuPartial_Bu2Dst0hst());
-  // if (Configuration::Get().runCombSystematic() == true) {
+  if (Configuration::Get().runCombSystematic() == true) {
     PdfBase::functionsBuPartial_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_).pdfBuPartial_comb());
     PdfBase::yieldsBuPartial_.add(
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_trueId_BuPartial_comb());
-  // }
+  }
   if (_daughters == Daughters::kk) {
     PdfBase::functionsBuPartial_.add(
         NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
@@ -1751,7 +1751,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
   PdfBase::yieldsDelta_.add(
       Yields<_neutral, _bachelor, _daughters, _charge>::Get(PdfBase::uniqueId_)
           .N_trueId_Delta_Bu2Dst0hst());
-  // if (Configuration::Get().runCombSystematic() == true) {
+  if (Configuration::Get().runCombSystematic() == true) {
     PdfBase::functionsDelta_.add(
         NeutralBachelorVars<_neutral, _bachelor>::Get(PdfBase::uniqueId_)
             .pdfDelta_comb());
@@ -1759,7 +1759,7 @@ void Pdf<_neutral, _bachelor, _daughters, _charge>::CreateDeltaAddPdf() {
         Yields<_neutral, _bachelor, _daughters, _charge>::Get(
             PdfBase::uniqueId_)
             .N_trueId_Delta_comb());
-  // }
+  }
   if (_daughters == Daughters::kk) {
     PdfBase::functionsDelta_.add(NeutralVars<_neutral>::Get(PdfBase::uniqueId_)
                                      .pdfDelta_Lb2Omegach_Lcpi0());
