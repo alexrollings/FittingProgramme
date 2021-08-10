@@ -2,7 +2,7 @@ import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import root_numpy as r_np
 import argparse
-import json
+import json, csv
 from shutil import copyfile
 
 def SaveToFile(fname, json_dict):
@@ -41,7 +41,7 @@ if __name__ == '__main__':
   ]
 
   if os.path.isdir(input_dir):
-    json_fname = f'{input_dir}/systematics_{neutral}.json'
+    json_fname = f'{input_dir}/format/systematics_{neutral}.json'
     # If json file exists, load existing dict
     if os.path.exists(json_fname):
       with open(json_fname, 'r') as json_file:
@@ -52,11 +52,11 @@ if __name__ == '__main__':
   else:
     sys.exit(input_dir + ' does not exist.')
 
-  input_dir = input_dir + '/results/'
-  if os.path.isdir(input_dir):
+  results_dir = input_dir + '/results/'
+  if os.path.isdir(results_dir):
     save_count = 0
     file_count = 0
-    files = os.listdir(input_dir)
+    files = os.listdir(results_dir)
     n_files = len(files)
     for f in files:
       file_count = file_count + 1
@@ -66,6 +66,7 @@ if __name__ == '__main__':
       if m:
         syst_label = m.group(1)[1:]
         seed = m.group(2)
+        # Good to format this way s.t. can check if file already opened before opening!
         if syst_label not in json_dict:
           json_dict[syst_label] = {}
         if syst_label == 'R_Dst0KDst0pi_Lb2Omegach_Lcpi0':
@@ -83,7 +84,7 @@ if __name__ == '__main__':
             for p in syst_result.floatParsFinal():
               for obs in observables:
                 par_name = p.GetName()
-                m = re.match(obs + '(\S+)_[0-9]+', par_name)
+                m = re.match(obs + '(_\S+)_[0-9]+', par_name)
                 if m:
                   # Results labelled with different numbers
                   par_name = obs + m.group(1)
@@ -99,5 +100,20 @@ if __name__ == '__main__':
             print(f'SystResult not found in {f}')
     print(f'Saved result final {file_count} out of {n_files}')
     SaveToFile(json_fname, json_dict)
+    csv_fname = f'{input_dir}/format/systematics_{neutral}.csv'
+    with open(csv_fname, 'w', newline='') as csv_file:
+      csv_writer = csv.writer(csv_file)
+      # writerow takes an iterable argument - would split up string into chars. Create own iterable using split()
+      csv_writer.writerow("par,label,seed,val,cov,status".split(','))
+      for label_key, label_val in json_dict.items():
+        for seed_key, seed_val in label_val.items():
+          cov_qual = seed_val['covQual']
+          fit_status = seed_val['fitStatus']
+          for par_key, par_val in seed_val.items():
+            if par_key != 'covQual' and par_key != 'fitStatus':
+              csv_writer.writerow(
+                  f"{par_key},{label_key},{seed_key},{par_val},{cov_qual},{fit_status}"
+                  .split(','))
+    print('Formatted to csv.')
   else:
     sys.exit(input_dir + ' does not exist.')
