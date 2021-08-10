@@ -37,7 +37,8 @@ def return_group_breakdown(syst):
       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': 'Branching fractions',
       'kBF_D0\S+': 'Branching fractions',
       'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs',
-      'Combinatorial' : 'Combinatorial'
+      'Combinatorial' : 'Combinatorial',
+      'Statistical Error Correction': 'Statistical Error Correction',
   }
   match = False
   for k, v in re_group_dict.items():
