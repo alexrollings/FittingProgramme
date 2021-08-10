@@ -292,6 +292,8 @@ if __name__ == '__main__':
               'std': std,
           })
 
+    df_groups = pd.json_normalize(dict_list_groups)
+
     # Read in Bs systematic and add to dict_list_totals
     dict_Bs_syst = {}
     eval_Bs_syst = False
