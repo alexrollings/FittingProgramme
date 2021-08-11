@@ -658,6 +658,14 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::boxEffs_Bu2Dst0h_D0gamma;
   } else if (systematic == "boxEffs_Bkg") {
     return Systematic::boxEffs_Bkg;
+  } else if (systematic == "boxEffs_WN") {
+    return Systematic::boxEffs_WN;
+  } else if (systematic == "boxEffs_Bd2Dsth") {
+    return Systematic::boxEffs_Bd2Dsth;
+  } else if (systematic == "boxEffs_Bu2D0hst") {
+    return Systematic::boxEffs_Bu2D0hst;
+  } else if (systematic == "boxEffs_Bu2Dst0hst") {
+    return Systematic::boxEffs_Bu2Dst0hst;
   } else if (systematic == "boxEffs_D02pik") {
     return Systematic::boxEffs_D02pik;
   } else if (systematic == "boxEffs_Bu2Dst0h_D0pi0_misId") {
@@ -912,6 +920,14 @@ std::string EnumToString(Systematic systematic) {
       return "boxEffs_Bu2Dst0h_D0gamma";
     case Systematic::boxEffs_Bkg:
       return "boxEffs_Bkg";
+    case Systematic::boxEffs_WN:
+      return "boxEffs_WN";
+    case Systematic::boxEffs_Bd2Dsth:
+      return "boxEffs_Bd2Dsth";
+    case Systematic::boxEffs_Bu2D0hst:
+      return "boxEffs_Bu2D0hst";
+    case Systematic::boxEffs_Bu2Dst0hst:
+      return "boxEffs_Bu2Dst0hst";
     case Systematic::boxEffs_D02pik:
       return "boxEffs_D02pik";
     case Systematic::boxEffs_Bu2Dst0h_D0pi0_misId:
