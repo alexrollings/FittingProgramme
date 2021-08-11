@@ -63,7 +63,7 @@ if __name__ == '__main__':
   parser.add_argument('-s',
                       '--syst_dir',
                       type=str,
-                      help='Directory where json systematic is stored',
+                      help='Directory where json systematic is stored: comma separated if more than one (will store output in first directory passed: considered main)',
                       required=False)
   parser.add_argument('--remake',
                       dest='remake',
@@ -74,7 +74,7 @@ if __name__ == '__main__':
   neutral = args.neutral
   charge = args.charge
   pull_fname = args.pull_fname
-  syst_dir = args.syst_dir
+  syst_dirs = args.syst_dir.split(',')
   remake = args.remake
 
   tex_path = os.path.join(os.getcwd(), 'tex_new/')
@@ -88,13 +88,14 @@ if __name__ == '__main__':
   result = f'{result_dir}/DataResult_{box_str}.root'
 
   eval_systs = False
-  if charge != 'total' and syst_dir != None:
+  if charge != 'total' and syst_dirs != None:
+    # Fir dir passed = main dir: store formatted csvs there
+    syst_dir = syst_dirs[0]
     if not os.path.exists(syst_dir):
       sys.exit(f'{syst_dir} does not exist')
     eval_systs = True
-
-  csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
-  csv_result_fname = f'{syst_dir}/format/result_{neutral}.csv'
+    csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
+    csv_result_fname = f'{syst_dir}/format/result_{neutral}.csv'
 
   if remake == True:
 
@@ -256,15 +257,37 @@ if __name__ == '__main__':
       # Load in systematics from json
       csv_fname = f'{syst_dir}/format/systematics_{neutral}.csv'
       if os.path.exists(csv_fname):
-        df_syst = pd.read_csv(csv_fname)
+        df_syst_1 = pd.read_csv(csv_fname)
         # Remove any Bu2Dst0hst observables
         patternKeep = "Bu2Dst0h_"
-        filter = df_syst['par'].str.contains(patternKeep)
-        df_syst = df_syst[filter]
+        filter = df_syst_1['par'].str.contains(patternKeep)
+        df_syst_1 = df_syst_1[filter]
         # Remove blind string
-        df_syst.par.replace({"_Blind" : ""}, regex=True, inplace=True)
+        df_syst_1.par.replace({"_Blind" : ""}, regex=True, inplace=True)
+        # # Remove boxEffs_Bkg label
+        # remove = "boxEffs_Bkg"
+        # df_syst_1 = df_syst_1[~(df_syst_1.label == remove)]
       else:
         sys.exit(f'{csv_fname} does not exist')
+
+      if len(syst_dirs) > 1:
+        for path in syst_dirs:
+          csv_fname_tmp = f'{path}/format/systematics_{neutral}.csv'
+          if os.path.exists(csv_fname_tmp):
+            df_syst_2 = pd.read_csv(csv_fname_tmp)
+            # Remove any Bu2Dst0hst observables
+            patternKeep = "Bu2Dst0h_"
+            filter = df_syst_2['par'].str.contains(patternKeep)
+            df_syst_2 = df_syst_2[filter]
+            # Remove blind string
+            df_syst_2.par.replace({"_Blind" : ""}, regex=True, inplace=True)
+            df_syst = pd.concat([df_syst_1, df_syst_2], ignore_index=True)
+            # df_syst = df_syst_1.append(df_syst_2, ignore_index=True)
+          else:
+            sys.exit(f'{csv_fname_tmp} does not exist')
+      else:
+        df_syst = df_syst_1
+
       arr_labels = df_syst['label'].unique().tolist()
       # PrintFitStatus(df_syst, arr_syst_pars, arr_labels)
       df_syst = df_syst.query('cov > 2 & status == 0')
@@ -447,7 +470,7 @@ if __name__ == '__main__':
 
     arr_labels = df_totals['label'].unique().tolist()
     arr_pars = df_result['par'].unique().tolist()
-    arr_syst_pars = [p for p in arr_pars if "N_tot" not in p]
+    arr_syst_pars = [p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)]
 
     # First row of table is parameter names
     row_arr = {'R': [], 'A': []}
