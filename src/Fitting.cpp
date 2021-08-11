@@ -752,22 +752,6 @@ int main(int argc, char **argv) {
                         // RooFit::Minos(kTRUE)));
                         RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
     }
-    // RooFit::NumCPU(config.nCPU())));
-    // if (config.neutral() == Neutral::pi0) {
-    //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-    //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-    //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-    //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-    //       RooFit::ExternalConstraints(
-    //           NeutralVars<Neutral::pi0>::Get(id).constraints_argSet())));
-    // } else {
-    //   dataFitResult = std::unique_ptr<RooFitResult>(simPdf->fitTo(
-    //       *fullAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
-    //       RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-    //       RooFit::Offset(true), RooFit::NumCPU(config.nCPU()),
-    //       RooFit::ExternalConstraints(
-    //           NeutralVars<Neutral::gamma>::Get(id).constraints_argSet())));
-    // }
     dataFitResult->SetName("DataFitResult");
   }
 
