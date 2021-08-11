@@ -236,26 +236,14 @@ class NeutralBachelorVars {
   RooRealVar &buEffBu2Dst0h_D0gamma() {
     return *buEffBu2Dst0h_D0gamma_;
   }
-  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_GetPointer() {
-    return buEffBu2Dst0h_D0gamma_;
-  }
   RooRealVar &buEffBu2Dst0h_D0pi0() {
     return *buEffBu2Dst0h_D0pi0_;
-  }
-  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0pi0_GetPointer() {
-    return buEffBu2Dst0h_D0pi0_;
   }
   RooRealVar &buEffBu2Dst0h_D0gamma_WN() {
     return *buEffBu2Dst0h_D0gamma_WN_;
   }
-  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_WN_GetPointer() {
-    return buEffBu2Dst0h_D0gamma_WN_;
-  }
   RooRealVar &buEffBu2Dst0h_D0pi0_WN() {
     return *buEffBu2Dst0h_D0pi0_WN_;
-  }
-  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0pi0_WN_GetPointer() {
-    return buEffBu2Dst0h_D0pi0_WN_;
   }
   RooRealVar &buEffBd2Dsth() {
     return *buEffBd2Dsth_;
@@ -274,9 +262,6 @@ class NeutralBachelorVars {
   }
   RooRealVar &deltaEffBu2Dst0h_D0pi0() {
     return *deltaEffBu2Dst0h_D0pi0_;
-  }
-  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0h_D0pi0_GetPointer() {
-    return deltaEffBu2Dst0h_D0pi0_;
   }
   RooRealVar &deltaEffBu2Dst0h_D0gamma_WN() {
     return *deltaEffBu2Dst0h_D0gamma_WN_;
@@ -302,20 +287,11 @@ class NeutralBachelorVars {
   RooRealVar &buPartialEffBu2Dst0h_D0pi0() {
     return *buPartialEffBu2Dst0h_D0pi0_;
   }
-  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_GetPointer() {
-    return buPartialEffBu2Dst0h_D0pi0_;
-  }
   RooRealVar &buPartialEffBu2Dst0h_D0gamma_WN() {
     return *buPartialEffBu2Dst0h_D0gamma_WN_;
   }
-  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0gamma_WN_GetPointer() {
-    return buPartialEffBu2Dst0h_D0gamma_WN_;
-  }
   RooRealVar &buPartialEffBu2Dst0h_D0pi0_WN() {
     return *buPartialEffBu2Dst0h_D0pi0_WN_;
-  }
-  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_WN_GetPointer() {
-    return buPartialEffBu2Dst0h_D0pi0_WN_;
   }
   RooRealVar &buPartialEffBd2Dsth() {
     return *buPartialEffBd2Dsth_;
@@ -425,6 +401,201 @@ class NeutralBachelorVars {
   }
   RooRealVar &buPartialEffMisId_Bu2Dst0hst_D0pi0() {
     return *buPartialEffMisId_Bu2Dst0hst_D0pi0_;
+  }
+
+  // BOX EFF POINTERS
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0h_D0gamma_GetPointer() {
+    return orEffBu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0h_D0pi0_GetPointer() {
+    return orEffBu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return orEffBu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return orEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBd2Dsth_GetPointer() {
+    return orEffBd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2D0hst_GetPointer() {
+    return orEffBu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0hst_D0gamma_GetPointer() {
+    return orEffBu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &orEffBu2Dst0hst_D0pi0_GetPointer() {
+    return orEffBu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_GetPointer() {
+    return buEffBu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0pi0_GetPointer() {
+    return buEffBu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return buEffBu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return buEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBd2Dsth_GetPointer() {
+    return buEffBd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2D0hst_GetPointer() {
+    return buEffBu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0hst_D0gamma_GetPointer() {
+    return buEffBu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buEffBu2Dst0hst_D0pi0_GetPointer() {
+    return buEffBu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0h_D0gamma_GetPointer() {
+    return deltaEffBu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0h_D0pi0_GetPointer() {
+    return deltaEffBu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return deltaEffBu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return deltaEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBd2Dsth_GetPointer() {
+    return deltaEffBd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2D0hst_GetPointer() {
+    return deltaEffBu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0hst_D0gamma_GetPointer() {
+    return deltaEffBu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffBu2Dst0hst_D0pi0_GetPointer() {
+    return deltaEffBu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0gamma_GetPointer() {
+    return buPartialEffBu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_GetPointer() {
+    return buPartialEffBu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0gamma_WN_GetPointer() {
+    return buPartialEffBu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0h_D0pi0_WN_GetPointer() {
+    return buPartialEffBu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBd2Dsth_GetPointer() {
+    return buPartialEffBd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2D0hst_GetPointer() {
+    return buPartialEffBu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0hst_D0gamma_GetPointer() {
+    return buPartialEffBu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffBu2Dst0hst_D0pi0_GetPointer() {
+    return buPartialEffBu2Dst0hst_D0pi0_;
+  }
+  // -------------------- Mis-ID BoxEffs ------------------- //
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0h_D0gamma_GetPointer() {
+    return orEffMisId_Bu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0h_D0pi0_GetPointer() {
+    return orEffMisId_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0h_D0gamma_WN_GetPointer() {
+    return orEffMisId_Bu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0h_D0pi0_WN_GetPointer() {
+    return orEffMisId_Bu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bd2Dsth_GetPointer() {
+    return orEffMisId_Bd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2D0hst_GetPointer() {
+    return orEffMisId_Bu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0hst_D0gamma_GetPointer() {
+    return orEffMisId_Bu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &orEffMisId_Bu2Dst0hst_D0pi0_GetPointer() {
+    return orEffMisId_Bu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0h_D0gamma_GetPointer() {
+    return buEffMisId_Bu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0h_D0pi0_GetPointer() {
+    return buEffMisId_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0h_D0gamma_WN_GetPointer() {
+    return buEffMisId_Bu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0h_D0pi0_WN_GetPointer() {
+    return buEffMisId_Bu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bd2Dsth_GetPointer() {
+    return buEffMisId_Bd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2D0hst_GetPointer() {
+    return buEffMisId_Bu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0hst_D0gamma_GetPointer() {
+    return buEffMisId_Bu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buEffMisId_Bu2Dst0hst_D0pi0_GetPointer() {
+    return buEffMisId_Bu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0h_D0gamma_GetPointer() {
+    return deltaEffMisId_Bu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0h_D0pi0_GetPointer() {
+    return deltaEffMisId_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0h_D0gamma_WN_GetPointer() {
+    return deltaEffMisId_Bu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0h_D0pi0_WN_GetPointer() {
+    return deltaEffMisId_Bu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bd2Dsth_GetPointer() {
+    return deltaEffMisId_Bd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2D0hst_GetPointer() {
+    return deltaEffMisId_Bu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0hst_D0gamma_GetPointer() {
+    return deltaEffMisId_Bu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &deltaEffMisId_Bu2Dst0hst_D0pi0_GetPointer() {
+    return deltaEffMisId_Bu2Dst0hst_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0h_D0gamma_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0h_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0h_D0pi0_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0h_D0pi0_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0h_D0gamma_WN_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0h_D0gamma_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0h_D0pi0_WN_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0h_D0pi0_WN_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bd2Dsth_GetPointer() {
+    return buPartialEffMisId_Bd2Dsth_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2D0hst_GetPointer() {
+    return buPartialEffMisId_Bu2D0hst_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0hst_D0gamma_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0hst_D0gamma_;
+  }
+  std::shared_ptr<RooRealVar> &buPartialEffMisId_Bu2Dst0hst_D0pi0_GetPointer() {
+    return buPartialEffMisId_Bu2Dst0hst_D0pi0_;
   }
 
   // -------------------- MC Efficiencies -------------------- //
