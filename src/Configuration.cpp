@@ -658,6 +658,12 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::boxEffs_Bu2Dst0h_D0gamma;
   } else if (systematic == "boxEffs_Bkg") {
     return Systematic::boxEffs_Bkg;
+  } else if (systematic == "boxEffs_Lb") {
+    return Systematic::boxEffs_Lb;
+  } else if (systematic == "boxEffs_Bs2D0Kst0") {
+    return Systematic::boxEffs_Bs2D0Kst0;
+  } else if (systematic == "boxEffs_Bs2Dst0Kst0") {
+    return Systematic::boxEffs_Bs2Dst0Kst0;
   } else if (systematic == "boxEffs_WN") {
     return Systematic::boxEffs_WN;
   } else if (systematic == "boxEffs_Bd2Dsth") {
@@ -920,6 +926,12 @@ std::string EnumToString(Systematic systematic) {
       return "boxEffs_Bu2Dst0h_D0gamma";
     case Systematic::boxEffs_Bkg:
       return "boxEffs_Bkg";
+    case Systematic::boxEffs_Lb:
+      return "boxEffs_Lb";
+    case Systematic::boxEffs_Bs2D0Kst0:
+      return "boxEffs_Bs2D0Kst0";
+    case Systematic::boxEffs_Bs2Dst0Kst0:
+      return "boxEffs_Bs2Dst0Kst0";
     case Systematic::boxEffs_WN:
       return "boxEffs_WN";
     case Systematic::boxEffs_Bd2Dsth:
