@@ -43,6 +43,8 @@ if __name__ == '__main__':
   ]
 
   if os.path.isdir(input_dir):
+    if not os.path.exists(os.path.join(input_dir, 'format')):
+      os.mkdir(os.path.join(input_dir, 'format'))
     json_fname = f'{input_dir}/format/systematics_{neutral}.json'
     # If json file exists, load existing dict
     if os.path.exists(json_fname):
