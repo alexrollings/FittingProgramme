@@ -33,7 +33,7 @@ void FixedParameter::AdjustBoxEffErr() {
     static const std::regex modeRgx(
         "deltaEffBu2Dst0hst\\S+");
     if (std::regex_match(name_, modeMatch, modeRgx)) {
-      abs_err = 0.1;
+      abs_err = 0.05;
     }
     std::cout << mean_ << "\n";
     if (std_tmp < abs_err) {
