@@ -769,8 +769,8 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
           Systematic::boxEffs_Bd2Dsth, Sign::same)),
       deltaEffBu2D0hst_(Params::Get().CreateFixed(
           "deltaEffBu2D0hst_", uniqueId_, Neutral::pi0, Bachelor::pi,
-          ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::deltaEff,
-                        false),
+          0.91 * ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi,
+                               Efficiency::deltaEff, false),
           ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::deltaEffErr,
                         false),
           Systematic::boxEffs_Bu2D0hst, Sign::same)),
