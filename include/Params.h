@@ -77,6 +77,7 @@ class FixedParameter {
   void AdjustBoxEffErr();
   void Randomise(TRandom3 &random,
                  std::map<std::string, double> &correlated_shifts);
+  void CorrelatedShift(std::map<std::string, double> &correlated_shifts);
 
  private:
   double mean_, std_pos_, std_neg_;
@@ -468,7 +469,6 @@ class Params {
     std::map<std::string, double> correlated_shifts;
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
-        // HERE
         if (t.second.systematic() == *i) {
           std::cout
               << " \n\n -------------------------------------------- \n\n"
@@ -480,6 +480,9 @@ class Params {
           } else {
             std::cout << t.second.name()
                       << " is correlated: call CorrelatedShift\n";
+            // If var name is saved in map, call function to shift value by
+            // assigned amount
+            t.second.CorrelatedShift(correlated_shifts);
           }
           break;
         }

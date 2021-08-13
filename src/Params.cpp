@@ -113,6 +113,16 @@ void FixedParameter::Randomise(TRandom3 &random,
   }
 }
 
+void FixedParameter::CorrelatedShift(std::map<std::string, double> &correlated_shifts) {
+  std::cout << "\n\n--------------------------------------------------------------\n";
+  std::cout << "FixedParameter::CorrelatedShift\n";
+  double shifted_value = mean_ + correlated_shifts[name_];
+  roo_variable_->setVal(shifted_value);
+  std::cout << "\t" << name_ << ": " << mean_ << " --> " << shifted_value
+            << "\n";
+  std::cout << "--------------------------------------------------------------\n\n";
+}
+
 double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
                    std::string const &parName, Param param) {
   // For Delta PDF of Bs2Dst0Kst0 modes, use signal values (but still retain own
