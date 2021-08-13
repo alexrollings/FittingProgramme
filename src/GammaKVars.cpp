@@ -1574,362 +1574,286 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::k>::NeutralBachelorVars(
                     pdf2BuPartial_misId_Bu2Dst0hst_D0pi0_),
           *misId_Bu2Dst0hst_D0pi0_fracPdf1BuPartial_),
       // -------------------- Correct ID BOX EFFs -------------------- //
-      // orEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //     Efficiency::orEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::orEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same)),
-      // orEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::orEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //     Efficiency::orEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same)),
-      // orEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::orEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::orEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // orEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //     Efficiency::orEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::orEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // orEffBd2Dsth_(Params::Get().CreateFixed(
-      //     "orEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::orEff,
-      //     false), ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k,
-      //     Efficiency::orEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // orEffBu2D0hst_(Params::Get().CreateFixed(
-      //     "orEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::orEff,
-      //     false), ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k,
-      //     Efficiency::orEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // orEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::orEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::orEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // orEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-      //     "orEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //     Efficiency::orEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::orEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //     Efficiency::buEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::buEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same)),
-      // // buEffBu2Dst0h_D0gamma_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buEffBu2Dst0h_D0gamma_GetPointer()),
-      // buEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //     Efficiency::buEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same)),
-      // buEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::buEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::buEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // // buEffBu2Dst0h_D0gamma_WN_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      // buEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //     Efficiency::buEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::buEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // // buEffBu2Dst0h_D0pi0_WN_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      // buEffBd2Dsth_(Params::Get().CreateFixed(
-      //     "buEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buEff,
-      //     false), ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k,
-      //     Efficiency::buEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buEffBu2D0hst_(Params::Get().CreateFixed(
-      //     "buEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::buEff,
-      //     false), ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k,
-      //     Efficiency::buEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::buEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::buEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-      //     "buEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //     Efficiency::buEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::buEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::deltaEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same)),
-      // deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //     Efficiency::deltaEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same)),
-      // deltaEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::deltaEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::deltaEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBd2Dsth_(Params::Get().CreateFixed(
-      //     "deltaEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::deltaEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::deltaEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBu2D0hst_(Params::Get().CreateFixed(
-      //     "deltaEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     0.95*ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k,
-      //     Efficiency::deltaEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::deltaEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::deltaEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // deltaEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-      //     "deltaEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::deltaEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::deltaEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buPartialEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same)),
-      // buPartialEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma,
-      //     Bachelor::k, ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same)),
-      // // buPartialEffBu2Dst0h_D0pi0_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buPartialEffBu2Dst0h_D0pi0_GetPointer()),
-      // buPartialEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // // buPartialEffBu2Dst0h_D0gamma_WN_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buPartialEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      // buPartialEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // // buPartialEffBu2Dst0h_D0pi0_WN_(
-      // //     NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId)
-      // //         .buPartialEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      // buPartialEffBd2Dsth_(Params::Get().CreateFixed(
-      //     "buPartialEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buPartialEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k,
-      //     Efficiency::buPartialEffErr,
-      //                   false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buPartialEffBu2D0hst_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k,
-      //     Efficiency::buPartialEff,
-      //                   false),
-      //     ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buPartialEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      // buPartialEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
-      //     "buPartialEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma,
-      //     Bachelor::k,
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::buPartialEff, false),
-      //     ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
-      //                   Efficiency::buPartialEffErr, false),
-      //     Systematic::boxEffs_Bkg, Sign::same)),
-      orEffBu2Dst0h_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0h_D0gamma_GetPointer()),
-      orEffBu2Dst0h_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0h_D0pi0_GetPointer()),
-      orEffBu2Dst0h_D0gamma_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      orEffBu2Dst0h_D0pi0_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      orEffBd2Dsth_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBd2Dsth_GetPointer()),
-      orEffBu2D0hst_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2D0hst_GetPointer()),
-      orEffBu2Dst0hst_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0hst_D0gamma_GetPointer()),
-      orEffBu2Dst0hst_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .orEffBu2Dst0hst_D0pi0_GetPointer()),
-      buEffBu2Dst0h_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0gamma_GetPointer()),
-      buEffBu2Dst0h_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0pi0_GetPointer()),
-      buEffBu2Dst0h_D0gamma_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      buEffBu2Dst0h_D0pi0_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      buEffBd2Dsth_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBd2Dsth_GetPointer()),
-      buEffBu2D0hst_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2D0hst_GetPointer()),
-      buEffBu2Dst0hst_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0hst_D0gamma_GetPointer()),
-      buEffBu2Dst0hst_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buEffBu2Dst0hst_D0pi0_GetPointer()),
-      deltaEffBu2Dst0h_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0h_D0gamma_GetPointer()),
-      deltaEffBu2Dst0h_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0h_D0pi0_GetPointer()),
-      deltaEffBu2Dst0h_D0gamma_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      deltaEffBu2Dst0h_D0pi0_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      deltaEffBd2Dsth_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBd2Dsth_GetPointer()),
-      deltaEffBu2D0hst_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2D0hst_GetPointer()),
-      deltaEffBu2Dst0hst_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0hst_D0gamma_GetPointer()),
-      deltaEffBu2Dst0hst_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .deltaEffBu2Dst0hst_D0pi0_GetPointer()),
-      buPartialEffBu2Dst0h_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0h_D0gamma_GetPointer()),
-      buPartialEffBu2Dst0h_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0h_D0pi0_GetPointer()),
-      buPartialEffBu2Dst0h_D0gamma_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0h_D0gamma_WN_GetPointer()),
-      buPartialEffBu2Dst0h_D0pi0_WN_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0h_D0pi0_WN_GetPointer()),
-      buPartialEffBd2Dsth_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBd2Dsth_GetPointer()),
-      buPartialEffBu2D0hst_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2D0hst_GetPointer()),
-      buPartialEffBu2Dst0hst_D0gamma_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0hst_D0gamma_GetPointer()),
-      buPartialEffBu2Dst0hst_D0pi0_(
-          NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(uniqueId_)
-              .buPartialEffBu2Dst0hst_D0pi0_GetPointer()),
+      orEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "orEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k, Efficiency::orEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
+                        Efficiency::orEffErr, false),
+          Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
+          ("orEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "orEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::orEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::orEffErr,
+                        false),
+          Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same,
+          ("orEffBu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
+          "orEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::orEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("orEffBu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "orEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k, Efficiency::orEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
+                        Efficiency::orEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("orEffBu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBd2Dsth_(Params::Get().CreateFixed(
+          "orEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::orEffErr,
+                        false),
+          Systematic::boxEffs_Bd2Dsth, Sign::same,
+          ("orEffBd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2D0hst_(Params::Get().CreateFixed(
+          "orEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::orEffErr,
+                        false),
+          Systematic::boxEffs_Bu2D0hst, Sign::same,
+          ("orEffBu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "orEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::orEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::orEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("orEffBu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      orEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "orEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k, Efficiency::orEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
+                        Efficiency::orEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("orEffBu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k, Efficiency::buEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
+                        Efficiency::buEffErr, false),
+          Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
+          ("buEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buEffErr,
+                        false),
+          Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same,
+          ("buEffBu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::buEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("buEffBu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "buEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k, Efficiency::buEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
+                        Efficiency::buEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("buEffBu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBd2Dsth_(Params::Get().CreateFixed(
+          "buEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buEffErr,
+                        false),
+          Systematic::boxEffs_Bd2Dsth, Sign::same,
+          ("buEffBd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2D0hst_(Params::Get().CreateFixed(
+          "buEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::buEffErr,
+                        false),
+          Systematic::boxEffs_Bu2D0hst, Sign::same,
+          ("buEffBu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "buEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::buEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::buEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("buEffBu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "buEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k, Efficiency::buEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
+                        Efficiency::buEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("buEffBu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k, Efficiency::deltaEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
+                        Efficiency::deltaEffErr, false),
+          Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
+          ("deltaEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::deltaEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::deltaEffErr,
+                        false),
+          Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same,
+          ("deltaEffBu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::deltaEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("deltaEffBu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k, Efficiency::deltaEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
+                        Efficiency::deltaEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("deltaEffBu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBd2Dsth_(Params::Get().CreateFixed(
+          "deltaEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::deltaEffErr,
+                        false),
+          Systematic::boxEffs_Bd2Dsth, Sign::same,
+          ("deltaEffBd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2D0hst_(Params::Get().CreateFixed(
+          "deltaEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::deltaEffErr,
+                        false),
+          Systematic::boxEffs_Bu2D0hst, Sign::same,
+          ("deltaEffBu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::deltaEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("deltaEffBu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      deltaEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "deltaEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k, Efficiency::deltaEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
+                        Efficiency::deltaEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("deltaEffBu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k, Efficiency::buPartialEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma, Bachelor::k,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
+          ("buPartialEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0h_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buPartialEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0, Bachelor::k, Efficiency::buPartialEffErr,
+                        false),
+          Systematic::boxEffs_Bu2Dst0h_D0pi0, Sign::same,
+          ("buPartialEffBu2Dst0h_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0h_D0gamma_WN_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0h_D0gamma_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::buPartialEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0gamma_WN, Bachelor::k,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("buPartialEffBu2Dst0h_D0gamma_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0h_D0pi0_WN_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0h_D0pi0_WN", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k, Efficiency::buPartialEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0K_D0pi0_WN, Bachelor::k,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::boxEffs_WN, Sign::same,
+          ("buPartialEffBu2Dst0h_D0pi0_WN_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBd2Dsth_(Params::Get().CreateFixed(
+          "buPartialEffBd2Dsth", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buPartialEff, false),
+          ReturnBoxEffs(Mode::Bd2DstK, Bachelor::k, Efficiency::buPartialEffErr,
+                        false),
+          Systematic::boxEffs_Bd2Dsth, Sign::same,
+          ("buPartialEffBd2Dsth_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2D0hst_(Params::Get().CreateFixed(
+          "buPartialEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::buPartialEff, false),
+          ReturnBoxEffs(Mode::Bu2D0Kst, Bachelor::k, Efficiency::buPartialEffErr,
+                        false),
+          Systematic::boxEffs_Bu2D0hst, Sign::same,
+          ("buPartialEffBu2D0hst_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0hst_D0gamma_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0hst_D0gamma", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::buPartialEff, false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0gamma, Bachelor::k,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("buPartialEffBu2Dst0hst_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
+      buPartialEffBu2Dst0hst_D0pi0_(Params::Get().CreateFixed(
+          "buPartialEffBu2Dst0hst_D0pi0", uniqueId_, Neutral::gamma, Bachelor::k,
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k, Efficiency::buPartialEff,
+                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0Kst_D0pi0, Bachelor::k,
+                        Efficiency::buPartialEffErr, false),
+          Systematic::boxEffs_Bu2Dst0hst, Sign::same,
+          ("buPartialEffBu2Dst0hst_D0pi0_" +
+           ComposeName(uniqueId_, Neutral::gamma, Bachelor::pi)))),
       // -------------------- Mis-ID BoxEffs ------------------- //
       // orEffMisId_Bu2Dst0h_D0gamma_(Params::Get().CreateFixed(
       //     "orEffMisId_Bu2Dst0h_D0gamma", uniqueId_, Neutral::gamma,
