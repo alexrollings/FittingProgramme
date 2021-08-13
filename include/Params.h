@@ -31,6 +31,7 @@ class FixedParameter {
         sym_(true),
         systematic_(systematic),
         sign_(sign),
+        correlated_var_(""),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
 
   FixedParameter(std::string const &name, double mean, double std_pos,
@@ -43,6 +44,19 @@ class FixedParameter {
         sym_(false),
         systematic_(systematic),
         sign_(sign),
+        correlated_var_(""),
+        roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
+
+  FixedParameter(std::string const &name, double mean, double std,
+                 Systematic systematic, Sign sign, std::string const &correlated_var)
+      : name_(name),
+        mean_(mean),
+        std_pos_(std),
+        std_neg_(std),
+        sym_(true),
+        systematic_(systematic),
+        sign_(sign),
+        correlated_var_(correlated_var),
         roo_variable_(new RooRealVar(name.c_str(), "", mean)) {}
 
   FixedParameter(FixedParameter const &) = delete;
@@ -59,6 +73,7 @@ class FixedParameter {
   bool sym() { return sym_; }
   Systematic systematic() const { return systematic_; }
   Sign sign() const { return sign_; }
+  std::string const &correlated_var() const { return correlated_var_; }
   void AdjustBoxEffErr();
   void Randomise(TRandom3 &random);
 
@@ -68,6 +83,7 @@ class FixedParameter {
   std::string const name_;
   Systematic systematic_;
   Sign sign_;
+  std::string const correlated_var_;
   std::shared_ptr<RooRealVar> roo_variable_;
 };
 
@@ -447,6 +463,7 @@ class Params {
   template <typename Iterator>
   void RandomiseParameters(Iterator const &systematic_begin,
                            Iterator const &systematic_end, TRandom3 &random) {
+    // Map correlated var to other variable/randomised shift
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
         // HERE
@@ -455,7 +472,9 @@ class Params {
               << " \n\n -------------------------------------------- \n\n"
               << EnumToString(*i) << ": " << t.second.name()
               << " \n\n -------------------------------------------- \n\n";
+          // Check if correlated var saved: if not, call new method
           t.second.Randomise(random);
+          // Save correlated var
           break;
         }
       }
