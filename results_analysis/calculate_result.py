@@ -43,7 +43,7 @@ if __name__ == '__main__':
   parser.add_argument('-r',
                       '--result_dir',
                       type=str,
-                      help='Directory where data fit result and Bs and combinatorial systematics are stored (if running systematics)',
+                      help='Directory where data fit result and Bs systematic are stored (if running systematics)',
                       required=True)
   parser.add_argument('-n',
                       '--neutral',
@@ -95,6 +95,7 @@ if __name__ == '__main__':
       sys.exit(f'{syst_dir} does not exist')
     eval_systs = True
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
+    csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
     csv_result_fname = f'{syst_dir}/format/result_{neutral}.csv'
 
   if remake == True:
@@ -381,41 +382,41 @@ if __name__ == '__main__':
                 # 'total_syst': np.nan
             })
 
-      # Read in combinatorial systematic and add to dict_list_totals
-      dict_comb_syst = {}
-      eval_comb_syst = False
-      fname_comb = f'{result_dir}/SystResult_{box_str}_combinatorial.root'
-      if not os.path.isfile(fname_comb):
-        print(f'{fname_comb} does not exist')
-      else:
-        comb_file = TFile(fname_comb)
-        comb_result = comb_file.Get('SystResult')
-        if ReturnResultQuality(comb_result, fname_comb):
-          eval_comb_syst = True
-        if eval_comb_syst == True:
-          for par in comb_result.floatParsFinal():
-            par_name = par.GetName()[:-2]
-            par_name = par_name.replace('_Blind', '')
-            if par_name in arr_syst_pars:
-              par_comb = par.getVal()
-              val = df_result[(df_result.par == par_name)]['val'].values[0]
-              # Error is difference between central value of combinatorial fit and that of default fit
-              error = abs(par_comb - val)
-              dict_comb_syst[par_name] = error
-
-      if eval_comb_syst == True:
-        for par_name in arr_syst_pars:
-          if par_name in dict_comb_syst:
-            dict_list_totals.append({
-                'par': par_name,
-                'label': 'Combinatorial',
-                'std': dict_comb_syst[par_name],
-                'breakdown_label': return_group_breakdown('Combinatorial'),
-                'breakdown_total': np.nan,
-                'group_label': return_final_group('Combinatorial'),
-                'group_total': np.nan,
-                # 'total_syst': np.nan
-            })
+      # # Read in combinatorial systematic and add to dict_list_totals
+      # dict_comb_syst = {}
+      # eval_comb_syst = False
+      # fname_comb = f'{result_dir}/SystResult_{box_str}_combinatorial.root'
+      # if not os.path.isfile(fname_comb):
+      #   print(f'{fname_comb} does not exist')
+      # else:
+      #   comb_file = TFile(fname_comb)
+      #   comb_result = comb_file.Get('SystResult')
+      #   if ReturnResultQuality(comb_result, fname_comb):
+      #     eval_comb_syst = True
+      #   if eval_comb_syst == True:
+      #     for par in comb_result.floatParsFinal():
+      #       par_name = par.GetName()[:-2]
+      #       par_name = par_name.replace('_Blind', '')
+      #       if par_name in arr_syst_pars:
+      #         par_comb = par.getVal()
+      #         val = df_result[(df_result.par == par_name)]['val'].values[0]
+      #         # Error is difference between central value of combinatorial fit and that of default fit
+      #         error = abs(par_comb - val)
+      #         dict_comb_syst[par_name] = error
+      #
+      # if eval_comb_syst == True:
+      #   for par_name in arr_syst_pars:
+      #     if par_name in dict_comb_syst:
+      #       dict_list_totals.append({
+      #           'par': par_name,
+      #           'label': 'Combinatorial',
+      #           'std': dict_comb_syst[par_name],
+      #           'breakdown_label': return_group_breakdown('Combinatorial'),
+      #           'breakdown_total': np.nan,
+      #           'group_label': return_final_group('Combinatorial'),
+      #           'group_total': np.nan,
+      #           # 'total_syst': np.nan
+      #       })
 
       df_totals = pd.json_normalize(dict_list_totals)
 
@@ -445,9 +446,8 @@ if __name__ == '__main__':
                                         df_result['syst'] / df_result['stat'],
                                         np.nan)
 
-      print(df_result)
-
       df_totals.to_csv(csv_totals_fname, index=False)
+      df_groups.to_csv(csv_groups_fname, index=False)
 
     df_result.to_csv(csv_result_fname, index=False)
 
@@ -466,13 +466,12 @@ if __name__ == '__main__':
         df_totals = pd.read_csv(csv_totals_fname)
       else:
         sys.exit(f'{csv_totals_fname} does not exist')
-    print(df_totals)
 
-    arr_labels = df_totals['label'].unique().tolist()
     arr_pars = df_result['par'].unique().tolist()
     arr_syst_pars = [p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)]
 
     # First row of table is parameter names
+    arr_labels = df_totals['label'].unique().tolist()
     row_arr = {'R': [], 'A': []}
     # Recorder number of ratios and asymmetries s.t. know when to line break in table
     n_params = {'R': 0, 'A': 0}
@@ -566,6 +565,324 @@ if __name__ == '__main__':
           tex_file.write(row)
         tex_file.write('\\end{tabular}\n')
         tex_file.write('\\end{adjustbox}\n')
+        tex_file.write('\\end{table}\n')
+    tex_file.write('\\end{document}')
+    tex_file.close()
+
+    # Semi-broken down table
+    arr_labels = df_totals['breakdown_label'].unique().tolist()
+    # First row of table is parameter names
+    row_arr = {'R': [], 'A': []}
+    # Recorder number of ratios and asymmetries s.t. know when to line break in table
+    n_params = {'R': 0, 'A': 0}
+    max_labels = {}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      n_params[key] += 1
+      if len(row_arr[key]) == 0:
+        row_arr[key].append(' & ' + return_label(par_name))
+      else:
+        row_arr[key][0] += ' & ' + return_label(par_name)
+      # Save maximum systematic label for each parameter: to be highlighted in table
+      max_labels[par_name] = df_totals.iloc[df_totals[(
+          df_totals.par == par_name
+      )]['breakdown_total'].idxmax()]['breakdown_label']
+    # New line and horizontal line after column titles
+    row_arr['R'][0] += ' \\\\ \\hline\n'
+    row_arr['A'][0] += ' \\\\ \\hline\n'
+
+    # Then fill subsequent rows with systematic values for every label
+    row_idx = {'R': 0, 'A': 0}
+    for label in arr_labels:
+      row_idx['R'] = row_idx['R'] + 1
+      row_idx['A'] = row_idx['A'] + 1
+      # Start new row with systematics label
+      # Label already given
+      row_arr['R'].append(label)
+      row_arr['A'].append(label)
+      col_idx = {'R': 0, 'A': 0}
+      for par_name in arr_syst_pars:
+        key = par_name[0]
+        col_idx[key] = col_idx[key] + 1
+        err = df_totals[(df_totals.par == par_name) & (
+            df_totals.breakdown_label == label)]['breakdown_total'].values[0]
+        stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+        frac = err / stat
+        if max_labels[par_name] == label:
+          err_str = ' & \\cellcolor{pink} '
+        else:
+          err_str = ' & '
+        err_str += f'${frac:.4f}$'
+        # Add formatted error for each parameter
+        row_arr[key][row_idx[key]] += err_str
+        # When reach last parameter of row: line break
+        if col_idx[key] == n_params[key]:
+          row_arr[key][row_idx[key]] += ' \\\\\n'
+
+    # Last rows: total systematic and syst/stat fraction
+    for key in row_arr:
+      row_arr[key].append('\\hline\n')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\sigma(Syst.)$')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+      row_idx[key] = row_idx[key] + 1
+
+    col_idx = {'R': 0, 'A': 0}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      col_idx[key] = col_idx[key] + 1
+      syst = df_result[(df_result.par == par_name)]['syst'].values[0]
+      # To allign with Systematic row (above)
+      row_arr[key][row_idx[key] - 1] += f' & ${syst:.4f}$'
+      stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+      frac = syst / stat
+      row_arr[key][row_idx[key]] += f' & ${frac:.4f}$'
+      if col_idx[key] == n_params[key]:
+        row_arr[key][row_idx[key] - 1] += ' \\\\ \\hline\n'
+        row_arr[key][row_idx[key]] += ' \\\\ \\hline\\hline\n'
+
+    # Write to tex file with LaTeX formatting
+    tex_file = open(
+        f'{tex_path}/Systematics_breakdown_{neutral}.tex',
+        'w')
+    tex_file.write('\\documentclass[12pt, landscape]{article}\n')
+    tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
+    tex_file.write('\\usepackage{graphicx}\n')
+    tex_file.write('\\usepackage{adjustbox}\n')
+    tex_file.write('\\usepackage[table]{xcolor}\n')
+    tex_file.write('\\usepackage{float}\n')
+    tex_file.write('\\restylefloat{table}\n')
+    tex_file.write('\\begin{document}\n')
+    for key in row_arr:
+      if n_params[key] > 0:
+        tex_file.write('\\begin{table}[t]\n')
+        tex_file.write('\\centering\n')
+        tex_file.write('\\footnotesize\n')
+        # tex_file.write(
+        #     '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+        tex_file.write('\\resizebox{\\textwidth}{!}{\n')
+        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
+        tex_file.write('\\hline\\hline\n')
+        for row in row_arr[key]:
+          tex_file.write(row)
+        tex_file.write('\\end{tabular}\n')
+        tex_file.write('}')
+        # tex_file.write('\\end{adjustbox}\n')
+        tex_file.write('\\end{table}\n')
+    tex_file.write('\\end{document}')
+    tex_file.close()
+
+    # Grouped table
+    arr_labels = df_totals['group_label'].unique().tolist()
+    # First row of table is parameter names
+    row_arr = {'R': [], 'A': []}
+    # Recorder number of ratios and asymmetries s.t. know when to line break in table
+    n_params = {'R': 0, 'A': 0}
+    max_labels = {}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      n_params[key] += 1
+      if len(row_arr[key]) == 0:
+        row_arr[key].append(' & ' + return_label(par_name))
+      else:
+        row_arr[key][0] += ' & ' + return_label(par_name)
+      # Save maximum systematic label for each parameter: to be highlighted in table
+      max_labels[par_name] = df_totals.iloc[df_totals[(
+          df_totals.par == par_name
+      )]['group_total'].idxmax()]['group_label']
+    # New line and horizontal line after column titles
+    row_arr['R'][0] += ' \\\\ \\hline\n'
+    row_arr['A'][0] += ' \\\\ \\hline\n'
+
+    # Then fill subsequent rows with systematic values for every label
+    row_idx = {'R': 0, 'A': 0}
+    for label in arr_labels:
+      row_idx['R'] = row_idx['R'] + 1
+      row_idx['A'] = row_idx['A'] + 1
+      # Start new row with systematics label
+      # Label already given
+      row_arr['R'].append(label)
+      row_arr['A'].append(label)
+      col_idx = {'R': 0, 'A': 0}
+      for par_name in arr_syst_pars:
+        key = par_name[0]
+        col_idx[key] = col_idx[key] + 1
+        err = df_totals[(df_totals.par == par_name) & (
+            df_totals.group_label == label)]['group_total'].values[0]
+        stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+        frac = err / stat
+        if max_labels[par_name] == label:
+          err_str = ' & \\cellcolor{pink} '
+        else:
+          err_str = ' & '
+        err_str += f'${frac:.4f}$'
+        # Add formatted error for each parameter
+        row_arr[key][row_idx[key]] += err_str
+        # When reach last parameter of row: line break
+        if col_idx[key] == n_params[key]:
+          row_arr[key][row_idx[key]] += ' \\\\\n'
+
+    # Last rows: total systematic and syst/stat fraction
+    for key in row_arr:
+      row_arr[key].append('\\hline\n')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\sigma(Syst.)$')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+      row_idx[key] = row_idx[key] + 1
+
+    col_idx = {'R': 0, 'A': 0}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      col_idx[key] = col_idx[key] + 1
+      syst = df_result[(df_result.par == par_name)]['syst'].values[0]
+      # To allign with Systematic row (above)
+      row_arr[key][row_idx[key] - 1] += f' & ${syst:.4f}$'
+      stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+      frac = syst / stat
+      row_arr[key][row_idx[key]] += f' & ${frac:.4f}$'
+      if col_idx[key] == n_params[key]:
+        row_arr[key][row_idx[key] - 1] += ' \\\\ \\hline\n'
+        row_arr[key][row_idx[key]] += ' \\\\ \\hline\\hline\n'
+
+    # Write to tex file with LaTeX formatting
+    tex_file = open(
+        f'{tex_path}/Systematics_group_{neutral}.tex',
+        'w')
+    tex_file.write('\\documentclass[12pt, landscape]{article}\n')
+    tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
+    tex_file.write('\\usepackage{graphicx}\n')
+    tex_file.write('\\usepackage{adjustbox}\n')
+    tex_file.write('\\usepackage[table]{xcolor}\n')
+    tex_file.write('\\usepackage{float}\n')
+    tex_file.write('\\restylefloat{table}\n')
+    tex_file.write('\\begin{document}\n')
+    for key in row_arr:
+      if n_params[key] > 0:
+        tex_file.write('\\begin{table}[t]\n')
+        tex_file.write('\\centering\n')
+        tex_file.write('\\footnotesize\n')
+        # tex_file.write(
+        #     '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+        tex_file.write('\\resizebox{\\textwidth}{!}{\n')
+        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
+        tex_file.write('\\hline\\hline\n')
+        for row in row_arr[key]:
+          tex_file.write(row)
+        tex_file.write('\\end{tabular}\n')
+        tex_file.write('}')
+        # tex_file.write('\\end{adjustbox}\n')
+        tex_file.write('\\end{table}\n')
+    tex_file.write('\\end{document}')
+    tex_file.close()
+
+
+    if remake == False:
+      if os.path.exists(csv_groups_fname):
+        df_groups = pd.read_csv(csv_groups_fname)
+      else:
+        sys.exit(f'{csv_groups_fname} does not exist')
+    # Grouped table
+    arr_labels = df_groups['label'].unique().tolist()
+    # First row of table is parameter names
+    row_arr = {'R': [], 'A': []}
+    # Recorder number of ratios and asymmetries s.t. know when to line break in table
+    n_params = {'R': 0, 'A': 0}
+    max_labels = {}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      n_params[key] += 1
+      if len(row_arr[key]) == 0:
+        row_arr[key].append(' & ' + return_label(par_name))
+      else:
+        row_arr[key][0] += ' & ' + return_label(par_name)
+      # Save maximum systematic label for each parameter: to be highlighted in table
+      max_labels[par_name] = df_groups.iloc[df_groups[(
+          df_groups.par == par_name
+      )]['std'].idxmax()]['label']
+    # New line and horizontal line after column titles
+    row_arr['R'][0] += ' \\\\ \\hline\n'
+    row_arr['A'][0] += ' \\\\ \\hline\n'
+
+    # Then fill subsequent rows with systematic values for every label
+    row_idx = {'R': 0, 'A': 0}
+    for label in arr_labels:
+      row_idx['R'] = row_idx['R'] + 1
+      row_idx['A'] = row_idx['A'] + 1
+      # Start new row with systematics label
+      # Label already given
+      row_arr['R'].append(label)
+      row_arr['A'].append(label)
+      col_idx = {'R': 0, 'A': 0}
+      for par_name in arr_syst_pars:
+        key = par_name[0]
+        col_idx[key] = col_idx[key] + 1
+        err = df_groups[(df_groups.par == par_name) & (
+            df_groups.label == label)]['std'].values[0]
+        stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+        frac = err / stat
+        if max_labels[par_name] == label:
+          err_str = ' & \\cellcolor{pink} '
+        else:
+          err_str = ' & '
+        err_str += f'${frac:.4f}$'
+        # Add formatted error for each parameter
+        row_arr[key][row_idx[key]] += err_str
+        # When reach last parameter of row: line break
+        if col_idx[key] == n_params[key]:
+          row_arr[key][row_idx[key]] += ' \\\\\n'
+
+    # Last rows: total systematic and syst/stat fraction
+    for key in row_arr:
+      row_arr[key].append('\\hline\n')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\sigma(Syst.)$')
+      row_idx[key] = row_idx[key] + 1
+      row_arr[key].append('$\\frac{\\sigma(Syst.)}{\\sigma(Stat.)}$')
+      row_idx[key] = row_idx[key] + 1
+
+    col_idx = {'R': 0, 'A': 0}
+    for par_name in arr_syst_pars:
+      key = par_name[0]
+      col_idx[key] = col_idx[key] + 1
+      syst = df_result[(df_result.par == par_name)]['syst'].values[0]
+      # To allign with Systematic row (above)
+      row_arr[key][row_idx[key] - 1] += f' & ${syst:.4f}$'
+      stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+      frac = syst / stat
+      row_arr[key][row_idx[key]] += f' & ${frac:.4f}$'
+      if col_idx[key] == n_params[key]:
+        row_arr[key][row_idx[key] - 1] += ' \\\\ \\hline\n'
+        row_arr[key][row_idx[key]] += ' \\\\ \\hline\\hline\n'
+
+    # Write to tex file with LaTeX formatting
+    tex_file = open(
+        f'{tex_path}/Systematics_group_corr_{neutral}.tex',
+        'w')
+    tex_file.write('\\documentclass[12pt, landscape]{article}\n')
+    tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
+    tex_file.write('\\usepackage{graphicx}\n')
+    tex_file.write('\\usepackage{adjustbox}\n')
+    tex_file.write('\\usepackage[table]{xcolor}\n')
+    tex_file.write('\\usepackage{float}\n')
+    tex_file.write('\\restylefloat{table}\n')
+    tex_file.write('\\begin{document}\n')
+    for key in row_arr:
+      if n_params[key] > 0:
+        tex_file.write('\\begin{table}[t]\n')
+        tex_file.write('\\centering\n')
+        tex_file.write('\\footnotesize\n')
+        # tex_file.write(
+        #     '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+        tex_file.write('\\resizebox{\\textwidth}{!}{\n')
+        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
+        tex_file.write('\\hline\\hline\n')
+        for row in row_arr[key]:
+          tex_file.write(row)
+        tex_file.write('\\end{tabular}\n')
+        tex_file.write('}')
+        # tex_file.write('\\end{adjustbox}\n')
         tex_file.write('\\end{table}\n')
     tex_file.write('\\end{document}')
     tex_file.close()
