@@ -108,6 +108,9 @@ void FixedParameter::Randomise(TRandom3 &random,
             << "\n";
   std::cout << "--------------------------------------------------------------\n\n";
   roo_variable_->setVal(shifted_value);
+  if (correlated_var_ != "") {
+    correlated_shifts[correlated_var_] = shifted_value - mean_;
+  }
 }
 
 double Params::ReturnValErr(Mode mode, Neutral neutral, Bachelor bachelor,
