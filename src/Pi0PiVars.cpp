@@ -623,7 +623,9 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
                         Efficiency::orEff, false),
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                         Efficiency::orEffErr, false),
-          Systematic::boxEffs_Bkg, Sign::same)),
+          Systematic::boxEffs_Bkg, Sign::same,
+          ("orEffBu2Dst0h_D0gamma_" +
+           ComposeName(uniqueId_, Neutral::pi0, Bachelor::k)))),
       orEffBu2Dst0h_D0pi0_(Params::Get().CreateFixed(
           "orEffBu2Dst0h_D0pi0_", uniqueId_, Neutral::pi0, Bachelor::pi,
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0pi0, Bachelor::pi, Efficiency::orEff,
