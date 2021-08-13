@@ -28,10 +28,10 @@ RooFormulaVar *Make_N_tot_k_kpi(int uniqueId, const char *name,
   std::cout << name << std::endl;
   return new RooFormulaVar(
       (name + ComposeName(uniqueId, neutral, Bachelor::k, daughters)).c_str(),
-      // "", "@0*@1*(@2/@3)*(@4/@5)",
-      "", "@0*@1*(@2/@3)",
-      // RooArgSet(N_tot_pi, ratio, mcEffK, mcEffPi, orEffK, orEffPi));
-      RooArgSet(N_tot_pi, ratio, mcEffK, mcEffPi));
+      "", "@0*@1*(@2/@3)*(@4/@5)",
+      // "", "@0*@1*(@2/@3)",
+      RooArgSet(N_tot_pi, ratio, mcEffK, mcEffPi, orEffK, orEffPi));
+      // RooArgSet(N_tot_pi, ratio, mcEffK, mcEffPi));
 }
 
 // DON'T need to multiple CP K yields by MC effs as ratio defined in terms of
