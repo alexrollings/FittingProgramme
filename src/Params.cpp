@@ -39,7 +39,8 @@ void FixedParameter::AdjustBoxEffErr() {
   }
 }
 
-void FixedParameter::Randomise(TRandom3 &random) {
+void FixedParameter::Randomise(TRandom3 &random,
+    std::map<std::string, double> &correlated_shifts) {
   std::cout << "\n\n--------------------------------------------------------------\n";
   std::cout << "FixedParameter::Randomise\n";
   double shifted_value, std;

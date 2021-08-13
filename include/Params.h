@@ -75,7 +75,8 @@ class FixedParameter {
   Sign sign() const { return sign_; }
   std::string const &correlated_var() const { return correlated_var_; }
   void AdjustBoxEffErr();
-  void Randomise(TRandom3 &random);
+  void Randomise(TRandom3 &random,
+                 std::map<std::string, double> &correlated_shifts);
 
  private:
   double mean_, std_pos_, std_neg_;
@@ -464,6 +465,7 @@ class Params {
   void RandomiseParameters(Iterator const &systematic_begin,
                            Iterator const &systematic_end, TRandom3 &random) {
     // Map correlated var to other variable/randomised shift
+    std::map<std::string, double> correlated_shifts;
     for (auto &t : fixed_parameters_) {
       for (auto i = systematic_begin; i != systematic_end; ++i) {
         // HERE
@@ -472,9 +474,13 @@ class Params {
               << " \n\n -------------------------------------------- \n\n"
               << EnumToString(*i) << ": " << t.second.name()
               << " \n\n -------------------------------------------- \n\n";
-          // Check if correlated var saved: if not, call new method
-          t.second.Randomise(random);
-          // Save correlated var
+          // Check if var saved in map: if not, randomise
+          if (correlated_shifts.find(t.second.name()) == correlated_shifts.end()) {
+            t.second.Randomise(random, correlated_shifts);
+          } else {
+            std::cout << t.second.name()
+                      << " is correlated: call CorrelatedShift\n";
+          }
           break;
         }
       }
@@ -490,14 +496,15 @@ class Params {
         if (t.second.systematic() == s) {
           if (t.second.std_pos() == t.second.std_neg()) {
             of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
-               << std::get<3>(t.first) << "," << t.second.mean() << ","
-               << t.second.std_pos() << "\n";
+               << std::get<3>(t.first) << "," << std::get<4>(t.first) << ","
+               << t.second.mean() << "," << t.second.std_pos() << "\n";
             std::cout << t.second.name() << "," << t.second.mean() << ","
                       << t.second.std_pos() << "\n";
           } else {
             of << std::get<0>(t.first) << "," << std::get<2>(t.first) << ","
-               << std::get<3>(t.first) << "," << t.second.mean() << ","
-               << t.second.std_pos() << "," << t.second.std_neg() << "\n";
+               << std::get<3>(t.first) << "," << std::get<4>(t.first) << ","
+               << t.second.mean() << "," << t.second.std_pos() << ","
+               << t.second.std_neg() << "\n";
             std::cout << t.second.name() << "," << t.second.mean() << ","
                       << t.second.std_pos() << "," << t.second.std_neg()
                       << "\n";
