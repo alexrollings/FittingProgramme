@@ -42,6 +42,15 @@ double ReturnMCEffs(Mode mode, Neutral neutral, Bachelor bachelor,
       }
     }
   }
+  std::cerr << "!!!!!!!!!!\nReturnMCEffs: " << txtFileName
+            << " doesn't contain lines for " << EnumToString(neutral) << ", "
+            << EnumToString(bachelor)
+            << ": setting eff to 1.0 and error to 0.0.\n!!!!!!!!!!";
+  if (eff == Efficiency::mcEff) {
+    return 1.0;
+  } else if (eff == Efficiency::mcEffErr) {
+    return 0.0;
+  }
 }
 
 // Function to be called in constructor of NVars, in order to construct
