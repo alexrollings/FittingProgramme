@@ -564,12 +564,9 @@ int main(int argc, char *argv[]) {
 
     std::unique_ptr<RooFitResult> pullResult;
     pull.setRange("full", -6, 6);
-    if (config.neutral() == Neutral::pi0 &&
-        ((toys2D == true &&
-          (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total" ||
-           paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_minus")) ||
-         toys2D == false && paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_plus")) {
-      pull.setRange("fit", -3, 6);
+    if (toys2D == true && (paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_total" ||
+                           paramName == "R_piK_Bu2Dst0h_D0pi0_Blind_k_minus")) {
+      pull.setRange("fit", -4, 4);
       pullResult = std::unique_ptr<RooFitResult>(
           pullGaus.fitTo(pullDH, RooFit::Range("fit"), RooFit::Save()));
     } else {
