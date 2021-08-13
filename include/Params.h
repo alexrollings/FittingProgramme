@@ -207,6 +207,19 @@ class Params {
   }
 
   std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
+                                          Neutral neutral, Bachelor bachelor,
+                                          double mean, double std,
+                                          Systematic systematic, Sign sign,
+                                          std::string const &correlated_var) {
+    // Add bachelor daughter charge as empty strings: , "", "", ""
+    auto key =
+        std::make_tuple(name, std::to_string(uniqueId), EnumToString(neutral),
+                        EnumToString(bachelor), "");
+    auto var_name = name + "_" + ComposeName(uniqueId, neutral, bachelor);
+    return ConstructFixedParameter(key, var_name, mean, std, systematic, sign, correlated_var);
+  }
+
+  std::shared_ptr<RooRealVar> CreateFixed(std::string const &name, int uniqueId,
                                           Daughters daughters, double mean,
                                           double std, Systematic systematic,
                                           Sign sign) {
@@ -531,6 +544,19 @@ class Params {
                  // forwards them to the constructor). Necessary so as not to
                  // copy any RooFit objects !!!
                  std::forward_as_tuple(var_name, mean, std, systematic, sign))
+        .first->second.roo_variable();
+  }
+
+  std::shared_ptr<RooRealVar> ConstructFixedParameter(
+      Key const &key, std::string const &var_name, double mean, double std,
+      Systematic systematic, Sign sign, std::string const &correlated_var) {
+    return fixed_parameters_
+        .emplace(std::piecewise_construct, key,
+                 // Calling FixedParam constructor (takes all arguments and
+                 // forwards them to the constructor). Necessary so as not to
+                 // copy any RooFit objects !!!
+                 std::forward_as_tuple(var_name, mean, std, systematic, sign,
+                                       correlated_var))
         .first->second.roo_variable();
   }
 
