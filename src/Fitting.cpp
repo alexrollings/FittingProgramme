@@ -883,73 +883,125 @@ int main(int argc, char **argv) {
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         // for (auto &p : pdfs) {
-        //   if (p->daughters() == Daughters::kpi) {
-        //     if (config.neutral() == Neutral::pi0) {
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+        //   if (p->daughters() == Daughters::kpi &&
+        //       p->bachelor() == Bachelor::pi) {
+        //     if (config.neutral() == Neutral::gamma) {
+        //       config.buDeltaMass().setRange(
+        //           "buBox_D0gamma", config.buDeltaLow(), config.buDeltaHigh());
+        //       RooAbsReal *buIntegral_D0gamma =
+        //           p->pdfBu_Bu2Dst0h_D0gamma().createIntegral(
+        //               config.buDeltaMass(),
+        //               RooFit::NormSet(config.buDeltaMass()),
+        //               RooFit::Range("buBox_D0gamma"));
+        //       buIntegral_D0gamma->Print();
+        //       config.deltaMass().setRange("deltaBox_D0gamma", config.deltaLow(),
+        //                                   config.deltaHigh());
+        //       RooAbsReal *deltaIntegral_D0gamma =
+        //           p->pdfDelta_Bu2Dst0h_D0gamma().createIntegral(
+        //               config.deltaMass(), RooFit::NormSet(config.deltaMass()),
+        //               RooFit::Range("deltaBox_D0gamma"));
+        //       deltaIntegral_D0gamma->Print();
+        //       config.buDeltaMass().setRange("buBox_D0pi0", config.buDeltaLow(),
+        //                                     config.buDeltaHigh());
+        //       RooAbsReal *buIntegral_D0pi0 =
+        //           p->pdfBuPartial_Bu2Dst0h_D0pi0().createIntegral(
+        //               config.buDeltaMass(),
+        //               RooFit::NormSet(config.buDeltaMass()),
+        //               RooFit::Range("buBox_D0pi0"));
+        //       buIntegral_D0pi0->Print();
+        //       config.deltaMass().setRange("deltaBox_D0pi0",
+        //                                   config.deltaPartialLow(),
+        //                                   config.deltaPartialHigh());
+        //       RooAbsReal *deltaIntegral_D0pi0 =
+        //           p->pdfDelta_Bu2Dst0h_D0pi0().createIntegral(
+        //               config.deltaMass(), RooFit::NormSet(config.deltaMass()),
+        //               RooFit::Range("deltaBox_D0pi0"));
+        //       deltaIntegral_D0pi0->Print();
         //     } else {
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " =
-        //       "
-        //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() <<
-        //                 "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " =
-        //       "
-        //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << "
-        //       = "
-        //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() <<
-        //                 "\n";
+        //       config.buDeltaMass().setRange("buBox_D0pi0", config.buDeltaLow(),
+        //                                     config.buDeltaHigh());
+        //       RooAbsReal *buIntegral_D0pi0 =
+        //           p->pdfBu_Bu2Dst0h_D0pi0().createIntegral(
+        //               config.buDeltaMass(),
+        //               RooFit::NormSet(config.buDeltaMass()),
+        //               RooFit::Range("buBox_D0pi0"));
+        //       buIntegral_D0pi0->Print();
+        //       config.deltaMass().setRange("deltaBox_D0pi0", config.deltaLow(),
+        //                                   config.deltaHigh());
+        //       RooAbsReal *deltaIntegral_D0pi0 =
+        //           p->pdfDelta_Bu2Dst0h_D0pi0().createIntegral(
+        //               config.deltaMass(), RooFit::NormSet(config.deltaMass()),
+        //               RooFit::Range("deltaBox_D0pi0"));
+        //       deltaIntegral_D0pi0->Print();
         //     }
         //   }
-        // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
-        //           << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
-        // std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
-        //           << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
-        // std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
-        //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
-        //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
-        //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
-        //             << p->N_tot_Bu2D0hst().getVal() << "\n";
-        // if (p->daughters() == Daughters::pik) {
-        //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_D02pik().GetName() << " = "
-        //             << p->N_tot_Bu2Dst0h_D0pi0_D02pik().getVal() << "\n";
-        //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " =
-        //   "
-        //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() <<
-        //             "\n";
-        //   if (p->neutral() == Neutral::gamma) {
-        //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << "
-        //     = "
-        //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() <<
-        //               "\n";
-        //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().GetName()
-        //               << " = "
-        //               << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().getVal()
-        //               << "\n";
-        //   }
         // }
-        // }
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
-        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-        // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
-        //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
-        PlotCorrelations(dataFitResult.get(), outputDir, config);
-        // Save RFR of data and efficiencies to calculate observables with
-        // corrected errors
-        std::string outFname;
-        if (config.runBsSystematic() == true) {
-          outFname = outputDir + "/results/SystResult_" +
-                     config.ReturnBoxString() + "_" +
-                     EnumToString(Systematic::Bs2Dst0Kst0) + "_" +
-                     to_string_with_precision(config.fracKst0(), 1) + ".root";
-          dataFitResult->SetName("SystResult");
+          //     if (config.neutral() == Neutral::pi0) {
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_WN().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_WN().getVal() << "\n";
+          //     } else {
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0pi0_WN().GetName() << " =
+          //       "
+          //                 << p->N_trueId_Bu2Dst0h_D0pi0_WN().getVal() <<
+          //                 "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " =
+          //       "
+          //                 << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          //       std::cout << p->N_trueId_Bu2Dst0h_D0gamma_WN().GetName() << "
+          //       = "
+          //                 << p->N_trueId_Bu2Dst0h_D0gamma_WN().getVal() <<
+          //                 "\n";
+          //     }
+          //   }
+          // std::cout << p->N_trueId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //           << p->N_trueId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          // std::cout << p->N_misId_Bu2Dst0h_D0pi0().GetName() << " = "
+          //           << p->N_misId_Bu2Dst0h_D0pi0().getVal() << "\n";
+          // std::cout << p->N_tot_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_tot_Bu2Dst0h_D0gamma().getVal() << "\n";
+          // std::cout << p->N_trueId_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_trueId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          // std::cout << p->N_misId_Bu2Dst0h_D0gamma().GetName() << " = "
+          //           << p->N_misId_Bu2Dst0h_D0gamma().getVal() << "\n";
+          //   std::cout << p->N_tot_Bu2D0hst().GetName() << " = "
+          //             << p->N_tot_Bu2D0hst().getVal() << "\n";
+          // if (p->daughters() == Daughters::pik) {
+          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_D02pik().GetName() << " = "
+          //             << p->N_tot_Bu2Dst0h_D0pi0_D02pik().getVal() << "\n";
+          //   std::cout << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().GetName() << " =
+          //   "
+          //             << p->N_tot_Bu2Dst0h_D0pi0_WN_D02pik().getVal() <<
+          //             "\n";
+          //   if (p->neutral() == Neutral::gamma) {
+          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_D02pik().GetName() << "
+          //     = "
+          //               << p->N_tot_Bu2Dst0h_D0gamma_D02pik().getVal() <<
+          //               "\n";
+          //     std::cout << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().GetName()
+          //               << " = "
+          //               << p->N_tot_Bu2Dst0h_D0gamma_WN_D02pik().getVal()
+          //               << "\n";
+          //   }
+          // }
+          // }
+          // NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::Get(id)
+          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+          // NeutralBachelorVars<Neutral::gamma, Bachelor::k>::Get(id)
+          //     .Bu2Dst0hst_fracD0pi0_Bu().Print();
+          PlotCorrelations(dataFitResult.get(), outputDir, config);
+          // Save RFR of data and efficiencies to calculate observables with
+          // corrected errors
+          std::string outFname;
+          if (config.runBsSystematic() == true) {
+            outFname = outputDir + "/results/SystResult_" +
+                       config.ReturnBoxString() + "_" +
+                       EnumToString(Systematic::Bs2Dst0Kst0) + "_" +
+                       to_string_with_precision(config.fracKst0(), 1) + ".root";
+            dataFitResult->SetName("SystResult");
         } else if (config.runCombSystematic() == true) {
           outFname = outputDir + "/results/SystResult_" +
                      config.ReturnBoxString() + "_combinatorial.root";
