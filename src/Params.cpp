@@ -28,7 +28,7 @@ void FixedParameter::AdjustBoxEffErr() {
   static const std::regex effRgx("(or|delta|bu|buPartial)Eff\\S+");
   if (std::regex_match(name_, effMatch, effRgx)) {
     double std_tmp = std_pos_;
-    double abs_err = 0.03;
+    double abs_err = 0.008;
     std::smatch modeMatch;
     std::cout << mean_ << "\n";
     if (std_tmp < abs_err) {
