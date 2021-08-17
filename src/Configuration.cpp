@@ -57,10 +57,8 @@ Configuration::Configuration()
       runCombSystematic_(false),
       fracKst0_(0.8),
       group_map_{
-          {Group::Pdfs,
+          {Group::Pi0Pdfs,
            std::vector<Systematic>{
-               Systematic::Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi,
-               Systematic::Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi,
                Systematic::Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi,
                Systematic::Bu2Dst0h_D0pi0_PdfDelta_Tails,
                Systematic::Bu2Dst0h_D0pi0_PdfDelta_Frac,
@@ -74,6 +72,9 @@ Configuration::Configuration()
                Systematic::Bu2Dst0h_D0pi0_PdfBuPartial_Frac,
                Systematic::Bu2Dst0h_D0pi0_PdfBuPartial_Sigma1,
                Systematic::Bu2Dst0h_D0pi0_PdfBu,
+               Systematic::boxEffs_Bu2Dst0h_D0pi0}},
+          {Group::GammaPdfs,
+           std::vector<Systematic>{
                Systematic::Bu2Dst0h_D0gamma_PdfBuPartial,
                Systematic::Bu2Dst0h_D0gamma_PdfDelta_SigmaRatioKpi,
                Systematic::Bu2Dst0h_D0gamma_PdfDelta_Tails,
@@ -81,92 +82,93 @@ Configuration::Configuration()
                Systematic::Bu2Dst0h_D0gamma_PdfBu_SigmaRatioKpi,
                Systematic::Bu2Dst0h_D0gamma_PdfBu_Tails,
                Systematic::Bu2Dst0h_D0gamma_PdfBu_Frac,
-               Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
-               Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
-               Systematic::Bu2Dst0h_D0pi0_WN_PdfBuPartial,
-               Systematic::Bu2Dst0h_D0gamma_WN_PdfDelta,
-               Systematic::Bu2Dst0h_D0gamma_WN_PdfBu,
-               Systematic::Bu2Dst0h_D0gamma_WN_PdfBuPartial,
-               Systematic::Bd2Dsth_PdfDelta,
-               Systematic::Bd2Dsth_PdfBu,
-               Systematic::Bd2Dsth_PdfBuPartial,
-               Systematic::Bu2D0hst_PdfDelta,
-               Systematic::Bu2D0hst_PdfDelta_D02pik,
-               Systematic::Bu2D0hst_PdfBu,
-               Systematic::Bu2D0hst_PdfBu_D02pik,
-               Systematic::Bu2D0hst_PdfBuPartial,
-               Systematic::Bu2Dst0hst_D0gamma_PdfDelta,
-               Systematic::Bu2Dst0hst_D0gamma_PdfBu,
-               Systematic::Bu2Dst0hst_D0gamma_PdfBuPartial,
-               Systematic::Bu2Dst0hst_D0pi0_PdfDelta,
-               Systematic::Bu2Dst0hst_D0pi0_PdfBu,
-               Systematic::Bu2Dst0hst_D0pi0_PdfBuPartial,
-               Systematic::Bu2Dst0hst_PdfBu_D02pik,
-               Systematic::Bu2Dst0hst_Frac,
-               Systematic::Lb2Omegach_Lcpi0_PdfDelta,
-               Systematic::Lb2Omegach_Lcpi0_PdfBu,
-               Systematic::Lb2Omegach_Lcpi0_PdfBuPartial,
-               Systematic::Bs2Dst0Kst0_Frac,
-               Systematic::Bs2Dst0Kst0_PdfDelta,
-               Systematic::Bs2Dst0Kst0,
-               Systematic::Bs2Dst0Kst0_WN,
-               Systematic::Bs2D0Kst0_PdfDelta,
-               Systematic::Bs2D0Kst0_PdfBu,
+               Systematic::boxEffs_Bu2Dst0h_D0gamma}},
+          {Group::BkgPdfs,
+           std::vector<Systematic>{Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
+                                   Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
+                                   Systematic::Bu2Dst0h_D0pi0_WN_PdfBuPartial,
+                                   Systematic::Bu2Dst0h_D0gamma_WN_PdfDelta,
+                                   Systematic::Bu2Dst0h_D0gamma_WN_PdfBu,
+                                   Systematic::Bu2Dst0h_D0gamma_WN_PdfBuPartial,
+                                   Systematic::Bd2Dsth_PdfDelta,
+                                   Systematic::Bd2Dsth_PdfBu,
+                                   Systematic::Bd2Dsth_PdfBuPartial,
+                                   Systematic::Bu2D0hst_PdfDelta,
+                                   Systematic::Bu2D0hst_PdfDelta_D02pik,
+                                   Systematic::Bu2D0hst_PdfBu,
+                                   Systematic::Bu2D0hst_PdfBu_D02pik,
+                                   Systematic::Bu2D0hst_PdfBuPartial,
+                                   Systematic::Bu2Dst0hst_D0gamma_PdfDelta,
+                                   Systematic::Bu2Dst0hst_D0gamma_PdfBu,
+                                   Systematic::Bu2Dst0hst_D0gamma_PdfBuPartial,
+                                   Systematic::Bu2Dst0hst_D0pi0_PdfDelta,
+                                   Systematic::Bu2Dst0hst_D0pi0_PdfBu,
+                                   Systematic::Bu2Dst0hst_D0pi0_PdfBuPartial,
+                                   Systematic::Bu2Dst0hst_PdfBu_D02pik,
+                                   Systematic::Bu2Dst0hst_Frac,
+                                   Systematic::Lb2Omegach_Lcpi0_PdfDelta,
+                                   Systematic::Lb2Omegach_Lcpi0_PdfBu,
+                                   Systematic::Lb2Omegach_Lcpi0_PdfBuPartial,
+                                   Systematic::Combinatorial,
+                                   Systematic::boxEffs_Bkg,
+                                   Systematic::boxEffs_Lb,
+                                   Systematic::boxEffs_WN,
+                                   Systematic::boxEffs_Bd2Dsth,
+                                   Systematic::boxEffs_Bu2D0hst,
+                                   Systematic::boxEffs_Bu2Dst0hst}},
+          {Group::BsPdfs,
+           std::vector<Systematic>{
+               Systematic::Bs2Dst0Kst0_Frac, Systematic::Bs2Dst0Kst0_PdfDelta,
+               Systematic::Bs2Dst0Kst0, Systematic::Bs2Dst0Kst0_WN,
+               Systematic::Bs2D0Kst0_PdfDelta, Systematic::Bs2D0Kst0_PdfBu,
                Systematic::Bs2D0Kst0_PdfBuPartial,
+               Systematic::boxEffs_Bs2D0Kst0, Systematic::boxEffs_Bs2Dst0Kst0}},
+          {Group::MisIDPdfs,
+           std::vector<Systematic>{
                Systematic::Bu2Dst0K_D0pi0_asPi_Pdfs,
                Systematic::Bu2Dst0pi_D0pi0_asK_Pdfs,
                Systematic::Bu2Dst0K_D0gamma_asPi_Pdfs,
                Systematic::Bu2Dst0pi_D0gamma_asK_Pdfs,
-               Systematic::Bu2Dst0h_WN_misId_Pdfs,
-               Systematic::Bkg_misId_Pdfs,
-               Systematic::D02pik_Pdfs,
-               Systematic::Combinatorial}},
-          {Group::Effs,
-           std::vector<Systematic>{Systematic::boxEffs_Bu2Dst0h_D0pi0,
-                                   Systematic::boxEffs_Bu2Dst0h_D0gamma,
-                                   Systematic::boxEffs_Bkg,
-                                   Systematic::boxEffs_D02pik,
-                                   Systematic::boxEffs_Bu2Dst0h_D0pi0_misId,
-                                   Systematic::boxEffs_Bu2Dst0h_D0gamma_misId,
-                                   Systematic::boxEffs_Bkg_misId,
-                                   Systematic::boxEffs_Lb,
-                                   Systematic::boxEffs_Bs2D0Kst0,
-                                   Systematic::boxEffs_Bs2Dst0Kst0,
-                                   Systematic::boxEffs_WN,
-                                   Systematic::boxEffs_Bd2Dsth,
-                                   Systematic::boxEffs_Bu2D0hst,
-                                   Systematic::boxEffs_Bu2Dst0hst,
-                                   Systematic::mcEffs_Bu2Dst0h_D0pi0,
+               Systematic::Bu2Dst0h_WN_misId_Pdfs, Systematic::Bkg_misId_Pdfs,
+               Systematic::D02pik_Pdfs, Systematic::boxEffs_D02pik,
+               Systematic::boxEffs_Bu2Dst0h_D0pi0_misId,
+               Systematic::boxEffs_Bu2Dst0h_D0gamma_misId,
+               Systematic::boxEffs_Bkg_misId}},
+          {Group::SelEffs,
+           std::vector<Systematic>{Systematic::mcEffs_Bu2Dst0h_D0pi0,
                                    Systematic::mcEffs_Bu2Dst0h_D0gamma,
                                    Systematic::mcEffs_Bkg,
                                    Systematic::mcEffs_Bu2Dst0h_D0pi0_misId,
                                    Systematic::mcEffs_Bu2Dst0h_D0gamma_misId,
                                    Systematic::mcEffs_Bkg_misId,
-                                   Systematic::pidEffPi,
-                                   Systematic::pidEffK}},
+                                   Systematic::pidEffPi, Systematic::pidEffK}},
+          {Group::PIDEffs,
+           std::vector<Systematic>{Systematic::pidEffPi, Systematic::pidEffK}},
           {Group::Rates,
            std::vector<Systematic>{
                Systematic::Bu2D0hst_BkgFrac, Systematic::Bu2Dst0hst_BkgFrac,
                Systematic::crossFeedRate, Systematic::kBF_D02kpi,
-               Systematic::kBF_D02kk, Systematic::kBF_D02pipi}},
+               Systematic::kBF_D02kk, Systematic::kBF_D02pipi,
+               Systematic::R_Dst0KDst0pi_Bd2Dsth,
+               Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0}},
           {Group::Asyms,
-           std::vector<Systematic>{Systematic::A_Kpi, Systematic::A_pi,
-                                   Systematic::Delta_A_CP}},
-          {Group::CPPars,
            std::vector<Systematic>{
+               Systematic::A_Kpi, Systematic::A_pi, Systematic::Delta_A_CP,
                Systematic::A_pi_Kpi_Bu2Dst0h_D0pi0,
                Systematic::A_pi_Kpi_Bu2Dst0h_D0gamma,
                Systematic::A_pi_Kpi_Bu2Dst0hst, Systematic::A_K_Kpi_Bu2Dst0hst,
-               Systematic::A_K_piK_Bu2D0hst, Systematic::R_CP_Bu2D0hst,
-               Systematic::R_ADS_Bu2D0hst, Systematic::R_Dst0KDst0pi_Bd2Dsth,
-               Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0,
-               Systematic::R_CP_Bu2Dst0h_D0gamma,
+               Systematic::A_K_piK_Bu2D0hst,
                Systematic::A_CP_pi_Bu2Dst0h_D0gamma,
                Systematic::A_CP_K_Bu2Dst0h_D0gamma,
-               Systematic::R_piK_Bu2Dst0h_D0gamma,
                Systematic::A_K_Kpi_Bu2Dst0h_D0gamma,
-               Systematic::R_ADS_Bu2Dst0hst, Systematic::A_K_piK_Bu2Dst0hst,
-               Systematic::A_CP_K_Lb2Omegach_Lcpi0}}} {
+               Systematic::A_K_piK_Bu2Dst0hst,
+               Systematic::A_CP_K_Lb2Omegach_Lcpi0}},
+          {Group::CPRatios,
+           std::vector<Systematic>{Systematic::R_CP_Bu2D0hst,
+                                   Systematic::R_ADS_Bu2D0hst,
+                                   Systematic::R_CP_Bu2Dst0h_D0gamma,
+                                   Systematic::R_piK_Bu2Dst0h_D0gamma,
+                                   Systematic::R_ADS_Bu2Dst0hst}}} {
   // k_A_CP_Bu2Dst0K_D0pi0_D02kpi(),
   // k_A_CP_Bu2Dst0K_D0gamma_D02kpi(),
   // k_A_CP_Bu2Dst0K_D0pi0_D02hh(),
@@ -525,16 +527,26 @@ Mode StringToEnum<Mode>(std::string const &mode) {
 
 template <>
 Group StringToEnum<Group>(std::string const &group) {
-  if (group == "Pdfs") {
-    return Group::Pdfs;
-  } else if (group == "Effs") {
-    return Group::Effs;
+  if (group == "Pi0Pdfs") {
+    return Group::Pi0Pdfs;
+  } else if (group == "GammaPdfs") {
+    return Group::GammaPdfs;
+  } else if (group == "BkgPdfs") {
+    return Group::BkgPdfs;
+  } else if (group == "BsPdfs") {
+    return Group::BsPdfs;
+  } else if (group == "MisIDPdfs") {
+    return Group::MisIDPdfs;
+  } else if (group == "SelEffs") {
+    return Group::SelEffs;
+  } else if (group == "PIDEffs") {
+    return Group::PIDEffs;
   } else if (group == "Rates") {
     return Group::Rates;
   } else if (group == "Asyms") {
     return Group::Asyms;
-  } else if (group == "CPPars") {
-    return Group::CPPars;
+  } else if (group == "CPRatios") {
+    return Group::CPRatios;
   }
   throw std::invalid_argument("Invalid Group passed to StringToEnum");
 }
@@ -791,19 +803,30 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
 }
 
 std::string EnumToString(Group group) {
-  if (group == Group::Pdfs) {
-    return "Pdfs";
-  } else if (group == Group::Effs) {
-    return "Effs";
+  if (group == Group::Pi0Pdfs) {
+    return "Pi0Pdfs";
+  } else if (group == Group::GammaPdfs) {
+    return "GammaPdfs";
+  } else if (group == Group::BkgPdfs) {
+    return "BkgPdfs";
+  } else if (group == Group::BsPdfs) {
+    return "BsPdfs";
+  } else if (group == Group::MisIDPdfs) {
+    return "MisIDPdfs";
+  } else if (group == Group::SelEffs) {
+    return "SelEffs";
+  } else if (group == Group::PIDEffs) {
+    return "PIDEffs";
   } else if (group == Group::Rates) {
     return "Rates";
   } else if (group == Group::Asyms) {
     return "Asyms";
-  } else if (group == Group::CPPars) {
-    return "CPPars";
+  } else if (group == Group::CPRatios) {
+    return "CPRatios";
   }
   throw std::invalid_argument(
-      "Group must take string: Pdfs, Effs, Rates, Asyms or CPPars");
+      "Group must take string: Pi0Pdfs, GammaPdfs, BkgPdfs, BsPdfs, MisIDPdfs, "
+      "SelEffs, PIDEffs, Rates, Asyms, CPRatios");
 }
 
 std::string EnumToString(Systematic systematic) {

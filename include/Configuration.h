@@ -204,7 +204,18 @@ enum class Systematic {
   kBF_Bu2Dst0rho,
   kBF_Bu2Dst0Kst
 };
-enum class Group { Pdfs, Rates, Asyms, Effs, CPPars };  
+enum class Group {
+  Pi0Pdfs,
+  GammaPdfs,
+  BkgPdfs,
+  BsPdfs,
+  MisIDPdfs,
+  SelEffs,
+  PIDEffs,
+  Rates,
+  Asyms,
+  CPRatios
+};
 
 // There is only a single instance of categories therefore we do not have to
 // pass it around any more
