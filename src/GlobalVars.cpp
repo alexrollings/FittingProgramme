@@ -6,7 +6,7 @@ std::string MakePidKey(Bachelor bachelor, Charge charge) {
 
 double ReturnPidEffs(Charge charge, bool returnEff) {
   std::string txtFileName =
-      "/home/rollings/Bu2Dst0h_scripts/pid_corr/output/PID_effs_mc_" +
+      Configuration::Get().inputDir + "/efficiencies/pidEffs_" +
       EnumToString(Configuration::Get().neutral()) + ".txt";
   if (!fexists(txtFileName)) {
     throw std::logic_error("ReturnPidEffs: " + txtFileName + " doesn't exist.");
@@ -21,6 +21,16 @@ double ReturnPidEffs(Charge charge, bool returnEff) {
       if (returnEff == true) {
         return std::stod(lineVec[1]);
       } else {
+        // double err = std::stod(lineVec[2]);
+        // double nTracks_err;
+        // if (Configuration::Get().neutral() == Neutral::pi0) {
+        //   nTracks_err = 0.0099; 
+        // } else {
+        //   nTracks_err = 0.0051; 
+        // }
+        // double err_tot = std::sqrt(pow(err, 2) + pow(nTracks_err, 2))
+        // std::coud << "PID ERROR = " << err_tot << "\n";
+        // return err_tot; 
         return std::stod(lineVec[2]);
       }
     }
@@ -127,10 +137,10 @@ GlobalVars::GlobalVars(int uniqueId)
   // Total PID eff from MC effs, and systematic from gamma MC vs data difference
   // (higher stats)
   pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
-      Params::Get().CreateFixed("pidEffK", uniqueId_,
-                                Configuration::Get().neutral(), Charge::total,
-                                ReturnPidEffs(Charge::total, true), 0.01,
-                                Systematic::pidEffK, Sign::same);
+      Params::Get().CreateFixed(
+          "pidEffK", uniqueId_, Configuration::Get().neutral(), Charge::total,
+          ReturnPidEffs(Charge::total, true),
+          ReturnPidEffs(Charge::total, false), Systematic::pidEffK, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
