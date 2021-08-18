@@ -161,14 +161,14 @@ if __name__ == '__main__':
         # 'Bu2Dst0h_WN_misId_Pdfs',
         # 'Bkg_misId_Pdfs',
         # 'D02pik_Pdfs',
-        'boxEffs_Bu2Dst0h_D0pi0',
-        'boxEffs_WN',
-        'boxEffs_Bd2Dsth',
-        'boxEffs_Bu2D0hst',
-        'boxEffs_Bu2Dst0hst',
-        'boxEffs_Lb',
-        'boxEffs_Bs2D0Kst0',
-        'boxEffs_Bs2Dst0Kst0',
+        # 'boxEffs_Bu2Dst0h_D0pi0',
+        # 'boxEffs_WN',
+        # 'boxEffs_Bd2Dsth',
+        # 'boxEffs_Bu2D0hst',
+        # 'boxEffs_Bu2Dst0hst',
+        # 'boxEffs_Lb',
+        # 'boxEffs_Bs2D0Kst0',
+        # 'boxEffs_Bs2Dst0Kst0',
         # 'boxEffs_Bkg',
         # 'boxEffs_D02pik',
         # 'boxEffs_Bu2Dst0h_D0pi0_misId',
@@ -206,6 +206,16 @@ if __name__ == '__main__':
         # 'Asyms',
         # 'Rates',
         # 'CPPars'
+        'Pi0Pdfs',
+        'GammaPdfs',
+        'BkgPdfs',
+        'BsPdfs',
+        'MisIDPdfs',
+        'SelEffs',
+        'PIDEffs',
+        'Rates',
+        'Asyms',
+        'CPRatios'
     ]
     if delta_low == None:
       delta_low = '138'
@@ -217,7 +227,7 @@ if __name__ == '__main__':
       bu_high = '5330'
   elif neutral == 'gamma':
     systematics = [
-        # # 'Combinatorial',
+        # 'Combinatorial',
         # 'Bu2Dst0h_D0pi0_PdfDelta_SigmaRatioKpi',
         # 'Bu2Dst0h_D0pi0_PdfDelta_Tails',
         # 'Bu2Dst0h_D0pi0_PdfDelta_Frac',
@@ -272,15 +282,15 @@ if __name__ == '__main__':
         # 'Bu2Dst0h_WN_misId_Pdfs',
         # 'Bkg_misId_Pdfs',
         # 'D02pik_Pdfs',
-        'boxEffs_Bu2Dst0h_D0pi0',
-        'boxEffs_Bu2Dst0h_D0gamma',
-        'boxEffs_WN',
-        'boxEffs_Bd2Dsth',
-        'boxEffs_Bu2D0hst',
-        'boxEffs_Bu2Dst0hst',
-        'boxEffs_Lb',
-        'boxEffs_Bs2D0Kst0',
-        'boxEffs_Bs2Dst0Kst0',
+        # 'boxEffs_Bu2Dst0h_D0pi0',
+        # 'boxEffs_Bu2Dst0h_D0gamma',
+        # 'boxEffs_WN',
+        # 'boxEffs_Bd2Dsth',
+        # 'boxEffs_Bu2D0hst',
+        # 'boxEffs_Bu2Dst0hst',
+        # 'boxEffs_Lb',
+        # 'boxEffs_Bs2D0Kst0',
+        # 'boxEffs_Bs2Dst0Kst0',
         # 'boxEffs_Bkg',
         # 'boxEffs_D02pik',
         # 'boxEffs_Bu2Dst0h_D0pi0_misId',
@@ -318,6 +328,16 @@ if __name__ == '__main__':
         # 'Asyms',
         # 'Rates',
         # 'CPPars'
+        'Pi0Pdfs',
+        'GammaPdfs',
+        'BkgPdfs',
+        'BsPdfs',
+        'MisIDPdfs',
+        'SelEffs',
+        'PIDEffs',
+        'Rates',
+        'Asyms',
+        'CPRatios'
     ]
     if delta_low == None:
       delta_low = '125'
