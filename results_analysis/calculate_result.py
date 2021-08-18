@@ -4,8 +4,7 @@ import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
 import json, csv
-from useful_functions import return_label
-from useful_functions import return_final_group
+from useful_functions import return_label, return_group, return_group_final
 
 def PrintFitStatus(df_syst, arr_syst_pars, arr_labels):
   par_name = arr_syst_pars[0]
@@ -482,8 +481,8 @@ if __name__ == '__main__':
       row_idx['A'] = row_idx['A'] + 1
       # Start new row with systematics label
       # Replace _ with \_ in LaTeX
-      row_arr['R'].append(label.replace('_', '\\_'))
-      row_arr['A'].append(label.replace('_', '\\_'))
+      row_arr['R'].append(return_group(label))
+      row_arr['A'].append(return_group(label))
       col_idx = {'R': 0, 'A': 0}
       for par_name in arr_syst_pars:
         key = par_name[0]

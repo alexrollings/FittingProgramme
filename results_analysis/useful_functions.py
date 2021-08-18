@@ -1,44 +1,117 @@
 import os, re
 
-def return_group_breakdown(syst):
-  re_group_dict = {
-      'Bu2Dst0h_D0pi0_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\pi^{0})h^{\\pm}$ PDFs',
-      'Bu2Dst0h_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
-      'Bu2Dst0h_D0pi0_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
-      'Bu2Dst0h_D0gamma_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
-      'Bd2Dsth_Pdf\S+': '$B^{0}\\rightarrow D^{*\\mp}h^{\\pm}$ PDFs',
-      'Bu2D0hst_Pdf\S+': '$B^{\\pm}\\rightarrow Dh^{\\pm}\\pi$ PDFs',
-      'Bu2Dst0hst_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
-      'Bu2Dst0hst_D0pi0_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
-      'Bu2Dst0hst_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
-      'Bu2Dst0hst_Fra\S+': 'Branching fractions',
-      'Lb2Omegach_Lcpi0_Pdf\S+': '$\\Lambda^{0}_{b}\\rightarrow \\Sigma_{c}^{\\pm}h^{\\mp}$ PDFs',
-      'Bs2D0Kst0_Pdf\S+': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
-      'Bs2Dst0Kst0_\S+': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ WN PDFs',
-      'D02pik_Pdfs': 'Favoured to ADS crossfeed PDFs',
-      'Bu2Dst0\S+_D0\S+_as\S+_Pdfs': 'Signal mis-ID PDFs',
-      '\S+_misId_Pdfs': 'Background mis-ID PDFs',
-      '\S+_BkgFrac': 'Branching fractions',
-      'boxEffs_\S+': 'Box efficiencies',
-      'mcEffs_\S+': 'Selection efficiencies',
-      'pidEffK': 'PID efficiencies',
-      'pidEffPi': 'PID efficiencies',
-      'crossFeedRate': 'Rate of favoured to ADS crossfeed',
-      'A_pi': 'Detector Asymmetries',
-      'A_Kpi': 'Detector Asymmetries',
-      'Delta_A_CP': 'Fixed $CP$ parameters',
-      'A_pi_Kpi_Bu2Dst0h_D0\S+': 'Fixed $CP$ parameters',
-      'A_CP_K_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
-      '\S+_Bu2Dst0h_WN': 'Fixed $CP$ parameters',
-      '\S+_Bu2D0hst': 'Fixed $CP$ parameters',
-      '\S+_Bu2Dst0hst': 'Fixed $CP$ parameters',
-      '\S+_Bd2Dsth': 'Fixed $CP$ parameters',
-      '\S+_Bu2Dst0h_D0gamma': 'Fixed $CP$ parameters',
-      # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
-      'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': 'Branching fractions',
-      'kBF_D0\S+': 'Branching fractions',
-      'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs',
-      'Combinatorial' : 'Combinatorial',
+# def return_group_breakdown(syst):
+#   re_group_dict = {
+#       'Bu2Dst0h_D0pi0_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\pi^{0})h^{\\pm}$ PDFs',
+#       'Bu2Dst0h_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
+#       'Bu2Dst0h_D0pi0_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
+#       'Bu2Dst0h_D0gamma_WN\S+': 'Mis-reco. $B^{\\pm}\\rightarrow D^{*}h^{\\pm}$ PDFs',
+#       'Bd2Dsth_Pdf\S+': '$B^{0}\\rightarrow D^{*\\mp}h^{\\pm}$ PDFs',
+#       'Bu2D0hst_Pdf\S+': '$B^{\\pm}\\rightarrow Dh^{\\pm}\\pi$ PDFs',
+#       'Bu2Dst0hst_D0gamma_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
+#       'Bu2Dst0hst_D0pi0_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
+#       'Bu2Dst0hst_Pdf\S+': '$B^{\\pm}\\rightarrow D^{*}h^{\\pm}\\pi$ PDFs',
+#       'Bu2Dst0hst_Fra\S+': 'Branching fractions',
+#       'Lb2Omegach_Lcpi0_Pdf\S+': '$\\Lambda^{0}_{b}\\rightarrow \\Sigma_{c}^{\\pm}h^{\\mp}$ PDFs',
+#       'Bs2D0Kst0_Pdf\S+': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
+#       'Bs2Dst0Kst0_\S+': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ WN PDFs',
+#       'D02pik_Pdfs': 'Favoured to ADS crossfeed PDFs',
+#       'Bu2Dst0\S+_D0\S+_as\S+_Pdfs': 'Signal mis-ID PDFs',
+#       '\S+_misId_Pdfs': 'Background mis-ID PDFs',
+#       '\S+_BkgFrac': 'Branching fractions',
+#       'boxEffs_\S+': 'Box efficiencies',
+#       'mcEffs_\S+': 'Selection efficiencies',
+#       'pidEffK': 'PID efficiencies',
+#       'pidEffPi': 'PID efficiencies',
+#       'crossFeedRate': 'Rate of favoured to ADS crossfeed',
+#       'A_pi': 'Detector Asymmetries',
+#       'A_Kpi': 'Detector Asymmetries',
+#       'Delta_A_CP': 'Fixed $CP$ parameters',
+#       'A_pi_Kpi_Bu2Dst0h_D0\S+': 'Fixed $CP$ parameters',
+#       'A_CP_K_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
+#       '\S+_Bu2Dst0h_WN': 'Fixed $CP$ parameters',
+#       '\S+_Bu2D0hst': 'Fixed $CP$ parameters',
+#       '\S+_Bu2Dst0hst': 'Fixed $CP$ parameters',
+#       '\S+_Bd2Dsth': 'Fixed $CP$ parameters',
+#       '\S+_Bu2Dst0h_D0gamma': 'Fixed $CP$ parameters',
+#       # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
+#       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': 'Branching fractions',
+#       'kBF_D0\S+': 'Branching fractions',
+#       'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ box efficiencies and $m(B)$ PDFs',
+#       'Combinatorial' : 'Combinatorial',
+#       'Statistical Error Correction': 'Statistical Error Correction',
+#   }
+#   match = False
+#   for k, v in re_group_dict.items():
+#     m = re.search(k, syst)
+#     if m:
+#       match = True
+#       return v
+#   if match == False:
+#     print('No regex match in return_group_breakdown for ' + syst)
+
+# def return_final_group(syst):
+#   re_group_dict = {
+#       'Bu2Dst0h_D0pi0_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0h_D0gamma_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0h_D0pi0_WN\S+': '$PDFs$',
+#       'Bu2Dst0h_D0gamma_WN\S+': '$PDFs$',
+#       'Bd2Dsth_Pdf\S+': '$PDFs$',
+#       'Bu2D0hst_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0hst_D0gamma_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0hst_D0pi0_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0hst_Pdf\S+': '$PDFs$',
+#       'Bu2Dst0hst_Fra\S+': '$Rates$',
+#       'Lb2Omegach_Lcpi0_Pdf\S+': '$PDFs$',
+#       'Bs2D0Kst0_Pdf\S+': '$PDFs$',
+#       'Bs2Dst0Kst0_\S+': '$PDFs$',
+#       'D02pik_Pdfs': '$PDFs$',
+#       'Bu2Dst0\S+_D0\S+_as\S+_Pdfs': '$PDFs$',
+#       '\S+_misId_Pdfs': '$PDFs$',
+#       '\S+_BkgFrac': '$Rates$',
+#       'boxEffs_\S+': '$\\epsilon_{BOX}$',
+#       'mcEffs_\S+': '$\\epsilon_{sel}$',
+#       'pidEffK': '$\\epsilon_{PID}$',
+#       'pidEffPi': '$\\epsilon_{PID}$',
+#       'crossFeedRate': '$Rates$',
+#       'A_pi': '$Asyms$',
+#       'A_Kpi': '$Asyms$',
+#       'Delta_A_CP': '$CP$ $Pars$',
+#       'A_pi_Kpi_Bu2Dst0h_D0\S+': '$CP$ $Pars$',
+#       'A_CP_K_Lb2Omegach_Lcpi0': '$CP$ $Pars$',
+#       '\S+_Bu2Dst0h_WN': '$CP$ $Pars$',
+#       '\S+_Bu2D0hst': '$CP$ $Pars$',
+#       '\S+_Bu2Dst0hst': '$CP$ $Pars$',
+#       '\S+_Bd2Dsth': '$CP$ $Pars$',
+#       '\S+_Bu2Dst0h_D0gamma': '$CP$ $Pars$',
+#       # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
+#       'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': '$Rates$',
+#       'kBF_D0\S+': '$Rates$',
+#       'Statistical Error Correction': '$Corr$',
+#       'Bs phase space': '$PDFs$',
+#       'Combinatorial' : '$Comb$'
+#   }
+#   match = False
+#   for k, v in re_group_dict.items():
+#     m = re.search(k, syst)
+#     if m:
+#       match = True
+#       return v
+#   if match == False:
+#     print('No regex match in return_final_group for ' + syst)
+
+def return_group(syst):
+  re_dict = {
+      'Pi0Pdfs': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\pi^{0})h^{\\pm}$ PDFs',
+      'GammaPdfs': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
+      'BkgPdfs': 'Mis. and part. reco. background PDFs',
+      'BsPdfs': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
+      'MisIDPdfs': 'Mis-ID and crossfeed PDFs',
+      'SelEffs': 'Selection efficiencies',
+      'PIDEffs': 'Particle identification efficiencies',
+      'Rates': 'Fixed branching fractions and rates',
+      'Asyms': 'Fixed asymmetries',
+      'CPRatios': 'Fixed $CP$ ratios',
       'Statistical Error Correction': 'Statistical Error Correction',
   }
   match = False
@@ -48,48 +121,17 @@ def return_group_breakdown(syst):
       match = True
       return v
   if match == False:
-    print('No regex match in return_group_breakdown for ' + syst)
+    print('No regex match in return_final_group for ' + syst)
 
 def return_final_group(syst):
   re_group_dict = {
-      'Bu2Dst0h_D0pi0_Pdf\S+': '$PDFs$',
-      'Bu2Dst0h_D0gamma_Pdf\S+': '$PDFs$',
-      'Bu2Dst0h_D0pi0_WN\S+': '$PDFs$',
-      'Bu2Dst0h_D0gamma_WN\S+': '$PDFs$',
-      'Bd2Dsth_Pdf\S+': '$PDFs$',
-      'Bu2D0hst_Pdf\S+': '$PDFs$',
-      'Bu2Dst0hst_D0gamma_Pdf\S+': '$PDFs$',
-      'Bu2Dst0hst_D0pi0_Pdf\S+': '$PDFs$',
-      'Bu2Dst0hst_Pdf\S+': '$PDFs$',
-      'Bu2Dst0hst_Fra\S+': '$Rates$',
-      'Lb2Omegach_Lcpi0_Pdf\S+': '$PDFs$',
-      'Bs2D0Kst0_Pdf\S+': '$PDFs$',
-      'Bs2Dst0Kst0_\S+': '$PDFs$',
-      'D02pik_Pdfs': '$PDFs$',
-      'Bu2Dst0\S+_D0\S+_as\S+_Pdfs': '$PDFs$',
-      '\S+_misId_Pdfs': '$PDFs$',
-      '\S+_BkgFrac': '$Rates$',
-      'boxEffs_\S+': '$\\epsilon_{BOX}$',
-      'mcEffs_\S+': '$\\epsilon_{sel}$',
-      'pidEffK': '$\\epsilon_{PID}$',
-      'pidEffPi': '$\\epsilon_{PID}$',
-      'crossFeedRate': '$Rates$',
-      'A_pi': '$Asyms$',
-      'A_Kpi': '$Asyms$',
-      'Delta_A_CP': '$CP$ $Pars$',
-      'A_pi_Kpi_Bu2Dst0h_D0\S+': '$CP$ $Pars$',
-      'A_CP_K_Lb2Omegach_Lcpi0': '$CP$ $Pars$',
-      '\S+_Bu2Dst0h_WN': '$CP$ $Pars$',
-      '\S+_Bu2D0hst': '$CP$ $Pars$',
-      '\S+_Bu2Dst0hst': '$CP$ $Pars$',
-      '\S+_Bd2Dsth': '$CP$ $Pars$',
-      '\S+_Bu2Dst0h_D0gamma': '$CP$ $Pars$',
-      # '\S+_Lb2Omegach_Lcpi0': 'Fixed $CP$ parameters',
-      'R_Dst0KDst0pi_Lb2Omegach_Lcpi0': '$Rates$',
-      'kBF_D0\S+': '$Rates$',
-      'Statistical Error Correction': '$Corr$',
-      'Bs phase space': '$PDFs$',
-      'Combinatorial' : '$Comb$'
+      '\S+Pdfs': '$PDFs$',
+      'SelEffs': '$\\epsilon_{sel}$',
+      'PIDEffs': '$\\epsilon_{PID}$',
+      'Rates': '$Rates$',
+      'Asyms': '$Asyms$',
+      'CPRatios': '$CP$ $Ratios$',
+      'Statistical Error Correction': 'Statistical Error Correction',
   }
   match = False
   for k, v in re_group_dict.items():
