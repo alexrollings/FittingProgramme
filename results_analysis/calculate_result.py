@@ -396,14 +396,25 @@ if __name__ == '__main__':
       if eval_Bs_syst == True:
         for par_name in arr_syst_pars:
           if par_name in dict_Bs_syst:
-            dict_list_totals.append({
-                'par': par_name,
-                'label': 'Bs phase space',
-                'std': dict_Bs_syst[par_name],
-                'group_label': return_final_group('Bs phase space'),
-                'group_total': np.nan,
-                # 'total_syst': np.nan
-            })
+            if breakdown == True:
+              dict_list_totals.append({
+                  'par': par_name,
+                  'label': 'Bs phase space',
+                  'std': dict_Bs_syst[par_name],
+                  'group_label': return_final_group('Bs phase space'),
+                  'group_total': np.nan,
+                  # 'total_syst': np.nan
+              })
+            else:
+              # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
+              par_idx = dict_list_totals.index[(
+                  (dict_list_totals.par == par_name) and (
+                      dict_list_totals.label == 'BsPdfs')) == True].tolist()[0]
+              combined_syst = math.sqrt(dict_list_totals[
+                  (dict_list_totals.par == par_name) and
+                  (dict_list_totals.label == 'BsPdfs')]['std'].values[0]**2 +
+                                        dict_Bs_syst[par_name]**2)
+              dict_list_totals.at[par_idx, 'std'] = combined_syst
 
       # # Read in combinatorial systematic and add to dict_list_totals
       # dict_comb_syst = {}
