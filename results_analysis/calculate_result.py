@@ -1,16 +1,19 @@
 import pandas as pd
+import root_numpy as r_np
 import numpy as np
 import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
 import json, csv
 from useful_functions import return_label, return_group, return_final_group
+from uncertainties import ufloat
+
 
 def PrintFitStatus(df_syst, arr_syst_pars, arr_labels):
   par_name = arr_syst_pars[0]
   df_labels = df_syst[df_syst.par == par_name].drop(['par'], axis=1)
   for l in arr_labels:
-    df_status = df_labels[df_labels.label==l]
+    df_status = df_labels[df_labels.label == l]
     n_Total = len(df_status)
     n_unConverged = len(df_status.query('cov < 2'))
     n_FPD = len(df_status.query('cov == 2'))
@@ -19,6 +22,7 @@ def PrintFitStatus(df_syst, arr_syst_pars, arr_labels):
     print(
         f'{l}:\n\tTotal:\t\t{n_Total}\n\tConverged:\t{n_Converged/n_Total*100}%\n\tUnconverged:\t{n_unConverged/n_Total*100}%\n\tFPD:\t\t{n_FPD/n_Total*100}%\n\tMINOS Errors:\t{n_MINOS/n_Total*100}\n'
     )
+
 
 def ReturnResultQuality(result, fname):
   if result == None:
@@ -37,13 +41,16 @@ def ReturnResultQuality(result, fname):
   elif (covQual >= 3 and fitStatus == 0):
     return True
 
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('-r',
-                      '--result_dir',
-                      type=str,
-                      help='Directory where data fit result and Bs systematic are stored (if running systematics)',
-                      required=True)
+  parser.add_argument(
+      '-r',
+      '--result_dir',
+      type=str,
+      help=
+      'Directory where data fit result and Bs systematic are stored (if running systematics)',
+      required=True)
   parser.add_argument('-n',
                       '--neutral',
                       type=str,
@@ -59,11 +66,13 @@ if __name__ == '__main__':
                       type=str,
                       help='Pull results from 2D toys',
                       required=True)
-  parser.add_argument('-s',
-                      '--syst_dir',
-                      type=str,
-                      help='Directory where json systematic is stored: comma separated if more than one (will store output in first directory passed: considered main)',
-                      required=False)
+  parser.add_argument(
+      '-s',
+      '--syst_dir',
+      type=str,
+      help=
+      'Directory where json systematic is stored: comma separated if more than one (will store output in first directory passed: considered main)',
+      required=False)
   parser.add_argument('--breakdown',
                       dest='breakdown',
                       action='store_true',
@@ -101,6 +110,7 @@ if __name__ == '__main__':
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
     csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
     csv_result_fname = f'{syst_dir}/format/result_{neutral}.csv'
+  fname_pars_blind = f'{tex_path}/blinded_pars.txt'
 
   if remake == True:
 
@@ -108,7 +118,8 @@ if __name__ == '__main__':
     # Include BR in order to calc gamma π0 FAV yield
     observables = [
         'N_tot_Bu2Dst0h', 'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-        'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h', 'BR_pi02gamma_eff'
+        'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h',
+        'BR_pi02gamma_eff'
     ]
 
     blinded_pars = []
@@ -140,7 +151,8 @@ if __name__ == '__main__':
           end = m0.group(1).replace('_Blind', '')
           par_name = obs + end
           # No systematics for yields
-          if eval_systs == True and ( obs != 'N_tot_Bu2Dst0h' and obs != 'BR_pi02gamma_eff'):
+          if eval_systs == True and (obs != 'N_tot_Bu2Dst0h'
+                                     and obs != 'BR_pi02gamma_eff'):
             syst_error = 0.
           else:
             syst_error = np.nan
@@ -154,10 +166,11 @@ if __name__ == '__main__':
     df_result = pd.json_normalize(dict_list_result)
     print(df_result)
 
+    with open(fname_pars_blind, 'w') as f:
+      f.write(','.join(blinded_pars))
+
     # Save raw result to tex file
-    raw_file = open(
-        f'{tex_path}/Result_raw_{charge}_{neutral}.tex',
-        'w')
+    raw_file = open(f'{tex_path}/Result_raw_{charge}_{neutral}.tex', 'w')
     row_arr = []
     arr_pars = df_result['par'].unique().tolist()
     if 'BR_pi02gamma_eff_gamma' in arr_pars:
@@ -166,7 +179,7 @@ if __name__ == '__main__':
       # To access value of DF - turn into 1x1 np array, then access first value
       val = df_result[(df_result.par == par_name)]['val'].values[0]
       stat = df_result[(df_result.par == par_name)]['stat'].values[0]
-      if par_name[0] == 'N':
+      if par_name[0] == 'N' or par_name[0] == 'B':
         continue
       if par_name in blinded_pars:
         val_str = ''
@@ -208,7 +221,8 @@ if __name__ == '__main__':
       pull_pars = pull_result.floatParsFinal()
       pull_width = pull_pars[1].getVal()
       # at allows you to access given element, but needs row, column location therefore first find index (row) for given par_name
-      par_idx = df_result.index[(df_result.par == par_name) == True].tolist()[0]
+      par_idx = df_result.index[(
+          df_result.par == par_name) == True].tolist()[0]
       df_result.at[par_idx, 'stat'] = df_result[
           (df_result.par == par_name)]['stat'].values[0] * pull_width
       if eval_systs == True:
@@ -264,7 +278,7 @@ if __name__ == '__main__':
         filter = df_syst_1['par'].str.contains(patternKeep)
         df_syst_1 = df_syst_1[filter]
         # Remove blind string
-        df_syst_1.par.replace({"_Blind" : ""}, regex=True, inplace=True)
+        df_syst_1.par.replace({"_Blind": ""}, regex=True, inplace=True)
         # # Remove boxEffs_Bkg label
         # remove = "boxEffs_Bkg"
         # df_syst_1 = df_syst_1[~(df_syst_1.label == remove)]
@@ -281,7 +295,7 @@ if __name__ == '__main__':
             filter = df_syst_2['par'].str.contains(patternKeep)
             df_syst_2 = df_syst_2[filter]
             # Remove blind string
-            df_syst_2.par.replace({"_Blind" : ""}, regex=True, inplace=True)
+            df_syst_2.par.replace({"_Blind": ""}, regex=True, inplace=True)
             df_syst = pd.concat([df_syst_1, df_syst_2], ignore_index=True)
             # df_syst = df_syst_1.append(df_syst_2, ignore_index=True)
           else:
@@ -301,19 +315,23 @@ if __name__ == '__main__':
       # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
       for par_name in arr_syst_pars:
         for label in arr_labels:
-          df_tmp = df_syst[(df_syst.par == par_name) & (df_syst.label == label)].drop(['par', 'label'], axis=1)
+          df_tmp = df_syst[(df_syst.par == par_name)
+                           & (df_syst.label == label)].drop(['par', 'label'],
+                                                            axis=1)
           n_init = len(df_tmp)
           val = df_result[(df_result.par == par_name)]['val'].values[0]
           stat = df_result[(df_result.par == par_name)]['stat'].values[0]
-          df_tmp.query(
-              f'val > {val-3*stat} & val < {val+3*stat}',
-              inplace=True)
+          df_tmp.query(f'val > {val-3*stat} & val < {val+3*stat}',
+                       inplace=True)
           n_final = len(df_tmp)
           if n_final == 0:
-            print(f'WARNING: Z-score removed all events for {par_name}, {label}')
+            print(
+                f'WARNING: Z-score removed all events for {par_name}, {label}')
             continue
-          elif n_init/n_final < 0.8:
-            print(f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}')
+          elif n_init / n_final < 0.8:
+            print(
+                f'WARNING: Z-score removed {n_init/n_final*100}% of events for {par_name}, {label}'
+            )
           std = df_tmp['val'].std()
           # Add columns for group labels and values
           if breakdown == True:
@@ -426,7 +444,8 @@ if __name__ == '__main__':
       arr_group = df_totals['group_label'].unique().tolist()
       for par_name in arr_syst_pars:
         for g in arr_group:
-          df_tmp = df_totals[(df_totals.par == par_name) & (df_totals.group_label == g)]
+          df_tmp = df_totals[(df_totals.par == par_name)
+                             & (df_totals.group_label == g)]
           total = math.sqrt(df_tmp['std'].pow(2).sum())
           df_totals.loc[(df_totals.group_label == g)
                         & (df_totals.par == par_name), 'group_total'] = total
@@ -466,7 +485,9 @@ if __name__ == '__main__':
         sys.exit(f'{csv_totals_fname} does not exist')
 
     arr_pars = df_result['par'].unique().tolist()
-    arr_syst_pars = [p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)]
+    arr_syst_pars = [
+        p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)
+    ]
 
     # First row of table is parameter names
     arr_labels = df_totals['label'].unique().tolist()
@@ -505,7 +526,8 @@ if __name__ == '__main__':
       for par_name in arr_syst_pars:
         key = par_name[0]
         col_idx[key] = col_idx[key] + 1
-        err = df_totals[(df_totals.par == par_name) & (df_totals.label == label)]['std'].values[0]
+        err = df_totals[(df_totals.par == par_name)
+                        & (df_totals.label == label)]['std'].values[0]
         stat = df_result[(df_result.par == par_name)]['stat'].values[0]
         frac = err / stat
         if max_labels[par_name] == label:
@@ -544,9 +566,7 @@ if __name__ == '__main__':
 
     # Write to tex file with LaTeX formatting
     if breakdown == True:
-      tex_file = open(
-          f'{tex_path}/Systematics_breakdown_{neutral}.tex',
-          'w')
+      tex_file = open(f'{tex_path}/Systematics_breakdown_{neutral}.tex', 'w')
       tex_file.write('\\documentclass[12pt, portrait]{article}\n')
       tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
       tex_file.write('\\usepackage{graphicx}\n')
@@ -558,28 +578,32 @@ if __name__ == '__main__':
     for key in row_arr:
       if n_params[key] > 0:
         if breakdown == False:
-          tex_file = open(
-              f'{tex_path}/Systematics_{key}_{neutral}.tex',
-              'w')
-          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma' and key == 'A'):
-            syst_file_1.write('\\begin{tabularx}{\\textwidth}{X' + 'l' * (n_params[key]) + '}\n')
+          tex_file = open(f'{tex_path}/Systematics_{key}_{neutral}.tex', 'w')
+          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma'
+                                                   and key == 'A'):
+            syst_file_1.write('\\begin{tabularx}{\\textwidth}{X' + 'l' *
+                              (n_params[key]) + '}\n')
           elif neutral == 'gamma' and key == 'R':
             syst_file_1.write('\\resizebox{.82\\paperheight}{!}{\n')
-            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) + '}\n')
+            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
+                              '}\n')
           else:
-            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) + '}\n')
+            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
+                              '}\n')
         else:
           tex_file.write('\\begin{table}[t]\n')
           tex_file.write('\\centering\n')
           tex_file.write('\\footnotesize\n')
           tex_file.write(
               '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
-          tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
+          tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) +
+                         '}\n')
         tex_file.write('\\hline\\hline\n')
         for row in row_arr[key]:
           tex_file.write(row)
         if breakdown == False:
-          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma' and key == 'A'):
+          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma'
+                                                   and key == 'A'):
             syst_file_1.write('\\end{tabularx}\n')
           elif neutral == 'gamma' and key == 'R':
             syst_file_1.write('\\end{tabular}\n')
@@ -603,7 +627,7 @@ if __name__ == '__main__':
 
       for label in arr_labels:
         if len(row_arr) == 0:
-          row_arr.append('Observable & {' + label + '}' )
+          row_arr.append('Observable & {' + label + '}')
         else:
           row_arr[0] += ' & {' + label + '}'
       # New line and horizontal line after column titles
@@ -613,7 +637,7 @@ if __name__ == '__main__':
       row_idx = 0
       for par_name in arr_syst_pars:
         n_params += 1
-        row_arr.append(return_label(par)
+        row_arr.append(return_label(par))
         row_idx += 1
         stat = df_result[(df_result.par == par_name)]['stat'].values[0]
         for label in arr_labels:
@@ -626,13 +650,200 @@ if __name__ == '__main__':
         row_arr[row_idx] += '& {total_frac:.2f} \\\\\n'
 
       # Write to tex file with LaTeX formatting
-      tex_file = open(
-          f'{tex_path}/Systematics_summary_{neutral}.tex',
-          'w')
-      tex_file.write('\\begin{tabular}{l *{' + str(len(arr_labels) + 1) + '}{S[table-format=2.2]}}\n')
+      tex_file = open(f'{tex_path}/Systematics_summary_{neutral}.tex', 'w')
+      tex_file.write('\\begin{tabular}{l *{' + str(len(arr_labels) + 1) +
+                     '}{S[table-format=2.2]}}\n')
       tex_file.write('\\hline\\hline\n')
       for row in row_arr[key]:
         tex_file.write(row)
       tex_file.write('\\end{tabular}\n')
       tex_file.write('\\hline\\hline\n')
       tex_file.close()
+
+  if breakdown == False:
+    with open(fname_pars_blind, 'r') as f:
+      blinded_pars = ','.strip(f.read())
+    # Save result to tex file
+    result_file = open(f'{tex_path}/Result_{charge}_{neutral}.tex', 'w')
+    row_arr = []
+    for par_name in arr_pars:
+      if par_name[0] == 'N' or par_name[0] == 'B':
+        continue
+      # To access value of DF - turn into 1x1 np array, then access first value
+      val = df_result[(df_result.par == par_name)]['val'].values[0]
+      stat = df_result[(df_result.par == par_name)]['stat'].values[0]
+      if eval_systs == True:
+        syst = df_result[(df_result.par == par_name)]['syst'].values[0]
+        syst_str = f'& &\\pm {syst:.4f} \\\\\n'
+      else:
+        syst_str = '\\\\\n'
+      if par_name in blinded_pars:
+        val_str = ''
+        extra = ''
+      else:
+        if val > 0:
+          extra = '\\textcolor{white}{-}'
+        else:
+          extra = ''
+        val_str = f'{val:.4f}'
+      results_str = f' &= {extra}{val_str} &&\\pm {stat:.4f} {syst_str}'
+      # Need to remove $$ at either end of string as going into align env
+      row_arr.append(return_label(par_name)[1:-1] + results_str)
+
+    for row in row_arr:
+      result_file.write(row)
+    result_file.close()
+
+    # Make yields table
+
+    yields_file = open(f'{tex_path}/Yields_{charge}_{neutral}.tex', 'w')
+    yields_file.write('\\begin{tabular}{lll}\n')
+    yields_file.write('Decay & \\D mode & Yield \\\\ \n')
+    yields_file.write('\\hline\n')
+    yield_dict = {}
+
+    if neutral == 'pi0':
+      true_neutral = ['pi0']
+    else:
+      true_neutral = ['gamma', 'pi0']
+
+    for n in true_neutral:
+      yield_dict[n] = {'pi': {}, 'k': {}}
+      daughters = ['kpi', 'kk', 'pipi']
+      b = 'pi'
+
+      if n == 'pi0' and neutral == 'gamma':
+        N_gamma_name = f'N_tot_Bu2Dst0h_D0gamma_gamma_pi_kpi'
+        N_gamma = ufloat(
+            df_result[(df_result.par == N_gamma_name)]['val'].values[0],
+            df_result[(df_result.par == N_gamma_name)]['stat'].values[0])
+        BR_name = 'BR_pi02gamma_eff_gamma'
+        BR = ufloat(df_result[(df_result.par == BR_name)]['val'].values[0],
+                    df_result[(df_result.par == BR_name)]['stat'].values[0])
+        branch_names = [
+            'orEff_Bu2Dst0pi_D0pi0', 'orEffErr_Bu2Dst0pi_D0pi0',
+            'boxEff_Bu2Dst0pi_D0pi0', 'boxEffErr_Bu2Dst0pi_D0pi0',
+            'buEff_Bu2Dst0pi_D0pi0', 'buEffErr_Bu2Dst0pi_D0pi0',
+            'deltaEff_Bu2Dst0pi_D0pi0', 'deltaEffErr_Bu2Dst0pi_D0pi0',
+            'buPartialEff_Bu2Dst0pi_D0pi0', 'buPartialEffErr_Bu2Dst0pi_D0pi0',
+            'orEff_Bu2Dst0pi_D0gamma', 'orEffErr_Bu2Dst0pi_D0gamma',
+            'boxEff_Bu2Dst0pi_D0gamma', 'boxEffErr_Bu2Dst0pi_D0gamma',
+            'buEff_Bu2Dst0pi_D0gamma', 'buEffErr_Bu2Dst0pi_D0gamma',
+            'deltaEff_Bu2Dst0pi_D0gamma', 'deltaEffErr_Bu2Dst0pi_D0gamma',
+            'buPartialEff_Bu2Dst0pi_D0gamma',
+            'buPartialEffErr_Bu2Dst0pi_D0gamma',
+            'N_tot_Bu2Dst0pi_D0pi0_D02kpi_val',
+            'N_tot_Bu2Dst0pi_D0pi0_D02kpi_err'
+        ]
+        tree = r_np.root2array(result, 'tree', branch_names)
+        pull_file = TFile(pull_fname)
+        pull_result = pull_file.Get(f'Result_Pull_{BR_name}')
+        if pull_result == None:
+          print(f'Could not extract  Result_Pull_{BR_name}')
+          pull_width = 1
+        else:
+          pull_pars = pull_result.floatParsFinal()
+          pull_width = pull_pars[1].getVal()
+        N_pi0 = ufloat(tree[0][20], tree[0][21] * pull_width)
+        dict_list_tmp = [{
+            'par': 'N_tot_Bu2Dst0h_D0pi0_gamma_pi_kpi',
+            'val': N_pi0.n,
+            'stat': N_pi0.s,
+            'syst': np.nan
+        }]
+        df_tmp = pd.json_normalize(dict_list_tmp)
+        df_result = df_result.append(df_tmp, ignore_index=True)
+
+      for d in daughters:
+        N_pi = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_{b}_{d}'
+        val = df_result[(df_result.par == N_pi)]['val'].values[0]
+        stat = df_result[(df_result.par == N_pi)]['stat'].values[0]
+        exp = math.sqrt(val)
+        daughters_label = return_label(d)
+        if d == 'kpi':
+          decay_label = '\\multirow{4}{*}{' + return_label(
+              f'Bu2Dst0{b}_D0{n}') + '}'
+        else:
+          decay_label = ''
+        yield_dict[n][b][
+            d] = f'{decay_label} & {daughters_label} & ${val:.0f} \\pm {stat:.0f}$ \\\\\n'
+
+      b = 'k'
+      R_K_pi_name = f'R_Dst0KDst0pi_Bu2Dst0h_D0{n}_kpi'
+      R_K_pi = ufloat(
+          df_result[(df_result.par == R_K_pi_name)]['val'].values[0],
+          df_result[(df_result.par == R_K_pi_name)]['stat'].values[0])
+      for d in daughters:
+        N_pi_name = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_pi_{d}'
+        N_pi = ufloat(df_result[(df_result.par == N_pi_name)]['val'].values[0],
+                      df_result[(df_result.par == N_pi_name)]['stat'].values[0])
+        if d == 'kpi':
+          decay_label = '\\multirow{4}{*}{' + return_label(
+              f'Bu2Dst0{b}_D0{n}') + '}'
+          R = R_K_pi
+        else:
+          decay_label = ''
+          R_CP_name = f'R_CP_Bu2Dst0h_D0{n}'
+          R_CP = ufloat(
+              df_result[(df_result.par == R_CP_name)]['val'].values[0],
+              df_result[(df_result.par == R_CP_name)]['stat'].values[0])
+          R = R_K_pi * R_CP
+        N_K = N_pi * R
+        val = N_K.n
+        stat = N_K.s
+        exp = math.sqrt(val)
+        if d == 'kpi':
+          N_K_kpi = ufloat(val, stat)
+        if par_name in blinded_pars and d != 'kpi':
+          val_str = ''
+        else:
+          valStr = f'{val:.0f}'
+        daughters_label = return_label(d)
+        yield_dict[n][b][
+            d] = f'{decay_label} & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\\n'
+
+      bachelor = ['pi', 'k']
+      for b in bachelor:
+        if charge == 'total':
+          R_piK_name = f'R_piK_Bu2Dst0h_D0{n}_{b}_total'
+          R_piK = ufloat(
+              df_result[(df_result.par == R_piK_name)]['val'].values[0],
+              df_result[(df_result.par == R_piK_name)]['stat'].values[0])
+        else:
+          R_piK_plus_name = f'R_piK_Bu2Dst0h_D0{n}_{b}_plus'
+          R_piK_plus = ufloat(
+              df_result[(df_result.par == R_piK_plus_name)]['val'].values[0],
+              df_result[(df_result.par == R_piK_plus_name)]['stat'].values[0])
+          R_piK_minus_name = f'R_piK_Bu2Dst0h_D0{n}_{b}_minus'
+          R_piK_minus = ufloat(
+              df_result[(df_result.par == R_piK_minus_name)]['val'].values[0],
+              df_result[(df_result.par == R_piK_minus_name)]['stat'].values[0])
+          R_piK = (R_piK_plus + R_piK_minus) / 2
+        if b == 'pi':
+          N_kpi_name = f'N_tot_Bu2Dst0h_D0{n}_{neutral}_{b}_kpi'
+          N_kpi = ufloat(
+              df_result[(df_result.par == N_kpi_name)]['val'].values[0],
+              df_result[(df_result.par == N_kpi_name)]['stat'].values[0])
+        else:
+          N_kpi = N_K_kpi
+        N_pik = N_kpi * R_piK
+        val = N_pik.n
+        stat = N_pik.s
+        exp = math.sqrt(val)
+        if par_name in blinded_pars and d != 'kpi':
+          val_str = ''
+        else:
+          valStr = f'{val:.0f}'
+        daughters_label = return_label('pik')
+        if n == 'pi0' and b == 'k':
+          yield_dict[n][b][
+              'pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\\n'
+        else:
+          yield_dict[n][b][
+              'pik'] = f' & {daughters_label} & ${valStr} \\pm {stat:.0f}$ \\\\ \\hline\n'
+
+    for n in true_neutral:
+      for b in ['pi', 'k']:
+        for d in ['kpi', 'kk', 'pipi', 'pik']:
+          yields_file.write(yield_dict[n][b][d])
+    yields_file.write('\\end{tabular}\n')
