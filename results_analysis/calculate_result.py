@@ -4,7 +4,7 @@ import math, re, os, sys
 from ROOT import TFile, RooFitResult
 import argparse
 import json, csv
-from useful_functions import return_label, return_group, return_group_final
+from useful_functions import return_label, return_group, return_final_group
 
 def PrintFitStatus(df_syst, arr_syst_pars, arr_labels):
   par_name = arr_syst_pars[0]
@@ -64,6 +64,10 @@ if __name__ == '__main__':
                       type=str,
                       help='Directory where json systematic is stored: comma separated if more than one (will store output in first directory passed: considered main)',
                       required=False)
+  parser.add_argument('--breakdown',
+                      dest='breakdown',
+                      action='store_true',
+                      required=False)
   parser.add_argument('--remake',
                       dest='remake',
                       action='store_true',
@@ -74,6 +78,7 @@ if __name__ == '__main__':
   charge = args.charge
   pull_fname = args.pull_fname
   syst_dirs = args.syst_dir.split(',')
+  breakdown = args.breakdown
   remake = args.remake
 
   tex_path = os.path.join(os.getcwd(), 'tex_effs/')
@@ -481,8 +486,12 @@ if __name__ == '__main__':
       row_idx['A'] = row_idx['A'] + 1
       # Start new row with systematics label
       # Replace _ with \_ in LaTeX
-      row_arr['R'].append(return_group(label))
-      row_arr['A'].append(return_group(label))
+      if breakdown == True:
+        row_arr['R'].append(label.replace('_', '\\_'))
+        row_arr['A'].append(label.replace('_', '\\_'))
+      else:
+        row_arr['R'].append(return_group(label))
+        row_arr['A'].append(return_group(label))
       col_idx = {'R': 0, 'A': 0}
       for par_name in arr_syst_pars:
         key = par_name[0]
@@ -525,33 +534,55 @@ if __name__ == '__main__':
         row_arr[key][row_idx[key]] += ' \\\\ \\hline\\hline\n'
 
     # Write to tex file with LaTeX formatting
-    tex_file = open(
-        f'{tex_path}/Systematics_{neutral}.tex',
-        'w')
-    tex_file.write('\\documentclass[12pt, portrait]{article}\n')
-    tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
-    tex_file.write('\\usepackage{graphicx}\n')
-    tex_file.write('\\usepackage{adjustbox}\n')
-    tex_file.write('\\usepackage[table]{xcolor}\n')
-    tex_file.write('\\usepackage{float}\n')
-    tex_file.write('\\restylefloat{table}\n')
-    tex_file.write('\\begin{document}\n')
+    if breakdown == True:
+      tex_file = open(
+          f'{tex_path}/Systematics_breakdown_{neutral}.tex',
+          'w')
+      tex_file.write('\\documentclass[12pt, portrait]{article}\n')
+      tex_file.write('\\usepackage[margin=0.1in]{geometry}\n')
+      tex_file.write('\\usepackage{graphicx}\n')
+      tex_file.write('\\usepackage{adjustbox}\n')
+      tex_file.write('\\usepackage[table]{xcolor}\n')
+      tex_file.write('\\usepackage{float}\n')
+      tex_file.write('\\restylefloat{table}\n')
+      tex_file.write('\\begin{document}\n')
     for key in row_arr:
       if n_params[key] > 0:
-        tex_file.write('\\begin{table}[t]\n')
-        tex_file.write('\\centering\n')
-        tex_file.write('\\footnotesize\n')
-        # tex_file.write(
-        #     '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
-        tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
+        if breakdown == False:
+          tex_file = open(
+              f'{tex_path}/Systematics_{key}_{neutral}.tex',
+              'w')
+          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma' and key == 'A'):
+            syst_file_1.write('\\begin{tabularx}{\\textwidth}{X' + 'l' * (n_params[key]) + '}\n')
+          elif neutral == 'gamma' and key == 'R':
+            syst_file_1.write('\\resizebox{.82\\paperheight}{!}{\n')
+            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) + '}\n')
+          else:
+            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) + '}\n')
+        else:
+          tex_file.write('\\begin{table}[t]\n')
+          tex_file.write('\\centering\n')
+          tex_file.write('\\footnotesize\n')
+          tex_file.write(
+              '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+          tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) + '}\n')
         tex_file.write('\\hline\\hline\n')
         for row in row_arr[key]:
           tex_file.write(row)
-        tex_file.write('\\end{tabular}\n')
-        # tex_file.write('\\end{adjustbox}\n')
-        tex_file.write('\\end{table}\n')
-    tex_file.write('\\end{document}')
-    tex_file.close()
+        if breakdown == False:
+          if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma' and key == 'A'):
+            syst_file_1.write('\\end{tabularx}\n')
+          elif neutral == 'gamma' and key == 'R':
+            syst_file_1.write('\\end{tabular}\n')
+            syst_file_1.write('}\n')
+          else:
+            syst_file_1.write('\\end{tabular}\n')
+        else:
+          tex_file.write('\\end{tabular}\n')
+          tex_file.write('\\end{adjustbox}\n')
+          tex_file.write('\\end{table}\n')
+    if breakdown == True:
+      tex_file.write('\\end{document}')
 
     # Grouped table
     arr_labels = df_totals['group_label'].unique().tolist()
