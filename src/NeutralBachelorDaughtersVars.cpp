@@ -141,7 +141,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kpi>::
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::pi, Daughters::kpi, 0, 0.07,
+                                        Bachelor::pi, Daughters::kpi, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
@@ -735,7 +735,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::kk>::
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::pi, Daughters::kk, 0, 0.07,
+                                        Bachelor::pi, Daughters::kk, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
@@ -978,7 +978,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::pi, Daughters::pipi>::
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::pi, Daughters::pipi, 0, 0.07,
+                                        Bachelor::pi, Daughters::pipi, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
@@ -1217,7 +1217,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
       A_Bs2Dst0Kst0_(nullptr),
       A_Bs2D0Kst0_(nullptr),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::k, Daughters::kpi, 0, 0.07,
+                                        Bachelor::k, Daughters::kpi, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(MakeLittleAsym(
@@ -1494,7 +1494,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pik>::
                                              Bachelor::k, Daughters::pik, 0, 0,
                                              Systematic::NA, Sign::none)),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::k, Daughters::pik, 0, 0.07,
+                                        Bachelor::k, Daughters::pik, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(nullptr),
       a_Bu2Dst0h_D0pi0_(nullptr),
@@ -1785,7 +1785,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kk>::
                                                 Daughters::pik>::Get(uniqueId)
                        .A_Bs2D0Kst0_GetPointer()),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::k, Daughters::kk, 0, 0.07,
+                                        Bachelor::k, Daughters::kk, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
@@ -2010,7 +2010,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::pipi>::
                                                 Daughters::pik>::Get(uniqueId)
                        .A_Bs2D0Kst0_GetPointer()),
       A_comb_(Params::Get().CreateFixed("A_comb", uniqueId, _neutral,
-                                        Bachelor::k, Daughters::pipi, 0, 0.07,
+                                        Bachelor::k, Daughters::pipi, 0, 0.1,
                                         Systematic::Combinatorial, Sign::none)),
       a_Bu2Dst0h_D0gamma_(MakeLittleAsym(
           ("a_Bu2Dst0h_D0gamma_" +
