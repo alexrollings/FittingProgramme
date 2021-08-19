@@ -498,7 +498,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       deltaEffBs2D0Kst0_(Params::Get().CreateFixed(
           "deltaEffBs2D0Kst0", uniqueId_, Neutral::pi0,
           ReturnBoxEffs(Mode::Bs2D0Kst0, Bachelor::k, Efficiency::deltaEff,
-                        false),
+                        false) +
+              0.0007,
           ReturnBoxEffs(Mode::Bs2D0Kst0, Bachelor::k, Efficiency::deltaEffErr,
                         false),
           Systematic::boxEffs_Bs2D0Kst0, Sign::same)),

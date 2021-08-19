@@ -1281,8 +1281,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
       // -------------------- Correct ID BOX EFFs -------------------- //
       orEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "orEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::pi,
-          ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, Efficiency::orEff,
-                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+                        Efficiency::orEff, false),
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                         Efficiency::orEffErr, false),
           Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
@@ -1351,8 +1351,8 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k)))),
       buEffBu2Dst0h_D0gamma_(Params::Get().CreateFixed(
           "buEffBu2Dst0h_D0gamma", uniqueId_, Neutral::gamma, Bachelor::pi,
-          ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi, Efficiency::buEff,
-                        false),
+          ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
+                        Efficiency::buEff, false),
           ReturnBoxEffs(Mode::Bu2Dst0pi_D0gamma, Bachelor::pi,
                         Efficiency::buEffErr, false),
           Systematic::boxEffs_Bu2Dst0h_D0gamma, Sign::same,
@@ -1467,8 +1467,9 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
            ComposeName(uniqueId_, Neutral::gamma, Bachelor::k)))),
       deltaEffBu2D0hst_(Params::Get().CreateFixed(
           "deltaEffBu2D0hst", uniqueId_, Neutral::gamma, Bachelor::pi,
-          0.95 * ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi,
-                               Efficiency::deltaEff, false),
+          ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::deltaEff,
+                        false) -
+              0.016,
           ReturnBoxEffs(Mode::Bu2D0rho, Bachelor::pi, Efficiency::deltaEffErr,
                         false),
           Systematic::boxEffs_Bu2D0hst, Sign::same,
