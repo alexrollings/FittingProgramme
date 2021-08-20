@@ -442,23 +442,6 @@ if __name__ == '__main__':
 
       df_totals = pd.json_normalize(dict_list_totals)
 
-      print(df_totals)
-      if breakdown == False:
-        # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
-        for par_name in arr_syst_pars:
-          if par_name in dict_Bs_syst:
-            par_idx = df_totals.index[(
-                (df_totals.par == par_name)
-                & (df_totals.label == 'BsPdfs')) == True].tolist()[0]
-            combined_syst = math.sqrt(df_totals[(df_totals.par == par_name) & (
-                df_totals.label == 'BsPdfs')]['std'].values[0]**2 + df_totals[
-                    (df_totals.par == par_name)
-                    & (df_totals.label == 'Bs phase space')]['std'].values[0]**2)
-            df_totals.at[par_idx, 'std'] = combined_syst
-        df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
-
-      print(df_totals)
-
       arr_group = df_totals['group_label'].unique().tolist()
       for par_name in arr_syst_pars:
         for g in arr_group:
@@ -506,6 +489,19 @@ if __name__ == '__main__':
     arr_syst_pars = [
         p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)
     ]
+
+    if breakdown == False:
+      # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
+      for par_name in arr_syst_pars:
+        par_idx = df_totals.index[(
+            (df_totals.par == par_name)
+            & (df_totals.label == 'BsPdfs')) == True].tolist()[0]
+        combined_syst = math.sqrt(df_totals[(df_totals.par == par_name) & (
+            df_totals.label == 'BsPdfs')]['std'].values[0]**2 + df_totals[
+                (df_totals.par == par_name)
+                & (df_totals.label == 'Bs phase space')]['std'].values[0]**2)
+        df_totals.at[par_idx, 'std'] = combined_syst
+      df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
 
     # First row of table is parameter names
     arr_labels = df_totals['label'].unique().tolist()
