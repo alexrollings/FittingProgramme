@@ -100,8 +100,6 @@ if __name__ == '__main__':
     box_str = '60_105_125_170_5240_5320'
   result = f'{result_dir}/DataResult_{box_str}.root'
 
-  csv_result_fname = f'{tex_path}/result_{neutral}.csv'
-
   eval_systs = False
   if charge != 'total' and syst_dir != None:
     # Fir dir passed = main dir: store formatted csvs there
@@ -112,6 +110,7 @@ if __name__ == '__main__':
     eval_systs = True
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
     csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
+  csv_result_fname = f'{tex_path}/result_{neutral}.csv'
   fname_pars_blind = f'{tex_path}/blinded_pars_{neutral}.txt'
 
   if remake == True:
@@ -680,7 +679,7 @@ if __name__ == '__main__':
 
   if breakdown == False:
     with open(fname_pars_blind, 'r') as f:
-      blinded_pars = ','.strip(f.read())
+      blinded_pars = f.read().split(',')
     # Save result to tex file
     result_file = open(f'{tex_path}/Result_{charge}_{neutral}.tex', 'w')
     row_arr = []
