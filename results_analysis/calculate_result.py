@@ -103,7 +103,7 @@ if __name__ == '__main__':
   csv_result_fname = f'{tex_path}/result_{neutral}.csv'
 
   eval_systs = False
-  if charge != 'total' and syst_dirs != None:
+  if charge != 'total' and syst_dir != None:
     # Fir dir passed = main dir: store formatted csvs there
     syst_dirs = syst_dir.split(',')
     syst_dir = syst_dirs[0]
@@ -647,7 +647,6 @@ if __name__ == '__main__':
         else:
           row_arr[0] += ' & {' + label + '}'
       # New line and horizontal line after column titles
-      row_arr[0] += ' & {Total} \\\\ \\hline\n'
       row_arr[0] += ' & {Total} \\\\ \\hline\n'
 
       row_idx = 0
