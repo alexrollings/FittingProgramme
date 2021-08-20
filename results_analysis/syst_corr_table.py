@@ -1,4 +1,5 @@
-import os, argparse, re, json
+import os, argparse, re, json, csv
+import pandas as pd
 import numpy as np
 from ROOT import TFile, RooFitResult
 from useful_functions import return_label
@@ -9,7 +10,7 @@ if __name__ == '__main__':
   parser.add_argument('-s',
                       '--syst_dir',
                       type=str,
-                      help='Directory where json systematic is stored',
+                      help='Directory where systematic csv file is stored',
                       required=False)
   parser.add_argument('-n',
                       '--neutral',
@@ -18,31 +19,31 @@ if __name__ == '__main__':
                       required=True)
   args = parser.parse_args()
 
-  tex_path = os.path.join(os.getcwd(), 'tex/')
+  tex_path = os.path.join(os.getcwd(), 'tex_NEW/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
   neutral = args.neutral
   syst_dir = args.syst_dir
 
-  json_fname_format = f'{syst_dir}/systematics_{neutral}_format.json'
-  if os.path.exists(json_fname_format):
-    with open(json_fname_format, 'r') as json_file_format:
-      total_syst_dict = json.load(json_file_format)
+  csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
+  if os.path.exists(csv_totals_fname):
+    df_totals = pd.read_csv(csv_totals_fname)
   else:
-    sys.exit(f'Run analyse_result.py first: {json_fname_format} does not exist')
+    sys.exit(f'Run calculate_result.py first: {csv_totals_fname} does not exist')
+
+  df_totals.drop(['group_label', 'group_rms', 'group_total'], axis=1, inplace=True)
+
+  arr_pars = df_totals['par'].unique().tolist()
+  pars = [
+      p for p in arr_pars if ("R_Dst0KDst0pi" not in p) and ("N_tot" not in p) and ("BR" not in p)
+  ]
 
   par_dict = {}
-  pars = []
-  syst_dict = {}
-  for par, syst_arr in total_syst_dict.items():
-    par_dict[par] = []
-    pars.append(par)
-    for syst_label, arr in syst_arr.items():
-      arr2d = np.array(arr)
-      np_arr = np.asarray(arr2d[0:, 0], dtype=np.float32)
-      par_dict[par] = par_dict[par] + np_arr.tolist()
+  for par in pars:
+    par_dict[par] = df_totals[df_totals.par == par]['std'].to_numpy()
 
+  syst_dict = {}
   f_tex = open(f'{tex_path}/syst_correlations_{neutral}.tex', 'w+')
   # f_tex.write('\\documentclass[12pt, landscape]{article}\n')
   # f_tex.write('\\usepackage[margin=0.1in]{geometry}\n')
@@ -73,7 +74,7 @@ if __name__ == '__main__':
         else:
           corr = pearsonr(par_dict[p1],par_dict[p2])[0]
         f_tex.write(' & $%.2f$ ' % corr)
-        print(p1 + ' vs.' + p2 + ':\t' + str(corr))
+        # print(p1 + ' vs.' + p2 + ':\t' + str(corr))
         syst_dict[p1 + ',' + p2] = corr
       else:
         f_tex.write(' &  ')
