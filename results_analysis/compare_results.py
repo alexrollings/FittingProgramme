@@ -1,4 +1,5 @@
 import glob, os, sys
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
@@ -16,15 +17,14 @@ rc('text', usetex=True)
 
 # Fit results saved in json
 path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/'
-json_fname_result_pi0 = f'{path}json/result_total_pi0.json'
-if os.path.exists(json_fname_result_pi0):
-  with open(json_fname_result_pi0, 'r') as json_file_result_pi0:
-    result_pi0 = json.load(json_file_result_pi0)
 
-json_fname_result_gamma = f'{path}json/result_total_gamma.json'
-if os.path.exists(json_fname_result_gamma):
-  with open(json_fname_result_gamma, 'r') as json_file_result_gamma:
-    result_gamma = json.load(json_file_result_gamma)
+csv_fname_result_pi0 = f'{path}tex_NEW/result_total_pi0.csv'
+if os.path.exists(csv_fname_result_pi0):
+  result_pi0 = pd.read_csv(csv_fname_result_pi0)
+
+csv_fname_result_gamma = f'{path}tex_NEW/result_total_gamma.csv'
+if os.path.exists(csv_fname_result_gamma):
+  result_gamma = pd.read_csv(csv_fname_result_gamma)
 
 # LHCb combination
 phi3_val_err = ufloat(math.radians(67),math.radians(4))
@@ -198,6 +198,8 @@ part_reco['R_piK_Bu2Dst0h_D0gamma_k_total'] = {'Value' : 0.0163, 'Error' : 0.037
 # print(b_factory)
 
 pars = ['R_CP_Bu2Dst0h_D0pi0', 'R_CP_Bu2Dst0h_D0gamma', 'R_piK_Bu2Dst0h_D0pi0_k_total', 'R_piK_Bu2Dst0h_D0gamma_k_total']
+result_pi0 = result_pi0[result_pi0.par.str.contains('|'.join(pars))]
+result_gamma = result_gamma[result_gamma.par.str.contains('|'.join(pars))]
 
 for p in pars:
   exp_mu = np.mean(exp[p])
@@ -207,13 +209,13 @@ for p in pars:
 # Scale stat error to include syst
 syst = {
     'R_CP': {
-        'gamma': 1.05,
-        'partial': 1.08,
-        'pi0': 1.02
+        'gamma': 1.06,
+        'partial': 1.12,
+        'pi0': 1.04
     },
     'R_piK': {
-        'gamma': 1.05,
-        'partial': 1.05,
+        'gamma': 1.03,
+        'partial': 1.06,
         'pi0': 1.03
     }
 }
@@ -227,7 +229,7 @@ for p in pars:
 
   p_gamma = False
   #Fit result
-  if p in result_gamma:
+  if result_gamma['par'].str.contains(p).any():
     # plt.errorbar(result_gamma[p]['Value'],1.0,xerr=np.sqrt(result_gamma[p]['Statistical Error']**2 + result_gamma[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
     syst_corr = 1
     for k in syst:
@@ -236,17 +238,17 @@ for p in pars:
           syst_corr = syst[k]['partial']
         else:
           syst_corr = syst[k]['gamma']
-    gamma_val = result_gamma[p]['Value']
-    gamma_err = result_gamma[p]['Statistical Error'] * syst_corr
+    gamma_val = result_gamma[(result_gamma.par == p)]['val'].values[0]
+    gamma_err = result_gamma[(result_gamma.par == p)]['stat'].values[0] * syst_corr
     plt.errorbar(gamma_val,4.0,xerr=gamma_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
-  if p in result_pi0:
+  if result_pi0['par'].str.contains(p).any():
     # plt.errorbar(result_pi0[p]['Value'],1.0,xerr=np.sqrt(result_pi0[p]['Statistical Error']**2 + result_pi0[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
     syst_corr = 1
     for k in syst:
       if k in p:
         syst_corr = syst[k]['pi0']
-    pi0_val = result_pi0[p]['Value']
-    pi0_err = result_pi0[p]['Statistical Error'] * syst_corr
+    pi0_val = result_pi0[(result_pi0.par == p)]['val'].values[0]
+    pi0_err = result_pi0[(result_pi0.par == p)]['stat'].values[0] * syst_corr
     plt.errorbar(pi0_val,6.0,xerr=pi0_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
   else:
     p_gamma = True
@@ -282,7 +284,7 @@ for p in pars:
   else:
     plt.text(left_text,2.0,f"{part_reco_val:.4f} $\\pm$ {part_reco_err:.4f}",fontsize=18)
   plt.text(left_text,1.5,f"[LHCb-PAPER-2020-036]",fontsize=18)
-  if p in result_gamma:
+  if result_gamma['par'].str.contains(p).any():
     if 'pi0' in p:
       plt.text(left_text,4.2,"$D^{*}\\rightarrow D[\\gamma]_{\\pi^{0}}$",fontsize=18)
     else:
@@ -291,7 +293,7 @@ for p in pars:
       plt.text(left_text,3.8,f"{gamma_val:.3f} $\\pm$ {gamma_err:.3f}",fontsize=18)
     else:
       plt.text(left_text,3.8,f"{gamma_val:.4f} $\\pm$ {gamma_err:.4f}",fontsize=18)
-  if p in result_pi0:
+  if result_pi0['par'].str.contains(p).any():
     plt.text(left_text,6.2,"$D^{*}\\rightarrow D\\pi^{0}$",fontsize=18)
     if 'R_CP' in p:
       plt.text(left_text,5.8,f"{pi0_val:.3f} $\\pm$ {pi0_err:.3f}",fontsize=18)
