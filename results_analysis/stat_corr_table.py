@@ -16,7 +16,7 @@ if __name__ == '__main__':
                       required=True)
   args = parser.parse_args()
 
-  tex_path = os.path.join(os.getcwd(), 'tex/')
+  tex_path = os.path.join(os.getcwd(), 'tex_NEW/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
   observables = [
       'R_piK_Bu2Dst0h', 'R_CP_Bu2Dst0h',
-      'R_Dst0KDst0pi_Bu2Dst0h', 'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
+      'A_Bu2Dst0h', 'A_CP_Bu2Dst0h'
   ]
 
   if not os.path.isfile(fname):
