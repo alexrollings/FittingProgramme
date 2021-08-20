@@ -840,8 +840,7 @@ void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
   hist_D02pik->SetLineColor(colorMap["Crossfeed"]);
   hist_D02pik->SetLineWidth(20);
 
-  auto hist_comb =
-      std::make_unique<TH1D>("hist_comb", "hist_comb", 1, 0, 1);
+  auto hist_comb = std::make_unique<TH1D>("hist_comb", "hist_comb", 1, 0, 1);
   hist_comb->SetLineColor(colorMap["comb"]);
   hist_comb->SetLineWidth(20);
 
@@ -912,9 +911,9 @@ void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
   // }
   labels.AddEntry(hist_MisID.get(), "Mis-ID", "l");
   // labels.AddEntry(hist_MisID.get(), " ", "l");
-  if (config.runCombSystematic() == true) {
-    labels.AddEntry(hist_comb.get(), "Combinatorial", "l");
-  }
+  // if (config.runCombSystematic() == true) {
+  labels.AddEntry(hist_comb.get(), "Combinatorial", "l");
+  // }
 
   // Loop over entries in legend and set size
   TList *labelList = labels.GetListOfPrimitives();
@@ -941,7 +940,9 @@ void PlotLegend(Configuration &config, std::map<std::string, Int_t> &colorMap,
   TH1D tmpHist("", "", 1, 0, 1);
   // tmpHist.Draw();
   labels.Draw();
-  canvas.SaveAs((outputDir + "/plots/legend_" + EnumToString(config.neutral()) + ".pdf").c_str());
+  canvas.SaveAs(
+      (outputDir + "/plots/legend_" + EnumToString(config.neutral()) + ".pdf")
+          .c_str());
 }
 
 // Plot projections
@@ -1242,9 +1243,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
-        if (config.runCombSystematic() == true) {
-          pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
-        }
+        // if (config.runCombSystematic() == true) {
+        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+        // }
       } else {
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
@@ -1281,9 +1282,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
-        if (config.runCombSystematic() == true) {
-          pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
-        }
+        // if (config.runCombSystematic() == true) {
+        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+        // }
       }
     } else if (mass == Mass::delta) {
       if (neutral == Neutral::pi0) {
@@ -1319,9 +1320,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
-        if (config.runCombSystematic() == true) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
-        }
+        // if (config.runCombSystematic() == true) {
+        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+        // }
       } else {
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
         pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
@@ -1360,9 +1361,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
           // pdfCharVec.emplace_back(
           //     pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
         }
-        if (config.runCombSystematic() == true) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
-        }
+        // if (config.runCombSystematic() == true) {
+        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+        // }
       }
     } else {
       pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
@@ -1397,9 +1398,9 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
         // pdfCharVec.emplace_back(
         //     pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
       }
-      if (config.runCombSystematic() == true) {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
-      }
+      // if (config.runCombSystematic() == true) {
+      pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
+      // }
     }
     // To pass to Components in plotOn, need string in the format
     // "pdf1,pdf2,pdf3"
@@ -1460,7 +1461,8 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
     if (config.neutral() == Neutral::gamma) {
       frame->SetXTitle("m(D^{*0}) - m(D^{0}) (MeV/c^{2})");
     } else {
-      frame->SetXTitle("m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG} (MeV/c^{2})");
+      frame->SetXTitle(
+          "m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG} (MeV/c^{2})");
     }
   } else {
     frame->SetXTitle("m(D^{*0}h) (MeV/c^{2})");
