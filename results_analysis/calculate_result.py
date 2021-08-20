@@ -86,7 +86,7 @@ if __name__ == '__main__':
   neutral = args.neutral
   charge = args.charge
   pull_fname = args.pull_fname
-  syst_dirs = args.syst_dir.split(',')
+  syst_dir = args.syst_dir
   breakdown = args.breakdown
   remake = args.remake
 
@@ -100,16 +100,18 @@ if __name__ == '__main__':
     box_str = '60_105_125_170_5240_5320'
   result = f'{result_dir}/DataResult_{box_str}.root'
 
+  csv_result_fname = f'{tex_path}/result_{neutral}.csv'
+
   eval_systs = False
   if charge != 'total' and syst_dirs != None:
     # Fir dir passed = main dir: store formatted csvs there
+    syst_dirs = syst_dir.split(',')
     syst_dir = syst_dirs[0]
     if not os.path.exists(syst_dir):
       sys.exit(f'{syst_dir} does not exist')
     eval_systs = True
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
     csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
-    csv_result_fname = f'{syst_dir}/format/result_{neutral}.csv'
   fname_pars_blind = f'{tex_path}/blinded_pars.txt'
 
   if remake == True:
