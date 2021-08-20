@@ -668,11 +668,11 @@ if __name__ == '__main__':
       tex_file = open(f'{tex_path}/Systematics_summary_{neutral}.tex', 'w')
       tex_file.write('\\begin{tabular}{l *{' + str(len(arr_labels) + 1) +
                      '}{S[table-format=2.2]}}\n')
-      tex_file.write('\\hline\\hline\n')
+      tex_file.write('\\hline \\hline\n')
       for row in row_arr:
         tex_file.write(row)
+      tex_file.write('\\hline \\hline\n')
       tex_file.write('\\end{tabular}\n')
-      tex_file.write('\\hline\\hline\n')
       tex_file.close()
 
   if breakdown == False:
