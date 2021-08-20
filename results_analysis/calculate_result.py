@@ -112,7 +112,7 @@ if __name__ == '__main__':
     eval_systs = True
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
     csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
-  fname_pars_blind = f'{tex_path}/blinded_pars.txt'
+  fname_pars_blind = f'{tex_path}/blinded_pars_{neutral}.txt'
 
   if remake == True:
 
@@ -148,10 +148,13 @@ if __name__ == '__main__':
         if m0:
           # Results labelled with different numbers
           value = p.getVal()
+          blind = False
           if 'Blind' in par_name:
-            blinded_pars.append(par_name)
+            blind = True
           end = m0.group(1).replace('_Blind', '')
           par_name = obs + end
+          if blind == True:
+            blinded_pars.append(par_name)
           # No systematics for yields
           if eval_systs == True and (obs != 'N_tot_Bu2Dst0h'
                                      and obs != 'BR_pi02gamma_eff'):
