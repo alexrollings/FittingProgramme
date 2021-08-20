@@ -90,7 +90,7 @@ if __name__ == '__main__':
   breakdown = args.breakdown
   remake = args.remake
 
-  tex_path = os.path.join(os.getcwd(), 'tex_effs/')
+  tex_path = os.path.join(os.getcwd(), 'tex_NEW/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
@@ -309,7 +309,7 @@ if __name__ == '__main__':
       df_syst.drop(['cov', 'status'], axis=1, inplace=True)
 
       # Old group comparison
-      group_labels = ['Pdfs', 'CPPars', 'Asyms', 'Effs', 'Rates']
+      # group_labels = ['Pdfs', 'CPPars', 'Asyms', 'Effs', 'Rates']
       # dict_list_groups = []
       # Calculate individual systematic errors from std dev
       # Calculate total systematic error on an observable by taking the sum in quadrature of all std devs
@@ -335,15 +335,15 @@ if __name__ == '__main__':
           std = df_tmp['val'].std()
           # Add columns for group labels and values
           if breakdown == True:
-            if label not in group_labels:
-              dict_list_totals.append({
-                  'par': par_name,
-                  'label': label,
-                  'std': std,
-                  'group_label': return_final_group(label),
-                  'group_rms': np.nan,
-                  # 'total_syst': np.nan
-              })
+            # if label not in group_labels:
+            dict_list_totals.append({
+                'par': par_name,
+                'label': label,
+                'std': std,
+                'group_label': return_final_group(label),
+                'group_rms': np.nan,
+                # 'total_syst': np.nan
+            })
           else:
             dict_list_totals.append({
                 'par': par_name,
@@ -393,28 +393,18 @@ if __name__ == '__main__':
               else:
                 dict_Bs_syst[par_name] = error
 
+      # print(dict_list_totals)
       if eval_Bs_syst == True:
         for par_name in arr_syst_pars:
           if par_name in dict_Bs_syst:
-            if breakdown == True:
-              dict_list_totals.append({
-                  'par': par_name,
-                  'label': 'Bs phase space',
-                  'std': dict_Bs_syst[par_name],
-                  'group_label': return_final_group('Bs phase space'),
-                  'group_total': np.nan,
-                  # 'total_syst': np.nan
-              })
-            else:
-              # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
-              par_idx = dict_list_totals.index[(
-                  (dict_list_totals.par == par_name) and (
-                      dict_list_totals.label == 'BsPdfs')) == True].tolist()[0]
-              combined_syst = math.sqrt(dict_list_totals[
-                  (dict_list_totals.par == par_name) and
-                  (dict_list_totals.label == 'BsPdfs')]['std'].values[0]**2 +
-                                        dict_Bs_syst[par_name]**2)
-              dict_list_totals.at[par_idx, 'std'] = combined_syst
+            dict_list_totals.append({
+                'par': par_name,
+                'label': 'Bs phase space',
+                'std': dict_Bs_syst[par_name],
+                'group_label': return_final_group('Bs phase space'),
+                'group_total': np.nan,
+                # 'total_syst': np.nan
+            })
 
       # # Read in combinatorial systematic and add to dict_list_totals
       # dict_comb_syst = {}
@@ -451,6 +441,23 @@ if __name__ == '__main__':
       #       })
 
       df_totals = pd.json_normalize(dict_list_totals)
+
+      print(df_totals)
+      if breakdown == False:
+        # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
+        for par_name in arr_syst_pars:
+          if par_name in dict_Bs_syst:
+            par_idx = df_totals.index[(
+                (df_totals.par == par_name)
+                & (df_totals.label == 'BsPdfs')) == True].tolist()[0]
+            combined_syst = math.sqrt(df_totals[(df_totals.par == par_name) & (
+                df_totals.label == 'BsPdfs')]['std'].values[0]**2 + df_totals[
+                    (df_totals.par == par_name)
+                    & (df_totals.label == 'Bs phase space')]['std'].values[0]**2)
+            df_totals.at[par_idx, 'std'] = combined_syst
+        df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
+
+      print(df_totals)
 
       arr_group = df_totals['group_label'].unique().tolist()
       for par_name in arr_syst_pars:
@@ -592,21 +599,21 @@ if __name__ == '__main__':
           tex_file = open(f'{tex_path}/Systematics_{key}_{neutral}.tex', 'w')
           if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma'
                                                    and key == 'A'):
-            syst_file_1.write('\\begin{tabularx}{\\textwidth}{X' + 'l' *
+            tex_file.write('\\begin{tabularx}{\\textwidth}{X' + 'l' *
                               (n_params[key]) + '}\n')
           elif neutral == 'gamma' and key == 'R':
-            syst_file_1.write('\\resizebox{.82\\paperheight}{!}{\n')
-            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
+            tex_file.write('\\resizebox{.82\\paperheight}{!}{\n')
+            tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
                               '}\n')
           else:
-            syst_file_1.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
+            tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
                               '}\n')
         else:
           tex_file.write('\\begin{table}[t]\n')
           tex_file.write('\\centering\n')
           tex_file.write('\\footnotesize\n')
-          tex_file.write(
-              '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
+          # tex_file.write(
+          #     '\\begin{adjustbox}{totalheight=\\textheight-2\\baselineskip}\n')
           tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 2) +
                          '}\n')
         tex_file.write('\\hline\\hline\n')
@@ -615,15 +622,15 @@ if __name__ == '__main__':
         if breakdown == False:
           if (neutral == 'pi0' and key == 'R') or (neutral == 'gamma'
                                                    and key == 'A'):
-            syst_file_1.write('\\end{tabularx}\n')
+            tex_file.write('\\end{tabularx}\n')
           elif neutral == 'gamma' and key == 'R':
-            syst_file_1.write('\\end{tabular}\n')
-            syst_file_1.write('}\n')
+            tex_file.write('\\end{tabular}\n')
+            tex_file.write('}\n')
           else:
-            syst_file_1.write('\\end{tabular}\n')
+            tex_file.write('\\end{tabular}\n')
         else:
           tex_file.write('\\end{tabular}\n')
-          tex_file.write('\\end{adjustbox}\n')
+          # tex_file.write('\\end{adjustbox}\n')
           tex_file.write('\\end{table}\n')
     if breakdown == True:
       tex_file.write('\\end{document}')
@@ -648,24 +655,24 @@ if __name__ == '__main__':
       row_idx = 0
       for par_name in arr_syst_pars:
         n_params += 1
-        row_arr.append(return_label(par))
+        row_arr.append(return_label(par_name))
         row_idx += 1
         stat = df_result[(df_result.par == par_name)]['stat'].values[0]
         for label in arr_labels:
           err = df_totals[(df_totals.par == par_name) & (
               df_totals.group_label == label)]['group_total'].values[0]
           frac = 100 * err / stat
-          row_arr[row_idx] += '& {frac:.2f}'
+          row_arr[row_idx] += f'& {frac:.2f}'
         syst = df_result[(df_result.par == par_name)]['syst'].values[0]
         total_frac = 100 * syst / stat
-        row_arr[row_idx] += '& {total_frac:.2f} \\\\\n'
+        row_arr[row_idx] += f'& {total_frac:.2f} \\\\\n'
 
       # Write to tex file with LaTeX formatting
       tex_file = open(f'{tex_path}/Systematics_summary_{neutral}.tex', 'w')
       tex_file.write('\\begin{tabular}{l *{' + str(len(arr_labels) + 1) +
                      '}{S[table-format=2.2]}}\n')
       tex_file.write('\\hline\\hline\n')
-      for row in row_arr[key]:
+      for row in row_arr:
         tex_file.write(row)
       tex_file.write('\\end{tabular}\n')
       tex_file.write('\\hline\\hline\n')
