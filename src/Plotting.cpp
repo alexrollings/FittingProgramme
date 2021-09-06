@@ -1168,16 +1168,16 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   int id = 0;
 
   // double initBin;
-  if (daughters == Daughters::pik) {
-    // initBin = config.buDeltaMass().GetBins();
-    if (config.neutral() == Neutral::pi0) {
-      config.buDeltaMass().setBins(32);
-      config.deltaMass().setBins(36);
-    } else {
-      config.buDeltaMass().setBins(36);
-      config.deltaMass().setBins(52);
-    }
-  }
+  // if (daughters == Daughters::pik) {
+  //   // initBin = config.buDeltaMass().GetBins();
+  //   if (config.neutral() == Neutral::pi0) {
+  //     config.buDeltaMass().setBins(32);
+  //     config.deltaMass().setBins(36);
+  //   } else {
+  //     config.buDeltaMass().setBins(36);
+  //     config.deltaMass().setBins(52);
+  //   }
+  // }
 
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
@@ -1598,14 +1598,14 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                    "_" + config.ReturnBoxString() + ".pdf")
                       .c_str());
 
-    if (daughters == Daughters::pik) {
-      // config.buDeltaMass().setBins(initBin);
-      if (config.neutral() == Neutral::pi0) {
-        config.buDeltaMass().setBins(40);
-        config.deltaMass().setBins(54);
-      } else {
-        config.buDeltaMass().setBins(45);
-      config.deltaMass().setBins(65);
-      }
-    }
+    // if (daughters == Daughters::pik) {
+    //   // config.buDeltaMass().setBins(initBin);
+    //   if (config.neutral() == Neutral::pi0) {
+    //     config.buDeltaMass().setBins(40);
+    //     config.deltaMass().setBins(54);
+    //   } else {
+    //     config.buDeltaMass().setBins(45);
+    //   config.deltaMass().setBins(65);
+    //   }
+    // }
 }
