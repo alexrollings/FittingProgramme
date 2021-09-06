@@ -1167,6 +1167,18 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
   Charge charge = pdf.charge();
   int id = 0;
 
+  // double initBin;
+  if (daughters == Daughters::pik) {
+    // initBin = config.buDeltaMass().GetBins();
+    if (config.neutral() == Neutral::pi0) {
+      config.buDeltaMass().setBins(32);
+      config.deltaMass().setBins(36);
+    } else {
+      config.buDeltaMass().setBins(36);
+      config.deltaMass().setBins(52);
+    }
+  }
+
   // Stops ROOT print INFO messages
   gErrorIgnoreLevel = kWarning;
 
@@ -1186,393 +1198,414 @@ void PlotComponent(Mass mass, RooRealVar &var, PdfBase &pdf,
                                     .c_str()),
                   RooFit::ProjWData(config.fitting, fullDataSet),
                   RooFit::LineColor(kBlack));
-  }
+    }
 
-  // Everything to be plotted has to be declared outside of a loop, in the
-  // scope of the canvas
-  RooHist *pullHist = nullptr;
-  std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
+    // Everything to be plotted has to be declared outside of a loop, in the
+    // scope of the canvas
+    RooHist *pullHist = nullptr;
+    std::unique_ptr<RooPlot> pullFrame(var.frame(RooFit::Title(" ")));
 
-  pullHist = frame->RooPlot::pullHist();
-  pullFrame->SetTitle("");
-  pullFrame->SetXTitle(" ");
-  pullFrame->GetYaxis()->SetTitle("Residual (#sigma)");
-  pullFrame->GetYaxis()->CenterTitle();
-  pullFrame->SetLabelFont(132, "XY");
-  pullFrame->SetTitleFont(132, "XY");
-  pullFrame->SetTitleSize(0.20, "Y");
-  pullFrame->SetTitleOffset(0.28, "Y");
-  pullFrame->SetLabelSize(0.18, "XY");
-  pullFrame->SetLabelOffset(0.02, "Y");
-  pullFrame->SetLabelOffset(50, "X");
-  pullFrame->GetYaxis()->SetNdivisions(6);
+    pullHist = frame->RooPlot::pullHist();
+    pullFrame->SetTitle("");
+    pullFrame->SetXTitle(" ");
+    pullFrame->GetYaxis()->SetTitle("Residual (#sigma)");
+    pullFrame->GetYaxis()->CenterTitle();
+    pullFrame->SetLabelFont(132, "XY");
+    pullFrame->SetTitleFont(132, "XY");
+    pullFrame->SetTitleSize(0.20, "Y");
+    pullFrame->SetTitleOffset(0.28, "Y");
+    pullFrame->SetLabelSize(0.18, "XY");
+    pullFrame->SetLabelOffset(0.02, "Y");
+    pullFrame->SetLabelOffset(50, "X");
+    pullFrame->GetYaxis()->SetNdivisions(6);
 
-  if (config.noFit() == false) {
-    std::vector<const char *> pdfCharVec;
-    // Need to add in list of components here rather than just using functions
-    // RooArgList as need specific order
-    if (mass == Mass::buDelta) {
-      if (neutral == Neutral::pi0) {
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
-        if (config.runADS() == true && bachelor == Bachelor::k &&
-            daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
-        // pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
-        if (daughters == Daughters::kk) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        // pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
-        if (bachelor == Bachelor::k) {
+    if (config.noFit() == false) {
+      std::vector<const char *> pdfCharVec;
+      // Need to add in list of components here rather than just using functions
+      // RooArgList as need specific order
+      if (mass == Mass::buDelta) {
+        if (neutral == Neutral::pi0) {
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+          if (config.runADS() == true && bachelor == Bachelor::k &&
+              daughters != Daughters::kpi) {
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
+          if (daughters == Daughters::kk) {
+            pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
+          if (bachelor == Bachelor::k) {
+            pdfCharVec.emplace_back(
+                pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
+            pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
+          }
+          if (daughters == Daughters::pik) {
+            pdfCharVec.emplace_back(
+                pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          }
+          // if (config.runCombSystematic() == true) {
+          pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+          // }
+        } else {
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+          if (config.runADS() == true && bachelor == Bachelor::k &&
+              daughters != Daughters::kpi) {
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
+            pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
+          if (daughters == Daughters::kk) {
+            pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(
               pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
+          if (bachelor == Bachelor::k) {
+            pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
+          }
+          if (daughters == Daughters::pik) {
+            pdfCharVec.emplace_back(
+                pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
+            pdfCharVec.emplace_back(
+                pdf.pdfBu_Bu2Dst0h_D0gamma_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
+          }
+          // if (config.runCombSystematic() == true) {
+          pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
+          // }
         }
-        if (daughters == Daughters::pik) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
-          // pdfCharVec.emplace_back(
-          //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-        }
-        // if (config.runCombSystematic() == true) {
-        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
-        // }
-      } else {
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
-        if (config.runADS() == true && bachelor == Bachelor::k &&
-            daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2Dst0Kst0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfBu_Bs2D0Kst0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0gamma_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2D0hst().GetName());
-        if (daughters == Daughters::kk) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Lb2Omegach_Lcpi0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(
-            pdf.pdfBu_misId_Bu2Dst0h_D0gamma_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2D0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBu_misId_Bd2Dsth().GetName());
-        if (bachelor == Bachelor::k) {
-          pdfCharVec.emplace_back(pdf.pdfBu_misId_Bu2Dst0hst().GetName());
-        }
-        if (daughters == Daughters::pik) {
-          pdfCharVec.emplace_back(pdf.pdfBu_Bu2Dst0h_D0pi0_D02pik().GetName());
+      } else if (mass == Mass::delta) {
+        if (neutral == Neutral::pi0) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+          if (config.runADS() == true && bachelor == Bachelor::k &&
+              daughters != Daughters::kpi) {
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+          if (daughters == Daughters::kk) {
+            pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
           pdfCharVec.emplace_back(
-              pdf.pdfBu_Bu2Dst0h_D0gamma_D02pik().GetName());
-          // pdfCharVec.emplace_back(
-          //     pdf.pdfBu_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-          // pdfCharVec.emplace_back(
-          //     pdf.pdfBu_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
-        }
-        // if (config.runCombSystematic() == true) {
-        pdfCharVec.emplace_back(pdf.pdfBu_comb().GetName());
-        // }
-      }
-    } else if (mass == Mass::delta) {
-      if (neutral == Neutral::pi0) {
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
-        if (config.runADS() == true && bachelor == Bachelor::k &&
-            daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
-        // pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
-        if (daughters == Daughters::kk) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
-        }
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
-        pdfCharVec.emplace_back(
-            pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
-        // pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
-        if (bachelor == Bachelor::k) {
+              pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+          // pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
+          if (bachelor == Bachelor::k) {
+            pdfCharVec.emplace_back(
+                pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
+            pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
+          }
+          if (daughters == Daughters::pik) {
+            pdfCharVec.emplace_back(
+                pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+          }
+          // if (config.runCombSystematic() == true) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+          // }
+        } else {
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+          if (config.runADS() == true && bachelor == Bachelor::k &&
+              daughters != Daughters::kpi) {
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
+            pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+          if (daughters == Daughters::kk) {
+            pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
+          }
+          pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
           pdfCharVec.emplace_back(
               pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
+          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
+          if (bachelor == Bachelor::k) {
+            pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
+          }
+          if (daughters == Daughters::pik) {
+            pdfCharVec.emplace_back(
+                pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
+            pdfCharVec.emplace_back(
+                pdf.pdfDelta_Bu2Dst0h_D0gamma_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
+            // pdfCharVec.emplace_back(
+            //     pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
+          }
+          // if (config.runCombSystematic() == true) {
+          pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+          // }
         }
-        if (daughters == Daughters::pik) {
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
-          // pdfCharVec.emplace_back(
-          //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-        }
-        // if (config.runCombSystematic() == true) {
-        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
-        // }
       } else {
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
         if (config.runADS() == true && bachelor == Bachelor::k &&
             daughters != Daughters::kpi) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2Dst0Kst0().GetName());
-          pdfCharVec.emplace_back(pdf.pdfDelta_Bs2D0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2Dst0Kst0().GetName());
+          pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kst0().GetName());
         }
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0pi0_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0h_D0gamma_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bd2Dsth().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2D0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
+        pdfCharVec.emplace_back(
+            pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
         if (daughters == Daughters::kk) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_Lb2Omegach_Lcpi0().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfBuPartial_Lb2Omegach_Lcpi0().GetName());
         }
-        pdfCharVec.emplace_back(pdf.pdfDelta_Bu2Dst0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst().GetName());
         pdfCharVec.emplace_back(
-            pdf.pdfDelta_misId_Bu2Dst0h_D0gamma().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0h_D0pi0().GetName());
+            pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
         pdfCharVec.emplace_back(
-            pdf.pdfDelta_misId_Bu2Dst0h_D0pi0_WN().GetName());
+            pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
         pdfCharVec.emplace_back(
-            pdf.pdfDelta_misId_Bu2Dst0h_D0gamma_WN().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2D0hst().GetName());
-        pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bd2Dsth().GetName());
+            pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bd2Dsth().GetName());
         if (bachelor == Bachelor::k) {
-          pdfCharVec.emplace_back(pdf.pdfDelta_misId_Bu2Dst0hst().GetName());
+          pdfCharVec.emplace_back(
+              pdf.pdfBuPartial_misId_Bu2Dst0hst().GetName());
         }
         if (daughters == Daughters::pik) {
           pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0pi0_D02pik().GetName());
-          pdfCharVec.emplace_back(
-              pdf.pdfDelta_Bu2Dst0h_D0gamma_D02pik().GetName());
+              pdf.pdfBuPartial_Bu2Dst0h_D0pi0_D02pik().GetName());
           // pdfCharVec.emplace_back(
-          //     pdf.pdfDelta_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-          // pdfCharVec.emplace_back(
-          //     pdf.pdfDelta_Bu2Dst0h_D0gamma_WN_D02pik().GetName());
+          //     pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
         }
         // if (config.runCombSystematic() == true) {
-        pdfCharVec.emplace_back(pdf.pdfDelta_comb().GetName());
+        pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
         // }
       }
-    } else {
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0().GetName());
-      if (config.runADS() == true && bachelor == Bachelor::k &&
-          daughters != Daughters::kpi) {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2Dst0Kst0().GetName());
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Bs2D0Kst0().GetName());
+      // To pass to Components in plotOn, need string in the format
+      // "pdf1,pdf2,pdf3"
+      while (pdfCharVec.size() > 0) {
+        std::string totPdfStr = "";
+        for (auto &chars : pdfCharVec) {
+          totPdfStr.append(chars);
+          totPdfStr.append(",");
+        }
+        // Remove comma from end
+        totPdfStr.pop_back();
+        // Find decay mode in order to select correct color for component in
+        // colorMap
+        std::string pdfStr(pdfCharVec[0]);
+        std::regex re("pdf([A-Za-z]+)_(.+)_(pi0|gamma)_.+");
+        std::smatch match;
+        std::string modeStr;
+        if (std::regex_search(pdfStr, match, re)) {
+          modeStr = match.str(2);
+          std::cout << modeStr << "\n";
+        } else {
+          throw std::runtime_error(
+              "Plotting.cpp: Can't find decay mode in pdfString with regex: " +
+              pdfStr + "\n");
+        }
+        std::cout << modeStr << "\n\n\n";
+        simPdf.plotOn(
+            frame.get(),
+            RooFit::Slice(
+                config.fitting,
+                ComposeFittingName(mass, neutral, bachelor, daughters, charge)
+                    .c_str()),
+            RooFit::ProjWData(config.fitting, fullDataSet),
+            RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
+            RooFit::FillColor(colorMap[modeStr.c_str()]),
+            RooFit::Precision(1e-3), RooFit::NumCPU(config.nCPU()));
+        // Remove first pdf string in vector: plot all others w/out this w/ new
+        // color
+        pdfCharVec.erase(pdfCharVec.begin());
+        // continue until no PDFs left
       }
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0h_D0gamma_WN().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bd2Dsth().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2D0hst().GetName());
-      if (daughters == Daughters::kk) {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_Lb2Omegach_Lcpi0().GetName());
-      }
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_Bu2Dst0hst().GetName());
-      pdfCharVec.emplace_back(
-          pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0().GetName());
-      pdfCharVec.emplace_back(
-          pdf.pdfBuPartial_misId_Bu2Dst0h_D0pi0_WN().GetName());
-      pdfCharVec.emplace_back(
-          pdf.pdfBuPartial_misId_Bu2Dst0h_D0gamma_WN().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2D0hst().GetName());
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bd2Dsth().GetName());
-      if (bachelor == Bachelor::k) {
-        pdfCharVec.emplace_back(pdf.pdfBuPartial_misId_Bu2Dst0hst().GetName());
-      }
-      if (daughters == Daughters::pik) {
-        pdfCharVec.emplace_back(
-            pdf.pdfBuPartial_Bu2Dst0h_D0pi0_D02pik().GetName());
-        // pdfCharVec.emplace_back(
-        //     pdf.pdfBuPartial_Bu2Dst0h_D0pi0_WN_D02pik().GetName());
-      }
-      // if (config.runCombSystematic() == true) {
-      pdfCharVec.emplace_back(pdf.pdfBuPartial_comb().GetName());
-      // }
-    }
-    // To pass to Components in plotOn, need string in the format
-    // "pdf1,pdf2,pdf3"
-    while (pdfCharVec.size() > 0) {
-      std::string totPdfStr = "";
-      for (auto &chars : pdfCharVec) {
-        totPdfStr.append(chars);
-        totPdfStr.append(",");
-      }
-      // Remove comma from end
-      totPdfStr.pop_back();
-      // Find decay mode in order to select correct color for component in
-      // colorMap
-      std::string pdfStr(pdfCharVec[0]);
-      std::regex re("pdf([A-Za-z]+)_(.+)_(pi0|gamma)_.+");
-      std::smatch match;
-      std::string modeStr;
-      if (std::regex_search(pdfStr, match, re)) {
-        modeStr = match.str(2);
-        std::cout << modeStr << "\n";
-      } else {
-        throw std::runtime_error(
-            "Plotting.cpp: Can't find decay mode in pdfString with regex: " +
-            pdfStr + "\n");
-      }
-      std::cout << modeStr << "\n\n\n";
-      simPdf.plotOn(
-          frame.get(),
-          RooFit::Slice(
-              config.fitting,
-              ComposeFittingName(mass, neutral, bachelor, daughters, charge)
-                  .c_str()),
-          RooFit::ProjWData(config.fitting, fullDataSet),
-          RooFit::Components(totPdfStr.c_str()), RooFit::DrawOption("F"),
-          RooFit::FillColor(colorMap[modeStr.c_str()]), RooFit::Precision(1e-3),
-          RooFit::NumCPU(config.nCPU()));
-      // Remove first pdf string in vector: plot all others w/out this w/ new
-      // color
-      pdfCharVec.erase(pdfCharVec.begin());
-      // continue until no PDFs left
-    }
-    simPdf.plotOn(frame.get(),
-                  RooFit::Slice(config.fitting,
-                                ComposeFittingName(mass, neutral, bachelor,
-                                                   daughters, charge)
-                                    .c_str()),
-                  RooFit::ProjWData(config.fitting, fullDataSet),
-                  RooFit::LineColor(kBlack));
-  }
-
-  fullDataSet.plotOn(frame.get(),
-                     RooFit::Cut(("fitting==fitting::" +
+      simPdf.plotOn(frame.get(),
+                    RooFit::Slice(config.fitting,
                                   ComposeFittingName(mass, neutral, bachelor,
-                                                     daughters, charge))
-                                     .c_str()));
-
-  if (mass == Mass::delta) {
-    if (config.neutral() == Neutral::gamma) {
-      frame->SetXTitle("m(D^{*0}) - m(D^{0}) (MeV/c^{2})");
-    } else {
-      frame->SetXTitle(
-          "m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG} (MeV/c^{2})");
+                                                     daughters, charge)
+                                      .c_str()),
+                    RooFit::ProjWData(config.fitting, fullDataSet),
+                    RooFit::LineColor(kBlack));
     }
-  } else {
-    frame->SetXTitle("m(D^{*0}h) (MeV/c^{2})");
-  }
 
-  // --------------- plot onto canvas ---------------------
+    fullDataSet.plotOn(frame.get(),
+                       RooFit::Cut(("fitting==fitting::" +
+                                    ComposeFittingName(mass, neutral, bachelor,
+                                                       daughters, charge))
+                                       .c_str()));
 
-  TCanvas canvas(
-      ("canvas_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "canvas", 1200, 1000);
+    if (mass == Mass::delta) {
+      if (config.neutral() == Neutral::gamma) {
+        frame->SetXTitle("m(D^{*0}) - m(D^{0}) (MeV/c^{2})");
+      } else {
+        frame->SetXTitle(
+            "m(D^{*0}) - m(D^{0}) - m(#pi^{0}) + m(#pi^{0})_{PDG} (MeV/c^{2})");
+      }
+    } else {
+      frame->SetXTitle("m(D^{*0}h) (MeV/c^{2})");
+    }
 
-  TPad pad1(
-      ("pad1_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "pad1", 0.0, 0.2, 1.0, 1.0, kWhite);
-  pad1.Draw();
+    // --------------- plot onto canvas ---------------------
 
-  TPad pad2(
-      ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
-          .c_str(),
-      "pad2", 0.0, 0.0, 1.0, 0.2, kWhite);
-  pad2.Draw();
+    TCanvas canvas(("canvas_" +
+                    ComposeName(id, mass, neutral, bachelor, daughters, charge))
+                       .c_str(),
+                   "canvas", 1200, 1000);
 
-  TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
-  zeroLine.SetLineColor(kGray + 2);
-  zeroLine.SetLineStyle(kDashed);
-  TLine upLine(var.getMin(), 3, var.getMax(), 3);
-  upLine.SetLineColor(kRed + 2);
-  TLine downLine(var.getMin(), -3, var.getMax(), -3);
-  downLine.SetLineColor(kRed + 2);
+    TPad pad1(
+        ("pad1_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "pad1", 0.0, 0.2, 1.0, 1.0, kWhite);
+    pad1.Draw();
 
-  if (config.noFit() == false) {
+    TPad pad2(
+        ("pad2_" + ComposeName(id, mass, neutral, bachelor, daughters, charge))
+            .c_str(),
+        "pad2", 0.0, 0.0, 1.0, 0.2, kWhite);
+    pad2.Draw();
+
+    TLine zeroLine(var.getMin(), 0, var.getMax(), 0);
+    zeroLine.SetLineColor(kGray + 2);
+    zeroLine.SetLineStyle(kDashed);
+    TLine upLine(var.getMin(), 3, var.getMax(), 3);
+    upLine.SetLineColor(kRed + 2);
+    TLine downLine(var.getMin(), -3, var.getMax(), -3);
+    downLine.SetLineColor(kRed + 2);
+
+    if (config.noFit() == false) {
+      canvas.cd();
+      pad2.cd();
+      pullFrame->addPlotable(pullHist /* .get() */, "P");
+      pullFrame->SetName(
+          ("pullFrame_" +
+           ComposeName(id, mass, neutral, bachelor, daughters, charge))
+              .c_str());
+      pullFrame->GetYaxis()->SetRangeUser(-5, 5);
+      pullFrame->Draw();
+      zeroLine.Draw("same");
+      upLine.Draw("same");
+      downLine.Draw("same");
+    }
+
     canvas.cd();
-    pad2.cd();
-    pullFrame->addPlotable(pullHist /* .get() */, "P");
-    pullFrame->SetName(("pullFrame_" + ComposeName(id, mass, neutral, bachelor,
-                                                   daughters, charge))
-                           .c_str());
-    pullFrame->GetYaxis()->SetRangeUser(-5, 5);
-    pullFrame->Draw();
-    zeroLine.Draw("same");
-    upLine.Draw("same");
-    downLine.Draw("same");
-  }
-
-  canvas.cd();
-  pad1.cd();
-  if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
-       daughters == Daughters::pik) &&
-      config.blindFit() == true) {
-    frame->SetLabelOffset(50, "Y");
-    frame->GetYaxis()->SetTickLength(0.);
-  }
-  frame->Draw();
-
-  double blindMin, blindMax;
-  if (mass == Mass::delta) {
-    blindMin = var.getMin();
-    if (neutral == Neutral::gamma) {
-      blindMax = 160;
-    } else {
-      blindMax = 155;
+    pad1.cd();
+    if (((bachelor == Bachelor::k && daughters != Daughters::kpi) ||
+         daughters == Daughters::pik) &&
+        config.blindFit() == true) {
+      frame->SetLabelOffset(50, "Y");
+      frame->GetYaxis()->SetTickLength(0.);
     }
-  } else if (mass == Mass::buDelta) {
-    blindMin = 5150;
-    if (neutral == Neutral::gamma) {
-      blindMax = 5375;
+    frame->Draw();
+
+    double blindMin, blindMax;
+    if (mass == Mass::delta) {
+      blindMin = var.getMin();
+      if (neutral == Neutral::gamma) {
+        blindMax = 160;
+      } else {
+        blindMax = 155;
+      }
+    } else if (mass == Mass::buDelta) {
+      blindMin = 5150;
+      if (neutral == Neutral::gamma) {
+        blindMax = 5375;
+      } else {
+        blindMax = 5350;
+      }
     } else {
-      blindMax = 5350;
+      blindMin = 5150;
+      blindMax = 5400;
     }
-  } else {
-    blindMin = 5150;
-    blindMax = 5400;
-  }
 
-  frame->SetMinimum(0.001);
-  if (daughters == Daughters::pik && config.blindFit() == true) {
-    if (bachelor == Bachelor::pi) {
-      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
-      frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
-    } else {
-      // frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
-      frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
+    frame->SetMinimum(0.001);
+    if (daughters == Daughters::pik && config.blindFit() == true) {
+      if (bachelor == Bachelor::pi) {
+        // frame->SetMaximum(yMaxMap[neutral][mass] * 0.004);
+        frame->SetMaximum(yMaxMap[neutral][mass] * 0.01);
+      } else {
+        // frame->SetMaximum(yMaxMap[neutral][mass] * 0.002);
+        frame->SetMaximum(yMaxMap[neutral][mass] * 0.005);
+      }
     }
-  }
-  TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
-                      "#font[12]{Blind}", "");
-  blindBox.SetBorderSize(0);
-  blindBox.SetTextSize(0.07);
-  // blindBox.SetTextAngle(30);
-  blindBox.SetTextColor(kRed + 1);
-  blindBox.SetFillColor(10);
-  if (daughters == Daughters::pik && config.blindFit() == true &&
-      config.splitByCharge() == true) {
-    blindBox.Draw("same");
-  }
-  legend.Draw("same");
+    TPaveLabel blindBox(blindMin, 0.001, blindMax, frame->GetMaximum() - 0.01,
+                        "#font[12]{Blind}", "");
+    blindBox.SetBorderSize(0);
+    blindBox.SetTextSize(0.07);
+    // blindBox.SetTextAngle(30);
+    blindBox.SetTextColor(kRed + 1);
+    blindBox.SetFillColor(10);
+    if (daughters == Daughters::pik && config.blindFit() == true &&
+        config.splitByCharge() == true) {
+      blindBox.Draw("same");
+    }
+    legend.Draw("same");
 
-  // if (mass == Mass::buDelta && daughters == Daughters::kpi) {
-  //   labels.Draw("same");
-  // }
-  // Stores max values for kpi, to set in pik
-  if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
-    yMaxMap[neutral][mass] = frame->GetMaximum();
-  }
+    // if (mass == Mass::buDelta && daughters == Daughters::kpi) {
+    //   labels.Draw("same");
+    // }
+    // Stores max values for kpi, to set in pik
+    if (daughters == Daughters::kpi && bachelor == Bachelor::pi) {
+      yMaxMap[neutral][mass] = frame->GetMaximum();
+    }
 
-  canvas.Update();
-  canvas.SaveAs((outputDir + "/plots/" +
-                 ComposeName(id, mass, neutral, bachelor, daughters, charge) +
-                 "_" + config.ReturnBoxString() + ".pdf")
-                    .c_str());
+    canvas.Update();
+    canvas.SaveAs((outputDir + "/plots/" +
+                   ComposeName(id, mass, neutral, bachelor, daughters, charge) +
+                   "_" + config.ReturnBoxString() + ".pdf")
+                      .c_str());
+
+    if (daughters == Daughters::pik) {
+      // config.buDeltaMass().setBins(initBin);
+      if (config.neutral() == Neutral::pi0) {
+        config.buDeltaMass().setBins(40);
+        config.deltaMass().setBins(54);
+      } else {
+        config.buDeltaMass().setBins(45);
+      config.deltaMass().setBins(65);
+      }
+    }
 }
