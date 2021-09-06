@@ -1,4 +1,5 @@
-import os, sys, argparse, json, re
+import os, sys, argparse, csv, re, json
+import pandas as pd
 from collections import OrderedDict
 
 def convert_param_names(neutral, par_name, blind):
@@ -57,13 +58,14 @@ if __name__ == '__main__':
 
   path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/'
 
-  json_fname_result = f'{path}json/result_{split}_{neutral}.json'
-  if os.path.exists(json_fname_result):
-    with open(json_fname_result, 'r') as json_file_result:
-      result = json.load(json_file_result)
+  csv_fname_df_result = f'{path}tex_unblind/result_split_{neutral}.csv'
+  if os.path.exists(csv_fname_df_result):
+    df_result = pd.read_csv(csv_fname_df_result)
 
   if blind == True:
     blind_str = '_Blind'
+  else:
+    blind_str = ''
   if neutral == 'pi0':
     init_n = ['pi0']
   else:
@@ -93,18 +95,17 @@ if __name__ == '__main__':
     with open(json_fname_syst, 'r') as json_file_syst:
       syst = json.load(json_file_syst)
 
-
   f_tex = open(f'{path}/gammadini/gammadini_{neutral}.tex', 'w+')
   f_tex.write('// -------- Load the central values of the measurements and their covariance matrix ----------\n')
-  for k in ['Value', 'Statistical Error', 'Systematic Error']:
+  for k in ['val', 'stat', 'syst']:
     for p in ordered_params:
       label = convert_param_names(neutral, p, blind)
-      num = result[p][k]
-      if k == 'Value':
+      num = df_result[(df_result.par == p)][k].values[0]
+      if k == 'val':
         f_tex.write(f'observedCentralValues(Index[\"{label}\"])\t={num:.4f};\n')
-      elif k == 'Statistical Error':
+      elif k == 'stat':
         f_tex.write(f'statErrorValues(Index[\"{label}\"])\t={num:.1};\n')
-      elif k == 'Systematic Error':
+      elif k == 'syst':
         f_tex.write(f'systErrorValues(Index[\"{label}\"])\t={num:.1};\n')
     f_tex.write('\n')
 

@@ -16,7 +16,7 @@ if __name__ == '__main__':
                       required=True)
   args = parser.parse_args()
 
-  tex_path = os.path.join(os.getcwd(), 'tex_NEW/')
+  tex_path = os.path.join(os.getcwd(), 'tex_unblind/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
