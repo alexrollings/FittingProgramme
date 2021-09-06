@@ -60,7 +60,7 @@ if __name__ == '__main__':
           sigma = ufloat(pars[1].getVal(), pars[1].getError())
           pull_dict[m.group(1)] = { 'mean' : mean, 'sigma' : sigma }
 
-  fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_new/pulls_{gen}_{neutral}_{charge}.tex'
+  fname = f'/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/tex_NEW/pulls_{gen}_{neutral}_{charge}.tex'
   with open(fname, 'w') as f:
     # f.write('\\documentclass[12pt, portrait]{article}\n')
     # f.write('\\usepackage[margin=0.1in]{geometry}\n')
