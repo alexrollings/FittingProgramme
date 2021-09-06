@@ -106,6 +106,7 @@ def return_group(syst):
       'GammaPdfs': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
       'BkgPdfs': 'Mis. and part. reco. background PDFs',
       'BsPdfs': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
+      'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
       'MisIDPdfs': 'Mis-ID and crossfeed PDFs',
       'SelEffs': '$\\epsilon_{sel}$',
       'PIDEffs': '$\\epsilon_{PID}$',
@@ -115,7 +116,7 @@ def return_group(syst):
       'Statistical Error Correction': 'Statistical Error Correction',
   }
   match = False
-  for k, v in re_group_dict.items():
+  for k, v in re_dict.items():
     m = re.search(k, syst)
     if m:
       match = True
