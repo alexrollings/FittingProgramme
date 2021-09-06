@@ -238,29 +238,6 @@ pars = result_gamma['par'].unique().tolist()
 for p in pars:
   fig, ax = plt.subplots(figsize=(8,6))
 
-  part_reco_val = part_reco[p]['val']
-  part_reco_err = math.sqrt(part_reco[p]['stat']**2 + part_reco[p]['syst']**2)
-  plt.errorbar(part_reco_val,2.0,xerr=part_reco_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
-
-  p_gamma = False
-  #Fit result
-  if result_gamma['par'].str.contains(p).any():
-    # plt.errorbar(result_gamma[p]['val'],1.0,xerr=np.sqrt(result_gamma[p]['Statistical Error']**2 + result_gamma[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
-    gamma_val = result_gamma[(result_gamma.par == p)]['val'].values[0]
-    gamma_err = math.sqrt(
-        result_gamma[(result_gamma.par == p)]['stat'].values[0]**2 +
-        result_gamma[(result_gamma.par == p)]['syst'].values[0]**2)
-    plt.errorbar(gamma_val,4.0,xerr=gamma_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
-  if result_pi0['par'].str.contains(p).any():
-    # plt.errorbar(result_pi0[p]['val'],1.0,xerr=np.sqrt(result_pi0[p]['Statistical Error']**2 + result_pi0[p]['Systematic Error']**2),fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='--',color='red')
-    pi0_val = result_pi0[(result_pi0.par == p)]['val'].values[0]
-    pi0_err = math.sqrt(
-        result_pi0[(result_pi0.par == p)]['stat'].values[0]**2 +
-        result_pi0[(result_pi0.par == p)]['syst'].values[0]**2)
-    plt.errorbar(pi0_val,6.0,xerr=pi0_err,fmt='o',yerr=None,capsize=5,linewidth=1,linestyle='-',color='k')
-  else:
-    p_gamma = True
-
   # Belle expectations
   exp_mu = np.mean(exp[p])
   exp_sigma = np.std(exp[p])
@@ -283,6 +260,40 @@ for p in pars:
   plt.axvspan(low2, low, color='#91bfdb',label='95\% C.L.')
 
   plt.tick_params(axis='both', which='major', labelsize=18)
+
+  part_reco_val = part_reco[p]['val']
+  part_reco_err = math.sqrt(part_reco[p]['stat']**2 + part_reco[p]['syst']**2)
+  part_reco_frac = part_reco[p]['stat'] / part_reco_err
+  plt.errorbar(part_reco_val,2.0,xerr=part_reco_err,fmt='',yerr=None,capsize=5,linewidth=1,linestyle='-',color='red')
+  plt.errorbar(part_reco_val,2.0,xerr=part_reco_err*part_reco_frac,fmt='o',yerr=None,capsize=5,linewidth=1.5,linestyle='-',color='k')
+
+  # print(p)
+  # print(part_reco_err)
+  # print(part_reco_frac)
+
+  p_gamma = False
+  #Fit result
+  if result_gamma['par'].str.contains(p).any():
+    gamma_val = result_gamma[(result_gamma.par == p)]['val'].values[0]
+    gamma_err = math.sqrt(
+        result_gamma[(result_gamma.par == p)]['stat'].values[0]**2 +
+        result_gamma[(result_gamma.par == p)]['syst'].values[0]**2)
+    gamma_frac = result_gamma[(result_gamma.par == p)]['stat'].values[0]/gamma_err
+    # print(result_gamma[(result_gamma.par == p)])
+    # print(gamma_err)
+    # print(gamma_frac)
+    plt.errorbar(gamma_val,4.0,xerr=gamma_err,fmt='',yerr=None,capsize=5,linewidth=1,linestyle='-',color='red')
+    plt.errorbar(gamma_val,4.0,xerr=gamma_err*gamma_frac,fmt='o',yerr=None,capsize=5,linewidth=1.5,linestyle='-',color='k')
+  if result_pi0['par'].str.contains(p).any():
+    pi0_val = result_pi0[(result_pi0.par == p)]['val'].values[0]
+    pi0_err = math.sqrt(
+        result_pi0[(result_pi0.par == p)]['stat'].values[0]**2 +
+        result_pi0[(result_pi0.par == p)]['syst'].values[0]**2)
+    pi0_frac = result_pi0[(result_pi0.par == p)]['stat'].values[0]/pi0_err
+    plt.errorbar(pi0_val,6.0,xerr=pi0_err,fmt='',yerr=None,capsize=5,linewidth=1,linestyle='-',color='red')
+    plt.errorbar(pi0_val,6.0,xerr=pi0_err*pi0_frac,fmt='o',yerr=None,capsize=5,linewidth=1.5,linestyle='-',color='k')
+  else:
+    p_gamma = True
 
   if 'A_Bu2Dst0h' in p:
     left_text = exp_mu + 12*exp_sigma
