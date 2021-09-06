@@ -21,16 +21,6 @@ double ReturnPidEffs(Charge charge, bool returnEff) {
       if (returnEff == true) {
         return std::stod(lineVec[1]);
       } else {
-        // double err = std::stod(lineVec[2]);
-        // double nTracks_err;
-        // if (Configuration::Get().neutral() == Neutral::pi0) {
-        //   nTracks_err = 0.0099; 
-        // } else {
-        //   nTracks_err = 0.0051; 
-        // }
-        // double err_tot = std::sqrt(pow(err, 2) + pow(nTracks_err, 2))
-        // std::coud << "PID ERROR = " << err_tot << "\n";
-        // return err_tot; 
         return std::stod(lineVec[2]);
       }
     }
