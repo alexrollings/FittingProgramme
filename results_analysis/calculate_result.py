@@ -110,8 +110,8 @@ if __name__ == '__main__':
     eval_systs = True
     csv_totals_fname = f'{syst_dir}/format/systematics_totals_{neutral}.csv'
     csv_groups_fname = f'{syst_dir}/format/systematics_groups_{neutral}.csv'
-  csv_result_fname = f'{tex_path}/result_{neutral}.csv'
-  fname_pars_blind = f'{tex_path}/blinded_pars_{neutral}.txt'
+  csv_result_fname = f'{tex_path}/result_{charge}_{neutral}.csv'
+  fname_pars_blind = f'{tex_path}/blinded_pars_{charge}_{neutral}.txt'
 
   if remake == True:
 
@@ -482,17 +482,17 @@ if __name__ == '__main__':
       sys.exit(f'{csv_result_fname} does not exist')
   print(df_result)
 
+  arr_pars = df_result['par'].unique().tolist()
+  arr_syst_pars = [
+      p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)
+  ]
+
   if eval_systs == True:
     if remake == False:
       if os.path.exists(csv_totals_fname):
         df_totals = pd.read_csv(csv_totals_fname)
       else:
         sys.exit(f'{csv_totals_fname} does not exist')
-
-    arr_pars = df_result['par'].unique().tolist()
-    arr_syst_pars = [
-        p for p in arr_pars if ("N_tot" not in p) and ("BR" not in p)
-    ]
 
     if breakdown == False:
       # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
@@ -552,7 +552,8 @@ if __name__ == '__main__':
           err_str = ' & \\cellcolor{pink} '
         else:
           err_str = ' & '
-        err_str += f'${frac:.4f}$'
+        # err_str += f'${frac:.4f}$'
+        err_str += f'${err:.4f}$'
         # Add formatted error for each parameter
         row_arr[key][row_idx[key]] += err_str
         # When reach last parameter of row: line break
