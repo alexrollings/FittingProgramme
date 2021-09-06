@@ -244,6 +244,10 @@ def return_label(string):
           '$A^{K\\pi,\\gamma}_{K}$',
       'A_Bu2Dst0h_D0pi0_gamma_k_kpi':
           '$A^{K\\pi,\\pi^{0}}_{K}$',
+      'A_Bu2Dst0h_D0gamma_k_kpi':
+          '$A^{K\\pi,\\gamma}_{K}$',
+      'A_Bu2Dst0h_D0pi0_k_kpi':
+          '$A^{K\\pi,\\pi^{0}}_{K}$',
       'A_CP_Bu2Dst0h_D0gamma_Blind_pi':
           '$A^{CP,\\gamma}_{\\pi}$',
       'A_CP_Bu2Dst0h_D0gamma_Blind_k':
