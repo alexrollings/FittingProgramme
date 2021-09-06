@@ -90,7 +90,7 @@ if __name__ == '__main__':
   breakdown = args.breakdown
   remake = args.remake
 
-  tex_path = os.path.join(os.getcwd(), 'tex_NEW/')
+  tex_path = os.path.join(os.getcwd(), 'tex_unblind/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
