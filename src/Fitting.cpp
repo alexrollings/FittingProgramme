@@ -869,17 +869,17 @@ int main(int argc, char **argv) {
     std::map<Neutral, std::map<Mass, double> > yMaxMap;
     // LaTeXYields(config, pdfs, outputDir, dataFitResult);
     if (config.runSystematics() == false) {
-      // if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
-      //   if (config.noFit() == false) {
-      //     dataFitResult->Print("v");
-      //   }
-      //   std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-      //   PlotLegend(config, colorMap, outputDir);
-      //   for (auto &p : pdfs) {
-      //     Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-      //                dataFitResult.get(), yMaxMap);
-      //   }
-      // }
+      if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
+        if (config.noFit() == false) {
+          dataFitResult->Print("v");
+        }
+        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+        PlotLegend(config, colorMap, outputDir);
+        for (auto &p : pdfs) {
+          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+                     dataFitResult.get(), yMaxMap);
+        }
+      }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         // for (auto &p : pdfs) {
