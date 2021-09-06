@@ -274,7 +274,8 @@ for p in pars:
   high5 = exp_mu + 5*exp_sigma
   low6 = exp_mu - 6*exp_sigma
   high6 = exp_mu + 6*exp_sigma
-  left_text = exp_mu + 5.3*exp_sigma
+  low14 = exp_mu - 14*exp_sigma
+  high14 = exp_mu + 14*exp_sigma
 
   plt.axvline(x=exp_mu,color='black',linestyle='--',label='Expected')
   plt.axvspan(low, high, color='#4575b4',label='68\% C.L.')
@@ -283,8 +284,15 @@ for p in pars:
 
   plt.tick_params(axis='both', which='major', labelsize=18)
 
-  span = high6 - low6
-  plt.xlim(low6,high6 + span/2)
+  if 'A_Bu2Dst0h' in p:
+    left_text = exp_mu + 12*exp_sigma
+    span = high14 - low14
+    plt.xlim(low14,high14 + span/2)
+  else:
+    left_text = exp_mu + 5.3*exp_sigma
+    span = high6 - low6
+    plt.xlim(low6,high6 + span/2)
+
 
   plt.text(left_text,2.4,"PR Analysis",fontsize=18)
   if 'R_CP' in p:
