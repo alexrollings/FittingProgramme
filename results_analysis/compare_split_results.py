@@ -351,9 +351,11 @@ if __name__ == '__main__':
       else:
         plt.text(left_text,5.8,f"{pi0_val:.4f} $\\pm$ {pi0_err:.4f}",fontsize=18)
 
+    Dpi_arr = ['R_piK_Bu2Dst0h_D0gamma_pi_plus', 'R_piK_Bu2Dst0h_D0pi0_pi_plus', 'R_piK_Bu2Dst0h_D0gamma_pi_minus', 'R_piK_Bu2Dst0h_D0pi0_pi_minus', 'A_CP_Bu2Dst0h_D0pi0_pi', 'A_CP_Bu2Dst0h_D0gamma_pi', 'A_Bu2Dst0h_D0pi0_k_kpi', 'A_Bu2Dst0h_D0gamma_k_kpi']
 
     if p_gamma == True:
-      plt.text(left_text, 7.2,'$B$-factory measurements:',fontsize=18)
+      if p not in Dpi_arr:
+        plt.text(left_text, 7.2,'$B$-factory measurements:',fontsize=18)
       plt.legend(loc=(0.62, 0.65), fontsize=18,frameon=False)
 
     plt.ylim(0.0,8.0)
