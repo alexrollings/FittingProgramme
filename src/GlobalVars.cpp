@@ -4,7 +4,7 @@ std::string MakePidKey(Bachelor bachelor, Charge charge) {
   return EnumToString(bachelor) + "_" + EnumToString(charge);
 }
 
-double ReturnPidEffs(Charge charge, bool returnEff) {
+double ReturnPidEffs(Bachelor bachelor, Charge charge, bool returnEff) {
   std::string txtFileName =
       Configuration::Get().inputDir + "/efficiencies/pidEffs_" +
       EnumToString(Configuration::Get().neutral()) + ".txt";
@@ -17,11 +17,11 @@ double ReturnPidEffs(Charge charge, bool returnEff) {
   while (std::getline(inFile, line)) {
     // Separate label and value (white space)
     std::vector<std::string> lineVec = SplitLine(line);
-    if (lineVec[0] == EnumToString(charge)) {
+    if (lineVec[0] == EnumToString(bachelor) && lineVec[1] == EnumToString(charge)) {
       if (returnEff == true) {
-        return std::stod(lineVec[1]);
-      } else {
         return std::stod(lineVec[2]);
+      } else {
+        return std::stod(lineVec[3]);
       }
     }
   }
@@ -129,19 +129,21 @@ GlobalVars::GlobalVars(int uniqueId)
   pidEffMap_[MakePidKey(Bachelor::k, Charge::total)] =
       Params::Get().CreateFixed(
           "pidEffK", uniqueId_, Configuration::Get().neutral(), Charge::total,
-          ReturnPidEffs(Charge::total, true),
-          ReturnPidEffs(Charge::total, false), Systematic::pidEffK, Sign::same);
+          ReturnPidEffs(Bachelor::k, Charge::total, true),
+          ReturnPidEffs(Bachelor::k, Charge::total, false), Systematic::pidEffK, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::k, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
+  // pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
+  //     Params::Get().CreateFixed(
+  //         "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
+  //         0.996, 0.002, Systematic::pidEffPi, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
-      // Params::Get().CreateFloating("pidEffPi", uniqueId_,
-      //                              Configuration::Get().neutral(),
-      //                              Charge::total, 0.996, 0.5, 1.5);
       Params::Get().CreateFixed(
           "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
-          0.995, 0.002, Systematic::pidEffPi, Sign::same);
+          ReturnPidEffs(Bachelor::pi, Charge::total, true),
+          ReturnPidEffs(Bachelor::pi, Charge::total, false), Systematic::pidEffPi, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::minus)] =
