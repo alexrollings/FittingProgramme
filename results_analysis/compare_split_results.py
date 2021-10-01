@@ -16,11 +16,14 @@ from scipy.stats import mode
 rc('font',**{'family': 'serif','serif': ['Roman']})
 rc('text', usetex=True)
 
-def WeightedAverage(val1, err1, val2, err2):
-  w1 = 1 / err1
-  w2 = 1 / err2
-  sum_w = w1 + w2
-  av = (val1 * w1 + val2 * w2) / sum_w
+def WeightedAverage(uf_arr):
+  sum_w = 0
+  tot = 0
+  for uf in uf_arr:
+    w = 1 / (uf.s**2)
+    sum_w += w
+    tot += uf.n * w
+  av = tot / sum_w
   err = 1 / math.sqrt(sum_w)
   return [av, err]
 
@@ -28,8 +31,12 @@ def CalculateChi2(FR_val, FR_err, PR_val, PR_err):
   chi2 = (FR_val - PR_val)**2 / (FR_err**2 + PR_err**2)
   return chi2
 
+def CalculateSigma(FR_val, FR_err, PR_val, PR_err):
+  sigma = (FR_val - PR_val) / math.sqrt(FR_err**2 + PR_err**2)
+  return abs(sigma)
+
 if __name__ == '__main__':
-# Fit results saved in json
+  # Fit results saved in json
   path = '/home/rollings/Bu2Dst0h_2d/FittingProgramme/results_analysis/'
 
   csv_fname_result_pi0 = f'{path}tex_unblind/result_split_pi0.csv'
@@ -44,31 +51,31 @@ if __name__ == '__main__':
   phi3_val_err = ufloat(math.radians(67),math.radians(4))
   phi3 = np.random.normal(phi3_val_err.n, phi3_val_err.s, 10000)
 
-# No assumptions in D*π mode
-# B- -> D*0 π-
+  # No assumptions in D*π mode
+  # B- -> D*0 π-
   rB_Dpi = np.random.uniform(0.0, 0.02, 10000)
-# rB_Dpi = np.random.uniform(0.0, 0.01, 10000)
+  # rB_Dpi = np.random.uniform(0.0, 0.01, 10000)
   dB_Dpi = np.random.uniform(math.radians(0.0), math.radians(180.0), 10000)
-# dB_Dpi = np.random.uniform(math.radians(0.0), math.radians(360.0), 10000)
+  # dB_Dpi = np.random.uniform(math.radians(0.0), math.radians(360.0), 10000)
 
-# B factory ADS/GLW
+  # B factory ADS/GLW
   rB_DK = np.random.normal(0.106, 0.028, 10000)
   dB_DK = np.random.normal(math.radians(294), math.radians(26), 10000)
 
-# FAV: D0 -> K-π+
+  # FAV: D0 -> K-π+
   rD_val = np.sqrt(0.00344)
   rD_err = rD_val * 2 * (2e-5/0.00344)
   rD_val_err = ufloat(rD_val,rD_err)
   rD = np.random.normal(rD_val_err.n, rD_val_err.s, 10000)
-# rD = np.sqrt(0.00344)
+  # rD = np.sqrt(0.00344)
 
   dD_av_err = (8.6 + 10.2)*0.5
   dD_val_err = ufloat(math.radians(192.1),math.radians(dD_av_err))
   dD = np.random.normal(dD_val_err.n, dD_val_err.s, 10000)
-# dD = math.radians(192.1)
+  # dD = math.radians(192.1)
 
-#Calculate observables
-#Rates
+  #Calculate observables
+  #Rates
   pi0_DK_hh_plus = 1 + rB_DK**2 + 2 * rB_DK * np.cos(dB_DK + phi3)
   pi0_DK_hh_minus = 1 + rB_DK**2 + 2 * rB_DK * np.cos(dB_DK - phi3)
   gamma_DK_hh_plus = 1 + rB_DK**2 - 2 * rB_DK * np.cos(dB_DK + phi3)
@@ -109,7 +116,7 @@ if __name__ == '__main__':
   R_gamma_Dpi_pik_minus = gamma_Dpi_pik_minus / gamma_Dpi_kpi_minus
   R_gamma_Dpi_pik_plus = gamma_Dpi_pik_plus / gamma_Dpi_kpi_plus
 
-#Observables
+  #Observables
   exp = {}
   exp['A_Bu2Dst0h_D0pi0_k_kpi'] = ((pi0_DK_kpi_minus - pi0_DK_kpi_plus) /
                                     (pi0_DK_kpi_minus + pi0_DK_kpi_plus))
@@ -179,7 +186,7 @@ if __name__ == '__main__':
   plt.savefig('figs/R_piK_pi_minus_gamma.pdf')
   plt.clf()
 
-# Part-reco results
+  # Part-reco results
   part_reco = {}
   part_reco['A_Bu2Dst0h_D0pi0_k_kpi']  = {'val' : 0.020, 'stat' : 0.007, 'syst' : 0.003}
   part_reco['A_Bu2Dst0h_D0gamma_k_kpi']  = {'val' : -0.004, 'stat' : 0.014, 'syst' : 0.003}
@@ -229,8 +236,13 @@ if __name__ == '__main__':
       'stat': 0.00091,
       'syst': 0.00114
   }
+  part_reco['R_Dst0KDst0pi_Bu2Dst0h_kpi'] = {
+      'val': 0.0851,
+      'stat': 0.0012,
+      'syst': 0.0048
+  }
 
-  pars = ['R_CP', 'R_piK', 'A_CP', 'A_Bu2Dst0h']
+  pars = ['R_CP', 'R_piK', 'A_CP', 'A_Bu2Dst0h', 'R_Dst']
   result_pi0 = result_pi0[result_pi0.par.str.contains('|'.join(pars))]
   result_gamma = result_gamma[result_gamma.par.str.contains('|'.join(pars))]
   result_pi0.replace(to_replace='A_Bu2Dst0h_D0pi0_pi0_k_kpi',
@@ -243,13 +255,42 @@ if __name__ == '__main__':
                        value='A_Bu2Dst0h_D0gamma_k_kpi',
                        inplace=True)
 
-# for p in pars:
-#   exp_mu = np.mean(exp[p])
-#   exp_sigma = np.std(exp[p])
-#   print(f'{p}: {exp_mu:.4f} +/- {exp_sigma:.4f}')
-#
+  # for p in pars:
+  #   exp_mu = np.mean(exp[p])
+  #   exp_sigma = np.std(exp[p])
+  #   print(f'{p}: {exp_mu:.4f} +/- {exp_sigma:.4f}')
+  #
   pars = result_gamma['par'].unique().tolist()
+  pars = [s for s in pars if "R_Dst" not in s]
   chi2_dict = {}
+
+  part_reco_R_val = part_reco['R_Dst0KDst0pi_Bu2Dst0h_kpi']['val']
+  part_reco_R_err = part_reco['R_Dst0KDst0pi_Bu2Dst0h_kpi']['stat']
+
+  gamma_Rgamma_val = result_gamma[(result_gamma.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi')]['val'].values[0]
+  gamma_Rgamma_err = result_gamma[(result_gamma.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi')]['stat'].values[0]
+
+  gamma_Rpi0_val = result_gamma[(result_gamma.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi')]['val'].values[0]
+  gamma_Rpi0_err = result_gamma[(result_gamma.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi')]['stat'].values[0]
+
+  pi0_Rpi0_val = result_pi0[(result_pi0.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi')]['val'].values[0]
+  pi0_Rpi0_err = result_pi0[(result_pi0.par == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi')]['stat'].values[0]
+
+  uf_arr = [
+      ufloat(pi0_Rpi0_val, pi0_Rpi0_err),
+      ufloat(gamma_Rpi0_val, gamma_Rpi0_err),
+      ufloat(gamma_Rgamma_val, gamma_Rgamma_err)
+  ]
+  FR_total = WeightedAverage(uf_arr)
+  # chi2_dict['R_Dst0KDst0pi_Bu2Dst0h_kpi'] = {
+  #     'sigma':
+  #         CalculateSigma(FR_total[0], FR_total[1], part_reco_R_val,
+  #                        part_reco_R_err),
+  #     'chi2':
+  #         CalculateChi2(FR_total[0], FR_total[1], part_reco_R_val,
+  #                       part_reco_R_err)
+  # }
+
   for p in pars:
     fig, ax = plt.subplots(figsize=(8,6))
 
@@ -277,6 +318,7 @@ if __name__ == '__main__':
     plt.tick_params(axis='both', which='major', labelsize=18)
 
     part_reco_val = part_reco[p]['val']
+    part_reco_stat = part_reco[p]['stat']
     part_reco_err = math.sqrt(part_reco[p]['stat']**2 + part_reco[p]['syst']**2)
     part_reco_frac = part_reco[p]['stat'] / part_reco_err
     plt.errorbar(part_reco_val,2.0,xerr=part_reco_err,fmt='',yerr=None,capsize=5,linewidth=1,linestyle='-',color='tab:red')
@@ -290,6 +332,7 @@ if __name__ == '__main__':
     #Fit result
     if result_gamma['par'].str.contains(p).any():
       gamma_val = result_gamma[(result_gamma.par == p)]['val'].values[0]
+      gamma_stat = result_gamma[(result_gamma.par == p)]['stat'].values[0]
       gamma_err = math.sqrt(
           result_gamma[(result_gamma.par == p)]['stat'].values[0]**2 +
           result_gamma[(result_gamma.par == p)]['syst'].values[0]**2)
@@ -301,6 +344,7 @@ if __name__ == '__main__':
       plt.errorbar(gamma_val,4.0,xerr=gamma_err*gamma_frac,fmt='o',yerr=None,capsize=5,linewidth=1.5,linestyle='-',color='k')
     if result_pi0['par'].str.contains(p).any():
       pi0_val = result_pi0[(result_pi0.par == p)]['val'].values[0]
+      pi0_stat = result_pi0[(result_pi0.par == p)]['stat'].values[0]
       pi0_err = math.sqrt(
           result_pi0[(result_pi0.par == p)]['stat'].values[0]**2 +
           result_pi0[(result_pi0.par == p)]['syst'].values[0]**2)
@@ -311,12 +355,27 @@ if __name__ == '__main__':
       p_gamma = True
 
     if p_gamma == True:
-      chi2_dict[p] = CalculateChi2(gamma_val, gamma_err, part_reco_val, part_reco_err)
+      chi2_dict[p] = {
+          'sigma':
+              CalculateSigma(gamma_val, gamma_stat, part_reco_val,
+                             part_reco_stat),
+          'chi2':
+              CalculateChi2(gamma_val, gamma_stat, part_reco_val, part_reco_stat)
+      }
+
     else:
-      pi0_total = WeightedAverage(pi0_val, pi0_err, gamma_val, gamma_err)
+      uf_arr = [ufloat(pi0_val, pi0_stat), ufloat(gamma_val, gamma_stat)]
+      pi0_total = WeightedAverage(uf_arr)
       # print(p)
       # print(pi0_total)
-      chi2_dict[p] = CalculateChi2(pi0_total[0], pi0_total[1], part_reco_val, part_reco_err)
+      chi2_dict[p] = {
+          'sigma':
+              CalculateSigma(pi0_total[0], pi0_total[1], part_reco_val,
+                             part_reco_stat),
+          'chi2':
+              CalculateChi2(pi0_total[0], pi0_total[1], part_reco_val,
+                            part_reco_stat)
+      }
 
 
     if 'A_Bu2Dst0h' in p:
@@ -366,10 +425,30 @@ if __name__ == '__main__':
     fig.savefig('result_comparisons/unblind/Exp_vs_Obs_%s.pdf' % p)
     fig.savefig('result_comparisons/unblind/Exp_vs_Obs_%s.eps' % p, format='eps')
 
-  chi2_arr = np.fromiter(chi2_dict.values(), dtype=float)
-  chi2_ndf = np.sum(chi2_arr)/len(chi2_arr)
+  #chi2_arr = np.fromiter(chi2_dict.values(), dtype=float)
+  #n_pars = len(chi2_arr)
+  n_pars = 0
+  chi2_tot = 0
+  for par, d in chi2_dict.items():
+    chi2_tot += d['chi2']
+    n_pars += 1
+  chi2_ndf = chi2_tot/n_pars
   print(f'chi2/ndf = {chi2_ndf}')
   p_value = stats.distributions.chi2.sf(chi2_ndf, 1)
   print(f'p value = {p_value}')
   sigma = stats.norm.ppf(1-p_value/2)
   print(f'sigma = {sigma}')
+
+  tex_file = open(f'result_comparisons/unblind/chi2_comparison.tex', 'w')
+  tex_file.write('\\begin{tabular}{ccc}\n')
+  tex_file.write('Observable & Agreement ($\\sigma$) & $\\chi^2$ \\\\ \n')
+  tex_file.write('\\hline\n')
+  for par, d in chi2_dict.items():
+    p_val = stats.distributions.chi2.sf(d['chi2'], 1)
+    s = stats.norm.ppf(1-p_val/2)
+    # print(f"{s}\t{d['sigma']}")
+    p_str = return_label(par)
+    tex_file.write(f"{p_str} & {s:.2f} & {d['chi2']:.2f} \\\\ \n")
+  tex_file.write('\\hline\n')
+  tex_file.write(f'$\\chi^2/\\text{{ndf}}$ & & ${chi2_tot:.2f}/{n_pars}={chi2_ndf:.2f}$ \\\\ \n')
+  tex_file.write('\\end{tabular}\n')
