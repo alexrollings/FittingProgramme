@@ -137,6 +137,16 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
             Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
                                          bachelor, charge, R_piK_init, min, 1));
       }
+      // if (bachelor == Bachelor::k) {
+      //   R_piK_Bu2Dst0h_D0gamma_ =
+      //       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+      //           "R_piK_Bu2Dst0h_D0gamma", uniqueId_, bachelor, charge, 0.0, 0.0,
+      //           Systematic::NA, Sign::none));
+      // } else {
+      //   R_piK_Bu2Dst0h_D0gamma_ = std::shared_ptr<RooRealVar>(
+      //       Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0gamma", uniqueId_,
+      //                                    bachelor, charge, R_piK_init, min, 1));
+      // }
     }
     if (Configuration::Get().neutral() == Neutral::gamma &&
         ((bachelor == Bachelor::k && charge == Charge::plus) ||
@@ -147,8 +157,19 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
     } else {
       R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
           Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
-                                       bachelor, charge, R_piK_init, min, 1));
+                                       bachelor, charge, R_piK_init, min,
+                                       1));
     }
+    // if (bachelor == Bachelor::k) {
+    //   R_piK_Bu2Dst0h_D0pi0_ =
+    //       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+    //           "R_piK_Bu2Dst0h_D0pi0", uniqueId_, bachelor, charge, 0.0, 0.0,
+    //           Systematic::NA, Sign::none));
+    // } else {
+    //   R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
+    //       Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
+    //                                    bachelor, charge, R_piK_init, min, 1));
+    // }
   }
   // Fix Bu2Dst0h_D0gamma physics observables in π0 fit
   if (Configuration::Get().neutral() == Neutral::pi0) {
