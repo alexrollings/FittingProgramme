@@ -135,15 +135,15 @@ GlobalVars::GlobalVars(int uniqueId)
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::k, Charge::minus)] =
       pidEffMap_[MakePidKey(Bachelor::k, Charge::total)];
-  // pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
-  //     Params::Get().CreateFixed(
-  //         "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
-  //         0.996, 0.002, Systematic::pidEffPi, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
       Params::Get().CreateFixed(
           "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
-          ReturnPidEffs(Bachelor::pi, Charge::total, true),
-          ReturnPidEffs(Bachelor::pi, Charge::total, false), Systematic::pidEffPi, Sign::same);
+          0.995, 0.002, Systematic::pidEffPi, Sign::same);
+  // pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)] =
+  //     Params::Get().CreateFixed(
+  //         "pidEffPi", uniqueId_, Configuration::Get().neutral(), Charge::total,
+  //         ReturnPidEffs(Bachelor::pi, Charge::total, true),
+  //         ReturnPidEffs(Bachelor::pi, Charge::total, false), Systematic::pidEffPi, Sign::same);
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::plus)] =
       pidEffMap_[MakePidKey(Bachelor::pi, Charge::total)];
   pidEffMap_[MakePidKey(Bachelor::pi, Charge::minus)] =
