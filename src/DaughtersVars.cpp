@@ -98,11 +98,16 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2D0hst(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2D0hst())),
-      R_Dst0KDst0pi_Bu2Dst0hst_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-          uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_",
-          DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-              .R_Dst0KDst0pi_Bu2Dst0hst(),
-          GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst())),
+      // R_Dst0KDst0pi_Bu2Dst0hst_(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+      //     uniqueId_, "R_Dst0KDst0pi_Bu2Dst0hst_",
+      //     DaughtersVars<Daughters::kpi>::Get(uniqueId_)
+      //         .R_Dst0KDst0pi_Bu2Dst0hst(),
+      //     GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0hst())),
+      R_Dst0KDst0pi_Bu2Dst0hst_(Params::Get().CreateFloating(
+          "R_Dst0KDst0pi_Bu2Dst0hst", uniqueId_, Daughters::kk,
+          GlobalVars::Get(uniqueId_).kBF_Bu2Dst0Kst().getVal() /
+              GlobalVars::Get(uniqueId_).kBF_Bu2Dst0rho().getVal(),
+          -1, 1)),
       // Increase uncertainty: from Lb -> Lc K / Lb -> Lc π
       // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_(Params::Get().CreateFloating(
       //     "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
@@ -120,31 +125,32 @@ DaughtersVars<Daughters::kk>::DaughtersVars(int uniqueId)
           DaughtersVars<Daughters::kpi>::Get(uniqueId_)
               .R_Dst0KDst0pi_Bu2Dst0h_D0gamma(),
           GlobalVars::Get(uniqueId_).R_CP_Bu2Dst0h_D0gamma()));
-  // if (Configuration::Get().neutral() == Neutral::pi0) {
-  //   // R_Dst0KDst0pi_Bu2D0hst_ =
-  //   //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
-  //   //         "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kk, 0.02, -1,
-  //   2)); R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
-  //       std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-  //           "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk,
-  //           0.073, 0.073 * 0.5, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0,
-  //           Sign::same));
-  // } else {
-  //   // R_Dst0KDst0pi_Bu2D0hst_ =
-  //   // std::shared_ptr<RooFormulaVar>(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
-  //   //         uniqueId_, "R_Dst0KDst0pi_Bu2D0hst_",
-  //   //         DaughtersVars<Daughters::kpi>::Get(uniqueId_)
-  //   //             .R_Dst0KDst0pi_Bu2D0hst(),
-  //   //         GlobalVars::Get(uniqueId_).R_CP_Bu2D0hst()));
-  //   R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
-  //       Params::Get().CreateFloating("R_Dst0KDst0pi_Lb2Omegach_Lcpi0",
-  //                                    uniqueId_, Daughters::kk, 0.073, -1,
-  //                                    1));
-  // }
-  R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
-      std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
-          "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
-          0.073 * 0.5, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0, Sign::same));
+  if (Configuration::Get().neutral() == Neutral::pi0) {
+    // R_Dst0KDst0pi_Bu2D0hst_ =
+    //     std::shared_ptr<RooRealVar>(Params::Get().CreateFloating(
+    //         "R_Dst0KDst0pi_Bu2D0hst", uniqueId_, Daughters::kk, 0.02, -1,
+    // 2)); 
+    R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
+        std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+            "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk,
+            0.073, 0.073 * 0.5, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0,
+            Sign::same));
+  } else {
+    // R_Dst0KDst0pi_Bu2D0hst_ =
+    // std::shared_ptr<RooFormulaVar>(Make_R_Dst0KDst0pi_CP<Daughters::kk>(
+    //         uniqueId_, "R_Dst0KDst0pi_Bu2D0hst_",
+    //         DaughtersVars<Daughters::kpi>::Get(uniqueId_)
+    //             .R_Dst0KDst0pi_Bu2D0hst(),
+    //         GlobalVars::Get(uniqueId_).R_CP_Bu2D0hst()));
+    R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ = std::shared_ptr<RooRealVar>(
+        Params::Get().CreateFloating("R_Dst0KDst0pi_Lb2Omegach_Lcpi0",
+                                     uniqueId_, Daughters::kk, 0.073, -1,
+                                     1));
+  }
+  // R_Dst0KDst0pi_Lb2Omegach_Lcpi0_ =
+  //     std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+  //         "R_Dst0KDst0pi_Lb2Omegach_Lcpi0", uniqueId_, Daughters::kk, 0.073,
+  //         0.073 * 0.5, Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0, Sign::same));
 }
 
 template <>
