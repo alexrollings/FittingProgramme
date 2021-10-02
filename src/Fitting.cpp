@@ -831,7 +831,7 @@ int main(int argc, char **argv) {
       std::default_random_engine rng(rd());
       std::uniform_int_distribution<UInt_t> dist;
       UInt_t seed = dist(rng);
-      // UInt_t seed = 0x49affb74;
+      // UInt_t seed = 0xa229a64a;
       RooRandom::randomGenerator()->SetSeed(seed);
       std::stringstream filename;
       if (config.runToy() == true && pdfD1D == true) {
@@ -869,17 +869,17 @@ int main(int argc, char **argv) {
     std::map<Neutral, std::map<Mass, double> > yMaxMap;
     // LaTeXYields(config, pdfs, outputDir, dataFitResult);
     if (config.runSystematics() == false) {
-      if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
-        if (config.noFit() == false) {
-          dataFitResult->Print("v");
-        }
-        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-        PlotLegend(config, colorMap, outputDir);
-        for (auto &p : pdfs) {
-          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-                     dataFitResult.get(), yMaxMap);
-        }
-      }
+      // if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
+      //   if (config.noFit() == false) {
+      //     dataFitResult->Print("v");
+      //   }
+      //   std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+      //   PlotLegend(config, colorMap, outputDir);
+      //   for (auto &p : pdfs) {
+      //     Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+      //                dataFitResult.get(), yMaxMap);
+      //   }
+      // }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         // for (auto &p : pdfs) {
