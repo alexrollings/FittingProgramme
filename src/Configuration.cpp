@@ -161,7 +161,8 @@ Configuration::Configuration()
                Systematic::A_CP_K_Bu2Dst0h_D0gamma,
                Systematic::A_K_Kpi_Bu2Dst0h_D0gamma,
                Systematic::A_K_piK_Bu2Dst0hst,
-               Systematic::A_CP_K_Lb2Omegach_Lcpi0}},
+               Systematic::A_CP_K_Lb2Omegach_Lcpi0,
+               Systematic::A_CP_K_Bu2Dst0hst}},
           {Group::CPRatios,
            std::vector<Systematic>{Systematic::R_CP_Bu2D0hst,
                                    Systematic::R_ADS_Bu2D0hst,
@@ -759,6 +760,8 @@ Systematic StringToEnum<Systematic>(std::string const &systematic) {
     return Systematic::A_CP_K_Bu2D0hst;
   } else if (systematic == "A_CP_K_Lb2Omegach_Lcpi0") {
     return Systematic::A_CP_K_Lb2Omegach_Lcpi0;
+  } else if (systematic == "A_CP_K_Bu2Dst0hst") {
+    return Systematic::A_CP_K_Bu2Dst0hst;
   } else if (systematic == "R_Dst0KDst0pi_Bd2Dsth") {
     return Systematic::R_Dst0KDst0pi_Bd2Dsth;
   } else if (systematic == "R_Dst0KDst0pi_Lb2Omegach_Lcpi0") {
@@ -1038,6 +1041,8 @@ std::string EnumToString(Systematic systematic) {
       return "A_CP_K_Bu2D0hst";
     case Systematic::A_CP_K_Lb2Omegach_Lcpi0:
       return "A_CP_K_Lb2Omegach_Lcpi0";
+    case Systematic::A_CP_K_Bu2Dst0hst:
+      return "A_CP_K_Bu2Dst0hst";
     case Systematic::R_Dst0KDst0pi_Bd2Dsth:
       return "R_Dst0KDst0pi_Bd2Dsth";
     case Systematic::R_Dst0KDst0pi_Lb2Omegach_Lcpi0:
