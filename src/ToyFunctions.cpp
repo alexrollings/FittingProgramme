@@ -147,16 +147,16 @@ void RunToysD1DPdf(std::unique_ptr<RooSimultaneous> &simPdf, TFile &outputFile,
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
           RooFit::ExternalConstraints(GlobalVars::Get(id).constraints_argSet()),
-          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-          RooFit::Minos(kTRUE)));
+          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          // RooFit::Minos(kTRUE)));
     } else {
       toyFitResult = std::shared_ptr<RooFitResult>(simPdfToFit->fitTo(
           *toyAbsData, RooFit::Extended(kTRUE), RooFit::Save(),
           RooFit::Strategy(2), RooFit::Minimizer("Minuit2"),
-          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
-          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
-          RooFit::Minos(kTRUE)));
+          RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU())));
+          // RooFit::Offset(kTRUE), RooFit::NumCPU(config.nCPU()),
+          // RooFit::Minos(kTRUE)));
     }
     toyFitResult->SetName("ToyResult");
   }
