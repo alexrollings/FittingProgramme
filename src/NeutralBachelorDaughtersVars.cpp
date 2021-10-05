@@ -1237,11 +1237,7 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
               .c_str(),
           *A_Bd2Dsth_)),
       a_Bu2D0hst_(nullptr),
-      a_Bu2Dst0hst_(MakeLittleAsym(
-          ("a_Bu2Dst0hst_" +
-           ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-              .c_str(),
-          *A_Bu2Dst0hst_)),
+      a_Bu2Dst0hst_(nullptr),
       a_Lb2Omegach_Lcpi0_(nullptr),
       a_Bs2Dst0Kst0_(nullptr),
       a_Bs2D0Kst0_(nullptr),
@@ -1473,6 +1469,11 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
        ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
           .c_str(),
       *A_Bu2D0hst_));
+  a_Bu2Dst0hst_ = std::unique_ptr<RooFormulaVar>(MakeLittleAsym(
+      ("a_Bu2Dst0hst_" +
+       ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+          .c_str(),
+      *A_Bu2Dst0hst_));
 }
 
 template <Neutral _neutral>
