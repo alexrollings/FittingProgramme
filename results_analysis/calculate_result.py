@@ -508,7 +508,17 @@ if __name__ == '__main__':
       df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
 
     # First row of table is parameter names
-    arr_labels = df_totals['label'].unique().tolist()
+    arr_labels_unique = df_totals['label'].unique().tolist()
+    arr_labels_sorted = [
+        'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'SelEffs',
+        'PIDEffs', 'Rates', 'Asyms', 'CPRatios', 'Statistical Error Correction'
+    ]
+    arr_labels = [l for l in arr_labels_sorted if l in arr_labels_unique]
+    arr_missing = [l for l in arr_labels_unique if l not in arr_labels_sorted]
+    if len(arr_missing) > 0:
+      print("Missing syst labels in table:\n")
+      for l in arr_missing:
+        print(l)
     row_arr = {'R': [], 'A': []}
     # Recorder number of ratios and asymmetries s.t. know when to line break in table
     n_params = {'R': 0, 'A': 0}
@@ -603,7 +613,7 @@ if __name__ == '__main__':
             tex_file.write('\\begin{tabularx}{\\textwidth}{X' + 'l' *
                               (n_params[key]) + '}\n')
           elif neutral == 'gamma' and key == 'R':
-            tex_file.write('\\resizebox{.82\\paperheight}{!}{\n')
+            tex_file.write('\\resizebox{.8\\paperheight}{!}{\n')
             tex_file.write('\\begin{tabular}{' + 'l' * (n_params[key] + 1) +
                               '}\n')
           else:
@@ -638,7 +648,19 @@ if __name__ == '__main__':
 
     if breakdown == False:
       # Summary table
-      arr_labels = df_totals['group_label'].unique().tolist()
+      arr_labels_unique = df_totals['group_label'].unique().tolist()
+      arr_labels_sorted = [
+          '$PDFs$', '$\\epsilon_{sel}$', '$\\epsilon_{PID}$', '$Rates$',
+          '$Asyms$', '$CP$ $Ratios$', '$Corr$'
+      ]
+      arr_labels = [l for l in arr_labels_sorted if l in arr_labels_unique]
+      arr_missing = [
+          l for l in arr_labels_unique if l not in arr_labels_sorted
+      ]
+      if len(arr_missing) > 0:
+        print("Missing syst labels in table:\n")
+        for l in arr_missing:
+          print(l)
       # First row of table is parameter names
       row_arr = []
       # Recorder number of ratios and asymmetries s.t. know when to line break in table
