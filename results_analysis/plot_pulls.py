@@ -232,8 +232,8 @@ if __name__ == '__main__':
     list_file = open(filename, 'w+')
     i = 0
     for root_file in os.listdir(input_dir):
-      # if i > 100:
-      #   break;
+      if i > 2500:
+        break;
       if dim == '1D':
         if fit_bu_partial == False:
           pass_filename(input_dir + '/' + root_file, list_file, dim, delta_low,
