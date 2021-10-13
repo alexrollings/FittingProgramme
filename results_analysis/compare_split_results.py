@@ -48,7 +48,7 @@ if __name__ == '__main__':
     result_gamma = pd.read_csv(csv_fname_result_gamma)
 
 # LHCb combination
-  phi3_val_err = ufloat(math.radians(67),math.radians(4))
+  phi3_val_err = ufloat(math.radians(65.4),math.radians(4))
   phi3 = np.random.normal(phi3_val_err.n, phi3_val_err.s, 10000)
 
   # No assumptions in D*π mode
