@@ -78,7 +78,7 @@ if __name__ == '__main__':
         corr = pearsonr(par_dict['gamma'][p_g],par_dict['pi0'][p_p])[0]
         f_tex.write(' & $%.2f$ ' % corr)
         # print(p_g + ' vs.' + p_p + ':\t' + str(corr))
-        syst_dict['{p_g}_gamma,{p_p}_pi0'] = corr
+        syst_dict[f'{p_g}_gamma,{p_p}_pi0'] = corr
       else:
         f_tex.write(' &  ')
     f_tex.write('\\\\ \n')
