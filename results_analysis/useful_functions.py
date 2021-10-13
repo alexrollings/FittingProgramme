@@ -178,9 +178,15 @@ def return_final_group(syst):
 
 def neutral_label(n_str):
   if n_str == "gamma":
-    return "$\\gamma$"
+    return "\\gamma"
   else:
-    return "$\\pi^{0}$"
+    return "\\pi^{0}"
+
+def bachelor_label(b_str):
+  if b_str == "pi":
+    return "\\pi"
+  else:
+    return "K"
 
 def return_label(string):
   labels = {

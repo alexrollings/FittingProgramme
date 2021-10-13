@@ -66,10 +66,10 @@ if __name__ == '__main__':
   f_tex.write('\t\\begin{tabular}{' + format_str + '}\n')
   f_tex.write('\t\t')
   for p_p in pars:
-    f_tex.write(' & ' + return_label(p_p) + ' ' + neutral_label('pi0'))
+    f_tex.write(' & ' + return_label(p_p) + ' $' + neutral_label('pi0') + '$')
   f_tex.write(' \\\\ \hline \n')
   for p_g in pars:
-    f_tex.write(return_label(p_g) + ' ' + neutral_label('gamma'))
+    f_tex.write(return_label(p_g) + ' $' + neutral_label('gamma') + '$')
     second_half = False
     for p_p in pars:
       if p_p == p_g:
