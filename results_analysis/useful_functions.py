@@ -178,9 +178,9 @@ def return_final_group(syst):
 
 def neutral_label(n_str):
   if n_str == "gamma":
-    return "\\gamma"
+    return "$\\gamma$"
   else:
-    return "\\pi^{0}"
+    return "$\\pi^{0}$"
 
 def return_label(string):
   labels = {
