@@ -272,26 +272,26 @@ if not os.path.exists(tex_path):
   os.mkdir(tex_path)
 f_tex = open(f'{tex_path}/R_ADS_A_ADS.tex', 'w+')
 f_tex.write(
-    f"R^{{\\piK,\\piz}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['R_pi0_k'].n:.4f} &&\\pm {result_dict['R_pi0_k'].s:.4f} \\\\ \n"
+    f"R^{{\\pi K,\\piz}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['R_pi0_k'].n:.4f} &&\\pm {result_dict['R_pi0_k'].s:.4f} \\\\ \n"
 )
 f_tex.write(
-    f"R^{{\\piK,\\g}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['R_gamma_k'].n:.4f} &&\\pm {result_dict['R_gamma_k'].s:.4f} \\\\ \n"
+    f"R^{{\\pi K,\\g}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['R_gamma_k'].n:.4f} &&\\pm {result_dict['R_gamma_k'].s:.4f} \\\\ \n"
 )
 f_tex.write(
-    f"R^{{\\piK,\\piz}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['R_pi0_pi'].n:.4f} &&\\pm {result_dict['R_pi0_pi'].s:.4f} \\\\ \n"
+    f"R^{{\\pi K,\\piz}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['R_pi0_pi'].n:.5f} &&\\pm {result_dict['R_pi0_pi'].s:.5f} \\\\ \n"
 )
 f_tex.write(
-    f"R^{{\\piK,\\g}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['R_gamma_pi'].n:.4f} &&\\pm {result_dict['R_gamma_pi'].s:.4f} \\\\ \n"
+    f"R^{{\\pi K,\\g}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['R_gamma_pi'].n:.5f} &&\\pm {result_dict['R_gamma_pi'].s:.5f} \\\\ \n"
 )
 f_tex.write(
-    f"A^{{\\piK,\\piz}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['A_pi0_k'].n:.3f} &&\\pm {result_dict['A_pi0_k'].s:.3f} \\\\ \n"
+    f"A^{{\\pi K,\\piz}}_{{K}} &= \\textcolor{{white}}{{-}}{result_dict['A_pi0_k'].n:.3f} &&\\pm {result_dict['A_pi0_k'].s:.3f} \\\\ \n"
 )
 f_tex.write(
-    f"A^{{\\piK,\\g}}_{{K}} &= {result_dict['A_gamma_k'].n:.3f} &&\\pm {result_dict['A_gamma_k'].s:.3f} \\\\ \n"
+    f"A^{{\\pi K,\\g}}_{{K}} &= {result_dict['A_gamma_k'].n:.3f} &&\\pm {result_dict['A_gamma_k'].s:.3f} \\\\ \n"
 )
 f_tex.write(
-    f"A^{{\\piK,\\piz}}_{{\\pi}} &= {result_dict['A_pi0_pi'].n:.3f} &&\\pm {result_dict['A_pi0_pi'].s:.3f} \\\\ \n"
+    f"A^{{\\pi K,\\piz}}_{{\\pi}} &= {result_dict['A_pi0_pi'].n:.3f} &&\\pm {result_dict['A_pi0_pi'].s:.3f} \\\\ \n"
 )
 f_tex.write(
-    f"A^{{\\piK,\\g}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['A_gamma_pi'].n:.3f} &&\\pm {result_dict['A_gamma_pi'].s:.3f} \\\\ \n"
+    f"A^{{\\pi K,\\g}}_{{\\pi}} &= \\textcolor{{white}}{{-}}{result_dict['A_gamma_pi'].n:.3f} &&\\pm {result_dict['A_gamma_pi'].s:.3f} \\\\ \n"
 )
