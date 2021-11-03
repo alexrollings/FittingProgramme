@@ -104,7 +104,7 @@ def return_group(syst):
   re_dict = {
       'Pi0Pdfs': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\pi^{0})h^{\\pm}$ PDFs',
       'GammaPdfs': '$B^{\\pm}\\rightarrow (D^{*}\\rightarrow D\\gamma)h^{\\pm}$ PDFs',
-      'BkgPdfs': 'Mis. and part. reco. background PDFs',
+      'BkgPdfs': 'Mis. and part. reco. PDFs',
       'BsPdfs': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
       'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
       'MisIDPdfs': 'Mis-ID and crossfeed PDFs',
