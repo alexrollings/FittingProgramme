@@ -53,18 +53,19 @@ RooArgList ReturnInitPars(bool dataToy,
 
 void SetStyle() {
   gStyle->SetTitleFont(132, "XYZ");
+  gStyle->SetLegendBorderSize(0);
   gStyle->SetLabelFont(132, "XYZ");
   gStyle->SetStatFont(132);
   gStyle->SetStatFontSize(0.04);
-  gStyle->SetTitleSize(0.055, "Y");
-  gStyle->SetTitleSize(0.06, "X");
-  gStyle->SetLabelSize(0.045, "XY");
-  gStyle->SetTitleOffset(0.9, "X");
-  gStyle->SetTitleOffset(0.95, "Y");
+  gStyle->SetTitleSize(0.08, "Y");
+  gStyle->SetTitleSize(0.08, "X");
+  gStyle->SetLabelSize(0.06, "XY");
+  gStyle->SetTitleOffset(0.6, "X");
+  gStyle->SetTitleOffset(0.93, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
   gStyle->SetPadBottomMargin(0.13);
-  gStyle->SetPadLeftMargin(0.12);
+  gStyle->SetPadLeftMargin(0.15);
 }
 
 int main(int argc, char *argv[]) {
@@ -606,13 +607,17 @@ int main(int argc, char *argv[]) {
 
     auto blankHist = std::make_unique<TH1D>("blankHist", "", 1, 0, 1);
     blankHist->SetLineColor(kWhite);
-    TLegend pullLegend(0.59, 0.84, 0.95, 0.965);
+    TLegend pullLegend(0.49, 0.84, 0.95, 0.965);
     // if (config.blindFit() == false) {
     //   pullLegend.SetX1(0.5);
     //   pullLegend.SetX2(0.85);
     // }
-    pullLegend.SetTextSize(0.045);
-    pullLegend.SetLineColor(kWhite);
+    pullLegend.SetFillColor(-1);
+    pullLegend.SetFillStyle(4000);
+    gStyle->SetStatStyle(0);
+    gStyle->SetTitleStyle(0);
+    pullLegend.SetTextSize(0.06);
+    pullLegend.SetLineColor(-1);
     std::ostringstream pullMeanString, pullSigmaString;
     pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal(), 3);
     pullMeanString << " #pm "
