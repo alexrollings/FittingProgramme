@@ -241,6 +241,7 @@ class Configuration {
   RooRealVar &d0hMass() { return d0hMass_; }
   RooRealVar &buPdgId() { return buPdgId_; }
   RooRealVar &bachPID() { return bachPID_; }
+  RooRealVar &bachIsMuon() { return bachIsMuon_; }
   RooRealVar &h1PID() { return h1PID_; }
   RooRealVar &h2PID() { return h2PID_; }
   RooRealVar &h1ID() { return h1ID_; }
@@ -329,6 +330,7 @@ class Configuration {
   RooRealVar d0hMass_;
   RooRealVar buPdgId_;
   RooRealVar bachPID_;
+  RooRealVar bachIsMuon_;
   RooRealVar h1PID_;
   RooRealVar h2PID_;
   RooRealVar h1ID_;

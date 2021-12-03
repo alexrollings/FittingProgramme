@@ -18,6 +18,7 @@ Configuration::Configuration()
       d0hMass_("", "", 0, 0, ""),
       buPdgId_("", "", 0, 0, ""),
       bachPID_("", "", 0, 0, ""),
+      bachIsMuon_("", "", 0, 0, ""),
       h1ID_("", "", 0, 0, ""),
       h2ID_("", "", 0, 0, ""),
       h1PID_("", "", 0, 0, ""),
@@ -243,6 +244,12 @@ Configuration::Configuration()
   bachPID_.setMin(-150);
   bachPID_.setUnit(kNoUnit);
 
+  bachIsMuon_.SetName("bach_isMuon");
+  bachIsMuon_.SetTitle("Bachelor IsMuon");
+  bachIsMuon_.setMax(2);
+  bachIsMuon_.setMin(0);
+  bachIsMuon_.setUnit(kNoUnit);
+
   h1ID_.SetName("h1_D_ID");
   h1ID_.SetTitle("h1 D0 daughter ID");
 
@@ -251,12 +258,6 @@ Configuration::Configuration()
   buPdgId_.setMax(550);
   buPdgId_.setMin(-550);
   buPdgId_.setUnit(kNoUnit);
-
-  bachPID_.SetName("bach_PIDK");
-  bachPID_.SetTitle("Bachelor PIDK");
-  bachPID_.setMax(150);
-  bachPID_.setMin(-150);
-  bachPID_.setUnit(kNoUnit);
 
   h1ID_.SetName("h1_D_ID");
   h1ID_.SetTitle("h1 D0 daughter ID");
@@ -327,6 +328,7 @@ Configuration::Configuration()
   variableArgSet_.add(d0hMass_);
   variableArgSet_.add(buPdgId_);
   variableArgSet_.add(bachPID_);
+  variableArgSet_.add(bachIsMuon_);
   variableArgSet_.add(h1ID_);
   variableArgSet_.add(h2ID_);
   variableArgSet_.add(h1PID_);
