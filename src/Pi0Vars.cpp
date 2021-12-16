@@ -1293,4 +1293,8 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
                   Configuration::Get().buDeltaLow()) /
                  (Configuration::Get().buDeltaMass().getMax() -
                   Configuration::Get().buDeltaMass().getMin())),
-          Systematic::Combinatorial, Sign::same)) {}
+          Systematic::Combinatorial, Sign::same)) {
+  if (Configuration::Get().isMuon() == true) {
+    bkgFracGlobal_WN_->setMax(1.5);
+  }
+}
