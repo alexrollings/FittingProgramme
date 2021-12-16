@@ -166,7 +166,8 @@ BachelorChargeVars<bachelor, charge>::BachelorChargeVars(int uniqueId)
       //           R_piK_init, 0., 0., Systematic::NA, Sign::none));
       // } else {
       if (Configuration::Get().neutral() == Neutral::gamma &&
-           bachelor == Bachelor::pi && charge == Charge::minus) {
+          ((bachelor == Bachelor::k && charge == Charge::plus) ||
+           (bachelor == Bachelor::pi && charge == Charge::minus))) {
         R_piK_Bu2Dst0h_D0pi0_ = std::shared_ptr<RooRealVar>(
             Params::Get().CreateFloating("R_piK_Bu2Dst0h_D0pi0", uniqueId_,
                                          bachelor, charge, R_piK_init, -1, 1));

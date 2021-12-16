@@ -27,8 +27,9 @@ void FixedParameter::AdjustBoxEffErr() {
   std::smatch effMatch;
   static const std::regex effRgx("(or|delta|bu|buPartial)Eff\\S+");
   if (std::regex_match(name_, effMatch, effRgx)) {
-    // Sum in quadrature of error on MC measurement and MC/data difference
-    double std_tmp = std::sqrt(pow(std_pos_, 2) + pow(0.008, 2));
+    // Sum in quadrature of error on MC measurement and MC/data difference and
+    // systematic from lack of PID
+    double std_tmp = std::sqrt(pow(std_pos_, 2) + pow(0.008, 2) + pow(0.008, 2));
     std_pos_ = std_tmp;
     std_neg_ = std_tmp;
   }
