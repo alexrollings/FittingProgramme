@@ -875,7 +875,8 @@ int main(int argc, char **argv) {
     std::map<Neutral, std::map<Mass, double> > yMaxMap;
     // LaTeXYields(config, pdfs, outputDir, dataFitResult);
     if (config.runSystematics() == false) {
-      if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
+      if (config.runBsSystematic() == false && config.isMuon() == false &&
+          config.runCombSystematic() == false) {
         if (config.noFit() == false) {
           dataFitResult->Print("v");
         }
@@ -1008,51 +1009,56 @@ int main(int argc, char **argv) {
                        EnumToString(Systematic::Bs2Dst0Kst0) + "_" +
                        to_string_with_precision(config.fracKst0(), 1) + ".root";
             dataFitResult->SetName("SystResult");
-        } else if (config.runCombSystematic() == true) {
-          outFname = outputDir + "/results/SystResult_" +
-                     config.ReturnBoxString() + "_combinatorial.root";
-          dataFitResult->SetName("SystResult");
-        } else {
-          outFname = outputDir + "/results/DataResult_" +
-                     config.ReturnBoxString() + ".root";
-        }
-        TFile outputFile(outFname.c_str(), "recreate");
-        dataFitResult->Write();
-        TTree tree("tree", "");
-        if (config.neutral() == Neutral::pi0 ||
-            config.fitBuPartial() == true) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
-        }
-        if (config.neutral() == Neutral::gamma) {
-          SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
-          double N_tot_Bu2Dst0pi_D0pi0_D02kpi_val =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>::Get(id)
-                  .N_tot_Bu2Dst0h_D0pi0().getVal();
-          double N_tot_Bu2Dst0pi_D0pi0_D02kpi_err =
-              NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
-                                           Daughters::kpi>::Get(id)
-                  .N_tot_Bu2Dst0h_D0pi0()
-                  .getPropagatedError(*dataFitResult);
-          std::cout << N_tot_Bu2Dst0pi_D0pi0_D02kpi_val
-                    << " " << N_tot_Bu2Dst0pi_D0pi0_D02kpi_err << "\n";
-          tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_val",
-                      &N_tot_Bu2Dst0pi_D0pi0_D02kpi_val,
-                      "N_tot_Bu2Dst0pi_D0pi0_D02kpi_val/D");
-          tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_err",
-                      &N_tot_Bu2Dst0pi_D0pi0_D02kpi_err,
-                      "N_tot_Bu2Dst0pi_D0pi0_D02kpi_err/D");
-          tree.Fill();
-        }
-        outputFile.cd();
-        tree.Write();
+          } else if (config.isMuon() == true) {
+            outFname = outputDir + "/results/SystResult_" +
+                       config.ReturnBoxString() + "_isMuon.root";
+            dataFitResult->SetName("SystResult");
+          } else if (config.runCombSystematic() == true) {
+            outFname = outputDir + "/results/SystResult_" +
+                       config.ReturnBoxString() + "_combinatorial.root";
+            dataFitResult->SetName("SystResult");
+          } else {
+            outFname = outputDir + "/results/DataResult_" +
+                       config.ReturnBoxString() + ".root";
+          }
+          TFile outputFile(outFname.c_str(), "recreate");
+          dataFitResult->Write();
+          TTree tree("tree", "");
+          if (config.neutral() == Neutral::pi0 ||
+              config.fitBuPartial() == true) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0pi0);
+          }
+          if (config.neutral() == Neutral::gamma) {
+            SaveEffToTree(config, outputFile, tree, Mode::Bu2Dst0pi_D0gamma);
+            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_val =
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kpi>::Get(id)
+                    .N_tot_Bu2Dst0h_D0pi0()
+                    .getVal();
+            double N_tot_Bu2Dst0pi_D0pi0_D02kpi_err =
+                NeutralBachelorDaughtersVars<Neutral::gamma, Bachelor::pi,
+                                             Daughters::kpi>::Get(id)
+                    .N_tot_Bu2Dst0h_D0pi0()
+                    .getPropagatedError(*dataFitResult);
+            std::cout << N_tot_Bu2Dst0pi_D0pi0_D02kpi_val << " "
+                      << N_tot_Bu2Dst0pi_D0pi0_D02kpi_err << "\n";
+            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_val",
+                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_val,
+                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_val/D");
+            tree.Branch("N_tot_Bu2Dst0pi_D0pi0_D02kpi_err",
+                        &N_tot_Bu2Dst0pi_D0pi0_D02kpi_err,
+                        "N_tot_Bu2Dst0pi_D0pi0_D02kpi_err/D");
+            tree.Fill();
+          }
+          outputFile.cd();
+          tree.Write();
       }
     }
   }
   // } else {
   //   if (config.runToy() == false) {
-  //     throw std::runtime_error("Must specify input directory to run data fit.");
-  //     return 1;
+  //     throw std::runtime_error("Must specify input directory to run data
+  //     fit."); return 1;
   //   }
   //   std::cout << "Fitting using D1D method, starting from model PDF\n";
   //   ToyTestD1D(simPdf, dataFitResult, config, daughtersVec, chargeVec,
