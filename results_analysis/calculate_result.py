@@ -410,41 +410,42 @@ if __name__ == '__main__':
                 # 'total_syst': np.nan
             })
 
-      # # Read in combinatorial systematic and add to dict_list_totals
-      # dict_comb_syst = {}
-      # eval_comb_syst = False
-      # fname_comb = f'{result_dir}/SystResult_{box_str}_combinatorial.root'
-      # if not os.path.isfile(fname_comb):
-      #   print(f'{fname_comb} does not exist')
-      # else:
-      #   comb_file = TFile(fname_comb)
-      #   comb_result = comb_file.Get('SystResult')
-      #   if ReturnResultQuality(comb_result, fname_comb):
-      #     eval_comb_syst = True
-      #   if eval_comb_syst == True:
-      #     for par in comb_result.floatParsFinal():
-      #       par_name = par.GetName()[:-2]
-      #       par_name = par_name.replace('_Blind', '')
-      #       if par_name in arr_syst_pars:
-      #         par_comb = par.getVal()
-      #         val = df_result[(df_result.par == par_name)]['val'].values[0]
-      #         # Error is difference between central value of combinatorial fit and that of default fit
-      #         error = abs(par_comb - val)
-      #         dict_comb_syst[par_name] = error
-      #
-      # if eval_comb_syst == True:
-      #   for par_name in arr_syst_pars:
-      #     if par_name in dict_comb_syst:
-      #       dict_list_totals.append({
-      #           'par': par_name,
-      #           'label': 'Combinatorial',
-      #           'std': dict_comb_syst[par_name],
-      #           'group_label': return_final_group('Combinatorial'),
-      #           'group_total': np.nan,
-      #           # 'total_syst': np.nan
-      #       })
+      # Read in semileptonic systematic and add to dict_list_totals
+      dict_muon_syst = {}
+      eval_muon_syst = False
+      fname_muon = f'{result_dir}/SystResult_{box_str}_isMuon.root'
+      if not os.path.isfile(fname_muon):
+        print(f'{fname_muon} does not exist')
+      else:
+        muon_file = TFile(fname_muon)
+        muon_result = muon_file.Get('SystResult')
+        if ReturnResultQuality(muon_result, fname_muon):
+          eval_muon_syst = True
+        if eval_muon_syst == True:
+          for par in muon_result.floatParsFinal():
+            par_name = par.GetName()[:-2]
+            par_name = par_name.replace('_Blind', '')
+            if par_name in arr_syst_pars:
+              par_muon = par.getVal()
+              val = df_result[(df_result.par == par_name)]['val'].values[0]
+              # Error is difference between central value of isMuon fit and that of default fit
+              error = abs(par_muon - val)
+              dict_muon_syst[par_name] = error
+
+      if eval_muon_syst == True:
+        for par_name in arr_syst_pars:
+          if par_name in dict_muon_syst:
+            dict_list_totals.append({
+                'par': par_name,
+                'label': 'Semileptonic',
+                'std': dict_muon_syst[par_name],
+                'group_label': return_final_group('Semileptonic'),
+                'group_total': np.nan,
+                # 'total_syst': np.nan
+            })
 
       df_totals = pd.json_normalize(dict_list_totals)
+      print(df_totals)
 
       arr_group = df_totals['group_label'].unique().tolist()
       for par_name in arr_syst_pars:
@@ -510,7 +511,7 @@ if __name__ == '__main__':
     # First row of table is parameter names
     arr_labels_unique = df_totals['label'].unique().tolist()
     arr_labels_sorted = [
-        'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'SelEffs',
+        'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'Semileptonic', 'SelEffs',
         'PIDEffs', 'Rates', 'Asyms', 'CPRatios', 'Statistical Error Correction'
     ]
     arr_labels = [l for l in arr_labels_sorted if l in arr_labels_unique]
@@ -531,6 +532,7 @@ if __name__ == '__main__':
       else:
         row_arr[key][0] += ' & ' + return_label(par_name)
       # Save maximum systematic label for each parameter: to be highlighted in table
+      df_totals.reset_index(drop=True, inplace=True)
       max_labels[par_name] = df_totals.iloc[df_totals[(
           df_totals.par == par_name)]['std'].idxmax()]['label']
     # New line and horizontal line after column titles
