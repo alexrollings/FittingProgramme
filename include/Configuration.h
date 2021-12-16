@@ -280,6 +280,15 @@ class Configuration {
 
   std::string ReturnBoxString();
 
+  std::string &AppendCutString() {
+    if (isMuon_ == true) {
+      pi0CutString_ += "&&bach_isMuon==0";
+      gammaCutString_ += "&&bach_isMuon==0";
+    } else
+      throw std::runtime_error(
+          "Cannot return append to cutString if isMuon==false\n");
+  }
+
   std::string &ReturnCutString() {
     if (neutral_ == Neutral::gamma) {
       return gammaCutString_;
@@ -306,6 +315,7 @@ class Configuration {
   int nCPU() { return nCPU_; }
   void SetNCPU(int val) { nCPU_ = val; }
     
+  bool &isMuon() {  return isMuon_; }
   bool &runBsSystematic() {  return runBsSystematic_; }
   bool &runCombSystematic() {  return runCombSystematic_; }
   double fracKst0() { return fracKst0_; }
@@ -372,6 +382,7 @@ class Configuration {
   bool simpleFit_;
   int nCPU_;
 
+  bool isMuon_;
   bool runBsSystematic_;
   bool runCombSystematic_;
   double fracKst0_;

@@ -294,6 +294,8 @@ int main(int argc, char **argv) {
       std::cout << "    -BsSyst and fracKst0=<0.7/0.9> to run fit to evaluate "
                    "Bs2Dst0Kst0 systematic"
                 << "\n";
+      std::cout << "    -isMuon to run fit on only isMuon==0 data"
+                << "\n";
       std::cout << "    -combSyst to run fit including combinatorial component "
                    "to evaluate combinatorial systematic"
                 << "\n";
@@ -445,6 +447,10 @@ int main(int argc, char **argv) {
         std::cout << "Running systematics for Bs2Dst0Kst0 (only run this!) "
                      "with fracKst0 = "
                   << config.fracKst0() << "\n";
+      } else if (args("isMuon")) {
+        std::cout << "Running fit on only isMuon==0 data.\n";
+        config.isMuon() = true;
+        config.AppendCutString();
       } else if (args("combSyst")) {
         std::cout << "Running combinatorial systematic fit.\n";
         config.runCombSystematic() = true;
@@ -869,17 +875,17 @@ int main(int argc, char **argv) {
     std::map<Neutral, std::map<Mass, double> > yMaxMap;
     // LaTeXYields(config, pdfs, outputDir, dataFitResult);
     if (config.runSystematics() == false) {
-      // if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
-      //   if (config.noFit() == false) {
-      //     dataFitResult->Print("v");
-      //   }
-      //   std::map<std::string, Int_t> colorMap = MakeColorMap(config);
-      //   PlotLegend(config, colorMap, outputDir);
-      //   for (auto &p : pdfs) {
-      //     Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
-      //                dataFitResult.get(), yMaxMap);
-      //   }
-      // }
+      if (config.runBsSystematic() == false && config.runCombSystematic() == false) {
+        if (config.noFit() == false) {
+          dataFitResult->Print("v");
+        }
+        std::map<std::string, Int_t> colorMap = MakeColorMap(config);
+        PlotLegend(config, colorMap, outputDir);
+        for (auto &p : pdfs) {
+          Plotting1D(id, *p, config, fullDataSet, *simPdf, colorMap, outputDir,
+                     dataFitResult.get(), yMaxMap);
+        }
+      }
       if (config.noFit() == false) {
         dataFitResult->Print("v");
         // for (auto &p : pdfs) {
