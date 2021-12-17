@@ -108,7 +108,7 @@ def return_group(syst):
       'BsPdfs': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
       'Bs phase space': '$B^{0}_{s}\\rightarrow D^{(*)}K^{\\mp}\\pi^{\\pm}$ PDFs',
       'MisIDPdfs': 'Mis-ID and crossfeed PDFs',
-      'Semileptonic': 'Semileptonic backgrounds',
+      'Semileptonic': 'Semi-leptonic backgrounds',
       'SelEffs': '$\\epsilon_{sel}$',
       'PIDEffs': '$\\epsilon_{PID}$',
       'Rates': 'Fixed branching fractions and rates',
