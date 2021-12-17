@@ -2295,4 +2295,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
                      *buPartialEffBu2Dst0h_D0pi0_, fracPdfFlat_comb_)) {
   std::cout << "WN FRAC COMB = \n";
   fracPdfFlat_comb_.Print();
+
+  // Adjust efficiencies for isMuon run of fit
+  if (Configuration::Get().isMuon() == true) {
+    double tmp_ = mcEff_Bu2Dst0h_D0pi0_->getVal(); 
+    mcEff_Bu2Dst0h_D0gamma_->setVal(tmp_*0.9913);
+    mcEff_Bu2Dst0h_D0pi0_->setVal(tmp_*0.9911);
+  }
 }
