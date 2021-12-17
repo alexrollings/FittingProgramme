@@ -2297,9 +2297,11 @@ NeutralBachelorVars<Neutral::gamma, Bachelor::pi>::NeutralBachelorVars(
   fracPdfFlat_comb_.Print();
 
   // Adjust efficiencies for isMuon run of fit
-  if (Configuration::Get().isMuon() == true) {
-    double tmp_ = mcEff_Bu2Dst0h_D0pi0_->getVal(); 
-    mcEff_Bu2Dst0h_D0gamma_->setVal(tmp_*0.9913);
-    mcEff_Bu2Dst0h_D0pi0_->setVal(tmp_*0.9911);
-  }
+  // if (Configuration::Get().isMuon() == true) {
+  //   double tmp_ = mcEff_Bu2Dst0h_D0pi0_->getVal(); 
+  //   mcEff_Bu2Dst0h_D0gamma_->setVal(tmp_*0.9913);
+  //   mcEff_Bu2Dst0h_D0gamma_WN_->setVal(tmp_*0.9939);
+  //   mcEff_Bu2Dst0h_D0pi0_->setVal(tmp_*0.9911);
+  //   mcEff_Bu2Dst0h_D0pi0_WN_->setVal(tmp_*0.9915);
+  // }
 }

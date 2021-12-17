@@ -427,6 +427,13 @@ if __name__ == '__main__':
             par_name = par_name.replace('_Blind', '')
             if par_name in arr_syst_pars:
               par_muon = par.getVal()
+              # Correct R(D*K/D*π) by efficiency ratio of isMuon==0 requirement on D*π/D*K
+              if neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi':
+                par_muon = par_muon * (0.9913/0.9892)
+              elif neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
+                par_muon = par_muon * (0.9911/0.9882)
+              elif neutral == 'pi0' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
+                par_muon = par_muon * (0.9924/0.9872)
               val = df_result[(df_result.par == par_name)]['val'].values[0]
               # Error is difference between central value of isMuon fit and that of default fit
               error = abs(par_muon - val)
