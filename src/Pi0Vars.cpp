@@ -1149,7 +1149,10 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       buPartialEffBu2Dst0h_D0gamma_WN_D02pik_(nullptr),
       // -------------------- Bkg Fractions -------------------- //
       bkgFracGlobal_WN_(Params::Get().CreateFloating(
-          "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 1.2)),
+          "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 1.5)),
+      // bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN", uniqueId_,
+      //                                             Neutral::pi0, 1.5, 0.,
+      //                                             Systematic::NA, Sign::same)),
       // bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN",
       // uniqueId_,
       //                                             Neutral::pi0, 0.7, 0.1,
@@ -1227,13 +1230,15 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("Bs2Dst0Kst0_floatingFracWN_Bu_" +
            ComposeName(uniqueId_, Neutral::pi0))
               .c_str(),
-          "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Bu_, *bkgFracGlobal_WN_)),
+          // "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Bu_, *bkgFracGlobal_WN_)),
+          "@0", RooArgList(*Bs2Dst0Kst0_fracWN_Bu_)),
       // "@0", RooArgList(*Bs2Dst0Kst0_fracWN_Bu_)),
       Bs2Dst0Kst0_floatingFracWN_Delta_(
           ("Bs2Dst0Kst0_floatingFracWN_Delta_" +
            ComposeName(uniqueId_, Neutral::pi0))
               .c_str(),
-          "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Delta_, *bkgFracGlobal_WN_)),
+          // "@0*@1", RooArgList(*Bs2Dst0Kst0_fracWN_Delta_, *bkgFracGlobal_WN_)),
+          "@0", RooArgList(*Bs2Dst0Kst0_fracWN_Delta_)),
       Bs2Dst0Kst0_floatingFracWN_BuPartial_(),
       pdfBu_Bs2Dst0Kst0_(
           ("pdfBu_Bs2Dst0Kst0_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
