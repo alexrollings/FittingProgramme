@@ -1407,18 +1407,21 @@ NeutralBachelorDaughtersVarsImpl<_neutral, Bachelor::k, Daughters::kpi>::
                          .c_str(),
                      ReturnType::stdH),
         Systematic::A_K_Kpi_Bu2Dst0h_D0gamma, Sign::same));
-    A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
-        Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
-                                     Bachelor::k, Daughters::kpi, 0, -1, 1));
-    A_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
-        ("A_Bu2D0hst_gaus_" +
-         ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
-            .c_str(),
-        "", *A_Bu2D0hst_, RooFit::RooConst(0.0), RooFit::RooConst(0.009)));
+    // A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(
+    //     Params::Get().CreateFloating("A_Bu2D0hst", uniqueId, _neutral,
+    //                                  Bachelor::k, Daughters::kpi, 0, -2, 2));
+    A_Bu2D0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
+        "A_Bu2D0hst", uniqueId, _neutral, Bachelor::k, Daughters::kpi, 0.0,
+        0.009, Systematic::A_K_Kpi_Bu2D0hst, Sign::none));
+    // A_Bu2D0hst_gaus_ = std::shared_ptr<RooGaussian>(new RooGaussian(
+    //     ("A_Bu2D0hst_gaus_" +
+    //      ComposeName(uniqueId, _neutral, Bachelor::k, Daughters::kpi))
+    //         .c_str(),
+    //     "", *A_Bu2D0hst_, RooFit::RooConst(0.0), RooFit::RooConst(0.009)));
+    // GlobalVars::Get(uniqueId).constraints_argSet().add(*A_Bu2D0hst_gaus_);
     A_Bu2Dst0hst_ = std::shared_ptr<RooRealVar>(Params::Get().CreateFixed(
         "A_Bu2Dst0hst", uniqueId, _neutral, Bachelor::k, Daughters::kpi, 0.0,
         0.02, Systematic::A_K_Kpi_Bu2Dst0hst, Sign::none));
-    // GlobalVars::Get(uniqueId).constraints_argSet().add(*A_Bu2D0hst_gaus_);
     N_tot_Bu2Dst0h_D0gamma_WN_ = std::shared_ptr<RooFormulaVar>(
         Make_N_tot_k_kpi<_neutral, Daughters::kpi>(
             uniqueId, "N_tot_Bu2Dst0h_D0gamma_WN_",
