@@ -300,20 +300,23 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
           ("pdfDelta_Bu2D0hst_" + ComposeName(uniqueId_, Neutral::pi0)).c_str(),
           "", Configuration::Get().deltaMass(), *Bu2D0hst_thresholdDelta_,
           *Bu2D0hst_cDelta_, *Bu2D0hst_aDelta_, *Bu2D0hst_bDelta_)),
-      Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
-          "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
-          Systematic::Bu2D0hst_PdfBu, Sign::same)),
+      // Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
+      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho,
+      //     Systematic::Bu2D0hst_PdfBu, Sign::same)),
       // Bu2D0hst_mean1Bu_(Params::Get().CreateFloating(
-      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho, 5230,
-      //     5260)),
+      //     "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, Mode::Bu2D0rho, 5200,
+      //     5300)),
+      Bu2D0hst_mean1Bu_(Params::Get().CreateFixed(
+          "Bu2D0hst_mean1Bu", uniqueId_, Neutral::pi0, 5.2529e+03,
+          6.15e+00, Systematic::Bu2D0hst_PdfBu, Sign::same)),
       Bu2D0hst_meanOffset21Bu_(nullptr),
       Bu2D0hst_mean2Bu_(),
-      // Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
-      //     "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
-      //     Systematic::Bu2D0hst_PdfBu, Sign::same)),
       Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
-          "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0587e+00, 2.22e-01,
+          "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
           Systematic::Bu2D0hst_PdfBu, Sign::same)),
+      // Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
+      //     "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0587e+00, 2.22e-01,
+      //     Systematic::Bu2D0hst_PdfBu, Sign::same)),
       // Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFloating(
       //     "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 0.95, 0.5, 1.5)),
       Bu2D0hst_sigmaRatio21Bu_(nullptr),
@@ -1151,7 +1154,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       bkgFracGlobal_WN_(Params::Get().CreateFloating(
           "bkgFracGlobal_WN", uniqueId_, Neutral::pi0, 1, 0, 1.5)),
       // bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN", uniqueId_,
-      //                                             Neutral::pi0, 1.5, 0.,
+      //                                             Neutral::pi0, 1, 0.,
       //                                             Systematic::NA, Sign::same)),
       // bkgFracGlobal_WN_(Params::Get().CreateFixed("bkgFracGlobal_WN",
       // uniqueId_,
@@ -1167,6 +1170,9 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       bkgFracFAV_Bd2Dsth_(Params::Get().CreateFloating(
           "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
           ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, ReturnType::val), 0, 5)),
+      // bkgFracFAV_Bd2Dsth_(Params::Get().CreateFixed(
+      //     "bkgFracFAV_Bd2Dsth", uniqueId_, Neutral::pi0,
+      //     ReadBkgFracs<Neutral::pi0>(Mode::Bd2Dstpi, ReturnType::val), 0, Systematic::NA, Sign::none)),
       // Constrained relative to Bd2Dsth
       // bkgFracFAV_Bu2D0hst_(Params::Get().CreateFloating(
       //     "bkgFracFAV_Bu2D0hst", uniqueId_, Neutral::pi0,
