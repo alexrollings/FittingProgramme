@@ -236,7 +236,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::k>::NeutralBachelorVars(
       //     Sign::none)),
       Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
-          -1.9673e+00, 5.34e-01, Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
+          -2.0918e+00, 5.40e-01, Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
           Sign::none)),
       // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
       //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::k,
