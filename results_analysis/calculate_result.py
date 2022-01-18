@@ -410,46 +410,46 @@ if __name__ == '__main__':
                 # 'total_syst': np.nan
             })
 
-      # Read in semileptonic systematic and add to dict_list_totals
-      dict_muon_syst = {}
-      eval_muon_syst = False
-      fname_muon = f'{result_dir}/SystResult_{box_str}_isMuon.root'
-      if not os.path.isfile(fname_muon):
-        print(f'{fname_muon} does not exist')
-      else:
-        muon_file = TFile(fname_muon)
-        muon_result = muon_file.Get('SystResult')
-        if ReturnResultQuality(muon_result, fname_muon):
-          eval_muon_syst = True
-        if eval_muon_syst == True:
-          for par in muon_result.floatParsFinal():
-            par_name = par.GetName()[:-2]
-            par_name = par_name.replace('_Blind', '')
-            if par_name in arr_syst_pars:
-              par_muon = par.getVal()
-              # Correct R(D*K/D*π) by efficiency ratio of isMuon==0 requirement on D*π/D*K
-              if neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi':
-                par_muon = par_muon * (0.9913/0.9892)
-              elif neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
-                par_muon = par_muon * (0.9911/0.9882)
-              elif neutral == 'pi0' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
-                par_muon = par_muon * (0.9924/0.9872)
-              val = df_result[(df_result.par == par_name)]['val'].values[0]
-              # Error is difference between central value of isMuon fit and that of default fit
-              error = abs(par_muon - val)
-              dict_muon_syst[par_name] = error
-
-      if eval_muon_syst == True:
-        for par_name in arr_syst_pars:
-          if par_name in dict_muon_syst:
-            dict_list_totals.append({
-                'par': par_name,
-                'label': 'Semileptonic',
-                'std': dict_muon_syst[par_name],
-                'group_label': return_final_group('Semileptonic'),
-                'group_total': np.nan,
-                # 'total_syst': np.nan
-            })
+      # # Read in semileptonic systematic and add to dict_list_totals
+      # dict_muon_syst = {}
+      # eval_muon_syst = False
+      # fname_muon = f'{result_dir}/SystResult_{box_str}_isMuon.root'
+      # if not os.path.isfile(fname_muon):
+      #   print(f'{fname_muon} does not exist')
+      # else:
+      #   muon_file = TFile(fname_muon)
+      #   muon_result = muon_file.Get('SystResult')
+      #   if ReturnResultQuality(muon_result, fname_muon):
+      #     eval_muon_syst = True
+      #   if eval_muon_syst == True:
+      #     for par in muon_result.floatParsFinal():
+      #       par_name = par.GetName()[:-2]
+      #       par_name = par_name.replace('_Blind', '')
+      #       if par_name in arr_syst_pars:
+      #         par_muon = par.getVal()
+      #         # Correct R(D*K/D*π) by efficiency ratio of isMuon==0 requirement on D*π/D*K
+      #         if neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0gamma_kpi':
+      #           par_muon = par_muon * (0.9913/0.9892)
+      #         elif neutral == 'gamma' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
+      #           par_muon = par_muon * (0.9911/0.9882)
+      #         elif neutral == 'pi0' and par_name == 'R_Dst0KDst0pi_Bu2Dst0h_D0pi0_kpi':
+      #           par_muon = par_muon * (0.9924/0.9872)
+      #         val = df_result[(df_result.par == par_name)]['val'].values[0]
+      #         # Error is difference between central value of isMuon fit and that of default fit
+      #         error = abs(par_muon - val)
+      #         dict_muon_syst[par_name] = error
+      #
+      # if eval_muon_syst == True:
+      #   for par_name in arr_syst_pars:
+      #     if par_name in dict_muon_syst:
+      #       dict_list_totals.append({
+      #           'par': par_name,
+      #           'label': 'Semileptonic',
+      #           'std': dict_muon_syst[par_name],
+      #           'group_label': return_final_group('Semileptonic'),
+      #           'group_total': np.nan,
+      #           # 'total_syst': np.nan
+      #       })
 
       df_totals = pd.json_normalize(dict_list_totals)
       print(df_totals)
@@ -518,7 +518,8 @@ if __name__ == '__main__':
     # First row of table is parameter names
     arr_labels_unique = df_totals['label'].unique().tolist()
     arr_labels_sorted = [
-        'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'Semileptonic', 'SelEffs',
+        # 'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'Semileptonic', 'SelEffs',
+        'Pi0Pdfs', 'GammaPdfs', 'BkgPdfs', 'BsPdfs', 'MisIDPdfs', 'SelEffs',
         'PIDEffs', 'Rates', 'Asyms', 'CPRatios', 'Statistical Error Correction'
     ]
     arr_labels = [l for l in arr_labels_sorted if l in arr_labels_unique]
@@ -659,7 +660,7 @@ if __name__ == '__main__':
       # Summary table
       arr_labels_unique = df_totals['group_label'].unique().tolist()
       arr_labels_sorted = [
-          '$PDFs$', '$\\epsilon_{sel}$', '$\\epsilon_{PID}$', '$Rates$',
+          '$PDFs$', '$SL$', '$\\epsilon_{sel}$', '$\\epsilon_{PID}$', '$Rates$',
           '$Asyms$', '$CP$ $Ratios$', '$Corr$'
       ]
       arr_labels = [l for l in arr_labels_sorted if l in arr_labels_unique]

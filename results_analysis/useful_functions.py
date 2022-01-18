@@ -134,7 +134,7 @@ def return_final_group(syst):
       'Asyms': '$Asyms$',
       'CPRatios': '$CP$ $Ratios$',
       'Statistical Error Correction': '$Corr$',
-      'Semileptonic' : '$PDFs$',
+      'Semileptonic' : '$SL$',
       'Combinatorial' : '$PDFs$',
       'Bs phase space': '$PDFs$',
       'Bu2Dst0h_D0pi0_Pdf\S+': '$PDFs$',

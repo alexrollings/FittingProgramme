@@ -270,8 +270,6 @@ if __name__ == '__main__':
           fitStatus = json_dict[syst_label][seed]['fitStatus']
           if covQual < 2:
             fit_status[syst_label]['Unconverged'] += 1
-            # if syst_label == 'Bs2D0Kst0_PdfBu':
-            # print(seed)
           elif covQual < 3:
             fit_status[syst_label]['FPD'] += 1
           elif fitStatus != 0:

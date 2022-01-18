@@ -233,6 +233,7 @@ if __name__ == '__main__':
     i = 0
     for root_file in os.listdir(input_dir):
       if i > 2500:
+      # if i > 100:
         break;
       if dim == '1D':
         if fit_bu_partial == False:

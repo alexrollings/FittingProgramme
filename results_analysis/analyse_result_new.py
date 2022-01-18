@@ -235,55 +235,55 @@ if __name__ == '__main__':
   final_groups = []
   max_systs = {}
   if eval_systs == True:
-    # g_err_Bs = 'Bs Systematic'
-    # fracs = ['0.7', '0.9']
-    # systBs_dict = {}
-    # eval_Bs_syst = False
-    # for frac in fracs:
-    #   result_Bs = f'{result_dir}/SystResult_{box_str}_Bs2Dst0Kst0_{frac}.root'
-    #   if not os.path.isfile(result_Bs):
-    #     print(f'{result_Bs} does not exist')
-    #     continue
-    #   Bs_file = TFile(result_Bs)
-    #   Bs_result = Bs_file.Get('SystResult')
-    #   if Bs_result == None:
-    #     print(f'{Bs_file} does not contain SystResult')
-    #     continue
-    #   covQual = Bs_result.covQual()
-    #   fitStatus = Bs_result.status()
-    #   if covQual < 2:
-    #     print(f'{Bs_file} SystResult unconverged')
-    #     continue
-    #   elif covQual < 3:
-    #     print(f'{Bs_file} SystResult FPD')
-    #     continue
-    #   elif fitStatus != 0:
-    #     print(f'{Bs_file} SystResult has MINOS errors')
-    #     continue
-    #   elif (covQual >= 3 and fitStatus == 0):
-    #     eval_Bs_syst = True
-    #     for par in Bs_result.floatParsFinal():
-    #       par_name = par.GetName()[:-2]
-    #       if par_name in fit_result:
-    #         par_Bs = par.getVal()
-    #         par_og = fit_result[par_name]['Value']
-    #         if par_name in systBs_dict:
-    #           systBs_dict[par_name][frac] = abs(par_Bs - par_og)
-    #         else:
-    #           systBs_dict[par_name] = { frac : abs(par_Bs - par_og) }
-    #
-    # if eval_Bs_syst == True:
-    #   group = {'final': return_final_group(g_err_Bs), 'breakdown': return_group_breakdown(g_err_Bs)}
-    #   if return_final_group(g_err_Bs) not in final_groups:
-    #     final_groups.append(return_final_group(g_err_Bs))
-    #   for g in group_dict:
-    #     for p, v in group_dict[g].items():
-    #       systBs = 0.
-    #       for f in fracs:
-    #         if systBs_dict[p][f] > systBs:
-    #           systBs = systBs_dict[p][f]
-    #       v[group[g]] = systBs**2
-    #       total_syst_dict[p][g_err_Bs] = systBs
+    g_err_Bs = 'Bs Systematic'
+    fracs = ['0.7', '0.9']
+    systBs_dict = {}
+    eval_Bs_syst = False
+    for frac in fracs:
+      result_Bs = f'{result_dir}/SystResult_{box_str}_Bs2Dst0Kst0_{frac}.root'
+      if not os.path.isfile(result_Bs):
+        print(f'{result_Bs} does not exist')
+        continue
+      Bs_file = TFile(result_Bs)
+      Bs_result = Bs_file.Get('SystResult')
+      if Bs_result == None:
+        print(f'{Bs_file} does not contain SystResult')
+        continue
+      covQual = Bs_result.covQual()
+      fitStatus = Bs_result.status()
+      if covQual < 2:
+        print(f'{Bs_file} SystResult unconverged')
+        continue
+      elif covQual < 3:
+        print(f'{Bs_file} SystResult FPD')
+        continue
+      elif fitStatus != 0:
+        print(f'{Bs_file} SystResult has MINOS errors')
+        continue
+      elif (covQual >= 3 and fitStatus == 0):
+        eval_Bs_syst = True
+        for par in Bs_result.floatParsFinal():
+          par_name = par.GetName()[:-2]
+          if par_name in fit_result:
+            par_Bs = par.getVal()
+            par_og = fit_result[par_name]['Value']
+            if par_name in systBs_dict:
+              systBs_dict[par_name][frac] = abs(par_Bs - par_og)
+            else:
+              systBs_dict[par_name] = { frac : abs(par_Bs - par_og) }
+
+    if eval_Bs_syst == True:
+      group = {'final': return_final_group(g_err_Bs), 'breakdown': return_group_breakdown(g_err_Bs)}
+      if return_final_group(g_err_Bs) not in final_groups:
+        final_groups.append(return_final_group(g_err_Bs))
+      for g in group_dict:
+        for p, v in group_dict[g].items():
+          systBs = 0.
+          for f in fracs:
+            if systBs_dict[p][f] > systBs:
+              systBs = systBs_dict[p][f]
+          v[group[g]] = systBs**2
+          total_syst_dict[p][g_err_Bs] = systBs
 
     g_err_comb = 'Combinatorial Systematic'
     syst_comb_dict = {}
