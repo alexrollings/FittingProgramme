@@ -312,7 +312,7 @@ NeutralVars<Neutral::pi0>::NeutralVars(int uniqueId)
       Bu2D0hst_meanOffset21Bu_(nullptr),
       Bu2D0hst_mean2Bu_(),
       Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
-          "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 0.05,
+          "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0, 2.22e-01,
           Systematic::Bu2D0hst_PdfBu, Sign::same)),
       // Bu2D0hst_KpiSigmaBu_(Params::Get().CreateFixed(
       //     "Bu2D0hst_KpiSigmaBu", uniqueId_, Neutral::pi0, 1.0587e+00, 2.22e-01,
