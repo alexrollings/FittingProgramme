@@ -847,8 +847,8 @@ int main(int argc, char **argv) {
       std::random_device rand_dev;
       std::mt19937 generator(rand_dev());
       std::uniform_int_distribution<int> dist;
-      // int seed = dist(generator);
-      int seed = 0x1a830a11;
+      int seed = dist(generator);
+      // int seed = 0x1a830a11;
       generator.seed(seed);
       RooRandom::randomGenerator()->SetSeed(seed);
       std::stringstream filename;
