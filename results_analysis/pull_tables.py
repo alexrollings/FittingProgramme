@@ -70,12 +70,12 @@ if __name__ == '__main__':
     # f.write('\\begin{document}\n')
     # f.write('\\begin{table}[t]\n')
     # f.write('\t\\centering\n')
-    if gen == 'D1D':
-      f.write('\\begin{tabular}{lcc} \n')
-      f.write('Observable & Pull $\\mu$ & Pull $\\sigma$ \\\\ \\hline \n')
-    else:
-      f.write('\\begin{tabular}{lc} \n')
-      f.write('Observable & Pull $\\sigma$ \\\\ \\hline \n')
+    # if gen == 'D1D':
+    f.write('\\begin{tabular}{lcc} \n')
+    f.write('Observable & Pull $\\mu$ & Pull $\\sigma$ \\\\ \\hline \n')
+    # else:
+    #   f.write('\\begin{tabular}{lc} \n')
+    #   f.write('Observable & Pull $\\sigma$ \\\\ \\hline \n')
     for k, v in pull_dict.items():
       par = return_label(k)
       sigma = pull_dict[k]['sigma']
@@ -84,10 +84,10 @@ if __name__ == '__main__':
         extra = '\\textcolor{white}{-}'
       else:
         extra = ''
-      if gen == 'D1D':
-        f.write(f'{par} & ${extra}{mean.n:.2f} \\pm {mean.s:.2f}$ & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
-      else:
-        f.write(f'{par} & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
+      # if gen == 'D1D':
+      f.write(f'{par} & ${extra}{mean.n:.2f} \\pm {mean.s:.2f}$ & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
+      # else:
+      #   f.write(f'{par} & ${sigma.n:.2f} \\pm {sigma.s:.2f}$ \\\\ \n')
     f.write('\\end{tabular} \n')
     # f.write('\\end{table}\n')
     # f.write('\\end{document}\n')

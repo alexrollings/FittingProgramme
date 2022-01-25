@@ -60,11 +60,11 @@ void SetStyle() {
   gStyle->SetTitleSize(0.08, "Y");
   gStyle->SetTitleSize(0.08, "X");
   gStyle->SetLabelSize(0.06, "XY");
-  gStyle->SetTitleOffset(0.6, "X");
+  gStyle->SetTitleOffset(0.85, "X");
   gStyle->SetTitleOffset(0.93, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
-  gStyle->SetPadBottomMargin(0.13);
+  gStyle->SetPadBottomMargin(0.16);
   gStyle->SetPadLeftMargin(0.15);
 }
 
@@ -508,9 +508,9 @@ int main(int argc, char *argv[]) {
     //               pullRange / 5);
     // TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -10, 10);
     TH1D pullHist(("pullHist_" + paramName).c_str(), "", 50, -6, 6);
-    if (toys2D == true) {
-      pullHist.GetXaxis()->SetLimits(-10, 10);
-    }
+    // if (toys2D == true) {
+    // pullHist.GetXaxis()->SetLimits(-10, 10);
+    // }
     // for (double j = 0; j < round(resultVec.size() / 5); ++j) {
     std::cout << "pullVec = " << pullMap[paramName].size() << "\n";
 
@@ -579,22 +579,22 @@ int main(int argc, char *argv[]) {
     pullResult->Write();
 
     std::unique_ptr<RooPlot> pullFrame;
-    if (toys2D == true) {
-      Double_t xMin = pullMean.getVal() - 6.0;
-      Double_t xMax = pullMean.getVal() + 6.0;
-      pullFrame = std::unique_ptr<RooPlot>(pull.frame(xMin, xMax, pullHist.GetNbinsX()));
-      pullFrame->SetTitle(" ");
-      pullFrame->SetLabelOffset(50, "X");
-      pullFrame->GetXaxis()->SetTickLength(0.);
+    // if (toys2D == true) {
+    //   Double_t xMin = pullMean.getVal() - 6.0;
+    //   Double_t xMax = pullMean.getVal() + 6.0;
+    //   pullFrame = std::unique_ptr<RooPlot>(pull.frame(xMin, xMax, pullHist.GetNbinsX()));
+      // pullFrame->SetLabelOffset(50, "X");
+      // pullFrame->GetXaxis()->SetTickLength(0.);
       // std::cout << "Attempt: \tSet min: " << xMin << "\t"
       //           << "Set max: " << xMax << "\n";
       // double x_min = pullFrame->GetXaxis()->GetXmin();
       // double x_max = pullFrame->GetXaxis()->GetXmax();
       // std::cout << "Actual: \tSet min: " << x_min << "\t"
       //           << "Set max: " << x_max << "\n";
-    } else {
-      pullFrame = std::unique_ptr<RooPlot>(pull.frame(RooFit::Title(" ")));
-    }
+    // } else {
+    pullFrame = std::unique_ptr<RooPlot>(pull.frame(RooFit::Title(" ")));
+    pullFrame->SetTitle(" ");
+    // }
     pullFrame->GetXaxis()->SetTitle((ReturnLaTeXLabel(paramName) + " pull").c_str());
     std::stringstream yLabel;
     yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
@@ -616,7 +616,7 @@ int main(int argc, char *argv[]) {
     pullLegend.SetFillStyle(4000);
     gStyle->SetStatStyle(0);
     gStyle->SetTitleStyle(0);
-    pullLegend.SetTextSize(0.06);
+    pullLegend.SetTextSize(0.055);
     pullLegend.SetLineColor(-1);
     std::ostringstream pullMeanString, pullSigmaString;
     pullMeanString << "#mu = " << to_string_with_precision(pullMean.getVal(), 3);
@@ -628,11 +628,7 @@ int main(int argc, char *argv[]) {
     pullSigmaString << " #pm "
                     << to_string_with_precision(
                            pullSigma.getPropagatedError(*pullResult.get()), 3);
-    if (toys2D == false) {
-      pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
-    } else {
-      pullLegend.SetY1(0.9);
-    }
+    pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
 
