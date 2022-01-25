@@ -573,6 +573,8 @@ int main(int argc, char **argv) {
 
   // Loop over all options in
   // order to extract correct roodataSets.
+  double n_events = 0;
+  double n_pi_kpi_events = 0;
   for (auto &y : yearVec) {
     std::string dPidCut;
     if (y == Year::y2011 or y == Year::y2012) {
@@ -618,6 +620,10 @@ int main(int argc, char **argv) {
               } else {
                 std::cout << "inputDataSet extracted: \n";
                 inputDataSet->Print();
+                if (b == Bachelor::pi and d == Daughters::kpi) {
+                  n_pi_kpi_events += inputDataSet->numEntries();
+                }
+                n_events += inputDataSet->numEntries();
                 RooDataSet *reducedInputDataSet_n =
                     dynamic_cast<RooDataSet *>(inputDataSet->reduce(
                         config.ReturnCutString().c_str()));
@@ -699,6 +705,8 @@ int main(int argc, char **argv) {
       }
     }
   }
+  std::cout << "Number of events in data fit = " << n_events << "\n";
+  std::cout << "Number of [Kπ]π events in data fit = " << n_pi_kpi_events << "\n";
 
   // id = 0 for data fit
   int id = 0;
@@ -719,6 +727,8 @@ int main(int argc, char **argv) {
   RooDataSet fullDataSet("fullDataSet", "fullDataSet", config.fittingArgSet(),
                          RooFit::Index(config.fitting),
                          RooFit::Import(mapFittingDataSet));
+  std::cout << "Full data set :\n";
+  fullDataSet.Print();
 
   auto fullDataHist = std::unique_ptr<RooDataHist>(
       fullDataSet.binnedClone("fullDataHist", "fullDataHist"));
@@ -734,7 +744,8 @@ int main(int argc, char **argv) {
     // Strategy(2) requires evaluation of hessian at every step: can set
     // strategy 0 then call MINOS after to calculate correct errors
     int nStrat = 2;
-    // if ((config.runBsSystematic() == true && config.splitByCharge() == false) ||
+    // if ((config.runBsSystematic() == true && config.splitByCharge() == false)
+    // ||
     //     config.runCombSystematic() == true) {
     if (config.runBsSystematic() == true && config.splitByCharge() == false) {
       std::cout << "Strategy 1\n";
@@ -833,11 +844,12 @@ int main(int argc, char **argv) {
   if (config.runToy() == true) {
     // start at id = 1 to reserve 0 for data fit
     for (int id = 1; id < nToys + 1; ++id) {
-      std::random_device rd;
-      std::default_random_engine rng(rd());
-      std::uniform_int_distribution<UInt_t> dist;
-      UInt_t seed = dist(rng);
-      // UInt_t seed = 0xa229a64a;
+      std::random_device rand_dev;
+      std::mt19937 generator(rand_dev());
+      std::uniform_int_distribution<int> dist;
+      // int seed = dist(generator);
+      int seed = 0x1a830a11;
+      generator.seed(seed);
       RooRandom::randomGenerator()->SetSeed(seed);
       std::stringstream filename;
       if (config.runToy() == true && pdfD1D == true) {
@@ -855,7 +867,7 @@ int main(int argc, char **argv) {
                       daughtersVec, chargeVec, outputDir, id);
       } else if (data2D == true) {
         RunToys2DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
-                      config, daughtersVec, chargeVec, outputDir, id);
+                      config, daughtersVec, chargeVec, outputDir, id, generator);
       } else if (data1D == true) {
         RunToys1DData(toyResultFile, dataFitResult, mapDataLabelDataSet,
                       config, daughtersVec, chargeVec, outputDir, id);

@@ -361,7 +361,7 @@ void RunToys2DData(TFile &outputFile,
                    Configuration &config,
                    std::vector<Daughters> const &daughtersVec,
                    std::vector<Charge> const &chargeVec,
-                   std::string const &outputDir, int id) {
+                   std::string const &outputDir, int id, std::mt19937 &generator) {
   std::cout << "\n\n -------------------------- Running toy #" << id
             << " -------------------------- \n\n";
   auto p = MakeSimultaneousPdf(id, config, daughtersVec, chargeVec);
@@ -370,7 +370,8 @@ void RunToys2DData(TFile &outputFile,
   std::map<std::string, RooDataSet *> mapDataLabelToy;
 
   for (auto &p : pdfs) {
-    GenerateToyFromData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config);
+    // GenerateToyFromData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config);
+    BootstrapData(mapDataLabelDataSet, mapDataLabelToy, id, *p, config, generator);
   }
 
   auto simPdf = std::unique_ptr<RooSimultaneous>(p.first);
@@ -1848,6 +1849,69 @@ void GenerateToyFromPi0Pdf(
   } else {
     mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
         ->append(*genData);
+    std::cout << "Appended toy to category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     "\n";
+  }
+}
+
+void BootstrapData(
+    std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+    std::map<std::string, RooDataSet *> &mapDataLabelToy, int const id,
+    PdfBase &pdf, Configuration &config, std::mt19937 &generator) {
+  gStyle->SetTitleSize(0.03, "XYZ");
+  gStyle->SetLabelSize(1.025, "XYZ");
+  gStyle->SetTitleOffset(1, "X");
+  gStyle->SetTitleOffset(1.2, "Y");
+  gStyle->SetTitleOffset(1.5, "Z");
+  gStyle->SetPadRightMargin(0.15);
+
+  Bachelor bachelor = pdf.bachelor();
+  Daughters daughters = pdf.daughters();
+  Neutral neutral = pdf.neutral();
+  Charge charge = pdf.charge();
+
+  auto dataSet = mapDataLabelDataSet[ComposeDataLabelName(neutral, bachelor, daughters,
+                                               charge)];
+  if (dataSet == nullptr) {
+    throw std::runtime_error("DataSet does not exist in mapDataLabelDataSet.");
+  }
+
+  RooDataSet *toyData = new RooDataSet(
+      ("toyData_" + ComposeDataLabelName(neutral, bachelor, daughters, charge) + "_" +
+       std::to_string(id))
+          .c_str(),
+      ("toyData_" + ComposeDataLabelName(neutral, bachelor, daughters, charge) + "_" +
+       std::to_string(id))
+          .c_str(),
+      config.fittingArgSet());
+  Int_t n_entries = dataSet->numEntries();
+  std::cout << n_entries << std::endl;
+  for (Int_t idx = 0; idx < n_entries; ++idx) {
+    std::uniform_int_distribution<Int_t> distr(0, n_entries - 1);
+    Int_t event = distr(generator);
+    const RooArgSet *eventArgSet = dataSet->get(event);
+    if (eventArgSet == nullptr) {
+      std::stringstream outStr;
+      outStr << "Event " << event
+             << " could not be extracted from dataSet.\n";
+      throw std::runtime_error(outStr.str());
+    }
+    toyData->add(*eventArgSet);
+  }
+
+  if (mapDataLabelToy.find(ComposeDataLabelName(
+          neutral, bachelor, daughters, charge)) == mapDataLabelToy.end()) {
+    mapDataLabelToy.insert(std::make_pair(
+        ComposeDataLabelName(neutral, bachelor, daughters, charge), toyData));
+    std::cout << "Created key-value pair for category " +
+                     ComposeDataLabelName(neutral, bachelor, daughters,
+                                          charge) +
+                     " and corresponding toy\n";
+  } else {
+    mapDataLabelToy[ComposeDataLabelName(neutral, bachelor, daughters, charge)]
+        ->append(*toyData);
     std::cout << "Appended toy to category " +
                      ComposeDataLabelName(neutral, bachelor, daughters,
                                           charge) +

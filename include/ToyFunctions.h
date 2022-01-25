@@ -31,6 +31,10 @@ void RunToys2DPdf(std::vector<PdfBase *> &pdfs,
                   Configuration &config, std::string const &outputDir,
                   std::vector<Daughters> const &daughtersVec,
                   std::vector<Charge> const &chargeVec, int id);
+void BootstrapData(
+    std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
+    std::map<std::string, RooDataSet *> &mapDataLabelToy, int const id,
+    PdfBase &pdf, Configuration &config, std::mt19937 &generator);
 void GenerateToyFromData(
     std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
     std::map<std::string, RooDataSet *> &mapDataLabelToy, int const id,
@@ -41,7 +45,7 @@ void RunToys2DData(TFile &outputFile,
                    Configuration &config,
                    std::vector<Daughters> const &daughtersVec,
                    std::vector<Charge> const &chargeVec,
-                   std::string const &outputDir, int id);
+                   std::string const &outputDir, int id, std::mt19937 &generator);
 void Generate1DToyFromData(
     std::map<std::string, RooDataSet *> &mapDataLabelDataSet,
     std::map<std::string, RooDataSet *> &mapFittingToy, int const id,
