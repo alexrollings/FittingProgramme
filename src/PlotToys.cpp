@@ -60,7 +60,7 @@ void SetStyle() {
   gStyle->SetTitleSize(0.08, "Y");
   gStyle->SetTitleSize(0.08, "X");
   gStyle->SetLabelSize(0.06, "XY");
-  gStyle->SetTitleOffset(0.85, "X");
+  gStyle->SetTitleOffset(0.82, "X");
   gStyle->SetTitleOffset(0.93, "Y");
   gStyle->SetPadTopMargin(0.03);
   gStyle->SetPadRightMargin(0.03);
