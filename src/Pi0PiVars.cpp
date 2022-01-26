@@ -218,8 +218,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       //     Sign::none)),
       Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
-          // QUESTIONABLE? 3.57e-01
-          -5.3774e+00, -2, Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
+          -5.3774e+00, 3.57e-01, Systematic::Bu2Dst0h_D0pi0_WN_PdfDelta,
           Sign::none)),
       // Bu2Dst0h_D0pi0_WN_aDelta_(Params::Get().CreateFloating(
       //     "Bu2Dst0h_D0pi0_WN_aDelta", uniqueId_, Neutral::pi0, Bachelor::pi,
@@ -246,7 +245,7 @@ NeutralBachelorVars<Neutral::pi0, Bachelor::pi>::NeutralBachelorVars(
       //     Systematic::Bu2Dst0h_D0pi0_WN_PdfBu, Sign::same)),
       Bu2Dst0h_D0pi0_WN_sigma1Bu_(Params::Get().CreateFixed(
           "Bu2Dst0h_D0pi0_WN_sigma1Bu", uniqueId_, Neutral::pi0, Bachelor::pi,
-          4.7637e+01, 2.03e+00, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
+          4.7637e+01, 1.03e+00, Systematic::Bu2Dst0h_D0pi0_WN_PdfBu,
           Sign::same)),
       Bu2Dst0h_D0pi0_WN_sigma2Bu_(nullptr),
       pdf1Bu_Bu2Dst0h_D0pi0_WN_(),
