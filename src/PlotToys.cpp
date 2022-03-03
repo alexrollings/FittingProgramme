@@ -27,6 +27,12 @@
 #include "TStyle.h"
 #include "TTreeReader.h"
 
+std::string to_string_scientific(double value, int precision) {
+  std::ostringstream out;
+  out << std::scientific << std::setprecision(precision) << value;
+  return out.str();
+}
+
 std::vector<std::string> SplitByComma(std::string const &str) {
   std::stringstream ss;
   ss.str(str);
@@ -420,6 +426,7 @@ int main(int argc, char *argv[]) {
         // }
         // Fill histograms
         initValMap[paramName].emplace_back(initialVal);
+        // valMap[paramName].emplace_back(finalVal - initialVal);
         valMap[paramName].emplace_back(finalVal);
         errMap[paramName].emplace_back(finalErr);
         pullMap[paramName].emplace_back(std::make_pair(rndmVec[j], pull));
@@ -542,13 +549,13 @@ int main(int argc, char *argv[]) {
     // Create RRVs for each parameter's value, error and pull
     // Make into function and pass relevant histogram
 
-    TCanvas varCanvas((paramName + "Canvas").c_str(), " ", 1200, 1000);
+    TCanvas pullCanvas((paramName + "Canvas").c_str(), " ", 1200, 1000);
 
-    if (config.blindFit() == false) {
-      varCanvas.SetCanvasSize(1500, 500);
-      varCanvas.Divide(3, 1);
-      varCanvas.cd(1);
-    }
+    // if (config.blindFit() == false) {
+    //   varCanvas.SetCanvasSize(1500, 500);
+    //   varCanvas.Divide(3, 1);
+    //   varCanvas.cd(1);
+    // }
 
     RooRealVar pull(("pull_" + paramName).c_str(), "",
                     pullHist.GetXaxis()->GetXmin(),
@@ -578,6 +585,7 @@ int main(int argc, char *argv[]) {
     pullResult->SetName(("Result_Pull_" + paramName).c_str());
     pullResult->Write();
 
+    gStyle->SetLabelSize(0.06, "X");
     std::unique_ptr<RooPlot> pullFrame;
     // if (toys2D == true) {
     //   Double_t xMin = pullMean.getVal() - 6.0;
@@ -597,8 +605,8 @@ int main(int argc, char *argv[]) {
     // }
     pullFrame->GetXaxis()->SetTitle((ReturnLaTeXLabel(paramName) + " pull").c_str());
     std::stringstream yLabel;
-    yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
-    pullFrame->GetYaxis()->SetTitle(yLabel.str().c_str());
+    // yLabel << "Number of toys / (" << pullHist.GetXaxis()->GetBinWidth(0) << ")";
+    pullFrame->GetYaxis()->SetTitle("Number of toys");
     pullDH.plotOn(pullFrame.get());
     pullGaus.plotOn(pullFrame.get(), RooFit::LineColor(kRed+1),
                     RooFit::LineWidth(3), RooFit::Range("full"));
@@ -631,7 +639,11 @@ int main(int argc, char *argv[]) {
     pullLegend.AddEntry(blankHist.get(), pullMeanString.str().c_str(), "l");
     pullLegend.AddEntry(blankHist.get(), pullSigmaString.str().c_str(), "l");
     pullLegend.Draw("same");
+    pullCanvas.SaveAs((outputDir + "/plots/" + config.ReturnBoxString() + "_" +
+                      paramName + "_Pull.pdf")
+                         .c_str());
 
+    TCanvas valCanvas((paramName + "Canvas").c_str(), " ", 1200, 1000);
     // // Initialise frame and legend outside of if satement so that pointer exists
     // // outside scope (or not plotted)
     RooRealVar val(("val_" + paramName).c_str(), "",
@@ -648,44 +660,72 @@ int main(int argc, char *argv[]) {
     //
   //   if (toys2D == true || config.blindFit() == false) {
   //     std::cout << "VAL AND ERR TOO\n";
-      RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
-                        RooFit::Import(valHist));
-      RooRealVar valMean(("valMean_" + paramName).c_str(), "",
-                         val.getMin() - (val.getMax() - val.getMin()),
-                         val.getMax() + (val.getMax() - val.getMin()));
-      RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
-                          (val.getMax() - val.getMin()) / 5, 0,
-                          val.getMax() - val.getMin());
-      RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
-                          valSigma);
-      auto valResult =
-          std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
-      valResult->Print("v");
-      valResult->SetName(("Result_Val_" + paramName).c_str());
-      valResult->Write();
-  //     valFrame->GetXaxis()->SetTitle(paramName.c_str());
-  //     valDH.plotOn(valFrame.get());
-  //     valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed),
-  //                    RooFit::LineWidth(2));
-  //     valDH.plotOn(valFrame.get());
-  //     varCanvas.cd(2);
-  //     valFrame->Draw();
-  //
-  //     valLegend.SetTextSize(0.03);
-  //     valLegend.SetLineColor(kWhite);
-  //     std::stringstream valMeanString, valSigmaString;
-  //     valMeanString << "#mu = " << to_string_with_precision(valMean.getVal());
-  //     valMeanString << " #pm "
-  //                   << to_string_with_precision(
-  //                          valMean.getPropagatedError(*valResult.get()));
-  //     valSigmaString << "#sigma = "
-  //                    << to_string_with_precision(valSigma.getVal());
-  //     valSigmaString << " #pm "
-  //                    << to_string_with_precision(
-  //                           valSigma.getPropagatedError(*valResult.get()));
-  //     valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
-  //     valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
-  //     valLegend.Draw("same");
+    RooDataHist valDH(("valDH_" + paramName).c_str(), "", RooArgSet(val),
+                      RooFit::Import(valHist));
+    RooRealVar valMean(("valMean_" + paramName).c_str(), "",
+                       val.getMin() - (val.getMax() - val.getMin()),
+                       val.getMax() + (val.getMax() - val.getMin()));
+    RooRealVar valSigma(("valSigma_" + paramName).c_str(), "",
+                        (val.getMax() - val.getMin()) / 5, 0,
+                        val.getMax() - val.getMin());
+    RooGaussian valGaus(("valGauss_" + paramName).c_str(), "", val, valMean,
+                        valSigma);
+    auto valResult =
+        std::unique_ptr<RooFitResult>(valGaus.fitTo(valDH, RooFit::Save()));
+    valResult->Print("v");
+    valResult->SetName(("Result_Val_" + paramName).c_str());
+    valResult->Write();
+
+    val.setMax(valMean.getVal() + valSigma.getVal() * 5);
+    val.setMin(valMean.getVal() -valSigma.getVal() * 5);
+    gStyle->SetLabelSize(0.05, "X");
+    auto valFrame = std::unique_ptr<RooPlot>(val.frame(RooFit::Title(" ")));
+    valFrame->SetTitle(" ");
+    // }
+    valFrame->GetXaxis()->SetTitle(ReturnLaTeXLabel(paramName).c_str());
+    // valFrame->GetXaxis()->SetMaxDigits(2);
+    valFrame->GetXaxis()->SetNdivisions(8);
+    // valFrame->SetLabelOffset(50, "X");
+    // valFrame->GetXaxis()->SetTickLength(0.);
+    std::stringstream yLabel_val;
+    valFrame->GetYaxis()->SetTitle("Number of toys");
+    valDH.plotOn(valFrame.get());
+    valGaus.plotOn(valFrame.get(), RooFit::LineColor(kRed + 1),
+                   RooFit::LineWidth(3));
+    valDH.plotOn(valFrame.get());
+    valFrame->GetXaxis()->SetRangeUser(valMean.getVal() - valSigma.getVal() * 5,
+                                       valMean.getVal() + valSigma.getVal() * 5);
+    valFrame->Draw();
+
+    // TLegend valLegend(0.49, 0.84, 0.95, 0.965);
+    TLegend valLegend(0.46, 0.915, 0.95, 0.975);
+    // if (config.blindFit() == false) {
+    //   valLegend.SetX1(0.5);
+    //   valLegend.SetX2(0.85);
+    // }
+    valLegend.SetFillColor(-1);
+    valLegend.SetFillStyle(4000);
+    gStyle->SetStatStyle(0);
+    gStyle->SetTitleStyle(0);
+    valLegend.SetTextSize(0.055);
+    valLegend.SetLineColor(-1);
+    std::ostringstream valMeanString, valSigmaString;
+    // valMeanString << "#mu = " << to_string_scientific(valMean.getVal(), 2);
+    // valMeanString << " #pm "
+    //                << to_string_scientific(
+    //                       valMean.getPropagatedError(*valResult.get()), 2);
+    valSigmaString << "#sigma = "
+                    << to_string_with_precision(valSigma.getVal(), 4);
+    valSigmaString << " #pm "
+                    << to_string_with_precision(
+                           valSigma.getPropagatedError(*valResult.get()), 4);
+    valLegend.AddEntry(blankHist.get(), valMeanString.str().c_str(), "l");
+    valLegend.AddEntry(blankHist.get(), valSigmaString.str().c_str(), "l");
+    valLegend.Draw("same");
+    valCanvas.SaveAs((outputDir + "/plots/" + config.ReturnBoxString() + "_" +
+                      paramName + "_Val.pdf")
+                         .c_str());
+
   //
       RooDataHist errDH(("errDH_" + paramName).c_str(), "", RooArgSet(err),
                         RooFit::Import(errHist));
@@ -727,18 +767,6 @@ int main(int argc, char *argv[]) {
   //     errLegend.Draw("same");
   //   }
 
-    std::string fileEnd;
-    // if (config.blindFit() == true) {
-    fileEnd = "Pull";
-    // } else {
-    //   fileEnd = "PullValErr";
-    // }
-    varCanvas.SaveAs((outputDir + "/plots/" + config.ReturnBoxString() + "_" +
-                      paramName + "_" + fileEnd + ".pdf")
-                         .c_str());
-    // varCanvas.SaveAs((outputDir + "/plots/" + paramName +
-    //                   "_PullValErr.pdf")
-    //                      .c_str());
   }
 
   outputFile.Write();
