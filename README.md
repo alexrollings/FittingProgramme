@@ -124,10 +124,10 @@ Oxford Particle Physics condor system. These should be edited for use on a diffe
 
 ### Final results
 
-In order to calculate the final results, the `analyse_result.py` script in the `results_analysis` sub-directory can 
+In order to calculate the final results, the `calculate_result.py` script in the `results_analysis` sub-directory can 
 be used. To run, this requires Python v3 and the NumPy and Uncertainties packages:
 ~~~
-python analyse_result.py -r=<file storing RooFitResult from the fit to data> -p=<file storing RooFitResults of 
+python3 calculate_result.py -r=<file storing RooFitResult from the fit to data> -p=<file storing RooFitResults of 
 fits to observable pull distributions from 2D toys> -s=<optional directory to systematics json file (see below)>
 -n=<pi0/gamma> -c=<split/total> --blind
 ~~~
