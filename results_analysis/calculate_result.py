@@ -91,6 +91,7 @@ if __name__ == '__main__':
   remake = args.remake
 
   tex_path = os.path.join(os.getcwd(), 'tex_unblind/')
+  # tex_path = os.path.join(os.getcwd(), 'tex_tmp_2/')
   if not os.path.exists(tex_path):
     os.mkdir(tex_path)
 
@@ -205,31 +206,53 @@ if __name__ == '__main__':
     # File where 2D pull results are stored
     pull_file = TFile(pull_fname)
     # Save pulls to dict labelled by neutral to calculate rms for syst on stat correction
-    pull_widths = {}
     arr_syst_pars = [p for p in arr_pars if "N_tot" not in p]
     # Extract pull results for params and correct stat error with pull width
     for par_name in arr_pars:
-      pull_result = pull_file.Get(f'Result_Pull_{par_name}')
-      if pull_result == None:
+      val_result = pull_file.Get(f'Result_Val_{par_name}')
+      if val_result == None:
         m = re.match('(\S+_Bu2Dst0h_D0(pi0|gamma))(_\S+|$)', par_name)
         if m:
           blind_par_name = m.group(1) + '_Blind' + m.group(3)
-          pull_result = pull_file.Get(f'Result_Pull_{blind_par_name}')
-          if pull_result == None:
+          val_result = pull_file.Get(f'Result_Val_{blind_par_name}')
+          if val_result == None:
             print(
-                f'Could not extract  Result_Pull_{k} or Result_Pull_{blind_par_name} from {pull_fname}'
+                f'Could not extract  Result_Val_{par_name} or Result_Val_{blind_par_name} from {pull_fname}'
             )
             continue
         else:
           continue
-      pull_pars = pull_result.floatParsFinal()
-      pull_width = pull_pars[1].getVal()
+      val_pars = val_result.floatParsFinal()
+      val_error = val_pars[1].getVal()
       # at allows you to access given element, but needs row, column location therefore first find index (row) for given par_name
       par_idx = df_result.index[(
           df_result.par == par_name) == True].tolist()[0]
-      df_result.at[par_idx, 'stat'] = df_result[
-          (df_result.par == par_name)]['stat'].values[0] * pull_width
-      if eval_systs == True:
+      # df_result.at[par_idx, 'stat'] = df_result[
+      #     (df_result.par == par_name)]['stat'].values[0] * pull_width
+      df_result.at[par_idx, 'stat'] = val_error
+
+    # print(df_result)
+
+    if eval_systs == True:
+      dict_list_totals = []
+      pull_widths = {}
+
+      for par_name in arr_pars:
+        pull_result = pull_file.Get(f'Result_Pull_{par_name}')
+        if pull_result == None:
+          m = re.match('(\S+_Bu2Dst0h_D0(pi0|gamma))(_\S+|$)', par_name)
+          if m:
+            blind_par_name = m.group(1) + '_Blind' + m.group(3)
+            pull_result = pull_file.Get(f'Result_Pull_{blind_par_name}')
+            if pull_result == None:
+              print(
+                  f'Could not extract  Result_Pull_{par_name} or Result_Pull_{blind_par_name} from {pull_fname}'
+              )
+              continue
+          else:
+            continue
+        pull_pars = pull_result.floatParsFinal()
+        pull_width = pull_pars[1].getVal()
         if par_name in arr_syst_pars:
           m0 = re.match('\S+_D0(pi0|gamma)(_\S+|$)', par_name)
           if m0:
@@ -241,11 +264,6 @@ if __name__ == '__main__':
             pull_widths[n] = [pull_width]
           else:
             pull_widths[n].append(pull_width)
-
-    # print(df_result)
-
-    if eval_systs == True:
-      dict_list_totals = []
 
       # Systematic error on stat. correction is RMS of pull withs from 2D toys
       for n, pulls in pull_widths.items():
@@ -502,18 +520,18 @@ if __name__ == '__main__':
       else:
         sys.exit(f'{csv_totals_fname} does not exist')
 
-    if breakdown == False:
-      # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
-      for par_name in arr_syst_pars:
-        par_idx = df_totals.index[(
-            (df_totals.par == par_name)
-            & (df_totals.label == 'BsPdfs')) == True].tolist()[0]
-        combined_syst = math.sqrt(df_totals[(df_totals.par == par_name) & (
-            df_totals.label == 'BsPdfs')]['std'].values[0]**2 + df_totals[
-                (df_totals.par == par_name)
-                & (df_totals.label == 'Bs phase space')]['std'].values[0]**2)
-        df_totals.at[par_idx, 'std'] = combined_syst
-      df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
+    # if breakdown == False:
+    # CHECK THIS: COMBINE BsPDFs and Bs phase space into one group for ANA breakdown
+    for par_name in arr_syst_pars:
+      par_idx = df_totals.index[(
+          (df_totals.par == par_name)
+          & (df_totals.label == 'BsPdfs')) == True].tolist()[0]
+      combined_syst = math.sqrt(df_totals[(df_totals.par == par_name) & (
+          df_totals.label == 'BsPdfs')]['std'].values[0]**2 + df_totals[
+              (df_totals.par == par_name)
+              & (df_totals.label == 'Bs phase space')]['std'].values[0]**2)
+      df_totals.at[par_idx, 'std'] = combined_syst
+    df_totals = df_totals[~df_totals.label.str.contains('Bs phase space')]
 
     # First row of table is parameter names
     arr_labels_unique = df_totals['label'].unique().tolist()
